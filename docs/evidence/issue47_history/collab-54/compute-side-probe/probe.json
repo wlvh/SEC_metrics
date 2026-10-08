@@ -1,0 +1,208 @@
+{
+ "record_type": "ISSUE_47_COMPUTE_SIDE_PROBE",
+ "position": {
+  "company_id": "marriott_international",
+  "report_end": "2023-12-31",
+  "metrics": [
+   "B01",
+   "B04",
+   "D01"
+  ]
+ },
+ "source_root": "restored from evidence/issue47_acquired (1547 rows, ledger sha256 61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9, checkpoint sha256:8fd479648aea793c6f89ddc08069fdf7d9f7b8e5620fba1ad3d7bda822062f1c)",
+ "runtime_tree": "the batch runtime tree (commit fc73df2d index, working files synced to 815c7820 plus the registration patch), copied without .git; docs/, outputs/, artifacts/ hard-linked, everything else copied",
+ "environment": {
+  "command_prefix": "env -i PATH=/usr/local/bin:/usr/bin:/bin HOME=/nonexistent LANG=C.UTF-8 TMPDIR=<scratch> PYTHONPYCACHEPREFIX=<scratch>",
+  "runner": "docs/evidence/issue47_history/period-batch/period_runs.py <out> marriott-2023 marriott_international 2023-12-31 B01,B04,D01 --layout shared --block on --memo on --memo-off-read-back 1"
+ },
+ "step_1_no_git": {
+  "result": "all three positions INSTALL_FAILED",
+  "error": "Command '['git', 'ls-files', 'catalog', 'config']' returned non-zero exit status 128.",
+  "error_type": "CalledProcessError",
+  "call_path": "normal_run_v3._install_case_inputs -> annual_runtime._authority_files -> git ls-files catalog config (cwd = code root)"
+ },
+ "step_2_minimal_git": {
+  "setup": [
+   "git init <copy>",
+   "echo <runtime tree>/.git/objects > <copy>/.git/objects/info/alternates",
+   "git -C <copy> read-tree fc73df2d896c7719c8d3fa6c45d156cf0b5941ee",
+   "git -C <copy> update-ref HEAD fc73df2d896c7719c8d3fa6c45d156cf0b5941ee",
+   "copy the trust-journal entry .git/ordinary-source-authority/acquired/<ledger sha256>.json (shortcut for this probe only, see README)"
+  ],
+  "dot_git_size": "9.3M",
+  "ls_files_catalog_config_same_as_runtime_tree": true,
+  "positions": {
+   "B01": {
+    "stage": "PUBLIC_ROW",
+    "run_id": "run:historical-period:0c7e265c90b16c0fb3e16f27d2c294efe84f67ed97cb75d0ba92293e0b8f957d",
+    "result_id": "sha256:7d0aeb48394b6fde5e28865ffc7cd3b337e81f5f51d53ed9f93370afab8b4a96",
+    "row_hash": "sha256:8ea34fabdd957924d889b548bcda727d39ba467c569c806de22614bde53d611e",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+    "selection_id": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30",
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "value": "23713000000",
+    "separate_process_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:0c7e265c90b16c0fb3e16f27d2c294efe84f67ed97cb75d0ba92293e0b8f957d",
+     "result_id": "sha256:7d0aeb48394b6fde5e28865ffc7cd3b337e81f5f51d53ed9f93370afab8b4a96"
+    }
+   },
+   "B04": {
+    "stage": "PUBLIC_ROW",
+    "run_id": "run:historical-period:2a9db4c517a5f21da8da5f13aae0c83456d88a96e619bf6aacd3d29719673995",
+    "result_id": "sha256:d23fda934dc9a703c2b877213dfee46949b1a233ce4838248cd64e5ba67fb206",
+    "row_hash": "sha256:eda91382cf6655156c75d1595881e3eaa44af15f7a6e4b4521332105dc58005c",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+    "selection_id": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30",
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "value": "3083000000",
+    "separate_process_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:2a9db4c517a5f21da8da5f13aae0c83456d88a96e619bf6aacd3d29719673995",
+     "result_id": "sha256:d23fda934dc9a703c2b877213dfee46949b1a233ce4838248cd64e5ba67fb206"
+    }
+   },
+   "D01": {
+    "stage": "PUBLIC_ROW",
+    "run_id": "run:historical-period:0811d84325bc7f3465a43ca5851463bd2401d91bef6e00cf846dfb886ef5bcbe",
+    "result_id": "sha256:f3037e091608ac8cbcd27586a8c57d1c91d265f75c05ec8850ba3cfec8b54ddc",
+    "row_hash": "sha256:eaef763764be66c30094f73c6c96712b5543afda665eb6e17f2cdf3ec5230ddf",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+    "selection_id": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30",
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "value": "Risks Relating to Our Industry\nOur industry is highly compet",
+    "separate_process_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:0811d84325bc7f3465a43ca5851463bd2401d91bef6e00cf846dfb886ef5bcbe",
+     "result_id": "sha256:f3037e091608ac8cbcd27586a8c57d1c91d265f75c05ec8850ba3cfec8b54ddc"
+    }
+   }
+  },
+  "phases_seconds": {
+   "create": 52.1,
+   "install": 207.5,
+   "memo_off_read_back": 102.7,
+   "read_back": 99.5,
+   "select": 0.1
+  },
+  "total_seconds": 462.2,
+  "code_tree_files_compared": 14213,
+  "code_tree_files_changed_or_added": 0
+ },
+ "control_full_checkout": {
+  "positions": {
+   "B01": {
+    "stage": "PUBLIC_ROW",
+    "run_id": "run:historical-period:0c7e265c90b16c0fb3e16f27d2c294efe84f67ed97cb75d0ba92293e0b8f957d",
+    "result_id": "sha256:7d0aeb48394b6fde5e28865ffc7cd3b337e81f5f51d53ed9f93370afab8b4a96",
+    "row_hash": "sha256:8ea34fabdd957924d889b548bcda727d39ba467c569c806de22614bde53d611e",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+    "selection_id": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30",
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "value": "23713000000",
+    "separate_process_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:0c7e265c90b16c0fb3e16f27d2c294efe84f67ed97cb75d0ba92293e0b8f957d",
+     "result_id": "sha256:7d0aeb48394b6fde5e28865ffc7cd3b337e81f5f51d53ed9f93370afab8b4a96"
+    }
+   },
+   "B04": {
+    "stage": "PUBLIC_ROW",
+    "run_id": "run:historical-period:2a9db4c517a5f21da8da5f13aae0c83456d88a96e619bf6aacd3d29719673995",
+    "result_id": "sha256:d23fda934dc9a703c2b877213dfee46949b1a233ce4838248cd64e5ba67fb206",
+    "row_hash": "sha256:eda91382cf6655156c75d1595881e3eaa44af15f7a6e4b4521332105dc58005c",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+    "selection_id": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30",
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "value": "3083000000",
+    "separate_process_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:2a9db4c517a5f21da8da5f13aae0c83456d88a96e619bf6aacd3d29719673995",
+     "result_id": "sha256:d23fda934dc9a703c2b877213dfee46949b1a233ce4838248cd64e5ba67fb206"
+    }
+   },
+   "D01": {
+    "stage": "PUBLIC_ROW",
+    "run_id": "run:historical-period:0811d84325bc7f3465a43ca5851463bd2401d91bef6e00cf846dfb886ef5bcbe",
+    "result_id": "sha256:f3037e091608ac8cbcd27586a8c57d1c91d265f75c05ec8850ba3cfec8b54ddc",
+    "row_hash": "sha256:eaef763764be66c30094f73c6c96712b5543afda665eb6e17f2cdf3ec5230ddf",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "requirement_closure_hash": "sha256:cf166529a86e44ee825602ea5e3e7b3782c9ad4a6ced8cda45b66c506142f7c6",
+    "selection_id": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30",
+    "new_calls": {
+     "paid": 0,
+     "provider": 0,
+     "sec": 0
+    },
+    "value": "Risks Relating to Our Industry\nOur industry is highly compet",
+    "separate_process_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:0811d84325bc7f3465a43ca5851463bd2401d91bef6e00cf846dfb886ef5bcbe",
+     "result_id": "sha256:f3037e091608ac8cbcd27586a8c57d1c91d265f75c05ec8850ba3cfec8b54ddc"
+    }
+   }
+  },
+  "phases_seconds": {
+   "create": 52.6,
+   "install": 209.3,
+   "memo_off_read_back": 101.3,
+   "read_back": 101.7,
+   "select": 0.1
+  },
+  "total_seconds": 465.1
+ },
+ "probe_equals_control": {
+  "B01": {
+   "run_result_row_replay": true,
+   "row_receipt_bytes_equal": true
+  },
+  "B04": {
+   "run_result_row_replay": true,
+   "row_receipt_bytes_equal": true
+  },
+  "D01": {
+   "run_result_row_replay": true,
+   "row_receipt_bytes_equal": true
+  }
+ },
+ "data_root": {
+  "size": "684M",
+  "evidence/request_attempts": "650M, 3098 files (every success row of the 1547-row ledger, body and headers, plus the period's baseline originals)"
+ },
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

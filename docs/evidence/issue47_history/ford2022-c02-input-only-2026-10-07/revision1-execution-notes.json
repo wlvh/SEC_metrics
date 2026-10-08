@@ -1,0 +1,79 @@
+{
+  "request_sha256": "1dc80aa539306580a54d3b7e56d7847c77188405d2d23624a955b6e345adedea",
+  "tool_calls": {
+    "functions_exec": 28,
+    "exec_command": 28,
+    "total": 56
+  },
+  "ordinary_messages_including_final": 3,
+  "read_scope": {
+    "only_input_file": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/work/issue47-input-only/ford2022-c02-revision1/request-body.json",
+    "system_message": "complete",
+    "user_json_decoded": true,
+    "original_blocks": [
+      0,
+      4911
+    ],
+    "extra_dictionary_strings": [
+      4912,
+      5194
+    ],
+    "all_table_layouts": [
+      0,
+      401
+    ],
+    "geometry": "all 9 entries",
+    "complete_source_text_read": true,
+    "complete_supplied_layout_read": true,
+    "unread_ranges": []
+  },
+  "truncations": [
+    {
+      "requested_blocks": [
+        200,
+        899
+      ],
+      "supplement": [
+        400,
+        779
+      ],
+      "resolved": true
+    },
+    {
+      "requested_blocks": [
+        900,
+        1499
+      ],
+      "supplement": [
+        1050,
+        1279
+      ],
+      "resolved": true
+    },
+    {
+      "expanded_tables": [
+        49,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        123,
+        229
+      ],
+      "supplement": "All dictionary texts had been read; complete raw layouts T90-T195 and the dedicated complete grid-ref read supplied all lost card associations.",
+      "resolved": true
+    }
+  ],
+  "network_calls": 0,
+  "sec_calls": 0,
+  "deepseek_calls": 0,
+  "paid_business_calls": 0,
+  "answer_attempts": 1,
+  "answer_sha256": "17bda24113ceead2d9f4dae040848c98a6064f92d1d14b96412c77a61a1cda87",
+  "note": "No other files read. Answer and notes created once; no source mutation, provider execution, retries or reference comparison."
+}

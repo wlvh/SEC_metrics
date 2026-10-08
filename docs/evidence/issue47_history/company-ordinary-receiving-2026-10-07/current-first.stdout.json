@@ -1,0 +1,72 @@
+{
+  "elapsed_seconds": 3.351349832955748,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261006T193320Z-0fde60a0",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B01",
+    "B02"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "a4e1fa14a998430691fc831228289992",
+      "version": "89a4f315195d4b9da4207b3269577c91",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "result_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-cli-20261007/state/updates/B01/results/89a4f315195d4b9da4207b3269577c91",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "record_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-cli-20261007/state/updates/B01/results/89a4f315195d4b9da4207b3269577c91",
+      "program_version": {
+        "commit": "ce75b97c2197ae4a53cefbbf379f14e9fa5e422f",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B02",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "5f14b91024b64666925750e47a0e72d3",
+      "version": "eb93c03f6f9f4636ad4858a41801ad9a",
+      "result_id": "sha256:dff8ee332821e42e593acd7b7c3b80d8c6a629abf9c1266bef7cc32b33178159",
+      "result_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-cli-20261007/state/updates/B02/results/eb93c03f6f9f4636ad4858a41801ad9a",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:dff8ee332821e42e593acd7b7c3b80d8c6a629abf9c1266bef7cc32b33178159",
+      "record_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-cli-20261007/state/updates/B02/results/eb93c03f6f9f4636ad4858a41801ad9a",
+      "program_version": {
+        "commit": "ce75b97c2197ae4a53cefbbf379f14e9fa5e422f",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006",
+  "record_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-cli-20261007/state",
+  "output_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-cli-20261007/output/20261006T193320Z-0fde60a0",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

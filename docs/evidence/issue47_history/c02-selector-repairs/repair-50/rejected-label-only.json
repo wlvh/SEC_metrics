@@ -1,0 +1,1204 @@
+{
+ "base": "4041c171",
+ "base_selector_sha256": "sha256:3e88837c8d50b5c2738c369e1b03cc219904e4bfe4edcf811a31789f06508271",
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "positions": {
+  "enphase_energy:2021-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "enphase_energy:2022-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "enphase_energy:2023-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "enphase_energy:2024-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "enphase_energy:2025-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "ford_motor_company:2021-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "ford_motor_company:2022-12-31": {
+   "added": [],
+   "problems": {
+    "base": {
+     "missed": [
+      {
+       "i": 1255,
+       "redundant_with": [
+        1252
+       ],
+       "why": "Farley's card name; his committee field (1261) is N/A, so no committee"
+      },
+      {
+       "i": 4535,
+       "redundant_with": [],
+       "why": "Shareholder proponent's text (not the company's): Anthony Earley was Lead Director and chair of the pay committee (past roles)"
+      }
+     ]
+    },
+    "variant": {
+     "missed": [
+      {
+       "i": 1255,
+       "redundant_with": [
+        1252
+       ],
+       "why": "Farley's card name; his committee field (1261) is N/A, so no committee"
+      },
+      {
+       "i": 4535,
+       "redundant_with": [],
+       "why": "Shareholder proponent's text (not the company's): Anthony Earley was Lead Director and chair of the pay committee (past roles)"
+      }
+     ]
+    }
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "ford_motor_company:2023-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "ford_motor_company:2024-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "ford_motor_company:2025-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "jpmorgan_chase:2021-12-31": {
+   "added": [],
+   "problems": {
+    "base": {
+     "missed": [
+      {
+       "i": 42,
+       "redundant_with": [
+        45,
+        55,
+        56,
+        392,
+        394,
+        717,
+        718,
+        723
+       ],
+       "why": "Dimon signs the notice letter as Chairman and CEO (with 43): who chairs the board; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 43,
+       "redundant_with": [
+        45,
+        55,
+        56,
+        392,
+        394,
+        717,
+        718,
+        723
+       ],
+       "why": "Signature title under Dimon's name: Chairman and CEO (who chairs the board, roles combined); not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 45,
+       "redundant_with": [
+        42,
+        43,
+        55,
+        56,
+        392,
+        394,
+        717,
+        718,
+        723
+       ],
+       "why": "Letter from Dimon, 'Our Chairman and CEO', and Burke, 'Our Lead Independent Director' (Burke's role is also in 617/970, selected); not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 55,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        392,
+        394,
+        717,
+        718,
+        723
+       ],
+       "why": "Dimon signs the board letter as Chairman and CEO (with 56); not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 56,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        392,
+        394,
+        717,
+        718,
+        723
+       ],
+       "why": "Signature title under Dimon's name: Chairman and CEO; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 325,
+       "redundant_with": [
+        951,
+        1041,
+        3510
+       ],
+       "why": "All principal standing committees are 100% independent; not in the selection: the selection states committee independence only for Audit and CMDC (892, 3324)"
+      },
+      {
+       "i": 392,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        55,
+        56,
+        717,
+        718,
+        723
+       ],
+       "why": "Dimon's nominee-table row, whose title 394 makes him Chairman and CEO of the registrant; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 394,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        55,
+        56,
+        717,
+        718,
+        723
+       ],
+       "why": "Dimon is Chairman and CEO of JPMorgan Chase (who chairs the board, roles combined); age and other-board count are not facts; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 527,
+       "redundant_with": [],
+       "why": "All nominees are current directors (no one joins or leaves at the meeting); consent and one-year term are not facts; not in the selection: stated nowhere else"
+      },
+      {
+       "i": 717,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        55,
+        56,
+        392,
+        394,
+        718,
+        723
+       ],
+       "why": "Dimon Chairman of the Board since 2006 (his card); 'Director since 2004' is tenure; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 718,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        55,
+        56,
+        392,
+        394
+       ],
+       "why": "Dimon's name on his card, whose title (719, selected) and tenure field make him Chairman and CEO; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 723,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        55,
+        56,
+        392,
+        394,
+        717,
+        718
+       ],
+       "why": "Dimon is Chairman of the Board and CEO (career highlight); the dates are tenure; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 951,
+       "redundant_with": [
+        325,
+        1041,
+        3510
+       ],
+       "why": "100% principal standing committee independence; not in the selection: the selection states committee independence only for Audit and CMDC (892, 3324)"
+      },
+      {
+       "i": 1041,
+       "redundant_with": [
+        325,
+        951,
+        1062,
+        1064,
+        1130,
+        3510
+       ],
+       "why": "The board's five independent principal standing committees: Audit, CMDC, Governance, PRC, Risk; the second sentence is purpose; not in the selection: the selection never lists the board's committees, it names them only on members' cards; the selection states committee independence only for Audit and CMDC (892, 3324)"
+      },
+      {
+       "i": 1052,
+       "redundant_with": [],
+       "why": "Audit members in 2021 (Flynn, Neal, Novakovic) each determined an audit committee financial expert; Bammann, Risk Committee chair, determined to have the Federal Reserve-rule risk-management experience; not in the selection: the Risk-chair expertise determination is stated only here; the Audit memberships and ACFE are also in the cards, 3324 and 3357-3360 (selected), and Bammann's Risk chair in 636/638 (selected)"
+      },
+      {
+       "i": 1062,
+       "redundant_with": [
+        1041,
+        1130
+       ],
+       "why": "Chart title naming the principal standing committees of the Board (with 1064); its subject is responsibilities; not in the selection: the selection never lists the board's committees, it names them only on members' cards"
+      },
+      {
+       "i": 1064,
+       "redundant_with": [
+        1041,
+        1130
+       ],
+       "why": "The five principal standing committees (Audit, CMDC, Risk, PRC, Governance) as the chart header; not in the selection: the selection never lists the board's committees, it names them only on members' cards"
+      },
+      {
+       "i": 1111,
+       "redundant_with": [],
+       "why": "Stock Committee: one of the two additional standing committees of 1110; the rest is its duties; not in the selection: 1110 (selected) gives the count of two but not the names"
+      },
+      {
+       "i": 1112,
+       "redundant_with": [],
+       "why": "Executive Committee: the other additional standing committee of 1110; the rest is its powers; not in the selection: 1110 (selected) gives the count of two but not the names"
+      },
+      {
+       "i": 1115,
+       "redundant_with": [
+        1144,
+        1145,
+        1146
+       ],
+       "why": "Begins 'The Board currently has two such committees' (Specific Purpose Committees, with 1116); the first sentence is policy; not in the selection: no selected block names the Specific Purpose Committees"
+      },
+      {
+       "i": 1116,
+       "redundant_with": [
+        1144,
+        1145,
+        1146
+       ],
+       "why": "The board's two Specific Purpose Committees: Markets Compliance and Omnibus; the rest is the Markets Compliance Committee's oversight; not in the selection: no selected block names the Specific Purpose Committees"
+      },
+      {
+       "i": 1130,
+       "redundant_with": [
+        1041,
+        1062,
+        1064
+       ],
+       "why": "Header of the current committee membership table: the committees Audit, CMDC, Governance, PRC, Risk (the principal seats in its rows are also on the selected cards); not in the selection: the selection never lists the board's committees, it names them only on members' cards; that Dimon sits on no committee is stated only by his empty row in this table"
+      },
+      {
+       "i": 1131,
+       "redundant_with": [],
+       "why": "Header of the Specific Purpose column (with 1132, the rows and legend 1144-1146: who sits on which Specific Purpose Committee); not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1132,
+       "redundant_with": [],
+       "why": "Header of the Specific Purpose column (with 1131, the rows and legend 1144-1146); not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1133,
+       "redundant_with": [],
+       "why": "Burke's membership-table row: Lead Independent Director (footnote 1147), CMDC Chair, Governance, Markets Compliance (A); LID and principal seats also in 613/617 (selected); not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1134,
+       "redundant_with": [],
+       "why": "Burke: CMDC Chair, Governance member, Markets Compliance Committee (A); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1135,
+       "redundant_with": [],
+       "why": "Bammann: CMDC member, Risk Chair, Omnibus Committee (B); principal seats also on her selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1136,
+       "redundant_with": [],
+       "why": "Combs: CMDC member, Governance Chair, Markets Compliance Committee (A); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1137,
+       "redundant_with": [],
+       "why": "Crown: PRC Chair, Risk member, Omnibus Committee (B); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1138,
+       "redundant_with": [],
+       "why": "Dimon's row in the current membership table: a director on no committee; not in the selection: that Dimon sits on no committee is stated only by his empty row in this table"
+      },
+      {
+       "i": 1140,
+       "redundant_with": [],
+       "why": "Hobson: PRC member, Risk member, Markets Compliance Committee (A); principal seats also on her selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1141,
+       "redundant_with": [],
+       "why": "Neal: Audit member, PRC member, Omnibus Committee (B); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1143,
+       "redundant_with": [],
+       "why": "Rometty: CMDC member, Governance member, Markets Compliance Committee (A); principal seats also on her selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1144,
+       "redundant_with": [
+        1115,
+        1116
+       ],
+       "why": "The Board's Specific Purpose Committees in 2021 were: (legend to the column); not in the selection: no selected block names the Specific Purpose Committees; the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1145,
+       "redundant_with": [
+        1115,
+        1116
+       ],
+       "why": "A = Markets Compliance Committee (legend); not in the selection: no selected block names the Specific Purpose Committees; the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1146,
+       "redundant_with": [
+        1115,
+        1116
+       ],
+       "why": "B = Omnibus Committee (legend); not in the selection: no selected block names the Specific Purpose Committees; the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 3510,
+       "redundant_with": [
+        325,
+        951,
+        1041
+       ],
+       "why": "Each Board committee is chaired and constituted by independent directors; the rest is process; not in the selection: the selection states committee independence only for Audit and CMDC (892, 3324)"
+      }
+     ],
+     "wrongly_taken": [
+      {
+       "i": 531,
+       "why": "Attributes and skills all nominees possess; 'independent perspective' is a personal attribute, not an independence determination"
+      },
+      {
+       "i": 971,
+       "why": "Policy that the Chair and CEO positions shall be separate at the next CEO transition, subject to the Board's determination then: a future, conditional policy, not the current composition"
+      },
+      {
+       "i": 3511,
+       "why": "Shareholder outreach on separating the Chair and CEO roles at the next transition; states no composition fact"
+      },
+      {
+       "i": 3513,
+       "why": "Powers of the Lead Independent Director role and a rebuttal of the proposal; does not say who holds the role or how the board is composed"
+      }
+     ]
+    },
+    "variant": {
+     "missed": [
+      {
+       "i": 42,
+       "redundant_with": [
+        45,
+        55,
+        56,
+        392,
+        394,
+        717,
+        718,
+        723
+       ],
+       "why": "Dimon signs the notice letter as Chairman and CEO (with 43): who chairs the board; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 43,
+       "redundant_with": [
+        45,
+        55,
+        56,
+        392,
+        394,
+        717,
+        718,
+        723
+       ],
+       "why": "Signature title under Dimon's name: Chairman and CEO (who chairs the board, roles combined); not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 45,
+       "redundant_with": [
+        42,
+        43,
+        55,
+        56,
+        392,
+        394,
+        717,
+        718,
+        723
+       ],
+       "why": "Letter from Dimon, 'Our Chairman and CEO', and Burke, 'Our Lead Independent Director' (Burke's role is also in 617/970, selected); not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 55,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        392,
+        394,
+        717,
+        718,
+        723
+       ],
+       "why": "Dimon signs the board letter as Chairman and CEO (with 56); not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 56,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        392,
+        394,
+        717,
+        718,
+        723
+       ],
+       "why": "Signature title under Dimon's name: Chairman and CEO; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 325,
+       "redundant_with": [
+        951,
+        1041,
+        3510
+       ],
+       "why": "All principal standing committees are 100% independent; not in the selection: the selection states committee independence only for Audit and CMDC (892, 3324)"
+      },
+      {
+       "i": 392,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        55,
+        56,
+        717,
+        718,
+        723
+       ],
+       "why": "Dimon's nominee-table row, whose title 394 makes him Chairman and CEO of the registrant; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 394,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        55,
+        56,
+        717,
+        718,
+        723
+       ],
+       "why": "Dimon is Chairman and CEO of JPMorgan Chase (who chairs the board, roles combined); age and other-board count are not facts; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 527,
+       "redundant_with": [],
+       "why": "All nominees are current directors (no one joins or leaves at the meeting); consent and one-year term are not facts; not in the selection: stated nowhere else"
+      },
+      {
+       "i": 717,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        55,
+        56,
+        392,
+        394,
+        718,
+        723
+       ],
+       "why": "Dimon Chairman of the Board since 2006 (his card); 'Director since 2004' is tenure; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 718,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        55,
+        56,
+        392,
+        394
+       ],
+       "why": "Dimon's name on his card, whose title (719, selected) and tenure field make him Chairman and CEO; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 723,
+       "redundant_with": [
+        42,
+        43,
+        45,
+        55,
+        56,
+        392,
+        394,
+        717,
+        718
+       ],
+       "why": "Dimon is Chairman of the Board and CEO (career highlight); the dates are tenure; not in the selection: no selected block names the Chair: 719 (selected) is his card title without his name 718, and 967/3508 (selected) give only the combined roles"
+      },
+      {
+       "i": 951,
+       "redundant_with": [
+        325,
+        1041,
+        3510
+       ],
+       "why": "100% principal standing committee independence; not in the selection: the selection states committee independence only for Audit and CMDC (892, 3324)"
+      },
+      {
+       "i": 1041,
+       "redundant_with": [
+        325,
+        951,
+        1062,
+        1064,
+        1130,
+        3510
+       ],
+       "why": "The board's five independent principal standing committees: Audit, CMDC, Governance, PRC, Risk; the second sentence is purpose; not in the selection: the selection never lists the board's committees, it names them only on members' cards; the selection states committee independence only for Audit and CMDC (892, 3324)"
+      },
+      {
+       "i": 1052,
+       "redundant_with": [],
+       "why": "Audit members in 2021 (Flynn, Neal, Novakovic) each determined an audit committee financial expert; Bammann, Risk Committee chair, determined to have the Federal Reserve-rule risk-management experience; not in the selection: the Risk-chair expertise determination is stated only here; the Audit memberships and ACFE are also in the cards, 3324 and 3357-3360 (selected), and Bammann's Risk chair in 636/638 (selected)"
+      },
+      {
+       "i": 1062,
+       "redundant_with": [
+        1041,
+        1130
+       ],
+       "why": "Chart title naming the principal standing committees of the Board (with 1064); its subject is responsibilities; not in the selection: the selection never lists the board's committees, it names them only on members' cards"
+      },
+      {
+       "i": 1064,
+       "redundant_with": [
+        1041,
+        1130
+       ],
+       "why": "The five principal standing committees (Audit, CMDC, Risk, PRC, Governance) as the chart header; not in the selection: the selection never lists the board's committees, it names them only on members' cards"
+      },
+      {
+       "i": 1111,
+       "redundant_with": [],
+       "why": "Stock Committee: one of the two additional standing committees of 1110; the rest is its duties; not in the selection: 1110 (selected) gives the count of two but not the names"
+      },
+      {
+       "i": 1112,
+       "redundant_with": [],
+       "why": "Executive Committee: the other additional standing committee of 1110; the rest is its powers; not in the selection: 1110 (selected) gives the count of two but not the names"
+      },
+      {
+       "i": 1115,
+       "redundant_with": [
+        1144,
+        1145,
+        1146
+       ],
+       "why": "Begins 'The Board currently has two such committees' (Specific Purpose Committees, with 1116); the first sentence is policy; not in the selection: no selected block names the Specific Purpose Committees"
+      },
+      {
+       "i": 1116,
+       "redundant_with": [
+        1144,
+        1145,
+        1146
+       ],
+       "why": "The board's two Specific Purpose Committees: Markets Compliance and Omnibus; the rest is the Markets Compliance Committee's oversight; not in the selection: no selected block names the Specific Purpose Committees"
+      },
+      {
+       "i": 1130,
+       "redundant_with": [
+        1041,
+        1062,
+        1064
+       ],
+       "why": "Header of the current committee membership table: the committees Audit, CMDC, Governance, PRC, Risk (the principal seats in its rows are also on the selected cards); not in the selection: the selection never lists the board's committees, it names them only on members' cards; that Dimon sits on no committee is stated only by his empty row in this table"
+      },
+      {
+       "i": 1131,
+       "redundant_with": [],
+       "why": "Header of the Specific Purpose column (with 1132, the rows and legend 1144-1146: who sits on which Specific Purpose Committee); not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1132,
+       "redundant_with": [],
+       "why": "Header of the Specific Purpose column (with 1131, the rows and legend 1144-1146); not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1133,
+       "redundant_with": [],
+       "why": "Burke's membership-table row: Lead Independent Director (footnote 1147), CMDC Chair, Governance, Markets Compliance (A); LID and principal seats also in 613/617 (selected); not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1134,
+       "redundant_with": [],
+       "why": "Burke: CMDC Chair, Governance member, Markets Compliance Committee (A); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1135,
+       "redundant_with": [],
+       "why": "Bammann: CMDC member, Risk Chair, Omnibus Committee (B); principal seats also on her selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1136,
+       "redundant_with": [],
+       "why": "Combs: CMDC member, Governance Chair, Markets Compliance Committee (A); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1137,
+       "redundant_with": [],
+       "why": "Crown: PRC Chair, Risk member, Omnibus Committee (B); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1138,
+       "redundant_with": [],
+       "why": "Dimon's row in the current membership table: a director on no committee; not in the selection: that Dimon sits on no committee is stated only by his empty row in this table"
+      },
+      {
+       "i": 1140,
+       "redundant_with": [],
+       "why": "Hobson: PRC member, Risk member, Markets Compliance Committee (A); principal seats also on her selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1141,
+       "redundant_with": [],
+       "why": "Neal: Audit member, PRC member, Omnibus Committee (B); principal seats also on his selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1143,
+       "redundant_with": [],
+       "why": "Rometty: CMDC member, Governance member, Markets Compliance Committee (A); principal seats also on her selected card; not in the selection: the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1144,
+       "redundant_with": [
+        1115,
+        1116
+       ],
+       "why": "The Board's Specific Purpose Committees in 2021 were: (legend to the column); not in the selection: no selected block names the Specific Purpose Committees; the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1145,
+       "redundant_with": [
+        1115,
+        1116
+       ],
+       "why": "A = Markets Compliance Committee (legend); not in the selection: no selected block names the Specific Purpose Committees; the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 1146,
+       "redundant_with": [
+        1115,
+        1116
+       ],
+       "why": "B = Omnibus Committee (legend); not in the selection: no selected block names the Specific Purpose Committees; the Specific Purpose Committee seats are stated only in this table"
+      },
+      {
+       "i": 3510,
+       "redundant_with": [
+        325,
+        951,
+        1041
+       ],
+       "why": "Each Board committee is chaired and constituted by independent directors; the rest is process; not in the selection: the selection states committee independence only for Audit and CMDC (892, 3324)"
+      }
+     ],
+     "wrongly_taken": [
+      {
+       "i": 531,
+       "why": "Attributes and skills all nominees possess; 'independent perspective' is a personal attribute, not an independence determination"
+      },
+      {
+       "i": 971,
+       "why": "Policy that the Chair and CEO positions shall be separate at the next CEO transition, subject to the Board's determination then: a future, conditional policy, not the current composition"
+      },
+      {
+       "i": 3511,
+       "why": "Shareholder outreach on separating the Chair and CEO roles at the next transition; states no composition fact"
+      },
+      {
+       "i": 3513,
+       "why": "Powers of the Lead Independent Director role and a rebuttal of the proposal; does not say who holds the role or how the board is composed"
+      }
+     ]
+    }
+   },
+   "read_only_holdout": true,
+   "removed": []
+  },
+  "lumen_technologies:2021-12-31": {
+   "added": [],
+   "problems": {
+    "base": {
+     "missed": [
+      {
+       "i": 455,
+       "redundant_with": [
+        516,
+        607,
+        710,
+        803
+       ],
+       "why": "Nominees Quincy L. Allen, Kevin P. Chilton, W. Bruce Hanks, Laurie Siegel."
+      },
+      {
+       "i": 457,
+       "redundant_with": [
+        580,
+        676,
+        677,
+        775
+       ],
+       "why": "Nominees Peter C. Brown, T. Michael Glenn, Michael Roberts."
+      }
+     ],
+     "wrongly_taken": [
+      {
+       "i": 856,
+       "why": "Southwestern Bell Telephone: a past employer in Storey's biography."
+      }
+     ]
+    },
+    "variant": {
+     "missed": [
+      {
+       "i": 455,
+       "redundant_with": [
+        516,
+        607,
+        710,
+        803
+       ],
+       "why": "Nominees Quincy L. Allen, Kevin P. Chilton, W. Bruce Hanks, Laurie Siegel."
+      },
+      {
+       "i": 457,
+       "redundant_with": [
+        580,
+        676,
+        677,
+        775
+       ],
+       "why": "Nominees Peter C. Brown, T. Michael Glenn, Michael Roberts."
+      }
+     ],
+     "wrongly_taken": [
+      {
+       "i": 856,
+       "why": "Southwestern Bell Telephone: a past employer in Storey's biography."
+      }
+     ]
+    }
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "lumen_technologies:2022-12-31": {
+   "added": [],
+   "problems": {
+    "base": {
+     "missed": [
+      {
+       "i": 865,
+       "redundant_with": [],
+       "why": "six new independent directors added to the Board since 2017 (statement continues in 866-867)"
+      },
+      {
+       "i": 866,
+       "redundant_with": [],
+       "why": "six new independent directors added since 2017 (continues 865, 867)"
+      },
+      {
+       "i": 867,
+       "redundant_with": [],
+       "why": "six new independent directors added since 2017 (end of 865-866)"
+      }
+     ]
+    },
+    "variant": {
+     "missed": [
+      {
+       "i": 865,
+       "redundant_with": [],
+       "why": "six new independent directors added to the Board since 2017 (statement continues in 866-867)"
+      },
+      {
+       "i": 866,
+       "redundant_with": [],
+       "why": "six new independent directors added since 2017 (continues 865, 867)"
+      },
+      {
+       "i": 867,
+       "redundant_with": [],
+       "why": "six new independent directors added since 2017 (end of 865-866)"
+      }
+     ]
+    }
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "lumen_technologies:2023-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "lumen_technologies:2024-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "lumen_technologies:2025-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "macys:2022-01-29": {
+   "added": [
+    1004,
+    1006
+   ],
+   "problems": {
+    "base": {
+     "missed": [
+      {
+       "i": 810,
+       "redundant_with": [],
+       "why": "Connelly chairs the NCG Committee (card field); her NCG membership also in 1208, but no other block names the NCG chair"
+      }
+     ]
+    },
+    "variant": {
+     "missed": [
+      {
+       "i": 810,
+       "redundant_with": [],
+       "why": "Connelly chairs the NCG Committee (card field); her NCG membership also in 1208, but no other block names the NCG chair"
+      }
+     ],
+     "wrongly_taken": [
+      {
+       "i": 1004,
+       "why": "read in the pool and left out of the facts"
+      }
+     ]
+    }
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "macys:2023-01-28": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "macys:2024-02-03": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "macys:2025-02-01": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "macys:2026-01-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "marriott_international:2021-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "marriott_international:2022-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "marriott_international:2023-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "marriott_international:2024-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "marriott_international:2025-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "paramount_skydance_paramount_global:2021-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "paramount_skydance_paramount_global:2022-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "paramount_skydance_paramount_global:2023-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "paramount_skydance_paramount_global:2024-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "paramount_skydance_paramount_global:2025-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "pfizer:2022-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "pfizer:2023-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "pfizer:2024-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "pfizer:2025-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "salesforce:2025-01-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "salesforce:2026-01-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  },
+  "southwest_airlines:2025-12-31": {
+   "added": [],
+   "problems": {
+    "base": {},
+    "variant": {}
+   },
+   "read_only_holdout": false,
+   "removed": []
+  }
+ },
+ "production_authorized": false,
+ "record_type": "UNADOPTED_C02_LABEL_ONLY_PROBE",
+ "scope": "37 development readings plus the read-only holdout, separately labelled; no rule or reading altered",
+ "substitutions": [
+  [
+   "_CARD_LABEL = re.compile(r\"^committees?\\s*:\\s*(?P<rest>.*)$\", re.I)",
+   "_CARD_LABEL = re.compile(r\"^committees?\\s*(?::\\s*(?P<rest>.*))?$\", re.I)"
+  ],
+  [
+   "        rest = match.group(\"rest\").strip()",
+   "        rest = (match.group(\"rest\") or \"\").strip()"
+  ]
+ ],
+ "variant_source_sha256": "sha256:27d07610e9a38107fb553f00e83412f66a03d65226f6c0a514caa7a1f90c519a"
+}

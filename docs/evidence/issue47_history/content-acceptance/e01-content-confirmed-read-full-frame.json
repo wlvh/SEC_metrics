@@ -1,0 +1,543 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "candidate_item_codes": [
+  "1.01",
+  "2.01",
+  "8.01"
+ ],
+ "per_position": {
+  "salesforce-2023": {
+   "candidate_items_by_basis": {
+    "filing_date": 0,
+    "report_date": 0
+   },
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:58f33e8741fff06f0dbb1242757a3f965406d945ae5e92cba6d6352c546fab1b",
+     "run_id": "run:historical-period:ffeddd978869534238879a4d41e823988cd16a9227a37221f307de28ff6710a8"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-22-000010",
+     "0001108524-22-000019",
+     "0001108524-22-000030",
+     "0001108524-22-000038",
+     "0001108524-22-000047",
+     "0001108524-22-000049",
+     "0001108524-22-000054",
+     "0001108524-22-000058",
+     "0001108524-22-000059",
+     "0001108524-22-000063",
+     "0001108524-23-000003",
+     "0001193125-22-094496",
+     "0001193125-22-214922",
+     "0001193125-23-017661"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2023-01-31",
+    "period_start": "2022-02-01",
+    "scope_key": "sha256:56be5ab9e37f886195c7e6327b2bede90394b7edcfe4092b309224e487d90f7c",
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "unit": "count",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0001193125-23-017661",
+      "candidate_items": [],
+      "filingDate": "2023-01-27",
+      "header": "evidence/request_attempts/06/065667b2da03ed4f74efeae8b1dd80f665ae1149a934b7f884789e2de0c348ab/0001193125-23-017661.hdr.sgml",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-23-000003",
+      "candidate_items": [],
+      "filingDate": "2023-01-04",
+      "header": "evidence/request_attempts/9f/9f8ff8db73ff03813ea5b21777c5a19c2e8137c7794b643cba5542204887de71/0001108524-23-000003.hdr.sgml",
+      "items": [
+       "2.05",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-22-000063",
+      "candidate_items": [],
+      "filingDate": "2022-12-16",
+      "header": "evidence/request_attempts/06/06d0be0e8025f8ddcacd121169f8dd6eca4a8463edd0495e87ae8888be4c3334/0001108524-22-000063.hdr.sgml",
+      "items": [
+       "5.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-22-000059",
+      "candidate_items": [],
+      "filingDate": "2022-11-30",
+      "header": "evidence/request_attempts/5d/5d08c3db6ede1b824dd025f373cd1d40ab7b96c9a14455634c4945fdfe8f5687/0001108524-22-000059.hdr.sgml",
+      "items": [
+       "5.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-22-000058",
+      "candidate_items": [],
+      "filingDate": "2022-11-30",
+      "header": "evidence/request_attempts/df/df6a2c6854d9b6c1b0fe9bfe1ad42c74c57e0da6e73e5dd932b8157059ce643d/0001108524-22-000058.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-22-000054",
+      "candidate_items": [],
+      "filingDate": "2022-11-23",
+      "header": "evidence/request_attempts/b9/b98f44b5e76a65bd9946089d8fc9e918ae11441d6a3929c7a81ea6084d89b77c/0001108524-22-000054.hdr.sgml",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0001108524-22-000049",
+      "candidate_items": [],
+      "filingDate": "2022-11-10",
+      "header": "evidence/request_attempts/1f/1f8e03df449b6e9a8281df56f7813395d475ad1d1a9bab83e7521a7c0543b20a/0001108524-22-000049.hdr.sgml",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0001108524-22-000047",
+      "candidate_items": [],
+      "filingDate": "2022-09-21",
+      "header": "evidence/request_attempts/b7/b7679460ae99da872e2637007b6884b48407156925f8525007fe63ecd6ee2f19/0001108524-22-000047.hdr.sgml",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-22-000038",
+      "candidate_items": [],
+      "filingDate": "2022-08-24",
+      "header": "evidence/request_attempts/9f/9f7fd32297aef08d6647269414902776b5c944651912ad72edef0255455d138a/0001108524-22-000038.hdr.sgml",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-22-214922",
+      "candidate_items": [],
+      "filingDate": "2022-08-08",
+      "header": "evidence/request_attempts/bc/bcd05b0494ee5ab0c06d50123b59a4bc384178addd0bd9deb7ca7c9c38cd9694/0001193125-22-214922.hdr.sgml",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0001108524-22-000030",
+      "candidate_items": [],
+      "filingDate": "2022-06-13",
+      "header": "evidence/request_attempts/97/97ccddfcbaa0727d49bfc70ade737a82e95e9ac8b799b36b9251ff9fde466ff9/0001108524-22-000030.hdr.sgml",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-22-000019",
+      "candidate_items": [],
+      "filingDate": "2022-05-31",
+      "header": "evidence/request_attempts/de/def72f43eb8738faa86db4aece42f3e9738798d925c542c3861e56c0d2bbe674/0001108524-22-000019.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-22-094496",
+      "candidate_items": [],
+      "filingDate": "2022-04-04",
+      "header": "evidence/request_attempts/91/9141da7fdae3522fb3115a9220061a2d3a7b5009a27da5b907997fb1b09df7b3/0001193125-22-094496.hdr.sgml",
+      "items": [
+       "5.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-22-000010",
+      "candidate_items": [],
+      "filingDate": "2022-03-01",
+      "header": "evidence/request_attempts/b1/b184a2d94699a9cc85584319b2e7858e14a4aed197213bd740d5383206a173e3/0001108524-22-000010.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0001193125-23-017661",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/06/065667b2da03ed4f74efeae8b1dd80f665ae1149a934b7f884789e2de0c348ab/0001193125-23-017661.hdr.sgml",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2023-01-27"
+     },
+     {
+      "accession": "0001108524-23-000003",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/9f/9f8ff8db73ff03813ea5b21777c5a19c2e8137c7794b643cba5542204887de71/0001108524-23-000003.hdr.sgml",
+      "items": [
+       "2.05",
+       "9.01"
+      ],
+      "reportDate": "2023-01-04"
+     },
+     {
+      "accession": "0001108524-22-000063",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/06/06d0be0e8025f8ddcacd121169f8dd6eca4a8463edd0495e87ae8888be4c3334/0001108524-22-000063.hdr.sgml",
+      "items": [
+       "5.03",
+       "9.01"
+      ],
+      "reportDate": "2022-12-15"
+     },
+     {
+      "accession": "0001108524-22-000059",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/5d/5d08c3db6ede1b824dd025f373cd1d40ab7b96c9a14455634c4945fdfe8f5687/0001108524-22-000059.hdr.sgml",
+      "items": [
+       "5.02",
+       "9.01"
+      ],
+      "reportDate": "2022-11-30"
+     },
+     {
+      "accession": "0001108524-22-000058",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/df/df6a2c6854d9b6c1b0fe9bfe1ad42c74c57e0da6e73e5dd932b8157059ce643d/0001108524-22-000058.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2022-11-30"
+     },
+     {
+      "accession": "0001108524-22-000054",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/b9/b98f44b5e76a65bd9946089d8fc9e918ae11441d6a3929c7a81ea6084d89b77c/0001108524-22-000054.hdr.sgml",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2022-11-21"
+     },
+     {
+      "accession": "0001108524-22-000049",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/1f/1f8e03df449b6e9a8281df56f7813395d475ad1d1a9bab83e7521a7c0543b20a/0001108524-22-000049.hdr.sgml",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2022-11-07"
+     },
+     {
+      "accession": "0001108524-22-000047",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/b7/b7679460ae99da872e2637007b6884b48407156925f8525007fe63ecd6ee2f19/0001108524-22-000047.hdr.sgml",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2022-09-21"
+     },
+     {
+      "accession": "0001108524-22-000038",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/9f/9f7fd32297aef08d6647269414902776b5c944651912ad72edef0255455d138a/0001108524-22-000038.hdr.sgml",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2022-08-24"
+     },
+     {
+      "accession": "0001193125-22-214922",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/bc/bcd05b0494ee5ab0c06d50123b59a4bc384178addd0bd9deb7ca7c9c38cd9694/0001193125-22-214922.hdr.sgml",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2022-08-08"
+     },
+     {
+      "accession": "0001108524-22-000030",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/97/97ccddfcbaa0727d49bfc70ade737a82e95e9ac8b799b36b9251ff9fde466ff9/0001108524-22-000030.hdr.sgml",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ],
+      "reportDate": "2022-06-09"
+     },
+     {
+      "accession": "0001108524-22-000019",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/de/def72f43eb8738faa86db4aece42f3e9738798d925c542c3861e56c0d2bbe674/0001108524-22-000019.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2022-05-31"
+     },
+     {
+      "accession": "0001193125-22-094496",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/91/9141da7fdae3522fb3115a9220061a2d3a7b5009a27da5b907997fb1b09df7b3/0001193125-22-094496.hdr.sgml",
+      "items": [
+       "5.03",
+       "9.01"
+      ],
+      "reportDate": "2022-04-04"
+     },
+     {
+      "accession": "0001108524-22-000010",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/b1/b184a2d94699a9cc85584319b2e7858e14a4aed197213bd740d5383206a173e3/0001108524-22-000010.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2022-03-01"
+     }
+    ]
+   },
+   "filings_in_window": [
+    "0001193125-23-017661",
+    "0001108524-23-000003",
+    "0001108524-22-000063",
+    "0001108524-22-000059",
+    "0001108524-22-000058",
+    "0001108524-22-000054",
+    "0001108524-22-000049",
+    "0001108524-22-000047",
+    "0001108524-22-000038",
+    "0001193125-22-214922",
+    "0001108524-22-000030",
+    "0001108524-22-000019",
+    "0001193125-22-094496",
+    "0001108524-22-000010"
+   ],
+   "headers_not_saved": [],
+   "history_blocks": {
+    "CIK0001108524-submissions-001.json": "evidence/request_attempts/f7/f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd/CIK0001108524-submissions-001.json"
+   },
+   "period_end": "2023-01-31",
+   "published": "0",
+   "result_reason_code": "PASS",
+   "submissions_index": "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json",
+   "verdict": "MATCH",
+   "window": [
+    "2022-02-01",
+    "2023-01-31"
+   ]
+  },
+  "salesforce-2024": {
+   "candidate_items_by_basis": {
+    "filing_date": 0,
+    "report_date": 0
+   },
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+     "result_id": "sha256:ceab39ec5fc405a15d28bef4a7bd2c645481ab87636e9eba973d735d224a4cf9",
+     "run_id": "run:historical-period:ac8d27f85c3db2218f5c9b5be57fbeb5d0602686681b1e25484861a24fe57e2a"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0001108524-23-000007",
+     "0001108524-23-000021",
+     "0001108524-23-000029",
+     "0001108524-23-000037",
+     "0001108524-23-000046"
+    ],
+    "not_named_by_the_reading": [],
+    "period_end": "2024-01-31",
+    "period_start": "2023-02-01",
+    "scope_key": "sha256:8715d9acc89656dae7a4be7d39314730969fa79672bd27958d2a392c822bd2f1",
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "unit": "count",
+    "value_kind": null
+   },
+   "company_id": "salesforce",
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0001108524-23-000046",
+      "candidate_items": [],
+      "filingDate": "2023-11-29",
+      "header": "evidence/request_attempts/7c/7c573e858e888b5c4d8b8bc6e6ec72a3d659a9f6d99c90376956b25b7824cc89/0001108524-23-000046.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-23-000037",
+      "candidate_items": [],
+      "filingDate": "2023-08-30",
+      "header": "evidence/request_attempts/ab/abe9b33bd79b69f8f0c973561675e1cc067ab8c2beac44d64173c29eee361d89/0001108524-23-000037.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-23-000029",
+      "candidate_items": [],
+      "filingDate": "2023-06-12",
+      "header": "evidence/request_attempts/24/24745b0668c464323df920bdb4d9f24f59f8171ea25f18e13533d98df48b6c77/0001108524-23-000029.hdr.sgml",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-23-000021",
+      "candidate_items": [],
+      "filingDate": "2023-05-31",
+      "header": "evidence/request_attempts/93/9380ec7377d2b21be63ddf7498fd2eed203430303566c2d6f95b8c19b658cfbd/0001108524-23-000021.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001108524-23-000007",
+      "candidate_items": [],
+      "filingDate": "2023-03-01",
+      "header": "evidence/request_attempts/bd/bd4742466f9e9ee906224483d094a15173977729d52de10f1147df3da5517fdf/0001108524-23-000007.hdr.sgml",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0001108524-23-000046",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/7c/7c573e858e888b5c4d8b8bc6e6ec72a3d659a9f6d99c90376956b25b7824cc89/0001108524-23-000046.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2023-11-29"
+     },
+     {
+      "accession": "0001108524-23-000037",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/ab/abe9b33bd79b69f8f0c973561675e1cc067ab8c2beac44d64173c29eee361d89/0001108524-23-000037.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2023-08-30"
+     },
+     {
+      "accession": "0001108524-23-000029",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/24/24745b0668c464323df920bdb4d9f24f59f8171ea25f18e13533d98df48b6c77/0001108524-23-000029.hdr.sgml",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ],
+      "reportDate": "2023-06-08"
+     },
+     {
+      "accession": "0001108524-23-000021",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/93/9380ec7377d2b21be63ddf7498fd2eed203430303566c2d6f95b8c19b658cfbd/0001108524-23-000021.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2023-05-31"
+     },
+     {
+      "accession": "0001108524-23-000007",
+      "candidate_items": [],
+      "header": "evidence/request_attempts/bd/bd4742466f9e9ee906224483d094a15173977729d52de10f1147df3da5517fdf/0001108524-23-000007.hdr.sgml",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2023-03-01"
+     }
+    ]
+   },
+   "filings_in_window": [
+    "0001108524-23-000046",
+    "0001108524-23-000037",
+    "0001108524-23-000029",
+    "0001108524-23-000021",
+    "0001108524-23-000007"
+   ],
+   "headers_not_saved": [],
+   "history_blocks": {
+    "CIK0001108524-submissions-001.json": "evidence/request_attempts/f7/f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd/CIK0001108524-submissions-001.json"
+   },
+   "period_end": "2024-01-31",
+   "published": "0",
+   "result_reason_code": "PASS",
+   "submissions_index": "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json",
+   "verdict": "MATCH",
+   "window": [
+    "2023-02-01",
+    "2024-01-31"
+   ]
+  }
+ },
+ "reader": "tools/read_e01_candidates.py",
+ "record_type": "ISSUE_47_E01_CONTENT_CONFIRMED_CANDIDATE_READ",
+ "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+ "route": "catalog/r6/E01_content_confirmed_ma_v1.json",
+ "what_this_can_accept": "a window with no candidate item, whose answer is zero under the definition; nothing where a candidate needs its content confirmed"
+}

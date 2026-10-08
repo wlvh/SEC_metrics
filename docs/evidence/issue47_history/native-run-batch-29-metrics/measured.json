@@ -1,0 +1,474 @@
+{
+ "a_failed_position_is_not_always_an_unexplained_failure": {
+  "failures": [
+   {
+    "case": "marriott-2023",
+    "error": "HISTORICAL_TEXT_RUN_INPUT_BLOCKED:[{'metric_id': 'C02', 'category': 'SOURCE_UNAVAILABLE', 'reason': 'SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000114036124015465/ny20015439x1_def14a.htm'}]",
+    "metric_id": "C02"
+   },
+   {
+    "case": "marriott-2024",
+    "error": "HISTORICAL_TEXT_RUN_INPUT_BLOCKED:[{'metric_id': 'C02', 'category': 'SOURCE_UNAVAILABLE', 'reason': 'SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000114036125010600/ny20039208x771_def14a.htm'}]",
+    "metric_id": "C02"
+   }
+  ],
+  "what_is_owed": "the frame cannot today tell these apart on its own. It is recorded here rather than parsed out of the error text, because that text is a Python repr the batch happened to write and reading it would be a guess dressed as a measurement.",
+  "why_this_block_exists": "The frame reads a failed attempt as ROUTE_IMPLEMENTED_ATTEMPT_FAILED, which is the right name for an attempt that stopped - but it does not say whether what stopped it was a gap in this repository or a defect in the route. Both failures here are the first kind, and counting them with the other is how a source gap reads as an unexplained failure.",
+  "why_this_shape_appears_at_all": "C02 is the first metric in this frame whose second source is needed to PREPARE the Run's input. C04's missing index is needed to resolve the metric, so its Run exists and the result is WITHHELD; C02's missing proxy means there is no input, and manufacturing a Run would mean declaring an input that does not exist. So the same kind of gap surfaces two different ways, and the difference is where in the route it is reached, not how serious it is."
+ },
+ "batch": {
+  "attempted": 385,
+  "failures": 2,
+  "per_period": [
+   {
+    "attempted": 35,
+    "case": "enphase-2025",
+    "company_id": "enphase_energy",
+    "duration_seconds": 4452.8,
+    "failures": [],
+    "report_end": "2025-12-31",
+    "stages": {
+     "PUBLIC_ROW": 35
+    }
+   },
+   {
+    "attempted": 35,
+    "case": "ford-2025",
+    "company_id": "ford_motor_company",
+    "duration_seconds": 6792.8,
+    "failures": [],
+    "report_end": "2025-12-31",
+    "stages": {
+     "PUBLIC_ROW": 35
+    }
+   },
+   {
+    "attempted": 35,
+    "case": "lumen-2025",
+    "company_id": "lumen_technologies",
+    "duration_seconds": 5285.5,
+    "failures": [],
+    "report_end": "2025-12-31",
+    "stages": {
+     "PUBLIC_ROW": 35
+    }
+   },
+   {
+    "attempted": 35,
+    "case": "macys-2026",
+    "company_id": "macys",
+    "duration_seconds": 3909.6,
+    "failures": [],
+    "report_end": "2026-01-31",
+    "stages": {
+     "PUBLIC_ROW": 35
+    }
+   },
+   {
+    "attempted": 35,
+    "case": "marriott-2023",
+    "company_id": "marriott_international",
+    "duration_seconds": 3917.2,
+    "failures": [
+     {
+      "error": "HISTORICAL_TEXT_RUN_INPUT_BLOCKED:[{'metric_id': 'C02', 'category': 'SOURCE_UNAVAILABLE', 'reason': 'SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000114036124015465/ny20015439x1_def14a.htm'}]",
+      "metric_id": "C02"
+     }
+    ],
+    "report_end": "2023-12-31",
+    "stages": {
+     "FAILED": 1,
+     "PUBLIC_ROW": 34
+    }
+   },
+   {
+    "attempted": 35,
+    "case": "marriott-2024",
+    "company_id": "marriott_international",
+    "duration_seconds": 4148.0,
+    "failures": [
+     {
+      "error": "HISTORICAL_TEXT_RUN_INPUT_BLOCKED:[{'metric_id': 'C02', 'category': 'SOURCE_UNAVAILABLE', 'reason': 'SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000114036125010600/ny20039208x771_def14a.htm'}]",
+      "metric_id": "C02"
+     }
+    ],
+    "report_end": "2024-12-31",
+    "stages": {
+     "FAILED": 1,
+     "PUBLIC_ROW": 34
+    }
+   },
+   {
+    "attempted": 35,
+    "case": "marriott-2025",
+    "company_id": "marriott_international",
+    "duration_seconds": 4609.7,
+    "failures": [],
+    "report_end": "2025-12-31",
+    "stages": {
+     "PUBLIC_ROW": 35
+    }
+   },
+   {
+    "attempted": 35,
+    "case": "paramount-2025",
+    "company_id": "paramount_skydance_paramount_global",
+    "duration_seconds": 7258.9,
+    "failures": [],
+    "report_end": "2025-12-31",
+    "stages": {
+     "PUBLIC_ROW": 35
+    }
+   },
+   {
+    "attempted": 35,
+    "case": "pfizer-2025",
+    "company_id": "pfizer",
+    "duration_seconds": 6083.2,
+    "failures": [],
+    "report_end": "2025-12-31",
+    "stages": {
+     "PUBLIC_ROW": 35
+    }
+   },
+   {
+    "attempted": 35,
+    "case": "salesforce-2026",
+    "company_id": "salesforce",
+    "duration_seconds": 3959.7,
+    "failures": [],
+    "report_end": "2026-01-31",
+    "stages": {
+     "PUBLIC_ROW": 35
+    }
+   },
+   {
+    "attempted": 35,
+    "case": "southwest-2025",
+    "company_id": "southwest_airlines",
+    "duration_seconds": 5128.9,
+    "failures": [],
+    "report_end": "2025-12-31",
+    "stages": {
+     "PUBLIC_ROW": 35
+    }
+   }
+  ],
+  "periods": 11,
+  "public_rows": 383
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "cold_read_by_route_family": {
+  "a_checker_that_finds_nothing_must_refuse": "The first run of this pointed at the flat runs root, which holds the Run directories but no per-period matrix. It globbed zero files, read zero Runs and printed all_passed: True - `all()` over an empty list. It now refuses when the root holds no period matrices, when no PUBLIC_ROW position is found, and when a family the batch held went uncovered.",
+  "all_passed": true,
+  "families_covered": [
+   "accession",
+   "companyfacts",
+   "debt",
+   "governance",
+   "lodging",
+   "structural",
+   "text",
+   "zero_ai_event",
+   "zero_ai_statement"
+  ],
+  "families_the_batch_held": [
+   "accession",
+   "companyfacts",
+   "debt",
+   "governance",
+   "lodging",
+   "structural",
+   "text",
+   "zero_ai_event",
+   "zero_ai_statement"
+  ],
+  "reads": 16,
+  "why_by_family_and_not_by_period": "Eleven reads sampled per period can all land on the same route. The question is per route kind, so this picks one Run of each."
+ },
+ "content_acceptance": {
+  "accepted": 140,
+  "of_how_many_values": 164,
+  "what_it_does_not_establish": "that the route is right in general, or that the values nobody read are right. Each acceptance names one value read from the filing itself.",
+  "withdrawn_by_a_confirmed_defect": [
+   {
+    "company_id": "pfizer",
+    "defect_id": "D02_PFIZER_2025_EXCEEDS_ITEM_BOUND",
+    "metric_id": "D02",
+    "report_end": "2025-12-31"
+   },
+   {
+    "company_id": "lumen_technologies",
+    "defect_id": "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "metric_id": "D02",
+    "report_end": "2025-12-31"
+   },
+   {
+    "company_id": "paramount_skydance_paramount_global",
+    "defect_id": "D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES",
+    "metric_id": "D02",
+    "report_end": "2025-12-31"
+   },
+   {
+    "company_id": "enphase_energy",
+    "defect_id": "D02_ENPHASE_2025_PAGE_FOOTER_CARRIES_ITS_PAGE_NUMBER",
+    "metric_id": "D02",
+    "report_end": "2025-12-31"
+   }
+  ]
+ },
+ "frame": {
+  "delivery_by_outcome": {
+   "NO_RESULT": {
+    "content_acceptance": 0,
+    "native_run": 0,
+    "positions": 1567,
+    "public_row": 0,
+    "statuses": {
+     "HISTORICAL_ROUTE_NOT_WIRED": 44,
+     "ROUTE_IMPLEMENTED_ATTEMPT_FAILED": 2,
+     "SOURCE_MISSING_TARGET_ORIGINAL": 1170,
+     "TARGET_PERIOD_METADATA_BLOCKED": 78,
+     "TARGET_PERIOD_NOT_DISCOVERED": 273
+    }
+   },
+   "RAN_WITHOUT_A_VALUE": {
+    "content_acceptance": 0,
+    "native_run": 50,
+    "positions": 50,
+    "public_row": 50,
+    "statuses": {
+     "NO_VALUE_PUBLISHED": 7,
+     "WITHHELD_SOURCE_OR_ROUTE": 43
+    }
+   },
+   "STRUCTURALLY_NOT_APPLICABLE": {
+    "content_acceptance": 0,
+    "native_run": 169,
+    "positions": 169,
+    "public_row": 169,
+    "statuses": {
+     "N_A_STRUCTURAL": 169
+    }
+   },
+   "VALUE": {
+    "content_acceptance": 140,
+    "native_run": 164,
+    "positions": 164,
+    "public_row": 164,
+    "statuses": {
+     "VALUE_APPROX": 2,
+     "VALUE_EXACT": 162
+    }
+   }
+  },
+  "delivery_layer_counts": {
+   "content_acceptance": 140,
+   "native_run": 383,
+   "public_row": 383
+  },
+  "delivery_layer_unproven_reasons": {
+   "content_acceptance": {
+    "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE": 1806,
+    "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT": 4
+   },
+   "native_run": {
+    "HISTORICAL_ROUTE_NOT_WIRED": 44,
+    "ROUTE_IMPLEMENTED_ATTEMPT_FAILED": 2,
+    "SOURCE_MISSING_TARGET_ORIGINAL": 1170,
+    "TARGET_PERIOD_METADATA_BLOCKED": 78,
+    "TARGET_PERIOD_NOT_DISCOVERED": 273
+   },
+   "public_row": {
+    "NOT_PROVEN:NO_RESULT": 1567
+   }
+  },
+  "enumerated_positions": 1950,
+  "per_period": {
+   "enphase_energy 2025-12-31": {
+    "content_accepted": 16,
+    "ran": 35,
+    "structurally_not_applicable": 16,
+    "values": 19
+   },
+   "ford_motor_company 2025-12-31": {
+    "content_accepted": 15,
+    "ran": 35,
+    "structurally_not_applicable": 16,
+    "values": 17
+   },
+   "lumen_technologies 2025-12-31": {
+    "content_accepted": 14,
+    "ran": 35,
+    "structurally_not_applicable": 16,
+    "values": 17
+   },
+   "macys 2026-01-31": {
+    "content_accepted": 16,
+    "ran": 35,
+    "structurally_not_applicable": 16,
+    "values": 19
+   },
+   "marriott_international 2023-12-31": {
+    "content_accepted": 9,
+    "ran": 34,
+    "structurally_not_applicable": 14,
+    "values": 9
+   },
+   "marriott_international 2024-12-31": {
+    "content_accepted": 11,
+    "ran": 34,
+    "structurally_not_applicable": 14,
+    "values": 11
+   },
+   "marriott_international 2025-12-31": {
+    "content_accepted": 18,
+    "ran": 35,
+    "structurally_not_applicable": 14,
+    "values": 20
+   },
+   "paramount_skydance_paramount_global 2025-12-31": {
+    "content_accepted": 1,
+    "ran": 35,
+    "structurally_not_applicable": 16,
+    "values": 4
+   },
+   "pfizer 2025-12-31": {
+    "content_accepted": 15,
+    "ran": 35,
+    "structurally_not_applicable": 16,
+    "values": 18
+   },
+   "salesforce 2026-01-31": {
+    "content_accepted": 10,
+    "ran": 35,
+    "structurally_not_applicable": 15,
+    "values": 13
+   },
+   "southwest_airlines 2025-12-31": {
+    "content_accepted": 15,
+    "ran": 35,
+    "structurally_not_applicable": 16,
+    "values": 17
+   }
+  },
+  "run_receipts_read": 383,
+  "status_counts": {
+   "HISTORICAL_ROUTE_NOT_WIRED": 44,
+   "NO_VALUE_PUBLISHED": 7,
+   "N_A_STRUCTURAL": 169,
+   "ROUTE_IMPLEMENTED_ATTEMPT_FAILED": 2,
+   "SOURCE_MISSING_TARGET_ORIGINAL": 1170,
+   "TARGET_PERIOD_METADATA_BLOCKED": 78,
+   "TARGET_PERIOD_NOT_DISCOVERED": 273,
+   "VALUE_APPROX": 2,
+   "VALUE_EXACT": 162,
+   "WITHHELD_SOURCE_OR_ROUTE": 43
+  },
+  "structural_applicability_metric_ids": [
+   "A03",
+   "A04",
+   "A09",
+   "A11",
+   "A12",
+   "A13"
+  ],
+  "target_frame_positions": 1950,
+  "unreadable_run_directories": [],
+  "wired_historical_metric_ids": [
+   "A01",
+   "A02",
+   "A05",
+   "A06",
+   "A07",
+   "A08",
+   "A10",
+   "B01",
+   "B02",
+   "B03",
+   "B04",
+   "B05",
+   "B06",
+   "B07",
+   "B08",
+   "B09",
+   "B10",
+   "B11",
+   "B12",
+   "C01",
+   "C02",
+   "C03",
+   "C04",
+   "D02",
+   "E01",
+   "E02",
+   "E03",
+   "E04",
+   "E05"
+  ]
+ },
+ "production_authorized": false,
+ "ran_without_a_value_by_reason": {
+  "ALL_BRANCHES_REJECTED": 1,
+  "ANNUAL_DURATION_OUT_OF_RANGE": 2,
+  "B06_SOURCE_RELATIONSHIP_UNRESOLVED": 3,
+  "C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND": 2,
+  "DENOMINATOR_NONPOSITIVE": 3,
+  "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED": 6,
+  "HISTORICAL_B06_SOURCE_ROUTE_UNRESOLVED": 1,
+  "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED": 1,
+  "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED": 5,
+  "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED": 24,
+  "RATIO_NUMERATOR_NOT_POSITIVE": 2
+ },
+ "ran_without_a_value_is_three_different_things": {
+  "a_named_material_or_implementation_gap": {
+   "ALL_BRANCHES_REJECTED": 1,
+   "B06_SOURCE_RELATIONSHIP_UNRESOLVED": 3,
+   "C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND": 2,
+   "HISTORICAL_B06_SOURCE_ROUTE_UNRESOLVED": 1,
+   "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED": 1,
+   "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED": 5,
+   "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED": 24
+  },
+  "an_answer_about_the_company": {
+   "ANNUAL_DURATION_OUT_OF_RANGE": 2,
+   "DENOMINATOR_NONPOSITIVE": 3,
+   "RATIO_NUMERATOR_NOT_POSITIVE": 2
+  },
+  "an_approved_policy_refusing_an_input_class": {
+   "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED": 6
+  },
+  "counts": {
+   "answers": 7,
+   "decided_policy_refusals": 6,
+   "gaps": 37
+  },
+  "why_it_is_split": "Reading these fifty as one number says 'fifty positions produced nothing', which is wrong three ways. Some are the Spec's answer about the company. Some are an approved policy saying no, which is a decided question rather than an open one. Only the rest name material this repository does not hold."
+ },
+ "record_type": "ISSUE_47_NATIVE_RUN_BATCH",
+ "requirement_closure_hash": [
+  "sha256:d4c4a7abdb78ed8594f06e3dc12e5ef16cfff8eb81b4bbd6f89b776e36e15cdc"
+ ],
+ "the_two_trees": {
+  "differing_files": [
+   "scripts/vnext/calculator.py",
+   "scripts/vnext/constraints.py",
+   "scripts/vnext/projector.py",
+   "scripts/vnext/records.py",
+   "scripts/vnext/requirement_profile.py",
+   "scripts/vnext/run_store.py"
+  ],
+  "differing_manifest_leaves": 12,
+  "new_rule_file_leaves_compared": 48,
+  "new_rule_file_leaves_differing": 0,
+  "what_that_says": "Every rule file this generation owns is byte-identical in both trees, so the batch ran the repository's own route bytes. Only the inherited registration patch differs.",
+  "why_there_are_two": "Creating a historical Run needs the six-file registration patch, which changes bytes that issue_28_v13's execution authority names. One code tree satisfies one generation at a time; that is the ratchet's shape, not something this batch introduced."
+ },
+ "three_layers_are_not_one_number": "A frozen Run and a public row say the route computed something and that the bytes are bound to it. They do not say the value is the right value. Those are counted separately below and the third one is mostly still zero.",
+ "what_this_is": "29 wired metrics plus 6 structural-applicability metrics over the eleven periods whose target original is saved, one process per period, one read-only runtime tree, zero calls."
+}

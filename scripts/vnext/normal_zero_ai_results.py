@@ -8,7 +8,7 @@ this bounded prototype rather than inheriting old answers or periods.
 from pathlib import Path
 
 from sec_urls import accession_document_url, companyfacts_url, hdr_sgml_url, submissions_url, submissions_file_url
-from .annual_update import AnnualUpdateError
+from .annual_sources import AnnualUpdateError
 from .annual_amendment_scope import prepare_saved_amendment_input
 from .batch_workflow import BatchWorkflowError, _structured_concepts
 from .calculator import calculate_metric, withheld_metric_result, calculate_observation_metric
@@ -166,7 +166,7 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period)
     return all_claims,all_manifests,all_filings,evidence
 
 
-def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str):
+def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None):
     """Derive native records from current saved annual input, without a Run.
 
     No caller fact, period, filing, answer, compiled Spec or source receipt is
@@ -175,8 +175,16 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     """
     _need(metric_id in SUPPORTED_METRICS, "NORMAL_ZERO_AI_METRIC_NOT_IN_PROTOTYPE")
     from .ordinary_income_input import IncomeInputError, prepare_current_income_input, verify_income_observations
-    authority = _authority(repo_root)
-    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
+    rules = repo_root if rules_root is None else Path(rules_root)
+    _need(rules_root is None or metric_id=='B01','NORMAL_ZERO_AI_SEPARATE_RULE_ROOT_ROUTE_NOT_READY')
+    authority = _authority(rules)
+    if rules_root is not None:
+        from .company_registry import _registry_rows
+        source_row=next(r for r in _registry_rows(repo_root=repo_root) if r['company_id']==company_id)
+        rule_row=next(r for r in _registry_rows(repo_root=rules) if r['company_id']==company_id)
+        _need(source_row==rule_row,'NORMAL_ZERO_AI_SOURCE_SUBJECT_REGISTRY_CHANGED')
+    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id,
+        **({} if rules_root is None else {'ordinary_registered':True}))
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
     period = prepared["table_input"]["target_period"]
     registered_event = metric_id in EVENT_METRICS and prepared["subject_policy"]["mode"] == "SUCCESSOR_REGISTRANT_ONLY"
@@ -193,7 +201,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     reader.primary(prepared["filing"])
     facts_source = reader.read(companyfacts_url(cik=int(prepared["entity"])), accession=prepared["filing"]["accessionNumber"],
         role="companyfacts", media_type="application/json")
-    traits = repository_company_traits(repo_root=repo_root, company_id=company_id)
+    traits = repository_company_traits(repo_root=rules, company_id=company_id)
     claims, source_sets, observations, filing_rows, selection = [], [], [], [prepared["filing"]], {}
     dependency_specs, dependency_records = {}, []
     amendment_input = None
@@ -202,9 +210,9 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     if metric_id in {"B01", "B03"}:
         spec_path = B01_SPEC_PATH if metric_id == "B01" else B03_SPEC_PATH
         if metric_id == "B03":
-            dependency_specs["B01"] = compile_spec_file(path=repo_root / B01_SPEC_PATH, dependency_specs={})
+            dependency_specs["B01"] = compile_spec_file(path=rules / B01_SPEC_PATH, dependency_specs={})
         spec_origin = {"spec_path":spec_path}
-        spec = compile_spec_file(path=repo_root / spec_path, dependency_specs=dependency_specs)
+        spec = compile_spec_file(path=rules / spec_path, dependency_specs=dependency_specs)
         scope = {"entity_scope":"registrant", "period_basis":"source_annual_duration"}
     else:
         catalog = load_event_route_catalog(repo_root=repo_root)

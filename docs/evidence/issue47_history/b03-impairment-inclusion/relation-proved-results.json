@@ -1,0 +1,53 @@
+{
+ "record_type": "ISSUE_47_B03_RELATION_PROVED_RESULTS",
+ "what_this_is": "Marriott's two B03 results computed by the eight-company frame after #28 proved the contract investment amortization is a gross-to-net revenue deduction (base 3d7adf92, merged a21ad181). The pinned route now reads #28's answer's `blocked`; the proof is derived again at every replay of the Run.",
+ "the_values_are_the_ones_accepted_before_the_withhold": "each result_id is the result the content acceptance was read against before the coordinate was withdrawn (CONTENT_B03_MARRIOTT_2024, CONTENT_B03_MARRIOTT_2025): the Run records do not store the selection, so the result is byte-for-byte the earlier one; what changed is that the question the defect asked now has an answer.",
+ "frame": "the eight-company frame run on the restored export in the runtime tree (period-batch/frame_batch.py)",
+ "results": {
+  "marriott-2024": {
+   "company_id": "marriott_international",
+   "metric_id": "B03",
+   "period_end": "2024-12-31",
+   "publication": "PUBLISHED",
+   "reason_code": "PASS",
+   "value": "0.1653386454183266932270916335",
+   "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+   "run_id": "run:historical-period:56cfd3ec4d262fbac783ce100554e361f34a9f165ae6eeb69be5d42f5b762003",
+   "requirement_closure_hash": "sha256:6144bf109260e6befca8fd4f1dff16953c8d67c8b6d0010a6fb5a0f09763a560",
+   "b01_it_carries": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+   "records_sha256": "sha256:7bbf8f3b530c19a8d2874805ece178c3ac6dd3650543d997df9fd64214ba6f10",
+   "cold_read": {
+    "separate_process_read_back": {
+     "run_id": "run:historical-period:56cfd3ec4d262fbac783ce100554e361f34a9f165ae6eeb69be5d42f5b762003",
+     "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783"
+    },
+    "rule": "period-batch/frame_batch.py _deletable: every Run the period created read back the same in another process, a memo-off sample too, every failure named; only then is the data root deleted (progress line DATA_ROOT_DELETED)"
+   }
+  },
+  "marriott-2025": {
+   "company_id": "marriott_international",
+   "metric_id": "B03",
+   "period_end": "2025-12-31",
+   "publication": "PUBLISHED",
+   "reason_code": "PASS",
+   "value": "0.1756281982738868097456656229",
+   "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+   "run_id": "run:historical-period:778dc80669d12b9a2c42b6819c853e61b1a91f595e47b808c27b760a9414dc59",
+   "requirement_closure_hash": "sha256:6144bf109260e6befca8fd4f1dff16953c8d67c8b6d0010a6fb5a0f09763a560",
+   "b01_it_carries": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+   "records_sha256": "sha256:a602791fd9f9611b9c5e40f6781455809558469dad22c9c32f331d745e87cfcb",
+   "cold_read": {
+    "separate_process_read_back": {
+     "run_id": "run:historical-period:778dc80669d12b9a2c42b6819c853e61b1a91f595e47b808c27b760a9414dc59",
+     "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a"
+    },
+    "rule": "period-batch/frame_batch.py _deletable: every Run the period created read back the same in another process, a memo-off sample too, every failure named; only then is the data root deleted (progress line DATA_ROOT_DELETED)"
+   }
+  }
+ },
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

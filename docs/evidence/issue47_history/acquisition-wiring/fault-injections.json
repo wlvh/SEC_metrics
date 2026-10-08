@@ -1,0 +1,1390 @@
+{
+ "injections": [
+  {
+   "caught_by": [
+    "TheCountIsCumulativeAndCountsFailures.test_a_failed_request_consumes_its_call_and_admits_no_source"
+   ],
+   "edit": "snapshot() increments counts only when terminal.json exists and its status is SUCCEEDED",
+   "id": "COUNT_ONLY_SUCCESSFUL_SLOTS",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1) of 16",
+   "why_it_matters": "a ceiling that ignores failures is not a ceiling"
+  },
+  {
+   "caught_by": [
+    "TheCountIsCumulativeAndCountsFailures.test_a_claim_with_no_terminal_blocks_the_channel"
+   ],
+   "edit": "capture() no longer calls ledger.require_unblocked() before installing sources",
+   "id": "DROP_THE_EARLY_UNBLOCKED_CHECK",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (errors=1) of 16",
+   "why_it_matters": "the already-saved short circuit returns before the claim, so without the early check a session whose previous slot has no terminal still answers 'already saved, no call needed' against a ledger it cannot account for. This injection reproduces a real bug that writing the case had found."
+  },
+  {
+   "caught_by": [
+    "TheSessionActuallyRoutesThroughTheFrozenValidator.test_a_capture_calls_the_frozen_replay_once_on_what_it_enrolls",
+    "TheSessionActuallyRoutesThroughTheFrozenValidator.test_a_refused_replay_enrolls_nothing"
+   ],
+   "edit": "register_checkpoint() replaces the validate_acquisition_checkpoint call with pass",
+   "first_run": "OK, all 16 cases green - every case exercised the validator directly, so the suite proved the validator works and never that this session calls it",
+   "id": "SKIP_THE_FROZEN_VALIDATOR",
+   "outcome": "NOT_CAUGHT_UNTIL_TWO_CASES_WERE_ADDED",
+   "suite_result_after_the_cases_were_added": "FAILED (failures=2) of 18",
+   "why_it_matters": "this is the module's central claim - that the provenance guarantee rests on code this issue cannot edit"
+  },
+  {
+   "caught_by": [
+    "TheSessionActuallyRoutesThroughTheFrozenValidator.test_a_refused_replay_enrolls_nothing"
+   ],
+   "edit": "register_checkpoint() writes the journal entry before calling the validator",
+   "id": "ENROL_BEFORE_VALIDATING",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1) of 18",
+   "why_it_matters": "a checkpoint the replay would refuse must not already be enrolled when it refuses"
+  },
+  {
+   "caught_by": [
+    "TheSuiteIsReadNotListed.test_the_collector_agrees_with_an_independent_reading_of_the_file",
+    "TheSuiteIsReadNotListed.test_every_declared_case_lands_in_exactly_one_phase",
+    "TheSuiteIsReadNotListed.test_the_excluded_names_are_exactly_those_that_read_the_receipt",
+    "AFailedVerificationReleasesNothing.test_an_existing_receipt_is_restored_byte_for_byte",
+    "AFailedVerificationReleasesNothing.test_a_first_phase_failure_never_reaches_the_file"
+   ],
+   "edit": "declared_cases() returns only the first nine names it found, which is what a hand-maintained list looks like once the suite has moved past it",
+   "id": "LIST_THE_SUITE_INSTEAD_OF_READING_IT",
+   "note": "the last two fail because an excluded name fell outside the truncated set, so split_cases refused with ISSUE_47_WIRING_EXCLUSION_NAMES_NO_CASE before those cases reached their own assertion - a second guard firing, recorded as what it is rather than counted as a third independent case",
+   "outcome": "CAUGHT",
+   "round": "test-machinery-moved-out-of-the-business-module",
+   "suite_result": "FAILED (failures=4, errors=1) of 62",
+   "why_it_matters": "the defect this round replaced was exactly a stale list: a receipt attesting eight classes while the suite declared twenty-one, green and meaningless"
+  },
+  {
+   "caught_by": [
+    "AFailedVerificationReleasesNothing.test_an_existing_receipt_is_restored_byte_for_byte",
+    "AFailedVerificationReleasesNothing.test_where_there_was_none_none_is_left"
+   ],
+   "edit": "build_and_install() re-raises without putting back what was installed before the failed run",
+   "id": "RESTORE_NOTHING_ON_A_FAILED_SECOND_PHASE",
+   "outcome": "CAUGHT",
+   "round": "test-machinery-moved-out-of-the-business-module",
+   "suite_result": "FAILED (failures=2) of 62",
+   "why_it_matters": "the second phase has to read the installed file, so the install happens before it passes; the restore is the only thing that keeps a failed run from releasing an artifact, and a restore is exactly the code that is written once and never exercised"
+  },
+  {
+   "also_observed_live": "this is not hypothetical - the class was in phase one when it was first written, and the first real run of the builder failed in phase two because of it",
+   "caught_by": [
+    "TheSuiteIsReadNotListed.test_the_excluded_names_are_exactly_those_that_read_the_receipt"
+   ],
+   "edit": "RECEIPT_DEPENDENT drops TheBusinessModuleLoadsWhereNoTestPackageExists, so a class that verifies the installed receipt runs before it is installed",
+   "id": "PUT_A_RECEIPT_READER_BACK_IN_PHASE_ONE",
+   "outcome": "CAUGHT",
+   "round": "test-machinery-moved-out-of-the-business-module",
+   "suite_result": "FAILED (failures=1) of 62",
+   "why_it_matters": "phase one runs against whatever receipt is on disk, which after any edit describes the previous tree; a receipt reader left there makes the artifact unrebuildable, and the refusal would name a stale hash rather than the misplacement"
+  },
+  {
+   "caught_by": [
+    "TheSuiteIsReadNotListed.test_the_business_module_names_no_test_case_and_imports_no_harness"
+   ],
+   "edit": "scripts/vnext/historical_sec_session.py imports unittest again",
+   "id": "IMPORT_THE_TEST_HARNESS_IN_THE_BUSINESS_MODULE",
+   "outcome": "CAUGHT",
+   "round": "test-machinery-moved-out-of-the-business-module",
+   "suite_result": "FAILED (failures=1) of 62",
+   "why_it_matters": "unittest is in the standard library, so a delivery runtime would still load the module and the child-process case would still pass; the import is the thing that grows back, one convenience at a time, until the selector lists follow"
+  },
+  {
+   "builder_result": "REFUSED with ISSUE_47_WIRING_SECOND_PHASE_DID_NOT_PASS (failures=2 of 10), exit code 2, and the committed receipt was byte-identical to its pre-injection contents afterwards - the release-nothing property observed rather than asserted",
+   "caught_by": [
+    "AGrantMustBindToAWiringReceiptThatIsStillTrue.test_a_run_that_covered_only_part_of_the_suite_is_refused",
+    "AGrantMustBindToAWiringReceiptThatIsStillTrue.test_a_case_counted_as_both_run_and_excluded_is_refused"
+   ],
+   "edit": "_verify_case_accounting() keeps the pass/failure/error checks and drops the partition check, so a run that passed is accepted whatever it covered",
+   "how_it_was_run": "the catching cases are in phase two, so the whole builder was run against the injected tree rather than phase one alone",
+   "id": "LET_THE_VERIFIER_TRUST_THE_PASS_FLAG",
+   "outcome": "CAUGHT",
+   "round": "test-machinery-moved-out-of-the-business-module",
+   "why_it_matters": "this is the previous version's actual defect - a green run over a fraction of the suite - and it is the one the verifier now has to catch without naming the cases, because naming them is unavailable where there is no test package"
+  },
+  {
+   "caught_by": [
+    "AFailedVerificationReleasesNothing.test_the_second_phase_checks_the_candidate_while_the_old_one_is_installed"
+   ],
+   "edit": "build_and_install() writes the new receipt to the installed path, tells the second phase to check that path, and restores the previous bytes if it fails - the shape the previous round shipped",
+   "id": "INSTALL_FIRST_AND_RESTORE_AFTERWARDS",
+   "outcome": "CAUGHT",
+   "round": "verify-the-candidate-before-installing-it",
+   "suite_result": "FAILED (failures=1) of 63",
+   "which_cases_could_not_tell": [
+    "AFailedVerificationReleasesNothing.test_an_existing_receipt_is_never_written_over_before_the_check_passes",
+    "AFailedVerificationReleasesNothing.test_where_there_was_none_none_is_left",
+    "AFailedVerificationReleasesNothing.test_a_first_phase_failure_never_reaches_the_file"
+   ],
+   "why_it_matters": "an external review measured what that leaves open: while the second phase runs, the gate and --check accept a receipt that has not finished being checked, and a process killed in that window leaves the unchecked artifact installed, because the restore never runs. Failing safely is not the same as never having exposed the thing",
+   "why_they_could_not": "they observe the installed file after the run, and a restore puts it back, so the end state is identical. Only a case that looks at the installed file *while* the second phase is running separates the two orders - which is why the review's finding was invisible to the three cases written for it"
+  },
+  {
+   "caught_by": [
+    "TheEventDeclarationIsWhatTheRouteReads.test_the_declaration_for_a_period_is_exactly_what_the_route_reads",
+    "TheEventDeclarationIsWhatTheRouteReads.test_each_filing_is_declared_as_a_body_and_a_header",
+    "TheUnionIsOneDeclarationNotTwo.test_an_event_body_and_header_resolve_through_the_gate"
+   ],
+   "edit": "_filing_rows() emits only the primary document for each event filing, dropping the hdr.sgml row",
+   "id": "DECLARE_THE_BODY_BUT_NOT_THE_HEADER",
+   "outcome": "CAUGHT",
+   "round": "event-source-declaration",
+   "suite_result": "FAILED (failures=2, errors=1) of 72",
+   "why_it_matters": "the route reads two documents per accession, so a declaration naming one would halve the plan while looking complete, and every header would still be refused at the gate as undeclared"
+  },
+  {
+   "caught_by": [
+    "AnUnderivableWindowDeclaresNothingRatherThanNoFilings.test_a_period_without_its_primary_is_a_named_limitation",
+    "AnUnderivableWindowDeclaresNothingRatherThanNoFilings.test_the_limitation_names_the_file_that_would_unblock_it"
+   ],
+   "edit": "a period whose window cannot be derived is skipped without recording a limitation",
+   "id": "TREAT_AN_UNDERIVABLE_WINDOW_AS_AN_EMPTY_ONE",
+   "outcome": "CAUGHT",
+   "round": "event-source-declaration",
+   "suite_result": "FAILED (failures=1, errors=1) of 72",
+   "why_it_matters": "declaring zero filings for a period and declaring nothing for it look identical in a plan and mean opposite things. 31 of the frame's 50 periods are in this state, so a silent skip would read as 'these years need no event sources'"
+  },
+  {
+   "caught_by": [
+    "ARecordedBodyMustBeTheOneAskedFor.test_a_url_the_map_does_not_carry_is_refused_by_name"
+   ],
+   "edit": "_recorded_body() falls back to the first body in the map when the requested URL is not in it, instead of refusing",
+   "id": "ANSWER_ANY_URL_FROM_WHATEVER_THE_MAP_HOLDS",
+   "outcome": "CAUGHT",
+   "round": "metadata-refresh-chain",
+   "suite_result": "FAILED (failures=1) of 81",
+   "which_cases_could_not_tell": [
+    "ARefreshIsFinishedWhenThePlanStopsAskingForIt (all six)"
+   ],
+   "why_it_matters": "a chain over several documents exists to make them disagree; handing one document's bytes to another's request removes the disagreement and looks like a pass",
+   "why_they_could_not": "the refresh chain needs one document, so its map has one entry and the fallback is never reached. A case for a guard has to be written where the guard bites, not where the feature happens to be used"
+  },
+  {
+   "id": "COPY_ONLY_THE_DIRECTORIES_THE_PARENT_KNEW",
+   "round": "installer-rule-inputs",
+   "edit": "install_historical_source_inputs copies execution-authority files under config/ and catalog/ only - the previous rule, restored",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_installed_root_answers_b13s_scope_question",
+    "TheInstallerCarriesTheRuleInputsItClaims.test_every_rule_input_is_installed_and_no_code_is"
+   ],
+   "suite_result": "FAILED (failures=1, errors=1) of 4",
+   "why_it_matters": "this is the measured failure, not a hypothetical: a recorded bank run over an installed root stopped at the approved definition with 'No such file', because B13 reads its scope from the data root and the definition sits at the repository root",
+   "which_cases_could_not_tell": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_presentation_path_under_config_is_excluded"
+   ],
+   "why_they_could_not": "it asks the exclusion question, and the directory rule excludes presentation just as well"
+  },
+  {
+   "id": "INSTALL_CODE_AS_A_SOURCE_INPUT_TOO",
+   "round": "installer-rule-inputs",
+   "edit": "the '.py' exclusion removed, so every non-presentation execution-authority file is installed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_every_rule_input_is_installed_and_no_code_is"
+   ],
+   "suite_result": "FAILED (failures=1) of 4",
+   "why_it_matters": "the fix could overshoot: code in the data root is code nothing is meant to import from there, and a rule that is only ever checked for being long enough never learns it is too long",
+   "which_cases_could_not_tell": [
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_installed_root_answers_b13s_scope_question",
+    "TheInstallerCarriesTheRuleInputsItClaims.test_the_presentation_path_under_config_is_excluded"
+   ],
+   "why_they_could_not": "both ask whether something needed is present or something excluded is absent; extra code is neither"
+  },
+  {
+   "id": "RETRY_A_URL_THIS_LEDGER_CLAIMED",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the claimed-URL skip removed from a pass",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_failed_url_is_reported_and_not_claimed_again"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 9 tests in 0.080s FAILED (failures=1)",
+   "why_it_matters": "zero automatic retries is the rule; a pass that re-planned a failed URL as due would fetch it again every pass until the cap",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "TAKE_EVERY_TIER_IN_ONE_PASS",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the end of a pass after a frame-changing tier removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_the_index_then_the_shards_then_the_rest_each_in_its_own_pass"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 9 tests in 0.079s FAILED (failures=1)",
+   "why_it_matters": "an index or shard changes what the frame declares; spending on rows planned against the old one can spend on rows the new frame no longer declares",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "KEEP_SENDING_AFTER_A_429",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the stop on a 403 or 429 removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_an_sec_access_refusal_stops_everything_by_name"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 9 tests in 0.106s FAILED (failures=1)",
+   "why_it_matters": "a fair-access refusal is the SEC saying stop; sending into it is not a decision a batch makes",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "ACCEPT_A_BODY_THAT_ONLY_STARTS_WITH_THE_APPROVAL",
+   "round": "batch-acquisition-export-registration",
+   "edit": "registration compares the fetched body by prefix instead of equality",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_footer_appended_to_the_body_registers_nothing"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 7 tests in 0.011s FAILED (failures=1)",
+   "why_it_matters": "a body with anything appended - a footer, an edit - is a different text from the one approved",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "EXPORT_A_LEDGER_NOBODY_REGISTERED",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the export takes the newest journal entry when the ledger's own is missing",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_an_unregistered_ledger_is_not_exported"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 7 tests in 35.058s FAILED (failures=1)",
+   "why_it_matters": "an export is only ever of what the frozen replay accepted on the machine that made it",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "RESTORE_WITHOUT_CHECKING_THE_ARCHIVE_DIGEST",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the restore's archive digest check removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_changed_archive_byte_is_refused"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 7 tests in 36.751s FAILED (failures=1)",
+   "why_it_matters": "a changed archive must be refused as changed, not decompressed and reinterpreted",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "PLAN_BEFORE_REGISTERING_WHAT_A_DEAD_PROCESS_LEFT",
+   "round": "batch-acquisition-export-registration",
+   "edit": "the start-of-pass registration removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_an_unregistered_ledger_is_not_exported"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 7 tests in 37.077s FAILED (errors=1)",
+   "why_it_matters": "a process that died after capturing and before registering leaves a ledger the planner cannot read; without this the next invocation can never plan again",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "COUNT_WHATEVER_SLOTS_EXIST",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the claim-log check replaced by trusting whichever slots exist",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_deleted_slot_is_a_refusal_not_a_smaller_count"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 5 tests in 49.220s FAILED (failures=1)",
+   "why_it_matters": "deleting a stopped slot released the stop in an independent review; the log is what makes the deletion visible",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "RESTART_A_LEDGER_WHOSE_ROOT_WAS_DELETED",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the anchor removed and the root restarted when its binding is missing",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_deleted_root_is_a_refusal_not_a_fresh_start"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 5 tests in 48.157s FAILED (failures=1)",
+   "why_it_matters": "deleting the root reset the cap to zero in an independent review; the anchor beside it is what a deletion leaves behind",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "TRUST_THE_SLOT_S_OWN_RECORDS",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the comparison of receipt and terminal with the logged row removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_stop_hidden_by_rewriting_the_slot_s_own_records_is_found"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 5 tests in 48.063s FAILED (failures=1)",
+   "why_it_matters": "a slot's receipt and terminal are self-sealed, so a stop can be rewritten away unless they must agree with the row the client appended",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "ALLOW_A_SAME_REQUEST_REDRAW",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the ledger-level refusal of a request digest already claimed removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_same_request_claimed_again_is_a_redraw"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 5 tests in 49.010s FAILED (failures=1)",
+   "why_it_matters": "zero retries holds at the ledger, not only in the pass that plans",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "LOCK_A_ROOT_THROUGH_A_SYMLINK",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the no-symlink check on the root and its parents removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_root_reached_through_a_symlink_is_refused"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 5 tests in 49.123s FAILED (failures=1)",
+   "why_it_matters": "a symlink made #47's lock file land inside #28's root in an independent review",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "PARSE_THE_APPROVAL_LEAVING_THE_LAST_DUPLICATE_KEY",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the approval body parsed with plain json.loads again",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_a_duplicate_key_is_a_refusal_not_the_last_value"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 2 tests in 0.005s FAILED (failures=1)",
+   "why_it_matters": "a body showing one limit and carrying a larger duplicate key was enforced at the larger one in an independent review",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "id": "ACCEPT_AN_EDITED_APPROVAL",
+   "round": "ledger-and-approval-after-independent-review",
+   "edit": "the unedited-comment requirement removed",
+   "outcome": "CAUGHT",
+   "caught_by": [
+    "test_an_edited_comment_is_not_the_approval"
+   ],
+   "also_failed": [],
+   "suite_result": "Ran 2 tests in 0.006s FAILED (failures=1)",
+   "why_it_matters": "an approval is what was posted; an edit is a new decision and needs a new comment",
+   "driver": "batch_injections.py; raw results in batch-injections.json"
+  },
+  {
+   "caught_by": [
+    "ALedgerCannotBeResetByDeletingIt.test_a_truncated_last_claim_is_a_refusal_not_a_released_slot",
+    "ALedgerCannotBeResetByDeletingIt.test_an_emptied_root_is_a_refusal_not_a_fresh_start"
+   ],
+   "edit": "HistoricalCallLedger._claims() no longer compares the claim log with its copy beside the root",
+   "id": "THE_SEC_CLAIM_LOG_HAS_NO_COPY_BESIDE_THE_ROOT",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=2) of 7",
+   "why_it_matters": "an independent re-review of the model ledger, which has this ledger's shape, emptied the root but for its binding and anchor and the ledger read as unused - count, stops and no-redraw all started again; truncating the last claim with its slot released a stop",
+   "run": "2026-09-27, main checkout, tests.vnext.test_historical_sec_session.ALedgerCannotBeResetByDeletingIt"
+  },
+  {
+   "caught_by": [
+    "AnExportCarriesExactlyWhatTheReplayAccepts.test_a_claim_log_that_is_not_its_copy_is_not_exported"
+   ],
+   "edit": "export_acquisition() no longer requires the claim log to equal its copy beside the root",
+   "id": "THE_SEC_EXPORT_READS_A_CLAIM_LOG_THAT_IS_NOT_ITS_COPY",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=1) of 8",
+   "why_it_matters": "a log truncated together with its last slot is not an export of what was claimed",
+   "run": "2026-09-27, main checkout, tests.vnext.test_historical_sec_session.AnExportCarriesExactlyWhatTheReplayAccepts"
+  },
+  {
+   "caught_by": [
+    "AnApprovalIsRegisteredOnlyFromTheApprovedBytes.test_the_approver_s_login_alone_is_not_the_approver"
+   ],
+   "edit": "_provenance() reads the author's login only, not the account id, type or association",
+   "id": "THE_APPROVER_IS_A_LOGIN_ONLY",
+   "outcome": "CAUGHT",
+   "suite_result": "FAILED (failures=3 subtests) of 8",
+   "why_it_matters": "the re-review found a comment by another account of the approver's name, by a bot or by a non-owner was accepted: a login can be renamed and re-registered; the id cannot",
+   "run": "2026-09-27, main checkout, tests.vnext.test_historical_sec_session.AnApprovalIsRegisteredOnlyFromTheApprovedBytes"
+  },
+  {
+   "id": "THE_LIVE_PATH_SKIPS_THE_START",
+   "edit": "live_historical_session() no longer calls require_published_start()",
+   "caught_by": [
+    "test_the_live_path_checks_the_start_before_any_transport"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.066s FAILED (failures=1)",
+   "why_it_matters": "the check that makes a count outlive the container; without it a new container with an empty ledger spends the allowance again",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_live_path_checks_the_start_before_any_transport"
+  },
+  {
+   "id": "ANY_MARKER_WILL_DO",
+   "edit": "require_published_start() accepts any marker equal to the local record, not only the earliest",
+   "caught_by": [
+    "test_the_earliest_marker_decides_not_the_latest"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.039s FAILED (failures=1)",
+   "why_it_matters": "a second container that posted its own marker later would pass; only the earliest start is the start",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_earliest_marker_decides_not_the_latest"
+  },
+  {
+   "id": "THE_LATEST_MARKER_DECIDES",
+   "edit": "start_markers() sorts newest first",
+   "caught_by": [
+    "test_the_earliest_marker_decides_not_the_latest"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.044s FAILED (failures=1)",
+   "why_it_matters": "same as above through the ordering: the latest marker would decide",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_earliest_marker_decides_not_the_latest"
+  },
+  {
+   "id": "AN_EDITED_MARKER_COUNTS",
+   "edit": "require_published_start() no longer requires created_at == updated_at",
+   "caught_by": [
+    "test_an_edited_marker_does_not_count"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.048s FAILED (failures=1)",
+   "why_it_matters": "an edit can make an old marker carry a new number",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_edited_marker_does_not_count"
+  },
+  {
+   "id": "A_STRANGER_S_MARKER_COUNTS",
+   "edit": "start_markers() no longer requires the owner's association",
+   "caught_by": [
+    "test_a_stranger_s_marker_neither_blocks_nor_stands_in"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.068s FAILED (errors=1)",
+   "why_it_matters": "issue 47 is public; a stranger's comment could block a start or stand in for one",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_stranger_s_marker_neither_blocks_nor_stands_in"
+  },
+  {
+   "id": "ANOTHER_APPROVAL_S_MARKER_COUNTS",
+   "edit": "start_markers() no longer compares the approval digest",
+   "caught_by": [
+    "test_another_approval_s_marker_is_not_this_one_s"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.055s FAILED (failures=1)",
+   "why_it_matters": "a marker for another approval would decide this one's start",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_another_approval_s_marker_is_not_this_one_s"
+  },
+  {
+   "id": "A_LOST_LEDGER_STARTS_AGAIN",
+   "edit": "start_ledger() no longer refuses when this approval already has a marker",
+   "caught_by": [
+    "test_a_host_that_lost_its_ledger_cannot_start_the_allowance_again"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.049s FAILED (failures=1)",
+   "why_it_matters": "a container that lost its ledger could write a new start record and begin again",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_host_that_lost_its_ledger_cannot_start_the_allowance_again"
+  },
+  {
+   "id": "ONLY_THE_FIRST_PAGE_IS_READ",
+   "edit": "start_markers() reads only the first page",
+   "caught_by": [
+    "test_markers_are_read_past_the_first_page"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.059s FAILED (errors=1)",
+   "why_it_matters": "the issue already has more than a page of comments; a marker on page two would be missed",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_markers_are_read_past_the_first_page"
+  },
+  {
+   "id": "THE_READER_TAKES_ANY_PATH",
+   "edit": "github_rest_reader() no longer checks the path",
+   "caught_by": [
+    "test_only_this_issue_s_comment_resources_are_readable"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 6 tests in 0.004s FAILED (failures=6)",
+   "why_it_matters": "the REST reader could be aimed at another repository's or issue's comment",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_only_this_issue_s_comment_resources_are_readable"
+  },
+  {
+   "id": "THE_PROXY_S_CREDENTIALS_ARE_RECORDED",
+   "edit": "_transport() records the proxy URL as given",
+   "caught_by": [
+    "test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 2 tests in 38.109s FAILED (failures=1)",
+   "why_it_matters": "a proxy URL with credentials would be written into receipts the branch carries",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
+  },
+  {
+   "id": "THE_TRANSPORT_IS_NOT_RECORDED",
+   "edit": "_receipt() no longer records the transport",
+   "caught_by": [
+    "test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 2 tests in 39.147s FAILED (errors=2)",
+   "why_it_matters": "a receipt silent about the proxy reads as a direct fetch from SEC",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_recorded_receipt_says_no_network_was_used, test_the_live_receipt_names_the_proxy_without_credentials_and_the_bundle"
+  },
+  {
+   "id": "A_DELETED_MARKER_LETS_A_NEW_START",
+   "edit": "start_ledger() no longer refuses when the checkout carries this approval's export",
+   "caught_by": [
+    "test_an_export_on_the_branch_blocks_a_start_the_issue_would_allow"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.042s FAILED (failures=3, errors=2)",
+   "why_it_matters": "the executor acts on GitHub as the owner and can delete a marker comment; without this an empty ledger starts again once the marker is gone",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_export_on_the_branch_blocks_a_start_the_issue_would_allow"
+  },
+  {
+   "id": "AN_UNREADABLE_EXPORT_READS_AS_NONE",
+   "edit": "_exported_here() returns False for an index it cannot parse",
+   "caught_by": [
+    "test_an_export_on_the_branch_blocks_a_start_the_issue_would_allow"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.089s FAILED (failures=3, errors=2)",
+   "why_it_matters": "an export index nobody can read would read as 'nothing was spent'",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_ledger_behind_its_export_on_the_branch_is_refused, test_an_export_on_the_branch_blocks_a_start_the_issue_would_allow"
+  },
+  {
+   "id": "AN_APP_S_POST_COUNTS_AS_THE_OWNER_S",
+   "edit": "_posted_by_the_approver_directly() always passes",
+   "caught_by": [
+    "test_an_approval_posted_through_an_app_registers_nothing"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 17 tests in 0.055s FAILED (failures=5, errors=1)",
+   "why_it_matters": "the container writes GitHub as the owner through the Claude app; without this a comment it posted directly would pass as the owner's approval",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal, test_an_approval_posted_through_an_app_registers_nothing"
+  },
+  {
+   "id": "A_DROPPED_FIELD_READS_AS_NO_APP",
+   "edit": "_posted_by_the_approver_directly() reads a missing field as None",
+   "caught_by": [
+    "test_an_app_s_mark_on_either_copy_is_a_refusal"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 17 tests in 0.054s FAILED (failures=1, errors=1)",
+   "why_it_matters": "a record or reader that drops the field would read as 'no app'",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal, test_an_approval_posted_through_an_app_registers_nothing"
+  },
+  {
+   "id": "THE_SAVED_RECORD_IS_NOT_READ_FOR_THE_MARK",
+   "edit": "_delegation() no longer checks the saved record for the mark",
+   "caught_by": [
+    "test_an_app_s_mark_on_either_copy_is_a_refusal"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 6 tests in 0.024s FAILED (failures=2)",
+   "why_it_matters": "an offline read would take an app-posted record for an approval",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal"
+  },
+  {
+   "id": "THE_FETCHED_COMMENT_IS_NOT_READ_FOR_THE_MARK",
+   "edit": "_delegation() no longer checks the fetched comment for the mark",
+   "caught_by": [
+    "test_an_app_s_mark_on_either_copy_is_a_refusal"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 6 tests in 0.021s FAILED (failures=1)",
+   "why_it_matters": "a saved record cleaned of the mark would pass against a comment GitHub marks",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_app_s_mark_on_either_copy_is_a_refusal"
+  },
+  {
+   "id": "REGISTRATION_DOES_NOT_READ_THE_MARK",
+   "edit": "register_approval() no longer checks the mark",
+   "caught_by": [
+    "test_an_approval_posted_through_an_app_registers_nothing"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.039s FAILED (failures=2, errors=1)",
+   "why_it_matters": "registration would write the policy and record from an app's comment before any gate refused it",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_approval_posted_through_an_app_registers_nothing"
+  },
+  {
+   "id": "MORE_THAN_LINE_BREAKS_IS_FORGIVEN",
+   "edit": "posted_text() also turns a lone CR into LF and strips leading whitespace",
+   "caught_by": [
+    "test_only_line_breaks_are_forgiven"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.056s FAILED (failures=2)",
+   "why_it_matters": "forgiving leading whitespace or a lone CR accepts a text the owner did not post as approved",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_only_line_breaks_are_forgiven"
+  },
+  {
+   "id": "LINE_BREAKS_ARE_NOT_FORGIVEN",
+   "edit": "posted_text() returns the body unchanged",
+   "caught_by": [
+    "test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.040s FAILED (errors=1)",
+   "why_it_matters": "a body pasted into github.com may come back with CRLF and would be refused although it is the same record",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
+  },
+  {
+   "id": "THE_MARKER_CARRIES_THE_WHOLE_RECORD",
+   "edit": "marker_comment_body() publishes the whole record and require_published_start() compares the record itself",
+   "caught_by": [
+    "test_a_marker_copied_beside_an_empty_root_is_not_the_start"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.042s FAILED (failures=2)",
+   "why_it_matters": "a marker that carries the record, random number included, can be copied back beside an empty root on any host and be the start (VM-delta review F2)",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_marker_copied_beside_an_empty_root_is_not_the_start, test_a_start_writes_the_local_record_and_a_marker_that_does_not_carry_its_number"
+  },
+  {
+   "id": "A_LEDGER_MAY_BE_BEHIND_ITS_EXPORT",
+   "edit": "require_published_start() no longer calls require_not_behind_export()",
+   "caught_by": [
+    "test_a_ledger_behind_its_export_on_the_branch_is_refused"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.089s FAILED (failures=4)",
+   "why_it_matters": "a host that kept its start record but lost or reset its ledger would count from less than the branch's export says was spent (VM-delta review F2)",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_ledger_behind_its_export_on_the_branch_is_refused"
+  },
+  {
+   "id": "A_MARKER_FROM_ANYWHERE_COUNTS",
+   "edit": "start_markers() no longer checks the comment's issue and account",
+   "caught_by": [
+    "test_a_marker_not_from_this_issue_or_account_does_not_count"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 15 tests in 0.077s FAILED (failures=4)",
+   "why_it_matters": "a comment relayed from another issue, or by another account with the owner's association, would stand in for the start (VM-delta review F9)",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_marker_not_from_this_issue_or_account_does_not_count"
+  },
+  {
+   "id": "AN_EXPORT_MAY_GO_BACKWARDS",
+   "edit": "_only_forward() always passes",
+   "caught_by": [
+    "test_an_export_replaces_only_its_own_shorter_self"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 9 tests in 31.414s FAILED (failures=3)",
+   "why_it_matters": "an export of a shorter ledger, or of another approval, would be written over the record of what was spent (VM-delta review F3)",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_an_export_replaces_only_its_own_shorter_self"
+  },
+  {
+   "id": "A_REDIRECTED_READ_IS_TRUSTED",
+   "edit": "github_rest_reader() no longer compares the final URL with the one asked for",
+   "caught_by": [
+    "test_a_redirected_read_is_refused"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 6 tests in 0.004s FAILED (failures=1)",
+   "why_it_matters": "urlopen follows redirects; a reply from anywhere else would be read as this issue's comment (VM-delta review F9)",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_redirected_read_is_refused"
+  },
+  {
+   "id": "THE_DIGEST_IS_OVER_THE_RAW_BODY",
+   "edit": "_delegation() hashes the raw body instead of posted_text()",
+   "caught_by": [
+    "test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 11 tests in 0.020s FAILED (errors=1)",
+   "why_it_matters": "registration would accept a CRLF body the gate then refuses, leaving a written policy that never grants",
+   "run": "2026-09-29, main checkout, vm_start_injections.py; failed cases test_a_body_pasted_into_the_web_page_registers_as_the_same_approval"
+  },
+  {
+   "id": "THE_OLD_ORDER_REMOVE_THEN_REPLACE_IN_PLACE",
+   "edit": "_publish() removes the stale archives first and writes every file in place",
+   "caught_by": [
+    "test_a_write_that_fails_leaves_the_export_already_there"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 10 tests in 1319.571s FAILED (failures=1)",
+   "why_it_matters": "the order the disk-full export used: a failed write leaves an index naming an archive already removed, or a half-written archive in place",
+   "run": "2026-09-29, main checkout, export_publish_injections.py; failed cases test_a_write_that_fails_leaves_the_export_already_there"
+  },
+  {
+   "id": "A_FAILED_STAGING_LEAVES_ITS_FILES",
+   "edit": "_publish() no longer removes what it staged when a write fails",
+   "caught_by": [
+    "test_a_write_that_fails_leaves_the_export_already_there"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 10 tests in 48.807s FAILED (failures=1)",
+   "why_it_matters": "staged files left behind by a failed export would sit in the directory the branch carries",
+   "run": "2026-09-29, main checkout, export_publish_injections.py; failed cases test_a_write_that_fails_leaves_the_export_already_there"
+  },
+  {
+   "id": "EVERY_DIFFERENCE_IS_REFUSED",
+   "edit": "_install_rule_inputs() re-checks against the root whatever the generation",
+   "caught_by": [
+    "test_a_new_generation_replaces_the_input_and_records_it"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 5 tests in 3.871s FAILED (errors=5)",
+   "why_it_matters": "the refusal that stopped the second round: a re-mint could never reach a ledger root",
+   "run": "2026-09-29, main checkout, rule_input_injections.py; failed cases test_a_baseline_file_is_never_replaced_as_a_rule_input, test_a_new_generation_replaces_the_input_and_records_it, test_a_root_from_before_the_stamp_takes_the_current_inputs, test_the_installation_records_the_generation_it_installed, test_within_one_generation_a_changed_input_is_refused"
+  },
+  {
+   "id": "A_CHANGED_INPUT_IS_REPLACED_WITHIN_A_GENERATION",
+   "edit": "_install_rule_inputs() replaces differing inputs even when the stamp matches",
+   "caught_by": [
+    "test_within_one_generation_a_changed_input_is_refused"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 5 tests in 4.412s FAILED (failures=2)",
+   "why_it_matters": "a rule input changed under a root of the same generation would be overwritten without a word instead of refused",
+   "run": "2026-09-29, main checkout, rule_input_injections.py; failed cases test_a_new_generation_replaces_the_input_and_records_it, test_within_one_generation_a_changed_input_is_refused"
+  },
+  {
+   "id": "A_BASELINE_FILE_IS_REPLACED_AS_A_RULE_INPUT",
+   "edit": "_install_rule_inputs() replaces a rule input that is also a baseline file",
+   "caught_by": [
+    "test_a_baseline_file_is_never_replaced_as_a_rule_input"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 5 tests in 4.577s FAILED (failures=1)",
+   "why_it_matters": "the baseline corpus is governed by its own stamp, which refuses any change; a transition must not rewrite part of it",
+   "run": "2026-09-29, main checkout, rule_input_injections.py; failed cases test_a_baseline_file_is_never_replaced_as_a_rule_input"
+  },
+  {
+   "id": "A_TRANSITION_IS_NOT_RECORDED",
+   "edit": "_install_rule_inputs() replaces inputs without recording the transition",
+   "caught_by": [
+    "test_a_new_generation_replaces_the_input_and_records_it"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 5 tests in 4.647s FAILED (errors=4)",
+   "why_it_matters": "a root whose configuration changed without a record reads as if it had always held these bytes",
+   "run": "2026-09-29, main checkout, rule_input_injections.py; failed cases test_a_new_generation_replaces_the_input_and_records_it, test_a_root_from_before_the_stamp_takes_the_current_inputs, test_the_installation_records_the_generation_it_installed, test_within_one_generation_a_changed_input_is_refused"
+  },
+  {
+   "id": "THE_RESERVE_IS_NOT_COUNTED",
+   "edit": "HistoricalCallLedger.snapshot() leaves the resume's reserve out of the count",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 43.623s FAILED (failures=1)",
+   "why_it_matters": "the cap would bound only what the restored slots recorded, not what the lost host may have sent",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "A_RESUME_NEEDS_NO_MARKER",
+   "edit": "require_published_resume() accepts a local chain the issue does not show",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 41.971s FAILED (failures=1)",
+   "why_it_matters": "a resume nobody can see on the issue would be a second, unaudited spending of the same approval",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "A_CHEAPER_CHAIN_PASSES",
+   "edit": "require_published_resume() compares how many resumes, not what they say",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 45.734s FAILED (failures=1)",
+   "why_it_matters": "a chain whose reserve was lowered locally would pass beside the true marker",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "THE_EXPORT_DROPS_THE_CHAIN",
+   "edit": "export_acquisition() leaves the resume chain out of the export",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 39.458s FAILED (errors=1)",
+   "why_it_matters": "a later restore would count from the slots alone and forget the lost segment",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "AN_EXPORT_MAY_DROP_A_RESUME",
+   "edit": "_only_forward() lets an export without the chain replace one that carries it",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 44.848s FAILED (failures=1)",
+   "why_it_matters": "the branch would stop recording the charge for a lost segment",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "THE_NONCE_IS_EXPORTED",
+   "edit": "export_acquisition() exports the resume record with its random number",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 42.278s FAILED (errors=1)",
+   "why_it_matters": "anyone reading the public branch could write a matching chain beside an empty root",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "A_RESUME_SINCE_THE_EXPORT_IS_IGNORED",
+   "edit": "resume_ledger() ignores resume markers the export does not carry",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 50.545s FAILED (failures=1)",
+   "why_it_matters": "what a resumed-then-lost host spent after its resume would be charged nowhere",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "THE_RESERVE_COUNTS_NOTHING",
+   "edit": "lost_segment_reserve() charges nothing for the due rows",
+   "caught_by": [
+    "test_the_reserve_is_the_due_rows_and_refuses_where_a_capture_could_open_more"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 36.111s FAILED (failures=4)",
+   "why_it_matters": "the resume would count from the export as if the lost host had sent nothing",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_reserve_is_the_due_rows_and_refuses_where_a_capture_could_open_more"
+  },
+  {
+   "id": "AN_OPENING_ROW_IS_TREATED_AS_BOUNDED",
+   "edit": "lost_segment_reserve() counts rows whose capture can declare more rows",
+   "caught_by": [
+    "test_the_reserve_is_the_due_rows_and_refuses_where_a_capture_could_open_more"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 36.764s FAILED (failures=1)",
+   "why_it_matters": "a later pass could have claimed rows the reserve does not see",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_reserve_is_the_due_rows_and_refuses_where_a_capture_could_open_more"
+  },
+  {
+   "id": "A_RESUME_OVER_A_KEPT_START",
+   "edit": "resume_ledger() rebuilds a ledger beside a start record the host kept",
+   "caught_by": [
+    "test_a_host_that_kept_its_start_or_its_root_does_not_resume"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 41.684s FAILED (failures=1)",
+   "why_it_matters": "a host that did not lose its ledger could reset it to an older export",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_host_that_kept_its_start_or_its_root_does_not_resume"
+  },
+  {
+   "id": "ANOTHER_APPROVAL_S_EXPORT_IS_RESUMED",
+   "edit": "resume_ledger() rebuilds from an export whose approval block differs",
+   "caught_by": [
+    "test_a_resume_needs_this_approval_s_export"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 44.082s FAILED (failures=1)",
+   "why_it_matters": "another approval's ledger would be counted against this one",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_resume_needs_this_approval_s_export"
+  },
+  {
+   "id": "AN_EDITED_START_MARKER_IS_ACCEPTED",
+   "edit": "resume_ledger() resumes from an edited start marker",
+   "caught_by": [
+    "test_a_resume_needs_the_approval_s_earliest_start_marker_unedited"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 42.917s FAILED (failures=1)",
+   "why_it_matters": "an edited marker is no longer the start that was published",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_resume_needs_the_approval_s_earliest_start_marker_unedited"
+  },
+  {
+   "id": "A_SNAPSHOT_DOES_NOT_HOLD_THE_PINNED_CHARGE",
+   "edit": "HistoricalCallLedger.snapshot() reads the chain afresh and ignores the pinned charge",
+   "caught_by": [
+    "test_the_resume_charge_cannot_shrink_while_a_session_holds_the_ledger"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 39.635s FAILED (failures=3)",
+   "why_it_matters": "a chain deleted mid-session lowered the count and captures ran past the cap",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_charge_cannot_shrink_while_a_session_holds_the_ledger"
+  },
+  {
+   "id": "THE_LIVE_LEDGER_IS_NOT_PINNED",
+   "edit": "live_ledger() builds the ledger without holding it to the verified charge",
+   "caught_by": [
+    "test_the_resume_charge_cannot_shrink_while_a_session_holds_the_ledger"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 39.907s FAILED (failures=3)",
+   "why_it_matters": "the snapshot check would have nothing to compare with",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_charge_cannot_shrink_while_a_session_holds_the_ledger"
+  },
+  {
+   "id": "A_LIVE_LEDGER_WITHOUT_A_BEGINNING_IS_EXPORTED",
+   "edit": "export_acquisition() exports a LIVE ledger with neither a start nor a resume beside it",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 43.614s FAILED (failures=1)",
+   "why_it_matters": "an export after the chain was deleted would leave the lost segment's charge out",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "THE_FIRST_HOST_IS_NOT_FENCED",
+   "edit": "require_published_start() lets a host holding its start spend after a published resume",
+   "caught_by": [
+    "test_a_host_that_still_holds_its_start_may_not_spend_after_a_resume"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 40.660s FAILED (failures=1)",
+   "why_it_matters": "a host that was only unreachable would spend the same allowance a second time",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_host_that_still_holds_its_start_may_not_spend_after_a_resume"
+  },
+  {
+   "id": "THE_RESUME_TRUSTS_THE_CHECKOUT",
+   "edit": "resume_ledger() restores whatever export the checkout holds",
+   "caught_by": [
+    "test_a_resume_is_from_the_export_the_branch_carries_now"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 42.168s FAILED (failures=3)",
+   "why_it_matters": "a checkout the loss took back would restore an older export and charge from it",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_resume_is_from_the_export_the_branch_carries_now"
+  },
+  {
+   "id": "THE_TIP_IS_NOT_FETCHED",
+   "edit": "the resume command reads the upstream ref without fetching it",
+   "caught_by": [
+    "test_a_checkout_behind_the_branch_is_handed_the_branch_s_newer_export"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.513s FAILED (failures=1)",
+   "why_it_matters": "the stale checkout's own remote ref is the export the loss took it back to",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_checkout_behind_the_branch_is_handed_the_branch_s_newer_export"
+  },
+  {
+   "id": "A_RUNNING_SESSION_IS_NOT_RECHECKED",
+   "edit": "capture_pending() plans a pass without running the live path's check again",
+   "caught_by": [
+    "test_a_running_session_stops_when_a_resume_is_published_elsewhere"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 43.842s FAILED (failures=1)",
+   "why_it_matters": "a session already running would keep claiming after a resume elsewhere",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_running_session_stops_when_a_resume_is_published_elsewhere"
+  },
+  {
+   "id": "THE_LIVE_SESSION_KEEPS_NO_CHECK",
+   "edit": "live_historical_session() builds a session with no check to run per pass",
+   "caught_by": [
+    "test_the_live_path_checks_the_start_before_any_transport"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.030s FAILED (errors=1)",
+   "why_it_matters": "the per-pass check would be skipped in production while every test of it passed",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_live_path_checks_the_start_before_any_transport"
+  },
+  {
+   "id": "THE_LIVE_PATH_TRUSTS_THE_CHECKOUT",
+   "edit": "require_published_start() compares the ledger with the checkout's export only",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 41.790s FAILED (failures=1)",
+   "why_it_matters": "a snapshot that took the ledger and the checkout back together would pass",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "A_RESUME_IS_CLAIMED_BEFORE_IT_IS_EXPORTED",
+   "edit": "require_published_resume() lets a session claim before the branch carries the resume",
+   "caught_by": [
+    "test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 40.254s FAILED (failures=1)",
+   "why_it_matters": "a second loss before that export would find the resume only on the issue",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_lost_host_resumes_the_exported_ledger_and_its_count_carries_the_reserve"
+  },
+  {
+   "id": "A_QUOTED_MARKER_IS_ANOTHER_RESUME",
+   "edit": "resume_markers() counts any owner comment carrying a resume record",
+   "caught_by": [
+    "test_the_resume_guards_the_review_found_untested"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 41.678s FAILED (errors=1)",
+   "why_it_matters": "a status comment quoting the marker would stop every live start",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_guards_the_review_found_untested"
+  },
+  {
+   "id": "A_DUPLICATE_MARKER_IS_ANOTHER_RESUME",
+   "edit": "resume_markers() counts the same record posted twice as two resumes",
+   "caught_by": [
+    "test_the_resume_guards_the_review_found_untested"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 42.407s FAILED (errors=1)",
+   "why_it_matters": "a retried POST GitHub had accepted would stop every live start",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_guards_the_review_found_untested"
+  },
+  {
+   "id": "A_RESUME_IN_PROGRESS_IS_DISTURBED",
+   "edit": "resume_ledger() goes on beside another resume's sentinel",
+   "caught_by": [
+    "test_a_resume_already_running_or_left_over_is_not_disturbed"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 32.444s FAILED (failures=1)",
+   "why_it_matters": "a refused resume would delete the staging directory of the one in progress",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_resume_already_running_or_left_over_is_not_disturbed"
+  },
+  {
+   "id": "THE_PREFIX_IS_ALWAYS_TRUE",
+   "edit": "_prefix() accepts any bytes (the review's mutation)",
+   "caught_by": [
+    "test_the_resume_guards_the_review_found_untested"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 39.261s FAILED (failures=1, errors=2)",
+   "why_it_matters": "a ledger that is not what was restored would pass the live path",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_guards_the_review_found_untested"
+  },
+  {
+   "id": "THE_LINKS_ARE_NOT_CHECKED",
+   "edit": "_check_links() checks nothing (the review's mutation)",
+   "caught_by": [
+    "test_the_resume_guards_the_review_found_untested"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 40.569s FAILED (failures=2, errors=2)",
+   "why_it_matters": "a chain resuming another start, or with a broken link, would pass",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_the_resume_guards_the_review_found_untested"
+  },
+  {
+   "id": "A_HEAD_BEHIND_THE_TIP_IS_ACCEPTED",
+   "edit": "the resume command accepts a HEAD that does not contain the fetched tip",
+   "caught_by": [
+    "test_a_checkout_behind_the_branch_is_handed_the_branch_s_newer_export"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.512s FAILED (failures=1)",
+   "why_it_matters": "the code and export the command acts on would be older than the branch's",
+   "run": "2026-09-29, the checkout's working tree, resume_injections.py; failed cases test_a_checkout_behind_the_branch_is_handed_the_branch_s_newer_export"
+  },
+  {
+   "id": "ANY_CLAIM_LOG_IS_EXTENDED",
+   "edit": "pin_extension() raises the cap whatever the ledger's claim log holds",
+   "caught_by": [
+    "test_an_extension_of_another_ledger_or_state_is_refused"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.082s FAILED (failures=3)",
+   "why_it_matters": "an extension approved for one ledger would raise the cap of any ledger at the root",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_an_extension_of_another_ledger_or_state_is_refused"
+  },
+  {
+   "id": "THE_CAP_IS_NOT_RAISED",
+   "edit": "_limits() ignores the pinned extension",
+   "caught_by": [
+    "test_the_cap_rises_by_exactly_what_the_extension_adds"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.084s FAILED (failures=1)",
+   "why_it_matters": "the approval would be read and pinned and still grant nothing",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_the_cap_rises_by_exactly_what_the_extension_adds"
+  },
+  {
+   "id": "THE_CAP_IS_RAISED_TWICE",
+   "edit": "_limits() adds the extension's limits twice",
+   "caught_by": [
+    "test_the_cap_rises_by_exactly_what_the_extension_adds"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.073s FAILED (failures=1)",
+   "why_it_matters": "more requests than the owner approved",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_the_cap_rises_by_exactly_what_the_extension_adds"
+  },
+  {
+   "id": "A_URL_IS_REQUESTED_AGAIN_AND_AGAIN",
+   "edit": "reclaim_ordinal() allows a URL requested under the extension to be requested again",
+   "caught_by": [
+    "test_a_refresh_is_requested_once_more_under_the_extension_and_not_again"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.130s FAILED (failures=1)",
+   "why_it_matters": "zero automatic retries would become one retry per pass",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_a_refresh_is_requested_once_more_under_the_extension_and_not_again"
+  },
+  {
+   "id": "ANY_KIND_IS_REQUESTED_AGAIN",
+   "edit": "reclaim_ordinal() ignores why the planner asks again",
+   "caught_by": [
+    "test_only_the_kinds_and_classes_the_owner_named"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.272s FAILED (failures=1)",
+   "why_it_matters": "a failed first request of a named class would be retried without being a replacement",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_only_the_kinds_and_classes_the_owner_named"
+  },
+  {
+   "id": "ANY_CLASS_IS_REQUESTED_AGAIN",
+   "edit": "reclaim_ordinal() ignores which classes the owner named",
+   "caught_by": [
+    "test_only_the_kinds_and_classes_the_owner_named"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.295s FAILED (failures=1)",
+   "why_it_matters": "a refresh of a class the owner did not name would be requested again",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_only_the_kinds_and_classes_the_owner_named"
+  },
+  {
+   "id": "A_MARKER_WITHOUT_AN_EXTENSION",
+   "edit": "_capture_one() takes a re-request marker from a caller with no extension",
+   "caught_by": [
+    "test_a_re_request_marker_needs_the_extension_that_makes_it"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.036s FAILED (failures=1)",
+   "why_it_matters": "a claimed URL could be requested again by anything that passes the marker",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_a_re_request_marker_needs_the_extension_that_makes_it"
+  },
+  {
+   "id": "THE_REQUEST_IS_NOT_MARKED",
+   "edit": "_capture_one() requests again with the first request's exact bytes",
+   "caught_by": [
+    "test_the_replacement_is_saved_and_the_plan_stops_asking"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 92.996s FAILED (errors=1)",
+   "why_it_matters": "the same digest twice is the redraw the ledger forbids; the replacement could never be made",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_the_replacement_is_saved_and_the_plan_stops_asking"
+  },
+  {
+   "id": "THE_FIRST_APPROVAL_S_GRANTS_STAY",
+   "edit": "extended_allowance() keeps the first approval's grants",
+   "caught_by": [
+    "test_after_the_extension_requests_are_held_to_its_grants"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.136s FAILED (failures=1)",
+   "why_it_matters": "requests after the extension would be held to grants the owner did not approve for them",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_after_the_extension_requests_are_held_to_its_grants"
+  },
+  {
+   "id": "THE_COMMENT_NEED_NOT_RESTATE_THE_POLICY",
+   "edit": "_approved_body() does not compare the comment with the policy",
+   "caught_by": [
+    "test_each_tie_and_each_field_refuses_by_name"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.143s FAILED (failures=1)",
+   "why_it_matters": "a policy file could grant more than the owner's comment says",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_each_tie_and_each_field_refuses_by_name"
+  },
+  {
+   "id": "ANY_APPROVAL_MAY_BE_EXTENDED",
+   "edit": "_typed() does not tie the extension to the approval it names",
+   "caught_by": [
+    "test_each_tie_and_each_field_refuses_by_name"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.102s FAILED (failures=1)",
+   "why_it_matters": "an extension of another approval would raise this one's cap",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_each_tie_and_each_field_refuses_by_name"
+  },
+  {
+   "id": "GITHUB_IS_NOT_COMPARED",
+   "edit": "_approved_body() fetches the comment and does not compare it with the saved record",
+   "caught_by": [
+    "test_the_saved_record_must_be_what_github_returns"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.025s FAILED (failures=1)",
+   "why_it_matters": "a locally written record would stand for an approval nobody posted",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_the_saved_record_must_be_what_github_returns"
+  },
+  {
+   "id": "THE_LOST_HOST_S_RE_REQUESTS_ARE_FREE",
+   "edit": "lost_segment_reserve() counts every claimed URL as done",
+   "caught_by": [
+    "test_a_lost_host_s_reserve_counts_what_the_extension_let_it_request_again"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.001s FAILED (failures=1)",
+   "why_it_matters": "a lost host may have requested it again under the extension; the charge would miss it",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_a_lost_host_s_reserve_counts_what_the_extension_let_it_request_again"
+  },
+  {
+   "id": "THE_EXPORT_RECORDS_ANY_EXTENSION",
+   "edit": "_extension() records an extension beside an approval it does not extend",
+   "caught_by": [
+    "test_an_extension_of_another_approval_or_root_is_refused"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.010s FAILED (failures=3)",
+   "why_it_matters": "the branch would say a ledger was spent under an extension of another approval",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_an_extension_of_another_approval_or_root_is_refused"
+  },
+  {
+   "id": "THE_LIVE_PATH_DOES_NOT_PIN",
+   "edit": "live_ledger() reads the extension and does not pin it",
+   "caught_by": [
+    "test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.059s FAILED (failures=3)",
+   "why_it_matters": "production would stop at the first cap while every recorded case passed",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+  },
+  {
+   "id": "A_REPLACEMENT_FOR_ANY_UNREADABLE_COPY",
+   "edit": "reclaim_ordinal() requests again any copy the planner cannot read",
+   "caught_by": [
+    "test_a_replacement_is_only_for_a_copy_whose_last_request_failed"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.330s FAILED (failures=1)",
+   "why_it_matters": "a changed hash or a conflicting attempt is not the failed request the owner named (review L2)",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_a_replacement_is_only_for_a_copy_whose_last_request_failed"
+  },
+  {
+   "id": "THE_CALLER_S_MARKER_IS_TRUSTED",
+   "edit": "_capture_one() takes the marker it is handed without reading the slots",
+   "caught_by": [
+    "test_the_replacement_is_saved_and_the_plan_stops_asking"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 123.620s FAILED (failures=2)",
+   "why_it_matters": "a URL already requested under the extension could be requested a third time (review L3)",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_the_replacement_is_saved_and_the_plan_stops_asking"
+  },
+  {
+   "id": "THE_STATED_SPENDING_IS_NOT_CHECKED",
+   "edit": "pin_extension() does not compare the stated spending with the claim log",
+   "caught_by": [
+    "test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.218s FAILED (failures=1, errors=1)",
+   "why_it_matters": "the owner could approve an increment against a spending that was not the ledger's (review L4)",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+  },
+  {
+   "id": "ANY_EXTENSION_MAY_FOLLOW_ANOTHER",
+   "edit": "pin_extension() accepts an extension other than the one first pinned at the root",
+   "caught_by": [
+    "test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.134s FAILED (failures=1)",
+   "why_it_matters": "an unverified dict could raise the cap after the real extension was pinned (review L1)",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+  },
+  {
+   "id": "A_LIVE_EXTENSION_NEED_NOT_BE_READ_BACK",
+   "edit": "live_ledger() pins an extension that was not read back from GitHub",
+   "caught_by": [
+    "test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.077s FAILED (failures=1)",
+   "why_it_matters": "a locally written extension would raise the live cap (review L1)",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_the_live_ledger_is_raised_only_for_the_log_it_continues"
+  },
+  {
+   "id": "THE_SESSION_AND_ITS_LEDGER_MAY_DISAGREE",
+   "edit": "_check() lets a session hold other grants than its ledger's extension",
+   "caught_by": [
+    "test_a_session_holding_other_grants_than_its_ledger_s_extension_is_refused"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.107s FAILED (errors=1)",
+   "why_it_matters": "requests would be counted against one approval and admitted by another (review L1, the uncaught injection)",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_a_session_holding_other_grants_than_its_ledger_s_extension_is_refused"
+  },
+  {
+   "id": "THE_LIVE_PATH_IGNORES_THE_BRANCH",
+   "edit": "live_historical_session() does not compare the extension with the branch tip",
+   "caught_by": [
+    "test_the_live_path_needs_the_branch_to_say_which_extension"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.007s FAILED (failures=1)",
+   "why_it_matters": "an extension never pushed could be spent, and a resume reading the branch could not charge for it (review M1)",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_the_live_path_needs_the_branch_to_say_which_extension"
+  },
+  {
+   "id": "ANY_BRANCH_CARRIES_THE_EXTENSION",
+   "edit": "require_extension_on_branch() accepts files the branch does not carry",
+   "caught_by": [
+    "test_the_checkout_and_the_tip_must_carry_the_same_extension"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.027s FAILED (failures=4)",
+   "why_it_matters": "the same as above, inside the check itself (review M1)",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_the_checkout_and_the_tip_must_carry_the_same_extension"
+  },
+  {
+   "id": "A_RESUME_UNDER_ANY_EXTENSION",
+   "edit": "resume_ledger() charges an export spent under an extension without it",
+   "caught_by": [
+    "test_a_resume_charges_under_the_extension_the_export_was_spent_under"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 55.233s FAILED (failures=1)",
+   "why_it_matters": "the lost segment's charge would leave out the rows only the extension admits (review M1)",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_a_resume_charges_under_the_extension_the_export_was_spent_under"
+  },
+  {
+   "id": "A_RESUME_CHARGED_UNDER_ANOTHER_EXTENSION_HOLDS",
+   "edit": "require_published_resume() keeps a resume charged under another extension",
+   "caught_by": [
+    "test_a_resume_charged_under_an_extension_holds_only_under_it"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 30.862s FAILED (failures=1)",
+   "why_it_matters": "its reserve was not computed against the grants now spent (review M1)",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_a_resume_charged_under_an_extension_holds_only_under_it"
+  },
+  {
+   "id": "A_RESUME_AFTER_THE_STATE_IS_COUNTED",
+   "edit": "resume_reserve_at_state() counts every resume in the chain as spent at the state",
+   "caught_by": [
+    "test_a_resume_before_the_state_is_in_it_and_one_after_is_not"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.107s FAILED (errors=1)",
+   "why_it_matters": "a resume after the state, restoring the stated export, would refuse every later pin (the re-review's N1)",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_a_resume_before_the_state_is_in_it_and_one_after_is_not"
+  },
+  {
+   "id": "THE_STATE_MAY_LEAVE_OUT_AN_EARLIER_RESUME",
+   "edit": "resume_reserve_at_state() lets a resume that restored an earlier log sit outside the stated chain",
+   "caught_by": [
+    "test_a_state_that_leaves_out_an_earlier_resume_is_refused"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.115s FAILED (failures=1)",
+   "why_it_matters": "the stated spending would understate a charge made before the state",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_a_state_that_leaves_out_an_earlier_resume_is_refused"
+  },
+  {
+   "id": "THE_STATED_CHAIN_IS_NOT_BOUND",
+   "edit": "resume_reserve_at_state() does not compare the chain with the stated bytes",
+   "caught_by": [
+    "test_a_chain_that_does_not_begin_with_the_stated_one_is_refused"
+   ],
+   "outcome": "CAUGHT",
+   "suite_result": "Ran 1 test in 0.102s FAILED (failures=1)",
+   "why_it_matters": "a chain whose charges were changed after the state would be read as the stated one",
+   "run": "2026-09-30, an isolated sparse clone, acquisition-extension/extension_injections.py; failed cases test_a_chain_that_does_not_begin_with_the_stated_one_is_refused"
+  }
+ ],
+ "method": "Each injection replaced named code in one of scripts/vnext/historical_sec_session.py, scripts/vnext/historical_event_sources.py or tools/vnext_historical_wiring.py, then the phase-one selector set was run in full - the same set the builder runs, read from the suite rather than listed - and the file was restored from a copy taken beforehand. Two are run differently and say so: one has its catching cases in phase two, so the whole builder was run against the injected tree; one is recorded with the three cases that passed under it, because which cases cannot tell the difference is the point of the case that can.",
+ "production_authorized": false,
+ "real_sec_credit": false,
+ "record_type": "ISSUE_47_ACQUISITION_FAULT_INJECTIONS",
+ "schema_version": 1,
+ "what_this_does_not_establish": "That the suite catches defects it has no case for. Of the thirteen injections, three were designed against cases that already existed and the third of the first round found that a case was missing and is recorded with its first, passing run. Nor does any of them establish that a builder corrupted and then re-run cannot produce a smaller receipt that is self-consistent: what the hashes establish is that the artifact on disk corresponds to this builder and this suite.",
+ "why_this_is_a_file_and_not_a_boolean": "A fault injection means editing the source and re-running the suite. The receipt builder runs in one process against one tree, so it cannot perform one, and a builder that writes fault_injections_caught: true regardless is asserting something it did not observe. This records what was actually run, so the claim can be checked rather than believed."
+}

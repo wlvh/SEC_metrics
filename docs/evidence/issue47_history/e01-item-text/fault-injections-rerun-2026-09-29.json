@@ -1,0 +1,58 @@
+[
+ {
+  "id": "READ_TO_THE_END_OF_THE_DOCUMENT",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_cross_reference_that_looks_like_the_next_heading_is_refused",
+   "test_a_sentence_ending_in_an_item_reference_does_not_start_that_item",
+   "test_consecutive_headings_of_one_item_are_one_item",
+   "test_every_saved_8_01_is_located_once",
+   "test_every_saved_candidate_reads_the_text_it_read_before",
+   "test_the_text_is_the_one_an_independent_reading_finds"
+  ],
+  "suite_result": "FAILED (failures=86)"
+ },
+ {
+  "id": "ANY_LOWERCASE_WORD_MAKES_A_REFERENCE",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_checkbox_glyph_before_the_heading_is_not_a_reference",
+   "test_a_window_with_a_candidate_is_withheld_by_name",
+   "test_every_candidate_item_is_read_from_its_own_text",
+   "test_every_saved_8_01_is_located_once",
+   "test_every_saved_candidate_reads_the_text_it_read_before",
+   "test_hidden_text_outside_the_item_is_not_this_item_s",
+   "test_the_text_is_the_one_an_independent_reading_finds"
+  ],
+  "suite_result": "FAILED (failures=1, errors=12)"
+ },
+ {
+  "id": "A_QUOTE_DOES_NOT_MAKE_A_REFERENCE",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_quoted_title_is_a_reference"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "EACH_SUB_ITEM_HEADING_IS_ITS_OWN_ITEM",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_consecutive_headings_of_one_item_are_one_item"
+  ],
+  "suite_result": "FAILED (errors=1)"
+ },
+ {
+  "id": "TAKE_THE_FIRST_OF_TWO_HEADINGS",
+  "file": "scripts/vnext/historical_event_items.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_an_item_headed_twice_around_another_is_refused"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ }
+]

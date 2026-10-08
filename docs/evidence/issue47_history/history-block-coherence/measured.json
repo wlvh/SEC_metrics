@@ -1,0 +1,2457 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "indexes": {
+  "CIK0000018926.json": {
+   "blocks": [
+    {
+     "count_matches_declared": false,
+     "declared_count": 1648,
+     "declared_from": "1994-01-06",
+     "declared_to": "2015-08-31",
+     "fetched_utc": "2026-07-06T07:23:02.647304+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000018926-submissions-001.json",
+     "next_newer_start": "2015-09-02",
+     "outside_declared_range": {},
+     "rows": 1645,
+     "saved": true
+    }
+   ],
+   "declared_blocks": 1,
+   "fetched_utc": "2026-08-17T10:53:05.432745+00:00",
+   "gap_days": [
+    {
+     "block": "CIK0000018926-submissions-001.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2015-09-01"
+    }
+   ],
+   "gap_days_between_declared_ranges": {
+    "2": 1
+   },
+   "gap_days_that_start_a_fiscal_year_with_filings": [],
+   "gap_days_with_filings": 0,
+   "saved_blocks": 1,
+   "saved_blocks_count_matches": 0,
+   "saved_blocks_every_row_before_next_newer_start": 1,
+   "saved_blocks_with_rows_after_declared_end": 0
+  },
+  "CIK0000019617.json": {
+   "blocks": [
+    {
+     "count_matches_declared": true,
+     "declared_count": 2039,
+     "declared_from": "2025-08-25",
+     "declared_to": "2025-09-27",
+     "fetched_utc": "2026-09-29T08:59:29.794024+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 1,
+     "name": "CIK0000019617-submissions-001.json",
+     "next_newer_start": "2025-09-29",
+     "outside_declared_range": {},
+     "rows": 2039,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2054,
+     "declared_from": "2025-07-22",
+     "declared_to": "2025-08-23",
+     "fetched_utc": "2026-09-29T08:59:30.325550+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 1,
+     "name": "CIK0000019617-submissions-002.json",
+     "next_newer_start": "2025-08-25",
+     "outside_declared_range": {},
+     "rows": 2054,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2033,
+     "declared_from": "2025-06-16",
+     "declared_to": "2025-07-20",
+     "fetched_utc": "2026-09-29T08:59:30.910821+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 4,
+     "name": "CIK0000019617-submissions-003.json",
+     "next_newer_start": "2025-07-22",
+     "outside_declared_range": {
+      "after_declared_end+1": 56
+     },
+     "rows": 2033,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2040,
+     "declared_from": "2025-05-05",
+     "declared_to": "2025-06-14",
+     "fetched_utc": "2026-09-29T08:59:31.458596+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 2,
+     "name": "CIK0000019617-submissions-004.json",
+     "next_newer_start": "2025-06-16",
+     "outside_declared_range": {},
+     "rows": 2040,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2059,
+     "declared_from": "2025-04-02",
+     "declared_to": "2025-05-03",
+     "fetched_utc": "2026-09-29T08:59:32.032919+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 5,
+     "name": "CIK0000019617-submissions-005.json",
+     "next_newer_start": "2025-05-05",
+     "outside_declared_range": {},
+     "rows": 2059,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2032,
+     "declared_from": "2025-03-03",
+     "declared_to": "2025-03-31",
+     "fetched_utc": "2026-09-29T08:59:32.596480+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 0,
+     "name": "CIK0000019617-submissions-006.json",
+     "next_newer_start": "2025-04-02",
+     "outside_declared_range": {
+      "after_declared_end+1": 117
+     },
+     "rows": 2032,
+     "saved": true
+    },
+    {
+     "count_matches_declared": false,
+     "declared_count": 2023,
+     "declared_from": "2025-01-28",
+     "declared_to": "2025-03-01",
+     "fetched_utc": "2026-07-06T07:22:48.093461+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": false,
+     "kept_rows": 0,
+     "name": "CIK0000019617-submissions-007.json",
+     "next_newer_start": "2025-03-03",
+     "outside_declared_range": {
+      "before_declared_start-62": 95,
+      "before_declared_start-63": 174,
+      "before_declared_start-64": 77,
+      "before_declared_start-67": 119,
+      "before_declared_start-68": 58,
+      "before_declared_start-69": 55,
+      "before_declared_start-70": 121,
+      "before_declared_start-71": 71,
+      "before_declared_start-74": 64,
+      "before_declared_start-75": 99,
+      "before_declared_start-76": 47,
+      "before_declared_start-77": 121,
+      "before_declared_start-81": 52,
+      "before_declared_start-82": 60,
+      "before_declared_start-83": 70,
+      "before_declared_start-84": 87,
+      "before_declared_start-85": 183,
+      "before_declared_start-88": 121,
+      "before_declared_start-89": 151,
+      "before_declared_start-90": 123,
+      "before_declared_start-91": 136
+     },
+     "rows": 2084,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2084,
+     "declared_from": "2024-12-13",
+     "declared_to": "2025-01-26",
+     "fetched_utc": "2026-09-29T08:59:33.268960+00:00",
+     "frozen_rule_out_of_range": 1,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 6,
+     "name": "CIK0000019617-submissions-008.json",
+     "next_newer_start": "2025-01-28",
+     "outside_declared_range": {
+      "after_declared_end+1": 40
+     },
+     "rows": 2084,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2011,
+     "declared_from": "2024-11-12",
+     "declared_to": "2024-12-11",
+     "fetched_utc": "2026-09-29T08:59:33.785626+00:00",
+     "frozen_rule_out_of_range": 1,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 2,
+     "name": "CIK0000019617-submissions-009.json",
+     "next_newer_start": "2024-12-13",
+     "outside_declared_range": {
+      "after_declared_end+1": 77
+     },
+     "rows": 2011,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2105,
+     "declared_from": "2024-10-04",
+     "declared_to": "2024-11-10",
+     "fetched_utc": "2026-09-29T08:59:34.254270+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 4,
+     "name": "CIK0000019617-submissions-010.json",
+     "next_newer_start": "2024-11-12",
+     "outside_declared_range": {},
+     "rows": 2105,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2068,
+     "declared_from": "2024-08-30",
+     "declared_to": "2024-10-02",
+     "fetched_utc": "2026-09-29T08:59:34.755487+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 1,
+     "name": "CIK0000019617-submissions-011.json",
+     "next_newer_start": "2024-10-04",
+     "outside_declared_range": {
+      "after_declared_end+1": 60
+     },
+     "rows": 2068,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2005,
+     "declared_from": "2024-07-29",
+     "declared_to": "2024-08-28",
+     "fetched_utc": "2026-09-29T08:59:35.214996+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 1,
+     "name": "CIK0000019617-submissions-012.json",
+     "next_newer_start": "2024-08-30",
+     "outside_declared_range": {
+      "after_declared_end+1": 108
+     },
+     "rows": 2005,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2011,
+     "declared_from": "2024-06-24",
+     "declared_to": "2024-07-27",
+     "fetched_utc": "2026-09-29T08:59:35.672875+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 6,
+     "name": "CIK0000019617-submissions-013.json",
+     "next_newer_start": "2024-07-29",
+     "outside_declared_range": {},
+     "rows": 2011,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2008,
+     "declared_from": "2024-05-20",
+     "declared_to": "2024-06-22",
+     "fetched_utc": "2026-09-29T08:59:36.152283+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 3,
+     "name": "CIK0000019617-submissions-014.json",
+     "next_newer_start": "2024-06-24",
+     "outside_declared_range": {},
+     "rows": 2008,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2007,
+     "declared_from": "2024-04-11",
+     "declared_to": "2024-05-18",
+     "fetched_utc": "2026-09-29T08:59:36.625472+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 5,
+     "name": "CIK0000019617-submissions-015.json",
+     "next_newer_start": "2024-05-20",
+     "outside_declared_range": {},
+     "rows": 2007,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2146,
+     "declared_from": "2024-03-04",
+     "declared_to": "2024-04-09",
+     "fetched_utc": "2026-09-29T08:59:37.092619+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 4,
+     "name": "CIK0000019617-submissions-016.json",
+     "next_newer_start": "2024-04-11",
+     "outside_declared_range": {
+      "after_declared_end+1": 34
+     },
+     "rows": 2146,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2031,
+     "declared_from": "2024-01-25",
+     "declared_to": "2024-03-02",
+     "fetched_utc": "2026-09-29T08:59:37.561648+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 2,
+     "name": "CIK0000019617-submissions-017.json",
+     "next_newer_start": "2024-03-04",
+     "outside_declared_range": {},
+     "rows": 2031,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2001,
+     "declared_from": "2023-12-13",
+     "declared_to": "2024-01-23",
+     "fetched_utc": "2026-09-29T08:59:38.056059+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 5,
+     "name": "CIK0000019617-submissions-018.json",
+     "next_newer_start": "2024-01-25",
+     "outside_declared_range": {
+      "after_declared_end+1": 53
+     },
+     "rows": 2001,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2136,
+     "declared_from": "2023-11-02",
+     "declared_to": "2023-12-11",
+     "fetched_utc": "2026-09-29T08:59:38.566254+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 0,
+     "name": "CIK0000019617-submissions-019.json",
+     "next_newer_start": "2023-12-13",
+     "outside_declared_range": {
+      "after_declared_end+1": 97
+     },
+     "rows": 2136,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2050,
+     "declared_from": "2023-09-29",
+     "declared_to": "2023-10-31",
+     "fetched_utc": "2026-09-29T08:59:39.107404+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 4,
+     "name": "CIK0000019617-submissions-020.json",
+     "next_newer_start": "2023-11-02",
+     "outside_declared_range": {
+      "after_declared_end+1": 132
+     },
+     "rows": 2050,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2011,
+     "declared_from": "2023-08-24",
+     "declared_to": "2023-09-27",
+     "fetched_utc": "2026-09-29T08:59:39.608306+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 1,
+     "name": "CIK0000019617-submissions-021.json",
+     "next_newer_start": "2023-09-29",
+     "outside_declared_range": {
+      "after_declared_end+1": 134
+     },
+     "rows": 2011,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2079,
+     "declared_from": "2023-07-18",
+     "declared_to": "2023-08-22",
+     "fetched_utc": "2026-09-29T08:59:40.133252+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 1,
+     "name": "CIK0000019617-submissions-022.json",
+     "next_newer_start": "2023-08-24",
+     "outside_declared_range": {
+      "after_declared_end+1": 55
+     },
+     "rows": 2079,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2236,
+     "declared_from": "2023-06-02",
+     "declared_to": "2023-07-16",
+     "fetched_utc": "2026-09-29T08:59:40.591730+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 6,
+     "name": "CIK0000019617-submissions-023.json",
+     "next_newer_start": "2023-07-18",
+     "outside_declared_range": {
+      "after_declared_end+1": 45
+     },
+     "rows": 2236,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2032,
+     "declared_from": "2023-04-24",
+     "declared_to": "2023-05-31",
+     "fetched_utc": "2026-09-29T08:59:41.075701+00:00",
+     "frozen_rule_out_of_range": 1,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 5,
+     "name": "CIK0000019617-submissions-024.json",
+     "next_newer_start": "2023-06-02",
+     "outside_declared_range": {
+      "after_declared_end+1": 123
+     },
+     "rows": 2032,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2024,
+     "declared_from": "2023-03-10",
+     "declared_to": "2023-04-22",
+     "fetched_utc": "2026-09-29T08:59:41.534935+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 4,
+     "name": "CIK0000019617-submissions-025.json",
+     "next_newer_start": "2023-04-24",
+     "outside_declared_range": {},
+     "rows": 2024,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2126,
+     "declared_from": "2023-02-02",
+     "declared_to": "2023-03-08",
+     "fetched_utc": "2026-09-29T08:59:42.013016+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 2,
+     "name": "CIK0000019617-submissions-026.json",
+     "next_newer_start": "2023-03-10",
+     "outside_declared_range": {
+      "after_declared_end+1": 49
+     },
+     "rows": 2126,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2061,
+     "declared_from": "2022-12-13",
+     "declared_to": "2023-01-31",
+     "fetched_utc": "2026-09-29T08:59:42.473566+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 6,
+     "name": "CIK0000019617-submissions-027.json",
+     "next_newer_start": "2023-02-02",
+     "outside_declared_range": {
+      "after_declared_end+1": 30
+     },
+     "rows": 2061,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2086,
+     "declared_from": "2022-10-25",
+     "declared_to": "2022-12-11",
+     "fetched_utc": "2026-09-29T08:59:42.941792+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 0,
+     "name": "CIK0000019617-submissions-028.json",
+     "next_newer_start": "2022-12-13",
+     "outside_declared_range": {
+      "after_declared_end+1": 46
+     },
+     "rows": 2086,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2023,
+     "declared_from": "2022-09-19",
+     "declared_to": "2022-10-23",
+     "fetched_utc": "2026-09-29T08:59:43.454298+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 3,
+     "name": "CIK0000019617-submissions-029.json",
+     "next_newer_start": "2022-10-25",
+     "outside_declared_range": {
+      "after_declared_end+1": 27
+     },
+     "rows": 2023,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2062,
+     "declared_from": "2022-08-09",
+     "declared_to": "2022-09-17",
+     "fetched_utc": "2026-09-29T08:59:43.956059+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 3,
+     "name": "CIK0000019617-submissions-030.json",
+     "next_newer_start": "2022-09-19",
+     "outside_declared_range": {},
+     "rows": 2062,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2058,
+     "declared_from": "2022-07-01",
+     "declared_to": "2022-08-07",
+     "fetched_utc": "2026-09-29T08:59:44.497715+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 5,
+     "name": "CIK0000019617-submissions-031.json",
+     "next_newer_start": "2022-08-09",
+     "outside_declared_range": {
+      "after_declared_end+1": 126
+     },
+     "rows": 2058,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2037,
+     "declared_from": "2022-05-17",
+     "declared_to": "2022-06-29",
+     "fetched_utc": "2026-09-29T08:59:45.023424+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 5,
+     "name": "CIK0000019617-submissions-032.json",
+     "next_newer_start": "2022-07-01",
+     "outside_declared_range": {
+      "after_declared_end+1": 82
+     },
+     "rows": 2037,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2186,
+     "declared_from": "2022-04-04",
+     "declared_to": "2022-05-15",
+     "fetched_utc": "2026-09-29T08:59:45.458599+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 5,
+     "name": "CIK0000019617-submissions-033.json",
+     "next_newer_start": "2022-05-17",
+     "outside_declared_range": {
+      "after_declared_end+1": 51
+     },
+     "rows": 2186,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2013,
+     "declared_from": "2022-02-15",
+     "declared_to": "2022-04-02",
+     "fetched_utc": "2026-09-29T08:59:45.923120+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 2,
+     "name": "CIK0000019617-submissions-034.json",
+     "next_newer_start": "2022-04-04",
+     "outside_declared_range": {},
+     "rows": 2013,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2018,
+     "declared_from": "2021-12-23",
+     "declared_to": "2022-02-13",
+     "fetched_utc": "2026-09-29T08:59:46.468510+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 5,
+     "name": "CIK0000019617-submissions-035.json",
+     "next_newer_start": "2022-02-15",
+     "outside_declared_range": {
+      "after_declared_end+1": 18
+     },
+     "rows": 2018,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2030,
+     "declared_from": "2021-10-28",
+     "declared_to": "2021-12-21",
+     "fetched_utc": "2026-09-29T08:59:46.944283+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 5,
+     "name": "CIK0000019617-submissions-036.json",
+     "next_newer_start": "2021-12-23",
+     "outside_declared_range": {
+      "after_declared_end+1": 30
+     },
+     "rows": 2030,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2041,
+     "declared_from": "2021-09-01",
+     "declared_to": "2021-10-26",
+     "fetched_utc": "2026-09-29T08:59:47.405402+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 3,
+     "name": "CIK0000019617-submissions-037.json",
+     "next_newer_start": "2021-10-28",
+     "outside_declared_range": {
+      "after_declared_end+1": 42
+     },
+     "rows": 2041,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2044,
+     "declared_from": "2021-06-22",
+     "declared_to": "2021-08-30",
+     "fetched_utc": "2026-09-29T08:59:47.876543+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 8,
+     "name": "CIK0000019617-submissions-038.json",
+     "next_newer_start": "2021-09-01",
+     "outside_declared_range": {
+      "after_declared_end+1": 82
+     },
+     "rows": 2044,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2043,
+     "declared_from": "2021-04-20",
+     "declared_to": "2021-06-20",
+     "fetched_utc": "2026-09-29T08:59:48.310093+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 7,
+     "name": "CIK0000019617-submissions-039.json",
+     "next_newer_start": "2021-06-22",
+     "outside_declared_range": {
+      "after_declared_end+1": 78
+     },
+     "rows": 2043,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2004,
+     "declared_from": "2021-02-19",
+     "declared_to": "2021-04-18",
+     "fetched_utc": "2026-09-29T08:59:48.795751+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 9,
+     "name": "CIK0000019617-submissions-040.json",
+     "next_newer_start": "2021-04-20",
+     "outside_declared_range": {
+      "after_declared_end+1": 77
+     },
+     "rows": 2004,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2044,
+     "declared_from": "2020-12-15",
+     "declared_to": "2021-02-17",
+     "fetched_utc": "2026-09-29T08:59:49.271905+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 7,
+     "name": "CIK0000019617-submissions-041.json",
+     "next_newer_start": "2021-02-19",
+     "outside_declared_range": {
+      "after_declared_end+1": 42
+     },
+     "rows": 2044,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2054,
+     "declared_from": "2020-09-15",
+     "declared_to": "2020-12-13",
+     "fetched_utc": "2026-09-29T08:59:49.720560+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 9,
+     "name": "CIK0000019617-submissions-042.json",
+     "next_newer_start": "2020-12-15",
+     "outside_declared_range": {
+      "after_declared_end+1": 19
+     },
+     "rows": 2054,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2018,
+     "declared_from": "2020-06-08",
+     "declared_to": "2020-09-13",
+     "fetched_utc": "2026-09-29T08:59:50.264071+00:00",
+     "frozen_rule_out_of_range": 1,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 5,
+     "name": "CIK0000019617-submissions-043.json",
+     "next_newer_start": "2020-09-15",
+     "outside_declared_range": {
+      "after_declared_end+1": 23
+     },
+     "rows": 2018,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2014,
+     "declared_from": "2020-03-18",
+     "declared_to": "2020-06-06",
+     "fetched_utc": "2026-09-29T08:59:50.781707+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 9,
+     "name": "CIK0000019617-submissions-044.json",
+     "next_newer_start": "2020-06-08",
+     "outside_declared_range": {},
+     "rows": 2014,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2002,
+     "declared_from": "2020-01-09",
+     "declared_to": "2020-03-16",
+     "fetched_utc": "2026-09-29T08:59:51.251693+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 10,
+     "name": "CIK0000019617-submissions-045.json",
+     "next_newer_start": "2020-03-18",
+     "outside_declared_range": {
+      "after_declared_end+1": 53
+     },
+     "rows": 2002,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2006,
+     "declared_from": "2019-10-21",
+     "declared_to": "2020-01-07",
+     "fetched_utc": "2026-09-29T08:59:51.680544+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 4,
+     "name": "CIK0000019617-submissions-046.json",
+     "next_newer_start": "2020-01-09",
+     "outside_declared_range": {
+      "after_declared_end+1": 23
+     },
+     "rows": 2006,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2002,
+     "declared_from": "2019-07-23",
+     "declared_to": "2019-10-19",
+     "fetched_utc": "2026-09-29T08:59:52.182227+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 7,
+     "name": "CIK0000019617-submissions-047.json",
+     "next_newer_start": "2019-10-21",
+     "outside_declared_range": {},
+     "rows": 2002,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2038,
+     "declared_from": "2019-03-29",
+     "declared_to": "2019-07-21",
+     "fetched_utc": "2026-09-29T08:59:52.675304+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 11,
+     "name": "CIK0000019617-submissions-048.json",
+     "next_newer_start": "2019-07-23",
+     "outside_declared_range": {
+      "after_declared_end+1": 15
+     },
+     "rows": 2038,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2053,
+     "declared_from": "2018-12-04",
+     "declared_to": "2019-03-27",
+     "fetched_utc": "2026-09-29T08:59:53.193406+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 12,
+     "name": "CIK0000019617-submissions-049.json",
+     "next_newer_start": "2019-03-29",
+     "outside_declared_range": {
+      "after_declared_end+1": 51
+     },
+     "rows": 2053,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2021,
+     "declared_from": "2018-07-31",
+     "declared_to": "2018-12-02",
+     "fetched_utc": "2026-09-29T08:59:53.719275+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 8,
+     "name": "CIK0000019617-submissions-050.json",
+     "next_newer_start": "2018-12-04",
+     "outside_declared_range": {
+      "after_declared_end+1": 35
+     },
+     "rows": 2021,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2009,
+     "declared_from": "2018-03-26",
+     "declared_to": "2018-07-29",
+     "fetched_utc": "2026-09-29T08:59:54.363075+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 15,
+     "name": "CIK0000019617-submissions-051.json",
+     "next_newer_start": "2018-07-31",
+     "outside_declared_range": {
+      "after_declared_end+1": 51
+     },
+     "rows": 2009,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2015,
+     "declared_from": "2017-11-02",
+     "declared_to": "2018-03-24",
+     "fetched_utc": "2026-09-29T08:59:54.921986+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 12,
+     "name": "CIK0000019617-submissions-052.json",
+     "next_newer_start": "2018-03-26",
+     "outside_declared_range": {},
+     "rows": 2015,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2003,
+     "declared_from": "2017-06-09",
+     "declared_to": "2017-10-31",
+     "fetched_utc": "2026-09-29T08:59:55.378358+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 13,
+     "name": "CIK0000019617-submissions-053.json",
+     "next_newer_start": "2017-11-02",
+     "outside_declared_range": {
+      "after_declared_end+1": 14
+     },
+     "rows": 2003,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2015,
+     "declared_from": "2017-01-23",
+     "declared_to": "2017-06-07",
+     "fetched_utc": "2026-09-29T08:59:55.865768+00:00",
+     "frozen_rule_out_of_range": 1,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 16,
+     "name": "CIK0000019617-submissions-054.json",
+     "next_newer_start": "2017-06-09",
+     "outside_declared_range": {
+      "after_declared_end+1": 9
+     },
+     "rows": 2015,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2005,
+     "declared_from": "2016-08-09",
+     "declared_to": "2017-01-21",
+     "fetched_utc": "2026-09-29T08:59:56.322556+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 20,
+     "name": "CIK0000019617-submissions-055.json",
+     "next_newer_start": "2017-01-23",
+     "outside_declared_range": {},
+     "rows": 2005,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2003,
+     "declared_from": "2016-01-29",
+     "declared_to": "2016-08-07",
+     "fetched_utc": "2026-09-29T08:59:56.802828+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 21,
+     "name": "CIK0000019617-submissions-056.json",
+     "next_newer_start": "2016-08-09",
+     "outside_declared_range": {
+      "after_declared_end+1": 8
+     },
+     "rows": 2003,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2003,
+     "declared_from": "2015-08-06",
+     "declared_to": "2016-01-27",
+     "fetched_utc": "2026-09-29T08:59:57.296773+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 15,
+     "name": "CIK0000019617-submissions-057.json",
+     "next_newer_start": "2016-01-29",
+     "outside_declared_range": {
+      "after_declared_end+1": 31
+     },
+     "rows": 2003,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2002,
+     "declared_from": "2015-02-23",
+     "declared_to": "2015-08-04",
+     "fetched_utc": "2026-09-29T08:59:57.834781+00:00",
+     "frozen_rule_out_of_range": 1,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 28,
+     "name": "CIK0000019617-submissions-058.json",
+     "next_newer_start": "2015-08-06",
+     "outside_declared_range": {
+      "after_declared_end+1": 34
+     },
+     "rows": 2002,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2024,
+     "declared_from": "2014-08-26",
+     "declared_to": "2015-02-21",
+     "fetched_utc": "2026-09-29T08:59:58.439222+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 18,
+     "name": "CIK0000019617-submissions-059.json",
+     "next_newer_start": "2015-02-23",
+     "outside_declared_range": {},
+     "rows": 2024,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2016,
+     "declared_from": "2014-01-31",
+     "declared_to": "2014-08-24",
+     "fetched_utc": "2026-09-29T08:59:58.938929+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 21,
+     "name": "CIK0000019617-submissions-060.json",
+     "next_newer_start": "2014-08-26",
+     "outside_declared_range": {
+      "after_declared_end+1": 3
+     },
+     "rows": 2016,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2012,
+     "declared_from": "2013-06-11",
+     "declared_to": "2014-01-29",
+     "fetched_utc": "2026-09-29T08:59:59.514452+00:00",
+     "frozen_rule_out_of_range": 1,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 27,
+     "name": "CIK0000019617-submissions-061.json",
+     "next_newer_start": "2014-01-31",
+     "outside_declared_range": {
+      "after_declared_end+1": 34
+     },
+     "rows": 2012,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2003,
+     "declared_from": "2012-10-25",
+     "declared_to": "2013-06-09",
+     "fetched_utc": "2026-09-29T09:00:00.136488+00:00",
+     "frozen_rule_out_of_range": 1,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 27,
+     "name": "CIK0000019617-submissions-062.json",
+     "next_newer_start": "2013-06-11",
+     "outside_declared_range": {
+      "after_declared_end+1": 2
+     },
+     "rows": 2003,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2001,
+     "declared_from": "2011-12-21",
+     "declared_to": "2012-10-23",
+     "fetched_utc": "2026-09-29T09:00:00.721261+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 28,
+     "name": "CIK0000019617-submissions-063.json",
+     "next_newer_start": "2012-10-25",
+     "outside_declared_range": {
+      "after_declared_end+1": 13
+     },
+     "rows": 2001,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2014,
+     "declared_from": "2011-01-12",
+     "declared_to": "2011-12-19",
+     "fetched_utc": "2026-09-29T09:00:01.424423+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 40,
+     "name": "CIK0000019617-submissions-064.json",
+     "next_newer_start": "2011-12-21",
+     "outside_declared_range": {
+      "after_declared_end+1": 8
+     },
+     "rows": 2014,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2008,
+     "declared_from": "2009-10-02",
+     "declared_to": "2011-01-10",
+     "fetched_utc": "2026-09-29T09:00:02.000248+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 36,
+     "name": "CIK0000019617-submissions-065.json",
+     "next_newer_start": "2011-01-12",
+     "outside_declared_range": {
+      "after_declared_end+1": 14
+     },
+     "rows": 2008,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2003,
+     "declared_from": "2008-06-27",
+     "declared_to": "2009-09-30",
+     "fetched_utc": "2026-09-29T09:00:02.517126+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 126,
+     "name": "CIK0000019617-submissions-066.json",
+     "next_newer_start": "2009-10-02",
+     "outside_declared_range": {
+      "after_declared_end+1": 6
+     },
+     "rows": 2003,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2000,
+     "declared_from": "2007-09-20",
+     "declared_to": "2008-06-25",
+     "fetched_utc": "2026-09-29T09:00:03.117658+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000019617-submissions-067.json",
+     "next_newer_start": "2008-06-27",
+     "outside_declared_range": {
+      "after_declared_end+1": 8
+     },
+     "rows": 2000,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2002,
+     "declared_from": "2006-08-03",
+     "declared_to": "2007-09-18",
+     "fetched_utc": "2026-09-29T09:00:03.725219+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000019617-submissions-068.json",
+     "next_newer_start": "2007-09-20",
+     "outside_declared_range": {
+      "after_declared_end+1": 7
+     },
+     "rows": 2002,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2018,
+     "declared_from": "2002-02-11",
+     "declared_to": "2006-08-01",
+     "fetched_utc": "2026-09-29T09:00:04.303079+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000019617-submissions-069.json",
+     "next_newer_start": "2006-08-03",
+     "outside_declared_range": {},
+     "rows": 2018,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 903,
+     "declared_from": "1994-01-20",
+     "declared_to": "2002-02-09",
+     "fetched_utc": "2026-09-29T09:00:04.820609+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000019617-submissions-070.json",
+     "next_newer_start": "2002-02-11",
+     "outside_declared_range": {},
+     "rows": 903,
+     "saved": true
+    }
+   ],
+   "declared_blocks": 70,
+   "fetched_utc": "2026-09-29T08:58:09.211288+00:00",
+   "gap_days": [
+    {
+     "block": "CIK0000019617-submissions-001.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2025-09-28"
+    },
+    {
+     "block": "CIK0000019617-submissions-002.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2025-08-24"
+    },
+    {
+     "block": "CIK0000019617-submissions-003.json",
+     "filings_by_form": {
+      "424B2": 52,
+      "FWP": 4
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2025-07-21"
+    },
+    {
+     "block": "CIK0000019617-submissions-004.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2025-06-15"
+    },
+    {
+     "block": "CIK0000019617-submissions-005.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2025-05-04"
+    },
+    {
+     "block": "CIK0000019617-submissions-006.json",
+     "filings_by_form": {
+      "424B2": 91,
+      "424B3": 12,
+      "424B8": 1,
+      "FWP": 13
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2025-04-01"
+    },
+    {
+     "block": "CIK0000019617-submissions-007.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2025-03-02"
+    },
+    {
+     "block": "CIK0000019617-submissions-008.json",
+     "filings_by_form": {
+      "424B2": 35,
+      "424B8": 1,
+      "8-K": 1,
+      "FWP": 3
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2025-01-27"
+    },
+    {
+     "block": "CIK0000019617-submissions-009.json",
+     "filings_by_form": {
+      "424B2": 70,
+      "424B3": 4,
+      "424B8": 1,
+      "8-K": 1,
+      "FWP": 1
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2024-12-12"
+    },
+    {
+     "block": "CIK0000019617-submissions-010.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2024-11-11"
+    },
+    {
+     "block": "CIK0000019617-submissions-011.json",
+     "filings_by_form": {
+      "424B2": 55,
+      "424B3": 1,
+      "FWP": 4
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2024-10-03"
+    },
+    {
+     "block": "CIK0000019617-submissions-012.json",
+     "filings_by_form": {
+      "424B2": 103,
+      "FWP": 5
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2024-08-29"
+    },
+    {
+     "block": "CIK0000019617-submissions-013.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2024-07-28"
+    },
+    {
+     "block": "CIK0000019617-submissions-014.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2024-06-23"
+    },
+    {
+     "block": "CIK0000019617-submissions-015.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2024-05-19"
+    },
+    {
+     "block": "CIK0000019617-submissions-016.json",
+     "filings_by_form": {
+      "424B2": 28,
+      "424B3": 2,
+      "FWP": 4
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2024-04-10"
+    },
+    {
+     "block": "CIK0000019617-submissions-017.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2024-03-03"
+    },
+    {
+     "block": "CIK0000019617-submissions-018.json",
+     "filings_by_form": {
+      "424B2": 52,
+      "FWP": 1
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2024-01-24"
+    },
+    {
+     "block": "CIK0000019617-submissions-019.json",
+     "filings_by_form": {
+      "144": 1,
+      "4": 2,
+      "424B2": 69,
+      "424B3": 22,
+      "FWP": 3
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2023-12-12"
+    },
+    {
+     "block": "CIK0000019617-submissions-020.json",
+     "filings_by_form": {
+      "10-Q": 1,
+      "424B2": 111,
+      "424B3": 12,
+      "424B8": 1,
+      "FWP": 6,
+      "IRANNOTICE": 1
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2023-11-01"
+    },
+    {
+     "block": "CIK0000019617-submissions-021.json",
+     "filings_by_form": {
+      "424B2": 128,
+      "424B3": 1,
+      "FWP": 5
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2023-09-28"
+    },
+    {
+     "block": "CIK0000019617-submissions-022.json",
+     "filings_by_form": {
+      "424B2": 50,
+      "FWP": 5
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2023-08-23"
+    },
+    {
+     "block": "CIK0000019617-submissions-023.json",
+     "filings_by_form": {
+      "424B2": 43,
+      "FWP": 2
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2023-07-17"
+    },
+    {
+     "block": "CIK0000019617-submissions-024.json",
+     "filings_by_form": {
+      "424B2": 100,
+      "424B3": 17,
+      "8-K": 1,
+      "FWP": 5
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2023-06-01"
+    },
+    {
+     "block": "CIK0000019617-submissions-025.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2023-04-23"
+    },
+    {
+     "block": "CIK0000019617-submissions-026.json",
+     "filings_by_form": {
+      "424B2": 46,
+      "FWP": 3
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2023-03-09"
+    },
+    {
+     "block": "CIK0000019617-submissions-027.json",
+     "filings_by_form": {
+      "424B2": 25,
+      "424B3": 4,
+      "FWP": 1
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2023-02-01"
+    },
+    {
+     "block": "CIK0000019617-submissions-028.json",
+     "filings_by_form": {
+      "424B2": 44,
+      "FWP": 2
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2022-12-12"
+    },
+    {
+     "block": "CIK0000019617-submissions-029.json",
+     "filings_by_form": {
+      "424B2": 25,
+      "424B8": 1,
+      "FWP": 1
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2022-10-24"
+    },
+    {
+     "block": "CIK0000019617-submissions-030.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2022-09-18"
+    },
+    {
+     "block": "CIK0000019617-submissions-031.json",
+     "filings_by_form": {
+      "424B2": 48,
+      "424B3": 28,
+      "424B8": 1,
+      "FWP": 49
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2022-08-08"
+    },
+    {
+     "block": "CIK0000019617-submissions-032.json",
+     "filings_by_form": {
+      "424B2": 77,
+      "424B3": 2,
+      "424B8": 1,
+      "FWP": 2
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2022-06-30"
+    },
+    {
+     "block": "CIK0000019617-submissions-033.json",
+     "filings_by_form": {
+      "424B2": 49,
+      "FWP": 2
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2022-05-16"
+    },
+    {
+     "block": "CIK0000019617-submissions-034.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2022-04-03"
+    },
+    {
+     "block": "CIK0000019617-submissions-035.json",
+     "filings_by_form": {
+      "424B2": 18
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2022-02-14"
+    },
+    {
+     "block": "CIK0000019617-submissions-036.json",
+     "filings_by_form": {
+      "424B2": 30
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2021-12-22"
+    },
+    {
+     "block": "CIK0000019617-submissions-037.json",
+     "filings_by_form": {
+      "424B2": 37,
+      "FWP": 5
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2021-10-27"
+    },
+    {
+     "block": "CIK0000019617-submissions-038.json",
+     "filings_by_form": {
+      "424B2": 68,
+      "424B3": 1,
+      "FWP": 13
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2021-08-31"
+    },
+    {
+     "block": "CIK0000019617-submissions-039.json",
+     "filings_by_form": {
+      "424B2": 71,
+      "FWP": 7
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2021-06-21"
+    },
+    {
+     "block": "CIK0000019617-submissions-040.json",
+     "filings_by_form": {
+      "4": 1,
+      "424B2": 69,
+      "424B3": 1,
+      "FWP": 6
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2021-04-19"
+    },
+    {
+     "block": "CIK0000019617-submissions-041.json",
+     "filings_by_form": {
+      "424B2": 30,
+      "FWP": 12
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2021-02-18"
+    },
+    {
+     "block": "CIK0000019617-submissions-042.json",
+     "filings_by_form": {
+      "424B2": 19
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2020-12-14"
+    },
+    {
+     "block": "CIK0000019617-submissions-043.json",
+     "filings_by_form": {
+      "424B2": 20,
+      "8-K": 1,
+      "FWP": 2
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2020-09-14"
+    },
+    {
+     "block": "CIK0000019617-submissions-044.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2020-06-07"
+    },
+    {
+     "block": "CIK0000019617-submissions-045.json",
+     "filings_by_form": {
+      "424B2": 53
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2020-03-17"
+    },
+    {
+     "block": "CIK0000019617-submissions-046.json",
+     "filings_by_form": {
+      "424B2": 16,
+      "SC 13G/A": 7
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2020-01-08"
+    },
+    {
+     "block": "CIK0000019617-submissions-047.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2019-10-20"
+    },
+    {
+     "block": "CIK0000019617-submissions-048.json",
+     "filings_by_form": {
+      "424B2": 15
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2019-07-22"
+    },
+    {
+     "block": "CIK0000019617-submissions-049.json",
+     "filings_by_form": {
+      "424B2": 47,
+      "FWP": 4
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2019-03-28"
+    },
+    {
+     "block": "CIK0000019617-submissions-050.json",
+     "filings_by_form": {
+      "424B2": 29,
+      "FWP": 6
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2018-12-03"
+    },
+    {
+     "block": "CIK0000019617-submissions-051.json",
+     "filings_by_form": {
+      "424B2": 51
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2018-07-30"
+    },
+    {
+     "block": "CIK0000019617-submissions-052.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2018-03-25"
+    },
+    {
+     "block": "CIK0000019617-submissions-053.json",
+     "filings_by_form": {
+      "10-Q": 1,
+      "424B2": 10,
+      "424B8": 3
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2017-11-01"
+    },
+    {
+     "block": "CIK0000019617-submissions-054.json",
+     "filings_by_form": {
+      "4": 1,
+      "424B2": 7,
+      "8-K": 1
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2017-06-08"
+    },
+    {
+     "block": "CIK0000019617-submissions-055.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2017-01-22"
+    },
+    {
+     "block": "CIK0000019617-submissions-056.json",
+     "filings_by_form": {
+      "13F-HR": 1,
+      "424B2": 7
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2016-08-08"
+    },
+    {
+     "block": "CIK0000019617-submissions-057.json",
+     "filings_by_form": {
+      "424B2": 23,
+      "SC 13G": 8
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2016-01-28"
+    },
+    {
+     "block": "CIK0000019617-submissions-058.json",
+     "filings_by_form": {
+      "424B2": 4,
+      "8-K": 1,
+      "CERTNYS": 1,
+      "FWP": 28
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2015-08-05"
+    },
+    {
+     "block": "CIK0000019617-submissions-059.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2015-02-22"
+    },
+    {
+     "block": "CIK0000019617-submissions-060.json",
+     "filings_by_form": {
+      "424B2": 1,
+      "FWP": 2
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2014-08-25"
+    },
+    {
+     "block": "CIK0000019617-submissions-061.json",
+     "filings_by_form": {
+      "424B2": 17,
+      "8-A12B": 1,
+      "8-K": 1,
+      "FWP": 3,
+      "SC 13G": 12
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2014-01-30"
+    },
+    {
+     "block": "CIK0000019617-submissions-062.json",
+     "filings_by_form": {
+      "8-K": 1,
+      "FWP": 1
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2013-06-10"
+    },
+    {
+     "block": "CIK0000019617-submissions-063.json",
+     "filings_by_form": {
+      "424B2": 4,
+      "FWP": 9
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2012-10-24"
+    },
+    {
+     "block": "CIK0000019617-submissions-064.json",
+     "filings_by_form": {
+      "424B2": 5,
+      "FWP": 3
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2011-12-20"
+    },
+    {
+     "block": "CIK0000019617-submissions-065.json",
+     "filings_by_form": {
+      "424B2": 5,
+      "424B8": 1,
+      "FWP": 8
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2011-01-11"
+    },
+    {
+     "block": "CIK0000019617-submissions-066.json",
+     "filings_by_form": {
+      "4": 1,
+      "424B2": 1,
+      "FWP": 4
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2009-10-01"
+    },
+    {
+     "block": "CIK0000019617-submissions-067.json",
+     "filings_by_form": {
+      "424B2": 2,
+      "8-K": 2,
+      "FWP": 4
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2008-06-26"
+    },
+    {
+     "block": "CIK0000019617-submissions-068.json",
+     "filings_by_form": {
+      "424B2": 2,
+      "8-K": 1,
+      "FWP": 4
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2007-09-19"
+    },
+    {
+     "block": "CIK0000019617-submissions-069.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2006-08-02"
+    },
+    {
+     "block": "CIK0000019617-submissions-070.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2002-02-10"
+    }
+   ],
+   "gap_days_between_declared_ranges": {
+    "2": 70
+   },
+   "gap_days_that_start_a_fiscal_year_with_filings": [],
+   "gap_days_with_filings": 50,
+   "saved_blocks": 70,
+   "saved_blocks_count_matches": 69,
+   "saved_blocks_every_row_before_next_newer_start": 69,
+   "saved_blocks_with_rows_after_declared_end": 51
+  },
+  "CIK0000037996.json": {
+   "blocks": [
+    {
+     "count_matches_declared": false,
+     "declared_count": 2009,
+     "declared_from": "2008-01-03",
+     "declared_to": "2019-05-19",
+     "fetched_utc": "2026-07-06T07:22:35.448226+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 1,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 345,
+     "name": "CIK0000037996-submissions-001.json",
+     "next_newer_start": "2019-05-20",
+     "outside_declared_range": {},
+     "rows": 2005,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 1422,
+     "declared_from": "1994-01-20",
+     "declared_to": "2008-01-02",
+     "fetched_utc": "2026-07-06T07:22:36.874225+00:00",
+     "gap_days": 1,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000037996-submissions-002.json",
+     "next_newer_start": "2008-01-03",
+     "outside_declared_range": {},
+     "rows": 1422,
+     "saved": true
+    }
+   ],
+   "declared_blocks": 2,
+   "fetched_utc": "2026-08-17T10:53:00.546349+00:00",
+   "gap_days": [],
+   "gap_days_between_declared_ranges": {
+    "1": 2
+   },
+   "gap_days_that_start_a_fiscal_year_with_filings": [],
+   "gap_days_with_filings": 0,
+   "saved_blocks": 2,
+   "saved_blocks_count_matches": 1,
+   "saved_blocks_every_row_before_next_newer_start": 2,
+   "saved_blocks_with_rows_after_declared_end": 0
+  },
+  "CIK0000078003.json": {
+   "blocks": [
+    {
+     "count_matches_declared": false,
+     "declared_count": 2005,
+     "declared_from": "2013-07-02",
+     "declared_to": "2021-01-31",
+     "fetched_utc": "2026-07-06T07:22:37.899362+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": false,
+     "kept_rows": 132,
+     "name": "CIK0000078003-submissions-001.json",
+     "next_newer_start": "2021-02-02",
+     "outside_declared_range": {
+      "before_declared_start-1": 3,
+      "before_declared_start-4": 4,
+      "before_declared_start-5": 3
+     },
+     "rows": 2001,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2000,
+     "declared_from": "2007-07-18",
+     "declared_to": "2013-06-30",
+     "fetched_utc": "2026-07-06T07:22:38.854871+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": false,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000078003-submissions-002.json",
+     "next_newer_start": "2013-07-02",
+     "outside_declared_range": {
+      "before_declared_start-1": 10
+     },
+     "rows": 2000,
+     "saved": true
+    },
+    {
+     "count_matches_declared": false,
+     "declared_count": 1654,
+     "declared_from": "1994-03-18",
+     "declared_to": "2007-07-16",
+     "fetched_utc": "2026-07-06T07:22:39.975447+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000078003-submissions-003.json",
+     "next_newer_start": "2007-07-18",
+     "outside_declared_range": {},
+     "rows": 1644,
+     "saved": true
+    }
+   ],
+   "declared_blocks": 3,
+   "fetched_utc": "2026-08-17T10:53:01.463917+00:00",
+   "gap_days": [
+    {
+     "block": "CIK0000078003-submissions-001.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2021-02-01"
+    },
+    {
+     "block": "CIK0000078003-submissions-002.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2013-07-01"
+    },
+    {
+     "block": "CIK0000078003-submissions-003.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2007-07-17"
+    }
+   ],
+   "gap_days_between_declared_ranges": {
+    "2": 3
+   },
+   "gap_days_that_start_a_fiscal_year_with_filings": [],
+   "gap_days_with_filings": 0,
+   "saved_blocks": 3,
+   "saved_blocks_count_matches": 1,
+   "saved_blocks_every_row_before_next_newer_start": 1,
+   "saved_blocks_with_rows_after_declared_end": 2
+  },
+  "CIK0000092380.json": {
+   "blocks": [
+    {
+     "count_matches_declared": false,
+     "declared_count": 1059,
+     "declared_from": "1995-01-13",
+     "declared_to": "2015-05-12",
+     "fetched_utc": "2026-07-06T07:22:34.347464+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000092380-submissions-001.json",
+     "next_newer_start": "2015-05-14",
+     "outside_declared_range": {},
+     "rows": 1047,
+     "saved": true
+    }
+   ],
+   "declared_blocks": 1,
+   "fetched_utc": "2026-08-17T10:52:59.399580+00:00",
+   "gap_days": [
+    {
+     "block": "CIK0000092380-submissions-001.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2015-05-13"
+    }
+   ],
+   "gap_days_between_declared_ranges": {
+    "2": 1
+   },
+   "gap_days_that_start_a_fiscal_year_with_filings": [],
+   "gap_days_with_filings": 0,
+   "saved_blocks": 1,
+   "saved_blocks_count_matches": 0,
+   "saved_blocks_every_row_before_next_newer_start": 1,
+   "saved_blocks_with_rows_after_declared_end": 0
+  },
+  "CIK0000794367.json": {
+   "blocks": [
+    {
+     "count_matches_declared": true,
+     "declared_count": 2001,
+     "declared_from": "2003-03-25",
+     "declared_to": "2016-04-02",
+     "fetched_utc": "2026-07-06T07:23:03.683348+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000794367-submissions-001.json",
+     "next_newer_start": "2016-04-04",
+     "outside_declared_range": {},
+     "rows": 2001,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 175,
+     "declared_from": "1995-04-20",
+     "declared_to": "2003-03-23",
+     "fetched_utc": "2026-07-06T07:23:04.481082+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000794367-submissions-002.json",
+     "next_newer_start": "2003-03-25",
+     "outside_declared_range": {
+      "after_declared_end+1": 1
+     },
+     "rows": 175,
+     "saved": true
+    }
+   ],
+   "declared_blocks": 2,
+   "fetched_utc": "2026-08-17T10:53:06.430218+00:00",
+   "gap_days": [
+    {
+     "block": "CIK0000794367-submissions-001.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2016-04-03"
+    },
+    {
+     "block": "CIK0000794367-submissions-002.json",
+     "filings_by_form": {
+      "8-K": 1
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2003-03-24"
+    }
+   ],
+   "gap_days_between_declared_ranges": {
+    "2": 2
+   },
+   "gap_days_that_start_a_fiscal_year_with_filings": [],
+   "gap_days_with_filings": 1,
+   "saved_blocks": 2,
+   "saved_blocks_count_matches": 2,
+   "saved_blocks_every_row_before_next_newer_start": 2,
+   "saved_blocks_with_rows_after_declared_end": 1
+  },
+  "CIK0000813828.json": {
+   "blocks": [
+    {
+     "count_matches_declared": false,
+     "declared_count": 2001,
+     "declared_from": "2007-07-12",
+     "declared_to": "2018-06-19",
+     "fetched_utc": "2026-07-06T07:23:05.605381+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 163,
+     "name": "CIK0000813828-submissions-001.json",
+     "next_newer_start": "2018-06-21",
+     "outside_declared_range": {},
+     "rows": 2000,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 1202,
+     "declared_from": "1994-01-07",
+     "declared_to": "2007-07-10",
+     "fetched_utc": "2026-07-06T07:23:06.848982+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0000813828-submissions-002.json",
+     "next_newer_start": "2007-07-12",
+     "outside_declared_range": {
+      "after_declared_end+1": 1
+     },
+     "rows": 1202,
+     "saved": true
+    }
+   ],
+   "declared_blocks": 2,
+   "fetched_utc": "2026-08-17T10:53:08.191852+00:00",
+   "gap_days": [
+    {
+     "block": "CIK0000813828-submissions-001.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2018-06-20"
+    },
+    {
+     "block": "CIK0000813828-submissions-002.json",
+     "filings_by_form": {
+      "4": 1
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2007-07-11"
+    }
+   ],
+   "gap_days_between_declared_ranges": {
+    "2": 2
+   },
+   "gap_days_that_start_a_fiscal_year_with_filings": [],
+   "gap_days_with_filings": 1,
+   "saved_blocks": 2,
+   "saved_blocks_count_matches": 1,
+   "saved_blocks_every_row_before_next_newer_start": 2,
+   "saved_blocks_with_rows_after_declared_end": 1
+  },
+  "CIK0001048286.json": {
+   "blocks": [
+    {
+     "count_matches_declared": false,
+     "declared_count": 2000,
+     "declared_from": "2005-02-25",
+     "declared_to": "2018-01-16",
+     "fetched_utc": "2026-07-06T07:22:32.563176+00:00",
+     "frozen_rule_out_of_range": 1,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": false,
+     "kept_rows": 187,
+     "name": "CIK0001048286-submissions-001.json",
+     "next_newer_start": "2018-01-18",
+     "outside_declared_range": {
+      "before_declared_start-10": 2,
+      "before_declared_start-11": 13,
+      "before_declared_start-2": 1,
+      "before_declared_start-8": 3
+     },
+     "rows": 2012,
+     "saved": true
+    },
+    {
+     "count_matches_declared": false,
+     "declared_count": 384,
+     "declared_from": "1998-02-13",
+     "declared_to": "2005-02-23",
+     "fetched_utc": "2026-07-06T07:22:33.358207+00:00",
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "metadata_parser_refused": "GOVERNANCE_PRIMARY_DOCUMENT_INVALID",
+     "name": "CIK0001048286-submissions-002.json",
+     "next_newer_start": "2005-02-25",
+     "outside_declared_range": {},
+     "rows": 365,
+     "saved": true
+    }
+   ],
+   "declared_blocks": 2,
+   "fetched_utc": "2026-09-08T15:06:43.720509+00:00",
+   "gap_days": [
+    {
+     "block": "CIK0001048286-submissions-001.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2018-01-17"
+    },
+    {
+     "block": "CIK0001048286-submissions-002.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2005-02-24"
+    }
+   ],
+   "gap_days_between_declared_ranges": {
+    "2": 2
+   },
+   "gap_days_that_start_a_fiscal_year_with_filings": [],
+   "gap_days_with_filings": 0,
+   "saved_blocks": 2,
+   "saved_blocks_count_matches": 0,
+   "saved_blocks_every_row_before_next_newer_start": 1,
+   "saved_blocks_with_rows_after_declared_end": 1
+  },
+  "CIK0001108524.json": {
+   "blocks": [
+    {
+     "count_matches_declared": false,
+     "declared_count": 2016,
+     "declared_from": "2018-11-26",
+     "declared_to": "2023-07-29",
+     "fetched_utc": "2026-07-06T07:22:56.192085+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 76,
+     "name": "CIK0001108524-submissions-001.json",
+     "next_newer_start": "2023-07-31",
+     "outside_declared_range": {},
+     "rows": 2010,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2000,
+     "declared_from": "2014-07-31",
+     "declared_to": "2018-11-24",
+     "fetched_utc": "2026-07-06T07:22:57.571750+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 73,
+     "name": "CIK0001108524-submissions-002.json",
+     "next_newer_start": "2018-11-26",
+     "outside_declared_range": {},
+     "rows": 2000,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2001,
+     "declared_from": "2008-06-12",
+     "declared_to": "2014-07-29",
+     "fetched_utc": "2026-07-06T07:22:58.792481+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 88,
+     "name": "CIK0001108524-submissions-003.json",
+     "next_newer_start": "2014-07-31",
+     "outside_declared_range": {
+      "after_declared_end+1": 1
+     },
+     "rows": 2001,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 2003,
+     "declared_from": "2006-02-15",
+     "declared_to": "2008-06-10",
+     "fetched_utc": "2026-07-06T07:23:00.014584+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 38,
+     "name": "CIK0001108524-submissions-004.json",
+     "next_newer_start": "2008-06-12",
+     "outside_declared_range": {
+      "after_declared_end+1": 2
+     },
+     "rows": 2003,
+     "saved": true
+    },
+    {
+     "count_matches_declared": true,
+     "declared_count": 670,
+     "declared_from": "2003-12-18",
+     "declared_to": "2006-02-13",
+     "fetched_utc": "2026-07-06T07:23:00.912378+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 26,
+     "name": "CIK0001108524-submissions-005.json",
+     "next_newer_start": "2006-02-15",
+     "outside_declared_range": {
+      "after_declared_end+1": 7
+     },
+     "rows": 670,
+     "saved": true
+    }
+   ],
+   "declared_blocks": 5,
+   "fetched_utc": "2026-08-17T10:53:04.399858+00:00",
+   "gap_days": [
+    {
+     "block": "CIK0001108524-submissions-001.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2023-07-30"
+    },
+    {
+     "block": "CIK0001108524-submissions-002.json",
+     "filings_by_form": {},
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2018-11-25"
+    },
+    {
+     "block": "CIK0001108524-submissions-003.json",
+     "filings_by_form": {
+      "4": 1
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2014-07-30"
+    },
+    {
+     "block": "CIK0001108524-submissions-004.json",
+     "filings_by_form": {
+      "4": 2
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2008-06-11"
+    },
+    {
+     "block": "CIK0001108524-submissions-005.json",
+     "filings_by_form": {
+      "4": 5,
+      "SC 13G/A": 2
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2006-02-14"
+    }
+   ],
+   "gap_days_between_declared_ranges": {
+    "2": 5
+   },
+   "gap_days_that_start_a_fiscal_year_with_filings": [],
+   "gap_days_with_filings": 3,
+   "saved_blocks": 5,
+   "saved_blocks_count_matches": 4,
+   "saved_blocks_every_row_before_next_newer_start": 5,
+   "saved_blocks_with_rows_after_declared_end": 3
+  },
+  "CIK0001463101.json": {
+   "blocks": [
+    {
+     "count_matches_declared": true,
+     "declared_count": 35,
+     "declared_from": "2009-05-06",
+     "declared_to": "2012-03-27",
+     "fetched_utc": "2026-07-06T07:23:07.704483+00:00",
+     "frozen_rule_out_of_range": 0,
+     "gap_days": 2,
+     "inside_declared_start_to_next_newer_start": true,
+     "kept_rows": 0,
+     "name": "CIK0001463101-submissions-001.json",
+     "next_newer_start": "2012-03-29",
+     "outside_declared_range": {
+      "after_declared_end+1": 7
+     },
+     "rows": 35,
+     "saved": true
+    }
+   ],
+   "declared_blocks": 1,
+   "fetched_utc": "2026-08-17T10:53:09.301327+00:00",
+   "gap_days": [
+    {
+     "block": "CIK0001463101-submissions-001.json",
+     "filings_by_form": {
+      "8-A12B": 1,
+      "CORRESP": 4,
+      "S-1/A": 1,
+      "UPLOAD": 1
+     },
+     "first_day_of_a_fiscal_year": false,
+     "gap_day": "2012-03-28"
+    }
+   ],
+   "gap_days_between_declared_ranges": {
+    "2": 1
+   },
+   "gap_days_that_start_a_fiscal_year_with_filings": [],
+   "gap_days_with_filings": 1,
+   "saved_blocks": 1,
+   "saved_blocks_count_matches": 1,
+   "saved_blocks_every_row_before_next_newer_start": 1,
+   "saved_blocks_with_rows_after_declared_end": 1
+  }
+ },
+ "record_type": "ISSUE_47_SUBMISSIONS_BLOCK_BOUNDARIES"
+}

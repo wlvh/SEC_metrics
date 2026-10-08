@@ -1,0 +1,22 @@
+{
+ "record_type": "ISSUE_47_FAST_TIMEOUT_RESOLUTION",
+ "same_179_selectors": true,
+ "same_30_second_per_case_ceiling": true,
+ "first_status": "FAILED",
+ "first_jobs": 4,
+ "first_timed_out": [
+  "tests.vnext.test_b06_new_source.B06NewSourceTest.test_development_modes_rebuild_real_source_relations",
+  "tests.vnext.test_c04_source_only_install.C04MissingAnnualBootstrapFastTest",
+  "tests.vnext.test_historical_requirement_snapshot",
+  "tests.vnext.test_normal_text_input_v2"
+ ],
+ "rerun_status": "PASSED",
+ "rerun_jobs": 1,
+ "rerun_max_case_seconds": 26.689,
+ "why_rerun": "Resolve four timeouts after the two simultaneous Marriott D04 native builds completed; retain the initial failures and make no causal CI speed claim.",
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

@@ -186,6 +186,19 @@ def _defects(entry, registry):
     return matched
 
 
+def requested_period(report, outcome):
+    return outcome.get('period_request', report.get('period_request')) or {}
+
+
+def matches_period(request, period):
+    """Issuer fiscal labels and archive dates keep their original meanings."""
+    year = period['fiscal_year']
+    return ((not request.get('report_end') or request['report_end'] == period['period_end'])
+            and (not request.get('fiscal_year') or request['fiscal_year'] == year)
+            and (not request.get('fiscal_year_start') or request['fiscal_year_start'] <= year)
+            and (not request.get('fiscal_year_end') or year <= request['fiscal_year_end']))
+
+
 def build_company_view(*, root, company_id, current, defect_registry=None):
     """Recover every metric/period from native records, even pre-V2 states."""
     reports = []
@@ -201,7 +214,7 @@ def build_company_view(*, root, company_id, current, defect_registry=None):
     observations = {}; creations = {}; latest_requests = {}
     for report in reports:
         for metric in report['metrics']:
-            latest_requests[metric['metric_id']] = (report, metric)
+            latest_requests.setdefault(metric['metric_id'], []).append((report, metric))
             candidate = metric.get('last_verified_candidate')
             if candidate:
                 key = (metric['metric_id'], candidate['rows_root'], candidate['attempt_id'])
@@ -256,14 +269,15 @@ def build_company_view(*, root, company_id, current, defect_registry=None):
                      'current_input_matches': matches,
                      'current_input_status': 'MATCHED' if matches is True else 'MISMATCH_OR_FAILED' if matches is False else 'NOT_RECHECKED',
                      'latest_attempt_status': latest_status if latest_status not in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'} else outcome.get('status', latest_status),
-                     'latest_request_status': latest_requests.get(candidate['metric_id'], ({}, {}))[1].get('status'),
+                     'latest_request_status': next((outcome.get('status') for request_report, outcome in
+                         reversed(latest_requests.get(candidate['metric_id'], []))
+                         if matches_period(requested_period(request_report, outcome), manifest['target_period'])), None),
                      'result_validity': 'NOT_ASSESSED', 'replay_status': 'NOT_REPLAYED'}
             latest_report = reports[-1] if reports else {}
-            requested = latest_report.get('period_request') or {}
-            entry['requested_in_latest_execution'] = (candidate['metric_id'] in
-                {m['metric_id'] for m in latest_report.get('metrics', [])} and
-                (not requested.get('report_end') or requested['report_end'] == entry['period']['period_end']) and
-                (not requested.get('fiscal_year') or requested['fiscal_year'] == entry['period']['fiscal_year']))
+            entry['requested_in_latest_execution'] = any(
+                outcome['metric_id'] == candidate['metric_id'] and
+                matches_period(requested_period(latest_report, outcome), entry['period'])
+                for outcome in latest_report.get('metrics', []))
             entry['period_role'] = 'RUN_ARCHIVE_COORDINATE'
             entry.update(_measurement_period(entry, manifest))
             entry['defect_holds'] = _defects(entry, defect_registry or {})
@@ -279,13 +293,14 @@ def build_company_view(*, root, company_id, current, defect_registry=None):
     for report in reports:
         for outcome in report['metrics']:
             if not outcome.get('last_verified_candidate'):
-                pending[(outcome['metric_id'], str(report.get('period_request')))] = {
-                    'metric_id': outcome['metric_id'], 'period_request': report.get('period_request'),
+                period = requested_period(report, outcome)
+                pending[(outcome['metric_id'], str(period))] = {
+                    'metric_id': outcome['metric_id'], 'period_request': period,
                     'latest_attempt_status': outcome['status'], 'reason': outcome.get('reason'),
                     'source_checkpoint_id': report['source_checkpoint_id'], 'run_id': None,
                     'result_validity': 'NO_RESULT', 'current_input_matches': False}
                 if outcome.get('development_review_id'):
-                    pending[(outcome['metric_id'], str(report.get('period_request')))]['development_review_id'] = outcome['development_review_id']
+                    pending[(outcome['metric_id'], str(period))]['development_review_id'] = outcome['development_review_id']
     existing = list(entries)
     for value in pending.values():
         requested = value.get('period_request') or {}
@@ -322,7 +337,12 @@ def build_company_view(*, root, company_id, current, defect_registry=None):
     return view
 
 
-def read_company_results(*, state_root, company_id, defects_file=None, runtime_roots=()):
+def read_company_results(*, state_root, company_id, defects_file=None, runtime_roots=(), output_root=None):
+    if (Path(state_root)/'company-task.json').is_file():
+        from .company_current_records import read_current_company
+        return read_current_company(state_root=state_root, company_id=company_id,
+                                    defects_file=defects_file, output_root=output_root)
+    need(output_root is None, 'NATIVE_DAILY_OUTPUT_REQUIRES_SAVED_READER_OR_EXPLICIT_EXPORT_ENTRY')
     from .company_handoff import locked_company, recover_import
     with locked_company(state_root) as root:
         current = recover_for_read(root, runtime_roots)

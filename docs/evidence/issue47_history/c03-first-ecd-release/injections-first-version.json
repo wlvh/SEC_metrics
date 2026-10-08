@@ -1,0 +1,88 @@
+{
+ "ANY_ECD_SUFFIX_IS_ACCEPTED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_three_release_forms_and_nothing_else",
+  "failed_cases": [
+   "test_the_three_release_forms_and_nothing_else"
+  ],
+  "file": "scripts/vnext/historical_dei.py",
+  "modules": [
+   "tests.vnext.test_historical_ecd_release"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 30
+ },
+ "CONTROL": {
+  "returncodes": [
+   0,
+   0
+  ],
+  "seconds": 102
+ },
+ "ONLY_ONE_FROZEN_ECD_SPELLING_IS_WIDENED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_every_ecd_spelling_in_the_frozen_readers_is_widened",
+  "failed_cases": [
+   "test_every_ecd_spelling_in_the_frozen_readers_is_widened"
+  ],
+  "file": "scripts/vnext/historical_dei.py",
+  "modules": [
+   "tests.vnext.test_historical_ecd_release"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 29
+ },
+ "THE_AMENDMENT_NOTE_ASKS_WITH_THE_FROZEN_PATTERN": {
+  "caught_by_the_case_written_for_it": false,
+  "expected_case": "test_no_historical_function_reaches_the_question_without_a_view",
+  "failed_cases": [],
+  "file": "scripts/vnext/historical_amendment_note.py",
+  "modules": [
+   "tests.vnext.test_historical_dei"
+  ],
+  "returncodes": [
+   0
+  ],
+  "seconds": 73
+ },
+ "THE_ECD_QUESTION_IS_ANSWERED_WITH_THE_DEI_PATTERN": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_each_frozen_pattern_is_answered_by_its_own_widened_pattern",
+  "failed_cases": [
+   "test_a_four_digit_release_gets_the_frozen_answer",
+   "test_each_frozen_pattern_is_answered_by_its_own_widened_pattern",
+   "test_the_view_reads_the_first_release_and_the_next_proxy_is_recorded_as_it_comes_out",
+   "test_where_the_definition_gives_no_single_value_the_view_names_why"
+  ],
+  "file": "scripts/vnext/historical_dei.py",
+  "modules": [
+   "tests.vnext.test_historical_ecd_release"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 24
+ },
+ "THE_ECD_QUESTION_IS_NOT_WIDENED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_view_reads_the_first_release_and_the_next_proxy_is_recorded_as_it_comes_out",
+  "failed_cases": [
+   "test_each_frozen_pattern_is_answered_by_its_own_widened_pattern",
+   "test_the_view_reads_the_first_release_and_the_next_proxy_is_recorded_as_it_comes_out",
+   "test_where_the_definition_gives_no_single_value_the_view_names_why"
+  ],
+  "file": "scripts/vnext/historical_dei.py",
+  "modules": [
+   "tests.vnext.test_historical_ecd_release"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 24
+ },
+ "all_caught": false
+}

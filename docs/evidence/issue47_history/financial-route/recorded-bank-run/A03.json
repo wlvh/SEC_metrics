@@ -1,0 +1,84 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "jpmorgan_chase",
+ "index_capture": "REUSED_FROM_AN_EARLIER_RUN_OF_THIS_SCRIPT",
+ "installation": {
+  "binding_id": "sha256:e84e1c768edaec923dfd61e71242b2fe12ea9c4e64ddbaf4282a510827b9d7d2",
+  "source_proofs": [
+   "CIK0000019617.json",
+   "jpm-20251231.htm",
+   "CIK0000019617.json",
+   "CIK0000019617-submissions-001.json",
+   "CIK0000019617-submissions-002.json",
+   "CIK0000019617-submissions-003.json",
+   "CIK0000019617-submissions-004.json",
+   "CIK0000019617-submissions-005.json",
+   "CIK0000019617-submissions-006.json"
+  ]
+ },
+ "matches": {
+  "cold_read": true,
+  "ordinary_value": true
+ },
+ "metric_id": "A03",
+ "ordinary_value": "1.11",
+ "production_authorized": false,
+ "public_row": {
+  "evidence_count": 1,
+  "period_end": "2025-12-31",
+  "period_start": "2025-10-01",
+  "row_hash": "sha256:08e5a2e77e3bfc6a7077f295f8c9d6dede3c37c291c7d36edfd943dc689680b3",
+  "status": "MDA_OK",
+  "value": "1.11"
+ },
+ "report_end": "2025-12-31",
+ "run": {
+  "new_calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "publication": "PUBLISHED",
+  "quality": "EXACT",
+  "reason_code": "PASS",
+  "requirement_closure_hash": "sha256:cb95b4ada223835e8a81f3b9e7da0dcd8823253ed4a08ae8eb7525dad9fc8430",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:cb79ccd29628b37c26def9550825d178ddce5f8197b47618adf75797dbb23d2a",
+  "run_id": "run:historical-period:e84e1c768edaec923dfd61e71242b2fe12ea9c4e64ddbaf4282a510827b9d7d2",
+  "status": "FROZEN",
+  "target_period": {
+   "fiscal_year": 2025,
+   "period_end": "2025-12-31",
+   "period_start": "2025-10-01"
+  },
+  "value": "1.11"
+ },
+ "runtime_tree": "/tmp/claude-0/native/rt-fin",
+ "selection": {
+  "loaded_inventories": [
+   "CIK0000019617.json",
+   "CIK0000019617-submissions-001.json",
+   "CIK0000019617-submissions-002.json",
+   "CIK0000019617-submissions-003.json",
+   "CIK0000019617-submissions-004.json",
+   "CIK0000019617-submissions-005.json",
+   "CIK0000019617-submissions-006.json"
+  ],
+  "selection_id": "sha256:16b7ba6ede27c1d38960ff5dccf7d9016cf3bf050e20e12ab34ddbf3fa4705aa",
+  "target_accession": "0001628280-26-008131"
+ },
+ "separate_process_cold_read": {
+  "quality": "EXACT",
+  "records": 9,
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:cb79ccd29628b37c26def9550825d178ddce5f8197b47618adf75797dbb23d2a",
+  "run_id": "run:historical-period:e84e1c768edaec923dfd61e71242b2fe12ea9c4e64ddbaf4282a510827b9d7d2",
+  "status": "FROZEN",
+  "value": "1.11"
+ },
+ "source_root_is": "RECORDED_TEST_ONLY: this repository's saved bytes with the submissions index re-derived from its own saved history blocks"
+}

@@ -1,0 +1,54 @@
+{
+  "status": "PASSED",
+  "view_id": "run:sha256:5527877d0e1bc3531236a97fce50304842aa95219e4bb52f3bbb833d81f1aed5",
+  "checks": [
+    {
+      "check": "REVIEW_BINDINGS",
+      "status": "PASS"
+    },
+    {
+      "check": "REVIEW_ASSETS",
+      "status": "PASS"
+    },
+    {
+      "check": "REPOSITORY_BINDINGS",
+      "status": "PASS"
+    },
+    {
+      "check": "RESULT_EXACT_SET",
+      "status": "PASS"
+    },
+    {
+      "check": "RECORD_GRAPH_REPLAY",
+      "status": "PASS"
+    },
+    {
+      "check": "EXECUTION_SEMANTICS",
+      "status": "PASS"
+    },
+    {
+      "check": "ARTIFACT_EXACT_SET",
+      "status": "PASS"
+    }
+  ],
+  "artifact_hashes": {
+    "records.jsonl": {
+      "sha256": "014e43da8b5a65e8dd6a91943692028f0cbfbacf487011dae3751adc01261892",
+      "size": 236523
+    },
+    "review/sha256:418ae313980b192f74a667e3402f56b8fb69a7670e689c8369b81960a61ff2e0/review.md": {
+      "sha256": "82d131ab473c716c0780c75ecc90520ed3e8cb3401d4405504d6c911c92b7d73",
+      "size": 27064
+    },
+    "review/sha256:418ae313980b192f74a667e3402f56b8fb69a7670e689c8369b81960a61ff2e0/review_context.json": {
+      "sha256": "0b188dc91970cdbd96fe25fc08c14440c266db0082dd957fbcb239fea8a523cf",
+      "size": 69060
+    },
+    "review_decisions.jsonl": {
+      "sha256": "0cff3985438480bb2c369a4a7932479ee446afba6066ab02935807bc5dcbfdd2",
+      "size": 1691
+    }
+  },
+  "record_type": "VALIDATION_RECEIPT",
+  "validation_receipt_id": "sha256:16e2e765c4e20bc322a0a2f6376b32c8efb1f1c2bb4ad986ad061fdbed7c1c8d"
+}

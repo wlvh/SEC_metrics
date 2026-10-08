@@ -1,0 +1,149 @@
+{
+ "answer": "Not with the rules measured. The best combination removes 39 of the 94 and also removes 2 composition facts; the rest share the frozen labels' surface features with composition facts.",
+ "best_combination": {
+  "composition_facts_lost": [
+   {
+    "block": 279,
+    "position": "macys:2026-01-31",
+    "text": "9 of 10 Director nominees are independent"
+   },
+   {
+    "block": 307,
+    "position": "southwest_airlines:2025-12-31",
+    "text": "9 out of 11 members of the Board are independent."
+   }
+  ],
+  "removes": {
+   "COMMITTEE_OR_BOARD_FUNCTION": 7,
+   "COMPOSITION_FACT": 2,
+   "COMPOSITION_POLICY_OR_PROCESS": 3,
+   "NOT_BOARD_COMPOSITION": 39
+  },
+  "rules": [
+   "dollar_amount",
+   "short_block_under_80_characters",
+   "pay_terms",
+   "another_company_named_after_board_or_committee_of",
+   "board_of_directors_of_a_named_organisation",
+   "organisation_listed_with_since_year"
+  ]
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "category_totals": {
+  "COMMITTEE_OR_BOARD_FUNCTION": 19,
+  "COMPOSITION_FACT": 82,
+  "COMPOSITION_POLICY_OR_PROCESS": 51,
+  "NOT_BOARD_COMPOSITION": 94
+ },
+ "data": "the 246 excerpts the route selects for the ten committed positions, re-derived under the current code, each with its committed judgement",
+ "frozen_label_by_category": {
+  "COMMITTEE_OR_BOARD_FUNCTION | COMMITTEE": 18,
+  "COMMITTEE_OR_BOARD_FUNCTION | SIZE": 1,
+  "COMPOSITION_FACT | COMMITTEE": 42,
+  "COMPOSITION_FACT | INDEP": 9,
+  "COMPOSITION_FACT | INDEP+COMMITTEE": 11,
+  "COMPOSITION_FACT | SIZE": 15,
+  "COMPOSITION_FACT | SIZE+COMMITTEE": 4,
+  "COMPOSITION_FACT | SIZE+INDEP+COMMITTEE": 1,
+  "COMPOSITION_POLICY_OR_PROCESS | COMMITTEE": 36,
+  "COMPOSITION_POLICY_OR_PROCESS | INDEP": 9,
+  "COMPOSITION_POLICY_OR_PROCESS | INDEP+COMMITTEE": 3,
+  "COMPOSITION_POLICY_OR_PROCESS | SIZE": 3,
+  "NOT_BOARD_COMPOSITION | COMMITTEE": 84,
+  "NOT_BOARD_COMPOSITION | INDEP": 3,
+  "NOT_BOARD_COMPOSITION | INDEP+COMMITTEE": 2,
+  "NOT_BOARD_COMPOSITION | SIZE": 4,
+  "NOT_BOARD_COMPOSITION | SIZE+COMMITTEE": 1
+ },
+ "not_claimed": "that no rule exists; only that the ones a keyword selector can express were measured and none separates the sets",
+ "question": "All three meaning options exclude the same 94 excerpts. Can a deterministic rule remove them without removing any of the 82 composition facts, so that part of the repair need not wait for the decision?",
+ "record_type": "ISSUE_47_C02_DETERMINISTIC_NARROWING_MEASUREMENT",
+ "rules": {
+  "another_company_named_after_board_or_committee_of": {
+   "removes": {
+    "COMMITTEE_OR_BOARD_FUNCTION": 0,
+    "COMPOSITION_FACT": 0,
+    "COMPOSITION_POLICY_OR_PROCESS": 0,
+    "NOT_BOARD_COMPOSITION": 0
+   },
+   "rule": "\\b(?:board|audit committee|committee) of (?:[A-Z][\\w&.,'-]+\\s){1,6}(?:Inc|Corp|Corporation|Company|Ltd|LLC|plc|N\\.V\\.|S\\.A\\.|Group|Holdings)\\b"
+  },
+  "board_of_directors_of_a_named_organisation": {
+   "removes": {
+    "COMMITTEE_OR_BOARD_FUNCTION": 0,
+    "COMPOSITION_FACT": 0,
+    "COMPOSITION_POLICY_OR_PROCESS": 0,
+    "NOT_BOARD_COMPOSITION": 1
+   },
+   "rule": "\\bboard of directors of [A-Z]"
+  },
+  "committee_name_and_structure_word_not_in_one_sentence": {
+   "removes": {
+    "COMMITTEE_OR_BOARD_FUNCTION": 3,
+    "COMPOSITION_FACT": 28,
+    "COMPOSITION_POLICY_OR_PROCESS": 22,
+    "NOT_BOARD_COMPOSITION": 21
+   },
+   "rule": "the frozen committee label, required within one sentence"
+  },
+  "director_of_a_named_organisation": {
+   "removes": {
+    "COMMITTEE_OR_BOARD_FUNCTION": 0,
+    "COMPOSITION_FACT": 1,
+    "COMPOSITION_POLICY_OR_PROCESS": 2,
+    "NOT_BOARD_COMPOSITION": 3
+   },
+   "rule": "\\b(?:serves?|served) as (?:a|an) (?:independent )?director of [A-Z]|\\bdirector of [A-Z][a-z]"
+  },
+  "dollar_amount": {
+   "removes": {
+    "COMMITTEE_OR_BOARD_FUNCTION": 0,
+    "COMPOSITION_FACT": 0,
+    "COMPOSITION_POLICY_OR_PROCESS": 1,
+    "NOT_BOARD_COMPOSITION": 11
+   },
+   "rule": "\"$\" in the excerpt"
+  },
+  "organisation_listed_with_since_year": {
+   "removes": {
+    "COMMITTEE_OR_BOARD_FUNCTION": 0,
+    "COMPOSITION_FACT": 0,
+    "COMPOSITION_POLICY_OR_PROCESS": 0,
+    "NOT_BOARD_COMPOSITION": 2
+   },
+   "rule": "\\((?:since|from) \\d{4}"
+  },
+  "pay_terms": {
+   "removes": {
+    "COMMITTEE_OR_BOARD_FUNCTION": 7,
+    "COMPOSITION_FACT": 0,
+    "COMPOSITION_POLICY_OR_PROCESS": 2,
+    "NOT_BOARD_COMPOSITION": 29
+   },
+   "rule": "\\b(salary|salaries|bonus|retainer|fees?|award|equity plan|stock option|grant|perquisite|incentive)\\b"
+  },
+  "short_block_under_80_characters": {
+   "removes": {
+    "COMMITTEE_OR_BOARD_FUNCTION": 0,
+    "COMPOSITION_FACT": 2,
+    "COMPOSITION_POLICY_OR_PROCESS": 0,
+    "NOT_BOARD_COMPOSITION": 12
+   },
+   "rule": "len(text) < 80"
+  }
+ },
+ "what_this_means_for_the_repair": {
+  "either_way": "not decision-independent after all: the rule that removes the 94 without losing facts is not a keyword rule, so what replaces the selector depends on which reading the owner picks",
+  "option_1_composition_facts_only": "a successor that selects composition facts directly (board size and independence count statements, committee membership and chair designations) rather than narrowing the keyword selection; the 82 judged facts are its positive set and the 164 others its negative set",
+  "options_2_and_3": "a narrower keyword selection still carries excerpts outside every reading; a per-excerpt semantic review would be a new call type needing a model-call allowance"
+ },
+ "why_the_rest_do_not_separate": [
+  "a nominee biography naming another company's audit committee has the same words as a statement of who sits on this board's audit committee",
+  "an equity plan's definition of 'the Committee' and the compensation discussion's process text name the committee and a structure word",
+  "the only surface feature short labels share is length, and two of the shortest excerpts are the independence counts"
+ ]
+}

@@ -79,7 +79,7 @@ def export_results(*, state_root, output_root, company_id, runtime_roots=(), def
         staged.mkdir(parents=True)
         try:
             native = []; metric_rows = []; evidence_rows = []
-            from .publication import _csv_bytes, METRIC_FIELDS, EVIDENCE_FIELDS
+            from .csv_output import _csv_bytes, METRIC_FIELDS, EVIDENCE_FIELDS
             for entry in view['metrics']:
                 if not entry.get('run_id'):
                     period = entry.get('period_request') or {}

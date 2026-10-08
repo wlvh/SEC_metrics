@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/work/check_historical_income_conflict.py", line 20, in <module>
+    assert any(x['native_period']==['2025-08-08','2025-12-31'] and ['2025-08-07','2025-12-31'] in x['visible_periods'] for x in evidence),evidence
+           ^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/work/check_historical_income_conflict.py", line 20, in <genexpr>
+    assert any(x['native_period']==['2025-08-08','2025-12-31'] and ['2025-08-07','2025-12-31'] in x['visible_periods'] for x in evidence),evidence
+               ~^^^^^^^^^^^^^^^^^
+TypeError: string indices must be integers, not 'str'

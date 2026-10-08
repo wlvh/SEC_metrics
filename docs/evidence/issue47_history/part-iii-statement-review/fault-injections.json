@@ -1,0 +1,90 @@
+[
+ {
+  "id": "COUNT_BLOCKS_NOT_PARAGRAPHS",
+  "file": "scripts/vnext/historical_amendment_note.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_note_that_reads_right_on_an_amendment_that_files_statements",
+   "test_a_pointer_to_another_report",
+   "test_an_extra_sentence_after_an_approved_one",
+   "test_another_item_inside_what_the_approved_pattern_leaves_open",
+   "test_another_purpose_in_the_continuation",
+   "test_defined_terms_naming_another_registrant",
+   "test_no_no_change_statement",
+   "test_read_whole_it_is_the_approved_class",
+   "test_the_predecessor_s_event_window_is_cleared_and_its_statements_are_not"
+  ],
+  "suite_result": "FAILED (failures=7, errors=2)"
+ },
+ {
+  "id": "ACCEPT_ANY_CONTINUATION",
+  "file": "scripts/vnext/historical_amendment_note.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_another_purpose_in_the_continuation"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "THE_APPROVED_WIDE_MIDDLE",
+  "file": "scripts/vnext/historical_amendment_note.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_note_that_reads_right_on_an_amendment_that_files_statements",
+   "test_a_pointer_to_another_report",
+   "test_an_extra_sentence_after_an_approved_one",
+   "test_another_item_inside_what_the_approved_pattern_leaves_open",
+   "test_defined_terms_naming_another_registrant",
+   "test_no_no_change_statement",
+   "test_read_whole_it_is_the_approved_class",
+   "test_the_predecessor_s_event_window_is_cleared_and_its_statements_are_not",
+   "test_where_the_classifier_does_classify_the_reading_agrees"
+  ],
+  "suite_result": "FAILED (failures=6, errors=3)"
+ },
+ {
+  "id": "READ_ONLY_THE_FIRST_SENTENCE_OF_A_PARAGRAPH",
+  "file": "scripts/vnext/historical_amendment_note.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_an_extra_sentence_after_an_approved_one"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "NO_POINTER_CHECK",
+  "file": "scripts/vnext/historical_amendment_note.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_pointer_to_another_report"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "NO_CHANGE_STATEMENT_NOT_REQUIRED",
+  "file": "scripts/vnext/historical_amendment_note.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_no_no_change_statement"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "ANY_REGISTRANT_IN_DEFINED_TERMS",
+  "file": "scripts/vnext/historical_amendment_note.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_defined_terms_naming_another_registrant"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "SKIP_THE_PART_III_STRUCTURE",
+  "file": "scripts/vnext/historical_amendment_note.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_note_that_reads_right_on_an_amendment_that_files_statements"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ }
+]

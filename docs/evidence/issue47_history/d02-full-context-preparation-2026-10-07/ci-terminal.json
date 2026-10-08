@@ -1,0 +1,31 @@
+{
+  "head": "3853211374380a9220a94a8ed9ff29824e979bdd",
+  "main_ci": {
+    "id": 37542372460,
+    "status": "completed",
+    "conclusion": "failure",
+    "jobs_succeeded": 11,
+    "jobs_failed": 1,
+    "failed_job": "vNext fast suite",
+    "failures": [
+      {
+        "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_invalid_source_fiscal_label_and_cik_are_integrity_failures",
+        "return_code": 124,
+        "limit_seconds": 30
+      },
+      {
+        "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_04",
+        "return_code": 124,
+        "limit_seconds": 30
+      }
+    ]
+  },
+  "reference_ci": {
+    "id": 37542372475,
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "targeted_saved_answer_six_tests_seconds": 0.012,
+  "full_ci_claim": "NOT_ALL_GREEN",
+  "action": "Reported public runner failures to #28; limits/assertions unchanged, no blanket rerun."
+}

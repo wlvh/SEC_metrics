@@ -1,0 +1,77 @@
+{
+ "a_count_in_batch_json_this_corrects": {
+  "corrected": {
+   "of_which_are_answers": 7,
+   "of_which_name_missing_material_or_a_settled_policy": 43
+  },
+  "why_it_is_wrong": "the two NOT_MEANINGFUL / ANNUAL_DURATION_OUT_OF_RANGE positions (Paramount B01 and B03) are the Spec saying a 146-day first period is not an annual measurement. That is an answer on the same footing as DENOMINATOR_NONPOSITIVE, which the same field counts as one.",
+  "written": "three_layers.of_which_are_answers = 5, of_which_name_missing_material_or_a_settled_policy = 45"
+ },
+ "b06": {
+  "position": {
+   "company_id": "paramount_skydance_paramount_global",
+   "error": "HISTORICAL_B06_SUCCESSOR_SCOPE_NOT_IMPLEMENTED",
+   "error_type": "HistoricalDebtError",
+   "metric_id": "B06",
+   "selected_report_end": "2025-12-31",
+   "selection_id": "sha256:94f833a9be9a9bbeca5196bdca178a368b7f2533c09c01ec12d2128c61a45e2f",
+   "stage": "FAILED"
+  },
+  "what_it_proves": "the second failure was still the named refusal at this point, which is what made it a real second item rather than a duplicate of the first.",
+  "wired_in": "docs/evidence/issue47_history/b06-cascade/successor-subject.json"
+ },
+ "c03": {
+  "position": {
+   "applicability": "APPLICABLE",
+   "company_id": "paramount_skydance_paramount_global",
+   "evidence_count": 1,
+   "fiscal_year": 2025,
+   "metric_id": "C03",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "requirement_id": "issue_47_v1",
+   "row_fiscal_year": "2025",
+   "row_hash": "sha256:8c603b64f537078a61eb54a3f14b59b9bd1079989bf1bca72d1a09b922cc96f4",
+   "row_period_end": "2025-12-31",
+   "row_period_start": "2025-08-07",
+   "row_status": "MDA_OK",
+   "row_value": "63211569",
+   "run_id": "run:historical-period:b169124dfa80102322d2dfa1f9de6bc07696fccdbe82da3df6621b8a816f38fd",
+   "run_status": "FROZEN",
+   "selected_report_end": "2025-12-31",
+   "selection_id": "sha256:94f833a9be9a9bbeca5196bdca178a368b7f2533c09c01ec12d2128c61a45e2f",
+   "separate_process_replay": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "records": 10,
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:b169124dfa80102322d2dfa1f9de6bc07696fccdbe82da3df6621b8a816f38fd",
+    "status": "FROZEN",
+    "target_period": {
+     "fiscal_year": 2025,
+     "period_end": "2025-12-31",
+     "period_start": "2025-08-07"
+    },
+    "value": "63211569"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "63211569"
+  },
+  "what_it_proves": "frozen Run, public row, and a separate process reading the same run id and the same value back out of the Run's own bytes. Zero calls."
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "production_authorized": false,
+ "record_type": "ISSUE_47_BATCH_FAILURE_RERUN",
+ "why_this_exists": "batch.json says C03's failure was fixed in the commit that adds _check_bound_assets. That claim was made from `prepare_historical_run_input` in the repository tree, and the failure came from `create_historical_run` in the runtime tree - the exact gap that produced three defects in this session. So the fix needed a Run to stand on, not a component."
+}

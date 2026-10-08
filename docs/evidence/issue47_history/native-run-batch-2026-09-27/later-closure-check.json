@@ -1,0 +1,864 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "closures": {
+  "batch": [
+   "sha256:ad81126d9d4bf2aec666d3e521683892cceafc41487c28e56b6b2cbc8700718f"
+  ],
+  "re_run": [
+   "sha256:b55afbac3792634d308e887784c9e10bf64c9517b8a2cdf5d81e555765f66080"
+  ]
+ },
+ "differ": [
+  {
+   "case": "paramount-2025",
+   "fields_that_differ": {
+    "reason_code": [
+     "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+     "C04_COMPARABLE_AUDITOR_FACTS_MISSING"
+    ],
+    "result_id": [
+     "sha256:b0a4ef24ba3e8ac35629f205906beee0f82ccdac22ecc43691f0002efdc636df",
+     "sha256:f6616f6a8f7d985a8092c76a7895649c8b010d3e9b7758c3ceb0c224ebdf1ef5"
+    ]
+   },
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "southwest-2025",
+   "fields_that_differ": {
+    "publication": [
+     "WITHHELD",
+     "PUBLISHED"
+    ],
+    "quality": [
+     "NONE",
+     "EXACT"
+    ],
+    "reason_code": [
+     "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+     "PASS"
+    ],
+    "result_id": [
+     "sha256:66bed5acf542052540b3f0d767d6261643f678856ef802fe65e128818d114263",
+     "sha256:2171ae2f78349dafc0eca33c372693916c7b43de7c1e1c1908c1685ea071bdb6"
+    ],
+    "value": [
+     null,
+     "0"
+    ]
+   },
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  }
+ ],
+ "fields_compared": [
+  "stage",
+  "result_id",
+  "value",
+  "quality",
+  "publication",
+  "reason_code",
+  "error",
+  "category"
+ ],
+ "identical": 92,
+ "positions": 94,
+ "record_type": "ISSUE_47_LATER_CLOSURE_TARGETED_CHECK",
+ "rows": [
+  {
+   "case": "enphase-2025",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "enphase-2025",
+   "fields_that_differ": {},
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "enphase-2025",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "enphase-2025",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "enphase-2025",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "enphase-2025",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "ford-2025",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "ford-2025",
+   "fields_that_differ": {},
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "ford-2025",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "ford-2025",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "ford-2025",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "ford-2025",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "lumen-2025",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "lumen-2025",
+   "fields_that_differ": {},
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "lumen-2025",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "lumen-2025",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "lumen-2025",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "lumen-2025",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "macys-2026",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "macys-2026",
+   "fields_that_differ": {},
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "macys-2026",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "macys-2026",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "macys-2026",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "macys-2026",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2023",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "marriott-2023",
+   "fields_that_differ": {},
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2023",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2023",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2023",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "marriott-2023",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2024",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "marriott-2024",
+   "fields_that_differ": {},
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2024",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2024",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2024",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "marriott-2024",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2025",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2025",
+   "fields_that_differ": {},
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2025",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2025",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2025",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "marriott-2025",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2024",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2024",
+   "fields_that_differ": {},
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2024",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2024",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2024",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "paramount-2024",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2025",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2025",
+   "fields_that_differ": {
+    "reason_code": [
+     "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+     "C04_COMPARABLE_AUDITOR_FACTS_MISSING"
+    ],
+    "result_id": [
+     "sha256:b0a4ef24ba3e8ac35629f205906beee0f82ccdac22ecc43691f0002efdc636df",
+     "sha256:f6616f6a8f7d985a8092c76a7895649c8b010d3e9b7758c3ceb0c224ebdf1ef5"
+    ]
+   },
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2025",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2025",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2025",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "paramount-2025",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "pfizer-2025",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "pfizer-2025",
+   "fields_that_differ": {},
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "pfizer-2025",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "pfizer-2025",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "pfizer-2025",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "pfizer-2025",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "salesforce-2026",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "salesforce-2026",
+   "fields_that_differ": {},
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "salesforce-2026",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "salesforce-2026",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "salesforce-2026",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "salesforce-2026",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "southwest-2025",
+   "fields_that_differ": {},
+   "metric_id": "C02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "southwest-2025",
+   "fields_that_differ": {
+    "publication": [
+     "WITHHELD",
+     "PUBLISHED"
+    ],
+    "quality": [
+     "NONE",
+     "EXACT"
+    ],
+    "reason_code": [
+     "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+     "PASS"
+    ],
+    "result_id": [
+     "sha256:66bed5acf542052540b3f0d767d6261643f678856ef802fe65e128818d114263",
+     "sha256:2171ae2f78349dafc0eca33c372693916c7b43de7c1e1c1908c1685ea071bdb6"
+    ],
+    "value": [
+     null,
+     "0"
+    ]
+   },
+   "metric_id": "C04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "southwest-2025",
+   "fields_that_differ": {},
+   "metric_id": "D01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "southwest-2025",
+   "fields_that_differ": {},
+   "metric_id": "D02",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "southwest-2025",
+   "fields_that_differ": {},
+   "metric_id": "D04",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": null,
+   "stage": "FAILED"
+  },
+  {
+   "case": "southwest-2025",
+   "fields_that_differ": {},
+   "metric_id": "E01",
+   "re_run_directory": "newclosure-final",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "enphase-2025",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "ford-2025",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "lumen-2025",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "macys-2026",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2023",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2024",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2025",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2024",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2025",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "pfizer-2025",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "salesforce-2026",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "southwest-2025",
+   "fields_that_differ": {},
+   "metric_id": "C03",
+   "re_run_directory": "newclosure-final-c03",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "lumen-2025",
+   "fields_that_differ": {},
+   "metric_id": "B13",
+   "re_run_directory": "newclosure-final-b13",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "macys-2026",
+   "fields_that_differ": {},
+   "metric_id": "B13",
+   "re_run_directory": "newclosure-final-b13",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2023",
+   "fields_that_differ": {},
+   "metric_id": "B13",
+   "re_run_directory": "newclosure-final-b13",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2024",
+   "fields_that_differ": {},
+   "metric_id": "B13",
+   "re_run_directory": "newclosure-final-b13",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "marriott-2025",
+   "fields_that_differ": {},
+   "metric_id": "B13",
+   "re_run_directory": "newclosure-final-b13",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2024",
+   "fields_that_differ": {},
+   "metric_id": "B13",
+   "re_run_directory": "newclosure-final-b13",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "paramount-2025",
+   "fields_that_differ": {},
+   "metric_id": "B13",
+   "re_run_directory": "newclosure-final-b13",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "pfizer-2025",
+   "fields_that_differ": {},
+   "metric_id": "B13",
+   "re_run_directory": "newclosure-final-b13",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "salesforce-2026",
+   "fields_that_differ": {},
+   "metric_id": "B13",
+   "re_run_directory": "newclosure-final-b13",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  },
+  {
+   "case": "southwest-2025",
+   "fields_that_differ": {},
+   "metric_id": "B13",
+   "re_run_directory": "newclosure-final-b13",
+   "re_run_read_back_by_another_process": true,
+   "stage": "PUBLIC_ROW"
+  }
+ ],
+ "stages": {
+  "FAILED": 14,
+  "PUBLIC_ROW": 80
+ }
+}

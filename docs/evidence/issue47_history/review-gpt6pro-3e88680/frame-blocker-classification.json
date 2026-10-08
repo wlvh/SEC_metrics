@@ -1,0 +1,121 @@
+{
+ "SOURCE_MISSING_TARGET_ORIGINAL": {
+  "classification": "FIRST_BLOCKING_REASON_IS_SOURCE",
+  "note": "30 target-year originals was the first count and is withdrawn; the production planner's deduplicated set is 142 dependencies, and each target also needs the prior year's accession material.",
+  "positions": 1170
+ },
+ "TARGET_PERIOD_METADATA_BLOCKED": {
+  "classification": "FIRST_BLOCKING_REASON_IS_SOURCE",
+  "measured": "both JPMorgan, HISTORY_SNAPSHOT_CONFLICT from SEC re-partitioning",
+  "positions": 78
+ },
+ "TARGET_PERIOD_NOT_DISCOVERED": {
+  "jpmorgan_chase": {
+   "classification": "FIRST_BLOCKING_REASON_IS_SOURCE",
+   "measured": "68 catalog limitations: 57 HISTORY_SHARD_NOT_SAVED and 11 SAVED_HISTORY_INDEX_AND_BODY_ARE_NOT_A_COHERENT_SNAPSHOT. Only 2025-12-31 and 2024-12-31 are reachable.",
+   "positions": 117,
+   "target_ordinals": [
+    3,
+    4,
+    5
+   ]
+  },
+  "paramount_skydance_paramount_global": {
+   "classification": "PERIOD_CATALOG_DOES_NOT_CROSS_THE_SUBJECT_TRANSITION",
+   "measured": "zero catalog limitations - nothing is reported missing. The successor CIK 2041610 has exactly one 10-K (2025-12-31); the predecessor CIK 813828 has six (2024 back to 2019) and all six are already listed in this repository's saved submissions. The period catalog does not cross the subject transition, so the earlier ends are not discovered even though the filings are known.",
+   "ordinal_2_catalog_is_what_answers_first": {
+    "note": "the target original is on disk and the catalog reports nothing missing, so the catalog is the layer that blocks discovery here and that is implementation. The earlier key name claimed these 39 positions need no acquisition at all; that is withdrawn - see a_saved_primary_does_not_clear_the_position.",
+    "positions": 39,
+    "predecessor_accession": "0000813828-25-000005",
+    "primary_document": "para-20241231.htm",
+    "primary_saved": true,
+    "report_end": "2024-12-31"
+   },
+   "ordinals_3_to_5_need_both": {
+    "originals_not_saved": [
+     "para-20231231.htm",
+     "para-20221231.htm",
+     "viac-20211231.htm"
+    ],
+    "positions": 117
+   },
+   "positions": 156,
+   "target_ordinals": [
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "positions": 273
+ },
+ "a_saved_primary_does_not_clear_the_position": {
+  "conclusion": "at this position the period catalog is what answers first, and it is an implementation question. It is not the only cost: the prior-period accession material and all 15 in-window 2023 8-K filings are absent, so an implementation fix alone does not deliver the six event metrics or B02/B03 here. 'implementation_only: 39' is withdrawn.",
+  "dependencies_below_that_layer_that_are_absent": {
+   "event_window_8k_bodies": {
+    "consumers": [
+     "C01",
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "predecessor_8k_filed_2023": {
+     "total": 15,
+     "with_saved_accession_directory": 0
+    },
+    "predecessor_8k_filed_2024": {
+     "total": 22,
+     "with_saved_accession_directory": 22
+    },
+    "why_that_window": "event_measurement_window widens a successor_predecessor target to the start of the prior calendar year; the same rule produced 2024-01-01..2025-12-31 for the FY2025 target.",
+    "window": "2023-01-01..2024-12-31"
+   },
+   "prior_period_accession_material": {
+    "accession_material_directory": "absent",
+    "filed": "2024-02-28",
+    "primary_document": "para-20231231.htm",
+    "report_end": "2023-12-31",
+    "why_it_is_needed": "measured on Marriott across three target years: a target fails when the prior period's accession material is absent in both its index and its primary. B02/B03 read it."
+   }
+  },
+  "measured_at": "paramount_skydance_paramount_global, predecessor CIK 813828, report end 2024-12-31",
+  "target_primary": {
+   "accession": "0000813828-25-000005",
+   "accession_material_directory": "present",
+   "document": "para-20241231.htm"
+  },
+  "what_is_still_established": "no download makes the earlier ends discoverable, because nothing is reported missing at the catalog layer. Acquisition is necessary for part of this position and not sufficient for any of it."
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "first_blocking_reason_counts": {
+  "SOURCE_MISSING_TARGET_ORIGINAL": 1170,
+  "TARGET_PERIOD_METADATA_BLOCKED": 78,
+  "TARGET_PERIOD_NOT_DISCOVERED": 273,
+  "note": "these are the frame's own first-blocking-reason tallies and are unchanged. What changed is what may be concluded from them.",
+  "total": 1521
+ },
+ "how_it_was_measured": "the frame's positions were grouped by company and target ordinal and each group's planner limitations read; for Paramount the successor and predecessor submissions were counted from the saved submissions blocks, and every 10-K and 8-K row in them checked against the saved accession material directories by accession number.",
+ "production_authorized": false,
+ "record_type": "ISSUE_47_FRAME_BLOCKER_CLASSIFICATION",
+ "source_missing_does_not_prove_the_route_exists": {
+  "claim_withdrawn": "'acquisition_only: 1365'",
+  "corrected_reading": "the counts below say which layer answered first. They are not a division of the remaining cost, and neither an acquisition grant nor an implementation plan can be sized from them alone.",
+  "measured_elsewhere_this_round": "Marriott 2023 has its target original saved and delivers 7 of 25 wired metrics, not 25 - the same asymmetry read from the other end.",
+  "why": "SOURCE_MISSING_TARGET_ORIGINAL is the first blocking reason. A position that reports it may also have no route: 8 of 39 metrics (B13, C02, C03, D01, D03, D04 and the two already-named) have no historical route at all, and 8 more are structurally gated, so for those metrics the source would arrive at a position the frame still cannot compute."
+ },
+ "verified_layer": {
+  "what_was_not_read": "the other dependencies each of the 39 metrics reads at that position - prior-period accession material, the fiscal window's 8-K bodies and headers, accession index.json, proxy material",
+  "what_was_read": "the period catalog's own limitations per company and target ordinal, plus whether the target period's primary document has a saved accession material directory",
+  "why_it_matters": "a classification derived from the first blocking reason names the layer that answered first, not the whole cost of the position. Both directions of the earlier wording overreached."
+ },
+ "withdrawn_claim": {
+  "first": "'1521 of the frame waits on acquisition and no amount of implementation moves it' - wrong for at least 39 positions and misleading for another 117.",
+  "second": "the correction's own 'acquisition_only / implementation_only' split. 'Only' is not established at either end, and for Paramount ordinal 2 it is measurably wrong."
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "A_FOOTER_NEED_NOT_HAVE_WORDS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_footer_without_words_is_not_a_running_footer",
+  "failed_cases": [
+   "test_a_footer_without_words_is_not_a_running_footer"
+  ],
+  "file": "scripts/vnext/historical_text_results.py",
+  "modules": [
+   "tests.vnext.test_historical_note_navigation"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 26
+ },
+ "A_SHORT_RUN_IS_ENOUGH": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_short_run_is_not_a_sequence_of_pages",
+  "failed_cases": [
+   "test_a_short_run_is_not_a_sequence_of_pages"
+  ],
+  "file": "scripts/vnext/historical_text_results.py",
+  "modules": [
+   "tests.vnext.test_historical_note_navigation"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 26
+ },
+ "CONTROL": {
+  "returncodes": [
+   0,
+   0
+  ],
+  "seconds": 147
+ },
+ "FACING_PAGES_ARE_NOT_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_only_the_footers_in_note_30_leave_and_each_was_judged_not_a_disclosure",
+  "failed_cases": [
+   "test_only_the_footers_in_note_30_leave_and_each_was_judged_not_a_disclosure",
+   "test_the_page_numbers_are_found"
+  ],
+  "file": "scripts/vnext/historical_text_results.py",
+  "modules": [
+   "tests.vnext.test_historical_d02_route_repairs"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 131
+ },
+ "THE_RUN_IS_NOT_ASKED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_short_run_is_not_a_sequence_of_pages",
+  "failed_cases": [
+   "test_a_numbered_heading_after_a_running_footer_is_not_a_page",
+   "test_a_short_run_is_not_a_sequence_of_pages"
+  ],
+  "file": "scripts/vnext/historical_text_results.py",
+  "modules": [
+   "tests.vnext.test_historical_note_navigation"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 24
+ },
+ "all_caught": true
+}

@@ -1,0 +1,274 @@
+{
+ "ANY_STALE_BLOCK_BLOCKS_EVERY_PERIOD": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_block_ending_before_the_prior_period_blocks_nothing",
+  "failed_cases": [
+   "test_a_block_ending_before_the_prior_period_blocks_nothing",
+   "test_the_block_s_last_day_not_its_declared_end_decides"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 141
+ },
+ "A_BLOCK_MAY_END_BEFORE_ITS_DECLARED_END": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_block_never_ends_before_its_declared_end",
+  "failed_cases": [
+   "test_a_block_never_ends_before_its_declared_end"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 145
+ },
+ "A_MISSING_COUNT_IS_TRUSTED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_block_without_a_declared_count_is_not_trusted",
+  "failed_cases": [
+   "test_a_block_without_a_declared_count_is_not_trusted"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 144
+ },
+ "C04_S_WALK_KEEPS_THE_FROZEN_CHECK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_c04_s_walk_takes_a_fresh_block_with_a_gap_day_filing",
+  "failed_cases": [
+   "test_c04_s_walk_refuses_a_block_missing_filings",
+   "test_c04_s_walk_takes_a_fresh_block_with_a_gap_day_filing"
+  ],
+  "file": "scripts/vnext/historical_governance_results.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 142
+ },
+ "CONTROL": {
+  "returncodes": [
+   0,
+   0,
+   0
+  ],
+  "seconds": 220
+ },
+ "ONLY_THE_KEPT_FORMS_ARE_COUNTED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_count_is_every_filing_not_only_the_forms_the_catalog_keeps",
+  "failed_cases": [
+   "test_jpmorgan_s_acquired_blocks_are_the_blocks_their_index_declares",
+   "test_the_count_is_every_filing_not_only_the_forms_the_catalog_keeps",
+   "test_the_dates_are_every_filing_s_not_only_the_kept_forms"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 140
+ },
+ "ONLY_THE_KEPT_FORMS_ARE_DATED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_dates_are_every_filing_s_not_only_the_kept_forms",
+  "failed_cases": [
+   "test_the_dates_are_every_filing_s_not_only_the_kept_forms"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 142
+ },
+ "THE_COUNT_IS_NOT_COMPARED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_block_missing_filings_is_not_the_declared_block",
+  "failed_cases": [
+   "test_a_block_missing_filings_is_not_the_declared_block",
+   "test_a_block_missing_filings_stops_the_walk",
+   "test_a_block_without_a_declared_count_is_not_trusted",
+   "test_c04_s_walk_refuses_a_block_missing_filings",
+   "test_the_count_is_every_filing_not_only_the_forms_the_catalog_keeps",
+   "test_the_newest_blocks_of_pfizer_and_salesforce_miss_filings",
+   "test_the_target_lookup_refuses_a_block_missing_filings"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 145
+ },
+ "THE_DECLARED_END_DECIDES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_block_s_last_day_not_its_declared_end_decides",
+  "failed_cases": [
+   "test_the_block_s_last_day_not_its_declared_end_decides"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 143
+ },
+ "THE_GAP_DAY_IS_NOT_ADMITTED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_filing_on_the_gap_day_is_in_the_older_block",
+  "failed_cases": [
+   "test_a_filing_on_the_gap_day_is_in_the_older_block",
+   "test_a_filing_on_the_gap_day_no_longer_stops_the_walk",
+   "test_c04_s_walk_takes_a_fresh_block_with_a_gap_day_filing",
+   "test_each_block_ends_the_day_before_the_next_newer_one_starts",
+   "test_jpmorgan_s_acquired_blocks_are_the_blocks_their_index_declares",
+   "test_the_target_lookup_takes_a_fresh_block_with_a_gap_day_filing"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 147
+ },
+ "THE_GAP_REACHES_INTO_THE_NEXT_BLOCK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_filing_on_the_next_block_s_first_day_is_outside",
+  "failed_cases": [
+   "test_a_filing_on_the_next_block_s_first_day_is_outside",
+   "test_each_block_ends_the_day_before_the_next_newer_one_starts"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 146
+ },
+ "THE_NEWEST_BLOCK_IGNORES_THE_RECENT_LIST": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_each_block_ends_the_day_before_the_next_newer_one_starts",
+  "failed_cases": [
+   "test_a_filing_on_the_gap_day_no_longer_stops_the_walk",
+   "test_c04_s_walk_takes_a_fresh_block_with_a_gap_day_filing",
+   "test_each_block_ends_the_day_before_the_next_newer_one_starts",
+   "test_the_target_lookup_takes_a_fresh_block_with_a_gap_day_filing"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 145
+ },
+ "THE_OLDEST_PERIOD_IS_NOT_BLOCKED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_oldest_period_is_blocked_by_any_stale_block",
+  "failed_cases": [
+   "test_the_oldest_period_is_blocked_by_any_stale_block"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 141
+ },
+ "THE_PERIOD_LOADER_KEEPS_THE_FROZEN_CHECK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_on_the_saved_blocks_the_stale_block_is_named",
+  "failed_cases": [
+   "test_on_the_saved_blocks_the_stale_block_is_named"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_historical_metadata_context"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 48
+ },
+ "THE_PRIOR_WALK_KEEPS_THE_FROZEN_CHECK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_filing_on_the_gap_day_no_longer_stops_the_walk",
+  "failed_cases": [
+   "test_a_block_missing_filings_stops_the_walk",
+   "test_a_filing_on_the_gap_day_no_longer_stops_the_walk"
+  ],
+  "file": "scripts/vnext/historical_filing_inventory.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 141
+ },
+ "THE_TARGET_LOOKUP_KEEPS_THE_FROZEN_CHECK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_target_lookup_takes_a_fresh_block_with_a_gap_day_filing",
+  "failed_cases": [
+   "test_the_target_lookup_refuses_a_block_missing_filings",
+   "test_the_target_lookup_takes_a_fresh_block_with_a_gap_day_filing"
+  ],
+  "file": "scripts/vnext/historical_filing_inventory.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 144
+ },
+ "THE_WINDOW_LOADER_KEEPS_THE_FROZEN_CHECK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_window_loads_only_the_history_a_bounded_window_can_need",
+  "failed_cases": [
+   "test_a_stale_shard_is_planned_as_a_refresh_not_treated_as_already_held",
+   "test_unsaved_and_incoherent_history_shards_stay_explicit_gaps",
+   "test_window_loads_only_the_history_a_bounded_window_can_need"
+  ],
+  "file": "scripts/vnext/normal_history_catalog.py",
+  "modules": [
+   "tests.vnext.test_normal_history_catalog"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 15
+ },
+ "all_caught": true
+}

@@ -1,0 +1,1205 @@
+{
+ "record_type": "ISSUE47_FOUR_SAVED_SOURCE_SHARDS_ACTUAL_FINISHES",
+ "head": "4d6540cabd75d8ace1e10c609412e1c698f28725",
+ "merge": "afb3b7ee01f77b78ac3c0c2de5ba6bf0acec3ce8",
+ "base": "05d11df29bb5a09e4da45629e024d1fd554c7b8e",
+ "workflow_run_id": 37182511452,
+ "shards": [
+  {
+   "workflow_run_id": 37182511452,
+   "job_id": 111377754117,
+   "head": "4d6540cabd75d8ace1e10c609412e1c698f28725",
+   "merge": "afb3b7ee01f77b78ac3c0c2de5ba6bf0acec3ce8",
+   "base": "05d11df29bb5a09e4da45629e024d1fd554c7b8e",
+   "report": {
+    "duration_seconds": 1734.44,
+    "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY",
+    "jobs": 2,
+    "per_case_timeout_overrides": {
+     "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest": 300,
+     "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest": 360,
+     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 480,
+     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": 480,
+     "tests.vnext.test_continuous_sec_acquisition": 480,
+     "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": 300,
+     "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest": 300,
+     "tests.vnext.test_historical_accession_releases": 480,
+     "tests.vnext.test_historical_amendment_note": 480,
+     "tests.vnext.test_historical_block_inputs": 480,
+     "tests.vnext.test_historical_board_composition_filings": 600,
+     "tests.vnext.test_historical_coverage": 480,
+     "tests.vnext.test_historical_d02_category_route": 480,
+     "tests.vnext.test_historical_d02_marks": 480,
+     "tests.vnext.test_historical_d02_route_repairs": 1200,
+     "tests.vnext.test_historical_debt_results": 900,
+     "tests.vnext.test_historical_derivation_memo": 300,
+     "tests.vnext.test_historical_event_items": 480,
+     "tests.vnext.test_historical_filing_inventory": 480,
+     "tests.vnext.test_historical_financial_results": 480,
+     "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes": 480,
+     "tests.vnext.test_historical_part_iii_admission": 600,
+     "tests.vnext.test_historical_period_results": 480,
+     "tests.vnext.test_historical_plan_replay": 480,
+     "tests.vnext.test_historical_risk_headings": 600,
+     "tests.vnext.test_historical_run_replay": 480,
+     "tests.vnext.test_historical_sec_session": 1500,
+     "tests.vnext.test_historical_semantic_routes": 600,
+     "tests.vnext.test_historical_text_boundary": 1500,
+     "tests.vnext.test_history_block_coherence": 480,
+     "tests.vnext.test_normal_zero_ai_results": 600
+    },
+    "per_case_timeout_seconds": 240,
+    "selector_generation": 2,
+    "shard_count": 4,
+    "shard_index": 0,
+    "status": "PASSED",
+    "suite": "source-material",
+    "tests": [
+     {
+      "duration_seconds": 65.846,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 64.561s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_a05_formula_material",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 23.702,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 22.335s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b03_depreciation_scope.B03ImpairmentSourceMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 39.399,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 38.063s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b03_exact_impairment_relation.B03ExactImpairmentRelationTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 136.501,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 135.176s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_current_run_input_retains_the_actual_amendment_without_creating_debt",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 48.669,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 47.362s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_real_effect_is_separate_from_debt_completeness_and_the_old_balance_policy",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 19.525,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 19.052s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_current_named_carrying_total_is_reconciled_but_unknown_balance_is_not",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 19.376,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 18.904s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_original_two_modes_keep_amounts_and_explain_different_measurements",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 9.571,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 9.112s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_unconsumed_known_concept_must_agree_with_primary",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 35.361,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 18 tests in 34.998s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_bank_measures_reading",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 3.889,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 12 tests in 3.538s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_bank_statement_facts_reading",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 172.567,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 171.366s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_c02_auditor_successor.C02AuditorScopeMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 244.663,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 243.275s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest",
+      "timeout_seconds": 360
+     },
+     {
+      "duration_seconds": 54.418,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 53.192s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_capacity_applicability.CapacityApplicabilityMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 44.27,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 43.546s\n\nOK\n",
+      "stdout_tail": "{'status': 'OFFLINE_NATIVE_REQUEST_ACCEPTANCE_PASS', 'network_disabled': True, 'actual_factory_and_opener_verified': True, 'required_native_evidence_verified': True, 'missing_unit_rejected': True, 'request_count': 27, 'selected_request_bytes': 72041, 'estimated_context_tokens': 31518, 'closure': 'sha256:b71ab42d71daa5c50fe570627399b1a49be696bae27a85a3c7e460eb7a39a911', 'real_calls': [0, 0, 0], 'complete_b13_result': False}\n",
+      "test": "tests.vnext.test_capacity_native_assessment",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 119.151,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 118.802s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_capacity_two_stage_material.CapacityTwoStageMaterialTest.test_scoped_interpretation_stops_after_saved_scan",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 110.226,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 109.070s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_d03_current_source_replay.D03CurrentSourceReplayTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 218.573,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 216.967s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest",
+      "timeout_seconds": 300
+     },
+     {
+      "duration_seconds": 15.795,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 15.437s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_e01_candidate_reading",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 24.905,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 21 tests in 24.386s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_event_count_reading",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 29.504,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 28.387s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_private_clients",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 28.65,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 27.463s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_illustrative_table_is_rejected",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 46.103,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 45.608s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_named_holding_is_rejected",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 28.811,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 18 tests in 27.832s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_going_concern_source",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 0.494,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 3 tests in 0.170s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_b03_depreciation_scope",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 181.704,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 18 tests in 180.118s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_da_scope_route",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 90.493,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 33 tests in 89.193s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_dei",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 170.473,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 9 tests in 168.355s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_financial_wording_filings",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 15.269,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 15 tests in 13.965s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_fiscal_labels",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 94.244,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 14 tests in 92.187s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_governance_results",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 66.292,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 64.502s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_governance_text",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 60.005,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 59.003s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_instance_sources",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 44.364,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 13 tests in 42.846s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_metadata_context",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 130.581,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 128.960s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_part_iii_admission",
+      "timeout_seconds": 600
+     },
+     {
+      "duration_seconds": 115.591,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 25 tests in 112.487s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_predecessor_periods",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 518.106,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 214 tests in 515.548s\n\nOK\n",
+      "stdout_tail": "SEC retry exhausted for https://www.sec.gov/Archives/edgar/data/1048286/000162828021006440/index.json; status=503; error=HTTP Error 503: busy\n",
+      "test": "tests.vnext.test_historical_sec_session",
+      "timeout_seconds": 1500
+     },
+     {
+      "duration_seconds": 39.24,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 37.789s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_structural_results",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 53.285,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 51.959s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_lodging_table_source",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 61.973,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 60.721s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_normal_source_requirements",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 31.566,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 13 tests in 30.263s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_r6_semantic_review",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 166.39,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 165.148s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_regulatory_fact_review",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 64.754,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 63.485s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 20.167,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 19.045s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_table_context_qualification_guard.TableContextQualificationGuardTest.test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two",
+      "timeout_seconds": 240
+     }
+    ]
+   },
+   "log_sha256": "9da01b8ea3272f755d3975b494d52439ca99c6f5d2877f83da59f58f90bbbc44",
+   "sum_case_seconds": 3464.466
+  },
+  {
+   "workflow_run_id": 37182511452,
+   "job_id": 111377754189,
+   "head": "4d6540cabd75d8ace1e10c609412e1c698f28725",
+   "merge": "afb3b7ee01f77b78ac3c0c2de5ba6bf0acec3ce8",
+   "base": "05d11df29bb5a09e4da45629e024d1fd554c7b8e",
+   "report": {
+    "duration_seconds": 1707.02,
+    "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY",
+    "jobs": 2,
+    "per_case_timeout_overrides": {
+     "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest": 300,
+     "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest": 360,
+     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 480,
+     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": 480,
+     "tests.vnext.test_continuous_sec_acquisition": 480,
+     "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": 300,
+     "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest": 300,
+     "tests.vnext.test_historical_accession_releases": 480,
+     "tests.vnext.test_historical_amendment_note": 480,
+     "tests.vnext.test_historical_block_inputs": 480,
+     "tests.vnext.test_historical_board_composition_filings": 600,
+     "tests.vnext.test_historical_coverage": 480,
+     "tests.vnext.test_historical_d02_category_route": 480,
+     "tests.vnext.test_historical_d02_marks": 480,
+     "tests.vnext.test_historical_d02_route_repairs": 1200,
+     "tests.vnext.test_historical_debt_results": 900,
+     "tests.vnext.test_historical_derivation_memo": 300,
+     "tests.vnext.test_historical_event_items": 480,
+     "tests.vnext.test_historical_filing_inventory": 480,
+     "tests.vnext.test_historical_financial_results": 480,
+     "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes": 480,
+     "tests.vnext.test_historical_part_iii_admission": 600,
+     "tests.vnext.test_historical_period_results": 480,
+     "tests.vnext.test_historical_plan_replay": 480,
+     "tests.vnext.test_historical_risk_headings": 600,
+     "tests.vnext.test_historical_run_replay": 480,
+     "tests.vnext.test_historical_sec_session": 1500,
+     "tests.vnext.test_historical_semantic_routes": 600,
+     "tests.vnext.test_historical_text_boundary": 1500,
+     "tests.vnext.test_history_block_coherence": 480,
+     "tests.vnext.test_normal_zero_ai_results": 600
+    },
+    "per_case_timeout_seconds": 240,
+    "selector_generation": 2,
+    "shard_count": 4,
+    "shard_index": 1,
+    "status": "PASSED",
+    "suite": "source-material",
+    "tests": [
+     {
+      "duration_seconds": 68.859,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 3 tests in 67.456s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b03_contract_amortization_scope.B03ContractAmortizationScopeTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 164.56,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 163.107s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b03_depreciation_scope_update.B03FordUpdateMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 133.476,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 132.066s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b03_depreciation_scope_update.B03LegacyRecoveryMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 72.858,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 71.492s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_combined_borrowings",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 54.855,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 53.529s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_declared_amendment_purpose_and_new_native_debt_cannot_pass",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 57.519,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 56.226s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 5.775,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 5.301s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_current_balance_cannot_inherit_an_unspecified_date",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 19.247,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 18.784s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_explicit_additional_current_borrowing_blocks_both_modes",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 13.539,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 13.064s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_newer_disclosed_credit_group_is_derived_from_table_members",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 17.281,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 16.823s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_primary_equity_amount_sign_scale_and_unit_conflicts_reject",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 16.366,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 15.902s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_zero_clause_cannot_hide_a_positive_balance_or_unsupported_amount",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 58.774,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 57.442s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_financing_inventory",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 132.964,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 131.583s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_inclusive_table",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 5.217,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 17 tests in 4.857s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_c03_across_proxies_reading",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 426.246,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 424.079s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04",
+      "timeout_seconds": 480
+     },
+     {
+      "duration_seconds": 198.264,
+      "return_code": 0,
+      "stderr_tail": "usage: python3 -m unittest [-h] [--data-root DATA_ROOT] [--discover-sources]\n                           [--company COMPANY] [--process]\n                           [--state-root STATE_ROOT] [--metric METRIC]\n                           [--output OUTPUT]\npython3 -m unittest: error: Metrics must be unique configured values\n----------------------------------------------------------------------\nRan 2 tests in 196.946s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 44.514,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 44.088s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_e01_header_document_guard.E01HeaderDocumentGuardMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 32.821,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 32.394s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_e01_layout_successor.E01LayoutSuccessorMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 28.106,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 26.978s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_selected_clients",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 28.321,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 27.209s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_unrelated_exclusion_does_not_change_aum_scope",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 27.774,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 26.661s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_hypothetical_table_is_rejected",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 44.698,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 44.211s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_consolidated_group_is_rejected",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 34.424,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 33.145s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_fiscal_year_labels",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 63.142,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 61.358s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_amendment_admission",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 193.221,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 66 tests in 191.636s\n\nOK (skipped=1)\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_coverage",
+      "timeout_seconds": 480
+     },
+     {
+      "duration_seconds": 117.997,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 25 tests in 116.510s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_d02_route_repairs",
+      "timeout_seconds": 1200
+     },
+     {
+      "duration_seconds": 32.619,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 31.159s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_ecd_release",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 163.008,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 53 tests in 161.384s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_event_items",
+      "timeout_seconds": 480
+     },
+     {
+      "duration_seconds": 88.302,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 86.256s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_lodging_results",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 89.492,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 17 tests in 87.973s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_run_replay",
+      "timeout_seconds": 480
+     },
+     {
+      "duration_seconds": 28.253,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 26.841s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_semantic_bound",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 44.523,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 42.686s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_shared_sources",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 151.935,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 25 tests in 150.108s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_text_boundary",
+      "timeout_seconds": 1500
+     },
+     {
+      "duration_seconds": 33.53,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 32.328s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_native_assessment_replay",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 198.821,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 197.561s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 226.552,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 224.429s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_normal_zero_ai_results",
+      "timeout_seconds": 600
+     },
+     {
+      "duration_seconds": 63.358,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 3 tests in 62.243s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_ordinary_e01_item_text_input",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 103.075,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 101.664s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 71.394,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 70.053s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_ordinary_special_debt_scope",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 16.293,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 15.106s\n\nOK\n",
+      "stdout_tail": "{\"status\": \"SEMANTIC_VERIFICATION_OFFLINE_WIRING_PASS\", \"closure\": \"sha256:b71ab42d71daa5c50fe570627399b1a49be696bae27a85a3c7e460eb7a39a911\", \"proposals\": 14, \"request_bytes\": 177967, \"source_references_and_original_proposal_bytes_replayed\": true, \"native_mock_path\": \"/tmp/tmpajw1cfel/recorded-ledger/calls/0001\", \"calls\": [0, 0, 0], \"network_disabled\": true, \"real_request_factory_to_controller_verified\": true, \"independent_code_review\": false, \"semantic_correctness_verified\": false, \"native_result_created\": false}\n",
+      "test": "tests.vnext.test_r6_semantic_verification",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 40.341,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 39.203s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_semantic_source_grouping.SemanticSourceGroupingMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 1.248,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 20 tests in 0.830s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_text_results_v2",
+      "timeout_seconds": 240
+     }
+    ]
+   },
+   "log_sha256": "507401bedd804d1ad9998ee45072cb3d2c5be976fb67316aa7d0f3c95df093ce",
+   "sum_case_seconds": 3413.562
+  },
+  {
+   "workflow_run_id": 37182511452,
+   "job_id": 111377754229,
+   "head": "4d6540cabd75d8ace1e10c609412e1c698f28725",
+   "merge": "afb3b7ee01f77b78ac3c0c2de5ba6bf0acec3ce8",
+   "base": "05d11df29bb5a09e4da45629e024d1fd554c7b8e",
+   "report": {
+    "duration_seconds": 1638.774,
+    "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY",
+    "jobs": 2,
+    "per_case_timeout_overrides": {
+     "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest": 300,
+     "tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest": 360,
+     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume": 480,
+     "tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04": 480,
+     "tests.vnext.test_continuous_sec_acquisition": 480,
+     "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest": 300,
+     "tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest": 300,
+     "tests.vnext.test_historical_accession_releases": 480,
+     "tests.vnext.test_historical_amendment_note": 480,
+     "tests.vnext.test_historical_block_inputs": 480,
+     "tests.vnext.test_historical_board_composition_filings": 600,
+     "tests.vnext.test_historical_coverage": 480,
+     "tests.vnext.test_historical_d02_category_route": 480,
+     "tests.vnext.test_historical_d02_marks": 480,
+     "tests.vnext.test_historical_d02_route_repairs": 1200,
+     "tests.vnext.test_historical_debt_results": 900,
+     "tests.vnext.test_historical_derivation_memo": 300,
+     "tests.vnext.test_historical_event_items": 480,
+     "tests.vnext.test_historical_filing_inventory": 480,
+     "tests.vnext.test_historical_financial_results": 480,
+     "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes": 480,
+     "tests.vnext.test_historical_part_iii_admission": 600,
+     "tests.vnext.test_historical_period_results": 480,
+     "tests.vnext.test_historical_plan_replay": 480,
+     "tests.vnext.test_historical_risk_headings": 600,
+     "tests.vnext.test_historical_run_replay": 480,
+     "tests.vnext.test_historical_sec_session": 1500,
+     "tests.vnext.test_historical_semantic_routes": 600,
+     "tests.vnext.test_historical_text_boundary": 1500,
+     "tests.vnext.test_history_block_coherence": 480,
+     "tests.vnext.test_normal_zero_ai_results": 600
+    },
+    "per_case_timeout_seconds": 240,
+    "selector_generation": 2,
+    "shard_count": 4,
+    "shard_index": 3,
+    "status": "PASSED",
+    "suite": "source-material",
+    "tests": [
+     {
+      "duration_seconds": 90.882,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 5 tests in 89.533s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b03_depreciation_scope.B03DepreciationScopeMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 208.231,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 206.828s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b03_depreciation_scope_update.B03SouthwestUpdateMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 144.826,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 17 tests in 143.517s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_bond_leases",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 70.321,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 69.022s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_current_input.CurrentDebtInputTest.test_changed_debt_or_equity_outside_the_purpose_note_is_rejected",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 16.454,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 15.994s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_borrowing_keyword_and_explicit_past_issuance_do_not_block",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 47.086,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 45.780s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_note_carrying",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 108.656,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 5 tests in 108.309s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_c02_board_reading",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 165.237,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 163.831s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest",
+      "timeout_seconds": 300
+     },
+     {
+      "duration_seconds": 18.764,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 17.512s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_c04_registration_successor",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 51.084,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 50.077s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_capacity_text_results",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 36.679,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 35.972s\n\nOK\n",
+      "stdout_tail": "{\"status\": \"OFFLINE_WIRING_PASS\", \"requirement_id\": \"issue_28_v14\", \"closure\": \"sha256:b71ab42d71daa5c50fe570627399b1a49be696bae27a85a3c7e460eb7a39a911\", \"request_bytes\": 36920, \"estimated_context_tokens\": 15335, \"source_request_count\": 29, \"selected_request_count\": 1, \"source_unit_coverage_preserved\": true, \"model\": \"deepseek-flash\", \"maximum_context_tokens\": 200000, \"retry_count\": 0, \"real_request_factory_to_controller_verified\": true, \"mocked_official_opener_invocations\": 1, \"network_disabled\": true, \"legacy_default_forbidden\": true, \"calls\": {\"provider\": 0, \"paid\": 0, \"sec\": 0}, \"semantic_correctness_verified\": false, \"native_result_created\": false, \"production_authorized\": false, \"native_mock_path\": \"/tmp/tmptaji1c3b/recorded-ledger/calls/0001\"}\n",
+      "test": "tests.vnext.test_continuous_semantic_calls",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 40.279,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 39.152s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_d01_emphasis_material",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 1.18,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.048s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_anchor_candidate_changes_business_digest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 119.004,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 117.848s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 269.243,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 267.521s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_d03_recorded_response_set.D03RecordedResponseSetTest",
+      "timeout_seconds": 300
+     },
+     {
+      "duration_seconds": 42.4,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 41.692s\n\nOK\n",
+      "stdout_tail": "{'status': 'OFFLINE_NATIVE_REQUEST_ACCEPTANCE_PASS', 'network_disabled': True, 'actual_factory_and_opener_verified': True, 'required_native_evidence_verified': True, 'missing_unit_rejected': True, 'request_count': 27, 'selected_request_bytes': 70662, 'estimated_context_tokens': 31263, 'closure': 'sha256:b71ab42d71daa5c50fe570627399b1a49be696bae27a85a3c7e460eb7a39a911', 'real_calls': [0, 0, 0], 'complete_d04_result': False}\n",
+      "test": "tests.vnext.test_d04_native_wiring",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 2.684,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 2.324s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_debt_to_equity_reading",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 28.198,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 27.108s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_excluding_clients",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 28.58,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 27.494s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_institutional_and_retail_clients",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 22.259,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 17 tests in 21.992s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_duration",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 91.405,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 89.980s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_accession_releases",
+      "timeout_seconds": 480
+     },
+     {
+      "duration_seconds": 132.399,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 15 tests in 130.888s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_amendment_note",
+      "timeout_seconds": 480
+     },
+     {
+      "duration_seconds": 172.107,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 28 tests in 170.971s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_board_composition_filings",
+      "timeout_seconds": 600
+     },
+     {
+      "duration_seconds": 44.137,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 5 tests in 42.348s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_d02_category_route",
+      "timeout_seconds": 480
+     },
+     {
+      "duration_seconds": 39.932,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 38.192s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_d02_marks",
+      "timeout_seconds": 480
+     },
+     {
+      "duration_seconds": 11.879,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 11.520s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_da_scope_candidate",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 251.582,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 13 tests in 248.099s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_debt_results",
+      "timeout_seconds": 900
+     },
+     {
+      "duration_seconds": 2.641,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 38 tests in 0.080s\n\nOK (skipped=3)\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_derivation_memo",
+      "timeout_seconds": 300
+     },
+     {
+      "duration_seconds": 133.257,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 9 tests in 130.845s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_financial_results",
+      "timeout_seconds": 480
+     },
+     {
+      "duration_seconds": 95.069,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 94.714s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_legal_review.OnARealFilingOnlyItem8Changes",
+      "timeout_seconds": 480
+     },
+     {
+      "duration_seconds": 28.546,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 26.757s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_lodging_introduction",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 26.631,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 24.354s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_note_carrying.HistoricalNoteRateMaterialTest",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 22.437,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 22 tests in 20.869s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_note_navigation",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 155.331,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 24 tests in 153.620s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_period_results",
+      "timeout_seconds": 480
+     },
+     {
+      "duration_seconds": 58.478,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 23 tests in 56.973s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_proxy_compensation",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 37.717,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 31 tests in 36.347s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_proxy_identity",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 124.055,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 17 tests in 121.399s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_risk_headings",
+      "timeout_seconds": 600
+     },
+     {
+      "duration_seconds": 72.698,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 70.207s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_historical_running_header",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 116.643,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 115.397s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_instant_balance_amendment",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 22.072,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 13 tests in 20.838s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_normal_history_catalog",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 56.076,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 54.942s\n\nOK\n",
+      "stdout_tail": "{\"status\": \"HISTORICAL_CONTROL_DISCOVERY_AND_RECORDED_CAPTURE_PASS\", \"closure\": \"sha256:b71ab42d71daa5c50fe570627399b1a49be696bae27a85a3c7e460eb7a39a911\", \"discovered_accessions\": [\"0001463101-17-000024\", \"0001463101-18-000030\"], \"recorded_capture_count\": 1, \"wrong_company_url_and_refresh_rejected\": true, \"source_identity\": \"RECORDED_TEST_ONLY\", \"calls\": [0, 0, 0], \"network_disabled\": true, \"native_result_created\": false, \"production_authorized\": false}\n",
+      "test": "tests.vnext.test_r6_historical_controls",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 42.02,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 40.850s\n\nOK\n",
+      "stdout_tail": "{\"status\": \"D03_OFFLINE_WIRING_PASS\", \"closure\": \"sha256:b71ab42d71daa5c50fe570627399b1a49be696bae27a85a3c7e460eb7a39a911\", \"source_units\": 54, \"source_units_preserved\": true, \"native_facts\": 3254, \"selected_request_id\": \"sha256:b64e6c02ba9e0ea83ce03c7db3918b68bc122aa6fad35c875ba68d895c91579d\", \"required_candidate_indices\": [3832, 3909, 3923, 3924, 3927, 3928, 3929, 3930, 3931, 3932, 3935, 3936], \"request_bytes\": 171918, \"estimated_tokens\": 55859, \"source_binding_gap_rejected\": true, \"network_disabled\": true, \"real_request_factory_to_controller_verified\": true, \"calls\": [0, 0, 0], \"native_mock_path\": \"/tmp/tmpm3716ruz/recorded-ledger/calls/0001\", \"native_result_created\": false, \"semantic_correctness_verified\": false}\n",
+      "test": "tests.vnext.test_r6_regulatory_semantics",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 20.576,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 5 tests in 19.523s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_risk_signals",
+      "timeout_seconds": 240
+     },
+     {
+      "duration_seconds": 7.66,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 12 tests in 7.318s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_statement_fact_reading",
+      "timeout_seconds": 240
+     }
+    ]
+   },
+   "log_sha256": "b4ba8cb9b9c8f8c1cb1c4027224b9b2bf3d4d3843a84108fe91a391c62b954e3",
+   "sum_case_seconds": 3277.395
+  }
+ ],
+ "shard_2_failure": "../ci-e01-reading-register-2026-10-04/ci-shard2-original-failure.json",
+ "shard_2_fix": "42cc582b3b74bde668cb73012f3e5b4426c29507",
+ "current_head_full_ci_passed": false,
+ "credit": "Partial source tier evidence only; failure is retained and aggregate is not passed.",
+ "all_four_entry_count": 170,
+ "unique_entry_count": 170,
+ "duplicate_entries": 0
+}

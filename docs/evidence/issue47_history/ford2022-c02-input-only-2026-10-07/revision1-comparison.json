@@ -1,0 +1,1365 @@
+{
+  "position": "ford_motor_company:FY2022",
+  "annual_container_not_board_snapshot": true,
+  "request_sha256": "1dc80aa539306580a54d3b7e56d7847c77188405d2d23624a955b6e345adedea",
+  "pre_trial_reference_sha256": "bdaf80e1feec073ddaf331803a5f316db6c7c2760ca4e3cf2691c63b7775a84b",
+  "answer_sha256": "17bda24113ceead2d9f4dae040848c98a6064f92d1d14b96412c77a61a1cda87",
+  "facts": 54,
+  "unresolved": 3,
+  "output_reference_tokens": 4216,
+  "output_reserve": 8192,
+  "output_fits": true,
+  "prompt_reference_tokens": 168209,
+  "context_reference_tokens": 176401,
+  "maximum_context": 200000,
+  "forward": [
+    {
+      "answer_fact_number": 1,
+      "source_blocks": [
+        52,
+        1061,
+        1066
+      ],
+      "status": "SUPPORTED_INPUT_WITH_CITATION_GAP",
+      "note": "14 incumbent nominees are in B52/1061/1066; May11 2023 is in supplied B36/48/70/188, absent from this fact's cited blocks. Original answer is not patched."
+    },
+    {
+      "answer_fact_number": 2,
+      "source_blocks": [
+        1066,
+        1231,
+        1232,
+        1237
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 3,
+      "source_blocks": [
+        406,
+        1066,
+        1233,
+        1242,
+        1543
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 4,
+      "source_blocks": [
+        1066,
+        1255,
+        1260
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 5,
+      "source_blocks": [
+        406,
+        1066,
+        1256,
+        1265
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 6,
+      "source_blocks": [
+        1066,
+        1274,
+        1279
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 7,
+      "source_blocks": [
+        1066,
+        1275,
+        1284
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 8,
+      "source_blocks": [
+        1066,
+        1293,
+        1298
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 9,
+      "source_blocks": [
+        1066,
+        1294,
+        1303
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 10,
+      "source_blocks": [
+        1066,
+        1315,
+        1320
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 11,
+      "source_blocks": [
+        1066,
+        1316,
+        1325
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 12,
+      "source_blocks": [
+        1066,
+        1336,
+        1341
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 13,
+      "source_blocks": [
+        1066,
+        1337,
+        1348
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 14,
+      "source_blocks": [
+        1066,
+        1358,
+        1363
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 15,
+      "source_blocks": [
+        1066,
+        1359,
+        1368
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 16,
+      "source_blocks": [
+        404,
+        775,
+        1538
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 17,
+      "source_blocks": [
+        1013,
+        1015
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 18,
+      "source_blocks": [
+        404
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 19,
+      "source_blocks": [
+        775,
+        778,
+        4562
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 20,
+      "source_blocks": [
+        775
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 21,
+      "source_blocks": [
+        394
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 22,
+      "source_blocks": [
+        394,
+        1274,
+        1286
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 23,
+      "source_blocks": [
+        394,
+        1337,
+        1346
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 24,
+      "source_blocks": [
+        4523,
+        4532,
+        4533,
+        4535,
+        4537
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Supported only as explicitly attributed reprinted shareholder-proposal claim. B4523 disclaims accuracy; not registrant-endorsed role or inferred exact tenure."
+    },
+    {
+      "answer_fact_number": 25,
+      "source_blocks": [
+        260,
+        413,
+        474
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 26,
+      "source_blocks": [
+        479,
+        508,
+        510,
+        512,
+        514,
+        1599,
+        1606,
+        1607,
+        1608,
+        1609
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 27,
+      "source_blocks": [
+        527,
+        528,
+        551,
+        553,
+        555,
+        557,
+        559,
+        746,
+        2522,
+        2523,
+        2524,
+        2525,
+        2526
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 28,
+      "source_blocks": [
+        566,
+        585,
+        587,
+        589,
+        591,
+        593,
+        595,
+        597,
+        599,
+        601
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 29,
+      "source_blocks": [
+        605,
+        630,
+        632,
+        634,
+        636,
+        638,
+        640,
+        642,
+        644,
+        646,
+        648
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 30,
+      "source_blocks": [
+        653,
+        664,
+        666,
+        668,
+        670,
+        672,
+        674,
+        676,
+        678,
+        680,
+        682
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 31,
+      "source_blocks": [
+        1274,
+        1280,
+        1286
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 32,
+      "source_blocks": [
+        2527,
+        2528
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 33,
+      "source_blocks": [
+        4523,
+        4532,
+        4533,
+        4535
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Supported only as explicitly attributed reprinted shareholder-proposal claim. B4523 disclaims accuracy; not registrant-endorsed role or inferred exact tenure."
+    },
+    {
+      "answer_fact_number": 34,
+      "source_blocks": [
+        473,
+        518,
+        775,
+        1599
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 35,
+      "source_blocks": [
+        473,
+        553,
+        555,
+        557,
+        559,
+        563,
+        746,
+        775
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 36,
+      "source_blocks": [
+        605,
+        652,
+        775
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 37,
+      "source_blocks": [
+        473,
+        479,
+        510,
+        512,
+        514,
+        520
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 38,
+      "source_blocks": [
+        479,
+        510,
+        522,
+        722
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 39,
+      "source_blocks": [
+        2527,
+        2528
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Source statement and actual time/role retained."
+    },
+    {
+      "answer_fact_number": 40,
+      "source_blocks": [
+        1066,
+        1094,
+        1123,
+        1124,
+        1129,
+        1130,
+        1143,
+        1144,
+        1164,
+        1165,
+        1179,
+        1180,
+        1232,
+        1245
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 41,
+      "source_blocks": [
+        1066,
+        1095,
+        1123,
+        1125,
+        1156,
+        1157,
+        1164,
+        1166,
+        1179,
+        1181,
+        1233,
+        1248
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 42,
+      "source_blocks": [
+        1066,
+        1096,
+        1109,
+        1110,
+        1114,
+        1115,
+        1123,
+        1126,
+        1129,
+        1131,
+        1143,
+        1145,
+        1156,
+        1158,
+        1164,
+        1167,
+        1179,
+        1182,
+        1255,
+        1268
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 43,
+      "source_blocks": [
+        1066,
+        1097,
+        1123,
+        1127,
+        1164,
+        1168,
+        1179,
+        1183,
+        1256,
+        1271
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 44,
+      "source_blocks": [
+        1066,
+        1098,
+        1109,
+        1111,
+        1114,
+        1116,
+        1129,
+        1132,
+        1143,
+        1146,
+        1156,
+        1159,
+        1164,
+        1169,
+        1179,
+        1184,
+        1274,
+        1287
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 45,
+      "source_blocks": [
+        1066,
+        1099,
+        1143,
+        1147,
+        1156,
+        1160,
+        1164,
+        1170,
+        1179,
+        1185,
+        1275,
+        1289
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 46,
+      "source_blocks": [
+        1066,
+        1100,
+        1114,
+        1117,
+        1129,
+        1133,
+        1139,
+        1140,
+        1143,
+        1148,
+        1164,
+        1171,
+        1179,
+        1186,
+        1293,
+        1306
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 47,
+      "source_blocks": [
+        1066,
+        1101,
+        1129,
+        1134,
+        1139,
+        1141,
+        1143,
+        1149,
+        1156,
+        1161,
+        1164,
+        1172,
+        1179,
+        1187,
+        1294,
+        1310
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 48,
+      "source_blocks": [
+        1066,
+        1102,
+        1109,
+        1112,
+        1114,
+        1118,
+        1129,
+        1135,
+        1143,
+        1150,
+        1156,
+        1162,
+        1164,
+        1173,
+        1179,
+        1188,
+        1315,
+        1328
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 49,
+      "source_blocks": [
+        1066,
+        1103,
+        1114,
+        1119,
+        1139,
+        1142,
+        1143,
+        1151,
+        1164,
+        1174,
+        1179,
+        1189,
+        1316,
+        1331
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 50,
+      "source_blocks": [
+        1066,
+        1104,
+        1105,
+        1109,
+        1113,
+        1123,
+        1128,
+        1143,
+        1152,
+        1156,
+        1163,
+        1164,
+        1175,
+        1179,
+        1190,
+        1336,
+        1351
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 51,
+      "source_blocks": [
+        1066,
+        1106,
+        1114,
+        1120,
+        1129,
+        1136,
+        1143,
+        1153,
+        1164,
+        1176,
+        1179,
+        1191,
+        1337,
+        1354
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 52,
+      "source_blocks": [
+        1066,
+        1107,
+        1114,
+        1121,
+        1129,
+        1137,
+        1143,
+        1154,
+        1164,
+        1177,
+        1179,
+        1192,
+        1358,
+        1371
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 53,
+      "source_blocks": [
+        1066,
+        1108,
+        1114,
+        1122,
+        1129,
+        1138,
+        1143,
+        1155,
+        1164,
+        1178,
+        1179,
+        1193,
+        1359,
+        1374
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    },
+    {
+      "answer_fact_number": 54,
+      "source_blocks": [
+        1066,
+        1094,
+        1095,
+        1096,
+        1097,
+        1098,
+        1099,
+        1100,
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107,
+        1108,
+        1194,
+        1195,
+        1196,
+        1197,
+        1198,
+        1199,
+        1200,
+        1201,
+        1202,
+        1203,
+        1204,
+        1205,
+        1206,
+        1207,
+        1208,
+        1209,
+        1210,
+        1211,
+        1212,
+        1213,
+        1214,
+        1215,
+        1216,
+        1217,
+        1218,
+        1219,
+        1220,
+        1221,
+        1222,
+        1223,
+        1224,
+        1225,
+        1226,
+        1227,
+        1228
+      ],
+      "status": "SUPPORTED_BY_CITED_SOURCE_AND_NECESSARY_GRID",
+      "note": "Original text read; member qualification/demographics use table_000103 cell/header relationships."
+    }
+  ],
+  "reverse": [
+    {
+      "reference_id": "F01",
+      "answer_fact_numbers": [
+        18
+      ],
+      "source_blocks": [
+        404
+      ],
+      "status": "REFERENCE_WORDING_CORRECTION",
+      "note": "Frozen reference says reduction occurred. B404 literally says Committee recommended reduction; revised fact18 preserves recommendation. Original frozen reference kept unchanged; correction does not require model to repeat reference overstatement."
+    },
+    {
+      "reference_id": "F02",
+      "answer_fact_numbers": [
+        1
+      ],
+      "source_blocks": [
+        1061,
+        1066
+      ],
+      "status": "PARTIAL",
+      "note": "Election tenure through next annual meeting or elected qualified successor is absent. The original initial answer included it."
+    },
+    {
+      "reference_id": "F03",
+      "answer_fact_numbers": [
+        19
+      ],
+      "source_blocks": [
+        363,
+        775,
+        4562
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F04",
+      "answer_fact_numbers": [
+        22,
+        42
+      ],
+      "source_blocks": [
+        394,
+        1274,
+        1286
+      ],
+      "status": "PARTIAL",
+      "note": "Separate chair/CEO and chair dates remain; the registrant statement explicitly naming Farley President/CEO is absent."
+    },
+    {
+      "reference_id": "F05",
+      "answer_fact_numbers": [
+        21
+      ],
+      "source_blocks": [
+        394
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F06",
+      "answer_fact_numbers": [
+        23
+      ],
+      "source_blocks": [
+        394,
+        1337,
+        1346
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F07",
+      "answer_fact_numbers": [
+        2,
+        26,
+        29,
+        30
+      ],
+      "source_blocks": [
+        1066,
+        1232,
+        1237,
+        1238
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F08",
+      "answer_fact_numbers": [
+        3,
+        28,
+        30
+      ],
+      "source_blocks": [
+        1066,
+        1233,
+        1242,
+        1243
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F09",
+      "answer_fact_numbers": [
+        4
+      ],
+      "source_blocks": [
+        1066,
+        1255,
+        1260,
+        1261
+      ],
+      "status": "PARTIAL",
+      "note": "Explicit Committees: N/A at B1261 is absent; absence from five rosters alone is not its substitute. Initial answer included N/A."
+    },
+    {
+      "reference_id": "F10",
+      "answer_fact_numbers": [
+        5,
+        28,
+        30
+      ],
+      "source_blocks": [
+        1066,
+        1256,
+        1265,
+        1266
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F11",
+      "answer_fact_numbers": [
+        6,
+        28,
+        30
+      ],
+      "source_blocks": [
+        1066,
+        1274,
+        1279,
+        1280
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F12",
+      "answer_fact_numbers": [
+        7,
+        28,
+        29,
+        30
+      ],
+      "source_blocks": [
+        1066,
+        1275,
+        1284,
+        1285
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F13",
+      "answer_fact_numbers": [
+        8,
+        30
+      ],
+      "source_blocks": [
+        1066,
+        1293,
+        1298,
+        1299
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F14",
+      "answer_fact_numbers": [
+        9,
+        28,
+        29,
+        30
+      ],
+      "source_blocks": [
+        1066,
+        1294,
+        1303,
+        1304
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F15",
+      "answer_fact_numbers": [
+        10,
+        27,
+        28,
+        29
+      ],
+      "source_blocks": [
+        1066,
+        1315,
+        1320,
+        1321
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F16",
+      "answer_fact_numbers": [
+        11,
+        26,
+        29
+      ],
+      "source_blocks": [
+        1066,
+        1316,
+        1325,
+        1326
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F17",
+      "answer_fact_numbers": [
+        12,
+        27,
+        29,
+        30
+      ],
+      "source_blocks": [
+        1066,
+        1336,
+        1341,
+        1342
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F18",
+      "answer_fact_numbers": [
+        13,
+        27,
+        28,
+        29
+      ],
+      "source_blocks": [
+        1066,
+        1337,
+        1348,
+        1349
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F19",
+      "answer_fact_numbers": [
+        14,
+        26,
+        29
+      ],
+      "source_blocks": [
+        1066,
+        1358,
+        1363,
+        1364
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F20",
+      "answer_fact_numbers": [
+        15,
+        27,
+        28,
+        29,
+        30
+      ],
+      "source_blocks": [
+        1066,
+        1359,
+        1368,
+        1369
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F21",
+      "answer_fact_numbers": [
+        26
+      ],
+      "source_blocks": [
+        510,
+        512,
+        514
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F22",
+      "answer_fact_numbers": [
+        27
+      ],
+      "source_blocks": [
+        553,
+        555,
+        557,
+        559
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F23",
+      "answer_fact_numbers": [
+        28
+      ],
+      "source_blocks": [
+        587,
+        589,
+        591,
+        593,
+        595,
+        597,
+        599,
+        601
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F24",
+      "answer_fact_numbers": [
+        29
+      ],
+      "source_blocks": [
+        632,
+        634,
+        636,
+        638,
+        640,
+        642,
+        644,
+        646,
+        648
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F25",
+      "answer_fact_numbers": [
+        30
+      ],
+      "source_blocks": [
+        666,
+        668,
+        670,
+        672,
+        674,
+        676,
+        678,
+        680,
+        682
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F26",
+      "answer_fact_numbers": [
+        34,
+        35,
+        36
+      ],
+      "source_blocks": [
+        473,
+        518,
+        563,
+        652,
+        775,
+        1599
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F27",
+      "answer_fact_numbers": [
+        37
+      ],
+      "source_blocks": [
+        473,
+        520
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F28",
+      "answer_fact_numbers": [
+        38,
+        26
+      ],
+      "source_blocks": [
+        522,
+        722
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F29",
+      "answer_fact_numbers": [
+        34
+      ],
+      "source_blocks": [
+        473,
+        775
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F30",
+      "answer_fact_numbers": [
+        35,
+        27
+      ],
+      "source_blocks": [
+        473,
+        775
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F31",
+      "answer_fact_numbers": [
+        20
+      ],
+      "source_blocks": [
+        775
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F32",
+      "answer_fact_numbers": [
+        16,
+        18
+      ],
+      "source_blocks": [
+        404,
+        1538
+      ],
+      "status": "PARTIAL",
+      "note": "Retirement and service through meeting remain; explicit fees prorated through meeting at B1538 is not stated."
+    },
+    {
+      "reference_id": "F33",
+      "answer_fact_numbers": [
+        32,
+        39,
+        27
+      ],
+      "source_blocks": [
+        2528
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    },
+    {
+      "reference_id": "F34",
+      "answer_fact_numbers": [
+        3
+      ],
+      "source_blocks": [
+        1233,
+        1242,
+        1537,
+        1543
+      ],
+      "status": "PARTIAL",
+      "note": "Continued board membership after June17 employment departure remains; non-employee director June-December fee/service description at B1537 is absent."
+    },
+    {
+      "reference_id": "F35",
+      "answer_fact_numbers": [
+        17
+      ],
+      "source_blocks": [
+        1013,
+        1015
+      ],
+      "status": "SUPPORTED_REFERENCE_CONTENT_COVERED",
+      "note": "Combined statements retain the listed reference relationship; graph membership checked against the supplied committee rosters."
+    }
+  ],
+  "reverse_counts": {
+    "covered": 29,
+    "partial": 5,
+    "reference_wording_correction": 1
+  },
+  "newly_restored_reference": "F35 Edsel B. Ford II explicitly former director; no invented exit date",
+  "member_qualification_matrix_checked": {
+    "table_id": "table_000103",
+    "rows": 17,
+    "columns": 31,
+    "nominee_qualification_statements": 14,
+    "demographic_statement": 1,
+    "locator_limitation": "The answer cites visible blocks; necessary grid was used in executor review, not added to original answer."
+  },
+  "unresolved_review": "All three have source support: historical count/timing conflict, unendorsed Earley proposal role dates, Lynn audit eligibility versus membership. No year-end snapshot inferred.",
+  "method_outcome": "INITIAL_PLUS_ONE_SUBSTANTIVE_CORRECTION_COMPLETE_WITH_REMAINING_GAPS",
+  "next_attempt_authorized": false,
+  "full_metric_acceptance": false,
+  "provider_usage": null,
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_Run": false,
+  "original_answer_and_reference_unchanged": true
+}

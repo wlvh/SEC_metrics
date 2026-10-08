@@ -1,0 +1,98 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "macys",
+ "label": "macys-c02-2021",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "C02"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 32,
+    "COMPUTED": 4
+   },
+   "seconds": 55.6
+  },
+  "install": {
+   "frozen_replays": 2,
+   "memo": {
+    "COMPUTED": 7
+   },
+   "seconds": 133.1
+  },
+  "memo_off_read_back": {
+   "frozen_replays": 1,
+   "memo": {},
+   "memo_not_remembered": [],
+   "metrics": [
+    "C02"
+   ],
+   "seconds": 134.3
+  },
+  "read_back": {
+   "frozen_replays": 1,
+   "memo": {
+    "ANSWERED": 5,
+    "COMPUTED": 4
+   },
+   "memo_not_remembered": [],
+   "seconds": 122.0
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 0.1
+  }
+ },
+ "positions": {
+  "C02": {
+   "binding_id": "sha256:35b8f148fdaa10652838e6bac9b10d99a3217a19a377388b5daa0455ac01f75b",
+   "data_root": "/workspace/work/issue47-card50-round/macys-c02-2021/data-macys-c02-2021",
+   "evidence_count": 89,
+   "memo_off_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:0a65c2b9670e42970fe0ba34c47bd4196d9f37be1fb6818c909f7c0df81a54b6",
+    "run_id": "run:historical-period:35b8f148fdaa10652838e6bac9b10d99a3217a19a377388b5daa0455ac01f75b",
+    "status": "FROZEN",
+    "value_sha256": "396dd609ab9f700ad734453c04d64a195acc4778a665719cb28bf0700a3d40e3"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "requirement_closure_hash": "sha256:aaea32da9cc599c86165bf5651d889a8b835edc8c1eddc10d63b1e8c7a8c9ab1",
+   "result_id": "sha256:0a65c2b9670e42970fe0ba34c47bd4196d9f37be1fb6818c909f7c0df81a54b6",
+   "row_hash": "sha256:4272db943ebdf08264501d017d206447d8299f9ae2bf11948177a13ccd8f8d46",
+   "run_dir": "/workspace/work/issue47-card50-round/macys-c02-2021/run-macys-c02-2021-C02",
+   "run_id": "run:historical-period:35b8f148fdaa10652838e6bac9b10d99a3217a19a377388b5daa0455ac01f75b",
+   "separate_process_read_back": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:0a65c2b9670e42970fe0ba34c47bd4196d9f37be1fb6818c909f7c0df81a54b6",
+    "run_id": "run:historical-period:35b8f148fdaa10652838e6bac9b10d99a3217a19a377388b5daa0455ac01f75b",
+    "status": "FROZEN",
+    "value_sha256": "396dd609ab9f700ad734453c04d64a195acc4778a665719cb28bf0700a3d40e3"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "12 of 13 Director nominees are independent\nChairman of the Board and CEO, Macy\u2019s, Inc.\n*Marna C. Whittington, who is currently serving as a Non-Employee Director, has not been nominated to stand for reelection and will retire from the Board as of the date of the Annual Meeting in accordance with our director retirement policy. Ms. Whittington is currently the Chair of the Finance Committee.\nIn accordance with the recommendation of the Nominating and Corporate Governance (NCG) Committee, the Board has nominated the following individuals for election as directors. Each nominee is currently a member of the Board. If elected, each nominee will serve for a one-year term expiring at our annual meeting of shareholders in 2023 or until his or her successor is duly elected and qualified.\nMarna C. Whittington, who has served as a director since June 1993, has not been nominated to stand for reelection and will retire from the Board as of the date of the Annual Meeting in accordance with our director retirement policy. We thank Dr. Whittington for her many years of service to Macy\u2019s and our shareholders. Effective as of the Annual Meeting, the Board has approved the reduction of the size of the Board from fourteen to thirteen members.\nFRANCIS S. BLAKE\nAge 72 | Independent\nTORRENCE N. BOONE\nAge 52 | Independent\nJOHN A. BRYANT\nAge 56 | Independent\nAudit\nASHLEY BUCHANAN\nAge 48 | Independent\nMARIE CHANDOHA\nAge 60 | Independent\nCMD\nNCG (Chair)\nDEIRDRE P. CONNELLY\nAge 61 | Independent\nChief Executive Officer of Macy\u2019s, Inc. since 2017, Chairman of the Board of Macy\u2019s, Inc. since 2018.\nJILL GRANOFF\nAge 59 | Independent\nAudit\nFinance\nLESLIE D. HALE\nAge 49 | Independent\nAudit\nFinance\nWILLIAM H. LENEHAN\nAge 45| Independent\nCMD\nNCG\nSARA LEVINSON\nAge 71 | Independent\nPAUL C. VARGA\nAge 58 | Independent\nNCG\nTRACEY ZHEN\nAge 45| Independent\nOur Board has determined that each of the following Non-Employee Director nominees qualifies as independent under NYSE rules and satisfies our Standards for Director Independence: Francis Blake, Torrence Boone, John Bryant, Ashley Buchanan, Marie Chandoha, Deirdre Connelly, Leslie Hale, Jill Granoff, William Lenehan, Sara Levinson, Paul Varga and Tracey Zhen. Our Board also determined that Marna C. Whittington, who is currently serving as a Non-Employee Director and has not been nominated to stand for reelection, qualifies as independent under NYSE rules and satisfies our Standards for Director Independence. Jeff Gennette is employed by the Company and therefore does not meet the independence standards set forth under the NYSE rules and our Standards for Director Independence.\nAs part of its independence determination, the NCG Committee reviewed each director\u2019s employment status and other board commitments and, where applicable, each director\u2019s (and his or her immediate family members\u2019) affiliation with consultants, service providers or suppliers of the Company and transactions, relationships, and arrangements with the Company. With respect to each Non-Employee Director, the NCG Committee determined that either the director or immediate family member was not employed by a company providing goods or services to Macy\u2019s or the amounts involved were below the monetary thresholds set forth in the Standards for Director Independence as noted above.\nOur Chairman and CEO functions currently are performed by a single individual. Our Board believes this combined leadership model works well. When combined with the current composition of the Board, the use of a lead independent director, and the other elements of our corporate governance structure, the combined CEO and Chairman position strikes an appropriate balance between strong and consistent leadership and independent and effective oversight of our business and affairs.\nSince our Chairman and CEO functions currently are performed by a single individual, the Board elected Paul Varga to serve as Lead Independent Director for a two-year term commencing in May 2021.\nThe following standing committees of the Board were in existence throughout fiscal 2021: Audit Committee, Compensation and Management Development Committee, Finance Committee, and Nominating and Corporate Governance Committee. Committee memberships noted below reflect committee composition as of as of March 24, 2022.\nAudit Committee\nJohn A. Bryant\nTorrence N. Boone\nAshley Buchanan\nLeslie D. Hale\nWilliam H. Lenehan\nMarna C. Whittington\nThe Audit Committee was established in accordance with the applicable requirements of the Securities Exchange Act of 1934 and the NYSE. Its charter is available on our website at www.macysinc.com/investors/corporate-governance/governance-documents. All current members of the Audit Committee are independent under our Standards for Director Independence and the NYSE independence standards and applicable SEC rules. The Board has determined that all members are financially literate for purposes of NYSE listing standards, and that Mr. Bryant qualifies as an \u201caudit committee financial expert\u201d because of his business experience, understanding of generally accepted accounting principles and financial statements, and educational background. Mr. Bryant currently serves on the audit committee of three public companies in addition to Macy\u2019s, Inc. The Board has determined that such simultaneous service does not impair Mr. Bryant\u2019s ability to effectively serve on the Macy\u2019s, Inc. Audit Committee.\nCompensation and Management Development Committee\nFrancis S. Blake\nDeirdre P. Connelly\nSara Levinson\nPaul C. Varga\nThe charter for the CMD Committee is available on our website at www.macysinc.com/investors/corporate-governance/governance-documents. All current members of the CMD Committee are independent under our Standards for Director Independence and the NYSE independence standards and applicable SEC rules, and are \u201cnon-employee directors\u201d under Rule 16b-3 of the Securities Exchange Act of 1934.\nFinance Committee\nMarna C. Whittington\nFrancis S. Blake\nJohn A. Bryant\nLeslie D. Hale\nWilliam H. Lenehan\nPaul C. Varga\nThe charter for the Finance Committee is available on our website at www.macysinc.com/ investors/corporate-governance/governance-documents. All current members of the Finance Committee are independent under our Standards for Director Independence and the NYSE independence standards.\nNominating and Corporate Governance Committee\nDeirdre P. Connelly\nTorrence N. Boone\nSara Levinson\nTracey Zhen\nThe charter for the NCG Committee is available on our website at www.macysinc.com/investors/corporate-governance/governance-documents. All current members of the NCG Committee are independent under our Standards for Director Independence and the NYSE independence standards.\nDigital Innovation Task Force\nThe Digital Innovation Task Force is made up of three directors, Torrence Boone, Ashley Buchanan and Tracey Zhen and senior members of our digital, merchandising and data science teams who focus on topics related to digital innovation, customer trends, emerging concepts and potential investments or partnerships that could shape our future Digital Strategy.\nMacy\u2019s, Inc. Chairman of the Board and Chief Executive Officer\nThe Board has adopted a written Audit Committee Charter. All members of the Audit Committee are independent, as defined in Sections 303A.06 and 303A.07 of the NYSE\u2019s listing standards.\nThe foregoing report was submitted by the Audit Committee and shall not be deemed to be \u201csoliciting materials\u201d or to be \u201cfiled\u201d with the Securities and Exchange Commission or subject to Regulation 14A or to the liabilities of Section 18 of the Securities Exchange Act of 1934.\nJohn A. Bryant, Chair\nTorrence N. Boone\nAshley Buchanan\nLeslie D. Hale\nWilliam H. Lenehan\nMarna C. Whittington\nThe foregoing report was submitted by the CMD Committee and shall not be deemed to be \u201csoliciting material\u201d or to be \u201cfiled\u201d with the Securities and Exchange Commission or subject to Regulation 14A or to the liabilities of Section 18 of the Securities Exchange Act of 1934.\nFrancis S. Blake, Chair\nDeirdre P. Connelly\nSara Levinson\nPaul C. Varga"
+  }
+ },
+ "report_end": "2022-01-29",
+ "seconds": 446.2,
+ "selection_id": "sha256:8d7f4145f157c5d6f40de061b2a9dd60f5cea507f9a2e980b1a362a9fabf4107",
+ "xbrl_parses": 1
+}

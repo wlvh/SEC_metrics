@@ -1,0 +1,244 @@
+{
+ "injections": [
+  {
+   "id": "NO_LOOKBEHIND",
+   "file": "scripts/vnext/historical_text_results.py",
+   "why_it_matters": "a run of separators is walked again from each of its positions",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_page_numbered.TheReadingIsLinearTest.test_a_long_separator_run",
+   "failed_cases": [
+    "test_a_long_separator_run"
+   ],
+   "expected_case_failure": "AssertionError: 15.187377628999457 not less than 2.0",
+   "suite_result": "Ran 2 tests in 15.190s FAILED (failures=1)",
+   "seconds": 16
+  },
+  {
+   "id": "THE_OLD_PATTERN_IS_BACK",
+   "file": "scripts/vnext/historical_text_results.py",
+   "why_it_matters": "the backtracking pattern returns, and a paragraph costs the square of its length",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_page_numbered.TheReadingIsLinearTest.test_a_long_paragraph",
+   "failed_cases": [
+    "test_a_long_paragraph",
+    "test_a_long_separator_run"
+   ],
+   "expected_case_failure": "AssertionError: 33.04617206900002 not less than 2.0",
+   "suite_result": "Ran 2 tests in 47.720s FAILED (failures=2)",
+   "seconds": 48
+  },
+  {
+   "id": "A_STEM_MAY_SPAN_LINES",
+   "file": "scripts/vnext/historical_text_results.py",
+   "why_it_matters": "the old pattern's stem never crossed a line break",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_page_numbered.ThePageNumberReadingIsTheOldPatternsTest.test_every_crafted_string_gets_the_same_answer",
+   "failed_cases": [
+    "test_every_crafted_string_gets_the_same_answer",
+    "test_random_footers_with_a_stem_a_separator_run_and_digits",
+    "test_random_strings_over_the_boundary_alphabet"
+   ],
+   "expected_case_failure": "AssertionError: ('a\\nb', '12') != None",
+   "suite_result": "Ran 4 tests in 0.002s FAILED (failures=4)",
+   "seconds": 1
+  },
+  {
+   "id": "A_STEM_NEEDS_NO_LETTER",
+   "file": "scripts/vnext/historical_text_results.py",
+   "why_it_matters": "a bare number would become a footer stem",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_page_numbered.ThePageNumberReadingIsTheOldPatternsTest.test_every_crafted_string_gets_the_same_answer",
+   "failed_cases": [
+    "test_every_crafted_string_gets_the_same_answer",
+    "test_random_footers_with_a_stem_a_separator_run_and_digits",
+    "test_random_strings_over_the_boundary_alphabet"
+   ],
+   "expected_case_failure": "AssertionError: ('', '12') != None",
+   "suite_result": "Ran 4 tests in 0.002s FAILED (failures=8)",
+   "seconds": 1
+  },
+  {
+   "id": "FIVE_DIGIT_PAGES",
+   "file": "scripts/vnext/historical_text_results.py",
+   "why_it_matters": "a five-digit number would be read as a page",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_page_numbered.ThePageNumberReadingIsTheOldPatternsTest.test_every_crafted_string_gets_the_same_answer",
+   "failed_cases": [
+    "test_every_crafted_string_gets_the_same_answer",
+    "test_random_footers_with_a_stem_a_separator_run_and_digits"
+   ],
+   "expected_case_failure": "AssertionError: ('x', '12345') != None",
+   "suite_result": "Ran 4 tests in 0.153s FAILED (failures=3)",
+   "seconds": 1
+  },
+  {
+   "id": "ANY_LETTER_COUNTS",
+   "file": "scripts/vnext/historical_text_results.py",
+   "why_it_matters": "the old pattern counted only ASCII letters",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_page_numbered.ThePageNumberReadingIsTheOldPatternsTest.test_every_crafted_string_gets_the_same_answer",
+   "failed_cases": [
+    "test_every_crafted_string_gets_the_same_answer",
+    "test_random_footers_with_a_stem_a_separator_run_and_digits",
+    "test_random_strings_over_the_boundary_alphabet"
+   ],
+   "expected_case_failure": "AssertionError: ('Ελλάδα', '12') != None",
+   "suite_result": "Ran 4 tests in 0.004s FAILED (failures=4)",
+   "seconds": 1
+  },
+  {
+   "id": "A_NUMBERED_NEIGHBOUR_DOES_NOT_RECUR",
+   "file": "scripts/vnext/historical_text_results.py",
+   "why_it_matters": "two footers that only recur as numbered stems would stop counting each other",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_page_numbered.TheFooterSetIsTheOldOnesTest.test_generated_documents_and_ranges",
+   "failed_cases": [
+    "test_generated_documents_and_ranges"
+   ],
+   "expected_case_failure": "AssertionError: Items in the first set but not the second:",
+   "suite_result": "Ran 1 test in 0.001s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "A_REPEATED_NEIGHBOUR_DOES_NOT_RECUR",
+   "file": "scripts/vnext/historical_text_results.py",
+   "why_it_matters": "a footer beside a repeated running head would stop being one",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_page_numbered.TheFooterSetIsTheOldOnesTest.test_generated_documents_and_ranges",
+   "failed_cases": [
+    "test_generated_documents_and_ranges"
+   ],
+   "expected_case_failure": "AssertionError: Items in the first set but not the second:",
+   "suite_result": "Ran 1 test in 0.002s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_STEM_IS_NOT_NORMALIZED",
+   "file": "scripts/vnext/historical_text_results.py",
+   "why_it_matters": "one footer printed in two cases would count as two stems",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_page_numbered.TheFooterSetIsTheOldOnesTest.test_generated_documents_and_ranges",
+   "failed_cases": [
+    "test_generated_documents_and_ranges"
+   ],
+   "expected_case_failure": "AssertionError: Items in the first set but not the second:",
+   "suite_result": "Ran 1 test in 0.003s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "KEYED_BY_LENGTH",
+   "file": "scripts/vnext/historical_xbrl_parse.py",
+   "why_it_matters": "another document of the same length would get this one's facts",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_xbrl_parse.OneParsePerDocumentTest.test_different_bytes_of_one_length_are_different_documents",
+   "failed_cases": [
+    "test_a_dropped_document_is_parsed_again_not_answered_differently",
+    "test_different_bytes_of_one_length_are_different_documents"
+   ],
+   "expected_case_failure": "AssertionError: 2 != 1",
+   "suite_result": "Ran 4 tests in 0.005s FAILED (failures=2)",
+   "seconds": 1
+  },
+  {
+   "id": "A_BYTEARRAY_IS_PARSED",
+   "file": "scripts/vnext/historical_xbrl_parse.py",
+   "why_it_matters": "an argument the frozen parser refuses would be answered",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_xbrl_parse.OneParsePerDocumentTest.test_what_the_parser_refuses_is_refused_as_before_and_not_kept",
+   "failed_cases": [
+    "test_what_the_parser_refuses_is_refused_as_before_and_not_kept"
+   ],
+   "expected_case_failure": "AssertionError: DeterministicRouterError not raised",
+   "suite_result": "Ran 4 tests in 0.005s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "NOTHING_IS_DROPPED",
+   "file": "scripts/vnext/historical_xbrl_parse.py",
+   "why_it_matters": "the block would hold every document it ever parsed",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_xbrl_parse.OneParsePerDocumentTest.test_a_dropped_document_is_parsed_again_not_answered_differently",
+   "failed_cases": [
+    "test_a_dropped_document_is_parsed_again_not_answered_differently"
+   ],
+   "expected_case_failure": "AssertionError: 3 != 2",
+   "suite_result": "Ran 4 tests in 0.011s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "NOT_PUT_BACK_WHEN_THE_BLOCK_RAISES",
+   "file": "scripts/vnext/historical_xbrl_parse.py",
+   "why_it_matters": "a failing case would leave every later one on the remembered parser",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_xbrl_parse.TheBindingsAreSwappedOnlyInsideTest.test_the_bindings_are_put_back_when_the_block_raises",
+   "failed_cases": [
+    "test_the_bindings_are_put_back_when_the_block_raises"
+   ],
+   "expected_case_failure": "AssertionError: <function parse_accession_xbrl_source at 0x7fab77ae4fe0> is not <function _memo.<locals>.parse_accession_xbrl_source at 0x7fab7883a200> : vnext.deterministic_router",
+   "suite_result": "Ran 6 tests in 0.006s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "A_MODULE_IMPORTED_INSIDE_KEEPS_THE_MEMO",
+   "file": "scripts/vnext/historical_xbrl_parse.py",
+   "why_it_matters": "a module first imported inside the block would keep the memo after it",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_xbrl_parse.TheBindingsAreSwappedOnlyInsideTest.test_a_module_first_imported_inside_the_block_is_put_back",
+   "failed_cases": [
+    "test_a_module_first_imported_inside_the_block_is_put_back"
+   ],
+   "expected_case_failure": "AssertionError: <function parse_accession_xbrl_source at 0x7fb4f5f80fe0> is not <function _memo.<locals>.parse_accession_xbrl_source at 0x7fb4f6191da0>",
+   "suite_result": "Ran 6 tests in 0.004s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_ROUTER_IS_NOT_SWAPPED",
+   "file": "scripts/vnext/historical_xbrl_parse.py",
+   "why_it_matters": "a module imported inside the block would take the frozen parser",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_xbrl_parse.TheBindingsAreSwappedOnlyInsideTest.test_every_binding_inside_and_none_outside",
+   "failed_cases": [
+    "test_a_block_inside_another_keeps_the_outer_memo",
+    "test_a_block_open_in_another_thread_is_refused",
+    "test_a_module_first_imported_inside_the_block_is_put_back",
+    "test_every_binding_inside_and_none_outside"
+   ],
+   "expected_case_failure": "AssertionError: unexpectedly identical: <function parse_accession_xbrl_source at 0x7f1542ee4fe0> : vnext.deterministic_router",
+   "suite_result": "Ran 6 tests in 0.007s FAILED (failures=4)",
+   "seconds": 0
+  },
+  {
+   "id": "ANOTHER_THREAD_SHARES_THE_BLOCK",
+   "file": "scripts/vnext/historical_xbrl_parse.py",
+   "why_it_matters": "a second thread would share one thread's memo",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_xbrl_parse.TheBindingsAreSwappedOnlyInsideTest.test_a_block_open_in_another_thread_is_refused",
+   "failed_cases": [
+    "test_a_block_open_in_another_thread_is_refused"
+   ],
+   "expected_case_failure": "AssertionError: 1 != 0",
+   "suite_result": "Ran 6 tests in 0.004s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "A_REPLACED_PARSER_IS_WRAPPED",
+   "file": "scripts/vnext/historical_xbrl_parse.py",
+   "why_it_matters": "a patched parser would be remembered as if it were the frozen one",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_xbrl_parse.TheBindingsAreSwappedOnlyInsideTest.test_a_parser_someone_else_replaced_is_refused",
+   "failed_cases": [
+    "test_a_parser_someone_else_replaced_is_refused"
+   ],
+   "expected_case_failure": "AssertionError: ValueError not raised",
+   "suite_result": "Ran 6 tests in 0.004s FAILED (failures=1)",
+   "seconds": 1
+  }
+ ],
+ "caught": 17,
+ "total": 17,
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

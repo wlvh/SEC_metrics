@@ -1,0 +1,101 @@
+{
+ "record_type": "ISSUE_47_DEV_DRY_RUN_INPUTS",
+ "what": "the one file each development model was told to read: the request's provider messages (system prompt, then the user message JSON) as dump_requests.py renders them; regenerate with dump_requests.py on the run package and compare these digests",
+ "files": [
+  {
+   "file": "D02-enphase_energy-2025-12-31.txt",
+   "sha256": "29054ae45cbce53a8e0c1e0dc02f4c8b6b02d09718b89a6e89b70c0672c46045",
+   "bytes": 180235
+  },
+  {
+   "file": "D02-ford_motor_company-2025-12-31.txt",
+   "sha256": "f2cb8ffe06835cb3ae6b9e8e99da69398fc7785b0110c210b42799ec79bc4b70",
+   "bytes": 3860
+  },
+  {
+   "file": "D02-lumen_technologies-2025-12-31.txt",
+   "sha256": "064ba93845b04529ff0da2b0074139065204369b5808231217e365e40d63739a",
+   "bytes": 254904
+  },
+  {
+   "file": "D02-macys-2026-01-31.txt",
+   "sha256": "200f5ccd1cabd1a44f48a21a7e7321d2672cc96983927113516aea9b02005e78",
+   "bytes": 127517
+  },
+  {
+   "file": "D02-marriott_international-2023-12-31.txt",
+   "sha256": "7f804aece770f69ad460bb0202bdbf3fc6b0803fe6398883771b7f6d76ecfe1c",
+   "bytes": 113622
+  },
+  {
+   "file": "D02-marriott_international-2024-12-31.txt",
+   "sha256": "0a3f2ac7af7ae1a25102dd928e9a91fa515a0f8706186eb15b2727890a41987c",
+   "bytes": 115072
+  },
+  {
+   "file": "D02-marriott_international-2025-12-31.txt",
+   "sha256": "d83c65eeed8afadd3e706e4f75ac0f8477bd363e3382f8fa5fa679091b2c1119",
+   "bytes": 114285
+  },
+  {
+   "file": "D02-paramount_skydance_paramount_global-2024-12-31.txt",
+   "sha256": "095174426c3c5f9385cef869688c5c89186acec0cc34b2f5d2b8cdc0f1e33505",
+   "bytes": 203859
+  },
+  {
+   "file": "D02-paramount_skydance_paramount_global-2025-12-31.txt",
+   "sha256": "7ac40cf0bf9c1b4cf722139121f8198c099cc0f7b145e1ec9b326fcb1ac666ab",
+   "bytes": 234454
+  },
+  {
+   "file": "D02-pfizer-2025-12-31.txt",
+   "sha256": "7ea3f0aa81dfefa31fe102eb671bb3de3c0763e682b3b60c2bb9810fd92a131e",
+   "bytes": 265581
+  },
+  {
+   "file": "D02-salesforce-2026-01-31.txt",
+   "sha256": "932fe865413a83993d73c2a42b67747875c6385692106eb90c9800a60347f03e",
+   "bytes": 137781
+  },
+  {
+   "file": "D02-southwest_airlines-2025-12-31.txt",
+   "sha256": "e1c18eac4384e653956d5bb5a6501ee68a543b451d2d62d0e32c3579b21c8c63",
+   "bytes": 187945
+  },
+  {
+   "file": "E01-ford_motor_company-2025-12-31.txt",
+   "sha256": "034a9a978dd0989cfad32e473756d0082a6955b06e7935c0db751e7c0de99257",
+   "bytes": 15543
+  },
+  {
+   "file": "E01-lumen_technologies-2025-12-31.txt",
+   "sha256": "be338d52331d5269a382376a1a810f1dd095832cfec8b6f24f680889501324ba",
+   "bytes": 80070
+  },
+  {
+   "file": "E01-macys-2026-01-31.txt",
+   "sha256": "75d2d11a339e68aaeff955f56636e81adf231d702058eea894f2ce7bc4a2c430",
+   "bytes": 16423
+  },
+  {
+   "file": "E01-marriott_international-2025-12-31.txt",
+   "sha256": "9897f77b83cd1fc24cb9bea9e3cd1adc74ad77a6b3cdd938b4edf4dbdea40f31",
+   "bytes": 8840
+  },
+  {
+   "file": "E01-paramount_skydance_paramount_global-2024-12-31.txt",
+   "sha256": "e12862c650a6248f9eb2963c338ca1dbaa58d4a1120a5821dc2371a377df8c56",
+   "bytes": 50132
+  },
+  {
+   "file": "E01-pfizer-2025-12-31.txt",
+   "sha256": "6cb03dcebe471f8f1968c1463a93daa1cbdc1f07dedb99f5463ca9c5235773f6",
+   "bytes": 11321
+  },
+  {
+   "file": "E01-southwest_airlines-2025-12-31.txt",
+   "sha256": "c4be48f7d6d136499e9ce2fb66417fef8de75f0634cf9f2c3c6e339690625bb2",
+   "bytes": 7202
+  }
+ ]
+}

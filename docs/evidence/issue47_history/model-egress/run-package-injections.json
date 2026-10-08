@@ -1,0 +1,197 @@
+{
+ "record_type": "ISSUE_47_RUN_PACKAGE_CHECK_INJECTIONS",
+ "checks": "build_run_package.hold_to_the_approval, build_run_package.hold_to_the_counts",
+ "sealed_commit_measurements": "5640c367",
+ "positions": 22,
+ "requests": 35,
+ "reference_input_tokens": 3037062,
+ "control": [
+  {
+   "case": "control: the measured digests and the body laid out from them",
+   "expected": "PASS",
+   "got": "PASS"
+  },
+  {
+   "case": "the package rebuilt one request other than measured, and the body names it",
+   "expected": "RUN_PACKAGE_REQUESTS_ARE_NOT_THE_MEASURED_ONES",
+   "got": "RUN_PACKAGE_REQUESTS_ARE_NOT_THE_MEASURED_ONES"
+  },
+  {
+   "case": "a grant names one request fewer than its positions send",
+   "expected": "RUN_PACKAGE_GRANT_NAMES_OTHER_REQUESTS",
+   "got": "RUN_PACKAGE_GRANT_NAMES_OTHER_REQUESTS"
+  },
+  {
+   "case": "a grant also names another grant's request",
+   "expected": "RUN_PACKAGE_GRANT_NAMES_OTHER_REQUESTS",
+   "got": "RUN_PACKAGE_GRANT_NAMES_OTHER_REQUESTS"
+  },
+  {
+   "case": "a grant names one of its requests twice",
+   "expected": "RUN_PACKAGE_GRANT_NAMES_OTHER_REQUESTS",
+   "got": "RUN_PACKAGE_GRANT_NAMES_OTHER_REQUESTS"
+  },
+  {
+   "case": "two grants cover the same position",
+   "expected": "RUN_PACKAGE_POSITION_NOT_IN_EXACTLY_ONE_GRANT",
+   "got": "RUN_PACKAGE_POSITION_NOT_IN_EXACTLY_ONE_GRANT"
+  },
+  {
+   "case": "no grant covers a position",
+   "expected": "RUN_PACKAGE_POSITION_NOT_IN_EXACTLY_ONE_GRANT",
+   "got": "RUN_PACKAGE_POSITION_NOT_IN_EXACTLY_ONE_GRANT"
+  },
+  {
+   "case": "the body lists one grant twice",
+   "expected": "RUN_PACKAGE_GRANT_NAMED_TWICE",
+   "got": "RUN_PACKAGE_GRANT_NAMED_TWICE"
+  },
+  {
+   "case": "two positions of one grant send the same request, and the body names it twice",
+   "expected": "RUN_PACKAGE_TWO_POSITIONS_SHARE_A_REQUEST",
+   "got": "RUN_PACKAGE_TWO_POSITIONS_SHARE_A_REQUEST"
+  },
+  {
+   "case": "the cap is not the number of requests",
+   "expected": "RUN_PACKAGE_CAP_IS_NOT_THE_REQUESTS",
+   "got": "RUN_PACKAGE_CAP_IS_NOT_THE_REQUESTS"
+  },
+  {
+   "case": "the cap carries an SEC call",
+   "expected": "RUN_PACKAGE_CAP_IS_NOT_THE_REQUESTS",
+   "got": "RUN_PACKAGE_CAP_IS_NOT_THE_REQUESTS"
+  },
+  {
+   "case": "control: the measured body bytes and reference counts",
+   "expected": "PASS",
+   "got": "PASS"
+  },
+  {
+   "case": "one rebuilt request counts one token more than measured",
+   "expected": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES",
+   "got": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES"
+  },
+  {
+   "case": "one rebuilt request's body is one byte longer than measured",
+   "expected": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES",
+   "got": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES"
+  }
+ ],
+ "injections": [
+  {
+   "injection": "THE_MEASUREMENT_IS_NOT_CHECKED",
+   "caught": true,
+   "caught_by": [
+    {
+     "case": "the package rebuilt one request other than measured, and the body names it",
+     "expected": "RUN_PACKAGE_REQUESTS_ARE_NOT_THE_MEASURED_ONES",
+     "got": "PASS"
+    }
+   ]
+  },
+  {
+   "injection": "A_POSITION_MAY_FALL_IN_TWO_GRANTS",
+   "caught": true,
+   "caught_by": [
+    {
+     "case": "two grants cover the same position",
+     "expected": "RUN_PACKAGE_POSITION_NOT_IN_EXACTLY_ONE_GRANT",
+     "got": "RUN_PACKAGE_GRANT_NAMES_OTHER_REQUESTS"
+    }
+   ]
+  },
+  {
+   "injection": "A_POSITION_MAY_FALL_IN_NO_GRANT",
+   "caught": true,
+   "caught_by": [
+    {
+     "case": "no grant covers a position",
+     "expected": "RUN_PACKAGE_POSITION_NOT_IN_EXACTLY_ONE_GRANT",
+     "got": "ERROR:IndexError"
+    }
+   ]
+  },
+  {
+   "injection": "GRANTS_COMPARED_AS_SETS",
+   "caught": true,
+   "caught_by": [
+    {
+     "case": "a grant names one of its requests twice",
+     "expected": "RUN_PACKAGE_GRANT_NAMES_OTHER_REQUESTS",
+     "got": "PASS"
+    }
+   ]
+  },
+  {
+   "injection": "A_GRANT_LISTED_TWICE_IS_ACCEPTED",
+   "caught": true,
+   "caught_by": [
+    {
+     "case": "the body lists one grant twice",
+     "expected": "RUN_PACKAGE_GRANT_NAMED_TWICE",
+     "got": "RUN_PACKAGE_POSITION_NOT_IN_EXACTLY_ONE_GRANT"
+    }
+   ]
+  },
+  {
+   "injection": "SHARED_REQUESTS_ARE_ACCEPTED",
+   "caught": true,
+   "caught_by": [
+    {
+     "case": "two positions of one grant send the same request, and the body names it twice",
+     "expected": "RUN_PACKAGE_TWO_POSITIONS_SHARE_A_REQUEST",
+     "got": "PASS"
+    }
+   ]
+  },
+  {
+   "injection": "THE_CAP_IS_NOT_CHECKED",
+   "caught": true,
+   "caught_by": [
+    {
+     "case": "the cap is not the number of requests",
+     "expected": "RUN_PACKAGE_CAP_IS_NOT_THE_REQUESTS",
+     "got": "PASS"
+    },
+    {
+     "case": "the cap carries an SEC call",
+     "expected": "RUN_PACKAGE_CAP_IS_NOT_THE_REQUESTS",
+     "got": "PASS"
+    }
+   ]
+  },
+  {
+   "injection": "THE_CAP_MAY_CARRY_SEC_CALLS",
+   "caught": true,
+   "caught_by": [
+    {
+     "case": "the cap carries an SEC call",
+     "expected": "RUN_PACKAGE_CAP_IS_NOT_THE_REQUESTS",
+     "got": "PASS"
+    }
+   ]
+  },
+  {
+   "injection": "THE_COUNTS_ARE_NOT_CHECKED",
+   "caught": true,
+   "caught_by": [
+    {
+     "case": "one rebuilt request counts one token more than measured",
+     "expected": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES",
+     "got": "PASS"
+    },
+    {
+     "case": "one rebuilt request's body is one byte longer than measured",
+     "expected": "RUN_PACKAGE_REFERENCE_COUNTS_ARE_NOT_THE_MEASURED_ONES",
+     "got": "PASS"
+    }
+   ]
+  }
+ ],
+ "all_caught": true,
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

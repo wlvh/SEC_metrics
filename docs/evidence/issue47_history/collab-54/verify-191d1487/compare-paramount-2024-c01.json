@@ -1,0 +1,82 @@
+{
+ "record_type": "ISSUE_47_COMPANY_HISTORICAL_CONSUMER_CHECK",
+ "company_id": "paramount_skydance_paramount_global",
+ "report_end": "2024-12-31",
+ "positions": [
+  {
+   "metric_id": "C01",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:02144394f40de4292e4abf1f7cdfa1b466820cac7fc69f81c9cc3812fdc482f7",
+    "result_id": "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "9",
+    "entities": [],
+    "filings": [
+     "0000813828-24-000009",
+     "0000813828-24-000018",
+     "0000813828-24-000023",
+     "0000813828-24-000028",
+     "0000813828-24-000033",
+     "0000813828-24-000034",
+     "0000813828-24-000038",
+     "0000813828-24-000042",
+     "0000813828-24-000063",
+     "0000813828-24-000069",
+     "0000813828-24-000073",
+     "0000813828-24-000075",
+     "0000813828-24-000081",
+     "0000813828-24-000083",
+     "0000813828-24-000085",
+     "0000813828-24-000087",
+     "0001193125-24-050664",
+     "0001193125-24-122356",
+     "0001193125-24-177535",
+     "0001193125-24-196053",
+     "0001193125-24-196972",
+     "0001193125-24-253719"
+    ],
+    "period": [
+     "2024-01-01",
+     "2024-12-31"
+    ],
+    "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "row_hash": "sha256:b58a1f976922ff37547e2fd35b118da140367d9dbf96ac971f3716d4722a53d0"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:02144394f40de4292e4abf1f7cdfa1b466820cac7fc69f81c9cc3812fdc482f7",
+     "result_ids": [
+      "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:02144394f40de4292e4abf1f7cdfa1b466820cac7fc69f81c9cc3812fdc482f7",
+     "result_ids": [
+      "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7",
+    "row_hash": "sha256:b58a1f976922ff37547e2fd35b118da140367d9dbf96ac971f3716d4722a53d0",
+    "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

@@ -1,0 +1,52 @@
+{
+  "input_path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/work/issue47-input-only/marriott2023-d02-regression/request-body.json",
+  "input_sha256": "2daff560bc5cfbb52dc13b2125d7e1d0744b4813f38a06a6299e47ac29f22830",
+  "original_max_tokens": 4096,
+  "tool_calls_actual": 16,
+  "functions_exec_calls": 8,
+  "exec_command_calls": 8,
+  "read_scope": "Only request-body.json was read; fixed system message and all non-block request fields, then every supplied block in filing order, then the same input for exact-quote and output formatting checks.",
+  "blocks_read": 538,
+  "block_ranges_zero_based_inclusive": [
+    [
+      0,
+      89
+    ],
+    [
+      90,
+      179
+    ],
+    [
+      180,
+      269
+    ],
+    [
+      270,
+      359
+    ],
+    [
+      360,
+      449
+    ],
+    [
+      450,
+      537
+    ]
+  ],
+  "must_decide_read": 17,
+  "keyword_prefilter_used": false,
+  "reading_output_truncated": false,
+  "supplemental_reads_due_to_truncation": false,
+  "answer_truncated": false,
+  "answer_attempts": 1,
+  "prompt_modified": false,
+  "network_calls": 0,
+  "sec_calls": 0,
+  "deepseek_calls": 0,
+  "paid_business_calls": 0,
+  "other_files_read": 0,
+  "files_written": [
+    "answer.json",
+    "execution-notes.json"
+  ]
+}

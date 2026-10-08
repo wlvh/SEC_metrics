@@ -1,0 +1,41 @@
+{
+  "elapsed_seconds": 0.0786852918099612,
+  "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+  "company_id": "marriott_international",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006",
+  "metrics": [
+    {
+      "metric_id": "B02",
+      "result_id": "sha256:dff8ee332821e42e593acd7b7c3b80d8c6a629abf9c1266bef7cc32b33178159",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "value": "0.04326693227091633466135458167",
+      "unit": "ratio",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+      "requested_in_latest_execution": true,
+      "record_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-cli-20261007/state/updates/B02/results/eb93c03f6f9f4636ad4858a41801ad9a"
+    },
+    {
+      "metric_id": "B01",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "value": "26186000000",
+      "unit": "USD",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+      "requested_in_latest_execution": false,
+      "record_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-cli-20261007/state/updates/B01/results/89a4f315195d4b9da4207b3269577c91"
+    }
+  ],
+  "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

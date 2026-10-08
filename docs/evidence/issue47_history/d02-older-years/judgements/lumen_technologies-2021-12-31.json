@@ -1,0 +1,607 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "lumen_technologies:2021-12-31",
+ "reader": "independent subagent reading: a fresh agent given the reader brief and the packet, not the selector's rules or any earlier reading (its prompt carried one example from the latest-year Lumen finding; see reader-prompts.md)",
+ "reader_note": "Item 3 incorporates Note 18 subheadings it calls \"Pending Matters\" and \"Other Proceedings and Disputes\", which the 2021 note titles \"Principal Proceedings\" and \"Other Proceedings, Disputes and Contingencies\"; the value takes the whole note, so every lawsuit, investigation, tax claim and the accrual paragraphs are present. It also carries the note's Right-of-Way table (its heading, last row and total only; the 2022-2026 rows are skipped) and the Purchase Commitments text, which sit under separate subheadings Item 3 does not incorporate and are not legal matters, so I judge them NOT_DISCLOSURE rather than incorporated NOTE_ content. Of the Note 1 keyword admissions, the SG&A definition (1148) and legal-fee policy (1183) are incidental; the loss-contingency recognition policy (1154) I count as disclosure.",
+ "packet_document_id": "sha256:95eab15020650eeabced914827cc7cb297518c99d3add1f0aafce5d0d9d9561e",
+ "packet_candidate_hash": "sha256:53e3b350761b8e6aeba1c8ecc991ac30e36772248a57e822e29e037ce6674d76",
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 537,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 sentence incorporating Note 18 legal subheadings by reference",
+   "text": "The information contained under the subheadings \"Pending Matters\" and \"Other Proceedings and Disputes\" in Note 18—Commitments, Contingencies and Other Items to our consolidated financial statements included in Item 8 of Part II of this report is incorporated herein by reference.",
+   "text_sha256": "sha256:0346e107ca876c2aefb085a3a57f2dfaa10029d4f6d1c4cea7d565b94623ab58",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1148,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "SG&A definition; litigation expense only listed as a cost category",
+   "text": "•Selling, general and administrative expenses are corporate overhead and other operating expenses. These expenses include: employee-related expenses (such as salaries, wages, internal commissions, benefits and professional fees) directly attributable to selling products or services and employee-related expenses for administrative functions; marketing and advertising; property and other operating taxes and fees; external commissions; litigation expenses associated with general matters; bad debt expense; and other selling, general and administrative expenses.",
+   "text_sha256": "sha256:aba2ba73128954a6ea31880dffff0b8e8e952cf9785aac912a766de06e3e70ff",
+   "order": 1,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1154,
+   "verdict": "DISCLOSURE",
+   "why": "loss-contingency accrual recognition policy (probable and estimable, net of probable recoveries)",
+   "text": "For matters not related to income taxes, if a loss contingency is considered probable and the amount can be reasonably estimated, we recognize an expense for the estimated loss. If we have the potential to recover a portion of the estimated loss from a third party, we make a separate assessment of recoverability and reduce the estimated loss if recovery is also deemed probable.",
+   "text_sha256": "sha256:e6bb0c6d9be53e8a9cdee17d6789de8b83d8a9eceb13424970c8281df560ea7b",
+   "order": 2,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1183,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "legal-fee expensing policy; litigation only listed among matters counsel advises on",
+   "text": "In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on regulatory, litigation and other matters. Subject to certain exceptions, we expense these costs as the related services are received.",
+   "text_sha256": "sha256:78b759cd435f37c1853161077a1f36afe3ccb257ee06ca69dc18c0513a30cbe8",
+   "order": 3,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2528,
+   "verdict": "DISCLOSURE",
+   "why": "title of the contingencies note, introducing the claims paragraphs that follow",
+   "text": "(18) Commitments, Contingencies and Other Items",
+   "text_sha256": "sha256:aefff77fe593f81eac8ecfc23885912b7f28664323b6a758fa7256df633498c9",
+   "order": 4,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2529,
+   "verdict": "DISCLOSURE",
+   "why": "registrant subject to claims, legal proceedings and contingent liabilities",
+   "text": "We are subject to various claims, legal proceedings and other contingent liabilities, including the matters described below, which individually or in the aggregate could materially affect our financial condition, future results of operations or cash flows. As a matter of course, we are prepared to both litigate these matters to judgment as needed, as well as to evaluate and consider reasonable settlement opportunities.",
+   "text_sha256": "sha256:57b9b1d892b5a5aed774dc8eafaafc81ceb1cf04c1e212c8c6f81fcce8630057",
+   "order": 5,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2530,
+   "verdict": "DISCLOSURE",
+   "why": "litigation accrual policy and aggregate accrued amounts",
+   "text": "Irrespective of its merits, litigation may be both lengthy and disruptive to our operations and could cause significant expenditure and diversion of management attention. We review our litigation accrual liabilities on a quarterly basis, but in accordance with applicable accounting guidelines only establish accrual liabilities when losses are deemed probable and reasonably estimable and only revise previously-established accrual liabilities when warranted by changes in circumstances, in each case based on then-available information. As such, as of any given date we could have exposure to losses under proceedings as to which no liability has been accrued or as to which the accrued liability is inadequate. Amounts accrued for our litigation and non-income tax contingencies at December 31, 2021 and December 31, 2020 aggregated to approximately $103 million and $141 million, respectively, and are included in other current liabilities, other liabilities, or liabilities held for sale in our consolidated balance sheets as of such dates. The establishment of an accrual does not mean that actual funds have been set aside to satisfy a given contingency. Thus, the resolution of a particular contingency for the amount accrued could have no effect on our results of operations but nonetheless could have an adverse effect on our cash flows.",
+   "text_sha256": "sha256:fbd1569bf497d1f1fd75a278940f17af1619b50858f8296cc373735e761be262",
+   "order": 6,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2531,
+   "verdict": "DISCLOSURE",
+   "why": "explains that the class actions called putative are uncertified",
+   "text": "In this Note, when we refer to a class action as \"putative\" it is because a class has been alleged, but not certified in that matter.",
+   "text_sha256": "sha256:8b7db92356446ca6f0223aac5825502db24e65f1708192bceb5695f1256829bf",
+   "order": 7,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2533,
+   "verdict": "DISCLOSURE",
+   "why": "label: Principal Proceedings",
+   "text": "Principal Proceedings",
+   "text_sha256": "sha256:22cbef47765d6177cdaffde01d4fa2eaa6701257ac0d6d4aa02de6c872879631",
+   "order": 8,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2534,
+   "verdict": "DISCLOSURE",
+   "why": "case label: shareholder class action",
+   "text": "Shareholder Class Action Suit",
+   "text_sha256": "sha256:1d8b56d51d0a6e4956de91161c975089332c43138e8a107f79318dac813f41d5",
+   "order": 9,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2535,
+   "verdict": "DISCLOSURE",
+   "why": "Houser shareholder class action, dismissed and on appeal",
+   "text": "Lumen and certain Lumen Board of Directors members and officers were named as defendants in a putative shareholder class action lawsuit filed on June 12, 2018 in the Boulder County District Court of the state of Colorado, captioned Houser et al. v. CenturyLink, et al. The complaint asserts claims on behalf of a putative class of former Level 3 shareholders who became CenturyLink, Inc. shareholders as a result of our acquisition of Level 3. It alleges that the proxy statement provided to the Level 3 shareholders failed to disclose various material information of several kinds, including information about strategic revenue, customer loss rates, and customer account issues, among other items. The complaint seeks damages, costs and fees, rescission, rescissory damages, and other equitable relief. In May 2020, the court dismissed the complaint. Plaintiffs appealed that decision, and the appeal is pending.",
+   "text_sha256": "sha256:8b627b1b82f9d151a3580f87dc4f0ed7b39c8928bd643d5dcc6f841b86f7f3d0",
+   "order": 10,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2536,
+   "verdict": "DISCLOSURE",
+   "why": "label: State Tax Suits",
+   "text": "State Tax Suits",
+   "text_sha256": "sha256:1fa6506b49a148a12478ab2d53c6c3fd45480177d837745fb070bccd29d0261e",
+   "order": 11,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2537,
+   "verdict": "DISCLOSURE",
+   "why": "Missouri municipalities' tax suits and awards under appeal",
+   "text": "Since 2012, a number of Missouri municipalities have asserted claims in the Circuit Court of St. Louis County, Missouri, alleging that we and several of our subsidiaries have underpaid taxes. These municipalities are seeking, among other things, declaratory relief regarding the application of business license and gross receipts taxes and back taxes from 2007 to the present, plus penalties and interest. In a February 2017 ruling in connection with one of these pending cases, the court entered an order awarding plaintiffs $4 million and broadening the tax base on a going-forward basis. We appealed that decision to the Missouri Supreme Court. In December 2019, it affirmed the circuit court's order in some respects and reversed it in others, remanding the case to the circuit court for further proceedings. The Missouri Supreme Court's decision reduced our exposure in the case. In a June 2021 ruling in one of the pending cases, another trial court awarded the cities of Columbia and Joplin approximately $55 million, plus statutory interest. We have appealed that decision to the Missouri Court of Appeals. That appeal is pending. If the trial court's decision is not overturned or modified in light of the Missouri Supreme Court's decision, it will result in a tax liability to us in excess of our reserved accruals established for these matters. We continue to vigorously defend against these claims.",
+   "text_sha256": "sha256:7254170f1fd8218a89fa03827ccb1222aa52a7a7262824df5339793048a95dc1",
+   "order": 12,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2538,
+   "verdict": "DISCLOSURE",
+   "why": "label: Billing Practices Suits",
+   "text": "Billing Practices Suits",
+   "text_sha256": "sha256:4ba66154e8a80f2d5e9a635166c789e63ff7d6592c64397c7866b4979d1cc83a",
+   "order": 13,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2539,
+   "verdict": "DISCLOSURE",
+   "why": "billing practices lawsuits, class actions and derivative suits",
+   "text": "In June 2017, a former employee filed an employment lawsuit against us claiming that she was wrongfully terminated for alleging that we charged some of our retail customers for products and services they did not authorize. Thereafter, based in part on the allegations made by the former employee, several legal proceedings were filed, including consumer class actions in federal and state courts, a series of securities investor class actions in federal courts and several shareholder derivative actions in federal and Louisiana state courts. The derivative cases were brought on behalf of CenturyLink, Inc. against certain current and former officers and directors of the Company and seek damages for alleged breaches of fiduciary duties.",
+   "text_sha256": "sha256:afebf14c3dcab7756f0dfc6c99927905ef1aaa5ddb6d14e289c9fb5abcebc482",
+   "order": 14,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2540,
+   "verdict": "DISCLOSURE",
+   "why": "consolidated sales practices litigation; settlements; derivative actions pending",
+   "text": "The consumer class actions, the securities investor class actions, and the federal derivative actions were transferred to the U.S. District Court for the District of Minnesota for coordinated and consolidated pretrial proceedings as In Re: CenturyLink Sales Practices and Securities Litigation. We have settled the consumer and securities investor class actions. Those settlements are final. The derivative actions remain pending.",
+   "text_sha256": "sha256:7945e34afbe68aa5aa9e7dec394270bd217cc0b8e56c217787535665e5542084",
+   "order": 15,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2541,
+   "verdict": "DISCLOSURE",
+   "why": "state attorneys general claims and settlements",
+   "text": "We have engaged in discussions regarding related claims with a number of state attorneys general, and have entered into agreements settling certain of the consumer practices claims asserted by state attorneys general. While we do not agree with allegations raised in these matters, we have been willing to consider reasonable settlements where appropriate.",
+   "text_sha256": "sha256:5f8251ebab58890300625d996a580fca3c7212296c511452c60adb0b322821cf",
+   "order": 16,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2542,
+   "verdict": "DISCLOSURE",
+   "why": "label: December 2018 Outage Proceedings",
+   "text": "December 2018 Outage Proceedings",
+   "text_sha256": "sha256:425681583783d2eed1971e323056e43acd994e7dab9bd9b7f8bef62afb0bd303",
+   "order": 17,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2543,
+   "verdict": "DISCLOSURE",
+   "why": "the outage underlying the proceedings",
+   "text": "We experienced an outage on one of our transport networks that impacted voice, IP, 911, and transport services for some of our customers between the 27th and 29th of December 2018. We believe that the outage was caused by a faulty network management card from a third-party equipment vendor.",
+   "text_sha256": "sha256:ae1b2070fee4657ff82ff4db1200a40b74b0ba6a150a529fa12dd2742d94ce80",
+   "order": 18,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2545,
+   "verdict": "DISCLOSURE",
+   "why": "FCC and state investigations; FCC settlement",
+   "text": "The FCC and four states (both Washington Utilities and Transportation Commission (\"WUTC\") and the Washington Attorney General; the Montana Public Service Commission; the Nebraska Public Service Commission; and the Wyoming Public Service Commission) initiated formal investigations. In November 2020, following the FCC's release of a public report on the outage, we negotiated a settlement which was released by the FCC in December 2020. The amount of the settlement was not material to our financial statements.",
+   "text_sha256": "sha256:bd4b08bd888b97b5da86669df1db1fcd7157384c3167a1ec241744cb8309768b",
+   "order": 19,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2546,
+   "verdict": "DISCLOSURE",
+   "why": "WUTC complaint seeking penalties",
+   "text": "In December 2020, the Staff of the WUTC filed a complaint against us based on the December 2018 outage, seeking penalties owed for alleged violations of Washington regulations and laws. We have denied the allegations and will defend the claims asserted.",
+   "text_sha256": "sha256:af15a60c0ad28ff5510cd47751affde0bff8aca4ad6e17df3c60b04f03498b46",
+   "order": 20,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2547,
+   "verdict": "DISCLOSURE",
+   "why": "label: Peruvian Tax Litigation",
+   "text": "Peruvian Tax Litigation",
+   "text_sha256": "sha256:df729085d49a2333dd900ee1b1a91e122fb3369ef2576cbef78db35165dd4c96",
+   "order": 21,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2548,
+   "verdict": "DISCLOSURE",
+   "why": "SUNAT tax assessments against Peruvian subsidiary",
+   "text": "In 2005, the Peruvian tax authorities (\"SUNAT\") issued tax assessments against one of our Peruvian subsidiaries asserting $26 million, of additional income tax withholding and value-added taxes (\"VAT\"), penalties and interest for calendar years 2001 and 2002 on the basis that the Peruvian subsidiary incorrectly documented its importations. In May 2021, the Company paid the remaining amount on the fractioning regimes entered into by the Company to pay the amount assessed while it was appealed.",
+   "text_sha256": "sha256:74176b0368d721b51b05f9f0aa4d9bee90ef7f38152626d3ed701af792676f42",
+   "order": 22,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2549,
+   "verdict": "DISCLOSURE",
+   "why": "appeals of the 2002 assessments",
+   "text": "We challenged the assessments via administrative and then judicial review processes. In October 2011, the highest administrative review tribunal (the Tribunal) decided the central issue underlying the 2002 assessments in SUNAT's favor. We appealed the Tribunal's decision to the first judicial level, which decided the central issue in favor of Level 3. SUNAT and we filed cross-appeals with the court of appeal. In May 2017, the court of appeal issued a decision reversing the first judicial level. In June 2017, we filed an appeal of the decision to the Supreme Court of Justice, the final judicial level. Oral argument was held before the Supreme Court of Justice in October 2018. A decision on this case is pending.",
+   "text_sha256": "sha256:d97b2a86dcb9d747c01f9957b8df99833a12070684347f83dc90dc27015f4d3b",
+   "order": 23,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2550,
+   "verdict": "DISCLOSURE",
+   "why": "appeals of the 2001 assessments; favorable final decision",
+   "text": "In October 2013, the Tribunal decided the central issue underlying the 2001 assessments in SUNAT’s favor. We appealed that decision to the first judicial level in Peru, which decided the central issue in favor of SUNAT. In June 2017, we filed an appeal with the court of appeal. In November 2017, the court of appeals issued a decision affirming the first judicial level and we filed an appeal of the decision to the Supreme Court of Justice. Oral argument was held before the Supreme Court of Justice in June 2019. In May 2021, the Company was served with a favorable and final decision from the Supreme Court of Justice. The Company is working with SUNAT to provide additional information before SUNAT submits its plan for complying with the Supreme Court of Justice's decision.",
+   "text_sha256": "sha256:2642f2fa22c3f1aeb9391cc20f6c837995a679aa96bf595dd051fee8df6bc2bb",
+   "order": 24,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2551,
+   "verdict": "DISCLOSURE",
+   "why": "label: Brazilian Tax Claims",
+   "text": "Brazilian Tax Claims",
+   "text_sha256": "sha256:8820bbe323a0d6cad58f882f77791a3cfdf3b81f637af17658c8393fbddff8a9",
+   "order": 25,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2552,
+   "verdict": "DISCLOSURE",
+   "why": "ICMS tax assessments and objections",
+   "text": "The São Paulo and Rio de Janeiro state tax authorities have issued tax assessments against our Brazilian subsidiaries for the Tax on Distribution of Goods and Services (“ICMS”), mainly with respect to revenue from leasing certain assets and revenue from the provision of Internet access services by treating such activities as the provision of communications services, to which the ICMS tax applies. We filed objections to these assessments in both states, arguing among other things that neither the lease of assets nor the provision of Internet access qualifies as communication services subject to ICMS.",
+   "text_sha256": "sha256:e5de8385fc06f5c1469496c62aadfd16160da9254309874069a9f564ddf87148",
+   "order": 26,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2553,
+   "verdict": "DISCLOSURE",
+   "why": "judicial and administrative appeals of ICMS assessments",
+   "text": "We have appealed to the respective state judicial courts the decisions by the respective state administrative courts that rejected our objections to these assessments. In cases in which state lower courts ruled partially in our favor finding that the lease assets are not subject to ICMS, and in connection, the State appealed those rulings. In other cases, the assessment was affirmed at the first administrative level and our appeal to the second administrative level is pending. Other assessments are still pending state judicial decisions.",
+   "text_sha256": "sha256:41bb3710ceb7a9cabec45256684c6e20f09da982455fbb34aa0206e89848c71e",
+   "order": 27,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2554,
+   "verdict": "DISCLOSURE",
+   "why": "contesting assessments; possible loss beyond accruals",
+   "text": "We are vigorously contesting all such assessments in both states and view the assessment of ICMS on revenue from equipment leasing and Internet access to be without merit. These assessments, if upheld, could result in a loss of up to $46 million as of December 31, 2021, in excess of the reserved accruals established for these matters.",
+   "text_sha256": "sha256:8e617e8eaff44ed390983dd991b2fd374cb936bf2bd702b7c863b6908b73617a",
+   "order": 28,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2556,
+   "verdict": "DISCLOSURE",
+   "why": "label: Qui Tam Action",
+   "text": "Qui Tam Action",
+   "text_sha256": "sha256:071d634173d9864074a139278f3fa3fbf95cbb6e61a6117266eb1cd2c0aa033d",
+   "order": 29,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2557,
+   "verdict": "DISCLOSURE",
+   "why": "qui tam False Claims action, settled",
+   "text": "Level 3 was notified in late 2017 of a qui tam action pending against Level 3 Communications, Inc. and others in the U.S. District Court for the Eastern District of Virginia, captioned United States of America ex rel., Stephen Bishop v. Level 3 Communications, Inc. et al. The amended complaint alleged that Level 3, principally through two former employees, submitted false claims and made false statements to the government in connection with two government contracts. The relator sought damages in this lawsuit of approximately $50 million. The case was settled in the second quarter of 2021 for an immaterial amount. This matter is now fully resolved.",
+   "text_sha256": "sha256:ea7cc7c84d497027132ccf7e8a3db9e341a8512c596393871b08bbc359a80b70",
+   "order": 30,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2558,
+   "verdict": "DISCLOSURE",
+   "why": "label: Other Proceedings, Disputes and Contingencies",
+   "text": "Other Proceedings, Disputes and Contingencies",
+   "text_sha256": "sha256:4ef29f53085f16ffc03e4633c7ab8010a9184a9b43b6245aa01a02f74f0a11f1",
+   "order": 31,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2559,
+   "verdict": "DISCLOSURE",
+   "why": "other proceedings incidental to the business",
+   "text": "From time to time, we are involved in other proceedings incidental to our business, including patent infringement allegations, regulatory hearings relating primarily to our rates or services, actions relating to employee claims, various tax issues, environmental law issues, grievance hearings before labor regulatory agencies and miscellaneous third-party tort actions or commercial disputes.",
+   "text_sha256": "sha256:54985edc067361c51d6c1d9fb41d20e6a2fc0fa0c408726c36ffa6d439576612",
+   "order": 32,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2560,
+   "verdict": "DISCLOSURE",
+   "why": "patent infringement lawsuits by non-practicing entities",
+   "text": "We are currently defending several patent infringement lawsuits asserted against us by non-practicing entities, many of which are seeking substantial recoveries. These cases have progressed to various stages and one or more may go to trial within the next 12 months if they are not otherwise resolved. Where applicable, we are seeking full or partial indemnification from our vendors and suppliers. As with all litigation, we are vigorously defending these actions and, as a matter of course, are prepared to litigate these matters to judgment, as well as to evaluate and consider all reasonable settlement opportunities.",
+   "text_sha256": "sha256:6d31a41b14314637434d31503eb82d35fc03ad6a2d7ac3c424c86f7c0e4cd690",
+   "order": 33,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2561,
+   "verdict": "DISCLOSURE",
+   "why": "pending environmental proceedings and penalty exposure",
+   "text": "We are subject to various foreign, federal, state and local environmental protection and health and safety laws. From time to time, we are subject to judicial and administrative proceedings brought by various governmental authorities under these laws. Several such proceedings are currently pending, but none is reasonably expected to exceed $300,000 in fines and penalties.",
+   "text_sha256": "sha256:16a5403ce5584fd0e661a0078798f6314b7a3dbb1485f384cc56dba39a6f4c5e",
+   "order": 34,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2562,
+   "verdict": "DISCLOSURE",
+   "why": "outcome assessment of the other proceedings",
+   "text": "The outcome of these other proceedings described under this heading is not predictable. However, based on current circumstances, we do not believe that the ultimate resolution of these other proceedings, after considering available defenses and any insurance coverage or indemnification rights, will have a material adverse effect on us.",
+   "text_sha256": "sha256:eceb1edee0cde537345b948207fbb78be1a54fe16b5f891627207a43301cf6e8",
+   "order": 35,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2563,
+   "verdict": "DISCLOSURE",
+   "why": "listed matters not all contingencies; outcomes may differ",
+   "text": "The matters listed in this Note do not reflect all of our contingencies. The ultimate outcome of the above-described matters may differ materially from the outcomes anticipated, estimated, projected or implied by us in certain of our statements appearing above in this Note, and proceedings currently viewed as immaterial by us may ultimately materially impact us.",
+   "text_sha256": "sha256:27fe9020aafb768f5ed4d6946fad668c51c665c09fe77a125d1738892b306620",
+   "order": 36,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2564,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "Right-of-Way subheading: commitments, outside the two subheadings Item 3 incorporates",
+   "text": "Right-of-Way",
+   "text_sha256": "sha256:21e9e82ebf8b00b847684ebafc58c675c45f9fa6ed1b35a0bfaa8b25572374d2",
+   "order": 37,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2565,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "introduces the right-of-way commitment table; not incorporated, not a legal matter",
+   "text": "At December 31, 2021, our future rental commitments and Right-of-Way agreements were as follows:",
+   "text_sha256": "sha256:3d5b72ad5c8e963bbb2e525c629d1abf5e2f6a911297986af3ba582d12a40391",
+   "order": 38,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2566,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "right-of-way commitment table header",
+   "text": "Right-of-Way Agreements",
+   "text_sha256": "sha256:44595d7b0fe7b9e16dc2514a7db30fa1d2d9ef2a53a901288264020fb4606994",
+   "order": 39,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2567,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "commitment table unit caption",
+   "text": "(Dollars in millions)",
+   "text_sha256": "sha256:bb261b73f2591c3660eb23d4c0a67f218512398e0caf29b0e9d7878db8fdc8be",
+   "order": 40,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2573,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "right-of-way commitment table row",
+   "text": "2027 and thereafter962",
+   "text_sha256": "sha256:7342ee4a95bcb4b0cd95dc406aa310250c25f254e62bf0f1bcd83f7aea07eb89",
+   "order": 41,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2574,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "right-of-way commitment table total",
+   "text": "Total future minimum payments$1,536",
+   "text_sha256": "sha256:d6913540c52b94476b2dabedf51278aeb18148d4fd4cfc3e8d3e10db123a28f4",
+   "order": 42,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2576,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "Purchase Commitments subheading, outside the subheadings Item 3 incorporates",
+   "text": "Purchase Commitments",
+   "text_sha256": "sha256:ecd722b9c278146dcf0b04306bbca9c5503e1b79965d795039b8e43a6500b218",
+   "order": 43,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2577,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "purchase commitment amounts, not a legal matter",
+   "text": "We have several commitments primarily for marketing activities and support services from a variety of vendors to be used in the ordinary course of business totaling $1.1 billion at December 31, 2021. Of this amount, we expect to purchase $414 million in 2022, $386 million in 2023 through 2024, $91 million in 2025 through 2026 and $188 million in 2027 and thereafter. These amounts do not represent our entire anticipated purchases in the future, but represent only those items for which we were contractually committed as of December 31, 2021.",
+   "text_sha256": "sha256:2543b11cfefb7314c115258395828644f5a0a77afc94004059b5b60f379b5942",
+   "order": 44,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2578,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "commitment amounts include businesses to be divested; not legal",
+   "text": "Amounts included in the Right-of-Way table and in the purchase commitments disclosed above are inclusive of contractual obligations related to our Latin American and ILEC businesses to be divested.",
+   "text_sha256": "sha256:08ac70d70948216d40df71d4ac689a795b4848d0dfe023cba7fd6b7846b08188",
+   "order": 45,
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2532,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "129",
+   "text_sha256": "sha256:6566230e3a3ce3774c1bbc7c18b590ae0f457bbcd511e90e3e7dca2a02e7addc",
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2544,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "130",
+   "text_sha256": "sha256:38d66d9692ac590000a91b03a88da1c88d51fab2b78f63171f553ecc551a0c6f",
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2555,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "131",
+   "text_sha256": "sha256:eeca91fd439b6d5e827e8fda7fee35046f2def93508637483f6be8a2df7a4392",
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2568,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "right-of-way commitment table row, not D02 content",
+   "text": "2022$246",
+   "text_sha256": "sha256:6ea78c2abb61556a0f107053b0e992bb9debc9dd44578eb9879af39c4d0caaf2",
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2569,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "right-of-way commitment table row, not D02 content",
+   "text": "202399",
+   "text_sha256": "sha256:8e3b96a24aa4a28901313722e6930b7edc21242372f1848e9abca947749bd169",
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2570,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "right-of-way commitment table row, not D02 content",
+   "text": "202484",
+   "text_sha256": "sha256:a481ddb2a891e5fb755eda26129bc67d3a3c8bce750479b572c1ed2fb345c369",
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2571,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "right-of-way commitment table row, not D02 content",
+   "text": "202574",
+   "text_sha256": "sha256:8ba5cd3bd368c0817e532b17e95afaa09cb9e573b223a9ae57b447a1eda78687",
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2572,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "right-of-way commitment table row, not D02 content",
+   "text": "202671",
+   "text_sha256": "sha256:6bcbf4e0aef6888d531a47a4301ac5689e8140b9ad7c866d48c8a346398a6179",
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2575,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "132",
+   "text_sha256": "sha256:dbb1ded63bc70732626c5dfe6c7f50ced3d560e970f30b15335ac290358748f6",
+   "scope": "NOTE_18"
+  },
+  {
+   "kind": "HEADING",
+   "i": 536,
+   "verdict": "REACHED",
+   "why": "Item 3 heading; its incorporation sentence is taken",
+   "text": "ITEM 3. LEGAL PROCEEDINGS",
+   "text_sha256": "sha256:dbb42f43bcffb34a940ab059bead73da216c54a7637a624a1f891edfda4f4d8e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 800,
+   "verdict": "NOT_D02",
+   "why": "MD&A critical accounting estimate heading",
+   "text": "Loss Contingencies and Litigation Reserves",
+   "text_sha256": "sha256:1922db985d710a381db4863a699c9ddc691ae0cd65187b478626e40b714db4f7"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1032,
+   "verdict": "NOT_D02",
+   "why": "balance sheet caption",
+   "text": "COMMITMENTS AND CONTINGENCIES (Note 18)",
+   "text_sha256": "sha256:e0223062ab5b3bf248de807e84e865f26a122cb8e4082b124732bf42ede5877a"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2528,
+   "verdict": "REACHED",
+   "why": "contingencies note heading; its legal content is taken",
+   "text": "(18) Commitments, Contingencies and Other Items",
+   "text_sha256": "sha256:aefff77fe593f81eac8ecfc23885912b7f28664323b6a758fa7256df633498c9"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2547,
+   "verdict": "REACHED",
+   "why": "Peruvian tax litigation subsection is taken",
+   "text": "Peruvian Tax Litigation",
+   "text_sha256": "sha256:df729085d49a2333dd900ee1b1a91e122fb3369ef2576cbef78db35165dd4c96"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2558,
+   "verdict": "REACHED",
+   "why": "other proceedings subsection is taken",
+   "text": "Other Proceedings, Disputes and Contingencies",
+   "text_sha256": "sha256:4ef29f53085f16ffc03e4633c7ab8010a9184a9b43b6245aa01a02f74f0a11f1"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2576,
+   "verdict": "NOT_D02",
+   "why": "purchase commitments",
+   "text": "Purchase Commitments",
+   "text_sha256": "sha256:ecd722b9c278146dcf0b04306bbca9c5503e1b79965d795039b8e43a6500b218"
+  }
+ ]
+}

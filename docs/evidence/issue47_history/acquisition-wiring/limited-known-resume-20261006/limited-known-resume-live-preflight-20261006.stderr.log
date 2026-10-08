@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "<stdin>", line 6, in <module>
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/scripts/vnext/historical_sec_session.py", line 1839, in live_historical_session
+    checked = published()
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/scripts/vnext/historical_sec_session.py", line 1826, in published
+    return require_published_start(allowance=allowance, reader=reader,
+                                   branch_export_index=branch_export_index)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/scripts/vnext/historical_sec_session.py", line 1766, in require_published_start
+    return require_published_resume(allowance=allowance, reader=reader, checkout=checkout)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/scripts/vnext/historical_sec_resume.py", line 523, in require_published_resume
+    _need("extension" not in view or view["extension"]
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          == (_extension_named(allowance["extension"])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+              if allowance.get("extension") is not None else None),
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "RESUME_WAS_CHARGED_UNDER_ANOTHER_EXTENSION")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/scripts/vnext/historical_sec_resume.py", line 104, in _need
+    raise HistoricalSessionError("ISSUE_47_SEC_LEDGER_" + reason)
+vnext.historical_sec_session.HistoricalSessionError: ISSUE_47_SEC_LEDGER_RESUME_WAS_CHARGED_UNDER_ANOTHER_EXTENSION

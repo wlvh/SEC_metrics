@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/docs/evidence/issue47_history/b03-shared-input-receiving-2026-10-07/check_saved_inputs.py", line 69, in <module>
+    print(json.dumps(check(), ensure_ascii=False, indent=2))
+                     ~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/docs/evidence/issue47_history/b03-shared-input-receiving-2026-10-07/check_saved_inputs.py", line 53, in check
+    assert {row["value"] for row in answer["filing_answer"]["candidates"]} == {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        "1200000000.0", "3631000000"}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

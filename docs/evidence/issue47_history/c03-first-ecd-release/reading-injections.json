@@ -1,0 +1,58 @@
+{
+ "CONTROL": {
+  "returncodes": [
+   0
+  ],
+  "seconds": 10
+ },
+ "PROXIES_THAT_DISAGREE_ARE_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_year_two_proxies_report_differently_is_not_chosen_between",
+  "failed_cases": [
+   "test_a_year_two_proxies_report_differently_is_not_chosen_between",
+   "test_a_year_with_two_chief_executives_is_not_chosen_between",
+   "test_every_position_of_every_reading"
+  ],
+  "file": "tools/read_c03_across_proxies.py",
+  "modules": [
+   "tests.vnext.test_c03_across_proxies_reading"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 9
+ },
+ "SEVERAL_TOTALS_IN_ONE_PROXY_ARE_READ": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_year_with_two_chief_executives_is_not_chosen_between",
+  "failed_cases": [
+   "test_a_year_two_proxies_report_differently_is_not_chosen_between",
+   "test_a_year_with_two_chief_executives_is_not_chosen_between",
+   "test_every_position_of_every_reading"
+  ],
+  "file": "tools/read_c03_across_proxies.py",
+  "modules": [
+   "tests.vnext.test_c03_across_proxies_reading"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 10
+ },
+ "THE_RESULT_S_OWN_FILING_IS_ENOUGH": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_value_only_the_result_s_own_filing_reports_is_not_accepted",
+  "failed_cases": [
+   "test_a_value_only_the_result_s_own_filing_reports_is_not_accepted"
+  ],
+  "file": "tools/read_c03_across_proxies.py",
+  "modules": [
+   "tests.vnext.test_c03_across_proxies_reading"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 10
+ },
+ "all_caught": true
+}

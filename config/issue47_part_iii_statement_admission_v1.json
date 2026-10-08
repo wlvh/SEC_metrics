@@ -1,0 +1,35 @@
+{
+ "record_type": "ISSUE_47_PART_III_STATEMENT_VALUES_ADMISSION",
+ "schema_version": 1,
+ "requirement_id": "issue_47_v1",
+ "input_class": "ORIGINAL_STATEMENT_VALUES",
+ "decision": {
+  "by": "owner",
+  "recorded": "2026-09-27, forwarded into the Claude Code session and transcribed by the executor",
+  "excerpt": "Part III：对已点名的两份修订给予有证据条件的逐份准入授权。范围仅限 `0001193125-25-096776` 和 `0001140361-26-016758` 各自对应期间的 `ORIGINAL_STATEMENT_VALUES`……条件不成立时，只阻断受影响的修订与位置；不扩大成未来所有 Part III 修订的通用放行规则，不允许跨主体财务拼接",
+  "scope_source": "current_scope in docs/evidence/issue47_history/part-iii-statement-review/statement-values-request.json at commit 92da6f2f"
+ },
+ "filings": [
+  {
+   "company_id": "paramount_skydance_paramount_global",
+   "registrant_cik": "813828",
+   "report_end": "2024-12-31",
+   "amendment": {"accession": "0001193125-25-096776", "document": "d886907d10ka.htm",
+                 "content_sha256": "ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845"},
+   "original": {"accession": "0000813828-25-000005", "document": "para-20241231.htm"},
+   "metrics": ["B01", "B02", "B03", "B04", "B05", "B07", "B08", "B09"]
+  },
+  {
+   "company_id": "paramount_skydance_paramount_global",
+   "registrant_cik": "2041610",
+   "report_end": "2025-12-31",
+   "amendment": {"accession": "0001140361-26-016758", "document": "ef20071103_10ka.htm",
+                 "content_sha256": "10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0"},
+   "original": {"accession": "0002041610-26-000011", "document": "psky-20251231.htm"},
+   "metrics": ["B02", "B04", "B05", "B07", "B08", "B09"]
+  }
+ ],
+ "exhibits_allowed": ["101", "104", "31"],
+ "not_a_rule_for_other_filings": "Every entry names one amendment by accession and by the bytes reviewed. An amendment not listed here gets the approved policy's answer and nothing else.",
+ "production_authorized": false
+}

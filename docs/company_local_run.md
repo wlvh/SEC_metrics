@@ -1,6 +1,6 @@
-# 本地运行一家公司的当前财年
+# 本地运行一家公司的当前财年或历史财年范围
 
-这是PR55的Draft本地入口。来源与计算仍为独立阶段，`run`只负责顺序调度；没有OpenShift部署、正式发布、active切换或新模型调用。旧分阶段入口及运行树仍可读取旧Run。
+main已通过PR57交付当期公司入口；`fiscal-years`为存量历史分支已实现功能，尚未入main。历史侧接续[#28可信内部工具规则](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006)及[#47 H4](https://github.com/wlvh/SEC_metrics/issues/47#history-simplification-20261006)。来源与计算仍为独立阶段，`run`负责顺序调度；没有OpenShift部署、正式发布或active切换。旧分阶段入口及运行树仍按原身份读取旧Run。
 
 在源码目录之外的工作位置执行，固定源码也可用绝对路径指定：
 
@@ -12,7 +12,44 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
   --output-dir ./outputs/marriott
 ```
 
-公司须已在登记中。当前本地 `run`仅选择最新已披露完整10-K及其原文确认的财年，不硬编码年份，不承诺某份尚未披露财报。历史五年仍走既有历史入口，不成为本地首年启动前提。相对路径转为安全绝对路径；别名、源码树重叠、生产active目录及工作/输出重叠拒绝。
+公司须已在登记中。默认 `latest-complete-fy`选择最新已披露完整10-K及其原文确认的财年，不硬编码年份，不承诺某份尚未披露财报。历史范围不是当前财年首跑的前提。相对路径转为安全绝对路径；别名、源码树重叠、生产active目录及工作/输出重叠拒绝。
+
+历史模式使用同一入口，明确指定公司、发行人财年标签范围和指标：
+
+```bash
+python /path/to/SEC_metrics/tools/vnext_company.py run \
+  --company macys --period fiscal-years \
+  --fiscal-year-start 2023 --fiscal-year-end 2024 --metric B01 \
+  --source-root /srv/sec-metrics/prepared-history/source-inputs \
+  --work-dir /srv/sec-metrics/work/macys \
+  --output-dir /srv/sec-metrics/output/macys
+```
+
+`source-root`必须事先准备；这里的“准备”不包括自动发现新申报或补齐缺件，`run --period fiscal-years`本身不获取历史来源。程序管理逐期间计算，不要求先运行别家公司或手工拼CSV。一次范围最多五个财年；每年都从申报自身DEI核对发行人财年标签，不把2025-02-01的Macy's FY2024改称FY2025。
+
+本历史分支的新B10/B11任务已接同一公共公司保存、更新和读取函数，按明确财年调用已有历史选择及共同表格计算。相同来源与配置复跑不再计算，单年缺源保留该年空值及失败，其他成功记录保持；不安装计算树或复制来源树。例如上面的同一`run`将公司换为`marriott_international`、范围设为2024至2025、指标设为`--metric B10 --metric B11`，即可从保存原件输出范围CSV/出处。该功能及依赖PR67尚未入main，也不是完整五年自动取源到CSV或业务接受。 历史B10/B11现从程序根读取规则、Spec和主体配置，来源包只需已保存原件、headers、日志及公司登记；不要求在来源根复制catalog、计算配置或代码。来源公司登记不符时明确拒绝。历史选择/DEI等接线仍在本分支，其他指标族未因此获得这一能力。
+
+新普通任务用`results --company marriott_international --state-root <原work-dir> --output-root <新的读取目录>`读取，无需旧信任/固定程序参数。共同日常读口已保留无结果行的请求财年，日期/数值仍空；成功年度的日期、数值及未请求角色保持，缺源失败不能当成零值。其余尚未接普通历史case的指标及已有native历史任务继续走原交接/导入/保存版本；旧native范围先解析全部年份，缺少或歧义年份在创建候选前拒绝。下面的旧机制说明只解释这些保留任务，不是新开发前置。
+
+来源准备端完整验证原账本；最终计算端只接收目标公司包与独立信任登记。`historical-company.json`固定历史程序，`historical-company-state`保留历史来源版本、原生Run和请求观察；已有`local-company.json`、当期程序与状态保留。计算整个范围持有同一个导入锁，每个Run仍保留原生期间和身份。CSV为每个请求财年/指标记录状态，旧范围外结果保留并标记未请求；单年失败不冒充零值，也不覆盖别年的请求状态。复跑沿原输入指纹核验已有候选。日常保存结果由当前入口检查记录、值、期间、出处字节和已知缺陷；需要原生重放时另用原固定版本的显式审计出口。
+
+历史分支已接收公共日常读取接口。读取已有任务时，不重新执行上面的范围计算：
+
+```bash
+python /path/to/SEC_metrics/tools/vnext_company.py results \
+  --company macys \
+  --state-root /srv/sec-metrics/work/macys/historical-company-state \
+  --trust-root /srv/sec-metrics/work/macys/trust/company \
+  --runtime-root /srv/sec-metrics/work/macys/programs/<原固定程序目录> \
+  --defects-file /path/to/SEC_metrics/docs/evidence/issue47_history/known_result_defects.json \
+  --output-root /srv/sec-metrics/output/macys/saved-read-01
+```
+
+输出目录必须是新目录。`requested_in_latest_execution`说明该行是否属于最后一次实际请求；`period_role`区分保存Run的归档坐标与没有结果的请求行。两列同时进入指标与出处CSV；缺来源行保留请求财年和空值。日常读取不重算、不复制attempt，也不作模型内容接受或在线来源刷新。旧任务仍需上述既有路径参数，计算安装和自动历史取源的简化尚未完成。接收、范围反例及实际两年读取见[主要验证记录](evidence/issue47_history/company-daily-read-2026-10-07/README.md)。
+
+待接入的历史来源发现/补齐继续复用`normal_history_plan.plan_historical_sources`、`historical_source_acquisition.declared_frame`及既有SEC客户端；公司/期间/指标选择需贯穿缺件报告与按具体许可执行的获取，再交给同一入口计算。当前仍为独立步骤，尚无从空历史来源自动完成五年到CSV的交付；新轻量runtime/来源/日常读取由#28主实现，本方做历史适配。
+
+这是公司入口接线范围，不能代替原完整五年业务验收。缺模型判断、来源或完整指标实现时仍返回限制/失败，已有专用入口和旧结果继续按原版本解释。
 
 本地程序自动安装固定的普通/native继承树（`issue_54_v4`继承V14），按已有Spec选择各自原生验证器，包含无需模型的B13结构性N/A；不修改普通、native或历史旧树。
 

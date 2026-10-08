@@ -1,0 +1,3123 @@
+{
+ "record_type": "ISSUE_47_E01_PRECALL_REFERENCE_AND_CENSUS_READ",
+ "reader": "tools/read_e01_confirmed.py",
+ "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+ "reference_sha256": "c20a0703c7ab87d2c18356cbcab05be026fd230c6edda04e481f83e9ab14f687",
+ "paid_check_sha256": "0b5621caf638b2e3a0cdafe14b6f1e305c0b897b6fc18cf8ab788ba5b28b7bcf",
+ "per_position": {
+  "E01-ford_motor_company-2025-12-31": {
+   "company_id": "ford_motor_company",
+   "period_end": "2025-12-31",
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "published": "0",
+   "reference_value": 0,
+   "verdict": "MATCH",
+   "reason": null,
+   "candidate_items": {
+    "filing_date": [
+     [
+      "0000037996-25-000175",
+      "8.01"
+     ],
+     [
+      "0000037996-25-000146",
+      "8.01"
+     ],
+     [
+      "0000037996-25-000143",
+      "1.01"
+     ],
+     [
+      "0000037996-25-000139",
+      "8.01"
+     ],
+     [
+      "0000037996-25-000067",
+      "1.01"
+     ],
+     [
+      "0000037996-25-000065",
+      "8.01"
+     ],
+     [
+      "0000037996-25-000002",
+      "8.01"
+     ]
+    ],
+    "report_date": [
+     [
+      "0000037996-25-000175",
+      "8.01"
+     ],
+     [
+      "0000037996-25-000146",
+      "8.01"
+     ],
+     [
+      "0000037996-25-000143",
+      "1.01"
+     ],
+     [
+      "0000037996-25-000139",
+      "8.01"
+     ],
+     [
+      "0000037996-25-000067",
+      "1.01"
+     ],
+     [
+      "0000037996-25-000065",
+      "8.01"
+     ],
+     [
+      "0000037996-25-000002",
+      "8.01"
+     ]
+    ]
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000037996-25-000238",
+      "filingDate": "2025-12-15",
+      "items": [
+       "2.06",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000236",
+      "filingDate": "2025-12-12",
+      "items": [
+       "5.02",
+       "5.03",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000210",
+      "filingDate": "2025-11-21",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000185",
+      "filingDate": "2025-10-23",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000175",
+      "filingDate": "2025-10-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000146",
+      "filingDate": "2025-07-30",
+      "items": [
+       "2.02",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000143",
+      "filingDate": "2025-07-28",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000141",
+      "filingDate": "2025-07-16",
+      "items": [
+       "7.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000139",
+      "filingDate": "2025-07-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000074",
+      "filingDate": "2025-05-13",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000071",
+      "filingDate": "2025-05-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000067",
+      "filingDate": "2025-04-17",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000065",
+      "filingDate": "2025-04-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000011",
+      "filingDate": "2025-02-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000009",
+      "filingDate": "2025-02-05",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000006",
+      "filingDate": "2025-01-23",
+      "items": [
+       "7.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000002",
+      "filingDate": "2025-01-03",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000037996-25-000238",
+      "reportDate": "2025-12-09",
+      "items": [
+       "2.06",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000236",
+      "reportDate": "2025-12-11",
+      "items": [
+       "5.02",
+       "5.03",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000210",
+      "reportDate": "2025-11-21",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000185",
+      "reportDate": "2025-10-23",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000175",
+      "reportDate": "2025-10-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000146",
+      "reportDate": "2025-07-30",
+      "items": [
+       "2.02",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000143",
+      "reportDate": "2025-07-28",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000141",
+      "reportDate": "2025-07-16",
+      "items": [
+       "7.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000139",
+      "reportDate": "2025-07-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000074",
+      "reportDate": "2025-05-07",
+      "items": [
+       "5.02",
+       "5.07",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000071",
+      "reportDate": "2025-05-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000067",
+      "reportDate": "2025-04-17",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000065",
+      "reportDate": "2025-04-01",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000037996-25-000011",
+      "reportDate": "2025-02-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000009",
+      "reportDate": "2025-02-05",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000006",
+      "reportDate": "2025-01-23",
+      "items": [
+       "7.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000037996-25-000002",
+      "reportDate": "2025-01-03",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "filings_in_window": [
+    "0000037996-25-000238",
+    "0000037996-25-000236",
+    "0000037996-25-000210",
+    "0000037996-25-000185",
+    "0000037996-25-000175",
+    "0000037996-25-000146",
+    "0000037996-25-000143",
+    "0000037996-25-000141",
+    "0000037996-25-000139",
+    "0000037996-25-000074",
+    "0000037996-25-000071",
+    "0000037996-25-000067",
+    "0000037996-25-000065",
+    "0000037996-25-000011",
+    "0000037996-25-000009",
+    "0000037996-25-000006",
+    "0000037996-25-000002"
+   ],
+   "history_blocks": {},
+   "judged_items": {
+    "0000037996-25-000002#8.01@2268": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000037996-25-000065#8.01@2266": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000037996-25-000067#1.01@2267": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000037996-25-000139#8.01@2265": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000037996-25-000143#1.01@2266": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000037996-25-000146#8.01@3474": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000037996-25-000175#8.01@2268": "DOES_NOT_REPORT_A_TRANSACTION"
+   },
+   "ledger_digest": "sha256:ba93585478a7d23961b87210ad7864d0b681ac5d55abd875e6f2d69e6db34c49",
+   "request_file_sha256": "3b29a6e05b5c12e41541fd5430755a7602938608216f923318c5c96c4295050d",
+   "reading_direction": [
+    "each requested item against pre-call reading",
+    "all saved window headers back to request and reference"
+   ],
+   "checked_identity": {
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "unit": "count",
+    "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+    "value_kind": null,
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "filings": [
+     "0000037996-25-000002",
+     "0000037996-25-000006",
+     "0000037996-25-000009",
+     "0000037996-25-000011",
+     "0000037996-25-000065",
+     "0000037996-25-000067",
+     "0000037996-25-000071",
+     "0000037996-25-000074",
+     "0000037996-25-000139",
+     "0000037996-25-000141",
+     "0000037996-25-000143",
+     "0000037996-25-000146",
+     "0000037996-25-000175",
+     "0000037996-25-000185",
+     "0000037996-25-000210",
+     "0000037996-25-000236",
+     "0000037996-25-000238"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+     "run_id": "run:historical-period:faa4d9f86f3d78ca14845096d9b5f1f43a443bf61cc61174115ca11dd6e93abb",
+     "result_id": "sha256:02f8e39dd1b14ef5a7bfa682bf84f0ee183157961edda385edafee3ddbd60838"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "not_named_by_the_reading": []
+   }
+  },
+  "E01-lumen_technologies-2025-12-31": {
+   "company_id": "lumen_technologies",
+   "period_end": "2025-12-31",
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "published": "1",
+   "reference_value": 1,
+   "verdict": "MATCH",
+   "reason": null,
+   "candidate_items": {
+    "filing_date": [
+     [
+      "0001193125-25-330850",
+      "1.01"
+     ],
+     [
+      "0001193125-25-330850",
+      "8.01"
+     ],
+     [
+      "0001193125-25-327637",
+      "8.01"
+     ],
+     [
+      "0001193125-25-311581",
+      "8.01"
+     ],
+     [
+      "0001193125-25-223206",
+      "1.01"
+     ],
+     [
+      "0001193125-25-198334",
+      "1.01"
+     ],
+     [
+      "0001193125-25-196061",
+      "8.01"
+     ],
+     [
+      "0001193125-25-182730",
+      "1.01"
+     ],
+     [
+      "0001193125-25-182730",
+      "8.01"
+     ],
+     [
+      "0001193125-25-172843",
+      "8.01"
+     ],
+     [
+      "0001193125-25-152683",
+      "1.01"
+     ],
+     [
+      "0001193125-25-152683",
+      "8.01"
+     ],
+     [
+      "0001193125-25-141702",
+      "8.01"
+     ],
+     [
+      "0001193125-25-124002",
+      "1.01"
+     ],
+     [
+      "0000018926-25-000039",
+      "1.01"
+     ]
+    ],
+    "report_date": [
+     [
+      "0001193125-25-330850",
+      "1.01"
+     ],
+     [
+      "0001193125-25-330850",
+      "8.01"
+     ],
+     [
+      "0001193125-25-327637",
+      "8.01"
+     ],
+     [
+      "0001193125-25-311581",
+      "8.01"
+     ],
+     [
+      "0001193125-25-223206",
+      "1.01"
+     ],
+     [
+      "0001193125-25-198334",
+      "1.01"
+     ],
+     [
+      "0001193125-25-196061",
+      "8.01"
+     ],
+     [
+      "0001193125-25-182730",
+      "1.01"
+     ],
+     [
+      "0001193125-25-182730",
+      "8.01"
+     ],
+     [
+      "0001193125-25-172843",
+      "8.01"
+     ],
+     [
+      "0001193125-25-152683",
+      "1.01"
+     ],
+     [
+      "0001193125-25-152683",
+      "8.01"
+     ],
+     [
+      "0001193125-25-141702",
+      "8.01"
+     ],
+     [
+      "0001193125-25-124002",
+      "1.01"
+     ],
+     [
+      "0000018926-25-000039",
+      "1.01"
+     ]
+    ]
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0001193125-25-330850",
+      "filingDate": "2025-12-23",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-327637",
+      "filingDate": "2025-12-22",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-311581",
+      "filingDate": "2025-12-09",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-308717",
+      "filingDate": "2025-12-05",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000018926-25-000110",
+      "filingDate": "2025-10-30",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-223206",
+      "filingDate": "2025-09-29",
+      "items": [
+       "1.01",
+       "2.03",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-203545",
+      "filingDate": "2025-09-15",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-198334",
+      "filingDate": "2025-09-08",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-196061",
+      "filingDate": "2025-09-04",
+      "items": [
+       "7.01",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-182730",
+      "filingDate": "2025-08-18",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-172843",
+      "filingDate": "2025-08-05",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000092",
+      "filingDate": "2025-07-31",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-152683",
+      "filingDate": "2025-06-30",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-141702",
+      "filingDate": "2025-06-17",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-124002",
+      "filingDate": "2025-05-21",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000059",
+      "filingDate": "2025-05-15",
+      "items": [
+       "5.07",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000018926-25-000047",
+      "filingDate": "2025-05-01",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000018926-25-000039",
+      "filingDate": "2025-04-02",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000004",
+      "filingDate": "2025-02-04",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0001193125-25-330850",
+      "reportDate": "2025-12-23",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-327637",
+      "reportDate": "2025-12-22",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-311581",
+      "reportDate": "2025-12-08",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-308717",
+      "reportDate": "2025-12-01",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000018926-25-000110",
+      "reportDate": "2025-10-30",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-223206",
+      "reportDate": "2025-09-29",
+      "items": [
+       "1.01",
+       "2.03",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-203545",
+      "reportDate": "2025-09-09",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-198334",
+      "reportDate": "2025-09-08",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-196061",
+      "reportDate": "2025-09-04",
+      "items": [
+       "7.01",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-182730",
+      "reportDate": "2025-08-18",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-172843",
+      "reportDate": "2025-08-04",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000092",
+      "reportDate": "2025-07-31",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-152683",
+      "reportDate": "2025-06-30",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-141702",
+      "reportDate": "2025-06-16",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-124002",
+      "reportDate": "2025-05-21",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000059",
+      "reportDate": "2025-05-13",
+      "items": [
+       "5.07",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000018926-25-000047",
+      "reportDate": "2025-05-01",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000018926-25-000039",
+      "reportDate": "2025-03-27",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000018926-25-000004",
+      "reportDate": "2025-02-04",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "filings_in_window": [
+    "0001193125-25-330850",
+    "0001193125-25-327637",
+    "0001193125-25-311581",
+    "0001193125-25-308717",
+    "0000018926-25-000110",
+    "0001193125-25-223206",
+    "0001193125-25-203545",
+    "0001193125-25-198334",
+    "0001193125-25-196061",
+    "0001193125-25-182730",
+    "0001193125-25-172843",
+    "0000018926-25-000092",
+    "0001193125-25-152683",
+    "0001193125-25-141702",
+    "0001193125-25-124002",
+    "0000018926-25-000059",
+    "0000018926-25-000047",
+    "0000018926-25-000039",
+    "0000018926-25-000004"
+   ],
+   "history_blocks": {},
+   "judged_items": {
+    "0000018926-25-000039#1.01@2603": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-124002#1.01@2164": "REPORTS_A_TRANSACTION",
+    "0001193125-25-141702#8.01@2619": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-152683#1.01@2616": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-152683#8.01@13141": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-172843#8.01@2617": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-182730#1.01@2618": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-182730#8.01@13031": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-196061#8.01@4713": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-198334#1.01@2620": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-223206#1.01@2622": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-311581#8.01@2620": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-327637#8.01@2620": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-330850#1.01@2619": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-330850#8.01@10912": "DOES_NOT_REPORT_A_TRANSACTION"
+   },
+   "ledger_digest": "sha256:87c5f4dc3d20ee8e8d78d9c26943e1ca52048e91188832734626c15add7938eb",
+   "request_file_sha256": "c7f1f5672c68569f16f04e8f1b41f782f4ebd9a28f9bbe157471435f956dd6ce",
+   "reading_direction": [
+    "each requested item against pre-call reading",
+    "all saved window headers back to request and reference"
+   ],
+   "checked_identity": {
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "unit": "count",
+    "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+    "value_kind": null,
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "filings": [
+     "0000018926-25-000004",
+     "0000018926-25-000039",
+     "0000018926-25-000047",
+     "0000018926-25-000059",
+     "0000018926-25-000092",
+     "0000018926-25-000110",
+     "0001193125-25-124002",
+     "0001193125-25-141702",
+     "0001193125-25-152683",
+     "0001193125-25-172843",
+     "0001193125-25-182730",
+     "0001193125-25-196061",
+     "0001193125-25-198334",
+     "0001193125-25-203545",
+     "0001193125-25-223206",
+     "0001193125-25-308717",
+     "0001193125-25-311581",
+     "0001193125-25-327637",
+     "0001193125-25-330850"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+     "run_id": "run:historical-period:da1c4a960077951edcc680fe99d861ec3e5991ffca3ecc6b8d80f7e0abbde8c3",
+     "result_id": "sha256:b608fd9b4bf008be4005bf39829783ff9c9b830213d0f9c7e504d932c6aa175d"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "not_named_by_the_reading": []
+   }
+  },
+  "E01-macys-2026-01-31": {
+   "company_id": "macys",
+   "period_end": "2026-01-31",
+   "window": [
+    "2025-02-02",
+    "2026-01-31"
+   ],
+   "published": "0",
+   "reference_value": 0,
+   "verdict": "MATCH",
+   "reason": null,
+   "candidate_items": {
+    "filing_date": [
+     [
+      "0000794367-25-000137",
+      "1.01"
+     ],
+     [
+      "0000794367-25-000137",
+      "8.01"
+     ],
+     [
+      "0000794367-25-000132",
+      "8.01"
+     ],
+     [
+      "0000794367-25-000128",
+      "8.01"
+     ],
+     [
+      "0000794367-25-000087",
+      "1.01"
+     ],
+     [
+      "0000794367-25-000010",
+      "8.01"
+     ]
+    ],
+    "report_date": [
+     [
+      "0000794367-25-000137",
+      "1.01"
+     ],
+     [
+      "0000794367-25-000137",
+      "8.01"
+     ],
+     [
+      "0000794367-25-000132",
+      "8.01"
+     ],
+     [
+      "0000794367-25-000128",
+      "8.01"
+     ],
+     [
+      "0000794367-25-000087",
+      "1.01"
+     ],
+     [
+      "0000794367-25-000010",
+      "8.01"
+     ]
+    ]
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000794367-25-000169",
+      "filingDate": "2025-12-12",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000165",
+      "filingDate": "2025-12-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001628280-25-054900",
+      "filingDate": "2025-12-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000139",
+      "filingDate": "2025-09-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000137",
+      "filingDate": "2025-07-29",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000132",
+      "filingDate": "2025-07-14",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000128",
+      "filingDate": "2025-07-14",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-028040",
+      "filingDate": "2025-05-28",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000092",
+      "filingDate": "2025-05-20",
+      "items": [
+       "5.07"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000087",
+      "filingDate": "2025-04-09",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000054",
+      "filingDate": "2025-04-01",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001628280-25-010767",
+      "filingDate": "2025-03-06",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000010",
+      "filingDate": "2025-02-28",
+      "items": [
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000794367-25-000169",
+      "reportDate": "2025-12-08",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000165",
+      "reportDate": "2025-12-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001628280-25-054900",
+      "reportDate": "2025-12-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000139",
+      "reportDate": "2025-09-03",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000137",
+      "reportDate": "2025-07-28",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000132",
+      "reportDate": "2025-07-14",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000128",
+      "reportDate": "2025-07-14",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-028040",
+      "reportDate": "2025-05-28",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000092",
+      "reportDate": "2025-05-16",
+      "items": [
+       "5.07"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000087",
+      "reportDate": "2025-04-09",
+      "items": [
+       "1.01",
+       "2.03",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000794367-25-000054",
+      "reportDate": "2025-04-01",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001628280-25-010767",
+      "reportDate": "2025-03-06",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000794367-25-000010",
+      "reportDate": "2025-02-28",
+      "items": [
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "filings_in_window": [
+    "0000794367-25-000169",
+    "0000794367-25-000165",
+    "0001628280-25-054900",
+    "0000794367-25-000139",
+    "0000794367-25-000137",
+    "0000794367-25-000132",
+    "0000794367-25-000128",
+    "0001628280-25-028040",
+    "0000794367-25-000092",
+    "0000794367-25-000087",
+    "0000794367-25-000054",
+    "0001628280-25-010767",
+    "0000794367-25-000010"
+   ],
+   "history_blocks": {},
+   "judged_items": {
+    "0000794367-25-000010#8.01@1933": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000794367-25-000087#1.01@1929": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000794367-25-000128#8.01@1929": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000794367-25-000132#8.01@1929": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000794367-25-000137#1.01@1929": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000794367-25-000137#8.01@4542": "DOES_NOT_REPORT_A_TRANSACTION"
+   },
+   "ledger_digest": "sha256:15a30b067e8bb799e513deb78552c6011483dae4602b63d9ab99076106c49962",
+   "request_file_sha256": "331fe451e05f35b588821498bb8309dc79e62a752611b200ab1f0376ad28dafd",
+   "reading_direction": [
+    "each requested item against pre-call reading",
+    "all saved window headers back to request and reference"
+   ],
+   "checked_identity": {
+    "period_start": "2025-02-02",
+    "period_end": "2026-01-31",
+    "unit": "count",
+    "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+    "value_kind": null,
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "filings": [
+     "0000794367-25-000010",
+     "0000794367-25-000054",
+     "0000794367-25-000087",
+     "0000794367-25-000092",
+     "0000794367-25-000128",
+     "0000794367-25-000132",
+     "0000794367-25-000137",
+     "0000794367-25-000139",
+     "0000794367-25-000165",
+     "0000794367-25-000169",
+     "0001628280-25-010767",
+     "0001628280-25-028040",
+     "0001628280-25-054900"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+     "run_id": "run:historical-period:574c4e8820c44a02a78463d83f366717d198ccd2fe51d812d0295e47dfaf04bd",
+     "result_id": "sha256:cfd2e66bf86aec1ff556980315b685bbcd05042e1f1c2ff8b94a5aa7af04fd5d"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "not_named_by_the_reading": []
+   }
+  },
+  "E01-marriott_international-2025-12-31": {
+   "company_id": "marriott_international",
+   "period_end": "2025-12-31",
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "published": "0",
+   "reference_value": 0,
+   "verdict": "MATCH",
+   "reason": null,
+   "candidate_items": {
+    "filing_date": [
+     [
+      "0001193125-25-184082",
+      "8.01"
+     ],
+     [
+      "0001193125-25-036732",
+      "8.01"
+     ]
+    ],
+    "report_date": [
+     [
+      "0001193125-25-184082",
+      "8.01"
+     ],
+     [
+      "0001193125-25-036732",
+      "8.01"
+     ]
+    ]
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0001048286-25-000011",
+      "filingDate": "2025-11-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-184082",
+      "filingDate": "2025-08-20",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-037592",
+      "filingDate": "2025-08-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-158742",
+      "filingDate": "2025-07-14",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-118861",
+      "filingDate": "2025-05-13",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-118853",
+      "filingDate": "2025-05-13",
+      "items": [
+       "5.07"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001628280-25-022390",
+      "filingDate": "2025-05-06",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-036732",
+      "filingDate": "2025-02-26",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-004772",
+      "filingDate": "2025-02-11",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-009110",
+      "filingDate": "2025-01-21",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0001048286-25-000011",
+      "reportDate": "2025-11-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-184082",
+      "reportDate": "2025-08-18",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-037592",
+      "reportDate": "2025-08-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-158742",
+      "reportDate": "2025-07-11",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-118861",
+      "reportDate": "2025-01-17",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-118853",
+      "reportDate": "2025-05-09",
+      "items": [
+       "5.07"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001628280-25-022390",
+      "reportDate": "2025-05-06",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-036732",
+      "reportDate": "2025-02-24",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001628280-25-004772",
+      "reportDate": "2025-02-11",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-009110",
+      "reportDate": "2025-01-17",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "filings_in_window": [
+    "0001048286-25-000011",
+    "0001193125-25-184082",
+    "0001628280-25-037592",
+    "0001193125-25-158742",
+    "0001193125-25-118861",
+    "0001193125-25-118853",
+    "0001628280-25-022390",
+    "0001193125-25-036732",
+    "0001628280-25-004772",
+    "0001193125-25-009110"
+   ],
+   "history_blocks": {},
+   "judged_items": {
+    "0001193125-25-036732#8.01@1994": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-184082#8.01@1992": "DOES_NOT_REPORT_A_TRANSACTION"
+   },
+   "ledger_digest": "sha256:7e521f10bf6f474f63fa9937e8fc9e678011dac0ed44988564751cdf5e9a084f",
+   "request_file_sha256": "6d089a9cc65581886ad463157d26683118d4c9b9c4540dfb50f36065ffa68d40",
+   "reading_direction": [
+    "each requested item against pre-call reading",
+    "all saved window headers back to request and reference"
+   ],
+   "checked_identity": {
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "unit": "count",
+    "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+    "value_kind": null,
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "filings": [
+     "0001048286-25-000011",
+     "0001193125-25-009110",
+     "0001193125-25-036732",
+     "0001193125-25-118853",
+     "0001193125-25-118861",
+     "0001193125-25-158742",
+     "0001193125-25-184082",
+     "0001628280-25-004772",
+     "0001628280-25-022390",
+     "0001628280-25-037592"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+     "run_id": "run:historical-period:1820d0fef1f36609bf1e4db605b11f3abee7c28a9344aa9a986168e90b293bc3",
+     "result_id": "sha256:e2e494c2d1086dceb028fe9770817070624ac539125040e62ee1c10e8577c6c2"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "not_named_by_the_reading": []
+   }
+  },
+  "E01-paramount_skydance_paramount_global-2024-12-31": {
+   "company_id": "paramount_skydance_paramount_global",
+   "period_end": "2024-12-31",
+   "window": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "published": null,
+   "reference_value": null,
+   "verdict": "NO_PUBLISHED_VALUE",
+   "reason": "REFERENCE_ITEM_DOES_NOT_SETTLE_IT",
+   "candidate_items": {
+    "filing_date": [
+     [
+      "0000813828-24-000087",
+      "8.01"
+     ],
+     [
+      "0000813828-24-000081",
+      "8.01"
+     ],
+     [
+      "0000813828-24-000073",
+      "8.01"
+     ],
+     [
+      "0001193125-24-196053",
+      "1.01"
+     ],
+     [
+      "0001193125-24-177535",
+      "1.01"
+     ],
+     [
+      "0000813828-24-000033",
+      "8.01"
+     ],
+     [
+      "0000813828-24-000018",
+      "8.01"
+     ],
+     [
+      "0000813828-24-000009",
+      "8.01"
+     ]
+    ],
+    "report_date": [
+     [
+      "0000813828-24-000087",
+      "8.01"
+     ],
+     [
+      "0000813828-24-000081",
+      "8.01"
+     ],
+     [
+      "0000813828-24-000073",
+      "8.01"
+     ],
+     [
+      "0001193125-24-196053",
+      "1.01"
+     ],
+     [
+      "0001193125-24-177535",
+      "1.01"
+     ],
+     [
+      "0000813828-24-000033",
+      "8.01"
+     ],
+     [
+      "0000813828-24-000018",
+      "8.01"
+     ],
+     [
+      "0000813828-24-000009",
+      "8.01"
+     ]
+    ]
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000813828-24-000087",
+      "filingDate": "2024-12-27",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000085",
+      "filingDate": "2024-12-11",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000083",
+      "filingDate": "2024-11-21",
+      "items": [
+       "5.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000081",
+      "filingDate": "2024-11-14",
+      "items": [
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-253719",
+      "filingDate": "2024-11-08",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000075",
+      "filingDate": "2024-10-18",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000073",
+      "filingDate": "2024-10-15",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000069",
+      "filingDate": "2024-08-27",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000063",
+      "filingDate": "2024-08-22",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-24-196972",
+      "filingDate": "2024-08-08",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-24-196053",
+      "filingDate": "2024-08-07",
+      "items": [
+       "1.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-177535",
+      "filingDate": "2024-07-11",
+      "items": [
+       "1.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000042",
+      "filingDate": "2024-07-08",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000038",
+      "filingDate": "2024-06-21",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000034",
+      "filingDate": "2024-06-10",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000033",
+      "filingDate": "2024-06-10",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000028",
+      "filingDate": "2024-06-07",
+      "items": [
+       "5.03",
+       "5.07",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000023",
+      "filingDate": "2024-05-03",
+      "items": [
+       "5.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000018",
+      "filingDate": "2024-04-29",
+      "items": [
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-122356",
+      "filingDate": "2024-04-29",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000009",
+      "filingDate": "2024-03-13",
+      "items": [
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-050664",
+      "filingDate": "2024-02-28",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000813828-24-000087",
+      "reportDate": "2024-12-20",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000085",
+      "reportDate": "2024-12-05",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000083",
+      "reportDate": "2024-11-15",
+      "items": [
+       "5.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000081",
+      "reportDate": "2024-11-14",
+      "items": [
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-253719",
+      "reportDate": "2024-11-08",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000075",
+      "reportDate": "2024-10-14",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000073",
+      "reportDate": "2024-10-08",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000069",
+      "reportDate": "2024-08-26",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000063",
+      "reportDate": "2024-08-21",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-24-196972",
+      "reportDate": "2024-08-08",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-24-196053",
+      "reportDate": "2024-08-01",
+      "items": [
+       "1.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-177535",
+      "reportDate": "2024-07-07",
+      "items": [
+       "1.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000042",
+      "reportDate": "2024-07-07",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000038",
+      "reportDate": "2024-06-16",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000034",
+      "reportDate": "2024-06-07",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000033",
+      "reportDate": "2024-04-29",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000028",
+      "reportDate": "2024-06-04",
+      "items": [
+       "5.03",
+       "5.07",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000023",
+      "reportDate": "2024-04-29",
+      "items": [
+       "5.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000018",
+      "reportDate": "2024-04-29",
+      "items": [
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-122356",
+      "reportDate": "2024-04-29",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000813828-24-000009",
+      "reportDate": "2024-03-13",
+      "items": [
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-050664",
+      "reportDate": "2024-02-28",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "filings_in_window": [
+    "0000813828-24-000087",
+    "0000813828-24-000085",
+    "0000813828-24-000083",
+    "0000813828-24-000081",
+    "0001193125-24-253719",
+    "0000813828-24-000075",
+    "0000813828-24-000073",
+    "0000813828-24-000069",
+    "0000813828-24-000063",
+    "0001193125-24-196972",
+    "0001193125-24-196053",
+    "0001193125-24-177535",
+    "0000813828-24-000042",
+    "0000813828-24-000038",
+    "0000813828-24-000034",
+    "0000813828-24-000033",
+    "0000813828-24-000028",
+    "0000813828-24-000023",
+    "0000813828-24-000018",
+    "0001193125-24-122356",
+    "0000813828-24-000009",
+    "0001193125-24-050664"
+   ],
+   "history_blocks": {},
+   "judged_items": {
+    "0000813828-24-000009#8.01@2402": "REPORTS_A_TRANSACTION",
+    "0000813828-24-000018#8.01@2224": "CANNOT_TELL_FROM_THE_ITEM_TEXT",
+    "0000813828-24-000033#8.01@4324": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000813828-24-000073#8.01@5204": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0000813828-24-000081#8.01@2227": "REPORTS_A_TRANSACTION",
+    "0000813828-24-000087#8.01@5109": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-24-177535#1.01@2210": "REPORTS_A_TRANSACTION",
+    "0001193125-24-196053#1.01@2212": "DOES_NOT_REPORT_A_TRANSACTION"
+   },
+   "ledger_digest": "sha256:11f9f8deeecc0691ed326daa2f2d65817d65bf24c90a32e16b5df07d5cf65554",
+   "request_file_sha256": "edf3c144fb483981f2f20a712a1f207e141183cee3a0572fc9f04f019d32e5ab",
+   "reading_direction": [
+    "each requested item against pre-call reading",
+    "all saved window headers back to request and reference"
+   ]
+  },
+  "E01-pfizer-2025-12-31": {
+   "company_id": "pfizer",
+   "period_end": "2025-12-31",
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "published": "1",
+   "reference_value": 1,
+   "verdict": "MATCH",
+   "reason": null,
+   "candidate_items": {
+    "filing_date": [
+     [
+      "0001193125-25-291406",
+      "8.01"
+     ],
+     [
+      "0000078003-25-000159",
+      "8.01"
+     ],
+     [
+      "0001193125-25-122480",
+      "8.01"
+     ]
+    ],
+    "report_date": [
+     [
+      "0001193125-25-291406",
+      "8.01"
+     ],
+     [
+      "0000078003-25-000159",
+      "8.01"
+     ],
+     [
+      "0001193125-25-122480",
+      "8.01"
+     ]
+    ]
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000078003-25-000167",
+      "filingDate": "2025-12-16",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-291406",
+      "filingDate": "2025-11-21",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000159",
+      "filingDate": "2025-11-13",
+      "items": [
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000149",
+      "filingDate": "2025-11-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000078003-25-000136",
+      "filingDate": "2025-08-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-122480",
+      "filingDate": "2025-05-19",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000111",
+      "filingDate": "2025-04-29",
+      "items": [
+       "2.02",
+       "2.05",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000078003-25-000109",
+      "filingDate": "2025-04-28",
+      "items": [
+       "5.07"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000078003-25-000017",
+      "filingDate": "2025-02-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000078003-25-000167",
+      "reportDate": "2025-12-16",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-291406",
+      "reportDate": "2025-11-18",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000159",
+      "reportDate": "2025-11-13",
+      "items": [
+       "8.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000149",
+      "reportDate": "2025-11-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000078003-25-000136",
+      "reportDate": "2025-08-05",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-122480",
+      "reportDate": "2025-05-14",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000078003-25-000111",
+      "reportDate": "2025-04-29",
+      "items": [
+       "2.02",
+       "2.05",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000078003-25-000109",
+      "reportDate": "2025-04-24",
+      "items": [
+       "5.07"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000078003-25-000017",
+      "reportDate": "2025-02-04",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "candidate_items": []
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "filings_in_window": [
+    "0000078003-25-000167",
+    "0001193125-25-291406",
+    "0000078003-25-000159",
+    "0000078003-25-000149",
+    "0000078003-25-000136",
+    "0001193125-25-122480",
+    "0000078003-25-000111",
+    "0000078003-25-000109",
+    "0000078003-25-000017"
+   ],
+   "history_blocks": {},
+   "judged_items": {
+    "0000078003-25-000159#8.01@2679": "REPORTS_A_TRANSACTION",
+    "0001193125-25-122480#8.01@2214": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-291406#8.01@2685": "DOES_NOT_REPORT_A_TRANSACTION"
+   },
+   "ledger_digest": "sha256:01e2446cb97c68f34962b6b24b39136fd2f45ed1cd45d5a0df12a76bf6afbb4b",
+   "request_file_sha256": "5136bc4455987f95a06f5ad3987a2e321046f71bb9350d8c0695f8867ad7abaf",
+   "reading_direction": [
+    "each requested item against pre-call reading",
+    "all saved window headers back to request and reference"
+   ],
+   "checked_identity": {
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "unit": "count",
+    "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+    "value_kind": null,
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "filings": [
+     "0000078003-25-000017",
+     "0000078003-25-000109",
+     "0000078003-25-000111",
+     "0000078003-25-000136",
+     "0000078003-25-000149",
+     "0000078003-25-000159",
+     "0000078003-25-000167",
+     "0001193125-25-122480",
+     "0001193125-25-291406"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+     "run_id": "run:historical-period:066f9a5dae70a4ac69187a62bf061ad21996eb44efde78754424e33ff6046b1a",
+     "result_id": "sha256:17710f4d827f1719e0aa3014bbbcfa3d2a1ff1a951b8d546dcbee5f32af257e6"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "not_named_by_the_reading": []
+   }
+  },
+  "E01-southwest_airlines-2025-12-31": {
+   "company_id": "southwest_airlines",
+   "period_end": "2025-12-31",
+   "window": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "published": "0",
+   "reference_value": 0,
+   "verdict": "MATCH",
+   "reason": null,
+   "candidate_items": {
+    "filing_date": [
+     [
+      "0001193125-25-262544",
+      "1.01"
+     ],
+     [
+      "0001193125-25-262544",
+      "8.01"
+     ],
+     [
+      "0001193125-25-029062",
+      "1.01"
+     ]
+    ],
+    "report_date": [
+     [
+      "0001193125-25-262544",
+      "1.01"
+     ],
+     [
+      "0001193125-25-262544",
+      "8.01"
+     ],
+     [
+      "0001193125-25-029062",
+      "1.01"
+     ]
+    ]
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0000092380-25-000144",
+      "filingDate": "2025-12-05",
+      "items": [
+       "7.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-262544",
+      "filingDate": "2025-11-03",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000138",
+      "filingDate": "2025-10-22",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000131",
+      "filingDate": "2025-07-23",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000119",
+      "filingDate": "2025-05-19",
+      "items": [
+       "3.03",
+       "5.03",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000117",
+      "filingDate": "2025-05-19",
+      "items": [
+       "5.07"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000079",
+      "filingDate": "2025-04-23",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000075",
+      "filingDate": "2025-03-31",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000059",
+      "filingDate": "2025-03-11",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-029062",
+      "filingDate": "2025-02-19",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-028035",
+      "filingDate": "2025-02-18",
+      "items": [
+       "2.05",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-023650",
+      "filingDate": "2025-02-10",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000025",
+      "filingDate": "2025-02-07",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000007",
+      "filingDate": "2025-01-30",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-013376",
+      "filingDate": "2025-01-27",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-004026",
+      "filingDate": "2025-01-10",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000003",
+      "filingDate": "2025-01-07",
+      "items": [
+       "7.01"
+      ],
+      "candidate_items": []
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0000092380-25-000144",
+      "reportDate": "2025-12-05",
+      "items": [
+       "7.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-262544",
+      "reportDate": "2025-11-03",
+      "items": [
+       "1.01",
+       "2.03",
+       "8.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000092380-25-000138",
+      "reportDate": "2025-10-22",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000131",
+      "reportDate": "2025-07-23",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000119",
+      "reportDate": "2025-05-16",
+      "items": [
+       "3.03",
+       "5.03",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000117",
+      "reportDate": "2025-05-14",
+      "items": [
+       "5.07"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000079",
+      "reportDate": "2025-04-23",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000075",
+      "reportDate": "2025-03-28",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000059",
+      "reportDate": "2025-03-11",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-029062",
+      "reportDate": "2025-02-18",
+      "items": [
+       "1.01",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": [
+       "1.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-028035",
+      "reportDate": "2025-02-17",
+      "items": [
+       "2.05",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-023650",
+      "reportDate": "2025-02-04",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000025",
+      "reportDate": "2025-02-04",
+      "items": [
+       "5.02"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000007",
+      "reportDate": "2025-01-30",
+      "items": [
+       "2.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-013376",
+      "reportDate": "2025-01-27",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0001193125-25-004026",
+      "reportDate": "2025-01-07",
+      "items": [
+       "5.02",
+       "7.01",
+       "9.01"
+      ],
+      "candidate_items": []
+     },
+     {
+      "accession": "0000092380-25-000003",
+      "reportDate": "2025-01-07",
+      "items": [
+       "7.01"
+      ],
+      "candidate_items": []
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "filings_in_window": [
+    "0000092380-25-000144",
+    "0001193125-25-262544",
+    "0000092380-25-000138",
+    "0000092380-25-000131",
+    "0000092380-25-000119",
+    "0000092380-25-000117",
+    "0000092380-25-000079",
+    "0000092380-25-000075",
+    "0000092380-25-000059",
+    "0001193125-25-029062",
+    "0001193125-25-028035",
+    "0001193125-25-023650",
+    "0000092380-25-000025",
+    "0000092380-25-000007",
+    "0001193125-25-013376",
+    "0001193125-25-004026",
+    "0000092380-25-000003"
+   ],
+   "history_blocks": {},
+   "judged_items": {
+    "0001193125-25-029062#1.01@2014": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-262544#1.01@1990": "DOES_NOT_REPORT_A_TRANSACTION",
+    "0001193125-25-262544#8.01@4164": "DOES_NOT_REPORT_A_TRANSACTION"
+   },
+   "ledger_digest": "sha256:5111af6c7cdf60e9bc6fc94f3370041f78104a2964de83edb624b9ea5be5dfb8",
+   "request_file_sha256": "2458b55e825cc8906aeb30aced54a7d350814242b4e814441360b452f7b6d890",
+   "reading_direction": [
+    "each requested item against pre-call reading",
+    "all saved window headers back to request and reference"
+   ],
+   "checked_identity": {
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "unit": "count",
+    "scope_key": "sha256:c071622b40fa5d60eb2b323e1fc47618d688cf3be23f74c0b45193208f74cfdd",
+    "value_kind": null,
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "filings": [
+     "0000092380-25-000003",
+     "0000092380-25-000007",
+     "0000092380-25-000025",
+     "0000092380-25-000059",
+     "0000092380-25-000075",
+     "0000092380-25-000079",
+     "0000092380-25-000117",
+     "0000092380-25-000119",
+     "0000092380-25-000131",
+     "0000092380-25-000138",
+     "0000092380-25-000144",
+     "0001193125-25-004026",
+     "0001193125-25-013376",
+     "0001193125-25-023650",
+     "0001193125-25-028035",
+     "0001193125-25-029062",
+     "0001193125-25-262544"
+    ],
+    "entities": [],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "bound_from": {
+     "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+     "run_id": "run:historical-period:78581c822e8d762fe849e7aebd0220ec1387ef50ed53ca0400f9c9cec48521a0",
+     "result_id": "sha256:1daf682138d4fe5809afad669d6c9d309088c6ece1d826d375fbf69f44e32fa7"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_equal_the_whole_set_the_reading_enumerated",
+     "window"
+    ],
+    "not_named_by_the_reading": []
+   }
+  }
+ },
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "limitations": "Pre-call development judgements, not independent business review; only declared candidate item codes; attached exhibits are not read."
+}

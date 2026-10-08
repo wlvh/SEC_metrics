@@ -1,0 +1,271 @@
+{
+ "filings": {
+  "salesforce:2026-01-31": {
+   "accession": "0001108524-26-000060",
+   "company_id": "salesforce",
+   "entity": "1108524",
+   "facts": {
+    "source_reference": {
+     "accession": "0001108524-26-000060",
+     "company_id": "salesforce",
+     "document_name": "CIK0001108524.json",
+     "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026",
+     "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
+     "source_role": "companyfacts",
+     "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json"
+    },
+    "storage_uri": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json"
+   },
+   "filing_date": "2026-03-02",
+   "primary": {
+    "source_reference": {
+     "accession": "0001108524-26-000060",
+     "company_id": "salesforce",
+     "document_name": "crm-20260131.htm",
+     "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7",
+     "source_reference_id": "sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c",
+     "source_role": "target_primary",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm"
+    },
+    "storage_uri": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm"
+   },
+   "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2026-01-31",
+    "period_start": "2025-02-01"
+   },
+   "xml": {
+    "source_reference": {
+     "accession": "0001108524-26-000060",
+     "company_id": "salesforce",
+     "document_name": "crm-20260131_htm.xml",
+     "raw_asset_id": "sha256:ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3",
+     "source_reference_id": "sha256:49f22a0447f7bbc7e9d2fa79e64642550f424d82bd3442741fd292341a84e4d3",
+     "source_role": "auditor_facts",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml"
+    },
+    "storage_uri": "evidence/request_attempts/ad/ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24/crm-20260131_htm.xml"
+   }
+  },
+  "southwest_airlines:2021-12-31": {
+   "accession": "0000092380-22-000007",
+   "company_id": "southwest_airlines",
+   "entity": "92380",
+   "facts": {
+    "source_reference": {
+     "accession": "0000092380-22-000007",
+     "company_id": "southwest_airlines",
+     "document_name": "CIK0000092380.json",
+     "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e",
+     "source_reference_id": "sha256:2d204b441fde789da5894f1d3cbf0966d6a50ede3c6c915535e0546cb354fb07",
+     "source_role": "companyfacts",
+     "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json"
+    },
+    "storage_uri": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json"
+   },
+   "filing_date": "2022-02-07",
+   "primary": {
+    "source_reference": {
+     "accession": "0000092380-22-000007",
+     "company_id": "southwest_airlines",
+     "document_name": "luv-20211231.htm",
+     "raw_asset_id": "sha256:64981946d80b3606093a7acfd0d9c603e10c3c48b8aed69783c1da71edcb9d4d",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:36a813ec3fca55929b84e37a253cb0fdfe5768f2e818118a75726ce6a5f1a668",
+     "source_reference_id": "sha256:0d793193d1898121493eb7fc92c863e9a1af6bff6205f4df9341687acfa917a7",
+     "source_role": "target_primary",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238022000007/luv-20211231.htm"
+    },
+    "storage_uri": "evidence/request_attempts/64/64981946d80b3606093a7acfd0d9c603e10c3c48b8aed69783c1da71edcb9d4d/luv-20211231.htm"
+   },
+   "target_period": {
+    "fiscal_year": 2021,
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01"
+   },
+   "xml": {
+    "source_reference": {
+     "accession": "0000092380-22-000007",
+     "company_id": "southwest_airlines",
+     "document_name": "luv-20211231_htm.xml",
+     "raw_asset_id": "sha256:1208df543f956d502fbfdceb5fc97179822f023669d20300be200b9831bd7d7f",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:5b1edec4b00486c136320e2e8d898f5b89e49485784a31716f844cbab357b32d",
+     "source_reference_id": "sha256:5c608fcb41dda93347a20e3d8efb5f050a86f8dd66b09e875fa9c1b00b58ee10",
+     "source_role": "auditor_facts",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238022000007/luv-20211231_htm.xml"
+    },
+    "storage_uri": "evidence/request_attempts/12/1208df543f956d502fbfdceb5fc97179822f023669d20300be200b9831bd7d7f/luv-20211231_htm.xml"
+   }
+  },
+  "southwest_airlines:2022-12-31": {
+   "accession": "0000092380-23-000010",
+   "company_id": "southwest_airlines",
+   "entity": "92380",
+   "facts": {
+    "source_reference": {
+     "accession": "0000092380-23-000010",
+     "company_id": "southwest_airlines",
+     "document_name": "CIK0000092380.json",
+     "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e",
+     "source_reference_id": "sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e",
+     "source_role": "companyfacts",
+     "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json"
+    },
+    "storage_uri": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json"
+   },
+   "filing_date": "2023-02-07",
+   "primary": {
+    "source_reference": {
+     "accession": "0000092380-23-000010",
+     "company_id": "southwest_airlines",
+     "document_name": "luv-20221231.htm",
+     "raw_asset_id": "sha256:a6e2bc5f40c8f2bc933cf35538b9b371c1f7e96f6a305bbda1ca9d09a5b926c2",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:177763edbcbc7b590f3d0af2c5aede04eada6da47eb97f491bde18cef5f327ad",
+     "source_reference_id": "sha256:6af4d4f248f490c0515a0ac6352f1f513dccdb1a94d8b9343e0a4ef6e971c0c6",
+     "source_role": "target_primary",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238023000010/luv-20221231.htm"
+    },
+    "storage_uri": "evidence/request_attempts/a6/a6e2bc5f40c8f2bc933cf35538b9b371c1f7e96f6a305bbda1ca9d09a5b926c2/luv-20221231.htm"
+   },
+   "target_period": {
+    "fiscal_year": 2022,
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01"
+   },
+   "xml": {
+    "source_reference": {
+     "accession": "0000092380-23-000010",
+     "company_id": "southwest_airlines",
+     "document_name": "luv-20221231_htm.xml",
+     "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:404f36c4dff8409fc1ece46b2eff23ca8896e19fcfa9afe8b00042cbc44844ae",
+     "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+     "source_role": "auditor_facts",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238023000010/luv-20221231_htm.xml"
+    },
+    "storage_uri": "evidence/request_attempts/72/729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929/luv-20221231_htm.xml"
+   }
+  },
+  "southwest_airlines:2023-12-31": {
+   "accession": "0000092380-24-000027",
+   "company_id": "southwest_airlines",
+   "entity": "92380",
+   "facts": {
+    "source_reference": {
+     "accession": "0000092380-24-000027",
+     "company_id": "southwest_airlines",
+     "document_name": "CIK0000092380.json",
+     "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e",
+     "source_reference_id": "sha256:aba2ec77d035c340fd8d3e4dbf68a45b461fda613cbcf73bf384571b2cb0a355",
+     "source_role": "companyfacts",
+     "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json"
+    },
+    "storage_uri": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json"
+   },
+   "filing_date": "2024-02-06",
+   "primary": {
+    "source_reference": {
+     "accession": "0000092380-24-000027",
+     "company_id": "southwest_airlines",
+     "document_name": "luv-20231231.htm",
+     "raw_asset_id": "sha256:5467e1c0ede0b61d6e469521c8224a898b1996d1c8ae3e38800942760604f1f3",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:e577d9356110cb9661c14b9de066827522d33afcdb7a70e6bbdb5157a2d6e804",
+     "source_reference_id": "sha256:62e71b69ce63196517ca180426071b28d3dfc0e5fed2a896608af12e27a7641c",
+     "source_role": "target_primary",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238024000027/luv-20231231.htm"
+    },
+    "storage_uri": "evidence/request_attempts/54/5467e1c0ede0b61d6e469521c8224a898b1996d1c8ae3e38800942760604f1f3/luv-20231231.htm"
+   },
+   "target_period": {
+    "fiscal_year": 2023,
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01"
+   },
+   "xml": {
+    "source_reference": {
+     "accession": "0000092380-24-000027",
+     "company_id": "southwest_airlines",
+     "document_name": "luv-20231231_htm.xml",
+     "raw_asset_id": "sha256:22a6268d145ad82e4b0fc818276705f5d2cb0a6272e16bb728889706aa36241c",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:1b21bcde9b71c76414ee4b21b702f781290d4726f864f5e999bec3c14cc36f16",
+     "source_reference_id": "sha256:97f2af917cecc551d2cf56ac515c304293d7862e0b7f70c990f7a6ff130e43f3",
+     "source_role": "auditor_facts",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238024000027/luv-20231231_htm.xml"
+    },
+    "storage_uri": "evidence/request_attempts/22/22a6268d145ad82e4b0fc818276705f5d2cb0a6272e16bb728889706aa36241c/luv-20231231_htm.xml"
+   }
+  },
+  "southwest_airlines:2024-12-31": {
+   "accession": "0000092380-25-000024",
+   "company_id": "southwest_airlines",
+   "entity": "92380",
+   "facts": {
+    "source_reference": {
+     "accession": "0000092380-25-000024",
+     "company_id": "southwest_airlines",
+     "document_name": "CIK0000092380.json",
+     "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e",
+     "source_reference_id": "sha256:bffd2b822bf4ff46dbd5af2b0def2c582e4c43be3bfab4f76fa5ebd22ffc7bc8",
+     "source_role": "companyfacts",
+     "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json"
+    },
+    "storage_uri": "evidence/request_attempts/7c/7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b/CIK0000092380.json"
+   },
+   "filing_date": "2025-02-07",
+   "primary": {
+    "source_reference": {
+     "accession": "0000092380-25-000024",
+     "company_id": "southwest_airlines",
+     "document_name": "luv-20241231.htm",
+     "raw_asset_id": "sha256:cb5459694fda32079a6bc63ba95b0aa80a18ed070a75619da213e28d37a11db0",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:c5d656583e0aa30d385b94d43c241c66c04a6e3101bc450d88c7a96db7da8680",
+     "source_reference_id": "sha256:77d547af7390f11f3df943e3d9d926f247a83baa36fab94c1f2cf8b79eb4ce56",
+     "source_role": "target_primary",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm"
+    },
+    "storage_uri": "evidence/request_attempts/cb/cb5459694fda32079a6bc63ba95b0aa80a18ed070a75619da213e28d37a11db0/luv-20241231.htm"
+   },
+   "target_period": {
+    "fiscal_year": 2024,
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01"
+   },
+   "xml": {
+    "source_reference": {
+     "accession": "0000092380-25-000024",
+     "company_id": "southwest_airlines",
+     "document_name": "luv-20241231_htm.xml",
+     "raw_asset_id": "sha256:7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+     "record_type": "SOURCE_REFERENCE",
+     "request_attempt_id": "request:attempt:19cddc7945e6aad0ec53642a4a3192760539b129581c8486d401231ba8aaac07",
+     "source_reference_id": "sha256:79915f85cd1a081991261cc7feb22f8d5b04f45c60d7397e1d01e767086787e0",
+     "source_role": "auditor_facts",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231_htm.xml"
+    },
+    "storage_uri": "evidence/accession_materials/southwest_airlines_92380_000009238025000024/luv-20241231_htm.xml"
+   }
+  }
+ },
+ "record_type": "ISSUE_47_B06_FALLBACK_SOURCE_RECORDS",
+ "why": "The fallback resolver's inputs for each position, captured from the historical cascade on the restored root, so a case can call the resolver on the saved bytes (checkout or export) without that root."
+}

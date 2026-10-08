@@ -1,0 +1,271 @@
+{
+ "record_type": "ISSUE_47_EGRESS_SEQUENTIAL_BASELINE_COMPLETION",
+ "interrupted_rows": 66,
+ "completed_here": [
+  "AN_E01_OR_D02_REQUEST_IS_NOT_COMPARED",
+  "THE_CLAIMS_NEED_NOT_CHAIN",
+  "AN_EDITED_BINDING_IS_ACCEPTED",
+  "AN_EDITED_ANCHOR_IS_ACCEPTED",
+  "THE_APPROVER_IS_A_LOGIN_ONLY",
+  "A_MODEL_APPROVAL_MAY_BE_POSTED_THROUGH_AN_APP",
+  "UNBOUND_CHECKOUT_CODE_MAY_RUN",
+  "CHECKOUT_BYTECODE_MAY_RUN",
+  "NO_PRIVATE_BYTECODE_CACHE_IS_REQUIRED",
+  "THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE",
+  "THE_GATE_DOES_NOT_LIST_THE_TRANSPORT_CALLER",
+  "THE_GATE_DOES_NOT_LIST_THE_CAPABILITY_REFERENCE"
+ ],
+ "manifest_digest": "sha256:c68c5eb6147123a428c5b40b6ab8ba5b6075a9eba68780a029bd44955253750c",
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ },
+ "copy_was_the_tree_when_made": true,
+ "stop": null,
+ "rows": [
+  {
+   "id": "AN_E01_OR_D02_REQUEST_IS_NOT_COMPARED",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "minted_for_the_injection": false,
+   "expected_class": "AnE01ConfirmationIsOneCountedCallOnTheSamePath",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_an_edited_request_or_source_is_refused_before_a_slot"
+   ],
+   "failures": [
+    {
+     "case": "test_an_edited_request_or_source_is_refused_before_a_slot",
+     "raised": ""
+    }
+   ],
+   "suite_result": "FAILED (failures=1)",
+   "copy": 0,
+   "seconds": 106.0
+  },
+  {
+   "id": "THE_CLAIMS_NEED_NOT_CHAIN",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "minted_for_the_injection": false,
+   "expected_class": "tests.vnext.test_historical_model_calls.TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_the_claims_must_name_each_other_in_order"
+   ],
+   "failures": [
+    {
+     "case": "test_the_claims_must_name_each_other_in_order",
+     "raised": ""
+    }
+   ],
+   "suite_result": "FAILED (failures=1)",
+   "copy": 0,
+   "seconds": 2.0
+  },
+  {
+   "id": "AN_EDITED_BINDING_IS_ACCEPTED",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "minted_for_the_injection": false,
+   "expected_class": "tests.vnext.test_historical_model_calls.TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_an_edited_binding_or_anchor_is_refused"
+   ],
+   "failures": [
+    {
+     "case": "test_an_edited_binding_or_anchor_is_refused",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "suite_result": "FAILED (failures=1)",
+   "copy": 0,
+   "seconds": 2.0
+  },
+  {
+   "id": "AN_EDITED_ANCHOR_IS_ACCEPTED",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "minted_for_the_injection": false,
+   "expected_class": "tests.vnext.test_historical_model_calls.TheLedgerCountsEveryClaimAndStopsWhereItCannotTrustTheCount",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_an_edited_binding_or_anchor_is_refused"
+   ],
+   "failures": [
+    {
+     "case": "test_an_edited_binding_or_anchor_is_refused",
+     "raised": "AssertionError: HistoricalModelCallError not raised"
+    }
+   ],
+   "suite_result": "FAILED (failures=1)",
+   "copy": 0,
+   "seconds": 2.0
+  },
+  {
+   "id": "THE_APPROVER_IS_A_LOGIN_ONLY",
+   "file": "scripts/vnext/historical_source_acquisition.py",
+   "minted_for_the_injection": false,
+   "expected_class": "tests.vnext.test_historical_model_calls.TheAllowanceIsVerifiedNotMerelyPresent",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_the_approval_is_the_approver_s_own_post"
+   ],
+   "failures": [
+    {
+     "case": "test_the_approval_is_the_approver_s_own_post",
+     "raised": ""
+    }
+   ],
+   "suite_result": "FAILED (failures=1)",
+   "copy": 0,
+   "seconds": 2.0
+  },
+  {
+   "id": "A_MODEL_APPROVAL_MAY_BE_POSTED_THROUGH_AN_APP",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "minted_for_the_injection": false,
+   "expected_class": "tests.vnext.test_historical_model_calls.TheAllowanceIsVerifiedNotMerelyPresent",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_the_approval_is_the_approver_s_own_post"
+   ],
+   "failures": [
+    {
+     "case": "test_the_approval_is_the_approver_s_own_post",
+     "raised": ""
+    }
+   ],
+   "suite_result": "FAILED (failures=1)",
+   "copy": 0,
+   "seconds": 2.0
+  },
+  {
+   "id": "UNBOUND_CHECKOUT_CODE_MAY_RUN",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "minted_for_the_injection": false,
+   "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_an_unbound_checkout_module_is_refused_before_a_claim"
+   ],
+   "failures": [
+    {
+     "case": "test_an_unbound_checkout_module_is_refused_before_a_claim",
+     "raised": ""
+    }
+   ],
+   "suite_result": "FAILED (failures=1)",
+   "copy": 0,
+   "seconds": 240.0
+  },
+  {
+   "id": "CHECKOUT_BYTECODE_MAY_RUN",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "minted_for_the_injection": false,
+   "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_code_read_from_the_checkout_s_bytecode_is_refused"
+   ],
+   "failures": [
+    {
+     "case": "test_code_read_from_the_checkout_s_bytecode_is_refused",
+     "raised": ""
+    }
+   ],
+   "suite_result": "FAILED (failures=1)",
+   "copy": 0,
+   "seconds": 148.0
+  },
+  {
+   "id": "NO_PRIVATE_BYTECODE_CACHE_IS_REQUIRED",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "minted_for_the_injection": false,
+   "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_code_read_from_the_checkout_s_bytecode_is_refused"
+   ],
+   "failures": [
+    {
+     "case": "test_code_read_from_the_checkout_s_bytecode_is_refused",
+     "raised": ""
+    }
+   ],
+   "suite_result": "FAILED (errors=1)",
+   "copy": 0,
+   "seconds": 148.0
+  },
+  {
+   "id": "THE_RUNNER_IMPORTS_THE_CHECKOUT_BEFORE_ITS_CACHE",
+   "file": "tools/vnext_historical_model.py",
+   "minted_for_the_injection": false,
+   "expected_class": "ASocketOpensOnlyForTheCountedSendItBelongsTo",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_a_transport_account_that_disagrees_stops_with_the_response_kept"
+   ],
+   "failures": [
+    {
+     "case": "test_a_transport_account_that_disagrees_stops_with_the_response_kept",
+     "raised": ""
+    }
+   ],
+   "suite_result": "FAILED (errors=1)",
+   "copy": 0,
+   "seconds": 58.0
+  },
+  {
+   "id": "THE_GATE_DOES_NOT_LIST_THE_TRANSPORT_CALLER",
+   "file": "tools/check_provider_egress.py",
+   "minted_for_the_injection": true,
+   "expected_class": "TheEgressGateNamesExactlyOneNewCaller",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_the_gate_passes_and_lists_the_one_new_caller"
+   ],
+   "failures": [
+    {
+     "case": "test_the_gate_passes_and_lists_the_one_new_caller",
+     "raised": "check_provider_egress.ProviderEgressGateError: repository transport factory exact set differs"
+    }
+   ],
+   "suite_result": "FAILED (errors=1)",
+   "copy": 0,
+   "seconds": 12.0
+  },
+  {
+   "id": "THE_GATE_DOES_NOT_LIST_THE_CAPABILITY_REFERENCE",
+   "file": "tools/check_provider_egress.py",
+   "minted_for_the_injection": true,
+   "expected_class": "TheEgressGateNamesExactlyOneNewCaller",
+   "expected_class_outcome": "CAUGHT",
+   "outcome": "CAUGHT",
+   "first_caught_by": [
+    "test_the_gate_passes_and_lists_the_one_new_caller"
+   ],
+   "failures": [
+    {
+     "case": "test_the_gate_passes_and_lists_the_one_new_caller",
+     "raised": "check_provider_egress.ProviderEgressGateError: egress capability reference exact set differs"
+    }
+   ],
+   "suite_result": "FAILED (errors=1)",
+   "copy": 0,
+   "seconds": 12.0
+  }
+ ],
+ "copy_was_the_tree_after_the_last_injection": true,
+ "tree_unchanged": false,
+ "seconds": 758.5
+}

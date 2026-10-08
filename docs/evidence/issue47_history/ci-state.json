@@ -1,0 +1,49 @@
+{
+ "record_type": "ISSUE_47_CI_STATE_READ",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "why_this_exists": "I asserted that CI does not run the source tier, inferring it from a stale line in AGENTS.md instead of reading the workflow. This records what the workflow and the runs actually say.",
+ "the_workflow": {
+  "file": ".github/workflows/vnext-fast.yml",
+  "jobs": 13,
+  "fast_tier": "python3 tools/run_fast_tests_v2.py --jobs 2",
+  "source_tier": "python3 tools/run_fast_tests_v2.py --suite source-material --jobs 2",
+  "also": [
+   "nine native-Run jobs covering ordinary, lodging, B06, B13, D04, instant balances, source update, remaining source and two update-history suites"
+  ],
+  "python": "3.14 on the runner; this container runs 3.11, so a version-specific failure would not show locally"
+ },
+ "runs_read": [
+  {
+   "run": 185,
+   "head": "3e45533",
+   "conclusion": "cancelled",
+   "reading": "this is why three red source-tier tests shipped. The review said a cancelled run is not proof of success; the stronger reading is that the cancellation is the reason nothing said so."
+  },
+  {
+   "run": 186,
+   "head": "f823ba4",
+   "conclusion": "failure",
+   "failed_jobs": [
+    "vNext fast suite",
+    "vNext saved-source material"
+   ],
+   "cause": "the fast tier on test_historical_requirement_snapshot - historical_text_results.py is a rule file and I edited it after running the local suite, re-minting only in the runtime tree. The source tier on the three tests that were already red at 3e45533."
+  },
+  {
+   "run": 187,
+   "head": "3817104",
+   "conclusion": "failure",
+   "failed_jobs": [
+    "vNext fast suite",
+    "vNext saved-source material"
+   ],
+   "cause": "same two, with historical_projection.py the rule file left un-minted"
+  }
+ ],
+ "the_standing_lesson": "local green carries a timestamp and so does a commit. Every push today before b5da8a7 was made after a rule-file edit that the last local suite run did not cover, so 'the fast suite passed' was true when I ran it and not evidence about what I pushed. The test that catches this exists and worked; what was missing was running the mint before committing.",
+ "current": {
+  "mint_check": "issue_47_v1 snapshot matches the current tree",
+  "three_red_tests": "fixed in 66a58ff and re-run individually",
+  "not_yet_proven": "a complete green run at the current head - runs 188 to 192 were queued or in progress when this was written, and a full local two-tier run is pending the batch"
+ }
+}

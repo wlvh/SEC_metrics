@@ -1,0 +1,73 @@
+{
+ "AN_UNREFERENCED_NAME_IS_BOUND_SILENTLY": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_name_the_frozen_code_does_not_use_is_refused",
+  "failed_cases": [
+   "test_a_name_the_frozen_code_does_not_use_is_refused"
+  ],
+  "file": "scripts/vnext/historical_event_walk.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 142
+ },
+ "CONTROL": {
+  "returncodes": [
+   0,
+   0,
+   0
+  ],
+  "seconds": 218
+ },
+ "THE_EVENT_WALK_COUNTS_THE_ROWS_IT_IS_HANDED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_fresh_block_with_a_gap_day_filing_is_read",
+  "failed_cases": [
+   "test_a_fresh_block_with_a_gap_day_filing_is_read"
+  ],
+  "file": "scripts/vnext/historical_event_walk.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 141
+ },
+ "THE_EVENT_WALK_KEEPS_THE_FROZEN_CHECK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_fresh_block_with_a_gap_day_filing_is_read",
+  "failed_cases": [
+   "test_a_block_missing_filings_stops_the_walk",
+   "test_a_fresh_block_with_a_gap_day_filing_is_read",
+   "test_the_registered_walk_walks_each_cik_with_the_successor"
+  ],
+  "file": "scripts/vnext/historical_event_walk.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 141
+ },
+ "THE_REGISTERED_WALK_KEEPS_THE_FROZEN_WALK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_registered_walk_walks_each_cik_with_the_successor",
+  "failed_cases": [
+   "test_the_registered_walk_walks_each_cik_with_the_successor"
+  ],
+  "file": "scripts/vnext/historical_event_walk.py",
+  "modules": [
+   "tests.vnext.test_history_block_coherence"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 143
+ },
+ "all_caught": true
+}

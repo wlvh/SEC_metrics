@@ -1,0 +1,30 @@
+[
+  {
+    "arguments": [
+      "start",
+      "--runtime-ledger-root",
+      "/not-used"
+    ],
+    "exit_code": 2,
+    "reason": "runtime location cannot start another budget or general acquisition",
+    "calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "arguments": [
+      "acquire",
+      "--runtime-ledger-root",
+      "/not-used"
+    ],
+    "exit_code": 2,
+    "reason": "runtime location cannot start another budget or general acquisition",
+    "calls": [
+      0,
+      0,
+      0
+    ]
+  }
+]

@@ -1,0 +1,82 @@
+{
+  "input_file": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/work/issue47-input-only/marriott2023-d02-full-context-revision1/request-body.json",
+  "input_sha256": "0fc4ab21423c5e440a331b3d8aeba946e033da675d614c32d0ba3aee9da55084",
+  "input_only": true,
+  "decoded_user_content_as_json": true,
+  "system_requirements_read": true,
+  "non_block_user_fields_read": true,
+  "complete_read": {
+    "block_count": 839,
+    "index_start": 0,
+    "index_end": 838,
+    "block_id_start": "b670",
+    "block_id_end": "b1508",
+    "must_decide_count": 27,
+    "reading_method": "Every supplied block was emitted in filing order and read; no keyword filtering."
+  },
+  "initial_read_ranges_inclusive": [
+    [
+      0,
+      139
+    ],
+    [
+      140,
+      319
+    ],
+    [
+      320,
+      429
+    ],
+    [
+      430,
+      529
+    ],
+    [
+      530,
+      619
+    ],
+    [
+      620,
+      729
+    ],
+    [
+      730,
+      838
+    ]
+  ],
+  "output_truncation": {
+    "occurred": true,
+    "range": [
+      320,
+      429
+    ],
+    "affected_indices": [
+      355,
+      376
+    ],
+    "supplementary_read_inclusive": [
+      355,
+      376
+    ],
+    "unread_remainder": false
+  },
+  "response_budget": 4096,
+  "response_attempts": 1,
+  "prompt_modified": false,
+  "response_retry_or_repair": false,
+  "network_calls": 0,
+  "sec_calls": 0,
+  "deepseek_calls": 0,
+  "paid_business_calls": 0,
+  "agent_delegations": 0,
+  "ordinary_messages_including_final": 3,
+  "completed_tool_counts": {
+    "functions_exec": 10,
+    "exec_command": 10,
+    "total_orchestration_and_underlying": 20
+  },
+  "output_files": [
+    "answer.json",
+    "execution-notes.json"
+  ]
+}

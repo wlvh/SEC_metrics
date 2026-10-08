@@ -1,0 +1,191 @@
+{
+ "record_type": "ISSUE_47_MODEL_LEDGER_VM_FAULT_INJECTIONS",
+ "results": [
+  {
+   "id": "THE_MODEL_LIVE_PATH_SKIPS_THE_START",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "why_it_matters": "without it a new container with an empty model ledger spends the allowance again",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_live_ledger_reads_the_host_s_reader_and_checks_the_start_last",
+   "failed_cases": [
+    "test_the_live_ledger_reads_the_host_s_reader_and_checks_the_start_last"
+   ],
+   "suite_result": "Ran 9 tests in 0.418s FAILED (failures=1)"
+  },
+  {
+   "id": "THE_MODEL_LIVE_PATH_READS_ONLY_WITH_GH",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "why_it_matters": "the container has no gh; the live path must read GitHub the way the host can",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_live_ledger_reads_the_host_s_reader_and_checks_the_start_last",
+   "failed_cases": [
+    "test_the_live_ledger_reads_the_host_s_reader_and_checks_the_start_last"
+   ],
+   "suite_result": "Ran 9 tests in 0.311s FAILED (errors=1)"
+  },
+  {
+   "id": "THE_MODEL_START_IS_THE_SEC_START",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "why_it_matters": "an SEC marker for the same approval digest would stand in for the model ledger's start",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_sec_marker_neither_starts_nor_blocks_the_model_ledger",
+   "failed_cases": [
+    "test_an_sec_marker_neither_starts_nor_blocks_the_model_ledger",
+    "test_the_model_start_writes_a_model_record_and_its_marker_verifies"
+   ],
+   "suite_result": "Ran 9 tests in 0.391s FAILED (failures=2)"
+  },
+  {
+   "id": "THE_MODEL_START_READS_THE_SEC_EXPORT",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "why_it_matters": "one ledger's export would block the other ledger's start, and its own would not",
+   "outcome": "CAUGHT",
+   "expected_case": "test_only_the_model_export_blocks_a_model_start",
+   "failed_cases": [
+    "test_a_ledger_behind_its_export_is_refused",
+    "test_only_the_model_export_blocks_a_model_start"
+   ],
+   "suite_result": "Ran 9 tests in 0.374s FAILED (failures=4)"
+  },
+  {
+   "id": "THE_MARKER_CARRIES_THE_WHOLE_RECORD",
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "why_it_matters": "a marker that carries the record can be copied back beside an empty root and be the start (F2)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_marker_does_not_carry_what_the_local_record_needs",
+   "failed_cases": [
+    "test_the_marker_does_not_carry_what_the_local_record_needs"
+   ],
+   "suite_result": "Ran 9 tests in 0.447s FAILED (failures=1)"
+  },
+  {
+   "id": "A_LEDGER_MAY_BE_BEHIND_ITS_EXPORT",
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "why_it_matters": "a host that lost or reset its ledger would count from less than was spent (F2)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_ledger_behind_its_export_is_refused",
+   "failed_cases": [
+    "test_a_ledger_behind_its_export_is_refused"
+   ],
+   "suite_result": "Ran 9 tests in 0.367s FAILED (failures=3)"
+  },
+  {
+   "id": "A_MARKER_FROM_ANYWHERE_COUNTS",
+   "file": "scripts/vnext/historical_ledger_start.py",
+   "why_it_matters": "a comment from another issue or account would stand in for the start (F9)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_marker_not_from_this_issue_or_account_does_not_count",
+   "failed_cases": [
+    "test_a_marker_not_from_this_issue_or_account_does_not_count"
+   ],
+   "suite_result": "Ran 9 tests in 0.389s FAILED (failures=3)"
+  },
+  {
+   "id": "A_RE_APPROVAL_REDRAWS_CLAIMED_REQUESTS",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "why_it_matters": "a re-approval would send again the requests an earlier approval already paid for (F5)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_re_approval_cannot_start_over_requests_another_approval_claimed",
+   "failed_cases": [
+    "test_a_re_approval_cannot_start_over_requests_another_approval_claimed"
+   ],
+   "suite_result": "Ran 9 tests in 0.378s FAILED (failures=1)"
+  },
+  {
+   "id": "ALL_APPROVALS_SHARE_ONE_EXPORT",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "why_it_matters": "a second approval's export would overwrite the first one's record (F5)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_each_approval_exports_into_its_own_directory",
+   "failed_cases": [
+    "test_a_ledger_behind_its_export_is_refused",
+    "test_each_approval_exports_into_its_own_directory",
+    "test_only_the_model_export_blocks_a_model_start"
+   ],
+   "suite_result": "Ran 9 tests in 0.376s FAILED (failures=5)"
+  },
+  {
+   "id": "AN_EXPORT_BEGINS_A_LEDGER",
+   "file": "scripts/vnext/historical_model_export.py",
+   "why_it_matters": "exporting on a host whose ledger is gone would begin an empty one and record nothing (F3)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_export_of_a_ledger_never_started_here_is_refused",
+   "failed_cases": [
+    "test_an_export_of_a_ledger_never_started_here_is_refused"
+   ],
+   "suite_result": "Ran 8 tests in 0.467s FAILED (failures=1)"
+  },
+  {
+   "id": "AN_EXPORT_MAY_GO_BACKWARDS",
+   "file": "scripts/vnext/historical_model_export.py",
+   "why_it_matters": "a shorter ledger's export would be written over the record of what was spent (F3)",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_export_only_moves_forward",
+   "failed_cases": [
+    "test_an_export_only_moves_forward"
+   ],
+   "suite_result": "Ran 8 tests in 0.524s FAILED (failures=1)"
+  },
+  {
+   "id": "MODEL_REGISTRATION_COMPARES_THE_RAW_BODY",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "why_it_matters": "an approval pasted into github.com may come back with CRLF line breaks",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_proposal_pasted_into_the_web_page_registers",
+   "failed_cases": [
+    "test_a_proposal_pasted_into_the_web_page_registers"
+   ],
+   "suite_result": "Ran 5 tests in 0.316s FAILED (errors=1)"
+  },
+  {
+   "id": "MODEL_ALLOWANCE_HASHES_THE_RAW_BODY",
+   "file": "scripts/vnext/historical_model_calls.py",
+   "why_it_matters": "registration would accept a pasted approval the gate then refuses",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_proposal_pasted_into_the_web_page_registers",
+   "failed_cases": [
+    "test_a_proposal_pasted_into_the_web_page_registers"
+   ],
+   "suite_result": "Ran 5 tests in 0.386s FAILED (errors=1)"
+  },
+  {
+   "id": "VERIFY_TRUSTS_THE_INDEX",
+   "file": "scripts/vnext/historical_model_export.py",
+   "why_it_matters": "an index sealed by whoever wrote the archive would say how much was spent",
+   "outcome": "CAUGHT",
+   "expected_case": "test_an_index_resealed_with_other_counts_is_refused",
+   "failed_cases": [
+    "test_an_index_resealed_with_other_counts_is_refused"
+   ],
+   "suite_result": "Ran 8 tests in 0.543s FAILED (failures=1)"
+  },
+  {
+   "id": "VERIFY_SKIPS_THE_LEDGER_S_OWN_SNAPSHOT",
+   "file": "scripts/vnext/historical_model_export.py",
+   "why_it_matters": "hashes that agree with each other are not a ledger",
+   "outcome": "CAUGHT",
+   "expected_case": "test_a_resealed_archive_of_a_truncated_ledger_is_refused_by_the_ledger",
+   "failed_cases": [
+    "test_a_resealed_archive_of_a_truncated_ledger_is_refused_by_the_ledger",
+    "test_an_index_resealed_with_other_counts_is_refused"
+   ],
+   "suite_result": "Ran 8 tests in 0.465s FAILED (failures=2)"
+  },
+  {
+   "id": "A_RECORDED_LEDGER_IS_RESTORED",
+   "file": "scripts/vnext/historical_model_export.py",
+   "why_it_matters": "only the granted ledger's record belongs at the granted root",
+   "outcome": "CAUGHT",
+   "expected_case": "test_only_a_live_ledger_is_restored",
+   "failed_cases": [
+    "test_only_a_live_ledger_is_restored"
+   ],
+   "suite_result": "Ran 8 tests in 0.500s FAILED (failures=1)"
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

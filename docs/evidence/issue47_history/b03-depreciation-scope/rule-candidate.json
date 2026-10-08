@@ -1,0 +1,212 @@
+{
+ "record_type": "ISSUE_47_B03_DA_SCOPE_RULE_CANDIDATE",
+ "rule": "scripts/vnext/historical_da_scope_candidate.py (not imported by any route)",
+ "rule_in_words": "Compare only the three direct concepts for exactly the target annual duration, undimensioned, in USD; two values conflict only beyond the precision each fact reports. If all agree, take the first in chain order (the approved selection). If they conflict and the filing tags Depreciation and AmortizationOfIntangibleAssets for the period, take the one direct candidate equal to their sum. Otherwise withhold by name as B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN, with every candidate. Never add back, never prefer the larger number.",
+ "positions": {
+  "enphase-2025": {
+   "document": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "rule_answer": "TAKE",
+   "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+   "rule_takes": "DepreciationDepletionAndAmortization",
+   "rule_value": "80645000",
+   "approved_chain_takes": "DepreciationDepletionAndAmortization",
+   "moves": false,
+   "candidates": [
+    {
+     "concept": "DepreciationDepletionAndAmortization",
+     "value": "80645000",
+     "decimals": "-3",
+     "context_ref": "c-1",
+     "fact_ordinal": 313
+    }
+   ]
+  },
+  "ford-2025": {
+   "document": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "rule_answer": "TAKE",
+   "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+   "rule_takes": "DepreciationDepletionAndAmortization",
+   "rule_value": "15974000000",
+   "approved_chain_takes": "DepreciationDepletionAndAmortization",
+   "moves": false,
+   "candidates": [
+    {
+     "concept": "DepreciationDepletionAndAmortization",
+     "value": "15974000000",
+     "decimals": "-6",
+     "context_ref": "c-1",
+     "fact_ordinal": 3180
+    }
+   ]
+  },
+  "lumen-2025": {
+   "document": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "rule_answer": "TAKE",
+   "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+   "rule_takes": "DepreciationDepletionAndAmortization",
+   "rule_value": "2749000000",
+   "approved_chain_takes": "DepreciationDepletionAndAmortization",
+   "moves": false,
+   "candidates": [
+    {
+     "concept": "DepreciationDepletionAndAmortization",
+     "value": "2749000000",
+     "decimals": "-6",
+     "context_ref": "c-1",
+     "fact_ordinal": 268
+    },
+    {
+     "concept": "DepreciationAndAmortization",
+     "value": "2749000000",
+     "decimals": "-6",
+     "context_ref": "c-1",
+     "fact_ordinal": 93
+    }
+   ]
+  },
+  "macys-2026": {
+   "document": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+   "period": [
+    "2025-02-02",
+    "2026-01-31"
+   ],
+   "rule_answer": "TAKE",
+   "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+   "rule_takes": "DepreciationDepletionAndAmortization",
+   "rule_value": "894000000",
+   "approved_chain_takes": "DepreciationDepletionAndAmortization",
+   "moves": false,
+   "candidates": [
+    {
+     "concept": "DepreciationDepletionAndAmortization",
+     "value": "894000000",
+     "decimals": "-6",
+     "context_ref": "c-1",
+     "fact_ordinal": 285
+    }
+   ]
+  },
+  "marriott-2024": {
+   "document": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+   "period": [
+    "2024-01-01",
+    "2024-12-31"
+   ],
+   "rule_answer": "NO_DIRECT_CANDIDATE",
+   "why": "THE_APPROVED_COMPOSITION_APPLIES",
+   "rule_takes": null,
+   "rule_value": null,
+   "approved_chain_takes": null,
+   "moves": false,
+   "candidates": []
+  },
+  "marriott-2025": {
+   "document": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "rule_answer": "NO_DIRECT_CANDIDATE",
+   "why": "THE_APPROVED_COMPOSITION_APPLIES",
+   "rule_takes": null,
+   "rule_value": null,
+   "approved_chain_takes": null,
+   "moves": false,
+   "candidates": []
+  },
+  "pfizer-2025": {
+   "document": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "rule_answer": "TAKE",
+   "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+   "rule_takes": "DepreciationDepletionAndAmortization",
+   "rule_value": "6592000000",
+   "approved_chain_takes": "DepreciationDepletionAndAmortization",
+   "moves": false,
+   "candidates": [
+    {
+     "concept": "DepreciationDepletionAndAmortization",
+     "value": "6592000000",
+     "decimals": "-6",
+     "context_ref": "c-1",
+     "fact_ordinal": 484
+    }
+   ]
+  },
+  "salesforce-2026": {
+   "document": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+   "period": [
+    "2025-02-01",
+    "2026-01-31"
+   ],
+   "rule_answer": "WITHHOLD",
+   "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT",
+   "rule_takes": null,
+   "rule_value": null,
+   "approved_chain_takes": "DepreciationDepletionAndAmortization",
+   "moves": true,
+   "candidates": [
+    {
+     "concept": "DepreciationDepletionAndAmortization",
+     "value": "1200000000",
+     "decimals": "-8",
+     "context_ref": "c-1",
+     "fact_ordinal": 809
+    },
+    {
+     "concept": "DepreciationAndAmortization",
+     "value": "3631000000",
+     "decimals": "-6",
+     "context_ref": "c-1",
+     "fact_ordinal": 337
+    }
+   ]
+  },
+  "southwest-2025": {
+   "document": "evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm",
+   "period": [
+    "2025-01-01",
+    "2025-12-31"
+   ],
+   "rule_answer": "TAKE",
+   "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+   "rule_takes": "DepreciationAndAmortization",
+   "rule_value": "1560000000",
+   "approved_chain_takes": "DepreciationAndAmortization",
+   "moves": false,
+   "candidates": [
+    {
+     "concept": "DepreciationAndAmortization",
+     "value": "1560000000",
+     "decimals": "-6",
+     "context_ref": "c-1",
+     "fact_ordinal": 183
+    }
+   ]
+  }
+ },
+ "moves": [
+  "salesforce-2026"
+ ],
+ "adoption": "a change to which fact an approved Spec selects, so a revision through the existing mechanism; until then both B03 routes keep their meaning and Salesforce stays withdrawn as a registered defect",
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

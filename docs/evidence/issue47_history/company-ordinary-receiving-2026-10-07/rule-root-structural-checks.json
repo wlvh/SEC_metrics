@@ -1,0 +1,22 @@
+{
+  "checks": [
+    {
+      "check": "historical-mint-check",
+      "exit_code": 1,
+      "elapsed_seconds": 1.2653823751024902,
+      "log": "historical-mint-check-rule-root.log"
+    },
+    {
+      "check": "capability-alignment",
+      "exit_code": 0,
+      "elapsed_seconds": 22.46012937510386,
+      "log": "capability-alignment-rule-root.log"
+    }
+  ],
+  "only_check_side_effect_artifacts_restored_to_saved_bytes": true,
+  "side_effect_artifacts": [
+    "outputs/semantic_audit_receipt.json",
+    "outputs/scalability_audit.csv"
+  ],
+  "meaning": "Structural/requirement checks only, not full business acceptance."
+}

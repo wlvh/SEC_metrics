@@ -1,0 +1,23 @@
+{
+ "record_type": "ISSUE_47_C02_TABLE_CONTEXT_FRESH_REBUILD",
+ "position": "jpmorgan_chase:2021-12-31",
+ "source_root": "Original 1547-row SEC export restored and authenticated by the current historical source path",
+ "model_input_bytes_identical": {
+  "view.json": true,
+  "request-body.json": true,
+  "prompt.txt": true,
+  "context-measurement.json": true
+ },
+ "original_document_and_complete_grid_hashes_identical": {
+  "document.json": true,
+  "table-grid.json": true
+ },
+ "provider_input_tokens": null,
+ "reference_input_tokens": 143723,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_run_or_acceptance": false
+}

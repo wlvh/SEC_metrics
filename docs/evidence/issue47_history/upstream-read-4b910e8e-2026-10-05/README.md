@@ -1,0 +1,13 @@
+# 固定上游4b910e8e的接收及影响核对
+
+在完整读取78434006的CI原日志时，发现它实际测试merge6be0234a/base4b910e8e，而本地方此前只接收c7a96eae。先固定抓取确切 `4b910e8e927bdd9ccee10367c6828e99c30c30d6`，查看十个增量，再创建新的私有只读测试克隆，没有更改原工作树或原runtime克隆。两次GitHub最终CI身份及本地比较基线保持各自实际含义。
+
+增量共66文件，全部位于 `docs/evidence/issue28_continuous/`；生产 scripts、tools、Requirement和workflow无改动。实际读取了普通390视图新增B03接收器、原件Member图例、D03 continuation组装/责任映射代码、有限测试、原责任阅读及独立输入试验的结论与范围。未把外部绝对临时路径中的任务或Run当作本方已重放。
+
+独立克隆中35个指定测试通过：既有普通视图19、B03接收7、原XML链4、责任映射5；socket和subprocess入口禁止。它们验证有限文档读取器及原文关系结构，有的计量被mock，不能声称是原件全源或模型方法验证。default390视图的canonical JSON bytes与c7相同；peer缺陷登记原字节与c7相同，SHA `e549ec55eee37f35a1e239f8fea5a44e2d393969e283b4ba7fd1a93fd0f4d849`。
+
+具体业务边界：B03新选项显式接收普通Marriott同一Result的后继Run及458M D&A范围证明，不证明所有经济摊销、不改变默认视图或全390。D03新代码保留完整原XML链、足迹及恰好一次责任，Marriott原任务有有限独立试验；实际试验仍缺原XML c-88/c-89字典，准确税务检查描述也不自动成为D03调查/执法信用。它的JPM共享全文方案超限停止，不能借数字推广。C02 Member图例已由本方此前自己的两个原件重放另行记录。
+
+固定增量在本方干净bd63d05d上合入。merge具体身份/父提交见 `merge-identity.json`；比较引用现在固定为4b910e8e。`peer_register_reads`新增本次阅读记录；本方104个既有缺陷对象内容全部保留，909接受对象不改。接收没有启动任何模型/SEC、Run、正式采纳/发布或active切换，不移植对方许可和信用。
+
+本目录保存实际预检、逐路径影响、固定peer-head及本方bd63d05d提交后两项检查摘要。合并后的mint/alignment另按新提交核对，不能把合并前的摘要说成合并后通过。

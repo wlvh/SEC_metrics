@@ -1,0 +1,32 @@
+{
+ "commands": [
+  {
+   "name": "mint-check",
+   "command": [
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+    "tools/vnext_mint_historical_requirement.py",
+    "--check"
+   ],
+   "return_code": 0
+  },
+  {
+   "name": "fast-final",
+   "command": [
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+    "tools/run_fast_tests_v2.py",
+    "--jobs",
+    "1"
+   ],
+   "return_code": 1
+  }
+ ],
+ "original": {
+  "outputs/semantic_audit_receipt.json": "f0444ff33222ce13996ad21b19864a8df9f2f55d75d29232853e2790e575cc77",
+  "outputs/scalability_audit.csv": "13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f"
+ },
+ "observed_after_commands": {
+  "outputs/semantic_audit_receipt.json": "f0444ff33222ce13996ad21b19864a8df9f2f55d75d29232853e2790e575cc77",
+  "outputs/scalability_audit.csv": "13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f"
+ },
+ "restored_exactly": true
+}

@@ -1,0 +1,33 @@
+{
+ "record_type": "ISSUE_47_OWNER_DECISIONS",
+ "schema_version": 1,
+ "recorded_by": "the executor, transcribing; not a GitHub comment by the owner",
+ "source": "an instruction the owner forwarded into the Claude Code session on 2026-09-27 (UTC), adopting a reviewer's text as their own delegation",
+ "what_this_record_is_not": "an approval that any gate reads. The SEC allowance is granted only by the approval comment on issue 47, read back from GitHub; the Part III admission by config/issue47_part_iii_statement_admission_v1.json, which carries its own excerpt of the text below.",
+ "decisions": {
+  "E01": {
+   "decided": "adopt 'content-confirmed M&A announcements' (经内容确认的并购公告)",
+   "excerpt": "E01：采用“经内容确认的并购公告”口径……已有数值和接受记录不能自动继承到新口径……涉及新增真实模型调用时仍适用下述独立许可边界"
+  },
+  "C02": {
+   "decided": "adopt 'composition facts' (构成事实)",
+   "excerpt": "C02：采用“构成事实”口径。包括董事会规模、独立董事人数、委员会设置、成员、主席，以及相关独立性和资格认定；不扩展到一般治理流程或委员会工作描述……不把任务缩成删除无关摘录，也不把正常运行变成我逐公司、逐年、逐段签字"
+  },
+  "PART_III": {
+   "decided": "per-filing, evidence-conditioned admission of ORIGINAL_STATEMENT_VALUES for the two named amendments only",
+   "excerpt": "Part III：对已点名的两份修订给予有证据条件的逐份准入授权。范围仅限 `0001193125-25-096776` 和 `0001140361-26-016758` 各自对应期间的 `ORIGINAL_STATEMENT_VALUES`……条件不成立时，只阻断受影响的修订与位置；不扩大成未来所有 Part III 修订的通用放行规则，不允许跨主体财务拼接",
+   "scope": "current_scope in docs/evidence/issue47_history/part-iii-statement-review/statement-values-request.json at commit 92da6f2f"
+  },
+  "SEC": {
+   "decided": "approve the fixed [0, 0, 1354] cumulative cap and its grants as proposed; post the body via the owner's authenticated GitHub identity and register it through the existing mechanism",
+   "excerpt": "SEC 获取：同意固定提案中的 `[0, 0, 1354]` 累计上限及其明确授予范围……授权你通过我已认证、具有相应权限的 GitHub 身份，将该正文原文发布到 #47，并按现有机制回读核验、建立对应许可记录；不能用本地自写的评论副本冒充真实批准来源……达到上限停止新增请求……实际账号或执行环境若使授权登记无法完成，把确实需要我亲自完成的动作集中说明一次",
+   "approved_body": "the_comment_body_as_text in docs/evidence/issue47_history/acquisition-wiring/proposed-allowance.json at commit 92da6f2f, sha256 71439c2ecaa5d936b8b4e0b14f612c1b1cee2bd3cc99113d14dbd264862e8394"
+  },
+  "MODEL_EGRESS": {
+   "decided": "organize an independent security review of the D04 egress patch; on a pass, apply only in #47's runtime tree with offline acceptance; no real model calls; prepare one complete call application",
+   "excerpt": "模型出口：独立安全审阅由你主动组织……不能用同一执行过程的自审冒充独立审阅。通过后，按既有隔离方案只在 #47 的独立运行树应用……这不批准真实模型调用……不把旧“193 请求”整体当成可执行清单，也不让 D04 的出口自动覆盖 E01、D02、C02"
+  }
+ },
+ "unchanged_boundaries": "#28's workspace, ledger, allowance and runtime packages stay separate; PR 52 does not merge into task/b06-new-source; no Ready, merge, adoption, deployment or active switch; the CI workflow patches stay shelved",
+ "production_authorized": false
+}

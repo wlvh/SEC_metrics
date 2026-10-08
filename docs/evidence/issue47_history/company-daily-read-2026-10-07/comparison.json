@@ -1,0 +1,96 @@
+{
+  "metrics_matrix.csv": {
+    "business_fields_unchanged": [
+      "company",
+      "cik",
+      "metric_id",
+      "metric_name",
+      "value",
+      "unit",
+      "status",
+      "source_class",
+      "formula",
+      "period_start",
+      "period_end",
+      "fiscal_year",
+      "fiscal_period",
+      "accession",
+      "form",
+      "filed_date",
+      "concept_or_section",
+      "context_or_dimension",
+      "confidence",
+      "notes"
+    ],
+    "rows": 2
+  },
+  "metric_evidence.csv": {
+    "business_fields_unchanged": [
+      "company",
+      "cik",
+      "metric_id",
+      "source_url",
+      "repo_relative_path",
+      "content_sha256",
+      "accession",
+      "document_name",
+      "concept_or_section",
+      "context_or_dimension",
+      "unit",
+      "period_start",
+      "period_end",
+      "value_raw",
+      "value_normalized",
+      "evidence_quote",
+      "extraction_method",
+      "parser_version"
+    ],
+    "rows": 2
+  },
+  "history_entries": [
+    {
+      "metric_id": "B01",
+      "run_id": "run:historical-period:40b435e6a57a903aa0494fa6e95154d7cb825875170693030d23cddcc098affd",
+      "result_id": "sha256:5f17ec97a234f3b8bae22bcaedd2bdb9ff2ace36056c7a52adfbc821ff088731",
+      "period": {
+        "fiscal_year": 2023,
+        "period_end": "2024-02-03",
+        "period_start": "2023-01-29"
+      },
+      "latest_request_status": "NO_SOURCE_CONTENT_CHANGE",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "measurement_period": {
+        "period_end": "2024-02-03",
+        "period_start": "2023-01-29"
+      },
+      "requested_in_latest_execution": true
+    },
+    {
+      "metric_id": "B01",
+      "run_id": "run:historical-period:da03087254a45bfcd8afc2e6a655d34789ee7c300dd93685c88700ab82a061e0",
+      "result_id": "sha256:cc5c6aa92146831e2999ab6d2b6f6d41c1dcb55cb5a4426dd90d446d54a357ea",
+      "period": {
+        "fiscal_year": 2024,
+        "period_end": "2025-02-01",
+        "period_start": "2024-02-04"
+      },
+      "latest_request_status": "NO_SOURCE_CONTENT_CHANGE",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "measurement_period": {
+        "period_end": "2025-02-01",
+        "period_start": "2024-02-04"
+      },
+      "requested_in_latest_execution": true
+    }
+  ],
+  "remaining_public_csv_fields": [
+    "requested_in_latest_execution",
+    "period_role"
+  ],
+  "no_new_computation": true,
+  "no_new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

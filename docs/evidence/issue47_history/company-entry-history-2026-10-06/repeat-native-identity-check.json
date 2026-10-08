@@ -1,0 +1,29 @@
+{
+ "status": "PASSED",
+ "new_launcher_commit": "af7902f6",
+ "fixed_program_identity": {
+  "requirement_id": "issue_54_v3",
+  "baseline": {
+   "sha256": "2e0f5683f43c52b604a826d1d94f642cbaba51a45be561fd58ddb7d94c4b08a6",
+   "size": 68727
+  },
+  "entry": {
+   "sha256": "7bf687fe40bccc0621a6f76f401c1c35ed5425572965dc0134f2448c21208992",
+   "size": 13066
+  },
+  "range_entry_protocol": "COMPANY_FISCAL_RANGE_V1",
+  "relation": "LAUNCHER_VERIFIES_AND_CALLS_PINNED_ENTRY"
+ },
+ "same_source_checkpoint": true,
+ "unchanged_run_ids": [
+  "run:historical-period:40b435e6a57a903aa0494fa6e95154d7cb825875170693030d23cddcc098affd",
+  "run:historical-period:da03087254a45bfcd8afc2e6a655d34789ee7c300dd93685c88700ab82a061e0"
+ ],
+ "unchanged_native_files_and_pointers": 16,
+ "new_candidates": 0,
+ "new_business_calls": [
+  0,
+  0,
+  0
+ ]
+}

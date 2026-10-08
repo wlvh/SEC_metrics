@@ -1,0 +1,208 @@
+{
+ "record_type": "D02_CONTENT_READ_BOTH_DIRECTIONS",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "coordinate": {
+  "company_id": "pfizer",
+  "metric_id": "D02",
+  "period_end": "2025-12-31"
+ },
+ "why_this_exists": "Every earlier reading of this coordinate asked which of the taken excerpts belong. That is one direction. A selector can be right about everything it took and still have dropped a disclosure, and nothing that looks only at the taken set can see it. This adds the other direction: every block inside the declared ranges that the selection does not take, read and judged.",
+ "what_is_delivered_now": {
+  "items": 96,
+  "rendered_characters": 39741,
+  "proposal_id": "sha256:f2a1106af8d72d7631ec1e42e4806fecc3a6f2e1b6ac20f7a25235e8e94639f3",
+  "by_section": {
+   "ITEM_3": 1,
+   "NOTE_16_SUB_A": 91,
+   "ITEM_8": 4
+  }
+ },
+ "declared_ranges": [
+  {
+   "section_id": "ITEM_1A",
+   "range": [
+    767,
+    909
+   ],
+   "blocks_present": 142,
+   "taken": 0,
+   "untaken": 142
+  },
+  {
+   "section_id": "ITEM_3",
+   "range": [
+    937,
+    938
+   ],
+   "blocks_present": 1,
+   "taken": 1,
+   "untaken": 0
+  },
+  {
+   "section_id": "ITEM_8",
+   "range": [
+    1857,
+    4178
+   ],
+   "blocks_present": 2321,
+   "taken": 95,
+   "untaken": 2226
+  },
+  {
+   "section_id": "NOTE_16_SUB_A",
+   "range": [
+    3821,
+    3937
+   ],
+   "blocks_present": 116,
+   "taken": 91,
+   "untaken": 25
+  }
+ ],
+ "inclusion_direction": {
+  "method": "the current set compared against the earlier block-by-block reading of the original, which was done against the filing and not by re-running the selector",
+  "the_reading_said": {
+   "wrongly_taken": [
+    1881,
+    1882,
+    1883,
+    1884,
+    2175,
+    2240
+   ],
+   "wrongly_missed": [
+    3858,
+    3870,
+    3874,
+    3882,
+    3886,
+    3889,
+    3899
+   ]
+  },
+  "measured_against_the_92_item_set": {
+   "added": [
+    3858,
+    3870,
+    3874,
+    3882,
+    3886,
+    3889,
+    3899
+   ],
+   "removed": [
+    1881,
+    1882,
+    1883,
+    1884
+   ],
+   "added_equals_the_missed": true,
+   "removed_equals_the_audit_report_blocks": true
+  },
+  "still_taken_and_wrong": {
+   "blocks": [
+    2175,
+    2240
+   ],
+   "defect": "D02_PFIZER_2025_SCOPE_CONTENT_READ",
+   "cause": "the _LEGAL keyword proxy standing in for the judgement 'is this a legal proceedings disclosure'"
+  },
+  "accepted_by_the_reading": 94,
+  "rejected_by_the_reading": 2,
+  "note_on_937": "block 937 was not in the 92 and is not one of the seven the reading recorded as missed, because at the time it was held back by a different rule and recorded separately. The reading's verdict on it was that Item 3's own sentence belongs, so the repair below moves it into the accepted side rather than adding an unjudged item."
+ },
+ "completeness_direction": {
+  "scope": [
+   3821,
+   3937
+  ],
+  "blocks_in_scope": 116,
+  "taken_in_scope": 91,
+  "untaken_in_scope": 25,
+  "method": "repetition counted here from the document's own block texts, so the verdict 'page furniture' comes from the filing rather than from the rule that produced the exclusion",
+  "untaken_contiguous_groups": [
+   [
+    3825,
+    3826,
+    3827,
+    3828,
+    3829
+   ],
+   [
+    3842,
+    3843,
+    3844,
+    3845,
+    3846
+   ],
+   [
+    3865,
+    3866,
+    3867,
+    3868,
+    3869
+   ],
+   [
+    3892,
+    3893,
+    3894,
+    3895,
+    3896
+   ],
+   [
+    3913,
+    3914,
+    3915,
+    3916,
+    3917
+   ]
+  ],
+  "every_untaken_block_has_a_repeating_neighbour": true,
+  "longest_untaken_block_chars": 42,
+  "distinct_untaken_texts": [
+   {
+    "text": "Pfizer Inc.",
+    "occurrences_in_document": 117
+   },
+   {
+    "text": "2025 Form 10-K",
+    "occurrences_in_document": 116
+   },
+   {
+    "text": "Notes to Consolidated Financial Statements",
+    "occurrences_in_document": 46
+   },
+   {
+    "text": "Pfizer Inc. and Subsidiary Companies",
+    "occurrences_in_document": 52
+   },
+   {
+    "text": "93",
+    "occurrences_in_document": 1
+   },
+   {
+    "text": "94",
+    "occurrences_in_document": 1
+   },
+   {
+    "text": "95",
+    "occurrences_in_document": 1
+   },
+   {
+    "text": "96",
+    "occurrences_in_document": 1
+   },
+   {
+    "text": "97",
+    "occurrences_in_document": 2
+   }
+  ],
+  "verdict": "the 25 are five identical page headers, five blocks each - registrant name, form title, page number, the notes heading and the subsidiary line. Nothing that reads as a disclosure is dropped inside this scope."
+ },
+ "what_this_does_not_cover": {
+  "item_8_outside_the_note": "2,226 blocks are untaken inside Item 8 and are governed by the _LEGAL keyword proxy, measured separately - across six filings it admits 17 blocks of which 3 are wrong, and narrowing it would drop 14 that belong. The completeness direction there is open, and this record does not close it.",
+  "item_1a": "142 untaken blocks in Item 1A are D03's branch, not D02's. Their absence from D02 is the design, not a gap.",
+  "other_periods_and_companies": "one coordinate. The audit-report rule and the hyperlink repair were each measured across six filings, but the block-by-block reading is Pfizer's 2025 filing alone.",
+  "business_content_accepted": "false. Two of the ninety-six are known wrong, so the coordinate stays withdrawn; and a reading by the same hands that wrote the rules is not an independent acceptance."
+ }
+}

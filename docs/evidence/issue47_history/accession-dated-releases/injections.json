@@ -1,0 +1,108 @@
+{
+ "ANOTHER_REFUSAL_IS_SWALLOWED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_another_refusal_is_the_frozen_one",
+  "failed_cases": [
+   "test_another_refusal_is_the_frozen_one"
+  ],
+  "file": "scripts/vnext/historical_accession_results.py",
+  "modules": [
+   "tests.vnext.test_historical_accession_releases"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 98
+ },
+ "ANY_SRT_SUFFIX_IS_ACCEPTED": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_namespace_that_is_not_a_fasb_release_is_still_refused",
+  "failed_cases": [
+   "test_a_namespace_that_is_not_a_fasb_release_is_still_refused",
+   "test_anything_but_a_release_is_still_refused"
+  ],
+  "file": "scripts/vnext/historical_dei.py",
+  "modules": [
+   "tests.vnext.test_historical_accession_releases"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 97
+ },
+ "AN_UNKNOWN_PATTERN_IS_PASSED_THROUGH": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_pattern_that_is_not_frozen_is_refused",
+  "failed_cases": [
+   "test_a_pattern_that_is_not_frozen_is_refused"
+  ],
+  "file": "scripts/vnext/historical_dei.py",
+  "modules": [
+   "tests.vnext.test_historical_accession_releases"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 97
+ },
+ "CONTROL": {
+  "returncodes": [
+   0
+  ],
+  "seconds": 92
+ },
+ "THE_CONCEPT_NAMESPACE_REFUSAL_IS_NOT_A_RELEASE_REFUSAL": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_fy2022_rpo_is_read_after_the_frozen_refusal",
+  "failed_cases": [
+   "test_the_fy2022_rpo_is_read_after_the_frozen_refusal"
+  ],
+  "file": "scripts/vnext/historical_accession_results.py",
+  "modules": [
+   "tests.vnext.test_historical_accession_releases"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 95
+ },
+ "THE_POLICY_IS_WIDENED_FOR_EVERY_REPORT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_year_alone_report_is_the_frozen_inspection",
+  "failed_cases": [
+   "test_a_year_alone_report_is_the_frozen_inspection"
+  ],
+  "file": "scripts/vnext/historical_accession_results.py",
+  "modules": [
+   "tests.vnext.test_historical_accession_releases"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 100
+ },
+ "THE_SRT_RELEASE_IS_NOT_IN_THE_VIEW": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_fy2021_capital_ratios_are_read_after_the_frozen_refusal",
+  "failed_cases": [
+   "test_a_namespace_that_is_not_a_fasb_release_is_still_refused",
+   "test_anything_but_a_release_is_still_refused",
+   "test_each_policy_namespace_has_a_release_aware_form",
+   "test_the_fy2021_capital_ratios_are_read_after_the_frozen_refusal",
+   "test_the_fy2022_rpo_is_read_after_the_frozen_refusal"
+  ],
+  "file": "scripts/vnext/historical_dei.py",
+  "modules": [
+   "tests.vnext.test_historical_accession_releases"
+  ],
+  "returncodes": [
+   1
+  ],
+  "seconds": 81
+ },
+ "all_caught": true,
+ "ran_on": {
+  "commit": "13a54eb5",
+  "where": "a git worktree of that commit, nothing else reading it"
+ }
+}

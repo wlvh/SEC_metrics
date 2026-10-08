@@ -1,0 +1,1060 @@
+{
+ "both_window_bases": "every accepted count is the same under the filing date and the report date, so it does not depend on which reading of the window is taken.",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "e01_is_the_one_route_this_cannot_read": {
+  "measured": {
+   "enphase-2025": {
+    "eight_o_one_filings": 0,
+    "published": "0",
+    "read": 0
+   },
+   "ford-2025": {
+    "eight_o_one_filings": 5,
+    "published": "2",
+    "read": 2
+   },
+   "lumen-2025": {
+    "eight_o_one_filings": 8,
+    "published": "7",
+    "read": 8
+   },
+   "macys-2026": {
+    "eight_o_one_filings": 4,
+    "published": "2",
+    "read": 3
+   },
+   "marriott-2025": {
+    "eight_o_one_filings": 2,
+    "published": "0",
+    "read": 2
+   },
+   "pfizer-2025": {
+    "eight_o_one_filings": 3,
+    "published": "0",
+    "read": 1
+   },
+   "southwest-2025": {
+    "eight_o_one_filings": 1,
+    "published": "2",
+    "read": 2
+   }
+  },
+  "why": "it is the only route with a keyword branch, and reading it means reproducing the route's text scoping. brief_source_priority puts the item code first and a primary-document heading second; a scan over every document in the accession matches 'transaction' in almost any exhibit, which over-counts. Six of the seven windows hold an 8.01 filing, so E01 is accepted only for the one that does not."
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "per_position": {
+  "paramount-2025": {
+   "company_id": "paramount_skydance_paramount_global",
+   "e01_keyword_rule_note": "E01 is not counted over a restored root: its keyword rule reads every saved document of a filing, and a filing only the acquisition saved has its primary document only",
+   "eight_ks_in_window": {
+    "filing_date": 35,
+    "report_date": 35
+   },
+   "filings": {
+    "filing_date": [
+     {
+      "accession": "0001193125-25-175027",
+      "cik": "813828",
+      "filingDate": "2025-08-07",
+      "header": "evidence/request_attempts/b6/b603b010c496c7290e69f893085312f19b556da744b136db6c0ee77130be64c6/0001193125-25-175027.hdr.sgml",
+      "items": [
+       "1.01",
+       "1.02",
+       "2.01",
+       "3.01",
+       "3.03",
+       "5.01",
+       "5.02",
+       "5.03",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-170521",
+      "cik": "813828",
+      "filingDate": "2025-07-31",
+      "header": "evidence/request_attempts/46/46bd3c99ccb4e775b1948779b6d180c10f6125615f10f5dc6a220bc154dde06a/0001193125-25-170521.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-165497",
+      "cik": "813828",
+      "filingDate": "2025-07-25",
+      "header": "evidence/request_attempts/30/30ab2df372fa47124826500ff7fffec81e85032877401281fda2ce408829355d/0001193125-25-165497.hdr.sgml",
+      "items": [
+       "5.04",
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-25-000019",
+      "cik": "813828",
+      "filingDate": "2025-07-08",
+      "header": "evidence/request_attempts/08/0858df56e5b9befa414a66cb70dbf55cb95b009b26b6d1d9fe7c2e83b1f122bd/0000813828-25-000019.hdr.sgml",
+      "items": [
+       "5.07"
+      ]
+     },
+     {
+      "accession": "0000813828-25-000015",
+      "cik": "813828",
+      "filingDate": "2025-06-09",
+      "header": "evidence/request_attempts/39/394e2e06023d7c0a3e7d7f9af3d646690c135b05359a8fb31434131f9ce1ceeb/0000813828-25-000015.hdr.sgml",
+      "items": [
+       "5.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-120877",
+      "cik": "813828",
+      "filingDate": "2025-05-15",
+      "header": "evidence/request_attempts/c3/c31fa35bd58b681265225c5541724b15b82e79e90031a055f175a1d82b7d7bb1/0001193125-25-120877.hdr.sgml",
+      "items": [
+       "1.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-115947",
+      "cik": "813828",
+      "filingDate": "2025-05-08",
+      "header": "evidence/request_attempts/ae/ae30c602ba5c86573e025795e7e9709c75e7349b526a7c7d262aa3f1e8dec81b/0001193125-25-115947.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-052917",
+      "cik": "813828",
+      "filingDate": "2025-03-12",
+      "header": "evidence/request_attempts/ca/cabeedcc4977370fa704c8578fa2202160fda76b6260a59fe4902ff35f5fcb62/0001193125-25-052917.hdr.sgml",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-036747",
+      "cik": "813828",
+      "filingDate": "2025-02-26",
+      "header": "evidence/request_attempts/13/1356e0caf6a1da00f9851f9e2cd7295c929727dca8e912646dac84e0439af65c/0001193125-25-036747.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000087",
+      "cik": "813828",
+      "filingDate": "2024-12-27",
+      "items": [
+       "5.02",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000085",
+      "cik": "813828",
+      "filingDate": "2024-12-11",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000083",
+      "cik": "813828",
+      "filingDate": "2024-11-21",
+      "items": [
+       "5.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000081",
+      "cik": "813828",
+      "filingDate": "2024-11-14",
+      "items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-253719",
+      "cik": "813828",
+      "filingDate": "2024-11-08",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000075",
+      "cik": "813828",
+      "filingDate": "2024-10-18",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000073",
+      "cik": "813828",
+      "filingDate": "2024-10-15",
+      "items": [
+       "5.02",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000069",
+      "cik": "813828",
+      "filingDate": "2024-08-27",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000063",
+      "cik": "813828",
+      "filingDate": "2024-08-22",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-196972",
+      "cik": "813828",
+      "filingDate": "2024-08-08",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-196053",
+      "cik": "813828",
+      "filingDate": "2024-08-07",
+      "items": [
+       "1.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-177535",
+      "cik": "813828",
+      "filingDate": "2024-07-11",
+      "items": [
+       "1.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000042",
+      "cik": "813828",
+      "filingDate": "2024-07-08",
+      "items": [
+       "7.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000038",
+      "cik": "813828",
+      "filingDate": "2024-06-21",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000034",
+      "cik": "813828",
+      "filingDate": "2024-06-10",
+      "items": [
+       "5.02"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000033",
+      "cik": "813828",
+      "filingDate": "2024-06-10",
+      "items": [
+       "5.02",
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000028",
+      "cik": "813828",
+      "filingDate": "2024-06-07",
+      "items": [
+       "5.03",
+       "5.07",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000023",
+      "cik": "813828",
+      "filingDate": "2024-05-03",
+      "items": [
+       "5.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000018",
+      "cik": "813828",
+      "filingDate": "2024-04-29",
+      "items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-122356",
+      "cik": "813828",
+      "filingDate": "2024-04-29",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0000813828-24-000009",
+      "cik": "813828",
+      "filingDate": "2024-03-13",
+      "items": [
+       "8.01"
+      ]
+     },
+     {
+      "accession": "0001193125-24-050664",
+      "cik": "813828",
+      "filingDate": "2024-02-28",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001104659-25-123496",
+      "cik": "2041610",
+      "filingDate": "2025-12-22",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0001193125-25-310710",
+      "cik": "2041610",
+      "filingDate": "2025-12-08",
+      "items": [
+       "8.01",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0002041610-25-000042",
+      "cik": "2041610",
+      "filingDate": "2025-11-10",
+      "items": [
+       "2.02",
+       "9.01"
+      ]
+     },
+     {
+      "accession": "0002041610-25-000021",
+      "cik": "2041610",
+      "filingDate": "2025-09-16",
+      "items": [
+       "5.02"
+      ]
+     }
+    ],
+    "report_date": [
+     {
+      "accession": "0001193125-25-175027",
+      "cik": "813828",
+      "header": "evidence/request_attempts/b6/b603b010c496c7290e69f893085312f19b556da744b136db6c0ee77130be64c6/0001193125-25-175027.hdr.sgml",
+      "items": [
+       "1.01",
+       "1.02",
+       "2.01",
+       "3.01",
+       "3.03",
+       "5.01",
+       "5.02",
+       "5.03",
+       "9.01"
+      ],
+      "reportDate": "2025-08-07"
+     },
+     {
+      "accession": "0001193125-25-170521",
+      "cik": "813828",
+      "header": "evidence/request_attempts/46/46bd3c99ccb4e775b1948779b6d180c10f6125615f10f5dc6a220bc154dde06a/0001193125-25-170521.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-07-31"
+     },
+     {
+      "accession": "0001193125-25-165497",
+      "cik": "813828",
+      "header": "evidence/request_attempts/30/30ab2df372fa47124826500ff7fffec81e85032877401281fda2ce408829355d/0001193125-25-165497.hdr.sgml",
+      "items": [
+       "5.04",
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2025-07-25"
+     },
+     {
+      "accession": "0000813828-25-000019",
+      "cik": "813828",
+      "header": "evidence/request_attempts/08/0858df56e5b9befa414a66cb70dbf55cb95b009b26b6d1d9fe7c2e83b1f122bd/0000813828-25-000019.hdr.sgml",
+      "items": [
+       "5.07"
+      ],
+      "reportDate": "2025-07-02"
+     },
+     {
+      "accession": "0000813828-25-000015",
+      "cik": "813828",
+      "header": "evidence/request_attempts/39/394e2e06023d7c0a3e7d7f9af3d646690c135b05359a8fb31434131f9ce1ceeb/0000813828-25-000015.hdr.sgml",
+      "items": [
+       "5.02",
+       "9.01"
+      ],
+      "reportDate": "2025-06-03"
+     },
+     {
+      "accession": "0001193125-25-120877",
+      "cik": "813828",
+      "header": "evidence/request_attempts/c3/c31fa35bd58b681265225c5541724b15b82e79e90031a055f175a1d82b7d7bb1/0001193125-25-120877.hdr.sgml",
+      "items": [
+       "1.01",
+       "9.01"
+      ],
+      "reportDate": "2025-05-12"
+     },
+     {
+      "accession": "0001193125-25-115947",
+      "cik": "813828",
+      "header": "evidence/request_attempts/ae/ae30c602ba5c86573e025795e7e9709c75e7349b526a7c7d262aa3f1e8dec81b/0001193125-25-115947.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-05-08"
+     },
+     {
+      "accession": "0001193125-25-052917",
+      "cik": "813828",
+      "header": "evidence/request_attempts/ca/cabeedcc4977370fa704c8578fa2202160fda76b6260a59fe4902ff35f5fcb62/0001193125-25-052917.hdr.sgml",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-03-12"
+     },
+     {
+      "accession": "0001193125-25-036747",
+      "cik": "813828",
+      "header": "evidence/request_attempts/13/1356e0caf6a1da00f9851f9e2cd7295c929727dca8e912646dac84e0439af65c/0001193125-25-036747.hdr.sgml",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-02-26"
+     },
+     {
+      "accession": "0000813828-24-000087",
+      "cik": "813828",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "reportDate": "2024-12-20"
+     },
+     {
+      "accession": "0000813828-24-000085",
+      "cik": "813828",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2024-12-05"
+     },
+     {
+      "accession": "0000813828-24-000083",
+      "cik": "813828",
+      "items": [
+       "5.02",
+       "9.01"
+      ],
+      "reportDate": "2024-11-15"
+     },
+     {
+      "accession": "0000813828-24-000081",
+      "cik": "813828",
+      "items": [
+       "8.01"
+      ],
+      "reportDate": "2024-11-14"
+     },
+     {
+      "accession": "0001193125-24-253719",
+      "cik": "813828",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2024-11-08"
+     },
+     {
+      "accession": "0000813828-24-000075",
+      "cik": "813828",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2024-10-14"
+     },
+     {
+      "accession": "0000813828-24-000073",
+      "cik": "813828",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "reportDate": "2024-10-08"
+     },
+     {
+      "accession": "0000813828-24-000069",
+      "cik": "813828",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2024-08-26"
+     },
+     {
+      "accession": "0000813828-24-000063",
+      "cik": "813828",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2024-08-21"
+     },
+     {
+      "accession": "0001193125-24-196972",
+      "cik": "813828",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2024-08-08"
+     },
+     {
+      "accession": "0001193125-24-196053",
+      "cik": "813828",
+      "items": [
+       "1.01",
+       "9.01"
+      ],
+      "reportDate": "2024-08-01"
+     },
+     {
+      "accession": "0001193125-24-177535",
+      "cik": "813828",
+      "items": [
+       "1.01",
+       "9.01"
+      ],
+      "reportDate": "2024-07-07"
+     },
+     {
+      "accession": "0000813828-24-000042",
+      "cik": "813828",
+      "items": [
+       "7.01",
+       "9.01"
+      ],
+      "reportDate": "2024-07-07"
+     },
+     {
+      "accession": "0000813828-24-000038",
+      "cik": "813828",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2024-06-16"
+     },
+     {
+      "accession": "0000813828-24-000034",
+      "cik": "813828",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2024-06-07"
+     },
+     {
+      "accession": "0000813828-24-000033",
+      "cik": "813828",
+      "items": [
+       "5.02",
+       "8.01"
+      ],
+      "reportDate": "2024-04-29"
+     },
+     {
+      "accession": "0000813828-24-000028",
+      "cik": "813828",
+      "items": [
+       "5.03",
+       "5.07",
+       "9.01"
+      ],
+      "reportDate": "2024-06-04"
+     },
+     {
+      "accession": "0000813828-24-000023",
+      "cik": "813828",
+      "items": [
+       "5.02",
+       "9.01"
+      ],
+      "reportDate": "2024-04-29"
+     },
+     {
+      "accession": "0000813828-24-000018",
+      "cik": "813828",
+      "items": [
+       "8.01"
+      ],
+      "reportDate": "2024-04-29"
+     },
+     {
+      "accession": "0001193125-24-122356",
+      "cik": "813828",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2024-04-29"
+     },
+     {
+      "accession": "0000813828-24-000009",
+      "cik": "813828",
+      "items": [
+       "8.01"
+      ],
+      "reportDate": "2024-03-13"
+     },
+     {
+      "accession": "0001193125-24-050664",
+      "cik": "813828",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2024-02-28"
+     },
+     {
+      "accession": "0001104659-25-123496",
+      "cik": "2041610",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-22"
+     },
+     {
+      "accession": "0001193125-25-310710",
+      "cik": "2041610",
+      "items": [
+       "8.01",
+       "9.01"
+      ],
+      "reportDate": "2025-12-08"
+     },
+     {
+      "accession": "0002041610-25-000042",
+      "cik": "2041610",
+      "items": [
+       "2.02",
+       "9.01"
+      ],
+      "reportDate": "2025-11-10"
+     },
+     {
+      "accession": "0002041610-25-000021",
+      "cik": "2041610",
+      "items": [
+       "5.02"
+      ],
+      "reportDate": "2025-09-12"
+     }
+    ]
+   },
+   "headers_not_saved": [],
+   "metrics": {
+    "C01": {
+     "by_filing_date": 12,
+     "by_report_date": 12,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+       "result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a",
+       "run_id": "run:historical-period:d511a2538a8636bf4c7904b9fe74692431e5f88cad0bf95ce1ad12b52c760049"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000813828-24-000009",
+       "0000813828-24-000018",
+       "0000813828-24-000023",
+       "0000813828-24-000028",
+       "0000813828-24-000033",
+       "0000813828-24-000034",
+       "0000813828-24-000038",
+       "0000813828-24-000042",
+       "0000813828-24-000063",
+       "0000813828-24-000069",
+       "0000813828-24-000073",
+       "0000813828-24-000075",
+       "0000813828-24-000081",
+       "0000813828-24-000083",
+       "0000813828-24-000085",
+       "0000813828-24-000087",
+       "0000813828-25-000015",
+       "0000813828-25-000019",
+       "0001104659-25-123496",
+       "0001193125-24-050664",
+       "0001193125-24-122356",
+       "0001193125-24-177535",
+       "0001193125-24-196053",
+       "0001193125-24-196972",
+       "0001193125-24-253719",
+       "0001193125-25-036747",
+       "0001193125-25-052917",
+       "0001193125-25-115947",
+       "0001193125-25-120877",
+       "0001193125-25-165497",
+       "0001193125-25-170521",
+       "0001193125-25-175027",
+       "0001193125-25-310710",
+       "0002041610-25-000021",
+       "0002041610-25-000042"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "12",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E02": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+       "result_id": "sha256:eadec2325437bbff953bf299e4b5bbc25594e76b8c91b5ec8e78354e6ce67c3e",
+       "run_id": "run:historical-period:f57e11f8460f1085e83d5c00ca585722646f2b3e8d8c08d6343dac1bbc208456"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000813828-24-000009",
+       "0000813828-24-000018",
+       "0000813828-24-000023",
+       "0000813828-24-000028",
+       "0000813828-24-000033",
+       "0000813828-24-000034",
+       "0000813828-24-000038",
+       "0000813828-24-000042",
+       "0000813828-24-000063",
+       "0000813828-24-000069",
+       "0000813828-24-000073",
+       "0000813828-24-000075",
+       "0000813828-24-000081",
+       "0000813828-24-000083",
+       "0000813828-24-000085",
+       "0000813828-24-000087",
+       "0000813828-25-000015",
+       "0000813828-25-000019",
+       "0001104659-25-123496",
+       "0001193125-24-050664",
+       "0001193125-24-122356",
+       "0001193125-24-177535",
+       "0001193125-24-196053",
+       "0001193125-24-196972",
+       "0001193125-24-253719",
+       "0001193125-25-036747",
+       "0001193125-25-052917",
+       "0001193125-25-115947",
+       "0001193125-25-120877",
+       "0001193125-25-165497",
+       "0001193125-25-170521",
+       "0001193125-25-175027",
+       "0001193125-25-310710",
+       "0002041610-25-000021",
+       "0002041610-25-000042"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:6ca42aef435dde02b451c1aa3d0afaf984858fdae962da02b1ad877cbb4f8c23",
+      "spec_closure_hash": "sha256:2225c56a35257b1ccf88dd4532f450dc264095fcbf4bcfa095a7a8f801e88465",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E03": {
+     "by_filing_date": 12,
+     "by_report_date": 12,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+       "result_id": "sha256:2cb23842d3646cff2d29f3f683230d58e7c2f624e9f43f198e5d51b19664af05",
+       "run_id": "run:historical-period:a78a02e2e751605d46da8d2dde96cc40fa5b1f5c4ecc9f5b6f028c10ede3378a"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000813828-24-000009",
+       "0000813828-24-000018",
+       "0000813828-24-000023",
+       "0000813828-24-000028",
+       "0000813828-24-000033",
+       "0000813828-24-000034",
+       "0000813828-24-000038",
+       "0000813828-24-000042",
+       "0000813828-24-000063",
+       "0000813828-24-000069",
+       "0000813828-24-000073",
+       "0000813828-24-000075",
+       "0000813828-24-000081",
+       "0000813828-24-000083",
+       "0000813828-24-000085",
+       "0000813828-24-000087",
+       "0000813828-25-000015",
+       "0000813828-25-000019",
+       "0001104659-25-123496",
+       "0001193125-24-050664",
+       "0001193125-24-122356",
+       "0001193125-24-177535",
+       "0001193125-24-196053",
+       "0001193125-24-196972",
+       "0001193125-24-253719",
+       "0001193125-25-036747",
+       "0001193125-25-052917",
+       "0001193125-25-115947",
+       "0001193125-25-120877",
+       "0001193125-25-165497",
+       "0001193125-25-170521",
+       "0001193125-25-175027",
+       "0001193125-25-310710",
+       "0002041610-25-000021",
+       "0002041610-25-000042"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+      "spec_closure_hash": "sha256:6a53aad18d3a406b16f08c8ddf337cafca865d9ed3843044ae47fcfef17a74a7",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "12",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E04": {
+     "by_filing_date": 0,
+     "by_report_date": 0,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+       "result_id": "sha256:473fec880f5cb2e2ebbcf8048bb4c40cf71300586acf6bd03eb9751d084499ae",
+       "run_id": "run:historical-period:1889810ab46ee0c0af073079e5de32fee41a24bab8221fafc30be401274bacfc"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000813828-24-000009",
+       "0000813828-24-000018",
+       "0000813828-24-000023",
+       "0000813828-24-000028",
+       "0000813828-24-000033",
+       "0000813828-24-000034",
+       "0000813828-24-000038",
+       "0000813828-24-000042",
+       "0000813828-24-000063",
+       "0000813828-24-000069",
+       "0000813828-24-000073",
+       "0000813828-24-000075",
+       "0000813828-24-000081",
+       "0000813828-24-000083",
+       "0000813828-24-000085",
+       "0000813828-24-000087",
+       "0000813828-25-000015",
+       "0000813828-25-000019",
+       "0001104659-25-123496",
+       "0001193125-24-050664",
+       "0001193125-24-122356",
+       "0001193125-24-177535",
+       "0001193125-24-196053",
+       "0001193125-24-196972",
+       "0001193125-24-253719",
+       "0001193125-25-036747",
+       "0001193125-25-052917",
+       "0001193125-25-115947",
+       "0001193125-25-120877",
+       "0001193125-25-165497",
+       "0001193125-25-170521",
+       "0001193125-25-175027",
+       "0001193125-25-310710",
+       "0002041610-25-000021",
+       "0002041610-25-000042"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:0d029fe3b4e3fa5a6aa6047ec69804c5acba0e42f29514fe5b0f382395aff828",
+      "spec_closure_hash": "sha256:034565b73fcf2d88fcff21e36b9fcc5a7ce604c7e09bb8d8d6ab940e5d56b24d",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "0",
+     "verdict": "MATCH_BOTH_BASES"
+    },
+    "E05": {
+     "by_filing_date": 4,
+     "by_report_date": 4,
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+       "result_id": "sha256:3e26994ddf575a8127187aefcf262e6d9fccb99d7e36e327c6e009e1fca3c086",
+       "run_id": "run:historical-period:46b49e00944383de6be483e07ee402cb86d51c60453aa51864aeb2e9aebb364f"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_equal_the_whole_set_the_reading_enumerated",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000813828-24-000009",
+       "0000813828-24-000018",
+       "0000813828-24-000023",
+       "0000813828-24-000028",
+       "0000813828-24-000033",
+       "0000813828-24-000034",
+       "0000813828-24-000038",
+       "0000813828-24-000042",
+       "0000813828-24-000063",
+       "0000813828-24-000069",
+       "0000813828-24-000073",
+       "0000813828-24-000075",
+       "0000813828-24-000081",
+       "0000813828-24-000083",
+       "0000813828-24-000085",
+       "0000813828-24-000087",
+       "0000813828-25-000015",
+       "0000813828-25-000019",
+       "0001104659-25-123496",
+       "0001193125-24-050664",
+       "0001193125-24-122356",
+       "0001193125-24-177535",
+       "0001193125-24-196053",
+       "0001193125-24-196972",
+       "0001193125-24-253719",
+       "0001193125-25-036747",
+       "0001193125-25-052917",
+       "0001193125-25-115947",
+       "0001193125-25-120877",
+       "0001193125-25-165497",
+       "0001193125-25-170521",
+       "0001193125-25-175027",
+       "0001193125-25-310710",
+       "0002041610-25-000021",
+       "0002041610-25-000042"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:6b232d81c480ca18f6035fadb7b13fb12f12a55152029919627f82b6b872e7b9",
+      "spec_closure_hash": "sha256:7f09c9630d318106f98f33d82b7914b583b8db6aef5bebc019b50b82c6f54cfd",
+      "unit": "count",
+      "value_kind": null
+     },
+     "published": "4",
+     "verdict": "MATCH_BOTH_BASES"
+    }
+   },
+   "registered_ciks": [
+    "813828",
+    "2041610"
+   ],
+   "submissions_index": "evidence/request_attempts/32/322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103/CIK0002041610.json",
+   "submissions_indexes": {
+    "2041610": "evidence/request_attempts/32/322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103/CIK0002041610.json",
+    "813828": "evidence/request_attempts/bd/bdb17feef9c7303a0ad11d4ce6a74caf168b4ff7c65249202331ba06e7524130/CIK0000813828.json"
+   },
+   "window": [
+    "2024-01-01",
+    "2025-12-31"
+   ],
+   "window_policy": "PRIOR_CALENDAR_YEAR_START_TO_TARGET_END"
+  }
+ },
+ "production_authorized": false,
+ "reader": "tools/read_event_counts.py",
+ "record_type": "ISSUE_47_EVENT_COUNT_READ",
+ "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+ "result": {
+  "MATCH_BOTH_BASES": 5,
+  "positions_compared_excluding_e01": 5
+ },
+ "same_method_as": "docs/evidence/issue47_history/content-acceptance/event-count-read.json",
+ "what_this_is": "the six 8-K event metrics counted from the filings' own SEC headers, for the seven company-periods that deliver them."
+}

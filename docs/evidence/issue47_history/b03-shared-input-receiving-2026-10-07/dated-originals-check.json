@@ -1,0 +1,293 @@
+{
+  "record_type": "HISTORICAL_B03_EXPLICIT_NAMESPACE_ACTUAL_SOURCE_CHECK",
+  "shared_commit": "22cfc2a6142226976cdb2550e17d0ed8bd3667cd",
+  "rows": [
+    {
+      "position": "southwest_airlines:FY2021",
+      "selected_observations": [
+        {
+          "semantic_role": "depreciation_and_amortization",
+          "value": "1272000000",
+          "source_binding": {
+            "concept": "us-gaap:DepreciationAndAmortization",
+            "entity": "92380"
+          }
+        }
+      ],
+      "historical_answer": {
+        "filing_answer": {
+          "status": "TAKE",
+          "selected": {
+            "concept": "DepreciationAndAmortization",
+            "fact_ordinal": 155,
+            "context_ref": "iad174ba078d44002a4593f77ac8cf139_D20210101-20211231",
+            "unit_ref": "usd",
+            "value": "1272000000",
+            "decimals": "-6",
+            "context_proof": {
+              "context_ref": "iad174ba078d44002a4593f77ac8cf139_D20210101-20211231",
+              "identifiers": [
+                {
+                  "value": "0000092380",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2021-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2021-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          },
+          "candidates": [
+            {
+              "concept": "DepreciationAndAmortization",
+              "fact_ordinal": 155,
+              "context_ref": "iad174ba078d44002a4593f77ac8cf139_D20210101-20211231",
+              "unit_ref": "usd",
+              "value": "1272000000",
+              "decimals": "-6",
+              "context_proof": {
+                "context_ref": "iad174ba078d44002a4593f77ac8cf139_D20210101-20211231",
+                "identifiers": [
+                  {
+                    "value": "0000092380",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2021-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2021-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              }
+            }
+          ],
+          "why": "EVERY_DIRECT_CANDIDATE_AGREES"
+        },
+        "chain_input": {
+          "concept": "DepreciationAndAmortization",
+          "value": "1272000000"
+        },
+        "primary_sha256": "64981946d80b3606093a7acfd0d9c603e10c3c48b8aed69783c1da71edcb9d4d",
+        "entity": "92380",
+        "period": {
+          "fiscal_year": 2021,
+          "period_start": "2021-01-01",
+          "period_end": "2021-12-31"
+        },
+        "source_facts": [
+          {
+            "concept": "DepreciationAndAmortization",
+            "fact_ordinal": 155,
+            "context_ref": "iad174ba078d44002a4593f77ac8cf139_D20210101-20211231",
+            "unit_ref": "usd",
+            "value": "1272000000",
+            "decimals": "-6",
+            "context_proof": {
+              "context_ref": "iad174ba078d44002a4593f77ac8cf139_D20210101-20211231",
+              "identifiers": [
+                {
+                  "value": "0000092380",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2021-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2021-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          },
+          {
+            "concept": "DepreciationAndAmortization",
+            "fact_ordinal": 313,
+            "context_ref": "iad174ba078d44002a4593f77ac8cf139_D20210101-20211231",
+            "unit_ref": "usd",
+            "value": "1272000000",
+            "decimals": "-6",
+            "context_proof": {
+              "context_ref": "iad174ba078d44002a4593f77ac8cf139_D20210101-20211231",
+              "identifiers": [
+                {
+                  "value": "0000092380",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2021-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2021-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            }
+          }
+        ],
+        "complete_business_scope_proven": false,
+        "status": "KEEP",
+        "why": "EVERY_DIRECT_CANDIDATE_AGREES"
+      },
+      "current_default_status": "WITHHOLD",
+      "historical_consumer_wall_seconds": 2.146517958957702,
+      "interpretation": "Limited original-fact scope check passes both official dated-namespace facts; not complete B03/Run/CLI acceptance.",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:0d793193d1898121493eb7fc92c863e9a1af6bff6205f4df9341687acfa917a7",
+        "raw_asset_id": "sha256:64981946d80b3606093a7acfd0d9c603e10c3c48b8aed69783c1da71edcb9d4d",
+        "company_id": "southwest_airlines",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238022000007/luv-20211231.htm",
+        "accession": "0000092380-22-000007",
+        "document_name": "luv-20211231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:36a813ec3fca55929b84e37a253cb0fdfe5768f2e818118a75726ce6a5f1a668"
+      },
+      "primary_sha256": "64981946d80b3606093a7acfd0d9c603e10c3c48b8aed69783c1da71edcb9d4d",
+      "period": {
+        "fiscal_year": 2021,
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31"
+      },
+      "actual_namespace_uris": [
+        "http://fasb.org/us-gaap/2021-01-31"
+      ],
+      "source_bytes_unchanged": true
+    },
+    {
+      "position": "marriott_international:FY2021",
+      "constructed_negative_selection_on_real_primary": [
+        {
+          "semantic_role": "depreciation",
+          "value": "138000000",
+          "source_binding": {
+            "concept": "us-gaap:Depreciation",
+            "entity": "1048286"
+          }
+        },
+        {
+          "semantic_role": "amortization",
+          "value": "165000000",
+          "source_binding": {
+            "concept": "us-gaap:AmortizationOfIntangibleAssets",
+            "entity": "1048286"
+          }
+        }
+      ],
+      "negative_selection_is_not_an_existing_Run_or_actual_chain_claim": true,
+      "rejection": {
+        "reason": "B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NOT_IN_ORIGINAL:amortization",
+        "category": "SOURCE_INTEGRITY_ERROR"
+      },
+      "historical_consumer_wall_seconds": 0.6069090829696506,
+      "original_dimensioned_amortization_facts": [
+        {
+          "ordinal": 925,
+          "concept_uri": "http://fasb.org/us-gaap/2021-01-31",
+          "source_text": "165",
+          "scale": "6",
+          "context": {
+            "context_ref": "i0bba544382824d16b852f57036bcc95e_D20210101-20211231",
+            "dimensions": {
+              "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis": "us-gaap:ContractBasedIntangibleAssetsMember"
+            },
+            "entity_identifier": "0001048286",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          }
+        },
+        {
+          "ordinal": 928,
+          "concept_uri": "http://fasb.org/us-gaap/2021-01-31",
+          "source_text": "62",
+          "scale": "6",
+          "context": {
+            "context_ref": "iff354faf5ff949f2924ec813098b975f_D20210101-20211231",
+            "dimensions": {
+              "us-gaap:IncomeStatementLocationAxis": "mar:ReimbursedExpensesMember",
+              "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis": "us-gaap:ContractBasedIntangibleAssetsMember"
+            },
+            "entity_identifier": "0001048286",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          }
+        }
+      ],
+      "actual_companyfacts_rows": {
+        "Depreciation": [
+          {
+            "start": "2021-01-01",
+            "end": "2021-12-31",
+            "val": 138000000,
+            "accn": "0001628280-22-002666",
+            "fy": 2021,
+            "fp": "FY",
+            "form": "10-K",
+            "filed": "2022-02-15"
+          }
+        ],
+        "AmortizationOfIntangibleAssets": []
+      },
+      "interpretation": "Primary has138m undimensioned depreciation;165m/62m amortization tags have explicit class/location axes, and selected-accession Company Facts has no annual AmortizationOfIntangibleAssets row. No full composition is asserted. Existing Run/credit unaffected; source mapping remains a separate business implementation question.",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0",
+        "raw_asset_id": "sha256:54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+        "accession": "0001628280-22-002666",
+        "document_name": "mar-20211231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+      },
+      "primary_sha256": "54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+      "period": {
+        "fiscal_year": 2021,
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31"
+      },
+      "actual_namespace_uris": [
+        "http://fasb.org/us-gaap/2021-01-31"
+      ],
+      "source_bytes_unchanged": true
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_or_source_installations": 0,
+  "copied_source_bytes": 0,
+  "new_runs": 0,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "complete_metric_accepted": false,
+  "initial_record_writer_failure": "All source/business assertions completed but JSON serialization of parser mappingproxy failed; only these two dated checks repeated after writer repair; four prior annual-source checks reused."
+}

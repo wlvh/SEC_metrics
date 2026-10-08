@@ -1,0 +1,78 @@
+{
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261008T102033Z-c9ce77c7",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B03"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B03",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "c9fdfe4afe874aa4aa80b440cfdd9f27",
+      "version": "f8c2db53da03489a922ba9505980fd31",
+      "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-company-20261008/state/updates/B03/periods/FY2024/results/f8c2db53da03489a922ba9505980fd31",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024,
+      "defect_holds": [],
+      "read_result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-company-20261008/state/updates/B03/periods/FY2024/results/f8c2db53da03489a922ba9505980fd31",
+      "program_version": {
+        "commit": "c371d5681fdafa3563728978b6d892c70a0e607f",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B03",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "9365252961db4819bea3f2afb6f626d3",
+      "version": "93ff032b5304493ab5ad47ee9081a2ea",
+      "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-company-20261008/state/updates/B03/periods/FY2025/results/93ff032b5304493ab5ad47ee9081a2ea",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025,
+      "defect_holds": [],
+      "read_result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-company-20261008/state/updates/B03/periods/FY2025/results/93ff032b5304493ab5ad47ee9081a2ea",
+      "program_version": {
+        "commit": "c371d5681fdafa3563728978b6d892c70a0e607f",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-company-20261008/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-company-20261008/outputs/20261008T102033Z-c9ce77c7",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2024,
+    2025
+  ]
+}

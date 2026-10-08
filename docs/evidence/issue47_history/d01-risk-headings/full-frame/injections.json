@@ -1,0 +1,47 @@
+{
+ "control": {
+  "injection": "CONTROL",
+  "caught": false,
+  "failing_tests": []
+ },
+ "injections": [
+  {
+   "injection": "ITEM_TITLE_MUST_BE_BOLD",
+   "caught": true,
+   "failing_tests": [
+    "json', label='jpmorgan-2022')",
+    "test_a_running_part_label_is_page_furniture",
+    "test_an_item_title_set_by_size_alone_starts_the_item"
+   ]
+  },
+  {
+   "injection": "NO_PART_LABEL_FURNITURE",
+   "caught": true,
+   "failing_tests": [
+    "json', label='jpmorgan-2022')",
+    "test_a_running_part_label_is_page_furniture"
+   ]
+  },
+  {
+   "injection": "ONLY_A_SINGLE_PART_LABEL_IS_FURNITURE",
+   "caught": true,
+   "failing_tests": [
+    "test_a_running_part_label_is_page_furniture"
+   ]
+  },
+  {
+   "injection": "NO_TAGGED_COVER_DATE",
+   "caught": true,
+   "failing_tests": [
+    "test_a_cover_set_as_a_table_is_read_from_its_tagged_date"
+   ]
+  },
+  {
+   "injection": "TAGGED_TEXT_STOPS_AT_THE_FIRST_CLOSE",
+   "caught": true,
+   "failing_tests": [
+    "test_a_cover_set_as_a_table_is_read_from_its_tagged_date"
+   ]
+  }
+ ]
+}

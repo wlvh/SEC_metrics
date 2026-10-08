@@ -1,0 +1,139 @@
+{
+ "budget_root": "/root/.local/state/sec_metrics/issue47-historical-sec-cloud-v1",
+ "execution": {
+  "durability": "the ledger root and the start record beside it are lost with the container. The start marker on issue 47 carries only a digest of the local record, so a new container cannot rebuild the start from it; once the branch carries this approval's export a start refuses and the live path refuses a ledger behind that export. Before the first export is pushed nothing guards a lost container whose marker comment is deleted, so the first run is one capture followed at once by an export and a push; after that the ledger and the acquired sources are exported to the branch after each company",
+  "host": "the executor's Claude Code cloud container, by the owner's decision of 2026-09-29 (issue 47 comment 5882788074)",
+  "transport": "HTTPS through the container's egress proxy, which re-terminates TLS: the client verifies the proxy's certificate, not SEC's. Each receipt records the proxy and the CA bundle the request used. 'Verified against GitHub' means as the proxy relayed it; the start record names the reader, the proxy and the CA bundle's digest",
+  "what_the_gates_bind": "the executor's code path, not the executor: in the container the executor chooses the GitHub reader, the proxy and the CA bundle the read-back goes through, and could send requests without this code. The gates guard against accidents and make the owner's decision auditable; what the owner can check is what the branch carries - the exported ledger, the SEC request log and the acquired sources"
+ },
+ "maximum_additional_provider_paid_sec_calls": [
+  0,
+  0,
+  1354
+ ],
+ "production_authorized": false,
+ "record_type": "ISSUE_47_HISTORICAL_SEC_DELEGATION",
+ "requirement_id": "issue_47_v1",
+ "scope": {
+  "company_ids": [
+   "enphase_energy",
+   "ford_motor_company",
+   "jpmorgan_chase",
+   "lumen_technologies",
+   "macys",
+   "marriott_international",
+   "paramount_skydance_paramount_global",
+   "pfizer",
+   "salesforce",
+   "southwest_airlines"
+  ],
+  "dependency_classes": [
+   "ACCESSION_INSTANCE_DISCOVERY",
+   "ANNUAL_PERIOD_IDENTITY",
+   "FISCAL_EVENT_FILING",
+   "GOVERNANCE_DISCLOSURE_FILING",
+   "SUBMISSIONS_HISTORY",
+   "SUBMISSIONS_INDEX"
+  ],
+  "earliest_report_end": "2021-12-31",
+  "grants": [
+   {
+    "company_ids": [
+     "enphase_energy",
+     "ford_motor_company",
+     "jpmorgan_chase",
+     "lumen_technologies",
+     "macys",
+     "marriott_international",
+     "paramount_skydance_paramount_global",
+     "pfizer",
+     "salesforce",
+     "southwest_airlines"
+    ],
+    "dependency_classes": [
+     "ACCESSION_INSTANCE_DISCOVERY",
+     "ANNUAL_PERIOD_IDENTITY"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "A_ANNUAL_CHAIN",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase"
+    ],
+    "dependency_classes": [
+     "SUBMISSIONS_HISTORY",
+     "SUBMISSIONS_INDEX"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "A_JPMORGAN_METADATA",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "enphase_energy",
+     "ford_motor_company",
+     "lumen_technologies",
+     "macys",
+     "marriott_international",
+     "paramount_skydance_paramount_global",
+     "pfizer",
+     "salesforce",
+     "southwest_airlines"
+    ],
+    "dependency_classes": [
+     "FISCAL_EVENT_FILING"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "B_EVENT_WINDOWS",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase"
+    ],
+    "dependency_classes": [
+     "FISCAL_EVENT_FILING"
+    ],
+    "earliest_report_end": "2025-12-31",
+    "grant": "B_JPMORGAN_FY2025_KNOWN_HEADER",
+    "latest_report_end": "2025-12-31"
+   },
+   {
+    "company_ids": [
+     "enphase_energy",
+     "ford_motor_company",
+     "lumen_technologies",
+     "macys",
+     "marriott_international",
+     "paramount_skydance_paramount_global",
+     "pfizer",
+     "salesforce",
+     "southwest_airlines"
+    ],
+    "dependency_classes": [
+     "GOVERNANCE_DISCLOSURE_FILING"
+    ],
+    "earliest_report_end": "2021-12-31",
+    "grant": "G_GOVERNANCE_PROXIES",
+    "latest_report_end": "2026-01-31"
+   },
+   {
+    "company_ids": [
+     "jpmorgan_chase"
+    ],
+    "dependency_classes": [
+     "GOVERNANCE_DISCLOSURE_FILING"
+    ],
+    "earliest_report_end": "2024-12-31",
+    "grant": "G_JPMORGAN_FY2024_PROXY",
+    "latest_report_end": "2024-12-31"
+   }
+  ],
+  "latest_report_end": "2026-01-31",
+  "purposes": [
+   "ISSUE47_HISTORICAL_SOURCE_DEPENDENCY"
+  ]
+ }
+}

@@ -1,0 +1,60 @@
+{
+  "tested_head": "784340066dd3bbb2e91b6426ed03702dbc5afbc4",
+  "tested_merge": "6be0234a510a6e262594965bf21617b31a216274",
+  "tested_base": "4b910e8e927bdd9ccee10367c6828e99c30c30d6",
+  "local_accepted_upstream_at_read_time": "c7a96eae8dbd6df9f01bc4db9a14014b69f487ef",
+  "local_accepted_upstream_equals_ci_base": false,
+  "complete_original_log_bytes": 835696,
+  "complete_original_log_sha256": "9f3356e019ce5f0bfbc3c570e656eebf4ee3ad08ec0f87e50e1a7ce6c96d87a5",
+  "gzip_bytes": 107389,
+  "gzip_sha256": "bb9a40fda60723b20ba24d9114026971d061e78bb5e5ad3771c7400291764ba0",
+  "all_17_jobs_success": true,
+  "entry_summaries": [
+    {
+      "job": "vNext saved-source material (shard 2)",
+      "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY",
+      "status": "PASSED",
+      "entries": 42,
+      "nonzero": [],
+      "duration_seconds": 908.618
+    },
+    {
+      "job": "vNext fast suite",
+      "evidence_tier": "FAST_LOCAL_ONLY",
+      "status": "PASSED",
+      "entries": 188,
+      "nonzero": [],
+      "duration_seconds": 240.404
+    },
+    {
+      "job": "vNext saved-source material (shard 0)",
+      "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY",
+      "status": "PASSED",
+      "entries": 43,
+      "nonzero": [],
+      "duration_seconds": 1681.973
+    },
+    {
+      "job": "vNext saved-source material (shard 1)",
+      "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY",
+      "status": "PASSED",
+      "entries": 42,
+      "nonzero": [],
+      "duration_seconds": 1739.555
+    },
+    {
+      "job": "vNext saved-source material (shard 3)",
+      "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY",
+      "status": "PASSED",
+      "entries": 44,
+      "nonzero": [],
+      "duration_seconds": 923.017
+    }
+  ],
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "new_run_or_acceptance_credit": false
+}

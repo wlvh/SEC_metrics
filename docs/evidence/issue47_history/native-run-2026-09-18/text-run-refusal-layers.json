@@ -1,0 +1,234 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "cases_blocked_earlier": 8,
+ "cases_reaching_their_layer": 7,
+ "company_id": "marriott_international",
+ "donor_period": "2024-12-31",
+ "metric_id": "D02",
+ "production_authorized": false,
+ "record_type": "HISTORICAL_TEXT_RUN_REFUSAL_LAYERS",
+ "rounds": [
+  {
+   "attempts": [
+    {
+     "actual_layer": "NONE",
+     "case": "unchanged_control",
+     "expected_layer": "NONE",
+     "reached_expected_layer": true,
+     "reason": null,
+     "refused": false
+    },
+    {
+     "actual_layer": "FROZEN_FILE_SEAL",
+     "case": "text_item_removed_and_result_resigned",
+     "error_type": "RunStoreError",
+     "expected_layer": "REQUIREMENT_AUTHORITY",
+     "reached_expected_layer": false,
+     "reason": "Frozen Run file hash mismatch: records_file_hash",
+     "refused": true
+    },
+    {
+     "actual_layer": "FROZEN_FILE_SEAL",
+     "case": "review_unit_rebound_and_resigned",
+     "error_type": "RunStoreError",
+     "expected_layer": "RECORD_GRAPH",
+     "reached_expected_layer": false,
+     "reason": "Frozen Run file hash mismatch: records_file_hash",
+     "refused": true
+    },
+    {
+     "actual_layer": "FROZEN_FILE_SEAL",
+     "case": "candidate_record_deleted",
+     "error_type": "RunStoreError",
+     "expected_layer": "REQUIREMENT_AUTHORITY",
+     "reached_expected_layer": false,
+     "reason": "Frozen Run file hash mismatch: records_file_hash",
+     "refused": true
+    },
+    {
+     "actual_layer": "FROZEN_FILE_SEAL",
+     "case": "evidence_check_deleted",
+     "error_type": "RunStoreError",
+     "expected_layer": "REQUIREMENT_AUTHORITY",
+     "reached_expected_layer": false,
+     "reason": "Frozen Run file hash mismatch: records_file_hash",
+     "refused": true
+    },
+    {
+     "actual_layer": "FROZEN_FILE_SEAL",
+     "case": "observation_deleted",
+     "error_type": "RunStoreError",
+     "expected_layer": "RECORD_GRAPH",
+     "reached_expected_layer": false,
+     "reason": "Frozen Run file hash mismatch: records_file_hash",
+     "refused": true
+    }
+   ],
+   "cases_reaching_their_layer": [],
+   "every_case_reached_its_layer": false,
+   "inner_check_not_covered": [
+    "text_item_removed_and_result_resigned",
+    "review_unit_rebound_and_resigned",
+    "candidate_record_deleted",
+    "evidence_check_deleted",
+    "observation_deleted"
+   ],
+   "layers_reached": [
+    "FROZEN_FILE_SEAL"
+   ],
+   "note": "Retained as a frozen-file integrity test. It supports no claim about text semantics.",
+   "round": "tampered_after_freezing",
+   "source_record_type": "HISTORICAL_TEXT_RUN_NEGATIVES"
+  },
+  {
+   "attempts": [
+    {
+     "actual_layer": "NONE",
+     "case": "unchanged_control",
+     "expected_layer": "NONE",
+     "reached_expected_layer": true,
+     "reason": null,
+     "refused": false
+    },
+    {
+     "actual_layer": "RECORD_SCHEMA",
+     "case": "text_item_removed_and_result_resigned",
+     "error_type": "RunStoreError",
+     "expected_layer": "REQUIREMENT_AUTHORITY",
+     "reached_expected_layer": false,
+     "reason": "Run JSONL record is invalid",
+     "refused": true
+    },
+    {
+     "actual_layer": "RECORD_SCHEMA",
+     "case": "review_unit_rebound_and_resigned",
+     "error_type": "RunStoreError",
+     "expected_layer": "RECORD_GRAPH",
+     "reached_expected_layer": false,
+     "reason": "Run JSONL record is invalid",
+     "refused": true
+    },
+    {
+     "actual_layer": "RECORD_SCHEMA",
+     "case": "candidate_altered",
+     "error_type": "RunStoreError",
+     "expected_layer": "REQUIREMENT_AUTHORITY",
+     "reached_expected_layer": false,
+     "reason": "Run JSONL record is invalid",
+     "refused": true
+    },
+    {
+     "actual_layer": "REQUIREMENT_AUTHORITY",
+     "case": "candidate_record_deleted",
+     "error_type": "RunStoreError",
+     "expected_layer": "REQUIREMENT_AUTHORITY",
+     "reached_expected_layer": true,
+     "reason": "HISTORICAL_RUN_TEXT_DERIVATION_CHANGED:DETERMINISTIC_TEXT_CANDIDATE",
+     "refused": true
+    },
+    {
+     "actual_layer": "REQUIREMENT_AUTHORITY",
+     "case": "evidence_check_deleted",
+     "error_type": "RunStoreError",
+     "expected_layer": "REQUIREMENT_AUTHORITY",
+     "reached_expected_layer": true,
+     "reason": "HISTORICAL_RUN_TEXT_DERIVATION_CHANGED:EVIDENCE_CHECK",
+     "refused": true
+    },
+    {
+     "actual_layer": "RECORD_GRAPH",
+     "case": "observation_deleted",
+     "error_type": "RunStoreError",
+     "expected_layer": "RECORD_GRAPH",
+     "reached_expected_layer": true,
+     "reason": "Text reviewed observation exact set differs",
+     "refused": true
+    }
+   ],
+   "cases_reaching_their_layer": [
+    "candidate_record_deleted",
+    "evidence_check_deleted",
+    "observation_deleted"
+   ],
+   "every_case_reached_its_layer": false,
+   "inner_check_not_covered": [
+    "text_item_removed_and_result_resigned",
+    "review_unit_rebound_and_resigned",
+    "candidate_altered"
+   ],
+   "layers_reached": [
+    "RECORD_GRAPH",
+    "RECORD_SCHEMA",
+    "REQUIREMENT_AUTHORITY"
+   ],
+   "note": "Deletions reach the semantic layers; hand re-signed records do not, because record-schema validation answers first.",
+   "round": "tampered_while_open",
+   "source_record_type": "HISTORICAL_TEXT_RUN_OPEN_NEGATIVES"
+  },
+  {
+   "attempts": [
+    {
+     "actual_layer": "RECORD_GRAPH",
+     "case": "other_period_text_result",
+     "error_type": "RunStoreError",
+     "expected_layer": "RECORD_GRAPH",
+     "reached_expected_layer": true,
+     "reason": "MetricResult ExecutionTrace is absent",
+     "refused": true,
+     "substituted": "METRIC_RESULT"
+    },
+    {
+     "actual_layer": "RECORD_GRAPH",
+     "case": "other_period_review_unit",
+     "error_type": "RunStoreError",
+     "expected_layer": "RECORD_GRAPH",
+     "reached_expected_layer": true,
+     "reason": "Review decisions contain a foreign unit binding",
+     "refused": true,
+     "substituted": "REVIEW_UNIT"
+    },
+    {
+     "actual_layer": "REQUIREMENT_AUTHORITY",
+     "case": "other_period_candidate",
+     "error_type": "RunStoreError",
+     "expected_layer": "REQUIREMENT_AUTHORITY",
+     "reached_expected_layer": true,
+     "reason": "HISTORICAL_RUN_TEXT_DERIVATION_CHANGED:DETERMINISTIC_TEXT_CANDIDATE",
+     "refused": true,
+     "substituted": "DETERMINISTIC_TEXT_CANDIDATE"
+    },
+    {
+     "actual_layer": "RECORD_GRAPH",
+     "case": "other_period_observations",
+     "error_type": "RunStoreError",
+     "expected_layer": "RECORD_GRAPH",
+     "reached_expected_layer": true,
+     "reason": "Observation SourceReference is absent",
+     "refused": true,
+     "substituted": "VERIFIED_OBSERVATION"
+    }
+   ],
+   "cases_reaching_their_layer": [
+    "other_period_text_result",
+    "other_period_review_unit",
+    "other_period_candidate",
+    "other_period_observations"
+   ],
+   "every_case_reached_its_layer": true,
+   "inner_check_not_covered": [],
+   "layers_reached": [
+    "RECORD_GRAPH",
+    "REQUIREMENT_AUTHORITY"
+   ],
+   "note": "Records the real code produced for the same metric in the pinned 2024 year, so they are structurally valid by construction and only meaning can refuse them.",
+   "round": "other_period_records_substituted",
+   "source_record_type": "HISTORICAL_TEXT_CROSS_PERIOD_NEGATIVES"
+  }
+ ],
+ "run_period": "2025-12-31",
+ "schema_version": 1
+}

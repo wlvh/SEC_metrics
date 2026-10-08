@@ -1,0 +1,59 @@
+test_completed_withheld_recovers_pointer_without_recalculation (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_completed_withheld_recovers_pointer_without_recalculation) ... FAIL
+test_current_withheld_replaces_same_year_success_but_retains_old_version (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_current_withheld_replaces_same_year_success_but_retains_old_version) ... FAIL
+test_dependency_source_and_processing_changes_reprocess_withheld_once (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_dependency_source_and_processing_changes_reprocess_withheld_once) ... FAIL
+test_missing_year_and_one_metric_failure_preserve_other_periods (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_missing_year_and_one_metric_failure_preserve_other_periods) ... ok
+test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates) ... FAIL
+
+======================================================================
+FAIL: test_completed_withheld_recovers_pointer_without_recalculation (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_completed_withheld_recovers_pointer_without_recalculation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 127, in test_completed_withheld_recovers_pointer_without_recalculation
+    self.assertTrue(pointer.is_file())
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_current_withheld_replaces_same_year_success_but_retains_old_version (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_current_withheld_replaces_same_year_success_but_retains_old_version)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 85, in test_current_withheld_replaces_same_year_success_but_retains_old_version
+    self.assertEqual(held["version"], pointer["version"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '2a69e8f088554e9da604f10c1b908b85' != '91b447f615064d6f873782ab0f721f6c'
+- 2a69e8f088554e9da604f10c1b908b85
++ 91b447f615064d6f873782ab0f721f6c
+
+
+======================================================================
+FAIL: test_dependency_source_and_processing_changes_reprocess_withheld_once (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_dependency_source_and_processing_changes_reprocess_withheld_once)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 100, in test_dependency_source_and_processing_changes_reprocess_withheld_once
+    self.assertEqual("NO_SOURCE_CONTENT_CHANGE", self.run_control(2024)["status"])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'CANDIDATE_WITHHELD'
+- NO_SOURCE_CONTENT_CHANGE
++ CANDIDATE_WITHHELD
+
+
+======================================================================
+FAIL: test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tests/vnext/test_selected_history_result_state.py", line 74, in test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates
+    self.assertEqual(["NO_SOURCE_CONTENT_CHANGE"] * 2, [r["status"] for r in again])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['NO_SOURCE_CONTENT_CHANGE', 'NO_SOURCE_CONTENT_CHANGE'] != ['NO_SOURCE_CONTENT_CHANGE', 'INPUT_OR_EXECUTION_FAILED']
+
+First differing element 1:
+'NO_SOURCE_CONTENT_CHANGE'
+'INPUT_OR_EXECUTION_FAILED'
+
+- ['NO_SOURCE_CONTENT_CHANGE', 'NO_SOURCE_CONTENT_CHANGE']
++ ['NO_SOURCE_CONTENT_CHANGE', 'INPUT_OR_EXECUTION_FAILED']
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.024s
+
+FAILED (failures=4)

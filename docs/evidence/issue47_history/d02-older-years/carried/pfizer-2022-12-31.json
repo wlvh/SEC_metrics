@@ -1,0 +1,1989 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "pfizer:2022-12-31",
+ "reader": "independent subagent reading: a fresh agent given the reader brief and the packet, not the selector's rules or any earlier reading (carried by tools/read_d02_excerpts.py --carry)",
+ "reader_note": "The value is Item 3's sentence pointing to Note 16A plus all of Note 16A (patent, product, commercial/environmental and government-investigation matters) and four Item 8 keyword blocks, of which only the Note 1S legal-contingency policy (2110) is D02; the critical-estimates risk list (1980), receivables collection policy (2041) and tax block (2555) are not, and six 'Pfizer Inc.2022 Form 10-K' footers were taken inside the note. No D02 content is missing: the Note 16 intro (3438) is stated by 2110/3440, the auditor's product-liability CAM is correctly left out, and Notes 16B-D are guarantees, commitments and contingent consideration.",
+ "packet_document_id": "sha256:3dfeab7854e47e7f6e47b04a16fdc843bb589127e65d60328ba9dedb3185b77d",
+ "packet_candidate_hash": "sha256:1bc61bbec14e3e576769cf99345116d0ff2f3d6bd7947045db3059b2e32b4e2a",
+ "carried_from": {
+  "reading": "docs/evidence/issue47_history/d02-older-years/judgements/pfizer-2022-12-31.json",
+  "reading_sha256": "sha256:dacc20f2a798a3af71d4813d79d596161aaea41bdec81b3fcfdc6508a475ff60",
+  "packet_document_id": "sha256:3dfeab7854e47e7f6e47b04a16fdc843bb589127e65d60328ba9dedb3185b77d",
+  "packet_candidate_hash": "sha256:3d8123f30775f8f915052041bcbade76caa02c44bc6e4b126170d09ef20352d8"
+ },
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 745,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 sentence incorporating Note 16A",
+   "text": "Certain legal proceedings in which we are involved are discussed in Note 16A.",
+   "text_sha256": "sha256:8aaa1581925183f0d8d799eab9d0fa5c80b7c5c5c5852735f51a78f548d1a05f",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2110,
+   "verdict": "DISCLOSURE",
+   "why": "Note 1S policy: registrant's legal/environmental contingencies and accruals",
+   "text": "We and certain of our subsidiaries are subject to numerous contingencies arising in the ordinary course of business, such as patent litigation, product liability and other product-related litigation, commercial and other asserted or unasserted matters, environmental claims and proceedings, government investigations and guarantees and indemnifications. In assessing contingencies related to legal and environmental proceedings that are pending against the Company, or unasserted claims that are probable of being asserted, we record accruals for these contingencies to the extent that we conclude that a loss is both probable and reasonably estimable. If some amount within a range of loss appears to be a better estimate than any other amount within the range, we accrue that amount. Alternatively, when no amount within a range of loss appears to be a better estimate than any other amount, we accrue the lowest amount in the range. We record anticipated recoveries under existing insurance contracts when recovery is assured.",
+   "text_sha256": "sha256:781a279ff1b60bc698fe5f161e703a469a5ad5836e0f9176ad23c14bd3b863fa",
+   "order": 1,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3439,
+   "verdict": "DISCLOSURE",
+   "why": "caption of incorporated Note 16A",
+   "text": "A. Legal Proceedings",
+   "text_sha256": "sha256:09f6c2151b0400b51872a1c890450966aa83778e50c94b89f1d0d4cc364400c9",
+   "order": 2,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3440,
+   "verdict": "DISCLOSURE",
+   "why": "introduces categories of legal contingencies",
+   "text": "Our legal contingencies include, but are not limited to, the following:",
+   "text_sha256": "sha256:a6b9b61601f0877518b3b5f8b963afc7d8c17de50656a9a66170f11ad8cdec48",
+   "order": 3,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3441,
+   "verdict": "DISCLOSURE",
+   "why": "patent litigation category",
+   "text": "•Patent litigation, which typically involves challenges to the coverage and/or validity of patents on various products, processes or dosage forms. An adverse outcome could result in loss of patent protection for a product, a significant loss of revenues from a product or impairment of the value of associated assets. We are the plaintiff in the majority of these actions.",
+   "text_sha256": "sha256:f760b7796000bc136407449a9b7bb48a2dddd98031894fcc44fa5f66d2bf57dd",
+   "order": 4,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3442,
+   "verdict": "DISCLOSURE",
+   "why": "product liability litigation category",
+   "text": "•Product liability and other product-related litigation related to current or former products, which can include personal injury, consumer, off-label promotion, securities, antitrust and breach of contract claims, among others, and often involves highly complex issues relating to medical causation, label warnings and reliance on those warnings, scientific evidence and findings, actual, provable injury and other matters.",
+   "text_sha256": "sha256:4bdd4090cdfc7ff1e15f32aaccabe27eb17c69a207bcb151920059c7eb0e0b61",
+   "order": 5,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3443,
+   "verdict": "DISCLOSURE",
+   "why": "commercial and environmental claims category",
+   "text": "•Commercial and other asserted or unasserted matters, which can include acquisition-, licensing-, intellectual property-, collaboration- or co-promotion-related and product-pricing claims and environmental claims and proceedings, and can involve complexities that will vary from matter to matter.",
+   "text_sha256": "sha256:15f30f3a3968ce65c2638423d15f18dc58c91620bb7be14832cd894dc521cdf3",
+   "order": 6,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3444,
+   "verdict": "DISCLOSURE",
+   "why": "government investigations category",
+   "text": "•Government investigations, which often are related to the extensive regulation of pharmaceutical companies by national, state and local government agencies in the U.S. and in other jurisdictions.",
+   "text_sha256": "sha256:e25b63f0015fec3cdb4d9d4384e1223dab26e113cb57dc8f3d72f8b28d09bccf",
+   "order": 7,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3445,
+   "verdict": "DISCLOSURE",
+   "why": "possible losses, fines, penalties from contingencies",
+   "text": "Certain of these contingencies could result in increased expenses and/or losses, including damages, royalty payments, fines and/or civil penalties, which could be substantial, and/or criminal charges.",
+   "text_sha256": "sha256:9ebe4b6b1fd93bb98c83ce75bf46a891293f978d19bfaa9b6d1cdefd62fda2ac",
+   "order": 8,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3446,
+   "verdict": "DISCLOSURE",
+   "why": "assessment of outcome of matters",
+   "text": "We believe that our claims and defenses in matters in which we are a defendant are substantial, but litigation is inherently unpredictable and excessive verdicts do occur. We do not believe that any of these matters will have a material adverse effect on our financial position. However, we could incur judgments, enter into settlements or revise our expectations regarding the outcome of matters, which could have a material adverse effect on our results of operations and/or our cash flows in the period in which the amounts are accrued or paid.",
+   "text_sha256": "sha256:575e7c36f5df784e17a950f36eeb3989bd987ed6b1b42fd2bcaf057bc886ebdb",
+   "order": 9,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3447,
+   "verdict": "DISCLOSURE",
+   "why": "accruals and range of loss (first part)",
+   "text": "We have accrued for losses that are both probable and reasonably estimable. Substantially all of our contingencies are subject to significant uncertainties and, therefore, determining the likelihood of a loss and/or the measurement of any loss can be complex. Consequently, we are unable to estimate the range of reasonably possible loss in excess of amounts accrued. Our assessments, which result from a complex series of judgments about future events and uncertainties, are based on estimates and assumptions that have been deemed reasonable by",
+   "text_sha256": "sha256:a2865066d9b783f6a910dcefbd1b5beeddf6472d848cb2fb80eeea10257a03ee",
+   "order": 10,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3452,
+   "verdict": "DISCLOSURE",
+   "why": "continuation of accrual paragraph",
+   "text": "management, but that may prove to be incomplete or inaccurate, and unanticipated events and circumstances may occur that might cause us to change those estimates and assumptions.",
+   "text_sha256": "sha256:38df19a4f81a29878142997d2947b084279f6007ded16c5ea51cc37503ee0392",
+   "order": 11,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3453,
+   "verdict": "DISCLOSURE",
+   "why": "legal/environmental contingency amounts; $1M threshold",
+   "text": "Amounts recorded for legal and environmental contingencies can result from a complex series of judgments about future events and uncertainties and can rely heavily on estimates and assumptions. For proceedings under environmental laws to which a governmental authority is a party, we have adopted a disclosure threshold of $1 million in potential or actual governmental monetary sanctions.",
+   "text_sha256": "sha256:931f1d8ace674f17a8a1bcaaf53aa25b71c460367c04cf77d531e227d67de203",
+   "order": 12,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3454,
+   "verdict": "DISCLOSURE",
+   "why": "principal pending matters and materiality factors",
+   "text": "The principal pending matters to which we are a party are discussed below. In determining whether a pending matter is a principal matter, we consider both quantitative and qualitative factors to assess materiality, such as, among others, the amount of damages and the nature of other relief sought, if specified; our view of the merits of the claims and of the strength of our defenses; whether the action purports to be, or is, a class action and, if not certified, our view of the likelihood that a class will be certified by the court; the jurisdiction in which the proceeding is pending; whether related actions have been transferred to multidistrict litigation; any experience that we or, to our knowledge, other companies have had in similar proceedings; whether disclosure of the action would be important to a reader of our financial statements, including whether disclosure might change a reader’s judgment about our financial statements in light of all of the information that is available to the reader; the potential impact of the proceeding on our reputation; and the extent of public interest in the matter. In addition, with respect to patent matters in which we are the plaintiff, we consider, among other things, the financial significance of the product protected by the patent(s) at issue. Some of the matters discussed below include those which management believes that the likelihood of possible loss in excess of amounts accrued is remote.",
+   "text_sha256": "sha256:52c941d9cfed08be9ca9531a8475312ef764c4d95af54f0c9bdba73a9dc55b2f",
+   "order": 13,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3455,
+   "verdict": "DISCLOSURE",
+   "why": "subsection label: patent litigation",
+   "text": "A1. Legal Proceedings––Patent Litigation",
+   "text_sha256": "sha256:02090e0ad0631f5bb8f05e63106ab5f3b588d426fb30959899ebc1e4adc8f912",
+   "order": 14,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3456,
+   "verdict": "DISCLOSURE",
+   "why": "patent suits incl. Eliquis, CureVac/Comirnaty, damages suits",
+   "text": "We are involved in suits relating to our patents (or those of our collaboration/licensing partners to which we have licenses or co-promotion rights), including but not limited to, those discussed below. We face claims by generic drug manufacturers that patents covering our products (or those of our collaboration/licensing partners to which we have licenses or co-promotion rights and to which we may or may not be a party), processes or dosage forms are invalid and/or do not cover the product of the generic drug manufacturer. Also, counterclaims, as well as various independent actions, have been filed alleging that our assertions of, or attempts to enforce, patent rights with respect to certain products constitute unfair competition and/or violations of antitrust laws. In addition to the challenges to the U.S. patents that are discussed below, patent rights to certain of our products or those of our collaboration/licensing partners are being challenged in various other jurisdictions. Some of our collaboration or licensing partners face challenges to the validity of their patent rights in non-U.S. jurisdictions. For example, in April 2022, the U.K. High Court issued a judgment finding invalid a BMS patent related to Eliquis due to expire in 2026. In November 2022, BMS received permission to appeal the High Court’s decision. Additional challenges are pending in other jurisdictions. Also, in July 2022, CureVac AG (CureVac) brought a patent infringement action against BioNTech and certain of its subsidiaries in the German Regional Court alleging that Comirnaty infringes certain German utility model patents and certain expired and unexpired European patents. Additional challenges involving Comirnaty patents may be filed against us and/or BioNTech in other jurisdictions in the future. Adverse decisions in these matters could have a material adverse effect on our results of operations. We are also party to patent damages suits in various jurisdictions pursuant to which generic drug manufacturers, payers, governments or other parties are seeking damages from us for allegedly causing delay of generic entry.",
+   "text_sha256": "sha256:4ac597bc77a51ab5cca9898b6f7529d7d6c6f26747c47c089f88946538196233",
+   "order": 15,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3457,
+   "verdict": "DISCLOSURE",
+   "why": "IPR/PGR proceedings on pneumococcal patents",
+   "text": "We also are often involved in other proceedings, such as inter partes review, post-grant review, re-examination or opposition proceedings, before the U.S. Patent and Trademark Office, the European Patent Office, or other foreign counterparts relating to our intellectual property or the intellectual property rights of others. Also, if one of our patents (or one of our collaboration/licensing partners patents) is found to be invalid by such proceedings, generic or competitive products could be introduced into the market resulting in the erosion of sales of our existing products. For example, several of the patents in our pneumococcal vaccine portfolio have been challenged in inter partes review and post-grant review proceedings in the U.S. Patent and Trademark Office, as well as outside the U.S. The invalidation of any of the patents in our pneumococcal portfolio could potentially allow additional competitor vaccines, if approved, to enter the marketplace earlier than anticipated. In the event that any of the patents are found valid and infringed, a competitor’s vaccine, if approved, might be prohibited from entering the market or a competitor might be required to pay us a royalty.",
+   "text_sha256": "sha256:9950f6d1d50da61ba49cc591a4d9aceeb9251bb4e19ddec4ce1f47df0631d3cc",
+   "order": 16,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3458,
+   "verdict": "DISCLOSURE",
+   "why": "third-party patent infringement claims against us",
+   "text": "We are also subject to patent litigation pursuant to which one or more third parties seek damages and/or injunctive relief to compensate for alleged infringement of its patents by our commercial or other activities. If one of our marketed products (or a product of our collaboration/licensing partners) is found to infringe valid patent rights of a third party, such third party may be awarded significant damages or royalty payments, or we may be prevented from further sales of that product. Such damages may be enhanced as much as three-fold if we or one of our subsidiaries is found to have willfully infringed valid patent rights of a third party.",
+   "text_sha256": "sha256:193eaafd39c516d56a5b6e447e06a039f9c62c6b9daa23603eee9f6f2a977dcf",
+   "order": 17,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3459,
+   "verdict": "DISCLOSURE",
+   "why": "label: actions where we are plaintiff",
+   "text": "Actions In Which We Are The Plaintiff",
+   "text_sha256": "sha256:4a6b3288e4e9e3cceec0eea97e9ca7d6f722bfec94943a43af78365d4e5dde30",
+   "order": 18,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3460,
+   "verdict": "DISCLOSURE",
+   "why": "case label Xeljanz",
+   "text": "Xeljanz (tofacitinib)",
+   "text_sha256": "sha256:85a659968b1f5694a6f77cd72b415f6822a14fd57183fbb95a1e19ce3f8fa535",
+   "order": 19,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3461,
+   "verdict": "DISCLOSURE",
+   "why": "Xeljanz ANDA patent actions",
+   "text": "Beginning in 2017, we brought patent-infringement actions against several generic manufacturers that filed separate abbreviated new drug applications (ANDAs) with the FDA seeking approval to market their generic versions of tofacitinib tablets in one or both of 5 mg and 10 mg dosage strengths, and in both immediate and extended release forms. To date, we have settled actions with several manufacturers on terms not material to us. The remaining action continues in the U.S. District Court for the District of Delaware as described below.",
+   "text_sha256": "sha256:9aa9991fd9e7fc08dee29cd4fa8627f7a4b2d1eb2f4561661c649fc898ea6040",
+   "order": 20,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3462,
+   "verdict": "DISCLOSURE",
+   "why": "Sinotherapeutics patent actions",
+   "text": "In October 2021, we brought a separate patent-infringement action against Sinotherapeutics Inc. (Sinotherapeutics) asserting the infringement and validity of our patent covering extended release formulations of tofacitinib that was challenged by Sinotherapeutics in its ANDA seeking approval to market a generic version of tofacitinib 11 mg extended release tablets. In November 2022, we filed an additional patent-infringement action against Sinotherapeutics relating to its challenge of our extended release formulation and method of treatment patents in its ANDA seeking approval to market a generic version of tofacitinib 22 mg extended release tablets.",
+   "text_sha256": "sha256:cff494319246c2478f3136596487e2cd46c31d1a0be0b78f9c151f2cbd1e9eb2",
+   "order": 21,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3463,
+   "verdict": "DISCLOSURE",
+   "why": "Sun action and settlement",
+   "text": "In November 2022, we brought a separate patent-infringement action against Sun Pharmaceutical Industries Limited and Sun Pharmaceutical Industries, Inc. (collectively, Sun) asserting the infringement and validity of our compound patent covering the active ingredient that was challenged by Sun in its ANDAs seeking approval to market generic versions of tofacitinib extended release (11 mg, 22 mg) tablets. In January 2023, we settled our action against Sun on terms not material to us.",
+   "text_sha256": "sha256:758810cccb3bed5c1276c30050d03924f7b63914c86ebc5eaacffa326df8e625",
+   "order": 22,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3468,
+   "verdict": "DISCLOSURE",
+   "why": "case label Inlyta",
+   "text": "Inlyta (axitinib)",
+   "text_sha256": "sha256:bb9973bf5b6167436a53668c04f5736e48e9a5d4e2904666d64dd41b86c3cf9b",
+   "order": 23,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3469,
+   "verdict": "DISCLOSURE",
+   "why": "Glenmark suit, settled",
+   "text": "In 2019, Glenmark Pharmaceuticals Ltd. (Glenmark) notified us that it had filed an ANDA with the FDA seeking approval to market a generic version of Inlyta. Glenmark asserts the invalidity and non-infringement of the crystalline form patent for Inlyta that expires in 2030. In 2019, we filed suit against Glenmark in the U.S. District Court for the District of Delaware, asserting the validity and infringement of the crystalline form patent for Inlyta. In November 2022, we settled our action against Glenmark on terms not material to us.",
+   "text_sha256": "sha256:88016ab130884b17a42a91cce346a0a7fb1bada2845e748206a0be133c62acee",
+   "order": 24,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3470,
+   "verdict": "DISCLOSURE",
+   "why": "case label Ibrance",
+   "text": "Ibrance (palbociclib)",
+   "text_sha256": "sha256:5771bb86a79951529a5ecb407f39fdc88d9a417614808760b2b5bca142da70ce",
+   "order": 25,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3471,
+   "verdict": "DISCLOSURE",
+   "why": "Ibrance ANDA patent actions",
+   "text": "Beginning in January 2021, several generic companies notified us that they had filed ANDAs with the FDA seeking approval to market generic versions of Ibrance tablets. The generic companies are challenging some or all of the following patents: (i) the composition of matter patent expiring in 2027; (ii) the composition of matter patent expiring in 2023; (iii) the method of use patent expiring in 2023; (iv) the crystalline form patent expiring in 2034; and (v) a tablet formulation patent expiring in 2036. We brought patent infringement actions against each of the generic filers in various U.S. federal courts, asserting the validity and infringement of the patents challenged by the generic companies. We have settled with one of these generic companies on terms not material to us, and we dismissed the patent infringement actions relating to the crystalline form of patent, the composition of matter patent expiring in 2023, the method of use patent, and the tablet formulation patent against the generic companies that had challenged these patents. The composition of matter patent expiring in 2027 remains in suit.",
+   "text_sha256": "sha256:84ab3798655746cce340292dd89dc85bb1a51ac8473e2fc402f2dc3dfd26e3bf",
+   "order": 26,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3472,
+   "verdict": "DISCLOSURE",
+   "why": "case label Eucrisa",
+   "text": "Eucrisa",
+   "text_sha256": "sha256:3b2844f0b4a1bc6a17282c94851bc7146f62940c07d82caf2209e24d25a33198",
+   "order": 27,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3473,
+   "verdict": "DISCLOSURE",
+   "why": "Eucrisa patent actions",
+   "text": "Beginning in September 2021, several generic companies notified us that they had filed ANDAs with the FDA seeking approval to market generic versions of Eucrisa. The companies assert the invalidity and non-infringement of a composition of matter patent expiring in 2026, two method of use patents expiring in 2027, and one other method of use patent expiring in 2030. In September 2021, we brought patent infringement actions against the generic filers in the U.S. District Court for the District of Delaware, asserting the validity and infringement of the patents challenged by the generic companies.",
+   "text_sha256": "sha256:c22807caedbce9957d759c0113d4554ee0a2621abdc603728bad2d126421d5ca",
+   "order": 28,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3474,
+   "verdict": "DISCLOSURE",
+   "why": "case label Braftovi",
+   "text": "Braftovi (encorafenib)",
+   "text_sha256": "sha256:8f93bbbc4b5d15df6d775b9430d95a0c1fab35d8a7e5c6deb61c1416e082a929",
+   "order": 29,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3475,
+   "verdict": "DISCLOSURE",
+   "why": "Braftovi action, dismissed",
+   "text": "In August 2022, a generic company notified us that it had filed an ANDA with the FDA seeking approval to market a generic version of Braftovi. The company asserted the invalidity and non-infringement of, among others, a method of use patent expiring in 2033. In September 2022, we brought a patent infringement action against the generic company in the U.S. District Court for the District of Delaware, asserting the validity and infringement of the method of use patent expiring in 2033. In January 2023, the case was dismissed.",
+   "text_sha256": "sha256:9d19b322e00dbd26628443b5bf43a1e3fa2a6c7d24f3835f16c5c7a78bab4c6d",
+   "order": 30,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3476,
+   "verdict": "DISCLOSURE",
+   "why": "case label Mektovi",
+   "text": "Mektovi (binimetinib)",
+   "text_sha256": "sha256:4f8a369639d2204a5bae8649fc6e14853341ce29da9ff3a10912844e715fb45b",
+   "order": 31,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3477,
+   "verdict": "DISCLOSURE",
+   "why": "Mektovi patent actions",
+   "text": "Beginning in August 2022, several generic companies notified us that they had filed ANDAs with the FDA seeking approval to market generic versions of Mektovi. The companies assert the invalidity and non-infringement of two method of use patents expiring in 2030, a method of use patent expiring in 2031, two method of use patents expiring in 2033, and a product by process patent expiring in 2033. Beginning in September 2022, we brought patent infringement actions against the generic filers in the U.S. District Court for the District of Delaware, asserting the validity and infringement of all six patents.",
+   "text_sha256": "sha256:03d74abe54405ba8ed9ae212e0fc4569895db5ebfaa9bf80f3d5eff61c2ae0a1",
+   "order": 32,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3478,
+   "verdict": "DISCLOSURE",
+   "why": "label: actions where we are defendant",
+   "text": "Actions in Which We are the Defendant",
+   "text_sha256": "sha256:a46908f43cf1ccba752c6743b168d85399b6d56b99b3416aa793319e874ec42b",
+   "order": 33,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3479,
+   "verdict": "DISCLOSURE",
+   "why": "case label Comirnaty",
+   "text": "Comirnaty",
+   "text_sha256": "sha256:3bd97142f3a6c8cf037d60851acc7e95dee9704527ecacf9153e3e975a4ba5b1",
+   "order": 34,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3480,
+   "verdict": "DISCLOSURE",
+   "why": "Alnylam complaints",
+   "text": "In March 2022, Alnylam Pharmaceuticals, Inc. (Alnylam) filed a complaint in the U.S. District Court for the District of Delaware against Pfizer and Pharmacia & Upjohn Co. LLC, our wholly owned subsidiary, alleging that Comirnaty infringes U.S. Patent No. 11,246,933, which was issued in February 2022, and seeking unspecified monetary damages. In July 2022, Alnylam filed a second complaint in the U.S. District Court for the District of Delaware against Pfizer, Pharmacia & Upjohn Co. LLC, BioNTech and BioNTech Manufacturing GmbH, alleging that Comirnaty infringes U.S. Patent No. 11,382,979, which was issued in July 2022, and seeking unspecified monetary damages.",
+   "text_sha256": "sha256:c7ec2c564436543640bead491c26030afc4ee729128bd5f2a32e80708befcc55",
+   "order": 35,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3481,
+   "verdict": "DISCLOSURE",
+   "why": "Moderna U.S. suit",
+   "text": "In August 2022, ModernaTX, Inc. (ModernaTX) and Moderna US, Inc. (Moderna) sued Pfizer, BioNTech, BioNTech Manufacturing GmbH and BioNTech US Inc. in the U.S. District Court for the District of Massachusetts, alleging that Comirnaty infringes three U.S. patents. In its complaint, Moderna stated that it is seeking damages for alleged infringement occurring after March 7, 2022.",
+   "text_sha256": "sha256:7d742712b72c77ed5c49392bc75faff804ca1052e4c0beed795dbd64e705d854",
+   "order": 36,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3482,
+   "verdict": "DISCLOSURE",
+   "why": "ModernaTX European actions",
+   "text": "In August 2022, ModernaTX filed a patent infringement action in Germany against Pfizer and certain subsidiary companies, as well as BioNTech and certain subsidiary companies, alleging that Comirnaty infringes two European patents. In September 2022, ModernaTX filed patent infringement actions in the U.K and in the Netherlands against Pfizer and certain subsidiary companies, as well as BioNTech and certain subsidiary companies, on the same two patents. In its complaints, ModernaTX stated that it is seeking damages for alleged infringement occurring after March 7, 2022. In the U.K., Pfizer and BioNTech have brought an action against ModernaTX seeking to revoke these European patents, which was consolidated with the September 2022 action filed by ModernaTX.",
+   "text_sha256": "sha256:ee7b1c3a6aab497b62d65f1181569a1449ceeefd96ee48d41f27cbe6e7e4f4c1",
+   "order": 37,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3483,
+   "verdict": "DISCLOSURE",
+   "why": "case label Paxlovid",
+   "text": "Paxlovid",
+   "text_sha256": "sha256:2dc9f0dd4b27808b49d0f37d669728d9bb0eed7573a51281409397ac4b6ed2b8",
+   "order": 38,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3484,
+   "verdict": "DISCLOSURE",
+   "why": "Enanta complaint",
+   "text": "In June 2022, Enanta Pharmaceuticals, Inc. filed a complaint in the U.S. District Court for the District of Massachusetts against Pfizer alleging that the active ingredient in Paxlovid, nirmatrelvir, infringes U.S. Patent No. 11,358,953, which was issued in June 2022, and seeking unspecified monetary damages.",
+   "text_sha256": "sha256:408a15478b6bfccfb85b7a7ee2710006ec79068efe5881a2cf1f33df88536570",
+   "order": 39,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3485,
+   "verdict": "DISCLOSURE",
+   "why": "label: matters with collaboration/licensing partners",
+   "text": "Matters Involving Pfizer and its Collaboration/Licensing Partners",
+   "text_sha256": "sha256:fae14c504342d5b724759fb19a32eef957f20d3d41b5270d13b0a47c3efb2e61",
+   "order": 40,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3486,
+   "verdict": "DISCLOSURE",
+   "why": "case label Comirnaty",
+   "text": "Comirnaty",
+   "text_sha256": "sha256:3bd97142f3a6c8cf037d60851acc7e95dee9704527ecacf9153e3e975a4ba5b1",
+   "order": 41,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3487,
+   "verdict": "DISCLOSURE",
+   "why": "CureVac declaratory judgment and U.K. actions",
+   "text": "In July 2022, Pfizer, BioNTech and BioNTech Manufacturing GmbH filed a declaratory judgment complaint against CureVac in the U.S. District Court for the District of Massachusetts seeking a judgment of non-infringement for the following three patents relating to Comirnaty: U.S. Patent Nos. 11,135,312, 11,149,278, and 11,241,493. Outside of the U.S., in the U.K., Pfizer and BioNTech have sued CureVac seeking a judgment of invalidity of several patents and CureVac has made certain infringement counterclaims.",
+   "text_sha256": "sha256:6bca029ab92594c763e034a1cb62b3dfd7a4b5d64fcbcf3f75b35ef5796f0f03",
+   "order": 42,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3488,
+   "verdict": "DISCLOSURE",
+   "why": "case label Xtandi",
+   "text": "Xtandi (enzalutamide)",
+   "text_sha256": "sha256:caff08bdb8746b8473f9bb89c4dcbd5203f7d63089c954667a89c6404651bd4d",
+   "order": 43,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3489,
+   "verdict": "DISCLOSURE",
+   "why": "Xtandi suits vs Zydus and Sun (first part)",
+   "text": "In July 2022, Medivation and Medivation Prostate Therapeutics, Inc.; Astellas Pharma Inc., Astellas US LLC and Astellas Pharma US, Inc.; and The Regents of the University of California filed a patent-infringement suit in the U.S. District Court for the District of New Jersey against Zydus Pharmaceuticals (USA) Inc. and Zydus Lifesciences Ltd.; and in December 2022, the same entities filed a patent-infringement suit in the U.S. District Court for the District of New Jersey against Sun in connection with those companies’ respective ANDAs seeking approval to market",
+   "text_sha256": "sha256:cdcac35d01d5aa13a5262c69cd184c4d4f67f3c1ae8d80243767622dcb7cce2f",
+   "order": 44,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3494,
+   "verdict": "DISCLOSURE",
+   "why": "continuation of Xtandi suits",
+   "text": "generic versions of enzalutamide. The generic manufacturers are challenging the composition of matter patent, which expires in 2027, covering enzalutamide and pharmaceutical compositions thereof, for treating prostate cancer.",
+   "text_sha256": "sha256:309b1da1a49b455837f0d6f3c5f02ab0dc8ef7d7083a8552a4d207d615d0368a",
+   "order": 45,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3495,
+   "verdict": "DISCLOSURE",
+   "why": "subsection label: product litigation",
+   "text": "A2. Legal Proceedings––Product Litigation",
+   "text_sha256": "sha256:5496efcbd069cd1f64d94eb1b486db6e40827b2c5fbc816641499946d2bd166d",
+   "order": 46,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3496,
+   "verdict": "DISCLOSURE",
+   "why": "defendant in numerous product cases",
+   "text": "We are defendants in numerous cases, including but not limited to those discussed below, related to our pharmaceutical and other products. Plaintiffs in these cases seek damages and other relief on various grounds for alleged personal injury and economic loss.",
+   "text_sha256": "sha256:b22c88c4ffda1bfc6ed050475ad7fa82ceebbc3c9d8915b57632b7054d69a920",
+   "order": 47,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3497,
+   "verdict": "DISCLOSURE",
+   "why": "case label Asbestos",
+   "text": "Asbestos",
+   "text_sha256": "sha256:6b210ed7077c2ff578b1dde1a4078123e262932220e508053ea0a91086b2cf4c",
+   "order": 48,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3498,
+   "verdict": "DISCLOSURE",
+   "why": "American Optical asbestos claims and indemnity",
+   "text": "Between 1967 and 1982, Warner-Lambert owned American Optical Corporation (American Optical), which manufactured and sold respiratory protective devices and asbestos safety clothing. In connection with the sale of American Optical in 1982, Warner-Lambert agreed to indemnify the purchaser for certain liabilities, including certain asbestos-related and other claims. Warner-Lambert was acquired by Pfizer in 2000 and is a wholly owned subsidiary of Pfizer. Warner-Lambert is actively engaged in the defense of, and will continue to explore various means of resolving, these claims.",
+   "text_sha256": "sha256:73ec26e28d3b3430f2bcf1d767e8f42aeb6ae7103062a25d08a3aaac7b3616da",
+   "order": 49,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3499,
+   "verdict": "DISCLOSURE",
+   "why": "pending asbestos lawsuits",
+   "text": "Numerous lawsuits against American Optical, Pfizer and certain of its previously owned subsidiaries are pending in various federal and state courts seeking damages for alleged personal injury from exposure to products allegedly containing asbestos and other allegedly hazardous materials sold by Pfizer and certain of its previously owned subsidiaries.",
+   "text_sha256": "sha256:87c6d82666070eff18001684a65ac71a97dba6218683a73953a2e5abc5006253",
+   "order": 50,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3500,
+   "verdict": "DISCLOSURE",
+   "why": "facility asbestos lawsuits",
+   "text": "There also are a small number of lawsuits pending in various federal and state courts seeking damages for alleged exposure to asbestos in facilities owned or formerly owned by Pfizer or its subsidiaries.",
+   "text_sha256": "sha256:6f1b8297bc155c5451c5eaf1d91440ae89bb8920b3503c18139d792bbfe18787",
+   "order": 51,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3501,
+   "verdict": "DISCLOSURE",
+   "why": "case label Effexor",
+   "text": "Effexor",
+   "text_sha256": "sha256:fa54d90db8e866defda55a1e82cb2b69a5db8c338dc4d19a0249eb054bba106b",
+   "order": 52,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3502,
+   "verdict": "DISCLOSURE",
+   "why": "Effexor antitrust class actions",
+   "text": "Beginning in 2011, actions, including purported class actions, were filed in various federal courts against Wyeth and, in certain of the actions, affiliates of Wyeth and certain other defendants relating to Effexor XR, which is the extended-release formulation of Effexor. The plaintiffs in each of the class actions seek to represent a class consisting of all persons in the U.S. and its territories who directly purchased, indirectly purchased or reimbursed patients for the purchase of Effexor XR or generic Effexor XR from any of the defendants from June 14, 2008 until the time the defendants’ allegedly unlawful conduct ceased. The plaintiffs in all of the actions allege delay in the launch of generic Effexor XR in the U.S. and its territories, in violation of federal antitrust laws and, in certain of the actions, the antitrust, consumer protection and various other laws of certain states, as the result of Wyeth fraudulently obtaining and improperly listing certain patents for Effexor XR in the Orange Book, enforcing certain patents for Effexor XR and entering into a litigation settlement agreement with a generic drug manufacturer with respect to Effexor XR. Each of the plaintiffs seeks treble damages (for itself in the individual actions or on behalf of the putative class in the purported class actions) for alleged price overcharges for Effexor XR or generic Effexor XR in the U.S. and its territories since June 14, 2008. All of these actions have been consolidated in the U.S. District Court for the District of New Jersey.",
+   "text_sha256": "sha256:89b35b6061bbc1bb56cf24b685d57f8d745b396f1f207a96a7e4af61d3e65712",
+   "order": 53,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3503,
+   "verdict": "DISCLOSURE",
+   "why": "Effexor procedural history",
+   "text": "In 2014, the District Court dismissed the direct purchaser plaintiffs’ claims based on the litigation settlement agreement, but declined to dismiss the other direct purchaser plaintiff claims. In 2015, the District Court entered partial final judgments as to all settlement agreement claims, including those asserted by direct purchasers and end-payer plaintiffs, which plaintiffs appealed to the U.S. Court of Appeals for the Third Circuit. In 2017, the U.S. Court of Appeals for the Third Circuit reversed the District Court’s decisions and remanded the claims to the District Court.",
+   "text_sha256": "sha256:aee6e7bcf814db666128c3ead770ba32219bfe83ef99eb07d903fb9c3abe289e",
+   "order": 54,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3504,
+   "verdict": "DISCLOSURE",
+   "why": "case label Lipitor",
+   "text": "Lipitor",
+   "text_sha256": "sha256:2052ea9ace3eb75fbb5dd44786eab9be0eb5b74a56b3a4aa8abeb87414680fce",
+   "order": 55,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3505,
+   "verdict": "DISCLOSURE",
+   "why": "Lipitor antitrust class actions",
+   "text": "Beginning in 2011, purported class actions relating to Lipitor were filed in various federal courts against, among others, Pfizer, certain Pfizer affiliates, and, in most of the actions, Ranbaxy Laboratories Ltd. (Ranbaxy) and certain Ranbaxy affiliates. The plaintiffs in these various actions seek to represent nationwide, multi-state or statewide classes consisting of persons or entities who directly purchased, indirectly purchased or reimbursed patients for the purchase of Lipitor (or, in certain of the actions, generic Lipitor) from any of the defendants from March 2010 until the cessation of the defendants’ allegedly unlawful conduct (the Class Period). The plaintiffs allege delay in the launch of generic Lipitor, in violation of federal antitrust laws and/or state antitrust, consumer protection and various other laws, resulting from (i) the 2008 agreement pursuant to which Pfizer and Ranbaxy settled certain patent litigation involving Lipitor and Pfizer granted Ranbaxy a license to sell a generic version of Lipitor in various markets beginning on varying dates, and (ii) in certain of the actions, the procurement and/or enforcement of certain patents for Lipitor. Each of the actions seeks, among other things, treble damages on behalf of the putative class for alleged price overcharges for Lipitor (or, in certain of the actions, generic Lipitor) during the Class Period. In addition, individual actions have been filed against Pfizer, Ranbaxy and certain of their affiliates, among others, that assert claims and seek relief for the plaintiffs that are substantially similar to the claims asserted and the relief sought in the purported class actions described above. These various actions have been consolidated for pre-trial proceedings in a MDL in the U.S. District Court for the District of New Jersey.",
+   "text_sha256": "sha256:870591d9a8e8ecc2c91d67f141e3b676b1f5ad814822d72aa918f53967a5daab",
+   "order": 56,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3506,
+   "verdict": "DISCLOSURE",
+   "why": "Lipitor dismissals and appeal",
+   "text": "In September 2013 and 2014, the District Court dismissed with prejudice the claims of the direct purchasers. In October and November 2014, the District Court dismissed with prejudice the claims of all other MDL plaintiffs. All plaintiffs appealed the District Court’s orders dismissing their claims with prejudice to the U.S. Court of Appeals for the Third Circuit. In addition, the direct purchaser class plaintiffs appealed the order denying their motion to amend the judgment and for leave to amend their complaint to the Court of Appeals. In 2017, the Court of Appeals reversed the District Court’s decisions and remanded the claims to the District Court.",
+   "text_sha256": "sha256:28ccabd88ed597690a33054018b6682a7d8b0a06818c1f63c151ba27a7b20087",
+   "order": 57,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3507,
+   "verdict": "DISCLOSURE",
+   "why": "West Virginia action",
+   "text": "Also, in 2013, the State of West Virginia filed an action in West Virginia state court against Pfizer and Ranbaxy, among others, that asserts claims and seeks relief on behalf of the State of West Virginia and residents of that state that are substantially similar to the claims asserted and the relief sought in the purported class actions described above.",
+   "text_sha256": "sha256:14d93ef41d61be9067926de7e397a7ff447d9b3f451c8efd6081efdd10867ade",
+   "order": 58,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3508,
+   "verdict": "DISCLOSURE",
+   "why": "case label EpiPen",
+   "text": "EpiPen (Direct Purchaser)",
+   "text_sha256": "sha256:577f681a755ed1114f0b204e3758f0eee49664226f3caf177afbba7d55d7a3b1",
+   "order": 59,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3509,
+   "verdict": "DISCLOSURE",
+   "why": "EpiPen direct purchaser suit",
+   "text": "In February 2020, a lawsuit was filed in the U.S. District Court for the District of Kansas against Pfizer, its current and former affiliates King and Meridian, and various Mylan entities, on behalf of a purported U.S. nationwide class of direct purchaser plaintiffs who purchased EpiPen devices directly from the defendants. Plaintiffs in this action generally allege that Pfizer and Mylan conspired to delay market entry of generic EpiPen through the settlement of patent litigation regarding EpiPen, and thereby delayed market entry of generic EpiPen in violation of federal antitrust law. Plaintiffs seek treble damages for alleged overcharges for EpiPen since 2011. In July 2021, the District Court granted defendants’ motion to dismiss the direct purchaser complaint, without prejudice. In September 2021, plaintiffs filed an amended complaint. In August 2022, the District Court granted Pfizer’s motion to dismiss the complaint, and plaintiffs have appealed to the U.S. Court of Appeals for the Tenth Circuit.",
+   "text_sha256": "sha256:1e2fbbd5c7fd33314f4742cfc52b995bdc21c29e5d2e3c5d7dc5a6d1eaf51db9",
+   "order": 60,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3514,
+   "verdict": "DISCLOSURE",
+   "why": "case label Nexium 24HR and Protonix",
+   "text": "Nexium 24HR and Protonix",
+   "text_sha256": "sha256:a5f8246e494ff4f9f83f644a8653d8b91ea945cae25dafc189c5de980de19560",
+   "order": 61,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3515,
+   "verdict": "DISCLOSURE",
+   "why": "PPI kidney-injury lawsuits",
+   "text": "A number of individual and multi-plaintiff lawsuits have been filed against Pfizer, certain of its subsidiaries and/or other pharmaceutical manufacturers in various federal and state courts alleging that the plaintiffs developed kidney-related injuries purportedly as a result of the ingestion of certain proton pump inhibitors. The cases against Pfizer involve Protonix and/or Nexium 24HR and seek compensatory and punitive damages and, in some cases, treble damages, restitution or disgorgement. In 2017, the federal actions were ordered transferred for coordinated pre-trial proceedings to a MDL in the U.S. District Court for the District of New Jersey. As part of the combination of our and GSK’s consumer healthcare businesses to form Haleon, Haleon assumed, and agreed to indemnify Pfizer for, liabilities arising out of such litigation to the extent related to Nexium 24HR.",
+   "text_sha256": "sha256:578d2dc6ad5a6fd935647f7dbecf200e915c972525f62815258e1c77ca65d598",
+   "order": 62,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3516,
+   "verdict": "DISCLOSURE",
+   "why": "case label Docetaxel",
+   "text": "Docetaxel",
+   "text_sha256": "sha256:c77b8dd8d90e56299de2b0955fa4fb05d27fd5dafab352706ad3db12041bc4be",
+   "order": 63,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3517,
+   "verdict": "DISCLOSURE",
+   "why": "label: personal injury actions",
+   "text": "•Personal Injury Actions",
+   "text_sha256": "sha256:212419985e96734e2c8e37579a659d5b87f8f6ecdf90934598fd870a50a240e9",
+   "order": 64,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3518,
+   "verdict": "DISCLOSURE",
+   "why": "Docetaxel hair-loss lawsuits",
+   "text": "A number of lawsuits have been filed against Hospira and Pfizer in various federal and state courts alleging that plaintiffs who were treated with Docetaxel developed permanent hair loss. The significant majority of the cases also name other defendants, including the manufacturer of the branded product, Taxotere. Plaintiffs seek compensatory and punitive damages. Additional lawsuits have been filed in which plaintiffs allege they developed blocked tear ducts following their treatment with Docetaxel.",
+   "text_sha256": "sha256:e446045634bd4c9c6e374824314ec61e701e87e90e1218d09ef5fe7f685321cb",
+   "order": 65,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3519,
+   "verdict": "DISCLOSURE",
+   "why": "Docetaxel MDL transfers",
+   "text": "In 2016, the federal cases were transferred for coordinated pre-trial proceedings to a MDL in the U.S. District Court for the Eastern District of Louisiana. In 2022, the eye injury cases were transferred for coordinated pre-trial proceedings to a MDL in the U.S. District Court for the Eastern District of Louisiana.",
+   "text_sha256": "sha256:9576519f148a2586eb1f2b0ddfe1ed1e7c056576f9f8a243318a31981bd4531e",
+   "order": 66,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3520,
+   "verdict": "DISCLOSURE",
+   "why": "label: Mississippi AG government action",
+   "text": "•Mississippi Attorney General Government Action",
+   "text_sha256": "sha256:7ea9f08dfb342aeb25e84fbd83bb32983d94d6d03f98df1a6eba5cecf21421ac",
+   "order": 67,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3521,
+   "verdict": "DISCLOSURE",
+   "why": "Mississippi AG complaint",
+   "text": "In 2018, the Attorney General of Mississippi filed a complaint in Mississippi state court against the manufacturer of the branded product and eight other manufacturers including Pfizer and Hospira, alleging, with respect to Pfizer and Hospira, a failure to warn about a risk of permanent hair loss in violation of the Mississippi Consumer Protection Act. The action seeks civil penalties and injunctive relief.",
+   "text_sha256": "sha256:c0d1c4519daa11e3580cc4108ce9c1bae7be38b22e07334a13276bb75ca988bc",
+   "order": 68,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3522,
+   "verdict": "DISCLOSURE",
+   "why": "case label Zantac",
+   "text": "Zantac",
+   "text_sha256": "sha256:3e67ff669f8c2f2468a3527823d650c114f7696f9da50cfea22eebe826615602",
+   "order": 69,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3523,
+   "verdict": "DISCLOSURE",
+   "why": "Zantac cancer lawsuits",
+   "text": "A number of lawsuits have been filed against Pfizer in various federal and state courts alleging that plaintiffs developed various types of cancer, or face an increased risk of developing cancer, purportedly as a result of the ingestion of Zantac. The significant majority of these cases also name other defendants that have historically manufactured and/or sold Zantac. Pfizer has not sold Zantac since 2006, and only sold an OTC version of the product. In 2006, Pfizer sold the consumer business that included its Zantac OTC rights to Johnson & Johnson and transferred the assets and liabilities related to Zantac OTC to Johnson & Johnson in connection with the sale. Plaintiffs in these cases seek compensatory and punitive damages.",
+   "text_sha256": "sha256:597221c510521bb02567edbf06e815f15b1144e15f8d9b9de2ee477b5c91948b",
+   "order": 70,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3524,
+   "verdict": "DISCLOSURE",
+   "why": "Zantac MDL, Canadian and state actions, dismissal",
+   "text": "In February 2020, the federal actions were transferred for coordinated pre-trial proceedings to a MDL in the U.S. District Court for the Southern District of Florida (the Federal MDL Court). Plaintiffs in the MDL have filed against Pfizer and many other defendants a master personal injury complaint, asserting a consolidated consumer class action alleging, among other things, claims under consumer protection statutes of all 50 states, and a medical monitoring complaint seeking to certify medical monitoring classes under the laws of 13 states. In addition, (i) Pfizer has received service of Canadian class action complaints naming Pfizer and other defendants, and seeking compensatory and punitive damages for personal injury and economic loss, allegedly arising from the defendants’ sale of Zantac in Canada; and (ii) the State of New Mexico and the Mayor and City Council of Baltimore separately filed civil actions against Pfizer and many other defendants in state courts, alleging various state statutory and common law claims in connection with the defendants’ alleged sale of Zantac in those jurisdictions. In April 2021, a Judicial Council Coordinated Proceeding was created in the Superior Court of California in Alameda County to coordinate personal injury actions against Pfizer and other defendants filed in California state court. Coordinated proceedings have also been created in other state courts. In December 2022, the Federal MDL Court granted defendants’ Daubert motions to exclude plaintiffs’ expert testimony and motion for summary judgment on general causation, and dismissed the litigation.",
+   "text_sha256": "sha256:51a6464e7b9edd8d173b69bfae6e1e68fd220465fb8b42ed5550497ee1347afe",
+   "order": 71,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3525,
+   "verdict": "DISCLOSURE",
+   "why": "case label Chantix",
+   "text": "Chantix",
+   "text_sha256": "sha256:389844e87f74345325a049cd47dd6e5c7e8abfd18950d090594bb12bfbec52d1",
+   "order": 72,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3526,
+   "verdict": "DISCLOSURE",
+   "why": "Chantix class actions",
+   "text": "Beginning in August 2021, a number of putative class actions have been filed against Pfizer in various U.S. federal courts following Pfizer’s voluntary recall of Chantix due to the presence of a nitrosamine, N-nitroso-varenicline. Plaintiffs assert that they suffered economic harm purportedly as a result of purchasing Chantix or generic varenicline medicines sold by Pfizer. Plaintiffs seek to represent nationwide and state-specific classes and seek various remedies, including damages and medical monitoring. In December 2022, the federal actions were transferred for coordinated pre-trial proceedings to a MDL in the U.S. District Court for the Southern District of New York. Similar putative class actions have been filed in Canada and Israel, where the product brand is Champix.",
+   "text_sha256": "sha256:34455a6be7dc11a19fb7b3fddab6f69de42145f9e8c89340cd63aae8820b5b5a",
+   "order": 73,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3527,
+   "verdict": "DISCLOSURE",
+   "why": "subsection label: commercial and other matters",
+   "text": "A3. Legal Proceedings––Commercial and Other Matters",
+   "text_sha256": "sha256:57a77a988753068e4a13b7230907c8cb3a69258bca4ca36a51ed841c12706658",
+   "order": 74,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3528,
+   "verdict": "DISCLOSURE",
+   "why": "case label Monsanto-related matters",
+   "text": "Monsanto-Related Matters",
+   "text_sha256": "sha256:a762cfee28f5ec0c9fc68a387c98ad12351628bf9c3dc77ec1d26250270bfcca",
+   "order": 75,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3529,
+   "verdict": "DISCLOSURE",
+   "why": "Monsanto/Solutia background within the matter",
+   "text": "In 1997, Monsanto Company (Former Monsanto) contributed certain chemical manufacturing operations and facilities to a newly formed corporation, Solutia Inc. (Solutia), and spun off the shares of Solutia. In 2000, Former Monsanto merged with Pharmacia & Upjohn Company to form Pharmacia. Pharmacia then transferred its agricultural operations to a newly created subsidiary, named Monsanto Company (New Monsanto), which it spun off in a two-stage process that was completed in 2002. Pharmacia was acquired by Pfizer in 2003 and is a wholly owned subsidiary of Pfizer.",
+   "text_sha256": "sha256:892a21107f1448ca06d5b95571ad66023a5fc795b3683501e60bb751d1b5267c",
+   "order": 76,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3530,
+   "verdict": "DISCLOSURE",
+   "why": "New Monsanto indemnity and defense of claims",
+   "text": "In connection with its spin-off that was completed in 2002, New Monsanto assumed, and agreed to indemnify Pharmacia for, any liabilities related to Pharmacia’s former agricultural business. New Monsanto has defended and/or is defending Pharmacia in connection with various claims and litigation arising out of, or related to, the agricultural business, and has been indemnifying Pharmacia when liability has been imposed or settlement has been reached regarding such claims and litigation.",
+   "text_sha256": "sha256:e4df02b63129c1ef9774edb4caa4503949c36aaf4d33669a0a937ef25cfd4537",
+   "order": 77,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3531,
+   "verdict": "DISCLOSURE",
+   "why": "Solutia/New Monsanto indemnity (first part)",
+   "text": "In connection with its spin-off in 1997, Solutia assumed, and agreed to indemnify Pharmacia for, liabilities related to Former Monsanto’s chemical businesses. As the result of its reorganization under Chapter 11 of the U.S. Bankruptcy Code, Solutia’s indemnification obligations relating to Former Monsanto’s chemical businesses are primarily limited to sites that Solutia has owned or operated. In addition, in connection with its spin-off that was completed in 2002, New Monsanto assumed, and agreed to indemnify Pharmacia for, any liabilities primarily related to Former Monsanto’s chemical businesses, including, but not limited to, any such liabilities that Solutia assumed. Solutia’s and New Monsanto’s",
+   "text_sha256": "sha256:6d4580abb237ff6cf2d259b0817c64caa1d51a3a45e8fdd1041d312020cf599a",
+   "order": 78,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3536,
+   "verdict": "DISCLOSURE",
+   "why": "continuation: indemnified environmental/PCB actions",
+   "text": "assumption of, and agreement to indemnify Pharmacia for, these liabilities apply to pending actions and any future actions related to Former Monsanto’s chemical businesses in which Pharmacia is named as a defendant, including, without limitation, actions asserting environmental claims, including alleged exposure to polychlorinated biphenyls. Solutia and/or New Monsanto are defending Pharmacia in connection with various claims and litigation arising out of, or related to, Former Monsanto’s chemical businesses, and have been indemnifying Pharmacia when liability has been imposed or settlement has been reached regarding such claims and litigation.",
+   "text_sha256": "sha256:28a5f0b8c31fe3ddf058993b66ed0b7b6f668820a4d64e96aada1d15167610ce",
+   "order": 79,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3537,
+   "verdict": "DISCLOSURE",
+   "why": "case label Environmental Matters",
+   "text": "Environmental Matters",
+   "text_sha256": "sha256:a8881f30feceda518b78bb368b7f249be88a1b4d45282c97cc8c5b78be6536c3",
+   "order": 80,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3538,
+   "verdict": "DISCLOSURE",
+   "why": "Bound Brook remediation consent orders",
+   "text": "In 2009, as part of our acquisition of Wyeth, we assumed responsibility for environmental remediation at the Wyeth Holdings LLC (formerly known as, Wyeth Holdings Corporation and American Cyanamid Company) discontinued industrial chemical facility in Bound Brook, New Jersey. Since that time, we have executed or have become a party to a number of administrative settlement agreements, orders on consent, and/or judicial consent decrees, with the U.S. Environmental Protection Agency and/or New Jersey Department of Environmental Protection to perform remedial design, removal and remedial actions, and related environmental remediation activities at the Bound Brook facility. We have accrued for the currently estimated costs of these activities.",
+   "text_sha256": "sha256:0632d8048f39a6465a407e712bc89a3da08760cbe9d5743b9485e3d374b7c04f",
+   "order": 81,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3539,
+   "verdict": "DISCLOSURE",
+   "why": "CERCLA and other remediation proceedings",
+   "text": "We are a party to a number of other proceedings brought under the Comprehensive Environmental Response, Compensation, and Liability Act of 1980, as amended, and other state, local or foreign laws in which the primary relief sought is the cost of past and/or future remediation.",
+   "text_sha256": "sha256:597a3e9a2c205c4e778d436fbaa6300dae0d48d99382623e7f38eeb2251e0d43",
+   "order": 82,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3540,
+   "verdict": "DISCLOSURE",
+   "why": "case label Iraqi Ministry of Health contracts",
+   "text": "Contracts with Iraqi Ministry of Health",
+   "text_sha256": "sha256:2f91c0fe7490562c048197b723167b467ad8c16a505ec394d57e71c83b37e970",
+   "order": 83,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3541,
+   "verdict": "DISCLOSURE",
+   "why": "Anti-Terrorism Act complaint",
+   "text": "In 2017, a number of U.S. service members, civilians, and their families brought a complaint in the U.S. District Court for the District of Columbia against a number of pharmaceutical and medical devices companies, including Pfizer and certain of its subsidiaries, alleging that the defendants violated the U.S. Anti-Terrorism Act. The complaint alleges that the defendants provided funding for terrorist organizations through their sales practices pursuant to pharmaceutical and medical device contracts with the Iraqi Ministry of Health, and seeks monetary relief. In July 2020, the District Court granted defendants’ motions to dismiss and dismissed all of plaintiffs’ claims. In January 2022, the Court of Appeals reversed the District Court’s decision. In February 2023, the defendants filed for en banc review of the Court of Appeals’ decision. In February 2023, the Court of Appeals denied defendants’ en banc petitions.",
+   "text_sha256": "sha256:a5f47dc72bc7544f03ded91dfb97a88d7d78bb40658844c7c1c5aad937501865",
+   "order": 84,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3542,
+   "verdict": "DISCLOSURE",
+   "why": "case label Allergan complaint for indemnity",
+   "text": "Allergan Complaint for Indemnity",
+   "text_sha256": "sha256:b5085ce4267f4da91bcb24a126477de1fb14e9bfa9aae32927ea3e6b6d40a682",
+   "order": 85,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3543,
+   "verdict": "DISCLOSURE",
+   "why": "Allergan indemnity suit discontinued",
+   "text": "In 2019, Pfizer was named as a defendant in a complaint, along with King, filed by Allergan Finance LLC (Allergan) in the Supreme Court of the State of New York, asserting claims for indemnity related to Kadian, which was owned for a short period by King in 2008, prior to Pfizer's acquisition of King in 2010. This suit was voluntarily discontinued without prejudice in January 2021.",
+   "text_sha256": "sha256:43eb2a199e5b112e16f08bea2bb087133db3a96cb5dd7a0db8f4e6ec475b5c4e",
+   "order": 86,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3544,
+   "verdict": "DISCLOSURE",
+   "why": "case label Viatris securities litigation",
+   "text": "Viatris Securities Litigation",
+   "text_sha256": "sha256:da750f789fa85554db20b4c39bc9de7958979a67898414f786288857d575caa0",
+   "order": 87,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3545,
+   "verdict": "DISCLOSURE",
+   "why": "Viatris securities class action",
+   "text": "In October 2021, a putative class action was filed in the Court of Common Pleas of Allegheny County, Pennsylvania on behalf of former Mylan N.V. shareholders who received Viatris common stock in exchange for Mylan shares in connection with the spin-off of the Upjohn Business and its combination with Mylan (the Transactions). Viatris, Pfizer, and certain of each company’s current and former officers, directors and employees are named as defendants. An amended complaint was filed in January 2023, and alleges that the defendants violated certain provisions of the Securities Act of 1933 in connection with certain disclosures made in or omitted from the registration statement and related prospectus issued in connection with the Transactions, as well as related communications. Plaintiff seeks damages, costs and expenses and other equitable and injunctive relief.",
+   "text_sha256": "sha256:3c24a5f7c8c0e0c4c64f11b1983fcaba5773432a21b112295453529c0097cdc9",
+   "order": 88,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3546,
+   "verdict": "DISCLOSURE",
+   "why": "subsection label: government investigations",
+   "text": "A4. Legal Proceedings––Government Investigations",
+   "text_sha256": "sha256:002ed2ec7bc163b4bd46c501fc043e16907d9492f6d959cbd6feab965c574d32",
+   "order": 89,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3547,
+   "verdict": "DISCLOSURE",
+   "why": "government investigations overview",
+   "text": "We are subject to extensive regulation by government agencies in the U.S., other developed markets and multiple emerging markets in which we operate. Criminal charges, substantial fines and/or civil penalties, limitations on our ability to conduct business in applicable jurisdictions, corporate integrity or deferred prosecution agreements, as well as reputational harm and increased public interest in the matter could result from government investigations in the U.S. and other jurisdictions in which we do business. These matters often involve government requests for information on a voluntary basis or through subpoenas after which the government may seek additional information through follow-up requests or additional subpoenas. In addition, in a qui tam lawsuit in which the government declines to intervene, the relator may still pursue a suit for the recovery of civil damages and penalties on behalf of the government. Among the investigations by government agencies are the matters discussed below.",
+   "text_sha256": "sha256:791f425a7543b1193e3ed29ac4f0369436a2e30fc2b77f873617e869184d702e",
+   "order": 90,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3548,
+   "verdict": "DISCLOSURE",
+   "why": "case label Greenstone investigations",
+   "text": "Greenstone Investigations",
+   "text_sha256": "sha256:a0909c728297513898984d0f0882124a80ecc58d9501f9dd161b700fe075b070",
+   "order": 91,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3549,
+   "verdict": "DISCLOSURE",
+   "why": "label: DOJ Antitrust Division investigation",
+   "text": "•U.S. Department of Justice Antitrust Division Investigation",
+   "text_sha256": "sha256:b26cbbf4c2f11bb85fecca201bafc3691deb48652e34817c6ad0015c7c165f9a",
+   "order": 92,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3550,
+   "verdict": "DISCLOSURE",
+   "why": "DOJ investigation of Greenstone",
+   "text": "Since July 2017, the U.S. Department of Justice's Antitrust Division has been investigating our former Greenstone generics business. We believe this is related to an ongoing broader antitrust investigation of the generic pharmaceutical industry. We have produced records relating to this investigation.",
+   "text_sha256": "sha256:450d29a87026e849d687a95dc00262310853763a8e69702a2597c2f6a894d279",
+   "order": 93,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3551,
+   "verdict": "DISCLOSURE",
+   "why": "label: State AG and MDL generics antitrust litigation",
+   "text": "•State Attorneys General and Multi-District Generics Antitrust Litigation",
+   "text_sha256": "sha256:f0b09eb96138f8249ee67c887581011c1aa97aee9ae53cba4a03f0771efa9454",
+   "order": 94,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3552,
+   "verdict": "DISCLOSURE",
+   "why": "State AG complaints and MDL",
+   "text": "In April 2018, Greenstone received requests for information from the Antitrust Department of the Connecticut Office of the Attorney General. In May 2019, Attorneys General of more than 40 states plus the District of Columbia and Puerto Rico filed a complaint against a number of pharmaceutical companies, including Greenstone and Pfizer. The matter has been consolidated with a MDL in the Eastern District of Pennsylvania. As to Greenstone and Pfizer, the complaint alleges anticompetitive conduct in violation of federal and state antitrust laws and state consumer protection laws. In June 2020, the State Attorneys General filed a new complaint against a large number of companies, including Greenstone and Pfizer, making similar allegations, but concerning a new set of drugs. This complaint was transferred to the MDL in July 2020. The MDL also includes civil complaints filed by private plaintiffs and state counties against Pfizer, Greenstone and a significant number of other defendants asserting allegations that generally overlap with those asserted by the State Attorneys General.",
+   "text_sha256": "sha256:eaf8f871060ffd5ad10ee36c21209b78eb855a6b7aa2c8d41958f7cb579b57b5",
+   "order": 95,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3553,
+   "verdict": "DISCLOSURE",
+   "why": "case label Tris Pharma/Quillivant XR subpoena",
+   "text": "Subpoena & Civil Investigative Demand relating to Tris Pharma/Quillivant XR",
+   "text_sha256": "sha256:0d572bc75f6ea2f91cdcfa5f76e9163f8cbf5f95491d072d037458f832fc7ffe",
+   "order": 96,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3554,
+   "verdict": "DISCLOSURE",
+   "why": "SDNY subpoena",
+   "text": "In October 2018, we received a subpoena from the U.S. Attorney’s Office for the Southern District of New York (SDNY) seeking records relating to our relationship with another drug manufacturer and its production and manufacturing of drugs including, but not limited to, Quillivant XR. We responded to that subpoena in full and have had no communication with the SDNY in connection with the subpoena since June 2019.",
+   "text_sha256": "sha256:41e081e0c6b9e247e3689d3b6f2429fbada8ec2507c2243611a90e61c985358c",
+   "order": 97,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3559,
+   "verdict": "DISCLOSURE",
+   "why": "Texas AG civil investigative demand",
+   "text": "Additionally, in September 2020, we received a Civil Investigative Demand (CID) from the Texas Attorney General’s office seeking records of a similar nature to those requested by the SDNY. We are producing records in response to this request.",
+   "text_sha256": "sha256:6a101c31d1a5c0e6322d87109141077fb337498e8d4677b6572aed4957487c19",
+   "order": 98,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3560,
+   "verdict": "DISCLOSURE",
+   "why": "case label Meridian inquiries",
+   "text": "Government Inquiries relating to Meridian Medical Technologies",
+   "text_sha256": "sha256:582144b79c9cc0b229a3c698ee68492379d785413d6f3fa1b0c52bf288366827",
+   "order": 99,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3561,
+   "verdict": "DISCLOSURE",
+   "why": "Meridian CID and HIPAA subpoena",
+   "text": "In February 2019, we received a CID from the U.S. Attorney’s Office for the SDNY. The CID seeks records and information related to alleged quality issues involving the manufacture of auto-injectors at the Meridian site. In August 2019, we received a HIPAA subpoena issued by the U.S. Attorney’s Office for the Eastern District of Missouri, in coordination with the Department of Justice’s Consumer Protection Branch, seeking similar records and information. We are producing records in response to these and subsequent requests.",
+   "text_sha256": "sha256:44c10e63bbdd5b714a5421629684dec818dcad674aca98f35f48ca6af8c5b930",
+   "order": 100,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3562,
+   "verdict": "DISCLOSURE",
+   "why": "case label Russia inquiry",
+   "text": "U.S. Department of Justice/SEC Inquiry relating to Russian Operations",
+   "text_sha256": "sha256:6670d561c7e56c0e28480d75ff6dbd3017e34e7f36f199dbda4e112759f9ef65",
+   "order": 101,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3563,
+   "verdict": "DISCLOSURE",
+   "why": "DOJ/SEC FCPA requests on Russia",
+   "text": "In June 2019, we received an informal request from the U.S. Department of Justice’s Foreign Corrupt Practices Act (FCPA) Unit seeking documents relating to our operations in Russia. In September 2019, we received a similar request from the SEC’s FCPA Unit. We have produced records pursuant to these requests.",
+   "text_sha256": "sha256:b45a7d59b7872661bc369f0da3d64242db87f006c42433f4685686f0d0203134",
+   "order": 102,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3564,
+   "verdict": "DISCLOSURE",
+   "why": "case label Docetaxel Mississippi AG investigation",
+   "text": "Docetaxel––Mississippi Attorney General Government Investigation",
+   "text_sha256": "sha256:58bd2073ef1f133e075a662ede30e5ca3184beb667e731b9f500115ea66f3a87",
+   "order": 103,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3565,
+   "verdict": "DISCLOSURE",
+   "why": "cross-reference to the Docetaxel AG matter",
+   "text": "See Legal Proceedings––Product Litigation––Docetaxel––Mississippi Attorney General Government Investigation above for information regarding a government investigation related to Docetaxel marketing practices.",
+   "text_sha256": "sha256:de58e2f235be4fddcb772030949adcdcdb04fafb1a37c0d5e0476db696ee85b7",
+   "order": 104,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3566,
+   "verdict": "DISCLOSURE",
+   "why": "case label India inquiries",
+   "text": "U.S. Department of Justice Inquiries relating to India Operations",
+   "text_sha256": "sha256:66c81698e5d1f1ddbf0e8dd556016f1aed5d22bb7b3e558ce675682f048aa100",
+   "order": 105,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3567,
+   "verdict": "DISCLOSURE",
+   "why": "DOJ/SDNY requests on India operations",
+   "text": "In March 2020, we received an informal request from the U.S. Department of Justice's Consumer Protection Branch seeking documents relating to our manufacturing operations in India, including at our former facility located at Irrungattukottai in India. In April 2020, we received a similar request from the U.S. Attorney’s Office for the SDNY regarding a civil investigation concerning operations at our facilities in India. We are producing records pursuant to these requests.",
+   "text_sha256": "sha256:385c5df54b35f04808da95ccb37544c5871e14f9e2c59d1d4c523629c5ae1675",
+   "order": 106,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3568,
+   "verdict": "DISCLOSURE",
+   "why": "case label China inquiry",
+   "text": "U.S. Department of Justice/SEC Inquiry relating to China Operations",
+   "text_sha256": "sha256:14367a7b1952e36ad2ee43ff46652a26b6c8d7e3a7b53922f8b50779d0a2d8d9",
+   "order": 107,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3569,
+   "verdict": "DISCLOSURE",
+   "why": "DOJ/SEC FCPA requests on China",
+   "text": "In June 2020, we received an informal request from the U.S. Department of Justice's FCPA Unit seeking documents relating to our operations in China. In August 2020, we received a similar request from the SEC’s FCPA Unit. We have produced records pursuant to these requests.",
+   "text_sha256": "sha256:5e55d84d5020d5dcd9a4eb358af5938d1a866bc8ac912bb676394683f900b44f",
+   "order": 108,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3570,
+   "verdict": "DISCLOSURE",
+   "why": "case label Zantac state/Baltimore civil actions",
+   "text": "Zantac––State of New Mexico and Mayor and City Council of Baltimore Civil Actions",
+   "text_sha256": "sha256:1613c0dc8f71275121bf117519276076d651668e19a09667c809eaf550cfe79d",
+   "order": 109,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3571,
+   "verdict": "DISCLOSURE",
+   "why": "cross-reference to the Zantac civil actions",
+   "text": "See Legal Proceedings––Product Litigation––Zantac above for information regarding civil actions separately filed by the State of New Mexico and the Mayor and City Council of Baltimore alleging various state statutory and common law claims in connection with the defendants’ alleged sale of Zantac in those jurisdictions.",
+   "text_sha256": "sha256:2fe579ab00784475fbe2f576fae9063f0574b47123167b6bca7324ad49c522b2",
+   "order": 110,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3572,
+   "verdict": "DISCLOSURE",
+   "why": "case label Biohaven inquiries",
+   "text": "Government Inquiries relating to Biohaven",
+   "text_sha256": "sha256:1a90eac3582c0431079dfd852a5562df37dadcb308b36c49c3077fc7b388733c",
+   "order": 111,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 3573,
+   "verdict": "DISCLOSURE",
+   "why": "Biohaven CID",
+   "text": "In June 2022, the U.S. Department of Justice's Commercial Litigation Branch and the U.S. Attorney’s Office for the Western District of New York issued a CID relating to Biohaven. The CID seeks records and information related to, among other things, engagements with health care professionals and co-pay coupons cards. Biohaven is a wholly-owned subsidiary that we acquired in October 2022. We are producing records in response to these requests.",
+   "text_sha256": "sha256:5f9736218479ff4eec63a4d80b6c3c7507b7dbe5643dc0158a818930b83203ee",
+   "order": 112,
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 1980,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "critical-estimates boilerplate; litigation only in a list of risks",
+   "text": "Our estimates are often based on complex judgments and assumptions that we believe to be reasonable, but that can be inherently uncertain and unpredictable. If our estimates and assumptions are not representative of actual outcomes, our results could be materially impacted. As future events and their effects cannot be determined with precision, our estimates and assumptions may prove to be incomplete or inaccurate, or unanticipated events and circumstances may occur that might cause us to change those estimates and assumptions. We are subject to risks and uncertainties that may cause actual results to differ from estimated amounts, such as changes in the healthcare environment, competition, litigation, legislation and regulations. We regularly evaluate our estimates and assumptions using historical experience and expectations about the future. We adjust our estimates and assumptions when facts and circumstances indicate the need for change.",
+   "text_sha256": "sha256:2462999d3d035aeb2d3ba96c88bf305f0253b2497b0d8448582cb2bb57d83d66",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2041,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "receivables write-off policy 'including litigation'",
+   "text": "In determining the reserve percentages for each pool of trade accounts receivables, we considered our historical experience with certain customers and customer types, regulatory and legal environments, country and political risk, and other relevant current and future forecasted macroeconomic factors. These credit risk indicators are monitored on a quarterly basis to determine whether there have been any changes in the economic environment that would indicate the established reserve percentages should be adjusted, and are considered on a regional basis to reflect more geographic-specific metrics. Additionally, write-offs and recoveries of customer receivables are tracked against collections on a quarterly basis to determine whether the reserve percentages remain appropriate. When management becomes aware of certain customer-specific factors that impact credit risk, specific allowances for these known troubled accounts are recorded. Trade accounts receivable are written off after all reasonable means to collect the full amount (including litigation, where appropriate) have been exhausted.",
+   "text_sha256": "sha256:d70491d92a93e12ceed3caa4169dc14f0f8b631c3ea7258f1485a53e343917b4",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2555,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "uncertain tax positions; legal proceedings with tax authorities incidental",
+   "text": "Any settlements or statutes of limitations expirations could result in a significant decrease in our uncertain tax positions. We estimate that it is reasonably possible that within the next 12 months, our gross unrecognized tax benefits, exclusive of interest, could decrease by as much as $100 million, as a result of settlements with taxing authorities or the expiration of the statutes of limitations. Our assessments are based on estimates and assumptions that have been deemed reasonable by management, but our estimates of unrecognized tax benefits and potential tax benefits may not be representative of actual outcomes, and variation from such estimates could materially affect our financial statements in the period of settlement or when the statutes of limitations expire, as we treat these events as discrete items in the period of resolution. Finalizing audits with the relevant taxing authorities can include formal administrative and legal proceedings, and, as a result, it is difficult to estimate the timing and range of possible changes related to our uncertain tax positions, and such changes could be significant.",
+   "text_sha256": "sha256:1ccc796bc9d2efab14ede8bbfdd8312cefc16a30d26d7f6869e19cfd4af272fe",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3448,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Pfizer Inc.2022 Form 10-K",
+   "text_sha256": "sha256:430f1e6e13fccb7551f77483054818a753e04372a777631944e2dd3dfed43a36",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3449,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "90",
+   "text_sha256": "sha256:69f59c273b6e669ac32a6dd5e1b2cb63333d8b004f9696447aee2d422ce63763",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3450,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "running head",
+   "text": "Notes to Consolidated Financial Statements",
+   "text_sha256": "sha256:96a803ffca85c035bfba97395da10233b4c50043bb033e524fc21e5bf89066e8",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3451,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name header",
+   "text": "Pfizer Inc. and Subsidiary Companies",
+   "text_sha256": "sha256:39af64573a8b2cdb18734cd9562789edb52d0dc87cbabf3ee9b7313ab02dc933",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3464,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Pfizer Inc.2022 Form 10-K",
+   "text_sha256": "sha256:430f1e6e13fccb7551f77483054818a753e04372a777631944e2dd3dfed43a36",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3465,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "91",
+   "text_sha256": "sha256:1da51b8d8ff98f6a48f80ae79fe3ca6c26e1abb7b7d125259255d6d2b875ea08",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3466,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "running head",
+   "text": "Notes to Consolidated Financial Statements",
+   "text_sha256": "sha256:96a803ffca85c035bfba97395da10233b4c50043bb033e524fc21e5bf89066e8",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3467,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name header",
+   "text": "Pfizer Inc. and Subsidiary Companies",
+   "text_sha256": "sha256:39af64573a8b2cdb18734cd9562789edb52d0dc87cbabf3ee9b7313ab02dc933",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3490,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Pfizer Inc.2022 Form 10-K",
+   "text_sha256": "sha256:430f1e6e13fccb7551f77483054818a753e04372a777631944e2dd3dfed43a36",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3491,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "92",
+   "text_sha256": "sha256:8241649609f88ccd2a0a5b233a07a538ec313ff6adf695aa44a969dbca39f67d",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3492,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "running head",
+   "text": "Notes to Consolidated Financial Statements",
+   "text_sha256": "sha256:96a803ffca85c035bfba97395da10233b4c50043bb033e524fc21e5bf89066e8",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3493,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name header",
+   "text": "Pfizer Inc. and Subsidiary Companies",
+   "text_sha256": "sha256:39af64573a8b2cdb18734cd9562789edb52d0dc87cbabf3ee9b7313ab02dc933",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3510,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Pfizer Inc.2022 Form 10-K",
+   "text_sha256": "sha256:430f1e6e13fccb7551f77483054818a753e04372a777631944e2dd3dfed43a36",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3511,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "93",
+   "text_sha256": "sha256:6e4001871c0cf27c7634ef1dc478408f642410fd3a444e2a88e301f5c4a35a4d",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3512,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "running head",
+   "text": "Notes to Consolidated Financial Statements",
+   "text_sha256": "sha256:96a803ffca85c035bfba97395da10233b4c50043bb033e524fc21e5bf89066e8",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3513,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name header",
+   "text": "Pfizer Inc. and Subsidiary Companies",
+   "text_sha256": "sha256:39af64573a8b2cdb18734cd9562789edb52d0dc87cbabf3ee9b7313ab02dc933",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3532,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Pfizer Inc.2022 Form 10-K",
+   "text_sha256": "sha256:430f1e6e13fccb7551f77483054818a753e04372a777631944e2dd3dfed43a36",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3533,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "94",
+   "text_sha256": "sha256:e3d6c4d4599e00882384ca981ee287ed961fa5f3828e2adb5e9ea890ab0d0525",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3534,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "running head",
+   "text": "Notes to Consolidated Financial Statements",
+   "text_sha256": "sha256:96a803ffca85c035bfba97395da10233b4c50043bb033e524fc21e5bf89066e8",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3535,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name header",
+   "text": "Pfizer Inc. and Subsidiary Companies",
+   "text_sha256": "sha256:39af64573a8b2cdb18734cd9562789edb52d0dc87cbabf3ee9b7313ab02dc933",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3555,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Pfizer Inc.2022 Form 10-K",
+   "text_sha256": "sha256:430f1e6e13fccb7551f77483054818a753e04372a777631944e2dd3dfed43a36",
+   "carried_from": {
+    "kind": "TAKEN",
+    "verdict": "NOT_DISCLOSURE"
+   },
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3556,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "95",
+   "text_sha256": "sha256:ad48ff99415b2f007dc35b7eb553fd1eb35ebfa2f2f308acd9488eeb86f71fa8",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3557,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "running head",
+   "text": "Notes to Consolidated Financial Statements",
+   "text_sha256": "sha256:96a803ffca85c035bfba97395da10233b4c50043bb033e524fc21e5bf89066e8",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 3558,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name header",
+   "text": "Pfizer Inc. and Subsidiary Companies",
+   "text_sha256": "sha256:39af64573a8b2cdb18734cd9562789edb52d0dc87cbabf3ee9b7313ab02dc933",
+   "scope": "NOTE_16_SUB_A"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1690,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "auditor's report (CAM description); not D02 content",
+   "text": "As discussed in Notes 1S. and 16 to the consolidated financial statements, the Company is involved in product liability and other product-related litigation, which can include personal injury, consumer, off-label promotion, securities, antitrust and breach of contract claims, among others. Certain of these pending product and other product-related legal proceedings could result in losses that could be substantial. The accrued liability and/or disclosure for the pending product liability and other product-related legal proceedings requires a complex series of judgments by the Company about future events, which involves a number of uncertainties.",
+   "text_sha256": "sha256:12ad250d5127b5637dbb83281934edd1f9446cd2e19619db483014c57d8ffd42"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1691,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "auditor's CAM statement",
+   "text": "We identified the evaluation of product liability and other product-related litigation as a critical audit matter. Challenging auditor judgment was required to evaluate the Company’s judgments about future events and uncertainties.",
+   "text_sha256": "sha256:2c326f353f74a34d59a320607b959f82e82e258933ba8bee69048ae11d61d1eb"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1692,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "auditor's CAM procedures",
+   "text": "The following are the primary procedures we performed to address this critical audit matter. We evaluated the design and tested the operating effectiveness of certain internal controls over the Company’s product liability and other product-related litigation processes, including controls related to (1) the evaluation of information from external and internal legal counsel, (2) forward-looking expectations, and (3) new legal proceedings, or other legal proceedings not currently reserved or disclosed. We read letters received directly from the Company’s external and internal legal counsel that described the Company’s probable or reasonably possible legal contingency to pending product liability and other product-related legal proceedings. We inspected the Company’s minutes from meetings of the Audit Committee, which included the status of key litigation matters. We evaluated the Company’s ability to estimate its monetary exposure to pending product and other product-related legal proceedings by comparing historically recorded liabilities to actual monetary amounts incurred upon resolution of prior legal matters. We analyzed relevant publicly available information about the Company, its competitors, and the industry.",
+   "text_sha256": "sha256:eabd72db42b35eda9d8d8dfdc02a0d4c305f6ad4477c1e93100b71db6aeef96c"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1693,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "auditor tenure statement",
+   "text": "We have not been able to determine the specific year that we or our predecessor firms began serving as the Company’s auditor, however, we are aware that we or our predecessor firms have served as the Company’s auditor since at least 1942.",
+   "text_sha256": "sha256:dc116eec43fe18ea88201671ee071b1a63ab4c8f8a50a35a5e8ae2a4e9ec634a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1694,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "auditor's report city",
+   "text": "New York, New York",
+   "text_sha256": "sha256:4cf4fc6c9f0b73b74c69200b63fbfa36050bb73152ffe0de07ddcb8a731e77ec"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1695,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "auditor's report date",
+   "text": "February 23, 2023",
+   "text_sha256": "sha256:bef8c5da3e78bb164141f60149125934295406818c07dd0c23686dd39efae97e"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1696,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Pfizer Inc.2022 Form 10-K",
+   "text_sha256": "sha256:430f1e6e13fccb7551f77483054818a753e04372a777631944e2dd3dfed43a36"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1809,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet line: preferred stock",
+   "text": "Preferred stock, no par value, at stated value; 27 shares authorized; no shares issued or outstanding at December 31, 2022 and December 31, 2021",
+   "text_sha256": "sha256:c78e68b1e16c72f50acc62ad700aecd9a18a93a383afdeb5d0d247134e78142f"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1810,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet figures",
+   "text": "— —",
+   "text_sha256": "sha256:45434a67314ff2166f701cbc61fcbaea150619a0bc7b78c09f1cc0c390eee939"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1811,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet line: common stock",
+   "text": "Common stock, $0.05 par value; 12,000 shares authorized; issued: 2022—9,519; 2021—9,471",
+   "text_sha256": "sha256:a737ac51cc3b166bd497df4c548687e000bac9da18b0e1343135d1aecdb0ad56"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1812,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet figures",
+   "text": "476 473",
+   "text_sha256": "sha256:5fad74191a2491f4d28b0a8a96eab19bc81bcd5f4d47be349d1b2a249f7d374b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1813,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet line: additional paid-in capital",
+   "text": "Additional paid-in capital91,802 90,591",
+   "text_sha256": "sha256:5572c67e60248b172e43de8fe12f7ec7b819cd6ec77e6e800078f6333d729447"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1814,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet line: treasury stock",
+   "text": "Treasury stock, shares at cost: 2022—3,903; 2021—3,851",
+   "text_sha256": "sha256:ef9d36097dce6cc95a92a90591e5c767306925ab97413d2b84534fe9d1752c03"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1815,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet figures",
+   "text": "(113,969)(111,361)",
+   "text_sha256": "sha256:95b590b96df9aefd2c395d0a3cff63c8ebc95e3275dda35db846012cdedb5191"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1816,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet line: retained earnings",
+   "text": "Retained earnings125,656 103,394",
+   "text_sha256": "sha256:faf196ec3a35deb160cdfb4bd12013cd433a2082006635d89b33b7fdfc8ab15d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1817,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet line: AOCI",
+   "text": "Accumulated other comprehensive loss(8,304)(5,897)",
+   "text_sha256": "sha256:42c4c428d48145c850de9b542ee5904bc76a804e0157ce3336b85faf65d27715"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1818,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet line: shareholders' equity",
+   "text": "Total Pfizer Inc. shareholders’ equity95,661 77,201",
+   "text_sha256": "sha256:af9850db08f7e9bf01db1a2559315188537f4648830ac4bd4edb75ee563aba6b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1819,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet line: noncontrolling interests",
+   "text": "Equity attributable to noncontrolling interests256 262",
+   "text_sha256": "sha256:1df7cf74b475dc8a470b499b470611883c1785c721038c9b9bcf1bb4e84e2bd5"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1820,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet line: total equity",
+   "text": "Total equity95,916 77,462",
+   "text_sha256": "sha256:f4d6f9fdabebca555205d65d39b97fd1e79199e8a3b0f4564de15e22a429c735"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1821,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "balance sheet line: total liabilities and equity",
+   "text": "Total liabilities and equity$197,205 $181,476",
+   "text_sha256": "sha256:d7e537c21a7492561ab70b57b81628490b435df96ee5758dbaad3073efb2c20d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1822,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "statement reference to notes",
+   "text": "See Accompanying Notes.",
+   "text_sha256": "sha256:7519c4040a8f954b196db4b6cd7b157115157d591de9843d5ec6289ae11288a4"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 1823,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Pfizer Inc.2022 Form 10-K",
+   "text_sha256": "sha256:430f1e6e13fccb7551f77483054818a753e04372a777631944e2dd3dfed43a36"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2094,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tax assets policy",
+   "text": "Tax Assets and Liabilities––Current tax assets primarily include (i) tax effects for intercompany transfers of inventory within our combined group, which are recognized in the consolidated statements of income when the inventory is sold to a third party and (ii) income tax receivables that are expected to be recovered either via refunds from taxing authorities or reductions to future tax obligations.",
+   "text_sha256": "sha256:95e6458076a35cfef16e4d0b1cbb49fed6e6742f06dd40a2e431aa0930ba42d5"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2095,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "deferred tax policy",
+   "text": "Deferred tax assets and liabilities are recognized for the expected future tax consequences of differences between the financial reporting and tax bases of assets and liabilities using enacted tax rates and laws. We provide a valuation allowance when we believe that our deferred tax assets are not recoverable based on an assessment of estimated future taxable income that incorporates ongoing, prudent and feasible tax-planning strategies, that would be implemented, if necessary, to realize the deferred tax assets. Amounts recorded for valuation allowances requires judgments about future income which can depend heavily on estimates and assumptions. All deferred tax assets and liabilities within the same tax jurisdiction are presented as a net amount in the noncurrent section of our consolidated balance sheet.",
+   "text_sha256": "sha256:5b31a2b20339031997b2690a907c5d03448d25014fb55897eaffcd8f072c735f"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2096,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "GILTI tax policy",
+   "text": "The TCJA subjects a U.S. shareholder to current tax on global intangible low-taxed income earned by certain foreign subsidiaries. The FASB Staff Q&A, Topic 740, No. 5, Accounting for Global Intangible Low-Taxed Income, states that we are permitted to make an accounting policy election to either recognize deferred taxes for temporary basis differences expected to reverse as global intangible low-taxed income in future years or provide for the tax expense related to such income in the year the tax is incurred. We elected to recognize deferred taxes for temporary differences expected to reverse as global intangible low-taxed income in future years.",
+   "text_sha256": "sha256:b94417a47806f83999b9b5f67f555e2ebb26361902ca32053111a56b545fbeba"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2097,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "non-current tax assets",
+   "text": "Other non-current tax assets primarily represent our estimate of the potential tax benefits in one tax jurisdiction that could result from the payment of income taxes in another tax jurisdiction. These potential benefits generally result from cooperative efforts among taxing authorities, as required by tax treaties to minimize double taxation, commonly referred to as the competent authority process. The recoverability of these assets, which we believe to be more likely than not, is dependent upon the actual payment of taxes in one tax jurisdiction and, in some cases, the successful petition for recovery in another tax jurisdiction.",
+   "text_sha256": "sha256:49ac0aef5e1a163649b380fc7df9d8b2b546ae354187cbe92f8fe234c185cacc"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2098,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "other taxes payable",
+   "text": "Other taxes payable as of December 31, 2022 and 2021 include liabilities for uncertain tax positions and the noncurrent portion of the repatriation tax liability for which we elected payment over eight years through 2026. For additional information, see Note 5D for uncertain tax positions and Note 5A for the repatriation tax liability and other estimates and assumptions in connection with the TCJA.",
+   "text_sha256": "sha256:6609b28b69402fea3ab2e39e831365a43911c0538e576cb53300557133c9ab5e"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2099,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "income tax contingencies policy",
+   "text": "Income Tax Contingencies––We account for income tax contingencies using a benefit recognition model. If we consider that a tax position is more likely than not to be sustained upon audit, based solely on the technical merits of the position, we recognize all or a portion of the benefit. We measure the benefit by determining the amount that is greater than 50% likely of being realized upon settlement, presuming that the tax position is examined by the taxing authority with full knowledge of all relevant information.",
+   "text_sha256": "sha256:7aa8352feed75e249a2a64138f313a4851d9e190200fd080c4c29a73afdf086a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2100,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "uncertain tax position recognition",
+   "text": "We regularly monitor our position and subsequently recognize the unrecognized tax benefit: (i) if there are changes in tax law, analogous case law or there is new information that sufficiently raise the likelihood of prevailing on the technical merits of the position to “more likely than not”; (ii) if the statute of limitations expires; or (iii) if there is a completion of an audit resulting in a favorable settlement of that tax year with the appropriate agency. Liabilities for uncertain tax positions are classified as current only when we expect to pay cash within the next 12 months. Interest and penalties, if any, are recorded in Provision/(benefit) for taxes on income and are classified on our consolidated balance sheet with the related tax liability.",
+   "text_sha256": "sha256:d49e0d6b7f4cf3930d0ddaed302dad9d8d4a9bb2e3e904a2d9c504b2ff5fa5da"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2101,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tax estimates caveat",
+   "text": "Our assessments are based on estimates and assumptions that have been deemed reasonable by management, but our estimates of unrecognized tax benefits and potential tax benefits may not be representative of actual outcomes, and variation from such estimates could",
+   "text_sha256": "sha256:500b893298a3e3d9505460d6ecb53e30542c6f0b67bf303472c6d2dee49b1ad0"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2102,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Pfizer Inc.2022 Form 10-K",
+   "text_sha256": "sha256:430f1e6e13fccb7551f77483054818a753e04372a777631944e2dd3dfed43a36"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2111,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "next policy heading: share-based payments",
+   "text": "T. Share-Based Payments",
+   "text_sha256": "sha256:4fd2fa07ba45679904da1d9058fcd8851027dec8f6a66d3e50bfbad2f6101c11"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2112,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "share-based payment policy",
+   "text": "Our compensation programs can include share-based payments. Generally, grants under share-based payment programs are accounted for at fair value and these fair values are generally amortized on a straight-line basis or on an accelerated attribution approach over the vesting terms with the related costs recorded in Cost of sales, Selling, informational and administrative expenses and/or Research and development expenses, as appropriate.",
+   "text_sha256": "sha256:6fd80418408b82bbc024bf1e6c0a022a55cc8de50906d32f7b1168c602454c7b"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2517,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tax contingencies cross-reference",
+   "text": "For a description of our accounting policies associated with accounting for income tax contingencies, see Note 1Q.",
+   "text_sha256": "sha256:2afc4a23851aa54230286f073d972c35196c4954ac503e7f6801184f9707cb3d"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2518,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "uncertain tax positions heading",
+   "text": "Uncertain Tax Positions",
+   "text_sha256": "sha256:1a570cb4a5b0e493f22053fbe4c7963feee6947fbb9d177eb232d624ba5b4a94"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2519,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "unrecognized tax benefits",
+   "text": "As tax law is complex and often subject to varied interpretations, it is uncertain whether some of our tax positions will be sustained upon audit. As of December 31, 2022, we had $2.9 billion and as of December 31, 2021, we had $4.5 billion in net unrecognized tax benefits, excluding associated interest.",
+   "text_sha256": "sha256:ad4e50394dbfe7d8da9e3f1b7f372953e024943ff6acdbadc599b620830c2e1a"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2520,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tax assets for uncertain positions",
+   "text": "•Tax assets for uncertain tax positions primarily represent our estimate of the potential tax benefits in one tax jurisdiction that could result from the payment of income taxes in another tax jurisdiction. These potential benefits generally result from cooperative efforts among taxing authorities, as required by tax treaties to minimize double taxation, commonly referred to as the competent authority process. The recoverability of these assets, which we believe to be more likely than not, is dependent upon the actual payment of taxes in one tax jurisdiction and, in some cases, the successful petition for recovery in another tax jurisdiction. As of December 31, 2022, we had $1.5 billion in assets associated with uncertain tax positions. These amounts were included in Noncurrent deferred tax assets and other noncurrent tax assets ($1.5 billion) and Other taxes payable ($45 million). As of December 31, 2021, we had $1.5 billion in assets associated with uncertain",
+   "text_sha256": "sha256:2fe87c3c11ac1db0e1b58716b74c4bac6e8ba5614fd1ebadd0462e187afa17f7"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2521,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Pfizer Inc.2022 Form 10-K",
+   "text_sha256": "sha256:430f1e6e13fccb7551f77483054818a753e04372a777631944e2dd3dfed43a36"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3438,
+   "verdict": "COVERED_ELSEWHERE",
+   "why": "Note 16 intro: subject to legal contingencies; stated in 2110 and 3440",
+   "text": "We and certain of our subsidiaries are subject to numerous contingencies arising in the ordinary course of business, including tax and legal contingencies, guarantees and indemnifications. The following outlines our legal contingencies, guarantees and indemnifications. For a discussion of our tax contingencies, see Note 5D.",
+   "text_sha256": "sha256:3a8257f1e3573835f7d4adb0e1721b86b8ae25718ad6996856b9ae81cd534aa2",
+   "covered_by": [
+    2110,
+    3440
+   ]
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3574,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "heading of Note 16B guarantees and indemnifications",
+   "text": "B. Guarantees and Indemnifications",
+   "text_sha256": "sha256:b10c3418dc3ae05d414ba16dad94d2339c0189835b9d24c84ab4fec98c276928"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3575,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "indemnification obligations; no proceeding described",
+   "text": "In the ordinary course of business and in connection with the sale of assets and businesses and other transactions, we often indemnify our counterparties against certain liabilities that may arise in connection with the transaction or that are related to events and activities prior to or following a transaction. If the indemnified party were to make a successful claim pursuant to the terms of the indemnification, we may be required to reimburse the loss. These indemnifications are generally subject to various restrictions and limitations. Historically, we have not paid significant amounts under these provisions and, as of December 31, 2022, the estimated fair value of these indemnification obligations is not material to Pfizer. See Note 2C for a description of the March 2022 indemnity provided by Pfizer to GSK in connection with the issuance of notes by the Consumer Healthcare JV. In conjunction with the completion of GSK’s demerger transactions in July 2022, GSK’s guarantee and our related indemnification of GSK’s guarantee were terminated.",
+   "text_sha256": "sha256:b03f3254bc3ce39eb691061b8134ab3be32206d93b4bc1a62dcb0bdc7bf51fae"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3576,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "indemnity arrangements with Viatris/BioNTech; no proceeding described",
+   "text": "In addition, in connection with our entry into certain agreements and other transactions, our counterparties may be obligated to indemnify us. For example, in November 2020, we and Mylan completed the transaction to spin-off our Upjohn Business and combine it with Mylan to form Viatris. As part of the transaction and as previously disclosed, each of Viatris and Pfizer has agreed to assume, and to indemnify the other for, liabilities arising out of certain matters. Also, our global agreement with BioNTech to co-develop a mRNA-based coronavirus vaccine program aimed at preventing COVID-19 infection, includes certain indemnity provisions pursuant to which each of BioNTech and Pfizer has agreed to indemnify the other for certain liabilities that may arise in connection with certain third-party claims relating to Comirnaty.",
+   "text_sha256": "sha256:c670ad13ea7a91c969ef743bbbe230e6d515a29e4b1a0fa29411e12dc90799cb"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3577,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "guarantees of subsidiaries' debt",
+   "text": "We have also guaranteed the long-term debt of certain companies that we acquired and that now are subsidiaries of Pfizer. See Note 7D.",
+   "text_sha256": "sha256:3be9d26a1fe2a78396bf1b9a296448c338d1c841077744a0aea8e01e51334926"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3578,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "heading: certain commitments",
+   "text": "C. Certain Commitments",
+   "text_sha256": "sha256:34b2b7d3470c3ce56dfcd04d586114f214bbc0f826a56736779cff89cf1c12bc"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3579,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "milestone and purchase commitments",
+   "text": "As of December 31, 2022, we had commitments totaling $4.4 billion that are legally binding and enforceable. These commitments include payments relating to potential milestone payments deemed reasonably likely to occur, and purchase obligations for goods and services.",
+   "text_sha256": "sha256:67d82fb0dcd663bbbd1cd32b41be192368651d5e7e89af900b2c766d88eebdb2"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3580,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "tax cross-reference",
+   "text": "See Note 5A for information on the TCJA repatriation tax liability.",
+   "text_sha256": "sha256:b4234b7d03bdc705ca7354b4d0e00a44d8a6c684e27ac663d214c8db1534b069"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3581,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "heading: contingent consideration",
+   "text": "D. Contingent Consideration for Acquisitions",
+   "text_sha256": "sha256:a6cf5ba8758bc4341abf1496d5be3d93567e905f4478de1bfba2c1cf98c393aa"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3582,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "contingent consideration amounts",
+   "text": "We may be required to make payments to sellers for certain prior business combinations that are contingent upon future events or outcomes. See Note 1D. The estimated fair value of contingent consideration as of December 31, 2022 is $645 million, of which $42 million is recorded in Other current liabilities and $603 million in Other noncurrent liabilities, and as of December 31, 2021 was $697 million, of which $135 million was recorded in Other current liabilities and $563 million in Other noncurrent liabilities. The decrease in the contingent consideration balance",
+   "text_sha256": "sha256:92facc75b47a0741deaf774c2ecaaa8cef52a715c2f8bc09ee1b7547453b1fbe"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3583,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "Form 10-K page footer",
+   "text": "Pfizer Inc.2022 Form 10-K",
+   "text_sha256": "sha256:430f1e6e13fccb7551f77483054818a753e04372a777631944e2dd3dfed43a36"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3584,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "96",
+   "text_sha256": "sha256:7b1a278f5abe8e9da907fc9c29dfd432d60dc76e17b0fabab659d2a508bc65c4"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3585,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "running head",
+   "text": "Notes to Consolidated Financial Statements",
+   "text_sha256": "sha256:96a803ffca85c035bfba97395da10233b4c50043bb033e524fc21e5bf89066e8"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3586,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "company-name header",
+   "text": "Pfizer Inc. and Subsidiary Companies",
+   "text_sha256": "sha256:39af64573a8b2cdb18734cd9562789edb52d0dc87cbabf3ee9b7313ab02dc933"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 3587,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "continuation of contingent consideration",
+   "text": "from December 31, 2021 is primarily due to payments made upon the achievement of certain sales-based milestones partially offset by fair value adjustments.",
+   "text_sha256": "sha256:30c78f17e7e9c85802f6314a25d62a51083d07e3c783d8c5aa6b6f5a09ae1290"
+  },
+  {
+   "kind": "HEADING",
+   "i": 220,
+   "verdict": "NOT_D02",
+   "why": "glossary entry defining MDL; not a D02 source",
+   "text": "MDLMulti-District Litigation",
+   "text_sha256": "sha256:c7e6b161a1a4a338ac4fc14d877927f36fc6cc2314cdf6e22c4d34b9d19bfb77"
+  },
+  {
+   "kind": "HEADING",
+   "i": 744,
+   "verdict": "REACHED",
+   "why": "Item 3 heading; its sentence 745 is taken",
+   "text": "ITEM 3.LEGAL PROCEEDINGS",
+   "text_sha256": "sha256:f4389f2c36f7c53195bc54405a3ea1672091f0e75a4590b82d3c6ff4aec3186b"
+  },
+  {
+   "kind": "HEADING",
+   "i": 911,
+   "verdict": "NOT_D02",
+   "why": "heading outside Item 3 and Item 8 (pre-Item 8, e.g. MD&A)",
+   "text": "Contingencies",
+   "text_sha256": "sha256:4dcd0fdb5a7fc75df149b9c68cd37cb1deadb29c9baecb0719e6f66c2b96e1f8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1689,
+   "verdict": "NOT_D02",
+   "why": "auditor's critical audit matter heading",
+   "text": "Evaluation of product liability and other product-related litigation",
+   "text_sha256": "sha256:38aa70fdfcef9eed6f97c49abc9ad2d21cdb9d5429d5f34d52f4817f9507f66f"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1808,
+   "verdict": "NOT_D02",
+   "why": "balance sheet caption",
+   "text": "Commitments and Contingencies",
+   "text_sha256": "sha256:fe30a896ac835e2a1db2122e04fe75b95598985425d59c93b0a2b214275bf3b8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2093,
+   "verdict": "NOT_D02",
+   "why": "income tax contingencies policy heading",
+   "text": "Q. Tax Assets and Liabilities and Income Tax Contingencies",
+   "text_sha256": "sha256:528c5cdf6d651cfa071837ecb22578bd7a2d125ee28c0a348bee831cfa333ac6"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2109,
+   "verdict": "REACHED",
+   "why": "Note 1S legal/environmental contingencies; 2110 taken",
+   "text": "S. Legal and Environmental Contingencies",
+   "text_sha256": "sha256:1a50b95da52723d2c5a2267f1bf9791a532190a8a2d9729d8a720476910fb41d"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2516,
+   "verdict": "NOT_D02",
+   "why": "tax contingencies",
+   "text": "D. Tax Contingencies",
+   "text_sha256": "sha256:5a0520ccd6629058cfd1442c050f348cb3bcb240d2ec1ccf22b587c317701f6f"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3437,
+   "verdict": "REACHED",
+   "why": "contingencies note; its Note 16A legal content is taken",
+   "text": "Note 16. Contingencies and Certain Commitments",
+   "text_sha256": "sha256:9590c561699a3b6af4e268bd36b233101413c8aee718c89f06f715acd147c011"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3439,
+   "verdict": "REACHED",
+   "why": "Note 16A caption; content taken",
+   "text": "A. Legal Proceedings",
+   "text_sha256": "sha256:09f6c2151b0400b51872a1c890450966aa83778e50c94b89f1d0d4cc364400c9"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3455,
+   "verdict": "REACHED",
+   "why": "patent litigation subsection taken",
+   "text": "A1. Legal Proceedings––Patent Litigation",
+   "text_sha256": "sha256:02090e0ad0631f5bb8f05e63106ab5f3b588d426fb30959899ebc1e4adc8f912"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3495,
+   "verdict": "REACHED",
+   "why": "product litigation subsection taken",
+   "text": "A2. Legal Proceedings––Product Litigation",
+   "text_sha256": "sha256:5496efcbd069cd1f64d94eb1b486db6e40827b2c5fbc816641499946d2bd166d"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3527,
+   "verdict": "REACHED",
+   "why": "commercial and other matters subsection taken",
+   "text": "A3. Legal Proceedings––Commercial and Other Matters",
+   "text_sha256": "sha256:57a77a988753068e4a13b7230907c8cb3a69258bca4ca36a51ed841c12706658"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3544,
+   "verdict": "REACHED",
+   "why": "Viatris securities litigation taken",
+   "text": "Viatris Securities Litigation",
+   "text_sha256": "sha256:da750f789fa85554db20b4c39bc9de7958979a67898414f786288857d575caa0"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3546,
+   "verdict": "REACHED",
+   "why": "government investigations subsection taken",
+   "text": "A4. Legal Proceedings––Government Investigations",
+   "text_sha256": "sha256:002ed2ec7bc163b4bd46c501fc043e16907d9492f6d959cbd6feab965c574d32"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3551,
+   "verdict": "REACHED",
+   "why": "State AG antitrust litigation taken",
+   "text": "•State Attorneys General and Multi-District Generics Antitrust Litigation",
+   "text_sha256": "sha256:f0b09eb96138f8249ee67c887581011c1aa97aee9ae53cba4a03f0771efa9454"
+  },
+  {
+   "kind": "HEADING",
+   "i": 3578,
+   "verdict": "NOT_D02",
+   "why": "purchase/contractual commitments",
+   "text": "C. Certain Commitments",
+   "text_sha256": "sha256:34b2b7d3470c3ce56dfcd04d586114f214bbc0f826a56736779cff89cf1c12bc"
+  }
+ ]
+}

@@ -1,0 +1,36 @@
+{
+ "record_type": "ISSUE_47_D02_DEV_INPUTS_INDEX",
+ "how_to_rebuild": "prepare_inputs.py on a root restored from the committed SEC export; the files below must come out byte-identical",
+ "files": {
+  "lumen_technologies-2022-12-31": {
+   "input.txt": {
+    "sha256": "7c83fc0714c583acd0bf3d295cf3bb9200d3e05a5b9afda5e9cd1c3d9a4365f0",
+    "size": 262142
+   },
+   "request.json": {
+    "sha256": "469b15a9f25102fb68e91f3944852d7b25d023cef1607bd01a4799b737d5f7cf",
+    "size": 246318
+   }
+  },
+  "pfizer-2022-12-31": {
+   "input.txt": {
+    "sha256": "bc5b64713b470498cdeb0a23e62f1a2983fc1be714aeacbd9bef4436c9403263",
+    "size": 281938
+   },
+   "request.json": {
+    "sha256": "52a5c5190a8c6bc940d501657e0c14b1da8c057c100ee45085abfb807ca9a659",
+    "size": 265236
+   }
+  },
+  "southwest_airlines-2023-12-31": {
+   "input.txt": {
+    "sha256": "55794151d565ed05aff69f131a718429c0006e97af0f3d7bf8e13b9d22688b00",
+    "size": 188239
+   },
+   "request.json": {
+    "sha256": "f665a2dd57bb4af3a0194aac285f95767fec7d6e5f7c2e5170fc3244f2c49873",
+    "size": 177941
+   }
+  }
+ }
+}

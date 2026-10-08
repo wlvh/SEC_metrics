@@ -1,0 +1,388 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "catalog": "catalog/deterministic_metrics.json",
+ "per_position": {
+  "jpmorgan-2021": {
+   "company_id": "jpmorgan_chase",
+   "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+   "metrics": {
+    "A01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:66569eecaf63453225d32a77abd30ea24b2b88b1556108e67bcc045ef8e645b1",
+       "result_id": "sha256:2266e9dab122a592eb8d761bd384a00d381c3bbd31f59e76ab5b9b38031ca4c8",
+       "run_id": "run:historical-period:b6970de121f20d8feb29972ff06dad630536a516c1276ca094f7bdcd6beea8f1"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-22-000272"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2021-12-31",
+      "period_start": "2021-12-31",
+      "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92",
+      "spec_closure_hash": "sha256:ee54ac53602bbc07c6449b627bd2449f30136e32d245764a847dc6282782a063",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "components": [
+      {
+       "accession_role": "current",
+       "approved_concepts_seen": {
+        "TierOneRiskBasedCapitalToRiskWeightedAssets": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "0.150"
+        }
+       },
+       "concept": "TierOneRiskBasedCapitalToRiskWeightedAssets",
+       "role": "tier_one_ratio",
+       "value": "0.150"
+      }
+     ],
+     "formula_id": "direct",
+     "published": "0.15",
+     "read": "0.150",
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2021-12-31",
+      "2021-12-31"
+     ]
+    },
+    "A02": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:66569eecaf63453225d32a77abd30ea24b2b88b1556108e67bcc045ef8e645b1",
+       "result_id": "sha256:06a635d1dc65d2761ae37999ed74b0cb17f94df2affc2aa53941bfc82b1ffd08",
+       "run_id": "run:historical-period:287584d360d5033829057353c242b66573df43cbeb355ff73aac8db80b795f9c"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-22-000272"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2021-12-31",
+      "period_start": "2021-12-31",
+      "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92",
+      "spec_closure_hash": "sha256:9f8a3bbf1bd4ac8229960d9ea59887842a0fbe1e5573c2dbaf9965044e91636d",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "components": [
+      {
+       "accession_role": "current",
+       "approved_concepts_seen": {
+        "CommonEquityTier1CapitaltoRiskWeightedAssets": {
+         "namespaces": [
+          "jpm"
+         ],
+         "problem": null,
+         "value": "0.131"
+        }
+       },
+       "concept": "CommonEquityTier1CapitaltoRiskWeightedAssets",
+       "role": "cet1_ratio",
+       "value": "0.131"
+      }
+     ],
+     "formula_id": "direct",
+     "published": "0.131",
+     "read": "0.131",
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2021-12-31",
+      "2021-12-31"
+     ]
+    },
+    "A05": {
+     "components": [
+      {
+       "accession_role": "current",
+       "approved_concepts_seen": {
+        "NetIncomeLoss": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "48334000000"
+        }
+       },
+       "concept": "NetIncomeLoss",
+       "role": "net_income",
+       "value": "48334000000"
+      },
+      {
+       "accession_role": "current",
+       "approved_concepts_seen": {
+        "Assets": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "3743567000000"
+        }
+       },
+       "concept": "Assets",
+       "role": "assets_current",
+       "value": "3743567000000"
+      },
+      {
+       "accession_role": "prior",
+       "approved_concepts_seen": {
+        "Assets": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "3386071000000"
+        }
+       },
+       "concept": "Assets",
+       "role": "assets_prior",
+       "target_report_states": "3384757000000",
+       "value": "3386071000000"
+      }
+     ],
+     "published": null,
+     "read": null,
+     "verdict": "NO_PUBLISHED_VALUE",
+     "why_not_read": "PRIOR_YEAR_RESTATED_IN_THE_TARGET"
+    },
+    "A06": {
+     "components": [
+      {
+       "accession_role": "current",
+       "approved_concepts_seen": {
+        "NetIncomeLoss": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "48334000000"
+        }
+       },
+       "concept": "NetIncomeLoss",
+       "role": "net_income",
+       "value": "48334000000"
+      },
+      {
+       "accession_role": "current",
+       "approved_concepts_seen": {
+        "StockholdersEquity": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "294127000000"
+        }
+       },
+       "concept": "StockholdersEquity",
+       "role": "equity_current",
+       "value": "294127000000"
+      },
+      {
+       "accession_role": "prior",
+       "approved_concepts_seen": {
+        "StockholdersEquity": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "279354000000"
+        }
+       },
+       "concept": "StockholdersEquity",
+       "role": "equity_prior",
+       "target_report_states": "279354000000",
+       "value": "279354000000"
+      }
+     ],
+     "formula_id": "average_denominator_ratio",
+     "published": null,
+     "read": "0.1685635618268085603533508521",
+     "verdict": "NO_PUBLISHED_VALUE",
+     "why_not_read": null
+    },
+    "A07": {
+     "components": [
+      {
+       "accession_role": "current",
+       "approved_concepts_seen": {
+        "NetIncomeLoss": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "48334000000"
+        }
+       },
+       "concept": "NetIncomeLoss",
+       "role": "net_income_current",
+       "value": "48334000000"
+      },
+      {
+       "accession_role": "prior",
+       "approved_concepts_seen": {
+        "NetIncomeLoss": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "29131000000"
+        }
+       },
+       "concept": "NetIncomeLoss",
+       "role": "net_income_prior",
+       "target_report_states": "29131000000",
+       "value": "29131000000"
+      }
+     ],
+     "formula_id": "difference",
+     "published": null,
+     "read": "19203000000",
+     "verdict": "NO_PUBLISHED_VALUE",
+     "why_not_read": null
+    },
+    "A08": {
+     "components": [
+      {
+       "accession_role": "current",
+       "approved_concepts_seen": {
+        "NoninterestIncome": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "69338000000"
+        }
+       },
+       "concept": "NoninterestIncome",
+       "role": "noninterest_income",
+       "value": "69338000000"
+      },
+      {
+       "accession_role": "current",
+       "approved_concepts_seen": {
+        "InterestIncomeExpenseNet": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "52311000000"
+        }
+       },
+       "concept": "InterestIncomeExpenseNet",
+       "role": "net_interest_income",
+       "value": "52311000000"
+      }
+     ],
+     "formula_id": "ratio",
+     "published": null,
+     "read": "1.325495593660989084513773394",
+     "verdict": "NO_PUBLISHED_VALUE",
+     "why_not_read": null
+    },
+    "A10": {
+     "components": [
+      {
+       "accession_role": "current",
+       "approved_concepts_seen": {
+        "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "16386000000"
+        }
+       },
+       "concept": "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest",
+       "role": "allowance",
+       "value": "16386000000"
+      },
+      {
+       "accession_role": "current",
+       "approved_concepts_seen": {
+        "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss": {
+         "namespaces": [
+          "us-gaap"
+         ],
+         "problem": null,
+         "value": "1010206000000"
+        }
+       },
+       "concept": "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss",
+       "role": "loans_before_allowance",
+       "value": "1010206000000"
+      }
+     ],
+     "formula_id": "ratio",
+     "published": null,
+     "read": "0.01622045404600645808874625571",
+     "verdict": "NO_PUBLISHED_VALUE",
+     "why_not_read": null
+    }
+   },
+   "needed_facts_not_read": {
+    "prior": [
+     {
+      "concept": "us-gaap:StockholdersEquity",
+      "context": "ib9cf1a9ff2ef4bfdb5e1a00caf8d61ea_I20201231",
+      "shown": "&#8212;"
+     },
+     {
+      "concept": "us-gaap:StockholdersEquity",
+      "context": "i6901d8e809ea4b3088381514da96d279_I20171231",
+      "shown": "&#8212;"
+     },
+     {
+      "concept": "us-gaap:NetIncomeLoss",
+      "context": "ib04e96e2a948452e8d6f8eb836afb0ff_D20200101-20201231",
+      "shown": "&#8212;"
+     },
+     {
+      "concept": "us-gaap:NetIncomeLoss",
+      "context": "ib22b272263db41e5aaa4620fb5dbe9e9_D20190101-20191231",
+      "shown": "&#8212;"
+     },
+     {
+      "concept": "us-gaap:NetIncomeLoss",
+      "context": "i0d5dfd32dce040739ef35bb30e975445_D20180101-20181231",
+      "shown": "&#8212;"
+     }
+    ],
+    "target": []
+   },
+   "period": {
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "prior_end": "2020-12-31",
+    "prior_start": "2020-01-01"
+   },
+   "period_end": "2021-12-31",
+   "prior_document": "evidence/request_attempts/8f/8f26dc23d8ac53d6b823596c0ba64dfc3dda06e36418edf5a0b65c98d6584cb4/jpm-20201231.htm",
+   "prior_filing_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961721000236/jpm-20201231.htm"
+  }
+ },
+ "reader": "tools/read_bank_statement_facts.py",
+ "requirement_closure_hash": "sha256:66569eecaf63453225d32a77abd30ea24b2b88b1556108e67bcc045ef8e645b1"
+}

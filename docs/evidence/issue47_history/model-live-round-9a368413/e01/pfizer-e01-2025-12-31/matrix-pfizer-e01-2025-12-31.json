@@ -1,0 +1,40 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "duration_seconds": 140.6,
+ "positions": [
+  {
+   "case": "pfizer-e01-2025-12-31",
+   "company_id": "pfizer",
+   "evidence_count": 1,
+   "metric_id": "E01",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "report_end": "2025-12-31",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:17710f4d827f1719e0aa3014bbbcfa3d2a1ff1a951b8d546dcbee5f32af257e6",
+   "row_hash": "sha256:fd7b75430c07c01c7ea2e71064d6d81c3bb385f875f8be314bb6f3eac7d1ccf5",
+   "run_id": "run:historical-period:066f9a5dae70a4ac69187a62bf061ad21996eb44efde78754424e33ff6046b1a",
+   "selection_id": "sha256:ae9f8b0fc91d2c0f498697a94476133440480303e153d76126a3c3b884c7599b",
+   "separate_process_replay": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "result_id": "sha256:17710f4d827f1719e0aa3014bbbcfa3d2a1ff1a951b8d546dcbee5f32af257e6",
+    "run_id": "run:historical-period:066f9a5dae70a4ac69187a62bf061ad21996eb44efde78754424e33ff6046b1a",
+    "status": "FROZEN",
+    "value_sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": "1"
+  }
+ ]
+}

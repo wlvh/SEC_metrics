@@ -1,0 +1,86 @@
+[
+ {
+  "id": "IGNORE_REPORTED_PRECISION",
+  "file": "scripts/vnext/historical_da_scope_candidate.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_difference_inside_reported_precision_is_not_a_conflict",
+   "test_precision_is_read_from_each_fact"
+  ],
+  "suite_result": "FAILED (failures=1, errors=1)"
+ },
+ {
+  "id": "TAKE_THE_CHAIN_S_FIRST_WHATEVER_THE_OTHERS_SAY",
+  "file": "scripts/vnext/historical_da_scope_candidate.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_difference_beyond_it_is",
+   "test_eight_answers_stay_what_the_approved_chain_gives",
+   "test_salesforce_is_withheld_with_both_candidates_named",
+   "test_the_filing_s_own_composition_resolves_a_conflict",
+   "test_the_larger_number_is_not_taken_for_being_larger"
+  ],
+  "suite_result": "FAILED (failures=4, errors=1)"
+ },
+ {
+  "id": "TAKE_THE_LARGER_WHEN_THEY_CONFLICT",
+  "file": "scripts/vnext/historical_da_scope_candidate.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_a_difference_beyond_it_is",
+   "test_eight_answers_stay_what_the_approved_chain_gives",
+   "test_salesforce_is_withheld_with_both_candidates_named",
+   "test_the_larger_number_is_not_taken_for_being_larger"
+  ],
+  "suite_result": "FAILED (failures=3, errors=1)"
+ },
+ {
+  "id": "A_SEGMENT_FACT_IS_A_CANDIDATE",
+  "file": "scripts/vnext/historical_da_scope_candidate.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_another_period_segment_or_unit_is_not_a_candidate",
+   "test_eight_answers_stay_what_the_approved_chain_gives"
+  ],
+  "suite_result": "FAILED (failures=2)"
+ },
+ {
+  "id": "ANOTHER_PERIOD_IS_A_CANDIDATE",
+  "file": "scripts/vnext/historical_da_scope_candidate.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_another_period_segment_or_unit_is_not_a_candidate",
+   "test_eight_answers_stay_what_the_approved_chain_gives",
+   "test_lumen_s_two_concepts_agree_and_are_not_a_conflict",
+   "test_salesforce_is_withheld_with_both_candidates_named"
+  ],
+  "suite_result": "FAILED (failures=4)"
+ },
+ {
+  "id": "ANY_UNIT_IS_A_CANDIDATE",
+  "file": "scripts/vnext/historical_da_scope_candidate.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_another_period_segment_or_unit_is_not_a_candidate"
+  ],
+  "suite_result": "FAILED (failures=1)"
+ },
+ {
+  "id": "NO_COMPOSITION_RESOLUTION",
+  "file": "scripts/vnext/historical_da_scope_candidate.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_the_filing_s_own_composition_resolves_a_conflict"
+  ],
+  "suite_result": "FAILED (errors=1)"
+ },
+ {
+  "id": "PARSER_DROPS_THE_FROZEN_FACT",
+  "file": "scripts/vnext/historical_da_scope_candidate.py",
+  "outcome": "CAUGHT",
+  "caught_by": [
+   "test_the_same_facts_in_the_same_order"
+  ],
+  "suite_result": "FAILED (failures=9)"
+ }
+]

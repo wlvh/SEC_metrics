@@ -1,0 +1,1511 @@
+{
+ "categories": {
+  "COMMITTEE_OR_BOARD_FUNCTION": "What a committee or board role does - responsibilities, powers, meeting practice. Inside the definition only if 'committee information' is read to include committee functions.",
+  "COMPOSITION_FACT": "A fact of the board's composition: its size or seats, which or how many directors are independent, which committees exist, who sits on or chairs them, and determinations about committee members' independence or qualifications.",
+  "COMPOSITION_POLICY_OR_PROCESS": "A policy, standard or process about composition: independence standards, voting standards, nomination and candidate criteria, evaluations, refreshment, overboarding limits. Inside the definition only if 'committee information' and 'board composition' are read to include how composition is governed.",
+  "NOT_BOARD_COMPOSITION": "Not board composition under any reading: executive or director compensation (including retainer labels), auditor services and independence, equity plan documents, insider trading and related-party procedures, shareholder outreach and communications, other companies' boards in biographies, labels without content, other governance topics."
+ },
+ "definition": "02_指标定义_SEC_10公司单年指标.md C02: 来源 DEF 14A；可输出董事人数、独立董事数、委员会信息。Spec catalog/r6/C02_board_disclosures_v1.md: 'Board composition source disclosures'.",
+ "direction_read": "SELECTED_EXCERPTS_ONLY. Whether the selector missed composition statements was not read: every value already holds text outside the definition, so none could be accepted whatever the other direction showed.",
+ "judged_by": "one reader, excerpt by excerpt against the definition; the same person who writes the routes. Not an independent review.",
+ "positions": {
+  "enphase_energy:2025-12-31": [
+   {
+    "block_index": 210,
+    "category": "COMPOSITION_FACT",
+    "reason": "three directors nominated; classified board",
+    "text_start": "Our Board of Directors (the “Board”) has nominated three directors to serve for three-year terms until 2029. The nominees and members have a broad and diverse s"
+   },
+   {
+    "block_index": 294,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "shareholder outreach",
+    "text_start": "A Board member (when requested), together with our General Counsel and Corporate Secretary, our head of investor relations, and other members of the legal team,"
+   },
+   {
+    "block_index": 381,
+    "category": "COMPOSITION_FACT",
+    "reason": "seven members in three classes",
+    "text_start": "We are asking our stockholders to elect three Class II nominees to serve on the Board each for a three-year term and until their successors are duly elected and"
+   },
+   {
+    "block_index": 383,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "plurality voting standard",
+    "text_start": "Directors are elected by a plurality of the votes of the holders of shares present in person or represented by proxy at the Annual Meeting and entitled to vote "
+   },
+   {
+    "block_index": 405,
+    "category": "COMPOSITION_FACT",
+    "reason": "committee chair and committee service",
+    "text_start": "As the Chair of the Nominating and Corporate Governance Committee, Mr. Kortlang leads Board oversight of the Company’s sustainability report, director evaluatio"
+   },
+   {
+    "block_index": 454,
+    "category": "COMPOSITION_FACT",
+    "reason": "board chair and audit committee chair roles (within a qualification narrative)",
+    "text_start": "Mr. Gomo brings to the Board valuable financial and business expertise through his years of experience as a chief financial officer with publicly traded compani"
+   },
+   {
+    "block_index": 481,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "nomination process",
+    "text_start": "The Board is responsible for selecting nominees for election as directors. The Board delegates the initial screening process to the Nominating and Corporate Gov"
+   },
+   {
+    "block_index": 494,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "exchange independence standards",
+    "text_start": "Under The Nasdaq Stock Market LLC (“Nasdaq”) listing standards, a majority of the members of a listed company’s board of directors must qualify as “independent,"
+   },
+   {
+    "block_index": 495,
+    "category": "COMPOSITION_FACT",
+    "reason": "six directors determined independent",
+    "text_start": "The Board undertook a review of the independence of each director. Based on information provided by each director concerning his or her background, employment a"
+   },
+   {
+    "block_index": 502,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "a director retained after failing a majority vote",
+    "text_start": "At the 2025 Annual Meeting, Mr. Rodgers did not receive a majority of the votes cast but was elected under our plurality voting standard for directors. The Nomi"
+   },
+   {
+    "block_index": 511,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "board risk oversight; no standing risk committee",
+    "text_start": "One of the Board’s key functions is informed oversight of our risk management process. The Board does not have a standing risk management committee, but rather "
+   },
+   {
+    "block_index": 531,
+    "category": "COMPOSITION_FACT",
+    "reason": "three standing committees and a strategic committee",
+    "text_start": "The Board has three standing committees: an Audit Committee, a Compensation Committee and a Nominating and Corporate Governance Committee, each of which has the"
+   },
+   {
+    "block_index": 546,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee of three named directors",
+    "text_start": "The Audit Committee is composed of three directors: Messrs. Gomo, Kortlang and Mora. The Audit Committee met five times in 2025. The Audit Committee has adopted"
+   },
+   {
+    "block_index": 547,
+    "category": "COMPOSITION_FACT",
+    "reason": "all audit committee members independent",
+    "text_start": "The Board reviews the Nasdaq listing standards definition of independence for Audit Committee members on an annual basis and has determined that all members of "
+   },
+   {
+    "block_index": 548,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee members' financial literacy and financial experts",
+    "text_start": "The Board has determined that each member of the Audit Committee can read and understand fundamental financial statements in accordance with applicable requirem"
+   },
+   {
+    "block_index": 558,
+    "category": "COMPOSITION_FACT",
+    "reason": "compensation committee of two named independent directors",
+    "text_start": "The Compensation Committee is composed of two directors: Messrs. Mora and Rodgers. All members of the Compensation Committee have been and are “independent,” as"
+   },
+   {
+    "block_index": 560,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "compensation committee agenda setting",
+    "text_start": "The agenda for each meeting is usually developed by the Chair of the Compensation Committee, in consultation with our CEO"
+   },
+   {
+    "block_index": 562,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "compensation committee meeting practice",
+    "text_start": "and senior vice president of human resources. The Compensation Committee meets periodically in executive session, without management. From time to time, various"
+   },
+   {
+    "block_index": 564,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "nominating committee responsibilities",
+    "text_start": "The Nominating and Corporate Governance Committee is responsible for identifying, reviewing and evaluating candidates to serve as directors (consistent with cri"
+   },
+   {
+    "block_index": 565,
+    "category": "COMPOSITION_FACT",
+    "reason": "nominating committee of four named independent directors",
+    "text_start": "The Nominating and Corporate Governance Committee was composed of four directors during 2025: Messrs. Kortlang, Malchow and Rodgers and Ms. Haenggi. The Board a"
+   },
+   {
+    "block_index": 571,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "policy on stockholder-recommended candidates",
+    "text_start": "The Nominating and Corporate Governance Committee, to date, has not adopted a formal policy with regard to the consideration of director candidates recommended "
+   },
+   {
+    "block_index": 572,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "stockholder nomination procedure",
+    "text_start": "To date, the Nominating and Corporate Governance Committee has not received any such nominations, nor has it rejected a director nominee from a stockholder or s"
+   },
+   {
+    "block_index": 574,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "board self-assessment",
+    "text_start": "The Board and its principal committees perform an annual self-assessment to foster a culture of accountability for performance and continuous improvement so tha"
+   },
+   {
+    "block_index": 578,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "communicating with directors",
+    "text_start": "In addition, any interested person, including any stockholder, may communicate directly with our non-employee directors. Persons interested in communicating dir"
+   },
+   {
+    "block_index": 583,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation policy",
+    "text_start": "The Compensation Committee last made changes to our non-employee director compensation policy in November 2020 in order to ensure that our compensation for dire"
+   },
+   {
+    "block_index": 590,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation label: audit chair retainer",
+    "text_start": "Additional retainer Audit Committee chair"
+   },
+   {
+    "block_index": 594,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation label: compensation chair retainer",
+    "text_start": "Additional retainer Compensation Committee chair"
+   },
+   {
+    "block_index": 598,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation label: nominating chair retainer",
+    "text_start": "Additional retainer Nominating and Corporate Governance Committee chair"
+   },
+   {
+    "block_index": 679,
+    "category": "COMPOSITION_FACT",
+    "reason": "compensation committee members and interlocks",
+    "text_start": "Messrs. Rodgers and Mora served on the Compensation Committee for the entire fiscal year ended December 31, 2025. None of the members of the Compensation Commit"
+   },
+   {
+    "block_index": 805,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "executive compensation allocation",
+    "text_start": "We do not have any formal policies for allocating compensation among salary, bonus awards and equity grants. Instead, the Compensation Committee and Board set t"
+   },
+   {
+    "block_index": 818,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "executive compensation process",
+    "text_start": "The Compensation Committee works with and receives information and analysis from management, including our legal, finance and human resources departments, and o"
+   },
+   {
+    "block_index": 850,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "executive base salaries",
+    "text_start": "The Compensation Committee generally reviews our NEOs’ base salaries on an annual basis. As shown in the chart below, the annual base salaries of our NEOs remai"
+   },
+   {
+    "block_index": 1386,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "insider trading policy",
+    "text_start": "Our insider trading policy prohibits our directors, NEOs and any other employee required to comply with the blackout periods and pre-clearance requirements from"
+   },
+   {
+    "block_index": 2210,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee of three named independent members",
+    "text_start": "As of March 20, 2026, the date of this report, the Audit Committee consisted of three members: Steven J. Gomo, who serves as the Chair of the Committee, Benjami"
+   }
+  ],
+  "ford_motor_company:2025-12-31": [
+   {
+    "block_index": 379,
+    "category": "COMPOSITION_FACT",
+    "reason": "three committees entirely independent",
+    "text_start": "✔ Independent Board Committees. Each of the Audit Committee, Compensation, Talent and Culture Committee, and Nominating and Governance Committee is comprised en"
+   },
+   {
+    "block_index": 406,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "nominating committee's role on board size and composition",
+    "text_start": "The Nominating and Governance Committee also reviews and makes recommendations to the Board on matters such as the size and composition of the Board so that the"
+   },
+   {
+    "block_index": 436,
+    "category": "COMPOSITION_FACT",
+    "reason": "only independent directors serve on the three committees",
+    "text_start": "Only independent directors serve on the Audit Committee, Compensation, Talent and Culture Committee, and Nominating and Governance Committee, in accordance with"
+   },
+   {
+    "block_index": 437,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee financial expert designated",
+    "text_start": "rules, and the Board has determined that Mr. Veihmeyer qualifies as an “Audit Committee financial expert” within the meaning of SEC regulations and applicable N"
+   },
+   {
+    "block_index": 449,
+    "category": "COMPOSITION_FACT",
+    "reason": "each audit committee member independent",
+    "text_start": "• Each member of the Audit Committee is independent, in accordance with the NYSE standards and SEC rules and the Company’s Corporate Governance Principles"
+   },
+   {
+    "block_index": 450,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee members' financial literacy",
+    "text_start": "• Each member of the Audit Committee meets the financial literacy requirements of the NYSE Listed Company rules"
+   },
+   {
+    "block_index": 532,
+    "category": "COMPOSITION_FACT",
+    "reason": "each nominating committee member independent",
+    "text_start": "• Each member of the Nominating and Governance Committee is independent, in accordance with the NYSE standards and SEC rules and the Company’s Corporate Governa"
+   },
+   {
+    "block_index": 595,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee chair designated financial expert; service limit",
+    "text_start": "The Charter of the Audit Committee provides that a member of the Audit Committee generally may not serve on the audit committee of more than two other public co"
+   },
+   {
+    "block_index": 613,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "compensation committee's executive pay responsibilities",
+    "text_start": "The Compensation, Talent and Culture Committee establishes and reviews our executive compensation philosophy and strategy and oversees our various executive com"
+   },
+   {
+    "block_index": 624,
+    "category": "COMPOSITION_FACT",
+    "reason": "73% of nominees independent; committees independent",
+    "text_start": "73% of the Director Nominees are independent. Each of the Audit Committee, Nominating and Governance Committee, and Compensation, Talent and Culture Committee i"
+   },
+   {
+    "block_index": 629,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "interlocking directorship independence standard",
+    "text_start": "• Interlocking Directorship. No director can be independent if he or she is, or in the past three years has been, part of an interlocking directorship in which "
+   },
+   {
+    "block_index": 637,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "annual independence review process",
+    "text_start": "In March 2026, the Nominating and Governance Committee conducted its annual review of directors’ relationships that may be relevant to independence. As a result"
+   },
+   {
+    "block_index": 638,
+    "category": "COMPOSITION_FACT",
+    "reason": "eleven directors determined independent",
+    "text_start": "on applicable independence standards and all of the relevant facts and circumstances, none of the following directors had any material relationship with the Com"
+   },
+   {
+    "block_index": 640,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "facts considered in independence determinations",
+    "text_start": "With respect to the independent directors listed above, the Board considered the following relevant facts and circumstances in making the independence determina"
+   },
+   {
+    "block_index": 759,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "related person transactions policy",
+    "text_start": "Business transactions between Ford and its officers or directors, including companies in which a director or officer (or an immediate family member) has a direc"
+   },
+   {
+    "block_index": 846,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "candidate inquiry process",
+    "text_start": "The Charter of the Nominating and Governance Committee provides that the Committee conducts all necessary and appropriate inquiries into the background and qual"
+   },
+   {
+    "block_index": 847,
+    "category": "COMPOSITION_FACT",
+    "reason": "fifteen directors standing for election",
+    "text_start": "Fifteen directors will stand for election at this year’s annual meeting. Each nominee has agreed to be named in this proxy statement and to serve if elected. Sh"
+   },
+   {
+    "block_index": 914,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "nominee biography: another organisation's audit committee",
+    "text_start": "Ms. Casiano has been the President of Kimberly Casiano & Associates since 2010. Her firm provides advisory services in marketing, recruiting, communications, an"
+   },
+   {
+    "block_index": 950,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "executive biography",
+    "text_start": "Mr. Farley was elected President and Chief Executive Officer of Ford Motor Company effective October 1, 2020, and in March 2022 took on the additional role of P"
+   },
+   {
+    "block_index": 973,
+    "category": "COMPOSITION_FACT",
+    "reason": "board chair since 1999; finance committee chair (within a biography)",
+    "text_start": "Mr. Ford has served as Chair of the Board of Directors since he was elected to that position in January 1999. He served as Chief Executive Officer of the Compan"
+   },
+   {
+    "block_index": 1150,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation line: audit chair fee",
+    "text_start": "Annual Audit Committee chair fee $ 30,000"
+   },
+   {
+    "block_index": 1157,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director perquisites",
+    "text_start": "3.Perquisites and Evaluation Vehicle Program. All amounts shown in this column reflect: (i) the cost of evaluation vehicles provided to non-executive Directors;"
+   },
+   {
+    "block_index": 1189,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee of three independent directors",
+    "text_start": "The Audit Committee is currently composed of three directors, all of whom meet the independence standards contained in the NYSE Listed Company rules, SEC rules,"
+   }
+  ],
+  "lumen_technologies:2025-12-31": [
+   {
+    "block_index": 366,
+    "category": "COMPOSITION_FACT",
+    "reason": "committee chairs appointed",
+    "text_start": "•Michelle J. Goldberg appointed as Chair of the Audit Committee and Diankha Linear appointed as Chair of the Risk Committee following the Annual Meeting."
+   },
+   {
+    "block_index": 491,
+    "category": "COMPOSITION_FACT",
+    "reason": "nine nominees for election",
+    "text_start": "Following the NCG Committee’s recommendation, the Board of Directors has nominated each of the nine nominees below for a one-year term expiring at our 2027 annu"
+   },
+   {
+    "block_index": 620,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "nominee biography: another company's committees",
+    "text_start": "•Commvault Systems (since 2018) (chair of Nominations and Governance Committee and member of the Audit Committee)"
+   },
+   {
+    "block_index": 621,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "nominee biography: another company's committees",
+    "text_start": "•Sportsman’s Warehouse Holdings, Inc. (since 2019) (chair of Nominating and Governance Committee and member of Audit Committee)"
+   },
+   {
+    "block_index": 825,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "candidate assessment and overboarding limit",
+    "text_start": "The NCG Committee assesses each director candidate based on the individual’s independence, character, judgment, and talent and endeavors to assemble a Board tha"
+   },
+   {
+    "block_index": 841,
+    "category": "COMPOSITION_FACT",
+    "reason": "each director independent except the CEO; HRCC members' independence",
+    "text_start": "In early 2026, the Board reviewed all relationships between the Company and each current director and director nominee and affirmatively determined that each is"
+   },
+   {
+    "block_index": 1085,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "meeting attendance",
+    "text_start": "Directors are expected to attend all Board meetings, meetings of committees on which they serve, and the annual shareholders meeting. All then-current directors"
+   },
+   {
+    "block_index": 1089,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "heading/label without content",
+    "text_start": "Nominating and Corporate Governance Committee Chair"
+   },
+   {
+    "block_index": 1464,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "audit committee complaint procedure",
+    "text_start": "In addition to the Company’s Corporate Compliance program and Integrity Line, the Audit Committee has established procedures for the receipt and evaluation, on "
+   },
+   {
+    "block_index": 1561,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "equity plan share usage review",
+    "text_start": "In its determination to approve the proposed A&R 2024 Plan, our Board reviewed with Compensia, which serves as independent compensation consultant to the Compen"
+   },
+   {
+    "block_index": 1636,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "equity plan eligibility",
+    "text_start": "Eligibility. Key employees, officers and directors of the Company, along with consultants and advisors, are eligible to receive awards (which we sometimes refer"
+   },
+   {
+    "block_index": 1890,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "nominee biography: another company's committees",
+    "text_start": "•Mr. Sharritts serves on the board of directors of Mueller Water Products, where he serves on the Nominating and Corporate Governance Committee and as Chair of "
+   },
+   {
+    "block_index": 1893,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "heading of the compensation committee chair's letter",
+    "text_start": "Letter from the Chair of the Human Resources and Compensation Committee"
+   },
+   {
+    "block_index": 1895,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "compensation committee chair's letter on executive pay",
+    "text_start": "We appreciate the care you take in reading and considering this disclosure. As Chair of the Human Resources and Compensation Committee (“HRCC”), I want to under"
+   },
+   {
+    "block_index": 2228,
+    "category": "COMPOSITION_FACT",
+    "reason": "HRCC composed solely of independent directors",
+    "text_start": "As further described in “Board of Directors and Governance—Board Committees—Human Resources and Compensation Committee,” the HRCC, which is composed of solely o"
+   },
+   {
+    "block_index": 3889,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "related-party review procedure",
+    "text_start": "Review Procedures. At the beginning of each year, our Legal department requests that each of our directors and executive officers complete a detailed questionna"
+   },
+   {
+    "block_index": 7054,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "equity plan document: plan administrator's composition",
+    "text_start": "2.1 Composition. This Plan shall generally be administered by the Human Resources and Compensation Committee of the Board of Directors of Lumen (the “Board”) or"
+   }
+  ],
+  "macys:2026-01-31": [
+   {
+    "block_index": 279,
+    "category": "COMPOSITION_FACT",
+    "reason": "nine of ten nominees independent",
+    "text_start": "9 of 10 Director nominees are independent"
+   },
+   {
+    "block_index": 509,
+    "category": "COMPOSITION_FACT",
+    "reason": "board size decreased from 13 to ten",
+    "text_start": "Richard Clark, Douglas W. Sesler and Tracey Zhen, who have served as directors since 2024, 2024 and 2021, respectively, will not stand for re-election to the Bo"
+   },
+   {
+    "block_index": 624,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "nominee biography: committee roles on another company's board",
+    "text_start": "Finance Experience – Beyond Charles Schwab Investment Management, Ms. Chandoha’s career in financial services has spanned executive roles at major global financ"
+   },
+   {
+    "block_index": 841,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "nominee biography: another organisation's committee",
+    "text_start": "Industry Knowledge and Experience – Mr. Spring has extensive knowledge of merchandising, marketing, and operations for brick-and-mortar and online retail, havin"
+   },
+   {
+    "block_index": 876,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "nominee biography: another company's audit committee",
+    "text_start": "Finance Experience – At Brown Forman, Mr. Varga produced an industry-leading 20% Return on Invested Capital through excellent capital deployment, regular reinve"
+   },
+   {
+    "block_index": 912,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "independence standards and the majority-independent requirement",
+    "text_start": "Our Corporate Governance Principles require that a majority of the Board consist of directors who the Board has determined are independent under the independenc"
+   },
+   {
+    "block_index": 913,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit and CMD committee members' independence determined",
+    "text_start": "The Board also affirmatively determined that each member of the Audit Committee meets the heightened independence standards required for audit committee members"
+   },
+   {
+    "block_index": 1031,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "AI governance structure",
+    "text_start": "We have implemented an AI governance structure, in addition to Board and Audit Committee oversight of AI risk and strategy, designed to help take advantage of t"
+   },
+   {
+    "block_index": 1038,
+    "category": "COMPOSITION_FACT",
+    "reason": "the standing committees",
+    "text_start": "The Board had the following standing committees throughout fiscal 2025: Audit Committee, CMD Committee, Finance Committee, and NCG Committee. Committee membersh"
+   },
+   {
+    "block_index": 1158,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "nominee evaluation criteria",
+    "text_start": "●relevant experience and background that would benefit the Company, including any special criteria applicable to service on standing committees of the Board, in"
+   },
+   {
+    "block_index": 1195,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "policy on directors' other commitments",
+    "text_start": "Board members are expected to confirm that other commitments do not materially interfere with their service as a director of Macy’s. Pursuant to the Company’s C"
+   },
+   {
+    "block_index": 1402,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation label: committee chair retainer",
+    "text_start": "Audit Committee Chair Retainer"
+   },
+   {
+    "block_index": 1751,
+    "category": "COMPOSITION_FACT",
+    "reason": "all audit committee members independent",
+    "text_start": "The Board has adopted a written Audit Committee charter. All members of the Audit Committee are independent, as defined in Sections 303A.06 and 303A.07 of the N"
+   }
+  ],
+  "marriott_international:2025-12-31": [
+   {
+    "block_index": 386,
+    "category": "COMPOSITION_FACT",
+    "reason": "committee chair and memberships; retiring from the board",
+    "text_start": "Debra L. Lee currently serves as the Chair of the Inclusion and Social Impact Committee and as a member of the Nominating and Corporate Governance Committee and"
+   },
+   {
+    "block_index": 402,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "executive pay and performance",
+    "text_start": "There is a strong correlation between our executive pay and Company performance. Our executive compensation program is designed to maintain this alignment, whil"
+   },
+   {
+    "block_index": 444,
+    "category": "COMPOSITION_FACT",
+    "reason": "HRCC composed solely of independent members",
+    "text_start": "The Human Resources and Compensation Committee is composed solely of independent members of the Board and retains an independent compensation consultant"
+   },
+   {
+    "block_index": 490,
+    "category": "COMPOSITION_FACT",
+    "reason": "a director not standing for reelection",
+    "text_start": "As previously disclosed and described elsewhere in this proxy statement, Debra L. Lee announced she will retire from the Board at the conclusion of her term and"
+   },
+   {
+    "block_index": 492,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "majority voting standard",
+    "text_start": "The Company’s Bylaws prescribe the voting standard for election of directors as a majority of the votes cast in an uncontested election, such as this one, where"
+   },
+   {
+    "block_index": 525,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "lead independent director's responsibilities",
+    "text_start": "Strong Lead Independent Director. Since 2013, the Board has maintained the position of Lead Independent Director. The Lead Independent Director’s responsibiliti"
+   },
+   {
+    "block_index": 531,
+    "category": "COMPOSITION_FACT",
+    "reason": "lead independent director selected",
+    "text_start": "independent directors of the Board appoint the Lead Independent Director annually. Since 2022, the independent directors have selected Mr. Frederick A. “Fritz” "
+   },
+   {
+    "block_index": 587,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "annual composition evaluation",
+    "text_start": "The Nominating and Corporate Governance Committee evaluates the composition of the Board at least annually to assess whether the skills, experience, characteris"
+   },
+   {
+    "block_index": 589,
+    "category": "COMPOSITION_FACT",
+    "reason": "twelve nominees, a majority independent",
+    "text_start": "A majority of our director nominees are independent with a mix of short-, medium- and long-term tenure. Five of our 12 director nominees are female and seven ar"
+   },
+   {
+    "block_index": 605,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "stockholder candidate recommendations",
+    "text_start": "The Nominating and Corporate Governance Committee will consider candidates for Board membership suggested by its members, other Board members, management, and s"
+   },
+   {
+    "block_index": 606,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "eligibility and qualifications considered",
+    "text_start": "The Board does not have specific requirements for eligibility to serve as a director. However, in evaluating candidates, regardless of how recommended, the Nomi"
+   },
+   {
+    "block_index": 613,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "candidate evaluation",
+    "text_start": "In addition, as described above, when evaluating director candidates, the Nominating and Corporate Governance Committee considers and discusses the extent to wh"
+   },
+   {
+    "block_index": 1024,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "nominee biography",
+    "text_start": "Grant brings years of experience as a global CEO with a proven track record in driving global business growth, consumer engagement, digital transformation, and "
+   },
+   {
+    "block_index": 1201,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "governance principles framework",
+    "text_start": "The Board has adopted Governance Principles that provide a framework for our governance processes. The portion of our Governance Principles addressing director "
+   },
+   {
+    "block_index": 1207,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "independence standards",
+    "text_start": "a. A director is not independent if: (i) the director is, or has been within the preceding three years, employed by Marriott; (ii) the director or a family memb"
+   },
+   {
+    "block_index": 1217,
+    "category": "COMPOSITION_FACT",
+    "reason": "ten directors determined independent",
+    "text_start": "Based on the standards set forth in the Governance Principles, the Board affirmatively determined that Ms. Goren, Mr. Henderson, Ms. Hobart, Ms. Lee, Mr. Lewis,"
+   },
+   {
+    "block_index": 1225,
+    "category": "COMPOSITION_FACT",
+    "reason": "six standing committees; members of three independent",
+    "text_start": "The Board has six standing committees: Audit; Human Resources and Compensation; Nominating and Corporate Governance; Inclusion and Social Impact; Technology and"
+   },
+   {
+    "block_index": 1226,
+    "category": "COMPOSITION_FACT",
+    "reason": "committee membership table; chairs",
+    "text_start": "The table below indicates the current members of the applicable Board committee, the primary responsibilities of such committee, and the number of meetings held"
+   },
+   {
+    "block_index": 1417,
+    "category": "COMPOSITION_FACT",
+    "reason": "executive committee chair and members",
+    "text_start": "The Board also maintains an Executive Committee that is chaired by Mr. Marriott and on which Mr. Capuano, Mr. Henderson and Ms. Lee serve as members. The Execut"
+   },
+   {
+    "block_index": 1426,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "board refreshment process",
+    "text_start": "The Board has established a robust Board refreshment process so that the backgrounds and experiences of our Board members are consistent with the needs of the b"
+   },
+   {
+    "block_index": 1432,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "one-on-one director interviews",
+    "text_start": "One-on-One Interviews. On a rotating basis, the Chairman of the Board or the Lead Independent Director meet with each director individually. This process is des"
+   },
+   {
+    "block_index": 1438,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "CEO performance review",
+    "text_start": "The Board also annually reviews the President and CEO’s performance. The Lead Independent Director organizes and leads the evaluation in collaboration with the "
+   },
+   {
+    "block_index": 1511,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "communicating with directors",
+    "text_start": "Stockholders and others interested in communicating with the Lead Independent Director, the Chair of the Nominating and Corporate Governance Committee, the Audi"
+   },
+   {
+    "block_index": 1528,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "signature label before the audit committee members",
+    "text_start": "Members of the Audit Committee:"
+   },
+   {
+    "block_index": 1535,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "auditor pre-approval policy",
+    "text_start": "The Audit Committee’s Pre-Approval of Independent Auditor Fees and Services Policy provides for pre-approval of all audit, audit-related, tax and other permissi"
+   },
+   {
+    "block_index": 1595,
+    "category": "COMPOSITION_FACT",
+    "reason": "HRCC composed solely of independent members",
+    "text_start": "The Human Resources and Compensation Committee (the “Committee”), which is composed solely of independent members of the Board, assists the Board in fulfilling "
+   },
+   {
+    "block_index": 1596,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "signature label before the HRCC members",
+    "text_start": "Members of the Human Resources and Compensation Committee:"
+   },
+   {
+    "block_index": 3826,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation label: audit chair fee",
+    "text_start": "Audit Committee Chair Fee"
+   },
+   {
+    "block_index": 4265,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "related-party transaction review",
+    "text_start": "The policy provides that the Audit Committee reviews certain transactions subject to the policy and determines whether or not to approve or ratify those transac"
+   }
+  ],
+  "paramount_skydance_paramount_global:2024-12-31": [
+   {
+    "block_index": 214,
+    "category": "COMPOSITION_FACT",
+    "reason": "seven nominees, six independent",
+    "text_start": "Our seven director nominees (four of whom are current members of our Board of Directors (the “Board of Directors” or “Board”)), as a group, have extensive and d"
+   },
+   {
+    "block_index": 366,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "majority-independence requirement",
+    "text_start": "A majority of the members of the Board must be independent of the Company, as independence is determined under the Nasdaq listing rules, by the Securities and E"
+   },
+   {
+    "block_index": 414,
+    "category": "COMPOSITION_FACT",
+    "reason": "board of five members named",
+    "text_start": "Our Board of Directors is currently comprised of five members, each serving until the Annual Meeting to be held on July 2, 2025 or until her successor is duly e"
+   },
+   {
+    "block_index": 418,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "separate sessions of non-management and independent directors",
+    "text_start": "In accordance with the Guidelines and, with respect to the independent director sessions, the Nasdaq listing rules, the non-management directors, when applicabl"
+   },
+   {
+    "block_index": 431,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "independence standard",
+    "text_start": "The director is, or has a family member who is, employed as an executive officer of another entity where at any time during the past three years any of the exec"
+   },
+   {
+    "block_index": 453,
+    "category": "COMPOSITION_FACT",
+    "reason": "independence of directors and nominees determined",
+    "text_start": "In April and May 2025, the Nominating and Governance Committee reviewed the independence of our current directors and of our director nominees who are not curre"
+   },
+   {
+    "block_index": 454,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "facts considered in independence determinations",
+    "text_start": "During its review, in determining that the directors and director nominees named above are independent, the Board considered (1) that we have, in the ordinary c"
+   },
+   {
+    "block_index": 465,
+    "category": "COMPOSITION_FACT",
+    "reason": "non-executive chair named (with her responsibilities)",
+    "text_start": "Our Non-Executive Chair of the Board, Shari E. Redstone, presides at all meetings of the Board. Under the Guidelines, her responsibilities also include, togethe"
+   },
+   {
+    "block_index": 518,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee of four named members and its chair",
+    "text_start": "Our Audit Committee is comprised of Mses. Byrne, Griego, McHale and Schuman. Ms. Byrne is the Chair of the Audit Committee. The Audit Committee Charter provides"
+   },
+   {
+    "block_index": 519,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "audit committee's delegation and advisor powers",
+    "text_start": "The Audit Committee has the power to delegate its authority and duties to subcommittees or individual members of the Committee, as well as to retain outside adv"
+   },
+   {
+    "block_index": 533,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee financial experts determined",
+    "text_start": "Audit Committee Financial Experts. The Board has determined that each of Mses. Byrne, McHale and Schuman is “financially sophisticated” under Nasdaq rules, qual"
+   },
+   {
+    "block_index": 538,
+    "category": "COMPOSITION_FACT",
+    "reason": "compensation committee members and chair",
+    "text_start": "Our Compensation Committee is comprised of Mses. Byrne, Griego, McHale and Schuman. Ms. McHale is the Chair of the Compensation Committee."
+   },
+   {
+    "block_index": 539,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "compensation committee charter's composition requirements",
+    "text_start": "The Compensation Committee Charter provides that the Compensation Committee will be comprised of at least three members, except that the Committee is deemed to "
+   },
+   {
+    "block_index": 540,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "compensation committee's delegation and advisor powers",
+    "text_start": "The Compensation Committee has the power to delegate its authority and duties to subcommittees or individual members of the Committee, as well as to retain a co"
+   },
+   {
+    "block_index": 564,
+    "category": "COMPOSITION_FACT",
+    "reason": "nominating committee members and chair",
+    "text_start": "The Nominating and Governance Committee is comprised of Mses. Byrne, Griego, McHale and Schuman. Ms. Schuman is the Chair of the Nominating and Governance Commi"
+   },
+   {
+    "block_index": 565,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "nominating committee charter's composition requirements",
+    "text_start": "The Nominating and Governance Committee’s Charter provides that the Nominating and Governance Committee will be comprised of at least three members, except that"
+   },
+   {
+    "block_index": 566,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "nominating committee's delegation and advisor powers",
+    "text_start": "The Nominating and Governance Committee has the power to delegate its authority and duties to subcommittees or individual members of the Committee, as well as t"
+   },
+   {
+    "block_index": 594,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "director nomination process",
+    "text_start": "2025 Director Nomination Process. In connection with the 2025 director nomination process, the Nominating and Governance Committee reviewed the current composit"
+   },
+   {
+    "block_index": 595,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "stockholder recommendations for director",
+    "text_start": "Stockholder Recommendations for Director. The Nominating and Governance Committee will consider candidates for director recommended by our stockholders. All rec"
+   },
+   {
+    "block_index": 605,
+    "category": "COMPOSITION_FACT",
+    "reason": "compensation committee interlocks",
+    "text_start": "None of the members of the Compensation Committee during fiscal year 2024 was, or has ever been, an officer or employee of the Company, and, during fiscal year "
+   },
+   {
+    "block_index": 768,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "beneficial ownership footnote",
+    "text_start": "These shares are owned by National Amusements and two wholly-owned subsidiaries. National Amusements is controlled by the Sumner M. Redstone National Amusements"
+   },
+   {
+    "block_index": 782,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "related-party review recusal",
+    "text_start": "Any member of the Nominating and Governance Committee who is a related person with respect to a transaction under review may not participate in the review or vo"
+   },
+   {
+    "block_index": 791,
+    "category": "COMPOSITION_FACT",
+    "reason": "seven nominees proposed, four current members",
+    "text_start": "The Board of Directors proposes the election of the seven nominees identified in this proxy statement, four of whom are current members of our Board and were el"
+   },
+   {
+    "block_index": 802,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "nominee biography: other organisations' committees",
+    "text_start": "Ms. Boies is a member of the Board of Directors of the Stimson Center and a member of the Board of Governors of the Middle East Institute, and currently serves "
+   },
+   {
+    "block_index": 817,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director biography",
+    "text_start": "Ms. Byrne is the former Vice Chairman, Investment Banking at Barclays PLC. Ms. Byrne has served as a director of LanzaTech NZ, Inc. since 2023 and of Carta, Inc"
+   },
+   {
+    "block_index": 818,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director biography",
+    "text_start": "During her more than 40 years of financial services experience, Ms. Byrne served as team leader for some of Barclays’ most important multinational corporate cli"
+   },
+   {
+    "block_index": 850,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "nominee biography: another company's audit committee",
+    "text_start": "Mr. Ryan is a Co-Founder and General Partner at Almaz Capital, an international venture capital firm based in Silicon Valley, which facilitates the global expan"
+   },
+   {
+    "block_index": 1089,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "auditor pre-approval",
+    "text_start": "All audit and non-audit services provided to us by PwC for 2024 were pre-approved by the full Audit Committee. Under the Audit Committee’s pre-approval policies"
+   },
+   {
+    "block_index": 1116,
+    "category": "COMPOSITION_FACT",
+    "reason": "compensation committee members, independence and a departed member",
+    "text_start": "The Compensation Committee is made up entirely of independent directors and is currently composed of Barbara M. Byrne, Linda M. Griego, Judith A. McHale (Chair)"
+   },
+   {
+    "block_index": 1117,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "compensation committee responsibilities",
+    "text_start": "The Committee directs and periodically reviews our compensation philosophy, strategy and principles, and oversees the administration of our cash-based and equit"
+   },
+   {
+    "block_index": 1638,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "executive PSU awards",
+    "text_start": "As previously disclosed in our proxy statement filed in 2022, the Compensation Committee granted, effective November 30, 2020, PSU awards for 2021 comprised of "
+   },
+   {
+    "block_index": 1683,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "signature label of the compensation committee report",
+    "text_start": "Members of the Compensation Committee"
+   },
+   {
+    "block_index": 1963,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "executive employment agreement",
+    "text_start": "On January 1, 2023, we entered into an employment agreement with Mr. McCarthy with a contract term through March 31, 2027, which provides for an annual base sal"
+   },
+   {
+    "block_index": 1973,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "executive equity terms",
+    "text_start": "Compensation Committee and increased at the discretion of the Compensation Committee. Pursuant to his employment agreement, Mr. Cheeks is eligible to receive an"
+   },
+   {
+    "block_index": 1979,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "executive employment agreement",
+    "text_start": "On December 15, 2023, we entered into an employment agreement with Mr. Robbins with a contract term through December 14, 2027, which provides for an annual base"
+   },
+   {
+    "block_index": 4144,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "equity plan definition of 'Committee'",
+    "text_start": "“Committee” shall mean the Nominating and Governance Committee of the Board (or such other committee(s) as may be appointed or designated by the Board, consisti"
+   }
+  ],
+  "paramount_skydance_paramount_global:2025-12-31": [
+   {
+    "block_index": 84,
+    "category": "COMPOSITION_FACT",
+    "reason": "board of ten members named; three standing committees",
+    "text_start": "Our Board of Directors (“Board”) is currently comprised of ten members, each serving until the next annual meeting or until his or her successor is duly elected"
+   },
+   {
+    "block_index": 110,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director biography",
+    "text_start": "Ms. Byrne has served as a member of our Board since August 2025. Ms. Byrne is a former Vice Chairman of Investment Banking at Barclays PLC and a former Vice Cha"
+   },
+   {
+    "block_index": 170,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee members and chair",
+    "text_start": "Our Audit Committee is comprised of Ms. Byrne and Messrs. Campion and Hamill. Ms. Byrne is the Chair of the Audit Committee."
+   },
+   {
+    "block_index": 171,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "audit committee charter's composition requirements and meetings",
+    "text_start": "The Audit Committee Charter provides that the Audit Committee will be comprised of at least three members. The Committee must have at least one “audit committee"
+   },
+   {
+    "block_index": 174,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "audit committee's delegation and advisor powers",
+    "text_start": "The Audit Committee has the power to delegate its authority and duties to subcommittees or individual members of the Audit Committee, as well as to retain outsi"
+   },
+   {
+    "block_index": 188,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee members' independence and financial sophistication",
+    "text_start": "The Board has determined that each of Ms. Byrne and Messrs. Campion and Hamill is “financially sophisticated” under the listing rules of the Nasdaq stock market"
+   },
+   {
+    "block_index": 427,
+    "category": "COMPOSITION_FACT",
+    "reason": "compensation committee members and chair",
+    "text_start": "The Compensation Committee is composed of Gerald Cardinale (Chair), Safra A. Catz and Justin G. Hamill."
+   },
+   {
+    "block_index": 435,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "compensation consultants retained",
+    "text_start": "For compensation established on the Closing Date, the Committee considered market data from Semler Brossy, Skydance’s compensation consultant. In December 2025,"
+   },
+   {
+    "block_index": 667,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "signature label of the compensation committee report",
+    "text_start": "Members of the Compensation Committee"
+   },
+   {
+    "block_index": 1515,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "controlled-company exemption from majority-independence requirements",
+    "text_start": "We are a “controlled company” under the Nasdaq rules. As a result, we qualify for exemptions from, and have elected not to comply with, certain corporate govern"
+   },
+   {
+    "block_index": 1518,
+    "category": "COMPOSITION_FACT",
+    "reason": "four of ten directors determined independent",
+    "text_start": "In making its independence determinations, the Board reviewed and discussed information provided by the directors with regard to each director’s business and pe"
+   },
+   {
+    "block_index": 1519,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee members' independence (repeated in the amendment's later section)",
+    "text_start": "The Board has determined that each of Ms. Byrne and Messrs. Campion and Hamill is “financially sophisticated” under the Nasdaq rules, and qualifies as “independ"
+   }
+  ],
+  "pfizer:2025-12-31": [
+   {
+    "block_index": 219,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "say-on-pay shareholder engagement",
+    "text_start": "Shareholder engagement remained a priority in 2025. After strong executive compensation program support averaging 93.5% from 2015 through 2024, in 2025, our Say"
+   },
+   {
+    "block_index": 235,
+    "category": "COMPOSITION_FACT",
+    "reason": "twelve directors to be elected",
+    "text_start": "1.To elect 12 members of the Board of Directors, each until our next Annual Meeting and until his or her successor has been duly elected and qualified."
+   },
+   {
+    "block_index": 440,
+    "category": "COMPOSITION_FACT",
+    "reason": "twelve members standing for re-election",
+    "text_start": "Twelve members of our Board are standing for re-election. In an uncontested Director election, the number of votes cast “for” a Director nominee must exceed the"
+   },
+   {
+    "block_index": 449,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "annual evaluations against membership criteria",
+    "text_start": "The Board and each Committee conduct annual evaluations to help ensure that each of its members individually, and the Board as a whole, continue to meet the cri"
+   },
+   {
+    "block_index": 501,
+    "category": "COMPOSITION_FACT",
+    "reason": "all current directors except the CEO independent",
+    "text_start": "The Board has determined that all of our current Directors (other than Dr. Albert Bourla) are independent of the company and its management and meet Pfizer’s cr"
+   },
+   {
+    "block_index": 1010,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "assisting candidate screening",
+    "text_start": "•Assist in screening candidates being considered by the Governance Committee for membership on the company’s Board of Directors"
+   },
+   {
+    "block_index": 1079,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "board evaluation reporting",
+    "text_start": "The results of the Board evaluation were reported to the full Board by the Chair of the Governance Committee at the April Board Meeting and were discussed in ex"
+   },
+   {
+    "block_index": 1095,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "committee composition and chair appointment process",
+    "text_start": "The Board, upon recommendation from the Governance Committee, reviews and determines the composition of the Committees and appoints the Committee Chairs. Throug"
+   },
+   {
+    "block_index": 1130,
+    "category": "COMPOSITION_FACT",
+    "reason": "compensation committee interlocks: no member an officer",
+    "text_start": "Compensation Committee Interlocks and Insider Participation. During 2025 and as of the date of this Proxy Statement, none of the members of the Committee was or"
+   },
+   {
+    "block_index": 1189,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "committee qualification and independence assessment",
+    "text_start": "Board and Committee Matters: We assessed the Directors’ qualifications for serving on various Committees and their independence. We reviewed, among other factor"
+   },
+   {
+    "block_index": 1195,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "shareholder engagement",
+    "text_start": "Shareholder Engagement: We reviewed shareholder and stakeholder communications at each of our meetings and were informed of shareholder feedback received during"
+   },
+   {
+    "block_index": 1239,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "shareholder proposal engagement",
+    "text_start": "During the 2025 proxy season, the company actively engaged with the proponents of shareholder proposals, listened to their concerns, and worked collaboratively "
+   },
+   {
+    "block_index": 1262,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "investor feedback to the governance committee",
+    "text_start": "At each Governance Committee meeting, we share investor and other stakeholder feedback directly with the Committee. We view communication between our shareholde"
+   },
+   {
+    "block_index": 1264,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "communicating with directors",
+    "text_start": "Shareholders and other interested parties may communicate with any of our Directors, including the Lead Independent Director and the Audit Committee Chair, as f"
+   },
+   {
+    "block_index": 1500,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "audit partner rotation",
+    "text_start": "In accordance with SEC rules and KPMG policies, audit partners are subject to rotation requirements to limit the number of consecutive years an individual partn"
+   },
+   {
+    "block_index": 1535,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "auditor pre-approval delegation",
+    "text_start": "The Chair of the Audit Committee, on behalf of the Committee, has been delegated authority to pre-approve services by the firm. The Committee may also delegate "
+   },
+   {
+    "block_index": 2016,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "compensation committee chair's investor discussions",
+    "text_start": "The Compensation Committee Chair, Jim Smith, led executive compensation-related discussions with several of the company’s largest investors, representing approx"
+   },
+   {
+    "block_index": 2248,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "CEO performance review",
+    "text_start": "–After its review of Dr. Bourla's performance, as discussed in the NEO Assessment later in this Proxy Statement, the Committee and the independent members of th"
+   },
+   {
+    "block_index": 2375,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "compensation consultant fees",
+    "text_start": "Fees Paid. The total amount of fees paid to Meridian for services provided to the Compensation Committee in 2025 was $213,639 (including reasonable travel and b"
+   },
+   {
+    "block_index": 2606,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "CEO aircraft use",
+    "text_start": "The Board has determined that the CEO must use company-provided aircraft for all air travel, including personal travel, to the maximum extent practicable, based"
+   },
+   {
+    "block_index": 4009,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "chairman election and leadership structure policy",
+    "text_start": "The Corporate Governance Principles require that the independent Directors elect a Chairman annually based on recommendations from the Governance Committee. The"
+   },
+   {
+    "block_index": 4011,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "leadership structure evaluation",
+    "text_start": "In December 2025, following a thorough review by the Governance Committee, the independent Directors evaluated the Board’s leadership structure taking into cons"
+   },
+   {
+    "block_index": 4192,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "candidate identification",
+    "text_start": "On an ongoing basis, the Governance Committee considers potential candidates identified on its own initiative, as well as those identified by other Directors, m"
+   },
+   {
+    "block_index": 4218,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "equity plan definition of 'Committee'",
+    "text_start": "(i) “Committee” shall mean the Compensation Committee of the Board or such other persons or committee to whom it has delegated any authority, as may be appropri"
+   }
+  ],
+  "salesforce:2026-01-31": [
+   {
+    "block_index": 646,
+    "category": "COMPOSITION_FACT",
+    "reason": "nominees independent except three",
+    "text_start": "The Board believes that it should consist of a substantial majority of independent directors. The Board has adopted and applied the standards established by the"
+   },
+   {
+    "block_index": 665,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "lead independent director term and chair policy",
+    "text_start": "Importantly, the Board has a strong and empowered Lead Independent Director to provide an effective independent voice in our Board leadership structure. Per our"
+   },
+   {
+    "block_index": 693,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "annual meeting attendance",
+    "text_start": "Directors are also expected to participate in our annual meeting of stockholders absent an unavoidable and irreconcilable conflict. Of the 12 directors then-ser"
+   },
+   {
+    "block_index": 696,
+    "category": "COMPOSITION_FACT",
+    "reason": "members of three committees independent",
+    "text_start": "The Board reviews and determines the makeup of the Board’s committees and committee chairs with a view toward balancing the benefits derived from continuity aga"
+   },
+   {
+    "block_index": 756,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "compensation committee responsibilities",
+    "text_start": "The Compensation Committee reviews and approves the compensation and benefits of our executive officers, including: reviewing and approving corporate goals and "
+   },
+   {
+    "block_index": 776,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "governance committee responsibilities",
+    "text_start": "The Nominating and Corporate Governance Committee (the “Governance Committee”) is responsible for director nomination matters and corporate governance matters g"
+   },
+   {
+    "block_index": 806,
+    "category": "COMPOSITION_FACT",
+    "reason": "two directors appointed in 2025 (within the identification process)",
+    "text_start": "The Governance Committee uses a variety of methods for identifying and evaluating director nominees. Candidates may come to the attention of the Governance Comm"
+   },
+   {
+    "block_index": 808,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "candidate criteria",
+    "text_start": "The Governance Committee evaluates and recommends candidates for membership on the Board consistent with criteria established by the committee. Directors should"
+   },
+   {
+    "block_index": 861,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "enterprise risk surveys",
+    "text_start": "The Company also conducts regular enterprise risk surveys, typically at least semi-annually, with a cross-functional group of executives. The survey process is "
+   },
+   {
+    "block_index": 919,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director equity awards",
+    "text_start": "Pursuant to our fiscal 2026 compensation policy for non-employee directors, (i) on February 1, 2025, each non-employee director serving at such time (other than"
+   },
+   {
+    "block_index": 933,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation table",
+    "text_start": "The following table sets forth information on the compensation earned during fiscal 2026 by our non-employee directors. The table excludes Messrs. Benioff and H"
+   },
+   {
+    "block_index": 963,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation footnote",
+    "text_start": "3.Mr. Morfit waived receipt of the cash fees for his service as Chair of the Compensation Committee during fiscal 2026."
+   },
+   {
+    "block_index": 964,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation footnote",
+    "text_start": "4.Cash fees paid to Mr. Roos relate to his service as Chair of the Compensation Committee for the first quarter of fiscal 2026 and as Chair of the Governance Co"
+   },
+   {
+    "block_index": 995,
+    "category": "COMPOSITION_FACT",
+    "reason": "nominee and committee membership table; a director not standing",
+    "text_start": "The following table sets forth the names, ages, and certain other information for each of our director nominees, as well as the membership of our standing commi"
+   },
+   {
+    "block_index": 1610,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "compensation committee chair's letter",
+    "text_start": "Now in my second year as Chair of the Compensation Committee, I want to share some thoughts on how we think about executive compensation at Salesforce, what we "
+   },
+   {
+    "block_index": 1953,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "compensation consultant",
+    "text_start": "The compensation consultant attended Compensation Committee and Governance Committee meetings, as requested, and also communicated with these committees outside"
+   },
+   {
+    "block_index": 1954,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "compensation consultant independence",
+    "text_start": "Reporting directly to the Compensation Committee and the Governance Committee, the compensation consultant maintained independence when meeting with members of "
+   },
+   {
+    "block_index": 1956,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "CEO input on executive pay",
+    "text_start": "Mr. Benioff provides input to the Compensation Committee on the performance and compensation of members of the executive leadership team. The Compensation Commi"
+   },
+   {
+    "block_index": 1980,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "compensation peer group",
+    "text_start": "Following this review, the Compensation Committee, with support from the compensation consultant, approved a new peer group comprised of the 17 companies listed"
+   },
+   {
+    "block_index": 2678,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "executive equity award",
+    "text_start": "In addition, Ms. Washington is eligible to participate in the compensation and benefit programs generally available to senior executives of the Company. In Marc"
+   },
+   {
+    "block_index": 2917,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "change of control agreements",
+    "text_start": "To allow our NEOs to focus solely on making decisions that are in the best interests of our stockholders in the event of a possible, threatened, or pending chan"
+   },
+   {
+    "block_index": 3091,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation footnote",
+    "text_start": "C.Represents amounts paid to Ms. Washington under our Director Compensation Program, as described above under “—Compensation of Directors,” for her services as "
+   },
+   {
+    "block_index": 4280,
+    "category": "COMPOSITION_FACT",
+    "reason": "compensation committee members and interlocks",
+    "text_start": "David B. Kirk, Neelie Kroes, Mason Morfit, John V. Roos, and Maynard Webb served on the Compensation Committee during fiscal 2026. No member of the Compensation"
+   },
+   {
+    "block_index": 4676,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee of non-management directors",
+    "text_start": "The Audit Committee, which is comprised entirely of non-management directors, oversees the Company’s financial reporting process on behalf of the Board. Managem"
+   },
+   {
+    "block_index": 4705,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "auditor independence and reappointment",
+    "text_start": "Based on this evaluation, the Audit Committee has concluded that EY is independent and believes it is in the best interests of the Company and its stockholders "
+   },
+   {
+    "block_index": 4706,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "audit committee reliance disclaimer",
+    "text_start": "Members of the Audit Committee rely without independent verification on the information provided to them and on the representations made by management and the i"
+   },
+   {
+    "block_index": 4717,
+    "category": "COMPOSITION_FACT",
+    "reason": "thirteen nominees named",
+    "text_start": "As recommended by the Nominating and Corporate Governance Committee, the Board’s nominees for election to the Board by the stockholders are the following curren"
+   },
+   {
+    "block_index": 4860,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "equity plan administration",
+    "text_start": "•Administration. The 2013 Plan is administered by the Compensation Committee of the Board, which is comprised entirely of independent, non-employee directors."
+   },
+   {
+    "block_index": 4913,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "equity plan administration",
+    "text_start": "The 2013 Plan will be administered by the Board or a committee of individuals satisfying applicable laws appointed by the Board (the “Committee”). The Board has"
+   },
+   {
+    "block_index": 5388,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "auditor pre-approval procedure",
+    "text_start": "All audit and non-audit services provided by EY to the Company must be pre-approved by the Audit Committee. The Audit Committee uses the following procedures in"
+   }
+  ],
+  "southwest_airlines:2025-12-31": [
+   {
+    "block_index": 214,
+    "category": "COMPOSITION_FACT",
+    "reason": "eleven directors nominated",
+    "text_start": "The Board of Directors (the “Board”) believes that strong corporate governance is critical to promoting the best long-term interests of our Shareholders, Employ"
+   },
+   {
+    "block_index": 285,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "candidate evaluation factors",
+    "text_start": "In evaluating Director candidates for membership, the Nominating and Corporate Governance Committee considers numerous factors, including, for example, diversit"
+   },
+   {
+    "block_index": 286,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "the board's mix of industry experience",
+    "text_start": "The Board is composed of, and benefits from, individuals with distinguished leadership experience across multiple industries, including aviation/aerospace, tran"
+   },
+   {
+    "block_index": 307,
+    "category": "COMPOSITION_FACT",
+    "reason": "nine of eleven members independent",
+    "text_start": "9 out of 11 members of the Board are independent."
+   },
+   {
+    "block_index": 398,
+    "category": "COMPOSITION_FACT",
+    "reason": "eleven directors nominated",
+    "text_start": "At the Annual Meeting of Shareholders, eleven Directors are nominated to be elected for terms expiring at the 2027 Annual Meeting of Shareholders or until their"
+   },
+   {
+    "block_index": 988,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "nominee biography: another company's audit committee",
+    "text_start": "Strong financial acumen. Mr. Jordan served as the Chair of the Audit Committee at The Container Store from 2013 to 2023, providing financial oversight and risk "
+   },
+   {
+    "block_index": 1129,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "majority-independence requirement; board meetings",
+    "text_start": "The business of the Company is managed under the direction of the Board. Pursuant to the requirements of the New York Stock Exchange (“NYSE”), a majority of the"
+   },
+   {
+    "block_index": 1133,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "nominating committee's role on membership criteria",
+    "text_start": "The Company’s Nominating and Corporate Governance Committee is responsible for recommending to the Board the criteria for Board membership, as set forth in the "
+   },
+   {
+    "block_index": 1157,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "overboarding limits",
+    "text_start": "The Corporate Governance Guidelines prohibit non-Employee Directors from serving on more than five public company boards and prohibit Employee Directors from se"
+   },
+   {
+    "block_index": 1159,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "board refreshment",
+    "text_start": "The Board believes Board composition and refreshment are important elements of the effective fulfillment of the Board’s oversight responsibilities. As the Compa"
+   },
+   {
+    "block_index": 1180,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "consulting on committee assignments",
+    "text_start": "• Consulting with the Nominating and Corporate Governance Committee with respect to recommendations for the assignment of Board members to the Board’s committee"
+   },
+   {
+    "block_index": 1183,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "self-evaluations",
+    "text_start": "In accordance with the Corporate Governance Guidelines and committee charters, the Board and each of its standing committees engage in self-evaluations at least"
+   },
+   {
+    "block_index": 1185,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "nominating committee oversees evaluations",
+    "text_start": "The Nominating and Corporate Governance Committee is responsible for overseeing the annual evaluations of the performance of the Board and the Board’s committee"
+   },
+   {
+    "block_index": 1204,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "evaluation responses",
+    "text_start": "The responses of the Board members are compiled on an anonymous basis and reviewed by the Nominating and Corporate Governance Committee. The Chairs of each comm"
+   },
+   {
+    "block_index": 1225,
+    "category": "COMPOSITION_FACT",
+    "reason": "standing committees and an ad hoc committee; membership table",
+    "text_start": "The Board has established the following standing committees to assist it with fulfilling its responsibilities: (i) Audit, (ii) Compensation, (iii) Nominating an"
+   },
+   {
+    "block_index": 1263,
+    "category": "COMPOSITION_FACT",
+    "reason": "audit committee members independent",
+    "text_start": "The Audit Committee has been established in accordance with Section 3(a)(58)(A) of the Securities Exchange Act of 1934, as amended (the “Exchange Act”), and the"
+   },
+   {
+    "block_index": 1265,
+    "category": "COMPOSITION_FACT",
+    "reason": "compensation committee members independent",
+    "text_start": "The Board has determined that each of the members of the Compensation Committee is (and each Director who previously served on the Compensation Committee during"
+   },
+   {
+    "block_index": 1267,
+    "category": "COMPOSITION_FACT",
+    "reason": "nominating committee members independent",
+    "text_start": "The Board has determined that each of the members of the Nominating and Corporate Governance Committee is (and each Director who previously served on the Nomina"
+   },
+   {
+    "block_index": 1272,
+    "category": "COMMITTEE_OR_BOARD_FUNCTION",
+    "reason": "committee functions described below",
+    "text_start": "The primary functions of each of the Board’s standing committees and the ad hoc Fleet Oversight Committee are discussed below. A more detailed list of each Comm"
+   },
+   {
+    "block_index": 1285,
+    "category": "COMPOSITION_FACT",
+    "reason": "membership table legend: audit committee financial expert",
+    "text_start": "* Satisfies the criteria adopted by the SEC to serve as an “audit committee financial expert”"
+   },
+   {
+    "block_index": 1396,
+    "category": "COMPOSITION_POLICY_OR_PROCESS",
+    "reason": "candidate identification",
+    "text_start": "The Nominating and Corporate Governance Committee identifies potential candidates for first-time nomination as a Board member using a variety of sources, such a"
+   },
+   {
+    "block_index": 1402,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "related-party questionnaire",
+    "text_start": "The Company requires all of its Directors and executive officers to complete an annual questionnaire that requires them to identify and describe any transaction"
+   },
+   {
+    "block_index": 1406,
+    "category": "COMPOSITION_FACT",
+    "reason": "a director's independence determination",
+    "text_start": "In determining her independence, the Board considered Ms. Atherton’s service as President & CEO of TXT and previously as President & CEO of Bell, a TXT subsidia"
+   },
+   {
+    "block_index": 1413,
+    "category": "COMPOSITION_FACT",
+    "reason": "compensation committee interlocks",
+    "text_start": "Compensation Committee Interlocks and Insider Participation. No member of the Compensation Committee has ever been an executive officer or Employee of the Compa"
+   },
+   {
+    "block_index": 3247,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director fees",
+    "text_start": "Non-Employee Directors’ cash retainer fees for Board membership and standing committees are generally paid on an annual basis. Board of Director and committee f"
+   },
+   {
+    "block_index": 3285,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "director compensation market data",
+    "text_start": "At the Compensation Committee’s request, Meridian provided market data and assessments regarding the adequacy of the Company’s compensation program for non-Empl"
+   },
+   {
+    "block_index": 3308,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "executive compensation structure",
+    "text_start": "The named executive officer compensation structure for 2025 reflects the Compensation Committee’s goal to balance the following objectives: (i) providing fair p"
+   },
+   {
+    "block_index": 3336,
+    "category": "NOT_BOARD_COMPOSITION",
+    "reason": "auditor selection",
+    "text_start": "The firm of Ernst & Young LLP, independent auditors, has been selected by the Audit Committee to serve as the Company’s independent auditors for the fiscal year"
+   }
+  ]
+ },
+ "record_type": "ISSUE_47_C02_EXCERPT_JUDGEMENTS",
+ "what_decides_a_defect": "Only NOT_BOARD_COMPOSITION excerpts. The two middle categories depend on how broadly the definition's 'committee information' is read, which is a meaning question; they are recorded, not counted against the value."
+}

@@ -1,0 +1,4055 @@
+{
+ "position": "ford_motor_company:2025-12-31",
+ "reader": "independent subagent reading, 2026-09-27",
+ "read_as": "independent subagent reading: a fresh agent given the owner's decision and the filing's blocks, not the selector's rules or the earlier reading",
+ "packet_selection": [
+  47,
+  121,
+  377,
+  379,
+  395,
+  436,
+  437,
+  441,
+  442,
+  443,
+  444,
+  445,
+  449,
+  450,
+  451,
+  470,
+  471,
+  472,
+  473,
+  474,
+  475,
+  476,
+  480,
+  494,
+  495,
+  496,
+  497,
+  498,
+  499,
+  500,
+  501,
+  502,
+  503,
+  516,
+  517,
+  518,
+  519,
+  520,
+  521,
+  522,
+  523,
+  524,
+  525,
+  526,
+  527,
+  528,
+  532,
+  545,
+  546,
+  547,
+  548,
+  549,
+  550,
+  551,
+  552,
+  553,
+  554,
+  555,
+  556,
+  595,
+  613,
+  624,
+  638,
+  847,
+  973,
+  1189,
+  1196,
+  1197,
+  1198,
+  1199,
+  1707,
+  1708,
+  1709,
+  1710,
+  1711,
+  1714,
+  2338
+ ],
+ "packet_pool_size": 532,
+ "pool_blocks_read": 532,
+ "selected": [
+  {
+   "i": 47,
+   "verdict": "FACT",
+   "why": "Board size: election of the 15 director nominees.",
+   "text_sha256": "sha256:1c0cfd0dc45450666fc2eaa2c13dfefbbd993b88fa4c456e70c0ad4b4d032fa0"
+  },
+  {
+   "i": 121,
+   "verdict": "FACT",
+   "why": "Board size: 15 director nominees (meeting agenda line).",
+   "text_sha256": "sha256:a09d91b96d41428edc576d846fea60bec1f3a8b2f5f6a471a3eae8041f89c9d0"
+  },
+  {
+   "i": 377,
+   "verdict": "FACT",
+   "why": "Independence count: 73% of the director nominees are independent.",
+   "text_sha256": "sha256:1ab4c3b6d8711896c12b359b45c8ae9ea603ac3e35f66631db2bbf66d1a23416"
+  },
+  {
+   "i": 379,
+   "verdict": "FACT",
+   "why": "Audit, Compensation Talent & Culture, and Nominating & Governance committees consist entirely of independent directors.",
+   "text_sha256": "sha256:00c3de004779aeb57806537f2a2b0fa798f416ab2bb4b1e15243d9c0a346112e"
+  },
+  {
+   "i": 395,
+   "verdict": "MIXED",
+   "why": "Facts: CEO and Chair roles separated; Farley is President & CEO; W.C. Ford Jr. is Chair of the Board and Executive Chair; Thornton appointed Lead Independent Director; the Chair is not independent. Also process/rationale sentences on why the structure is optimal.",
+   "text_sha256": "sha256:9fb219b52457d1af5696cafa66ec68dd5c88907885846433ee4460511c8aace3"
+  },
+  {
+   "i": 436,
+   "verdict": "FACT",
+   "why": "Only independent directors on Audit/CTC/N&G; Audit members meet heightened SEC audit-committee independence, CTC members meet NYSE comp-committee standards; every Audit member meets NYSE financial literacy.",
+   "text_sha256": "sha256:ff1c0bcb15706cb2134951e4021489a06e43fb3ef9d63d3df1ebf956a09788b4"
+  },
+  {
+   "i": 437,
+   "verdict": "MIXED",
+   "why": "Fact: Board determined Veihmeyer is an audit committee financial expert (also ends the financial-literacy sentence of 436). Other: Board/committees authority to engage consultants.",
+   "text_sha256": "sha256:1c6f06ac3a56c23c2e0aafa431e05aae580007b995033c9bd0afc151c3d2cbe6"
+  },
+  {
+   "i": 441,
+   "verdict": "FACT",
+   "why": "Heading of the Audit Committee card; names the committee and heads its members roster (442-445).",
+   "text_sha256": "sha256:c694e7b552e90ef7a50730a3fa4a5684c10aff4d28a933bbac0f679feb184151"
+  },
+  {
+   "i": 442,
+   "verdict": "FACT",
+   "why": "\"MEMBERS\" label of the Audit Committee roster (names in 443-445).",
+   "text_sha256": "sha256:324ddfd466bdf51d4a298d20efae406b8536e1ad4c1dbfeef340fd008649a3d0"
+  },
+  {
+   "i": 443,
+   "verdict": "FACT",
+   "why": "Audit Committee roster: John B. Veihmeyer, Chair.",
+   "text_sha256": "sha256:d7d08b8aafb22ca9512bc8702150cb0f0159e67e4f5c933b9b85fba808ba99eb"
+  },
+  {
+   "i": 444,
+   "verdict": "FACT",
+   "why": "Audit Committee roster: Kimberly A. Casiano.",
+   "text_sha256": "sha256:dacbfc62b863d44a5872833167009f3a33a91e3d6067cbc1ca91a8831db4b804"
+  },
+  {
+   "i": 445,
+   "verdict": "FACT",
+   "why": "Audit Committee roster: Beth E. Mooney.",
+   "text_sha256": "sha256:29c49adb42932749cd5d408ef4567b07a34731df04fd0cba247fb7dfafdfac57"
+  },
+  {
+   "i": 449,
+   "verdict": "FACT",
+   "why": "Each Audit Committee member is independent (NYSE/SEC/Governance Principles).",
+   "text_sha256": "sha256:a9f6c8301540874ee4071cfe5d738d8bdb6d48f91e0e5b30c4dd95982b39c33c"
+  },
+  {
+   "i": 450,
+   "verdict": "FACT",
+   "why": "Each Audit Committee member meets NYSE financial literacy requirements.",
+   "text_sha256": "sha256:6e6072ad78ad28949ec0cc280f6d24cceb5b1834b00454844e8c7ffe56a19705"
+  },
+  {
+   "i": 451,
+   "verdict": "FACT",
+   "why": "Board determined Veihmeyer qualifies as an audit committee financial expert.",
+   "text_sha256": "sha256:dbeb8fed164469af53f566c3d12622864b35db3c65ab8e46d1f76c6bc0905ca9"
+  },
+  {
+   "i": 470,
+   "verdict": "FACT",
+   "why": "Heading (first part) of the Compensation, Talent and Culture Committee card; heads its roster.",
+   "text_sha256": "sha256:5df23014deec89235fe7f7f9f187c3264f2691129d9fddca290e94ea804c6076"
+  },
+  {
+   "i": 471,
+   "verdict": "FACT",
+   "why": "Heading (second part, \"CULTURE COMMITTEE\") of the CTC card; heads its roster.",
+   "text_sha256": "sha256:70bb5708387de5a08d6e20d95bec26a784221011e5ec562189bc124683c23792"
+  },
+  {
+   "i": 472,
+   "verdict": "FACT",
+   "why": "\"MEMBERS\" label of the CTC roster (names in 473-476).",
+   "text_sha256": "sha256:324ddfd466bdf51d4a298d20efae406b8536e1ad4c1dbfeef340fd008649a3d0"
+  },
+  {
+   "i": 473,
+   "verdict": "FACT",
+   "why": "CTC roster: Lynn Radakovich, Chair.",
+   "text_sha256": "sha256:132c0719d24170c36233ae350c2513207663cc41d1bec509c496c800e556cfc9"
+  },
+  {
+   "i": 474,
+   "verdict": "FACT",
+   "why": "CTC roster: John C. May.",
+   "text_sha256": "sha256:ec7e1b0fab1fe0dca78fc1e73a038df99f3b56fcddc497d09b8c33656f594bca"
+  },
+  {
+   "i": 475,
+   "verdict": "FACT",
+   "why": "CTC roster: John L. Thornton.",
+   "text_sha256": "sha256:750bff6304a3008f238cc4f1648f028ca8e656ffe198bb9b856e50f848e4b84b"
+  },
+  {
+   "i": 476,
+   "verdict": "FACT",
+   "why": "CTC roster: John S. Weinberg.",
+   "text_sha256": "sha256:1923d96b0ccb9c69bc090017e68a49d405aa9a8fc541a37860400c0384e4a85c"
+  },
+  {
+   "i": 480,
+   "verdict": "FACT",
+   "why": "Each CTC member is independent.",
+   "text_sha256": "sha256:39fd98e94fec10c8d91f91f059a9263189c46ced3745893b9b72200cf2cddf23"
+  },
+  {
+   "i": 494,
+   "verdict": "FACT",
+   "why": "Heading of the Finance Committee card; names the committee and heads its roster.",
+   "text_sha256": "sha256:7caa66413db15a82ee49d33d4279b01253c48a2dc6931526c7e1d4cc5b2b47f9"
+  },
+  {
+   "i": 495,
+   "verdict": "FACT",
+   "why": "\"MEMBERS\" label of the Finance Committee roster (names in 496-503).",
+   "text_sha256": "sha256:324ddfd466bdf51d4a298d20efae406b8536e1ad4c1dbfeef340fd008649a3d0"
+  },
+  {
+   "i": 496,
+   "verdict": "FACT",
+   "why": "Finance Committee roster: William Clay Ford, Jr., Chair.",
+   "text_sha256": "sha256:687be3346e2dbf56dc234ab7c2dc2ff3d7faba858f6560162791af2a53ac569e"
+  },
+  {
+   "i": 497,
+   "verdict": "FACT",
+   "why": "Finance Committee roster: Alexandra Ford English.",
+   "text_sha256": "sha256:d71f5c3156a219d570db643a1ec87c0a7ef86d78cba0d9c220547824a8f7198f"
+  },
+  {
+   "i": 498,
+   "verdict": "FACT",
+   "why": "Finance Committee roster: Henry Ford III.",
+   "text_sha256": "sha256:e85c8c459355b303474ebcda2df5bc61e5740506f20b26afcc82b0fe7720c01f"
+  },
+  {
+   "i": 499,
+   "verdict": "FACT",
+   "why": "Finance Committee roster: William W. Helman IV.",
+   "text_sha256": "sha256:ea0cdc99313e4cfcffa1916ce740cb5a1fc6b32e2786d43a65b5db78ee205b81"
+  },
+  {
+   "i": 500,
+   "verdict": "FACT",
+   "why": "Finance Committee roster: William E. Kennard.",
+   "text_sha256": "sha256:9c1a60a90b340f17b415dd39204ead17de3e5dbec477e43e52ed7d08fdc69cbb"
+  },
+  {
+   "i": 501,
+   "verdict": "FACT",
+   "why": "Finance Committee roster: John C. May.",
+   "text_sha256": "sha256:ec7e1b0fab1fe0dca78fc1e73a038df99f3b56fcddc497d09b8c33656f594bca"
+  },
+  {
+   "i": 502,
+   "verdict": "FACT",
+   "why": "Finance Committee roster: John L. Thornton.",
+   "text_sha256": "sha256:750bff6304a3008f238cc4f1648f028ca8e656ffe198bb9b856e50f848e4b84b"
+  },
+  {
+   "i": 503,
+   "verdict": "FACT",
+   "why": "Finance Committee roster: John S. Weinberg.",
+   "text_sha256": "sha256:1923d96b0ccb9c69bc090017e68a49d405aa9a8fc541a37860400c0384e4a85c"
+  },
+  {
+   "i": 516,
+   "verdict": "FACT",
+   "why": "Heading (first part) of the Nominating and Governance Committee card; heads its roster.",
+   "text_sha256": "sha256:abd255b9f42dafe580bbb39b773cf08472aae9af340ddccd4f7b3d9939c93539"
+  },
+  {
+   "i": 517,
+   "verdict": "FACT",
+   "why": "Heading (second part, \"COMMITTEE\") of the N&G card; heads its roster.",
+   "text_sha256": "sha256:e265fdc3636b8540869536c54dd9559fedb318a983b1c9c4cc4a4d78ee184e86"
+  },
+  {
+   "i": 518,
+   "verdict": "FACT",
+   "why": "\"MEMBERS\" label of the N&G roster (names in 519-528).",
+   "text_sha256": "sha256:324ddfd466bdf51d4a298d20efae406b8536e1ad4c1dbfeef340fd008649a3d0"
+  },
+  {
+   "i": 519,
+   "verdict": "FACT",
+   "why": "N&G roster: William E. Kennard, Chair.",
+   "text_sha256": "sha256:06f7d7bf46f5842804bfd086bf8c11bdac9b3e87744864359737e20561e1842a"
+  },
+  {
+   "i": 520,
+   "verdict": "FACT",
+   "why": "N&G roster: Kimberly A. Casiano.",
+   "text_sha256": "sha256:dacbfc62b863d44a5872833167009f3a33a91e3d6067cbc1ca91a8831db4b804"
+  },
+  {
+   "i": 521,
+   "verdict": "FACT",
+   "why": "N&G roster: Adriana Cisneros.",
+   "text_sha256": "sha256:9618d0996bf4dcd00abffa2fb961a66460a10268cf7ae2afe73bce671054a45e"
+  },
+  {
+   "i": 522,
+   "verdict": "FACT",
+   "why": "N&G roster: William W. Helman IV.",
+   "text_sha256": "sha256:ea0cdc99313e4cfcffa1916ce740cb5a1fc6b32e2786d43a65b5db78ee205b81"
+  },
+  {
+   "i": 523,
+   "verdict": "FACT",
+   "why": "N&G roster: John C. May.",
+   "text_sha256": "sha256:ec7e1b0fab1fe0dca78fc1e73a038df99f3b56fcddc497d09b8c33656f594bca"
+  },
+  {
+   "i": 524,
+   "verdict": "FACT",
+   "why": "N&G roster: Beth E. Mooney.",
+   "text_sha256": "sha256:29c49adb42932749cd5d408ef4567b07a34731df04fd0cba247fb7dfafdfac57"
+  },
+  {
+   "i": 525,
+   "verdict": "FACT",
+   "why": "N&G roster: Lynn Radakovich.",
+   "text_sha256": "sha256:208b8570da97663a1e677ee6256a522e29f90b743530c39798578b2e4f33dc06"
+  },
+  {
+   "i": 526,
+   "verdict": "FACT",
+   "why": "N&G roster: John L. Thornton.",
+   "text_sha256": "sha256:750bff6304a3008f238cc4f1648f028ca8e656ffe198bb9b856e50f848e4b84b"
+  },
+  {
+   "i": 527,
+   "verdict": "FACT",
+   "why": "N&G roster: John Veihmeyer.",
+   "text_sha256": "sha256:aa203ba9737feb19e16a1b7573cfeeecfc8f9d0f4a3ea4ef936cf9598698555a"
+  },
+  {
+   "i": 528,
+   "verdict": "FACT",
+   "why": "N&G roster: John S. Weinberg.",
+   "text_sha256": "sha256:1923d96b0ccb9c69bc090017e68a49d405aa9a8fc541a37860400c0384e4a85c"
+  },
+  {
+   "i": 532,
+   "verdict": "FACT",
+   "why": "Each N&G member is independent.",
+   "text_sha256": "sha256:3963ad1e1c05369079ceb7d80b9e9727bf50864f96cf2e6536560b7c6231c26a"
+  },
+  {
+   "i": 545,
+   "verdict": "FACT",
+   "why": "Heading of the Sustainability, Innovation and Policy Committee card; names it and heads its roster.",
+   "text_sha256": "sha256:f018232cf4542affed101b3a19345b49c8781b41f1330e91635c114bff8b4b72"
+  },
+  {
+   "i": 546,
+   "verdict": "FACT",
+   "why": "\"MEMBERS\" label of the SIP roster (names in 547-556).",
+   "text_sha256": "sha256:324ddfd466bdf51d4a298d20efae406b8536e1ad4c1dbfeef340fd008649a3d0"
+  },
+  {
+   "i": 547,
+   "verdict": "FACT",
+   "why": "SIP roster: William W. Helman IV, Chair.",
+   "text_sha256": "sha256:5a1e47e7f84c6c841e27304c044ecf26c89dc885bc53e374eddf817f9b777131"
+  },
+  {
+   "i": 548,
+   "verdict": "FACT",
+   "why": "SIP roster: Kimberly A. Casiano.",
+   "text_sha256": "sha256:dacbfc62b863d44a5872833167009f3a33a91e3d6067cbc1ca91a8831db4b804"
+  },
+  {
+   "i": 549,
+   "verdict": "FACT",
+   "why": "SIP roster: Adriana Cisneros.",
+   "text_sha256": "sha256:9618d0996bf4dcd00abffa2fb961a66460a10268cf7ae2afe73bce671054a45e"
+  },
+  {
+   "i": 550,
+   "verdict": "FACT",
+   "why": "SIP roster: Alexandra Ford English.",
+   "text_sha256": "sha256:d71f5c3156a219d570db643a1ec87c0a7ef86d78cba0d9c220547824a8f7198f"
+  },
+  {
+   "i": 551,
+   "verdict": "FACT",
+   "why": "SIP roster: Henry Ford III.",
+   "text_sha256": "sha256:e85c8c459355b303474ebcda2df5bc61e5740506f20b26afcc82b0fe7720c01f"
+  },
+  {
+   "i": 552,
+   "verdict": "FACT",
+   "why": "SIP roster: William Clay Ford, Jr.",
+   "text_sha256": "sha256:0a9907f585d00855b5d84b96bdced3c9aa4c980291a9178794d9f035f4a5b616"
+  },
+  {
+   "i": 553,
+   "verdict": "FACT",
+   "why": "SIP roster: Jon M. Huntsman, Jr.",
+   "text_sha256": "sha256:7d07c6538848c60b5d26a355a3d5c39386b533c069d2d765b3a38ee38422eec1"
+  },
+  {
+   "i": 554,
+   "verdict": "FACT",
+   "why": "SIP roster: William E. Kennard.",
+   "text_sha256": "sha256:9c1a60a90b340f17b415dd39204ead17de3e5dbec477e43e52ed7d08fdc69cbb"
+  },
+  {
+   "i": 555,
+   "verdict": "FACT",
+   "why": "SIP roster: Lynn Radakovich.",
+   "text_sha256": "sha256:208b8570da97663a1e677ee6256a522e29f90b743530c39798578b2e4f33dc06"
+  },
+  {
+   "i": 556,
+   "verdict": "FACT",
+   "why": "SIP roster: John S. Weinberg.",
+   "text_sha256": "sha256:1923d96b0ccb9c69bc090017e68a49d405aa9a8fc541a37860400c0384e4a85c"
+  },
+  {
+   "i": 595,
+   "verdict": "MIXED",
+   "why": "Facts: Veihmeyer is Audit Chair and designated audit committee financial expert; he and the other Audit members meet audit-committee independence standards. Other: charter limit on other audit-committee seats (a criterion) and auditor lead-partner rotation.",
+   "text_sha256": "sha256:d3bbbacd028b47d7b796c37598e1a222390b4a13a935a4256fee694a453cc010"
+  },
+  {
+   "i": 613,
+   "verdict": "MIXED",
+   "why": "Fact: CTC currently composed of four directors, all independent. Other: committee duties, membership set by the Board (process), charter.",
+   "text_sha256": "sha256:0b2e5bbe2c6eb0af83ccb01846b34163b933b30abf3e55b24bc23a1fcd09372e"
+  },
+  {
+   "i": 624,
+   "verdict": "FACT",
+   "why": "73% of director nominees independent; Audit, N&G and CTC committees entirely independent.",
+   "text_sha256": "sha256:91a9226ba9a83761b9522ee291a36dfbc91946107553b84b1d9f0849318fa880"
+  },
+  {
+   "i": 638,
+   "verdict": "FACT",
+   "why": "Names the 11 directors determined independent; 10 of them (all but Weinberg) independent under audit-committee standards, all 11 under comp-committee standards; 73% of nominees independent; three committees fully independent.",
+   "text_sha256": "sha256:249f43c10c763fbe0954bd26da4533943368f5bca4acf094ec959b0ab64ba0bb"
+  },
+  {
+   "i": 847,
+   "verdict": "MIXED",
+   "why": "Fact: fifteen directors stand for election (board size). Other: consent to serve, substitution/board-size-reduction mechanics, term of office.",
+   "text_sha256": "sha256:4a62ef4e3f0c4d4fb226460a388872ea936bf9bd35eb7595fc60f3053f2a9039"
+  },
+  {
+   "i": 973,
+   "verdict": "MIXED",
+   "why": "Facts: W.C. Ford Jr. is Chair of the Board (since Jan 1999), Executive Chair (since 2006) and Chair of the Finance Committee (since 2007). Other: his employment history and roles at other organisations (Detroit Lions, Detroit Economic Club, The Henry Ford, Business Leaders for Michigan).",
+   "text_sha256": "sha256:627ca548ec495f5714a05630b4bca7d9b604d6e2141b457b7823d85d882b962f"
+  },
+  {
+   "i": 1189,
+   "verdict": "MIXED",
+   "why": "Fact: Audit Committee composed of three directors, all meeting independence standards. Other: charter and its auditor-selection duty.",
+   "text_sha256": "sha256:3554517ebfb4ad2853144e13191a9951faf1fa9d873276e5a9703496319334d1"
+  },
+  {
+   "i": 1196,
+   "verdict": "FACT",
+   "why": "Audit Committee Report signature heading; with 1197-1199 lists the committee members.",
+   "text_sha256": "sha256:6e8176aefb47a5c87e4ebfd997b4749e3f4db4fdfd261d0b13de7a002beacbd8"
+  },
+  {
+   "i": 1197,
+   "verdict": "FACT",
+   "why": "Audit Committee report signature: John B. Veihmeyer (Chair).",
+   "text_sha256": "sha256:5ac89a40d451de7eebe6f2e0356dd990a40a42254af2b136ed3506df8e9be728"
+  },
+  {
+   "i": 1198,
+   "verdict": "FACT",
+   "why": "Audit Committee report signature: Beth E. Mooney.",
+   "text_sha256": "sha256:d6079a3b4a18ce211b4740cdb56fdcde248cca43cdaf61e14ccc8424bed05caa"
+  },
+  {
+   "i": 1199,
+   "verdict": "FACT",
+   "why": "Audit Committee report signature: Kimberly A. Casiano.",
+   "text_sha256": "sha256:650bd84e1714ac935b2123125b805dc3da428a427773242305bcc8e9206ec64a"
+  },
+  {
+   "i": 1707,
+   "verdict": "FACT",
+   "why": "Compensation Committee Report signature heading; with 1708-1711 lists the CTC members.",
+   "text_sha256": "sha256:437895a2c5ef63b185121b7db79b149c09b92282b530e1427bd106eb8a13d51e"
+  },
+  {
+   "i": 1708,
+   "verdict": "FACT",
+   "why": "CTC report signature: Lynn Radakovich (Chair).",
+   "text_sha256": "sha256:0da33a8636f2387d66ede51f402fd7cef0ffb25d380c562a4ca2136a2431c277"
+  },
+  {
+   "i": 1709,
+   "verdict": "FACT",
+   "why": "CTC report signature: John L. Thornton.",
+   "text_sha256": "sha256:43d3336eaef2409c184fd79a1b0d1909d25ad52e56bc1f8cd50161661f8572ff"
+  },
+  {
+   "i": 1710,
+   "verdict": "FACT",
+   "why": "CTC report signature: John C. May.",
+   "text_sha256": "sha256:f2b16046a4a19329b7306b2c11a9344d703c94f34a4681fe552b91d74aa6e1ce"
+  },
+  {
+   "i": 1711,
+   "verdict": "FACT",
+   "why": "CTC report signature: John S. Weinberg.",
+   "text_sha256": "sha256:32d6b9c88f455a344e23a168dee4b4e61edc7f33951fb107149de59359cb83e3"
+  },
+  {
+   "i": 1714,
+   "verdict": "FACT",
+   "why": "CTC members during 2025 (May, Radakovich, Thornton, Weinberg); none was an employee or current/former officer and none had a disclosable relationship.",
+   "text_sha256": "sha256:ac9af21dde5af07d810a900a5d7959f41ca6681d7568091ab02d099c648b2a16"
+  },
+  {
+   "i": 2338,
+   "verdict": "FACT",
+   "why": "Eleven of the director nominees are independent.",
+   "text_sha256": "sha256:c0f1c13c0320672c32d909e8e6af4d0b6bdcdd1d1ca1869722681bce952fe207"
+  }
+ ],
+ "pool_facts": [
+  {
+   "i": 33,
+   "verdict": "FACT",
+   "why": "Letter signature title: William Clay Ford, Jr. (block 32) is Chair of the Board.",
+   "text_sha256": "sha256:f03c003b38cb73099a3d014302237d02aa188ec054aa409fe0197bf1899152a6",
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "i": 43,
+   "verdict": "FACT",
+   "why": "Pull-quote attribution: William Clay Ford, Jr. (block 42) is Chair of the Board.",
+   "text_sha256": "sha256:f03c003b38cb73099a3d014302237d02aa188ec054aa409fe0197bf1899152a6",
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "i": 147,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Kimberly A. Casiano is Independent.",
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 156,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Adriana Cisneros is Independent.",
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 186,
+   "verdict": "FACT",
+   "why": "Nominee summary table: W.C. Ford Jr. is Executive Chair & Chair of the Board (title continues in 187).",
+   "text_sha256": "sha256:a6c7afd8b5d6bcb938d8bf4913bd5980beb004042330a43c92829bcbed8bb67d",
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "i": 187,
+   "verdict": "FACT",
+   "why": "Continuation of 186: \"...Board of Directors, Ford Motor Company\" - W.C. Ford Jr. is Chair of the Board.",
+   "text_sha256": "sha256:b3dbfad15d336dcdb0af95f1a4afd64e74fb87f5805b74875dccd0c8256205cf",
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "i": 190,
+   "verdict": "FACT",
+   "why": "Nominee-table director card: W.C. Ford Jr. chairs the Finance Committee.",
+   "text_sha256": "sha256:5eb164df71800cf5afa164a836b898b1373eafa4268d886e40b679b733cb8f25",
+   "redundant_with": [
+    494,
+    495,
+    496
+   ]
+  },
+  {
+   "i": 193,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: William W. Helman IV is Independent.",
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 199,
+   "verdict": "FACT",
+   "why": "Nominee-table director card: Helman chairs the Sustainability, Innovation & Policy Committee.",
+   "text_sha256": "sha256:da83e76248455cde383ab9c467566478832b6bf227a1b2b6dd84f6741ba7f3e9",
+   "redundant_with": [
+    545,
+    546,
+    547
+   ]
+  },
+  {
+   "i": 202,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Jon M. Huntsman, Jr. is Independent.",
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 210,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: William E. Kennard is Independent.",
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 216,
+   "verdict": "FACT",
+   "why": "Nominee-table director card: Kennard chairs the Nominating & Governance Committee.",
+   "text_sha256": "sha256:4c8f18eaf6b6bc06c0e8d59f2ed4f2aa2fb3f6048956444d59668daad20026ba",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    519
+   ]
+  },
+  {
+   "i": 221,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: John C. May is Independent.",
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 231,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Beth E. Mooney is Independent.",
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 240,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Lynn Radakovich is Independent.",
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 245,
+   "verdict": "FACT",
+   "why": "Nominee-table director card: Radakovich chairs the Compensation, Talent & Culture Committee.",
+   "text_sha256": "sha256:95d0ff3eeda80176ca06bf11d3ab846c0051ddfd83e004f9c2beb87f0a1dfdf4",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    473
+   ]
+  },
+  {
+   "i": 252,
+   "verdict": "FACT",
+   "why": "Nominee-table director card: John L. Thornton is Lead Independent Director (and independent).",
+   "text_sha256": "sha256:c9d70c052b3e31cf377861de84c5a44498c9d336c360a763351d56382a16a0d6",
+   "redundant_with": [
+    395,
+    638
+   ]
+  },
+  {
+   "i": 263,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: John B. Veihmeyer is Independent.",
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 269,
+   "verdict": "FACT",
+   "why": "Nominee-table director card: Veihmeyer chairs the Audit Committee.",
+   "text_sha256": "sha256:c7dc890e8f9c7029d14ca8ba58b9136d7c5d57dd21c3c373cdd6f042f9d2cf47",
+   "redundant_with": [
+    441,
+    442,
+    443
+   ]
+  },
+  {
+   "i": 272,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: John S. Weinberg is Independent.",
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 378,
+   "verdict": "MIXED",
+   "why": "Fact: the Board has a Lead Independent Director. Other: the role's duty.",
+   "text_sha256": "sha256:f959081ddab6baa44c89e4a79c30ed2777c92d71ec529d8c5c0ed0c8c1d2c396",
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "i": 384,
+   "verdict": "FACT",
+   "why": "CEO and Chair of the Board roles are held separately.",
+   "text_sha256": "sha256:379c146019a1d2cfe2c6025b594ecb01f8971074b3c6abbfa4509fe5e179e8a5",
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "i": 411,
+   "verdict": "MIXED",
+   "why": "Fact: W.C. Ford Jr. is Executive Chair. Other: rationale on Ford-family perspective, family relationships, and that A. Ford English and H. Ford III were first elected in 2021 (historical tenure, not a current change).",
+   "text_sha256": "sha256:b9a46066dba0e0643e15fd78d089f227d607ff1b675ea33ec0995d786a320f79",
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "i": 412,
+   "verdict": "FACT",
+   "why": "\"BOARD COMMITTEES\" heading of the committee matrix; with its column headers (414-420) it names the five board committees.",
+   "text_sha256": "sha256:dfb0184d8c8d1b1e5edd6378c304d338cc65685cdb4ccc1d1edee0010f2f8d21",
+   "redundant_with": [
+    441,
+    470,
+    471,
+    494,
+    516,
+    517,
+    545
+   ]
+  },
+  {
+   "i": 438,
+   "verdict": "MIXED",
+   "why": "Fact: the Board has five committees (Audit, CTC, Finance, N&G, SIP). Other: charters published on the website.",
+   "text_sha256": "sha256:4ac486a59a34a2567993fcdd378288c51bd700bd92d6dc6d7488bf7ee3b715ab",
+   "redundant_with": [
+    441,
+    470,
+    471,
+    494,
+    516,
+    517,
+    545
+   ]
+  },
+  {
+   "i": 642,
+   "verdict": "MIXED",
+   "why": "Fact: Board found the business/charitable relationships of May, Thornton, Weinberg, Kennard, Veihmeyer, Mooney and Radakovich not material (independence determination). Other: description of the transactions and donations.",
+   "text_sha256": "sha256:aabd2613434a880789b77d11afcf8042ffc7ec4f5b3765563fdd9d147d0c3b79",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 908,
+   "verdict": "FACT",
+   "why": "Director bio card: Casiano is independent (\"Independent Director Since\").",
+   "text_sha256": "sha256:bed3513c1a73b7c6bc7cd41e318b35ec90ae188190775d40b85a6113c14e4c8f",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 910,
+   "verdict": "FACT",
+   "why": "Bio card: Casiano's committees - Audit; Nominating and Governance (list continues in 911-912).",
+   "text_sha256": "sha256:61f1107134a7a4a4fa34fea80b4233c4e3708b607c85469558e6fb65e485c881",
+   "redundant_with": [
+    441,
+    442,
+    444,
+    516,
+    517,
+    518,
+    520
+   ]
+  },
+  {
+   "i": 922,
+   "verdict": "FACT",
+   "why": "Director bio card: Cisneros is independent (\"Independent Director Since\").",
+   "text_sha256": "sha256:bed3513c1a73b7c6bc7cd41e318b35ec90ae188190775d40b85a6113c14e4c8f",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 924,
+   "verdict": "FACT",
+   "why": "Bio card: Cisneros's committees - Nominating and Governance (list continues in 925-926).",
+   "text_sha256": "sha256:ee266f0e718bc939cb61c1deb2ac30d7b7d204253bfe96556142ccdf25a630ed",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    521
+   ]
+  },
+  {
+   "i": 938,
+   "verdict": "FACT",
+   "why": "Bio card: A. Ford English's committees - Finance; Sustainability, Innovation and Policy (completed in 939).",
+   "text_sha256": "sha256:ee70a067cf801a20afe6efa0fdfa2cdccde99b0c07f204424189a5b0277cb228",
+   "redundant_with": [
+    494,
+    495,
+    497,
+    545,
+    546,
+    550
+   ]
+  },
+  {
+   "i": 948,
+   "verdict": "FACT",
+   "why": "Bio card: Farley serves on no board committee (\"Committees: N/A\"); the five complete rosters all omit him.",
+   "text_sha256": "sha256:10282050ad6e94693c3c1a6b0f50ebf043b6a751f737e95c95725d26593c344f",
+   "redundant_with": [
+    441,
+    442,
+    443,
+    444,
+    445,
+    470,
+    471,
+    472,
+    473,
+    474,
+    475,
+    476,
+    494,
+    495,
+    496,
+    497,
+    498,
+    499,
+    500,
+    501,
+    502,
+    503,
+    516,
+    517,
+    518,
+    519,
+    520,
+    521,
+    522,
+    523,
+    524,
+    525,
+    526,
+    527,
+    528,
+    545,
+    546,
+    547,
+    548,
+    549,
+    550,
+    551,
+    552,
+    553,
+    554,
+    555,
+    556
+   ]
+  },
+  {
+   "i": 959,
+   "verdict": "FACT",
+   "why": "Bio card: Henry Ford III's committees - Finance; Sustainability, Innovation and Policy (completed in 960).",
+   "text_sha256": "sha256:ee70a067cf801a20afe6efa0fdfa2cdccde99b0c07f204424189a5b0277cb228",
+   "redundant_with": [
+    494,
+    495,
+    498,
+    545,
+    546,
+    551
+   ]
+  },
+  {
+   "i": 969,
+   "verdict": "FACT",
+   "why": "Bio card: W.C. Ford Jr. chairs the Finance Committee (SIP follows in 970-971).",
+   "text_sha256": "sha256:6a4e5d64e3c5981ae0c812e4cfc5ffaa09a2868b642787b9ce0363f0fdf37b36",
+   "redundant_with": [
+    494,
+    495,
+    496
+   ]
+  },
+  {
+   "i": 980,
+   "verdict": "FACT",
+   "why": "Director bio card: Helman is independent (\"Independent Director Since\").",
+   "text_sha256": "sha256:77614b2ad04ee4f02cc9f2caa98e1720acd03d85b001187c5e4fef2e2f95468c",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 981,
+   "verdict": "FACT",
+   "why": "Bio card: Helman's committees - Finance; Nominating and Governance (list continues in 982-983).",
+   "text_sha256": "sha256:f37214bfa679504a647a5f7e205bc41787dd977675c379abc1a20d1ced340046",
+   "redundant_with": [
+    494,
+    495,
+    499,
+    516,
+    517,
+    518,
+    522
+   ]
+  },
+  {
+   "i": 983,
+   "verdict": "FACT",
+   "why": "Bio card: Helman chairs SIP (\"Innovation and Policy (Chair)\").",
+   "text_sha256": "sha256:f72038b109130e21ca33a67198abf3e854772e3460b68ea583e270f93de9b3ea",
+   "redundant_with": [
+    545,
+    546,
+    547
+   ]
+  },
+  {
+   "i": 994,
+   "verdict": "FACT",
+   "why": "Director bio card: Huntsman is independent; label dates his independence from 2026 (director since 2020) - a status date outside the listed composition facts.",
+   "text_sha256": "sha256:6d12fdfaa0f97c4bbb4997fc802d720d6e20b071c989bac02599e4bae9551ced",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 995,
+   "verdict": "FACT",
+   "why": "Bio card: Huntsman's committee - Sustainability, Innovation and Policy (completed in 996).",
+   "text_sha256": "sha256:efb76b84edb027e714e66f070041a85719b26645c03dee1a9e12e3deae6a4e4a",
+   "redundant_with": [
+    545,
+    546,
+    553
+   ]
+  },
+  {
+   "i": 1009,
+   "verdict": "FACT",
+   "why": "Director bio card: Kennard is independent (\"Independent Director Since\").",
+   "text_sha256": "sha256:af51c7e8b27694db585d4e80ff235751931226fc87d5c2c07b3922e927bd8e7e",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 1010,
+   "verdict": "FACT",
+   "why": "Bio card: Kennard's committees - Finance; Nominating and Governance (continues in 1011).",
+   "text_sha256": "sha256:f37214bfa679504a647a5f7e205bc41787dd977675c379abc1a20d1ced340046",
+   "redundant_with": [
+    494,
+    495,
+    500,
+    516,
+    517,
+    518,
+    519
+   ]
+  },
+  {
+   "i": 1011,
+   "verdict": "FACT",
+   "why": "Bio card: Kennard chairs Nominating and Governance (\"and Governance (Chair);\").",
+   "text_sha256": "sha256:612de4fb608e146e686fa5d3561e0fdbe6155720f4ae556c131d6c24197ce449",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    519
+   ]
+  },
+  {
+   "i": 1024,
+   "verdict": "FACT",
+   "why": "Director bio card: May is independent (\"Independent Director Since\").",
+   "text_sha256": "sha256:c28af08189ba40b94717608d50629da98566860dedf859b8cac69275f830ec84",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 1025,
+   "verdict": "FACT",
+   "why": "Bio card: May's committee list begins - Compensation, Talent and Culture (continues in 1026-1027).",
+   "text_sha256": "sha256:31a5a61ef35916e5481378a01ff9a9f976cd73aa4930ad4c272a8883eec3ab0b",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    474
+   ]
+  },
+  {
+   "i": 1037,
+   "verdict": "FACT",
+   "why": "Director bio card: Mooney is independent (\"Independent Director Since\").",
+   "text_sha256": "sha256:5bc75c1aff54fbc9d4c313c274e7cea6cec7482c3b1c7cc58f633cbcd0430252",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 1038,
+   "verdict": "FACT",
+   "why": "Bio card: Mooney's committees - Audit; Nominating and Governance (completed in 1039).",
+   "text_sha256": "sha256:61f1107134a7a4a4fa34fea80b4233c4e3708b607c85469558e6fb65e485c881",
+   "redundant_with": [
+    441,
+    442,
+    445,
+    516,
+    517,
+    518,
+    524
+   ]
+  },
+  {
+   "i": 1050,
+   "verdict": "FACT",
+   "why": "Director bio card: Radakovich is independent (\"Independent Director Since\").",
+   "text_sha256": "sha256:d1837c4249fe6689fe866a1c979cb997ebaf5f471961308382e0e4e0a142d3ca",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 1051,
+   "verdict": "FACT",
+   "why": "Bio card: Radakovich's committee list begins - Compensation, Talent and Culture (continues in 1052-1055).",
+   "text_sha256": "sha256:31a5a61ef35916e5481378a01ff9a9f976cd73aa4930ad4c272a8883eec3ab0b",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    473
+   ]
+  },
+  {
+   "i": 1052,
+   "verdict": "FACT",
+   "why": "Bio card: Radakovich chairs CTC (\"Talent and Culture (Chair);\").",
+   "text_sha256": "sha256:7d8c46b4ef0f5881d4fd6a3c82c5518daccdd576f73b999fc175a5e6727e37db",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    473
+   ]
+  },
+  {
+   "i": 1065,
+   "verdict": "FACT",
+   "why": "Bio card: Thornton is Lead Independent Director (since 2022, year in 1066).",
+   "text_sha256": "sha256:622b04d0ab51bbb370e9addc46349e87518ecaaa0fad566a407191f7f0af079e",
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "i": 1067,
+   "verdict": "FACT",
+   "why": "Director bio card: Thornton is independent (\"Independent Director Since\").",
+   "text_sha256": "sha256:8852010ddc7a326159bac775f04efeb3f3e6d1da61d9e31de5fb8fcf3b718206",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 1068,
+   "verdict": "FACT",
+   "why": "Bio card: Thornton's committee list begins - Compensation, Talent and Culture (continues in 1069-1070).",
+   "text_sha256": "sha256:31a5a61ef35916e5481378a01ff9a9f976cd73aa4930ad4c272a8883eec3ab0b",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    475
+   ]
+  },
+  {
+   "i": 1083,
+   "verdict": "FACT",
+   "why": "Director bio card: Veihmeyer is independent (\"Independent Director Since\").",
+   "text_sha256": "sha256:d1837c4249fe6689fe866a1c979cb997ebaf5f471961308382e0e4e0a142d3ca",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 1084,
+   "verdict": "FACT",
+   "why": "Bio card: Veihmeyer chairs the Audit Committee (N&G follows in 1085).",
+   "text_sha256": "sha256:0ddd47b829dae7dd448266454d8c8e788cd5bc914df6d20a7e5f64feec74bf0f",
+   "redundant_with": [
+    441,
+    442,
+    443
+   ]
+  },
+  {
+   "i": 1095,
+   "verdict": "FACT",
+   "why": "Director bio card: Weinberg is independent (\"Independent Director Since\").",
+   "text_sha256": "sha256:0c4132b6239f675114ee483bbfab5c29509343d854ea87cd89adf6ff5e6c5616",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 1096,
+   "verdict": "FACT",
+   "why": "Bio card: Weinberg's committee list begins - Compensation, Talent and Culture (continues in 1097-1100).",
+   "text_sha256": "sha256:31a5a61ef35916e5481378a01ff9a9f976cd73aa4930ad4c272a8883eec3ab0b",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    476
+   ]
+  },
+  {
+   "i": 1153,
+   "verdict": "MIXED",
+   "why": "Fact: Farley (President & CEO) and W.C. Ford Jr. (Executive Chair) are the directors who are Company employees. Other: director pay policy.",
+   "text_sha256": "sha256:4d159022eeb6479f20596de9226ff47425d8654049cb4363dd589fae3668e65b",
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "i": 2340,
+   "verdict": "FACT",
+   "why": "CEO and Chair positions are separate; the Board has a Lead Independent Director.",
+   "text_sha256": "sha256:ec39c92db106110ac108327d6ba0ba4ffda5f171e81b135cae38f1ad5dba7b38",
+   "redundant_with": [
+    395
+   ]
+  }
+ ],
+ "outside_pool_facts": [
+  {
+   "i": 152,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Casiano serves on the Audit Committee.",
+   "text_sha256": "sha256:f4609e88d764067b5d0745b6eb9c6f50acdf9bedd3d0d7c816025cdb38e56624",
+   "redundant_with": [
+    441,
+    442,
+    444
+   ]
+  },
+  {
+   "i": 153,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Casiano serves on the Nominating and Governance Committee.",
+   "text_sha256": "sha256:55e5e19eaf4f0c132aa1e26376d2b3488f825cdd509160af3572b3d288941636",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    520
+   ]
+  },
+  {
+   "i": 154,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Casiano serves on the Sustainability, Innovation and Policy Committee.",
+   "text_sha256": "sha256:2056bede590c553321e5aae482a521843e01a772a38eb0c8cc103c27ce28de70",
+   "redundant_with": [
+    545,
+    546,
+    548
+   ]
+  },
+  {
+   "i": 160,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Cisneros serves on the Nominating and Governance Committee.",
+   "text_sha256": "sha256:55e5e19eaf4f0c132aa1e26376d2b3488f825cdd509160af3572b3d288941636",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    521
+   ]
+  },
+  {
+   "i": 161,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Cisneros serves on the Sustainability, Innovation and Policy Committee.",
+   "text_sha256": "sha256:2056bede590c553321e5aae482a521843e01a772a38eb0c8cc103c27ce28de70",
+   "redundant_with": [
+    545,
+    546,
+    549
+   ]
+  },
+  {
+   "i": 169,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: A. Ford English serves on the Finance Committee.",
+   "text_sha256": "sha256:adf2770290dc936d8ba7a2cd652b50ef87cc7c20fc9c22d152efbeb0d15368d1",
+   "redundant_with": [
+    494,
+    495,
+    497
+   ]
+  },
+  {
+   "i": 170,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: A. Ford English serves on the Sustainability, Innovation and Policy Committee.",
+   "text_sha256": "sha256:2056bede590c553321e5aae482a521843e01a772a38eb0c8cc103c27ce28de70",
+   "redundant_with": [
+    545,
+    546,
+    550
+   ]
+  },
+  {
+   "i": 183,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Henry Ford III serves on the Finance Committee.",
+   "text_sha256": "sha256:adf2770290dc936d8ba7a2cd652b50ef87cc7c20fc9c22d152efbeb0d15368d1",
+   "redundant_with": [
+    494,
+    495,
+    498
+   ]
+  },
+  {
+   "i": 184,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Henry Ford III serves on the Sustainability, Innovation and Policy Committee.",
+   "text_sha256": "sha256:2056bede590c553321e5aae482a521843e01a772a38eb0c8cc103c27ce28de70",
+   "redundant_with": [
+    545,
+    546,
+    551
+   ]
+  },
+  {
+   "i": 191,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: W.C. Ford Jr. serves on the Sustainability, Innovation and Policy Committee.",
+   "text_sha256": "sha256:2056bede590c553321e5aae482a521843e01a772a38eb0c8cc103c27ce28de70",
+   "redundant_with": [
+    545,
+    546,
+    552
+   ]
+  },
+  {
+   "i": 197,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Helman serves on the Finance Committee.",
+   "text_sha256": "sha256:adf2770290dc936d8ba7a2cd652b50ef87cc7c20fc9c22d152efbeb0d15368d1",
+   "redundant_with": [
+    494,
+    495,
+    499
+   ]
+  },
+  {
+   "i": 198,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Helman serves on the Nominating and Governance Committee.",
+   "text_sha256": "sha256:55e5e19eaf4f0c132aa1e26376d2b3488f825cdd509160af3572b3d288941636",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    522
+   ]
+  },
+  {
+   "i": 207,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Huntsman serves on the Sustainability, Innovation and Policy Committee.",
+   "text_sha256": "sha256:2056bede590c553321e5aae482a521843e01a772a38eb0c8cc103c27ce28de70",
+   "redundant_with": [
+    545,
+    546,
+    553
+   ]
+  },
+  {
+   "i": 215,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Kennard serves on the Finance Committee.",
+   "text_sha256": "sha256:adf2770290dc936d8ba7a2cd652b50ef87cc7c20fc9c22d152efbeb0d15368d1",
+   "redundant_with": [
+    494,
+    495,
+    500
+   ]
+  },
+  {
+   "i": 217,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Kennard serves on the Sustainability, Innovation and Policy Committee.",
+   "text_sha256": "sha256:2056bede590c553321e5aae482a521843e01a772a38eb0c8cc103c27ce28de70",
+   "redundant_with": [
+    545,
+    546,
+    554
+   ]
+  },
+  {
+   "i": 226,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: May serves on the Compensation, Talent and Culture Committee.",
+   "text_sha256": "sha256:f6c216cf379a18d82a448e3a96fbd3f15b05c47b63eef1f49d63560fcd07d80a",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    474
+   ]
+  },
+  {
+   "i": 227,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: May serves on the Finance Committee.",
+   "text_sha256": "sha256:adf2770290dc936d8ba7a2cd652b50ef87cc7c20fc9c22d152efbeb0d15368d1",
+   "redundant_with": [
+    494,
+    495,
+    501
+   ]
+  },
+  {
+   "i": 228,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: May serves on the Nominating and Governance Committee.",
+   "text_sha256": "sha256:55e5e19eaf4f0c132aa1e26376d2b3488f825cdd509160af3572b3d288941636",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    523
+   ]
+  },
+  {
+   "i": 236,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Mooney serves on the Audit Committee.",
+   "text_sha256": "sha256:f4609e88d764067b5d0745b6eb9c6f50acdf9bedd3d0d7c816025cdb38e56624",
+   "redundant_with": [
+    441,
+    442,
+    445
+   ]
+  },
+  {
+   "i": 237,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Mooney serves on the Nominating and Governance Committee.",
+   "text_sha256": "sha256:55e5e19eaf4f0c132aa1e26376d2b3488f825cdd509160af3572b3d288941636",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    524
+   ]
+  },
+  {
+   "i": 246,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Radakovich serves on the Nominating and Governance Committee.",
+   "text_sha256": "sha256:55e5e19eaf4f0c132aa1e26376d2b3488f825cdd509160af3572b3d288941636",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    525
+   ]
+  },
+  {
+   "i": 247,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Radakovich serves on the Sustainability, Innovation and Policy Committee.",
+   "text_sha256": "sha256:2056bede590c553321e5aae482a521843e01a772a38eb0c8cc103c27ce28de70",
+   "redundant_with": [
+    545,
+    546,
+    555
+   ]
+  },
+  {
+   "i": 256,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Thornton serves on the Compensation, Talent and Culture Committee.",
+   "text_sha256": "sha256:256228c060b9a9bce5266658152af46cf33344d50abaa1e559b1382b41302289",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    475
+   ]
+  },
+  {
+   "i": 257,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Thornton serves on the Finance Committee.",
+   "text_sha256": "sha256:adf2770290dc936d8ba7a2cd652b50ef87cc7c20fc9c22d152efbeb0d15368d1",
+   "redundant_with": [
+    494,
+    495,
+    502
+   ]
+  },
+  {
+   "i": 258,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Thornton serves on the Nominating and Governance Committee.",
+   "text_sha256": "sha256:55e5e19eaf4f0c132aa1e26376d2b3488f825cdd509160af3572b3d288941636",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    526
+   ]
+  },
+  {
+   "i": 270,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Veihmeyer serves on the Nominating and Governance Committee.",
+   "text_sha256": "sha256:55e5e19eaf4f0c132aa1e26376d2b3488f825cdd509160af3572b3d288941636",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    527
+   ]
+  },
+  {
+   "i": 277,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Weinberg serves on the Compensation, Talent and Culture Committee.",
+   "text_sha256": "sha256:256228c060b9a9bce5266658152af46cf33344d50abaa1e559b1382b41302289",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    476
+   ]
+  },
+  {
+   "i": 278,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Weinberg serves on the Finance Committee.",
+   "text_sha256": "sha256:adf2770290dc936d8ba7a2cd652b50ef87cc7c20fc9c22d152efbeb0d15368d1",
+   "redundant_with": [
+    494,
+    495,
+    503
+   ]
+  },
+  {
+   "i": 279,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Weinberg serves on the Nominating and Governance Committee.",
+   "text_sha256": "sha256:55e5e19eaf4f0c132aa1e26376d2b3488f825cdd509160af3572b3d288941636",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    528
+   ]
+  },
+  {
+   "i": 280,
+   "verdict": "FACT",
+   "why": "Nominee summary table director card: Weinberg serves on the Sustainability, Innovation and Policy Committee.",
+   "text_sha256": "sha256:2056bede590c553321e5aae482a521843e01a772a38eb0c8cc103c27ce28de70",
+   "redundant_with": [
+    545,
+    546,
+    556
+   ]
+  },
+  {
+   "i": 414,
+   "verdict": "FACT",
+   "why": "Committee-matrix column header under \"BOARD COMMITTEES\": Audit Committee.",
+   "text_sha256": "sha256:bb6aea28739637ea0edb0fbb6e228db85821b76bf8f5e15d1c02ed3949814fc4",
+   "redundant_with": [
+    441
+   ]
+  },
+  {
+   "i": 415,
+   "verdict": "FACT",
+   "why": "Committee-matrix column header (part): Compensation, Talent and Culture Committee.",
+   "text_sha256": "sha256:696e2d633a4b9178952bca2f8559e8054e83446162fde15b7c9dc05c6f46892e",
+   "redundant_with": [
+    470,
+    471
+   ]
+  },
+  {
+   "i": 416,
+   "verdict": "FACT",
+   "why": "Committee-matrix column header (part): \"Talent and Culture\" of the CTC Committee.",
+   "text_sha256": "sha256:baff8a31fb1eae1bf3ad21e8ab9f3fb9c4a8db9c49498e75de988c9c2a49d93a",
+   "redundant_with": [
+    470,
+    471
+   ]
+  },
+  {
+   "i": 417,
+   "verdict": "FACT",
+   "why": "Committee-matrix column header: Finance Committee.",
+   "text_sha256": "sha256:b696d75511dc16f2b52563e3113a498311a79866f4672862197aa9a8c5c0da12",
+   "redundant_with": [
+    494
+   ]
+  },
+  {
+   "i": 418,
+   "verdict": "FACT",
+   "why": "Committee-matrix column header (part): Nominating and Governance Committee.",
+   "text_sha256": "sha256:2d45fea148f7215600e5d75e28e297cbdbb79a53c26580eafd3d35772ea7b7dc",
+   "redundant_with": [
+    516,
+    517
+   ]
+  },
+  {
+   "i": 419,
+   "verdict": "FACT",
+   "why": "Committee-matrix column headers (parts): end of Nominating and Governance, start of Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:c7f11af28eb8b62824a61ea157943f40533a736e98b662e73d57cb35c739ec6f",
+   "redundant_with": [
+    516,
+    517,
+    545
+   ]
+  },
+  {
+   "i": 420,
+   "verdict": "FACT",
+   "why": "Committee-matrix column header (part): Sustainability, Innovation and Policy Committee.",
+   "text_sha256": "sha256:094df3ae93473b75dda7049616db96483d76d93be2755ec4c1694ceac0d75222",
+   "redundant_with": [
+    545
+   ]
+  },
+  {
+   "i": 911,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"and Governance; Sustainability,\"): Casiano on Nominating and Governance and Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:fcbd270d488a0a85e623f64370c8a24c2fd5dd779fd3c22eed315679b2ba8ed2",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    520,
+    545,
+    546,
+    548
+   ]
+  },
+  {
+   "i": 912,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Innovation and Policy\"): Casiano on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:094df3ae93473b75dda7049616db96483d76d93be2755ec4c1694ceac0d75222",
+   "redundant_with": [
+    545,
+    546,
+    548
+   ]
+  },
+  {
+   "i": 925,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Governance; Sustainability,\"): Cisneros on Nominating and Governance and Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:ecdc357779ba1719b49ead8e0f1b2afd57183bbafda9ad18bc2eee778c68ea35",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    521,
+    545,
+    546,
+    549
+   ]
+  },
+  {
+   "i": 926,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Innovation and Policy\"): Cisneros on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:094df3ae93473b75dda7049616db96483d76d93be2755ec4c1694ceac0d75222",
+   "redundant_with": [
+    545,
+    546,
+    549
+   ]
+  },
+  {
+   "i": 939,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Innovation and Policy\"): A. Ford English on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:094df3ae93473b75dda7049616db96483d76d93be2755ec4c1694ceac0d75222",
+   "redundant_with": [
+    545,
+    546,
+    550
+   ]
+  },
+  {
+   "i": 960,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Innovation and Policy\"): Henry Ford III on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:094df3ae93473b75dda7049616db96483d76d93be2755ec4c1694ceac0d75222",
+   "redundant_with": [
+    545,
+    546,
+    551
+   ]
+  },
+  {
+   "i": 970,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Sustainability, Innovation and\"): W.C. Ford Jr. on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:ca07873135aa4d62d3eeac57ce18984d6b08dad193bfa82338d8b35d572fd5d1",
+   "redundant_with": [
+    545,
+    546,
+    552
+   ]
+  },
+  {
+   "i": 971,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Policy\"): W.C. Ford Jr. on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:c611981fab983bc648368eb81240f5a5a1eff07f40aa4c9fd155600a98eeb6af",
+   "redundant_with": [
+    545,
+    546,
+    552
+   ]
+  },
+  {
+   "i": 982,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"and Governance; Sustainability,\"): Helman on Nominating and Governance and Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:fcbd270d488a0a85e623f64370c8a24c2fd5dd779fd3c22eed315679b2ba8ed2",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    522,
+    545,
+    546,
+    547
+   ]
+  },
+  {
+   "i": 996,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Innovation and Policy\"): Huntsman on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:094df3ae93473b75dda7049616db96483d76d93be2755ec4c1694ceac0d75222",
+   "redundant_with": [
+    545,
+    546,
+    553
+   ]
+  },
+  {
+   "i": 1012,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Sustainability, Innovation and\"): Kennard on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:ca07873135aa4d62d3eeac57ce18984d6b08dad193bfa82338d8b35d572fd5d1",
+   "redundant_with": [
+    545,
+    546,
+    554
+   ]
+  },
+  {
+   "i": 1013,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Policy\"): Kennard on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:c611981fab983bc648368eb81240f5a5a1eff07f40aa4c9fd155600a98eeb6af",
+   "redundant_with": [
+    545,
+    546,
+    554
+   ]
+  },
+  {
+   "i": 1026,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Talent and Culture; Finance;\"): May on Compensation, Talent and Culture and Finance.",
+   "text_sha256": "sha256:3025b751f9e0d45b89a16b9b6494acdc10e59e1df0ce63d657e02cb02790cb5d",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    474,
+    494,
+    495,
+    501
+   ]
+  },
+  {
+   "i": 1027,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Nominating and Governance\"): May on Nominating and Governance.",
+   "text_sha256": "sha256:87c76d1b0dfd01b213865e6e278095de1ba1202d648fe36bd4df5006f21194e9",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    523
+   ]
+  },
+  {
+   "i": 1039,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"and Governance\"): Mooney on Nominating and Governance.",
+   "text_sha256": "sha256:f87ff13bfa171eab19a676404d7e0431915f6b46bf4d60bcf00315240d943fc2",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    524
+   ]
+  },
+  {
+   "i": 1053,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Nominating and Governance;\"): Radakovich on Nominating and Governance.",
+   "text_sha256": "sha256:dd21b67996bd8e1cb23a01d519bc425a06d371e099898f42b809fdf599132f03",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    525
+   ]
+  },
+  {
+   "i": 1054,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Sustainability, Innovation and\"): Radakovich on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:ca07873135aa4d62d3eeac57ce18984d6b08dad193bfa82338d8b35d572fd5d1",
+   "redundant_with": [
+    545,
+    546,
+    555
+   ]
+  },
+  {
+   "i": 1055,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Policy\"): Radakovich on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:c611981fab983bc648368eb81240f5a5a1eff07f40aa4c9fd155600a98eeb6af",
+   "redundant_with": [
+    545,
+    546,
+    555
+   ]
+  },
+  {
+   "i": 1069,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Talent and Culture; Finance;\"): Thornton on Compensation, Talent and Culture and Finance.",
+   "text_sha256": "sha256:3025b751f9e0d45b89a16b9b6494acdc10e59e1df0ce63d657e02cb02790cb5d",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    475,
+    494,
+    495,
+    502
+   ]
+  },
+  {
+   "i": 1070,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Nominating and Governance\"): Thornton on Nominating and Governance.",
+   "text_sha256": "sha256:87c76d1b0dfd01b213865e6e278095de1ba1202d648fe36bd4df5006f21194e9",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    526
+   ]
+  },
+  {
+   "i": 1085,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Nominating and Governance\"): Veihmeyer on Nominating and Governance.",
+   "text_sha256": "sha256:87c76d1b0dfd01b213865e6e278095de1ba1202d648fe36bd4df5006f21194e9",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    527
+   ]
+  },
+  {
+   "i": 1097,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Talent and Culture; Finance;\"): Weinberg on Compensation, Talent and Culture and Finance.",
+   "text_sha256": "sha256:3025b751f9e0d45b89a16b9b6494acdc10e59e1df0ce63d657e02cb02790cb5d",
+   "redundant_with": [
+    470,
+    471,
+    472,
+    476,
+    494,
+    495,
+    503
+   ]
+  },
+  {
+   "i": 1098,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Nominating and Governance;\"): Weinberg on Nominating and Governance.",
+   "text_sha256": "sha256:dd21b67996bd8e1cb23a01d519bc425a06d371e099898f42b809fdf599132f03",
+   "redundant_with": [
+    516,
+    517,
+    518,
+    528
+   ]
+  },
+  {
+   "i": 1099,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Sustainability, Innovation and\"): Weinberg on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:ca07873135aa4d62d3eeac57ce18984d6b08dad193bfa82338d8b35d572fd5d1",
+   "redundant_with": [
+    545,
+    546,
+    556
+   ]
+  },
+  {
+   "i": 1100,
+   "verdict": "FACT",
+   "why": "Bio-card committee-line continuation (\"Policy\"): Weinberg on Sustainability, Innovation and Policy.",
+   "text_sha256": "sha256:c611981fab983bc648368eb81240f5a5a1eff07f40aa4c9fd155600a98eeb6af",
+   "redundant_with": [
+    545,
+    546,
+    556
+   ]
+  }
+ ],
+ "pool": [
+  {
+   "i": 33,
+   "text_sha256": "sha256:f03c003b38cb73099a3d014302237d02aa188ec054aa409fe0197bf1899152a6"
+  },
+  {
+   "i": 43,
+   "text_sha256": "sha256:f03c003b38cb73099a3d014302237d02aa188ec054aa409fe0197bf1899152a6"
+  },
+  {
+   "i": 48,
+   "text_sha256": "sha256:1d07998a4c928ef76d87f5781fed05d782cad0c4f2dad371eec0daa3cc8741da"
+  },
+  {
+   "i": 52,
+   "text_sha256": "sha256:c4171d9fb0678247d34755601c7b8ea4d2e56d9184e0c70951317e09f0583a1b"
+  },
+  {
+   "i": 118,
+   "text_sha256": "sha256:0e9550b19142446a9e36a7da2b876579cce316be8079c138b8391338e1681788"
+  },
+  {
+   "i": 120,
+   "text_sha256": "sha256:7b56ba56ab30879b6d70deeb0975c7ebbc5aac04242c3e6c6d1a6d829629b866"
+  },
+  {
+   "i": 123,
+   "text_sha256": "sha256:6ed3999c3f05a7796bc09716df10321447c4622ebab57b5c2dc690b77e42feb8"
+  },
+  {
+   "i": 144,
+   "text_sha256": "sha256:129d1d031cd70dc533caf79fdd0ec2daa34dc676dd979a2c59453a52745d1be6"
+  },
+  {
+   "i": 145,
+   "text_sha256": "sha256:8c41dec367cbee33053143a69dd57ae6008d439a0e65811860bbecff3a49515b"
+  },
+  {
+   "i": 147,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 156,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 165,
+   "text_sha256": "sha256:8852f450c373d29d6ab33d254f3f1561bdb809acfb255fbb943f66c63acf149f"
+  },
+  {
+   "i": 179,
+   "text_sha256": "sha256:c9f659fe708c52de980ecced491b0b044f734d0cf5c7e0eee39acf6fca514dfa"
+  },
+  {
+   "i": 186,
+   "text_sha256": "sha256:a6c7afd8b5d6bcb938d8bf4913bd5980beb004042330a43c92829bcbed8bb67d"
+  },
+  {
+   "i": 187,
+   "text_sha256": "sha256:b3dbfad15d336dcdb0af95f1a4afd64e74fb87f5805b74875dccd0c8256205cf"
+  },
+  {
+   "i": 190,
+   "text_sha256": "sha256:5eb164df71800cf5afa164a836b898b1373eafa4268d886e40b679b733cb8f25"
+  },
+  {
+   "i": 193,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 199,
+   "text_sha256": "sha256:da83e76248455cde383ab9c467566478832b6bf227a1b2b6dd84f6741ba7f3e9"
+  },
+  {
+   "i": 202,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 203,
+   "text_sha256": "sha256:f1da1ae73bbc4055cddd5492638272d05b88240082f6892d3c4bcd2befe44c8d"
+  },
+  {
+   "i": 210,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 216,
+   "text_sha256": "sha256:4c8f18eaf6b6bc06c0e8d59f2ed4f2aa2fb3f6048956444d59668daad20026ba"
+  },
+  {
+   "i": 221,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 222,
+   "text_sha256": "sha256:8172590ec9cb2e85f204fcd7d6b9c35583b21d3d0d58bdc4ee2b770048673793"
+  },
+  {
+   "i": 231,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 232,
+   "text_sha256": "sha256:e8d13da654750e7f76d9578ba6563972f13ac41a31916b661a6122ec9a119a69"
+  },
+  {
+   "i": 240,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 245,
+   "text_sha256": "sha256:95d0ff3eeda80176ca06bf11d3ab846c0051ddfd83e004f9c2beb87f0a1dfdf4"
+  },
+  {
+   "i": 252,
+   "text_sha256": "sha256:c9d70c052b3e31cf377861de84c5a44498c9d336c360a763351d56382a16a0d6"
+  },
+  {
+   "i": 253,
+   "text_sha256": "sha256:adf439e9029eafdb7b6ec6fb9f27ad3a0b473beea603965e5b323c685be3436a"
+  },
+  {
+   "i": 263,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 264,
+   "text_sha256": "sha256:e8d13da654750e7f76d9578ba6563972f13ac41a31916b661a6122ec9a119a69"
+  },
+  {
+   "i": 265,
+   "text_sha256": "sha256:5332ba5f246cc575ce9f75472223e13b5ed63937496ddfbf6da8c6e2a21caa3e"
+  },
+  {
+   "i": 269,
+   "text_sha256": "sha256:c7dc890e8f9c7029d14ca8ba58b9136d7c5d57dd21c3c373cdd6f042f9d2cf47"
+  },
+  {
+   "i": 272,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 273,
+   "text_sha256": "sha256:f67f6fcdb08f28aa90466e81065321fc00726c82806bbddaec1ab137c393ae4e"
+  },
+  {
+   "i": 274,
+   "text_sha256": "sha256:f47e22c9aae7e3738c4b1c775d0192436293699c30dc48ae0eb1c050091c9847"
+  },
+  {
+   "i": 358,
+   "text_sha256": "sha256:593103e5e5a5f74738af55bb5c46f2a3f1e20d5b272208f86c14a231f5f539af"
+  },
+  {
+   "i": 371,
+   "text_sha256": "sha256:e31c867c6878a1cc232d77c63aaf107db683c5e886c3cbe595497a334ac72b72"
+  },
+  {
+   "i": 373,
+   "text_sha256": "sha256:f4de9210bc32b731894bbc1f52f6639c778e5d95160d4bbbf53325f0fa16de35"
+  },
+  {
+   "i": 375,
+   "text_sha256": "sha256:3d806f0d5a7f18f2a9274c9447f51b9dcc71239079899e59a6ebb83fbd991147"
+  },
+  {
+   "i": 376,
+   "text_sha256": "sha256:7a107f76d6a677c4045c49749aa4d666e9ca66e2391c21a79749b25e9f4e1e40"
+  },
+  {
+   "i": 378,
+   "text_sha256": "sha256:f959081ddab6baa44c89e4a79c30ed2777c92d71ec529d8c5c0ed0c8c1d2c396"
+  },
+  {
+   "i": 380,
+   "text_sha256": "sha256:079a90dcfae2679a4e3e0dac64cddf9bb4ebdc8831c53bc05eade1bd67f677ef"
+  },
+  {
+   "i": 381,
+   "text_sha256": "sha256:2a99beb0a5b9e857bb0f1fc22294dcc13239ea625151cb3a81bb1e79c6ad6ce7"
+  },
+  {
+   "i": 382,
+   "text_sha256": "sha256:c439f58b05ba62050840ea98479c4f2659fa4c6ac0b984db1aee95609dba06f3"
+  },
+  {
+   "i": 383,
+   "text_sha256": "sha256:a2dee5a3fe37694a7053250e011fc5f945d01ba73abf6047aa4eff8119975643"
+  },
+  {
+   "i": 384,
+   "text_sha256": "sha256:379c146019a1d2cfe2c6025b594ecb01f8971074b3c6abbfa4509fe5e179e8a5"
+  },
+  {
+   "i": 388,
+   "text_sha256": "sha256:415eb09f723c3ae543a074e0f541117165b608f955366c25b0cc22fa3418ab7b"
+  },
+  {
+   "i": 390,
+   "text_sha256": "sha256:5916eb2014135072483aab2aad30cc7e8bea0900a67a7c296682bd1ef135d451"
+  },
+  {
+   "i": 391,
+   "text_sha256": "sha256:9d2cb802f63ec89ef1d5a9c2a6a1fd6c57eeb7187657e6cbcd7dcbdfa3aff553"
+  },
+  {
+   "i": 394,
+   "text_sha256": "sha256:54ee398ab2a47af2ffcfe339710cac0b4bbc6f0716de6f010dfbaed3bbf99602"
+  },
+  {
+   "i": 396,
+   "text_sha256": "sha256:79f8178516db0dc3cecdd4ad466afe0c5b3aab250d7baa779480cf5bd78f5ff0"
+  },
+  {
+   "i": 397,
+   "text_sha256": "sha256:d6bc952bb13483880685dea9349413c7cba6f8d82ce8bf40095e381d2ee57df2"
+  },
+  {
+   "i": 398,
+   "text_sha256": "sha256:80238e47b525aca82a61852319880c7eea2e62086c134ae4b0e63e4e3f18b3f4"
+  },
+  {
+   "i": 399,
+   "text_sha256": "sha256:253b464cd456bc13cdc307b110b77e3c9dd973abde8dcd9b61fbc73f5d2f33dc"
+  },
+  {
+   "i": 400,
+   "text_sha256": "sha256:11fb5a4d2fa461fcc9c76a8b61e3878dd0e559f7d25078752bfc203633578a9d"
+  },
+  {
+   "i": 401,
+   "text_sha256": "sha256:49a6c03bc15de27bfa11d34b6c0d4e09bd7eb3ed5818e73a48bb45f5e40300ad"
+  },
+  {
+   "i": 402,
+   "text_sha256": "sha256:78af1fc3a83ab94f31dd84ba8d6fd5faaab8169243a34d29d343247b14ea289c"
+  },
+  {
+   "i": 404,
+   "text_sha256": "sha256:0b0a63a08dafe76886d1cda682eaf05297885ab3ab542292a824e2515de65325"
+  },
+  {
+   "i": 405,
+   "text_sha256": "sha256:a3500cbd3065c470ff13ba067cc575ab686453434a61ac9c54acc61268727748"
+  },
+  {
+   "i": 406,
+   "text_sha256": "sha256:55d139af2b3a14f57ac092756f0cfb2629683525b712289ad4f5d19e43f318a2"
+  },
+  {
+   "i": 407,
+   "text_sha256": "sha256:160a7b3c7fd1db95bcccf6b02ad2c9f7d9daf78063c594c9114b4569a2427a95"
+  },
+  {
+   "i": 409,
+   "text_sha256": "sha256:d88c26bbd54650fdb2348888360d2658d3d3430589387bd937d759f8ee47d8b4"
+  },
+  {
+   "i": 410,
+   "text_sha256": "sha256:66abe37b4c7e3dbeaa1e97217c90437ff3f4808c644401ac606adbd48607a00f"
+  },
+  {
+   "i": 411,
+   "text_sha256": "sha256:b9a46066dba0e0643e15fd78d089f227d607ff1b675ea33ec0995d786a320f79"
+  },
+  {
+   "i": 412,
+   "text_sha256": "sha256:dfb0184d8c8d1b1e5edd6378c304d338cc65685cdb4ccc1d1edee0010f2f8d21"
+  },
+  {
+   "i": 413,
+   "text_sha256": "sha256:e4f25355c23617e96cf14e4a31847a7576d3b20560d6a949a704d12eecc369ba"
+  },
+  {
+   "i": 424,
+   "text_sha256": "sha256:afc47669609c8046f1a25e0c693b5a98846210efc00751e6a80d55be588e038c"
+  },
+  {
+   "i": 426,
+   "text_sha256": "sha256:dbaafa9893dffd37e0179c1104dc695764643794a23993f8df357e093eb87673"
+  },
+  {
+   "i": 427,
+   "text_sha256": "sha256:9c752748a74f9089ac13e3c7357de1b2ea0f7518905dce0158d92465b7c241f4"
+  },
+  {
+   "i": 429,
+   "text_sha256": "sha256:df63bd4fd205a6c2a1eac7cbf50b8dc2b51518916003a7a4750675c662a6d837"
+  },
+  {
+   "i": 432,
+   "text_sha256": "sha256:b852271d1c297aa25fcfa25c2041fa53a7df3c0cac534d7df1683bf4c271921d"
+  },
+  {
+   "i": 434,
+   "text_sha256": "sha256:e73ed245c5b7fad48674af2c976e5ffadceeeaee79c4c6df5dce6a6ccaaf6e59"
+  },
+  {
+   "i": 438,
+   "text_sha256": "sha256:4ac486a59a34a2567993fcdd378288c51bd700bd92d6dc6d7488bf7ee3b715ab"
+  },
+  {
+   "i": 440,
+   "text_sha256": "sha256:43d3d95ed0de56106a39d9e9388ac0527dcd03a540d9ee9be4b30b4614f6ea3c"
+  },
+  {
+   "i": 448,
+   "text_sha256": "sha256:9615c3631475e1a0c355e68f3d53aea3623021a34f8ff0852e73ab9694d21c82"
+  },
+  {
+   "i": 453,
+   "text_sha256": "sha256:b459cd0cdcf94fcaa154760aad78540402e58297403c27127881414957738013"
+  },
+  {
+   "i": 454,
+   "text_sha256": "sha256:92d6ff354db037cf8d65e53186446886cc6b0a3b040178f08d7a117fbefd19dc"
+  },
+  {
+   "i": 455,
+   "text_sha256": "sha256:5aebfcc6c60b3177a73f752efc7724716097ea2f1c13a4007351b86a89f5699e"
+  },
+  {
+   "i": 456,
+   "text_sha256": "sha256:4f54b2b2371828286a475127acfaf95844fb8ac92a23915486d71faf0fc7646f"
+  },
+  {
+   "i": 457,
+   "text_sha256": "sha256:acd9c31c335914b5dce78728fce9af177b4243559362ced27dffbdb4e059d5f5"
+  },
+  {
+   "i": 465,
+   "text_sha256": "sha256:f42f6cc5db463417c52e9f22a082396f36c4a70ec4e81958f00bc13efeff4d11"
+  },
+  {
+   "i": 467,
+   "text_sha256": "sha256:bc916a90b650fb79af2405aae77c2bb72f434af6f904126458f27f9bb9ffb5ae"
+  },
+  {
+   "i": 468,
+   "text_sha256": "sha256:f53497bbfda3c58465842c1ec76e3f7c797db92b4374192353d3457af19a0a80"
+  },
+  {
+   "i": 479,
+   "text_sha256": "sha256:9615c3631475e1a0c355e68f3d53aea3623021a34f8ff0852e73ab9694d21c82"
+  },
+  {
+   "i": 482,
+   "text_sha256": "sha256:a0a7846e550dbc3606e2c3c26a398e7ec714c7dc573179527c6657385df534d8"
+  },
+  {
+   "i": 484,
+   "text_sha256": "sha256:acd1aa840a24ff5bede7e7eb0e4273e1a5cb76420641cfcab338f936815a4848"
+  },
+  {
+   "i": 485,
+   "text_sha256": "sha256:58516c5972fa1e068ed6509d4b74c7106bda430e30ba2bce885b977d129915ab"
+  },
+  {
+   "i": 490,
+   "text_sha256": "sha256:4332ee74de8f82ea03397583fbfc993ab9ae7a57f8273682c3b37b48bd5a0598"
+  },
+  {
+   "i": 491,
+   "text_sha256": "sha256:67d3d9b2a00e0e5029af0870809019cb60bf5d61c262394c71bd9660c87e8759"
+  },
+  {
+   "i": 492,
+   "text_sha256": "sha256:6c15674e850a7647479df59b336508a4f630a2ce85db227dfdc50aa4bae4fd2d"
+  },
+  {
+   "i": 493,
+   "text_sha256": "sha256:f53497bbfda3c58465842c1ec76e3f7c797db92b4374192353d3457af19a0a80"
+  },
+  {
+   "i": 506,
+   "text_sha256": "sha256:e03790572828849af18c884cddece40683f29862c737e7b9ace4a0f2bc679f76"
+  },
+  {
+   "i": 511,
+   "text_sha256": "sha256:668a1acc8505f23d16ff3c5cd75334d329f6a0feb35f0507c7e51c9a52687852"
+  },
+  {
+   "i": 513,
+   "text_sha256": "sha256:768a7c50fff62369838b42d7d38da7345bb09f1f2856a2fed689bd37fdd9a735"
+  },
+  {
+   "i": 514,
+   "text_sha256": "sha256:f53497bbfda3c58465842c1ec76e3f7c797db92b4374192353d3457af19a0a80"
+  },
+  {
+   "i": 531,
+   "text_sha256": "sha256:9615c3631475e1a0c355e68f3d53aea3623021a34f8ff0852e73ab9694d21c82"
+  },
+  {
+   "i": 534,
+   "text_sha256": "sha256:fff474662147569b293f604d99e2ef004b0445b835d184ac06531a0c25f12465"
+  },
+  {
+   "i": 535,
+   "text_sha256": "sha256:222f9446d2d74adf95fbd6a89509ce945e0788f926a3ef555d5f34a8de6a67ef"
+  },
+  {
+   "i": 536,
+   "text_sha256": "sha256:6545d7d1808667c3babe6cd490c4b4eea210b947fe9bd94a907c13de868a50d5"
+  },
+  {
+   "i": 537,
+   "text_sha256": "sha256:1b2aa66d881dc68c6d702d1c9c204cb50ac0d6fed6d2e8c1531fdec5e2472b9f"
+  },
+  {
+   "i": 538,
+   "text_sha256": "sha256:8166204ed3ab361e66d3eef373237fedf969eae516e25ae6988e338b7839f60b"
+  },
+  {
+   "i": 539,
+   "text_sha256": "sha256:27d0ed29e0dca35b32e723b9158161119a33a20b45185728dc99992d2d1818b4"
+  },
+  {
+   "i": 542,
+   "text_sha256": "sha256:a658b252e260aa8288412a4ffd1d5ecb1e1bb91772ac128dd9c3fba36569f764"
+  },
+  {
+   "i": 543,
+   "text_sha256": "sha256:ed5367a88f3421f44bba44fb5e841b0783d8aa1e2e516b36bd00244a5cbba182"
+  },
+  {
+   "i": 544,
+   "text_sha256": "sha256:f53497bbfda3c58465842c1ec76e3f7c797db92b4374192353d3457af19a0a80"
+  },
+  {
+   "i": 562,
+   "text_sha256": "sha256:4a8921ab88136b255d7f8abd1a668e55a50c273dc8456a3f5d3ae88a19e30876"
+  },
+  {
+   "i": 563,
+   "text_sha256": "sha256:f53497bbfda3c58465842c1ec76e3f7c797db92b4374192353d3457af19a0a80"
+  },
+  {
+   "i": 565,
+   "text_sha256": "sha256:93c84d12fd0b8d1169c73db3a8f29067b1fce5a1db6a55ac6b02d465ea8c06b8"
+  },
+  {
+   "i": 566,
+   "text_sha256": "sha256:ec2955cdfdd83d7c38f3499aae3d0362b96faed64c986308dcb15115b6b59de6"
+  },
+  {
+   "i": 567,
+   "text_sha256": "sha256:204b40a6dc28720bd213c0893a9f77f7da9e47ceef1f7b85ed5123d6f1ff554c"
+  },
+  {
+   "i": 572,
+   "text_sha256": "sha256:455e87a754f7912c43256f14d4b4b47021788b433ac87f5ec52182a932868eca"
+  },
+  {
+   "i": 573,
+   "text_sha256": "sha256:5f0a30531469c85079cd8b8aa27a44c2b48f3a2ac8ee81fc98b66fdd5a064eec"
+  },
+  {
+   "i": 574,
+   "text_sha256": "sha256:6c468f1bef6a1679bfaa55af0e07542f1e11b6a9f20ee26be643782c7c852e4b"
+  },
+  {
+   "i": 575,
+   "text_sha256": "sha256:8ef579b0ce7a39aeeda5b0b941470ebdc6710681ae80af12bafb723b337a9f61"
+  },
+  {
+   "i": 577,
+   "text_sha256": "sha256:1f3ce5abe869d987167e6067c89bb266293b9dde3af90c64ea721be3174094dd"
+  },
+  {
+   "i": 578,
+   "text_sha256": "sha256:6bc85d58f727fc7dba1ff28e34dc727db0d3cc22327ecff9a88f51fcf3e21fa3"
+  },
+  {
+   "i": 583,
+   "text_sha256": "sha256:0b42e94c6962d1955be8301315b66af4175a91ce16577ce567cf7877295c306e"
+  },
+  {
+   "i": 585,
+   "text_sha256": "sha256:6e8176aefb47a5c87e4ebfd997b4749e3f4db4fdfd261d0b13de7a002beacbd8"
+  },
+  {
+   "i": 586,
+   "text_sha256": "sha256:06d6fcc723c3a50d6400eedec6617c0d4aced42d914879edcd5a97106990833d"
+  },
+  {
+   "i": 588,
+   "text_sha256": "sha256:c50c8035abd04c038069e370608d7b029a95be2bf3922b3eb7713911b56704de"
+  },
+  {
+   "i": 591,
+   "text_sha256": "sha256:9632368a9a822a27f7344df33e6d502e9efb040c398c3ce62a5567146285814d"
+  },
+  {
+   "i": 592,
+   "text_sha256": "sha256:a7af18d1e153604f9b6e31209cac5a726ebca8935bf8f9f4b2116d7c4f659271"
+  },
+  {
+   "i": 594,
+   "text_sha256": "sha256:43cc4e30184bd79cd4bae1cdf8b1fc939fef388c7a413cc60aed1cc21737ee62"
+  },
+  {
+   "i": 597,
+   "text_sha256": "sha256:9503973430bf4acfee865672033b2a93ee751f650e8a42d2190ad4676db16719"
+  },
+  {
+   "i": 603,
+   "text_sha256": "sha256:c058913843a1090b9388fb0819d0d04b62adfafd9a0e005176dc17b74078e9e9"
+  },
+  {
+   "i": 608,
+   "text_sha256": "sha256:9ba160b10135dae60976d66e728ee1333659b4ff079301e552bbd5e5b9f33300"
+  },
+  {
+   "i": 611,
+   "text_sha256": "sha256:f5deaa1649e727b8ae1c51bfb6cdf611698eedf12b32b97b0d9fe13cbb787436"
+  },
+  {
+   "i": 612,
+   "text_sha256": "sha256:29b896f3e5880613fd48b62ffc5d2b60484471d4395d79eeb29adb6927b2f8c3"
+  },
+  {
+   "i": 614,
+   "text_sha256": "sha256:07b64e6722aff5236c3dfa81e2b58791cc28a91c82648814684436c8c775934c"
+  },
+  {
+   "i": 615,
+   "text_sha256": "sha256:c70af2b86925fb83261acc2bb9c4b5732751ffc6916239ae035656daf0f74f1e"
+  },
+  {
+   "i": 616,
+   "text_sha256": "sha256:efed89dfda1411153664c8d7af16cdf1797f6356d3f0bcc2d1972520a4d4128a"
+  },
+  {
+   "i": 617,
+   "text_sha256": "sha256:174fba136bb414674938f586cb001a2f2d4565a794afa39bc1c44e5df5a0ce24"
+  },
+  {
+   "i": 618,
+   "text_sha256": "sha256:057e94d0dcb0b4cfef5ae5dd7bc6513a57aff496a31f5cd416cecf1ba1ad33b7"
+  },
+  {
+   "i": 620,
+   "text_sha256": "sha256:42a69f0f57073167ed76ac28f9d2fe05432a74c889025e9bd9779c9e73523f7a"
+  },
+  {
+   "i": 621,
+   "text_sha256": "sha256:7432f11d1ff978a846f74e15e828dfc2620cc4a32f922aa765dc811787b16488"
+  },
+  {
+   "i": 622,
+   "text_sha256": "sha256:2ba9452a196eaa57d15b0748e550efb824ec500989f129aca75d1e4c39c93020"
+  },
+  {
+   "i": 623,
+   "text_sha256": "sha256:82bf494e277e07d1b956e39ef4b0847b442cc8f5d823e4df8ab78d48f8784482"
+  },
+  {
+   "i": 625,
+   "text_sha256": "sha256:28a7e253d5f8e7d38ecea7f8326c72ace80ac26b8aa0092570fb72f29b48a47e"
+  },
+  {
+   "i": 626,
+   "text_sha256": "sha256:29bc803583970772ad101b69becbe1dcefb1d20dc06d44e0a90e2660b28f5144"
+  },
+  {
+   "i": 627,
+   "text_sha256": "sha256:aebfa60c15d75b46775ca8df3f09b372eb5f85b3dd88eb4fc3c4b9ab154ad6f8"
+  },
+  {
+   "i": 628,
+   "text_sha256": "sha256:178f75c82aa62157fa0df02574618dc1561dab7a791eab24648c0e48f886015f"
+  },
+  {
+   "i": 629,
+   "text_sha256": "sha256:d4aa5bd1e011730dad53bac54b97c251a39bd830da29e9109603b4210e308786"
+  },
+  {
+   "i": 630,
+   "text_sha256": "sha256:5e3421ea8998c284237860ead5e7a20e28fa6669f22a419be466593d277b638d"
+  },
+  {
+   "i": 631,
+   "text_sha256": "sha256:b2b61be1bdcbc30b5e75b101f7ffa85a43db26c605f708e44b54c2451fe2e939"
+  },
+  {
+   "i": 632,
+   "text_sha256": "sha256:9ef549c7e9e9e8212a7328a40c81a1726e48ef1874f46d8260d00da7e51adfca"
+  },
+  {
+   "i": 633,
+   "text_sha256": "sha256:cdd3a55394b5547b57720fc072b7084b0b66f185e4c8375dc21a7d6d6bd8b5ce"
+  },
+  {
+   "i": 635,
+   "text_sha256": "sha256:d9f1a16803c7e042b25bdfc3382576bb2ecc796d50d3514f158241565420cf13"
+  },
+  {
+   "i": 636,
+   "text_sha256": "sha256:c9817493d17f3244289a1b6ec5eb656d46c532d95f791c5d9123ab90e0596e91"
+  },
+  {
+   "i": 637,
+   "text_sha256": "sha256:3810241f2b00b87c69208065ebaf3c9df3fe9d5f643432da33d9aef9ae00148c"
+  },
+  {
+   "i": 640,
+   "text_sha256": "sha256:18ab5fa2d6fd3a9206bb111f105f529ee9abdb33cb29c9534e780b72fe4289e9"
+  },
+  {
+   "i": 641,
+   "text_sha256": "sha256:2d7023ccfa3b89a1a63f11375be7aa02ae9774814648fc9b4acefe66740fc086"
+  },
+  {
+   "i": 642,
+   "text_sha256": "sha256:aabd2613434a880789b77d11afcf8042ffc7ec4f5b3765563fdd9d147d0c3b79"
+  },
+  {
+   "i": 645,
+   "text_sha256": "sha256:474963e2c69b679df9286b92e9fd7d6044913cc146a1459add9e1f7663ce0e8f"
+  },
+  {
+   "i": 646,
+   "text_sha256": "sha256:b6b24bebd41eab1817cef5a8528c17944e6ec480cbf5fe0136b2d225a2b8811b"
+  },
+  {
+   "i": 647,
+   "text_sha256": "sha256:1a9229bffb3597f8397be1e8a1ae2886a1e2a0a366947e57e4c08b2fe5ad2622"
+  },
+  {
+   "i": 648,
+   "text_sha256": "sha256:e5c0d98cd093f9d752f20884b363108b710643a12e20ee0f2908b4ac71179bda"
+  },
+  {
+   "i": 649,
+   "text_sha256": "sha256:91457d0fb95cdbcffcd92759d62d1f676fa34e0a63749fd8972cc5b347455221"
+  },
+  {
+   "i": 650,
+   "text_sha256": "sha256:66959f73a70f45867124b17b9e758e89f10016f1ce1ff939e370c21c50d8fed2"
+  },
+  {
+   "i": 651,
+   "text_sha256": "sha256:cb2e3642b78a193f556a5faff79f29203fb7d2642c66170f32b63f037908ac41"
+  },
+  {
+   "i": 652,
+   "text_sha256": "sha256:93303b0aca8ea97291c22821c5b457f13624dfc69d2ba1e953b6ae6aebc8535c"
+  },
+  {
+   "i": 653,
+   "text_sha256": "sha256:1e65d08ee5d6174f90415b2f89d1f6f1e9fb443d03406c13680b1160f66faa2f"
+  },
+  {
+   "i": 654,
+   "text_sha256": "sha256:b94cf1522815b45179b47ded4f47f759870403ff7cbc78a59b350b716833f56b"
+  },
+  {
+   "i": 655,
+   "text_sha256": "sha256:a5174130d29e621e6e1e5a71d5084092c183250ba39b36aacf021bd0400504e8"
+  },
+  {
+   "i": 662,
+   "text_sha256": "sha256:1aa4f3d6ea5b4c9305a7efe7d06b31e9763177119afb0604a237dd7fa36e7d82"
+  },
+  {
+   "i": 665,
+   "text_sha256": "sha256:ffdfae70796b3fbe36249f4e1ebc21fe53243bcdb4d5f12a7551145ae5daec78"
+  },
+  {
+   "i": 705,
+   "text_sha256": "sha256:4d442d9ce9834df4628b79c9455e1f01f03cf4c679aab07372480f0a1bcb9120"
+  },
+  {
+   "i": 718,
+   "text_sha256": "sha256:16e1343ee3d7cc52c4a7fa875d36c694c0595478a29ec0bde1547c13c6087f34"
+  },
+  {
+   "i": 740,
+   "text_sha256": "sha256:705c668c8a2cc9a8a8dfe80a5b4878ceb3be16975d9d4a28af3e27e9792533e5"
+  },
+  {
+   "i": 745,
+   "text_sha256": "sha256:38548990dc4aacbe22178b47511d6540f97071d96100d7ad2fcc066fa536f734"
+  },
+  {
+   "i": 747,
+   "text_sha256": "sha256:6b293b177a815e1c86b92aee42bdb137039f826a27fb1fbdf05769437ae42cd9"
+  },
+  {
+   "i": 748,
+   "text_sha256": "sha256:42c5adb58945d7fa31352a4ba51e55104a7ef4e78d62138b12128dd8e721ca49"
+  },
+  {
+   "i": 750,
+   "text_sha256": "sha256:36e7eac780c394e59d1beb663052623af36503a2005863d483011bfe06d151d1"
+  },
+  {
+   "i": 751,
+   "text_sha256": "sha256:166abf251e1afcb100e4f0e9c74e3dddbf9589e48cfe70f8703c714bf55ae656"
+  },
+  {
+   "i": 755,
+   "text_sha256": "sha256:f398eda0166e2f9dca440539d594773b3f6b61d1c65d0d83e110aad7b1d67696"
+  },
+  {
+   "i": 757,
+   "text_sha256": "sha256:24be964ee4fcc73c76183cfe9eee18c5b2df1ff8288174d90bbd28cc5b9d6955"
+  },
+  {
+   "i": 759,
+   "text_sha256": "sha256:eec295588a114c1357780b9d8851948c5f8660a3baeece64be754ce5e09a7ea5"
+  },
+  {
+   "i": 760,
+   "text_sha256": "sha256:fbd3c977aa4f50b3ae8c38d20f2277c4b16d10de01f05e6e999b3f441f16207c"
+  },
+  {
+   "i": 761,
+   "text_sha256": "sha256:fec5522cf0baf4a9d61b53ea6c8a10a1706f38b588c040995a5ca07c0311cadb"
+  },
+  {
+   "i": 762,
+   "text_sha256": "sha256:289984d20519989a9e8a52cf98728206efdcce5893645eb9e37b8facad1a5829"
+  },
+  {
+   "i": 764,
+   "text_sha256": "sha256:0130680b1cd7d0798ddfbfe7ba7b477abf923148aa889d402722153fbe1912cd"
+  },
+  {
+   "i": 765,
+   "text_sha256": "sha256:846e42e1458b5c0cec2bc210cf2b0e5fdec838c780b9dab12a1a6248fbbe4c65"
+  },
+  {
+   "i": 767,
+   "text_sha256": "sha256:cd079f7f861901ce87b033bcf808a06277fa5036321d53a28e3323420755ed66"
+  },
+  {
+   "i": 769,
+   "text_sha256": "sha256:66ef105fe2ea934e9e6a19cdf7c12b3000eab84bdf15c50d62bf2385ae6520df"
+  },
+  {
+   "i": 770,
+   "text_sha256": "sha256:ad0dfdf97653ea2d1a9ee3c88ccf2879fbfebe844515d7bd8b4e08c07524da40"
+  },
+  {
+   "i": 771,
+   "text_sha256": "sha256:5ee74e1e90c53eba466b50517f0f83883d534c2726effef76c444999dc19267c"
+  },
+  {
+   "i": 773,
+   "text_sha256": "sha256:bc4e7f86f93438df3cf5d3bd8d3ba7331371c8b9484e754bc0f0c70c6131aef7"
+  },
+  {
+   "i": 777,
+   "text_sha256": "sha256:6fd148a14be1d00a1b0d91f099374f670a06f1dc964758d465a72d2ef3980457"
+  },
+  {
+   "i": 778,
+   "text_sha256": "sha256:c149bc14e45c0d92e0adae72d5dfa10ad2fde44aebb562d6c1fedebf30ceaca1"
+  },
+  {
+   "i": 779,
+   "text_sha256": "sha256:6a1cfdf599246310c6ef8215cee09c5314eab56db0b4c5a2601cf250cba26110"
+  },
+  {
+   "i": 780,
+   "text_sha256": "sha256:abe5980f9e23f02463770565e861eaa14feaf0e7550854e9bd44e1a9a003a533"
+  },
+  {
+   "i": 781,
+   "text_sha256": "sha256:dae0e4d2fd3fabe6af3bc658567686421c6e79f287874645e025872eac8da118"
+  },
+  {
+   "i": 782,
+   "text_sha256": "sha256:3ffb2885e21caabe4f2e120ad1f09eacb05664ebe78900120cd13598a6ba16bf"
+  },
+  {
+   "i": 783,
+   "text_sha256": "sha256:abe5980f9e23f02463770565e861eaa14feaf0e7550854e9bd44e1a9a003a533"
+  },
+  {
+   "i": 784,
+   "text_sha256": "sha256:43b56a68909daf2d4bfd59a161751d5613daec5ea9ce440b813d86408d5b994d"
+  },
+  {
+   "i": 785,
+   "text_sha256": "sha256:7bf5ffc617c303aafc6063bc44390f2896969211fecc524b93860cb95af8c668"
+  },
+  {
+   "i": 792,
+   "text_sha256": "sha256:82f44ec7a95e62681e8fbe70661772188482116b2288ca1b8b5b1ea17c2b9794"
+  },
+  {
+   "i": 793,
+   "text_sha256": "sha256:1637a97530aebe56565c3668c125258927d6d4c90050c41cffdf2e46e58f5a97"
+  },
+  {
+   "i": 794,
+   "text_sha256": "sha256:a15ad8a5d2f55cf8ac8a87d124ec9d645a2c773a509046aed2d0c1660d138a71"
+  },
+  {
+   "i": 801,
+   "text_sha256": "sha256:1169d10bc2baaafe05205768879d9cf141887ae7fe7ce1a75bbe18ea07cc813f"
+  },
+  {
+   "i": 805,
+   "text_sha256": "sha256:32f8642cbbf4025db21b280ef4e1d8d807386d53d4df70889888fc8ae64218f4"
+  },
+  {
+   "i": 806,
+   "text_sha256": "sha256:78669cd2a1bbb8f3bf44656f8aa3ef7e0937b5093a5a045b396cd14b22272f06"
+  },
+  {
+   "i": 807,
+   "text_sha256": "sha256:cf98247bb75ed2dd644d8602182beb381ecef03208f76fbab4e389ba28ff9ff3"
+  },
+  {
+   "i": 808,
+   "text_sha256": "sha256:e7971997e2f1decc87b9767f6456051e0fa17e344087a814490ba3cf224b7882"
+  },
+  {
+   "i": 809,
+   "text_sha256": "sha256:a863d519e38f80e45d10e280fb1afc729816e23f0218db2f3e8b23005a9ad8dd"
+  },
+  {
+   "i": 811,
+   "text_sha256": "sha256:32f8642cbbf4025db21b280ef4e1d8d807386d53d4df70889888fc8ae64218f4"
+  },
+  {
+   "i": 812,
+   "text_sha256": "sha256:483ff967198348d6545db7320a451aa10f47f7cd80931db77fdc49f7ea426791"
+  },
+  {
+   "i": 813,
+   "text_sha256": "sha256:f321d3fa4711dd384f091e4c196992f30436be417304cf4d873fae0ea0e25817"
+  },
+  {
+   "i": 818,
+   "text_sha256": "sha256:32f8642cbbf4025db21b280ef4e1d8d807386d53d4df70889888fc8ae64218f4"
+  },
+  {
+   "i": 826,
+   "text_sha256": "sha256:8530be027a96a7846016535bc25dfe29af76bd88830a255babbf0685c7583759"
+  },
+  {
+   "i": 837,
+   "text_sha256": "sha256:c3104d8c37497a1768a6362f73440ec26e9dc49d42f8cc5c3b06dd1173ffad72"
+  },
+  {
+   "i": 844,
+   "text_sha256": "sha256:9b0e5f91743532e1c2ec6700e03143bf797cf6e4e3d7c23c7f03570f8dcad6db"
+  },
+  {
+   "i": 845,
+   "text_sha256": "sha256:b3ccd47c1a74bd442d0ad587e77417deae7960b9d52743a043a75fe92c0c87ed"
+  },
+  {
+   "i": 846,
+   "text_sha256": "sha256:64626186a4c5dd62152e6012c5b3656724220d8d16ccf48b936216bf973d3cec"
+  },
+  {
+   "i": 848,
+   "text_sha256": "sha256:94184c3b78597dc1ba9e63320d3cb583175ec0c2e53b542924921f875539f724"
+  },
+  {
+   "i": 849,
+   "text_sha256": "sha256:2355fbfe2e00fbbc1460e99e11d7cb96eead274f87318365a77cbee198c1bc92"
+  },
+  {
+   "i": 850,
+   "text_sha256": "sha256:1442c8311016d10002a210c4a386c207df55ef92bb9edd37e4fe423b868a9ae0"
+  },
+  {
+   "i": 851,
+   "text_sha256": "sha256:e4a1265b88ee3aa39f6fa1a800ca6fa1a3dc876e651f1f4d726335a74b2cbba6"
+  },
+  {
+   "i": 852,
+   "text_sha256": "sha256:24a5807d89f60a6eace1cc5fe729092140e240787f7e19473bf3fc305cce93de"
+  },
+  {
+   "i": 853,
+   "text_sha256": "sha256:bca04e6277520d30dd835a63234246f40f3340ce8c6770bc198e2e4cd9e1112b"
+  },
+  {
+   "i": 855,
+   "text_sha256": "sha256:c6838ed989fd7d93ba9023466783c95230843ee13acafd63a355f9ad766cc39f"
+  },
+  {
+   "i": 859,
+   "text_sha256": "sha256:f5904cf7a1231a7a13a8cffbd2f0482984a1c69e96fc48dd96be8858a1707e60"
+  },
+  {
+   "i": 863,
+   "text_sha256": "sha256:c71e90d2f497062ba8d068af0bed2a3dc1fc250e03ab2718d7a1b2bdf00adc09"
+  },
+  {
+   "i": 870,
+   "text_sha256": "sha256:32bfe36f06d7e76f967bddbec5b3ac094ce0096edfa1ca563f5dfe999e63d683"
+  },
+  {
+   "i": 875,
+   "text_sha256": "sha256:13db797050587e5469e3f6922764aaa598f4345b4d6917c3f771fbd13cd8ea68"
+  },
+  {
+   "i": 876,
+   "text_sha256": "sha256:95bf1232214945db2af87dafee0cd0df4e1de607630df6a0d0f3b189e9f07d24"
+  },
+  {
+   "i": 877,
+   "text_sha256": "sha256:ba118bf7fc9c1aedc1edb28a0aa86e0b43b681f222af6616e13c43be87815b06"
+  },
+  {
+   "i": 878,
+   "text_sha256": "sha256:f1906c8d0caf76b299f64ee48a47737a721a01fa9b515ce00a6ab67ad710cb81"
+  },
+  {
+   "i": 879,
+   "text_sha256": "sha256:eeec4358e1536754053540a53fe7d178276df436188bc9902258a082604d04b7"
+  },
+  {
+   "i": 880,
+   "text_sha256": "sha256:1022e3eda16838fc933f0056ff3e7f534a528e8e020274c625f02b9411efa2aa"
+  },
+  {
+   "i": 881,
+   "text_sha256": "sha256:19092b5d9d18c923bd9a619fd2f0f5fcb59b67852c490c4f9d606e35f54f52e1"
+  },
+  {
+   "i": 903,
+   "text_sha256": "sha256:eb64908a4cd19acf8f25b9386591dc7c3de878800ba33bdf7e849fb4d4f48447"
+  },
+  {
+   "i": 904,
+   "text_sha256": "sha256:129d1d031cd70dc533caf79fdd0ec2daa34dc676dd979a2c59453a52745d1be6"
+  },
+  {
+   "i": 908,
+   "text_sha256": "sha256:bed3513c1a73b7c6bc7cd41e318b35ec90ae188190775d40b85a6113c14e4c8f"
+  },
+  {
+   "i": 910,
+   "text_sha256": "sha256:61f1107134a7a4a4fa34fea80b4233c4e3708b607c85469558e6fb65e485c881"
+  },
+  {
+   "i": 914,
+   "text_sha256": "sha256:3c0b9702ad5d0989075f4e4af017b4ad596ca8042d911fef238dfbceb13395f9"
+  },
+  {
+   "i": 919,
+   "text_sha256": "sha256:ee6aa9381e07c60412e8bca2932326f413828ccabca7b96380b4170f7e704605"
+  },
+  {
+   "i": 920,
+   "text_sha256": "sha256:95bf1232214945db2af87dafee0cd0df4e1de607630df6a0d0f3b189e9f07d24"
+  },
+  {
+   "i": 922,
+   "text_sha256": "sha256:bed3513c1a73b7c6bc7cd41e318b35ec90ae188190775d40b85a6113c14e4c8f"
+  },
+  {
+   "i": 924,
+   "text_sha256": "sha256:ee266f0e718bc939cb61c1deb2ac30d7b7d204253bfe96556142ccdf25a630ed"
+  },
+  {
+   "i": 928,
+   "text_sha256": "sha256:947a8f19223881474808c3f44686e478bc5758f8fdd9e39d44e17df622d96a04"
+  },
+  {
+   "i": 930,
+   "text_sha256": "sha256:3c6200ec5974ba7918a05d55fa62f09a84b6c3ff0b2011341a1a065485b48275"
+  },
+  {
+   "i": 933,
+   "text_sha256": "sha256:00b1b34baf6363d9254a84187eabf25e0975882f7162b6061181cb6e07d6e4d7"
+  },
+  {
+   "i": 934,
+   "text_sha256": "sha256:0bb09269b6f5ad4db69ccf7bd2c4688a187ab4b57bdcadede6e5b87bd6a815f9"
+  },
+  {
+   "i": 935,
+   "text_sha256": "sha256:ba118bf7fc9c1aedc1edb28a0aa86e0b43b681f222af6616e13c43be87815b06"
+  },
+  {
+   "i": 937,
+   "text_sha256": "sha256:bdafed20e9489e3cf65dfd9bb9127b452aba5f4493dc7cf018e151279dfdacca"
+  },
+  {
+   "i": 938,
+   "text_sha256": "sha256:ee70a067cf801a20afe6efa0fdfa2cdccde99b0c07f204424189a5b0277cb228"
+  },
+  {
+   "i": 941,
+   "text_sha256": "sha256:06c2c6392e8f84bf32c4506db04719e384d61d567e1f0e2ad2e1baaf0872b1ff"
+  },
+  {
+   "i": 943,
+   "text_sha256": "sha256:3048ed2e8f39f75bce285965960c0589cca7322a4f6b664c1e5943230108ac27"
+  },
+  {
+   "i": 944,
+   "text_sha256": "sha256:8af6848704a716f58074fe1857d0ab8e169d959d52c31f8ee275cb5809fbeed2"
+  },
+  {
+   "i": 945,
+   "text_sha256": "sha256:bbb285dc7356e76d8ab19174dab43ef8078c86af232d5710afd5ceae1b58000f"
+  },
+  {
+   "i": 947,
+   "text_sha256": "sha256:a0feac9204ab6041332c80acb5d90b9c5473c0a2be3cd1ddf851cd6166c087b5"
+  },
+  {
+   "i": 948,
+   "text_sha256": "sha256:10282050ad6e94693c3c1a6b0f50ebf043b6a751f737e95c95725d26593c344f"
+  },
+  {
+   "i": 950,
+   "text_sha256": "sha256:3d17ce106cd043b6c8cb9efb01e813685776cec4fc4559db4f30099fa598133c"
+  },
+  {
+   "i": 955,
+   "text_sha256": "sha256:0ea7995e14feb0b41df2462d7ba75b78df95988d2c4ab8af91767cbad10d6604"
+  },
+  {
+   "i": 956,
+   "text_sha256": "sha256:83fe939693e82b4657b097c2bae730112c839cbc0411e0c62883473981f61f1f"
+  },
+  {
+   "i": 958,
+   "text_sha256": "sha256:bdafed20e9489e3cf65dfd9bb9127b452aba5f4493dc7cf018e151279dfdacca"
+  },
+  {
+   "i": 959,
+   "text_sha256": "sha256:ee70a067cf801a20afe6efa0fdfa2cdccde99b0c07f204424189a5b0277cb228"
+  },
+  {
+   "i": 962,
+   "text_sha256": "sha256:e0b2c4127a1b235f1e7d2d12f8f385a726979481cf8f1be1fea6c382634422ce"
+  },
+  {
+   "i": 964,
+   "text_sha256": "sha256:beb0558c45f55ab80cb8bd594b85c3947bfa22cecb27c499fd39a5b69a162a03"
+  },
+  {
+   "i": 965,
+   "text_sha256": "sha256:8950e28ee9c64b2450012d842cf3f6eea6129eb0daa0faae6993e740de73bd68"
+  },
+  {
+   "i": 966,
+   "text_sha256": "sha256:be26f92de7c7e41eb66fc71e4d7eeb5b0129302a5f48a8ad16f8a604ccde245b"
+  },
+  {
+   "i": 968,
+   "text_sha256": "sha256:5e7bef52a4f98fd08e4f367b6016c9a6e6cbc2bd9f15d7f621f9cc6f52395f1d"
+  },
+  {
+   "i": 969,
+   "text_sha256": "sha256:6a4e5d64e3c5981ae0c812e4cfc5ffaa09a2868b642787b9ce0363f0fdf37b36"
+  },
+  {
+   "i": 975,
+   "text_sha256": "sha256:58102fa820b530ffa1edf35a0339e656f0c1e162e1696555610613792bd8340e"
+  },
+  {
+   "i": 976,
+   "text_sha256": "sha256:b3ed22979cdc02b40b3b11af7397e9a3b85853d69ccd1dba0d40c9fd786549d9"
+  },
+  {
+   "i": 977,
+   "text_sha256": "sha256:1315b3e3614119650d810ef4d7f6c9a909cae990d346ab6f43b417a3ac6a5f6a"
+  },
+  {
+   "i": 978,
+   "text_sha256": "sha256:66e927a8bdca683ae02b6853ed775fcc8b40b1bd4916b79986816b5a72f99a2b"
+  },
+  {
+   "i": 980,
+   "text_sha256": "sha256:77614b2ad04ee4f02cc9f2caa98e1720acd03d85b001187c5e4fef2e2f95468c"
+  },
+  {
+   "i": 981,
+   "text_sha256": "sha256:f37214bfa679504a647a5f7e205bc41787dd977675c379abc1a20d1ced340046"
+  },
+  {
+   "i": 983,
+   "text_sha256": "sha256:f72038b109130e21ca33a67198abf3e854772e3460b68ea583e270f93de9b3ea"
+  },
+  {
+   "i": 985,
+   "text_sha256": "sha256:c8dcad5a2583909cbb12f5641d701f5988edc2f3e49bd4bbf368733c8c741d05"
+  },
+  {
+   "i": 987,
+   "text_sha256": "sha256:e5d6daf5612006f925d04b8d0e419f77203fc41632feada3bbfb42933b4d63a9"
+  },
+  {
+   "i": 990,
+   "text_sha256": "sha256:55d851d99eb2e542b0970692ce37066840f739ec9d3b5c5c7fd6428d91fe62f3"
+  },
+  {
+   "i": 991,
+   "text_sha256": "sha256:ef44c41fee625810282023ce111cc16ed0f68d6c28827e03abf0531215b37717"
+  },
+  {
+   "i": 993,
+   "text_sha256": "sha256:fe7056bf4d797adecfa64e2d85f802418c8a52b9122e721754843bb065fa668d"
+  },
+  {
+   "i": 994,
+   "text_sha256": "sha256:6d12fdfaa0f97c4bbb4997fc802d720d6e20b071c989bac02599e4bae9551ced"
+  },
+  {
+   "i": 995,
+   "text_sha256": "sha256:efb76b84edb027e714e66f070041a85719b26645c03dee1a9e12e3deae6a4e4a"
+  },
+  {
+   "i": 998,
+   "text_sha256": "sha256:c41ff4b767b0c9bbbacc3b4a4bae6c1ac2d159376190501f1c29f6c862b985a8"
+  },
+  {
+   "i": 1000,
+   "text_sha256": "sha256:8a52fdbb53094cc0585edc0d01a2749dec8553bd78d64c4e1e84bcbd4fe2abe2"
+  },
+  {
+   "i": 1005,
+   "text_sha256": "sha256:352304fa2c144ff9da9abab7216d97065f65a7a591d6b259d3ecf97a8affa50e"
+  },
+  {
+   "i": 1006,
+   "text_sha256": "sha256:eeab98f7a151b698b1c848efa19358cbfe050dfeccd9ede02e3bcd0ee9cd5613"
+  },
+  {
+   "i": 1007,
+   "text_sha256": "sha256:81ae550b7a3a4160ddf265dc697a48a6740bf93eba74f43d28da049c619ad204"
+  },
+  {
+   "i": 1009,
+   "text_sha256": "sha256:af51c7e8b27694db585d4e80ff235751931226fc87d5c2c07b3922e927bd8e7e"
+  },
+  {
+   "i": 1010,
+   "text_sha256": "sha256:f37214bfa679504a647a5f7e205bc41787dd977675c379abc1a20d1ced340046"
+  },
+  {
+   "i": 1011,
+   "text_sha256": "sha256:612de4fb608e146e686fa5d3561e0fdbe6155720f4ae556c131d6c24197ce449"
+  },
+  {
+   "i": 1015,
+   "text_sha256": "sha256:971d2d8fb491ae3108f59db59c81160ab25a344fc1abdd5ca155592f15f18e54"
+  },
+  {
+   "i": 1022,
+   "text_sha256": "sha256:f2b16046a4a19329b7306b2c11a9344d703c94f34a4681fe552b91d74aa6e1ce"
+  },
+  {
+   "i": 1024,
+   "text_sha256": "sha256:c28af08189ba40b94717608d50629da98566860dedf859b8cac69275f830ec84"
+  },
+  {
+   "i": 1025,
+   "text_sha256": "sha256:31a5a61ef35916e5481378a01ff9a9f976cd73aa4930ad4c272a8883eec3ab0b"
+  },
+  {
+   "i": 1029,
+   "text_sha256": "sha256:f41fa4d81cf6000bb5d3441f92aab28e4fd0ba383c93a778ef6624fcec02b22e"
+  },
+  {
+   "i": 1034,
+   "text_sha256": "sha256:d86ec0e564a07346f3784e6acf2f288dd2f7bd081bd457b806d1718f4493b5a2"
+  },
+  {
+   "i": 1037,
+   "text_sha256": "sha256:5bc75c1aff54fbc9d4c313c274e7cea6cec7482c3b1c7cc58f633cbcd0430252"
+  },
+  {
+   "i": 1038,
+   "text_sha256": "sha256:61f1107134a7a4a4fa34fea80b4233c4e3708b607c85469558e6fb65e485c881"
+  },
+  {
+   "i": 1041,
+   "text_sha256": "sha256:ab9f76855e1680a025ae7e37b08a3673c56fa54e85ce43609d00af11282f8b84"
+  },
+  {
+   "i": 1043,
+   "text_sha256": "sha256:615f0c5035cb7e1eeb2eb82cb02f1fcae5c525ce07138d6730dbd8953c3d2988"
+  },
+  {
+   "i": 1050,
+   "text_sha256": "sha256:d1837c4249fe6689fe866a1c979cb997ebaf5f471961308382e0e4e0a142d3ca"
+  },
+  {
+   "i": 1051,
+   "text_sha256": "sha256:31a5a61ef35916e5481378a01ff9a9f976cd73aa4930ad4c272a8883eec3ab0b"
+  },
+  {
+   "i": 1052,
+   "text_sha256": "sha256:7d8c46b4ef0f5881d4fd6a3c82c5518daccdd576f73b999fc175a5e6727e37db"
+  },
+  {
+   "i": 1057,
+   "text_sha256": "sha256:3914e53b140d08c124354bfd1b268ba89c77893f4022c2f810f5dbb381674492"
+  },
+  {
+   "i": 1062,
+   "text_sha256": "sha256:3d40bbe1b20e4cf32d502b1b0acdade00cedc8e1794fc9292c979c69e1747ddd"
+  },
+  {
+   "i": 1065,
+   "text_sha256": "sha256:622b04d0ab51bbb370e9addc46349e87518ecaaa0fad566a407191f7f0af079e"
+  },
+  {
+   "i": 1067,
+   "text_sha256": "sha256:8852010ddc7a326159bac775f04efeb3f3e6d1da61d9e31de5fb8fcf3b718206"
+  },
+  {
+   "i": 1068,
+   "text_sha256": "sha256:31a5a61ef35916e5481378a01ff9a9f976cd73aa4930ad4c272a8883eec3ab0b"
+  },
+  {
+   "i": 1072,
+   "text_sha256": "sha256:4ee61ff9cda766a874e42de5daef33e107bfcbd80a9a478fe4c7346224937afe"
+  },
+  {
+   "i": 1074,
+   "text_sha256": "sha256:9390b753e11890a402b153dcc631afb8a5a929b29c2e4df288d39a66cc4f1855"
+  },
+  {
+   "i": 1079,
+   "text_sha256": "sha256:8a8e96a08edff24f29e3621c86a4e72cc623daed3a5ad5c01d87c4134bbf9264"
+  },
+  {
+   "i": 1083,
+   "text_sha256": "sha256:d1837c4249fe6689fe866a1c979cb997ebaf5f471961308382e0e4e0a142d3ca"
+  },
+  {
+   "i": 1084,
+   "text_sha256": "sha256:0ddd47b829dae7dd448266454d8c8e788cd5bc914df6d20a7e5f64feec74bf0f"
+  },
+  {
+   "i": 1087,
+   "text_sha256": "sha256:4edad102178415c0f1c34ec83b3f60dcb21a9bd120bdeb005d1928d14ac69b92"
+  },
+  {
+   "i": 1089,
+   "text_sha256": "sha256:b1674bbfa3b00d7892d14d32ab5d69756887b6aad069d396dbb65ed0461b3c1d"
+  },
+  {
+   "i": 1095,
+   "text_sha256": "sha256:0c4132b6239f675114ee483bbfab5c29509343d854ea87cd89adf6ff5e6c5616"
+  },
+  {
+   "i": 1096,
+   "text_sha256": "sha256:31a5a61ef35916e5481378a01ff9a9f976cd73aa4930ad4c272a8883eec3ab0b"
+  },
+  {
+   "i": 1102,
+   "text_sha256": "sha256:66f87849fd4e5e81f67d1e12c751a6d281fecd6027439986ea7dea701629ba6f"
+  },
+  {
+   "i": 1107,
+   "text_sha256": "sha256:16716bea8f76ae035346433e73627c64158fc07e25b91b0a9af0d1ac8b9a54b8"
+  },
+  {
+   "i": 1108,
+   "text_sha256": "sha256:ccd68826f2deb0ea59ad595173d24835802bbb17dcfa730e4e74539f7c07a9b0"
+  },
+  {
+   "i": 1146,
+   "text_sha256": "sha256:fd64879e440125c6eac5962ccba80c2218b73483fbb5392273e8414e1fcdcbb9"
+  },
+  {
+   "i": 1147,
+   "text_sha256": "sha256:71b6461b3e37c610e2a70646260fb9b2aa31ffd0b5307f1e68279ea91d63ad71"
+  },
+  {
+   "i": 1148,
+   "text_sha256": "sha256:af4cc37ca644ae68dea422a2064f7d5ff6a8f352ce6e1c799e32b2fb4c1a5bfe"
+  },
+  {
+   "i": 1149,
+   "text_sha256": "sha256:5dcd9585d368d2fbdd3be4aceb3c26eab3e31ee25e8b34cc1d8f6e02e92f186d"
+  },
+  {
+   "i": 1150,
+   "text_sha256": "sha256:a37d6e9afb5c8f1be74f8e0b5ae989a2f9760d385bbf0c507be12af119c7d082"
+  },
+  {
+   "i": 1151,
+   "text_sha256": "sha256:c0792a1c8b2ad9f88985ec81012cd3c77284b767154ce904625187eef3e1f69b"
+  },
+  {
+   "i": 1152,
+   "text_sha256": "sha256:15ebf584314b9ae6c3bc6fbcc069d5e09479f0e524f192ba0aa1fa2c9220aace"
+  },
+  {
+   "i": 1153,
+   "text_sha256": "sha256:4d159022eeb6479f20596de9226ff47425d8654049cb4363dd589fae3668e65b"
+  },
+  {
+   "i": 1154,
+   "text_sha256": "sha256:530150444f71931db175f339accaed40c531fbfd38dddc413a5703713eb54281"
+  },
+  {
+   "i": 1155,
+   "text_sha256": "sha256:57e1b6c5de3d01549367b279857bd66f749279b6990e69a5734a47782d0216b8"
+  },
+  {
+   "i": 1156,
+   "text_sha256": "sha256:ae94e3b4b1164dee75988f6543a3cab5e416655c0e7a29196b8479a85f5d80dd"
+  },
+  {
+   "i": 1157,
+   "text_sha256": "sha256:5cbc318b1fddd63bd26d37814eadaf6634f048be4da035759b470a2c435afd65"
+  },
+  {
+   "i": 1158,
+   "text_sha256": "sha256:03a715f7c5c5fe7077301a9249c2afc8ac19a5b5203f26145d47ad0c3eb79695"
+  },
+  {
+   "i": 1160,
+   "text_sha256": "sha256:a8c2b81101ba24ad6dea24d320575c326a2ff9bdf5fefa26fc21ee49e4a78d9f"
+  },
+  {
+   "i": 1161,
+   "text_sha256": "sha256:6b60f6fe70fc7d0737512a0f62d8ec242d8e431fe05dfb50c879946c7119a617"
+  },
+  {
+   "i": 1162,
+   "text_sha256": "sha256:498fc2019bfa3b33099fb148e4f79f686682730a5fd577916543c3de9ca4b711"
+  },
+  {
+   "i": 1163,
+   "text_sha256": "sha256:f63cc217976f9c891bad0ff1f3313231741a66dce4f8d117fb685f63e221a539"
+  },
+  {
+   "i": 1166,
+   "text_sha256": "sha256:452a611c097efadee4873ab339c88d51c87e1aef69975cf1c8b36b010327f21b"
+  },
+  {
+   "i": 1167,
+   "text_sha256": "sha256:dd22fc7d07f70a666af4d492b50ecc7a4700d6e2f76af60ee751607f920aad7c"
+  },
+  {
+   "i": 1168,
+   "text_sha256": "sha256:970b542b1be06f4d92bc86480aac8ef0cfcd6848661ca72108927883d1d60064"
+  },
+  {
+   "i": 1169,
+   "text_sha256": "sha256:8d86a3c88dbd1113c16c68ff63831a2c2d92afaf9ab3bf5380f3350d75e49ee1"
+  },
+  {
+   "i": 1170,
+   "text_sha256": "sha256:730ba4d8564bedf6da9a2c97da525142f7a329ee9174e1adbea08a2ecc0da889"
+  },
+  {
+   "i": 1187,
+   "text_sha256": "sha256:90c7afc4841f9184e9c6e34e833e3bdf590611aafad0ad1884b934042b7547a9"
+  },
+  {
+   "i": 1188,
+   "text_sha256": "sha256:97e1e546d81ef377bc3e8d8067dba980e3a2256cea60cf8b6d428af4d53b0590"
+  },
+  {
+   "i": 1190,
+   "text_sha256": "sha256:df8872c79034b8f9247fa4d4217642be31c858ac24fad06e7b5de6b0f22781ae"
+  },
+  {
+   "i": 1191,
+   "text_sha256": "sha256:20f61d6f4d783e6794bd2c582f8438b56daae2420674deeab82c3b6363355006"
+  },
+  {
+   "i": 1192,
+   "text_sha256": "sha256:dc59090e802b10f62b1ed7b45aebb034dcdf7d2e5c97661b5b7829f86defe30e"
+  },
+  {
+   "i": 1193,
+   "text_sha256": "sha256:20a649078b1d5326437796d059cdc1ab750fb4db93e4eae24c2a35dc7675d131"
+  },
+  {
+   "i": 1194,
+   "text_sha256": "sha256:907bf1a7b2a03d17e6171eb393ae1e9b20ee9fe250732fbe5fb1f2e845ce7d0c"
+  },
+  {
+   "i": 1195,
+   "text_sha256": "sha256:59591d216443f7972d1a646e3ccf129ec713391c776fa5c17be92c352677665f"
+  },
+  {
+   "i": 1200,
+   "text_sha256": "sha256:aab4f7e5fe1eadcb12c4af108d33477edb84c10ff469fd8b7c5bbebfae573329"
+  },
+  {
+   "i": 1202,
+   "text_sha256": "sha256:20298c4a6fb37377fa78eb28cdd6b1374476e9d12f5079ce7883e9c1484b8caf"
+  },
+  {
+   "i": 1205,
+   "text_sha256": "sha256:c441f0dab23d163ccc9f4bd05f984fee1fed2f15ff45d14256793057e56b3b73"
+  },
+  {
+   "i": 1208,
+   "text_sha256": "sha256:4eec4a163535ca5de0ce480050647e3794456ae408e60267cf40a4b6defc5804"
+  },
+  {
+   "i": 1213,
+   "text_sha256": "sha256:be3ed7c1f54137c73371e09f969de6623864f61023fb54e64c45f168183b6c4d"
+  },
+  {
+   "i": 1217,
+   "text_sha256": "sha256:134f961fcf62c37873dd219d0784a8f72a83ad32b0f15ea4721ae17ccdaae043"
+  },
+  {
+   "i": 1220,
+   "text_sha256": "sha256:3ffcb700440d5c6e9d11b4ba3650b3eae0cb0923efa17bc85e9f84e41b511691"
+  },
+  {
+   "i": 1231,
+   "text_sha256": "sha256:279d674930f755836bccc816a0a21cf565bb2179b074843ed81dd83f88e6ac53"
+  },
+  {
+   "i": 1269,
+   "text_sha256": "sha256:7ded22129c49170c6fe535806d5439b26b8995704d39836cdf3601da99174090"
+  },
+  {
+   "i": 1275,
+   "text_sha256": "sha256:dc036d4a15d7c3bafd643a892e5f278bb506c202bf129276db7a6dabe4693af6"
+  },
+  {
+   "i": 1285,
+   "text_sha256": "sha256:20b223cc5a6648913f51a58569655004b80795b6023f474c5ac857728be9ae4a"
+  },
+  {
+   "i": 1287,
+   "text_sha256": "sha256:6034f9ee014d195fcd0beb3578137beb8b12c37fee7897bc4fe523842095ac74"
+  },
+  {
+   "i": 1290,
+   "text_sha256": "sha256:fc949b2df09f26fdda8857b180cadcc4ad422948838e5cbb560a9a77ff43601a"
+  },
+  {
+   "i": 1295,
+   "text_sha256": "sha256:b7a89072e652c050779a51ac204d8383380b59eb2353a8a0bf72204c774376df"
+  },
+  {
+   "i": 1306,
+   "text_sha256": "sha256:593103e5e5a5f74738af55bb5c46f2a3f1e20d5b272208f86c14a231f5f539af"
+  },
+  {
+   "i": 1320,
+   "text_sha256": "sha256:daa741891854d75e9fde76129e3cfc9c7683b7faa6c09c2f6f3acc4b1b4d4a08"
+  },
+  {
+   "i": 1325,
+   "text_sha256": "sha256:1ccda44acb23305bd1b7a2c7d856db213f25d3c9d71ee063c7145d28816b2fca"
+  },
+  {
+   "i": 1326,
+   "text_sha256": "sha256:978354db0c00fc78c3a5524f462a73bc425df3fb2767e51a5f46352ae26ae6f9"
+  },
+  {
+   "i": 1327,
+   "text_sha256": "sha256:e969f85c47caa12786cb321a6c0cd7a1427b24553813ca91cf6da1a38f65cd3c"
+  },
+  {
+   "i": 1329,
+   "text_sha256": "sha256:f36fabef716452f6521cfb7084b457eefb361a1796424df93e09fa13e20e4e76"
+  },
+  {
+   "i": 1330,
+   "text_sha256": "sha256:010dd7b94f5f3d31b17799f0a5419c71e80438ef34ef70b0cb0500dabee32eeb"
+  },
+  {
+   "i": 1331,
+   "text_sha256": "sha256:442aded87a55aa8c8f7d5ff0c30228150d4b1cb8756e4be138d615ca4708fc26"
+  },
+  {
+   "i": 1332,
+   "text_sha256": "sha256:964a9c0606520b6e0f94e252b1d25b1a3f46f3cd38da00ff8166d656ac870679"
+  },
+  {
+   "i": 1334,
+   "text_sha256": "sha256:c2a6bd84a9080d690c70c93bee3ee87bee4350963dd0605a78cf98b1e27d2142"
+  },
+  {
+   "i": 1335,
+   "text_sha256": "sha256:240cacc1dbbf213ac16f13ade37af484e528f0eefd177f675898ff5e53b7bd91"
+  },
+  {
+   "i": 1348,
+   "text_sha256": "sha256:96d74f918bc2a8a7b0d951d2ca0711b1285f9aa3d08058b8f82ab852fb192596"
+  },
+  {
+   "i": 1350,
+   "text_sha256": "sha256:1a5699d752983f137e76f042e25bcda6af0b3fd5e1fcb5a52ccbb9865259ccb6"
+  },
+  {
+   "i": 1351,
+   "text_sha256": "sha256:cb2e5313b45b1f31bf1cf7719d988ff7c6b282c1d93de76e242ebae58db65563"
+  },
+  {
+   "i": 1356,
+   "text_sha256": "sha256:3710d602a913263c652bcba011f98c5c3fb01f0507f98335114d98cce9393df6"
+  },
+  {
+   "i": 1357,
+   "text_sha256": "sha256:d0c0111818c71ef6fac3c65eb2ec341f43af0c872cba35c725ae25d9f0bad3e8"
+  },
+  {
+   "i": 1359,
+   "text_sha256": "sha256:7b03582809824a308f0076b0a40ff7ef917d6d59fe22223a300b2cdc1a649b7e"
+  },
+  {
+   "i": 1362,
+   "text_sha256": "sha256:21f04183a43983e977601ba1c346b5787627c0c5b07da7505780f1f043180050"
+  },
+  {
+   "i": 1366,
+   "text_sha256": "sha256:646224de32259c58631a493670dde5fdf0068b35a1b6571e2e6c6cb52f6aa780"
+  },
+  {
+   "i": 1379,
+   "text_sha256": "sha256:1b02cf0cb1e545fc6b849b1988642240c89808bbbc12b37e2d0a17b2f0c127a1"
+  },
+  {
+   "i": 1381,
+   "text_sha256": "sha256:4bebe051183d8f9071e21910a1665faf7926651935ff8c5d5a04f497544194fc"
+  },
+  {
+   "i": 1383,
+   "text_sha256": "sha256:0d79e6e693584a359cb28d36672c353a3ab4c03f67bc82d2b3be70e91982d7d8"
+  },
+  {
+   "i": 1384,
+   "text_sha256": "sha256:0b2a6517f934e2079a9b6e993f014783aa9965e935fa05bcba9bead40edbff06"
+  },
+  {
+   "i": 1385,
+   "text_sha256": "sha256:51e4ca6f7d2b01c48de738e9eb29d3ebfbc44eaa850c551b3e8a410589f939e5"
+  },
+  {
+   "i": 1386,
+   "text_sha256": "sha256:8314132eba17116896c2f8e2f89cb7e4605a62900c4fe6b342521594269839dd"
+  },
+  {
+   "i": 1388,
+   "text_sha256": "sha256:fd91b5a73d1103a051edf82ac30d73372ff15ea8628e6210327c8f85295dc96a"
+  },
+  {
+   "i": 1406,
+   "text_sha256": "sha256:21ee7a2d6359cbd8ac175414b4c4e11e55219fc8bb43157a90c9419eb7a9203b"
+  },
+  {
+   "i": 1408,
+   "text_sha256": "sha256:8056032be8a5f948a6df7514924be11d3a1f5b54da33e2c80be178ee3662d00a"
+  },
+  {
+   "i": 1410,
+   "text_sha256": "sha256:9ebe12e40e8818b47baf49f1ce3ec367d80313ce1d223efb98563e2b1d4f22c4"
+  },
+  {
+   "i": 1414,
+   "text_sha256": "sha256:2022fa8b98e4683620091f82946a005cdf777cd1eaba77d9957f36d1920b8878"
+  },
+  {
+   "i": 1421,
+   "text_sha256": "sha256:afc47669609c8046f1a25e0c693b5a98846210efc00751e6a80d55be588e038c"
+  },
+  {
+   "i": 1429,
+   "text_sha256": "sha256:39bd9a53a250e4019be7ecaa88699b52b1df09d9d6d7225db1ed2a02d8c02130"
+  },
+  {
+   "i": 1433,
+   "text_sha256": "sha256:354d47d1e9f5cfff3172896030fbdba776c76a3218431a79454c0123a54c45cc"
+  },
+  {
+   "i": 1434,
+   "text_sha256": "sha256:67754ad42bcf3845bed73b8d2f95e0feeb642bab61718dbc3703a78ba61738ef"
+  },
+  {
+   "i": 1441,
+   "text_sha256": "sha256:39bd9a53a250e4019be7ecaa88699b52b1df09d9d6d7225db1ed2a02d8c02130"
+  },
+  {
+   "i": 1459,
+   "text_sha256": "sha256:f1a31a2e00e0d8c0e39ac0f6a5d3647deddc7d28407f29574872b795c06fa569"
+  },
+  {
+   "i": 1494,
+   "text_sha256": "sha256:2f0a47f419bec9403914a7500ca11f398546fb7b4411b5aaf4fefb6016fb3e96"
+  },
+  {
+   "i": 1495,
+   "text_sha256": "sha256:49cd412123ec55d8a8377671e13ef31cd1f703af403147c8f7bb5fe863f07c69"
+  },
+  {
+   "i": 1498,
+   "text_sha256": "sha256:4a101d346c684cd8f66301b02c5ace6b603f16494f3b186ca95958f235480e5e"
+  },
+  {
+   "i": 1499,
+   "text_sha256": "sha256:2146b0dc4d0362f5fdfeedcba52b77cfb1c723b9e75815f050a70df50ec0e313"
+  },
+  {
+   "i": 1501,
+   "text_sha256": "sha256:0c21d424e72b5371791ad4cd1eac9592a2604bc4fea6adf159948c9117813b87"
+  },
+  {
+   "i": 1502,
+   "text_sha256": "sha256:f06cb2b73e1cb8b5b70773b45b3971ba92141b84bae5b8bde99f24988a3dee7e"
+  },
+  {
+   "i": 1508,
+   "text_sha256": "sha256:9bcd769afd93166a627f80ec832f13df64457573f2efac0e4c0dfe820cc336dd"
+  },
+  {
+   "i": 1509,
+   "text_sha256": "sha256:c8c6235c69a314ea263a4e462cc80da23341b581041bb6e9b39758a05b811910"
+  },
+  {
+   "i": 1511,
+   "text_sha256": "sha256:8a649ca3acf129989fc82e96fed3eb88965601b22e04956b71f8ffa8f0b04ae6"
+  },
+  {
+   "i": 1512,
+   "text_sha256": "sha256:507736ed23056fa17fe276b5ff19fa4f539242aaf66ad3108690063e63ce745c"
+  },
+  {
+   "i": 1517,
+   "text_sha256": "sha256:b129ad3d673635f24712b10f30f02b7f70f9b1fa88d78dd3fc9db77eccf986bc"
+  },
+  {
+   "i": 1519,
+   "text_sha256": "sha256:b7a19901e75e6a298317a19307bd92f6df026003fac4abe3137f01b3dcc966e5"
+  },
+  {
+   "i": 1520,
+   "text_sha256": "sha256:02fef0e939e2c36fd33560215541311c744e26eccff28f29205c37a3d13d99f8"
+  },
+  {
+   "i": 1523,
+   "text_sha256": "sha256:02fef0e939e2c36fd33560215541311c744e26eccff28f29205c37a3d13d99f8"
+  },
+  {
+   "i": 1528,
+   "text_sha256": "sha256:af06e588a6aba76ccbb0d041c4da404343121b272c444ca78ba0ccd569450e4b"
+  },
+  {
+   "i": 1532,
+   "text_sha256": "sha256:4db3f5a0d162ab7b75b12868f84fc8de39b72c5894c44ef81182b92403f49a85"
+  },
+  {
+   "i": 1533,
+   "text_sha256": "sha256:e5c1fbf94ad0085877bdff05f89dcff3e0441aa26ea3dc385d03ec8a3b2d2d5b"
+  },
+  {
+   "i": 1534,
+   "text_sha256": "sha256:02fef0e939e2c36fd33560215541311c744e26eccff28f29205c37a3d13d99f8"
+  },
+  {
+   "i": 1537,
+   "text_sha256": "sha256:8cafcdd62d3f16100f5b680070a0e0cca5ef92ad8adbde069a0ef6e8e261f248"
+  },
+  {
+   "i": 1549,
+   "text_sha256": "sha256:6f26be4b4a393bab5e31fda67bd7ccfbd33a1553a4376545f2d0a431feb42ec0"
+  },
+  {
+   "i": 1550,
+   "text_sha256": "sha256:776d788bf08a4d031459e45f20c42aa54c2b8324dfcbf73c9271ed9c62063bb2"
+  },
+  {
+   "i": 1551,
+   "text_sha256": "sha256:b84aa5dc572d21cf7b14152532ef0b69d1f5716cacc897c4e4c071687ff2f121"
+  },
+  {
+   "i": 1552,
+   "text_sha256": "sha256:fc64990d59f48a0002533e9127d5449385ebe01f9ae75dd63eda8d4308229f1b"
+  },
+  {
+   "i": 1553,
+   "text_sha256": "sha256:3ced4a0c6e44455bcd6e85ad39e4371ca62ec1b51aecf3553b48c60dcf3fe20b"
+  },
+  {
+   "i": 1555,
+   "text_sha256": "sha256:b9c38b26687fa4da3eaa0ceebb7ade7bac042f06c1436fce251e7dc9a4299ae5"
+  },
+  {
+   "i": 1556,
+   "text_sha256": "sha256:30345c78151d0947aa739c4f681bee6c4f411529d53542dd69ec4b2f9f2d6e50"
+  },
+  {
+   "i": 1557,
+   "text_sha256": "sha256:e3009adefbdd873558a2847f7dabc83e116c77e8a4b29967137bc6b147caecb5"
+  },
+  {
+   "i": 1559,
+   "text_sha256": "sha256:065aac3475d4ecfe19277dbc4b50eb29c00926ec0a6575d2b52dbb459eb7c495"
+  },
+  {
+   "i": 1568,
+   "text_sha256": "sha256:888667a47350ce4308a11ac21b58fee41dc6e46012f1cbd2293e65e270492e45"
+  },
+  {
+   "i": 1570,
+   "text_sha256": "sha256:358e3d8d2f0dd58c4af776420f4a49e2485ce2977c97e874aeba2a3521936ff6"
+  },
+  {
+   "i": 1573,
+   "text_sha256": "sha256:ef0527a120c4638b4c16df698412e86efd19ad78b9a2f352deb42874eb5871d9"
+  },
+  {
+   "i": 1578,
+   "text_sha256": "sha256:1b9f09101a5b830f31a3a9262f3c55ed51401e72ac557fc195405f2baadfaa94"
+  },
+  {
+   "i": 1579,
+   "text_sha256": "sha256:6cd9e83c5d4ca255a28be2693174b3be40aa6f76bb645bd75bb505cb485e12e8"
+  },
+  {
+   "i": 1580,
+   "text_sha256": "sha256:c5da7c809a65b7f64c07d2b7848ad65cfb4c008ae51dbb55cf95136cdd33ceda"
+  },
+  {
+   "i": 1581,
+   "text_sha256": "sha256:f98a6f4ca2867f958f08750fe8bae4b421b435988d48b05d9542c3a06c0dd720"
+  },
+  {
+   "i": 1582,
+   "text_sha256": "sha256:f5b4b42712a5c76e1294bbb874e6f6e30edfbc4c63eee3b3cfd913bac1ad03a8"
+  },
+  {
+   "i": 1584,
+   "text_sha256": "sha256:f0cccaa83a2bd47a1a28d7ee609aac9aef49d3598e2535248c4e1e0bb201b3f7"
+  },
+  {
+   "i": 1585,
+   "text_sha256": "sha256:e2c258181616411eb4965c54169d0351e0f0bf4e74d75f55dbe91f26c1447aa0"
+  },
+  {
+   "i": 1586,
+   "text_sha256": "sha256:f223faa96f22916294922b171a2696d868fd1f9129302eb41a45b2a2ea2ebbfd"
+  },
+  {
+   "i": 1587,
+   "text_sha256": "sha256:c18468092c4f8471977d25078d2bbac2964bf43ad1ff69b45046ff1238244223"
+  },
+  {
+   "i": 1678,
+   "text_sha256": "sha256:0217e0dc63338251ce13a6146a05260beba5696c396e259e581453d7784b17b2"
+  },
+  {
+   "i": 1680,
+   "text_sha256": "sha256:ea692156be418306fc462b8f56cf3bea6d4e6a637f6775081902479c0bacc3ed"
+  },
+  {
+   "i": 1682,
+   "text_sha256": "sha256:2f9864b6b8d2609aa97c40b0479b87ebf66d2432fe264f6891a3b0bdc9dc9b36"
+  },
+  {
+   "i": 1684,
+   "text_sha256": "sha256:bf343822000e0cb6163d4d6255e12a8c54bee254acc1eabf5fa39fdcd6b4899c"
+  },
+  {
+   "i": 1689,
+   "text_sha256": "sha256:49b62ea5b49db8b3b0d3c19ff4167115ab846903496ea728390f05745b982e54"
+  },
+  {
+   "i": 1690,
+   "text_sha256": "sha256:71e254e17a735c705aa3adb10d642e18f9ec697fef164241b916a82b57efe3e9"
+  },
+  {
+   "i": 1696,
+   "text_sha256": "sha256:3bfe5056c2663d02250cf43681db9245a48f46c501717d6825ceb1b0e6b3bac6"
+  },
+  {
+   "i": 1698,
+   "text_sha256": "sha256:d86249bf5acf77f3b123fbad2ba93a4ee89c4629c7e265b58a79cf9d7de47ec9"
+  },
+  {
+   "i": 1699,
+   "text_sha256": "sha256:4abd5aa655c9f28fe6444cefcbf01e50eb71559b2ecd493740538f7cc94db2a3"
+  },
+  {
+   "i": 1701,
+   "text_sha256": "sha256:af05a634f51c2d85a03e80e5e95c4dffa1e15122cf3bfdfafee24aea571c6868"
+  },
+  {
+   "i": 1705,
+   "text_sha256": "sha256:94512e9e7076e45e488663d8bb41dab2e7aefc95ae834d50d20de128e97bcc16"
+  },
+  {
+   "i": 1706,
+   "text_sha256": "sha256:0de7bf7a3b6bb50c3a014d1ed5096a7259780cedfda9c106d658938918ab9b29"
+  },
+  {
+   "i": 1712,
+   "text_sha256": "sha256:d6a16db91fbc7ace42b37eae12400b37219a7a583209b8d673275b0f3a739af5"
+  },
+  {
+   "i": 1717,
+   "text_sha256": "sha256:e5d967e17d97ea0544227492522b3091b18cd3a55e91435241dcf53ccfb06885"
+  },
+  {
+   "i": 1723,
+   "text_sha256": "sha256:edf14213688b25edac4cb01fefb2f93b33d6a1ff4ed591e49d0fbb1964b974b2"
+  },
+  {
+   "i": 1725,
+   "text_sha256": "sha256:b45ad71031cf8e005ea80a5ff572684950d2ec79636c005a9bba1f06fea849ab"
+  },
+  {
+   "i": 1726,
+   "text_sha256": "sha256:1fc4d2e60ca80e29e9ac8f51f41bcb7380978e98d7fc035d4bdfe4ff44a4ed02"
+  },
+  {
+   "i": 1734,
+   "text_sha256": "sha256:afc47669609c8046f1a25e0c693b5a98846210efc00751e6a80d55be588e038c"
+  },
+  {
+   "i": 1739,
+   "text_sha256": "sha256:354d47d1e9f5cfff3172896030fbdba776c76a3218431a79454c0123a54c45cc"
+  },
+  {
+   "i": 1740,
+   "text_sha256": "sha256:67754ad42bcf3845bed73b8d2f95e0feeb642bab61718dbc3703a78ba61738ef"
+  },
+  {
+   "i": 1744,
+   "text_sha256": "sha256:cc1697f7be2fc5f66061ddfa3c3441f91c1eaf0bcc60c8c2d1e06c1c262ab190"
+  },
+  {
+   "i": 1748,
+   "text_sha256": "sha256:10e082b5b2d1764e60c41eb00f1fe1b20f13e235509c78bd06ede2b528d19d85"
+  },
+  {
+   "i": 1799,
+   "text_sha256": "sha256:0e89c24847cdf73606ed88340429167e8fccbe9ec4913c980e31acdf8d877cbe"
+  },
+  {
+   "i": 1803,
+   "text_sha256": "sha256:68409b1215865d9dd62bd562541cd1a5d232b4cfaa03d886de93c8bec0f6bf94"
+  },
+  {
+   "i": 1810,
+   "text_sha256": "sha256:20095940678220ed9ba78f3145921947c76193021368c90a3fe4fcf188cca188"
+  },
+  {
+   "i": 1850,
+   "text_sha256": "sha256:eabb06d41195b7522202b76ed82847d5b23d0c6fe1dcc367b3fc57d5111c3c23"
+  },
+  {
+   "i": 1851,
+   "text_sha256": "sha256:0c64a0eb251af2e31974074e78d54c02524bd5f187317bfe53810f4fb630ab43"
+  },
+  {
+   "i": 1858,
+   "text_sha256": "sha256:41d3539358cf708163bede14a8f71d14bab840c98788ee39d8421342e5a77698"
+  },
+  {
+   "i": 1859,
+   "text_sha256": "sha256:fa0d85b9a1c8b2e2799dda0e4cba83288d270ed0ab6bb50026b50b9bc476cae1"
+  },
+  {
+   "i": 1860,
+   "text_sha256": "sha256:d6d760b0f7b85c99a5f4fccb9803bf767636de1cb4c3d04b66bafa3ab2c2de60"
+  },
+  {
+   "i": 1865,
+   "text_sha256": "sha256:2a12160119fea06bcf25df072d11238ece4cd18e2eaf973c51b65e94a52dfbba"
+  },
+  {
+   "i": 1895,
+   "text_sha256": "sha256:2dc9d87f192943692026e34f633757ce7e405027a7fbe7759ff8ac609d24979f"
+  },
+  {
+   "i": 2010,
+   "text_sha256": "sha256:18e43ee72c8ac92cfe37f273d1d7d6127db272b29da97aab4e578b80d0e672c6"
+  },
+  {
+   "i": 2014,
+   "text_sha256": "sha256:91c986e5ad111b1ebe9421be25f49347b9757ae42eaac357e6efbd44e8d10f7e"
+  },
+  {
+   "i": 2016,
+   "text_sha256": "sha256:1889cf7628004753b631f31cd752a9feb13732d5b9ee834ff252e42cfc35cc0a"
+  },
+  {
+   "i": 2018,
+   "text_sha256": "sha256:32d7e82082479b8cb546187ff0af11e4915e4d17bc28e02dca7425288b79badd"
+  },
+  {
+   "i": 2022,
+   "text_sha256": "sha256:91c986e5ad111b1ebe9421be25f49347b9757ae42eaac357e6efbd44e8d10f7e"
+  },
+  {
+   "i": 2024,
+   "text_sha256": "sha256:91c986e5ad111b1ebe9421be25f49347b9757ae42eaac357e6efbd44e8d10f7e"
+  },
+  {
+   "i": 2026,
+   "text_sha256": "sha256:6db0f2662a542d5dcf5625964fa52acca88452c46773430cf6734343cf056ef6"
+  },
+  {
+   "i": 2095,
+   "text_sha256": "sha256:11212203c1826bd41b0e9736bffeca9663d6de05f83f75a92e6db31dc5048949"
+  },
+  {
+   "i": 2117,
+   "text_sha256": "sha256:fdd46846c44cc5a727efb7abee722924f6a54e6ffce2fdcf50ee0de82b0fb3f8"
+  },
+  {
+   "i": 2176,
+   "text_sha256": "sha256:95c564c4544486ace9fff1b40e20a27cb8d1e6de1b4625d72c3e539dbb4adbf1"
+  },
+  {
+   "i": 2304,
+   "text_sha256": "sha256:a3145c859384f380f921c4d5ad63016f7b02fd0a2d6ba5e5f716ddcc02477cf4"
+  },
+  {
+   "i": 2311,
+   "text_sha256": "sha256:13b1099c34893340088877dbabf38b2d40bf4b8e1a62227b7fcaafa63e386adb"
+  },
+  {
+   "i": 2312,
+   "text_sha256": "sha256:05ae101276bdf56c36b81fd917df9318632bc0bba6899e2df3b782f3261b9dd8"
+  },
+  {
+   "i": 2314,
+   "text_sha256": "sha256:5b7eef859e9dacfa9a2fb42fe88078e23b45521a3b13ddc894c4dbece53685a1"
+  },
+  {
+   "i": 2327,
+   "text_sha256": "sha256:bc5da993ad4c3ecb08d191432abcebc2a65c34a4305f3c77840105fe89f31fe1"
+  },
+  {
+   "i": 2328,
+   "text_sha256": "sha256:0167f57452a914bc45fdff7e6bdfa600756623d67af3ab9accc8dee7e440bef3"
+  },
+  {
+   "i": 2333,
+   "text_sha256": "sha256:f3d1c02e12de00a58e28b80f3e832f2a4e0085cf536b7b6d3c67df772a1aa331"
+  },
+  {
+   "i": 2335,
+   "text_sha256": "sha256:7e849454a5da8b956d03569bf9446e05abc9c85be2b678839a699cdb5ce5d2a7"
+  },
+  {
+   "i": 2340,
+   "text_sha256": "sha256:ec39c92db106110ac108327d6ba0ba4ffda5f171e81b135cae38f1ad5dba7b38"
+  },
+  {
+   "i": 2341,
+   "text_sha256": "sha256:b8f740ce691606d2a76303ba80c267d3319e680e87e76db0d3baabcd6628980f"
+  },
+  {
+   "i": 2350,
+   "text_sha256": "sha256:a42827b3437c9ec2bdf0bd28b29a00b38846563996f49548f8c426e353b5335c"
+  },
+  {
+   "i": 2351,
+   "text_sha256": "sha256:fbbb6dc88c57adad68e1365cb0fd0912bc6c2edee47424d533ddd0149e9cad9f"
+  },
+  {
+   "i": 2352,
+   "text_sha256": "sha256:66fba4c0cc68703ddbaa1310036492f2840cf76bf229e7335a0ed7581207319d"
+  },
+  {
+   "i": 2357,
+   "text_sha256": "sha256:a208788c12c5d6cc9237510edf0fe50b5d7e45f069e7196544b70f2c1b55df89"
+  },
+  {
+   "i": 2358,
+   "text_sha256": "sha256:80ea0a39feb3dedd8f1e3a694c7fe7fdf1521191ee91d7338cffb11d6d9fb3a3"
+  },
+  {
+   "i": 2359,
+   "text_sha256": "sha256:52603d3b615215ff8ba78a720f8adac5b6b116c559f697953f4588ddc8769a6e"
+  },
+  {
+   "i": 2360,
+   "text_sha256": "sha256:8bd692afd689dfd93210765353be426e542926db1798bebfd7a052f0db9c9dec"
+  },
+  {
+   "i": 2361,
+   "text_sha256": "sha256:97b2bf847b1e2f682f9a635523c60a938aedf1581d2e32322655ddbe8bc384bd"
+  },
+  {
+   "i": 2364,
+   "text_sha256": "sha256:5922ef9f66cb4b33694fd5293631ee228124dde040170c36ee56e15893880f45"
+  },
+  {
+   "i": 2365,
+   "text_sha256": "sha256:f6f5c54de015bd9bed18c5f294b7d291d85e6e61ed3bd2aa39dfd186add6b34e"
+  },
+  {
+   "i": 2367,
+   "text_sha256": "sha256:6f8954252732d9a2193e2a53ff6247cf084c9ab99d564ba7a80a7c479327309e"
+  },
+  {
+   "i": 2368,
+   "text_sha256": "sha256:9a723e8c96d6d7b74a2fdb9699ecb14a3046b2808ed966c654755ea2d5d0ab87"
+  },
+  {
+   "i": 2374,
+   "text_sha256": "sha256:3075048f44bb47b6f1156aa396f151a8c5e7842d4e94fdce2343959e70d47640"
+  },
+  {
+   "i": 2375,
+   "text_sha256": "sha256:0d0d0415439818755dcb75eda0133ae6d6dc718e4040c03cc3541124fe9d03a3"
+  },
+  {
+   "i": 2378,
+   "text_sha256": "sha256:be0ecbda4f67032065b7041e8ff71448c9fbf9c2a0722587a66388e5a98edb7e"
+  },
+  {
+   "i": 2379,
+   "text_sha256": "sha256:5851c33ecb43654a846879f8eb1d42fc40de1239b8d775712c0d80b3e1424d08"
+  },
+  {
+   "i": 2381,
+   "text_sha256": "sha256:a63c1627961d7d6b318eed70f57caac12e335f164aec46d698e4b167a1abefe8"
+  },
+  {
+   "i": 2390,
+   "text_sha256": "sha256:09e81634d9349385037463105aaecb1a67a6a51ee31be1f27781dbe0bd164ba1"
+  },
+  {
+   "i": 2392,
+   "text_sha256": "sha256:99a07cab3edf65ac455818592a9aebe1617fe859649dc9a369f46a87c70a4cfa"
+  },
+  {
+   "i": 2393,
+   "text_sha256": "sha256:8d4f03acc73b157c60654a1b787b941339893ff37fc1e29526f0033654aa2d5a"
+  },
+  {
+   "i": 2394,
+   "text_sha256": "sha256:46bd7a785bd80adf9809c74b22659505014c4aef2197cd7bb0be2bdf297f4b3f"
+  },
+  {
+   "i": 2395,
+   "text_sha256": "sha256:b9baaaf0bcd2085aa5b63e0188c9dadab1fda11d57e79ae607259afdf67b1756"
+  },
+  {
+   "i": 2400,
+   "text_sha256": "sha256:2fdcbc55eca91844e91349c20f5527f30995d8a93c6be2ed317c34d1b279a763"
+  },
+  {
+   "i": 2401,
+   "text_sha256": "sha256:7609251f4f8982a557bc25603c575509ad1266da2a1c1cbd29a841d5dbaf2af2"
+  },
+  {
+   "i": 2403,
+   "text_sha256": "sha256:b319d6513e672fb947296a46ca405590ca82968a4283c2896402871c230ba786"
+  },
+  {
+   "i": 2409,
+   "text_sha256": "sha256:a38a51f1bf1fa0a6639e349b820ec88d51f8b22f52afb92d01334effdf3b47d7"
+  },
+  {
+   "i": 2418,
+   "text_sha256": "sha256:028237e0d838f8c9f0a6e6a5d8cba8be892c97d4684b4b917dcff16e48f3c29d"
+  },
+  {
+   "i": 2420,
+   "text_sha256": "sha256:c5862bb6225ffc0d9a0daa37cbc25987c70078ff7780c30ee06a7ef4ed5dac81"
+  },
+  {
+   "i": 2428,
+   "text_sha256": "sha256:cddf263a349e7025fa9fe6cf0fbe8ff76c30fe13baf2274f775aa28708625df7"
+  },
+  {
+   "i": 2432,
+   "text_sha256": "sha256:a1a1a5c92ea14350999d82559b204ab2d19dff0cc8669a2381ef19007ca6d058"
+  },
+  {
+   "i": 2433,
+   "text_sha256": "sha256:cfc7be33b8c4feffef014c753acdcd2ca080c9e613565d5b814ffacf7f1630d7"
+  },
+  {
+   "i": 2437,
+   "text_sha256": "sha256:482d93d69533749c3ba754e8b8eeb9ff7487b414e91b62dfa86590a5f4b008c6"
+  },
+  {
+   "i": 2438,
+   "text_sha256": "sha256:8336c399c200e9f79db354cd49ac26f4a4a0993119ddcf96fa05b6391231c6e4"
+  },
+  {
+   "i": 2441,
+   "text_sha256": "sha256:385da3c782c4cf5bfd8908a4b8acee264a7d82c7093068f45dfa2b4d9a6345c0"
+  },
+  {
+   "i": 2442,
+   "text_sha256": "sha256:28321c331fc25473e7b00500e880d0f906cdfa970beb12475d44ace571a5b43f"
+  },
+  {
+   "i": 2443,
+   "text_sha256": "sha256:fc4aa7f59c616dc1c88416426d189639530974dff6a1efa570dde8714d3b89a2"
+  },
+  {
+   "i": 2444,
+   "text_sha256": "sha256:1491c592a1e07d324b595a07ba16f362d9a21d1dcb5b79f2125c8d47dc028d19"
+  },
+  {
+   "i": 2445,
+   "text_sha256": "sha256:21e435017eb4806af2d4e5c3a8b857bb4bd86723b27babd0983c3425252cd5c3"
+  },
+  {
+   "i": 2458,
+   "text_sha256": "sha256:ecdd16ddb7f429a2ab19fd562a02cb768f9786b96b07a2bac107ef5e47133fa3"
+  },
+  {
+   "i": 2477,
+   "text_sha256": "sha256:0aa0f9b00bb1583c08409c12f3d9f2d7fd075a0bc512087faddb532472bdd5d5"
+  },
+  {
+   "i": 2482,
+   "text_sha256": "sha256:7737a439e7d5cea4815f04c434117be57b04e76058a77b3b4205b6fdb019b459"
+  },
+  {
+   "i": 2579,
+   "text_sha256": "sha256:0c05d12cf9807bcad61f40ec4d6358fc9d2f4c1aa7bdb9a4c8d813636642d19b"
+  },
+  {
+   "i": 2580,
+   "text_sha256": "sha256:34ce2e7a78c35f90a36dd41e9341b5199d17707b4f1c2d8703d794e495dd98d5"
+  }
+ ]
+}

@@ -1,0 +1,549 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "judgements": "docs/evidence/issue47_history/d01-risk-headings/heading-judgements-paramount-predecessor-2024.json",
+ "per_position": {
+  "paramount-2024": {
+   "accession": "0000813828-25-000005",
+   "business_judgement": "Read line by line against the predecessor's own 10-K (CIK 813828, para-20241231.htm). Every line is a bold stand-alone line of Item 1A - the 'Risk Factors Summary' heading, the eight category labels the summary names (listed once, at their first occurrence, as the route publishes them) and the categories again over the detailed section - or the bold sentence that opens one risk factor and leads into its body. Each distinct line is a heading of Item 1A under the approved definition's heading-level list; the same judgement was made for Salesforce's 'Risk Factor Summary'. No heading-marked line in the item is missing. The one line the reading flags - emphasis resuming after a gap of two characters or fewer - is judged below from its own runs.",
+   "checked_identity": {
+    "bound_from": {
+     "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+     "result_id": "sha256:fb7156e0f3b5386673b33f283e5c89711f76c0c45365085c0bf2f09640cd7ac8",
+     "run_id": "run:historical-period:f8a3b455b2c35cf072e2c5594481c08458dfed3fb1135d420580a1d25a1f7d15"
+    },
+    "checked_against_the_reading": [
+     "value",
+     "filings_contain_the_filing_the_reading_opened"
+    ],
+    "entities": [
+     "813828"
+    ],
+    "established_by": "RECORDED_AT_READING_TIME",
+    "filings": [
+     "0000813828-25-000005"
+    ],
+    "not_named_by_the_reading": [
+     "window"
+    ],
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+    "unit": "text",
+    "value_kind": "TEXT_V1"
+   },
+   "company_id": "paramount_skydance_paramount_global",
+   "document": "evidence/request_attempts/5e/5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a/para-20241231.htm",
+   "fiscal_year_end_on_the_cover": "2024-12-31",
+   "heading_lines": [
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risk Factors Summary"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Our Business and Industry"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Business Continuity, Cybersecurity and Privacy and Data Protection"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Intellectual Property"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Macroeconomic and Political Conditions"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Legal and Regulatory Matters"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Human Capital"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to the Transactions"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Ownership of our Common Stock"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Our Business and Industry"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "If our streaming business is unsuccessful, our business, financial condition or results of operations could be adversely affected."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Our advertising revenues have been and may continue to be adversely impacted by several factors, including changes in consumer behavior and advertising market conditions."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "We operate in highly competitive and dynamic industries and our business, financial condition or results of operations could be adversely affected if we do not compete effectively."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "The unpredictable and constantly shifting nature of consumer behavior, as well as evolving technologies and distribution models, have affected, and could continue to adversely affect, our business, financial condition or results of operations."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Decisions to make investments in new businesses, products, services and technologies, and the evolution of our business strategy, could have an adverse effect on our business, financial condition or results of operations."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "The loss of affiliation and distribution agreements, renewal of these agreements on less favorable terms or adverse interpretations thereof could have an adverse effect on our business, financial condition or results of operations."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Damage to our reputation or brands could adversely affect our business, financial condition or results of operations."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Losses due to asset impairment charges for goodwill, intangible assets, FCC licenses and content could have an adverse effect on our business, financial condition or results of operations."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Our liabilities related to discontinued operations and former businesses could adversely affect our business, financial condition or results of operations."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Increasing scrutiny of, and evolving expectations for, sustainability initiatives could increase costs, harm our reputation or otherwise adversely impact our business, financial condition or results of operations."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Business Continuity, Cybersecurity and Privacy and Data Protection"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Disruptions or failures of, or attacks on, our or our service providers’ networks, information systems and other technologies could result in the disclosure of business or personal information, disruption of our businesses, damage to our brands and reputation, and legal exposure and financial losses."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Intellectual Property"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Infringement of our content reduces revenue received from the distribution of our programming, films, interactive games and other entertainment content."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Macroeconomic and Political Conditions"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Economic and political conditions in the U.S. and around the world could have an adverse effect on our business, financial condition or results of operations."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Legal and Regulatory Matters"
+    },
+    {
+     "across_short_gaps": "Failures to comply with or changes in U.S. or foreign laws or regulations could have an adverse effect on our business, financial condition or results of operations.",
+     "body_chars": 126,
+     "emphasis_resumes_after_a_short_gap": true,
+     "mark": "BOLD",
+     "shape": "LEADS_INTO_ITS_BODY",
+     "text": "Failures to comply with or changes in U"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "We are subject to complex, often inconsistent and potentially costly laws, regulations, industry standards and contractual obligations relating to privacy and data protection."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Human Capital"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "The inability to hire or retain key employees or secure creative talent could adversely affect our business, financial condition or results of operations."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Labor disputes could disrupt our operations and adversely affect our business, financial condition or results of operations."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to the Transactions"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Combining the Company’s and Skydance’s businesses may be more difficult, time-consuming or costly than expected and the actual benefits of combining the Company’s and Skydance’s businesses may be less than expected, either or both of which may adversely affect New Paramount’s future results."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "The Transactions may not be accretive and may cause dilution to the earnings per share of New Paramount, which may negatively affect the market price of the New Paramount Class B Common Stock."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "The market price for shares of New Paramount Class B Common Stock following the completion of the Transactions may be affected by factors different from, or in addition to, those that have historically affected or currently affect the market price for shares of our Class A Common Stock and our Class B Common Stock."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "The stock consideration exchange ratios are fixed and will not be adjusted for stock price changes. Because the market prices of our Class A Common Stock and Class B Common Stock have fluctuated and will continue to fluctuate, our stockholders cannot be sure of the value of the stock consideration they will receive, and such value may be lower than the value of our Common Stock on an earlier date."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Holders of our Class B Common Stock may not receive all merger consideration in the form they elect, and the form of merger consideration that they receive may have a lower value or different tax consequences than the form of merger consideration that they elect to receive."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Our existing stockholders will have a reduced ownership and economic interest in New Paramount after the Transactions."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "The PIPE Transaction is subject to certain cutbacks in the event that stock elections exceed specified thresholds."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "We and Skydance must obtain certain regulatory approvals in order to complete the Transactions; if such approvals are not obtained or are obtained with conditions, the Transactions may be prevented or delayed or the anticipated benefits of the Transactions could be reduced."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "The Transactions are subject to a number of conditions to the Closing and, if these conditions are not satisfied, the Transaction Agreement may be terminated in accordance with its terms and the Transactions may not be completed. In addition, the parties have the right to terminate the Transaction Agreement under certain circumstances, in which case the Transactions would not be completed."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "We have incurred, and along with New Paramount will incur, significant transaction and merger-related transition costs in connection with the Transactions."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "We will be subject to business uncertainties and contractual restrictions under the Transaction Agreement while the Transactions are pending."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Under the terms of the Transaction Agreement, the go-shop period has expired and we are no longer permitted to pursue alternatives to the Transactions."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "There may be tax consequences of the Transactions that may adversely affect holders of our Common Stock if the Transactions fail to qualify as a tax-deferred exchange pursuant to Section 351 of the Code for U.S. federal income tax purposes."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "A new 1% U.S. federal excise tax could be imposed on us or New Paramount in connection with redemptions by us or New Paramount of our respective shares."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Executive officers, directors and affiliates of Paramount may have interests in the Transactions that are different from, or in addition to, the rights of our stockholders."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Failure to complete the Transactions could negatively impact our businesses or financial results and the stock price of our Common Stock."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "As of the date of this Annual Report on From 10-K, several lawsuits have been filed in connection with the Transactions and additional lawsuits may be filed in the future against us, Skydance, NAI, our and their respective affiliates and/or boards of directors and management and the Special Committee, challenging the Transactions. An adverse ruling in any such lawsuit could result in substantial costs and/or delay or prevent the completion of the Transactions."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "We may waive one or more of the conditions to the Closing without re-obtaining stockholder approval."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "We and, following completion of the Transactions, New Paramount must continue to retain, motivate and recruit executives and other key employees, which may be difficult in light of uncertainty regarding the Transactions and failure to do so could negatively affect us and New Paramount."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "The Transactions may trigger change in control or other provisions in certain agreements, which may allow third parties to terminate or alter existing contracts or relationships with us."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Our stockholders will not be entitled to appraisal rights in connection with the Transactions."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Changes and uncertainties with respect to taxes in the jurisdictions in which New Paramount will operate may have an adverse effect on New Paramount’s business, financial condition or results of operations."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Risks Relating to Ownership of our Common Stock"
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "We have experienced, and may continue to experience, volatility in the prices of our Common Stock."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "NAI, through its voting control of the Company, is in a position to control actions that require stockholder approval."
+    },
+    {
+     "body_chars": 0,
+     "emphasis_resumes_after_a_short_gap": false,
+     "mark": "BOLD",
+     "shape": "STANDALONE",
+     "text": "Sales of NAI’s shares of our Common Stock, some of which are pledged to lenders or otherwise encumbered, could adversely affect the stock prices."
+    }
+   ],
+   "heading_shapes": {
+    "BOLD:LEADS_INTO_ITS_BODY": 1,
+    "BOLD:STANDALONE": 58
+   },
+   "headings_read": [
+    "Risk Factors Summary",
+    "Risks Relating to Our Business and Industry",
+    "Risks Relating to Business Continuity, Cybersecurity and Privacy and Data Protection",
+    "Risks Relating to Intellectual Property",
+    "Risks Relating to Macroeconomic and Political Conditions",
+    "Risks Relating to Legal and Regulatory Matters",
+    "Risks Relating to Human Capital",
+    "Risks Relating to the Transactions",
+    "Risks Relating to Ownership of our Common Stock",
+    "If our streaming business is unsuccessful, our business, financial condition or results of operations could be adversely affected.",
+    "Our advertising revenues have been and may continue to be adversely impacted by several factors, including changes in consumer behavior and advertising market conditions.",
+    "We operate in highly competitive and dynamic industries and our business, financial condition or results of operations could be adversely affected if we do not compete effectively.",
+    "The unpredictable and constantly shifting nature of consumer behavior, as well as evolving technologies and distribution models, have affected, and could continue to adversely affect, our business, financial condition or results of operations.",
+    "Decisions to make investments in new businesses, products, services and technologies, and the evolution of our business strategy, could have an adverse effect on our business, financial condition or results of operations.",
+    "The loss of affiliation and distribution agreements, renewal of these agreements on less favorable terms or adverse interpretations thereof could have an adverse effect on our business, financial condition or results of operations.",
+    "Damage to our reputation or brands could adversely affect our business, financial condition or results of operations.",
+    "Losses due to asset impairment charges for goodwill, intangible assets, FCC licenses and content could have an adverse effect on our business, financial condition or results of operations.",
+    "Our liabilities related to discontinued operations and former businesses could adversely affect our business, financial condition or results of operations.",
+    "Increasing scrutiny of, and evolving expectations for, sustainability initiatives could increase costs, harm our reputation or otherwise adversely impact our business, financial condition or results of operations.",
+    "Disruptions or failures of, or attacks on, our or our service providers’ networks, information systems and other technologies could result in the disclosure of business or personal information, disruption of our businesses, damage to our brands and reputation, and legal exposure and financial losses.",
+    "Infringement of our content reduces revenue received from the distribution of our programming, films, interactive games and other entertainment content.",
+    "Economic and political conditions in the U.S. and around the world could have an adverse effect on our business, financial condition or results of operations.",
+    "Failures to comply with or changes in U.S. or foreign laws or regulations could have an adverse effect on our business, financial condition or results of operations.",
+    "We are subject to complex, often inconsistent and potentially costly laws, regulations, industry standards and contractual obligations relating to privacy and data protection.",
+    "The inability to hire or retain key employees or secure creative talent could adversely affect our business, financial condition or results of operations.",
+    "Labor disputes could disrupt our operations and adversely affect our business, financial condition or results of operations.",
+    "Combining the Company’s and Skydance’s businesses may be more difficult, time-consuming or costly than expected and the actual benefits of combining the Company’s and Skydance’s businesses may be less than expected, either or both of which may adversely affect New Paramount’s future results.",
+    "The Transactions may not be accretive and may cause dilution to the earnings per share of New Paramount, which may negatively affect the market price of the New Paramount Class B Common Stock.",
+    "The market price for shares of New Paramount Class B Common Stock following the completion of the Transactions may be affected by factors different from, or in addition to, those that have historically affected or currently affect the market price for shares of our Class A Common Stock and our Class B Common Stock.",
+    "The stock consideration exchange ratios are fixed and will not be adjusted for stock price changes. Because the market prices of our Class A Common Stock and Class B Common Stock have fluctuated and will continue to fluctuate, our stockholders cannot be sure of the value of the stock consideration they will receive, and such value may be lower than the value of our Common Stock on an earlier date.",
+    "Holders of our Class B Common Stock may not receive all merger consideration in the form they elect, and the form of merger consideration that they receive may have a lower value or different tax consequences than the form of merger consideration that they elect to receive.",
+    "Our existing stockholders will have a reduced ownership and economic interest in New Paramount after the Transactions.",
+    "The PIPE Transaction is subject to certain cutbacks in the event that stock elections exceed specified thresholds.",
+    "We and Skydance must obtain certain regulatory approvals in order to complete the Transactions; if such approvals are not obtained or are obtained with conditions, the Transactions may be prevented or delayed or the anticipated benefits of the Transactions could be reduced.",
+    "The Transactions are subject to a number of conditions to the Closing and, if these conditions are not satisfied, the Transaction Agreement may be terminated in accordance with its terms and the Transactions may not be completed. In addition, the parties have the right to terminate the Transaction Agreement under certain circumstances, in which case the Transactions would not be completed.",
+    "We have incurred, and along with New Paramount will incur, significant transaction and merger-related transition costs in connection with the Transactions.",
+    "We will be subject to business uncertainties and contractual restrictions under the Transaction Agreement while the Transactions are pending.",
+    "Under the terms of the Transaction Agreement, the go-shop period has expired and we are no longer permitted to pursue alternatives to the Transactions.",
+    "There may be tax consequences of the Transactions that may adversely affect holders of our Common Stock if the Transactions fail to qualify as a tax-deferred exchange pursuant to Section 351 of the Code for U.S. federal income tax purposes.",
+    "A new 1% U.S. federal excise tax could be imposed on us or New Paramount in connection with redemptions by us or New Paramount of our respective shares.",
+    "Executive officers, directors and affiliates of Paramount may have interests in the Transactions that are different from, or in addition to, the rights of our stockholders.",
+    "Failure to complete the Transactions could negatively impact our businesses or financial results and the stock price of our Common Stock.",
+    "As of the date of this Annual Report on From 10-K, several lawsuits have been filed in connection with the Transactions and additional lawsuits may be filed in the future against us, Skydance, NAI, our and their respective affiliates and/or boards of directors and management and the Special Committee, challenging the Transactions. An adverse ruling in any such lawsuit could result in substantial costs and/or delay or prevent the completion of the Transactions.",
+    "We may waive one or more of the conditions to the Closing without re-obtaining stockholder approval.",
+    "We and, following completion of the Transactions, New Paramount must continue to retain, motivate and recruit executives and other key employees, which may be difficult in light of uncertainty regarding the Transactions and failure to do so could negatively affect us and New Paramount.",
+    "The Transactions may trigger change in control or other provisions in certain agreements, which may allow third parties to terminate or alter existing contracts or relationships with us.",
+    "Our stockholders will not be entitled to appraisal rights in connection with the Transactions.",
+    "Changes and uncertainties with respect to taxes in the jurisdictions in which New Paramount will operate may have an adverse effect on New Paramount’s business, financial condition or results of operations.",
+    "We have experienced, and may continue to experience, volatility in the prices of our Common Stock.",
+    "NAI, through its voting control of the Company, is in a position to control actions that require stockholder approval.",
+    "Sales of NAI’s shares of our Common Stock, some of which are pledged to lenders or otherwise encumbered, could adversely affect the stock prices."
+   ],
+   "lines_judged_wrong": [],
+   "lines_where_emphasis_resumes_after_a_short_gap": [
+    "Failures to comply with or changes in U"
+   ],
+   "other_marked_blocks": [
+    {
+     "block_in_item_1a": 159,
+     "text": "addition to, those that have historically affected or currently affect the market price for shares of our Class A Common Stock and our Class B Common Stock.”"
+    }
+   ],
+   "other_marked_blocks_with_no_judgement": [],
+   "period_end": "2024-12-31",
+   "published_equals_read_in_order": true,
+   "published_lines": 51,
+   "published_not_read": [],
+   "read_not_published": [],
+   "reading": "D01_HEADINGS_READ_FROM_THE_FILING_BYTES",
+   "recorded_judgements_not_found_in_the_filing": [],
+   "registrant_cik": "813828",
+   "registrant_names_tagged_in_the_filing": [
+    "Paramount Global"
+   ],
+   "repeated_heading_occurrences_grouped": 8,
+   "short_gap_judgements": {
+    "Failures to comply with or changes in U": "ONE_HEADING_ACROSS_THE_GAP"
+   },
+   "short_gap_judgements_not_found_in_the_filing": [],
+   "short_gap_lines_with_no_judgement": [],
+   "value_sha256": "sha256:a9f74b62f75070dad9c568917027b1dd48c2d8ce0b679196511c836682a50e42",
+   "verdict": "MATCH"
+  }
+ },
+ "record_type": "ISSUE_47_D01_HEADINGS_READ_FROM_BYTES",
+ "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1"
+}

@@ -1,0 +1,111 @@
+{
+ "b02_runs": 41,
+ "calls": {
+  "provider": 0,
+  "sec": 0
+ },
+ "filings": {
+  "0000078003-22-000027": {
+   "document": "evidence/request_attempts/a6/a6dc538da8dd8c78563933a612ccb61bcc77ed9d067383ee6ed394612d5f0dd8/pfe-20211231.htm",
+   "revenue_facts": {
+    "RevenueFromContractWithCustomerExcludingAssessedTax": {
+     "2019-01-01..2019-12-31": "40905000000",
+     "2020-01-01..2020-12-31": "41651000000",
+     "2021-01-01..2021-12-31": "81288000000"
+    }
+   }
+  },
+  "0000078003-23-000024": {
+   "document": "evidence/request_attempts/3f/3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e/pfe-20221231.htm",
+   "revenue_facts": {
+    "Revenues": {
+     "2020-01-01..2020-12-31": "41651000000",
+     "2021-01-01..2021-12-31": "81288000000",
+     "2022-01-01..2022-12-31": "100330000000"
+    }
+   }
+  },
+  "0000078003-24-000039": {
+   "document": "evidence/request_attempts/e8/e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0/pfe-20231231.htm",
+   "revenue_facts": {
+    "RevenueFromContractWithCustomerExcludingAssessedTax": {
+     "2021-01-01..2021-12-31": "73636000000",
+     "2022-01-01..2022-12-31": "91793000000",
+     "2023-01-01..2023-12-31": "50914000000"
+    },
+    "Revenues": {
+     "2021-01-01..2021-12-31": "81288000000",
+     "2022-01-01..2022-12-31": "100330000000",
+     "2023-01-01..2023-12-31": "58496000000"
+    }
+   }
+  },
+  "0000078003-25-000054": {
+   "document": "evidence/request_attempts/05/05b77064b72e16b39bc80dfa10d12d18e4b470c0df63c2cb89d3884e813bb97f/pfe-20241231.htm",
+   "revenue_facts": {
+    "Revenues": {
+     "2022-01-01..2022-12-31": "101175000000",
+     "2023-01-01..2023-12-31": "59553000000",
+     "2024-01-01..2024-12-31": "63627000000"
+    }
+   }
+  }
+ },
+ "record_type": "ISSUE_47_B02_REVENUE_CONCEPT_MEASUREMENT",
+ "runs_whose_two_claims_use_different_concepts": [
+  {
+   "current": {
+    "accession": "0000078003-23-000024",
+    "concept": "Revenues",
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "value": "100330000000"
+   },
+   "growth_from_these_claims": "0.2342535183544926680444838106",
+   "prior": {
+    "accession": "0000078003-22-000027",
+    "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "value": "81288000000"
+   },
+   "run": "run-pfizer-2022-B02"
+  },
+  {
+   "current": {
+    "accession": "0000078003-24-000039",
+    "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "value": "50914000000"
+   },
+   "growth_from_these_claims": "-0.4925346357021827967706568325",
+   "prior": {
+    "accession": "0000078003-23-000024",
+    "concept": "Revenues",
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "value": "100330000000"
+   },
+   "run": "run-pfizer-2023-B02"
+  },
+  {
+   "current": {
+    "accession": "0000078003-25-000054",
+    "concept": "Revenues",
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01",
+    "value": "63627000000"
+   },
+   "growth_from_these_claims": "0.2496955650705110578622775661",
+   "prior": {
+    "accession": "0000078003-24-000039",
+    "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "value": "50914000000"
+   },
+   "run": "run-pfizer-2024-B02"
+  }
+ ]
+}

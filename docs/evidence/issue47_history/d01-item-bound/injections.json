@@ -1,0 +1,49 @@
+{
+ "record_type": "ISSUE_47_D01_BOUND_REVISION_FAULT_INJECTIONS",
+ "results": [
+  {
+   "id": "D01_KEEPS_THE_FROZEN_SPEC",
+   "file": "scripts/vnext/historical_results.py",
+   "edit": "the pinned route compiles the ordinary D01 Spec",
+   "why_it_matters": "a year whose Item 1A has more than 64 emphasized headings has no D01 result",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_risk_headings.PinnedRiskHeadingsTest.test_the_pinned_route_s_spec_is_the_ordinary_one_with_only_the_bound_raised",
+   "failed_cases": [
+    "test_the_pinned_route_s_spec_is_the_ordinary_one_with_only_the_bound_raised"
+   ],
+   "suite_result": "Ran 1 test in 0.002s FAILED (failures=1)",
+   "seconds": 2
+  },
+  {
+   "id": "THE_REVISION_IS_NOT_REGISTERED",
+   "file": "scripts/vnext/historical_spec_revision.py",
+   "edit": "historical_spec_revision does not name D01's successor",
+   "why_it_matters": "the successor would take the frozen compiler's path, which refuses its bound, and the text protocol would not render more than 64 headings",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_risk_headings.PinnedRiskHeadingsTest.test_the_pinned_route_s_spec_is_the_ordinary_one_with_only_the_bound_raised",
+   "failed_cases": [
+    "test_the_pinned_route_s_spec_is_the_ordinary_one_with_only_the_bound_raised"
+   ],
+   "suite_result": "Ran 1 test in 0.002s FAILED (errors=1)",
+   "seconds": 2
+  },
+  {
+   "id": "THE_SUCCESSOR_MOVES_ANOTHER_FIELD",
+   "file": "catalog/r6/D01_risk_factor_headings_v2.md",
+   "edit": "D01's successor also halves the character bound",
+   "why_it_matters": "a revision that changes more than the bound is a different Spec, not this one",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_risk_headings.PinnedRiskHeadingsTest.test_the_pinned_route_s_spec_is_the_ordinary_one_with_only_the_bound_raised",
+   "failed_cases": [
+    "test_the_pinned_route_s_spec_is_the_ordinary_one_with_only_the_bound_raised"
+   ],
+   "suite_result": "Ran 1 test in 0.003s FAILED (errors=1)",
+   "seconds": 2
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

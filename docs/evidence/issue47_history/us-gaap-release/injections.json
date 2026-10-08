@@ -1,0 +1,108 @@
+{
+ "record_type": "ISSUE_47_US_GAAP_RELEASE_FAULT_INJECTIONS",
+ "results": [
+  {
+   "id": "US_GAAP_IS_NOT_IN_THE_VIEW",
+   "file": "scripts/vnext/historical_dei.py",
+   "edit": "the view's table carries no US GAAP entry",
+   "why_it_matters": "every FY2021 B06 stops at B06_GUARD_EQUITY_NAMESPACE_CONFLICT again",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_dei.AUsGaapReleaseIsRead.test_a_fy2021_report_s_equity_is_read_through_the_view",
+   "failed_cases": [
+    "test_a_fy2021_report_s_equity_is_read_through_the_view"
+   ],
+   "expected_case_failure": "vnext.b06_guarded_result_v3.B06GuardError: B06_GUARD_EQUITY_NAMESPACE_CONFLICT",
+   "suite_result": "Ran 1 test in 2.140s FAILED (errors=1)",
+   "seconds": 3
+  },
+  {
+   "id": "ANY_SUFFIX_IS_A_US_GAAP_RELEASE",
+   "file": "scripts/vnext/historical_dei.py",
+   "edit": "the widened pattern accepts any text after the year",
+   "why_it_matters": "a quarter form or a malformed date would read as a US GAAP release",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_dei.AUsGaapReleaseIsRead.test_anything_else_is_refused",
+   "failed_cases": [
+    "test_anything_else_is_refused"
+   ],
+   "expected_case_failure": "AssertionError: True is not false",
+   "suite_result": "Ran 1 test in 0.001s FAILED (failures=3)",
+   "seconds": 0
+  },
+  {
+   "id": "ONE_FROZEN_SPELLING_IS_LEFT_OUT",
+   "file": "scripts/vnext/historical_dei.py",
+   "edit": "the \\d{4} spelling of the capacity and text readers is not widened",
+   "why_it_matters": "the D04 request reconstruction and D02/D03 fact candidates would keep the frozen answer",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_dei.AUsGaapReleaseIsRead.test_the_frozen_readers_spell_the_pattern_these_ways",
+   "failed_cases": [
+    "test_the_frozen_readers_spell_the_pattern_these_ways"
+   ],
+   "expected_case_failure": "AssertionError: Items in the first set but not the second:",
+   "suite_result": "Ran 1 test in 0.103s FAILED (failures=1)",
+   "seconds": 1
+  },
+  {
+   "id": "THE_CONTRACT_AMORTIZATION_CHECK_IS_NOT_VIEWED",
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "edit": "B03's contract-amortization check is called directly",
+   "why_it_matters": "a FY2021 report's contract amortization would not be seen as US GAAP",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_dei.EveryHistoricalReferenceGoesThroughAView.test_no_historical_function_reaches_the_question_without_a_view",
+   "failed_cases": [
+    "test_no_historical_function_reaches_the_question_without_a_view"
+   ],
+   "expected_case_failure": "AssertionError: Items in the second set but not the first:",
+   "suite_result": "Ran 1 test in 3.295s FAILED (failures=1)",
+   "seconds": 4
+  },
+  {
+   "id": "THE_REQUEST_RECONSTRUCTION_IS_NOT_VIEWED",
+   "file": "scripts/vnext/historical_semantic_results.py",
+   "edit": "D04's request reconstruction is called directly",
+   "why_it_matters": "a FY2021 report's monetary facts would not be seen as US GAAP in the requests",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_dei.EveryHistoricalReferenceGoesThroughAView.test_no_historical_function_reaches_the_question_without_a_view",
+   "failed_cases": [
+    "test_no_historical_function_reaches_the_question_without_a_view"
+   ],
+   "expected_case_failure": "AssertionError: Items in the second set but not the first:",
+   "suite_result": "Ran 1 test in 3.106s FAILED (failures=1)",
+   "seconds": 4
+  },
+  {
+   "id": "THE_CAPACITY_SOURCE_IS_NOT_VIEWED",
+   "file": "scripts/vnext/historical_semantic_source.py",
+   "edit": "B13's capacity source is built directly",
+   "why_it_matters": "a FY2021 report's monetary capacity facts would not be seen as US GAAP",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_dei.EveryHistoricalReferenceGoesThroughAView.test_no_historical_function_reaches_the_question_without_a_view",
+   "failed_cases": [
+    "test_no_historical_function_reaches_the_question_without_a_view"
+   ],
+   "expected_case_failure": "AssertionError: Items in the second set but not the first:",
+   "suite_result": "Ran 1 test in 2.989s FAILED (failures=1)",
+   "seconds": 4
+  },
+  {
+   "id": "THE_DEFINED_ABSENCE_ROW_IS_NOT_VIEWED",
+   "file": "scripts/vnext/historical_projection.py",
+   "edit": "the D04 defined-absence row re-derives its candidate directly",
+   "why_it_matters": "a FY2021 D04 row would re-derive a different candidate from the one its Run holds",
+   "outcome": "CAUGHT",
+   "expected_case": "tests.vnext.test_historical_dei.EveryHistoricalReferenceGoesThroughAView.test_no_historical_function_reaches_the_question_without_a_view",
+   "failed_cases": [
+    "test_no_historical_function_reaches_the_question_without_a_view"
+   ],
+   "expected_case_failure": "AssertionError: {'run_store:_mechanically_replay_open_run', 'capacity_run:project_defined_absence', 'run_store:load_frozen_run'} not less than or equal to {'run_store:validate_and_freeze_run', 'run_store:_mechanically_replay_open_run', 'run_store:load_frozen_run'}",
+   "suite_result": "Ran 1 test in 3.118s FAILED (failures=1)",
+   "seconds": 4
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

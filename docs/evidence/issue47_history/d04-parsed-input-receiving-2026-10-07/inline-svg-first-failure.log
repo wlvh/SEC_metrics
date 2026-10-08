@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_inline_svg_drawing_change_is_not_unchanged_media_input (tests.vnext.test_historical_task_input.HistoricalTaskInputTest.test_inline_svg_drawing_change_is_not_unchanged_media_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tests/vnext/test_historical_task_input.py", line 60, in test_inline_svg_drawing_change_is_not_unchanged_media_input
+    self.assertNotEqual(previous['parsed_input_sha256'], current['parsed_input_sha256'])
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '4e3471c55226908571b8fc5d206ee598fe418107cff3495f5e782ce2da8bfd47' == '4e3471c55226908571b8fc5d206ee598fe418107cff3495f5e782ce2da8bfd47'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (failures=1)

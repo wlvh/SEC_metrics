@@ -1,0 +1,92 @@
+{
+ "record_type": "ISSUE_47_SUCCESSOR_EVENT_WINDOW_WIRED",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "supersedes": "finding.json in this directory, which recorded the gap and the reason the first port was withdrawn. That record stands as what was true then.",
+ "what_was_asked": "Finish separating the pinned Run coordinate from the event measurement window, with source reconstruction and validation dispatch. Keep the 53-week constraint and the no-cross-entity-financial-combination boundary. Do not truncate event sources to fit the coordinate. Do not promise there will be exactly two changes.",
+ "changes": [
+  {
+   "file": "scripts/vnext/historical_zero_ai_results.py",
+   "what": "event_measurement_window: a continuous primary registrant measures the pinned period; a successor registrant measures the window the approved policy widens to the prior calendar year's start, and carries registered_event_scope as the evidence - the registered CIKs, the window, the pinned period, and the explicit statement that no financial combination is authorised. The event branch then reads the ordinary route's own _registered_event_sources."
+  },
+  {
+   "file": "scripts/vnext/historical_results.py",
+   "what": "_run_coordinate: the primary result's window is the coordinate when it lies inside the pinned period, and the pinned period is the coordinate when it does not. Measured over 117 primary results from the six-company batch, all 117 are contained, so this changes none of them."
+  },
+  {
+   "file": "scripts/vnext/historical_run.py",
+   "what": "the case exposes its component under the field name run_store's shared registered-event check already reads, so one check serves both routes rather than a second hunk in a file fourteen generations bind by bytes."
+  }
+ ],
+ "not_two_changes": "three files, and the third was only found by running it: the Run was created with the pinned coordinate and then refused at MetricResult period differs from Run, because the shared exemption reads the ordinary case's shape.",
+ "measured": {
+  "run": {
+   "status": "FROZEN",
+   "run_id": "run:historical-period:90aaad09df09046e5170d59f15e36360c98dbd5da7f3fbc5b3f92dc450311205",
+   "coordinate": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   }
+  },
+  "separate_process_cold_read": {
+   "status": "FROZEN",
+   "records": 114,
+   "same_run_id": true
+  },
+  "result_window": {
+   "period_start": "2024-01-01",
+   "period_end": "2025-12-31"
+  },
+  "public_row": {
+   "fiscal_year": "2025",
+   "fiscal_period": "TARGET_PERIOD",
+   "period_start": "2024-01-01",
+   "period_end": "2025-12-31",
+   "status": "WITHHELD"
+  },
+  "reading": "the coordinate is the pinned year and the row reports the window that was measured. Both are visible in the output rather than one standing in for the other."
+ },
+ "the_remaining_blocker_is_material_and_it_is_named": {
+  "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/813828/000119312525036747/d830953d8k.htm",
+  "category": "SOURCE_UNAVAILABLE",
+  "measured_set": {
+   "successor_cik_2041610": {
+    "rows_in_window": 4,
+    "saved": 4,
+    "missing": 0
+   },
+   "predecessor_cik_813828": {
+    "rows_in_window": 31,
+    "saved": 22,
+    "missing": 9
+   }
+  },
+  "missing_documents": [
+   "813828|0001193125-25-175027|d52142d8k.htm|2025-08-07",
+   "813828|0001193125-25-170521|d55470d8k.htm|2025-07-31",
+   "813828|0001193125-25-165497|d51931d8k.htm|2025-07-25",
+   "813828|0000813828-25-000019|para-20250702.htm|2025-07-08",
+   "813828|0000813828-25-000015|para-20250603.htm|2025-06-09",
+   "813828|0001193125-25-120877|d924390d8k.htm|2025-05-15",
+   "813828|0001193125-25-115947|d771259d8k.htm|2025-05-08",
+   "813828|0001193125-25-052917|d847459d8k.htm|2025-03-12",
+   "813828|0001193125-25-036747|d830953d8k.htm|2025-02-26"
+  ],
+  "why_this_is_not_a_regression": "the ordinary issue_28_v13 route was run on the same day, on the same repository, and stops at the same document with the same window. The two routes agree, which is the point of the cross-check: a port that quietly widened or narrowed the source set would still have produced a result."
+ },
+ "a_correction_to_the_project_record": {
+  "what_AGENTS_md_says": "18件真实来源补齐后Paramount6事件原生通过",
+  "what_is_true_now": "that was measured when the target annual period was FY2024, whose successor event window is 2023-01-01 to 2024-12-31 - and the predecessor's 2024 filings are saved. The target period has since moved to FY2025, whose window is 2024-01-01 to 2025-12-31, and nine of the predecessor's 2025 filings are not saved.",
+  "the_general_point": "a pass recorded against a target period does not survive the target period moving. This is the same shape as the historical frame's own problem and is why a passing state has to name the period it passed for."
+ },
+ "what_is_not_done": [
+  "a value for any of Paramount's six event coordinates - nine documents are missing",
+  "the successor registrant's own statement metrics, which need the current income input and stay an explicit implementation gap",
+  "business content acceptance of anything here"
+ ]
+}

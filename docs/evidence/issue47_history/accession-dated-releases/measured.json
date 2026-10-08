@@ -1,0 +1,184 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "frame4_closure": "sha256:500ddf5f",
+ "positions": {
+  "jpmorgan_chase:2021-12-31:A01": {
+   "frame4_reason": "HISTORICAL_ACCESSION_ROUTE_UNRESOLVED",
+   "frame4_result_id": "sha256:df9b5d0355317a164383bc03e3bc420d924ff0e179a918d4fc491322db6eadf4",
+   "frame4_value": null,
+   "reason": "PASS",
+   "result_id": "sha256:2266e9dab122a592eb8d761bd384a00d381c3bbd31f59e76ab5b9b38031ca4c8",
+   "same_result_as_frame4": false,
+   "status": "SOURCE_SCOPE_PROVEN",
+   "successor": {
+    "frozen_refusal": [
+     "NORMAL_ACCESSION_STANDARD_NAMESPACE_CHANGED"
+    ],
+    "namespace_patterns": {
+     "dei_namespace_pattern": "https?://xbrl\\.sec\\.gov/dei/\\d{4}(?:q[1-4]|-\\d{2}-\\d{2})?",
+     "srt_namespace_pattern": "https?://fasb\\.org/srt/[0-9]{4}(?:-\\d{2}-\\d{2})?",
+     "us_gaap_namespace_pattern": "https?://fasb\\.org/us-gaap/[0-9]{4}(?:-\\d{2}-\\d{2})?"
+    }
+   },
+   "value": "0.15",
+   "why": null
+  },
+  "jpmorgan_chase:2021-12-31:A02": {
+   "frame4_reason": "HISTORICAL_ACCESSION_ROUTE_UNRESOLVED",
+   "frame4_result_id": "sha256:855f0550481d37431c98910e02264d7f1386c74b0b611f29d310832500627604",
+   "frame4_value": null,
+   "reason": "PASS",
+   "result_id": "sha256:06a635d1dc65d2761ae37999ed74b0cb17f94df2affc2aa53941bfc82b1ffd08",
+   "same_result_as_frame4": false,
+   "status": "SOURCE_SCOPE_PROVEN",
+   "successor": {
+    "frozen_refusal": [
+     "NORMAL_ACCESSION_STANDARD_NAMESPACE_CHANGED"
+    ],
+    "namespace_patterns": {
+     "dei_namespace_pattern": "https?://xbrl\\.sec\\.gov/dei/\\d{4}(?:q[1-4]|-\\d{2}-\\d{2})?",
+     "srt_namespace_pattern": "https?://fasb\\.org/srt/[0-9]{4}(?:-\\d{2}-\\d{2})?",
+     "us_gaap_namespace_pattern": "https?://fasb\\.org/us-gaap/[0-9]{4}(?:-\\d{2}-\\d{2})?"
+    }
+   },
+   "value": "0.131",
+   "why": null
+  },
+  "jpmorgan_chase:2021-12-31:B12": {
+   "frame4_reason": "TRAIT_NOT_APPLICABLE",
+   "frame4_result_id": "sha256:eeff0f43f01c9534b91a2c75b35af854496a7c12263f73396ea53fd40371a402",
+   "frame4_value": null,
+   "reason": "TRAIT_NOT_APPLICABLE",
+   "result_id": "sha256:eeff0f43f01c9534b91a2c75b35af854496a7c12263f73396ea53fd40371a402",
+   "same_result_as_frame4": true,
+   "status": null,
+   "successor": null,
+   "value": null,
+   "why": null
+  },
+  "jpmorgan_chase:2022-12-31:A01": {
+   "frame4_reason": "PASS",
+   "frame4_result_id": "sha256:f0d51267257e2514eea95034cf13f1bef1b90e3093171838542def63574caeb7",
+   "frame4_value": "0.149",
+   "reason": "PASS",
+   "result_id": "sha256:f0d51267257e2514eea95034cf13f1bef1b90e3093171838542def63574caeb7",
+   "same_result_as_frame4": true,
+   "status": "SOURCE_SCOPE_PROVEN",
+   "successor": null,
+   "value": "0.149",
+   "why": null
+  },
+  "jpmorgan_chase:2022-12-31:A02": {
+   "frame4_reason": "PASS",
+   "frame4_result_id": "sha256:84d67d35712d42f031f3ec2604fced0b3c237f0cfe194279052f45bd361fcef6",
+   "frame4_value": "0.132",
+   "reason": "PASS",
+   "result_id": "sha256:84d67d35712d42f031f3ec2604fced0b3c237f0cfe194279052f45bd361fcef6",
+   "same_result_as_frame4": true,
+   "status": "SOURCE_SCOPE_PROVEN",
+   "successor": null,
+   "value": "0.132",
+   "why": null
+  },
+  "jpmorgan_chase:2022-12-31:B12": {
+   "frame4_reason": "TRAIT_NOT_APPLICABLE",
+   "frame4_result_id": "sha256:19faed84875a14998652437dce3458e1485ef03141b113a63fa7f4e02f8d752f",
+   "frame4_value": null,
+   "reason": "TRAIT_NOT_APPLICABLE",
+   "result_id": "sha256:19faed84875a14998652437dce3458e1485ef03141b113a63fa7f4e02f8d752f",
+   "same_result_as_frame4": true,
+   "status": null,
+   "successor": null,
+   "value": null,
+   "why": null
+  },
+  "salesforce:2022-01-31:A01": {
+   "frame4_reason": "TRAIT_NOT_APPLICABLE",
+   "frame4_result_id": "sha256:9cfee1ca39d25b72a5268e44810ccd39547652552b2ee174e046616820b1c664",
+   "frame4_value": null,
+   "reason": "TRAIT_NOT_APPLICABLE",
+   "result_id": "sha256:9cfee1ca39d25b72a5268e44810ccd39547652552b2ee174e046616820b1c664",
+   "same_result_as_frame4": true,
+   "status": null,
+   "successor": null,
+   "value": null,
+   "why": null
+  },
+  "salesforce:2022-01-31:A02": {
+   "frame4_reason": "TRAIT_NOT_APPLICABLE",
+   "frame4_result_id": "sha256:4574a794236d5a8c32845827b10adc00ab4ecf1f04168a8c3ca0e75f26be25e1",
+   "frame4_value": null,
+   "reason": "TRAIT_NOT_APPLICABLE",
+   "result_id": "sha256:4574a794236d5a8c32845827b10adc00ab4ecf1f04168a8c3ca0e75f26be25e1",
+   "same_result_as_frame4": true,
+   "status": null,
+   "successor": null,
+   "value": null,
+   "why": null
+  },
+  "salesforce:2022-01-31:B12": {
+   "frame4_reason": "HISTORICAL_ACCESSION_ROUTE_UNRESOLVED",
+   "frame4_result_id": "sha256:d32b47446e3eb2b192c897ae8df1f263ca696500337c025eb2a9b558a844f318",
+   "frame4_value": null,
+   "reason": "PASS",
+   "result_id": "sha256:07c162bc77c8246d61f1ced7545a35000bdcf7b811421868c034350988e7d4cf",
+   "same_result_as_frame4": false,
+   "status": "SOURCE_SCOPE_PROVEN",
+   "successor": {
+    "frozen_refusal": [
+     "NORMAL_ACCESSION_CONCEPT_NAMESPACE_NOT_APPROVED"
+    ],
+    "namespace_patterns": {
+     "dei_namespace_pattern": "https?://xbrl\\.sec\\.gov/dei/\\d{4}(?:q[1-4]|-\\d{2}-\\d{2})?",
+     "srt_namespace_pattern": "https?://fasb\\.org/srt/[0-9]{4}(?:-\\d{2}-\\d{2})?",
+     "us_gaap_namespace_pattern": "https?://fasb\\.org/us-gaap/[0-9]{4}(?:-\\d{2}-\\d{2})?"
+    }
+   },
+   "value": "43700000000",
+   "why": null
+  },
+  "salesforce:2023-01-31:A01": {
+   "frame4_reason": "TRAIT_NOT_APPLICABLE",
+   "frame4_result_id": "sha256:1c4155397f64160e1e38aa1ed4486797cd7205307566e307870f9a9f400b1009",
+   "frame4_value": null,
+   "reason": "TRAIT_NOT_APPLICABLE",
+   "result_id": "sha256:1c4155397f64160e1e38aa1ed4486797cd7205307566e307870f9a9f400b1009",
+   "same_result_as_frame4": true,
+   "status": null,
+   "successor": null,
+   "value": null,
+   "why": null
+  },
+  "salesforce:2023-01-31:A02": {
+   "frame4_reason": "TRAIT_NOT_APPLICABLE",
+   "frame4_result_id": "sha256:229bfa6d6643e7c7986c074bb42e533306ea1aefac16b6f0948cfde9ab6d2432",
+   "frame4_value": null,
+   "reason": "TRAIT_NOT_APPLICABLE",
+   "result_id": "sha256:229bfa6d6643e7c7986c074bb42e533306ea1aefac16b6f0948cfde9ab6d2432",
+   "same_result_as_frame4": true,
+   "status": null,
+   "successor": null,
+   "value": null,
+   "why": null
+  },
+  "salesforce:2023-01-31:B12": {
+   "frame4_reason": "PASS",
+   "frame4_result_id": "sha256:d982b0065a43eb7129b6b0e783f15c5f461eb89408f54d0b439d6e1f9f275f9d",
+   "frame4_value": "48600000000",
+   "reason": "PASS",
+   "result_id": "sha256:d982b0065a43eb7129b6b0e783f15c5f461eb89408f54d0b439d6e1f9f275f9d",
+   "same_result_as_frame4": true,
+   "status": "SOURCE_SCOPE_PROVEN",
+   "successor": null,
+   "value": "48600000000",
+   "why": null
+  }
+ },
+ "probe": "probe.py",
+ "record_type": "ISSUE_47_ACCESSION_DATED_RELEASES_MEASURED",
+ "source_root": "the final export-restored root"
+}

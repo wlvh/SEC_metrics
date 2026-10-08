@@ -1,0 +1,120 @@
+{
+  "input": "/workspace/work/issue47-c02-layout-final/jpmorgan_chase-2021-12-31/request-body.json",
+  "read_scope": "Only the supplied request system and JSON user source; no reference answers, web, SEC requests, repository history, AGENTS.md, project checkers, notes or other samples.",
+  "system_read": true,
+  "strings_covered": 5034,
+  "original_visible_blocks_covered": 4064,
+  "extra_cell_caption_strings_covered": 970,
+  "unique_text_values_read": 3851,
+  "repeated_visible_block_values_resolved_by_exact_text_equality": 1183,
+  "tables_covered": 428,
+  "explicit_cells_covered": 3285,
+  "geometry_definitions_covered": 28,
+  "string_read_ranges_inclusive": [
+    [
+      0,
+      549
+    ],
+    [
+      267,
+      338
+    ],
+    [
+      550,
+      949
+    ],
+    [
+      950,
+      1279
+    ],
+    [
+      1280,
+      1445
+    ],
+    [
+      1446,
+      1780
+    ],
+    [
+      1781,
+      2093
+    ],
+    [
+      2094,
+      2270
+    ],
+    [
+      2271,
+      2537
+    ],
+    [
+      2538,
+      2996
+    ],
+    [
+      2997,
+      3261
+    ],
+    [
+      3262,
+      3443
+    ],
+    [
+      3444,
+      3566
+    ],
+    [
+      3567,
+      3741
+    ],
+    [
+      3742,
+      4083
+    ],
+    [
+      4084,
+      4327
+    ],
+    [
+      4328,
+      4504
+    ],
+    [
+      4505,
+      4835
+    ],
+    [
+      4836,
+      5033
+    ]
+  ],
+  "initial_output_truncation_repair": "Initial B0-B549 response omitted an internal section; B267-B338 was reread in full. No later reading response was truncated.",
+  "table_read_ranges_inclusive": [
+    [
+      0,
+      150
+    ],
+    [
+      151,
+      304
+    ],
+    [
+      305,
+      366
+    ],
+    [
+      367,
+      427
+    ]
+  ],
+  "method": "Sequential full reading of numbered source strings with exact duplicate references, followed by all table shapes, captions, origins, string references and geometry overrides. Relevant tables were then rendered with complete text for explicit association. No keyword-only scanning.",
+  "notes": [
+    "FY2021 is a reporting container. Current filing facts are not a 2021-12-31 snapshot.",
+    "Current Board committee table is table index 128 / table_000129; columns: Director, Audit, CMDC, Governance, PRC, Risk, Specific Purpose.",
+    "The Specific Purpose A/B key expressly says 2021, while the table heading says Current Board committee membership. Preserve both stated temporal scopes.",
+    "CMDC report is dated 2022-03-15; Audit report is dated 2022-03-14.",
+    "Biography qualification paragraphs are filing assessments, not independently verified credentials. Bare career chronology and another organization board positions were excluded.",
+    "Matrix table index 71 / table_000072 has category labels and nominee columns but no explicit skill/demographic mark cells in the supplied representation. Blank represented coordinates do not prove absence of a skill or attribute.",
+    "Stock and Executive committee existence is explicit. Their individual members/chairs, and the two Specific Purpose chairs, cannot be identified from this supplied source."
+  ]
+}

@@ -1,0 +1,71 @@
+======================================================================
+ERROR: test_acquire_and_run_keep_the_same_program_and_allowance (tests.vnext.test_company_local.CompanyLocalTest.test_acquire_and_run_keep_the_same_program_and_allowance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/tests/vnext/test_company_local.py", line 230, in test_acquire_and_run_keep_the_same_program_and_allowance
+    self.assertEqual(local.prepare_program(work), program)
+                     ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_local.py", line 76, in prepare_program
+    program = absolute(saved)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_local.py", line 22, in absolute
+    need(first_symlink_in_path(path=path) is None, 'LOCAL_PATH_ALIAS')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_PATH_ALIAS
+
+======================================================================
+ERROR: test_acquisition_crash_cannot_be_reported_as_complete (tests.vnext.test_company_local.CompanyLocalTest.test_acquisition_crash_cannot_be_reported_as_complete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/tests/vnext/test_company_local.py", line 195, in test_acquisition_crash_cannot_be_reported_as_complete
+    result = local.run_local(company_id='marriott_international', work_dir=self.root/'work',
+                             output_dir=self.root/'output')
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_local.py", line 173, in run_local
+    work, outputs = external(absolute(work_dir)), external(absolute(output_dir))
+                             ~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_local.py", line 22, in absolute
+    need(first_symlink_in_path(path=path) is None, 'LOCAL_PATH_ALIAS')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_PATH_ALIAS
+
+======================================================================
+ERROR: test_acquisition_failure_exports_old_native_result_without_current_success (tests.vnext.test_company_local.CompanyLocalTest.test_acquisition_failure_exports_old_native_result_without_current_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/tests/vnext/test_company_local.py", line 254, in test_acquisition_failure_exports_old_native_result_without_current_success
+    result = local.run_local(company_id='marriott_international', work_dir=work,
+        output_dir=self.root/'output', metric_ids=['B01'])
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_local.py", line 173, in run_local
+    work, outputs = external(absolute(work_dir)), external(absolute(output_dir))
+                             ~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_local.py", line 22, in absolute
+    need(first_symlink_in_path(path=path) is None, 'LOCAL_PATH_ALIAS')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_PATH_ALIAS
+
+======================================================================
+ERROR: test_run_has_one_compute_and_complete_status_scope (tests.vnext.test_company_local.CompanyLocalTest.test_run_has_one_compute_and_complete_status_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/tests/vnext/test_company_local.py", line 171, in test_run_has_one_compute_and_complete_status_scope
+    result = local.run_local(company_id='marriott_international', work_dir=work,
+        output_dir=output, metric_ids=['B01', 'D01', 'D03'])
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_local.py", line 173, in run_local
+    work, outputs = external(absolute(work_dir)), external(absolute(output_dir))
+                             ~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_local.py", line 22, in absolute
+    need(first_symlink_in_path(path=path) is None, 'LOCAL_PATH_ALIAS')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_PATH_ALIAS
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.337s
+
+FAILED (errors=4)

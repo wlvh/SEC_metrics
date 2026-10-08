@@ -1,0 +1,513 @@
+{
+ "attempted_metric_position_count": 60,
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "companies": [
+  "marriott_international",
+  "ford_motor_company",
+  "salesforce",
+  "macys"
+ ],
+ "exact_metric_position_count": 14,
+ "native_run_created": false,
+ "outcomes": [
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "marriott_international",
+   "component_id": "sha256:ef1a56b5f7ec2249a933c5932d419b0cdad3016349571af31dde51b596dbc2b6",
+   "current_accession": "0001048286-26-000007",
+   "fiscal_year": 2025,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B02",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "ratio",
+     "value": "0.04326693227091633466135458167"
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B04",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "2601000000"
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B05",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "2608000000"
+    }
+   ],
+   "period_start": "2025-01-01",
+   "prior_accession": "0001628280-25-004818",
+   "prior_error": null,
+   "prior_fiscal_year": 2024,
+   "report_end": "2025-12-31",
+   "selection_id": "sha256:4303b5f169ea76886ba33883126d6cd2595ebab668a298e34bab075a9f1f499c",
+   "status": "RESOLVED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "marriott_international",
+   "component_id": "sha256:e648e74e38236425b34735887676e27c37776a0f0b3878bbe4d6bc1d755beffb",
+   "current_accession": "0001628280-25-004818",
+   "fiscal_year": 2024,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B02",
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "ratio",
+     "value": "0.05849112301269345928393708093"
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B04",
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "2375000000"
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B05",
+     "period_end": "2024-12-31",
+     "period_start": "2024-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "1999000000"
+    }
+   ],
+   "period_start": "2024-01-01",
+   "prior_accession": "0001628280-24-004372",
+   "prior_error": null,
+   "prior_fiscal_year": 2023,
+   "report_end": "2024-12-31",
+   "selection_id": "sha256:5529f0de9f8e0bdbb6a292d4de84ef7924837dec57aa6699ac789395f9116e40",
+   "status": "RESOLVED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "marriott_international",
+   "component_id": "sha256:e22dc7aac680584a1fb8e704445b93ef061c7d1a61f7ec53d8c5e3527db83ba3",
+   "current_accession": "0001628280-24-004372",
+   "fiscal_year": 2023,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B02",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "publication": "WITHHELD",
+     "quality": "NONE",
+     "reason_code": "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED",
+     "unit": null,
+     "value": null
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B04",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "3083000000"
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B05",
+     "period_end": "2023-12-31",
+     "period_start": "2023-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "2718000000"
+    }
+   ],
+   "period_start": "2023-01-01",
+   "prior_accession": null,
+   "prior_error": {
+    "error_type": "NormalGovernanceInputError",
+    "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm"
+   },
+   "prior_fiscal_year": null,
+   "report_end": "2023-12-31",
+   "selection_id": "sha256:9906123db5d285cd5247710b73a3f024d34d4109eeec721ab4044230ea92cc9d",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "marriott_international",
+   "current_accession": "0001628280-23-003485",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001628280-22-002666",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828023003485/mar-20221231.htm",
+   "report_end": "2022-12-31",
+   "selection_id": "sha256:9d0c8da29c39d2637462884146db7938f3fdc096eee693d3f1ced4c320c09d7d",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "marriott_international",
+   "current_accession": "0001628280-22-002666",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001628280-21-002433",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+   "report_end": "2021-12-31",
+   "selection_id": "sha256:71114ab6fa861142cbeca864ae4e47914baeb9526b87a947420311d34a2cfcc5",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "ford_motor_company",
+   "component_id": "sha256:11b28daee8f057a82aec640a8978d59f5095ffe755d62e1d6a1c2d24c65df77e",
+   "current_accession": "0000037996-26-000015",
+   "fiscal_year": 2025,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B02",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "WITHHELD",
+     "quality": "NONE",
+     "reason_code": "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED",
+     "unit": null,
+     "value": null
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B04",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "-8162000000"
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B05",
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "12467000000"
+    }
+   ],
+   "period_start": "2025-01-01",
+   "prior_accession": null,
+   "prior_error": {
+    "error_type": "NormalGovernanceInputError",
+    "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm"
+   },
+   "prior_fiscal_year": null,
+   "report_end": "2025-12-31",
+   "selection_id": "sha256:6ceef464f049fccf6d0f50f7309ce1290e08f6c30731eaffa3d5498d491fc77a",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "ford_motor_company",
+   "current_accession": "0000037996-25-000013",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000037996-24-000009",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
+   "report_end": "2024-12-31",
+   "selection_id": "sha256:1131fd3ec012f16224acf4322ec0dcf42512ce9ec6912bfff62a035195021a39",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "ford_motor_company",
+   "current_accession": "0000037996-24-000009",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000037996-23-000012",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/f-20231231.htm",
+   "report_end": "2023-12-31",
+   "selection_id": "sha256:621ce5a59249128f6953fb4d333b3aa314a3337e624457d52a09cae972af346e",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "ford_motor_company",
+   "current_accession": "0000037996-23-000012",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000037996-22-000013",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/f-20221231.htm",
+   "report_end": "2022-12-31",
+   "selection_id": "sha256:246d989faf82feac53439a248f856c76700e6f8c612676f7570c7cc574f05993",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "ford_motor_company",
+   "current_accession": "0000037996-22-000013",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0000037996-21-000012",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231.htm",
+   "report_end": "2021-12-31",
+   "selection_id": "sha256:a9ed733565ccdaa2be9499a5f1847b5ff3718c748cb1b4b36183ebd0964e6215",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "salesforce",
+   "component_id": "sha256:4de2a2ed9ec49273f9c39f66788b7fc9f43d2fe82a5b8b5f2509e3c474bd6281",
+   "current_accession": "0001108524-26-000060",
+   "fiscal_year": 2026,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B02",
+     "period_end": "2026-01-31",
+     "period_start": "2025-02-01",
+     "publication": "WITHHELD",
+     "quality": "NONE",
+     "reason_code": "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED",
+     "unit": null,
+     "value": null
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B04",
+     "period_end": "2026-01-31",
+     "period_start": "2025-02-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "7457000000"
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B05",
+     "period_end": "2026-01-31",
+     "period_start": "2025-02-01",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "14402000000"
+    }
+   ],
+   "period_start": "2025-02-01",
+   "prior_accession": null,
+   "prior_error": {
+    "error_type": "NormalGovernanceInputError",
+    "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm"
+   },
+   "prior_fiscal_year": null,
+   "report_end": "2026-01-31",
+   "selection_id": "sha256:3fff7be1f9afea7dbf404bac8d29eaaaba9f1229ee929d8751ff7a1b406f2912",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "salesforce",
+   "current_accession": "0001108524-25-000006",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001108524-24-000005",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+   "report_end": "2025-01-31",
+   "selection_id": "sha256:261260138e3bdbcbbaf8e66aa60c170bdebba46a74997cf6d89b7a69deb6d166",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "salesforce",
+   "current_accession": "0001108524-24-000005",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001108524-23-000011",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852424000005/crm-20240131.htm",
+   "report_end": "2024-01-31",
+   "selection_id": "sha256:96253fd63dea7f36e4a5217d25ef4b948fed9d01e94753f2a1f03764cc501640",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "salesforce",
+   "current_accession": "0001108524-23-000011",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001108524-22-000013",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852423000011/crm-20230131.htm",
+   "report_end": "2023-01-31",
+   "selection_id": "sha256:a5f4b243aac096e5471c60cf587c8edb4224963f013c17c5b062dda44f7d6734",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "salesforce",
+   "current_accession": "0001108524-22-000013",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001108524-22-000008",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1108524/000110852422000013/crm-20220131.htm",
+   "report_end": "2022-01-31",
+   "selection_id": "sha256:7b650957fe0bddef1f81e80cc65d871d7f7c1abdb3fdd3e246558de24e0f1695",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "company_id": "macys",
+   "component_id": "sha256:00e163827659b66b886fc85d4348f66cbde0ac5cd93382b673e346e9d468dc09",
+   "current_accession": "0001628280-26-021721",
+   "fiscal_year": 2025,
+   "metrics": [
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B02",
+     "period_end": "2026-01-31",
+     "period_start": "2025-02-02",
+     "publication": "WITHHELD",
+     "quality": "NONE",
+     "reason_code": "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED",
+     "unit": null,
+     "value": null
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B04",
+     "period_end": "2026-01-31",
+     "period_start": "2025-02-02",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "642000000"
+    },
+    {
+     "applicability": "APPLICABLE",
+     "metric_id": "B05",
+     "period_end": "2026-01-31",
+     "period_start": "2025-02-02",
+     "publication": "PUBLISHED",
+     "quality": "EXACT",
+     "reason_code": "PASS",
+     "unit": "USD",
+     "value": "1057000000"
+    }
+   ],
+   "period_start": "2025-02-02",
+   "prior_accession": null,
+   "prior_error": {
+    "error_type": "NormalGovernanceInputError",
+    "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm"
+   },
+   "prior_fiscal_year": null,
+   "report_end": "2026-01-31",
+   "selection_id": "sha256:4f8874dc27484fa29cda939adcd87ad0ee2bb4400bdb34d26658a7a58dc12b62",
+   "status": "RESOLVED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "macys",
+   "current_accession": "0001628280-25-014315",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001628280-24-012734",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm",
+   "report_end": "2025-02-01",
+   "selection_id": "sha256:da5b538c91aec92d49c083ce616acec41b05e7fca316beebe0e7bf9c1007688b",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "macys",
+   "current_accession": "0001628280-24-012734",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001628280-23-009154",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203.htm",
+   "report_end": "2024-02-03",
+   "selection_id": "sha256:30397bb3592c544c066ec9900a208da0f2c7b1c11d866032e4187de78f69da0e",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "macys",
+   "current_accession": "0001628280-23-009154",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001564590-22-011726",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+   "report_end": "2023-01-28",
+   "selection_id": "sha256:f45b2fb69dc918b2ee01b7679afe63a71cdf9648581c95440a67af4bd9022384",
+   "status": "SOURCE_BLOCKED"
+  },
+  {
+   "category": "SOURCE_UNAVAILABLE",
+   "company_id": "macys",
+   "current_accession": "0001564590-22-011726",
+   "error_type": "NormalAnnualInputError",
+   "prior_accession": "0001564590-21-016119",
+   "reason": "SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/m-10k_20220129.htm",
+   "report_end": "2022-01-29",
+   "selection_id": "sha256:9f978e8bec3774466b13730c627709a6fddf78ffd3138aeb226a111651e918cf",
+   "status": "SOURCE_BLOCKED"
+  }
+ ],
+ "production_authorized": false,
+ "record_type": "HISTORICAL_PERIOD_PILOT_REPORT",
+ "requested_metrics": [
+  "B02",
+  "B04",
+  "B05"
+ ],
+ "requested_years": 5,
+ "resolved_period_count": 6,
+ "schema_version": 1,
+ "target_period_count": 20
+}

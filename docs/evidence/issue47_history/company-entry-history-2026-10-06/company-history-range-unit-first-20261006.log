@@ -1,0 +1,20 @@
+======================================================================
+ERROR: test_missing_coordinates_and_old_out_of_range_rows_remain_distinct (tests.vnext.test_company_historical_range.HistoricalRangeTest.test_missing_coordinates_and_old_out_of_range_rows_remain_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/tests/vnext/test_company_historical_range.py", line 85, in test_missing_coordinates_and_old_out_of_range_rows_remain_distinct
+    local._history_tables(output, 'test_company', outcomes,
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          {'run_id': 'test', 'status': 'FLOW_INCOMPLETE'})
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/company_local.py", line 396, in _history_tables
+    path.write_bytes(_csv_bytes(rows=rows, fieldnames=fields))
+                     ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/publication.py", line 2568, in _csv_bytes
+    raise PublicationError("Generated publication CSV schema differs")
+scripts.vnext.publication.PublicationError: Generated publication CSV schema differs
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.205s
+
+FAILED (errors=1)

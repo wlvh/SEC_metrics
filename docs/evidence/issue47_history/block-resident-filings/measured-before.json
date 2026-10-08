@@ -1,0 +1,1651 @@
+{
+ "block": "CIK0001048286-submissions-003.json",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "marriott_international",
+ "compared": "the answer - applicability, quality, publication, reason, value, period and unit for a Result; status and excerpts in order for a text candidate. Identities are reported apart: a filing proved against another document is bound to that document, so a Result's source set and a D02 candidate's metadata row move with the row, and that is provenance, not a changed answer.",
+ "cutoff": "2024-06-30",
+ "label": "before",
+ "periods": {
+  "2023-12-31": {
+   "metrics_whose_answer_differs": [
+    "A01",
+    "A02",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A10",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B07",
+    "B08",
+    "B09",
+    "B12"
+   ],
+   "repartitioned_root": {
+    "metrics": {
+     "A01": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "A02": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "A03": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A04": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A05": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "A06": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "A07": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "A08": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "A09": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A10": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "A11": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A12": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A13": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "B01": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "B02": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "B03": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "B04": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "B05": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "B06": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_B06_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "B07": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "B08": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "B09": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "B10": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "0.692"
+     },
+     "B11": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "124.7"
+     },
+     "B12": {
+      "error": "ZeroAiReleaseError:Filing accession is absent from submissions: 0001628280-24-004372"
+     },
+     "B13": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "C01": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "C02": {
+      "error": "NormalCompanyfactsError:HISTORICAL_TEXT_RUN_INPUT_BLOCKED:[{'metric_id': 'C02', 'category': 'SOURCE_UNAVAILABLE', 'reason': 'SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000114036124015465/ny20015439x1_def14a.htm'}]"
+     },
+     "C03": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND",
+      "unit": null,
+      "value": null
+     },
+     "C04": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "D01": {
+      "identity": {
+       "candidate_hash": "sha256:7e3fbb753c594e13fc04bd095f7781f5cad41026e68c4fffef0f708a54546c7b",
+       "row_origins": []
+      },
+      "text": [
+       "Risks Relating to Our Industry",
+       "Our industry is highly competitive, which may impact our ability to compete successfully for guests",
+       "Economic and other global, national, and regional conditions and events have in the past impacted, and could in the future impact, our business, financial results and growth",
+       "Risks Relating to Our Business",
+       "Operational Risks",
+       "Premature termination of our management or franchise agreements could hurt our financial performance",
+       "Disagreements with owners of hotels that we manage or franchise may result in arbitration or litigation or delay implementation of product or service initiatives",
+       "An increase in the use of third-party Internet services to book online hotel reservations could adversely impact our business",
+       "Our growth strategy depends upon attracting third-party owners and franchisees to our platform, and future arrangements with these third parties may be less favorable to us, depending on the terms offered by our competitors",
+       "The effects of, or our failure to comply with, applicable laws, regulations and government policies may disrupt our business, lower our revenues, increase our costs, reduce our profits, limit our growth, or damage our reputation.",
+       "Exchange rate fluctuations could result in significant foreign currency gains and losses and affect our business results",
+       "Our business depends on the quality and reputation of our Company and our brands, and any deterioration could adversely impact our market share, reputation, business, financial condition, or results of operations",
+       "Actions by our franchisees and licensees or others could adversely affect our image and reputation",
+       "Collective bargaining activity and strikes could materially disrupt our operations, increase our labor costs, and interfere with the ability of our management to focus on executing our business strategies",
+       "Our business could suffer if we cannot attract and retain associates or as the result of the loss of the services of our senior executives",
+       "Extreme weather, natural disasters, climate change, and sustainability-related concerns have impacted our business in the past and could in the future have a material adverse effect on our business and results of operations.",
+       "Insurance may not cover damage to, or losses involving, properties that we own, manage, or franchise, or other aspects of our business, and the cost of such insurance could increase",
+       "If our brands, goodwill, or other intangible assets become impaired, we may be required to record significant non-cash charges to earnings.",
+       "Our Loyalty Program plays a significant role in our business and unfavorable developments affecting the program could adversely affect our business and results of operations.",
+       "Development and Financing Risks",
+       "Our hotel owners and franchisees depend on capital to buy, develop, and improve hotels, and they may be unable to access capital when necessary",
+       "Our ability to grow our management and franchise systems is subject to the range of risks associated with real estate investments",
+       "Our owned properties and other real estate investments subject us to numerous risks",
+       "Risks associated with development and sale of residential properties associated with our lodging properties or brands may reduce our profits",
+       "More hotel projects in our development pipeline may be cancelled or delayed in opening, which could adversely affect our growth prospects",
+       "Losses on loans or loan guarantees that we have made to third parties impact our profits",
+       "If owners of hotels that we manage or franchise cannot repay or refinance mortgage loans secured by their properties, our revenues and profits could decrease and our business could be harmed",
+       "Technology, Information Protection, and Privacy Risks",
+       "Any disruption in the functioning of our reservation, Loyalty Program, or other core operational systems could adversely affect our performance and results",
+       "A failure to keep pace with developments in technology could impair our operations or competitive position",
+       "We are exposed to risks and costs associated with protecting the integrity and security of Company, associate, and guest data",
+       "The Data Security Incident, and other information security incidents, could have numerous adverse effects on our business",
+       "Additional cybersecurity incidents could have adverse effects on our business.",
+       "Changes in privacy and data security laws could increase our operating costs and increase our exposure to payment obligations and litigation",
+       "Changes in laws could adversely affect our ability to market our products effectively",
+       "Governance Risk",
+       "Delaware law and our governing corporate documents contain, and our Board of Directors could implement, anti-takeover provisions that could deter takeover attempts."
+      ],
+      "text_candidate_status": "CANDIDATE",
+      "text_items": 37
+     },
+     "D02": {
+      "identity": {
+       "candidate_hash": "sha256:6486ab93d61737c241c424ac63c647549c2cece9598fcc59f273211ad32f96b0",
+       "row_origins": [
+        "CIK0001048286-submissions-003.json"
+       ]
+      },
+      "text": [
+       "See the information under the “Litigation, Claims, and Government Investigations” caption in Note 7, which we incorporate here by reference. Within this section, we use a threshold of $1 million in disclosing material environmental proceedings involving a governmental authority, if any.",
+       "From time to time, we are also subject to other legal proceedings and claims in the ordinary course of business, including adjustments proposed during governmental examinations of the various tax returns we file. While management presently believes that the ultimate outcome of these other proceedings, individually and in aggregate, will not materially harm our financial position, cash flows, or overall trends in results of operations, legal proceedings are inherently uncertain, and unfavorable rulings could, individually or in aggregate, have a material adverse effect on our business, financial condition, or operating results.",
+       "We are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss. In making such determinations we evaluate, among other things, the probability of an unfavorable outcome and, when we believe it probable that a liability has been incurred, our ability to make a reasonable estimate of the loss. We review these accruals each reporting period and make revisions based on changes in facts and circumstances.",
+       "Litigation, Claims, and Government Investigations",
+       "Following our announcement of the Data Security Incident, approximately 100 lawsuits were filed by consumers and others against us in U.S. federal, U.S. state and Canadian courts related to the incident. The plaintiffs in the cases that remain pending, who generally purport to represent various classes of consumers, generally claim to have been harmed by alleged actions and/or omissions by the Company in connection with the Data Security Incident and assert a variety of common law and statutory claims seeking monetary damages, injunctive relief, costs and attorneys’ fees, and other related relief. The active U.S. cases are consolidated in the U.S. District Court for the District of Maryland (the “District Court”), pursuant to orders of the U.S. Judicial Panel on Multidistrict Litigation (the “MDL”). The District Court granted in part and denied in part class certification of various U.S. groups of consumers. In August 2023, the U.S. Court of Appeals for the Fourth Circuit (the “Fourth Circuit”) vacated the District Court’s class certification decision because the District Court failed to first consider the effect of a class-action waiver signed by all putative class members. On remand, after briefing, the District Court issued an order reinstating the same classes that had previously been certified. We promptly petitioned the Fourth Circuit, seeking leave to appeal that ruling. On January 18, 2024, the Fourth Circuit granted that petition, and we are preparing to file such appeal. A case brought by the City of Chicago (which is consolidated in the MDL proceeding) also remains pending. The Canadian cases have effectively been consolidated into a single case in the province of Ontario. We dispute the allegations in these lawsuits and are vigorously defending against such claims.",
+       "In addition, various U.S. federal, U.S. state and foreign governmental authorities made inquiries, opened investigations, or requested information and/or documents related to the Data Security Incident and related matters. Although some of these matters have been resolved or no longer appear to be active, some remain open. We are in discussions with the Attorney General offices from 49 states and the District of Columbia and the Federal Trade Commission. Based on the ongoing discussions, we believe it is probable that we will incur losses, and as of December 31, 2023, we have an accrual for an estimated loss contingency, which is not material to our Financial Statements.",
+       "While we believe it is reasonably possible that we may incur losses in excess of the amounts recorded associated with the above described MDL proceedings and regulatory investigations related to the Data Security Incident, it is not possible to reasonably estimate the amount of such losses or range of loss that might result from adverse judgments, settlements, fines,",
+       "penalties or other resolution of these proceedings and investigations based on: (1) in the case of the above described MDL proceedings, the current stage of these proceedings, the absence of specific allegations as to alleged damages, the uncertainty as to the certification of a class or classes and the size of any certified class, and the lack of resolution of significant factual and legal issues; and (2) in the case of the above described regulatory investigations, the lack of resolution with the Federal Trade Commission and the state Attorneys General."
+      ],
+      "text_candidate_status": "CANDIDATE",
+      "text_items": 8
+     },
+     "D03": {
+      "error": "NormalCompanyfactsError:HISTORICAL_RUN_METRIC_NOT_IN_ZERO_AI_SET"
+     },
+     "D04": {
+      "error": "HistoricalSemanticError:HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE"
+     },
+     "E01": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E02": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E03": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E04": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E05": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     }
+    },
+    "selection": {
+     "current": "0001628280-24-004372",
+     "loaded_inventories": [
+      "CIK0001048286.json",
+      "CIK0001048286-submissions-003.json"
+     ],
+     "prior": "0001628280-23-003485"
+    }
+   },
+   "repository_root": {
+    "metrics": {
+     "A01": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A02": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A03": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A04": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A05": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A06": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A07": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A08": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A09": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A10": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A11": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A12": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A13": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "B01": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "23713000000"
+     },
+     "B02": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "B03": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "ALL_BRANCHES_REJECTED",
+      "unit": null,
+      "value": null
+     },
+     "B04": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "3083000000"
+     },
+     "B05": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "2718000000"
+     },
+     "B06": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_B06_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "B07": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "6.838938053097345132743362832"
+     },
+     "B08": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "0.4265653182169543931976294769"
+     },
+     "B09": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "338000000"
+     },
+     "B10": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "0.692"
+     },
+     "B11": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "124.7"
+     },
+     "B12": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "B13": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "C01": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "C02": {
+      "error": "NormalCompanyfactsError:HISTORICAL_TEXT_RUN_INPUT_BLOCKED:[{'metric_id': 'C02', 'category': 'SOURCE_UNAVAILABLE', 'reason': 'SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000114036124015465/ny20015439x1_def14a.htm'}]"
+     },
+     "C03": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND",
+      "unit": null,
+      "value": null
+     },
+     "C04": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "D01": {
+      "identity": {
+       "candidate_hash": "sha256:7e3fbb753c594e13fc04bd095f7781f5cad41026e68c4fffef0f708a54546c7b",
+       "row_origins": []
+      },
+      "text": [
+       "Risks Relating to Our Industry",
+       "Our industry is highly competitive, which may impact our ability to compete successfully for guests",
+       "Economic and other global, national, and regional conditions and events have in the past impacted, and could in the future impact, our business, financial results and growth",
+       "Risks Relating to Our Business",
+       "Operational Risks",
+       "Premature termination of our management or franchise agreements could hurt our financial performance",
+       "Disagreements with owners of hotels that we manage or franchise may result in arbitration or litigation or delay implementation of product or service initiatives",
+       "An increase in the use of third-party Internet services to book online hotel reservations could adversely impact our business",
+       "Our growth strategy depends upon attracting third-party owners and franchisees to our platform, and future arrangements with these third parties may be less favorable to us, depending on the terms offered by our competitors",
+       "The effects of, or our failure to comply with, applicable laws, regulations and government policies may disrupt our business, lower our revenues, increase our costs, reduce our profits, limit our growth, or damage our reputation.",
+       "Exchange rate fluctuations could result in significant foreign currency gains and losses and affect our business results",
+       "Our business depends on the quality and reputation of our Company and our brands, and any deterioration could adversely impact our market share, reputation, business, financial condition, or results of operations",
+       "Actions by our franchisees and licensees or others could adversely affect our image and reputation",
+       "Collective bargaining activity and strikes could materially disrupt our operations, increase our labor costs, and interfere with the ability of our management to focus on executing our business strategies",
+       "Our business could suffer if we cannot attract and retain associates or as the result of the loss of the services of our senior executives",
+       "Extreme weather, natural disasters, climate change, and sustainability-related concerns have impacted our business in the past and could in the future have a material adverse effect on our business and results of operations.",
+       "Insurance may not cover damage to, or losses involving, properties that we own, manage, or franchise, or other aspects of our business, and the cost of such insurance could increase",
+       "If our brands, goodwill, or other intangible assets become impaired, we may be required to record significant non-cash charges to earnings.",
+       "Our Loyalty Program plays a significant role in our business and unfavorable developments affecting the program could adversely affect our business and results of operations.",
+       "Development and Financing Risks",
+       "Our hotel owners and franchisees depend on capital to buy, develop, and improve hotels, and they may be unable to access capital when necessary",
+       "Our ability to grow our management and franchise systems is subject to the range of risks associated with real estate investments",
+       "Our owned properties and other real estate investments subject us to numerous risks",
+       "Risks associated with development and sale of residential properties associated with our lodging properties or brands may reduce our profits",
+       "More hotel projects in our development pipeline may be cancelled or delayed in opening, which could adversely affect our growth prospects",
+       "Losses on loans or loan guarantees that we have made to third parties impact our profits",
+       "If owners of hotels that we manage or franchise cannot repay or refinance mortgage loans secured by their properties, our revenues and profits could decrease and our business could be harmed",
+       "Technology, Information Protection, and Privacy Risks",
+       "Any disruption in the functioning of our reservation, Loyalty Program, or other core operational systems could adversely affect our performance and results",
+       "A failure to keep pace with developments in technology could impair our operations or competitive position",
+       "We are exposed to risks and costs associated with protecting the integrity and security of Company, associate, and guest data",
+       "The Data Security Incident, and other information security incidents, could have numerous adverse effects on our business",
+       "Additional cybersecurity incidents could have adverse effects on our business.",
+       "Changes in privacy and data security laws could increase our operating costs and increase our exposure to payment obligations and litigation",
+       "Changes in laws could adversely affect our ability to market our products effectively",
+       "Governance Risk",
+       "Delaware law and our governing corporate documents contain, and our Board of Directors could implement, anti-takeover provisions that could deter takeover attempts."
+      ],
+      "text_candidate_status": "CANDIDATE",
+      "text_items": 37
+     },
+     "D02": {
+      "identity": {
+       "candidate_hash": "sha256:f402c2a6240f658a020ea8b8fa5713d11b78ab8a06fc3834a8e448b43607ea30",
+       "row_origins": [
+        "CIK0001048286.json"
+       ]
+      },
+      "text": [
+       "See the information under the “Litigation, Claims, and Government Investigations” caption in Note 7, which we incorporate here by reference. Within this section, we use a threshold of $1 million in disclosing material environmental proceedings involving a governmental authority, if any.",
+       "From time to time, we are also subject to other legal proceedings and claims in the ordinary course of business, including adjustments proposed during governmental examinations of the various tax returns we file. While management presently believes that the ultimate outcome of these other proceedings, individually and in aggregate, will not materially harm our financial position, cash flows, or overall trends in results of operations, legal proceedings are inherently uncertain, and unfavorable rulings could, individually or in aggregate, have a material adverse effect on our business, financial condition, or operating results.",
+       "We are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss. In making such determinations we evaluate, among other things, the probability of an unfavorable outcome and, when we believe it probable that a liability has been incurred, our ability to make a reasonable estimate of the loss. We review these accruals each reporting period and make revisions based on changes in facts and circumstances.",
+       "Litigation, Claims, and Government Investigations",
+       "Following our announcement of the Data Security Incident, approximately 100 lawsuits were filed by consumers and others against us in U.S. federal, U.S. state and Canadian courts related to the incident. The plaintiffs in the cases that remain pending, who generally purport to represent various classes of consumers, generally claim to have been harmed by alleged actions and/or omissions by the Company in connection with the Data Security Incident and assert a variety of common law and statutory claims seeking monetary damages, injunctive relief, costs and attorneys’ fees, and other related relief. The active U.S. cases are consolidated in the U.S. District Court for the District of Maryland (the “District Court”), pursuant to orders of the U.S. Judicial Panel on Multidistrict Litigation (the “MDL”). The District Court granted in part and denied in part class certification of various U.S. groups of consumers. In August 2023, the U.S. Court of Appeals for the Fourth Circuit (the “Fourth Circuit”) vacated the District Court’s class certification decision because the District Court failed to first consider the effect of a class-action waiver signed by all putative class members. On remand, after briefing, the District Court issued an order reinstating the same classes that had previously been certified. We promptly petitioned the Fourth Circuit, seeking leave to appeal that ruling. On January 18, 2024, the Fourth Circuit granted that petition, and we are preparing to file such appeal. A case brought by the City of Chicago (which is consolidated in the MDL proceeding) also remains pending. The Canadian cases have effectively been consolidated into a single case in the province of Ontario. We dispute the allegations in these lawsuits and are vigorously defending against such claims.",
+       "In addition, various U.S. federal, U.S. state and foreign governmental authorities made inquiries, opened investigations, or requested information and/or documents related to the Data Security Incident and related matters. Although some of these matters have been resolved or no longer appear to be active, some remain open. We are in discussions with the Attorney General offices from 49 states and the District of Columbia and the Federal Trade Commission. Based on the ongoing discussions, we believe it is probable that we will incur losses, and as of December 31, 2023, we have an accrual for an estimated loss contingency, which is not material to our Financial Statements.",
+       "While we believe it is reasonably possible that we may incur losses in excess of the amounts recorded associated with the above described MDL proceedings and regulatory investigations related to the Data Security Incident, it is not possible to reasonably estimate the amount of such losses or range of loss that might result from adverse judgments, settlements, fines,",
+       "penalties or other resolution of these proceedings and investigations based on: (1) in the case of the above described MDL proceedings, the current stage of these proceedings, the absence of specific allegations as to alleged damages, the uncertainty as to the certification of a class or classes and the size of any certified class, and the lack of resolution of significant factual and legal issues; and (2) in the case of the above described regulatory investigations, the lack of resolution with the Federal Trade Commission and the state Attorneys General."
+      ],
+      "text_candidate_status": "CANDIDATE",
+      "text_items": 8
+     },
+     "D03": {
+      "error": "NormalCompanyfactsError:HISTORICAL_RUN_METRIC_NOT_IN_ZERO_AI_SET"
+     },
+     "D04": {
+      "error": "HistoricalSemanticError:HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE"
+     },
+     "E01": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E02": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E03": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E04": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E05": {
+      "applicability": "APPLICABLE",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     }
+    },
+    "selection": {
+     "current": "0001628280-24-004372",
+     "loaded_inventories": [
+      "CIK0001048286.json"
+     ],
+     "prior": "0001628280-23-003485"
+    }
+   },
+   "seconds": 215.2,
+   "text_metrics_whose_identity_differs": [
+    "D02"
+   ]
+  },
+  "2024-12-31": {
+   "metrics_whose_answer_differs": [],
+   "repartitioned_root": {
+    "metrics": {
+     "A01": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A02": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A03": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A04": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A05": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A06": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A07": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A08": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A09": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A10": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A11": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A12": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A13": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "B01": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "25100000000"
+     },
+     "B02": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "0.05849112301269345928393708093"
+     },
+     "B03": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "0.1653386454183266932270916335"
+     },
+     "B04": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "2375000000"
+     },
+     "B05": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "1999000000"
+     },
+     "B06": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NOT_MEANINGFUL",
+      "reason_code": "DENOMINATOR_NONPOSITIVE",
+      "unit": null,
+      "value": null
+     },
+     "B07": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "5.420143884892086330935251799"
+     },
+     "B08": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "0.4029367556942999190657879524"
+     },
+     "B09": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "396000000"
+     },
+     "B10": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "0.698"
+     },
+     "B11": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "128.23"
+     },
+     "B12": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "B13": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "C01": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "C02": {
+      "error": "NormalCompanyfactsError:HISTORICAL_TEXT_RUN_INPUT_BLOCKED:[{'metric_id': 'C02', 'category': 'SOURCE_UNAVAILABLE', 'reason': 'SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000114036125010600/ny20039208x771_def14a.htm'}]"
+     },
+     "C03": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND",
+      "unit": null,
+      "value": null
+     },
+     "C04": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "D01": {
+      "identity": {
+       "candidate_hash": "sha256:2a5333a5961da7f6508f4cd88470807b1637dab26e6630b7c8a62c0a4619f05b",
+       "row_origins": []
+      },
+      "text": [
+       "Risks Relating to Our Industry",
+       "Our industry is highly competitive, which may impact our ability to compete successfully for guests",
+       "Economic and other global, national, and regional conditions and events have in the past impacted, and could in the future impact, our business, financial results and growth",
+       "Risks Relating to Our Business",
+       "Operational Risks",
+       "Premature termination of our agreements with hotel owners could hurt our financial performance",
+       "Disagreements with hotel owners and other counterparties may result in arbitration or litigation or delay implementation of product or service initiatives",
+       "An increase in the use of Internet travel intermediaries to book hotel reservations could adversely impact our business",
+       "Our growth strategy depends upon attracting hotel owners to our platform, and future arrangements with these third parties may be less favorable to us, depending on the terms offered by our competitors",
+       "The effects of, or our failure to comply with, applicable laws, regulations, and government policies may disrupt our business, lower our revenues, increase our costs, reduce our profits, limit our growth, or damage our reputation.",
+       "Third-party claims that we infringe the intellectual property rights of others or our failure to defend our own intellectual property rights could materially adversely affect our business.",
+       "If our brands, goodwill, or other intangible assets become impaired, we may be required to record significant non-cash charges to earnings.",
+       "Our business depends on the quality and reputation of our Company and our brands, and any deterioration could adversely impact our market share, reputation, business, financial condition, or results of operations",
+       "Actions by our hotel owners or others could adversely affect our image and reputation",
+       "Collective bargaining activity and strikes could materially disrupt hotel operations, increase labor costs, and interfere with the ability of our management to focus on executing our business strategies",
+       "Our business could suffer if we or the hotels in our system cannot attract and retain associates or as the result of the loss of the services of our senior executives",
+       "Extreme weather, natural disasters, climate change, and sustainability-related concerns have impacted our business in the past and could in the future have a material adverse effect on our business and results of operations.",
+       "Insurance may not cover damage to, or losses involving, hotels in our system or other aspects of our business, and the cost of such insurance could increase",
+       "Our Loyalty Program plays a significant role in our business, and unfavorable developments affecting the program could adversely affect our business and results of operations.",
+       "Exchange rate fluctuations could result in significant foreign currency gains and losses and affect our business results",
+       "Development and Financing Risks",
+       "Our hotel owners depend on capital to buy, develop, and improve hotels, and they may be unable to access capital when necessary",
+       "Our ability to grow our system is subject to the range of risks associated with real estate investments",
+       "Our owned properties and other real estate investments subject us to numerous risks",
+       "Risks associated with development and sale of residential properties associated with our lodging properties or brands may reduce our profits",
+       "More hotel projects in our development pipeline may be cancelled or delayed in opening, which could adversely affect our growth prospects",
+       "Losses on loans or guarantees that we have made to third parties impact our profits",
+       "If hotel owners cannot repay or refinance mortgage loans secured by their properties, our revenues and profits could decrease and our business could be harmed",
+       "Technology, Information Protection, and Privacy Risks",
+       "Disruption in the functioning of our reservation, Loyalty Program, or other core operational systems, or our use of certain new technologies, could adversely affect our business",
+       "A failure to keep pace with developments in technology could impair our operations or competitive position",
+       "We are exposed to risks and costs associated with protecting the integrity and security of data",
+       "The Data Security Incident, and other information security incidents, could have numerous adverse effects on our business",
+       "Additional cybersecurity incidents could have adverse effects on our business.",
+       "Changes in privacy and data security laws could increase our operating costs and increase our exposure to payment obligations and litigation",
+       "Changes in laws could adversely affect our ability to market our products effectively",
+       "General Risk Factors",
+       "Delaware law and our governing corporate documents contain, and our Board of Directors could implement, anti-takeover provisions that could deter takeover attempts.",
+       "Changes in tax law, interpretations of existing tax law, or agreements or disputes with tax authorities could increase our tax costs."
+      ],
+      "text_candidate_status": "CANDIDATE",
+      "text_items": 39
+     },
+     "D02": {
+      "identity": {
+       "candidate_hash": "sha256:e4edd30bce34295aedd728b69d4846238eb8a0f5fe2992c0a7e68b058b04da9e",
+       "row_origins": [
+        "CIK0001048286.json"
+       ]
+      },
+      "text": [
+       "See the information under the “Litigation, Claims, and Government Investigations” caption in Note 7, which we incorporate here by reference. Within this section, we use a threshold of $1 million in disclosing material environmental proceedings involving a governmental authority, if any.",
+       "From time to time, we are also subject to other legal proceedings and claims in the ordinary course of business, including adjustments proposed during governmental examinations of the various tax returns we file. While management presently",
+       "believes that the ultimate outcome of these other proceedings, individually and in aggregate, will not materially harm our financial position, cash flows, or overall trends in results of operations, legal proceedings are inherently uncertain, and unfavorable rulings could, individually or in aggregate, have a material adverse effect on our business, financial condition, or operating results.",
+       "We are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss. In making such determinations we evaluate, among other things, the probability of an unfavorable outcome and, when we believe it probable that a liability has been incurred, our ability to make a reasonable estimate of the loss. We review these accruals each reporting period and make revisions based on changes in facts and circumstances.",
+       "Litigation, Claims, and Government Investigations",
+       "Following our announcement of the Data Security Incident, approximately 100 lawsuits were filed by consumers and others against us in U.S. federal, U.S. state and Canadian courts related to the incident. The plaintiffs in the cases that remain pending, who generally purport to represent various classes of consumers, generally claim to have been harmed by alleged actions and/or omissions by the Company in connection with the Data Security Incident and assert a variety of common law and statutory claims seeking monetary damages, injunctive relief, costs and attorneys’ fees, and other related relief. The active U.S. cases are consolidated in the U.S. District Court for the District of Maryland (the “District Court”), pursuant to orders of the U.S. Judicial Panel on Multidistrict Litigation (the “MDL”). The District Court granted in part and denied in part class certification of various U.S. groups of consumers. In August 2023, the U.S. Court of Appeals for the Fourth Circuit (the “Fourth Circuit”) vacated the District Court’s class certification decision because the District Court failed to first consider the effect of a class-action waiver signed by all putative class members. On remand, after briefing, the District Court issued an order reinstating the same classes that had previously been certified. We promptly petitioned the Fourth Circuit, seeking leave to appeal that ruling. The Fourth Circuit granted that petition on January 18, 2024, oral argument was held on November 1, 2024, and we await a decision. A case brought by the City of Chicago (which is consolidated in the MDL proceeding) also remains pending. The Canadian cases have effectively been consolidated into a single case in the province of Ontario. We dispute the allegations in these lawsuits and are vigorously defending against such claims.",
+       "In addition, various U.S. federal, U.S. state and foreign governmental authorities made inquiries, opened investigations, or requested information and/or documents related to the Data Security Incident and related matters. Most of these matters have been resolved or no longer appear to be active. In the 2024 fourth quarter, we reached final resolutions with the U.S. Federal Trade Commission and the Attorney General offices from 49 U.S. states and the District of Columbia (the “AG Offices”). Among other terms, the resolution with the AG Offices included a $52 million monetary payment, the majority of which we paid in the 2024 fourth quarter, and which is not material to our Financial Statements. We do not expect the terms of these resolutions to have a material impact on our current or ongoing operations.",
+       "While we believe it is reasonably possible that we may incur losses in excess of the amounts recorded associated with the above described MDL proceedings and unresolved regulatory investigations related to the Data Security Incident, it is not possible to reasonably estimate the amount of such losses or range of loss in excess of the amounts recorded that might result from adverse judgments, settlements, fines, penalties or other resolution of these proceedings and investigations based on: (1) in the case of the above described MDL proceedings, the current stage of these proceedings, the absence of specificity as to alleged damages, the uncertainty as to the certification of a class or classes and the size of any certified class, and the lack of resolution of significant factual and legal issues, and (2) uncertainty regarding unresolved inquiries, investigations, or requests for information and/or documents.",
+       "Other Legal Proceedings",
+       "During 2024, we recorded certain expenses related to settled and ongoing claims brought against the Company regarding the use of copyrighted music. These amounts are not material to our Financial Statements. While we believe it is reasonably possible that we may incur losses in excess of the amounts already recorded for the unresolved claims, we are currently unable to reasonably estimate the amount of losses or range of loss in excess of the amounts recorded. At this time, we do not expect these claims or resolutions to have a material impact on the Company’s financial position or operations."
+      ],
+      "text_candidate_status": "CANDIDATE",
+      "text_items": 10
+     },
+     "D03": {
+      "error": "NormalCompanyfactsError:HISTORICAL_RUN_METRIC_NOT_IN_ZERO_AI_SET"
+     },
+     "D04": {
+      "error": "HistoricalSemanticError:HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE"
+     },
+     "E01": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E02": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E03": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E04": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E05": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     }
+    },
+    "selection": {
+     "current": "0001628280-25-004818",
+     "loaded_inventories": [
+      "CIK0001048286.json",
+      "CIK0001048286-submissions-003.json"
+     ],
+     "prior": "0001628280-24-004372"
+    }
+   },
+   "repository_root": {
+    "metrics": {
+     "A01": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A02": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A03": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A04": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A05": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A06": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A07": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A08": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A09": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A10": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A11": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A12": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "A13": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "B01": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "25100000000"
+     },
+     "B02": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "0.05849112301269345928393708093"
+     },
+     "B03": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "0.1653386454183266932270916335"
+     },
+     "B04": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "2375000000"
+     },
+     "B05": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "1999000000"
+     },
+     "B06": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NOT_MEANINGFUL",
+      "reason_code": "DENOMINATOR_NONPOSITIVE",
+      "unit": null,
+      "value": null
+     },
+     "B07": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "5.420143884892086330935251799"
+     },
+     "B08": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "0.4029367556942999190657879524"
+     },
+     "B09": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "396000000"
+     },
+     "B10": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "ratio",
+      "value": "0.698"
+     },
+     "B11": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "unit": "USD",
+      "value": "128.23"
+     },
+     "B12": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "B13": {
+      "applicability": "N_A_STRUCTURAL",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "PUBLISHED",
+      "quality": "NONE",
+      "reason_code": "TRAIT_NOT_APPLICABLE",
+      "unit": null,
+      "value": null
+     },
+     "C01": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "C02": {
+      "error": "NormalCompanyfactsError:HISTORICAL_TEXT_RUN_INPUT_BLOCKED:[{'metric_id': 'C02', 'category': 'SOURCE_UNAVAILABLE', 'reason': 'SAVED_SOURCE_MISSING:https://www.sec.gov/Archives/edgar/data/1048286/000114036125010600/ny20039208x771_def14a.htm'}]"
+     },
+     "C03": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND",
+      "unit": null,
+      "value": null
+     },
+     "C04": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "D01": {
+      "identity": {
+       "candidate_hash": "sha256:2a5333a5961da7f6508f4cd88470807b1637dab26e6630b7c8a62c0a4619f05b",
+       "row_origins": []
+      },
+      "text": [
+       "Risks Relating to Our Industry",
+       "Our industry is highly competitive, which may impact our ability to compete successfully for guests",
+       "Economic and other global, national, and regional conditions and events have in the past impacted, and could in the future impact, our business, financial results and growth",
+       "Risks Relating to Our Business",
+       "Operational Risks",
+       "Premature termination of our agreements with hotel owners could hurt our financial performance",
+       "Disagreements with hotel owners and other counterparties may result in arbitration or litigation or delay implementation of product or service initiatives",
+       "An increase in the use of Internet travel intermediaries to book hotel reservations could adversely impact our business",
+       "Our growth strategy depends upon attracting hotel owners to our platform, and future arrangements with these third parties may be less favorable to us, depending on the terms offered by our competitors",
+       "The effects of, or our failure to comply with, applicable laws, regulations, and government policies may disrupt our business, lower our revenues, increase our costs, reduce our profits, limit our growth, or damage our reputation.",
+       "Third-party claims that we infringe the intellectual property rights of others or our failure to defend our own intellectual property rights could materially adversely affect our business.",
+       "If our brands, goodwill, or other intangible assets become impaired, we may be required to record significant non-cash charges to earnings.",
+       "Our business depends on the quality and reputation of our Company and our brands, and any deterioration could adversely impact our market share, reputation, business, financial condition, or results of operations",
+       "Actions by our hotel owners or others could adversely affect our image and reputation",
+       "Collective bargaining activity and strikes could materially disrupt hotel operations, increase labor costs, and interfere with the ability of our management to focus on executing our business strategies",
+       "Our business could suffer if we or the hotels in our system cannot attract and retain associates or as the result of the loss of the services of our senior executives",
+       "Extreme weather, natural disasters, climate change, and sustainability-related concerns have impacted our business in the past and could in the future have a material adverse effect on our business and results of operations.",
+       "Insurance may not cover damage to, or losses involving, hotels in our system or other aspects of our business, and the cost of such insurance could increase",
+       "Our Loyalty Program plays a significant role in our business, and unfavorable developments affecting the program could adversely affect our business and results of operations.",
+       "Exchange rate fluctuations could result in significant foreign currency gains and losses and affect our business results",
+       "Development and Financing Risks",
+       "Our hotel owners depend on capital to buy, develop, and improve hotels, and they may be unable to access capital when necessary",
+       "Our ability to grow our system is subject to the range of risks associated with real estate investments",
+       "Our owned properties and other real estate investments subject us to numerous risks",
+       "Risks associated with development and sale of residential properties associated with our lodging properties or brands may reduce our profits",
+       "More hotel projects in our development pipeline may be cancelled or delayed in opening, which could adversely affect our growth prospects",
+       "Losses on loans or guarantees that we have made to third parties impact our profits",
+       "If hotel owners cannot repay or refinance mortgage loans secured by their properties, our revenues and profits could decrease and our business could be harmed",
+       "Technology, Information Protection, and Privacy Risks",
+       "Disruption in the functioning of our reservation, Loyalty Program, or other core operational systems, or our use of certain new technologies, could adversely affect our business",
+       "A failure to keep pace with developments in technology could impair our operations or competitive position",
+       "We are exposed to risks and costs associated with protecting the integrity and security of data",
+       "The Data Security Incident, and other information security incidents, could have numerous adverse effects on our business",
+       "Additional cybersecurity incidents could have adverse effects on our business.",
+       "Changes in privacy and data security laws could increase our operating costs and increase our exposure to payment obligations and litigation",
+       "Changes in laws could adversely affect our ability to market our products effectively",
+       "General Risk Factors",
+       "Delaware law and our governing corporate documents contain, and our Board of Directors could implement, anti-takeover provisions that could deter takeover attempts.",
+       "Changes in tax law, interpretations of existing tax law, or agreements or disputes with tax authorities could increase our tax costs."
+      ],
+      "text_candidate_status": "CANDIDATE",
+      "text_items": 39
+     },
+     "D02": {
+      "identity": {
+       "candidate_hash": "sha256:e4edd30bce34295aedd728b69d4846238eb8a0f5fe2992c0a7e68b058b04da9e",
+       "row_origins": [
+        "CIK0001048286.json"
+       ]
+      },
+      "text": [
+       "See the information under the “Litigation, Claims, and Government Investigations” caption in Note 7, which we incorporate here by reference. Within this section, we use a threshold of $1 million in disclosing material environmental proceedings involving a governmental authority, if any.",
+       "From time to time, we are also subject to other legal proceedings and claims in the ordinary course of business, including adjustments proposed during governmental examinations of the various tax returns we file. While management presently",
+       "believes that the ultimate outcome of these other proceedings, individually and in aggregate, will not materially harm our financial position, cash flows, or overall trends in results of operations, legal proceedings are inherently uncertain, and unfavorable rulings could, individually or in aggregate, have a material adverse effect on our business, financial condition, or operating results.",
+       "We are subject to various legal proceedings and claims, the outcomes of which are uncertain. We record an accrual for legal contingencies when we determine that it is probable that we have incurred a liability and we can reasonably estimate the amount of the loss. In making such determinations we evaluate, among other things, the probability of an unfavorable outcome and, when we believe it probable that a liability has been incurred, our ability to make a reasonable estimate of the loss. We review these accruals each reporting period and make revisions based on changes in facts and circumstances.",
+       "Litigation, Claims, and Government Investigations",
+       "Following our announcement of the Data Security Incident, approximately 100 lawsuits were filed by consumers and others against us in U.S. federal, U.S. state and Canadian courts related to the incident. The plaintiffs in the cases that remain pending, who generally purport to represent various classes of consumers, generally claim to have been harmed by alleged actions and/or omissions by the Company in connection with the Data Security Incident and assert a variety of common law and statutory claims seeking monetary damages, injunctive relief, costs and attorneys’ fees, and other related relief. The active U.S. cases are consolidated in the U.S. District Court for the District of Maryland (the “District Court”), pursuant to orders of the U.S. Judicial Panel on Multidistrict Litigation (the “MDL”). The District Court granted in part and denied in part class certification of various U.S. groups of consumers. In August 2023, the U.S. Court of Appeals for the Fourth Circuit (the “Fourth Circuit”) vacated the District Court’s class certification decision because the District Court failed to first consider the effect of a class-action waiver signed by all putative class members. On remand, after briefing, the District Court issued an order reinstating the same classes that had previously been certified. We promptly petitioned the Fourth Circuit, seeking leave to appeal that ruling. The Fourth Circuit granted that petition on January 18, 2024, oral argument was held on November 1, 2024, and we await a decision. A case brought by the City of Chicago (which is consolidated in the MDL proceeding) also remains pending. The Canadian cases have effectively been consolidated into a single case in the province of Ontario. We dispute the allegations in these lawsuits and are vigorously defending against such claims.",
+       "In addition, various U.S. federal, U.S. state and foreign governmental authorities made inquiries, opened investigations, or requested information and/or documents related to the Data Security Incident and related matters. Most of these matters have been resolved or no longer appear to be active. In the 2024 fourth quarter, we reached final resolutions with the U.S. Federal Trade Commission and the Attorney General offices from 49 U.S. states and the District of Columbia (the “AG Offices”). Among other terms, the resolution with the AG Offices included a $52 million monetary payment, the majority of which we paid in the 2024 fourth quarter, and which is not material to our Financial Statements. We do not expect the terms of these resolutions to have a material impact on our current or ongoing operations.",
+       "While we believe it is reasonably possible that we may incur losses in excess of the amounts recorded associated with the above described MDL proceedings and unresolved regulatory investigations related to the Data Security Incident, it is not possible to reasonably estimate the amount of such losses or range of loss in excess of the amounts recorded that might result from adverse judgments, settlements, fines, penalties or other resolution of these proceedings and investigations based on: (1) in the case of the above described MDL proceedings, the current stage of these proceedings, the absence of specificity as to alleged damages, the uncertainty as to the certification of a class or classes and the size of any certified class, and the lack of resolution of significant factual and legal issues, and (2) uncertainty regarding unresolved inquiries, investigations, or requests for information and/or documents.",
+       "Other Legal Proceedings",
+       "During 2024, we recorded certain expenses related to settled and ongoing claims brought against the Company regarding the use of copyrighted music. These amounts are not material to our Financial Statements. While we believe it is reasonably possible that we may incur losses in excess of the amounts already recorded for the unresolved claims, we are currently unable to reasonably estimate the amount of losses or range of loss in excess of the amounts recorded. At this time, we do not expect these claims or resolutions to have a material impact on the Company’s financial position or operations."
+      ],
+      "text_candidate_status": "CANDIDATE",
+      "text_items": 10
+     },
+     "D03": {
+      "error": "NormalCompanyfactsError:HISTORICAL_RUN_METRIC_NOT_IN_ZERO_AI_SET"
+     },
+     "D04": {
+      "error": "HistoricalSemanticError:HISTORICAL_SEMANTIC_ASSESSMENT_NOT_REGISTERED:LIVE"
+     },
+     "E01": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E02": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E03": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E04": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     },
+     "E05": {
+      "applicability": "APPLICABLE",
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "publication": "WITHHELD",
+      "quality": "NONE",
+      "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+      "unit": null,
+      "value": null
+     }
+    },
+    "selection": {
+     "current": "0001628280-25-004818",
+     "loaded_inventories": [
+      "CIK0001048286.json"
+     ],
+     "prior": "0001628280-24-004372"
+    }
+   },
+   "seconds": 227.6,
+   "text_metrics_whose_identity_differs": []
+  }
+ },
+ "record_type": "ISSUE_47_BLOCK_RESIDENT_ROUTE_MEASUREMENT",
+ "source_root_is": "RECORDED_TEST_ONLY: this repository's saved bytes with Marriott's submissions rows filed on or before the cutoff moved into a new history block"
+}

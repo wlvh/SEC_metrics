@@ -1,0 +1,128 @@
+{
+ "record_type": "D02_HYPERLINKED_ITEM_THREE_REPAIR",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "found_by": "the completeness direction of the content read. Item 3 is the first source the approved definition names and it contributed nothing to Pfizer's set, which only shows up when the untaken side of a declared range is read.",
+ "a_claim_that_was_not_true": "docs/evidence/issue47_history/d02-content-read/finding.json said this was 'already registered as a separate defect'. It was written in prose in two READMEs and in AGENTS.md and was never in known_result_defects.json, which is the file that actually withdraws results. A defect recorded only in prose does not withdraw anything.",
+ "the_defect": {
+  "rule": "vnext.text_business_candidates._substantive rejects a linked block shorter than 120 characters",
+  "what_it_drops": "Pfizer's entire Item 3, which is one 77-character hyperlinked sentence: 'Certain legal proceedings in which we are involved are discussed in Note 16A.'",
+  "the_control": "Lumen's Item 3 is also a single block and also an incorporation by reference to a note - 'The information contained under the subheadings \"Principal Proceedings\" and \"Other Proceedings, Disputes and Contingencies\" in Note 17 ... is incorporated herein by reference.' - 226 characters, not hyperlinked, and it is taken. Same kind of content, opposite answers, and the difference is the anchor.",
+  "severity": "set composition rather than lost substance. Note 16A is taken in full ninety-one blocks over, so the disclosure the sentence points at is present; what was missing was the item's own text."
+ },
+ "why_the_clause_could_not_simply_be_removed": {
+  "blocks_held_inside_declared_ranges_across_six_filings": 365,
+  "of_those_that_could_reach_d02": 14,
+  "what_those_fourteen_are": "thirteen are the identical string 'Table of Contents'; the fourteenth is Pfizer's sentence."
+ },
+ "the_repair": {
+  "where": "scripts/vnext/historical_text_results._hyperlinked_sentence",
+  "what_it_asks": "the frozen rule again with the anchor taken off. Nothing new decides which is which: _substantive's own navigation-header pattern already rejects every one of the thirteen 'Table of Contents' blocks once the link flag stops answering first.",
+  "why_no_second_discriminator": "a repetition condition was written first and then measured: removing it changed nothing on any of the six filings, because the navigation-header pattern had already done that work. It was deleted rather than kept as an unexercised guard.",
+  "placement": "appended to D02's list, not added to the shared gate, so the change cannot move D03's regulatory candidates. This corpus does not distinguish the two placements - wiring it into the shared gate leaves every D03 set byte-identical - so the narrow placement is a bound on what the change can touch and is recorded as such rather than claimed to be tested.",
+  "what_stays_open": "a hyperlink of twelve characters or more that is not a navigation header and repeats inside a note scope would be admitted once per occurrence. No filing here holds one."
+ },
+ "measured": {
+  "method": "the proposal record's own identity, not the candidate count: a change that swapped one block for another would leave the count alone.",
+  "per_filing": [
+   {
+    "company_id": "pfizer",
+    "d02_before": 95,
+    "d02_after": 96,
+    "added": [
+     937
+    ],
+    "removed": [],
+    "proposal_id_unchanged": false,
+    "d03_candidates_unchanged": true,
+    "blocks_the_clause_holds_inside_declared_ranges": 21,
+    "of_those_that_could_reach_d02": 1
+   },
+   {
+    "company_id": "marriott_international",
+    "d02_before": 11,
+    "d02_after": 11,
+    "added": [],
+    "removed": [],
+    "proposal_id_unchanged": true,
+    "d03_candidates_unchanged": true,
+    "blocks_the_clause_holds_inside_declared_ranges": 63,
+    "of_those_that_could_reach_d02": 2
+   },
+   {
+    "company_id": "southwest_airlines",
+    "d02_before": 25,
+    "d02_after": 25,
+    "added": [],
+    "removed": [],
+    "proposal_id_unchanged": true,
+    "d03_candidates_unchanged": true,
+    "blocks_the_clause_holds_inside_declared_ranges": 93,
+    "of_those_that_could_reach_d02": 6
+   },
+   {
+    "company_id": "ford_motor_company",
+    "d02_before": 53,
+    "d02_after": 53,
+    "added": [],
+    "removed": [],
+    "proposal_id_unchanged": true,
+    "d03_candidates_unchanged": true,
+    "blocks_the_clause_holds_inside_declared_ranges": 0,
+    "of_those_that_could_reach_d02": 0
+   },
+   {
+    "company_id": "lumen_technologies",
+    "d02_before": 41,
+    "d02_after": 41,
+    "added": [],
+    "removed": [],
+    "proposal_id_unchanged": true,
+    "d03_candidates_unchanged": true,
+    "blocks_the_clause_holds_inside_declared_ranges": 100,
+    "of_those_that_could_reach_d02": 4
+   },
+   {
+    "company_id": "enphase_energy",
+    "d02_before": 18,
+    "d02_after": 18,
+    "added": [],
+    "removed": [],
+    "proposal_id_unchanged": true,
+    "d03_candidates_unchanged": true,
+    "blocks_the_clause_holds_inside_declared_ranges": 88,
+    "of_those_that_could_reach_d02": 1
+   }
+  ]
+ },
+ "fault_injections": [
+  {
+   "injection": "ADMIT_ANY_LINKED_BLOCK",
+   "edit": "the predicate returns True instead of re-asking the frozen rule",
+   "damage": "Marriott +2, Southwest +6, Enphase +1 Table of Contents blocks",
+   "cases_failed": 3
+  },
+  {
+   "injection": "KEEP_THE_LINK_CLAUSE",
+   "edit": "the predicate asks the frozen rule with the block unchanged",
+   "damage": "Pfizer back to 95; block 937 dropped again",
+   "cases_failed": 2
+  },
+  {
+   "injection": "DROP_THE_SECTION_RULE",
+   "edit": "the branch stops asking where the block sits",
+   "damage": "Pfizer 96->116, Marriott 11->33, Southwest 25->85, Enphase 18->26",
+   "cases_failed": 1
+  },
+  {
+   "injection": "RESTATE_THE_SECTION_RULE_IN_ONE_PLACE",
+   "edit": "_d02_section drops the Item 8 keyword so the two paths disagree",
+   "damage": "Item 8 blocks enter D02 without the keyword",
+   "cases_failed": 2
+  }
+ ],
+ "not_done": [
+  "the _LEGAL keyword proxy, which is what still holds blocks 2175 and 2240 in the set. Measured separately: 17 admitted across six filings, 3 wrong, and narrowing it drops 14 that belong.",
+  "the other four target years, whose originals are not saved.",
+  "an independent acceptance. These readings and these rules are the same hands."
+ ]
+}

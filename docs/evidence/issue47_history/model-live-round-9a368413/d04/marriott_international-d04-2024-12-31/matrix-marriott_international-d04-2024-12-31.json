@@ -1,0 +1,40 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "duration_seconds": 1020.3,
+ "positions": [
+  {
+   "case": "marriott_international-d04-2024-12-31",
+   "company_id": "marriott_international",
+   "evidence_count": 1,
+   "metric_id": "D04",
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+   "report_end": "2024-12-31",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:5cc606360939089630724afc5e6076c2024171c6dc501bc698298e785b2ac500",
+   "row_hash": "sha256:4cffec818725d190dacf75f5d8018f91d86d97dd959372d770626177f983919e",
+   "run_id": "run:historical-period:ac385486fa81bbb78e37deed633c5f45e09f6674ac92920a6df6ed036c3be882",
+   "selection_id": "sha256:c135b5a87acdd2e5d3af55dd52003da94e49f816156b6837dc72b6f3f97efee4",
+   "separate_process_replay": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:5cc606360939089630724afc5e6076c2024171c6dc501bc698298e785b2ac500",
+    "run_id": "run:historical-period:ac385486fa81bbb78e37deed633c5f45e09f6674ac92920a6df6ed036c3be882",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": null
+  }
+ ]
+}

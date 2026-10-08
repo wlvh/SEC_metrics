@@ -1,0 +1,31 @@
+{
+ "record_type": "ISSUE47_B06_DOWNSTREAM_FAILURE_TRACE",
+ "reason": "C03_ZERO_TRANSFORM_TEXT_CONFLICT",
+ "same_failure_as_saved_probe": true,
+ "trace": [
+  {
+   "function": "_financing_inventory",
+   "source_kind": "primary",
+   "ordinal": 833,
+   "context_ref": "c-152",
+   "source_text": "no",
+   "concept_qname": [
+    "http://fasb.org/us-gaap/2024",
+    "LineOfCredit"
+   ],
+   "dimensions": {
+    "us-gaap:DebtInstrumentAxis": "m:BankCreditAgreementMember",
+    "us-gaap:CreditFacilityAxis": "us-gaap:RevolvingCreditFacilityMember",
+    "us-gaap:LongtermDebtTypeAxis": "us-gaap:LineOfCreditMember"
+   }
+  }
+ ],
+ "source_bytes_unmodified": true,
+ "no_fault_injection": true,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_acceptances": 0
+}

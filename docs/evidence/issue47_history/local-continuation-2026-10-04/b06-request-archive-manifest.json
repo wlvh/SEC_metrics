@@ -1,0 +1,97 @@
+{
+ "record_type": "ISSUE47_LOCAL_B06_DEVELOPMENT_REQUEST_ARCHIVE",
+ "file": "b06-financing-v4-equity-request-v1.tar.gz",
+ "bytes": 736579,
+ "sha256": "35a4995b30e290ccdb4592e08ca116de64a8a4e88bc3fab615d3fbcfe7847134",
+ "members": [
+  {
+   "path": "b06/source-v4/document.json",
+   "bytes": 840181,
+   "sha256": "87e1112c63804161448ced4027608de96e62331aef8e826c9c17b6f982fb4bd9"
+  },
+  {
+   "path": "b06/source-v4/metadata.json",
+   "bytes": 1953,
+   "sha256": "221ab1a81077fc03c43d3d1a4026868e7398e181fe0f43b23841afddc8caae93"
+  },
+  {
+   "path": "b06/source-v4/native-current-financing-facts.json",
+   "bytes": 267099,
+   "sha256": "4cb3366bfe90214e2e4a6cc429bfb4d372eb5ab745a597c84e15c65cc9f084cc"
+  },
+  {
+   "path": "b06/source-v4/normal-b06-source-binding.json",
+   "bytes": 11864,
+   "sha256": "8bead84e624769cab754e4da9685f6ad673611aeca28bfbe229e3569365a3ed3"
+  },
+  {
+   "path": "b06/source-v4/source-only-package.json",
+   "bytes": 652843,
+   "sha256": "3e568a833608b3a4c358bf6acccc6c2975bdee384141c5030eba7867ab27f5b6"
+  },
+  {
+   "path": "b06/source-v4/table-grid.json",
+   "bytes": 3812835,
+   "sha256": "d12b78b1006472f7c9d71531b7bb56f559622546f925e431df81e6123d694a2b"
+  },
+  {
+   "path": "b06/source-v4/view.json",
+   "bytes": 383243,
+   "sha256": "d232beaf3551dbe55a95405cd46332ed3db94b9df7c9314098ed26c9f9236b76"
+  },
+  {
+   "path": "b06/request-v1/context-measurement.json",
+   "bytes": 1174,
+   "sha256": "e0e71eb8339461549b86c7e6bb488240147a5df4d7178292f36538043dec9530"
+  },
+  {
+   "path": "b06/request-v1/metadata.json",
+   "bytes": 936,
+   "sha256": "11510d7248b7d049c32b7ba5e79bd6012610894b4d477fe45dbf165c74e4f44e"
+  },
+  {
+   "path": "b06/request-v1/prompt.txt",
+   "bytes": 6831,
+   "sha256": "60e25b792da77285c2cf244a68ecee1de19e1ca8620895612571eecb548c7694"
+  },
+  {
+   "path": "b06/request-v1/request-body.json",
+   "bytes": 699605,
+   "sha256": "9feffb1239bfeae017d9ad233fa1267333f14d98b7b6491132fd80d42aee951e"
+  }
+ ],
+ "complete_request": {
+  "record_type": "ISSUE47_B06_COMPLETE_REQUEST_DEVELOPMENT",
+  "generator_sha256": "225350c1e6560ac39316d23ea0ad1f32f8d08882581fee0e364a8c9796548481",
+  "company_id": "macys",
+  "report_end": "2025-02-01",
+  "source_packet_sha256": "3e568a833608b3a4c358bf6acccc6c2975bdee384141c5030eba7867ab27f5b6",
+  "source_metadata_sha256": "221ab1a81077fc03c43d3d1a4026868e7398e181fe0f43b23841afddc8caae93",
+  "approved_definition_sha256": "d488ea9f62247459cff27c9248cd1ebb6e31b870030a7e161e8547136676e024",
+  "request_sha256": "9feffb1239bfeae017d9ad233fa1267333f14d98b7b6491132fd80d42aee951e",
+  "input_tokens": 187863,
+  "fits": true,
+  "source_value_version": "historical-registry4",
+  "all_prepared_source_data_retained": true,
+  "source_admission_credit": false,
+  "model_answer_tested": false,
+  "runtime_wired": false,
+  "complete_b06_proven": false,
+  "calls": [
+   0,
+   0,
+   0
+  ],
+  "new_runs": 0,
+  "new_acceptances": 0,
+  "production_authorized": false
+ },
+ "verified_archive_members": true,
+ "derived_from": "evidence/issue47_local_inputs/b06-financing-v3.tar.gz",
+ "original_archives_unchanged": true,
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

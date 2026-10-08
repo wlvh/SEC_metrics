@@ -1,0 +1,38 @@
+{
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics",
+  "selection_accession": "0002041610-26-000011",
+  "seconds": 8.712914667092264,
+  "metrics": {
+    "B01": {
+      "publication": "WITHHELD",
+      "value": null,
+      "reason": "ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT",
+      "coordinate": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "evidence_count": 5
+    },
+    "B03": {
+      "publication": "WITHHELD",
+      "value": null,
+      "reason": "ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT",
+      "coordinate": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "evidence_count": 5
+    }
+  },
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "ledger_sha256": "a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262",
+  "old_results_or_runs_modified": false,
+  "B01_saved_component_reused_after_record_writer_error": true,
+  "seconds_scope": "B03 necessary completion and record checks only; earlier full pair time not saved"
+}

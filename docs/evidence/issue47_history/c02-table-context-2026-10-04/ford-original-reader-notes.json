@@ -1,0 +1,538 @@
+{
+ "record_type": "EXECUTOR_ORIGINAL_SOURCE_REFERENCE_TEXT_READ_COMPLETED",
+ "company_id": "ford_motor_company",
+ "target_report_end": "2022-12-31",
+ "source_proxy_date": "2023-03-31",
+ "blocks_read": [
+  [
+   0,
+   4911
+  ]
+ ],
+ "block_count": 4912,
+ "all_source_text_read": true,
+ "tables_read": [
+  {
+   "table_id": "table_000050",
+   "rows": 16,
+   "columns": 11,
+   "scope": "complete expanded current-director membership grid"
+  },
+  {
+   "table_id": "table_000103",
+   "rows": 17,
+   "columns": 31,
+   "scope": "complete expanded qualification/expertise and diversity matrix, statement of issuer; inclusion policy for non-standard skill assessments unresolved",
+   "grid_sha256": "sha256:a11c30471f6fc2a542adfb5f5489f3cca90215cc38292c41749c8f83eb98a62e"
+  }
+ ],
+ "independent_input_trial": "NOT_STARTED; new read-only agent authorization pending",
+ "new_provider_paid_sec_calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0,
+ "manual_reference_observations": {
+  "board_size_change": {
+   "from": 15,
+   "to": 14,
+   "event": "Anthony F. Earley, Jr. retired following May 2022 shareholder meeting",
+   "blocks": [
+    404
+   ]
+  },
+  "nominees": {
+   "count": 14,
+   "meeting_date": "2023-05-11",
+   "independent_percentage": 64,
+   "blocks": [
+    52,
+    201,
+    262,
+    363,
+    761
+   ]
+  },
+  "roles": {
+   "board_and_executive_chair": "William Clay Ford, Jr.",
+   "president_ceo": "James D. Farley, Jr.",
+   "lead_independent_director": "John L. Thornton",
+   "chair_independent": false,
+   "blocks": [
+    394
+   ]
+  },
+  "committees": {
+   "Audit": {
+    "chair": "John B. Veihmeyer",
+    "members": [
+     "John B. Veihmeyer",
+     "Kimberly A. Casiano",
+     "Beth E. Mooney"
+    ],
+    "blocks": [
+     510,
+     512,
+     514
+    ],
+    "table_column": 2
+   },
+   "Compensation, Talent and Culture": {
+    "chair": "Lynn Vojvodich Radakovich",
+    "members": [
+     "Lynn Vojvodich Radakovich",
+     "John C. May",
+     "John L. Thornton",
+     "John S. Weinberg"
+    ],
+    "blocks": [
+     553,
+     555,
+     557,
+     559
+    ],
+    "table_column": 4
+   },
+   "Finance": {
+    "chair": "William Clay Ford, Jr.",
+    "members": [
+     "William Clay Ford, Jr.",
+     "Alexandra Ford English",
+     "Henry Ford III",
+     "William W. Helman IV",
+     "William E. Kennard",
+     "John C. May",
+     "John L. Thornton",
+     "John S. Weinberg"
+    ],
+    "blocks": [
+     587,
+     589,
+     591,
+     593,
+     595,
+     597,
+     599,
+     601
+    ],
+    "table_column": 6
+   },
+   "Nominating and Governance": {
+    "chair": "William E. Kennard",
+    "members": [
+     "William E. Kennard",
+     "Kimberly A. Casiano",
+     "William W. Helman IV",
+     "John C. May",
+     "Beth E. Mooney",
+     "Lynn Vojvodich Radakovich",
+     "John L. Thornton",
+     "John B. Veihmeyer",
+     "John S. Weinberg"
+    ],
+    "blocks": [
+     632,
+     634,
+     636,
+     638,
+     640,
+     642,
+     644,
+     646,
+     648
+    ],
+    "table_column": 8
+   },
+   "Sustainability, Innovation and Policy": {
+    "chair": "William W. Helman IV",
+    "members": [
+     "William W. Helman IV",
+     "Kimberly A. Casiano",
+     "Alexandra Ford English",
+     "Henry Ford III",
+     "William Clay Ford, Jr.",
+     "Jon M. Huntsman, Jr.",
+     "William E. Kennard",
+     "Lynn Vojvodich Radakovich",
+     "John S. Weinberg"
+    ],
+    "blocks": [
+     666,
+     668,
+     670,
+     672,
+     674,
+     676,
+     678,
+     680,
+     682
+    ],
+    "table_column": 10
+   }
+  },
+  "qualification_determinations": [
+   {
+    "subject": "Audit, Compensation/Talent/Culture, Nominating/Governance members",
+    "determination": "all independent under named NYSE/SEC and company standards; Audit heightened SEC and compensation additional NYSE standards",
+    "blocks": [
+     473,
+     518,
+     563,
+     652
+    ]
+   },
+   {
+    "subject": "all Audit Committee members",
+    "determination": "meet NYSE financial literacy requirements",
+    "blocks": [
+     473,
+     520
+    ]
+   },
+   {
+    "subject": "John B. Veihmeyer",
+    "determination": "Audit Committee financial expert under SEC/NYSE rules; independent and committee chair",
+    "blocks": [
+     522,
+     722
+    ]
+   }
+  ],
+  "excluded_context_read": [
+   "committee work and risk oversight",
+   "auditor rotation/independence",
+   "compensation consultant independence",
+   "general nomination/evaluation procedures",
+   "management Disclosure Committee",
+   "executive compensation amounts, performance awards, severance and hypothetical change in control",
+   "40 executive officers and 500 other PSU-eligible employees: not Board size",
+   "stock compensation administration/delegation alone does not identify committee membership"
+  ],
+  "limitations": [
+   "all 4912 supplied visible text blocks read; not an all-media/raw-HTML or complete numeric-context analysis",
+   "image media not examined",
+   "current/2023 nominees not assigned to 2022 year-end",
+   "B789 states 14 then-current members attended 2022 meeting whereas B404 gives 15 to 14 after Earley retired following that meeting; preserve statements and date uncertainty",
+   "B747 refers to delegated unnamed board subcommittees and management committees; do not invent names or mix management membership",
+   "reference forming before any new independent input trial; semantic policy fringe retained"
+  ],
+  "named_independent_directors": {
+   "names": [
+    "Kimberly A. Casiano",
+    "William W. Helman IV",
+    "William E. Kennard",
+    "John C. May",
+    "Beth E. Mooney",
+    "Lynn Vojvodich Radakovich",
+    "John L. Thornton",
+    "John B. Veihmeyer",
+    "John S. Weinberg"
+   ],
+   "count": 9,
+   "blocks": [
+    775
+   ]
+  },
+  "additional_heightened_standard_determinations": [
+   {
+    "standard_as_source": "heightened SEC independence standards for audit committees",
+    "names": [
+     "Kimberly A. Casiano",
+     "Beth E. Mooney",
+     "Lynn Vojvodich Radakovich",
+     "John B. Veihmeyer"
+    ],
+    "block": 775,
+    "caution": "Lynn qualifies for the standard but is not shown as an Audit member; do not infer membership"
+   },
+   {
+    "standard_as_source": "additional NYSE independence standards for compensation committees",
+    "names": [
+     "John C. May",
+     "Lynn Vojvodich Radakovich",
+     "John L. Thornton",
+     "John S. Weinberg"
+    ],
+    "block": 775
+   },
+   {
+    "subject": "Anthony F. Earley, Jr.",
+    "determination": "independent during service; heightened SEC independence standards for compensation committees as literally written",
+    "period": "during service; did not stand for re-election at 2022 Annual Meeting",
+    "block": 775,
+    "caution": "retain literal source criterion; not a current member"
+   }
+  ],
+  "dated_director_roles": [
+   {
+    "subject": "William Clay Ford, Jr.",
+    "roles": "Board chair since January 1999; CEO October 2001–September 2006; thereafter Executive Chair; Finance chair since 2007 and 1995–October 2001",
+    "blocks": [
+     1286
+    ]
+   },
+   {
+    "subject": "John L. Thornton",
+    "roles": "Lead Independent Director since 2022; Independent Director since 1996",
+    "blocks": [
+     1346,
+     1348
+    ]
+   },
+   {
+    "subject": "Jon M. Huntsman, Jr.",
+    "roles": "Director since 2020 and 2012–2017; Vice Chair, Policy May 2021–December 2022 (executive officer role)",
+    "blocks": [
+     1298,
+     1305,
+     1536
+    ]
+   },
+   {
+    "subject": "Alexandra Ford English",
+    "roles": "Board director continues after departure as Director, Global Brand Merchandising on June 17, 2022; non-employee Board fees June–December",
+    "blocks": [
+     1537,
+     1543
+    ]
+   },
+   {
+    "subject": "Anthony F. Earley, Jr.",
+    "roles": "Director compensation prorated through 2022 Annual Meeting",
+    "blocks": [
+     1538
+    ]
+   }
+  ],
+  "candidate_slate": {
+   "count": 14,
+   "term": "if elected until next annual meeting or qualified successor",
+   "all_nominees_current_directors": true,
+   "blocks": [
+    1061,
+    1066
+   ]
+  },
+  "audit_report_confirmation": {
+   "count": 3,
+   "members": [
+    "John B. Veihmeyer (Chair)",
+    "Beth E. Mooney",
+    "Kimberly A. Casiano"
+   ],
+   "named_independence_standards": [
+    "NYSE Listed Company rules",
+    "SEC rules",
+    "Ford Corporate Governance Principles"
+   ],
+   "blocks": [
+    1599,
+    1607,
+    1608,
+    1609
+   ]
+  },
+  "qualification_policy_fringe": {
+   "general_current_slate_qualification_and_nomination_reasons": "issuer statements without named external standard; retain separate policy-unresolved category",
+   "blocks": [
+    1065,
+    1066,
+    1371,
+    1374
+   ]
+  },
+  "year_end_compensation_footnote": {
+   "statement": "charitable gift cost divided among directors who were Board members December 31, 2022; does not alone identify full roster",
+   "blocks": [
+    1545
+   ]
+  },
+  "compensation_2022_membership": {
+   "members": [
+    "Anthony F. Earley, Jr. (until May 12, 2022)",
+    "John C. May",
+    "Lynn Vojvodich Radakovich",
+    "John L. Thornton",
+    "John S. Weinberg"
+   ],
+   "determination": "none employee/current or former officer during committee service; no relationship requiring disclosure",
+   "block": 2528
+  },
+  "compensation_report_confirmation": {
+   "chair": "Lynn Vojvodich Radakovich",
+   "members": [
+    "Lynn Vojvodich Radakovich",
+    "John L. Thornton",
+    "John C. May",
+    "John S. Weinberg"
+   ],
+   "blocks": [
+    2522,
+    2523,
+    2524,
+    2525,
+    2526
+   ]
+  },
+  "issuer_current_composition_confirmation": {
+   "annual_election_all_directors": true,
+   "independent_nominees_count": 9,
+   "ceo_chair_separate": true,
+   "lead_independent_director": true,
+   "blocks": [
+    4558,
+    4562,
+    4564
+   ]
+  },
+  "attributed_shareholder_claim": {
+   "statement": "Shareholder proposal referring to 2021 votes calls Anthony Earley lead director and management-pay committee chair",
+   "blocks": [
+    4523,
+    4532,
+    4533,
+    4535
+   ],
+   "handling": "preserve speaker and historical context; issuer warns proposal contains inaccuracies and disclaims its contents; not a current issuer determination"
+  },
+  "other_entity_exclusion": {
+   "statement": "Ford chairs the Responsible Business Alliance board; not an identified Ford director role",
+   "blocks": [
+    4603
+   ]
+  }
+ },
+ "reading_completion_time": "2026-10-04 07:41 UTC",
+ "packets_read": [
+  {
+   "path": "block-00.txt",
+   "first": "B0",
+   "last": "B484",
+   "characters": 31826,
+   "packet_sha256": "b8178233131fba67bf68f2e47630fb8bfc222a1de3de565bcc42cbea4e7a83ed",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-01.txt",
+   "first": "B485",
+   "last": "B769",
+   "characters": 31616,
+   "packet_sha256": "cf2feb07ccda263c0cbb3e256a27e84b82aec76469ba74069179fdbc5619e4c5",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-02.txt",
+   "first": "B770",
+   "last": "B1049",
+   "characters": 31832,
+   "packet_sha256": "0c6c2fafd14aaa35e7f6b09b4a94680f286ef7d2859d1ae5a0f5f79cd38728b4",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-03.txt",
+   "first": "B1050",
+   "last": "B1368",
+   "characters": 31944,
+   "packet_sha256": "e68a79d04b131d8bed0483143350edcce3ec1ba723c559d11d1f67d33276c466",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-04.txt",
+   "first": "B1369",
+   "last": "B1758",
+   "characters": 31918,
+   "packet_sha256": "1c6f8407573ebc95ef8acc3af765c7fd543c291ddf10c1b5255c64ae28b11d88",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-05.txt",
+   "first": "B1759",
+   "last": "B2285",
+   "characters": 31987,
+   "packet_sha256": "dfaab18cafb1994f804e70b6c486680ce66afdc773aaac040f1f7c3829ea5dfe",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-06.txt",
+   "first": "B2286",
+   "last": "B2805",
+   "characters": 31998,
+   "packet_sha256": "40eeff1d36e05c3e82c1a79eced765b6ddea493ac6ec62a1b1b56bcb59134755",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-07.txt",
+   "first": "B2806",
+   "last": "B3438",
+   "characters": 31061,
+   "packet_sha256": "8ca3fd536c02dc01ba33058031fffc7106aa1709d4136f5834c1207d1222679e",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-08.txt",
+   "first": "B3439",
+   "last": "B4078",
+   "characters": 31996,
+   "packet_sha256": "5d93f3859488538c7ee25fabccdc4e96e38685c4da43196e7e66bc620cf22c82",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-09.txt",
+   "first": "B4079",
+   "last": "B4463",
+   "characters": 31819,
+   "packet_sha256": "6819a649d8d50ee9a316fc14d62193554748c74217cff25fff631eefff70068e",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-10.txt",
+   "first": "B4464",
+   "last": "B4641",
+   "characters": 31495,
+   "packet_sha256": "f125cc55d1c97a18bc0fbd1e96179307e2969dfdff607372f006f93b13068cf5",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-11.txt",
+   "first": "B4642",
+   "last": "B4770",
+   "characters": 31159,
+   "packet_sha256": "5d47adc77b9383dbc3323ef4d9ab5c2b1c8844509c755ac5016bc83de0ba824c",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-12.txt",
+   "first": "B4771",
+   "last": "B4829",
+   "characters": 31860,
+   "packet_sha256": "1a18149b6ec588c743c826f280486871a19ced45f6e9d73592929bb91046c082",
+   "all_lines_read": true
+  },
+  {
+   "path": "block-13.txt",
+   "first": "B4830",
+   "last": "B4911",
+   "characters": 21722,
+   "packet_sha256": "8ab21b368899b050a816a73124efa493fe05b54c833e7545ad1bb59a1acecb6a",
+   "all_lines_read": true
+  }
+ ],
+ "tool_truncation_recovery": [
+  {
+   "packet": "block-06.txt",
+   "re_read_blocks": [
+    2515,
+    2719
+   ]
+  },
+  {
+   "packet": "block-07.txt",
+   "re_read_blocks": [
+    2985,
+    3092
+   ]
+  }
+ ]
+}

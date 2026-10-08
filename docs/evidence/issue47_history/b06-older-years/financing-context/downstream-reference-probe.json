@@ -1,0 +1,41 @@
+{
+ "record_type": "ISSUE47_B06_DEVELOPMENT_DOWNSTREAM_PROBE_WITH_EXECUTOR_REFERENCE",
+ "note": "This calls one downstream inventory with manually supplied source-derived reference operands. It bypasses upstream interpretation for diagnosis only; no scope proof, Result, Run or acceptance is generated. It is not automatic business completion.",
+ "source_sha256": {
+  "primary": "29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+  "xml": "5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e"
+ },
+ "reference_operands": {
+  "revolver_zero_statement": "As of February 1, 2025 and February 3, 2024, there were no outstanding borrowings under the agreement.",
+  "standby_current": "144000000",
+  "unused_capacity": "2856000000",
+  "facility_limit": "3000000000",
+  "purchase_current": "2900000000"
+ },
+ "operand_source_blocks": {
+  "standby_current": [
+   568
+  ],
+  "unused_capacity": [
+   568
+  ],
+  "facility_limit": [
+   568
+  ],
+  "revolver_zero_statement": [
+   590
+  ],
+  "purchase_current": "Note 14; exact source note saved in previous component probe"
+ },
+ "borrowings_and_native_members_from_previous_saved_probe": true,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0,
+ "complete_b06_proven": false,
+ "inventory_probe_status": "REJECTED",
+ "reason": "C03_ZERO_TRANSFORM_TEXT_CONFLICT"
+}

@@ -1,0 +1,25 @@
+{
+  "original_archive": "docs/evidence/issue47_history/marriott2023-d02-full-executor-read-2026-10-05/input-materials.tar.gz",
+  "original_manifest": "docs/evidence/issue47_history/marriott2023-d02-full-executor-read-2026-10-05/manifest.json",
+  "all_29_members_verified_before_extraction": true,
+  "system_addition": "docs/evidence/issue47_history/pfizer2024-d02-input-only-2026-10-06/revision1-system-addition.txt",
+  "constructor": "same source request plus system addition; request_id=content_hash(request excluding request_id); legal_review_contract.provider_messages; canonical_json_bytes",
+  "trials": [
+    {
+      "trial": "initial",
+      "original_member": "normal-question/request-body.json",
+      "original_request_sha256": "df0e5864cc60147194a6deef9439599164ec4faf37b2dfbfa2f9c7c0fa6b8931",
+      "new_request_sha256": "2daff560bc5cfbb52dc13b2125d7e1d0744b4813f38a06a6299e47ac29f22830",
+      "blocks_and_must_decide_same_as_that_original": true
+    },
+    {
+      "trial": "revision1",
+      "original_member": "full-input/request-body.json",
+      "original_request_sha256": "a358f391890188d853217fbf893c723d2e2e8e226941e692ec88b7a6570335a0",
+      "new_request_sha256": "0fc4ab21423c5e440a331b3d8aeba946e033da675d614c32d0ba3aee9da55084",
+      "blocks_and_must_decide_same_as_that_original": true
+    }
+  ],
+  "unchanged_definition_quote_contract_model_parameters_output4096": true,
+  "preparation_errors": "First preparation assumed archive.file and dict members; manifest is archive.path and list members. Both stopped before creating the question. Corrected by reading actual manifest shape; no source or request was modified."
+}

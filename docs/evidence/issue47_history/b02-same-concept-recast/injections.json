@@ -1,0 +1,59 @@
+{
+ "module": "scripts/vnext/historical_results.py",
+ "record_type": "ISSUE_47_B02_RECAST_FAULT_INJECTIONS",
+ "results": [
+  {
+   "as_expected": true,
+   "expected_failing": [],
+   "failing": [],
+   "injection": "CONTROL",
+   "ran": 9
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_one_concept_reported_at_the_prior_value_or_not_at_all_asks_nothing",
+    "test_one_concept_the_target_filing_recasts_is_withheld"
+   ],
+   "failing": [
+    "test_one_concept_reported_at_the_prior_value_or_not_at_all_asks_nothing",
+    "test_one_concept_the_target_filing_recasts_is_withheld"
+   ],
+   "injection": "ONE_CONCEPT_ASKS_NOTHING",
+   "ran": 9
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_one_concept_reported_at_the_prior_value_or_not_at_all_asks_nothing"
+   ],
+   "failing": [
+    "test_one_concept_reported_at_the_prior_value_or_not_at_all_asks_nothing"
+   ],
+   "injection": "AN_UNREPORTED_YEAR_IS_A_RECAST",
+   "ran": 9
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_concept_pair_problem_carries_no_recast_mark"
+   ],
+   "failing": [
+    "test_a_concept_pair_problem_carries_no_recast_mark"
+   ],
+   "injection": "EVERY_PROBLEM_IS_MARKED_A_RECAST",
+   "ran": 9
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_one_concept_reported_at_the_prior_value_or_not_at_all_asks_nothing"
+   ],
+   "failing": [
+    "test_one_concept_reported_at_the_prior_value_or_not_at_all_asks_nothing"
+   ],
+   "injection": "A_SAME_CONCEPT_PAIR_IS_A_BRIDGE",
+   "ran": 9
+  }
+ ]
+}

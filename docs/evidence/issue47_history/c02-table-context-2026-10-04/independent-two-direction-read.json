@@ -1,0 +1,3218 @@
+{
+ "record_type": "ISSUE_47_C02_INDEPENDENT_INPUT_BOUND_RELATION_TRIAL",
+ "authorization": "User explicitly allowed one read-only child agent in this conversation. No model-provider/SEC/paid-budget permission was added.",
+ "reader_scope": "Independent child received only the exact request-body system/user input, not the original reference, source HTML, old answers or repository instructions. Main executor then performed source comparison.",
+ "request_sha256": "c912d3a8bcd1ab5350eef9c733110e3a9fa9ae6ce7ec4ac1a635dd454835931a",
+ "original_reference_sha256": "d950838f5a93d6be1b79885d8aea9613378e356148f01262c63f00389031114f",
+ "independent_answer_sha256": "ed9e7dc14d87fd86c8b12da0ebf7e7871fd131a9234fb13313dffef13b1e8d8e",
+ "compact_answer_sha256": "0be2951bc6d56bbfc0f428333c4c0656654a38ceafebeeb3c799c1a4bcac7306",
+ "reading_log_sha256": "8149b3801680408174f4770a8669ca11b9d96d752f7dab920675e6c930df50d3",
+ "model_to_original": [
+  {
+   "fact_index": 0,
+   "fact": {
+    "kind": "board_size",
+    "statement": "The current Board has 10 directors; all 10 director nominees are incumbent directors.",
+    "source_blocks": [
+     357,
+     527,
+     1129,
+     1130,
+     1133,
+     1135,
+     1136,
+     1137,
+     1138,
+     1139,
+     1140,
+     1141,
+     1142,
+     1143
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "The Board of Directors has nominated the 10 individuals listed below. All are independent other than our CEO. If elected at our annual meeting, all nominees are expected to serve until next year’s annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 357,
+     "raw_start_byte": 222669,
+     "raw_end_byte": 222887,
+     "raw_span_sha256": "ee3e456482b00bf09828d01fb82cd59cd74decb81235ba85368754eb15e4df0c"
+    },
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "Current Board committee membership",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1129,
+     "raw_start_byte": 700797,
+     "raw_end_byte": 700832,
+     "raw_span_sha256": "2281b58b5605f380465e7e4002042812e169e79ad0992d184885ac88ae581727"
+    },
+    {
+     "text": "DirectorAuditCMDCGovernancePRCRisk",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1130,
+     "raw_start_byte": 701810,
+     "raw_end_byte": 702869,
+     "raw_span_sha256": "d8401218e1c2cbf5a2dc0523a720ea634f5c33f0f7479926b6e21d841d5c0193"
+    },
+    {
+     "text": "Stephen B. Burke2",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 1133,
+     "raw_start_byte": 703705,
+     "raw_end_byte": 703899,
+     "raw_span_sha256": "a3fff7e4d4126b7fe31e2755c9932f76f7c08b868d2371421f3b3d752842a4db"
+    },
+    {
+     "text": "Linda B. BammannMemberChairB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1135,
+     "raw_start_byte": 705256,
+     "raw_end_byte": 706382,
+     "raw_span_sha256": "1013ebcd305aed9d59c4884d52ff244a8773291e0f3d87d9152eb852c3513cbd"
+    },
+    {
+     "text": "Todd A. CombsMemberChairA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1136,
+     "raw_start_byte": 706623,
+     "raw_end_byte": 707746,
+     "raw_span_sha256": "aeed87d98f627ca81e401710cafa71eed2d655eae52450d32752841792786642"
+    },
+    {
+     "text": "James S. CrownChairMemberB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1137,
+     "raw_start_byte": 707987,
+     "raw_end_byte": 709111,
+     "raw_span_sha256": "7cc6d03bbf57a683ea1aa6ff6fbb7829a9c34d3e2de724d8000b6679c781238c"
+    },
+    {
+     "text": "James Dimon",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 1138,
+     "raw_start_byte": 709352,
+     "raw_end_byte": 709363,
+     "raw_span_sha256": "4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+    },
+    {
+     "text": "Timothy P. FlynnChair",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1139,
+     "raw_start_byte": 710216,
+     "raw_end_byte": 710501,
+     "raw_span_sha256": "a4b8c9f375fedd498d3dddcba3576be8c969c08d0384f0b5561e63c79041947e"
+    },
+    {
+     "text": "Mellody HobsonMemberMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1140,
+     "raw_start_byte": 711252,
+     "raw_end_byte": 712377,
+     "raw_span_sha256": "6c2f06e88c199ce8657151d1a1f15155695c4496171b5dea52b6ecdb88d81aa8"
+    },
+    {
+     "text": "Michael A. NealMemberMemberB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1141,
+     "raw_start_byte": 712618,
+     "raw_end_byte": 713744,
+     "raw_span_sha256": "cd1e75158e8fee225001b1ac605235e772463309b65c4fda58c117b9f8fe4ad4"
+    },
+    {
+     "text": "Phebe N. NovakovicMember",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1142,
+     "raw_start_byte": 713985,
+     "raw_end_byte": 714273,
+     "raw_span_sha256": "195f3b991a9ca915c4757bfe1fdd816ce67898d17dd56afbbd7ccd59b3cde76f"
+    },
+    {
+     "text": "Virginia M. RomettyMemberMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1143,
+     "raw_start_byte": 715056,
+     "raw_end_byte": 716378,
+     "raw_span_sha256": "dd5a8bc3244111aaa83cbd60c33ce80b881c449454f04d0f46dbbbe96d7b93e4"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 1,
+   "fact": {
+    "kind": "board_size",
+    "statement": "All 10 directors serving at the 2021 annual meeting attended that meeting.",
+    "source_blocks": [
+     528
+    ],
+    "stated_time": "2021 annual meeting"
+   },
+   "source_blocks": [
+    {
+     "text": "Directors are expected to attend our annual shareholder meetings. All 10 directors serving on our Board at the time of the 2021 annual meeting attended the meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 528,
+     "raw_start_byte": 336791,
+     "raw_end_byte": 336956,
+     "raw_span_sha256": "eb9b4412faa154ea6cfb6bc4e0c72998c24d3a48f5a3ff037076ba226e43e351"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 2,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "Stephen B. Burke is an incumbent director, serving since 2004.",
+    "source_blocks": [
+     527,
+     609,
+     613
+    ],
+    "stated_time": "since 2004; CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "Director since: 2004",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 609,
+     "raw_start_byte": 430309,
+     "raw_end_byte": 430454,
+     "raw_span_sha256": "ae26481d913f6c69c1e3ccb6670d12a4f1b12cba866cf323492f4bd31951127f"
+    },
+    {
+     "text": "Stephen B. Burke",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 613,
+     "raw_start_byte": 431712,
+     "raw_end_byte": 431729,
+     "raw_span_sha256": "46c45b2f6faea432009396e3000900d7ad20af24e05e5a6617808e5d188cd628"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 3,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "Linda B. Bammann is an incumbent director, serving since 2013.",
+    "source_blocks": [
+     527,
+     634,
+     638
+    ],
+    "stated_time": "since 2013; CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "Director since: 2013",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 634,
+     "raw_start_byte": 440388,
+     "raw_end_byte": 440532,
+     "raw_span_sha256": "51ed3bd52a3d049df8b4c507cc6a1a983ffe5dc4126c708f0ef711c04e0e5b32"
+    },
+    {
+     "text": "Linda B. Bammann",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 638,
+     "raw_start_byte": 441867,
+     "raw_end_byte": 441883,
+     "raw_span_sha256": "1135df142e8418d0c7ef3b44f06394a062b6875948f5bbc6c74ed0a7fa95334e"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 4,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "Todd A. Combs is an incumbent director, serving since 2016.",
+    "source_blocks": [
+     527,
+     665,
+     669
+    ],
+    "stated_time": "since 2016; CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "Director since: 2016",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 665,
+     "raw_start_byte": 456322,
+     "raw_end_byte": 456466,
+     "raw_span_sha256": "2e6ec2c37012a5ae0bedb6cb00f5d5d33bf9e8f0240482d44d8162a65293fc1a"
+    },
+    {
+     "text": "Todd A. Combs",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 669,
+     "raw_start_byte": 457816,
+     "raw_end_byte": 457829,
+     "raw_span_sha256": "f4865ec8dac746c8762baff116f3bf57d84d6483dc5de38b726e9c4d90a78125"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 5,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "James S. Crown is an incumbent director, serving since 2004.",
+    "source_blocks": [
+     527,
+     684,
+     688
+    ],
+    "stated_time": "since 2004; CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "Director since: 2004",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 684,
+     "raw_start_byte": 464284,
+     "raw_end_byte": 464429,
+     "raw_span_sha256": "cd05a1e098b17809d3c7f52182a21f4953c23f02fb4e9857e17092c5a49fb403"
+    },
+    {
+     "text": "James S. Crown",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 688,
+     "raw_start_byte": 465751,
+     "raw_end_byte": 465765,
+     "raw_span_sha256": "8a96a105ad3a59143f50eb21e04701ef200994b255e4eddf63ed4f997d6a4f2c"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 6,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "James Dimon is an incumbent director, serving since 2004.",
+    "source_blocks": [
+     527,
+     717,
+     718
+    ],
+    "stated_time": "since 2004; CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "Director since: 2004 and Chairman of the Board since 2006",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 717,
+     "raw_start_byte": 481197,
+     "raw_end_byte": 481378,
+     "raw_span_sha256": "b5dd2eed90085da8b5c27aa39c664ab596025aa3970a59580b05de5da802dfac"
+    },
+    {
+     "text": "James Dimon",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 718,
+     "raw_start_byte": 481709,
+     "raw_end_byte": 481720,
+     "raw_span_sha256": "4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 7,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "Timothy P. Flynn is an incumbent director, serving since 2012.",
+    "source_blocks": [
+     527,
+     739,
+     742
+    ],
+    "stated_time": "since 2012; CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "Director since: 2012",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 739,
+     "raw_start_byte": 490365,
+     "raw_end_byte": 490509,
+     "raw_span_sha256": "f3dc08cbbf70a41c5a8ae308cabf86e3715a3ea4d1742b148b903530ef24fc82"
+    },
+    {
+     "text": "Timothy P. Flynn",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 742,
+     "raw_start_byte": 491494,
+     "raw_end_byte": 491510,
+     "raw_span_sha256": "ee81a1a35fe8af07a1b46a3ad03d9dc119802e55e379a16cbb155cd4f93c9507"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 8,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "Mellody Hobson is an incumbent director, serving since 2018.",
+    "source_blocks": [
+     527,
+     772,
+     776
+    ],
+    "stated_time": "since 2018; CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "Director since: 2018",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 772,
+     "raw_start_byte": 507146,
+     "raw_end_byte": 507290,
+     "raw_span_sha256": "7c7aee3111e1a194a37fb96261f6d76ee589be95a54558fbb7c0f4d97f98d6e8"
+    },
+    {
+     "text": "Mellody Hobson",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 776,
+     "raw_start_byte": 508481,
+     "raw_end_byte": 508495,
+     "raw_span_sha256": "8b45780d7a40b14f3f8beea16544fbc2ec0af3d7835742b47d15fa6626935b72"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 9,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "Michael A. Neal is an incumbent director, serving since 2014.",
+    "source_blocks": [
+     527,
+     796,
+     800
+    ],
+    "stated_time": "since 2014; CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "Director since: 2014",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 796,
+     "raw_start_byte": 516953,
+     "raw_end_byte": 517097,
+     "raw_span_sha256": "c352d726cf965d08c02405de50d118a4489ef69aae5fb6dd6af58f2062e2d7e5"
+    },
+    {
+     "text": "Michael A. Neal",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 800,
+     "raw_start_byte": 518319,
+     "raw_end_byte": 518334,
+     "raw_span_sha256": "92a2f81085cbdfd9c89c535c6d99dffd8d9b16f7f511ab7bce5cf6f3104271f8"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 10,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "Phebe N. Novakovic is an incumbent director, serving since 2020.",
+    "source_blocks": [
+     527,
+     823,
+     826
+    ],
+    "stated_time": "since 2020; CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "Director since: 2020",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 823,
+     "raw_start_byte": 531548,
+     "raw_end_byte": 531692,
+     "raw_span_sha256": "d7a89378add05fb0febc4c6a214c6dc720efbf63fe7fb955196382db39ab228e"
+    },
+    {
+     "text": "Phebe N. Novakovic",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 826,
+     "raw_start_byte": 532650,
+     "raw_end_byte": 532668,
+     "raw_span_sha256": "4e8b2433e6a05079e2a17dfc3f8519a75e2d29eb5fee4cd0ef820b68a098df25"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 11,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "Virginia M. Rometty is an incumbent director, serving since 2020.",
+    "source_blocks": [
+     527,
+     849,
+     853
+    ],
+    "stated_time": "since 2020; CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "Director since: 2020",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 849,
+     "raw_start_byte": 541987,
+     "raw_end_byte": 542131,
+     "raw_span_sha256": "d7a89378add05fb0febc4c6a214c6dc720efbf63fe7fb955196382db39ab228e"
+    },
+    {
+     "text": "Virginia M. Rometty",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 853,
+     "raw_start_byte": 543496,
+     "raw_end_byte": 543515,
+     "raw_span_sha256": "2d1ac3f71faf4430f2214508b52818bcb777372927e1a09025dbfa926ace08ee"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 12,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "All 10 incumbents were nominated for election at the May 17, 2022 meeting, for one-year terms expiring at the 2023 annual meeting.",
+    "source_blocks": [
+     62,
+     357,
+     477,
+     527
+    ],
+    "stated_time": "proposed 2022-05-17 election; term through 2023 annual meeting"
+   },
+   "source_blocks": [
+    {
+     "text": "Tuesday, May 17, 2022",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 62,
+     "raw_start_byte": 32689,
+     "raw_end_byte": 32710,
+     "raw_span_sha256": "94f9518fb7bb356e832831d81e737293c2d720f9bab20752f14a320cf7a4d74b"
+    },
+    {
+     "text": "The Board of Directors has nominated the 10 individuals listed below. All are independent other than our CEO. If elected at our annual meeting, all nominees are expected to serve until next year’s annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 357,
+     "raw_start_byte": 222669,
+     "raw_end_byte": 222887,
+     "raw_span_sha256": "ee3e456482b00bf09828d01fb82cd59cd74decb81235ba85368754eb15e4df0c"
+    },
+    {
+     "text": "Our Board of Directors has nominated 10 directors, who, if elected by shareholders at our annual meeting, will be expected to serve until next year’s annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 477,
+     "raw_start_byte": 304152,
+     "raw_end_byte": 304323,
+     "raw_span_sha256": "0b21dc01d86b5827816c7d9d56913af96791679e0338fd262c4d1fa26fc2f9d4"
+    },
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 13,
+   "fact": {
+    "kind": "board_membership",
+    "statement": "All directors of the Firm were elected by shareholders in 2021.",
+    "source_blocks": [
+     1129,
+     1130,
+     1133,
+     1135,
+     1136,
+     1137,
+     1138,
+     1139,
+     1140,
+     1141,
+     1142,
+     1143,
+     1148
+    ],
+    "stated_time": "2021"
+   },
+   "source_blocks": [
+    {
+     "text": "Current Board committee membership",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1129,
+     "raw_start_byte": 700797,
+     "raw_end_byte": 700832,
+     "raw_span_sha256": "2281b58b5605f380465e7e4002042812e169e79ad0992d184885ac88ae581727"
+    },
+    {
+     "text": "DirectorAuditCMDCGovernancePRCRisk",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1130,
+     "raw_start_byte": 701810,
+     "raw_end_byte": 702869,
+     "raw_span_sha256": "d8401218e1c2cbf5a2dc0523a720ea634f5c33f0f7479926b6e21d841d5c0193"
+    },
+    {
+     "text": "Stephen B. Burke2",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 1133,
+     "raw_start_byte": 703705,
+     "raw_end_byte": 703899,
+     "raw_span_sha256": "a3fff7e4d4126b7fe31e2755c9932f76f7c08b868d2371421f3b3d752842a4db"
+    },
+    {
+     "text": "Linda B. BammannMemberChairB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1135,
+     "raw_start_byte": 705256,
+     "raw_end_byte": 706382,
+     "raw_span_sha256": "1013ebcd305aed9d59c4884d52ff244a8773291e0f3d87d9152eb852c3513cbd"
+    },
+    {
+     "text": "Todd A. CombsMemberChairA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1136,
+     "raw_start_byte": 706623,
+     "raw_end_byte": 707746,
+     "raw_span_sha256": "aeed87d98f627ca81e401710cafa71eed2d655eae52450d32752841792786642"
+    },
+    {
+     "text": "James S. CrownChairMemberB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1137,
+     "raw_start_byte": 707987,
+     "raw_end_byte": 709111,
+     "raw_span_sha256": "7cc6d03bbf57a683ea1aa6ff6fbb7829a9c34d3e2de724d8000b6679c781238c"
+    },
+    {
+     "text": "James Dimon",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 1138,
+     "raw_start_byte": 709352,
+     "raw_end_byte": 709363,
+     "raw_span_sha256": "4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+    },
+    {
+     "text": "Timothy P. FlynnChair",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1139,
+     "raw_start_byte": 710216,
+     "raw_end_byte": 710501,
+     "raw_span_sha256": "a4b8c9f375fedd498d3dddcba3576be8c969c08d0384f0b5561e63c79041947e"
+    },
+    {
+     "text": "Mellody HobsonMemberMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1140,
+     "raw_start_byte": 711252,
+     "raw_end_byte": 712377,
+     "raw_span_sha256": "6c2f06e88c199ce8657151d1a1f15155695c4496171b5dea52b6ecdb88d81aa8"
+    },
+    {
+     "text": "Michael A. NealMemberMemberB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1141,
+     "raw_start_byte": 712618,
+     "raw_end_byte": 713744,
+     "raw_span_sha256": "cd1e75158e8fee225001b1ac605235e772463309b65c4fda58c117b9f8fe4ad4"
+    },
+    {
+     "text": "Phebe N. NovakovicMember",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1142,
+     "raw_start_byte": 713985,
+     "raw_end_byte": 714273,
+     "raw_span_sha256": "195f3b991a9ca915c4757bfe1fdd816ce67898d17dd56afbbd7ccd59b3cde76f"
+    },
+    {
+     "text": "Virginia M. RomettyMemberMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1143,
+     "raw_start_byte": 715056,
+     "raw_end_byte": 716378,
+     "raw_span_sha256": "dd5a8bc3244111aaa83cbd60c33ce80b881c449454f04d0f46dbbbe96d7b93e4"
+    },
+    {
+     "text": "All directors of the Firm were elected by shareholders in 2021 and comprise the full Boards of JPMorgan Chase Bank, National Association (the “Bank”) and an intermediate holding company, JPMorgan Chase Holdings LLC (the “IHC”). Mr. Burke is the independent Chair of the Board of the Bank; IHC does not have a Chair of the Board.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1148,
+     "raw_start_byte": 717850,
+     "raw_end_byte": 718230,
+     "raw_span_sha256": "9efe806a0bf40b1f9d8ac42f40979f8bee409a7fce317cae85c7751a43fcee9a"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 14,
+   "fact": {
+    "kind": "board_independence",
+    "statement": "The Board determined nine non-management directors independent under NYSE and Firm standards, with only immaterial Firm relationships: Bammann, Burke, Combs, Crown, Flynn, Hobson, Neal, Novakovic and Rometty. CEO James Dimon is the exception.",
+    "source_blocks": [
+     357,
+     885,
+     891
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "The Board of Directors has nominated the 10 individuals listed below. All are independent other than our CEO. If elected at our annual meeting, all nominees are expected to serve until next year’s annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 357,
+     "raw_start_byte": 222669,
+     "raw_end_byte": 222887,
+     "raw_span_sha256": "ee3e456482b00bf09828d01fb82cd59cd74decb81235ba85368754eb15e4df0c"
+    },
+    {
+     "text": "All of the Firm’s non-management Board members are independent, under both the NYSE corporate governance listing standards and the Firm’s independence standards as set forth in its Governance Principles.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 885,
+     "raw_start_byte": 558539,
+     "raw_end_byte": 558754,
+     "raw_span_sha256": "9796d38913e322a025b5934f1fdd59b591427d4ffb8a3fdba7b85399d1f3ef61"
+    },
+    {
+     "text": "The Board, having reviewed the relevant relationships between the Firm and each director, determined, in accordance with the NYSE’s listing standards and the Firm’s independence standards, that each non-management director (Linda B. Bammann, Stephen B. Burke, Todd A. Combs, James S. Crown, Timothy P. Flynn, Mellody Hobson, Michael A. Neal, Phebe N. Novakovic and Virginia M. Rometty) had only immaterial relationships with JPMorgan Chase and accordingly is independent.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 891,
+     "raw_start_byte": 563323,
+     "raw_end_byte": 563807,
+     "raw_span_sha256": "b76062c056654de7bff86b12d85ca59c6593985102d1006bfde053c7f69b2b90"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 15,
+   "fact": {
+    "kind": "board_leadership",
+    "statement": "James Dimon is Chairman since 2006 and CEO since 2005; the Board currently combines the Chair and CEO roles.",
+    "source_blocks": [
+     717,
+     718,
+     719,
+     723,
+     967
+    ],
+    "stated_time": "Chair since 2006; CEO since 2005; CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "Director since: 2004 and Chairman of the Board since 2006",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 717,
+     "raw_start_byte": 481197,
+     "raw_end_byte": 481378,
+     "raw_span_sha256": "b5dd2eed90085da8b5c27aa39c664ab596025aa3970a59580b05de5da802dfac"
+    },
+    {
+     "text": "James Dimon",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 718,
+     "raw_start_byte": 481709,
+     "raw_end_byte": 481720,
+     "raw_span_sha256": "4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+    },
+    {
+     "text": "Chairman and Chief Executive Officer of JPMorgan Chase & Co.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 719,
+     "raw_start_byte": 481870,
+     "raw_end_byte": 481934,
+     "raw_span_sha256": "bffab654674def5f38bd52fac3b9ffe87ca089d040abaebfadb93a51611a2955"
+    },
+    {
+     "text": "•Chairman of the Board (since 2006) and Director (since 2004); Chief Executive Officer (since 2005)",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 723,
+     "raw_start_byte": 483666,
+     "raw_end_byte": 483915,
+     "raw_span_sha256": "57ff5d66650b056f09278c1bc6d74ed3b542761749767f83badad7fbb472ce2f"
+    },
+    {
+     "text": "Based on consideration of the factors described on page 23, our Board has determined that combining the roles of Chair and CEO is the most effective leadership structure for the Board at this time. The Board believes the present structure provides the Firm and the Board with strong leadership, appropriate independent oversight of management, continuity of experience that complements ongoing Board refreshment, and the ability to communicate the Firm's business and strategy to shareholders, clients, employees, regulators and the public in a single voice.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 967,
+     "raw_start_byte": 609036,
+     "raw_end_byte": 609594,
+     "raw_span_sha256": "e744a5869c5b43a98d9dfba93e5e8bfbfe6ba152a5fa4f25956c281a08036e7b"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 16,
+   "fact": {
+    "kind": "board_leadership",
+    "statement": "Stephen B. Burke has been Lead Independent Director since 2021. In March 2022 independent directors maintained the leadership structure with Burke in that role, considering his effective performance over the prior year.",
+    "source_blocks": [
+     613,
+     614,
+     617,
+     969,
+     970
+    ],
+    "stated_time": "since 2021; March 2022 review"
+   },
+   "source_blocks": [
+    {
+     "text": "Stephen B. Burke",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 613,
+     "raw_start_byte": 431712,
+     "raw_end_byte": 431729,
+     "raw_span_sha256": "46c45b2f6faea432009396e3000900d7ad20af24e05e5a6617808e5d188cd628"
+    },
+    {
+     "text": "Lead Independent Director since 2021",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 614,
+     "raw_start_byte": 431861,
+     "raw_end_byte": 431897,
+     "raw_span_sha256": "0f3b1cf3e0a199d6405eb0240ed1242d905cfbb59839d0b9a6d694b6fc7c049e"
+    },
+    {
+     "text": "Mr. Burke has served as the Lead Independent Director since 2021. More information regarding the duties and responsibilities of the Lead Independent Director can be found on page 23.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 617,
+     "raw_start_byte": 433153,
+     "raw_end_byte": 433336,
+     "raw_span_sha256": "0c2a1803acfc02c1fd373f5f10af6820c54c9438c42c0a657a35d361b2c2f038"
+    },
+    {
+     "text": "In March 2022, the independent directors conducted a review of the Board’s leadership structure. This review was conducted first by the Corporate Governance & Nominating Committee, which considered the factors on page 23, the",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 969,
+     "raw_start_byte": 610466,
+     "raw_end_byte": 610702,
+     "raw_span_sha256": "f2f2a5961b2c5da674c07c9bde7a70a1f103c75d68b449907b59dd977ee17468"
+    },
+    {
+     "text": "Firm’s governance practices, which include executive sessions of independent directors as part of each regularly scheduled Board meeting and the directors’ frequent and open interactions with senior management, and the effectiveness of the Lead Independent Director role. Following its review, the Committee recommended that the Board continue its current leadership structure and that Stephen B. Burke be re-appointed as Lead Independent Director. The independent directors of the Board conducted their own review, again taking into account the factors on page 23, the Committee’s recommendation and Mr. Burke’s effective performance in the Lead Independent Director role over the course of the prior year, and determined to maintain the current leadership structure with Mr. Burke serving as Lead Independent Director.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 970,
+     "raw_start_byte": 611026,
+     "raw_end_byte": 611870,
+     "raw_span_sha256": "ac4e16145fac489a24dff49eaf1e7ca33ea74aa2763b6202716f3aa77b25cebb"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 17,
+   "fact": {
+    "kind": "committee_structure",
+    "statement": "Five independent principal standing committees: Audit; Compensation & Management Development (CMDC); Corporate Governance & Nominating (Governance); Public Responsibility (PRC); Risk.",
+    "source_blocks": [
+     1041,
+     1062,
+     1064
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "A significant portion of our Board’s oversight responsibilities is carried out through its five independent, principal standing committees: Audit Committee, CMDC, Governance Committee, Public Responsibility Committee (\"PRC\") and Risk Committee. Allocating responsibilities among committees allows more in-depth attention devoted to the Board’s oversight of the business and affairs of the Firm.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1041,
+     "raw_start_byte": 650725,
+     "raw_end_byte": 651143,
+     "raw_span_sha256": "fc7409967716b85d726eb0eca8c9276f7aaf09d44ce7806d8f47a395308e5cbc"
+    },
+    {
+     "text": "Key oversight responsibilities of the principal standing committees of the Board:",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1062,
+     "raw_start_byte": 663744,
+     "raw_end_byte": 663830,
+     "raw_span_sha256": "a5fc7fbff59ee9fae912521306f5152e11f5be55ba0c51258900a01bd7a65a83"
+    },
+    {
+     "text": "AuditCMDCRiskPRCGovernance",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 1064,
+     "raw_start_byte": 668346,
+     "raw_end_byte": 669343,
+     "raw_span_sha256": "f5769437d66f410bd7ca8e582667221dce5dde8cbb7d5c98dead9b4a972480c8"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 18,
+   "fact": {
+    "kind": "committee_structure",
+    "statement": "Additional standing committees: Stock and Executive. Two current Specific Purpose Committees: Markets Compliance and Omnibus.",
+    "source_blocks": [
+     1109,
+     1110,
+     1111,
+     1112,
+     1114,
+     1115,
+     1116,
+     1117
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "Other Standing Committees",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1109,
+     "raw_start_byte": 689186,
+     "raw_end_byte": 689211,
+     "raw_span_sha256": "b06fba6526807e6c071ddbc067bce36bc5794f6ce2438d1f282e6d2b4c2571a4"
+    },
+    {
+     "text": "The Board has two additional standing committees:",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1110,
+     "raw_start_byte": 689384,
+     "raw_end_byte": 689437,
+     "raw_span_sha256": "a67559137d005075bc9d83edef2515b948641a347a19612b621536e65c1d55a3"
+    },
+    {
+     "text": "Stock Committee: The committee is responsible for implementing the declaration of dividends, authorizing the issuance of stock, administering the dividend reinvestment plan and implementing share repurchase plans. The committee acts within Board-approved limitations and capital plans.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1111,
+     "raw_start_byte": 689610,
+     "raw_end_byte": 690020,
+     "raw_span_sha256": "e1802bffb0b40d891576a613eeb675c97143a50e779ca2b91cebd21f2df853be"
+    },
+    {
+     "text": "Executive Committee: The committee may exercise all the powers of the Board that lawfully may be delegated, but with the expectation that it would not take material actions absent special circumstances.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1112,
+     "raw_start_byte": 690193,
+     "raw_end_byte": 690520,
+     "raw_span_sha256": "f2d82020f4426aeb17f0f0f5ca3e6021e56c8e0f06bcf2ee741db45ac752fbb8"
+    },
+    {
+     "text": "Specific Purpose Committees",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1114,
+     "raw_start_byte": 690931,
+     "raw_end_byte": 690958,
+     "raw_span_sha256": "1addc39f4a6cb44bb99308870a3fbdd67dc09ff635f638b71cec32f0e2e1749f"
+    },
+    {
+     "text": "The Board establishes Specific Purpose Committees as appropriate to address specific issues. The Board currently",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1115,
+     "raw_start_byte": 691131,
+     "raw_end_byte": 691244,
+     "raw_span_sha256": "53a8808ed2efa3d367f0489196539658c9b91e8b9e4fa3cc55e4b0dcc11154dd"
+    },
+    {
+     "text": "has two such committees, the Markets Compliance Committee and the Omnibus Committee. The Markets Compliance Committee provides oversight in connection with certain markets-related matters, including the Deferred Prosecution Agreement entered into with the U.S. Department of Justice to resolve the Firm's precious metals and U.S. Treasuries investigations.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1116,
+     "raw_start_byte": 691583,
+     "raw_end_byte": 691940,
+     "raw_span_sha256": "c5339cdc8dfa0a8fa030a3b8b5743725e2a4d22a821eb1915fa8bf9a8937e690"
+    },
+    {
+     "text": "The Omnibus Committee reviews matters delegated by the Board.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1117,
+     "raw_start_byte": 692113,
+     "raw_end_byte": 692174,
+     "raw_span_sha256": "ee854ab85ccb0e5c902a30b37286de3776ce2fda12ad00ba86bb8c38c4130385"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 19,
+   "fact": {
+    "kind": "committee_membership",
+    "statement": "Audit: Timothy P. Flynn (Chair), Michael A. Neal and Phebe N. Novakovic.",
+    "source_blocks": [
+     1129,
+     1130,
+     1139,
+     1141,
+     1142
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "Current Board committee membership",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1129,
+     "raw_start_byte": 700797,
+     "raw_end_byte": 700832,
+     "raw_span_sha256": "2281b58b5605f380465e7e4002042812e169e79ad0992d184885ac88ae581727"
+    },
+    {
+     "text": "DirectorAuditCMDCGovernancePRCRisk",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1130,
+     "raw_start_byte": 701810,
+     "raw_end_byte": 702869,
+     "raw_span_sha256": "d8401218e1c2cbf5a2dc0523a720ea634f5c33f0f7479926b6e21d841d5c0193"
+    },
+    {
+     "text": "Timothy P. FlynnChair",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1139,
+     "raw_start_byte": 710216,
+     "raw_end_byte": 710501,
+     "raw_span_sha256": "a4b8c9f375fedd498d3dddcba3576be8c969c08d0384f0b5561e63c79041947e"
+    },
+    {
+     "text": "Michael A. NealMemberMemberB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1141,
+     "raw_start_byte": 712618,
+     "raw_end_byte": 713744,
+     "raw_span_sha256": "cd1e75158e8fee225001b1ac605235e772463309b65c4fda58c117b9f8fe4ad4"
+    },
+    {
+     "text": "Phebe N. NovakovicMember",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1142,
+     "raw_start_byte": 713985,
+     "raw_end_byte": 714273,
+     "raw_span_sha256": "195f3b991a9ca915c4757bfe1fdd816ce67898d17dd56afbbd7ccd59b3cde76f"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 20,
+   "fact": {
+    "kind": "committee_membership",
+    "statement": "CMDC: Stephen B. Burke (Chair), Linda B. Bammann, Todd A. Combs and Virginia M. Rometty.",
+    "source_blocks": [
+     1129,
+     1130,
+     1133,
+     1134,
+     1135,
+     1136,
+     1143
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "Current Board committee membership",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1129,
+     "raw_start_byte": 700797,
+     "raw_end_byte": 700832,
+     "raw_span_sha256": "2281b58b5605f380465e7e4002042812e169e79ad0992d184885ac88ae581727"
+    },
+    {
+     "text": "DirectorAuditCMDCGovernancePRCRisk",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1130,
+     "raw_start_byte": 701810,
+     "raw_end_byte": 702869,
+     "raw_span_sha256": "d8401218e1c2cbf5a2dc0523a720ea634f5c33f0f7479926b6e21d841d5c0193"
+    },
+    {
+     "text": "Stephen B. Burke2",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 1133,
+     "raw_start_byte": 703705,
+     "raw_end_byte": 703899,
+     "raw_span_sha256": "a3fff7e4d4126b7fe31e2755c9932f76f7c08b868d2371421f3b3d752842a4db"
+    },
+    {
+     "text": "ChairMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1134,
+     "raw_start_byte": 704271,
+     "raw_end_byte": 705015,
+     "raw_span_sha256": "3ba9853a8d34a086a5d8fa1f06c1698a63eac29a9c897b560343a85ab474234f"
+    },
+    {
+     "text": "Linda B. BammannMemberChairB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1135,
+     "raw_start_byte": 705256,
+     "raw_end_byte": 706382,
+     "raw_span_sha256": "1013ebcd305aed9d59c4884d52ff244a8773291e0f3d87d9152eb852c3513cbd"
+    },
+    {
+     "text": "Todd A. CombsMemberChairA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1136,
+     "raw_start_byte": 706623,
+     "raw_end_byte": 707746,
+     "raw_span_sha256": "aeed87d98f627ca81e401710cafa71eed2d655eae52450d32752841792786642"
+    },
+    {
+     "text": "Virginia M. RomettyMemberMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1143,
+     "raw_start_byte": 715056,
+     "raw_end_byte": 716378,
+     "raw_span_sha256": "dd5a8bc3244111aaa83cbd60c33ce80b881c449454f04d0f46dbbbe96d7b93e4"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 21,
+   "fact": {
+    "kind": "committee_membership",
+    "statement": "Governance: Todd A. Combs (Chair), Stephen B. Burke and Virginia M. Rometty.",
+    "source_blocks": [
+     1129,
+     1130,
+     1133,
+     1134,
+     1136,
+     1143
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "Current Board committee membership",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1129,
+     "raw_start_byte": 700797,
+     "raw_end_byte": 700832,
+     "raw_span_sha256": "2281b58b5605f380465e7e4002042812e169e79ad0992d184885ac88ae581727"
+    },
+    {
+     "text": "DirectorAuditCMDCGovernancePRCRisk",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1130,
+     "raw_start_byte": 701810,
+     "raw_end_byte": 702869,
+     "raw_span_sha256": "d8401218e1c2cbf5a2dc0523a720ea634f5c33f0f7479926b6e21d841d5c0193"
+    },
+    {
+     "text": "Stephen B. Burke2",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 1133,
+     "raw_start_byte": 703705,
+     "raw_end_byte": 703899,
+     "raw_span_sha256": "a3fff7e4d4126b7fe31e2755c9932f76f7c08b868d2371421f3b3d752842a4db"
+    },
+    {
+     "text": "ChairMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1134,
+     "raw_start_byte": 704271,
+     "raw_end_byte": 705015,
+     "raw_span_sha256": "3ba9853a8d34a086a5d8fa1f06c1698a63eac29a9c897b560343a85ab474234f"
+    },
+    {
+     "text": "Todd A. CombsMemberChairA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1136,
+     "raw_start_byte": 706623,
+     "raw_end_byte": 707746,
+     "raw_span_sha256": "aeed87d98f627ca81e401710cafa71eed2d655eae52450d32752841792786642"
+    },
+    {
+     "text": "Virginia M. RomettyMemberMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1143,
+     "raw_start_byte": 715056,
+     "raw_end_byte": 716378,
+     "raw_span_sha256": "dd5a8bc3244111aaa83cbd60c33ce80b881c449454f04d0f46dbbbe96d7b93e4"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 22,
+   "fact": {
+    "kind": "committee_membership",
+    "statement": "PRC: James S. Crown (Chair), Mellody Hobson and Michael A. Neal.",
+    "source_blocks": [
+     1129,
+     1130,
+     1137,
+     1140,
+     1141
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "Current Board committee membership",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1129,
+     "raw_start_byte": 700797,
+     "raw_end_byte": 700832,
+     "raw_span_sha256": "2281b58b5605f380465e7e4002042812e169e79ad0992d184885ac88ae581727"
+    },
+    {
+     "text": "DirectorAuditCMDCGovernancePRCRisk",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1130,
+     "raw_start_byte": 701810,
+     "raw_end_byte": 702869,
+     "raw_span_sha256": "d8401218e1c2cbf5a2dc0523a720ea634f5c33f0f7479926b6e21d841d5c0193"
+    },
+    {
+     "text": "James S. CrownChairMemberB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1137,
+     "raw_start_byte": 707987,
+     "raw_end_byte": 709111,
+     "raw_span_sha256": "7cc6d03bbf57a683ea1aa6ff6fbb7829a9c34d3e2de724d8000b6679c781238c"
+    },
+    {
+     "text": "Mellody HobsonMemberMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1140,
+     "raw_start_byte": 711252,
+     "raw_end_byte": 712377,
+     "raw_span_sha256": "6c2f06e88c199ce8657151d1a1f15155695c4496171b5dea52b6ecdb88d81aa8"
+    },
+    {
+     "text": "Michael A. NealMemberMemberB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1141,
+     "raw_start_byte": 712618,
+     "raw_end_byte": 713744,
+     "raw_span_sha256": "cd1e75158e8fee225001b1ac605235e772463309b65c4fda58c117b9f8fe4ad4"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 23,
+   "fact": {
+    "kind": "committee_membership",
+    "statement": "Risk: Linda B. Bammann (Chair), James S. Crown and Mellody Hobson.",
+    "source_blocks": [
+     1129,
+     1130,
+     1135,
+     1137,
+     1140
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "Current Board committee membership",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1129,
+     "raw_start_byte": 700797,
+     "raw_end_byte": 700832,
+     "raw_span_sha256": "2281b58b5605f380465e7e4002042812e169e79ad0992d184885ac88ae581727"
+    },
+    {
+     "text": "DirectorAuditCMDCGovernancePRCRisk",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1130,
+     "raw_start_byte": 701810,
+     "raw_end_byte": 702869,
+     "raw_span_sha256": "d8401218e1c2cbf5a2dc0523a720ea634f5c33f0f7479926b6e21d841d5c0193"
+    },
+    {
+     "text": "Linda B. BammannMemberChairB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1135,
+     "raw_start_byte": 705256,
+     "raw_end_byte": 706382,
+     "raw_span_sha256": "1013ebcd305aed9d59c4884d52ff244a8773291e0f3d87d9152eb852c3513cbd"
+    },
+    {
+     "text": "James S. CrownChairMemberB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1137,
+     "raw_start_byte": 707987,
+     "raw_end_byte": 709111,
+     "raw_span_sha256": "7cc6d03bbf57a683ea1aa6ff6fbb7829a9c34d3e2de724d8000b6679c781238c"
+    },
+    {
+     "text": "Mellody HobsonMemberMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1140,
+     "raw_start_byte": 711252,
+     "raw_end_byte": 712377,
+     "raw_span_sha256": "6c2f06e88c199ce8657151d1a1f15155695c4496171b5dea52b6ecdb88d81aa8"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 24,
+   "fact": {
+    "kind": "committee_membership",
+    "statement": "The current membership table assigns Stephen B. Burke, Todd A. Combs, Mellody Hobson and Virginia M. Rometty to A; the 2021 footnote identifies A as Markets Compliance.",
+    "source_blocks": [
+     1129,
+     1130,
+     1131,
+     1132,
+     1133,
+     1134,
+     1136,
+     1140,
+     1143,
+     1144,
+     1145
+    ],
+    "stated_time": "CURRENT_IN_FILING table; 2021 committee key"
+   },
+   "source_blocks": [
+    {
+     "text": "Current Board committee membership",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1129,
+     "raw_start_byte": 700797,
+     "raw_end_byte": 700832,
+     "raw_span_sha256": "2281b58b5605f380465e7e4002042812e169e79ad0992d184885ac88ae581727"
+    },
+    {
+     "text": "DirectorAuditCMDCGovernancePRCRisk",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1130,
+     "raw_start_byte": 701810,
+     "raw_end_byte": 702869,
+     "raw_span_sha256": "d8401218e1c2cbf5a2dc0523a720ea634f5c33f0f7479926b6e21d841d5c0193"
+    },
+    {
+     "text": "Specific",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1131,
+     "raw_start_byte": 703103,
+     "raw_end_byte": 703111,
+     "raw_span_sha256": "0b85c4d8a4bac636c5e8f131ae39049132d237fce96defe8403896886db04a14"
+    },
+    {
+     "text": "Purpose1",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1132,
+     "raw_start_byte": 703268,
+     "raw_end_byte": 703453,
+     "raw_span_sha256": "f05882192f00a9665b1c92c9b0c39807a7aed3769760b6a7585c1786a26b011b"
+    },
+    {
+     "text": "Stephen B. Burke2",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 1133,
+     "raw_start_byte": 703705,
+     "raw_end_byte": 703899,
+     "raw_span_sha256": "a3fff7e4d4126b7fe31e2755c9932f76f7c08b868d2371421f3b3d752842a4db"
+    },
+    {
+     "text": "ChairMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1134,
+     "raw_start_byte": 704271,
+     "raw_end_byte": 705015,
+     "raw_span_sha256": "3ba9853a8d34a086a5d8fa1f06c1698a63eac29a9c897b560343a85ab474234f"
+    },
+    {
+     "text": "Todd A. CombsMemberChairA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1136,
+     "raw_start_byte": 706623,
+     "raw_end_byte": 707746,
+     "raw_span_sha256": "aeed87d98f627ca81e401710cafa71eed2d655eae52450d32752841792786642"
+    },
+    {
+     "text": "Mellody HobsonMemberMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1140,
+     "raw_start_byte": 711252,
+     "raw_end_byte": 712377,
+     "raw_span_sha256": "6c2f06e88c199ce8657151d1a1f15155695c4496171b5dea52b6ecdb88d81aa8"
+    },
+    {
+     "text": "Virginia M. RomettyMemberMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1143,
+     "raw_start_byte": 715056,
+     "raw_end_byte": 716378,
+     "raw_span_sha256": "dd5a8bc3244111aaa83cbd60c33ce80b881c449454f04d0f46dbbbe96d7b93e4"
+    },
+    {
+     "text": "1The Board’s Specific Purpose Committees in 2021 were:",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1144,
+     "raw_start_byte": 716647,
+     "raw_end_byte": 716851,
+     "raw_span_sha256": "2de8b1ca2117e9ec8f9a3881aee76be8e4a2bcbbc03055f2f118e7b7c82155ce"
+    },
+    {
+     "text": "A – Markets Compliance Committee",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1145,
+     "raw_start_byte": 717030,
+     "raw_end_byte": 717069,
+     "raw_span_sha256": "ccfd8ea45d6f54716b934abe964dc2de6736deb9036abcb76851513cd476b506"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 25,
+   "fact": {
+    "kind": "committee_membership",
+    "statement": "The current membership table assigns Linda B. Bammann, James S. Crown and Michael A. Neal to B; the 2021 footnote identifies B as Omnibus.",
+    "source_blocks": [
+     1129,
+     1130,
+     1131,
+     1132,
+     1135,
+     1137,
+     1141,
+     1144,
+     1146
+    ],
+    "stated_time": "CURRENT_IN_FILING table; 2021 committee key"
+   },
+   "source_blocks": [
+    {
+     "text": "Current Board committee membership",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1129,
+     "raw_start_byte": 700797,
+     "raw_end_byte": 700832,
+     "raw_span_sha256": "2281b58b5605f380465e7e4002042812e169e79ad0992d184885ac88ae581727"
+    },
+    {
+     "text": "DirectorAuditCMDCGovernancePRCRisk",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1130,
+     "raw_start_byte": 701810,
+     "raw_end_byte": 702869,
+     "raw_span_sha256": "d8401218e1c2cbf5a2dc0523a720ea634f5c33f0f7479926b6e21d841d5c0193"
+    },
+    {
+     "text": "Specific",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1131,
+     "raw_start_byte": 703103,
+     "raw_end_byte": 703111,
+     "raw_span_sha256": "0b85c4d8a4bac636c5e8f131ae39049132d237fce96defe8403896886db04a14"
+    },
+    {
+     "text": "Purpose1",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1132,
+     "raw_start_byte": 703268,
+     "raw_end_byte": 703453,
+     "raw_span_sha256": "f05882192f00a9665b1c92c9b0c39807a7aed3769760b6a7585c1786a26b011b"
+    },
+    {
+     "text": "Linda B. BammannMemberChairB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1135,
+     "raw_start_byte": 705256,
+     "raw_end_byte": 706382,
+     "raw_span_sha256": "1013ebcd305aed9d59c4884d52ff244a8773291e0f3d87d9152eb852c3513cbd"
+    },
+    {
+     "text": "James S. CrownChairMemberB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1137,
+     "raw_start_byte": 707987,
+     "raw_end_byte": 709111,
+     "raw_span_sha256": "7cc6d03bbf57a683ea1aa6ff6fbb7829a9c34d3e2de724d8000b6679c781238c"
+    },
+    {
+     "text": "Michael A. NealMemberMemberB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1141,
+     "raw_start_byte": 712618,
+     "raw_end_byte": 713744,
+     "raw_span_sha256": "cd1e75158e8fee225001b1ac605235e772463309b65c4fda58c117b9f8fe4ad4"
+    },
+    {
+     "text": "1The Board’s Specific Purpose Committees in 2021 were:",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1144,
+     "raw_start_byte": 716647,
+     "raw_end_byte": 716851,
+     "raw_span_sha256": "2de8b1ca2117e9ec8f9a3881aee76be8e4a2bcbbc03055f2f118e7b7c82155ce"
+    },
+    {
+     "text": "B – Omnibus Committee",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1146,
+     "raw_start_byte": 717248,
+     "raw_end_byte": 717275,
+     "raw_span_sha256": "72855409d0432fc5079dc2e4e3ce59bb847a5fe8e4ccca81a897b702659b05f3"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 26,
+   "fact": {
+    "kind": "committee_membership",
+    "statement": "The CMDC report identifies independent directors Stephen B. Burke (Chair), Linda B. Bammann, Todd A. Combs and Virginia M. Rometty as its members.",
+    "source_blocks": [
+     2677,
+     2679,
+     2680,
+     2681,
+     2682,
+     2683
+    ],
+    "stated_time": "2022-03-15 report"
+   },
+   "source_blocks": [
+    {
+     "text": "Compensation & Management Development Committee report",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 2677,
+     "raw_start_byte": 1708954,
+     "raw_end_byte": 1709012,
+     "raw_span_sha256": "ce80d51cb0a4e0b22eafd251606f92c26b67e2a7c3817db015213178ea50ad71"
+    },
+    {
+     "text": "Based on such review and discussion with management, the Compensation & Management Development Committee recommended to the Board of Directors that the Compensation Discussion and Analysis be included in this proxy statement and our Annual Report on Form 10-K for the year ended December 31, 2021. This report is provided as of March 15, 2022, by the following independent directors, who comprise the Compensation & Management Development Committee:",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 2679,
+     "raw_start_byte": 1709512,
+     "raw_end_byte": 1709973,
+     "raw_span_sha256": "639621119cde72ab5c0e237e787e63dcad1534d15c04427d669d589880a2881b"
+    },
+    {
+     "text": "Stephen B. Burke (Chair)",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 2680,
+     "raw_start_byte": 1710146,
+     "raw_end_byte": 1710170,
+     "raw_span_sha256": "5e4186412b015ce24d9de2af8dfe2ae1c35e1daaefc9b716fe191004fc1541d8"
+    },
+    {
+     "text": "Linda B. Bammann",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 2681,
+     "raw_start_byte": 1710343,
+     "raw_end_byte": 1710359,
+     "raw_span_sha256": "1135df142e8418d0c7ef3b44f06394a062b6875948f5bbc6c74ed0a7fa95334e"
+    },
+    {
+     "text": "Todd A. Combs",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 2682,
+     "raw_start_byte": 1710532,
+     "raw_end_byte": 1710545,
+     "raw_span_sha256": "f4865ec8dac746c8762baff116f3bf57d84d6483dc5de38b726e9c4d90a78125"
+    },
+    {
+     "text": "Virginia M. Rometty",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 2683,
+     "raw_start_byte": 1710718,
+     "raw_end_byte": 1710737,
+     "raw_span_sha256": "2d1ac3f71faf4430f2214508b52818bcb777372927e1a09025dbfa926ace08ee"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 27,
+   "fact": {
+    "kind": "committee_membership",
+    "statement": "The Audit report identifies Timothy P. Flynn (Chair), Michael A. Neal and Phebe N. Novakovic as its members.",
+    "source_blocks": [
+     3356,
+     3357,
+     3358,
+     3359,
+     3360
+    ],
+    "stated_time": "2022-03-14 report"
+   },
+   "source_blocks": [
+    {
+     "text": "Dated as of March 14, 2022",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3356,
+     "raw_start_byte": 2282866,
+     "raw_end_byte": 2282892,
+     "raw_span_sha256": "2bba98f1609fa931df2b7443f4bee4be80126db8f313deb41fa5bce3197123c0"
+    },
+    {
+     "text": "Audit Committee",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 3357,
+     "raw_start_byte": 2283065,
+     "raw_end_byte": 2283080,
+     "raw_span_sha256": "6e8176aefb47a5c87e4ebfd997b4749e3f4db4fdfd261d0b13de7a002beacbd8"
+    },
+    {
+     "text": "Timothy P. Flynn (Chair)",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3358,
+     "raw_start_byte": 2283212,
+     "raw_end_byte": 2283236,
+     "raw_span_sha256": "e29550d76ff29dac27c50b065c237890f33aad115a77203bb7200b008ed943c1"
+    },
+    {
+     "text": "Michael A. Neal",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3359,
+     "raw_start_byte": 2283368,
+     "raw_end_byte": 2283383,
+     "raw_span_sha256": "92a2f81085cbdfd9c89c535c6d99dffd8d9b16f7f511ab7bce5cf6f3104271f8"
+    },
+    {
+     "text": "Phebe N. Novakovic",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3360,
+     "raw_start_byte": 2283515,
+     "raw_end_byte": 2283533,
+     "raw_span_sha256": "4e8b2433e6a05079e2a17dfc3f8519a75e2d29eb5fee4cd0ef820b68a098df25"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 28,
+   "fact": {
+    "kind": "committee_independence",
+    "statement": "Principal standing committee independence is 100%; the filing also states Board committees are chaired and constituted by independent directors.",
+    "source_blocks": [
+     325,
+     951,
+     1041,
+     3510
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "•100% principal standing committee independence",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 325,
+     "raw_start_byte": 200932,
+     "raw_end_byte": 201127,
+     "raw_span_sha256": "d0edd0074cd3bbcd48022c7e72b7c4a94081a3badda817816fead3625606cd15"
+    },
+    {
+     "text": "100% principal standing committee independence",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 951,
+     "raw_start_byte": 601292,
+     "raw_end_byte": 601338,
+     "raw_span_sha256": "e1f63c6109f9653e651b24e4eca9061f5d7e95d14d5002a7ba13cf2f4aa0bb5f"
+    },
+    {
+     "text": "A significant portion of our Board’s oversight responsibilities is carried out through its five independent, principal standing committees: Audit Committee, CMDC, Governance Committee, Public Responsibility Committee (\"PRC\") and Risk Committee. Allocating responsibilities among committees allows more in-depth attention devoted to the Board’s oversight of the business and affairs of the Firm.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1041,
+     "raw_start_byte": 650725,
+     "raw_end_byte": 651143,
+     "raw_span_sha256": "fc7409967716b85d726eb0eca8c9276f7aaf09d44ce7806d8f47a395308e5cbc"
+    },
+    {
+     "text": "In addition, each of the Committees of the Board are chaired and constituted by independent directors. Committee chairs shape the agenda and information presented to their committees. Our independent directors meet regularly. An executive session of the Board, chaired by the Lead Independent Director, is held as part of each regularly scheduled Board meeting and allows additional time for the independent directors to fulfill their duty to provide oversight of the Firm and its management.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3510,
+     "raw_start_byte": 2384605,
+     "raw_end_byte": 2385098,
+     "raw_span_sha256": "9551cfd9c1453a57ba88493c9a159c950e12f69427c0120c6c489c7a84ff4c28"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 29,
+   "fact": {
+    "kind": "committee_independence",
+    "statement": "All directors who served on Audit and CMDC were determined to meet additional NYSE independence and qualitative criteria applicable to those committees.",
+    "source_blocks": [
+     892,
+     1129,
+     1130,
+     1133,
+     1134,
+     1135,
+     1136,
+     1139,
+     1141,
+     1142,
+     1143
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "All directors who served on the Audit and Compensation & Management Development Committees of the Board were also determined to meet the additional independence and qualitative criteria of the NYSE listing standards applicable to directors serving on those committees. For more information about the committees of the Board, see pages 24-26.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 892,
+     "raw_start_byte": 563980,
+     "raw_end_byte": 564325,
+     "raw_span_sha256": "5a0f34268cc069844008beb2fd099cedb227268417b6248406b545670e1f2981"
+    },
+    {
+     "text": "Current Board committee membership",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1129,
+     "raw_start_byte": 700797,
+     "raw_end_byte": 700832,
+     "raw_span_sha256": "2281b58b5605f380465e7e4002042812e169e79ad0992d184885ac88ae581727"
+    },
+    {
+     "text": "DirectorAuditCMDCGovernancePRCRisk",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1130,
+     "raw_start_byte": 701810,
+     "raw_end_byte": 702869,
+     "raw_span_sha256": "d8401218e1c2cbf5a2dc0523a720ea634f5c33f0f7479926b6e21d841d5c0193"
+    },
+    {
+     "text": "Stephen B. Burke2",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 1133,
+     "raw_start_byte": 703705,
+     "raw_end_byte": 703899,
+     "raw_span_sha256": "a3fff7e4d4126b7fe31e2755c9932f76f7c08b868d2371421f3b3d752842a4db"
+    },
+    {
+     "text": "ChairMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1134,
+     "raw_start_byte": 704271,
+     "raw_end_byte": 705015,
+     "raw_span_sha256": "3ba9853a8d34a086a5d8fa1f06c1698a63eac29a9c897b560343a85ab474234f"
+    },
+    {
+     "text": "Linda B. BammannMemberChairB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1135,
+     "raw_start_byte": 705256,
+     "raw_end_byte": 706382,
+     "raw_span_sha256": "1013ebcd305aed9d59c4884d52ff244a8773291e0f3d87d9152eb852c3513cbd"
+    },
+    {
+     "text": "Todd A. CombsMemberChairA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1136,
+     "raw_start_byte": 706623,
+     "raw_end_byte": 707746,
+     "raw_span_sha256": "aeed87d98f627ca81e401710cafa71eed2d655eae52450d32752841792786642"
+    },
+    {
+     "text": "Timothy P. FlynnChair",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1139,
+     "raw_start_byte": 710216,
+     "raw_end_byte": 710501,
+     "raw_span_sha256": "a4b8c9f375fedd498d3dddcba3576be8c969c08d0384f0b5561e63c79041947e"
+    },
+    {
+     "text": "Michael A. NealMemberMemberB",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1141,
+     "raw_start_byte": 712618,
+     "raw_end_byte": 713744,
+     "raw_span_sha256": "cd1e75158e8fee225001b1ac605235e772463309b65c4fda58c117b9f8fe4ad4"
+    },
+    {
+     "text": "Phebe N. NovakovicMember",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1142,
+     "raw_start_byte": 713985,
+     "raw_end_byte": 714273,
+     "raw_span_sha256": "195f3b991a9ca915c4757bfe1fdd816ce67898d17dd56afbbd7ccd59b3cde76f"
+    },
+    {
+     "text": "Virginia M. RomettyMemberMemberA",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1143,
+     "raw_start_byte": 715056,
+     "raw_end_byte": 716378,
+     "raw_span_sha256": "dd5a8bc3244111aaa83cbd60c33ce80b881c449454f04d0f46dbbbe96d7b93e4"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 30,
+   "fact": {
+    "kind": "committee_independence",
+    "statement": "The Board determined each of the three Audit members had no material Firm relationship and was independent under Firm, NYSE and SEC audit-committee standards.",
+    "source_blocks": [
+     3324,
+     3356,
+     3357,
+     3358,
+     3359,
+     3360
+    ],
+    "stated_time": "2022-03-14 report; determination date unspecified"
+   },
+   "source_blocks": [
+    {
+     "text": "The Audit Committee of the Board of Directors of JPMorgan Chase is comprised of three non-management directors. The Board has determined that each member of our committee has no material relationship with the Firm under the Board’s director independence standards and that each member is independent under the listing standards of the NYSE, where the Firm’s securities are listed, and under the SEC’s standards relating to the independence of audit committees. The Board has also determined that each member is financially literate and is an audit committee financial expert as defined by the SEC.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3324,
+     "raw_start_byte": 2262725,
+     "raw_end_byte": 2263340,
+     "raw_span_sha256": "2d408edd80e4388129282ce5bd2680dcb2e946be2fa33b2e6e0c425013990fd1"
+    },
+    {
+     "text": "Dated as of March 14, 2022",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3356,
+     "raw_start_byte": 2282866,
+     "raw_end_byte": 2282892,
+     "raw_span_sha256": "2bba98f1609fa931df2b7443f4bee4be80126db8f313deb41fa5bce3197123c0"
+    },
+    {
+     "text": "Audit Committee",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 3357,
+     "raw_start_byte": 2283065,
+     "raw_end_byte": 2283080,
+     "raw_span_sha256": "6e8176aefb47a5c87e4ebfd997b4749e3f4db4fdfd261d0b13de7a002beacbd8"
+    },
+    {
+     "text": "Timothy P. Flynn (Chair)",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3358,
+     "raw_start_byte": 2283212,
+     "raw_end_byte": 2283236,
+     "raw_span_sha256": "e29550d76ff29dac27c50b065c237890f33aad115a77203bb7200b008ed943c1"
+    },
+    {
+     "text": "Michael A. Neal",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3359,
+     "raw_start_byte": 2283368,
+     "raw_end_byte": 2283383,
+     "raw_span_sha256": "92a2f81085cbdfd9c89c535c6d99dffd8d9b16f7f511ab7bce5cf6f3104271f8"
+    },
+    {
+     "text": "Phebe N. Novakovic",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3360,
+     "raw_start_byte": 2283515,
+     "raw_end_byte": 2283533,
+     "raw_span_sha256": "4e8b2433e6a05079e2a17dfc3f8519a75e2d29eb5fee4cd0ef820b68a098df25"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 31,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "The filing assesses all nominees as possessing skills, experience, attributes and tenure for effective oversight, including independent perspective, integrity, judgment, work ethic, conviction, collaboration, inquisitiveness and willingness to challenge management.",
+    "source_blocks": [
+     524,
+     525,
+     527,
+     531,
+     563
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "The individuals presented on the following pages have been nominated for election because they possess the skills, experience, personal attributes and tenure needed to guide",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 524,
+     "raw_start_byte": 334751,
+     "raw_end_byte": 334925,
+     "raw_span_sha256": "9780b2ece90c7cc502f8d269c1f3f2305c7a0879dafcfde720c098818977ce9b"
+    },
+    {
+     "text": "the Firm’s strategy, and to effectively oversee the Firm’s risk management and internal control framework, and management’s execution of its responsibilities.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 525,
+     "raw_start_byte": 335264,
+     "raw_end_byte": 335440,
+     "raw_span_sha256": "4964f6f48c8c4c589a90171ef3c65ea8ddde1efd25d457ab5f82fb66528456c6"
+    },
+    {
+     "text": "All of the nominees are currently directors of the Firm. Each nominee has agreed to be named in this proxy statement and, if elected, to serve a one-year term expiring at our 2023 annual meeting.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 527,
+     "raw_start_byte": 336423,
+     "raw_end_byte": 336618,
+     "raw_span_sha256": "4bb9454d3b1cdc5eefd7cd54e21c5d3eb50593d30f03ce3757cda5639569e40f"
+    },
+    {
+     "text": "All of our nominees possess: independent perspective, integrity, judgment, strong work ethic, strength of conviction, collaborative approach to engagement, inquisitiveness and willingness to appropriately challenge management",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 531,
+     "raw_start_byte": 338154,
+     "raw_end_byte": 338383,
+     "raw_span_sha256": "275c6edb5dab8ac92ac7e9192b19588617c00b83e545d0b74622b67d3e0b69b1"
+    },
+    {
+     "text": "10 Director Nominees:BurkeBammannCombsCrownDimonFlynnHobsonNealNovakovicRometty",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 563,
+     "raw_start_byte": 356969,
+     "raw_end_byte": 359102,
+     "raw_span_sha256": "9bb33ee8c44ef84aef540e91a9366bca6b7d28bc46b1cb839c9a3cb9784ff2e6"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 32,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "Filing assessment of Stephen B. Burke: large/diverse business management; audit/financial reporting; risk; executive compensation; sales/marketing; technology/operations; regulated industries; international business.",
+    "source_blocks": [
+     526,
+     609,
+     613,
+     616
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "In the biographical information about our director nominees that follows, the ages indicated are as of May 17, 2022, and the other information is as of the date of this proxy statement. The information in the Board Diversity and Experience Matrix was provided by the nominees. The race and ethnicity information is based on U.S. Equal Employment Opportunity race/ethnicity categories. There are no family relationships among the director nominees or between any director nominee and any executive officer. Unless otherwise stated, all nominees have been continuously employed by their present employers for more than five years.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 526,
+     "raw_start_byte": 335613,
+     "raw_end_byte": 336250,
+     "raw_span_sha256": "5070da0c45643dbf9fafb06fb653c414882b9fab93f68148e72b58209ff2aac9"
+    },
+    {
+     "text": "Director since: 2004",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 609,
+     "raw_start_byte": 430309,
+     "raw_end_byte": 430454,
+     "raw_span_sha256": "ae26481d913f6c69c1e3ccb6670d12a4f1b12cba866cf323492f4bd31951127f"
+    },
+    {
+     "text": "Stephen B. Burke",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 613,
+     "raw_start_byte": 431712,
+     "raw_end_byte": 431729,
+     "raw_span_sha256": "46c45b2f6faea432009396e3000900d7ad20af24e05e5a6617808e5d188cd628"
+    },
+    {
+     "text": "Mr. Burke’s roles at Comcast Corporation and his prior work at other large global media corporations have given him broad exposure to the challenges associated with managing large and diverse businesses. In these roles, he has dealt with a variety of issues including audit and financial reporting, risk management, executive compensation, sales and marketing, technology and operations. These experiences have also provided Mr. Burke a background in regulated industries and international business.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 616,
+     "raw_start_byte": 432494,
+     "raw_end_byte": 432999,
+     "raw_span_sha256": "ca4f80977a1d581f51cf071411631941dfc31a7da4799edecae4a09fab25a49c"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 33,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "Filing assessment of Linda B. Bammann: financial-services insight and wide-ranging experience; extensive risk-management and regulatory expertise.",
+    "source_blocks": [
+     526,
+     634,
+     638,
+     640
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "In the biographical information about our director nominees that follows, the ages indicated are as of May 17, 2022, and the other information is as of the date of this proxy statement. The information in the Board Diversity and Experience Matrix was provided by the nominees. The race and ethnicity information is based on U.S. Equal Employment Opportunity race/ethnicity categories. There are no family relationships among the director nominees or between any director nominee and any executive officer. Unless otherwise stated, all nominees have been continuously employed by their present employers for more than five years.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 526,
+     "raw_start_byte": 335613,
+     "raw_end_byte": 336250,
+     "raw_span_sha256": "5070da0c45643dbf9fafb06fb653c414882b9fab93f68148e72b58209ff2aac9"
+    },
+    {
+     "text": "Director since: 2013",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 634,
+     "raw_start_byte": 440388,
+     "raw_end_byte": 440532,
+     "raw_span_sha256": "51ed3bd52a3d049df8b4c507cc6a1a983ffe5dc4126c708f0ef711c04e0e5b32"
+    },
+    {
+     "text": "Linda B. Bammann",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 638,
+     "raw_start_byte": 441867,
+     "raw_end_byte": 441883,
+     "raw_span_sha256": "1135df142e8418d0c7ef3b44f06394a062b6875948f5bbc6c74ed0a7fa95334e"
+    },
+    {
+     "text": "Through her service on other boards, including as Chair of the Business and Risk Committee of the Federal Home Loan Mortgage Corporation and her management tenure at JPMorgan Chase and Bank One Corporation, Ms. Bammann has developed insight and wide-ranging experience in financial services and extensive expertise in risk management and regulatory matters.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 640,
+     "raw_start_byte": 442481,
+     "raw_end_byte": 442838,
+     "raw_span_sha256": "934742cbfe3321715384e2efd74d5b1d34475a756aee408ff7cf6f460150be65"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 34,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "Filing assessment of Todd A. Combs: financial markets, risk assessment and regulation; corporate governance, strategy, succession planning and compensation.",
+    "source_blocks": [
+     526,
+     665,
+     669,
+     671
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "In the biographical information about our director nominees that follows, the ages indicated are as of May 17, 2022, and the other information is as of the date of this proxy statement. The information in the Board Diversity and Experience Matrix was provided by the nominees. The race and ethnicity information is based on U.S. Equal Employment Opportunity race/ethnicity categories. There are no family relationships among the director nominees or between any director nominee and any executive officer. Unless otherwise stated, all nominees have been continuously employed by their present employers for more than five years.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 526,
+     "raw_start_byte": 335613,
+     "raw_end_byte": 336250,
+     "raw_span_sha256": "5070da0c45643dbf9fafb06fb653c414882b9fab93f68148e72b58209ff2aac9"
+    },
+    {
+     "text": "Director since: 2016",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 665,
+     "raw_start_byte": 456322,
+     "raw_end_byte": 456466,
+     "raw_span_sha256": "2e6ec2c37012a5ae0bedb6cb00f5d5d33bf9e8f0240482d44d8162a65293fc1a"
+    },
+    {
+     "text": "Todd A. Combs",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 669,
+     "raw_start_byte": 457816,
+     "raw_end_byte": 457829,
+     "raw_span_sha256": "f4865ec8dac746c8762baff116f3bf57d84d6483dc5de38b726e9c4d90a78125"
+    },
+    {
+     "text": "Mr. Combs’ roles have provided him with extensive experience in financial markets, risk assessment and regulatory matters. His service on three of Berkshire Hathaway’s subsidiary boards has given him expertise and insight into matters such as corporate governance, strategy, succession planning and compensation.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 671,
+     "raw_start_byte": 458473,
+     "raw_end_byte": 458797,
+     "raw_span_sha256": "ea6b345dda67c6d28a46ed28db3775d09cc0e6fd36d814cbe7c101c098476444"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 35,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "Filing assessment of James S. Crown: risk management, audit/financial reporting, investment management, capital markets and executive compensation.",
+    "source_blocks": [
+     526,
+     684,
+     688,
+     690
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "In the biographical information about our director nominees that follows, the ages indicated are as of May 17, 2022, and the other information is as of the date of this proxy statement. The information in the Board Diversity and Experience Matrix was provided by the nominees. The race and ethnicity information is based on U.S. Equal Employment Opportunity race/ethnicity categories. There are no family relationships among the director nominees or between any director nominee and any executive officer. Unless otherwise stated, all nominees have been continuously employed by their present employers for more than five years.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 526,
+     "raw_start_byte": 335613,
+     "raw_end_byte": 336250,
+     "raw_span_sha256": "5070da0c45643dbf9fafb06fb653c414882b9fab93f68148e72b58209ff2aac9"
+    },
+    {
+     "text": "Director since: 2004",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 684,
+     "raw_start_byte": 464284,
+     "raw_end_byte": 464429,
+     "raw_span_sha256": "cd05a1e098b17809d3c7f52182a21f4953c23f02fb4e9857e17092c5a49fb403"
+    },
+    {
+     "text": "James S. Crown",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 688,
+     "raw_start_byte": 465751,
+     "raw_end_byte": 465765,
+     "raw_span_sha256": "8a96a105ad3a59143f50eb21e04701ef200994b255e4eddf63ed4f997d6a4f2c"
+    },
+    {
+     "text": "Mr. Crown’s position with Henry Crown and Company and his service on other public company boards have given him extensive experience with risk management, audit and financial reporting, investment management, capital markets activity and executive compensation matters.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 690,
+     "raw_start_byte": 466375,
+     "raw_end_byte": 466650,
+     "raw_span_sha256": "354ce4320952ebd24b7ef42c61bb670860849b31f04890295911454f2312a886"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 36,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "Filing assessment of James Dimon: experienced financial-services leadership, international business, knowledge of all Firm activities and regulatory-process insight.",
+    "source_blocks": [
+     526,
+     717,
+     718,
+     720
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "In the biographical information about our director nominees that follows, the ages indicated are as of May 17, 2022, and the other information is as of the date of this proxy statement. The information in the Board Diversity and Experience Matrix was provided by the nominees. The race and ethnicity information is based on U.S. Equal Employment Opportunity race/ethnicity categories. There are no family relationships among the director nominees or between any director nominee and any executive officer. Unless otherwise stated, all nominees have been continuously employed by their present employers for more than five years.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 526,
+     "raw_start_byte": 335613,
+     "raw_end_byte": 336250,
+     "raw_span_sha256": "5070da0c45643dbf9fafb06fb653c414882b9fab93f68148e72b58209ff2aac9"
+    },
+    {
+     "text": "Director since: 2004 and Chairman of the Board since 2006",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 717,
+     "raw_start_byte": 481197,
+     "raw_end_byte": 481378,
+     "raw_span_sha256": "b5dd2eed90085da8b5c27aa39c664ab596025aa3970a59580b05de5da802dfac"
+    },
+    {
+     "text": "James Dimon",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 718,
+     "raw_start_byte": 481709,
+     "raw_end_byte": 481720,
+     "raw_span_sha256": "4236328da9555389a54cd672de50f2f650e7b2ac91cc28db5effd62bc2765151"
+    },
+    {
+     "text": "Mr. Dimon is an experienced leader in the financial services industry and has extensive international business expertise. As CEO, he is knowledgeable about all aspects of the Firm’s business activities. His work has given him substantial insight into the regulatory process.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 720,
+     "raw_start_byte": 482331,
+     "raw_end_byte": 482611,
+     "raw_span_sha256": "dc1d681e8e6884ab3cfdef9ac6644e06f005e9ad39586a020ddc46ed96012b9c"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 37,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "Filing assessment of Timothy P. Flynn: evolving business/regulatory environment, complex global companies, financial services, auditing and risk management.",
+    "source_blocks": [
+     526,
+     739,
+     742,
+     744
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "In the biographical information about our director nominees that follows, the ages indicated are as of May 17, 2022, and the other information is as of the date of this proxy statement. The information in the Board Diversity and Experience Matrix was provided by the nominees. The race and ethnicity information is based on U.S. Equal Employment Opportunity race/ethnicity categories. There are no family relationships among the director nominees or between any director nominee and any executive officer. Unless otherwise stated, all nominees have been continuously employed by their present employers for more than five years.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 526,
+     "raw_start_byte": 335613,
+     "raw_end_byte": 336250,
+     "raw_span_sha256": "5070da0c45643dbf9fafb06fb653c414882b9fab93f68148e72b58209ff2aac9"
+    },
+    {
+     "text": "Director since: 2012",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 739,
+     "raw_start_byte": 490365,
+     "raw_end_byte": 490509,
+     "raw_span_sha256": "f3dc08cbbf70a41c5a8ae308cabf86e3715a3ea4d1742b148b903530ef24fc82"
+    },
+    {
+     "text": "Timothy P. Flynn",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 742,
+     "raw_start_byte": 491494,
+     "raw_end_byte": 491510,
+     "raw_span_sha256": "ee81a1a35fe8af07a1b46a3ad03d9dc119802e55e379a16cbb155cd4f93c9507"
+    },
+    {
+     "text": "Through his leadership positions at KPMG, Mr. Flynn gained perspective on the evolving business and regulatory environment, expertise in many of the issues facing complex, global companies, and extensive experience in financial services, auditing matters and risk management.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 744,
+     "raw_start_byte": 492123,
+     "raw_end_byte": 492398,
+     "raw_span_sha256": "4ef21f5648a9b1d4925a6c909f1c690f9ee42d9a39ec60024d21aad33ecb6357"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 38,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "Filing assessment of Mellody Hobson: financial services/markets, corporate governance, strategic planning, operations, regulation and international business.",
+    "source_blocks": [
+     526,
+     772,
+     776,
+     778
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "In the biographical information about our director nominees that follows, the ages indicated are as of May 17, 2022, and the other information is as of the date of this proxy statement. The information in the Board Diversity and Experience Matrix was provided by the nominees. The race and ethnicity information is based on U.S. Equal Employment Opportunity race/ethnicity categories. There are no family relationships among the director nominees or between any director nominee and any executive officer. Unless otherwise stated, all nominees have been continuously employed by their present employers for more than five years.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 526,
+     "raw_start_byte": 335613,
+     "raw_end_byte": 336250,
+     "raw_span_sha256": "5070da0c45643dbf9fafb06fb653c414882b9fab93f68148e72b58209ff2aac9"
+    },
+    {
+     "text": "Director since: 2018",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 772,
+     "raw_start_byte": 507146,
+     "raw_end_byte": 507290,
+     "raw_span_sha256": "7c7aee3111e1a194a37fb96261f6d76ee589be95a54558fbb7c0f4d97f98d6e8"
+    },
+    {
+     "text": "Mellody Hobson",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 776,
+     "raw_start_byte": 508481,
+     "raw_end_byte": 508495,
+     "raw_span_sha256": "8b45780d7a40b14f3f8beea16544fbc2ec0af3d7835742b47d15fa6626935b72"
+    },
+    {
+     "text": "Ms. Hobson’s roles at Ariel Investments, LLC, as well as on public company boards, have provided her with significant experience in financial services and financial markets, corporate governance, strategic planning, operations, regulatory matters and international business.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 778,
+     "raw_start_byte": 509108,
+     "raw_end_byte": 509388,
+     "raw_span_sha256": "8e0b2a13ef6974cd9f00c1ebe0c98be8855854fc1c7fdb0ea779ddf9eaa88aa7"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 39,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "Filing assessment of Michael A. Neal: complex global regulated businesses, financial services, risk, strategy/operations, finance/reporting, government/regulatory relations, management development and succession.",
+    "source_blocks": [
+     526,
+     796,
+     800,
+     802
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "In the biographical information about our director nominees that follows, the ages indicated are as of May 17, 2022, and the other information is as of the date of this proxy statement. The information in the Board Diversity and Experience Matrix was provided by the nominees. The race and ethnicity information is based on U.S. Equal Employment Opportunity race/ethnicity categories. There are no family relationships among the director nominees or between any director nominee and any executive officer. Unless otherwise stated, all nominees have been continuously employed by their present employers for more than five years.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 526,
+     "raw_start_byte": 335613,
+     "raw_end_byte": 336250,
+     "raw_span_sha256": "5070da0c45643dbf9fafb06fb653c414882b9fab93f68148e72b58209ff2aac9"
+    },
+    {
+     "text": "Director since: 2014",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 796,
+     "raw_start_byte": 516953,
+     "raw_end_byte": 517097,
+     "raw_span_sha256": "c352d726cf965d08c02405de50d118a4489ef69aae5fb6dd6af58f2062e2d7e5"
+    },
+    {
+     "text": "Michael A. Neal",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 800,
+     "raw_start_byte": 518319,
+     "raw_end_byte": 518334,
+     "raw_span_sha256": "92a2f81085cbdfd9c89c535c6d99dffd8d9b16f7f511ab7bce5cf6f3104271f8"
+    },
+    {
+     "text": "Mr. Neal has extensive experience managing large, complex businesses in regulated industries around the world. During his career with General Electric and GE Capital, Mr. Neal oversaw the provision of financial services and products to consumers and businesses of all sizes globally. His professional background has provided him with extensive expertise and insight in risk management, strategic planning and operations, finance and financial reporting, government and regulatory relations, and management development and succession planning.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 802,
+     "raw_start_byte": 518993,
+     "raw_end_byte": 519535,
+     "raw_span_sha256": "d59c53dfe9ebe750d682c991440326e74646b49eae5f2d3def38b7ab00bfce62"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 40,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "Filing assessment of Phebe N. Novakovic: international operations, leadership of a large complex organization, regulated industries and regulatory matters.",
+    "source_blocks": [
+     526,
+     823,
+     826,
+     828
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "In the biographical information about our director nominees that follows, the ages indicated are as of May 17, 2022, and the other information is as of the date of this proxy statement. The information in the Board Diversity and Experience Matrix was provided by the nominees. The race and ethnicity information is based on U.S. Equal Employment Opportunity race/ethnicity categories. There are no family relationships among the director nominees or between any director nominee and any executive officer. Unless otherwise stated, all nominees have been continuously employed by their present employers for more than five years.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 526,
+     "raw_start_byte": 335613,
+     "raw_end_byte": 336250,
+     "raw_span_sha256": "5070da0c45643dbf9fafb06fb653c414882b9fab93f68148e72b58209ff2aac9"
+    },
+    {
+     "text": "Director since: 2020",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 823,
+     "raw_start_byte": 531548,
+     "raw_end_byte": 531692,
+     "raw_span_sha256": "d7a89378add05fb0febc4c6a214c6dc720efbf63fe7fb955196382db39ab228e"
+    },
+    {
+     "text": "Phebe N. Novakovic",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 826,
+     "raw_start_byte": 532650,
+     "raw_end_byte": 532668,
+     "raw_span_sha256": "4e8b2433e6a05079e2a17dfc3f8519a75e2d29eb5fee4cd0ef820b68a098df25"
+    },
+    {
+     "text": "Ms. Novakovic's leadership roles at General Dynamics, as well as her tenure with the Office of Management and Budget and as Special Assistant to the Secretary and Deputy Secretary of Defense, have provided her with significant experience in international business operations, leadership of a large complex organization, and regulated industries and regulatory matters.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 828,
+     "raw_start_byte": 533230,
+     "raw_end_byte": 533600,
+     "raw_span_sha256": "3e01a104d27856fe8830d9dfe134fd20cdf0b452c4d7fb95d56c0c35af87d7d9"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 41,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "Filing assessment of Virginia M. Rometty: technology and complex global business leadership, succession, public-company governance, operational and regulatory issues.",
+    "source_blocks": [
+     526,
+     849,
+     853,
+     855
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "In the biographical information about our director nominees that follows, the ages indicated are as of May 17, 2022, and the other information is as of the date of this proxy statement. The information in the Board Diversity and Experience Matrix was provided by the nominees. The race and ethnicity information is based on U.S. Equal Employment Opportunity race/ethnicity categories. There are no family relationships among the director nominees or between any director nominee and any executive officer. Unless otherwise stated, all nominees have been continuously employed by their present employers for more than five years.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 526,
+     "raw_start_byte": 335613,
+     "raw_end_byte": 336250,
+     "raw_span_sha256": "5070da0c45643dbf9fafb06fb653c414882b9fab93f68148e72b58209ff2aac9"
+    },
+    {
+     "text": "Director since: 2020",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 849,
+     "raw_start_byte": 541987,
+     "raw_end_byte": 542131,
+     "raw_span_sha256": "d7a89378add05fb0febc4c6a214c6dc720efbf63fe7fb955196382db39ab228e"
+    },
+    {
+     "text": "Virginia M. Rometty",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 853,
+     "raw_start_byte": 543496,
+     "raw_end_byte": 543515,
+     "raw_span_sha256": "2d1ac3f71faf4430f2214508b52818bcb777372927e1a09025dbfa926ace08ee"
+    },
+    {
+     "text": "During her tenure spanning four decades at IBM, Mrs. Rometty has gained extensive expertise in technology, and in all aspects of leading a complex global business, including succession planning, public company governance, as well as operational and regulatory issues.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 855,
+     "raw_start_byte": 544149,
+     "raw_end_byte": 544417,
+     "raw_span_sha256": "e9f5883e7fc4043288474384c76fc1faf8b49aaaacb8be555d0d4afecb57f9e1"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 42,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "The Board determined Timothy P. Flynn, Michael A. Neal and Phebe N. Novakovic, the Audit members in 2021, SEC-defined audit committee financial experts; the March 2022 Audit report also says each is financially literate.",
+    "source_blocks": [
+     1052,
+     3324,
+     3356,
+     3357,
+     3358,
+     3359,
+     3360
+    ],
+    "stated_time": "2021 Audit membership; 2022-03-14 report; determination date unspecified"
+   },
+   "source_blocks": [
+    {
+     "text": "The Board determined each member of the Audit Committee in 2021 (Timothy P. Flynn, Michael A. Neal and Phebe N. Novakovic) to be an audit committee financial expert in accordance with the definition established by the SEC, and that Ms. Bammann, the chair of the Risk Committee, has experience in identifying, assessing and managing risk exposures of large, complex financial firms in accordance with rules issued by the Board of Governors of the Federal Reserve System (“Federal Reserve”).",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1052,
+     "raw_start_byte": 655519,
+     "raw_end_byte": 656021,
+     "raw_span_sha256": "4ff065c3959d9454ad9724baf6f4f7c080c8abbe4588e94eab43c6055f853a91"
+    },
+    {
+     "text": "The Audit Committee of the Board of Directors of JPMorgan Chase is comprised of three non-management directors. The Board has determined that each member of our committee has no material relationship with the Firm under the Board’s director independence standards and that each member is independent under the listing standards of the NYSE, where the Firm’s securities are listed, and under the SEC’s standards relating to the independence of audit committees. The Board has also determined that each member is financially literate and is an audit committee financial expert as defined by the SEC.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3324,
+     "raw_start_byte": 2262725,
+     "raw_end_byte": 2263340,
+     "raw_span_sha256": "2d408edd80e4388129282ce5bd2680dcb2e946be2fa33b2e6e0c425013990fd1"
+    },
+    {
+     "text": "Dated as of March 14, 2022",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3356,
+     "raw_start_byte": 2282866,
+     "raw_end_byte": 2282892,
+     "raw_span_sha256": "2bba98f1609fa931df2b7443f4bee4be80126db8f313deb41fa5bce3197123c0"
+    },
+    {
+     "text": "Audit Committee",
+     "linked": false,
+     "emphasized": true,
+     "block_index": 3357,
+     "raw_start_byte": 2283065,
+     "raw_end_byte": 2283080,
+     "raw_span_sha256": "6e8176aefb47a5c87e4ebfd997b4749e3f4db4fdfd261d0b13de7a002beacbd8"
+    },
+    {
+     "text": "Timothy P. Flynn (Chair)",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3358,
+     "raw_start_byte": 2283212,
+     "raw_end_byte": 2283236,
+     "raw_span_sha256": "e29550d76ff29dac27c50b065c237890f33aad115a77203bb7200b008ed943c1"
+    },
+    {
+     "text": "Michael A. Neal",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3359,
+     "raw_start_byte": 2283368,
+     "raw_end_byte": 2283383,
+     "raw_span_sha256": "92a2f81085cbdfd9c89c535c6d99dffd8d9b16f7f511ab7bce5cf6f3104271f8"
+    },
+    {
+     "text": "Phebe N. Novakovic",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3360,
+     "raw_start_byte": 2283515,
+     "raw_end_byte": 2283533,
+     "raw_span_sha256": "4e8b2433e6a05079e2a17dfc3f8519a75e2d29eb5fee4cd0ef820b68a098df25"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 43,
+   "fact": {
+    "kind": "member_qualification",
+    "statement": "The Board determined Risk Chair Linda B. Bammann experienced in identifying, assessing and managing exposures of large, complex financial firms under Federal Reserve rules.",
+    "source_blocks": [
+     636,
+     638,
+     1052
+    ],
+    "stated_time": "CURRENT_IN_FILING"
+   },
+   "source_blocks": [
+    {
+     "text": "•Risk Committee (Chair)",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 636,
+     "raw_start_byte": 440995,
+     "raw_end_byte": 441165,
+     "raw_span_sha256": "3df01b1c9d77fe64741cd51553543b7823b20bac6af5f5ceb47a3e965f46830f"
+    },
+    {
+     "text": "Linda B. Bammann",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 638,
+     "raw_start_byte": 441867,
+     "raw_end_byte": 441883,
+     "raw_span_sha256": "1135df142e8418d0c7ef3b44f06394a062b6875948f5bbc6c74ed0a7fa95334e"
+    },
+    {
+     "text": "The Board determined each member of the Audit Committee in 2021 (Timothy P. Flynn, Michael A. Neal and Phebe N. Novakovic) to be an audit committee financial expert in accordance with the definition established by the SEC, and that Ms. Bammann, the chair of the Risk Committee, has experience in identifying, assessing and managing risk exposures of large, complex financial firms in accordance with rules issued by the Board of Governors of the Federal Reserve System (“Federal Reserve”).",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1052,
+     "raw_start_byte": 655519,
+     "raw_end_byte": 656021,
+     "raw_span_sha256": "4ff065c3959d9454ad9724baf6f4f7c080c8abbe4588e94eab43c6055f853a91"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 44,
+   "fact": {
+    "kind": "membership_change",
+    "statement": "The filing says recruitment resulted in election of three women directors in the past four years, one a person of color; its assessment says two have technology experience.",
+    "source_blocks": [
+     3535,
+     3545
+    ],
+    "stated_time": "past four years, as stated in the 2022 filing"
+   },
+   "source_blocks": [
+    {
+     "text": "•The Board's recruitment process has resulted in the election of three women directors in the past four years, one of whom is a person of color. Our Board is comprised of individuals with diverse experiences, skills and backgrounds, as described on page 13.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3535,
+     "raw_start_byte": 2401629,
+     "raw_end_byte": 2402033,
+     "raw_span_sha256": "4420be8adb9fc12df9ae8a35813b9a2a35d7ec4f5346cbe0c4188c497d6f8dd8"
+    },
+    {
+     "text": "Candidates are nominated based on the skills, experience, personal attributes and tenure needed to guide the Firm’s strategy, and to effectively oversee the Firm’s risk management and internal control framework, and management’s execution of its responsibilities. As a result, the Board represents a diverse mix of viewpoints and maintains fresh perspectives. The Board's recruitment process has resulted in the election of three female directors in the past four years, one of whom is a person of color, and two of whom have experience in technology, which is an important component of the Firm’s business strategy. Overall, our Board is comprised of people with diverse experiences, skills and backgrounds that collectively facilitate effective oversight.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 3545,
+     "raw_start_byte": 2409186,
+     "raw_end_byte": 2409967,
+     "raw_span_sha256": "a64acf5e5dec63ce363fd0f68dcf647b5508198020e851b4b60244564f1aa2ef"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  },
+  {
+   "fact_index": 45,
+   "fact": {
+    "kind": "membership_change",
+    "statement": "Linda B. Bammann joined CMDC 15 years after her prior JPMorgan Chase officer service, and joined the Board eight years after that service.",
+    "source_blocks": [
+     1386,
+     1387,
+     1388
+    ],
+    "stated_time": "15 years after prior officer service (CMDC); eight years after (Board)"
+   },
+   "source_blocks": [
+    {
+     "text": "Compensation & Management Development Committee interlocks and insider participation",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1386,
+     "raw_start_byte": 870952,
+     "raw_end_byte": 871040,
+     "raw_span_sha256": "b75fc0f8a3c428aef248dfd0cfe43ce96870899a30619cbcb08b55f9f4c0f1db"
+    },
+    {
+     "text": "The members of the CMDC are listed on page 26. No member of the CMDC is or ever was a JPMorgan Chase officer or",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1387,
+     "raw_start_byte": 871198,
+     "raw_end_byte": 871310,
+     "raw_span_sha256": "d25546a9193cd8cd07272c42222cf6376a310a7545d7ed4001e100072a33a1d2"
+    },
+    {
+     "text": "employee, other than Linda B. Bammann, who previously served as an officer of JPMorgan Chase 15 years before joining the CMDC and 8 years before joining the Board. No JPMorgan Chase executive officer is, or was during 2021, a member of the board of directors or compensation committee (or other committee serving an equivalent function) of another company that has, or had during 2021, an executive officer serving as a member of our Board or the CMDC. All of the members of the CMDC, and/or some of their immediate family members and affiliated entities, were customers of, or had transactions with or involving, JPMorgan Chase or our banking or other subsidiaries in the ordinary course of business during 2021. Additional transactions may be expected to take place in the future. Any outstanding loans to the directors serving on the CMDC and their immediate family members and affiliated entities, and any transactions involving other financial products and services provided by the Firm to such persons and entities, were made in accordance with the standards stated above for transactions with directors, executive officers and 5% shareholders.",
+     "linked": false,
+     "emphasized": false,
+     "block_index": 1388,
+     "raw_start_byte": 871634,
+     "raw_end_byte": 872788,
+     "raw_span_sha256": "f33d7fd288f67be93fa5e20602ac0057c308278371e249e81bd1bd56a3665256"
+    }
+   ],
+   "executor_disposition": "SUPPORTED_AS_THE_FILINGS_STATED_ASSESSMENT_OR_COMPOSITION",
+   "qualification_policy_resolution_claimed": false
+  }
+ ],
+ "original_to_model": [
+  {
+   "original_relation": {
+    "name_as_printed": "Stephen B. Burke2",
+    "committee_code": "A",
+    "committee_name_from_legend": "Markets Compliance Committee",
+    "source_blocks": [
+     1129,
+     1131,
+     1132,
+     1133,
+     1134,
+     1144,
+     1145
+    ],
+    "name_cell": [
+     2,
+     0,
+     1,
+     3
+    ],
+    "code_cell": [
+     2,
+     18,
+     1,
+     3
+    ],
+    "stated_time": "CURRENT_IN_FILING; committee-code legend explicitly refers to 2021",
+    "year_end_membership_inferred": false
+   },
+   "independent_fact_index": 24,
+   "executor_comparison": "MATCH_MEMBERSHIP_AND_SEPARATE_TEMPORAL_SCOPES"
+  },
+  {
+   "original_relation": {
+    "name_as_printed": "Linda B. Bammann",
+    "committee_code": "B",
+    "committee_name_from_legend": "Omnibus Committee",
+    "source_blocks": [
+     1129,
+     1131,
+     1132,
+     1135,
+     1144,
+     1146
+    ],
+    "name_cell": [
+     3,
+     0,
+     1,
+     3
+    ],
+    "code_cell": [
+     3,
+     18,
+     1,
+     3
+    ],
+    "stated_time": "CURRENT_IN_FILING; committee-code legend explicitly refers to 2021",
+    "year_end_membership_inferred": false
+   },
+   "independent_fact_index": 25,
+   "executor_comparison": "MATCH_MEMBERSHIP_AND_SEPARATE_TEMPORAL_SCOPES"
+  },
+  {
+   "original_relation": {
+    "name_as_printed": "Todd A. Combs",
+    "committee_code": "A",
+    "committee_name_from_legend": "Markets Compliance Committee",
+    "source_blocks": [
+     1129,
+     1131,
+     1132,
+     1136,
+     1144,
+     1145
+    ],
+    "name_cell": [
+     4,
+     0,
+     1,
+     3
+    ],
+    "code_cell": [
+     4,
+     18,
+     1,
+     3
+    ],
+    "stated_time": "CURRENT_IN_FILING; committee-code legend explicitly refers to 2021",
+    "year_end_membership_inferred": false
+   },
+   "independent_fact_index": 24,
+   "executor_comparison": "MATCH_MEMBERSHIP_AND_SEPARATE_TEMPORAL_SCOPES"
+  },
+  {
+   "original_relation": {
+    "name_as_printed": "James S. Crown",
+    "committee_code": "B",
+    "committee_name_from_legend": "Omnibus Committee",
+    "source_blocks": [
+     1129,
+     1131,
+     1132,
+     1137,
+     1144,
+     1146
+    ],
+    "name_cell": [
+     5,
+     0,
+     1,
+     3
+    ],
+    "code_cell": [
+     5,
+     18,
+     1,
+     3
+    ],
+    "stated_time": "CURRENT_IN_FILING; committee-code legend explicitly refers to 2021",
+    "year_end_membership_inferred": false
+   },
+   "independent_fact_index": 25,
+   "executor_comparison": "MATCH_MEMBERSHIP_AND_SEPARATE_TEMPORAL_SCOPES"
+  },
+  {
+   "original_relation": {
+    "name_as_printed": "Mellody Hobson",
+    "committee_code": "A",
+    "committee_name_from_legend": "Markets Compliance Committee",
+    "source_blocks": [
+     1129,
+     1131,
+     1132,
+     1140,
+     1144,
+     1145
+    ],
+    "name_cell": [
+     8,
+     0,
+     1,
+     3
+    ],
+    "code_cell": [
+     8,
+     18,
+     1,
+     3
+    ],
+    "stated_time": "CURRENT_IN_FILING; committee-code legend explicitly refers to 2021",
+    "year_end_membership_inferred": false
+   },
+   "independent_fact_index": 24,
+   "executor_comparison": "MATCH_MEMBERSHIP_AND_SEPARATE_TEMPORAL_SCOPES"
+  },
+  {
+   "original_relation": {
+    "name_as_printed": "Michael A. Neal",
+    "committee_code": "B",
+    "committee_name_from_legend": "Omnibus Committee",
+    "source_blocks": [
+     1129,
+     1131,
+     1132,
+     1141,
+     1144,
+     1146
+    ],
+    "name_cell": [
+     9,
+     0,
+     1,
+     3
+    ],
+    "code_cell": [
+     9,
+     18,
+     1,
+     3
+    ],
+    "stated_time": "CURRENT_IN_FILING; committee-code legend explicitly refers to 2021",
+    "year_end_membership_inferred": false
+   },
+   "independent_fact_index": 25,
+   "executor_comparison": "MATCH_MEMBERSHIP_AND_SEPARATE_TEMPORAL_SCOPES"
+  },
+  {
+   "original_relation": {
+    "name_as_printed": "Virginia M. Rometty",
+    "committee_code": "A",
+    "committee_name_from_legend": "Markets Compliance Committee",
+    "source_blocks": [
+     1129,
+     1131,
+     1132,
+     1143,
+     1144,
+     1145
+    ],
+    "name_cell": [
+     11,
+     0,
+     1,
+     3
+    ],
+    "code_cell": [
+     11,
+     18,
+     1,
+     3
+    ],
+    "stated_time": "CURRENT_IN_FILING; committee-code legend explicitly refers to 2021",
+    "year_end_membership_inferred": false
+   },
+   "independent_fact_index": 24,
+   "executor_comparison": "MATCH_MEMBERSHIP_AND_SEPARATE_TEMPORAL_SCOPES"
+  }
+ ],
+ "unresolved": [
+  {
+   "source_blocks": [
+    1109,
+    1110,
+    1111,
+    1112,
+    1129,
+    1130
+   ],
+   "reason": "Stock and Executive exist, but their individual members and chairs are not identified in the supplied disclosure. No absence of membership is inferred."
+  },
+  {
+   "source_blocks": [
+    1115,
+    1116,
+    1117,
+    1129,
+    1131,
+    1132,
+    1144,
+    1145,
+    1146
+   ],
+   "reason": "Markets Compliance and Omnibus chairs are unidentified. The Current membership heading and expressly 2021 A/B key do not establish an exact snapshot date or uninterrupted membership throughout 2021."
+  },
+  {
+   "source_blocks": [
+    562,
+    563,
+    564,
+    565,
+    575,
+    576,
+    577,
+    581,
+    589,
+    592,
+    597,
+    598
+   ],
+   "reason": "The matrix preserves nominee columns and category labels but supplies no explicit individual skill/demographic marks. Images are uninterpreted; blank coordinates cannot establish that a nominee lacks a skill or attribute."
+  },
+  {
+   "source_blocks": [
+    526,
+    528,
+    1129,
+    1144,
+    2679,
+    3356
+   ],
+   "reason": "Current filing information, the 2021 annual-meeting count and dated March 2022 reports do not establish board/committee composition measured at 2021-12-31. FY2021 is only the reporting container."
+  }
+ ],
+ "output_measurement": {
+  "reference_tokenizer_only": true,
+  "archive_tokens": 4374,
+  "literal_compact_json_tokens": 3328,
+  "output_limit": 4096,
+  "archive_format_fits": false,
+  "literal_compact_json_fits": true,
+  "objects_identical": true,
+  "provider_usage": null,
+  "provider_generation_with_output_cap_tested": false
+ },
+ "complete_original_fact_inventory_prepared_before_trial": false,
+ "reverse_scope": "All seven original A/B membership relations only; forward reading covers all 46 emitted facts. Independent full supplied input coverage does not enlarge the pre-trial original reference.",
+ "limitations": [
+  "Uninterpreted images and exact 2021-12-31 membership remain unresolved.",
+  "Qualification and role-evaluation policy question to Issue #28 remains open.",
+  "This reused development source is not a new holdout.",
+  "Original pretty JSON exceeds 4096; literal whitespace compaction fits without changing facts, but is not proof a provider produces complete output within its cap."
+ ],
+ "new_acceptance_entries": 0,
+ "new_native_runs": 0,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "production_authorized": false
+}

@@ -1,0 +1,54 @@
+{
+  "normal_preparer": "tools/prepare_c02_table_context.py --output-tokens8192",
+  "raw_source_user_matches_all4630_blocks_and455_tables": true,
+  "reference": {
+    "reference_sha256": "4d3fa9038ade57f5cc168b9d6ad541fdcd8f38ae58642ecf810298868b26435e",
+    "frozen_at_utc": "2026-10-07T00:27:18.483934+00:00",
+    "independent_answer_read_or_started": false,
+    "text_read_complete": true,
+    "full_metric_accepted": false
+  },
+  "request_measurement": {
+    "request_sha256": "6eab7a73c08fe8f5a659c8003be72b6e2980c61363b12848bc86ba0816e439f2",
+    "request_bytes": 667727,
+    "rendered_prompt_sha256": "e9fe5e2780352848e67be75042b98bf4034f3a6e0b0cae86313f89373e00ce14",
+    "rendered_prompt_bytes": 650749,
+    "input_tokens": 161678,
+    "output_reserve_tokens": 8192,
+    "context_tokens": 169870,
+    "maximum_context_tokens": 200000,
+    "maximum_payload_bytes": 8388608,
+    "fits": true,
+    "fallback_reason": null,
+    "context_authority_hash": "sha256:4211df72fd08c669213ba143fc488a0636e97ddb12f2f144cfdea5c94c248d2d",
+    "estimator_id": "continuous_bounded_chat_context",
+    "estimator_version": "deepseek-v41-two-message-json-chat-1",
+    "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+    "identity": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "api": "chat_completions",
+      "format_version": "deepseek-v41-two-message-json-chat-1",
+      "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+      "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+      "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+      "tokenizer_engine": "tokenizers",
+      "tokenizer_engine_version": "0.22.2",
+      "method": "PINNED_REFERENCE_CHAT_FORMAT",
+      "output_reserve": 8192,
+      "request_limits": {
+        "output_tokens": 8192,
+        "max_context_tokens": 200000,
+        "max_payload_bytes": 8388608
+      }
+    }
+  },
+  "initial_prompt_semantic_change": false,
+  "independent_answer_started": false,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "native_runs": 0
+}

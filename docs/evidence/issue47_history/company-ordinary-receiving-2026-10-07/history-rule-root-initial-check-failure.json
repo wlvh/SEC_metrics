@@ -1,0 +1,6 @@
+{
+  "cause": "Test wrongly asserted whole mutable update tree unchanged; ordinary checks/intent/terminal/latest-check append on repeat. All four initial value/unit/period checks and repeat factory-forbidden NO_SOURCE_CONTENT_CHANGE checks passed before assertion.",
+  "correction": "Protect immutable results and current-result pointers; normal appended checks retained. Not a production write failure or a relaxed business assertion.",
+  "initial_and_repeat_raw_reports_preserved": true,
+  "production_changes_between_initial_and_final": "Added early program/source company-row consistency check; this final actual run checks changed program as well."
+}

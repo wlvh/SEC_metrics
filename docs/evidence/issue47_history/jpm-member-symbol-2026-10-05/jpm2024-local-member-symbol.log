@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/docs/evidence/issue47_history/jpm-member-symbol-2026-10-05/replay_member_symbol.py", line 111, in <module>
+    run(parser.parse_args())
+    ~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/docs/evidence/issue47_history/jpm-member-symbol-2026-10-05/replay_member_symbol.py", line 62, in run
+    tag_bytes = tag.encode('utf-8'); assert raw.count(tag_bytes) == 1
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

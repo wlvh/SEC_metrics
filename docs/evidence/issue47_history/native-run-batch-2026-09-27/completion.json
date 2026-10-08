@@ -1,0 +1,133 @@
+{
+ "periods": {
+  "enphase-2025": {
+   "invocations": [
+    {
+     "duration_seconds": 614.0,
+     "ended": "BATCH_TIMEOUT_10_HOURS",
+     "output_directory": ".",
+     "rows": 6
+    },
+    {
+     "duration_seconds": 1802.7,
+     "ended": "COMPLETED",
+     "output_directory": "complete-e1",
+     "rows": 15
+    },
+    {
+     "duration_seconds": 2157.9,
+     "ended": "COMPLETED",
+     "output_directory": "complete-e2",
+     "rows": 16
+    }
+   ],
+   "rows_by_invocation": {
+    "0": [
+     "A01",
+     "A02",
+     "A03",
+     "A04",
+     "A05",
+     "A06"
+    ],
+    "1": [
+     "A07",
+     "A08",
+     "A09",
+     "A10",
+     "A11",
+     "A12",
+     "A13",
+     "B01",
+     "B02",
+     "B03",
+     "B04",
+     "B05",
+     "B06",
+     "B07",
+     "B08"
+    ],
+    "2": [
+     "B09",
+     "B10",
+     "B11",
+     "B12",
+     "C01",
+     "C02",
+     "C03",
+     "C04",
+     "D01",
+     "D02",
+     "D04",
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ]
+   }
+  },
+  "paramount-2024": {
+   "invocations": [
+    {
+     "duration_seconds": 8960.1,
+     "ended": "BATCH_TIMEOUT_10_HOURS",
+     "output_directory": ".",
+     "rows": 37
+    },
+    {
+     "duration_seconds": 315.3,
+     "ended": "COMPLETED",
+     "output_directory": "complete-p24",
+     "rows": 1
+    }
+   ],
+   "rows_by_invocation": {
+    "0": [
+     "A01",
+     "A02",
+     "A03",
+     "A04",
+     "A05",
+     "A06",
+     "A07",
+     "A08",
+     "A09",
+     "A10",
+     "A11",
+     "A12",
+     "A13",
+     "B01",
+     "B02",
+     "B03",
+     "B04",
+     "B05",
+     "B06",
+     "B07",
+     "B08",
+     "B09",
+     "B10",
+     "B11",
+     "B12",
+     "B13",
+     "C01",
+     "C02",
+     "C03",
+     "C04",
+     "D01",
+     "D02",
+     "D04",
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "1": [
+     "E05"
+    ]
+   }
+  }
+ },
+ "record_type": "ISSUE_47_BATCH_COMPLETION",
+ "why": "the batch command ran under a 10-hour timeout and was stopped with Paramount FY2024 at E05 and Enphase FY2025 at A07; both positions had frozen Runs but no matrix row (the stop came between freezing and the separate-process read-back), so their directories were removed and every position not yet in a matrix was run again under the same label, in the same runtime tree, in output directories of their own, then merged back by merge_completions.py"
+}

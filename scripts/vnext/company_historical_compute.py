@@ -67,7 +67,7 @@ def compute_historical(*, root, source, company_id, metric_ids, report_end=None,
             # the frozen replay performed above.
             receipt = read_run_receipt(run_dir=work/'runs'/metric)
             rows = work/'rows'; rows.mkdir()
-            from .publication import _csv_bytes, METRIC_FIELDS, EVIDENCE_FIELDS
+            from .csv_output import _csv_bytes, METRIC_FIELDS, EVIDENCE_FIELDS
             (rows/'metrics_matrix.csv').write_bytes(_csv_bytes(rows=[rendered['row']], fieldnames=METRIC_FIELDS))
             (rows/'metric_evidence.csv').write_bytes(_csv_bytes(rows=rendered['evidence'], fieldnames=EVIDENCE_FIELDS))
             candidate = {'attempt_id': attempt, 'rows_root': str(rows), 'receipt': receipt,

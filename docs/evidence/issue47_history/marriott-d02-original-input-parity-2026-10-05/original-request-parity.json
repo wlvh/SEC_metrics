@@ -1,0 +1,47 @@
+{
+ "record_type": "ISSUE47_ORIGINAL_MARRIOTT_D02_WIRE_INPUT_PARITY",
+ "export_path": "evidence/issue47_model_calls/9a368413797ddef1/export.json",
+ "export_sha256": "5199a583fe5f93f019816fad368928b4fd306b2a453a6d9a2e52b8906b37ca45",
+ "original_archive_path": "evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz",
+ "original_archive_sha256": "970c98e67b7c7b8c1b55eae6b9dd602917cec45af8c193ec1ac9a5d941acf9a0",
+ "original_archive_size": 13047421,
+ "entire_archive_hash_checked": true,
+ "only_two_original_request_binary_members_opened": true,
+ "rows": [
+  {
+   "position": "marriott_international:2023-12-31:D02",
+   "original_call_ordinal": 12,
+   "original_archive_member": "root/calls/0012/invocation_control/requests/9a766af81b37c084e21c6af9a3d8c3e16af894420b364e9b74def8412a0652a3.bin",
+   "original_wire_sha256": "df0e5864cc60147194a6deef9439599164ec4faf37b2dfbfa2f9c7c0fa6b8931",
+   "current_native_question_byte_equal_original_wire": true,
+   "self_insurance_blocks_already_in_original_wire": [
+    1081,
+    1082
+   ],
+   "pool_blocks": 538,
+   "response_files_or_old_answers_read": false
+  },
+  {
+   "position": "marriott_international:2024-12-31:D02",
+   "original_call_ordinal": 13,
+   "original_archive_member": "root/calls/0013/invocation_control/requests/4d750d56485d2463f1ffc453d65a4a383087611ff57d1ff349d0cf04a09bd254.bin",
+   "original_wire_sha256": "33ea0f80b92f00a1e8a62d91347105e24cdc59e413da7602bdc12689c109f356",
+   "current_native_question_byte_equal_original_wire": true,
+   "self_insurance_blocks_already_in_original_wire": [
+    1110,
+    1111
+   ],
+   "pool_blocks": 564,
+   "response_files_or_old_answers_read": false
+  }
+ ],
+ "old_export_archive_requests_answers_runs_modified": false,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0,
+ "method_independently_validated": false
+}

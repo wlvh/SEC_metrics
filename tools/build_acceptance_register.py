@@ -1,0 +1,764 @@
+"""Build the acceptance register from the readings, so nothing is hand-written.
+
+Eight readings, eight shapes of source locator - a document, a table row, a
+window of filings - so what every entry must carry is not one field name but
+the artifact that holds the full reading. That is what a reader needs to redo
+it, and it is uniform across them.
+
+What an entry binds - the filings, window, entity, unit and meaning of the
+value that was read - is copied from the reading, never from a batch of
+results. An earlier version pinned it from whatever results it was generated
+against, keyed by directory order, so an unchanged reading regenerated against
+a batch whose result had moved to another unit or scope granted the new one.
+The reading now carries that identity (tools/bind_acceptance_readings.py
+records it once for readings made before they did), and this generator reads
+no Run at all unless asked to report correspondence.
+
+Usage:
+    python3 tools/build_acceptance_register.py
+    python3 tools/build_acceptance_register.py --runs-root <flat runs root> \
+        --closure sha256:<closure>    # also report which entries a batch matches
+"""
+import argparse
+import collections
+import hashlib
+import json
+import sys
+from pathlib import Path
+
+REPO = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO / "scripts"))
+sys.path.insert(0, str(REPO / "tools"))
+
+from acceptance_readings import (BANK_MEASURES_READINGS, BANK_STATEMENT_READINGS,  # noqa: E402
+                                 C02_COMPOSITION_READINGS, C02_LATEST_READINGS,
+                                 C02_OLDER_YEARS_READINGS, C03_ACROSS_PROXIES, COMPENSATION, CROSS,
+                                 CROSS_READINGS,
+                                 D01_READINGS, D02_EXCERPT_READINGS, DEBT_TO_EQUITY_READINGS,
+                                 E01_CANDIDATE_READINGS, E01_EIGHT_O_ONES, E01_PAID_READINGS,
+                                 EVENT_READINGS, GOVERNANCE, GOVERNANCE_READINGS, LODGING, LODGING_READINGS, READINGS, RPO_READINGS, TEXT, load,
+                                 positions)
+
+REGISTER = "docs/evidence/issue47_history/accepted_result_content.json"
+
+
+class RegisterError(ValueError):
+    """The readings cannot produce a register without inventing something."""
+
+
+STATEMENT_METHOD = (
+ "the filing's own primary document, walked directly by "
+ "tools/read_statement_facts.py: xbrli:context parsed for period, instant and "
+ "dimensional members; ix:nonFraction facts read as decimals with their scale "
+ "and sign, the fixed-zero dash as zero, and duplicates kept as one fact only "
+ "where they round to each other; consolidated facts only; the approved "
+ "candidate chain from 02_指标定义_SEC_10公司单年指标.md followed over what "
+ "that document tags; the arithmetic in Decimal at the calculator's own "
+ "precision. B03 is not accepted where two names for total D&A carry "
+ "different values. The route resolves these from the Company Facts API "
+ "instead, so this is a different source for the same facts.")
+LODGING_METHOD = (
+ "the filing's lodging statistics table, read without the production grid "
+ "builder the route uses: the document split on <table>, the one naming the "
+ "frozen scope literal 'Comparable Systemwide Properties' with a Worldwide row "
+ "kept - exactly one does in each year - tags stripped, and the row's RevPAR "
+ "and occupancy read off the text.")
+EVENT_METHOD = (
+ "8-K and 8-K/A filings in the pinned fiscal window, selected from the saved "
+ "submissions index, with each one's item codes read out of its own SEC "
+ "header, counted against catalog/event_routes.json's declared item codes. "
+ "Counted under both the filing date and the report date; every accepted "
+ "position agrees under both.")
+COMMON = ("that the approved definition is the right definition for the "
+          "business question, or that the filing is right. It is independent "
+          "of the code, not of the reader: the same person wrote the reading "
+          "and read the result.")
+STATEMENT_LIMIT = ("what is established is that the concept the definition "
+                   "names carries this value in this filing for this period "
+                   "and that the stated arithmetic produces the published "
+                   "number. It does not establish " + COMMON)
+BANK_MEASURES_METHOD = (
+ "the bank's annual report read by tools/read_bank_measures.py, which imports none of "
+ "the financial inspectors (Issue #28's frozen ones or #47's older-wording successors): "
+ "the document split on <table>, each row's cells with the tags stripped, and each "
+ "measure read from the row the report names it by - net yield on average "
+ "interest-earning assets on the managed basis, firmwide nonaccrual loans to total "
+ "loans outstanding, total assets under management, Total VaR in the Avg. column of the "
+ "table split into Avg., Min and Max, Total international under the target year's rows "
+ "of the table whose first figure column is revenue, and the registrant's LCR in the "
+ "table of averages for the three months ended on the period's end together with the "
+ "selected financial data's firm LCR average - in the target year's column found from "
+ "the table's own header, in the scale the header states. Every table that names the "
+ "measure and states the year is read, and they must agree; the window is the one the "
+ "table's header states (the year ended, the date, or the three months ended) and must "
+ "be the result's measurement window.")
+BANK_MEASURES_LIMIT = (
+ "what is established is that the row the report names carries this value for this "
+ "window. It does not establish what the route's witnesses establish - that the named "
+ "row is the measure the definition asks for and covers the whole issuer (the glossary, "
+ "segment, introduction and footnote witnesses): this reading takes the report's own "
+ "row label for that. Nor does it establish " + COMMON)
+BANK_STATEMENT_METHOD = (
+ "the bank's annual report's primary document, read by tools/read_bank_statement_facts.py "
+ "with the statement reader's parser (every value a decimal, scale and sign applied, "
+ "duplicates consistent or no value) and the approved concepts, periods, filings and "
+ "formulas of catalog/deterministic_metrics.json - the definition, not the route's code, "
+ "none of which it imports. A component the catalog takes from the prior filing is read "
+ "from the prior annual report, and the target report's comparative for that year must "
+ "equal it. The capital ratios read only facts carrying exactly the required dimensions; "
+ "a fact the filer tags under its own namespace with the approved name is read and its "
+ "namespace recorded. The route reads Company Facts (and, for the capital ratios, the "
+ "accession's XBRL instance), so for most components this is another source for the same "
+ "facts; for the capital ratios it is the same facts in another file.")
+BANK_STATEMENT_LIMIT = (
+ "what is established is that the approved concepts carry these values in these filings "
+ "for these periods and that the catalog's formula produces the published number. It does "
+ "not establish " + COMMON)
+LODGING_LIMIT = ("what is established is that the row under the approved scope "
+                 "carries this value. It does not establish that the scope is "
+                 "the right scope, nor " + COMMON)
+EVENT_LIMIT = ("what is established is that this many filings in the window "
+               "carry the declared item codes. C01 is named 'CEO / CFO "
+               "changes' and its approved definition asks for an event list "
+               "keyed by accession, so an 8-K/A amending an earlier filing's "
+               "same event is its own entry - Marriott's 2025 window has one. "
+               "Whether counting filings answers the metric's name is a "
+               "question about the definition. It does not establish " + COMMON)
+E01_METHOD = (
+ "the window's 1.01 and 2.01 items from each filing's own SEC header, as for "
+ "the other event metrics, and every item 8.01 in the window read off the "
+ "saved primary document: the item located by its own heading and ended at "
+ "Item 9.01 or the signatures, the catalog's aliases matched under its own "
+ "normalisation, and a recorded judgement per filing of whether the item "
+ "reports a merger, acquisition or business combination the registrant is "
+ "party to. Counted in the route's unit, one per matched item, under three "
+ "readings of the confirmation - alias in the item, alias anywhere in the "
+ "document, alias in the item that reports a transaction - and accepted only "
+ "where all three give the published count.")
+E01_LIMIT = (
+ "what is established is that this count does not depend on which reading of "
+ "'8.01 需正文关键词确认' is chosen: no 8.01 in the window changes it under "
+ "any of the three. It does not establish that counting every 1.01 answers "
+ "the metric's name - in these windows eleven of thirteen 1.01 items are debt "
+ "agreements - nor " + COMMON)
+
+GOVERNANCE_METHOD = {
+ "C03": "the ecd:PeoTotalCompAmt fact for the target period in the pinned "
+        "proxy's own inline XBRL, read directly rather than through the "
+        "route's ecd reader. Accepted only where exactly one PEO total is "
+        "reported for that period.",
+ "C04": "the auditor named by dei:AuditorName in this year's 10-K and in the "
+        "previous year's, plus any 8-K in the window carrying item 4.01. Zero "
+        "means the same auditor in both years and no such filing."}
+GOVERNANCE_LIMIT = {
+ "C03": "what is established is that the proxy reports this PEO total for this "
+        "period. It does not establish that PEO total compensation is the "
+        "right signal, nor " + COMMON,
+ "C04": "what is established is that the auditor named in both years is the "
+        "same and no 8-K in the window reported a change. Two limits belong "
+        "with that. Naming the same firm across a punctuation difference - "
+        "Macy's files KPMG LLP and KPMG, LLP - uses the same normalisation "
+        "the route uses, so a route too loose at that layer would not be "
+        "caught here; the rule compares letter sequences, so KPMG and KPMG "
+        "Advisory are not equal under it, and both exact strings are recorded. "
+        "And the reading takes every dei:AuditorName fact in the document "
+        "without filtering by context, entity or dimension, which is looser "
+        "than the route; each document here carries exactly one name. It does "
+        "not establish " + COMMON}
+
+TEXT_METHOD = (
+ "every excerpt in the set read whole, and every block the selector skipped "
+ "inside the narrow scopes - Item 3 and any named note range - read with it, "
+ "judged against the approved source "
+ "definition. The other direction - whether a contingencies note was missed - "
+ "is the unreached-note scan in docs/evidence/issue47_history/"
+ "d02-content-read/unreached-notes.json. The value is named by digest because "
+ "it is the whole text payload.")
+TEXT_LIMIT = (
+ "what is established is that this excerpt set is the set the approved source "
+ "definition asks for in this filing, read in both directions. It does not "
+ "establish " + COMMON)
+
+E01_CANDIDATES_METHOD = (
+ "under the owner's content-confirmed definition "
+ "(catalog/r6/E01_content_confirmed_ma_v1.json), the window's 8-K and 8-K/A "
+ "filings from the ledger's latest saved submissions index and each one's item "
+ "codes from its own SEC header, by tools/read_e01_candidates.py, which calls "
+ "none of the route's discovery, claim or item code; counted under both the "
+ "filing date and the report date. Accepted only where the window holds no "
+ "candidate item (1.01, 2.01, 8.01) under either basis and every header in it "
+ "is saved: that answer needs no content confirmation.")
+E01_CANDIDATES_LIMIT = (
+ "what is established is that no item the definition reads as a candidate was "
+ "filed in the window, so zero needs no confirmation. It establishes nothing "
+ "about a window with candidates, and does not establish that the candidate "
+ "items are the right ones to read - a transaction announced only under 7.01 "
+ "is outside them - nor " + COMMON)
+C02_COMPOSITION_METHOD = (
+ "the governance document's blocks read in both directions by readers who had "
+ "not seen the rules (docs/evidence/issue47_history/c02-composition-facts/"
+ "judgements/): every selected block judged against the owner's composition-"
+ "fact meaning, and a pool of every block naming directors or committees read "
+ "for facts the selection missed; two classes where readers split decided by "
+ "the recorded adjudication. tools/read_c02_composition.py recomputes today's "
+ "selection and accepts only where no selected block is judged outside the "
+ "meaning, no judged fact is missed, the Run's candidate hash is the one "
+ "recomputed and its excerpts are the selected blocks' texts in order. The "
+ "value is named by digest because it is the whole text payload.")
+C02_COMPOSITION_LIMIT = (
+ "what is established is that this excerpt set states the composition facts "
+ "the reading found in this document and nothing the reading judged outside "
+ "the meaning. The selection rules were written on these same ten filings, so "
+ "this is agreement with a reading of the material they were fitted on, not a "
+ "held-out test; the readers are agents of one model family and their "
+ "judgements were not sampled by a person. It does not establish " + COMMON)
+
+C02_OLDER_YEARS_METHOD = (
+ "a packet built from the saved governance document by tools/read_c02_composition.py "
+ "through the route's own selection - every selected block, and a pool of every block "
+ "using the owner's words for composition facts with every short block within sixteen "
+ "blocks of one (the rule docs/evidence/issue47_history/c02-older-years/pool_rule.py "
+ "chose because, with the selection, it holds every fact block the latest-year readers "
+ "found) - read by an independent reader (a fresh-context subagent of the same model "
+ "family, not a person) against c02-older-years/reader-brief.md: every selected block "
+ "judged, and every pool block stating a composition fact listed with the blocks that "
+ "state the same fact. Accepted only where no selected block is judged outside the "
+ "meaning, no listed fact is missed, the Run's candidate hash is the one recomputed and "
+ "its excerpts are the selected blocks' texts in order. The value is named by digest "
+ "because it is the whole text payload.")
+C02_OLDER_YEARS_LIMIT = (
+ "what is established is that this excerpt set states the composition facts the reading "
+ "found in this document and nothing the reading judged outside the meaning. It is not a "
+ "held-out test: repairs 7 to 45 of the selector and the unified adjudication were written "
+ "against these same older-year readings, so this is agreement with a reading of the "
+ "material the rules were fitted on. The pool is a rule too - a fact stated only in a long "
+ "block that uses none of the pool's words and lies more than sixteen blocks from one is "
+ "not read - and the readers are agents of one model family whose judgements were not "
+ "sampled by a person. It does not establish " + COMMON)
+
+HEADINGS_LIMIT = (
+ "what is established is that this heading set is the set the approved source "
+ "definition asks for in this filing, read in both directions and item by "
+ "item. It does not establish " + COMMON)
+
+
+
+def _read_from(position):
+    """The reading-specific locator an entry quotes."""
+    path, case, row = position["reading"], position["case"], position["slot"]
+    if path in DEBT_TO_EQUITY_READINGS:
+        return {"document": case["document"],
+                "debt_rows": case["balance_sheet"]["debt_rows"],
+                "equity_row": case["balance_sheet"]["equity_row"],
+                "finance_leases": case["finance_leases"]}
+    if path in CROSS_READINGS:
+        return {"document": case["document"], "concepts_that_answered": case["concepts_used"]}
+    if path in BANK_MEASURES_READINGS:
+        return {"document": case["document"],
+                "reads": [{key: read[key] for key in ("table_ordinal", "row", "figure", "window")
+                           if key in read} for read in row["reads"]]}
+    if path in BANK_STATEMENT_READINGS:
+        return {"document": case["document"], "prior_document": case["prior_document"],
+                "formula_id": row["formula_id"], "components": row["components"]}
+    if path in LODGING_READINGS:
+        return {"document": case["document"], "table_ordinal": case["read"]["table_ordinal"],
+                "row_text": case["read"]["row_text"],
+                "tables_naming_the_scope_literal": case["tables_matching_scope"]}
+    if path in EVENT_READINGS:
+        return {"window": case["window"],
+                "eight_k_filings_in_window": case["eight_ks_in_window"]["filing_date"],
+                "item_codes": [f["items"] for f in case["filings"]["filing_date"]],
+                "counted_under": ["filing_date", "report_date"]}
+    if path in E01_CANDIDATE_READINGS:
+        return {"window": case["window"], "eight_k_filings_in_window": len(case["filings_in_window"]),
+                "item_codes": [f["items"] for f in case["filings"]["filing_date"]],
+                "candidate_items_by_basis": case["candidate_items_by_basis"]}
+    if path in E01_PAID_READINGS:
+        return {"window": case["window"], "filings": case["filings"],
+                "candidate_items": case["candidate_items"],
+                "pre_call_item_judgements": case["judged_items"],
+                "ledger_digest": case["ledger_digest"],
+                "request_file_sha256": case["request_file_sha256"]}
+    if path in C02_COMPOSITION_READINGS:
+        return {"governance_document": case["governance_document"],
+                "reading": case["reading"], "reading_sha256": case["reading_sha256"],
+                "counts": case["counts"], "adjudicated_blocks": case["adjudicated_blocks"],
+                "published_excerpts": case["published_excerpts"]}
+    if path == E01_EIGHT_O_ONES:
+        return {"window": case["window"],
+                "direct_item_claims": case["direct_item_claims"],
+                "eight_o_ones": [{key: entry[key] for key in (
+                    "accession", "heading", "aliases_in_the_8_01_item",
+                    "aliases_anywhere_in_the_primary_document", "decision")}
+                    for entry in case["eight_o_ones"]],
+                "counts_under_each_reading": case["counts"]}
+    if path in GOVERNANCE_READINGS:
+        if position["metric_id"] == "C03":
+            return {"proxies": row["proxies_reporting_the_target_period"]}
+        return {"auditor_this_year": row["auditor_named_in_the_target_filing"],
+                "auditor_last_year": row["auditor_named_in_the_previous_years_filing"],
+                "eight_k_item_4_01_in_window": row["eight_k_item_4_01_in_window"]}
+    if path in C03_ACROSS_PROXIES:
+        if "untagged_first_reports" in case:
+            return {"proxies": case["proxies_reporting_the_target_period"],
+                    "first_report_tables": case["untagged_first_reports"]}
+        return {"proxies": case["proxies_reporting_the_target_period"]}
+    if path == TEXT:
+        return {"excerpts": case["excerpts"], "chars": case["chars"]}
+    if path in D02_EXCERPT_READINGS:
+        return {"document": case["document"], "reading": case["reading"],
+                "reading_sha256": case["reading_sha256"], "counts": case["counts"],
+                "published_excerpts": case["published_excerpts"]}
+    if path in D01_READINGS:
+        return {"headings": len(case["headings_read"]), "accession": case["accession"],
+                "document": case["document"], "heading_shapes": case["heading_shapes"]}
+    if path in RPO_READINGS:
+        return case["read_from"]
+    if path == COMPENSATION:
+        return {"document": case["document"], "where": case["where"],
+                "components": case["components"]}
+    raise RegisterError("READING_SHAPE_UNKNOWN:" + path)
+
+
+def _method_and_limit(position):
+    path, metric = position["reading"], position["metric_id"]
+    if path in DEBT_TO_EQUITY_READINGS:
+        return DEBT_TO_EQUITY_METHOD, DEBT_TO_EQUITY_LIMIT
+    if path in CROSS_READINGS:
+        return STATEMENT_METHOD, STATEMENT_LIMIT
+    if path in BANK_MEASURES_READINGS:
+        return BANK_MEASURES_METHOD, BANK_MEASURES_LIMIT
+    if path in BANK_STATEMENT_READINGS:
+        return BANK_STATEMENT_METHOD, BANK_STATEMENT_LIMIT
+    if path in LODGING_READINGS:
+        return LODGING_METHOD, LODGING_LIMIT
+    if path in EVENT_READINGS:
+        return EVENT_METHOD, EVENT_LIMIT
+    if path == E01_EIGHT_O_ONES:
+        return E01_METHOD, E01_LIMIT
+    if path in E01_CANDIDATE_READINGS:
+        return E01_CANDIDATES_METHOD, E01_CANDIDATES_LIMIT
+    if path in E01_PAID_READINGS:
+        return (
+            "tools/read_e01_confirmed.py counts pre-call development judgements of each "
+            "candidate item's own text, compares every paid decision with them, and "
+            "independently enumerates every 8-K/8-K/A from saved submissions and SEC "
+            "headers under both filing-date and report-date windows. Both censuses must "
+            "name exactly the items in the request and reference; undecided items, "
+            "missing headers or a disagreement grant nothing. The frozen result's "
+            "value, complete filing set, window and identity are bound at reading time.",
+            "Pre-call development judgements by the executor; no independent human "
+            "business review. Only the approved candidate item codes are covered; "
+            "exhibits whose own item text does not settle the meaning remain undecided.")
+    if path in C02_LATEST_READINGS:
+        return C02_COMPOSITION_METHOD, C02_COMPOSITION_LIMIT
+    if path in C02_OLDER_YEARS_READINGS:
+        return C02_OLDER_YEARS_METHOD, C02_OLDER_YEARS_LIMIT
+    if path in GOVERNANCE_READINGS:
+        return GOVERNANCE_METHOD[metric], GOVERNANCE_LIMIT[metric]
+    if path in C03_ACROSS_PROXIES:
+        if position["case"].get("first_report_read_from") == "SUMMARY_COMPENSATION_TABLE":
+            return C03_FIRST_REPORTED_TABLE_METHOD, C03_FIRST_REPORTED_TABLE_LIMIT
+        if position["case"].get("read_as") == "FIRST_REPORTED":
+            return C03_FIRST_REPORTED_METHOD, C03_FIRST_REPORTED_LIMIT
+        return C03_ACROSS_PROXIES_METHOD, C03_ACROSS_PROXIES_LIMIT
+    if path == TEXT:
+        return TEXT_METHOD, TEXT_LIMIT
+    if path in D02_EXCERPT_READINGS:
+        return D02_EXCERPTS_METHOD, D02_EXCERPTS_LIMIT
+    if path in D01_READINGS:
+        return HEADINGS_FROM_BYTES_METHOD, HEADINGS_LIMIT
+    if path in RPO_READINGS:
+        return (RPO_METHOD, position["case"]["what_this_does_not_establish"])
+    if path == COMPENSATION:
+        return COMPENSATION_METHOD, COMPENSATION_LIMIT
+    raise RegisterError("READING_SHAPE_UNKNOWN:" + path)
+
+
+D02_EXCERPTS_METHOD = (
+ "a packet built from the saved annual report by tools/read_d02_excerpts.py through "
+ "the route's own selection - every excerpt with its scope, every block skipped inside "
+ "Item 3 and the note scopes Item 3 incorporates, the blocks under an Item 8 heading "
+ "naming contingencies, legal proceedings or litigation in a note Item 3 does not "
+ "incorporate, and every heading naming those words - judged block by block by an "
+ "independent reader (a fresh-context subagent of the same model family, not a "
+ "person) against the brief in d02-older-years/reader-brief.md; the reading carries "
+ "each judged block's text, covers the packet exactly, and its excerpts render the "
+ "value; the result's candidate hash is the one recomputed from the filing.")
+D02_EXCERPTS_LIMIT = (
+ "that the rest of Item 8 holds no litigation disclosure: outside the incorporated "
+ "scopes it is read only where the keyword proxy took a block and under the headings "
+ "that name the definition's words, so a disclosure under a heading worded otherwise, "
+ "or under none, is not read (the proxy's registered decision); nor that the reader "
+ "is independent of the model family that wrote the rules; nor " + COMMON)
+HEADINGS_FROM_BYTES_METHOD = (
+ "Item 1A read off the filing's saved HTML by tools/read_d01_headings.py, which "
+ "imports none of the route's text modules: its own block reader, runs carrying "
+ "the bold, underline and italic their own styles give them, the item located "
+ "by its own heading and ended by the next item's. Every heading-marked line - "
+ "bold or underline, outside links, not page furniture - is compared with the "
+ "published value line for line and in order, so a dropped heading and an "
+ "extra line both fail it; every other visually marked block needs a recorded "
+ "judgement; the cover's fiscal year end must be the period read; and each "
+ "line was judged as a category or a risk-factor heading against the filing. "
+ "Identical heading text is listed once at its first occurrence, which is the "
+ "shape the route publishes. Its controls: against Marriott's results from "
+ "before the underline repair it reports exactly the four underlined "
+ "categories as read and not published in each year, and on Paramount it "
+ "flags the line cut at an unbolded period.")
+DEBT_TO_EQUITY_METHOD = (
+ "the filing's own balance sheet and lease note, read by tools/read_debt_to_equity.py, "
+ "which imports none of the debt cascade and reads the published value only to compare: "
+ "every balance sheet row whose caption names debt, borrowings or commercial paper and "
+ "not a lease, each by its inline XBRL fact at the period end; finance leases added only "
+ "where the filing classifies them under captions other than debt (Macy's accounts "
+ "payable and long-term lease liabilities, Salesforce's accrued and other noncurrent "
+ "liabilities), not where its debt table lists them (Paramount) or it states it has none "
+ "(Enphase); over the parent's total stockholders' equity.")
+DEBT_TO_EQUITY_LIMIT = (
+ "that the balance sheet's debt rows are every borrowing the definition means - a "
+ "borrowing presented under another caption would be missed by both this reading and "
+ "the arithmetic it checks - nor " + "that the parent's equity rather than total equity "
+ "is the right divisor where noncontrolling interests exist (Paramount), which is the "
+ "approved definition's 'shareholders' equity' as read here, nor " + COMMON)
+RPO_METHOD = ("the filing's own inline XBRL fact for remaining performance "
+              "obligation at the period end, undimensioned, against the "
+              "accession-instance value the route published.")
+C03_ACROSS_PROXIES_METHOD = (
+ "the year's ecd:PeoTotalCompAmt read out of every saved proxy of the registrant "
+ "that tags it (a pay-versus-performance table reports each of its years again in "
+ "every later proxy), by tools/read_c03_across_proxies.py, which imports none of "
+ "the route's governance modules: accepted only when each proxy reports exactly one "
+ "total, all of them agree, and at least one of them is a filing the result does "
+ "not name, so a document the route did not read confirms the value. A placeholder "
+ "dash for a person paid as PEO in another year is set aside, with the evidence.")
+C03_ACROSS_PROXIES_LIMIT = (
+ "that the amount first reported is the amount the frame should show where a later "
+ "proxy reports another (such a year is not accepted here; see "
+ "c03-first-ecd-release/), nor " + COMMON)
+C03_FIRST_REPORTED_METHOD = (
+ "a year the saved proxies report differently, read as the owner decided a year is "
+ "read - as first reported (the owner's c03-convention.json decision record, answer "
+ "A): the earliest proxy's single ecd:PeoTotalCompAmt for the year, read by "
+ "tools/read_c03_across_proxies.py, which imports none of the route's governance "
+ "modules; that proxy must be the filing the result names, and every later amount "
+ "is recorded beside it.")
+C03_FIRST_REPORTED_LIMIT = (
+ "confirmation by a document the route did not read: the later proxies report "
+ "another amount, so the only confirmation is the route's own filing read with "
+ "independent code - the standard the latest years' C03 meet; nor " + COMMON)
+C03_FIRST_REPORTED_TABLE_METHOD = (
+ "a year the saved proxies report differently, read as the owner decided a year is "
+ "read - as first reported (c03-convention.json, answer A) - where the first report "
+ "is a proxy filed before the pay-versus-performance table was required, so it tags "
+ "no total: the result's own filing read off its Summary Compensation Table by "
+ "tools/read_c03_across_proxies.py, which imports none of the route's governance "
+ "modules. The table is the one carrying the columns Item 402(c)(2) prescribes; the "
+ "row is the person every tagged proxy names as the year's PEO (ecd:PeoName); it is "
+ "read only if its components add up to its total and the filing precedes every "
+ "tagged report; every later amount is recorded beside it.")
+C03_FIRST_REPORTED_TABLE_LIMIT = (
+ "confirmation of the amount by a document the route did not read: the later "
+ "proxies name the person but report the year again, two with this amount and two "
+ "with another, so the amount is confirmed by the route's own filing read with "
+ "independent code and by its table's own arithmetic; nor " + COMMON)
+COMPENSATION_METHOD = ("the Summary Compensation Table's own CEO row, read off the "
+                       "table. Its five components sum to its total, so the number "
+                       "is confirmed by the table's arithmetic as well as by "
+                       "matching the published value.")
+COMPENSATION_LIMIT = ("that the Summary Compensation Table total is the right pay "
+                      "signal, nor " + COMMON)
+
+
+def _accepted(position):
+    """Whether this reading's conclusion at this position is an acceptance.
+
+    A reading that found a defect is not one, and neither is a comparison the
+    reading could not complete. E01 is never accepted from the header count:
+    whether an 8.01 counts depends on its text, which that reading does not
+    open. The 8.01 reading accepts it only where the published count holds
+    under every reading of the confirmation, so no acceptance rests on the
+    reading still to be decided.
+    """
+    path, verdict = position["reading"], position["verdict"]
+    if path in EVENT_READINGS:
+        return verdict == "MATCH_BOTH_BASES" and position["metric_id"] != "E01"
+    return verdict == "MATCH"
+
+
+def _acceptance_id(position):
+    if position["reading"] == COMPENSATION:
+        return "CONTENT_C03_PARAMOUNT_2025"
+    if position["reading"] in E01_CANDIDATE_READINGS:
+        # A different definition's acceptance: its own name, so it can never be
+        # read as the item-code definition's entry at the same coordinate.
+        return "CONTENT_E01_CONTENT_CONFIRMED_" + position["label"].upper().replace("-", "_")
+    return ("CONTENT_" + position["metric_id"] + "_"
+            + position["label"].upper().replace("-", "_"))
+
+
+# What a second reading of one fact must agree on to confirm it rather than
+# make a second grant: the coordinate, the value, and the identity fields the
+# coverage matches an acceptance on. Where and when the identity was bound
+# (bound_from, established_by) are provenance, which two readings made against
+# different batches legitimately differ on.
+_CONFIRMATION_FIELDS = ("company_id", "metric_id", "period_end", "accepted_value")
+
+
+def _differs_in_the_spec_only(first, entry):
+    """Two readings of one coordinate's value, each of a result under another Spec.
+
+    A Spec revision can move a result's identity and not its value: D01's v1 to
+    v2 raised the item bound only, so a coordinate read under v1 and read again
+    under v2 has two results with the same lines. Each reading binds its own
+    result's meaning, so these are two acceptances, not one fact read twice -
+    and not a disagreement either. Anything else that differs (the value, a
+    filing, the period, the unit) still is one, and stops the build.
+    """
+    from vnext.historical_coverage import ACCEPTANCE_IDENTITY_FIELDS
+    first_identity, identity = first["checked_identity"], entry["checked_identity"]
+    return (all(first[field] == entry[field] for field in _CONFIRMATION_FIELDS)
+            and first_identity.get("spec_closure_hash") != identity.get("spec_closure_hash")
+            and all(first_identity.get(field) == identity.get(field)
+                    for field in ACCEPTANCE_IDENTITY_FIELDS if field != "spec_closure_hash"))
+
+
+def _another_result_passes_a_membership_reading(first, entry):
+    """Two C02 readings of two results at one coordinate, each accepted on its own.
+
+    C02's reading does not accept a value by equality: it accepts an excerpt
+    set when every selected block is within the meaning and no fact the reader
+    found is missed. Two selections of one filing that differ in which blocks
+    restate a fact can both pass, so two different values at one coordinate are
+    two acceptances here, one per result - not a disagreement. Each binds only
+    its own result, and an open coordinate-level defect withdraws whichever
+    result it is not released for. Only C02 readings qualify, and only when the
+    two name different results: one result cannot carry two values.
+    """
+    from vnext.historical_coverage import ACCEPTANCE_IDENTITY_FIELDS
+    first_identity, identity = first["checked_identity"], entry["checked_identity"]
+    first_result = (first_identity.get("bound_from") or {}).get("result_id")
+    result = (identity.get("bound_from") or {}).get("result_id")
+    return (first["evidence"] in C02_COMPOSITION_READINGS
+            and entry["evidence"] in C02_COMPOSITION_READINGS
+            and all(first[field] == entry[field] for field in _CONFIRMATION_FIELDS
+                    if field != "accepted_value")
+            and first["accepted_value"] != entry["accepted_value"]
+            and first_result is not None and result is not None and first_result != result
+            and all(first_identity.get(field) == identity.get(field)
+                    for field in ACCEPTANCE_IDENTITY_FIELDS))
+
+
+def _merge_confirmations(entries):
+    """One acceptance per identifier; a later reading of the same fact confirms it.
+
+    A batch reading re-reads positions an earlier reading already accepted,
+    because it reads every statement metric of a filing to reach the one that
+    was unread. The same fact read twice is one acceptance with a second
+    witness, not two grants - two would double-count it. It is the same fact
+    only if the coordinate, the value and the recorded identity (without when
+    it was recorded) all agree; otherwise the readings disagree about one
+    coordinate, which is a finding, and the build stops.
+    """
+    kept, order = {}, []
+    for entry in entries:
+        identifier = entry["acceptance_id"]
+        if identifier in kept and _differs_in_the_spec_only(kept[identifier], entry):
+            identifier += "_SPEC_" + entry["checked_identity"]["spec_closure_hash"][7:15].upper()
+            entry["acceptance_id"] = identifier
+        elif identifier in kept and _another_result_passes_a_membership_reading(kept[identifier], entry):
+            identifier += "_VALUE_" + entry["accepted_value"][7:15].upper()
+            entry["acceptance_id"] = identifier
+        if identifier not in kept:
+            kept[identifier] = entry
+            order.append(identifier)
+            continue
+        first = kept[identifier]
+        from vnext.historical_coverage import ACCEPTANCE_IDENTITY_FIELDS
+        same = (all(first[field] == entry[field] for field in _CONFIRMATION_FIELDS)
+                and all(first["checked_identity"].get(field) == entry["checked_identity"].get(field)
+                        for field in ACCEPTANCE_IDENTITY_FIELDS))
+        if not same:
+            raise RegisterError("ACCEPTANCE_ID_NOT_UNIQUE:" + identifier
+                                + ":READINGS_DISAGREE_ON_ONE_COORDINATE:" + first["evidence"]
+                                + ":" + entry["evidence"])
+        first.setdefault("confirmed_by", []).append(entry["evidence"])
+    return [kept[identifier] for identifier in order]
+
+
+def build_register(*, repo_root: Path):
+    """The register the readings under ``repo_root`` support. Reads no Run."""
+    entries, readings = [], {}
+    for source in READINGS:
+        body, _ = load(repo_root=repo_root, path=source)
+        contributed = 0
+        for position in positions(repo_root=repo_root, path=source, body=body):
+            if not _accepted(position):
+                continue
+            identity = position["slot"].get("checked_identity")
+            if not isinstance(identity, dict):
+                raise RegisterError("READING_POSITION_HAS_NO_CHECKED_IDENTITY:" + source
+                                    + ":" + position["label"] + ":" + position["metric_id"])
+            method, limit = _method_and_limit(position)
+            entries.append({
+                "acceptance_id": _acceptance_id(position),
+                "company_id": position["company_id"], "metric_id": position["metric_id"],
+                "period_end": position["period_end"],
+                "accepted_value": str(position["published"]),
+                "evidence": source, "read_from": _read_from(position),
+                "checked_identity": identity,
+                "method": method, "what_this_does_not_establish": limit})
+            contributed += 1
+        raw = (repo_root / source).read_bytes()
+        examined = body.get("per_position") if isinstance(body, dict) else None
+        # Reported, not gated. A reading that runs to completion and finds every
+        # value inconsistent contributes none, and a legitimate fall in
+        # acceptances is a result this register has to be able to carry.
+        readings[source] = {
+            "content_sha256": "sha256:" + hashlib.sha256(raw).hexdigest(),
+            "positions_examined": len(examined) if isinstance(examined, dict) else None,
+            "positions_examined_is_null_because":
+                None if isinstance(examined, dict)
+                else "this reading's shape carries no per_position map",
+            "acceptances_contributed": contributed}
+    entries = _merge_confirmations(entries)
+    return {
+     "record_type": "INDEPENDENT_CONTENT_ACCEPTANCE_REGISTER", "schema_version": 2,
+     "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+     "purpose": "The third delivery layer. A frozen Run with a public row says the "
+                "route computed something and the bytes are bound; it does not say "
+                "the number is right. This is where a reading that did not come "
+                "from the route says so, for one value at a time.",
+     "acceptance_rule": "An acceptance covers a position only while the value it "
+                        "names, and the identity its reading recorded, are what "
+                        "that position still carries. A later Run computing "
+                        "something else, from other filings, over another window "
+                        "or under another unit, scope or meaning, has not been "
+                        "checked. A result a defect withdraws is never accepted, "
+                        "whatever is written here.",
+     "generated_from": list(READINGS),
+ "not_here_and_why": {
+  "salesforce B03": "read, and wrong: the D&A the chain takes is "
+                    "DepreciationDepletionAndAmortization $1.2 billion, which "
+                    "the filing tags on 'Depreciation and amortization of "
+                    "fixed assets' - a subtotal that leaves out $1,687 million "
+                    "of acquired-intangible amortization. This entry used to "
+                    "say the primary document does not tag that concept and "
+                    "that the route was right; the document tags it, and the "
+                    "earlier reading did not find it. Registered as "
+                    "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_"
+                    "AS_TOTAL; see b03-depreciation-scope/finding.json.",
+  "ford B07 and lumen B07": "operating income is negative, the definition says "
+                            "NOT_MEANINGFUL, and the reading agrees by "
+                            "producing a negative ratio where the route "
+                            "published none. There is no value to accept.",
+  "marriott 2023 B02 and B03": "that period's source gaps.",
+  "E01 for Macy's, Marriott and Pfizer": "every 8.01 in the seven windows is "
+   "read (content-acceptance/e01-eight-o-one-read.json). The historical route "
+   "now reads each 8.01 from its own text instead of the brief the program "
+   "wrote (e01-item-text/), and withholds a window where an alias occurs in "
+   "an 8.01's text until the meaning of that occurrence is decided "
+   "(e01-keyword-branch/decision.json) - so these three carry no value to "
+   "accept. Lumen's count no longer depends on the open reading: the reading "
+   "that let another item's covenant language confirm an 8.01 is not a reading "
+   "of the 8.01's own text, and Lumen's 8.01 texts carry no alias.",
+  "C03": "all nine are read. The four that previously read as 'no saved proxy "
+         "reports the target period' were a defect in the reading, not a gap "
+         "in the material: it globbed *def14a*.htm, and only one of the ten "
+         "companies names its proxy that way. Earlier periods remain unread "
+         "and that IS a source gap - each registrant declares 16 to 33 DEF "
+         "14A filings and exactly one is on disk.",
+  "C04": "all six positions that carry a value are read. The five that "
+         "previously reported the previous year's 10-K as not readable were "
+         "three defects in the reading: it demanded the prior primary HTML "
+         "where the route reads any document of that accession carrying dei "
+         "facts, it parsed the accession out of an error string it had itself "
+         "truncated, and it computed the prior period end by replacing the "
+         "year - which for a 52/53-week filer names a date the calendar never "
+         "had. Southwest and Salesforce have no published C04 value at all.",
+  "B06": "all four delivered values are read off their filings' balance sheets "
+         "and lease notes and accepted (content-acceptance/debt-to-equity-read.json). "
+         "This entry used to say two of them had been solved backwards from the "
+         "published value and that Salesforce carried the inputs of two debt models "
+         "with different answers; the reading now decides finance leases from where "
+         "the filing itself classifies them, before it looks at the published value, "
+         "and Salesforce's lease note puts them under accrued and other noncurrent "
+         "liabilities - outside debt - so the definition's 'finance leases included' "
+         "answers which model applies. Lumen and Marriott 2024/2025 are NOT_MEANINGFUL "
+         "with no value to accept.",
+  "D02 for four of the eleven": "Pfizer's 96 excerpts, Lumen's 41, Paramount's "
+    "28 and Enphase's 18 were read whole and found wrong - two, one, two and "
+    "one blocks respectively - so each is a registered defect rather than an "
+    "unread set. The other seven have been read in both directions and are "
+    "accepted.",
+  "everything else": "no reading has been made."},
+ "readings": readings,
+     "what_binds_an_acceptance": (
+         "company, metric, period end, value, and checked_identity - the filings "
+         "the value was measured from, the measured window, the entity, the unit, "
+         "the scope key and the metric's meaning (spec_closure_hash). All of it is "
+         "copied from the reading, which recorded it when it was made or had it "
+         "bound once afterwards against the result it compared (established_by "
+         "says which, and bound_from names the closure, run and result). None of "
+         "it comes from the results this register happens to be generated beside, "
+         "and none of it moves with unrelated repository bytes."),
+     "when_an_acceptance_stops_applying": (
+         "the value moves, any identity field moves, a registered defect withdraws "
+         "the result, or the reading it cites is not hashed here, cannot be read, "
+         "or no longer hashes to content_sha256 above - a reading that was re-run "
+         "and now concludes something else must not leave the previous grant "
+         "standing, and a reading this table does not name cannot be checked."),
+     "acceptances": sorted(entries, key=lambda entry: entry["acceptance_id"]),
+    }
+
+
+def correspondence(*, repo_root: Path, register, runs_root: Path, closure: str):
+    """Which entries a named batch's results match, and on what they differ.
+
+    A report about the register and one batch, not an input to either: the
+    register's content does not depend on it, and a batch that differs is a
+    finding to read, not a pin to follow.
+    """
+    from vnext.historical_coverage import acceptance_mismatch, select_receipt
+    from vnext.historical_run_receipts import collect_run_receipts, index_receipts
+    index = index_receipts(receipts=collect_run_receipts(runs_root=runs_root)["receipts"])
+    counts = collections.Counter()
+    differing = []
+    for entry in register["acceptances"]:
+        key = (entry["company_id"], entry["metric_id"], entry["period_end"])
+        selection = select_receipt(found=index.get(key, []), closure=closure)
+        if selection["ambiguity"] is not None:
+            counts["AMBIGUOUS:" + selection["ambiguity"]] += 1
+            continue
+        mismatch = acceptance_mismatch(acceptance=entry, company_id=key[0],
+                                       metric_id=key[1], report_end=key[2],
+                                       result=selection["result"])
+        if not mismatch:
+            counts["CORRESPONDS"] += 1
+        else:
+            counts["DIFFERS"] += 1
+            differing.append({"acceptance_id": entry["acceptance_id"], "fields": mismatch})
+    return {"counts": dict(sorted(counts.items())), "differing": differing}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--runs-root", type=Path)
+    parser.add_argument("--closure")
+    arguments = parser.parse_args()
+    register = build_register(repo_root=REPO)
+    (REPO / REGISTER).write_text(json.dumps(register, indent=1, sort_keys=True,
+                                            ensure_ascii=False) + "\n", encoding="utf-8")
+    print("acceptances:", len(register["acceptances"]))
+    print(collections.Counter(entry["metric_id"] for entry in register["acceptances"]))
+    if arguments.runs_root is not None:
+        if not arguments.closure:
+            parser.error("--closure names which version's results to compare")
+        print(json.dumps(correspondence(repo_root=REPO, register=register,
+                                        runs_root=arguments.runs_root,
+                                        closure=arguments.closure), sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

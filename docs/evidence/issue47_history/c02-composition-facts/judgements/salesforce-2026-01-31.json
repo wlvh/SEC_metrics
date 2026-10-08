@@ -1,0 +1,4863 @@
+{
+ "position": "salesforce:2026-01-31",
+ "reader": "independent subagent reading, 2026-09-27",
+ "read_as": "independent subagent reading: a fresh agent given the owner's decision and the filing's blocks, not the selector's rules or the earlier reading",
+ "packet_selection": [
+  66,
+  638,
+  646,
+  649,
+  665,
+  696,
+  728,
+  742,
+  743,
+  749,
+  750,
+  751,
+  757,
+  758,
+  772,
+  773,
+  777,
+  778,
+  779,
+  783,
+  784,
+  785,
+  786,
+  790,
+  791,
+  806,
+  965,
+  995,
+  4280,
+  4599,
+  4667,
+  4668,
+  4669,
+  4670,
+  4671,
+  4672,
+  4676,
+  4707,
+  4708,
+  4709,
+  4710,
+  4711,
+  4717
+ ],
+ "packet_pool_size": 870,
+ "pool_blocks_read": 870,
+ "selected": [
+  {
+   "i": 66,
+   "verdict": "NOT",
+   "why": "Refreshment narrative ('deliberate approach', 'added new directors' over 'the past few years') with no person, date or count; process, not a composition fact",
+   "text_sha256": "sha256:30e10551d154064c988be50f0f0b3a769d796bbaf1b7886fc7f6db3333eec23c"
+  },
+  {
+   "i": 638,
+   "verdict": "FACT",
+   "why": "77% of director nominees are independent (the 'variety of experiences' tail is minor)",
+   "text_sha256": "sha256:d07c5e5403299d17da0405be977696ff26339840715684ff7e4268d512c1fac2"
+  },
+  {
+   "i": 646,
+   "verdict": "MIXED",
+   "why": "Independence determination: every nominee except Benioff, Harris and Washington is independent; Webb (not standing for reelection) also independent; surrounded by NYSE standards and the factors considered",
+   "text_sha256": "sha256:4423c8ff66d2432474fe84911986d43823440ca451d76bdc3e414fbf88901c6e"
+  },
+  {
+   "i": 649,
+   "verdict": "MIXED",
+   "why": "CEO Marc Benioff also serves as Chair of the Board; rest is the Board's rationale for the combined role",
+   "text_sha256": "sha256:3240bcabdf0a2c981c4f35b77f6a15bfcfa30bd4878342107bc0f11f17bca3a1"
+  },
+  {
+   "i": 665,
+   "verdict": "MIXED",
+   "why": "In March 2025 the independent directors elected Arnold Donald to succeed Robin Washington as Lead Independent Director; Donald is a member of the Audit and Governance Committees; plus LID policy and selection rationale",
+   "text_sha256": "sha256:f3b57979c6622a1c9a1e5ae84a52fc7f952c611fb14801d3da2b4369d6f4f3ca"
+  },
+  {
+   "i": 696,
+   "verdict": "MIXED",
+   "why": "All members of Audit & Finance, Compensation and Nominating & Corporate Governance are independent; Sachin Mehra is an audit committee financial expert; other standing committees were Cybersecurity & Privacy and Business Transformation; plus Board process and bylaw discretion",
+   "text_sha256": "sha256:b18a606dceb68d70630aa465adea5091b185b4e8b441a743d9f804e6ff6551b6"
+  },
+  {
+   "i": 728,
+   "verdict": "FACT",
+   "why": "Webb is not standing for reelection; his Board service ends at the 2026 Annual Meeting",
+   "text_sha256": "sha256:d0b7d20313dfbfebb31f135ae9a53aa72ecc145047eba77465497fd60bdf6067"
+  },
+  {
+   "i": 742,
+   "verdict": "FACT",
+   "why": "Heading naming the Audit & Finance Committee; labels its Members roster (743)",
+   "text_sha256": "sha256:87f66caea7aba37ea43a7b86628d7b4e8011cc4784a625dede82134914445ddd"
+  },
+  {
+   "i": 743,
+   "verdict": "FACT",
+   "why": "A&F roster: Mehra (Chair), Donald, Conway, Munoz",
+   "text_sha256": "sha256:6d53bbab3da0719280824d676b32484bb7eba958320b99648fe9f12e0bd8e05f"
+  },
+  {
+   "i": 749,
+   "verdict": "FACT",
+   "why": "All A&F members independent and financially literate under NYSE/SEC rules",
+   "text_sha256": "sha256:2f152bcdfb91a814bc117708e29b6c282812a78387a5a2458e9a3883abce292c"
+  },
+  {
+   "i": 750,
+   "verdict": "FACT",
+   "why": "Heading naming the Compensation Committee; labels its roster (751)",
+   "text_sha256": "sha256:291760aedf0f111cb392eca41159e04d0c3de9330b68e969fc4fbb54ceee2d24"
+  },
+  {
+   "i": 751,
+   "verdict": "FACT",
+   "why": "Compensation roster: Morfit (Chair), Kroes, Roos, Kirk, Webb",
+   "text_sha256": "sha256:bf050be5bfa3ed4df225934ef826ad1d35e69b24d93ab3e9c20cd8e623ec839e"
+  },
+  {
+   "i": 757,
+   "verdict": "FACT",
+   "why": "All Compensation Committee members independent under NYSE/SEC rules",
+   "text_sha256": "sha256:3ce30df65bec30b9a1143f45c8b1f804059261f3ce69a8bb91e619f9c83b5ced"
+  },
+  {
+   "i": 758,
+   "verdict": "FACT",
+   "why": "Webb not standing for reelection; service ends at 2026 Annual Meeting",
+   "text_sha256": "sha256:dab5901a9920b65f5fcf1c0306ef9cffd3a76b481ff0fded098c6b7828664d04"
+  },
+  {
+   "i": 772,
+   "verdict": "FACT",
+   "why": "Heading naming the Nominating & Corporate Governance Committee; labels its roster (773)",
+   "text_sha256": "sha256:385545cfd3c5b45d5d48e9bb6ea3e60a5a3d883c92068c757d916aacfa568a3f"
+  },
+  {
+   "i": 773,
+   "verdict": "FACT",
+   "why": "NCG roster: Roos (Chair), Alber, Chang, Donald",
+   "text_sha256": "sha256:2af92ab21c9d33e9680b5c458cedb1889120a7928d481ced12151734a599f5ea"
+  },
+  {
+   "i": 777,
+   "verdict": "FACT",
+   "why": "All NCG members independent under NYSE standards",
+   "text_sha256": "sha256:159005e3da7b9135dffe47132fea0cdc817abff6dfc1fa84d31e628059fe5ca0"
+  },
+  {
+   "i": 778,
+   "verdict": "FACT",
+   "why": "Heading naming the Cybersecurity & Privacy Committee; labels its roster (779)",
+   "text_sha256": "sha256:4cb013378a3f98b129ca124bf8e50c105ee1fe0c42899d0f5142ddb599bc9ad0"
+  },
+  {
+   "i": 779,
+   "verdict": "FACT",
+   "why": "C&P roster: Kroes (Chair), Harris, Chang, Kirk, Webb",
+   "text_sha256": "sha256:9f1e42c36d604f02eceb2911c1b2134d37b1f73b141317b341e7d439ce20386b"
+  },
+  {
+   "i": 783,
+   "verdict": "FACT",
+   "why": "All C&P members except Harris are independent",
+   "text_sha256": "sha256:c6b97033a430a4f47a1609ec0fb758c15ebc940553bbea346676367dfae3ce6c"
+  },
+  {
+   "i": 784,
+   "verdict": "FACT",
+   "why": "Webb not standing for reelection; service ends at 2026 Annual Meeting",
+   "text_sha256": "sha256:dab5901a9920b65f5fcf1c0306ef9cffd3a76b481ff0fded098c6b7828664d04"
+  },
+  {
+   "i": 785,
+   "verdict": "FACT",
+   "why": "Heading naming the Business Transformation Committee; labels its roster (786)",
+   "text_sha256": "sha256:c9a697965fedaa382a9f9929707a8ce09a7a4d237ebcbee912eabe95b4558216"
+  },
+  {
+   "i": 786,
+   "verdict": "FACT",
+   "why": "BT roster: Munoz (Chair), Conway, Morfit, Washington, Webb",
+   "text_sha256": "sha256:d1bde136aa799b833101bf9802fd3b50f3027e9d548e158be7a45133ab0ecd85"
+  },
+  {
+   "i": 790,
+   "verdict": "FACT",
+   "why": "All BT members except Washington are independent",
+   "text_sha256": "sha256:d8d4a87c15d5fdadb26edc11cbb0564fba544fe284efa2dea4093dbd1da47861"
+  },
+  {
+   "i": 791,
+   "verdict": "FACT",
+   "why": "Webb not standing for reelection; service ends at 2026 Annual Meeting",
+   "text_sha256": "sha256:dab5901a9920b65f5fcf1c0306ef9cffd3a76b481ff0fded098c6b7828664d04"
+  },
+  {
+   "i": 806,
+   "verdict": "MIXED",
+   "why": "Amy Chang and David B. Kirk were appointed to the Board in 2025; rest is the nomination/search process",
+   "text_sha256": "sha256:375b9c29cebba200176d1966384274651de80b0f25c80c2b72e4b58297e84e68"
+  },
+  {
+   "i": 965,
+   "verdict": "FACT",
+   "why": "Director-pay table footnote whose text is only: Webb not standing for reelection, service ends at 2026 Annual Meeting",
+   "text_sha256": "sha256:2aa9482fc0a678f4e147b87bdd8436cb0bd7a31e2b1cc980c74266a71cf1abda"
+  },
+  {
+   "i": 995,
+   "verdict": "FACT",
+   "why": "Webb, a director since 2006, will not stand for reelection (plus a one-line table introduction)",
+   "text_sha256": "sha256:341ff937077807fea4aba634279b5ac9ba1a8571aed42922d324ec77511a14c6"
+  },
+  {
+   "i": 4280,
+   "verdict": "FACT",
+   "why": "Kirk, Kroes, Morfit, Roos and Webb served on the Compensation Committee in fiscal 2026; no member was an employee, officer or former officer, and none had a disclosable related-party relationship",
+   "text_sha256": "sha256:698756cecde45a2d809313397947c74ad16033e6439ad7f3e01218d8b4ea92e5"
+  },
+  {
+   "i": 4599,
+   "verdict": "MIXED",
+   "why": "Ownership footnote (187 shares in a family trust) plus Webb not standing for reelection, service ending at 2026 Annual Meeting",
+   "text_sha256": "sha256:c267804558480c058ef64e48b1274835cdb05bfc136c96ee4840a72a6e7bd689"
+  },
+  {
+   "i": 4667,
+   "verdict": "FACT",
+   "why": "Compensation Committee report signature heading; labels the member names 4668-4672",
+   "text_sha256": "sha256:18dff4249987e46b560d43a5825688804d4faf7dab59ad54e855f33a0f1cdd05"
+  },
+  {
+   "i": 4668,
+   "verdict": "FACT",
+   "why": "Report signature roster: Mason Morfit (Chair)",
+   "text_sha256": "sha256:d392a3ed085e476ae16292b85bb461065f1f4a9f72c1aa3fb223cf50a002000b"
+  },
+  {
+   "i": 4669,
+   "verdict": "FACT",
+   "why": "Report signature roster: David B. Kirk",
+   "text_sha256": "sha256:4226b6de6532f61bd95f71b385a861159ff48cc0dde95030cd4fc763a476e9c4"
+  },
+  {
+   "i": 4670,
+   "verdict": "FACT",
+   "why": "Report signature roster: Neelie Kroes",
+   "text_sha256": "sha256:24bb11e05342e8097820c5668df0b578079c93288cefbbd933726d61083cd018"
+  },
+  {
+   "i": 4671,
+   "verdict": "FACT",
+   "why": "Report signature roster: John V. Roos",
+   "text_sha256": "sha256:41771329bb5ba5abe5ca490c07873ea32406521c19dbaf2c61efacd511f0ac3c"
+  },
+  {
+   "i": 4672,
+   "verdict": "FACT",
+   "why": "Report signature roster: Maynard Webb",
+   "text_sha256": "sha256:e12f215a1a650215adb2811a01da535d515bf8075906ceae5e9a3239c2a7536a"
+  },
+  {
+   "i": 4676,
+   "verdict": "MIXED",
+   "why": "Audit Committee is comprised entirely of non-management directors; rest is its oversight role and the auditor's responsibilities",
+   "text_sha256": "sha256:a97c37e20a5a90ab1f61a6834481685f7f76c3a2bcf134d26ca5411e360b8985"
+  },
+  {
+   "i": 4707,
+   "verdict": "FACT",
+   "why": "Audit and Finance Committee report signature heading; labels names 4708-4711",
+   "text_sha256": "sha256:0bb491bb399f51c75ff39c1755cc4124b115d43b8a15a8201361f867f7fffa3e"
+  },
+  {
+   "i": 4708,
+   "verdict": "FACT",
+   "why": "Report signature roster: Sachin Mehra (Chair)",
+   "text_sha256": "sha256:e9ff90f3c9974340ba7217a896825d50dd40e12ecc1b7cd88b606f8e2f86876d"
+  },
+  {
+   "i": 4709,
+   "verdict": "FACT",
+   "why": "Report signature roster: Craig Conway",
+   "text_sha256": "sha256:27a9a39089c89766e9b1030bf880d79771a7812dfcfda8065b2a46fea0d535e0"
+  },
+  {
+   "i": 4710,
+   "verdict": "FACT",
+   "why": "Report signature roster: Arnold Donald",
+   "text_sha256": "sha256:62f416d4621c2178c26054dfea7bd4280e032d421f80a36b252bd4e7e3a7daf6"
+  },
+  {
+   "i": 4711,
+   "verdict": "FACT",
+   "why": "Report signature roster: Oscar Munoz",
+   "text_sha256": "sha256:ccbb6f64ac7a90971f37ac47fd02ecf9de31daebaae94c1b850f75b06437b959"
+  },
+  {
+   "i": 4717,
+   "verdict": "FACT",
+   "why": "The 13 nominees (named) are current Board members; Chang and Kirk appointed by the Board effective July 9, 2025; the others last elected at the 2025 Annual Meeting",
+   "text_sha256": "sha256:613232cf65322e10486e99e3040b52a5c6729fd150800d9a5073426100d30797"
+  }
+ ],
+ "pool_facts": [
+  {
+   "i": 50,
+   "verdict": "FACT",
+   "why": "Signature title under 'Marc Benioff' (49): Chair of the Board of Directors",
+   "text_sha256": "sha256:a853c24248585932641b96f564a3712ba1c2ef1e5caa739d130de4c91deae0a7",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 67,
+   "verdict": "MIXED",
+   "why": "Chang and Kirk joined the Board this past year as independent directors; rest praises their expertise",
+   "text_sha256": "sha256:57dcf93c6186321972ef449b92f36604a91b41b2fc310a1689cd803d962ff8f1",
+   "redundant_with": [
+    806,
+    4717,
+    646
+   ]
+  },
+  {
+   "i": 77,
+   "verdict": "FACT",
+   "why": "Signature title under 'Arnold Donald' (76): Lead Independent Director",
+   "text_sha256": "sha256:c9d70c052b3e31cf377861de84c5a44498c9d336c360a763351d56382a16a0d6",
+   "redundant_with": [
+    665
+   ]
+  },
+  {
+   "i": 98,
+   "verdict": "FACT",
+   "why": "Notice: election of the 13 named director nominees",
+   "text_sha256": "sha256:3db511bdba2d806d4cc6389e45184338deaf7ae9dc31baa93ca6a0d3f8e38e12",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 293,
+   "verdict": "FACT",
+   "why": "Proxy summary: the same 13 named nominees",
+   "text_sha256": "sha256:3db511bdba2d806d4cc6389e45184338deaf7ae9dc31baa93ca6a0d3f8e38e12",
+   "redundant_with": [
+    4717,
+    98
+   ]
+  },
+  {
+   "i": 334,
+   "verdict": "FACT",
+   "why": "Summary nominee table roster entry: Marc Benioff",
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 335,
+   "verdict": "FACT",
+   "why": "Nominee table: Benioff is Chair (Chair, CEO & Co-Founder)",
+   "text_sha256": "sha256:2ee949ce8177836734c1f4327137e48c4bc5a691b364a9da970ccd8084bade5a",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 337,
+   "verdict": "FACT",
+   "why": "Summary nominee table roster entry: Laura Alber",
+   "text_sha256": "sha256:3518266b081fc0b729b014635e37a769be93e9cecbe3f4f625d4331f4675331f",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 340,
+   "verdict": "FACT",
+   "why": "Summary nominee table roster entry: Amy Chang",
+   "text_sha256": "sha256:99a28d12bf5cb7a37860b8a8aaa586f5076d2c3b5f5becdcc23b4ac7e0c8e70b",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 344,
+   "verdict": "FACT",
+   "why": "Summary nominee table roster entry: Craig Conway",
+   "text_sha256": "sha256:27a9a39089c89766e9b1030bf880d79771a7812dfcfda8065b2a46fea0d535e0",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 347,
+   "verdict": "FACT",
+   "why": "Summary nominee table entry: Arnold Donald, marked Lead Independent Director",
+   "text_sha256": "sha256:fc71a51c4a9e6e6742643170da7c7af4f47720953a3aa60e4b8028bf56273390",
+   "redundant_with": [
+    4717,
+    665
+   ]
+  },
+  {
+   "i": 350,
+   "verdict": "FACT",
+   "why": "Summary nominee table roster entry: Parker Harris",
+   "text_sha256": "sha256:b9a91f88266285d4aa6ad88fbf40fc8ab1ff171941263dfc7fb1e6cde2860971",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 353,
+   "verdict": "FACT",
+   "why": "Summary nominee table roster entry: David B. Kirk",
+   "text_sha256": "sha256:4226b6de6532f61bd95f71b385a861159ff48cc0dde95030cd4fc763a476e9c4",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 480,
+   "verdict": "MIXED",
+   "why": "Engagement statistics; names Mr. Benioff 'our Chair and Chief Executive Officer'",
+   "text_sha256": "sha256:2baaca812223678dfffe2a9db83c01f3120b3ec2e592231e1b8cb9d5830d4583",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 499,
+   "verdict": "FACT",
+   "why": "Board nominees are 77% independent directors",
+   "text_sha256": "sha256:ba09f2ea9945fb60337895a3ac95a7198688538351bcc5fe03634351b623dfe1",
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "i": 501,
+   "verdict": "FACT",
+   "why": "Two new directors effective July 2025 (also in 4717) and five new directors appointed in the past three fiscal years; the five-in-three-years refreshment count is stated nowhere else",
+   "text_sha256": "sha256:9ef8543ee2cf3edc366d67dfbbdd9232b93aa25e5819ed0118dd810c8e327bed",
+   "redundant_with": []
+  },
+  {
+   "i": 502,
+   "verdict": "FACT",
+   "why": "Audit, Compensation and Governance committees are fully independent",
+   "text_sha256": "sha256:f9044de957e244124dd6aa7a712eb09ffa978b9b59e6609b622e8573e2002085",
+   "redundant_with": [
+    696
+   ]
+  },
+  {
+   "i": 552,
+   "verdict": "FACT",
+   "why": "Voting items: election of the 13 named nominees",
+   "text_sha256": "sha256:d187fe7c30b2b5d060ae2902bfe750fa7c8eea855057079b2845329eba20ab26",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 636,
+   "verdict": "FACT",
+   "why": "Fully independent audit, compensation and governance committees, with independent chairs",
+   "text_sha256": "sha256:d4ca7e09ea7fa963291cfd8bd8ab51f356c086eeca2ad8fb0d76fbfb7305278c",
+   "redundant_with": [
+    696
+   ]
+  },
+  {
+   "i": 693,
+   "verdict": "MIXED",
+   "why": "Attendance/communications text stating 12 directors were then serving at the 2025 Annual Meeting (board size before the July 2025 appointments); no other block gives this count",
+   "text_sha256": "sha256:16e09a8271b54bc2848a72a54138bf8378a2c0aa320c9009bccf5a1abac637ef",
+   "redundant_with": []
+  },
+  {
+   "i": 706,
+   "verdict": "FACT",
+   "why": "Committee matrix roster of current directors: Marc Benioff (Chair & CEO)",
+   "text_sha256": "sha256:95e29ba69c7b063e1f40959ed9e8d3cb323697c687c1203ae079af02db2018c0",
+   "redundant_with": [
+    4717,
+    649
+   ]
+  },
+  {
+   "i": 707,
+   "verdict": "FACT",
+   "why": "Committee matrix roster of current directors: Laura Alber",
+   "text_sha256": "sha256:3518266b081fc0b729b014635e37a769be93e9cecbe3f4f625d4331f4675331f",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 708,
+   "verdict": "FACT",
+   "why": "Committee matrix roster of current directors: Amy Chang",
+   "text_sha256": "sha256:99a28d12bf5cb7a37860b8a8aaa586f5076d2c3b5f5becdcc23b4ac7e0c8e70b",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 709,
+   "verdict": "FACT",
+   "why": "Committee matrix roster of current directors: Craig Conway",
+   "text_sha256": "sha256:27a9a39089c89766e9b1030bf880d79771a7812dfcfda8065b2a46fea0d535e0",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 711,
+   "verdict": "FACT",
+   "why": "Committee matrix roster of current directors: Parker Harris",
+   "text_sha256": "sha256:b9a91f88266285d4aa6ad88fbf40fc8ab1ff171941263dfc7fb1e6cde2860971",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 712,
+   "verdict": "FACT",
+   "why": "Committee matrix roster of current directors: David B. Kirk",
+   "text_sha256": "sha256:4226b6de6532f61bd95f71b385a861159ff48cc0dde95030cd4fc763a476e9c4",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 713,
+   "verdict": "FACT",
+   "why": "Committee matrix roster of current directors: Neelie Kroes",
+   "text_sha256": "sha256:24bb11e05342e8097820c5668df0b578079c93288cefbbd933726d61083cd018",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 715,
+   "verdict": "FACT",
+   "why": "Committee matrix roster of current directors: Mason Morfit",
+   "text_sha256": "sha256:703ff6b0ccf4c0361490fc52ea80e463f24dbc518429f610f032a85d9541a709",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 716,
+   "verdict": "FACT",
+   "why": "Committee matrix roster of current directors: Oscar Munoz",
+   "text_sha256": "sha256:ccbb6f64ac7a90971f37ac47fd02ecf9de31daebaae94c1b850f75b06437b959",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 717,
+   "verdict": "FACT",
+   "why": "Committee matrix roster of current directors: John V. Roos",
+   "text_sha256": "sha256:41771329bb5ba5abe5ca490c07873ea32406521c19dbaf2c61efacd511f0ac3c",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 718,
+   "verdict": "FACT",
+   "why": "Committee matrix roster of current directors: Robin Washington",
+   "text_sha256": "sha256:9f9805a341e2efa598a213258833832f86a6d70b1c6e026ed838933fd21ce7a4",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 719,
+   "verdict": "FACT",
+   "why": "Committee matrix roster: Maynard Webb is a current director (footnote 1: not standing)",
+   "text_sha256": "sha256:68325c9036ef34f113b7fc657cd74062ab1123d7a9750c897cd0280abbddbb28",
+   "redundant_with": [
+    995,
+    646
+   ]
+  },
+  {
+   "i": 919,
+   "verdict": "MIXED",
+   "why": "Director RSU grants; states Chang and Kirk were appointed to the Board in July 2025",
+   "text_sha256": "sha256:b005c48faee1cac05f0579d6190f660d12d14da7d4017a56f1553a69bcf64fb0",
+   "redundant_with": [
+    4717,
+    806
+   ]
+  },
+  {
+   "i": 933,
+   "verdict": "MIXED",
+   "why": "Director-pay intro; Washington's former roles as Lead Independent Director and Governance Committee Chair ended when she became COFO effective 3/21/2025, when Donald became LID and Roos became Governance Committee Chair",
+   "text_sha256": "sha256:e756e68fbf90cd91b2e24ce9b7f12fa99b41bb9a426ee8eaaf355ac655761c7a",
+   "redundant_with": [
+    665,
+    962,
+    3091,
+    964
+   ]
+  },
+  {
+   "i": 962,
+   "verdict": "MIXED",
+   "why": "Fee note; Donald has been LID since 3/21/2025, following Washington's resignation as LID on her move to COFO",
+   "text_sha256": "sha256:319bd18cbcb4974983be046229f26d92b306b69998d0b69e6610e23ed8553b82",
+   "redundant_with": [
+    665,
+    933,
+    3091
+   ]
+  },
+  {
+   "i": 963,
+   "verdict": "MIXED",
+   "why": "Fee waiver; Morfit served as Compensation Committee Chair during fiscal 2026",
+   "text_sha256": "sha256:26ca233cd2ad5b29b7eb86d76ac27651c27985da80ce36c7b9bd20db864e03e4",
+   "redundant_with": [
+    751,
+    4668,
+    1610
+   ]
+  },
+  {
+   "i": 964,
+   "verdict": "MIXED",
+   "why": "Fee note; Roos chaired the Compensation Committee in Q1 FY2026 and the Governance Committee in Q2-Q4; the Governance part is in 933, but his Q1 Compensation chairmanship (the Roos-to-Morfit handover) is stated nowhere else",
+   "text_sha256": "sha256:56d03e66afd8e603594298a6bfb8055ac6d3dbf707bd3b4af6d58e52bb20220c",
+   "redundant_with": []
+  },
+  {
+   "i": 1007,
+   "verdict": "FACT",
+   "why": "Board Composition table: Benioff is Chair (Chair, CEO & Co-Founder)",
+   "text_sha256": "sha256:2ee949ce8177836734c1f4327137e48c4bc5a691b364a9da970ccd8084bade5a",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 1106,
+   "verdict": "MIXED",
+   "why": "All nominees are current Board members; Chang and Kirk appointed effective July 9, 2025; other nominees last elected at 2025 Annual Meeting; plus ValueAct agreement, no family relationships, director terms",
+   "text_sha256": "sha256:f6deef52f088d24507fc3b4ef7cba089abd7c402e6c2e1b9770d5f7d7d39fe40",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1108,
+   "verdict": "MIXED",
+   "why": "Qualification bullet citing Benioff's tenure as CEO and Chair of the Board",
+   "text_sha256": "sha256:6f6b697baa7b390d48e1ea41ea60017a050e56c5ee36d967762e668dde4de76b",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 1112,
+   "verdict": "FACT",
+   "why": "Benioff: Chair of the Board, CEO (since 2001) and co-founder",
+   "text_sha256": "sha256:b10935187f4416dbbe69a9ab559242a0546c4d3ffbf6e5140c0e1cd0317bb861",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 1124,
+   "verdict": "FACT",
+   "why": "Benioff bio card title 'Chair, Chief Executive Officer & Co-Founder, Salesforce'",
+   "text_sha256": "sha256:c0ec18b0074120dbc8ee1c7bb3d0840dd72c419288945a49fc51f0d2ed861c04",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 1129,
+   "verdict": "FACT",
+   "why": "Benioff bio card: Director since 1999 (board membership)",
+   "text_sha256": "sha256:330d942f92e2d3ec8d8e535ca9bbb306af9dc120590c96577a35fbda13da04c9",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1162,
+   "verdict": "FACT",
+   "why": "Alber bio card: Director since 2021 (board membership)",
+   "text_sha256": "sha256:bdafed20e9489e3cf65dfd9bb9127b452aba5f4493dc7cf018e151279dfdacca",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1163,
+   "verdict": "FACT",
+   "why": "Alber bio card: serves on Nominating & Corporate Governance",
+   "text_sha256": "sha256:c098d63b90ccdf4638d05879959b251afbc723498ab3bb1f9bdf2c5c627d64c5",
+   "redundant_with": [
+    773
+   ]
+  },
+  {
+   "i": 1202,
+   "verdict": "FACT",
+   "why": "Chang bio card: Director since 2025 (board membership)",
+   "text_sha256": "sha256:6c7d7619fed1c6b8ae9f54d6bffb00c8dd1eb5cf0cb8f63e3e85d6644d96064b",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1203,
+   "verdict": "FACT",
+   "why": "Chang bio card: serves on Nominating & Corporate Governance and Cybersecurity & Privacy",
+   "text_sha256": "sha256:51a8ab56b79e612378ea80cefafc31a50269600007d261960ce41256260cb3c2",
+   "redundant_with": [
+    773,
+    779
+   ]
+  },
+  {
+   "i": 1238,
+   "verdict": "FACT",
+   "why": "Conway bio card: Director since 2005 (board membership)",
+   "text_sha256": "sha256:74fdd7ffabcad25799ce858559e062c628630111a5d44331656e98ed7a9b69d0",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1239,
+   "verdict": "FACT",
+   "why": "Conway bio card: serves on Audit & Finance and Business Transformation",
+   "text_sha256": "sha256:7253ffe91fdf708f3aaeb39bb6311146ff81ba0104e601293562493bb341eb0f",
+   "redundant_with": [
+    743,
+    786
+   ]
+  },
+  {
+   "i": 1278,
+   "verdict": "FACT",
+   "why": "Donald bio card title 'Lead Independent Director' (with 1279)",
+   "text_sha256": "sha256:cc2724e5d973b0bd27be95c8cd2eec93a4d003ac81f74f33eb0a4b83dd0b42a8",
+   "redundant_with": [
+    665
+   ]
+  },
+  {
+   "i": 1279,
+   "verdict": "FACT",
+   "why": "Completes Donald's card title 'Lead Independent Director' (with 1278)",
+   "text_sha256": "sha256:81fa43b23661e975846bd5ee69c9a0fca4a08fed465a22a52d06891871ce8ea7",
+   "redundant_with": [
+    665
+   ]
+  },
+  {
+   "i": 1284,
+   "verdict": "FACT",
+   "why": "Donald bio card: Director since 2023 (board membership)",
+   "text_sha256": "sha256:dad50312c6590e54037c6b903ba09f17a5fa207892512169f1ca5fd672afb3f0",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1285,
+   "verdict": "FACT",
+   "why": "Donald bio card: serves on Audit & Finance and Nominating & Corporate Governance",
+   "text_sha256": "sha256:f869cda805bad0934c06794edcb802a8c89e8ec8ecb69d2a95641ab76019685d",
+   "redundant_with": [
+    743,
+    773
+   ]
+  },
+  {
+   "i": 1321,
+   "verdict": "FACT",
+   "why": "Harris bio card: Director since 2018 (board membership)",
+   "text_sha256": "sha256:27c869abb4bf4552ff306448c7ff4b1bc14f1fcbc025dde27757c06dd92787c1",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1322,
+   "verdict": "FACT",
+   "why": "Harris bio card: serves on Cybersecurity & Privacy",
+   "text_sha256": "sha256:e9d1b02d1b65beee02dc47a180b155ff70e6bc502ae6d57625a2b21342ed0db6",
+   "redundant_with": [
+    779
+   ]
+  },
+  {
+   "i": 1361,
+   "verdict": "FACT",
+   "why": "Kirk bio card: Director since 2025 (board membership)",
+   "text_sha256": "sha256:6c7d7619fed1c6b8ae9f54d6bffb00c8dd1eb5cf0cb8f63e3e85d6644d96064b",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1362,
+   "verdict": "FACT",
+   "why": "Kirk bio card: serves on Compensation and Cybersecurity & Privacy",
+   "text_sha256": "sha256:1fcdac1aecc9700378c2ca8335eb612daecf82a9463add81e8a3fe5ee67dcbf9",
+   "redundant_with": [
+    751,
+    779
+   ]
+  },
+  {
+   "i": 1400,
+   "verdict": "FACT",
+   "why": "Kroes bio card: Director since 2016 (board membership)",
+   "text_sha256": "sha256:169613c30cae7e9f19de8f089c50a33dd111dbe6b6c8df34ed3fb1c00a01157a",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1401,
+   "verdict": "FACT",
+   "why": "Kroes bio card: serves on Compensation and chairs Cybersecurity & Privacy",
+   "text_sha256": "sha256:6f68664f7b3968cd3c71fb5d2110507fe3e8865bc2fe106cda2b9efba78d44b4",
+   "redundant_with": [
+    751,
+    779
+   ]
+  },
+  {
+   "i": 1437,
+   "verdict": "FACT",
+   "why": "Mehra bio card: Director since 2023 (board membership)",
+   "text_sha256": "sha256:dad50312c6590e54037c6b903ba09f17a5fa207892512169f1ca5fd672afb3f0",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1438,
+   "verdict": "FACT",
+   "why": "Mehra bio card: chairs Audit & Finance",
+   "text_sha256": "sha256:d51ea35230977ee3d2fb41cee0fe86f45bcfb5d74febceb426af6e855933c895",
+   "redundant_with": [
+    743
+   ]
+  },
+  {
+   "i": 1455,
+   "verdict": "MIXED",
+   "why": "Qualification bullet referring to Morfit's leadership of the Board's Compensation Committee",
+   "text_sha256": "sha256:ad3d727438df8cedca757f0f8812493b5dc14b7092e2f0f99bc4eaa60a7cdbe5",
+   "redundant_with": [
+    751,
+    4668
+   ]
+  },
+  {
+   "i": 1473,
+   "verdict": "FACT",
+   "why": "Morfit bio card: Director since 2023 (board membership)",
+   "text_sha256": "sha256:dad50312c6590e54037c6b903ba09f17a5fa207892512169f1ca5fd672afb3f0",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1474,
+   "verdict": "FACT",
+   "why": "Morfit bio card: chairs Compensation, serves on Business Transformation",
+   "text_sha256": "sha256:3d5f07cf74769c649c8cb4836e53fa0b448bef66c3725f4911645511e1b9ebb5",
+   "redundant_with": [
+    751,
+    786
+   ]
+  },
+  {
+   "i": 1490,
+   "verdict": "MIXED",
+   "why": "Qualification bullet referring to Munoz's leadership of the Board's Business Transformation Committee",
+   "text_sha256": "sha256:ad711fd14095ef53fa7679c5ae79a200a9df66705601174fa036278ef3a1af10",
+   "redundant_with": [
+    786
+   ]
+  },
+  {
+   "i": 1514,
+   "verdict": "FACT",
+   "why": "Munoz bio card: Director since 2022 (board membership)",
+   "text_sha256": "sha256:85898b8c0c63316825fd64f1a3ffb08247ab2d7617bcaa18d4a41b4342081af0",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1515,
+   "verdict": "FACT",
+   "why": "Munoz bio card: serves on Audit & Finance, chairs Business Transformation",
+   "text_sha256": "sha256:0ec97001b2afee9e8733d0d9619404305537e84c7ad33ac3b8bed77f04d1c66c",
+   "redundant_with": [
+    743,
+    786
+   ]
+  },
+  {
+   "i": 1560,
+   "verdict": "FACT",
+   "why": "Roos bio card: Director since 2013 (board membership)",
+   "text_sha256": "sha256:21b7c28442cf9fd0faa5eb146fd06dc4512dc6000256480e2c6438fb981622cc",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1561,
+   "verdict": "FACT",
+   "why": "Roos bio card: serves on Compensation, chairs Nominating & Corporate Governance",
+   "text_sha256": "sha256:2f7cd9dd2add6a1faff7566490b7887013216ce2a2a73600927f683e091ba744",
+   "redundant_with": [
+    751,
+    773
+   ]
+  },
+  {
+   "i": 1578,
+   "verdict": "MIXED",
+   "why": "Washington bio bullet: Salesforce's former Lead Independent Director (with outside-board experience)",
+   "text_sha256": "sha256:10704f84829b70755ea55a7136786e6239cb39f6396a0de191409a82512ed0f4",
+   "redundant_with": [
+    665,
+    933
+   ]
+  },
+  {
+   "i": 1602,
+   "verdict": "FACT",
+   "why": "Washington bio card: Director since 2013 (board membership)",
+   "text_sha256": "sha256:21b7c28442cf9fd0faa5eb146fd06dc4512dc6000256480e2c6438fb981622cc",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1603,
+   "verdict": "FACT",
+   "why": "Washington bio card: serves on Business Transformation",
+   "text_sha256": "sha256:e281f73dc9f64788a6c12bd36eb3a2c6cfbbab09f9a2a4e34a182d814f5cb4a0",
+   "redundant_with": [
+    786
+   ]
+  },
+  {
+   "i": 1610,
+   "verdict": "MIXED",
+   "why": "Compensation Committee letter by its Chair (signed Morfit, 1640-1641), now in his second year as Chair",
+   "text_sha256": "sha256:3371711a69a9c6bd2ef2f7e3791f8f7b5097e40a8ac84b2c5209ffd477e9a929",
+   "redundant_with": [
+    751,
+    4668,
+    963
+   ]
+  },
+  {
+   "i": 1640,
+   "verdict": "FACT",
+   "why": "Committee letter signature roster: Mason Morfit, with 'Chair' (1641)",
+   "text_sha256": "sha256:703ff6b0ccf4c0361490fc52ea80e463f24dbc518429f610f032a85d9541a709",
+   "redundant_with": [
+    751,
+    4668
+   ]
+  },
+  {
+   "i": 1641,
+   "verdict": "FACT",
+   "why": "'Chair' under Mason Morfit: Compensation Committee Chair",
+   "text_sha256": "sha256:f56648cd7573460b58fb9642f7e660b6d095ef1e7235f65464f6a3df763728de",
+   "redundant_with": [
+    751,
+    4668
+   ]
+  },
+  {
+   "i": 1642,
+   "verdict": "FACT",
+   "why": "'On behalf of the Compensation Committee' labels the signing members 1643-1646",
+   "text_sha256": "sha256:5f572a02434fc2e8f4ab7594a3dfe767b1d2f2a46a072dccb90a3ca746b6d989",
+   "redundant_with": [
+    751,
+    4667
+   ]
+  },
+  {
+   "i": 1643,
+   "verdict": "FACT",
+   "why": "Compensation Committee letter signature roster: David B. Kirk",
+   "text_sha256": "sha256:4226b6de6532f61bd95f71b385a861159ff48cc0dde95030cd4fc763a476e9c4",
+   "redundant_with": [
+    751,
+    4669
+   ]
+  },
+  {
+   "i": 1644,
+   "verdict": "FACT",
+   "why": "Compensation Committee letter signature roster: Neelie Kroes",
+   "text_sha256": "sha256:24bb11e05342e8097820c5668df0b578079c93288cefbbd933726d61083cd018",
+   "redundant_with": [
+    751,
+    4670
+   ]
+  },
+  {
+   "i": 1645,
+   "verdict": "FACT",
+   "why": "Compensation Committee letter signature roster: John V. Roos",
+   "text_sha256": "sha256:41771329bb5ba5abe5ca490c07873ea32406521c19dbaf2c61efacd511f0ac3c",
+   "redundant_with": [
+    751,
+    4671
+   ]
+  },
+  {
+   "i": 1646,
+   "verdict": "FACT",
+   "why": "Compensation Committee letter signature roster: Maynard Webb",
+   "text_sha256": "sha256:e12f215a1a650215adb2811a01da535d515bf8075906ceae5e9a3239c2a7536a",
+   "redundant_with": [
+    751,
+    4672
+   ]
+  },
+  {
+   "i": 1655,
+   "verdict": "FACT",
+   "why": "NEO list entry: Marc Benioff, our Chair of the Board and CEO",
+   "text_sha256": "sha256:5ec65bdc214b1594a0b5b7a49bb6548bc3a67e91e30abec22e3ff0697027b947",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 1773,
+   "verdict": "MIXED",
+   "why": "Engagement statistics; names Mr. Benioff 'our Chair and Chief Executive Officer'",
+   "text_sha256": "sha256:9ab3bc598c5e8e500d247434fb5513700a05df117834cfade532cbca92016edf",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 1943,
+   "verdict": "MIXED",
+   "why": "Compensation Committee charter/meetings text stating Kirk joined the Compensation Committee in December 2025 after his July 2025 Board appointment; the December 2025 committee change is stated nowhere else (751/4280 give only membership)",
+   "text_sha256": "sha256:489a6295044c39a40854f81118ca00b03d02cca18cb1f07e6614b4b4fcaa667e",
+   "redundant_with": []
+  },
+  {
+   "i": 2682,
+   "verdict": "MIXED",
+   "why": "CEO security program; cites Benioff's position as co-founder, CEO and Chairman",
+   "text_sha256": "sha256:2b6f27a5ca94f5de2ef83ff2fbe3ff54ca5cd3ffc56311aa5825a3d897e6aed9",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 2697,
+   "verdict": "MIXED",
+   "why": "Security study; cites Benioff as co-founder, CEO and Chairman",
+   "text_sha256": "sha256:3b54185498bed8520ae5c21f27d3203c59d6b727fd5050988edbe3ab674a5985",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 2977,
+   "verdict": "FACT",
+   "why": "Summary Compensation Table position for Benioff (2976): Chair of the Board and CEO",
+   "text_sha256": "sha256:a409685320e6d631cc019f5c0f6b18b3cd30b438db6eea747779c50b6a377ec7",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 3091,
+   "verdict": "MIXED",
+   "why": "Pay footnote; Washington served as Lead Independent Director and NCG Committee Chair until stepping down on her appointment as COFO on 3/21/2025",
+   "text_sha256": "sha256:139ba07dec168a5216fe17c6aff545590b0b0d4d6434bd78245d02e95423d0e9",
+   "redundant_with": [
+    933,
+    665
+   ]
+  },
+  {
+   "i": 4298,
+   "verdict": "MIXED",
+   "why": "Related-party item naming Marc Benioff 'our Chair and CEO'",
+   "text_sha256": "sha256:0d0c1082c4441d79ff828d45d3def208a8032977fbd00c8ec649f4c286971bc4",
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "i": 4300,
+   "verdict": "MIXED",
+   "why": "Related-party employees; states Munoz was appointed to the Board in January 2022",
+   "text_sha256": "sha256:790a348ea7b2fda1946183c2dc5e872b896c38bf2345df0fc744ac63fb0d85fd",
+   "redundant_with": [
+    1514
+   ]
+  },
+  {
+   "i": 4301,
+   "verdict": "MIXED",
+   "why": "Related-party approvals; says Munoz and Conway later joined the Audit Committee",
+   "text_sha256": "sha256:8bf7f9c99f21166113c6d6a370664f6b6bfde77c244b064a12eaa77c59cb3280",
+   "redundant_with": [
+    743
+   ]
+  },
+  {
+   "i": 4860,
+   "verdict": "MIXED",
+   "why": "Plan administration; the Compensation Committee is comprised entirely of independent, non-employee directors",
+   "text_sha256": "sha256:c2942dd9811d36a0b9ad7bcc3a93a9b24bebcaeaab9212b5162381669bdad5b7",
+   "redundant_with": [
+    757,
+    4280
+   ]
+  },
+  {
+   "i": 4930,
+   "verdict": "MIXED",
+   "why": "Plan eligibility; states there were 11 non-employee directors as of March 25, 2026; no other block states this count (646 addresses independence, not employment status)",
+   "text_sha256": "sha256:9a93d6b82c76440b9811ca05ef3483bdcdbce5419a342a48fb9ee4123286f3e1",
+   "redundant_with": []
+  },
+  {
+   "i": 5124,
+   "verdict": "FACT",
+   "why": "Plan awards table position for Benioff (5123): Chair of the Board and CEO",
+   "text_sha256": "sha256:152fbd7b41714b116f3936a21dd18fb8d2ae4740d663050dfe26b0d04da1cd19",
+   "redundant_with": [
+    649
+   ]
+  }
+ ],
+ "outside_pool_facts": [
+  {
+   "i": 357,
+   "verdict": "FACT",
+   "why": "Summary nominee table roster entry: Neelie Kroes",
+   "text_sha256": "sha256:24bb11e05342e8097820c5668df0b578079c93288cefbbd933726d61083cd018",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 360,
+   "verdict": "FACT",
+   "why": "Summary nominee table entry: Sachin Mehra, marked Financial Expert",
+   "text_sha256": "sha256:9142bdda30a3dae78426d64b9ea5bc37765bae728de808c5647aa59cf4cf7378",
+   "redundant_with": [
+    4717,
+    696
+   ]
+  },
+  {
+   "i": 363,
+   "verdict": "FACT",
+   "why": "Summary nominee table roster entry: Mason Morfit",
+   "text_sha256": "sha256:703ff6b0ccf4c0361490fc52ea80e463f24dbc518429f610f032a85d9541a709",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 366,
+   "verdict": "FACT",
+   "why": "Summary nominee table roster entry: Oscar Munoz",
+   "text_sha256": "sha256:ccbb6f64ac7a90971f37ac47fd02ecf9de31daebaae94c1b850f75b06437b959",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 369,
+   "verdict": "FACT",
+   "why": "Summary nominee table roster entry: John V. Roos",
+   "text_sha256": "sha256:41771329bb5ba5abe5ca490c07873ea32406521c19dbaf2c61efacd511f0ac3c",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 372,
+   "verdict": "FACT",
+   "why": "Summary nominee table roster entry: Robin Washington",
+   "text_sha256": "sha256:9f9805a341e2efa598a213258833832f86a6d70b1c6e026ed838933fd21ce7a4",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 710,
+   "verdict": "FACT",
+   "why": "Committee matrix roster: Arnold Donald (L = Lead Independent Director per legend 727)",
+   "text_sha256": "sha256:15ebda0be78d3d43749f5f8f9e15bd0aa5527d073bf17653a180968a02581105",
+   "redundant_with": [
+    4717,
+    665
+   ]
+  },
+  {
+   "i": 714,
+   "verdict": "FACT",
+   "why": "Committee matrix roster: Sachin Mehra (FE = Financial Expert per legend 727)",
+   "text_sha256": "sha256:14762fd49ce1d01b6bbba0d1a028edd4856cd093698168d338f455db0d96ca16",
+   "redundant_with": [
+    4717,
+    696
+   ]
+  },
+  {
+   "i": 1006,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table roster entry: Marc Benioff",
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1009,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table roster entry: Laura Alber",
+   "text_sha256": "sha256:3518266b081fc0b729b014635e37a769be93e9cecbe3f4f625d4331f4675331f",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1012,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table roster entry: Amy Chang",
+   "text_sha256": "sha256:99a28d12bf5cb7a37860b8a8aaa586f5076d2c3b5f5becdcc23b4ac7e0c8e70b",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1016,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table roster entry: Craig Conway",
+   "text_sha256": "sha256:27a9a39089c89766e9b1030bf880d79771a7812dfcfda8065b2a46fea0d535e0",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1019,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table entry: Arnold Donald (L = Lead Independent Director per legend 1048)",
+   "text_sha256": "sha256:15ebda0be78d3d43749f5f8f9e15bd0aa5527d073bf17653a180968a02581105",
+   "redundant_with": [
+    4717,
+    665
+   ]
+  },
+  {
+   "i": 1022,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table roster entry: Parker Harris",
+   "text_sha256": "sha256:b9a91f88266285d4aa6ad88fbf40fc8ab1ff171941263dfc7fb1e6cde2860971",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1025,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table roster entry: David B. Kirk",
+   "text_sha256": "sha256:4226b6de6532f61bd95f71b385a861159ff48cc0dde95030cd4fc763a476e9c4",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1029,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table roster entry: Neelie Kroes",
+   "text_sha256": "sha256:24bb11e05342e8097820c5668df0b578079c93288cefbbd933726d61083cd018",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1032,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table entry: Sachin Mehra (FE = Financial Expert per legend 1048)",
+   "text_sha256": "sha256:14762fd49ce1d01b6bbba0d1a028edd4856cd093698168d338f455db0d96ca16",
+   "redundant_with": [
+    4717,
+    696
+   ]
+  },
+  {
+   "i": 1035,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table roster entry: Mason Morfit",
+   "text_sha256": "sha256:703ff6b0ccf4c0361490fc52ea80e463f24dbc518429f610f032a85d9541a709",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1038,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table roster entry: Oscar Munoz",
+   "text_sha256": "sha256:ccbb6f64ac7a90971f37ac47fd02ecf9de31daebaae94c1b850f75b06437b959",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1041,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table roster entry: John V. Roos",
+   "text_sha256": "sha256:41771329bb5ba5abe5ca490c07873ea32406521c19dbaf2c61efacd511f0ac3c",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1044,
+   "verdict": "FACT",
+   "why": "Board Composition nominee table roster entry: Robin Washington",
+   "text_sha256": "sha256:9f9805a341e2efa598a213258833832f86a6d70b1c6e026ed838933fd21ce7a4",
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "i": 1432,
+   "verdict": "FACT",
+   "why": "Mehra bio card title 'Financial Expert'",
+   "text_sha256": "sha256:f6f7971cfe609a293899f3d4918caf2e9dfac521741c3d3866f7138e413e4899",
+   "redundant_with": [
+    696
+   ]
+  }
+ ],
+ "pool": [
+  {
+   "i": 21,
+   "text_sha256": "sha256:ea8e24f0c5579452dc3e16589132c8412c91680c71bb987d014617a5914520f5"
+  },
+  {
+   "i": 50,
+   "text_sha256": "sha256:a853c24248585932641b96f564a3712ba1c2ef1e5caa739d130de4c91deae0a7"
+  },
+  {
+   "i": 56,
+   "text_sha256": "sha256:c9d70c052b3e31cf377861de84c5a44498c9d336c360a763351d56382a16a0d6"
+  },
+  {
+   "i": 59,
+   "text_sha256": "sha256:4861c25626de28d47c8b58a3c93fee9095b0fc832cdc9692ebfe58b5ffe24ec4"
+  },
+  {
+   "i": 62,
+   "text_sha256": "sha256:dd1a6c2eb86b3bc719855006b06e798ce6d1ff291d8b030f73caff8dd1f70a2a"
+  },
+  {
+   "i": 65,
+   "text_sha256": "sha256:54028025efe2594efa6670ee43c2196d1149da9105e33e3f2e243706f1c49d91"
+  },
+  {
+   "i": 67,
+   "text_sha256": "sha256:57dcf93c6186321972ef449b92f36604a91b41b2fc310a1689cd803d962ff8f1"
+  },
+  {
+   "i": 68,
+   "text_sha256": "sha256:bf21a0aa25cc6e61c2d8793cdb1f459760d05317fac7a64d4a38aa3b5217c51d"
+  },
+  {
+   "i": 73,
+   "text_sha256": "sha256:f18ec40ab4e441f3b9937a028a64453f7b002c08b34c562cba52256e3d7b20af"
+  },
+  {
+   "i": 74,
+   "text_sha256": "sha256:090b09af25279a67b7ec1d126ef379b25a26eadd0d968dd3692eb3109d10f669"
+  },
+  {
+   "i": 76,
+   "text_sha256": "sha256:62f416d4621c2178c26054dfea7bd4280e032d421f80a36b252bd4e7e3a7daf6"
+  },
+  {
+   "i": 77,
+   "text_sha256": "sha256:c9d70c052b3e31cf377861de84c5a44498c9d336c360a763351d56382a16a0d6"
+  },
+  {
+   "i": 86,
+   "text_sha256": "sha256:f34a7388e3f3e7c928c26ebeceb29c374e5e6eb1c4e605528f8f16edf2d57cba"
+  },
+  {
+   "i": 91,
+   "text_sha256": "sha256:15b61974b2707a7b3d4201385e0f01f4ff5eb1f17c5639d98788ee5add2025cd"
+  },
+  {
+   "i": 98,
+   "text_sha256": "sha256:3db511bdba2d806d4cc6389e45184338deaf7ae9dc31baa93ca6a0d3f8e38e12"
+  },
+  {
+   "i": 101,
+   "text_sha256": "sha256:4674abccca2a83a294d7bc87f17ae365375c97eef01adbaecac4b8fdba1140db"
+  },
+  {
+   "i": 109,
+   "text_sha256": "sha256:5bdc3a120cb2289c5efcee15f85ec8df55451dc0178a5bf095944922c99d6f51"
+  },
+  {
+   "i": 111,
+   "text_sha256": "sha256:257c229ddeab95f0440a37c46af391ef13a3bb3fe8aca10eafce0d26dbffd7b0"
+  },
+  {
+   "i": 121,
+   "text_sha256": "sha256:76ad7bb94d93f5362272134fe54643de497f032dbad57cd47c9583e7bd6fc171"
+  },
+  {
+   "i": 289,
+   "text_sha256": "sha256:4816cbfd74aa8297b9c9cdaae89e2f0d2ced6041e952dfcd114e01b4c82e9c6d"
+  },
+  {
+   "i": 293,
+   "text_sha256": "sha256:3db511bdba2d806d4cc6389e45184338deaf7ae9dc31baa93ca6a0d3f8e38e12"
+  },
+  {
+   "i": 302,
+   "text_sha256": "sha256:4674abccca2a83a294d7bc87f17ae365375c97eef01adbaecac4b8fdba1140db"
+  },
+  {
+   "i": 309,
+   "text_sha256": "sha256:4816cbfd74aa8297b9c9cdaae89e2f0d2ced6041e952dfcd114e01b4c82e9c6d"
+  },
+  {
+   "i": 313,
+   "text_sha256": "sha256:8f49622b08edfe74a5ae685e4d6641c7a1aa01ec6f1ed9652c567579a6edf8ac"
+  },
+  {
+   "i": 329,
+   "text_sha256": "sha256:129d1d031cd70dc533caf79fdd0ec2daa34dc676dd979a2c59453a52745d1be6"
+  },
+  {
+   "i": 330,
+   "text_sha256": "sha256:5632112e241ff4424153aa34ca8e2923efebcb96ba34eb463c57245ff2c02f75"
+  },
+  {
+   "i": 332,
+   "text_sha256": "sha256:6e3b70c7a266cb4f685e16ba52935d12290a26bd166e2dd706d382e24f999d13"
+  },
+  {
+   "i": 333,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 334,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 335,
+   "text_sha256": "sha256:2ee949ce8177836734c1f4327137e48c4bc5a691b364a9da970ccd8084bade5a"
+  },
+  {
+   "i": 337,
+   "text_sha256": "sha256:3518266b081fc0b729b014635e37a769be93e9cecbe3f4f625d4331f4675331f"
+  },
+  {
+   "i": 340,
+   "text_sha256": "sha256:99a28d12bf5cb7a37860b8a8aaa586f5076d2c3b5f5becdcc23b4ac7e0c8e70b"
+  },
+  {
+   "i": 344,
+   "text_sha256": "sha256:27a9a39089c89766e9b1030bf880d79771a7812dfcfda8065b2a46fea0d535e0"
+  },
+  {
+   "i": 347,
+   "text_sha256": "sha256:fc71a51c4a9e6e6742643170da7c7af4f47720953a3aa60e4b8028bf56273390"
+  },
+  {
+   "i": 350,
+   "text_sha256": "sha256:b9a91f88266285d4aa6ad88fbf40fc8ab1ff171941263dfc7fb1e6cde2860971"
+  },
+  {
+   "i": 353,
+   "text_sha256": "sha256:4226b6de6532f61bd95f71b385a861159ff48cc0dde95030cd4fc763a476e9c4"
+  },
+  {
+   "i": 367,
+   "text_sha256": "sha256:116aa53444a4e99d353984d3af82059da53a7df1167a8707b0982c21014a8963"
+  },
+  {
+   "i": 375,
+   "text_sha256": "sha256:db591c0712c4ecdb46d1a270b657d87696a6077ef31b41e0d77f469aa80ac8c7"
+  },
+  {
+   "i": 392,
+   "text_sha256": "sha256:c4b7330bd91e0c971041618056cb7201fd3f384e5db390bc89230d70712d7a47"
+  },
+  {
+   "i": 396,
+   "text_sha256": "sha256:a2e56d9f966105f9186b997ba8ad59be867730d539c6f63c23580e28dbc56622"
+  },
+  {
+   "i": 402,
+   "text_sha256": "sha256:cb3ce91c684f8556bbf4c0db69a19daa4c55d2ca7fd3118a18c10c8acc4d536a"
+  },
+  {
+   "i": 405,
+   "text_sha256": "sha256:58b20db42d9a6af7dbe6dea4d8a659072f5dab10386106da751890353fc562e7"
+  },
+  {
+   "i": 470,
+   "text_sha256": "sha256:4d4c2214b1cdb68f3d695c7f19dd17ce3000309f4a82c4159a2f86f4d85a93e3"
+  },
+  {
+   "i": 477,
+   "text_sha256": "sha256:678fa881e95b057177ba26dac0e497dadd541a3ef9ae02f9aae4079749c54d7f"
+  },
+  {
+   "i": 480,
+   "text_sha256": "sha256:2baaca812223678dfffe2a9db83c01f3120b3ec2e592231e1b8cb9d5830d4583"
+  },
+  {
+   "i": 496,
+   "text_sha256": "sha256:466bb1ab5a54f28c70bc2f19fc429865b2d905a0529b39e876dd65bce848c1e8"
+  },
+  {
+   "i": 497,
+   "text_sha256": "sha256:ebac221e092b544d2bbe04e5f8fe6ed83fde203ba8038da94ba8c01dcb955a2f"
+  },
+  {
+   "i": 499,
+   "text_sha256": "sha256:ba09f2ea9945fb60337895a3ac95a7198688538351bcc5fe03634351b623dfe1"
+  },
+  {
+   "i": 501,
+   "text_sha256": "sha256:9ef8543ee2cf3edc366d67dfbbdd9232b93aa25e5819ed0118dd810c8e327bed"
+  },
+  {
+   "i": 502,
+   "text_sha256": "sha256:f9044de957e244124dd6aa7a712eb09ffa978b9b59e6609b622e8573e2002085"
+  },
+  {
+   "i": 503,
+   "text_sha256": "sha256:724614138914dc466743fe90baf5c01c9f23ef3c7587a5515a1b8e4760ff246c"
+  },
+  {
+   "i": 504,
+   "text_sha256": "sha256:14611122ad58c1f61ba431decca8c20b5a76090e82dc55b5ab3f1d72f2e85ba4"
+  },
+  {
+   "i": 505,
+   "text_sha256": "sha256:d2b44cdd12eda340cfe454365352b890d7efa2ade2095fbf5178334748183322"
+  },
+  {
+   "i": 506,
+   "text_sha256": "sha256:aec8b009914f04eab853907254829a9423d133d567997eac0c2f57f9a15b71f5"
+  },
+  {
+   "i": 507,
+   "text_sha256": "sha256:3d26c979356f9ccb9822e4065fbd29be0cf434eeaf2e23d3136b8cc809d5835f"
+  },
+  {
+   "i": 509,
+   "text_sha256": "sha256:b10184083a39efc2a0bec445bae892db323a9e1dcc91aa5b8a1a33d900d4243a"
+  },
+  {
+   "i": 510,
+   "text_sha256": "sha256:ca46358f0d420d6d3d05583aabce216a4e94875757d72384ecfe245b0da21726"
+  },
+  {
+   "i": 512,
+   "text_sha256": "sha256:653ff7ff050e265bef743325161e376dc624d0bdf19e8cbecf8eba4b8e72545c"
+  },
+  {
+   "i": 513,
+   "text_sha256": "sha256:38969f20d557007b7770b654f0ded7a7e0d58d880b2b80954341d25b43fa353e"
+  },
+  {
+   "i": 514,
+   "text_sha256": "sha256:62fe9c43d416be7df772ea6c635b9470a49093c24c44488b5a4e7d6aa6960536"
+  },
+  {
+   "i": 516,
+   "text_sha256": "sha256:a209980c53acbdcd904d3d456f457735de4e028cd9f2bafee15dfc8e93d183cc"
+  },
+  {
+   "i": 524,
+   "text_sha256": "sha256:0cb356818b79d55cbba08aa65ac44ee88885e7380715c797beec4950fad5ec0d"
+  },
+  {
+   "i": 550,
+   "text_sha256": "sha256:4816cbfd74aa8297b9c9cdaae89e2f0d2ced6041e952dfcd114e01b4c82e9c6d"
+  },
+  {
+   "i": 551,
+   "text_sha256": "sha256:bc92e0e35c9a7ba1b3ec441119dde7058b36fc2853815e402628b5613c19b011"
+  },
+  {
+   "i": 552,
+   "text_sha256": "sha256:d187fe7c30b2b5d060ae2902bfe750fa7c8eea855057079b2845329eba20ab26"
+  },
+  {
+   "i": 558,
+   "text_sha256": "sha256:4dc72c5cacce0e6df5d25649b9762936ac155f2538c55e2c6b946b6b003aa032"
+  },
+  {
+   "i": 563,
+   "text_sha256": "sha256:4816cbfd74aa8297b9c9cdaae89e2f0d2ced6041e952dfcd114e01b4c82e9c6d"
+  },
+  {
+   "i": 564,
+   "text_sha256": "sha256:bc92e0e35c9a7ba1b3ec441119dde7058b36fc2853815e402628b5613c19b011"
+  },
+  {
+   "i": 565,
+   "text_sha256": "sha256:dc4ef7957970fdfa8bbc3823376aaa94db7b2e40a9c3ce5591941df9f4736a12"
+  },
+  {
+   "i": 566,
+   "text_sha256": "sha256:59a440de418e8295618a7ee6307a34bc1c1b9bc640695e96ace2fad50028048a"
+  },
+  {
+   "i": 570,
+   "text_sha256": "sha256:57e8a431deec0d70da0a26ea3392e59688b11b79edfd04e9da823b16bcd1d4d7"
+  },
+  {
+   "i": 591,
+   "text_sha256": "sha256:365f90557535fdac1cdde8b7cb95cf5a1ca1fdfc5d266fde0968b4437acc60d5"
+  },
+  {
+   "i": 600,
+   "text_sha256": "sha256:7fbb22f8c19b6b23a7c62d6ef3e566771c5159c813112a0ae1d5fc745927f108"
+  },
+  {
+   "i": 601,
+   "text_sha256": "sha256:70e7517ae35d72036c134013f572bd9293ecaf742b3637c016c5725d6c57cd2a"
+  },
+  {
+   "i": 602,
+   "text_sha256": "sha256:a394ef9b3d64520cdb57491e3c88c89eef486ea5be5930012a292955d0316cd0"
+  },
+  {
+   "i": 604,
+   "text_sha256": "sha256:c43cd8a8550933c835e2fe5ac40851716389382356bd1e69c3d69613d3aed0ca"
+  },
+  {
+   "i": 607,
+   "text_sha256": "sha256:3880d4895c2659335527d5452d5a6e56bef0d98edd93078ade4a2e8ef4b72515"
+  },
+  {
+   "i": 608,
+   "text_sha256": "sha256:7ec4efa7bb0eb5f7a73d003327bafe9e312312575f9330f7b46a5584bd786eaa"
+  },
+  {
+   "i": 615,
+   "text_sha256": "sha256:419e5398f6956c32a245938bda043d435908945b765a9c1776b33f4da2570e37"
+  },
+  {
+   "i": 616,
+   "text_sha256": "sha256:1f9fef29152cee90922e5cb170efa9b16dc1ba73bc01287d3cafc50871a89704"
+  },
+  {
+   "i": 617,
+   "text_sha256": "sha256:af212272ec11d9a48667e295f7eaf2a283a4a157ae3115fa1e8bf304b9e3f13a"
+  },
+  {
+   "i": 631,
+   "text_sha256": "sha256:c43cd8a8550933c835e2fe5ac40851716389382356bd1e69c3d69613d3aed0ca"
+  },
+  {
+   "i": 633,
+   "text_sha256": "sha256:81169ab78a4ac03a76ac8b0e78ebfd63ebc1a13ad42e61a0a833a2deefa80597"
+  },
+  {
+   "i": 634,
+   "text_sha256": "sha256:99dd707c4791e49e9c9b4312f799b94c4fab328c1b2e1dca144475827a9a8830"
+  },
+  {
+   "i": 635,
+   "text_sha256": "sha256:8d0fbc0e6e3e6401ba6f245898012594717753d77a8b514afe32c0ae40372e50"
+  },
+  {
+   "i": 636,
+   "text_sha256": "sha256:d4ca7e09ea7fa963291cfd8bd8ab51f356c086eeca2ad8fb0d76fbfb7305278c"
+  },
+  {
+   "i": 640,
+   "text_sha256": "sha256:e322fc1776aded271d971002010f9d57403e389571894f895c832d7aa449ad33"
+  },
+  {
+   "i": 641,
+   "text_sha256": "sha256:17af99f49e4c8ebee0a148c827a18d0f6d7872e689c4d710d29975ffe9985d96"
+  },
+  {
+   "i": 643,
+   "text_sha256": "sha256:cdae91155fcbf1054d41ad3ff8566fae5f6b60ef0ed1f8bf7be7f173a14df7ee"
+  },
+  {
+   "i": 645,
+   "text_sha256": "sha256:244f6afab43146344457a6467d1c76c25bc2cc4fdea4f7122add15591c4573e4"
+  },
+  {
+   "i": 647,
+   "text_sha256": "sha256:5b91eba836f552f4b0c6246c5d93c558b84ef6221a05a12556084a5beb3b2ac7"
+  },
+  {
+   "i": 648,
+   "text_sha256": "sha256:f03c003b38cb73099a3d014302237d02aa188ec054aa409fe0197bf1899152a6"
+  },
+  {
+   "i": 663,
+   "text_sha256": "sha256:3dd713aefab9240f4f1e3c25e6c2c981fa35be4dd48fc4c6bf4735cb4e9b7490"
+  },
+  {
+   "i": 664,
+   "text_sha256": "sha256:c9d70c052b3e31cf377861de84c5a44498c9d336c360a763351d56382a16a0d6"
+  },
+  {
+   "i": 666,
+   "text_sha256": "sha256:e92b85f569c55c76ebe6e0cc553322c49e314c75ffc8612556196bb7b6e00695"
+  },
+  {
+   "i": 667,
+   "text_sha256": "sha256:66b52c905cf53edb905fb41bef64239f13f20454c9984ff827abbc9afb5d7633"
+  },
+  {
+   "i": 668,
+   "text_sha256": "sha256:ce07aa9ac05af53feed26694c46b8e4bc6137f221b280cf0218ce7de0d13d6c5"
+  },
+  {
+   "i": 669,
+   "text_sha256": "sha256:896f4c5fcfc4e6b380a9aeb0f38ce4fc90a130057b5a927f36c7b8a9f539e765"
+  },
+  {
+   "i": 670,
+   "text_sha256": "sha256:6101f9706c4f0ff023fb90970a880023bc9a89db7342771eabed24ef0b25cae6"
+  },
+  {
+   "i": 672,
+   "text_sha256": "sha256:c699dda00ee4c6548ebb7053851dd892588d399569b8bf8caab9921bd77442cd"
+  },
+  {
+   "i": 673,
+   "text_sha256": "sha256:204b8bfb723359d7fb0fbd5140a40e3611151520e886918b322d59eec93d4dfe"
+  },
+  {
+   "i": 674,
+   "text_sha256": "sha256:d5f9a2775d37ed68721e98076dbb3305f8a5ad3a7012b3745e67a9312dd1e111"
+  },
+  {
+   "i": 675,
+   "text_sha256": "sha256:bb14649776fe51c98e2abb94bface5a241a90e1463544f3b00f00e487b08f3e8"
+  },
+  {
+   "i": 676,
+   "text_sha256": "sha256:966dca281ca4ff0b7c41d3591301e34b8d5d4ee4fee49977a5df3cf69c3f55d9"
+  },
+  {
+   "i": 677,
+   "text_sha256": "sha256:93a5fc15068818a03a346a9ef755951d4c2d339443d6165e6e9102071fbf6a55"
+  },
+  {
+   "i": 678,
+   "text_sha256": "sha256:1a7f0efbe4dd3079dd33fb456e5bb26fecd891a9c02d310e3d0b4ce38fec5d5e"
+  },
+  {
+   "i": 679,
+   "text_sha256": "sha256:2087f9a6ffb8ba9dce5f5b4b3a9d1f10144082585925d3628ebc5bdc766ac2b3"
+  },
+  {
+   "i": 693,
+   "text_sha256": "sha256:16e09a8271b54bc2848a72a54138bf8378a2c0aa320c9009bccf5a1abac637ef"
+  },
+  {
+   "i": 694,
+   "text_sha256": "sha256:f6120c94a7688800ed0ae12566960d4b00cf0008391e1d34cc135efde02150ae"
+  },
+  {
+   "i": 695,
+   "text_sha256": "sha256:f968b8bef0da3a0a869b4767adccc1a3cc6e778d00753579d48cdb3319838535"
+  },
+  {
+   "i": 697,
+   "text_sha256": "sha256:c149bc14e45c0d92e0adae72d5dfa10ad2fde44aebb562d6c1fedebf30ceaca1"
+  },
+  {
+   "i": 698,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 706,
+   "text_sha256": "sha256:95e29ba69c7b063e1f40959ed9e8d3cb323697c687c1203ae079af02db2018c0"
+  },
+  {
+   "i": 707,
+   "text_sha256": "sha256:3518266b081fc0b729b014635e37a769be93e9cecbe3f4f625d4331f4675331f"
+  },
+  {
+   "i": 708,
+   "text_sha256": "sha256:99a28d12bf5cb7a37860b8a8aaa586f5076d2c3b5f5becdcc23b4ac7e0c8e70b"
+  },
+  {
+   "i": 709,
+   "text_sha256": "sha256:27a9a39089c89766e9b1030bf880d79771a7812dfcfda8065b2a46fea0d535e0"
+  },
+  {
+   "i": 711,
+   "text_sha256": "sha256:b9a91f88266285d4aa6ad88fbf40fc8ab1ff171941263dfc7fb1e6cde2860971"
+  },
+  {
+   "i": 712,
+   "text_sha256": "sha256:4226b6de6532f61bd95f71b385a861159ff48cc0dde95030cd4fc763a476e9c4"
+  },
+  {
+   "i": 713,
+   "text_sha256": "sha256:24bb11e05342e8097820c5668df0b578079c93288cefbbd933726d61083cd018"
+  },
+  {
+   "i": 715,
+   "text_sha256": "sha256:703ff6b0ccf4c0361490fc52ea80e463f24dbc518429f610f032a85d9541a709"
+  },
+  {
+   "i": 716,
+   "text_sha256": "sha256:ccbb6f64ac7a90971f37ac47fd02ecf9de31daebaae94c1b850f75b06437b959"
+  },
+  {
+   "i": 717,
+   "text_sha256": "sha256:41771329bb5ba5abe5ca490c07873ea32406521c19dbaf2c61efacd511f0ac3c"
+  },
+  {
+   "i": 718,
+   "text_sha256": "sha256:9f9805a341e2efa598a213258833832f86a6d70b1c6e026ed838933fd21ce7a4"
+  },
+  {
+   "i": 719,
+   "text_sha256": "sha256:68325c9036ef34f113b7fc657cd74062ab1123d7a9750c897cd0280abbddbb28"
+  },
+  {
+   "i": 727,
+   "text_sha256": "sha256:bc7867785459605d2e39fcf90942c8b7fce603ec4ee9926fb5cb449b26a19148"
+  },
+  {
+   "i": 746,
+   "text_sha256": "sha256:b6f27798a7c174a2a962618f30db5dbdc180105e5ce903c74f78dfd5bb3eda89"
+  },
+  {
+   "i": 748,
+   "text_sha256": "sha256:76917664ab9b4203fd54ef8c4a39f52611b4df6d6a4765a8d6f5769da1ac8970"
+  },
+  {
+   "i": 754,
+   "text_sha256": "sha256:b6f27798a7c174a2a962618f30db5dbdc180105e5ce903c74f78dfd5bb3eda89"
+  },
+  {
+   "i": 756,
+   "text_sha256": "sha256:88354f28a908be112b5e3bd881078caf7cdcffb82522015e7485223172b57c74"
+  },
+  {
+   "i": 776,
+   "text_sha256": "sha256:c03a4c6384fa1af2ec55f077c2d70f7b3f7e78fb7237c1554013979388b0809e"
+  },
+  {
+   "i": 782,
+   "text_sha256": "sha256:7318e7c361aa92f37bf67b88124a0091de4a95d59119870b27b16c23d32e5b16"
+  },
+  {
+   "i": 789,
+   "text_sha256": "sha256:3f45d9c78306a169960f01a53b5e6af250b58b5fa909d863a68035a74b6ea717"
+  },
+  {
+   "i": 805,
+   "text_sha256": "sha256:23e959934c58578053808aaef85fde211efeac6f496d86a1733e12d9e98a1c83"
+  },
+  {
+   "i": 807,
+   "text_sha256": "sha256:0dc8fde233d1bc0def000518a1fc5b619e3269bd5d5643460b5c371d53fba2e1"
+  },
+  {
+   "i": 809,
+   "text_sha256": "sha256:0581ef69a7028fd33e4bc6b3736d900fea74de40ee5e0b79dc46f6f4c3dcabab"
+  },
+  {
+   "i": 810,
+   "text_sha256": "sha256:2b2d8d287e96ef9d7296245b9e1dbe9329ecee435a571370bc765f85193c5fcc"
+  },
+  {
+   "i": 811,
+   "text_sha256": "sha256:6dfdd18a003f306c6a253ceea214c1d16ecb7467f76acd09563a7a9e490c6755"
+  },
+  {
+   "i": 826,
+   "text_sha256": "sha256:8bec799d3acbcba2eda784180e812deb0cbf814bab540a11edd58a861aafcc29"
+  },
+  {
+   "i": 828,
+   "text_sha256": "sha256:41d8a384561483f92aa5de5c168ce5099087c4b15408b8152364bdbe625bd908"
+  },
+  {
+   "i": 829,
+   "text_sha256": "sha256:c524b52a352e0cdaed784f9b9ed3cce7c87b9b59b046362977e0b606a993853e"
+  },
+  {
+   "i": 830,
+   "text_sha256": "sha256:52caf7291362154e5610f40ca3574c60388c029acfe5599184524aee7df03533"
+  },
+  {
+   "i": 832,
+   "text_sha256": "sha256:87f66caea7aba37ea43a7b86628d7b4e8011cc4784a625dede82134914445ddd"
+  },
+  {
+   "i": 837,
+   "text_sha256": "sha256:291760aedf0f111cb392eca41159e04d0c3de9330b68e969fc4fbb54ceee2d24"
+  },
+  {
+   "i": 840,
+   "text_sha256": "sha256:0fbdc46b5598f7af482bedd2b9acbf29fd614e92d6aef26a029baa63c55f6af0"
+  },
+  {
+   "i": 842,
+   "text_sha256": "sha256:5506e79c6f40fe1b030a5c5ae84c6f4e97f7251067352dd5ce594f55e8fb94f7"
+  },
+  {
+   "i": 844,
+   "text_sha256": "sha256:4cb013378a3f98b129ca124bf8e50c105ee1fe0c42899d0f5142ddb599bc9ad0"
+  },
+  {
+   "i": 846,
+   "text_sha256": "sha256:c9a697965fedaa382a9f9929707a8ce09a7a4d237ebcbee912eabe95b4558216"
+  },
+  {
+   "i": 861,
+   "text_sha256": "sha256:19d371ead35527fcc0fa421df8de773490ff6a9c817aa6cb8f1582f0f1740303"
+  },
+  {
+   "i": 863,
+   "text_sha256": "sha256:8df16178929caa23d265905ceab0674ad5a2ed04bd331033bd31f943bfc501bc"
+  },
+  {
+   "i": 864,
+   "text_sha256": "sha256:fc96efc528aa30cfb7184c190d5122b23c0891b09f4725a97eda700f54a478f6"
+  },
+  {
+   "i": 879,
+   "text_sha256": "sha256:bb80456e0154a0461a140679537aba76f8e857f73171b302591a183d5db497c6"
+  },
+  {
+   "i": 880,
+   "text_sha256": "sha256:59f20d5e2087ff342fe39cffa0644369c77aa30d9d4259b8d73b09140be0dd3d"
+  },
+  {
+   "i": 881,
+   "text_sha256": "sha256:f1ed4c9b740dc716d6d1eb1c75d1ea14eb054a964effbb60a128f158502298e5"
+  },
+  {
+   "i": 882,
+   "text_sha256": "sha256:4cb013378a3f98b129ca124bf8e50c105ee1fe0c42899d0f5142ddb599bc9ad0"
+  },
+  {
+   "i": 884,
+   "text_sha256": "sha256:4520c10171f6468eed9f40a1eaf34d05734af13f70fcb0550a953dbd3003196e"
+  },
+  {
+   "i": 885,
+   "text_sha256": "sha256:87f66caea7aba37ea43a7b86628d7b4e8011cc4784a625dede82134914445ddd"
+  },
+  {
+   "i": 888,
+   "text_sha256": "sha256:291760aedf0f111cb392eca41159e04d0c3de9330b68e969fc4fbb54ceee2d24"
+  },
+  {
+   "i": 891,
+   "text_sha256": "sha256:0fbdc46b5598f7af482bedd2b9acbf29fd614e92d6aef26a029baa63c55f6af0"
+  },
+  {
+   "i": 893,
+   "text_sha256": "sha256:736c24a0e3e49c7929307b11877370a3cc72f0d0a93c16d17b1c12ab3b9651a1"
+  },
+  {
+   "i": 894,
+   "text_sha256": "sha256:c9a697965fedaa382a9f9929707a8ce09a7a4d237ebcbee912eabe95b4558216"
+  },
+  {
+   "i": 896,
+   "text_sha256": "sha256:4c64ffe4c62d7b38f9dea9ade2cb23fcb8413fbf3cbc670837aa0aa971155d7d"
+  },
+  {
+   "i": 912,
+   "text_sha256": "sha256:223ad2752d0bd896461c52bede263951c03bec301223ecde0d540be760b02540"
+  },
+  {
+   "i": 914,
+   "text_sha256": "sha256:0b5061f8fb2f625ea80ba1dd4d26d9473074ff297c4752147966596e2f2a9eac"
+  },
+  {
+   "i": 915,
+   "text_sha256": "sha256:0fb75d73ad52c26c5b2963db26947029f696d856e22ad9f45e025b04946f7f9b"
+  },
+  {
+   "i": 916,
+   "text_sha256": "sha256:c7763fa8e9afec61852a18885fcb1781ad08c6e9d9003df07918d3a63ff7883a"
+  },
+  {
+   "i": 917,
+   "text_sha256": "sha256:707c57a46b8bb64320546fa0ab080cddc352aa408a0648b558247f5a0ce22316"
+  },
+  {
+   "i": 918,
+   "text_sha256": "sha256:7274a0ef09bba0d26d6c502f8c016db37484a326d34be3d402305a1baf376c6c"
+  },
+  {
+   "i": 919,
+   "text_sha256": "sha256:b005c48faee1cac05f0579d6190f660d12d14da7d4017a56f1553a69bcf64fb0"
+  },
+  {
+   "i": 933,
+   "text_sha256": "sha256:e756e68fbf90cd91b2e24ce9b7f12fa99b41bb9a426ee8eaaf355ac655761c7a"
+  },
+  {
+   "i": 934,
+   "text_sha256": "sha256:5066906f6032b02fe3edd7b84787c1b3bfa8fab4608cfd616f5579d5355348ce"
+  },
+  {
+   "i": 944,
+   "text_sha256": "sha256:99a28d12bf5cb7a37860b8a8aaa586f5076d2c3b5f5becdcc23b4ac7e0c8e70b"
+  },
+  {
+   "i": 947,
+   "text_sha256": "sha256:ab89c9bd0c72c9de0e11db5f7a40a12ab9d88473da849fd79076c986305f8b03"
+  },
+  {
+   "i": 949,
+   "text_sha256": "sha256:4226b6de6532f61bd95f71b385a861159ff48cc0dde95030cd4fc763a476e9c4"
+  },
+  {
+   "i": 951,
+   "text_sha256": "sha256:24bb11e05342e8097820c5668df0b578079c93288cefbbd933726d61083cd018"
+  },
+  {
+   "i": 954,
+   "text_sha256": "sha256:2832da8597a362b985bfb4cf76ccf8bccb75093cefc4776662fd7c6f4165415f"
+  },
+  {
+   "i": 957,
+   "text_sha256": "sha256:e6379823b0d78659e87d2a3adaa796d82ca2a9f62a35ec836b9b84180a6e49c5"
+  },
+  {
+   "i": 959,
+   "text_sha256": "sha256:20771a484c7c3b635b22f2604cb5ad9fefa2a08bc572501437523599574ed38d"
+  },
+  {
+   "i": 961,
+   "text_sha256": "sha256:88cd11dcd543c5a4ce4008c0bf71b9868db31940a2c02e2c63736938db1b4f99"
+  },
+  {
+   "i": 962,
+   "text_sha256": "sha256:319bd18cbcb4974983be046229f26d92b306b69998d0b69e6610e23ed8553b82"
+  },
+  {
+   "i": 963,
+   "text_sha256": "sha256:26ca233cd2ad5b29b7eb86d76ac27651c27985da80ce36c7b9bd20db864e03e4"
+  },
+  {
+   "i": 964,
+   "text_sha256": "sha256:56d03e66afd8e603594298a6bfb8055ac6d3dbf707bd3b4af6d58e52bb20220c"
+  },
+  {
+   "i": 979,
+   "text_sha256": "sha256:cfe1d06d52eafbfe6c43e3c43224eb724bae3f7d453f1409b208c417166a611c"
+  },
+  {
+   "i": 980,
+   "text_sha256": "sha256:790c0abc59fbaad10a1c510d7c7f9e5dad70aa43f4cb392f4a21ce7402be0ba9"
+  },
+  {
+   "i": 982,
+   "text_sha256": "sha256:769c762dd9ed067a9c9cdf0668cac399896b5d0d584acd63c419da6c4df59e67"
+  },
+  {
+   "i": 983,
+   "text_sha256": "sha256:773ad7fbb2ccd7d4a52eaccceea35702c342330f3d8c7cd1d175b8dd7719c1f8"
+  },
+  {
+   "i": 987,
+   "text_sha256": "sha256:095d08b28445240b8a378ff808a044190c708f6a195c17756cc397edad375c9f"
+  },
+  {
+   "i": 988,
+   "text_sha256": "sha256:c9b309d0c30f4de0fa14ff4d8e111f4f44553c8f41cbc0d9bc5905701e83ecc6"
+  },
+  {
+   "i": 992,
+   "text_sha256": "sha256:129d1d031cd70dc533caf79fdd0ec2daa34dc676dd979a2c59453a52745d1be6"
+  },
+  {
+   "i": 993,
+   "text_sha256": "sha256:f335fe9069b1d28252864150d91cf637896a0638db3c642c710c303787c8ee5e"
+  },
+  {
+   "i": 994,
+   "text_sha256": "sha256:7e0c973beaeb7914fefd9789efa9b439e8bdf687def4cc5d960c1b2dcefccb65"
+  },
+  {
+   "i": 996,
+   "text_sha256": "sha256:d505969023583389a378eee1daac5a42b8ecf03873a8dfb9de5efb6ad64225ac"
+  },
+  {
+   "i": 998,
+   "text_sha256": "sha256:c149bc14e45c0d92e0adae72d5dfa10ad2fde44aebb562d6c1fedebf30ceaca1"
+  },
+  {
+   "i": 1000,
+   "text_sha256": "sha256:6cbf0605ed3d9f53d3f06ccfc0bd398ebb83446cff46d4333da36e79921740e8"
+  },
+  {
+   "i": 1007,
+   "text_sha256": "sha256:2ee949ce8177836734c1f4327137e48c4bc5a691b364a9da970ccd8084bade5a"
+  },
+  {
+   "i": 1039,
+   "text_sha256": "sha256:116aa53444a4e99d353984d3af82059da53a7df1167a8707b0982c21014a8963"
+  },
+  {
+   "i": 1048,
+   "text_sha256": "sha256:bc7867785459605d2e39fcf90942c8b7fce603ec4ee9926fb5cb449b26a19148"
+  },
+  {
+   "i": 1062,
+   "text_sha256": "sha256:1fe8a4738393059416e00163f769ae2277101bbfa40b82c5c4f6f60f0e615593"
+  },
+  {
+   "i": 1063,
+   "text_sha256": "sha256:af571b1bb79b6160293b58bbf8ba0215f43b41740c3363704399c3748168ea4a"
+  },
+  {
+   "i": 1064,
+   "text_sha256": "sha256:5f47a1180ac1cf4a1fb2eee3265083a5d7921e2bfd39ea0a3bca4c61085daf03"
+  },
+  {
+   "i": 1065,
+   "text_sha256": "sha256:2511229ed62cf4619cc5c26da9ca56575d08ff061686ab4778c7cc6169ab9075"
+  },
+  {
+   "i": 1066,
+   "text_sha256": "sha256:0e86a3e6c7e844577cdc145abc60c488e8ab2091fe9564f1ae472d0175b4114f"
+  },
+  {
+   "i": 1067,
+   "text_sha256": "sha256:00e5382695bbb61b87bdde2eb79567ec9ee216c491e4be1155470978263893fc"
+  },
+  {
+   "i": 1068,
+   "text_sha256": "sha256:29f115008d01f5f867e09703ed27b20b3e4437b5def629236c69a3f918122f85"
+  },
+  {
+   "i": 1084,
+   "text_sha256": "sha256:8c447d51b985cf1b65d5627620417ad2752ff70bbf9fbe1359ec8f7f5f3e03d9"
+  },
+  {
+   "i": 1091,
+   "text_sha256": "sha256:327a893fbbdfa5d6b9f34d755d150741e437d291e773f74fcd956cdaaa829b8e"
+  },
+  {
+   "i": 1105,
+   "text_sha256": "sha256:c8dda3bbc7028618fd44dc1ec4eeaf30d9fffcb519e3ffcd7ad4c585b1447ded"
+  },
+  {
+   "i": 1106,
+   "text_sha256": "sha256:f6deef52f088d24507fc3b4ef7cba089abd7c402e6c2e1b9770d5f7d7d39fe40"
+  },
+  {
+   "i": 1107,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1108,
+   "text_sha256": "sha256:6f6b697baa7b390d48e1ea41ea60017a050e56c5ee36d967762e668dde4de76b"
+  },
+  {
+   "i": 1112,
+   "text_sha256": "sha256:b10935187f4416dbbe69a9ab559242a0546c4d3ffbf6e5140c0e1cd0317bb861"
+  },
+  {
+   "i": 1113,
+   "text_sha256": "sha256:edf6a55e6d1fe83df999fbe608a8fd0617b0e4de3f9b088b3325d815c2e0e8f2"
+  },
+  {
+   "i": 1114,
+   "text_sha256": "sha256:0e4d07db2f69d66d3cbc810de5967f563e1cd5af23c11573bfa9867da038b0d9"
+  },
+  {
+   "i": 1115,
+   "text_sha256": "sha256:0e7556184177c991c159301327bb22f928dc336946b69f44a4599a8f2060b3ab"
+  },
+  {
+   "i": 1122,
+   "text_sha256": "sha256:88c3cf364123a25bbab687d4fe8ec6284836b9f00654eda361579d584a43343e"
+  },
+  {
+   "i": 1123,
+   "text_sha256": "sha256:6128c81fc02ff4444cf69ba6264caba6529c551dc82b155bf9a26f8ba2a0d1e3"
+  },
+  {
+   "i": 1124,
+   "text_sha256": "sha256:c0ec18b0074120dbc8ee1c7bb3d0840dd72c419288945a49fc51f0d2ed861c04"
+  },
+  {
+   "i": 1127,
+   "text_sha256": "sha256:33a7935db79df2a3bf5ac7ff9f2421015ff61623e005da1cf0cc9e1352c98069"
+  },
+  {
+   "i": 1129,
+   "text_sha256": "sha256:330d942f92e2d3ec8d8e535ca9bbb306af9dc120590c96577a35fbda13da04c9"
+  },
+  {
+   "i": 1143,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1150,
+   "text_sha256": "sha256:0d1ca54ec35e4b7449cb9ae6c3d3367f117a51f3a9625041ebd0a37fb86b858f"
+  },
+  {
+   "i": 1152,
+   "text_sha256": "sha256:8264604aa9af130343dfe851085d3bfbc03807c96b951f520aa9b61eb63c4bfa"
+  },
+  {
+   "i": 1154,
+   "text_sha256": "sha256:2eec8a4622798a05c80456862c5f540d80c1a0fd7ff0682e18facfc2cce6e75e"
+  },
+  {
+   "i": 1157,
+   "text_sha256": "sha256:f0b8649dbd8cc269a6a9f57166490602cb5e17344007e29c1591f6cdad29aa37"
+  },
+  {
+   "i": 1158,
+   "text_sha256": "sha256:9f47616cf36181ab3caff967309cf0048328673757392abe29c787f2cfe98930"
+  },
+  {
+   "i": 1160,
+   "text_sha256": "sha256:56a068b88178c3d1b0abd12be7f00c02e23030fb10bdcd7f8428e61d29bd6c94"
+  },
+  {
+   "i": 1162,
+   "text_sha256": "sha256:bdafed20e9489e3cf65dfd9bb9127b452aba5f4493dc7cf018e151279dfdacca"
+  },
+  {
+   "i": 1163,
+   "text_sha256": "sha256:c098d63b90ccdf4638d05879959b251afbc723498ab3bb1f9bdf2c5c627d64c5"
+  },
+  {
+   "i": 1177,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1180,
+   "text_sha256": "sha256:ba0989793134148dd4f5512bc679ddd4b5086886fa3d1c8766d360e33bcceaef"
+  },
+  {
+   "i": 1183,
+   "text_sha256": "sha256:5dd962a28288372c5da2eef1b8ba2fbc73d8a70616c45982476a593147271348"
+  },
+  {
+   "i": 1184,
+   "text_sha256": "sha256:635f94df319ca45740809c2130ba2597dcdb0bbe7a4a82fc2a4b0142b4168959"
+  },
+  {
+   "i": 1187,
+   "text_sha256": "sha256:7a328704e3b25eabaed7dafbc3642d6b25108a8e1a06a3bc11df7352986885e7"
+  },
+  {
+   "i": 1188,
+   "text_sha256": "sha256:9c4cee02b8b5226c94bb005966a951e8e84a5394f123c4fac44b7f2492a58999"
+  },
+  {
+   "i": 1190,
+   "text_sha256": "sha256:da4d1d12d183e1653c18402d7bfff071153e203bd8b375b51a8009a2bc0b2420"
+  },
+  {
+   "i": 1191,
+   "text_sha256": "sha256:b1003666d577a451b8807610a91c12dceb3aef0c2ef1b41f1097667f2361d5bd"
+  },
+  {
+   "i": 1194,
+   "text_sha256": "sha256:6410ef0d3a6d3324fcba02131e5742215c99301055398a75457a27ac89dffb5f"
+  },
+  {
+   "i": 1195,
+   "text_sha256": "sha256:2511229ed62cf4619cc5c26da9ca56575d08ff061686ab4778c7cc6169ab9075"
+  },
+  {
+   "i": 1200,
+   "text_sha256": "sha256:28da8c1f9edee99d216bf511feafd4285b7d13d6f43e6f122ae2e9e1687b40af"
+  },
+  {
+   "i": 1202,
+   "text_sha256": "sha256:6c7d7619fed1c6b8ae9f54d6bffb00c8dd1eb5cf0cb8f63e3e85d6644d96064b"
+  },
+  {
+   "i": 1203,
+   "text_sha256": "sha256:51a8ab56b79e612378ea80cefafc31a50269600007d261960ce41256260cb3c2"
+  },
+  {
+   "i": 1217,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1219,
+   "text_sha256": "sha256:012eb2ce51ece69c1a27cf35bf0222eea3256e19d59ca8f1d167ff22b94a2e08"
+  },
+  {
+   "i": 1220,
+   "text_sha256": "sha256:5b1244215a3bab880b1692f10f3f4eea79494eae811fb7f097c079f3cbec2ac4"
+  },
+  {
+   "i": 1227,
+   "text_sha256": "sha256:e4611ff2e992a062e1356f1083d7e5faf6eee58f29563761cf22cb0b08af585b"
+  },
+  {
+   "i": 1228,
+   "text_sha256": "sha256:c1474422f28e0483b57ddb8ed96a49d6ff55f611b327ec8795e5c708eb97fe6b"
+  },
+  {
+   "i": 1230,
+   "text_sha256": "sha256:734d963472e28dacba8546f5b0f2acf4b7d13a5119081de01e45abd19e48c9dc"
+  },
+  {
+   "i": 1233,
+   "text_sha256": "sha256:8da8dcc64180bb40d2508ee04c409b0d0fecaf79454a0bac355aa898e1e26461"
+  },
+  {
+   "i": 1234,
+   "text_sha256": "sha256:ca3e7995c79976c23aeb7eb96f34a8e0b985bff2ee28a69993993520a5e762a7"
+  },
+  {
+   "i": 1238,
+   "text_sha256": "sha256:74fdd7ffabcad25799ce858559e062c628630111a5d44331656e98ed7a9b69d0"
+  },
+  {
+   "i": 1239,
+   "text_sha256": "sha256:7253ffe91fdf708f3aaeb39bb6311146ff81ba0104e601293562493bb341eb0f"
+  },
+  {
+   "i": 1253,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1256,
+   "text_sha256": "sha256:501ed122b01cf23f2a2951afa1c99074c4b7f070c1ccd19ef6bff5fc57d5d3a2"
+  },
+  {
+   "i": 1259,
+   "text_sha256": "sha256:4d51f569e382fbb54e5c63a9998b3f2cee847d4caa08492c4785e4991cb1db00"
+  },
+  {
+   "i": 1262,
+   "text_sha256": "sha256:a707e143cd2334d158b2c6e3e419996d5c4fd2f55c0e0f3d41b060978fe8c8c9"
+  },
+  {
+   "i": 1264,
+   "text_sha256": "sha256:6184d8c0d9daeebdd327e7b074d9e633b11e5ad5b3f7e0f65f467c9ecfea519f"
+  },
+  {
+   "i": 1266,
+   "text_sha256": "sha256:5e916ec7949fa44ec523975725f3bbd1fea4121084e87f6f357d59dcd0d5e3ce"
+  },
+  {
+   "i": 1267,
+   "text_sha256": "sha256:23fc5ed54e784bfd21e9a57151ae5ee81b3b5e015677efa6e9443f01d55f06e6"
+  },
+  {
+   "i": 1268,
+   "text_sha256": "sha256:0695a916d91901ed739869dac291502e7fc5c14401303fd014dc5c5a96c34f1e"
+  },
+  {
+   "i": 1270,
+   "text_sha256": "sha256:f05894c87b5d7dabe25709b0c5d2c31db5f230695796f4785756b34bb4ca3184"
+  },
+  {
+   "i": 1271,
+   "text_sha256": "sha256:61e6c0a4d5f6fb582b98fb356d9cf5960de5ef830bbb747a2b71d2ec2c25f0b3"
+  },
+  {
+   "i": 1276,
+   "text_sha256": "sha256:3ccea6fa629fb6ad2149312db9403174f15f612f813d9c3e34eb3f15b5d217a7"
+  },
+  {
+   "i": 1277,
+   "text_sha256": "sha256:5991ce426259a177aa1e0a9a0317e4bb0a21c09cf28e4743c5c1e2c91a306d3e"
+  },
+  {
+   "i": 1278,
+   "text_sha256": "sha256:cc2724e5d973b0bd27be95c8cd2eec93a4d003ac81f74f33eb0a4b83dd0b42a8"
+  },
+  {
+   "i": 1279,
+   "text_sha256": "sha256:81fa43b23661e975846bd5ee69c9a0fca4a08fed465a22a52d06891871ce8ea7"
+  },
+  {
+   "i": 1281,
+   "text_sha256": "sha256:2511d54317987faf5965b66a2f2f4c6c2e01cefde130371f525e2773159cdfb9"
+  },
+  {
+   "i": 1284,
+   "text_sha256": "sha256:dad50312c6590e54037c6b903ba09f17a5fa207892512169f1ca5fd672afb3f0"
+  },
+  {
+   "i": 1285,
+   "text_sha256": "sha256:f869cda805bad0934c06794edcb802a8c89e8ec8ecb69d2a95641ab76019685d"
+  },
+  {
+   "i": 1299,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1301,
+   "text_sha256": "sha256:c93f9440d14343ca6dadf5b4396016b77066e517b60285d90112c7dfc1107512"
+  },
+  {
+   "i": 1302,
+   "text_sha256": "sha256:57a63c8b3221cfe8667a6fc33dcb2e6a5fa5633d01f9ff0277507a615abb3577"
+  },
+  {
+   "i": 1307,
+   "text_sha256": "sha256:956833d5ab5cf3679f8889959f68e2d4d6d20496af66ec7c6642ed07f7154550"
+  },
+  {
+   "i": 1314,
+   "text_sha256": "sha256:92039f1a7ad82575787e314975b24ac559b72031e5b7f84702e75821225f2929"
+  },
+  {
+   "i": 1315,
+   "text_sha256": "sha256:56d3e80582af937e546f8e3f744c536d16b47c0e4d1fcc6f78ee2c3fad769012"
+  },
+  {
+   "i": 1316,
+   "text_sha256": "sha256:68549ae6ba207ce50e06261805f1ecc9b8fc402c0c9944a5814e446fa4981069"
+  },
+  {
+   "i": 1321,
+   "text_sha256": "sha256:27c869abb4bf4552ff306448c7ff4b1bc14f1fcbc025dde27757c06dd92787c1"
+  },
+  {
+   "i": 1322,
+   "text_sha256": "sha256:e9d1b02d1b65beee02dc47a180b155ff70e6bc502ae6d57625a2b21342ed0db6"
+  },
+  {
+   "i": 1336,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1337,
+   "text_sha256": "sha256:69502f17a0c1b0626d256b3c616dab709bf91742d77f22140ab8de85aae17fb6"
+  },
+  {
+   "i": 1341,
+   "text_sha256": "sha256:76151f5c3c13262655de16347fdeb0633909d0d8ec14a8f653d6ac1884747683"
+  },
+  {
+   "i": 1354,
+   "text_sha256": "sha256:792f063190f7b91e2ae22e27c228c420b26471befd2466aa1bdac8573e71f502"
+  },
+  {
+   "i": 1355,
+   "text_sha256": "sha256:00e5382695bbb61b87bdde2eb79567ec9ee216c491e4be1155470978263893fc"
+  },
+  {
+   "i": 1359,
+   "text_sha256": "sha256:c9f49275cc0d8df738dc0aa8deca7d52db774c1bb159537359537ea048a687fe"
+  },
+  {
+   "i": 1361,
+   "text_sha256": "sha256:6c7d7619fed1c6b8ae9f54d6bffb00c8dd1eb5cf0cb8f63e3e85d6644d96064b"
+  },
+  {
+   "i": 1362,
+   "text_sha256": "sha256:1fcdac1aecc9700378c2ca8335eb612daecf82a9463add81e8a3fe5ee67dcbf9"
+  },
+  {
+   "i": 1376,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1377,
+   "text_sha256": "sha256:798cf9c882dddb54b86ef2667c7426dbd6101c05cbf2447dd39bb0c201959f12"
+  },
+  {
+   "i": 1382,
+   "text_sha256": "sha256:024e6496915ed28924be5235b263b0df8c680565d8388dcecc046ba14ae561b3"
+  },
+  {
+   "i": 1383,
+   "text_sha256": "sha256:04a4a0037c356c26cd5a30fd79e6f13dcd7730320744bde71db38678128eafff"
+  },
+  {
+   "i": 1385,
+   "text_sha256": "sha256:868fb87e3bb4523070f482a97a95d9fb4b26fa544e8dcc9d42a16f70334b2609"
+  },
+  {
+   "i": 1386,
+   "text_sha256": "sha256:b0d899dfa4b6589b5328b9d727f5e9cee87cbc8bca8f71488e78f86dab15ad6f"
+  },
+  {
+   "i": 1393,
+   "text_sha256": "sha256:5f5ccdf75a01a94f8912d5adc1c8f4d138522cebab964c9f174542dfb3fc4abf"
+  },
+  {
+   "i": 1394,
+   "text_sha256": "sha256:f943f7bff7c859c04e4e07e1129d136c17cd81b758291561171fd6d6bf7cac0e"
+  },
+  {
+   "i": 1398,
+   "text_sha256": "sha256:3d41e1a66a7daeb8da761812e830ca56fe19dd3ec7c8e2e6b0ca2abeef1a2010"
+  },
+  {
+   "i": 1400,
+   "text_sha256": "sha256:169613c30cae7e9f19de8f089c50a33dd111dbe6b6c8df34ed3fb1c00a01157a"
+  },
+  {
+   "i": 1401,
+   "text_sha256": "sha256:6f68664f7b3968cd3c71fb5d2110507fe3e8865bc2fe106cda2b9efba78d44b4"
+  },
+  {
+   "i": 1415,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1421,
+   "text_sha256": "sha256:e4ca535ee64b87c64ec217a398a04f1081c2b4ac6e5d2875d45c6f988521b01f"
+  },
+  {
+   "i": 1430,
+   "text_sha256": "sha256:964fa766292d50c62019ed7d33232559c0af511cddd5e55938aa845698f771b9"
+  },
+  {
+   "i": 1431,
+   "text_sha256": "sha256:7e1fbf0a594c27cf2359f902d19cbc922563fde54a5af26cae20c6ce9d603b6a"
+  },
+  {
+   "i": 1435,
+   "text_sha256": "sha256:f3dce2762403f100f5ecacd0df3360ce583fc3d438f0e3c4377ba60fc0918624"
+  },
+  {
+   "i": 1437,
+   "text_sha256": "sha256:dad50312c6590e54037c6b903ba09f17a5fa207892512169f1ca5fd672afb3f0"
+  },
+  {
+   "i": 1438,
+   "text_sha256": "sha256:d51ea35230977ee3d2fb41cee0fe86f45bcfb5d74febceb426af6e855933c895"
+  },
+  {
+   "i": 1452,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1455,
+   "text_sha256": "sha256:ad3d727438df8cedca757f0f8812493b5dc14b7092e2f0f99bc4eaa60a7cdbe5"
+  },
+  {
+   "i": 1458,
+   "text_sha256": "sha256:8c0f87db9c78762735097e51980f2388d2d3a426a883a608511b46ceec269d2b"
+  },
+  {
+   "i": 1466,
+   "text_sha256": "sha256:b3a31e502df662e99abc9b4d429348f1bab086ba01ee63846d00c613a152f4dd"
+  },
+  {
+   "i": 1467,
+   "text_sha256": "sha256:1373ce9639208378598ff17f60a6d0533657441ddede7fd40761d1958e111f84"
+  },
+  {
+   "i": 1473,
+   "text_sha256": "sha256:dad50312c6590e54037c6b903ba09f17a5fa207892512169f1ca5fd672afb3f0"
+  },
+  {
+   "i": 1474,
+   "text_sha256": "sha256:3d5f07cf74769c649c8cb4836e53fa0b448bef66c3725f4911645511e1b9ebb5"
+  },
+  {
+   "i": 1488,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1489,
+   "text_sha256": "sha256:a4e5b526cb2fca862bb018c846aee08c3a3e364a2dc15b2e962d61f0c8f5b837"
+  },
+  {
+   "i": 1490,
+   "text_sha256": "sha256:ad711fd14095ef53fa7679c5ae79a200a9df66705601174fa036278ef3a1af10"
+  },
+  {
+   "i": 1491,
+   "text_sha256": "sha256:dea67a20c57119cfc12f15970d36f53a333941984f65507af1242848893dde4b"
+  },
+  {
+   "i": 1494,
+   "text_sha256": "sha256:4cea86da7916d83370d6f5b7cdad7d9e863154ce1d4a16eb109866609b0378e1"
+  },
+  {
+   "i": 1496,
+   "text_sha256": "sha256:22ecf0301a98af71f5d0c3be1778faaad592de92116421d1a0d15680fa73f3c9"
+  },
+  {
+   "i": 1497,
+   "text_sha256": "sha256:835d1ddc914c5b36434e7d1f0defb52a75ea9065f55a3261d902e1f0ec977e92"
+  },
+  {
+   "i": 1498,
+   "text_sha256": "sha256:0dfaa787935a4f55cb7c1ec66894b88fd7cca1bf4d5fad0a11ebda6005118a9a"
+  },
+  {
+   "i": 1501,
+   "text_sha256": "sha256:e85a600edd27bfb3bb453d4b4b6f6d8d800851f441bbbc5b217033be016c75d4"
+  },
+  {
+   "i": 1503,
+   "text_sha256": "sha256:474fc425d77ba7994522917ac6532b489779623c930948413d9217879bd84129"
+  },
+  {
+   "i": 1504,
+   "text_sha256": "sha256:5e084e7f7df564612f02aa48d02d88a9c2b118ddd21c576c7812d5aa87190c95"
+  },
+  {
+   "i": 1508,
+   "text_sha256": "sha256:ca66a852a9e96c40f4cce7972d994914909b646b2564e8d25dd4003656b3dd63"
+  },
+  {
+   "i": 1509,
+   "text_sha256": "sha256:62f32e9a96dac6ba51de458a6d62c38cb3fb67ad2afa2c6508090da27a4b6107"
+  },
+  {
+   "i": 1510,
+   "text_sha256": "sha256:5799288991e72d46b66819145a1590b1cb1750535ebce8bfb274d65e0d1861ee"
+  },
+  {
+   "i": 1514,
+   "text_sha256": "sha256:85898b8c0c63316825fd64f1a3ffb08247ab2d7617bcaa18d4a41b4342081af0"
+  },
+  {
+   "i": 1515,
+   "text_sha256": "sha256:0ec97001b2afee9e8733d0d9619404305537e84c7ad33ac3b8bed77f04d1c66c"
+  },
+  {
+   "i": 1529,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1537,
+   "text_sha256": "sha256:8af9654c147e63fadd6fe00eb1e4b101b041f767c58bbdb98e434a30b89309f5"
+  },
+  {
+   "i": 1540,
+   "text_sha256": "sha256:31a6b7e98edc24425bccb4facf99f885d4dcd2635c6e4f030011ed9c41d95799"
+  },
+  {
+   "i": 1543,
+   "text_sha256": "sha256:a163e93f2abf96f653a1b910b501e98b8b0e62e9cbe7be33f986865df4a675e8"
+  },
+  {
+   "i": 1547,
+   "text_sha256": "sha256:770665c92e2507d49a602641fae6093d43f6f24515653fc113af4955e035fb75"
+  },
+  {
+   "i": 1548,
+   "text_sha256": "sha256:9017cabc2cb67681fe91aef4ff5b20b9dc21acc377174e4ca6336a6718de3ae1"
+  },
+  {
+   "i": 1552,
+   "text_sha256": "sha256:4013ed24c1bca4cd539b8b7af76c92ef10f70f7cbe2d7e2bba73f64623c259fd"
+  },
+  {
+   "i": 1553,
+   "text_sha256": "sha256:262335107b7af3b68f5c369f3bba8bead1dc58fb8e4793433d12939da8ec167a"
+  },
+  {
+   "i": 1560,
+   "text_sha256": "sha256:21b7c28442cf9fd0faa5eb146fd06dc4512dc6000256480e2c6438fb981622cc"
+  },
+  {
+   "i": 1561,
+   "text_sha256": "sha256:2f7cd9dd2add6a1faff7566490b7887013216ce2a2a73600927f683e091ba744"
+  },
+  {
+   "i": 1575,
+   "text_sha256": "sha256:67ae0b1b8b3c216dd5cb0e818b216fbd1e6f558174235e7d6eaaef2e8ce4d29a"
+  },
+  {
+   "i": 1578,
+   "text_sha256": "sha256:10704f84829b70755ea55a7136786e6239cb39f6396a0de191409a82512ed0f4"
+  },
+  {
+   "i": 1584,
+   "text_sha256": "sha256:a83e0b9e5c38af9d8f5325ff43982b71ed16370a4bc96be6f283090651aea585"
+  },
+  {
+   "i": 1585,
+   "text_sha256": "sha256:ab37e26f9fb633e4477b1078bda1d1929566dd9de76a3acaa812f59b9af59f74"
+  },
+  {
+   "i": 1588,
+   "text_sha256": "sha256:3153fe139ee86ea0a23e57810a10a7888125e7a13d779ad7fbeab75cfe611f1f"
+  },
+  {
+   "i": 1590,
+   "text_sha256": "sha256:f7567cbdb011800e0a3608964f1dc71e48aff297501c28abf5ec3345a35c4de1"
+  },
+  {
+   "i": 1591,
+   "text_sha256": "sha256:7e18f46608401549bbd810fcd12ab63887ab7aace64e9fac0587d442099e722e"
+  },
+  {
+   "i": 1595,
+   "text_sha256": "sha256:b4eb71306c2267a12979550569be28017dff1b00e790ac016129b80c3d660214"
+  },
+  {
+   "i": 1596,
+   "text_sha256": "sha256:6b9031df058346a877deaba0a830b576fa81b9da8692e183e4eb4c9dc949054c"
+  },
+  {
+   "i": 1602,
+   "text_sha256": "sha256:21b7c28442cf9fd0faa5eb146fd06dc4512dc6000256480e2c6438fb981622cc"
+  },
+  {
+   "i": 1603,
+   "text_sha256": "sha256:e281f73dc9f64788a6c12bd36eb3a2c6cfbbab09f9a2a4e34a182d814f5cb4a0"
+  },
+  {
+   "i": 1607,
+   "text_sha256": "sha256:bfd646c195dd68fee5fb6b17fc0dbecc648fad3b0432d8db220b93a9253632ae"
+  },
+  {
+   "i": 1610,
+   "text_sha256": "sha256:3371711a69a9c6bd2ef2f7e3791f8f7b5097e40a8ac84b2c5209ffd477e9a929"
+  },
+  {
+   "i": 1637,
+   "text_sha256": "sha256:06236a723e9316156e8f90d32c34a6a52915dab9e58029154a8dea8b8c8182fc"
+  },
+  {
+   "i": 1638,
+   "text_sha256": "sha256:ec69036ebfeed467912abed0f25247dc27ef1ef3d1decc683e89b9d6b6146ffd"
+  },
+  {
+   "i": 1639,
+   "text_sha256": "sha256:694566f2b82aa11bbb338c6946c68f22b7860749cacd12749d3c8bce101c460d"
+  },
+  {
+   "i": 1640,
+   "text_sha256": "sha256:703ff6b0ccf4c0361490fc52ea80e463f24dbc518429f610f032a85d9541a709"
+  },
+  {
+   "i": 1641,
+   "text_sha256": "sha256:f56648cd7573460b58fb9642f7e660b6d095ef1e7235f65464f6a3df763728de"
+  },
+  {
+   "i": 1642,
+   "text_sha256": "sha256:5f572a02434fc2e8f4ab7594a3dfe767b1d2f2a46a072dccb90a3ca746b6d989"
+  },
+  {
+   "i": 1643,
+   "text_sha256": "sha256:4226b6de6532f61bd95f71b385a861159ff48cc0dde95030cd4fc763a476e9c4"
+  },
+  {
+   "i": 1644,
+   "text_sha256": "sha256:24bb11e05342e8097820c5668df0b578079c93288cefbbd933726d61083cd018"
+  },
+  {
+   "i": 1645,
+   "text_sha256": "sha256:41771329bb5ba5abe5ca490c07873ea32406521c19dbaf2c61efacd511f0ac3c"
+  },
+  {
+   "i": 1646,
+   "text_sha256": "sha256:e12f215a1a650215adb2811a01da535d515bf8075906ceae5e9a3239c2a7536a"
+  },
+  {
+   "i": 1652,
+   "text_sha256": "sha256:cfbaea21978b3b49969630de2fc5458f278846a535cae24952416059e7ddb7f7"
+  },
+  {
+   "i": 1655,
+   "text_sha256": "sha256:5ec65bdc214b1594a0b5b7a49bb6548bc3a67e91e30abec22e3ff0697027b947"
+  },
+  {
+   "i": 1686,
+   "text_sha256": "sha256:c4b7330bd91e0c971041618056cb7201fd3f384e5db390bc89230d70712d7a47"
+  },
+  {
+   "i": 1688,
+   "text_sha256": "sha256:30bec809ed94747d579aa82f236693b0205730d37e6d3d0f14d4d70598d78a91"
+  },
+  {
+   "i": 1691,
+   "text_sha256": "sha256:c202cc893613a7fb8779958ef5e83809391762f57413eceee88f39f9065b1de4"
+  },
+  {
+   "i": 1692,
+   "text_sha256": "sha256:fb99971e02099d3fea844986b393885b88c1b4f54671e21f5967beae422403b5"
+  },
+  {
+   "i": 1708,
+   "text_sha256": "sha256:c63da6385e098da927c46075dfe4d1a98a8f49794c47d5eb0cd234b28bedc495"
+  },
+  {
+   "i": 1732,
+   "text_sha256": "sha256:2a7280a0c6c2ada7c98c5061c9be0950a934614339e5e6fd3e1d7c304825a6f1"
+  },
+  {
+   "i": 1740,
+   "text_sha256": "sha256:081be1e1c2b1f42c3f53d89d7223bd60151c7ab19da2901393a38b2f9f782724"
+  },
+  {
+   "i": 1761,
+   "text_sha256": "sha256:cbc2af31942200ffe44cf666666370d4b772aea55a76d0179a3bd167d80ded49"
+  },
+  {
+   "i": 1768,
+   "text_sha256": "sha256:678fa881e95b057177ba26dac0e497dadd541a3ef9ae02f9aae4079749c54d7f"
+  },
+  {
+   "i": 1772,
+   "text_sha256": "sha256:62ef4fc6618924459aa134bbddd70184f775d9a7d732b0748a30a2273afc2fd2"
+  },
+  {
+   "i": 1773,
+   "text_sha256": "sha256:9ab3bc598c5e8e500d247434fb5513700a05df117834cfade532cbca92016edf"
+  },
+  {
+   "i": 1774,
+   "text_sha256": "sha256:d016fca4a5e69e3215f07f1dd92ae05cc65ad19bfa63a2220b955f8b98ab8495"
+  },
+  {
+   "i": 1775,
+   "text_sha256": "sha256:b38c9374c553ced7724cfda592bd8cb7599bf28a01055a1dcf8b14dc3560ff60"
+  },
+  {
+   "i": 1777,
+   "text_sha256": "sha256:cc66f3d56418696f554370d208beb0a4eba65f30708cde2ffae3646f1b7e2f58"
+  },
+  {
+   "i": 1795,
+   "text_sha256": "sha256:35741991aa7abd273ffec96da58666532f7dcc2c82e954bc6361ccf03d56723f"
+  },
+  {
+   "i": 1796,
+   "text_sha256": "sha256:9b554d0a87006c8a43fbf92c6845fa35582eb7dd752dc178688748fd26e12aaa"
+  },
+  {
+   "i": 1798,
+   "text_sha256": "sha256:13fb9fc3741d896138bcd985fa32723f5729c136ca4d7b3863b25ef330bc4194"
+  },
+  {
+   "i": 1802,
+   "text_sha256": "sha256:ee732c7eaf56f76178c029dd82e52327e04bf528052b533835b6ee9c366006e7"
+  },
+  {
+   "i": 1806,
+   "text_sha256": "sha256:15e7dfd2a5d1e982932ec108271eb22a309ef940206f83b7c1731d50eb950169"
+  },
+  {
+   "i": 1807,
+   "text_sha256": "sha256:17827cf6ed346c7aff3c20353ea0b22d0e6938b6da19f57c27fd4c22bacbfbb0"
+  },
+  {
+   "i": 1810,
+   "text_sha256": "sha256:537d88815d52868085f99c2f58ae0e3ea4033ea64bf2341cce1cf802607a9764"
+  },
+  {
+   "i": 1812,
+   "text_sha256": "sha256:25cc7006c1f7d76945d4a4970426b304606dbc2c837cc203ad1cc133c36ee5c6"
+  },
+  {
+   "i": 1814,
+   "text_sha256": "sha256:a38f5ac8e235de1bd18df46006c482c346b4b2cc706e38e1648de7993b75e710"
+  },
+  {
+   "i": 1875,
+   "text_sha256": "sha256:73033781ca52142bab7f91c3bfd45cf8a217367b41d74d58045732a3084a5d41"
+  },
+  {
+   "i": 1906,
+   "text_sha256": "sha256:1ccda44acb23305bd1b7a2c7d856db213f25d3c9d71ee063c7145d28816b2fca"
+  },
+  {
+   "i": 1912,
+   "text_sha256": "sha256:e59e6599df6a4aa41e1c19c7e00aad6764cd67b852f6283df2aab55dd9e05662"
+  },
+  {
+   "i": 1913,
+   "text_sha256": "sha256:3d5c2221148547e0ba6503523ab551b030905f0572b123df36457339e8a00630"
+  },
+  {
+   "i": 1917,
+   "text_sha256": "sha256:6b896b40967547df1e0f0eba52d0b697f3a22e807f5e38759c61c3ced5388d6e"
+  },
+  {
+   "i": 1921,
+   "text_sha256": "sha256:6b896b40967547df1e0f0eba52d0b697f3a22e807f5e38759c61c3ced5388d6e"
+  },
+  {
+   "i": 1942,
+   "text_sha256": "sha256:14c8898dd86dc6973ea18681483b04c2b86bfe14f5989d2d2060c4584e7b83f2"
+  },
+  {
+   "i": 1943,
+   "text_sha256": "sha256:489a6295044c39a40854f81118ca00b03d02cca18cb1f07e6614b4b4fcaa667e"
+  },
+  {
+   "i": 1944,
+   "text_sha256": "sha256:7288143d35a5510cc9426cfefe70b40d492b69077ff28e61920bd69cc6187e34"
+  },
+  {
+   "i": 1945,
+   "text_sha256": "sha256:b16228748ea74f81fedca64279537c4d67b611eda6a849f55281de0baef08f45"
+  },
+  {
+   "i": 1946,
+   "text_sha256": "sha256:7d7ee8971f0ab52a4afe8529f16786c4fdf59ab399f743b55949db0e52162802"
+  },
+  {
+   "i": 1947,
+   "text_sha256": "sha256:9d0220a8d66da87c142d0559da1ede89173d1e886cdccfbe3bdc3a05a85dedf4"
+  },
+  {
+   "i": 1951,
+   "text_sha256": "sha256:883c0c2b1efd9f096d23d23fab9a1f34dfdbeabb13f98433dca0f58cf80d39af"
+  },
+  {
+   "i": 1953,
+   "text_sha256": "sha256:37517cc2c5d5f12a8c271cc5a332e74906edc60107e2bc7547144d8f771d2678"
+  },
+  {
+   "i": 1954,
+   "text_sha256": "sha256:6cb178c38e72e1898de1c697f0a430fca7b8c3e1ca083b1a5d85916eb9b9dacb"
+  },
+  {
+   "i": 1956,
+   "text_sha256": "sha256:54c6cfea4a693cb5f84ce4e6bfe2929a5e426b89641caee4aaa74ab30a52c3bb"
+  },
+  {
+   "i": 1971,
+   "text_sha256": "sha256:71f21bdc9301d595171c6d74cef7445b8cef67fae77ab4109a26ae615fe12f4d"
+  },
+  {
+   "i": 1972,
+   "text_sha256": "sha256:0208f0315166f392cdd62905bb725658b5c6f31945a7ca692272f95ba46f42e5"
+  },
+  {
+   "i": 1974,
+   "text_sha256": "sha256:2ce92f02aea81182666516b1cafcfcf7a196cabc6bb88f705da84074acec213b"
+  },
+  {
+   "i": 1976,
+   "text_sha256": "sha256:1645d9cb2fc8218017b6bb87e5696703fe24c0cce6c70d41a22d5dcd1d099de7"
+  },
+  {
+   "i": 1978,
+   "text_sha256": "sha256:6e1886b9e98d81fa47c23a0b8d260b172a8992b26a1f039ae63bd66fc43e2eb3"
+  },
+  {
+   "i": 1980,
+   "text_sha256": "sha256:11d8fda24afb8b562b9f1ca9531052ad5e782c5078e8c132ce85917c6cc1f6cb"
+  },
+  {
+   "i": 1987,
+   "text_sha256": "sha256:9152c4e8a7e3b80cbe091d8e2ec6665340e29d22385a11db0b7c7d981f72cf78"
+  },
+  {
+   "i": 1990,
+   "text_sha256": "sha256:17e4f9a7383c3f15b63a464b14d8f4e41bc6d76b04fade16a3191e69aa4c9c32"
+  },
+  {
+   "i": 2002,
+   "text_sha256": "sha256:3a9afd338ccefa88540cc46e464ffecf641c111c259bf1529efc1eaf2d84f2f6"
+  },
+  {
+   "i": 2017,
+   "text_sha256": "sha256:3e92a0c33765765ec8ff7e62d0253807e1c65ab62e2ff9cf5301b273402fdeba"
+  },
+  {
+   "i": 2018,
+   "text_sha256": "sha256:a05ca8a9d23bebdeb5f4b8bdbdb4413466e479d80f23d5626d6a21e47e1e09ec"
+  },
+  {
+   "i": 2021,
+   "text_sha256": "sha256:a92f0f93dd794923c795f1dd1f7c54caaa996b4f55a5ba2af2c460024c593e5d"
+  },
+  {
+   "i": 2028,
+   "text_sha256": "sha256:7d2aa9e913c28f26cb6a63fe18affe8ce89fa01722f7deee24d8df853aac56f3"
+  },
+  {
+   "i": 2042,
+   "text_sha256": "sha256:1a259dba256600620c6c91094f3a300b30f0cbaecee19c6114deffd3288957d7"
+  },
+  {
+   "i": 2052,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 2057,
+   "text_sha256": "sha256:7f18293b54f96f7d8b9893430908784edc9dd8138c7b69384c462541efde4ec1"
+  },
+  {
+   "i": 2062,
+   "text_sha256": "sha256:2b2090583d4fbef6d4e0df5a90fb2b7a83218dab753f3ce197ef39674bdacd6c"
+  },
+  {
+   "i": 2091,
+   "text_sha256": "sha256:271277a1bff3ad257b7d815ee245cd748cf730ff06a025c082b42a40a9093062"
+  },
+  {
+   "i": 2094,
+   "text_sha256": "sha256:e6c79bc0f8edd45577c866f104ce9260bfb168e70525d014364fcdc64c51fd3b"
+  },
+  {
+   "i": 2096,
+   "text_sha256": "sha256:bfc46684b18d2175e3ec6898a5cfbe56a9972c19b88c8f1b4f624664f0f80cd5"
+  },
+  {
+   "i": 2111,
+   "text_sha256": "sha256:e5654245c996c6c8ee103d5208856507f78d69499c56993a3340a5ede00332a6"
+  },
+  {
+   "i": 2112,
+   "text_sha256": "sha256:84d651e3b50dbc62514c4cc30d00a3385a98c1beb775a8d93a237d66d78141da"
+  },
+  {
+   "i": 2114,
+   "text_sha256": "sha256:e616507b623d19b12a4e6ef4affc524920532e2da855043bda3137a6319e747d"
+  },
+  {
+   "i": 2117,
+   "text_sha256": "sha256:116cd3982a9bc435ecd50e5978b68f5f1d542c0ef071fdb598f06a9000dd33cb"
+  },
+  {
+   "i": 2122,
+   "text_sha256": "sha256:0e4284b485ec419dfa1986d024e266359a0f1700617cb201627bde666887df16"
+  },
+  {
+   "i": 2124,
+   "text_sha256": "sha256:5bd8e160c968b26a2a02fa48e6b922c4e5691de3459ff9f8a5adbb9e9e0bc60e"
+  },
+  {
+   "i": 2127,
+   "text_sha256": "sha256:0013f57c9f24f11e4c3b5ff4f558bd7f6e77e5e56dfab976eebc91ce46a7f78a"
+  },
+  {
+   "i": 2130,
+   "text_sha256": "sha256:62861e0a96febdb7583bf0ff824b45ef1d654d4a8e8e16e512e2d274530aaf5a"
+  },
+  {
+   "i": 2133,
+   "text_sha256": "sha256:669cf7ba50bac450cee2acc902981726ec7c28d78d604a6ea83c305935ac9a09"
+  },
+  {
+   "i": 2139,
+   "text_sha256": "sha256:978354db0c00fc78c3a5524f462a73bc425df3fb2767e51a5f46352ae26ae6f9"
+  },
+  {
+   "i": 2141,
+   "text_sha256": "sha256:c406421c2b35a533caa25ee477a07f5843fb564d687f8a2c13d2e2968ac66e6e"
+  },
+  {
+   "i": 2143,
+   "text_sha256": "sha256:0da627ada476c179bb6421d267cb6de8c9f770a2274b5d673d898e33cea29247"
+  },
+  {
+   "i": 2145,
+   "text_sha256": "sha256:978354db0c00fc78c3a5524f462a73bc425df3fb2767e51a5f46352ae26ae6f9"
+  },
+  {
+   "i": 2147,
+   "text_sha256": "sha256:66c9ab177708cbc6b9770301ef0caa3f4fdcab0e3741a7f555b025a5d7dac2eb"
+  },
+  {
+   "i": 2149,
+   "text_sha256": "sha256:6725ac4a8c6591a5059049dc49a8d8654326646eaf11535f1d05db4ef5518b59"
+  },
+  {
+   "i": 2151,
+   "text_sha256": "sha256:0b5a89cfb9ff984da168cf56f7d8dba93b661aa6182334491e68eb08d4406986"
+  },
+  {
+   "i": 2153,
+   "text_sha256": "sha256:add171c7339b4e21b70ad29df4bb075288d381e6a43df74d0781202fe4d60fa3"
+  },
+  {
+   "i": 2189,
+   "text_sha256": "sha256:b6eb732f058fa05ff9f73e8a02c5400b0fc2141117f47986b57af7770cd23731"
+  },
+  {
+   "i": 2191,
+   "text_sha256": "sha256:dadd435f3636785254914b46e6137707f9f2d701b74413347dc9b9bb372faccf"
+  },
+  {
+   "i": 2192,
+   "text_sha256": "sha256:30aed11fd1a86781b682779e01e11fb3c040b54729413a758fee2e7df87fe974"
+  },
+  {
+   "i": 2206,
+   "text_sha256": "sha256:f9ef182dc939583e2d2d713b4db76bfd410bbaf43b68c8eedb7c0e4b5d20c033"
+  },
+  {
+   "i": 2208,
+   "text_sha256": "sha256:e969f85c47caa12786cb321a6c0cd7a1427b24553813ca91cf6da1a38f65cd3c"
+  },
+  {
+   "i": 2211,
+   "text_sha256": "sha256:e0fb5b5cc4f656dd4bb87ee6647f3e8d00c37316bc854aed069537a22c6a55a0"
+  },
+  {
+   "i": 2212,
+   "text_sha256": "sha256:429414da4f13fd14e6171f41850614e6059daf6b8804046a740d2f7a38162c43"
+  },
+  {
+   "i": 2214,
+   "text_sha256": "sha256:010dd7b94f5f3d31b17799f0a5419c71e80438ef34ef70b0cb0500dabee32eeb"
+  },
+  {
+   "i": 2215,
+   "text_sha256": "sha256:442aded87a55aa8c8f7d5ff0c30228150d4b1cb8756e4be138d615ca4708fc26"
+  },
+  {
+   "i": 2216,
+   "text_sha256": "sha256:88fb11573a6a01055cff4da5a1b81f5b20850faa77b8ca6826ef9d278b150d20"
+  },
+  {
+   "i": 2219,
+   "text_sha256": "sha256:db6d65143f82da4377fbafd321717d3633319b262efef9dfea515d9e207a33cf"
+  },
+  {
+   "i": 2221,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 2223,
+   "text_sha256": "sha256:df8948ffab935203c46f1702ee679e656703f13dba94d17c5dcd67699e0e98ad"
+  },
+  {
+   "i": 2225,
+   "text_sha256": "sha256:2b2090583d4fbef6d4e0df5a90fb2b7a83218dab753f3ce197ef39674bdacd6c"
+  },
+  {
+   "i": 2227,
+   "text_sha256": "sha256:c2132a32702c766df335233474a229e266c4a4e1466eee837bf6d84da7af237a"
+  },
+  {
+   "i": 2229,
+   "text_sha256": "sha256:b9a91f88266285d4aa6ad88fbf40fc8ab1ff171941263dfc7fb1e6cde2860971"
+  },
+  {
+   "i": 2237,
+   "text_sha256": "sha256:12f65ed46e5d9c8a6ac0904b8888e647f5f5e867dc4bc835c013ccda1a0bd6e2"
+  },
+  {
+   "i": 2254,
+   "text_sha256": "sha256:d7fd04f6518682b0c2ab0c3f0f1d7b904d2b361293bcfc7fd4c58ea0348a90eb"
+  },
+  {
+   "i": 2256,
+   "text_sha256": "sha256:d1153ea5d1a67f81be1afcf16251b23d93a5746f2d17983c9b29358464b20fba"
+  },
+  {
+   "i": 2262,
+   "text_sha256": "sha256:63e39794f7d57484a8c132c9ac59ec499bfd86ee456dd9cd388a369242704d7d"
+  },
+  {
+   "i": 2264,
+   "text_sha256": "sha256:00249aac693be1c0cc68027d0f221017c95778456d3768cc043691a0edec536b"
+  },
+  {
+   "i": 2270,
+   "text_sha256": "sha256:348757d27a4556e47d8c9f6a3782197d43d34c406fbb74a4011d6589599eb251"
+  },
+  {
+   "i": 2273,
+   "text_sha256": "sha256:476f631fecb37ff951854b7420e4f646f22f989d29f7b9fcad3fe0ef93113880"
+  },
+  {
+   "i": 2278,
+   "text_sha256": "sha256:2e81ad3ddd8f95011fda8f81fb285dece20b62190c00a094f9e987c1b714dbb3"
+  },
+  {
+   "i": 2282,
+   "text_sha256": "sha256:c2c2803fb702b3bf1374137b580cf985c3daa21b0978a0a7e01037405caafe5a"
+  },
+  {
+   "i": 2318,
+   "text_sha256": "sha256:0b71016763a16de747f9497838300f9dfbad4e3bbdfec7d02153891068aa88a8"
+  },
+  {
+   "i": 2320,
+   "text_sha256": "sha256:845563095c60ed7b1e02d5fe48bdc108e5ec5262ff2e8d9bbdadbdafb549d389"
+  },
+  {
+   "i": 2322,
+   "text_sha256": "sha256:5b1ccb2d00b416428977746c7e237fadc4869042e094fb7ce2363bd7c08bfed6"
+  },
+  {
+   "i": 2340,
+   "text_sha256": "sha256:eebc94b80150c4a8c4814b332dba1d4ae247db26744c6f625abcc081bf5eefeb"
+  },
+  {
+   "i": 2343,
+   "text_sha256": "sha256:442aded87a55aa8c8f7d5ff0c30228150d4b1cb8756e4be138d615ca4708fc26"
+  },
+  {
+   "i": 2345,
+   "text_sha256": "sha256:0da627ada476c179bb6421d267cb6de8c9f770a2274b5d673d898e33cea29247"
+  },
+  {
+   "i": 2348,
+   "text_sha256": "sha256:978354db0c00fc78c3a5524f462a73bc425df3fb2767e51a5f46352ae26ae6f9"
+  },
+  {
+   "i": 2350,
+   "text_sha256": "sha256:66c9ab177708cbc6b9770301ef0caa3f4fdcab0e3741a7f555b025a5d7dac2eb"
+  },
+  {
+   "i": 2352,
+   "text_sha256": "sha256:f41b6da2a4e3718078b1754511bb396abf4d8a7ade46d9c4c9c1fcc8e29b3952"
+  },
+  {
+   "i": 2381,
+   "text_sha256": "sha256:eebc94b80150c4a8c4814b332dba1d4ae247db26744c6f625abcc081bf5eefeb"
+  },
+  {
+   "i": 2388,
+   "text_sha256": "sha256:442aded87a55aa8c8f7d5ff0c30228150d4b1cb8756e4be138d615ca4708fc26"
+  },
+  {
+   "i": 2394,
+   "text_sha256": "sha256:978354db0c00fc78c3a5524f462a73bc425df3fb2767e51a5f46352ae26ae6f9"
+  },
+  {
+   "i": 2397,
+   "text_sha256": "sha256:66c9ab177708cbc6b9770301ef0caa3f4fdcab0e3741a7f555b025a5d7dac2eb"
+  },
+  {
+   "i": 2399,
+   "text_sha256": "sha256:211090ae65a6f289f946ad3496bb31a60da397ef1e0672d56e21c4c0170ec38c"
+  },
+  {
+   "i": 2422,
+   "text_sha256": "sha256:eebc94b80150c4a8c4814b332dba1d4ae247db26744c6f625abcc081bf5eefeb"
+  },
+  {
+   "i": 2429,
+   "text_sha256": "sha256:bdbf22c7a66871e1cfa084425bd7736e35b3f1a797eed048d22de3a484adc673"
+  },
+  {
+   "i": 2433,
+   "text_sha256": "sha256:0da627ada476c179bb6421d267cb6de8c9f770a2274b5d673d898e33cea29247"
+  },
+  {
+   "i": 2440,
+   "text_sha256": "sha256:978354db0c00fc78c3a5524f462a73bc425df3fb2767e51a5f46352ae26ae6f9"
+  },
+  {
+   "i": 2444,
+   "text_sha256": "sha256:66c9ab177708cbc6b9770301ef0caa3f4fdcab0e3741a7f555b025a5d7dac2eb"
+  },
+  {
+   "i": 2500,
+   "text_sha256": "sha256:f9ef182dc939583e2d2d713b4db76bfd410bbaf43b68c8eedb7c0e4b5d20c033"
+  },
+  {
+   "i": 2501,
+   "text_sha256": "sha256:571ec79ed9c76b1d69245731e53babfa4cc6f7779b1d4422fec652db324ee73d"
+  },
+  {
+   "i": 2504,
+   "text_sha256": "sha256:86b7c5977661479fb54f65765baf5fd597537ced5548f4e2fc1ea54c0f584bdf"
+  },
+  {
+   "i": 2510,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 2514,
+   "text_sha256": "sha256:2b2090583d4fbef6d4e0df5a90fb2b7a83218dab753f3ce197ef39674bdacd6c"
+  },
+  {
+   "i": 2545,
+   "text_sha256": "sha256:2f64bb04dffd8d7daa55a185e29d9cfe13f2714aa2a62cbdf53768bf476677c0"
+  },
+  {
+   "i": 2546,
+   "text_sha256": "sha256:c43c142cf5fda72d03fa23fdaa5948c119a81c14945a382188bf86022ea5f702"
+  },
+  {
+   "i": 2549,
+   "text_sha256": "sha256:9a17a4450b2b138f06d5e3e55dcf68e4929c7f1a735b4da6399c32830a40ff4c"
+  },
+  {
+   "i": 2550,
+   "text_sha256": "sha256:385165e2ff59804537e732dc51e2b6058a5a11016e0bb01febe8a738614ed728"
+  },
+  {
+   "i": 2551,
+   "text_sha256": "sha256:2d80a5cf7a698c7b0e0e2eff4dadd809c19d7e4cfee5175ead2f80e7036cd160"
+  },
+  {
+   "i": 2553,
+   "text_sha256": "sha256:760cd014dfbb615406c49e7d19cecd5fad45c05bddfb2ae6c18c602bc1ad401c"
+  },
+  {
+   "i": 2555,
+   "text_sha256": "sha256:583933b33a130c493af05082a6aca35f9330c7630e38270ffb76786e9ecc8836"
+  },
+  {
+   "i": 2556,
+   "text_sha256": "sha256:4231ceb37445fc974ed3b07f84b86080379112b650d1b14a417877bb2201ffd1"
+  },
+  {
+   "i": 2557,
+   "text_sha256": "sha256:f4830a1dae2980447c716bd4b5779b7013575ef09f70ef4731457218792487b3"
+  },
+  {
+   "i": 2558,
+   "text_sha256": "sha256:442aded87a55aa8c8f7d5ff0c30228150d4b1cb8756e4be138d615ca4708fc26"
+  },
+  {
+   "i": 2559,
+   "text_sha256": "sha256:1709305c9fa966d14f56f0da3c3614bbc10adcf53d72f90341bb96d24afcfca3"
+  },
+  {
+   "i": 2560,
+   "text_sha256": "sha256:4231ceb37445fc974ed3b07f84b86080379112b650d1b14a417877bb2201ffd1"
+  },
+  {
+   "i": 2561,
+   "text_sha256": "sha256:293523c3bf5bf430b2fff06cd20f620382fdba701eb6d779afe36acfa27542b7"
+  },
+  {
+   "i": 2562,
+   "text_sha256": "sha256:379db318f5b44fcd9880981049b2d3988232e52d9efaf01676e7acb2c0298d15"
+  },
+  {
+   "i": 2567,
+   "text_sha256": "sha256:116cd3982a9bc435ecd50e5978b68f5f1d542c0ef071fdb598f06a9000dd33cb"
+  },
+  {
+   "i": 2568,
+   "text_sha256": "sha256:c406421c2b35a533caa25ee477a07f5843fb564d687f8a2c13d2e2968ac66e6e"
+  },
+  {
+   "i": 2570,
+   "text_sha256": "sha256:442aded87a55aa8c8f7d5ff0c30228150d4b1cb8756e4be138d615ca4708fc26"
+  },
+  {
+   "i": 2576,
+   "text_sha256": "sha256:c2c2803fb702b3bf1374137b580cf985c3daa21b0978a0a7e01037405caafe5a"
+  },
+  {
+   "i": 2612,
+   "text_sha256": "sha256:ab00b2fd59b0b8b4aa310cb2fc82232aaaf8ccb38372ea339702ead879cfb0ff"
+  },
+  {
+   "i": 2613,
+   "text_sha256": "sha256:b0f3393bb169b1793ac96bd570645e14ae1a2ffa9e789f2a3d1c4d964a68bebf"
+  },
+  {
+   "i": 2614,
+   "text_sha256": "sha256:1a259dba256600620c6c91094f3a300b30f0cbaecee19c6114deffd3288957d7"
+  },
+  {
+   "i": 2619,
+   "text_sha256": "sha256:2f64bb04dffd8d7daa55a185e29d9cfe13f2714aa2a62cbdf53768bf476677c0"
+  },
+  {
+   "i": 2625,
+   "text_sha256": "sha256:6aeb84a287dcd9f802e66b5dc376132823c40e4afd9ba3b6d42fe4ebd57eeaed"
+  },
+  {
+   "i": 2627,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 2632,
+   "text_sha256": "sha256:9f9805a341e2efa598a213258833832f86a6d70b1c6e026ed838933fd21ce7a4"
+  },
+  {
+   "i": 2637,
+   "text_sha256": "sha256:2b2090583d4fbef6d4e0df5a90fb2b7a83218dab753f3ce197ef39674bdacd6c"
+  },
+  {
+   "i": 2642,
+   "text_sha256": "sha256:c2132a32702c766df335233474a229e266c4a4e1466eee837bf6d84da7af237a"
+  },
+  {
+   "i": 2657,
+   "text_sha256": "sha256:dfea09817c7c495da305e7170369c4c25e29e84f0048a5c4c64c654e4b8ef741"
+  },
+  {
+   "i": 2659,
+   "text_sha256": "sha256:694a2d265324f85be430527cbe10d37a74c8df57c65ab66121d3997a8931d1a6"
+  },
+  {
+   "i": 2661,
+   "text_sha256": "sha256:1da4658407b0b91ca958290d75ebf4bfcd5d83bd16e10e2bcec99a8e703ad5fc"
+  },
+  {
+   "i": 2676,
+   "text_sha256": "sha256:ed5b483b8f3aa8ff31074c7da151b73d3744d96e34d8b52fe43e0389a117d32d"
+  },
+  {
+   "i": 2677,
+   "text_sha256": "sha256:12464d5fbd370426a4474943f0a9d08dc9e8bd566dd583891027a750d7828286"
+  },
+  {
+   "i": 2678,
+   "text_sha256": "sha256:339aeb047c7288978eb715f84ba4e9cad8cb3c5ec7379207045dd5a8f6618d8d"
+  },
+  {
+   "i": 2682,
+   "text_sha256": "sha256:2b6f27a5ca94f5de2ef83ff2fbe3ff54ca5cd3ffc56311aa5825a3d897e6aed9"
+  },
+  {
+   "i": 2697,
+   "text_sha256": "sha256:3b54185498bed8520ae5c21f27d3203c59d6b727fd5050988edbe3ab674a5985"
+  },
+  {
+   "i": 2698,
+   "text_sha256": "sha256:5f387d73ead32b49483f875efbf92667b22d3de361ecee5f581e8a7a492a4fc2"
+  },
+  {
+   "i": 2699,
+   "text_sha256": "sha256:bc5d2c5dde16f79a69bdd7eb17d06dca45c0aeec3c714c7f18b964b70cc5170b"
+  },
+  {
+   "i": 2700,
+   "text_sha256": "sha256:ab37aa26385bd0887fd740e16d7263b1b02486445101c4bcefcbf3fc90ef7500"
+  },
+  {
+   "i": 2701,
+   "text_sha256": "sha256:44759dd2db6f02ff3e4ed32cd74ec42e1e9b757d77189e29c84b86df51b0c502"
+  },
+  {
+   "i": 2715,
+   "text_sha256": "sha256:01ba18b779fc7c4384a50b7467cd27c87088595d5b427ff517e773a2318035aa"
+  },
+  {
+   "i": 2716,
+   "text_sha256": "sha256:6178e5473bc84e2a7f30e34e15ce02f401714b5193784f8b466c96ebc48c93cc"
+  },
+  {
+   "i": 2717,
+   "text_sha256": "sha256:c06e0abb47d93492c1838fe601715ff8c5ed4f9a7622e925d9aeda400e40bd2a"
+  },
+  {
+   "i": 2720,
+   "text_sha256": "sha256:bcd611e8dd47469ae9a281278d6d71b59364bba7e4c757b4f7cdfd91fad371dc"
+  },
+  {
+   "i": 2743,
+   "text_sha256": "sha256:15a873255b1fa69afd28ed24e6f5b58b33b24245d5c2a87db053696cb62901c5"
+  },
+  {
+   "i": 2750,
+   "text_sha256": "sha256:7569af5264d92976889d78eacba24f491d860ada4e23411faa48a79d1be9ad44"
+  },
+  {
+   "i": 2757,
+   "text_sha256": "sha256:11fffe61b82eb5d46c6897a8ba4d44b35c654623192cf8aae4627c4c3762c565"
+  },
+  {
+   "i": 2772,
+   "text_sha256": "sha256:c6bfcd2dd24974f426d67b716c886caad69515ff748c021aed3c76a2cb35c8e6"
+  },
+  {
+   "i": 2773,
+   "text_sha256": "sha256:1a259dba256600620c6c91094f3a300b30f0cbaecee19c6114deffd3288957d7"
+  },
+  {
+   "i": 2775,
+   "text_sha256": "sha256:1ccda44acb23305bd1b7a2c7d856db213f25d3c9d71ee063c7145d28816b2fca"
+  },
+  {
+   "i": 2778,
+   "text_sha256": "sha256:1ccda44acb23305bd1b7a2c7d856db213f25d3c9d71ee063c7145d28816b2fca"
+  },
+  {
+   "i": 2782,
+   "text_sha256": "sha256:f553f96eba419e4aa828dc065f7c8522ebb521eed0255da81f1d3e04498ea867"
+  },
+  {
+   "i": 2788,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 2793,
+   "text_sha256": "sha256:9f9805a341e2efa598a213258833832f86a6d70b1c6e026ed838933fd21ce7a4"
+  },
+  {
+   "i": 2798,
+   "text_sha256": "sha256:2b2090583d4fbef6d4e0df5a90fb2b7a83218dab753f3ce197ef39674bdacd6c"
+  },
+  {
+   "i": 2819,
+   "text_sha256": "sha256:3c401b9a19afc400f1bd4e8bc50f9db0da9cfa00bbac16391fda392d92ab4916"
+  },
+  {
+   "i": 2820,
+   "text_sha256": "sha256:df1d2659d46c59699730bd11a8393afece511400ad9e7d695f3546f378c58aa8"
+  },
+  {
+   "i": 2835,
+   "text_sha256": "sha256:1a259dba256600620c6c91094f3a300b30f0cbaecee19c6114deffd3288957d7"
+  },
+  {
+   "i": 2840,
+   "text_sha256": "sha256:9731de826f42164684c9c19f02fb2ff487f81e5b0239c901dd5695207aa6092d"
+  },
+  {
+   "i": 2846,
+   "text_sha256": "sha256:8f55b3b72d29d7a624e8493fc4a6d6acb755f4edaed3e1f379211ac38124ea70"
+  },
+  {
+   "i": 2847,
+   "text_sha256": "sha256:3916ff74b491ca8e5dcc8496cbdc228939212d673235b89adea200843fc2bf51"
+  },
+  {
+   "i": 2849,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 2851,
+   "text_sha256": "sha256:9f9805a341e2efa598a213258833832f86a6d70b1c6e026ed838933fd21ce7a4"
+  },
+  {
+   "i": 2853,
+   "text_sha256": "sha256:2b2090583d4fbef6d4e0df5a90fb2b7a83218dab753f3ce197ef39674bdacd6c"
+  },
+  {
+   "i": 2855,
+   "text_sha256": "sha256:c2132a32702c766df335233474a229e266c4a4e1466eee837bf6d84da7af237a"
+  },
+  {
+   "i": 2857,
+   "text_sha256": "sha256:b9a91f88266285d4aa6ad88fbf40fc8ab1ff171941263dfc7fb1e6cde2860971"
+  },
+  {
+   "i": 2861,
+   "text_sha256": "sha256:6ef22dd40b5c7041cc55c08d9739700f3b775fc8fc5aec3331c747370ea51e65"
+  },
+  {
+   "i": 2867,
+   "text_sha256": "sha256:aad6faa6418dde8fa0effc532c01a6b3001f63cf10b07158e0bd8955fe0c7178"
+  },
+  {
+   "i": 2868,
+   "text_sha256": "sha256:769c762dd9ed067a9c9cdf0668cac399896b5d0d584acd63c419da6c4df59e67"
+  },
+  {
+   "i": 2869,
+   "text_sha256": "sha256:9cdbde33f614f8c0c2acac43f3198ad04fa1cb2293fb002d731ba23db75bc28f"
+  },
+  {
+   "i": 2870,
+   "text_sha256": "sha256:57f0df0e3d01f3f2b0aaf23f34e9555027766525ce779fbe5f0b044021d6fd15"
+  },
+  {
+   "i": 2877,
+   "text_sha256": "sha256:0d8e13d99b0bff6887d80d75336be705e948aae2b8133a0fd38e5e239cd42bb3"
+  },
+  {
+   "i": 2894,
+   "text_sha256": "sha256:06740e95b886470dd57e081b76bbf359dd024800197ee864ddd29f89129ae71f"
+  },
+  {
+   "i": 2896,
+   "text_sha256": "sha256:406e8a11ad1cfeba5e69387144c7b947540d682ca3d4e602eb5077a1dcbed4b6"
+  },
+  {
+   "i": 2899,
+   "text_sha256": "sha256:3609ffa2c0d64a4e43e0ba30711f46ccc06bf00a500c590e43fe5d2b7f9780b8"
+  },
+  {
+   "i": 2901,
+   "text_sha256": "sha256:8bed5c8395ff40bb15d7901cfb1793213a4f84cf5845dd42e2ed23cbb2a59754"
+  },
+  {
+   "i": 2916,
+   "text_sha256": "sha256:b9c5efaad52f0430675c72564354e9c4d086f3c22d1b1e79d4ad895332fd0f84"
+  },
+  {
+   "i": 2917,
+   "text_sha256": "sha256:d4b513a3b6a5dc25e9cda89839276e6c826d98c6dd081f5b57731761f88ef4b1"
+  },
+  {
+   "i": 2919,
+   "text_sha256": "sha256:d7efb6830fa6995a239f8590bd59c063a09f3d66459de373fbe1f2032d0c7bc5"
+  },
+  {
+   "i": 2938,
+   "text_sha256": "sha256:76c8cd8d984ea38871b4a0e6012a3bb2c9eb260481aca033fbbbd60857c18796"
+  },
+  {
+   "i": 2943,
+   "text_sha256": "sha256:e2074411cccbeb1d71f7a7221aaa4b93401d5cdf0b89e4a78b066ff67c9b88de"
+  },
+  {
+   "i": 2960,
+   "text_sha256": "sha256:c3f3bfb177f52380909808e05dea2c7ff3deeb9d82492329874607cae2be538d"
+  },
+  {
+   "i": 2966,
+   "text_sha256": "sha256:45aaacba7ea1a668da79cff4034c6573c6ab9399bb868b878f7e844fd0b6ea75"
+  },
+  {
+   "i": 2976,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 2977,
+   "text_sha256": "sha256:a409685320e6d631cc019f5c0f6b18b3cd30b438db6eea747779c50b6a377ec7"
+  },
+  {
+   "i": 3046,
+   "text_sha256": "sha256:6d70ee9b508a580c9d7d3caed1c37c09e121128d7f4c1a33ec258dde2fe9f50b"
+  },
+  {
+   "i": 3050,
+   "text_sha256": "sha256:47e2886ee5d3fcab799efae44644488b428a7cb7d3bf24752b46e93d5c3eb6b8"
+  },
+  {
+   "i": 3053,
+   "text_sha256": "sha256:f57d67552b6f9f1b69145b88e623f437e4101a58a862e1d5927f0e859f78a377"
+  },
+  {
+   "i": 3056,
+   "text_sha256": "sha256:845f9286400f42697fbb196d24c794efa933ce1d20e2b93a7cf770b69f96f6fc"
+  },
+  {
+   "i": 3061,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 3076,
+   "text_sha256": "sha256:5ef962e11e9d6a03f9ee616b68de11ac7cefb138dfa2c19811b21f5278d859cb"
+  },
+  {
+   "i": 3091,
+   "text_sha256": "sha256:139ba07dec168a5216fe17c6aff545590b0b0d4d6434bd78245d02e95423d0e9"
+  },
+  {
+   "i": 3098,
+   "text_sha256": "sha256:5b3c9e053db37c517962acd9ab991c8105eedb86523f717133ba1e1b6b44310b"
+  },
+  {
+   "i": 3116,
+   "text_sha256": "sha256:6e21f61e4f0952f485b5fdfa3337066d1439beac65fc503f4398f2783323903d"
+  },
+  {
+   "i": 3117,
+   "text_sha256": "sha256:ffd5731830aad717f23a3ab4b16df1396a64f79c16727d8385221c9e62288d01"
+  },
+  {
+   "i": 3119,
+   "text_sha256": "sha256:7693b0c2e7290ac8dd17514f44bb6f879868d0e6f339ea63b04e000db668ccdd"
+  },
+  {
+   "i": 3120,
+   "text_sha256": "sha256:0e4b0f36c8669197e9acbea9f54ec292575858b39fb5056273e77ecdfcbae23a"
+  },
+  {
+   "i": 3130,
+   "text_sha256": "sha256:9bc3516b784aceb156fb7e182b697e3f2aae96fa300e13aaad39085a986f02a6"
+  },
+  {
+   "i": 3133,
+   "text_sha256": "sha256:45aaacba7ea1a668da79cff4034c6573c6ab9399bb868b878f7e844fd0b6ea75"
+  },
+  {
+   "i": 3136,
+   "text_sha256": "sha256:78b7d0379d5eb3fa70147f422b792dfff88e99f1682d74b03828ec584bc56c09"
+  },
+  {
+   "i": 3275,
+   "text_sha256": "sha256:4a2954eda3acd2da09c56be84860aad00317d167e661ef7f8e35aeb146af875c"
+  },
+  {
+   "i": 3291,
+   "text_sha256": "sha256:7c1d19fab60af1c6175760608602e24ff0b2aa1579484928a3c8ac4748f8525c"
+  },
+  {
+   "i": 3292,
+   "text_sha256": "sha256:147fb813a2515718ef6121c61c9636d6ffbcb055bcdb45dbb483af667aa94c8b"
+  },
+  {
+   "i": 3297,
+   "text_sha256": "sha256:0b6d10257f03e5c918a963c20ff18adbc1b90b072a57bb3c3e5da9c92c586a49"
+  },
+  {
+   "i": 3299,
+   "text_sha256": "sha256:30b76d08658dbb6f8f49d3bba6403e43a412c05c4ebc288ba29ddc39b3cda893"
+  },
+  {
+   "i": 3339,
+   "text_sha256": "sha256:4554b4645574415f65d4e0f114f1c5e792117584bfb5cb133712d9857848184e"
+  },
+  {
+   "i": 3360,
+   "text_sha256": "sha256:37f8c6a5d220384e6457b25b560719694e1df53fd44a6c79dfba0bdcf77f493d"
+  },
+  {
+   "i": 3381,
+   "text_sha256": "sha256:cb8b610509daff947516e96ae858b8c36544ea2d386586ed402421bd2a3a339b"
+  },
+  {
+   "i": 3382,
+   "text_sha256": "sha256:e7dea6e921fc87ed97e5c3eb58d06dc463f6aa184c67b36d4ea27681eef845a4"
+  },
+  {
+   "i": 3383,
+   "text_sha256": "sha256:150628a26d9ae73ec7f8f9f2201437df2160e9334b74ff17eeff966847d2cb4f"
+  },
+  {
+   "i": 3385,
+   "text_sha256": "sha256:4bbe72d4afa7080977925b1481787fe82f7e7e0ab9cc1a2359ac8ca14be44e24"
+  },
+  {
+   "i": 3387,
+   "text_sha256": "sha256:cb8b610509daff947516e96ae858b8c36544ea2d386586ed402421bd2a3a339b"
+  },
+  {
+   "i": 3388,
+   "text_sha256": "sha256:e7dea6e921fc87ed97e5c3eb58d06dc463f6aa184c67b36d4ea27681eef845a4"
+  },
+  {
+   "i": 3389,
+   "text_sha256": "sha256:150628a26d9ae73ec7f8f9f2201437df2160e9334b74ff17eeff966847d2cb4f"
+  },
+  {
+   "i": 3391,
+   "text_sha256": "sha256:a60a9f5628a9e383b6092a369df272774ad8368459217f519be6a6fd1431220d"
+  },
+  {
+   "i": 3392,
+   "text_sha256": "sha256:45aaacba7ea1a668da79cff4034c6573c6ab9399bb868b878f7e844fd0b6ea75"
+  },
+  {
+   "i": 3393,
+   "text_sha256": "sha256:9bc3516b784aceb156fb7e182b697e3f2aae96fa300e13aaad39085a986f02a6"
+  },
+  {
+   "i": 3394,
+   "text_sha256": "sha256:93c91c851e7acc17d881c9b89ea954be1183070254014be03a93d169cf52dbbd"
+  },
+  {
+   "i": 3396,
+   "text_sha256": "sha256:45aaacba7ea1a668da79cff4034c6573c6ab9399bb868b878f7e844fd0b6ea75"
+  },
+  {
+   "i": 3397,
+   "text_sha256": "sha256:f38d6e0e9b0832fa142cfa3a658a948fda6200e465fae470e535154579d5ef98"
+  },
+  {
+   "i": 3557,
+   "text_sha256": "sha256:cb8b610509daff947516e96ae858b8c36544ea2d386586ed402421bd2a3a339b"
+  },
+  {
+   "i": 3558,
+   "text_sha256": "sha256:e7dea6e921fc87ed97e5c3eb58d06dc463f6aa184c67b36d4ea27681eef845a4"
+  },
+  {
+   "i": 3559,
+   "text_sha256": "sha256:150628a26d9ae73ec7f8f9f2201437df2160e9334b74ff17eeff966847d2cb4f"
+  },
+  {
+   "i": 3561,
+   "text_sha256": "sha256:4bbe72d4afa7080977925b1481787fe82f7e7e0ab9cc1a2359ac8ca14be44e24"
+  },
+  {
+   "i": 3563,
+   "text_sha256": "sha256:cb8b610509daff947516e96ae858b8c36544ea2d386586ed402421bd2a3a339b"
+  },
+  {
+   "i": 3564,
+   "text_sha256": "sha256:e7dea6e921fc87ed97e5c3eb58d06dc463f6aa184c67b36d4ea27681eef845a4"
+  },
+  {
+   "i": 3565,
+   "text_sha256": "sha256:150628a26d9ae73ec7f8f9f2201437df2160e9334b74ff17eeff966847d2cb4f"
+  },
+  {
+   "i": 3567,
+   "text_sha256": "sha256:a60a9f5628a9e383b6092a369df272774ad8368459217f519be6a6fd1431220d"
+  },
+  {
+   "i": 3568,
+   "text_sha256": "sha256:45aaacba7ea1a668da79cff4034c6573c6ab9399bb868b878f7e844fd0b6ea75"
+  },
+  {
+   "i": 3569,
+   "text_sha256": "sha256:9bc3516b784aceb156fb7e182b697e3f2aae96fa300e13aaad39085a986f02a6"
+  },
+  {
+   "i": 3570,
+   "text_sha256": "sha256:93c91c851e7acc17d881c9b89ea954be1183070254014be03a93d169cf52dbbd"
+  },
+  {
+   "i": 3572,
+   "text_sha256": "sha256:45aaacba7ea1a668da79cff4034c6573c6ab9399bb868b878f7e844fd0b6ea75"
+  },
+  {
+   "i": 3573,
+   "text_sha256": "sha256:f38d6e0e9b0832fa142cfa3a658a948fda6200e465fae470e535154579d5ef98"
+  },
+  {
+   "i": 3754,
+   "text_sha256": "sha256:cb8b610509daff947516e96ae858b8c36544ea2d386586ed402421bd2a3a339b"
+  },
+  {
+   "i": 3755,
+   "text_sha256": "sha256:e7dea6e921fc87ed97e5c3eb58d06dc463f6aa184c67b36d4ea27681eef845a4"
+  },
+  {
+   "i": 3756,
+   "text_sha256": "sha256:150628a26d9ae73ec7f8f9f2201437df2160e9334b74ff17eeff966847d2cb4f"
+  },
+  {
+   "i": 3758,
+   "text_sha256": "sha256:4bbe72d4afa7080977925b1481787fe82f7e7e0ab9cc1a2359ac8ca14be44e24"
+  },
+  {
+   "i": 3760,
+   "text_sha256": "sha256:cb8b610509daff947516e96ae858b8c36544ea2d386586ed402421bd2a3a339b"
+  },
+  {
+   "i": 3761,
+   "text_sha256": "sha256:e7dea6e921fc87ed97e5c3eb58d06dc463f6aa184c67b36d4ea27681eef845a4"
+  },
+  {
+   "i": 3762,
+   "text_sha256": "sha256:150628a26d9ae73ec7f8f9f2201437df2160e9334b74ff17eeff966847d2cb4f"
+  },
+  {
+   "i": 3764,
+   "text_sha256": "sha256:a60a9f5628a9e383b6092a369df272774ad8368459217f519be6a6fd1431220d"
+  },
+  {
+   "i": 3765,
+   "text_sha256": "sha256:45aaacba7ea1a668da79cff4034c6573c6ab9399bb868b878f7e844fd0b6ea75"
+  },
+  {
+   "i": 3766,
+   "text_sha256": "sha256:9bc3516b784aceb156fb7e182b697e3f2aae96fa300e13aaad39085a986f02a6"
+  },
+  {
+   "i": 3767,
+   "text_sha256": "sha256:93c91c851e7acc17d881c9b89ea954be1183070254014be03a93d169cf52dbbd"
+  },
+  {
+   "i": 3769,
+   "text_sha256": "sha256:45aaacba7ea1a668da79cff4034c6573c6ab9399bb868b878f7e844fd0b6ea75"
+  },
+  {
+   "i": 3770,
+   "text_sha256": "sha256:f38d6e0e9b0832fa142cfa3a658a948fda6200e465fae470e535154579d5ef98"
+  },
+  {
+   "i": 3953,
+   "text_sha256": "sha256:cb8b610509daff947516e96ae858b8c36544ea2d386586ed402421bd2a3a339b"
+  },
+  {
+   "i": 3954,
+   "text_sha256": "sha256:e7dea6e921fc87ed97e5c3eb58d06dc463f6aa184c67b36d4ea27681eef845a4"
+  },
+  {
+   "i": 3955,
+   "text_sha256": "sha256:150628a26d9ae73ec7f8f9f2201437df2160e9334b74ff17eeff966847d2cb4f"
+  },
+  {
+   "i": 3957,
+   "text_sha256": "sha256:4bbe72d4afa7080977925b1481787fe82f7e7e0ab9cc1a2359ac8ca14be44e24"
+  },
+  {
+   "i": 3959,
+   "text_sha256": "sha256:cb8b610509daff947516e96ae858b8c36544ea2d386586ed402421bd2a3a339b"
+  },
+  {
+   "i": 3960,
+   "text_sha256": "sha256:e7dea6e921fc87ed97e5c3eb58d06dc463f6aa184c67b36d4ea27681eef845a4"
+  },
+  {
+   "i": 3961,
+   "text_sha256": "sha256:150628a26d9ae73ec7f8f9f2201437df2160e9334b74ff17eeff966847d2cb4f"
+  },
+  {
+   "i": 3963,
+   "text_sha256": "sha256:a60a9f5628a9e383b6092a369df272774ad8368459217f519be6a6fd1431220d"
+  },
+  {
+   "i": 3964,
+   "text_sha256": "sha256:45aaacba7ea1a668da79cff4034c6573c6ab9399bb868b878f7e844fd0b6ea75"
+  },
+  {
+   "i": 3965,
+   "text_sha256": "sha256:9bc3516b784aceb156fb7e182b697e3f2aae96fa300e13aaad39085a986f02a6"
+  },
+  {
+   "i": 3966,
+   "text_sha256": "sha256:93c91c851e7acc17d881c9b89ea954be1183070254014be03a93d169cf52dbbd"
+  },
+  {
+   "i": 3968,
+   "text_sha256": "sha256:45aaacba7ea1a668da79cff4034c6573c6ab9399bb868b878f7e844fd0b6ea75"
+  },
+  {
+   "i": 3969,
+   "text_sha256": "sha256:f38d6e0e9b0832fa142cfa3a658a948fda6200e465fae470e535154579d5ef98"
+  },
+  {
+   "i": 4061,
+   "text_sha256": "sha256:6a9838670daa80d05c978d4cb067fcad620c7fbe62ded37c0befcac5df7bc5ab"
+  },
+  {
+   "i": 4064,
+   "text_sha256": "sha256:5d6b346508e8272134684aa1e339e5605398e9b3be32a140c505f78e5ef61173"
+  },
+  {
+   "i": 4068,
+   "text_sha256": "sha256:6a9838670daa80d05c978d4cb067fcad620c7fbe62ded37c0befcac5df7bc5ab"
+  },
+  {
+   "i": 4071,
+   "text_sha256": "sha256:5d6b346508e8272134684aa1e339e5605398e9b3be32a140c505f78e5ef61173"
+  },
+  {
+   "i": 4074,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 4079,
+   "text_sha256": "sha256:9f9805a341e2efa598a213258833832f86a6d70b1c6e026ed838933fd21ce7a4"
+  },
+  {
+   "i": 4138,
+   "text_sha256": "sha256:cc5d1195c2ec439f9ee54a73ace11eb1774837fbfa65c0af4bd1061de7e77f51"
+  },
+  {
+   "i": 4139,
+   "text_sha256": "sha256:1c29e2097fb6d3c03e4bfb832acc84631e7835f6ba3320b12dcd95c8951d3f1e"
+  },
+  {
+   "i": 4140,
+   "text_sha256": "sha256:266fd8a5759cb33069b7b1e29d75913434b8eb116789a781af20627d9b45dbe0"
+  },
+  {
+   "i": 4159,
+   "text_sha256": "sha256:0aa11413e5d3642ecfa063b5b467c1ed39902b161396f1c99b614c061eae81a0"
+  },
+  {
+   "i": 4162,
+   "text_sha256": "sha256:29f1f4d5ed75d38c1dacb91563f8310e9d7a1a071056bb37e222b53dbaa78f72"
+  },
+  {
+   "i": 4166,
+   "text_sha256": "sha256:e17d5f05f9d9c30dd1113dcdcac4d5794190d43432626b25e37c367b84b26d0c"
+  },
+  {
+   "i": 4171,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 4180,
+   "text_sha256": "sha256:fcd6fea72de7e6c09ca2567674befdef61c04e783bd2e0f092aeb99c57e587e3"
+  },
+  {
+   "i": 4277,
+   "text_sha256": "sha256:6efd6390a2b35cf7f0cf79991c505fbaf24b84fcc182a6dba3f946ba8cd27ff6"
+  },
+  {
+   "i": 4278,
+   "text_sha256": "sha256:464a356e30f93b3292ae305b4b31424c0a0ad2e740a4b7f78809edb25ff1d5e1"
+  },
+  {
+   "i": 4279,
+   "text_sha256": "sha256:00189997b5a83595ae538b4ee80e4ec4374410a8508f6433cbeb998d4f7872d1"
+  },
+  {
+   "i": 4282,
+   "text_sha256": "sha256:1a048520e0b87c0b6460d3e4f11e449bb662cee945cdb323e7748848c3d0397f"
+  },
+  {
+   "i": 4297,
+   "text_sha256": "sha256:cd8af793ac49f114093f1f4cf521fb78eb2733baa6bd3707773f0d6fd81e97d2"
+  },
+  {
+   "i": 4298,
+   "text_sha256": "sha256:0d0c1082c4441d79ff828d45d3def208a8032977fbd00c8ec649f4c286971bc4"
+  },
+  {
+   "i": 4300,
+   "text_sha256": "sha256:790a348ea7b2fda1946183c2dc5e872b896c38bf2345df0fc744ac63fb0d85fd"
+  },
+  {
+   "i": 4301,
+   "text_sha256": "sha256:8bf7f9c99f21166113c6d6a370664f6b6bfde77c244b064a12eaa77c59cb3280"
+  },
+  {
+   "i": 4302,
+   "text_sha256": "sha256:6f89af10629656807a7ef74e65463d41f30f23d7e609a1efb7af3e5d8df892bc"
+  },
+  {
+   "i": 4313,
+   "text_sha256": "sha256:cb8f6f0210caa2ed3e42f2a2f332b19dec1ad2338f860bd5c6b4424981935d0c"
+  },
+  {
+   "i": 4315,
+   "text_sha256": "sha256:48796b1f8df25b13b99a406c47ff23a8b3a22f59eaebb364c1f483819da748a4"
+  },
+  {
+   "i": 4324,
+   "text_sha256": "sha256:018265f7c253c4476f79b62e4d3e938ce5688489f1a345e808e432a13a15dcf2"
+  },
+  {
+   "i": 4325,
+   "text_sha256": "sha256:fb81b961af456e5e748db7e1b1bff9a5e621b62718234c1937738d1adc317a17"
+  },
+  {
+   "i": 4435,
+   "text_sha256": "sha256:b4eb9fab95864d93dfe622b0244a0093efca1a009920a7f5803407c06715d7bb"
+  },
+  {
+   "i": 4438,
+   "text_sha256": "sha256:50e370e5083fa986498a3db39c99d7f2988c0ffdb8162a83efd70918474345c8"
+  },
+  {
+   "i": 4439,
+   "text_sha256": "sha256:61403bd3ce1c9d1a94ed73c9c0586fda8225837bc7551a9f92e6948046f7b743"
+  },
+  {
+   "i": 4482,
+   "text_sha256": "sha256:2a9b5dbcf52c1b0a30e7eae030f097c57c252e7fa966a96d928df1b509846321"
+  },
+  {
+   "i": 4483,
+   "text_sha256": "sha256:6f0e70ed7566cbcfc9cb7a75486d694f358f21c5f452adb98e9fd9b0f065e36d"
+  },
+  {
+   "i": 4498,
+   "text_sha256": "sha256:f0e4b94b92907396528811c92b3057d7587c8f39d7ff48d23c8815c7aefd039b"
+  },
+  {
+   "i": 4500,
+   "text_sha256": "sha256:4f3a9bd003974a5ed8c9ad65d4aeda3b8a0db6fd903e36e83a3a950624b09bbd"
+  },
+  {
+   "i": 4515,
+   "text_sha256": "sha256:0a22beabb19c0e14c7f25de83218db4d6de52179de529d5194f5cf1192272926"
+  },
+  {
+   "i": 4516,
+   "text_sha256": "sha256:45c1775a176b30b9b9fed7925a098f084b0ee1d45faefc1e2a2549964f7cdc3c"
+  },
+  {
+   "i": 4519,
+   "text_sha256": "sha256:73f269f1057511c1ef707e6fde16a606c25988786c4747fe5f6d4f3f04814303"
+  },
+  {
+   "i": 4570,
+   "text_sha256": "sha256:ac767e11bfee25e7ca4659fd8d7d3b693111ba3d8013e52c0d5caf12f4bcfea2"
+  },
+  {
+   "i": 4591,
+   "text_sha256": "sha256:06b55887dc09324ae0807365725fa5daef1a8dd14558d8a23c6eb0543d4bf146"
+  },
+  {
+   "i": 4595,
+   "text_sha256": "sha256:3c7e4d2c3f27c2e74ea20b0fd8bb6f0b7cca8cb5a0b92b5d482a363921cd8b1d"
+  },
+  {
+   "i": 4605,
+   "text_sha256": "sha256:41f61ae9df611f4581f12c1daad5f1fb1f460b688aa70c248524148d564a2231"
+  },
+  {
+   "i": 4607,
+   "text_sha256": "sha256:a15233bc8569f457b9848bbd2046da0f6df0ab008607aaea2315cb69ff00105a"
+  },
+  {
+   "i": 4611,
+   "text_sha256": "sha256:fbc6eb9aa08582908761264240bfacc21ce921a961a824b4d8b95a16fa55d58b"
+  },
+  {
+   "i": 4641,
+   "text_sha256": "sha256:ea6c10ff6e2eccc327bbdab9e4bc5e035ce908d7e990c879d9ce3acf805b7150"
+  },
+  {
+   "i": 4658,
+   "text_sha256": "sha256:9b1eba9ab047b39f243d23e8f79c5348e4a6277227ad127e5540c437be5628ed"
+  },
+  {
+   "i": 4663,
+   "text_sha256": "sha256:30be674fee387f652fce83b7c33411428bdcab8930d097f360582aa6bf78e529"
+  },
+  {
+   "i": 4664,
+   "text_sha256": "sha256:64a5738cac6c5486f3bc2f3bb25d8937e583dc383f3e1af416858dd2662c8920"
+  },
+  {
+   "i": 4665,
+   "text_sha256": "sha256:9cbfff8edf11579f00d7e52e970bf50af9df3b4dd5d92b613613f6ffd7a655b4"
+  },
+  {
+   "i": 4666,
+   "text_sha256": "sha256:44e426d3a80c6c2e6e660770b72778fb0aa715412a42805269bd03a975359901"
+  },
+  {
+   "i": 4673,
+   "text_sha256": "sha256:19deba86d1ee9c0a74873c231647a48c2237a427c51d233691435a0e889ee8d4"
+  },
+  {
+   "i": 4674,
+   "text_sha256": "sha256:49c508dfc9e3a8dc05190959f0ad69dff479408f270f090a924fac74071dd28d"
+  },
+  {
+   "i": 4675,
+   "text_sha256": "sha256:80b800f14e2535fecf0fdb3aa55360c44a64763afc929d3e09f1f89ff27a11a0"
+  },
+  {
+   "i": 4677,
+   "text_sha256": "sha256:2586a94357128f11b1f79abaae8c126dbdc33ae0e10a4dae4740e54bada10b5e"
+  },
+  {
+   "i": 4679,
+   "text_sha256": "sha256:ee37d813e5be95732a165e47e1a0e6aff32632b9db0ca8bc9081439a2fbaf6a0"
+  },
+  {
+   "i": 4680,
+   "text_sha256": "sha256:25848cb72438831ce82bfe17bf109590a0be6650b5dd9fd190280dd191861dac"
+  },
+  {
+   "i": 4695,
+   "text_sha256": "sha256:0eacdeb73de0c4b99f27aa848864b8f3853dd0ba605ba1c14e2b525314b8ce34"
+  },
+  {
+   "i": 4696,
+   "text_sha256": "sha256:db4d18b52b42bf7b5e685377fd40ed41c4e523a140d8e956496f38f71b1c1b06"
+  },
+  {
+   "i": 4697,
+   "text_sha256": "sha256:985081882bd36a177b65eac6311368a8be248460dc493fb16becf8e2dcdb3fe7"
+  },
+  {
+   "i": 4700,
+   "text_sha256": "sha256:8e896c1b88e1fe265d029ca0411ddd8ecb90844063b600536c2d4f5a90d59653"
+  },
+  {
+   "i": 4704,
+   "text_sha256": "sha256:e57630cfce868aed3e2ef96c8b4d7038c5a199382e04b7b1089f714d7263bd49"
+  },
+  {
+   "i": 4705,
+   "text_sha256": "sha256:560a051f970d5d211b202d1d0a52ecfc455773dd4abafc30ba9cb6f3ee1c65ff"
+  },
+  {
+   "i": 4706,
+   "text_sha256": "sha256:f884fcb8ee86357af29f13a41092c710f2d16d3c0fc6f47be9787aa26f373d7c"
+  },
+  {
+   "i": 4716,
+   "text_sha256": "sha256:70c100c196fdc61e3c3339b227783fd229262f87d113f774525bdf3487d52107"
+  },
+  {
+   "i": 4718,
+   "text_sha256": "sha256:e6402af8ee6601d624af5cdd1061c18bc29aebdcabf5018c87a40d4f35ba7c13"
+  },
+  {
+   "i": 4719,
+   "text_sha256": "sha256:3b4b1f31c1a59e3114cb73e7f59e23c5d19de08d85d612e1409f9f8b21a7fe60"
+  },
+  {
+   "i": 4720,
+   "text_sha256": "sha256:1a53d8916f1049a4ae6f728db528db0654ffccd37feff50c1748c7b8d0c9d390"
+  },
+  {
+   "i": 4721,
+   "text_sha256": "sha256:7ba799f38d841048a10b725f7a2c191a8fc36076d9526e4ef5215e8e32c7054e"
+  },
+  {
+   "i": 4727,
+   "text_sha256": "sha256:09515123963c903f4ad26283652d11ec0078388a2a6a5df45d562f558b4f65ab"
+  },
+  {
+   "i": 4749,
+   "text_sha256": "sha256:ea7da071c4e039b25cba9ae2506b915b2b968ce57dc0825ffdcabdfb49a2fe24"
+  },
+  {
+   "i": 4750,
+   "text_sha256": "sha256:b6c7846133c6c07c63421048a06db12ed63e8de90924fe382e3a97db7b482504"
+  },
+  {
+   "i": 4753,
+   "text_sha256": "sha256:811adb51be1c4525a0dc50cee8792b8c363a1997d9058c482d9ce5bb4f224f8a"
+  },
+  {
+   "i": 4756,
+   "text_sha256": "sha256:114e96e59a8034b820b23d197351057c37d2a9ef268dbe2e050a76e93462f5d5"
+  },
+  {
+   "i": 4803,
+   "text_sha256": "sha256:b38ae2c5b84529e8027b43a69c8ce9426a3cb081dae97b77bdcd2fdc5a9df742"
+  },
+  {
+   "i": 4860,
+   "text_sha256": "sha256:c2942dd9811d36a0b9ad7bcc3a93a9b24bebcaeaab9212b5162381669bdad5b7"
+  },
+  {
+   "i": 4861,
+   "text_sha256": "sha256:b57bc1e65e21e81b97ddc66b77326ef66ebfaf1ba27b4ca4237f0182c4ae1c77"
+  },
+  {
+   "i": 4882,
+   "text_sha256": "sha256:165ccd3efb861b869e5e81e844b58f849dfa7f549016d211d1e002f2a22e8fc9"
+  },
+  {
+   "i": 4883,
+   "text_sha256": "sha256:b6ad8340a6800f270f1b382d603cc69b78fdee6fcd547980f2aaaab6cce7a20d"
+  },
+  {
+   "i": 4887,
+   "text_sha256": "sha256:d4e8830a71c73edffe0115b8abad16b0b5cb2e121047c64cd01995203cfad062"
+  },
+  {
+   "i": 4889,
+   "text_sha256": "sha256:0682e315e0648bbf01b63ffc9a4911e5ef04e1e37516e8acdb3602496b22f6d3"
+  },
+  {
+   "i": 4912,
+   "text_sha256": "sha256:4b42c6690ebeb867e96784025c16e1b109cf5b688cadce26dd9355a22cc3ad7d"
+  },
+  {
+   "i": 4913,
+   "text_sha256": "sha256:fd40804e1203c04a40d5915babfeb602e942a80d20a5f35f7b5c24273a0ce49b"
+  },
+  {
+   "i": 4914,
+   "text_sha256": "sha256:7d0ed8eaf2d841f3d79d89234ee1db095d76feb2ccb5b6a1d3c87c1ef21e7f7f"
+  },
+  {
+   "i": 4929,
+   "text_sha256": "sha256:dfa9dfa5cad2d8f96bee96c28ba04843b2e5d795150edc07588a8e074d91a59b"
+  },
+  {
+   "i": 4930,
+   "text_sha256": "sha256:9a93d6b82c76440b9811ca05ef3483bdcdbce5419a342a48fb9ee4123286f3e1"
+  },
+  {
+   "i": 4994,
+   "text_sha256": "sha256:abd15b230ac9760d23f32ff1c443ae9dd5d2b1f9356aeaa44ce005a56f136c3b"
+  },
+  {
+   "i": 4997,
+   "text_sha256": "sha256:1acefb525242ddd517bfd42b41399b347a743fc165130935a7d026bab4d78474"
+  },
+  {
+   "i": 4998,
+   "text_sha256": "sha256:02758b8ffc0234c2936c3ec36f513cb1cfdff0c2edcf500d43cfb71ea981bc8c"
+  },
+  {
+   "i": 4999,
+   "text_sha256": "sha256:fc1d3402031db1ce6bf8564de418a4765e570ee4817c02e6a7bb7e65f48f30ce"
+  },
+  {
+   "i": 5001,
+   "text_sha256": "sha256:78d0c3168da1216d192c587ddfb4a6ea13ad82f651fadcb241986a590c66084a"
+  },
+  {
+   "i": 5004,
+   "text_sha256": "sha256:85f76fbd7d6d271eeb8fe3a5e1a11f1f149ba21734b64e78fe8685e83d2117b5"
+  },
+  {
+   "i": 5005,
+   "text_sha256": "sha256:7a59e7c6ddca443e289375c2c67cd503739a2485e27d5eadc014c8bd104d98e2"
+  },
+  {
+   "i": 5009,
+   "text_sha256": "sha256:66c9ab177708cbc6b9770301ef0caa3f4fdcab0e3741a7f555b025a5d7dac2eb"
+  },
+  {
+   "i": 5012,
+   "text_sha256": "sha256:4227cb0785fc40c9b11b322746407d46392f3ec90f2566b99f6831f8be437531"
+  },
+  {
+   "i": 5041,
+   "text_sha256": "sha256:603e9a94a58ddffa4f7b1c18c39280ae34fdde574d8f40e31b8f2a356a294a44"
+  },
+  {
+   "i": 5042,
+   "text_sha256": "sha256:7bc0a71ce84b42827d07d0a9e9594cf108b17e15bd0ced478e56a54121a892a3"
+  },
+  {
+   "i": 5051,
+   "text_sha256": "sha256:a43614fc284dcbbf5b917589dfbf7bb01b64c77e2d03e441c00346dc4204f1af"
+  },
+  {
+   "i": 5096,
+   "text_sha256": "sha256:3434bfcf86882160b284ed6597436869f1d93538771d6e309a274e951f7d32dd"
+  },
+  {
+   "i": 5116,
+   "text_sha256": "sha256:88205773e5de0a46dbd80df14d8450464800b9f4ee3bf1195113d239807be389"
+  },
+  {
+   "i": 5117,
+   "text_sha256": "sha256:098b0e3915374a5465d843af6b50e211ef1753c96e89cf4fd6778ccb48af7e46"
+  },
+  {
+   "i": 5123,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14"
+  },
+  {
+   "i": 5124,
+   "text_sha256": "sha256:152fbd7b41714b116f3936a21dd18fb8d2ae4740d663050dfe26b0d04da1cd19"
+  },
+  {
+   "i": 5127,
+   "text_sha256": "sha256:9f9805a341e2efa598a213258833832f86a6d70b1c6e026ed838933fd21ce7a4"
+  },
+  {
+   "i": 5131,
+   "text_sha256": "sha256:2b2090583d4fbef6d4e0df5a90fb2b7a83218dab753f3ce197ef39674bdacd6c"
+  },
+  {
+   "i": 5135,
+   "text_sha256": "sha256:c2132a32702c766df335233474a229e266c4a4e1466eee837bf6d84da7af237a"
+  },
+  {
+   "i": 5139,
+   "text_sha256": "sha256:b9a91f88266285d4aa6ad88fbf40fc8ab1ff171941263dfc7fb1e6cde2860971"
+  },
+  {
+   "i": 5154,
+   "text_sha256": "sha256:445a2ad50d062f9f93bf21fef7356b8997b818097e10819ce001413dc98d936e"
+  },
+  {
+   "i": 5157,
+   "text_sha256": "sha256:b3bd10a980cb3cb2ff8061510b90dfc6da4798bb7af37faa60336ac5adc1fc3c"
+  },
+  {
+   "i": 5179,
+   "text_sha256": "sha256:1a53d8916f1049a4ae6f728db528db0654ffccd37feff50c1748c7b8d0c9d390"
+  },
+  {
+   "i": 5180,
+   "text_sha256": "sha256:82a932832ef8531937856cc131a5021e459088be65bf002db609801ccacff703"
+  },
+  {
+   "i": 5196,
+   "text_sha256": "sha256:8fc57bf4b4eb004fca2233f7dd43e73e1a974388e7d6001cb6e6d582551d839e"
+  },
+  {
+   "i": 5202,
+   "text_sha256": "sha256:25d39aab705bc9c49eb913e3e2f85aa88bb0d308e8d2ced108d45200c5263590"
+  },
+  {
+   "i": 5218,
+   "text_sha256": "sha256:9a4ebcb1fe9050bca82eb9085700115544aa2ceda773553073ad3782b1e8c452"
+  },
+  {
+   "i": 5219,
+   "text_sha256": "sha256:fdd08a531acc4d41ab8db2827b1577f883e52aacdc7b28df0f43706378f069ef"
+  },
+  {
+   "i": 5222,
+   "text_sha256": "sha256:d4e8830a71c73edffe0115b8abad16b0b5cb2e121047c64cd01995203cfad062"
+  },
+  {
+   "i": 5244,
+   "text_sha256": "sha256:4b42c6690ebeb867e96784025c16e1b109cf5b688cadce26dd9355a22cc3ad7d"
+  },
+  {
+   "i": 5245,
+   "text_sha256": "sha256:589304bdf3813acb4ae7e24ec859989b3aa7aa85358f17c530f9609f0d60c0ef"
+  },
+  {
+   "i": 5283,
+   "text_sha256": "sha256:5cb6cdcad9dee6562927f79a69f807343c7adaafc78964a04e15abf9a44b3ace"
+  },
+  {
+   "i": 5306,
+   "text_sha256": "sha256:944284bd34a1c17368b8451fc43a6433d665d6b17225d50e03c1fd2cdcc3a2c6"
+  },
+  {
+   "i": 5315,
+   "text_sha256": "sha256:75ef6404044ac9c94b427ace2befb8cbdcaa531dfaf60434f15ac3f9964040a2"
+  },
+  {
+   "i": 5322,
+   "text_sha256": "sha256:64c9898726f594a6da26c50e920f83758118669cc9123dcc4ec5eb6fdf6aee17"
+  },
+  {
+   "i": 5344,
+   "text_sha256": "sha256:1a53d8916f1049a4ae6f728db528db0654ffccd37feff50c1748c7b8d0c9d390"
+  },
+  {
+   "i": 5345,
+   "text_sha256": "sha256:969f3a3eba39b76d47763b95edaa4c2d5a4b3098c6ff4c9eb4cbb96a1b234453"
+  },
+  {
+   "i": 5350,
+   "text_sha256": "sha256:fcf808776ccad9d06bbad7476556c903514be4217190c91cfafacaa105072c90"
+  },
+  {
+   "i": 5351,
+   "text_sha256": "sha256:dc6860b644d41d101d09a1ff5e19025edda3273a95f2b17e66726753b7ede319"
+  },
+  {
+   "i": 5355,
+   "text_sha256": "sha256:90cd0116b390309526b78fa055ac82f336ef55902a21b47fb29cb363eccce81b"
+  },
+  {
+   "i": 5388,
+   "text_sha256": "sha256:c4fa095b48b2664db377722e2bbb0ea98bff2503817c3c010b2a0fa1e81492ad"
+  },
+  {
+   "i": 5390,
+   "text_sha256": "sha256:1a53d8916f1049a4ae6f728db528db0654ffccd37feff50c1748c7b8d0c9d390"
+  },
+  {
+   "i": 5391,
+   "text_sha256": "sha256:67c53f3b78d78663e4e511b9e8f1f57f593e67f60355d59853e727a982cd9a5d"
+  },
+  {
+   "i": 5404,
+   "text_sha256": "sha256:81a6284e9180f9e2b22e17db20b0614e51e1d553d42fab911fb787dd47c39765"
+  },
+  {
+   "i": 5406,
+   "text_sha256": "sha256:1a53d8916f1049a4ae6f728db528db0654ffccd37feff50c1748c7b8d0c9d390"
+  },
+  {
+   "i": 5407,
+   "text_sha256": "sha256:37ee2a541895088323fefdd8d189ff819fc7215be2058c2c455e7ac205a4585d"
+  },
+  {
+   "i": 5415,
+   "text_sha256": "sha256:9e20a164dc63a8707b16d3f1118984f2fbdc16e29dd9e30d02f988a8329eb097"
+  },
+  {
+   "i": 5418,
+   "text_sha256": "sha256:2bb5c257a906f7e3f3c4654b4f5c15603a7e535b3074cd4e88056b42cd28f4fd"
+  },
+  {
+   "i": 5420,
+   "text_sha256": "sha256:0795b2579eb91ce6c5dd7cfa75a400b08413b9beb974c44a06d36afb6c0eb1fb"
+  },
+  {
+   "i": 5422,
+   "text_sha256": "sha256:e237834c07c44713601321d85186edb9eb9b6185e75a8c9ee4261d0a54eeccf2"
+  },
+  {
+   "i": 5423,
+   "text_sha256": "sha256:3590fb3e0132764619c3f0b46d712af5e1418ee78e71ae0fd8a35684d128544a"
+  },
+  {
+   "i": 5426,
+   "text_sha256": "sha256:71a40107ffaba8822718cd98a186a3d6e54722142cb8251ba55591978a7f3ac7"
+  },
+  {
+   "i": 5427,
+   "text_sha256": "sha256:4e8a854d6e018085f5dc52b0fce7beb346527bc65597cb466b10567387313e63"
+  },
+  {
+   "i": 5428,
+   "text_sha256": "sha256:bbae73b653e1633fac884d1dc981e292a2cec64024d48bb9d456677f5823760b"
+  },
+  {
+   "i": 5442,
+   "text_sha256": "sha256:2d63f1a547a5c6c6b4d8546483d7026945e999123ba1a871ad8f1970e5f0f88d"
+  },
+  {
+   "i": 5444,
+   "text_sha256": "sha256:0d09be7a02ba622d08eb93b9523b2bff9b6bc3a9b7289f26f195670eb52d2c38"
+  },
+  {
+   "i": 5445,
+   "text_sha256": "sha256:d3c13ce819b9021b8b1a56c7290febb1c4aaa6e25974943c5c755dcf555bd964"
+  },
+  {
+   "i": 5447,
+   "text_sha256": "sha256:45381eb0624b0496df1bfced903563fe1919e46cc28a1d0fafb63e3b45e07e16"
+  },
+  {
+   "i": 5448,
+   "text_sha256": "sha256:829511855007cf5de5336fcc66631be1cb3cabc0a97f8f9aa5a3fe2e555bb0fd"
+  },
+  {
+   "i": 5449,
+   "text_sha256": "sha256:12fb8955e1384b8bb5aa13f1d4c03f7d5ef0dd1dd834fa3603a1a93de4efc330"
+  },
+  {
+   "i": 5450,
+   "text_sha256": "sha256:1a53d8916f1049a4ae6f728db528db0654ffccd37feff50c1748c7b8d0c9d390"
+  },
+  {
+   "i": 5451,
+   "text_sha256": "sha256:d2144205ab275d783bc30a4c9667ff2cfed3cf4f3e8bb52b60d711c76120bdf3"
+  },
+  {
+   "i": 5471,
+   "text_sha256": "sha256:f54be0e1d0315ed1a1ea013c29007d4e9f0393c5b75408c0f21d6573fbe96e26"
+  },
+  {
+   "i": 5473,
+   "text_sha256": "sha256:360bfff6c6060eabb89626637c7f72b4e7348be0308a9f148633fa062c53fa54"
+  },
+  {
+   "i": 5497,
+   "text_sha256": "sha256:b2534746540c82e76be4230df3b1f6d30a58f667d0e629b078f5df0bbc33d509"
+  },
+  {
+   "i": 5499,
+   "text_sha256": "sha256:4816cbfd74aa8297b9c9cdaae89e2f0d2ced6041e952dfcd114e01b4c82e9c6d"
+  },
+  {
+   "i": 5500,
+   "text_sha256": "sha256:90aef4d140965f973da09b06e664746fe453ac1155dab07654c5b6e57d97a9a6"
+  },
+  {
+   "i": 5502,
+   "text_sha256": "sha256:bbb4679ce1094f19c3884afadacaf57bf2c0d4ebb1235f571735367f90c2d7aa"
+  },
+  {
+   "i": 5504,
+   "text_sha256": "sha256:25d3e07faa28aa6a7d804b6c0291f537f7375a1bebeb6141ffae7d4e91e24b94"
+  },
+  {
+   "i": 5505,
+   "text_sha256": "sha256:70c100c196fdc61e3c3339b227783fd229262f87d113f774525bdf3487d52107"
+  },
+  {
+   "i": 5536,
+   "text_sha256": "sha256:17784a7692d75e96e0971267d2f17f14b55cb889e3eb387a0090bdad8b37eb0c"
+  },
+  {
+   "i": 5560,
+   "text_sha256": "sha256:57d5426c3300f6a966d0cc0fdc76329f6d68497efca5c8826743d1895a4baca0"
+  },
+  {
+   "i": 5562,
+   "text_sha256": "sha256:442a7ff5c129ac8fac3fe3f1932a525b1888fcafec6f6022da4b84870dae6bbe"
+  },
+  {
+   "i": 5563,
+   "text_sha256": "sha256:c836f933cec622d2359732880722928ae9275691028b1c73bc72137cec0c464e"
+  },
+  {
+   "i": 5564,
+   "text_sha256": "sha256:d031eda69ff738d9f50a1790007f2f89a29f5e7aaac083274137c81a9ee93d2d"
+  },
+  {
+   "i": 5579,
+   "text_sha256": "sha256:526b3050aee6ef2716af07847c9e02e834da64971ab2c4cebb4afaa24799b591"
+  },
+  {
+   "i": 5581,
+   "text_sha256": "sha256:9632e45c6501881d137ce056aefae354a9c7ab068a6d8e845d491835c6e94870"
+  },
+  {
+   "i": 5589,
+   "text_sha256": "sha256:b0511e0829775bef3fa526b0018e51a9b7f143a6a9035442f0e8883525095b3f"
+  },
+  {
+   "i": 5590,
+   "text_sha256": "sha256:257c229ddeab95f0440a37c46af391ef13a3bb3fe8aca10eafce0d26dbffd7b0"
+  },
+  {
+   "i": 5591,
+   "text_sha256": "sha256:d09952711df1e44d683dd8d5bcc13e381007abc8289922bac7a90cf1d134f182"
+  },
+  {
+   "i": 5703,
+   "text_sha256": "sha256:66ed0dafae11ce0eb95c96f82c75f625e2ae22b0a5f0c45ac01bbfc2a351fbf2"
+  },
+  {
+   "i": 5707,
+   "text_sha256": "sha256:a40bcee6e9493728cf2e49b9789dbac4245fc558c927888619ef01076d40a7ee"
+  },
+  {
+   "i": 5713,
+   "text_sha256": "sha256:0eaaf2f8c7b7de956488d4040d8e207347961ccbd18179b8d7c995810a5e81aa"
+  },
+  {
+   "i": 5731,
+   "text_sha256": "sha256:e2b31036ff96a0cd24cfa89f581f8fedf54861909e5778f209f64a4915071014"
+  },
+  {
+   "i": 5751,
+   "text_sha256": "sha256:9589dcbdef78d645ac15f58020300fc132915cbd9ebfb16354f2b83b9504de50"
+  },
+  {
+   "i": 5755,
+   "text_sha256": "sha256:ad4ac4f529e7f6b9e63b3f07645be7769b808a4275edf81031816caa93b6729f"
+  },
+  {
+   "i": 5758,
+   "text_sha256": "sha256:fe8a357a3e1fcd6f28dc23a7e217f2de051d5e9125c780236cd86de71a88e096"
+  },
+  {
+   "i": 5781,
+   "text_sha256": "sha256:d0832d88f37c0fb55028b925ed0b6aff36f6847b9c871b65c9dc9668992954e4"
+  },
+  {
+   "i": 5785,
+   "text_sha256": "sha256:cc92c2ec626f8d1c630e5a1fa6d227cca1ea241ce3c16974568f30c451bff769"
+  },
+  {
+   "i": 5859,
+   "text_sha256": "sha256:dff1ec32b296bab89fc56c6fec5924d3111a9574d253d49327a38a471fddb515"
+  },
+  {
+   "i": 5879,
+   "text_sha256": "sha256:cba85f143a61580676346e33a7311539c5b933d0b01a56124a3e2edc41762935"
+  },
+  {
+   "i": 5898,
+   "text_sha256": "sha256:726a0002c425abec5433800fa3d04c4816e3aae04d6e78ca60b0bf10f6e2ff6d"
+  },
+  {
+   "i": 5900,
+   "text_sha256": "sha256:0bd372f12b8516a4becd2745e3c16c0ba3f28d9a46b87a3ef39d7fb904997a42"
+  },
+  {
+   "i": 5902,
+   "text_sha256": "sha256:a1adc7b716879b24a8d2000c719f022c10b2eccb2cb7853f46a5d7d7986f8cf4"
+  },
+  {
+   "i": 5956,
+   "text_sha256": "sha256:374bb64abdaf3d2cdccdc21d38825f4e27a322589e835ab80dd17fb4b8dc54b0"
+  },
+  {
+   "i": 6138,
+   "text_sha256": "sha256:b077ec96ed0869ece814f95e3cd124d73c69a9def44376bb0f7c0aa5d08ee686"
+  },
+  {
+   "i": 6200,
+   "text_sha256": "sha256:2cba070af4faa5406faaec7d8f3eb3d6ae009010ac19a9fb4bcdb1b96a295655"
+  },
+  {
+   "i": 6210,
+   "text_sha256": "sha256:f491376c4e6eef41d755e5dea8ac7c1991458eadc2d3482144372321f77c2238"
+  },
+  {
+   "i": 6211,
+   "text_sha256": "sha256:86bdf3b6fd5c73d1f8bdc95c5e8446dd6a565eb57b448fa859a5cdee23c127ae"
+  },
+  {
+   "i": 6212,
+   "text_sha256": "sha256:4f78eb12d1b1b313f3423461d4c9b8365ecf4ae2180ee3d3a4d6f0199d82fc8b"
+  },
+  {
+   "i": 6216,
+   "text_sha256": "sha256:967b91510b8a5021b9ebca30e112857cafb5f8f9d99edb9ff604f26b2c0be9a7"
+  },
+  {
+   "i": 6232,
+   "text_sha256": "sha256:d1365405aeffa7437e61b417211736f24aa5d138cffbbb915855e6f782fa5674"
+  },
+  {
+   "i": 6234,
+   "text_sha256": "sha256:a6f2934672274cc6d0be760cdbe7dd7933a88b72843a16308e3961a962f73de0"
+  },
+  {
+   "i": 6237,
+   "text_sha256": "sha256:e4a9ff98bb09cbded42d6cc7891772725bbddc7d7b73c1e342f5318ede5100c0"
+  },
+  {
+   "i": 6240,
+   "text_sha256": "sha256:715c28ccfefe947567a4e49d09fd3bb3e040536cb53a02ba99f28afe1998c626"
+  },
+  {
+   "i": 6254,
+   "text_sha256": "sha256:4123000d07ba7cf106c100423ed2eaac8b7e6b78548bbbbb957336c7ec83584a"
+  },
+  {
+   "i": 6256,
+   "text_sha256": "sha256:f64024be1f8c004d14995116ad00de8c33b9a1f598b66eab42e4370378a8280e"
+  },
+  {
+   "i": 6261,
+   "text_sha256": "sha256:5f4540e7de8b61260bf4161101d1b34163541ddd645e202d99afbef6740f34a5"
+  },
+  {
+   "i": 6290,
+   "text_sha256": "sha256:77b8dc39e09e85fa3cdb50c8b5a07a925ccc68096204c21951df4c57c6dc315e"
+  },
+  {
+   "i": 6291,
+   "text_sha256": "sha256:4b54301e60af246c12d329a8cc0ee075d415781929f8a7c5d31fe864d7f0841c"
+  },
+  {
+   "i": 6306,
+   "text_sha256": "sha256:fa61cb75e6bf99ed703735e218905b4616c6a88acd4f08edcceb400c8311ca32"
+  },
+  {
+   "i": 6307,
+   "text_sha256": "sha256:810292ba3a43d85056dcd43de549df3f132e9b11636fae55c5a48b7b2ea6a632"
+  },
+  {
+   "i": 6309,
+   "text_sha256": "sha256:688472a99df57e9e102f6470758a88f5e1f126d745200851fd8f4176124fed88"
+  },
+  {
+   "i": 6310,
+   "text_sha256": "sha256:68c5f73d334e2d5dcbc6aa8eb93fec7b03403c59e0056f780c4b0de3c93fcea0"
+  },
+  {
+   "i": 6327,
+   "text_sha256": "sha256:0b9ca114bde353aa32ca2790f9d045a94a76cc7f8c2c834234afe5be2c7bf035"
+  },
+  {
+   "i": 6332,
+   "text_sha256": "sha256:8f7f2a3224c47a1a458dd6f56d89ded72ebca4e51b5784bdd8dd56806c7db0d2"
+  },
+  {
+   "i": 6347,
+   "text_sha256": "sha256:43fb23e5fb099124f09aa3aa562ba390ed27f6ecdcf0325e20fcec95db3b0d08"
+  },
+  {
+   "i": 6351,
+   "text_sha256": "sha256:0abab163c77ee836985c255e3151f8fd9a42fa361ab077530a2ba6f312fa2a1a"
+  },
+  {
+   "i": 6370,
+   "text_sha256": "sha256:7447ccc764ad721928d0c4309c09b95bf56563afbb28aae0d1ea28719826d15e"
+  },
+  {
+   "i": 6373,
+   "text_sha256": "sha256:2b1e4c7a1b838a25228a57338aaf5edc3281fb373c577de6a2fa99cd43d2ea35"
+  },
+  {
+   "i": 6387,
+   "text_sha256": "sha256:a89a5a3057c5339e6fcde2984276e57845221d76c966ea10ddc5aa3947c05548"
+  },
+  {
+   "i": 6390,
+   "text_sha256": "sha256:4a75556a0d286b68f68600ee548aeed1aecfab00dd4880f71b741f6fefcfd086"
+  },
+  {
+   "i": 6392,
+   "text_sha256": "sha256:1b38bc6bef41c87a4d10f11a62ee9f3fcab03a7934c7995de0945e5f7db94336"
+  },
+  {
+   "i": 6393,
+   "text_sha256": "sha256:184af77ecffc254dfe06f46889836e1378c1f4d75129b199ec69e9bbb71e4130"
+  },
+  {
+   "i": 6407,
+   "text_sha256": "sha256:42ed84f0a829639783a0215765dcba42d3944165cc17ea21b1e00884c50a5764"
+  },
+  {
+   "i": 6412,
+   "text_sha256": "sha256:8f5591928e72aa0130c0b283d6ca54809dd81266f5c404090fb5bcc3694e0e30"
+  },
+  {
+   "i": 6413,
+   "text_sha256": "sha256:fe0d1e66911fac91404149ab093ac52d8f10ba398c1d5f2df4ff1eacf6991b68"
+  },
+  {
+   "i": 6427,
+   "text_sha256": "sha256:cc5296b9080d83c5e5b31c26fa6163306f035f7cd339d382c66583cdc9e7d891"
+  },
+  {
+   "i": 6428,
+   "text_sha256": "sha256:ebf700d7d34082e77120d0914a612735800d3779b474620aa2b089857786a222"
+  },
+  {
+   "i": 6429,
+   "text_sha256": "sha256:e856c388aa9da3552de01445fe85ef36ce88cb793e06a357f26527f4e5aeec98"
+  },
+  {
+   "i": 6455,
+   "text_sha256": "sha256:7a0d8f94ccf7adc8f8fa1c25bef0b932e87cd6b32bde482eb646f781ee3d7405"
+  },
+  {
+   "i": 6470,
+   "text_sha256": "sha256:4ae7e510c58abcf325de60ceb31c24bcc75f420910c0ad5aabdf8918a7f7a099"
+  },
+  {
+   "i": 6492,
+   "text_sha256": "sha256:ce9f9eecc2e1f172e3a99869fd71ae1229d3d1f1b32b9b61f52e6a32b2310b98"
+  },
+  {
+   "i": 6494,
+   "text_sha256": "sha256:a603af55489211554ac0683de2daec0f2d8c4c871a1a0ea0c305c2f1198bf69c"
+  },
+  {
+   "i": 6498,
+   "text_sha256": "sha256:6715418d6e57639c1ea1e89c21818ed107e2b3f28dd3e77dd6dac95df3841a0f"
+  },
+  {
+   "i": 6517,
+   "text_sha256": "sha256:ccf44579f96d94781eb3db035bffd95da02fdee889d13fd7ec43e199dc68dcab"
+  },
+  {
+   "i": 6518,
+   "text_sha256": "sha256:31cb5f84d58cbd45da2867a5d0e9ca839e01b470153a4efd9160f58295c8d461"
+  },
+  {
+   "i": 6537,
+   "text_sha256": "sha256:1e422f00c86c48b007739b471905d0a12d456f7328d28d1dfee095cf7d836e4b"
+  },
+  {
+   "i": 6555,
+   "text_sha256": "sha256:1e422f00c86c48b007739b471905d0a12d456f7328d28d1dfee095cf7d836e4b"
+  },
+  {
+   "i": 6562,
+   "text_sha256": "sha256:027a62b9382e84bc8c3dc1ef5ef6917c2b98a9be33617efba18407140a973b9e"
+  },
+  {
+   "i": 6568,
+   "text_sha256": "sha256:5f7603adb4a3b9ddc5c443919aff2710846ea6e010c25dec6a04b578b20ceb77"
+  },
+  {
+   "i": 6585,
+   "text_sha256": "sha256:90d8dc890b4dc4070f955a2659739a53b7ff35d63a254f92cfaf1e4be03bb327"
+  }
+ ]
+}

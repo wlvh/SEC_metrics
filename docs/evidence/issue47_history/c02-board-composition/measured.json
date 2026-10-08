@@ -1,0 +1,175 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "differential_against_the_ordinary_chain": {
+  "agree": [
+   "enphase_energy",
+   "ford_motor_company",
+   "lumen_technologies",
+   "macys",
+   "marriott_international",
+   "paramount_skydance_paramount_global",
+   "pfizer",
+   "salesforce",
+   "southwest_airlines"
+  ],
+  "compared": "plan basis, the accession numbers of every admitted filing, and the selected block indices - not 'it produced something'",
+  "do_not_agree": {
+   "jpmorgan_chase": "PeriodSelectionError:ORDINARY_PERIOD_SELECTION_SAVED_HISTORY_INCOHERENT"
+  },
+  "the_one_that_does_not": "JPMorgan fails at period selection with SAVED_HISTORY_INCOHERENT, which every historical route shares and which is in the acquisition plan. It is not this route's."
+ },
+ "end_to_end": {
+  "marriott_international": {
+   "chars": 19562,
+   "evidence_count": 29,
+   "excerpts": 29,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "requirement_id": "issue_47_v1",
+   "row_hash": "sha256:6f7bccf2afe1faa88a0152ff2d30bd6adabc7063f06173fcff3ecb740c317e0e",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "records": 42,
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:9519549d1d7a670580f54a6a5aebfcb5409a24677791e01fed37aa35894b95c9",
+    "status": "FROZEN",
+    "target_period": {
+     "fiscal_year": 2025,
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01"
+    }
+   },
+   "stage": "PUBLIC_ROW"
+  },
+  "paramount_skydance_paramount_global": {
+   "chars": 6564,
+   "evidence_count": 12,
+   "excerpts": 12,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "requirement_id": "issue_47_v1",
+   "row_hash": "sha256:07187366976dd1a9cbe3d6fe78964cafb08df20c045efb4df557d0a3c88cb28d",
+   "run_status": "FROZEN",
+   "separate_process_replay": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "records": 25,
+    "requirement_id": "issue_47_v1",
+    "run_id": "run:historical-period:34a0b1d56c068bb55991558322d704cae25dd129e5e8b4eb3118e2fc7fbfe688",
+    "status": "FROZEN",
+    "target_period": {
+     "fiscal_year": 2025,
+     "period_end": "2025-12-31",
+     "period_start": "2025-01-01"
+    }
+   },
+   "stage": "PUBLIC_ROW"
+  }
+ },
+ "fault_injections": {
+  "results": {
+   "GIVE_D02_THE_PROXY_ROLES_TOO": {
+    "cases_that_failed": [
+     "test_d02_still_gets_no_proxy_role"
+    ],
+    "caught": true,
+    "exit_code": 1
+   },
+   "RESTORE_THE_SHARED_AMENDMENT_STATUS": {
+    "cases_that_failed": [
+     "test_the_current_period_gets_the_ordinary_chain_s_own_answer"
+    ],
+    "caught": true,
+    "exit_code": 1
+   },
+   "SKIP_THE_PART_III_PROOF": {
+    "cases_that_failed": [
+     "test_the_part_iii_level_carries_its_raw_proof"
+    ],
+    "caught": true,
+    "exit_code": 1
+   },
+   "TAKE_THE_NEWEST_PROXY": {
+    "cases_that_failed": [
+     "test_an_earlier_year_names_its_own_proxy_and_stops"
+    ],
+    "caught": true,
+    "exit_code": 1
+   },
+   "WIDEN_THE_FORMS_FOR_EVERY_METRIC": {
+    "cases_that_failed": [],
+    "caught": false,
+    "exit_code": 0
+   },
+   "WIRE_ONLY_THE_PROXY_LEVEL": {
+    "cases_that_failed": [
+     "test_the_current_period_gets_the_ordinary_chain_s_own_answer",
+     "test_the_part_iii_level_carries_its_raw_proof"
+    ],
+    "caught": true,
+    "exit_code": 1
+   }
+  },
+  "the_one_not_caught": {
+   "injection": "WIDEN_THE_FORMS_FOR_EVERY_METRIC",
+   "why": "the form set and the role assignment guard the same thing, so removing either alone leaves the other answering and nothing observable changes. The pair is what is load-bearing, which GIVE_D02_THE_PROXY_ROLES_TOO removes both halves to show."
+  }
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "measured_before_writing_it": {
+  "excerpts_per_company": {
+   "enphase": 34,
+   "ford": 23,
+   "jpmorgan": 39,
+   "lumen": 17,
+   "macys": 13,
+   "marriott": 29,
+   "paramount": 12,
+   "pfizer": 24,
+   "salesforce": 30,
+   "southwest": 28
+  },
+  "result": "nine of ten companies resolve through CURRENT_SAME_CIK_DEF14A and Paramount through SAME_PERIOD_PART_III_ANNUAL_AMENDMENT, whose governance information is in the 10-K/A that adds Part III rather than in a proxy. Both levels are wired.",
+  "why": "the same discipline B06 and C03 needed. A metric whose ordinary chain is a cascade cannot be ported one level at a time without giving the companies on the other levels the first level's answer."
+ },
+ "production_authorized": false,
+ "record_type": "ISSUE_47_C02_PINNED_ROUTE",
+ "the_difference_the_comparison_found": {
+  "how_it_was_found": "Paramount is the only company where the two rules differ, and the comparison asserts statuses rather than only values.",
+  "what": "the historical route set PREPARED_ORIGINAL_WITH_AMENDMENTS whenever the period carried an annual amendment; the frozen route sets it for D02 only.",
+  "why_the_frozen_rule_is_right": "at C02's second level the annual amendment IS the source, so calling the input 'original with amendments' describes the same document twice."
+ },
+ "the_one_rule_that_is_replaced": {
+  "measured": {
+   "2023-12-31": "names the DEF 14A filed 2024-03-27",
+   "2024-12-31": "names the DEF 14A filed 2025-03-27",
+   "and_both_stop_there": "SAVED_SOURCE_MISSING with the document's URL. Ten proxies are saved of the 82 the submissions indexes list and all ten were filed in 2026, so an earlier period is a source gap - which is the answer, not a route gap."
+  },
+  "the_frozen_rule": "every proxy filed on or after the period end, ordered newest first, take the first - that is the newest of them.",
+  "what": "which DEF 14A a period means.",
+  "why_it_is_right_for_the_current_period": "only one annual meeting has been held since the current period ended, so newest and earliest are the same filing. The ordinary chain is correct and this is not a defect in it.",
+  "why_it_is_wrong_for_a_pinned_earlier_period": "for Marriott's 2023 year the filter admits the 2024, 2025 and 2026 proxies and the newest is the 2026 one. The annual meeting that reports on a year is the one held after it ends, so the successor takes the earliest at or after the pinned end."
+ },
+ "what_is_not_done": {
+  "content_acceptance": "a frozen Run and a public row say the route selected something and bound its bytes. Nobody has read the 29 excerpts against the proxy.",
+  "earlier_periods": "every period but the newest names its proxy and stops. Wiring and delivery are two things and this is the first.",
+  "the_proxy_amendment_branch": "this repository holds no DEF 14A/A at all, so the amendment rule is carried unexercised. For an earlier period it can reach a later year's proxy amendment and the plan then refuses with a named implementation gap rather than answering."
+ },
+ "what_this_is": "C02 for a pinned annual period. It is the last route this repository's saved material can reach without a model call, and it was previously recorded as blocked on model allowance, which was wrong: C02 runs through the same deterministic excerpt machinery as D02."
+}

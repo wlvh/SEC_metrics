@@ -1,0 +1,278 @@
+{
+ "record_type": "ISSUE_47_TARGETED_ROUND",
+ "metric_id": "E01",
+ "what_this_is": "the twelve E01 periods whose target original is saved, under the committed content-confirmed route (629f1ed8 plus the row note of 460695ef), in the runtime tree with the registration patch; default LIVE installation, so no recorded confirmation is consumed",
+ "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+ "not_a_full_frame": true,
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ },
+ "positions": [
+  {
+   "case": "enphase-2025",
+   "company_id": "enphase_energy",
+   "report_end": "2025-12-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "reason_code": "PASS",
+   "value": "0",
+   "result_id": "sha256:78d5e68af5c48f62e664ea45b265e7f493595028211a58f0fd66d9b571a5b582",
+   "run_id": "run:historical-period:ce543969dafee62dca6f05a1773fd63547d5b205767443c8843dfc07a292617f",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:3474a332c1988bcd8b5931507c9d77c962f9ebe58bad8aa4e6f284d809a98315",
+   "evidence_count": 1,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  },
+  {
+   "case": "ford-2025",
+   "company_id": "ford_motor_company",
+   "report_end": "2025-12-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED",
+   "value": null,
+   "result_id": "sha256:2f4841ced5a04c35e005d3c8b485379fe83f725fa5843c311dcb24cd3c3cae2c",
+   "run_id": "run:historical-period:506bb6d00790e3a62bd8ac86c84cfabfcaeb0ebab1fa5d3b0dabd5756bcd0460",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:3dcfe20ce1db953ad92c8487fb1689af791f678e39b723fcf045744c6f5be8a0",
+   "evidence_count": 0,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  },
+  {
+   "case": "lumen-2025",
+   "company_id": "lumen_technologies",
+   "report_end": "2025-12-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED",
+   "value": null,
+   "result_id": "sha256:089e34dcaaf8e3c5123e198d75c0cb27c082c803e811eb0c25c450c86e5c537d",
+   "run_id": "run:historical-period:84db73d74b6ec8b09e839d43df71635bb8e2fecbf6bdc8e0c019b238c4923c8f",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:53fa2a0c456595a1bc632a468e7ac0b0593bfab3f2832ddb3e2cb09f1424797d",
+   "evidence_count": 0,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  },
+  {
+   "case": "macys-2026",
+   "company_id": "macys",
+   "report_end": "2026-01-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED",
+   "value": null,
+   "result_id": "sha256:68c74aae930b2dc06c94fd71eaeab9cabac448cc1c54a2364bd1c2d6b3acc8a3",
+   "run_id": "run:historical-period:3d35d984a8be9c89d47118ed51da2b3650b02dd42a3c8f3a2115ef8bd518a14b",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:6cb00a656eb2375b2d07efc18d58f2d07813b936601a6953023fee5e77c4d682",
+   "evidence_count": 0,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  },
+  {
+   "case": "marriott-2023",
+   "company_id": "marriott_international",
+   "report_end": "2023-12-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "value": null,
+   "result_id": "sha256:fe97c0b29cdf1bca2c2508cc411f684af0ee6352e738c86a4f98ab5a6b05874e",
+   "run_id": "run:historical-period:33b2ff96246536e7e952bc5cefcd0e39ae463b1414ee50b106528431691a753e",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:abc2dc12164bca95751a20f05b7090e09da17a92cce41a5041e3d81977358900",
+   "evidence_count": 0,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  },
+  {
+   "case": "marriott-2024",
+   "company_id": "marriott_international",
+   "report_end": "2024-12-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "value": null,
+   "result_id": "sha256:89b5cdcaf2c6aace27218cae3dc937665ef924bb4148794dbfde3a9792a2a6c1",
+   "run_id": "run:historical-period:361053f332bc3a2fa812f1a4508e8fb2ae8dd829ea120c8c6358f76e6e983b80",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:ac094c8980b1bc30cf323933d7803bac859210b210e2995c8882c9b408c81169",
+   "evidence_count": 0,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  },
+  {
+   "case": "marriott-2025",
+   "company_id": "marriott_international",
+   "report_end": "2025-12-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED",
+   "value": null,
+   "result_id": "sha256:7d17110a04ffa5fb7f1f7c8ed60cf31f9063a8ce8ff66c007761d1549af42f0d",
+   "run_id": "run:historical-period:c6efb6ea9240bc68f8f4d45ca10381387410ff1019f472e7c166a9b1df153580",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:efa52b78a330bd92691654b72ab14b3816e051834f999188f701a21d912da1df",
+   "evidence_count": 0,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  },
+  {
+   "case": "paramount-2024",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED",
+   "value": null,
+   "result_id": "sha256:88677eb8642ea938756070c5e4aaaf4774c94be38492274aac975671c992dce8",
+   "run_id": "run:historical-period:cc2d5a836c439c93e9794e336775ac25ac448da92837f5d04875aac26b5f32b9",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:d0a35c5157ef22148d7326223f3bbb7fb9fc9ce42966ab2a1b5605642a6c2542",
+   "evidence_count": 0,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  },
+  {
+   "case": "paramount-2025",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2025-12-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "value": null,
+   "result_id": "sha256:cfff704def419cd07cbae7c59dac335887b334619d8821c4d5058c4bd547907b",
+   "run_id": "run:historical-period:549ce0f8d8cdc7ec5a591d871d3116dec560111cb2db03dccd3eca2bd5a4eb70",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:d4919b215d932800092ac7b730a8af9b796d6ee4274f160135a94598c1925282",
+   "evidence_count": 0,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  },
+  {
+   "case": "pfizer-2025",
+   "company_id": "pfizer",
+   "report_end": "2025-12-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED",
+   "value": null,
+   "result_id": "sha256:71d81e004a5a717826bac12475fcb3b282a751267ea334f3d9d96257fade82f5",
+   "run_id": "run:historical-period:21de7138fbe36c604e32e9690a05360017af23d66becbd49a96c6b961b30f6b2",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:b644cd3ee0bf07842eaaeafccfda4da67f6904e70e5407952ead0a1e2d425860",
+   "evidence_count": 0,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  },
+  {
+   "case": "salesforce-2026",
+   "company_id": "salesforce",
+   "report_end": "2026-01-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED",
+   "value": null,
+   "result_id": "sha256:cbce1fc775851007833f50f1c3c526fbe645c9ecfb7f12cbfa2f72d6ee9d2203",
+   "run_id": "run:historical-period:a2e0eb32921d07b54a95c0c0bd265d02b0d108a7df5210a400f533df5273ef6a",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:311d1cda4777d0a4c8d99f84d5d8435b80c9098fd74c2c4899a31a6523a3316d",
+   "evidence_count": 0,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  },
+  {
+   "case": "southwest-2025",
+   "company_id": "southwest_airlines",
+   "report_end": "2025-12-31",
+   "metric_id": "E01",
+   "stage": "PUBLIC_ROW",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED",
+   "value": null,
+   "result_id": "sha256:0c6759bffbe2096dd640f5155a2b2294bcf2fbda229e97e3b93e7517b798cb5b",
+   "run_id": "run:historical-period:54067c3732d12b10ed0a3c213863d8981161f30a67728314a7449a21748ca9ae",
+   "requirement_closure_hash": "sha256:6815cf417af987e890862acc678addd3e97a4fda320b1757b27fabba42635a07",
+   "row_hash": "sha256:71ae9fd72a507081e262c3e86beb8cf76e45d004c63c64502caea0ce74a9a276",
+   "evidence_count": 0,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "cold_read_same_result": true
+  }
+ ]
+}

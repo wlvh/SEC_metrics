@@ -1,0 +1,265 @@
+"""Prepare the D02 text input for an explicitly selected historical period.
+
+A source adapter, not a second reader. ``_source_plan`` and the
+``text_results_v2`` scopes are imported unchanged from the frozen modules, and
+the candidate functions this feeds read only the target filing's own bytes.
+What this module owns is which filing the text roles mean when the period is
+pinned.
+
+The metadata view is the one place that could not be inherited. The frozen
+``_current_metadata_context`` scans only ``filings.recent`` and refuses while a
+declared history shard could reach the pinned period, which puts thirteen
+company periods of this repository's own saved indexes out of reach.
+``historical_metadata_context`` keeps that invariant and meets it by reading
+those blocks through the existing historical catalog instead.
+
+It exists as a successor file because ``scripts/vnext/ordinary_text_input.py`` is
+byte-bound by the ``issue_28_v13`` rule set; changing it would stop every
+existing ordinary Run from loading its own Requirement.
+
+C02 is wired too, and its shape is a two-level cascade rather than one route.
+Measured on the ordinary chain before writing this: nine of the ten companies
+resolve through CURRENT_SAME_CIK_DEF14A, and Paramount through
+SAME_PERIOD_PART_III_ANNUAL_AMENDMENT with a Part III raw proof, because its
+governance information is in the 10-K/A that adds Part III rather than in a
+proxy. Wiring only the first level would give that company the first level's
+answer - a source gap that is not true of it.
+
+What C02 cannot reach is an earlier period: of the 82 proxies this repository's
+saved submissions indexes list, ten have their accession material saved and all
+ten were filed in 2026. So a pinned earlier period names the proxy it needs and
+stops there, which is a source gap rather than a route gap.
+"""
+from pathlib import Path
+
+from sec_urls import companyfacts_url, submissions_url
+
+from .canonical import content_hash, sha256_file, strict_json_loads
+from .historical_annual_input import prepare_historical_annual_input
+from .historical_dei import release_aware
+from .historical_proxy_identity import (carries_inline_xbrl, cover_name_in_effect,
+                                        proxy_cover)
+from .historical_metadata_context import (check_historical_metadata_scope,
+                                          historical_metadata_context)
+from .normal_governance_input import _Sources
+from .normal_text_input_v2 import _need, _source_plan
+from .ordinary_text_input import _part_iii_proof
+from .ordinary_source_authority import verify_ordinary_source_proofs
+from .text_results_v2 import SCOPES
+
+# The frozen readers this module calls, answering the DEI namespace question
+# for every taxonomy release (historical_dei).
+_part_iii_proof = release_aware(_part_iii_proof)
+
+RECORD_TYPE = "HISTORICAL_BUSINESS_TEXT_INPUT_BINDING"
+SUPPORTED_METRICS = ("C02", "D01", "D02")
+# D01's scope, which text_results_v2's SCOPES does not carry because D01 is not
+# one of its metrics: it runs on the frozen v1 result API, whose target scope
+# for this metric is the registrant.
+D01_SCOPE = {"entity_scope": "registrant"}
+# The metrics whose only text source is the pinned annual filing, so a same
+# period 10-K/A is context around that source. C02 is not one of them: at its
+# second level the amendment IS the source, and calling that "original with
+# amendments" would describe one document twice.
+#
+# The frozen rule keys on D02 because D02 and C02 are the only metrics it
+# serves. Measured before widening it: of the ten companies, Paramount and
+# Southwest carry an annual amendment in the pinned period, and there D02
+# reports PREPARED_ORIGINAL_WITH_AMENDMENTS while D01 reported PREPARED for the
+# same filing and the same amendment.
+ANNUAL_ONLY_TEXT_METRICS = ("D01", "D02")
+
+
+def prepare_historical_business_text_input(*, repo_root: Path, company_id: str, metric_id: str,
+                                           period_selection, review_mode=None,
+                                           _without_reviews=False):
+    """Admit the target filing's own text for a pinned annual period.
+
+    The 10-K is chosen by ``historical_metadata_context`` on the pinned
+    period's own end date and checked against the selection's filing, so the
+    text comes from the year that was asked for rather than from whatever was
+    filed last - including when that year's row is in a history shard.
+
+    D02 also carries the Item 8 reviews registered for this position, if any
+    (``historical_legal_review``); which of them answers today's request is
+    decided where the request is rebuilt. ``review_mode`` selects them as
+    E01's and D04's modes do: None means the installed copy's in a data root
+    and LIVE otherwise.
+    """
+    _need(metric_id in SUPPORTED_METRICS,
+          "HISTORICAL_TEXT_INPUT_METRIC_NOT_WIRED:" + metric_id, "IMPLEMENTATION_GAP")
+    _need(review_mode is None or metric_id == "D02",
+          "HISTORICAL_TEXT_REVIEW_MODE_WITHOUT_REVIEW:" + metric_id, "IMPLEMENTATION_GAP")
+    root = Path(repo_root)
+    ledger_sha = sha256_file(path=root / "evidence/requests_log.csv")
+    prepared = prepare_historical_annual_input(repo_root=root, company_id=company_id,
+                                               period_selection=period_selection)
+    cik = prepared["entity"]
+    reader = _Sources(root, company_id, cik)
+    inventory = reader.read(submissions_url(cik=int(cik)), role="sec_submissions_inventory",
+                            media_type="application/json")
+    metadata = historical_metadata_context(repo_root=root, company_id=company_id,
+                                           prepared=prepared, inventory=inventory,
+                                           reader=reader, metric_id=metric_id)
+    ordinary = metadata["selection"]["ordinary"]
+    annual = reader.primary(ordinary)
+    reader.read(companyfacts_url(cik=int(cik)), accession=ordinary["accessionNumber"],
+                role="companyfacts", media_type="application/json")
+    period = prepared["table_input"]["target_period"]
+    scope = dict(D01_SCOPE if metric_id == "D01" else SCOPES[metric_id])
+    target = {"company_id": company_id, "entity": cik,
+              "accession": ordinary["accessionNumber"],
+              "period_start": period["period_start"], "period_end": period["period_end"],
+              "scope": scope, "scope_key": content_hash(value=scope)}
+    plan, text_sources, filings, limitations = None, [], {}, []
+    part_iii = cover_identity = None
+    try:
+        # D01 and D02 read the same source structure - the pinned annual
+        # filing, one text role, no Part III proof - so D02's frozen plan is
+        # reused rather than a second one written for D01. The assertion is
+        # what keeps that reuse honest: if D02's plan ever gains a second
+        # filing or a proof, this stops instead of quietly giving D01 one.
+        plan = _source_plan(governance_binding=metadata,
+                            metric_id="D02" if metric_id == "D01" else metric_id)
+        if metric_id == "D01":
+            _need(len(plan["text_filings"]) == 1
+                  and not plan["requires_part_iii_proof"],
+                  "HISTORICAL_TEXT_D01_PLAN_SHAPE_CHANGED")
+        check_historical_metadata_scope(
+            plan=plan, context=metadata,
+            references=[record for record in reader.records.values()
+                        if record["record_type"] == "SOURCE_REFERENCE"])
+        text_sources = [annual["source_reference"]]
+        filings[text_sources[0]["source_reference_id"]] = ordinary
+        if metric_id == "C02":
+            # The plan's second filing is whichever level answered: the proxy
+            # at level one, the Part III annual amendment at level two. Both
+            # are read the same way; only the Part III case additionally has
+            # to prove from the raw bytes that the amendment really carries
+            # Part III, which is the frozen proof and is imported rather than
+            # restated.
+            governance = plan["text_filings"][1]
+            selected = reader.primary(governance)
+            text_sources.append(selected["source_reference"])
+            filings[text_sources[-1]["source_reference_id"]] = governance
+            if plan["requires_part_iii_proof"]:
+                part_iii = _part_iii_proof(
+                    source=selected["source_reference"], blob=selected["raw_blob"],
+                    raw=selected["raw_bytes"], filing=governance, company_id=company_id,
+                    cik=cik, period_end=period["period_end"])
+            elif (governance["form"] == "DEF 14A"
+                  and not carries_inline_xbrl(selected["raw_bytes"])):
+                # A proxy filed before it carried inline XBRL is identified by
+                # its Schedule 14A cover, whose name must be the one the SEC's
+                # submissions record gives this CIK on the filing date
+                # (historical_proxy_identity). Checked here, where the record
+                # is read; the Run repeats it on every replay.
+                cover_identity = cover_name_in_effect(
+                    cover=proxy_cover(raw_bytes=selected["raw_bytes"], filing=governance),
+                    inventory=strict_json_loads(text=inventory["raw_bytes"].decode("utf-8")),
+                    filing=governance)
+    except ValueError as error:
+        limitations.append({"metric_id": metric_id,
+                            "category": getattr(error, "category", None)
+                            or ("SOURCE_ACCESS_FAILED"
+                                if str(error).startswith("LATEST_SOURCE_REQUEST_FAILED")
+                                else "SOURCE_INTEGRITY_ERROR"),
+                            "reason": str(error)})
+    proofs_by_id = {}
+    for proof in [*prepared["source_proofs"], *(v["proof"] for v in reader.proofs.values())]:
+        key = proof["request_attempt_id"]
+        _need(key not in proofs_by_id or proofs_by_id[key] == proof,
+              "HISTORICAL_TEXT_INPUT_REQUEST_PROOF_COLLISION")
+        proofs_by_id[key] = proof
+    proofs = list(proofs_by_id.values())
+    admission = verify_ordinary_source_proofs(data_root=root, proofs=proofs)
+    records = list(reader.records.values())
+    references = [r for r in records if r["record_type"] == "SOURCE_REFERENCE"]
+    blobs = {r["raw_asset_id"]: r for r in records if r["record_type"] == "RAW_BLOB"}
+    raw = {v["raw_blob"]["raw_asset_id"]: v["raw_bytes"] for v in reader.cache.values()}
+    # The v1 result API that answers D01 takes four arguments and rejects a
+    # shape it does not know, so source_filings - which the v2 metrics carry -
+    # is not added for it.
+    text_args = None if limitations else {
+        "target": target, "source_references": text_sources, "raw_blobs": blobs,
+        "raw_bytes_by_id": raw,
+        **({} if metric_id == "D01" else {"source_filings": filings})}
+    review = None
+    if metric_id == "D02" and text_args is not None and not _without_reviews:
+        from .historical_legal_review import load_registered_reviews, select_registered_review
+        reviews = load_registered_reviews(
+            data_root=root, company_id=company_id,
+            period_selection_id=period_selection["selection_id"],
+            raw_asset_id=text_sources[0]["raw_asset_id"], mode=review_mode)
+        if reviews:
+            # Which review answers is decided against today's request, which
+            # needs the filing read - so only where a review exists, and here
+            # rather than later, so a source root holding an outdated review
+            # beside the current one binds the same single record the data
+            # root is given. One that answers no current request is refused by
+            # name; it is never read as "unreviewed".
+            from .historical_text_results import _prepare_corrected_sources, legal_review_request
+            review = select_registered_review(records=reviews, request=legal_review_request(
+                prepared=_prepare_corrected_sources(metric_id="D02", **text_args),
+                source_arguments=text_args))
+            # Only where there is one, so an unreviewed position keeps its bytes.
+            text_args["legal_review"] = [review]
+    _need(sha256_file(path=root / "evidence/requests_log.csv") == ledger_sha,
+          "HISTORICAL_TEXT_INPUT_LEDGER_CHANGED_DURING_PREPARATION")
+    # The amendment flag belongs to the annual-only text metrics, not to D02
+    # alone as the frozen route spells it - there D02 simply is "the one that
+    # is not C02". Found by comparing statuses with the ordinary chain:
+    # Paramount is the one company where the C02 rule and the D02 rule differ.
+    status = ("BLOCKED" if limitations
+              else "PREPARED_ORIGINAL_WITH_AMENDMENTS"
+              if metric_id in ANNUAL_ONLY_TEXT_METRICS and prepared["amendments"]
+              else "PREPARED")
+    body = {"record_type": RECORD_TYPE, "metric_id": metric_id, "company_id": company_id,
+            "period_selection": period_selection, "prepared_input": prepared,
+            "current_metadata_scope": metadata["scope"],
+            "metadata_blocks_read": metadata["loaded_inventories"], "source_proofs": proofs,
+            "source_admission": admission, "source_references": references,
+            "source_set_manifests": [],
+            "text_source_reference_ids": ([] if text_args is None
+                                          else [s["source_reference_id"] for s in text_sources]),
+            "source_filings": {} if text_args is None else filings, "target": target,
+            "source_plan": plan, "part_iii_source_proof": part_iii, "input_status": status,
+            "limitations": limitations,
+            "failed_source_attempts": list(reader.failed_attempts.values()),
+            "current_latest_verified": False, "latest_restated_values_used": False,
+            "execution": "NOT_EXECUTED", "production_authorized": False,
+            "business_calls": [0, 0, 0]}
+    if review is not None:
+        body["registered_item_8_review"] = {key: review[key] for key in (
+            "input_record_id", "request_id", "mode")}
+    if cover_identity is not None:
+        # Only where the cover identified the proxy, so every other position
+        # keeps its binding's bytes.
+        body["proxy_cover_identity"] = cover_identity
+    binding = {**body, "input_binding_id": content_hash(value=body)}
+    return {"prepared_input": prepared, "input_binding": binding, "input_status": status,
+            "records": records, "source_references": references, "source_set_manifests": [],
+            "source_proofs": proofs, "admission": admission, "text_arguments": text_args,
+            "target_period": period, "business_calls": [0, 0, 0]}
+
+
+def d02_review_request(*, repo_root: Path, company_id: str, period_selection):
+    """D02's Item 8 review request at a pinned period, and the source proofs it was built from.
+
+    Built by the route's own reading of the pinned filing - the same prepared
+    input, section boundaries and Item 8 pool the route checks an answer
+    against - so the question a model is asked is the one a registration must
+    answer. Registered reviews are not consulted: the question is the same
+    whether an answer exists or not.
+    """
+    from .historical_text_results import _prepare_corrected_sources, legal_review_request
+    prepared = prepare_historical_business_text_input(
+        repo_root=repo_root, company_id=company_id, metric_id="D02",
+        period_selection=period_selection, _without_reviews=True)
+    _need(prepared["input_status"] != "BLOCKED",
+          "HISTORICAL_D02_REVIEW_INPUT_BLOCKED:" + str(prepared["input_binding"]["limitations"])[:200],
+          "SOURCE_INTEGRITY_ERROR")
+    arguments = prepared["text_arguments"]
+    request = legal_review_request(prepared=_prepare_corrected_sources(metric_id="D02", **arguments),
+                                   source_arguments=arguments)
+    return request, prepared["source_proofs"]

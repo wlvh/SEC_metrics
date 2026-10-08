@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/tools/prepare_c02_table_context.py", line 237, in <module>
+    main()
+    ~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/tools/prepare_c02_table_context.py", line 233, in main
+    prepare(args.source_root.resolve(), company, end, args.out.resolve())
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/tools/prepare_c02_table_context.py", line 173, in prepare
+    prepared = prepare_historical_business_text_input(
+        repo_root=source_root, company_id=company, metric_id="C02", period_selection=selection)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/historical_text_input.py", line 95, in prepare_historical_business_text_input
+    prepared = prepare_historical_annual_input(repo_root=root, company_id=company_id,
+                                               period_selection=period_selection)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/historical_annual_input.py", line 166, in prepare_historical_annual_input
+    verify_ordinary_source_proofs(data_root=repo_root, proofs=original["source_proofs"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/ordinary_source_authority.py", line 163, in verify_ordinary_source_proofs
+    checkpoint=_trusted_checkpoint(data_root)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/ordinary_source_authority.py", line 138, in _trusted_checkpoint
+    path=_journal()/(ledger+'.json')
+         ~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/ordinary_source_authority.py", line 33, in _journal
+    _need((ROOT/'.git').is_dir() and not (ROOT/'.git').is_symlink()
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and first_symlink_in_path(path=path) is None,'ORDINARY_SOURCE_TRUSTED_JOURNAL_REQUIRED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/scripts/vnext/ordinary_source_authority.py", line 28, in _need
+    if not condition:raise OrdinarySourceAuthorityError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.ordinary_source_authority.OrdinarySourceAuthorityError: ORDINARY_SOURCE_TRUSTED_JOURNAL_REQUIRED

@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/workspace/work/issue47-model-run-verified/tools/vnext_historical_model.py", line 191, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/workspace/work/issue47-model-run-verified/tools/vnext_historical_model.py", line 178, in main
+    result = calls.start_model_ledger(allowance=allowance, reader=reader)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue47-model-run-verified/scripts/vnext/historical_model_calls.py", line 1345, in start_model_ledger
+    return start_ledger(_model_start(), allowance=allowance, reader=reader, now=now,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/work/issue47-model-run-verified/scripts/vnext/historical_ledger_start.py", line 218, in start_ledger
+    _need(kind, not path.exists() and not path.is_symlink(),
+                    ^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 860, in exists
+    self.stat(follow_symlinks=follow_symlinks)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 840, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/root/.local/state/sec_metrics/.issue47-historical-model-cloud-v1.start.json'

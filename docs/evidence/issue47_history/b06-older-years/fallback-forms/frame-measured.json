@@ -1,0 +1,69 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "moved": {
+  "southwest_airlines:2021-12-31": {
+   "frozen": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+    "stage": "FALLBACK_RESOLVER",
+    "value": null
+   },
+   "frozen_reason": "DEBT_MEMBERSHIP_SUM_CONFLICT",
+   "successor": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+    "stage": "FALLBACK_RESOLVER",
+    "value": null
+   },
+   "successor_reason": "UNRESOLVED_FINANCING_ITEM:[{'origin': 'balance_sheet', 'row': 36, 'label': 'Construction obligation', 'value': '0', 'disposition': 'UNRESOLVED'}, {'origin': 'all_instant_xbrl', 'concept': 'us-gaap:debtinstrumentconvertibleconversionprice1', 'ordinal': 635, 'value': '38.48', 'disposition': 'UNRESOLVED'}]"
+  },
+  "southwest_airlines:2022-12-31": {
+   "frozen": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+    "stage": "FALLBACK_RESOLVER",
+    "value": null
+   },
+   "frozen_reason": "UNRESOLVED_FINANCING_ITEM:[{'origin': 'debt_composition', 'row': 3, 'label': 'Pass Through Certificates due 2022 - 6.24%', 'value': '0', 'disposition': 'UNRESOLVED'}, {'origin': 'all_instant_xbrl', 'concept': 'us-gaap:definedbenefitplanbenefitobligation', 'ordinal': 1435, 'value': '241000000', 'disposition': 'UNRESOLVED'}]",
+   "successor": {
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "stage": "FALLBACK_RESOLVER",
+    "value": "0.7568073360157200336857864695"
+   },
+   "successor_reason": null
+  },
+  "southwest_airlines:2023-12-31": {
+   "frozen": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+    "stage": "FALLBACK_RESOLVER",
+    "value": null
+   },
+   "frozen_reason": "UNRESOLVED_FINANCING_ITEM:[{'origin': 'all_instant_xbrl', 'concept': 'us-gaap:definedbenefitplanbenefitobligation', 'ordinal': 1346, 'value': '269000000', 'disposition': 'UNRESOLVED'}]",
+   "successor": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+    "stage": "FALLBACK_RESOLVER",
+    "value": null
+   },
+   "successor_reason": "B06_V2_NARRATIVE_BALANCE_UNSUPPORTED:The net carrying amount and principal amount of the Convertible Notes was $1.6 billion as of December 31, 2023 and 2022."
+  }
+ },
+ "new_values": [
+  "southwest_airlines:2022-12-31"
+ ],
+ "positions": 50,
+ "record_type": "ISSUE_47_B06_FALLBACK_FORMS_FRAME_EFFECT",
+ "values_changed": []
+}

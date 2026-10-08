@@ -1,0 +1,281 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "contract": "D02_ITEM_8_LEGAL_REVIEW_V1",
+ "metric_id": "D02",
+ "positions": [
+  {
+   "answer_tokens_added_per_block_counted_in": {
+    "max": 75,
+    "min": 5
+   },
+   "answer_tokens_every_block_out": 878,
+   "block_characters": 134264,
+   "blocks": 871,
+   "company_id": "enphase_energy",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:e2a8c212763757425560bcc4ea40bba5d4cf1b81b5619a4cc2a05bc4430b1a66",
+   "max_output_tokens": 4096,
+   "must_decide": 36,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 36,
+   "planned_context_tokens": 43936,
+   "provider_body_bytes": 173239,
+   "reference_input_tokens": 39840,
+   "report_end": "2025-12-31",
+   "request_id": "sha256:ae6e27b7e24e07973f026c9a9f85b9e0e8225f0f225d0b79109686ec49f2e31c",
+   "seconds": 10.6
+  },
+  {
+   "answer_tokens_added_per_block_counted_in": null,
+   "answer_tokens_every_block_out": 13,
+   "block_characters": 382,
+   "blocks": 1,
+   "company_id": "ford_motor_company",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:40e79bb821b033427325228a742ce920ad6b858653b4ac2cf6f78fc84b0f78ad",
+   "max_output_tokens": 4096,
+   "must_decide": 0,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 0,
+   "planned_context_tokens": 5059,
+   "provider_body_bytes": 3862,
+   "reference_input_tokens": 963,
+   "report_end": "2025-12-31",
+   "request_id": "sha256:7f0d2be204ae60689397a55ac102ec07f3ad0923c57ab00db59060abd9fe8908",
+   "seconds": 20.7
+  },
+  {
+   "answer_tokens_added_per_block_counted_in": {
+    "max": 80,
+    "min": 7
+   },
+   "answer_tokens_every_block_out": 950,
+   "block_characters": 185718,
+   "blocks": 1369,
+   "company_id": "lumen_technologies",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:5e6ba3ba06bed5315e9ec73f51fd35e588e2ea07d2c094d88f30318eaad95be4",
+   "max_output_tokens": 4096,
+   "must_decide": 39,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 39,
+   "planned_context_tokens": 58981,
+   "provider_body_bytes": 244177,
+   "reference_input_tokens": 54885,
+   "report_end": "2025-12-31",
+   "request_id": "sha256:9d73ac4466c8919a808fd2190fc26ab21c581e30f31fd71672aa8138289c077c",
+   "seconds": 12.9
+  },
+  {
+   "answer_tokens_added_per_block_counted_in": {
+    "max": 69,
+    "min": 3
+   },
+   "answer_tokens_every_block_out": 729,
+   "block_characters": 92145,
+   "blocks": 670,
+   "company_id": "macys",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:95432daf4c59c0f39246dd5996b728acfd31acc10c582a943c5507bf862bfd70",
+   "max_output_tokens": 4096,
+   "must_decide": 30,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 30,
+   "planned_context_tokens": 31492,
+   "provider_body_bytes": 122251,
+   "reference_input_tokens": 27396,
+   "report_end": "2026-01-31",
+   "request_id": "sha256:cee02d21891594163b723550ffd35f141cac9c8bd97a2999a94c004d3c4d1307",
+   "seconds": 8.9
+  },
+  {
+   "answer_tokens_added_per_block_counted_in": {
+    "max": 67,
+    "min": 3
+   },
+   "answer_tokens_every_block_out": 420,
+   "block_characters": 84415,
+   "blocks": 538,
+   "company_id": "marriott_international",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:df0e5864cc60147194a6deef9439599164ec4faf37b2dfbfa2f9c7c0fa6b8931",
+   "max_output_tokens": 4096,
+   "must_decide": 17,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 17,
+   "planned_context_tokens": 28363,
+   "provider_body_bytes": 109309,
+   "reference_input_tokens": 24267,
+   "report_end": "2023-12-31",
+   "request_id": "sha256:8d4745814b7b7b83a2b45bbe507703d603af2a33f2f1e764b81228da30999b0e",
+   "seconds": 6.8
+  },
+  {
+   "answer_tokens_added_per_block_counted_in": {
+    "max": 67,
+    "min": 3
+   },
+   "answer_tokens_every_block_out": 397,
+   "block_characters": 84579,
+   "blocks": 564,
+   "company_id": "marriott_international",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:33ea0f80b92f00a1e8a62d91347105e24cdc59e413da7602bdc12689c109f356",
+   "max_output_tokens": 4096,
+   "must_decide": 16,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 16,
+   "planned_context_tokens": 28704,
+   "provider_body_bytes": 110552,
+   "reference_input_tokens": 24608,
+   "report_end": "2024-12-31",
+   "request_id": "sha256:de5a7e20f0a1276e150da741a125aa8ecb175509d5b021a3c63f43ae14d689da",
+   "seconds": 7.0
+  },
+  {
+   "answer_tokens_added_per_block_counted_in": {
+    "max": 66,
+    "min": 2
+   },
+   "answer_tokens_every_block_out": 397,
+   "block_characters": 84110,
+   "blocks": 557,
+   "company_id": "marriott_international",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:39524c19ec29e4162984e633751742386d211bff3b6afe2ebea02cff500529a1",
+   "max_output_tokens": 4096,
+   "must_decide": 16,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 16,
+   "planned_context_tokens": 28343,
+   "provider_body_bytes": 109821,
+   "reference_input_tokens": 24247,
+   "report_end": "2025-12-31",
+   "request_id": "sha256:46a40758d0e934b2cd60160a4a62d53a13371f2311d6dd0acd59ee8d060329d6",
+   "seconds": 7.3
+  },
+  {
+   "answer_tokens_added_per_block_counted_in": {
+    "max": 68,
+    "min": 4
+   },
+   "answer_tokens_every_block_out": 518,
+   "block_characters": 150631,
+   "blocks": 1032,
+   "company_id": "paramount_skydance_paramount_global",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:6781306ba0ec67cf2bc307500fc8cb9d60c3287042dcb2a00ba30c93c831bfb6",
+   "max_output_tokens": 4096,
+   "must_decide": 21,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 21,
+   "planned_context_tokens": 47880,
+   "provider_body_bytes": 195590,
+   "reference_input_tokens": 43784,
+   "report_end": "2024-12-31",
+   "request_id": "sha256:144b7331b75597f29c35c527532408e8c7696e6c1cb1c99fb768c093fb74607e",
+   "seconds": 12.2
+  },
+  {
+   "answer_tokens_added_per_block_counted_in": {
+    "max": 72,
+    "min": 4
+   },
+   "answer_tokens_every_block_out": 638,
+   "block_characters": 173354,
+   "blocks": 1190,
+   "company_id": "paramount_skydance_paramount_global",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:17aefe2ce1f1e736ccfde8c88699a1dbe03469c7d3f2bed87e702224778fffab",
+   "max_output_tokens": 4096,
+   "must_decide": 26,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 26,
+   "planned_context_tokens": 55052,
+   "provider_body_bytes": 224916,
+   "reference_input_tokens": 50956,
+   "report_end": "2025-12-31",
+   "request_id": "sha256:6f8f3d675f0e1d1323eda16283acb325a9fe01bb327a27aaf0d7c811b6ca43a9",
+   "seconds": 15.4
+  },
+  {
+   "answer_tokens_added_per_block_counted_in": {
+    "max": 75,
+    "min": 5
+   },
+   "answer_tokens_every_block_out": 1574,
+   "block_characters": 196397,
+   "blocks": 1359,
+   "company_id": "pfizer",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:f81847d3472ce45e7d7b8624bd05c82046e6211537adb9e1d5618030280b4e6b",
+   "max_output_tokens": 4096,
+   "must_decide": 65,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 45,
+   "planned_context_tokens": 60898,
+   "provider_body_bytes": 254652,
+   "reference_input_tokens": 56802,
+   "report_end": "2025-12-31",
+   "request_id": "sha256:9a3d41a9eeb77cae4192d426bf7b064c7f1000f5ea57a24f9c8763e22d1cf78d",
+   "seconds": 17.4
+  },
+  {
+   "answer_tokens_added_per_block_counted_in": {
+    "max": 75,
+    "min": 7
+   },
+   "answer_tokens_every_block_out": 590,
+   "block_characters": 96926,
+   "blocks": 784,
+   "company_id": "salesforce",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:a5ab17965b54a2f753eba496e9c80926f97d48c23f9d72143e8265fe0e282b25",
+   "max_output_tokens": 4096,
+   "must_decide": 24,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 24,
+   "planned_context_tokens": 33946,
+   "provider_body_bytes": 131497,
+   "reference_input_tokens": 29850,
+   "report_end": "2026-01-31",
+   "request_id": "sha256:005c5b4c99a37229f47bb0f5e2d02b952479f0fe6e539d960dfd16f102d3a3d3",
+   "seconds": 8.8
+  },
+  {
+   "answer_tokens_added_per_block_counted_in": {
+    "max": 74,
+    "min": 2
+   },
+   "answer_tokens_every_block_out": 686,
+   "block_characters": 145040,
+   "blocks": 818,
+   "company_id": "southwest_airlines",
+   "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+   "fits_the_ceiling": true,
+   "ledger_digest": "sha256:75002feb7f3f2dc04c419e1bcce60866fa115dbef4d12522f1de83e72a2d8233",
+   "max_output_tokens": 4096,
+   "must_decide": 28,
+   "must_decide_blocks_that_fit_counted_in_at_the_longest_quotes": 28,
+   "planned_context_tokens": 44074,
+   "provider_body_bytes": 181583,
+   "reference_input_tokens": 39978,
+   "report_end": "2025-12-31",
+   "request_id": "sha256:b0c4c11e1df02a1314f707304c6fcb64fd5d4f5c73e4f37311fec2f6b0bdd343",
+   "seconds": 9.6
+  }
+ ],
+ "record_type": "ISSUE_47_D02_REVIEW_REQUEST_MEASUREMENT",
+ "tokenizer": "the pinned reference tokenizer (continuous_request_context.measure_request)",
+ "totals": {
+  "blocks": 9753,
+  "max_output_tokens": 49152,
+  "must_decide_blocks": 318,
+  "reference_input_tokens": 417576,
+  "requests": 12
+ }
+}

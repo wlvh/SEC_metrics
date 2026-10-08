@@ -1,0 +1,98 @@
+{
+ "block": "on",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "company_id": "paramount_skydance_paramount_global",
+ "label": "paramount_skydance_paramount_global-d04-2024-12-31",
+ "layout": "shared",
+ "memo": "on",
+ "memo_not_remembered": [],
+ "metrics": [
+  "D04"
+ ],
+ "phases": {
+  "create": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 33,
+    "COMPUTED": 3
+   },
+   "seconds": 1315.2
+  },
+  "install": {
+   "frozen_replays": 0,
+   "memo": {
+    "COMPUTED": 5
+   },
+   "seconds": 87.9
+  },
+  "memo_off_read_back": {
+   "frozen_replays": 0,
+   "memo": {},
+   "memo_not_remembered": [],
+   "metrics": [
+    "D04"
+   ],
+   "seconds": 336.1
+  },
+  "read_back": {
+   "frozen_replays": 0,
+   "memo": {
+    "ANSWERED": 5,
+    "COMPUTED": 3
+   },
+   "memo_not_remembered": [],
+   "seconds": 286.4
+  },
+  "select": {
+   "frozen_replays": 0,
+   "memo": {},
+   "seconds": 0.1
+  }
+ },
+ "positions": {
+  "D04": {
+   "binding_id": "sha256:c0fd6b8154d128b06f80f8a03eebf0b6b79d4192e8628c3af886b669409fefa2",
+   "data_root": "/workspace/work/issue47-model-native-d04/paramount_skydance_paramount_global-d04-2024-12-31/data-paramount_skydance_paramount_global-d04-2024-12-31",
+   "evidence_count": 2,
+   "memo_off_read_back": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:6240a9c644aaac6190507dc13de931782857349425abc8cbb648df1d0d673711",
+    "run_id": "run:historical-period:c0fd6b8154d128b06f80f8a03eebf0b6b79d4192e8628c3af886b669409fefa2",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   },
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+   "requirement_closure_hash": "sha256:ebefaffb8af9181bd52ce1d602572de3aebc7927bd0e794dcf01639db7976388",
+   "result_id": "sha256:6240a9c644aaac6190507dc13de931782857349425abc8cbb648df1d0d673711",
+   "row_hash": "sha256:0e547ed6d9d1990114da075ef46fa4846a0b87f358f9d70731c133171946f91d",
+   "run_dir": "/workspace/work/issue47-model-native-d04/paramount_skydance_paramount_global-d04-2024-12-31/run-paramount_skydance_paramount_global-d04-2024-12-31-D04",
+   "run_id": "run:historical-period:c0fd6b8154d128b06f80f8a03eebf0b6b79d4192e8628c3af886b669409fefa2",
+   "separate_process_read_back": {
+    "publication": "WITHHELD",
+    "quality": "NONE",
+    "result_id": "sha256:6240a9c644aaac6190507dc13de931782857349425abc8cbb648df1d0d673711",
+    "run_id": "run:historical-period:c0fd6b8154d128b06f80f8a03eebf0b6b79d4192e8628c3af886b669409fefa2",
+    "status": "FROZEN",
+    "value_sha256": "dc937b59892604f5a86ac96936cd7ff09e25f18ae6b758e8014a24c7fa039e91"
+   },
+   "stage": "PUBLIC_ROW",
+   "value": null
+  }
+ },
+ "report_end": "2024-12-31",
+ "seconds": 2027.1,
+ "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+ "xbrl_parses": 2
+}

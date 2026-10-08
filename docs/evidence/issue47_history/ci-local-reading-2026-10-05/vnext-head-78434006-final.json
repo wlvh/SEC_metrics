@@ -1,0 +1,1245 @@
+{
+  "conclusion": "success",
+  "event": "pull_request",
+  "headSha": "784340066dd3bbb2e91b6426ed03702dbc5afbc4",
+  "jobs": [
+    {
+      "completedAt": "2026-10-04T18:02:54Z",
+      "conclusion": "success",
+      "databaseId": 111494227783,
+      "name": "vNext capacity native Runs",
+      "startedAt": "2026-10-04T17:50:53Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:55Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:30Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:30Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:34Z",
+          "conclusion": "success",
+          "name": "Install pinned offline request tokenizer",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:02:52Z",
+          "conclusion": "success",
+          "name": "Validate recorded B13 native Run and rejected input relabelling",
+          "number": 5,
+          "startedAt": "2026-10-04T17:51:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:02:52Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 9,
+          "startedAt": "2026-10-04T18:02:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:02:52Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 10,
+          "startedAt": "2026-10-04T18:02:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:02:52Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-04T18:02:52Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494227783"
+    },
+    {
+      "completedAt": "2026-10-04T18:07:03Z",
+      "conclusion": "success",
+      "databaseId": 111494227943,
+      "name": "vNext debt native Runs",
+      "startedAt": "2026-10-04T17:50:54Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:56Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:45Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:45Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:56:25Z",
+          "conclusion": "success",
+          "name": "Build reconciled note debt and nonpositive-equity guard Runs",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:59:13Z",
+          "conclusion": "success",
+          "name": "Reject recalculated false debt and historical Spec substitution",
+          "number": 5,
+          "startedAt": "2026-10-04T17:56:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:05:01Z",
+          "conclusion": "success",
+          "name": "Build bank and industrial source gaps without complete ratios",
+          "number": 6,
+          "startedAt": "2026-10-04T17:59:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:07:00Z",
+          "conclusion": "success",
+          "name": "Reject re-signed ratios and false disclosure absence",
+          "number": 7,
+          "startedAt": "2026-10-04T18:05:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:07:01Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 13,
+          "startedAt": "2026-10-04T18:07:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:07:01Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 14,
+          "startedAt": "2026-10-04T18:07:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:07:01Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 15,
+          "startedAt": "2026-10-04T18:07:01Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494227943"
+    },
+    {
+      "completedAt": "2026-10-04T18:13:52Z",
+      "conclusion": "success",
+      "databaseId": 111494227955,
+      "name": "vNext current-instant native Runs",
+      "startedAt": "2026-10-04T17:50:53Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:55Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:29Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:29Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:09:52Z",
+          "conclusion": "success",
+          "name": "Build current-balance and approved noncomparability Runs",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:12:38Z",
+          "conclusion": "success",
+          "name": "Reject false cash and missing amendment sources",
+          "number": 5,
+          "startedAt": "2026-10-04T18:09:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:13:49Z",
+          "conclusion": "success",
+          "name": "Reject forged inputless and numeric continuity terminals",
+          "number": 6,
+          "startedAt": "2026-10-04T18:12:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:13:49Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 11,
+          "startedAt": "2026-10-04T18:13:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:13:49Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 12,
+          "startedAt": "2026-10-04T18:13:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:13:49Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "startedAt": "2026-10-04T18:13:49Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494227955"
+    },
+    {
+      "completedAt": "2026-10-04T18:00:32Z",
+      "conclusion": "success",
+      "databaseId": 111494227979,
+      "name": "vNext going-concern native Runs",
+      "startedAt": "2026-10-04T17:50:54Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:55Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:27Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:27Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:30Z",
+          "conclusion": "success",
+          "name": "Install pinned offline request tokenizer",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:00:30Z",
+          "conclusion": "success",
+          "name": "Validate complete recorded D04 source assessments through native Review and Run",
+          "number": 5,
+          "startedAt": "2026-10-04T17:51:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:00:30Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 9,
+          "startedAt": "2026-10-04T18:00:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:00:30Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 10,
+          "startedAt": "2026-10-04T18:00:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:00:30Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-04T18:00:30Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494227979"
+    },
+    {
+      "completedAt": "2026-10-04T18:15:26Z",
+      "conclusion": "success",
+      "databaseId": 111494228005,
+      "name": "vNext capacity program-role native Runs",
+      "startedAt": "2026-10-04T17:50:55Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:57Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:28Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:28Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:28Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:29Z",
+          "conclusion": "success",
+          "name": "Install pinned offline request tokenizer",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:28Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:15:23Z",
+          "conclusion": "success",
+          "name": "Validate program-owned quantity roles through the complete recorded B13 Run",
+          "number": 5,
+          "startedAt": "2026-10-04T17:51:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:15:23Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 9,
+          "startedAt": "2026-10-04T18:15:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:15:23Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 10,
+          "startedAt": "2026-10-04T18:15:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:15:23Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-04T18:15:23Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228005"
+    },
+    {
+      "completedAt": "2026-10-04T18:06:46Z",
+      "conclusion": "success",
+      "databaseId": 111494228012,
+      "name": "vNext saved-source material (shard 2)",
+      "startedAt": "2026-10-04T17:50:53Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:54Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:30Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:30Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:35Z",
+          "conclusion": "success",
+          "name": "Install pinned offline request tokenizer",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:06:43Z",
+          "conclusion": "success",
+          "name": "Run complete saved-source material tests",
+          "number": 5,
+          "startedAt": "2026-10-04T17:51:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:06:44Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 9,
+          "startedAt": "2026-10-04T18:06:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:06:44Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 10,
+          "startedAt": "2026-10-04T18:06:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:06:44Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-04T18:06:44Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228012"
+    },
+    {
+      "completedAt": "2026-10-04T17:55:40Z",
+      "conclusion": "success",
+      "databaseId": 111494228034,
+      "name": "vNext fast suite",
+      "startedAt": "2026-10-04T17:50:54Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:55Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:31Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:31Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:37Z",
+          "conclusion": "success",
+          "name": "Install pinned offline request tokenizer",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:55:37Z",
+          "conclusion": "success",
+          "name": "Run fast suite",
+          "number": 5,
+          "startedAt": "2026-10-04T17:51:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:55:37Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 9,
+          "startedAt": "2026-10-04T17:55:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:55:38Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 10,
+          "startedAt": "2026-10-04T17:55:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:55:38Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-04T17:55:38Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228034"
+    },
+    {
+      "completedAt": "2026-10-04T18:19:34Z",
+      "conclusion": "success",
+      "databaseId": 111494228038,
+      "name": "vNext saved-source material (shard 0)",
+      "startedAt": "2026-10-04T17:50:53Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:55Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:29Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:29Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:30Z",
+          "conclusion": "success",
+          "name": "Install pinned offline request tokenizer",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:19:32Z",
+          "conclusion": "success",
+          "name": "Run complete saved-source material tests",
+          "number": 5,
+          "startedAt": "2026-10-04T17:51:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:19:33Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 9,
+          "startedAt": "2026-10-04T18:19:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:19:33Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 10,
+          "startedAt": "2026-10-04T18:19:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:19:33Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-04T18:19:33Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228038"
+    },
+    {
+      "completedAt": "2026-10-04T18:21:00Z",
+      "conclusion": "success",
+      "databaseId": 111494228042,
+      "name": "vNext saved-source material (shard 1)",
+      "startedAt": "2026-10-04T17:50:55Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:57Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:55Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:55Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:58Z",
+          "conclusion": "success",
+          "name": "Install pinned offline request tokenizer",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:20:57Z",
+          "conclusion": "success",
+          "name": "Run complete saved-source material tests",
+          "number": 5,
+          "startedAt": "2026-10-04T17:51:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:20:57Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 9,
+          "startedAt": "2026-10-04T18:20:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:20:58Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 10,
+          "startedAt": "2026-10-04T18:20:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:20:58Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-04T18:20:58Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228042"
+    },
+    {
+      "completedAt": "2026-10-04T18:04:45Z",
+      "conclusion": "success",
+      "databaseId": 111494228055,
+      "name": "vNext ordinary update history",
+      "startedAt": "2026-10-04T17:50:54Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:55Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:31Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:31Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:04:42Z",
+          "conclusion": "success",
+          "name": "Verify real update history, source changes and interruption recovery",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:04:42Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 7,
+          "startedAt": "2026-10-04T18:04:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:04:43Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 8,
+          "startedAt": "2026-10-04T18:04:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:04:43Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 9,
+          "startedAt": "2026-10-04T18:04:43Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228055"
+    },
+    {
+      "completedAt": "2026-10-04T17:57:59Z",
+      "conclusion": "success",
+      "databaseId": 111494228096,
+      "name": "vNext recorded source update Runs",
+      "startedAt": "2026-10-04T17:50:55Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:56Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:23Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:23Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:57:57Z",
+          "conclusion": "success",
+          "name": "Run owned recorded sources through native adapters and reject changed graphs or histories",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:57:57Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 7,
+          "startedAt": "2026-10-04T17:57:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:57:57Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 8,
+          "startedAt": "2026-10-04T17:57:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:57:57Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 9,
+          "startedAt": "2026-10-04T17:57:57Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228096"
+    },
+    {
+      "completedAt": "2026-10-04T18:07:00Z",
+      "conclusion": "success",
+      "databaseId": 111494228097,
+      "name": "vNext saved-source material (shard 3)",
+      "startedAt": "2026-10-04T17:50:54Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:55Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:30Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:30Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:34Z",
+          "conclusion": "success",
+          "name": "Install pinned offline request tokenizer",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:06:57Z",
+          "conclusion": "success",
+          "name": "Run complete saved-source material tests",
+          "number": 5,
+          "startedAt": "2026-10-04T17:51:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:06:57Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 9,
+          "startedAt": "2026-10-04T18:06:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:06:58Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 10,
+          "startedAt": "2026-10-04T18:06:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:06:58Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 11,
+          "startedAt": "2026-10-04T18:06:58Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228097"
+    },
+    {
+      "completedAt": "2026-10-04T18:05:09Z",
+      "conclusion": "success",
+      "databaseId": 111494228190,
+      "name": "vNext remaining source Runs (marriott_international)",
+      "startedAt": "2026-10-04T17:50:54Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:55Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:29Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:29Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:05:07Z",
+          "conclusion": "success",
+          "name": "Verify remaining current-source adapters through native Runs and source-bound rejections",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:05:07Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 7,
+          "startedAt": "2026-10-04T18:05:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:05:07Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 8,
+          "startedAt": "2026-10-04T18:05:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:05:07Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 9,
+          "startedAt": "2026-10-04T18:05:07Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228190"
+    },
+    {
+      "completedAt": "2026-10-04T17:59:03Z",
+      "conclusion": "success",
+      "databaseId": 111494228191,
+      "name": "vNext independent metric updates",
+      "startedAt": "2026-10-04T17:50:54Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:55Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:27Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:27Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:59:01Z",
+          "conclusion": "success",
+          "name": "Verify independent results and historical periods through actual mixed outcomes",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:59:01Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 7,
+          "startedAt": "2026-10-04T17:59:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:59:01Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 8,
+          "startedAt": "2026-10-04T17:59:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:59:01Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 9,
+          "startedAt": "2026-10-04T17:59:01Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228191"
+    },
+    {
+      "completedAt": "2026-10-04T18:12:06Z",
+      "conclusion": "success",
+      "databaseId": 111494228238,
+      "name": "vNext remaining source Runs (jpmorgan_chase)",
+      "startedAt": "2026-10-04T17:50:53Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:55Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:33Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:33Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:12:04Z",
+          "conclusion": "success",
+          "name": "Verify remaining current-source adapters through native Runs and source-bound rejections",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:33Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:12:04Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 7,
+          "startedAt": "2026-10-04T18:12:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:12:04Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 8,
+          "startedAt": "2026-10-04T18:12:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:12:04Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 9,
+          "startedAt": "2026-10-04T18:12:04Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228238"
+    },
+    {
+      "completedAt": "2026-10-04T18:13:05Z",
+      "conclusion": "success",
+      "databaseId": 111494228361,
+      "name": "vNext ordinary native Runs",
+      "startedAt": "2026-10-04T17:50:54Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T17:50:56Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T17:50:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:30Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-04T17:50:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:51:30Z",
+          "conclusion": "success",
+          "name": "Set up Python 3.14",
+          "number": 3,
+          "startedAt": "2026-10-04T17:51:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T17:56:17Z",
+          "conclusion": "success",
+          "name": "Validate actual OPEN Runs and source-bound file negatives",
+          "number": 4,
+          "startedAt": "2026-10-04T17:51:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:00:15Z",
+          "conclusion": "success",
+          "name": "Build source-rebuilt lodging Runs",
+          "number": 5,
+          "startedAt": "2026-10-04T17:56:17Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:01:39Z",
+          "conclusion": "success",
+          "name": "Reject altered lodging values, omitted grids and old AI Specs",
+          "number": 6,
+          "startedAt": "2026-10-04T18:00:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:13:02Z",
+          "conclusion": "success",
+          "name": "Reconcile inclusive B06 debt and reject altered graphs or current inputs",
+          "number": 7,
+          "startedAt": "2026-10-04T18:01:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:13:02Z",
+          "conclusion": "success",
+          "name": "Post Set up Python 3.14",
+          "number": 13,
+          "startedAt": "2026-10-04T18:13:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:13:02Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 14,
+          "startedAt": "2026-10-04T18:13:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:13:03Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 15,
+          "startedAt": "2026-10-04T18:13:02Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111494228361"
+    },
+    {
+      "completedAt": "2026-10-04T18:21:05Z",
+      "conclusion": "success",
+      "databaseId": 111500066093,
+      "name": "vNext saved-source material",
+      "startedAt": "2026-10-04T18:21:03Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-04T18:21:03Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-04T18:21:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:21:04Z",
+          "conclusion": "success",
+          "name": "Require all complete source shards",
+          "number": 2,
+          "startedAt": "2026-10-04T18:21:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-04T18:21:04Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 3,
+          "startedAt": "2026-10-04T18:21:04Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910/job/111500066093"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/wlvh/SEC_metrics/actions/runs/37222059910",
+  "workflowName": "vNext fast suite"
+}

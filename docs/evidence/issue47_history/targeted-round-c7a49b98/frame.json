@@ -1,0 +1,394 @@
+{
+ "built_with": "tools/vnext_history_coverage.py --runs-root <the round's 31 runs, copied flat> --requirement-closure-hash <this closure>",
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "matrix_id": "sha256:4231a67eeb393a6246e29f6b57983a532abecac60a734afdfa83e4af3f57d0c5",
+ "per_position": {
+  "enphase_energy:2025-12-31:D01": {
+   "accepted_by": "CONTENT_D01_ENPHASE_2025",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "enphase_energy:2025-12-31:D02": {
+   "accepted_by": "CONTENT_D02_ENPHASE_2025",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [
+    "D02_ENPHASE_2025_PAGE_FOOTER_CARRIES_ITS_PAGE_NUMBER"
+   ],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "ford_motor_company:2025-12-31:D01": {
+   "accepted_by": "CONTENT_D01_FORD_2025",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "ford_motor_company:2025-12-31:D02": {
+   "accepted_by": "CONTENT_D02_FORD_2025",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "lumen_technologies:2025-12-31:B13": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "released_defect_ids": [],
+   "status": "N_A_STRUCTURAL",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "lumen_technologies:2025-12-31:D01": {
+   "accepted_by": "CONTENT_D01_LUMEN_2025",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "lumen_technologies:2025-12-31:D02": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "released_defect_ids": [
+    "D02_LUMEN_2025_UNDERLINED_CASE_LABEL_DROPPED"
+   ],
+   "status": "VALUE_EXACT",
+   "verified_outcome": false,
+   "withdrawn_by": "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY"
+  },
+  "macys:2026-01-31:B13": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "released_defect_ids": [],
+   "status": "N_A_STRUCTURAL",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "macys:2026-01-31:D01": {
+   "accepted_by": "CONTENT_D01_MACYS_2026",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "macys:2026-01-31:D02": {
+   "accepted_by": "CONTENT_D02_MACYS_2026",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "marriott_international:2023-12-31:B13": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "released_defect_ids": [],
+   "status": "N_A_STRUCTURAL",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "marriott_international:2023-12-31:D01": {
+   "accepted_by": "CONTENT_D01_MARRIOTT_2023",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [
+    "D01_MARRIOTT_2023_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED"
+   ],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "marriott_international:2023-12-31:D02": {
+   "accepted_by": "CONTENT_D02_MARRIOTT_2023",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "marriott_international:2024-12-31:B13": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "released_defect_ids": [],
+   "status": "N_A_STRUCTURAL",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "marriott_international:2024-12-31:D01": {
+   "accepted_by": "CONTENT_D01_MARRIOTT_2024",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [
+    "D01_MARRIOTT_2024_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED"
+   ],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "marriott_international:2024-12-31:D02": {
+   "accepted_by": "CONTENT_D02_MARRIOTT_2024",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "marriott_international:2025-12-31:B13": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "released_defect_ids": [],
+   "status": "N_A_STRUCTURAL",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "marriott_international:2025-12-31:D01": {
+   "accepted_by": "CONTENT_D01_MARRIOTT_2025",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [
+    "D01_MARRIOTT_2025_12_31_UNDERLINE_GROUP_HEADINGS_DROPPED"
+   ],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "marriott_international:2025-12-31:D02": {
+   "accepted_by": "CONTENT_D02_MARRIOTT_2025",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "paramount_skydance_paramount_global:2025-12-31:B13": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "released_defect_ids": [],
+   "status": "N_A_STRUCTURAL",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "paramount_skydance_paramount_global:2025-12-31:D01": {
+   "accepted_by": "CONTENT_D01_PARAMOUNT_2025",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [
+    "D01_PARAMOUNT_2025_HEADING_TRUNCATED_AT_AN_UNBOLDED_PERIOD"
+   ],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "paramount_skydance_paramount_global:2025-12-31:D02": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": false,
+   "withdrawn_by": "D02_PARAMOUNT_2025_KEYWORD_PROXY_ADMITS_COST_AND_COVENANT_NOTES"
+  },
+  "pfizer:2025-12-31:B13": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "released_defect_ids": [],
+   "status": "N_A_STRUCTURAL",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "pfizer:2025-12-31:D01": {
+   "accepted_by": "CONTENT_D01_PFIZER_2025",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "pfizer:2025-12-31:D02": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:WITHDRAWN_BY_A_CONFIRMED_CONTENT_DEFECT",
+   "released_defect_ids": [
+    "D02_PFIZER_2025_EXCEEDS_ITEM_BOUND",
+    "D02_PFIZER_2025_HYPERLINKED_ITEM_THREE_DROPPED"
+   ],
+   "status": "VALUE_EXACT",
+   "verified_outcome": false,
+   "withdrawn_by": "D02_PFIZER_2025_SCOPE_CONTENT_READ"
+  },
+  "salesforce:2026-01-31:B13": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "released_defect_ids": [],
+   "status": "N_A_STRUCTURAL",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "salesforce:2026-01-31:D01": {
+   "accepted_by": "CONTENT_D01_SALESFORCE_2026",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "salesforce:2026-01-31:D02": {
+   "accepted_by": "CONTENT_D02_SALESFORCE_2026",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "southwest_airlines:2025-12-31:B13": {
+   "accepted_by": null,
+   "content_acceptance": false,
+   "native_run": true,
+   "public_row": true,
+   "reason": "NOT_PROVEN:NO_INDEPENDENT_CONTENT_CHECK_IS_RECORDED_FOR_THIS_VALUE",
+   "released_defect_ids": [],
+   "status": "N_A_STRUCTURAL",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "southwest_airlines:2025-12-31:D01": {
+   "accepted_by": "CONTENT_D01_SOUTHWEST_2025",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  },
+  "southwest_airlines:2025-12-31:D02": {
+   "accepted_by": "CONTENT_D02_SOUTHWEST_2025",
+   "content_acceptance": true,
+   "native_run": true,
+   "public_row": true,
+   "reason": null,
+   "released_defect_ids": [],
+   "status": "VALUE_EXACT",
+   "verified_outcome": true,
+   "withdrawn_by": null
+  }
+ },
+ "record_type": "ISSUE_47_TARGETED_ROUND_FRAME",
+ "requirement_closure_hash": "sha256:c7a49b98a79c1d83caeeba21cbc9d791fd6200d375ef1b2823b12171fb8ca26b",
+ "summary": {
+  "acceptance_reading_states": {
+   "GRANTING": 152
+  },
+  "by_metric": {
+   "B13": {
+    "structural": 9
+   },
+   "D01": {
+    "accepted": 11
+   },
+   "D02": {
+    "accepted": 8,
+    "withdrawn": 3
+   }
+  },
+  "layers": {
+   "content_acceptance": 19,
+   "native_run": 31,
+   "public_row": 31
+  },
+  "positions": 31,
+  "verified_outcome": 28
+ },
+ "what_it_is": "The coverage frame's three delivery layers for the 31 positions this round ran, read from their receipts. The other 1,919 positions have no receipt under this closure and are not reported here: this is the round's frame, not the closure's."
+}

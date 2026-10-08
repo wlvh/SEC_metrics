@@ -1,0 +1,54 @@
+{
+ "a_docstring_this_corrects": {
+  "file": "scripts/vnext/historical_lodging_results.py",
+  "when_it_will_be_fixed": "that file is a rule file, so editing it moves the Requirement closure. A batch is running on the current closure and is the evidence for it, so the correction waits for the batch rather than changing the version underneath a report.",
+  "why_it_is_wrong": "the accession route does not; it still refuses on sight.",
+  "written": "Amendments go through the approved policy like every other historical route"
+ },
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "method": "read every NOT_IMPLEMENTED reason in scripts/vnext/historical_*.py and look for its counterpart in the ordinary chain the route copies. Static reading, no Runs, no calls.",
+ "production_authorized": false,
+ "record_type": "ISSUE_47_HISTORICAL_REFUSAL_SURVEY",
+ "refusals": {
+  "HISTORICAL_ACCESSION_SUCCESSOR_SCOPE_NOT_IMPLEMENTED": {
+   "ordinary_counterpart": "normal_accession_results.py: NORMAL_ACCESSION_SUCCESSOR_SCOPE_NOT_IMPLEMENTED",
+   "verdict": "faithful"
+  },
+  "HISTORICAL_B06_SUCCESSOR_SCOPE_NOT_IMPLEMENTED": {
+   "ordinary_counterpart": null,
+   "verdict": "stricter than the ordinary chain - removed, see successor-subject.json"
+  },
+  "HISTORICAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED": {
+   "ordinary_counterpart": "normal_companyfacts_results.py: same name",
+   "verdict": "faithful"
+  },
+  "HISTORICAL_LODGING_SUCCESSOR_SCOPE_NOT_IMPLEMENTED": {
+   "ordinary_counterpart": "lodging_table_source.py: LODGING_SOURCE_SUBJECT_OR_AMENDMENT_UNRESOLVED",
+   "verdict": "faithful on the subject half"
+  },
+  "HISTORICAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED": {
+   "ordinary_counterpart": "normal_zero_ai_results.py: same name, with the same event and income-proof exceptions",
+   "verdict": "faithful"
+  }
+ },
+ "the_question": "B06's historical route refused a position its ordinary chain answers, and that refusal was this issue's own. Asking the same question of every other refusal these routes carry is cheap, so it was asked rather than assumed to be a one-off.",
+ "two_divergences_on_amendments_neither_of_which_any_material_reaches": {
+  "accession_is_stricter": {
+   "measured": "the route returns N_A_STRUCTURAL from its own applicability gate before the amendment check for every amended period here. Southwest and Paramount both carry an amendment and both are excluded by that gate first; Salesforce is the one company with an accession metric that delivers (B12) and it carries no amendment.",
+   "not_done": "wiring it would move zero positions and could only be exercised by a constructed case. Named rather than built.",
+   "reached_by_real_material": false,
+   "what": "historical_accession_results refuses an amended target outright (HISTORICAL_ACCESSION_AMENDED_TARGET_NOT_IMPLEMENTED), matching its ordinary counterpart rather than the approved policy - while Company Facts, zero-AI and lodging all ask the policy. A01, A02 and B12 are not among the policy's not_covered_metric_ids, so the policy would decide them.",
+   "what_would_reach_it": "an accession-applicable company-period that also carries an amendment. None exists in this repository today."
+  },
+  "lodging_is_looser": {
+   "measured": "the one lodging company's three saved target periods (2023-12-31, 2024-12-31, 2025-12-31) carry zero amendments, so the branch never runs.",
+   "reached_by_real_material": false,
+   "what": "the ordinary entry point refuses any amendment outright; the historical route asks the approved amendment policy instead, which covers B10 and B11 (they are not among the policy's nine not_covered_metric_ids, and required_input_class puts them in ORIGINAL_STATEMENT_VALUES - both read off the policy, not assumed)."
+  }
+ }
+}

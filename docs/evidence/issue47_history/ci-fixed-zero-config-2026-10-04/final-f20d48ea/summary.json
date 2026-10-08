@@ -1,0 +1,44 @@
+{
+ "source_head": "f20d48ea7420dc650c07de09b9f241d11dc28285",
+ "comparison_base": "c7a96eae8dbd6df9f01bc4db9a14014b69f487ef",
+ "tested_checkout": "3229d5aa1d29a38835d691d35aca437ff1cbfd16",
+ "vnext_run": 37202827491,
+ "reference_run": 37202827514,
+ "jobs_success": 17,
+ "source_selectors_success": 171,
+ "fast_selectors_success": 188,
+ "source_case_limits_changed": false,
+ "native_business_acceptance_inferred": false,
+ "new_calls": [
+  0,
+  0,
+  0
+ ],
+ "files": {
+  "ci-f20-reference-final-run.json": {
+   "bytes": 1753,
+   "sha256": "cd70e5d309de589c2abcb94fbea05dc0297f2f689d2a1be55d805430d4741934"
+  },
+  "ci-f20-tested-checkouts.json": {
+   "bytes": 122,
+   "sha256": "8afe32b521b698fb90d8a87e4187badf70ba61014c1ab05c00671e866afbb223"
+  },
+  "ci-f20-suite-terminals.json": {
+   "bytes": 125656,
+   "sha256": "f8c5d59de529747ea58830b07bf753b821e48233f274e2f907c0d1adcf6ba920"
+  },
+  "ci-f20-final-run.json": {
+   "bytes": 26879,
+   "sha256": "aeff154eecf2b099e674af9e37ba2627dd459154e88374cf1ed89bc2a920ab7c"
+  },
+  "ci-f20-complete.log.gz": {
+   "bytes": 104294,
+   "sha256": "9fe2bf35b9826c1715e4be070cb32e2ea89b7224c671d0a94d915daf53787fc1"
+  }
+ },
+ "uncompressed_ci_stdout": {
+  "bytes": 774063,
+  "sha256": "235300dc9527dfe8a777d4130cbdf9f1329d891eaa77892abb643039ab54ba63"
+ },
+ "ci_stdout_compression": "gzip; complete original stdout including whitespace; verified byte-identical decompression"
+}

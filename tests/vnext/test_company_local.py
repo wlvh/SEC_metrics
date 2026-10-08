@@ -33,7 +33,7 @@ class CompanyLocalTest(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
+        self.root = Path(self.temp.name).resolve()
 
     def test_local_reader_selects_only_the_existing_exact_native_specs(self):
         self.assertTrue(local.native_run({'spec_file_hashes':{'catalog/r5/B13_capacity_disclosures_v1.md':'hash'}}))
@@ -147,7 +147,8 @@ class CompanyLocalTest(unittest.TestCase):
             elif args[0] == 'compute':
                 result = {'metrics': [{'metric_id': 'B01', 'status': 'CANDIDATE_READY'},
                     {'metric_id': 'D01', 'status': 'INPUT_FAILED'}]}
-            elif args[0] == 'export-results':
+            elif args[0] == 'results':
+                self.assertEqual(program, local.ROOT)
                 destination = Path(args[args.index('--output-root')+1])
                 destination.mkdir(parents=True)
                 matrix = [{**dict.fromkeys(METRIC_FIELDS, ''), 'metric_id': 'B01', 'value': '10', 'status': 'EXACT'}]
@@ -170,7 +171,7 @@ class CompanyLocalTest(unittest.TestCase):
             (work/'programs/program').mkdir(parents=True)
             result = local.run_local(company_id='marriott_international', work_dir=work,
                 output_dir=output, metric_ids=['B01', 'D01', 'D03'])
-        self.assertEqual(calls, ['acquire', 'export', 'install', 'compute', 'export-results'])
+        self.assertEqual(calls, ['acquire', 'export', 'install', 'compute', 'results'])
         saved_summary = json.loads(Path(result['outputs']['run_summary.json']).read_text())
         view = json.loads((Path(result['output_root'])/'company-results.json').read_text())
         installed = json.loads((work/'company-state/current_source.json').read_text())
@@ -240,7 +241,8 @@ class CompanyLocalTest(unittest.TestCase):
             calls.append(args[0])
             if args[0] == 'acquire':
                 return {'returncode': 1, 'result': {'status': 'STAGE_FAILED'}}
-            self.assertEqual(args[0], 'export-results')
+            self.assertEqual(args[0], 'results')
+            self.assertEqual(program, local.ROOT)
             dest = Path(args[args.index('--output-root')+1])
             dest.mkdir(parents=True)
             row = {**dict.fromkeys(METRIC_FIELDS, ''), 'metric_id': 'D01', 'value': '38', 'status': 'OK'}
@@ -253,7 +255,7 @@ class CompanyLocalTest(unittest.TestCase):
                 patch.object(local, '_invoke', side_effect=invoke):
             result = local.run_local(company_id='marriott_international', work_dir=work,
                 output_dir=self.root/'output', metric_ids=['B01'])
-        self.assertEqual(calls, ['acquire', 'export-results'])
+        self.assertEqual(calls, ['acquire', 'results'])
         self.assertEqual(result['status'], 'FLOW_INCOMPLETE')
         self.assertIsNone(result['calls']['sec'])
         with Path(result['outputs']['metrics_matrix.csv']).open(encoding='utf-8-sig') as stream:

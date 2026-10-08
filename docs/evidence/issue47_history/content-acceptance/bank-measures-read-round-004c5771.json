@@ -1,0 +1,1912 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "per_position": {
+  "jpmorgan-2021": {
+   "company_id": "jpmorgan_chase",
+   "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+   "metrics": {
+    "A03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:cd76379dc7c465cb2517fc7163aa9e1a42c2c660467f46a3fbd39d12190cc878",
+       "run_id": "run:historical-period:957f4b362e4239a85a3e1eab8b2ebd32295650d6a8fafcbafe64751de27a7f83"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-22-000272"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2021-12-31",
+      "period_start": "2021-10-01",
+      "scope_key": "sha256:52a3afe8a1f454da0ecd9d15015edb398398ee229608f56fbf4ee664f87e33ae",
+      "spec_closure_hash": "sha256:99ff7afa51744213038acd97d91f0d62d641a1090f96fa85d860708579d64601",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "1.11",
+     "read": "1.11",
+     "reads": [
+      {
+       "figure": "111",
+       "row": [
+        "Firm Liquidity coverage ratio (“LCR”) (average) (d)",
+        "111",
+        "110",
+        "116"
+       ],
+       "source": "SELECTED_FINANCIAL_DATA",
+       "table_ordinal": 63,
+       "value": "1.11",
+       "window": [
+        "2021-10-01",
+        "2021-12-31"
+       ]
+      },
+      {
+       "figure": "111",
+       "group": "JPMorgan Chase & Co.:",
+       "row": [
+        "LCR",
+        "111",
+        "%",
+        "112",
+        "%",
+        "110",
+        "%"
+       ],
+       "source": "QUARTER_AVERAGE_TABLE",
+       "table_ordinal": 198,
+       "value": "1.11",
+       "window": [
+        "2021-10-01",
+        "2021-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2021-10-01",
+      "2021-12-31"
+     ]
+    },
+    "A04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:7ddc7e869aa3d1134b87990f77dd1e6f47293f0154852435e71df9c6bbaf2bfa",
+       "run_id": "run:historical-period:7c77915af703efc5075d372cf2a2c6cc4cb24b2dfd587fa07661b201211db6e6"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-22-000272"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2021-12-31",
+      "period_start": "2021-01-01",
+      "scope_key": "sha256:a7688ff41838926b0ff9724b68c60894ad67dc734ac3f80b32c42acef2e9e2a1",
+      "spec_closure_hash": "sha256:bf1f13bb535f9b2004629af329532e19d87362d41606540da719b789229e9282",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "0.0164",
+     "read": "0.0164",
+     "reads": [
+      {
+       "figure": "1.64",
+       "row": [
+        "Net yield on average interest-earning assets – managed basis",
+        "1.64",
+        "%",
+        "1.98",
+        "%",
+        "2.46",
+        "%"
+       ],
+       "table_ordinal": 97,
+       "value": "0.0164",
+       "window": [
+        "2021-01-01",
+        "2021-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2021-01-01",
+      "2021-12-31"
+     ]
+    },
+    "A09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:2c550c1f3dc1a2063a8a84a678dcbae3b619759c10944fb1da80f67649cd15ac",
+       "run_id": "run:historical-period:0af23617cead6eefc2a648c77ad9d2d39b5e1dcbb3fbe821ccfe8d6ece1130bd"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-22-000272"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2021-12-31",
+      "period_start": "2021-12-31",
+      "scope_key": "sha256:3d94e6ea0573af3a263c9059ceb4a25734ab919ba49299cfc55fea2f56346eec",
+      "spec_closure_hash": "sha256:aaafb1f1c5a4318007074875776ccc6f92edffe5a78d610a729f0a46775b7dd4",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "0.0072",
+     "read": "0.0072",
+     "reads": [
+      {
+       "figure": "0.72",
+       "row": [
+        "Firmwide nonaccrual loans to total loans outstanding",
+        "0.72",
+        "%",
+        "1.04",
+        "%"
+       ],
+       "table_ordinal": 221,
+       "value": "0.0072",
+       "window": [
+        "2021-12-31",
+        "2021-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2021-12-31",
+      "2021-12-31"
+     ]
+    },
+    "A11": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:d39c0a20ac1abf0966d27c4f33c00c4a8431f1e4326ba0c37cee2f9dfa9805f2",
+       "run_id": "run:historical-period:b1f552ad14800c987576538b467b0cbf9f5479d8ad591fad9bcd6a757aa1ad6a"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-22-000272"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2021-12-31",
+      "period_start": "2021-12-31",
+      "scope_key": "sha256:99e384e563aa2518f34769ac5874c0115ef95257f91a4411ccc8d55c901e28d9",
+      "spec_closure_hash": "sha256:87645fa1422b2ac635a9383b5b30d40091d45a819a3789d8415c1ed00dbc234b",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "3113000000000",
+     "read": "3113000000000",
+     "reads": [
+      {
+       "figure": "3,113",
+       "row": [
+        "Total assets under management",
+        "3,113",
+        "2,716",
+        "2,328"
+       ],
+       "table_ordinal": 153,
+       "value": "3113000000000",
+       "window": [
+        "2021-12-31",
+        "2021-12-31"
+       ]
+      },
+      {
+       "figure": "3,113",
+       "row": [
+        "Total assets under management",
+        "$",
+        "3,113",
+        "$",
+        "2,716",
+        "$",
+        "2,328"
+       ],
+       "table_ordinal": 153,
+       "value": "3113000000000",
+       "window": [
+        "2021-12-31",
+        "2021-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2021-12-31",
+      "2021-12-31"
+     ]
+    },
+    "A12": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:5ba6630342ed34686176393c66fb2a2177c756155bb616347e0072fbb1a23926",
+       "run_id": "run:historical-period:bd6ccb19f4e0de5766b5d14b31c5fcc5675b4840f2c95ee6125911adac6bca49"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-22-000272"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2021-12-31",
+      "period_start": "2021-01-01",
+      "scope_key": "sha256:c3369a19083ecd0d1653c03badefdf47b6ace414ed59467a2d58bbb1370642d5",
+      "spec_closure_hash": "sha256:338264b583c2d2458cb3f73d060e1a42fa9d90a20e51be961394fc27ae62b213",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "55000000",
+     "read": "55000000",
+     "reads": [
+      {
+       "figure": "55",
+       "row": [
+        "Total VaR",
+        "$",
+        "55",
+        "$",
+        "24",
+        "$",
+        "153",
+        "$",
+        "95",
+        "$",
+        "32",
+        "$",
+        "164"
+       ],
+       "table_ordinal": 286,
+       "value": "55000000",
+       "window": [
+        "2021-01-01",
+        "2021-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2021-01-01",
+      "2021-12-31"
+     ]
+    },
+    "A13": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:41b8b0dd5bf7c719f87e5e865a95a3b90a1ba6b5416887333c56701e4f3c7e44",
+       "run_id": "run:historical-period:60247dea2ce8551458fcde1b7f3425d26994f2e44b745d11c21818f1c537e009"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-22-000272"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2021-12-31",
+      "period_start": "2021-01-01",
+      "scope_key": "sha256:1beed0e0fed6eb64e1a5aacc0c1592cf9c9fd49e62f17e055bea498d8d58bee0",
+      "spec_closure_hash": "sha256:94699b6e1c2c5d8f8e5b048007c5f863416fb4072489b274929dd4ae03716b09",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "28971000000",
+     "read": "28971000000",
+     "reads": [
+      {
+       "figure": "28,971",
+       "row": [
+        "Total international",
+        "28,971",
+        "18,794",
+        "10,177",
+        "7,380",
+        "857,458"
+       ],
+       "table_ordinal": 613,
+       "value": "28971000000",
+       "window": [
+        "2021-01-01",
+        "2021-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2021-01-01",
+      "2021-12-31"
+     ]
+    }
+   },
+   "period_end": "2021-12-31",
+   "registrant_name": "JPMorgan Chase & Co"
+  },
+  "jpmorgan-2022": {
+   "company_id": "jpmorgan_chase",
+   "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+   "metrics": {
+    "A03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:08e67741151908ad68862ff034da7e11f59138b9b32ae056b85726380b451c3f",
+       "run_id": "run:historical-period:710ce201cce435fc0dcc8b9aa5164367ff73b755bcb332d8847be12336b88321"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-23-000231"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2022-12-31",
+      "period_start": "2022-10-01",
+      "scope_key": "sha256:52a3afe8a1f454da0ecd9d15015edb398398ee229608f56fbf4ee664f87e33ae",
+      "spec_closure_hash": "sha256:99ff7afa51744213038acd97d91f0d62d641a1090f96fa85d860708579d64601",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "1.12",
+     "read": "1.12",
+     "reads": [
+      {
+       "figure": "112",
+       "row": [
+        "Firm Liquidity coverage ratio (“LCR”) (average) (c)",
+        "112",
+        "111",
+        "110"
+       ],
+       "source": "SELECTED_FINANCIAL_DATA",
+       "table_ordinal": 62,
+       "value": "1.12",
+       "window": [
+        "2022-10-01",
+        "2022-12-31"
+       ]
+      },
+      {
+       "figure": "112",
+       "group": "JPMorgan Chase & Co.:",
+       "row": [
+        "LCR",
+        "112",
+        "%",
+        "113",
+        "%",
+        "111",
+        "%"
+       ],
+       "source": "QUARTER_AVERAGE_TABLE",
+       "table_ordinal": 200,
+       "value": "1.12",
+       "window": [
+        "2022-10-01",
+        "2022-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2022-10-01",
+      "2022-12-31"
+     ]
+    },
+    "A04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:a29bf3a446adca6593b4d5bcc6e18607e0eb0f389ca6169dc0f1169ad2633247",
+       "run_id": "run:historical-period:6e207eaeb054dd54858972e1c89127d727b6150537f493894bc43b1eddf81cb3"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-23-000231"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2022-12-31",
+      "period_start": "2022-01-01",
+      "scope_key": "sha256:a7688ff41838926b0ff9724b68c60894ad67dc734ac3f80b32c42acef2e9e2a1",
+      "spec_closure_hash": "sha256:bf1f13bb535f9b2004629af329532e19d87362d41606540da719b789229e9282",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "0.02",
+     "read": "0.02",
+     "reads": [
+      {
+       "figure": "2.00",
+       "row": [
+        "Net yield on average interest-earning assets – managed basis",
+        "2.00",
+        "%",
+        "1.64",
+        "%",
+        "1.98",
+        "%"
+       ],
+       "table_ordinal": 96,
+       "value": "0.02",
+       "window": [
+        "2022-01-01",
+        "2022-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2022-01-01",
+      "2022-12-31"
+     ]
+    },
+    "A09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:1f937eb72b422849afd5af43705f138a08a033a37adbced8e1a57ef16ed3ed52",
+       "run_id": "run:historical-period:c1f918faf6352b58a6cf05098dca5ceb62cd7305f3b7611f0cd4accfc3bcd529"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-23-000231"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2022-12-31",
+      "period_start": "2022-12-31",
+      "scope_key": "sha256:3d94e6ea0573af3a263c9059ceb4a25734ab919ba49299cfc55fea2f56346eec",
+      "spec_closure_hash": "sha256:aaafb1f1c5a4318007074875776ccc6f92edffe5a78d610a729f0a46775b7dd4",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "0.0059",
+     "read": "0.0059",
+     "reads": [
+      {
+       "figure": "0.59",
+       "row": [
+        "Firmwide nonaccrual loans to total loans outstanding",
+        "0.59",
+        "%",
+        "0.72",
+        "%"
+       ],
+       "table_ordinal": 223,
+       "value": "0.0059",
+       "window": [
+        "2022-12-31",
+        "2022-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2022-12-31",
+      "2022-12-31"
+     ]
+    },
+    "A11": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:88d39f3d9c73d6b879b704a533f21097834f6bc70e26ca2a3cadc4b56749679d",
+       "run_id": "run:historical-period:0eb320167bed57535c5329fa783c390a99616747bfb82126500ed3f40c3b328f"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-23-000231"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2022-12-31",
+      "period_start": "2022-12-31",
+      "scope_key": "sha256:99e384e563aa2518f34769ac5874c0115ef95257f91a4411ccc8d55c901e28d9",
+      "spec_closure_hash": "sha256:87645fa1422b2ac635a9383b5b30d40091d45a819a3789d8415c1ed00dbc234b",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "2766000000000",
+     "read": "2766000000000",
+     "reads": [
+      {
+       "figure": "2,766",
+       "row": [
+        "Total assets under management",
+        "2,766",
+        "3,113",
+        "2,716"
+       ],
+       "table_ordinal": 154,
+       "value": "2766000000000",
+       "window": [
+        "2022-12-31",
+        "2022-12-31"
+       ]
+      },
+      {
+       "figure": "2,766",
+       "row": [
+        "Total assets under management",
+        "$",
+        "2,766",
+        "$",
+        "3,113",
+        "$",
+        "2,716"
+       ],
+       "table_ordinal": 154,
+       "value": "2766000000000",
+       "window": [
+        "2022-12-31",
+        "2022-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2022-12-31",
+      "2022-12-31"
+     ]
+    },
+    "A12": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:e2487f354aa4826571ef3a5509b9e17afbd84ff9337fe0ca22fb1e941e0008c5",
+       "run_id": "run:historical-period:c7169962eb73c83f1ada18b27b7c2c7c30970a264b79d7b71674b9d1a2cf1e97"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-23-000231"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2022-12-31",
+      "period_start": "2022-01-01",
+      "scope_key": "sha256:c3369a19083ecd0d1653c03badefdf47b6ace414ed59467a2d58bbb1370642d5",
+      "spec_closure_hash": "sha256:338264b583c2d2458cb3f73d060e1a42fa9d90a20e51be961394fc27ae62b213",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "58000000",
+     "read": "58000000",
+     "reads": [
+      {
+       "figure": "58",
+       "row": [
+        "Total VaR",
+        "$",
+        "58",
+        "$",
+        "34",
+        "$",
+        "242",
+        "$",
+        "55",
+        "$",
+        "24",
+        "$",
+        "153"
+       ],
+       "table_ordinal": 286,
+       "value": "58000000",
+       "window": [
+        "2022-01-01",
+        "2022-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2022-01-01",
+      "2022-12-31"
+     ]
+    },
+    "A13": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:ddec737169bb2d5e2487063a0e09d07974494f3a17c1fd637c2c43c1a43d3cdb",
+       "run_id": "run:historical-period:51a78426623f2e9f27a6381071574c71a769000e497971e64b1df738646bdf8a"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-23-000231"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2022-12-31",
+      "period_start": "2022-01-01",
+      "scope_key": "sha256:1beed0e0fed6eb64e1a5aacc0c1592cf9c9fd49e62f17e055bea498d8d58bee0",
+      "spec_closure_hash": "sha256:94699b6e1c2c5d8f8e5b048007c5f863416fb4072489b274929dd4ae03716b09",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "31968000000",
+     "read": "31968000000",
+     "reads": [
+      {
+       "figure": "31,968",
+       "row": [
+        "Total international",
+        "31,968",
+        "20,214",
+        "11,754",
+        "8,433",
+        "918,582"
+       ],
+       "table_ordinal": 609,
+       "value": "31968000000",
+       "window": [
+        "2022-01-01",
+        "2022-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2022-01-01",
+      "2022-12-31"
+     ]
+    }
+   },
+   "period_end": "2022-12-31",
+   "registrant_name": "JPMorgan Chase & Co"
+  },
+  "jpmorgan-2023": {
+   "company_id": "jpmorgan_chase",
+   "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+   "metrics": {
+    "A03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:4d9ce1615fe5db956b31696746b57f1001784dfc0b6f05be182b337bed41adf9",
+       "run_id": "run:historical-period:6256123e0d7f9349a4a1a81a76f0b13fc71432ef242ce324d32e742e46cd924d"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-24-000225"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2023-12-31",
+      "period_start": "2023-10-01",
+      "scope_key": "sha256:52a3afe8a1f454da0ecd9d15015edb398398ee229608f56fbf4ee664f87e33ae",
+      "spec_closure_hash": "sha256:99ff7afa51744213038acd97d91f0d62d641a1090f96fa85d860708579d64601",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "1.13",
+     "read": "1.13",
+     "reads": [
+      {
+       "figure": "113",
+       "row": [
+        "Firm Liquidity coverage ratio (“LCR”) (average) (b)",
+        "113",
+        "112",
+        "111"
+       ],
+       "source": "SELECTED_FINANCIAL_DATA",
+       "table_ordinal": 65,
+       "value": "1.13",
+       "window": [
+        "2023-10-01",
+        "2023-12-31"
+       ]
+      },
+      {
+       "figure": "113",
+       "group": "JPMorgan Chase & Co.:",
+       "row": [
+        "LCR",
+        "113",
+        "%",
+        "112",
+        "%",
+        "112",
+        "%"
+       ],
+       "source": "QUARTER_AVERAGE_TABLE",
+       "table_ordinal": 207,
+       "value": "1.13",
+       "window": [
+        "2023-10-01",
+        "2023-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2023-10-01",
+      "2023-12-31"
+     ]
+    },
+    "A04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:46568fa41902ae80959f3bf6fcc56e1319d70c354446b96d9ca17e2265728309",
+       "run_id": "run:historical-period:e14df62b1d87a317f845f9e2d4aa41abfb90b209a47e839955cc595fae03b3a6"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-24-000225"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "scope_key": "sha256:a7688ff41838926b0ff9724b68c60894ad67dc734ac3f80b32c42acef2e9e2a1",
+      "spec_closure_hash": "sha256:bf1f13bb535f9b2004629af329532e19d87362d41606540da719b789229e9282",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "0.027",
+     "read": "0.027",
+     "reads": [
+      {
+       "figure": "2.70",
+       "row": [
+        "Net yield on average interest-earning assets – managed basis",
+        "2.70",
+        "%",
+        "2.00",
+        "%",
+        "1.64",
+        "%"
+       ],
+       "table_ordinal": 101,
+       "value": "0.027",
+       "window": [
+        "2023-01-01",
+        "2023-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2023-01-01",
+      "2023-12-31"
+     ]
+    },
+    "A09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:ba9abedb73dd27f7ca80936757603a3956160459f4947af5989949d012a29a21",
+       "run_id": "run:historical-period:bab153b67181a6366fd4508524604e1a7b2ce591cb026665b0c5cae5452bf867"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-24-000225"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "scope_key": "sha256:3d94e6ea0573af3a263c9059ceb4a25734ab919ba49299cfc55fea2f56346eec",
+      "spec_closure_hash": "sha256:aaafb1f1c5a4318007074875776ccc6f92edffe5a78d610a729f0a46775b7dd4",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "0.0052",
+     "read": "0.0052",
+     "reads": [
+      {
+       "figure": "0.52",
+       "row": [
+        "Firmwide nonaccrual loans to total loans outstanding",
+        "0.52",
+        "%",
+        "0.59",
+        "%"
+       ],
+       "table_ordinal": 230,
+       "value": "0.0052",
+       "window": [
+        "2023-12-31",
+        "2023-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2023-12-31",
+      "2023-12-31"
+     ]
+    },
+    "A11": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:6626c7346ec17f13717e741c46d9933924384c752b924afe45d167ab6a4d1348",
+       "run_id": "run:historical-period:a5ce244091818bf908eec85d790ace06ef481850521866c9a219bccb156b1ad0"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-24-000225"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2023-12-31",
+      "period_start": "2023-12-31",
+      "scope_key": "sha256:99e384e563aa2518f34769ac5874c0115ef95257f91a4411ccc8d55c901e28d9",
+      "spec_closure_hash": "sha256:87645fa1422b2ac635a9383b5b30d40091d45a819a3789d8415c1ed00dbc234b",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "3422000000000",
+     "read": "3422000000000",
+     "reads": [
+      {
+       "figure": "3,422",
+       "row": [
+        "Total assets under management",
+        "3,422",
+        "2,766",
+        "3,113"
+       ],
+       "table_ordinal": 161,
+       "value": "3422000000000",
+       "window": [
+        "2023-12-31",
+        "2023-12-31"
+       ]
+      },
+      {
+       "figure": "3,422",
+       "row": [
+        "Total assets under management",
+        "$",
+        "3,422",
+        "$",
+        "2,766",
+        "$",
+        "3,113"
+       ],
+       "table_ordinal": 161,
+       "value": "3422000000000",
+       "window": [
+        "2023-12-31",
+        "2023-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2023-12-31",
+      "2023-12-31"
+     ]
+    },
+    "A12": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:23af9319de766968573764489e7b03cd0fdc9ae99c1c92b913d92f05d5316385",
+       "run_id": "run:historical-period:2e591f7a18fc07fd4dc2c1f9b684717bbf391e175efb214f51a39023a182ad12"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-24-000225"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "scope_key": "sha256:c3369a19083ecd0d1653c03badefdf47b6ace414ed59467a2d58bbb1370642d5",
+      "spec_closure_hash": "sha256:338264b583c2d2458cb3f73d060e1a42fa9d90a20e51be961394fc27ae62b213",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "43000000",
+     "read": "43000000",
+     "reads": [
+      {
+       "figure": "43",
+       "row": [
+        "Total VaR",
+        "$",
+        "43",
+        "$",
+        "26",
+        "$",
+        "57",
+        "$",
+        "58",
+        "$",
+        "34",
+        "$",
+        "242",
+        "(d)"
+       ],
+       "table_ordinal": 289,
+       "value": "43000000",
+       "window": [
+        "2023-01-01",
+        "2023-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2023-01-01",
+      "2023-12-31"
+     ]
+    },
+    "A13": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:0c55c08053507182782e47a86efebb39bbaab3764e20cbe0ba1e14aff1b49dd0",
+       "run_id": "run:historical-period:ba843cc629a32035203830be1fdd8210e6a33ad01b4a3744dbf8735321f82056"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-24-000225"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "scope_key": "sha256:1beed0e0fed6eb64e1a5aacc0c1592cf9c9fd49e62f17e055bea498d8d58bee0",
+      "spec_closure_hash": "sha256:94699b6e1c2c5d8f8e5b048007c5f863416fb4072489b274929dd4ae03716b09",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "34873000000",
+     "read": "34873000000",
+     "reads": [
+      {
+       "figure": "34,873",
+       "row": [
+        "Total international",
+        "34,873",
+        "20,468",
+        "14,405",
+        "10,105",
+        "863,926"
+       ],
+       "table_ordinal": 633,
+       "value": "34873000000",
+       "window": [
+        "2023-01-01",
+        "2023-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2023-01-01",
+      "2023-12-31"
+     ]
+    }
+   },
+   "period_end": "2023-12-31",
+   "registrant_name": "JPMorgan Chase & Co"
+  },
+  "jpmorgan-2024": {
+   "company_id": "jpmorgan_chase",
+   "document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm",
+   "metrics": {
+    "A03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:b34ebfa88819cbd627163951bfdd00cbd55122d2844e0f6d3cb83b52b70e326f",
+       "run_id": "run:historical-period:f438f4f8735120f11a1f009f3afbc76f83bc01fc34ffef9a9f8f4978327d448e"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-25-000270"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2024-12-31",
+      "period_start": "2024-10-01",
+      "scope_key": "sha256:52a3afe8a1f454da0ecd9d15015edb398398ee229608f56fbf4ee664f87e33ae",
+      "spec_closure_hash": "sha256:99ff7afa51744213038acd97d91f0d62d641a1090f96fa85d860708579d64601",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "1.13",
+     "read": "1.13",
+     "reads": [
+      {
+       "figure": "113",
+       "row": [
+        "Firm Liquidity coverage ratio (“LCR”) (average) (b)",
+        "113",
+        "113",
+        "112"
+       ],
+       "source": "SELECTED_FINANCIAL_DATA",
+       "table_ordinal": 70,
+       "value": "1.13",
+       "window": [
+        "2024-10-01",
+        "2024-12-31"
+       ]
+      },
+      {
+       "figure": "113",
+       "group": "JPMorgan Chase & Co.:",
+       "row": [
+        "LCR",
+        "113",
+        "%",
+        "114",
+        "%",
+        "113",
+        "%"
+       ],
+       "source": "QUARTER_AVERAGE_TABLE",
+       "table_ordinal": 206,
+       "value": "1.13",
+       "window": [
+        "2024-10-01",
+        "2024-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2024-10-01",
+      "2024-12-31"
+     ]
+    },
+    "A04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:8a2e08cc3edd3fbfda08846f9935b9c89a0a108f21e5c028b61327f4403f070e",
+       "run_id": "run:historical-period:d3598ffde7b3548e6cef5a117b92c0ea4b6637e72d197bcfba3911d6d85c8d30"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-25-000270"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:a7688ff41838926b0ff9724b68c60894ad67dc734ac3f80b32c42acef2e9e2a1",
+      "spec_closure_hash": "sha256:bf1f13bb535f9b2004629af329532e19d87362d41606540da719b789229e9282",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "0.0263",
+     "read": "0.0263",
+     "reads": [
+      {
+       "figure": "2.63",
+       "row": [
+        "Net yield on average interest-earning assets – managed basis",
+        "2.63",
+        "%",
+        "2.70",
+        "%",
+        "2.00",
+        "%"
+       ],
+       "table_ordinal": 107,
+       "value": "0.0263",
+       "window": [
+        "2024-01-01",
+        "2024-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2024-01-01",
+      "2024-12-31"
+     ]
+    },
+    "A09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:a9c8f9ea25ead7febc2b47089e0de1610ac9288fc7dfd6ffb1b028c8e01c368b",
+       "run_id": "run:historical-period:97018fc3328466b1bd398521b2085ae8c5ed00ecfe113decd283f00b851a8ec7"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-25-000270"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "scope_key": "sha256:3d94e6ea0573af3a263c9059ceb4a25734ab919ba49299cfc55fea2f56346eec",
+      "spec_closure_hash": "sha256:aaafb1f1c5a4318007074875776ccc6f92edffe5a78d610a729f0a46775b7dd4",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "0.0066",
+     "read": "0.0066",
+     "reads": [
+      {
+       "figure": "0.66",
+       "row": [
+        "Firmwide nonaccrual loans to total loans outstanding",
+        "0.66",
+        "%",
+        "0.52",
+        "%"
+       ],
+       "table_ordinal": 229,
+       "value": "0.0066",
+       "window": [
+        "2024-12-31",
+        "2024-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2024-12-31",
+      "2024-12-31"
+     ]
+    },
+    "A11": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:823cf7659972167e912c057249da6b186fd02e58b65d1e76d76a4a996d97ab7d",
+       "run_id": "run:historical-period:f86c7c4618fe6ea2f6b552c0fac495109c86ad7b03ff08997a071cd329b0f8e0"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-25-000270"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2024-12-31",
+      "period_start": "2024-12-31",
+      "scope_key": "sha256:99e384e563aa2518f34769ac5874c0115ef95257f91a4411ccc8d55c901e28d9",
+      "spec_closure_hash": "sha256:87645fa1422b2ac635a9383b5b30d40091d45a819a3789d8415c1ed00dbc234b",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "4045000000000",
+     "read": "4045000000000",
+     "reads": [
+      {
+       "figure": "4,045",
+       "row": [
+        "Total assets under management",
+        "4,045",
+        "3,422",
+        "2,766"
+       ],
+       "table_ordinal": 156,
+       "value": "4045000000000",
+       "window": [
+        "2024-12-31",
+        "2024-12-31"
+       ]
+      },
+      {
+       "figure": "4,045",
+       "row": [
+        "Total assets under management",
+        "$",
+        "4,045",
+        "$",
+        "3,422",
+        "$",
+        "2,766"
+       ],
+       "table_ordinal": 156,
+       "value": "4045000000000",
+       "window": [
+        "2024-12-31",
+        "2024-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2024-12-31",
+      "2024-12-31"
+     ]
+    },
+    "A12": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:0119f79e87425aa7b543fb28fbe343f714ef4eba634058a6838ce5adf2bb5dde",
+       "run_id": "run:historical-period:021df20b927708563cea0057e8cca5e41c3b454d786f36ce11d3b18d028afac7"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-25-000270"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:c3369a19083ecd0d1653c03badefdf47b6ace414ed59467a2d58bbb1370642d5",
+      "spec_closure_hash": "sha256:338264b583c2d2458cb3f73d060e1a42fa9d90a20e51be961394fc27ae62b213",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "47000000",
+     "read": "47000000",
+     "reads": [
+      {
+       "figure": "47",
+       "row": [
+        "Total VaR",
+        "$",
+        "47",
+        "$",
+        "30",
+        "$",
+        "91",
+        "$",
+        "43",
+        "$",
+        "26",
+        "$",
+        "57"
+       ],
+       "table_ordinal": 288,
+       "value": "47000000",
+       "window": [
+        "2024-01-01",
+        "2024-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2024-01-01",
+      "2024-12-31"
+     ]
+    },
+    "A13": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:490f347f0ef0f3b5835e61770d950ae04fa57479eccb3796f38caa824a0350dc",
+       "run_id": "run:historical-period:8ed835c6393bfb382035137975143aa1b45e97fdb5ee9de8c5440fd419cc0194"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0000019617-25-000270"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2024-12-31",
+      "period_start": "2024-01-01",
+      "scope_key": "sha256:1beed0e0fed6eb64e1a5aacc0c1592cf9c9fd49e62f17e055bea498d8d58bee0",
+      "spec_closure_hash": "sha256:94699b6e1c2c5d8f8e5b048007c5f863416fb4072489b274929dd4ae03716b09",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "38233000000",
+     "read": "38233000000",
+     "reads": [
+      {
+       "figure": "38,233",
+       "row": [
+        "Total international",
+        "38,233",
+        "21,660",
+        "16,573",
+        "11,840",
+        "922,468"
+       ],
+       "table_ordinal": 642,
+       "value": "38233000000",
+       "window": [
+        "2024-01-01",
+        "2024-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2024-01-01",
+      "2024-12-31"
+     ]
+    }
+   },
+   "period_end": "2024-12-31",
+   "registrant_name": "JPMorgan Chase & Co"
+  },
+  "jpmorgan-2025": {
+   "company_id": "jpmorgan_chase",
+   "document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+   "metrics": {
+    "A03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:8a8dbd440613fcbac2658b7cd6dea3213c9f784fa55b164e578a23a9c2e72993",
+       "run_id": "run:historical-period:17df39ba923424d23b36431f7d9754b0fb65170b96160485bde30d23c1d036a3"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-008131"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-10-01",
+      "scope_key": "sha256:52a3afe8a1f454da0ecd9d15015edb398398ee229608f56fbf4ee664f87e33ae",
+      "spec_closure_hash": "sha256:99ff7afa51744213038acd97d91f0d62d641a1090f96fa85d860708579d64601",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "1.11",
+     "read": "1.11",
+     "reads": [
+      {
+       "figure": "111",
+       "row": [
+        "Firm Liquidity coverage ratio (“LCR”) (average) (b)",
+        "111",
+        "113",
+        "113"
+       ],
+       "source": "SELECTED_FINANCIAL_DATA",
+       "table_ordinal": 64,
+       "value": "1.11",
+       "window": [
+        "2025-10-01",
+        "2025-12-31"
+       ]
+      },
+      {
+       "figure": "111",
+       "group": "JPMorgan Chase & Co.:",
+       "row": [
+        "LCR",
+        "111",
+        "%",
+        "110",
+        "%",
+        "113",
+        "%"
+       ],
+       "source": "QUARTER_AVERAGE_TABLE",
+       "table_ordinal": 198,
+       "value": "1.11",
+       "window": [
+        "2025-10-01",
+        "2025-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2025-10-01",
+      "2025-12-31"
+     ]
+    },
+    "A04": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:a8ee6a699cc8d2c670dc4f89280e8c39cf32ea1dea710edc900f23f4327ad877",
+       "run_id": "run:historical-period:3713c6246cbefe046947ac28a4a676177721bd088ded23a691cfc96e9ffef017"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-008131"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:a7688ff41838926b0ff9724b68c60894ad67dc734ac3f80b32c42acef2e9e2a1",
+      "spec_closure_hash": "sha256:bf1f13bb535f9b2004629af329532e19d87362d41606540da719b789229e9282",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "0.025",
+     "read": "0.025",
+     "reads": [
+      {
+       "figure": "2.50",
+       "row": [
+        "Net yield on average interest-earning assets – managed basis",
+        "2.50",
+        "%",
+        "2.63",
+        "%",
+        "2.70",
+        "%"
+       ],
+       "table_ordinal": 99,
+       "value": "0.025",
+       "window": [
+        "2025-01-01",
+        "2025-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2025-01-01",
+      "2025-12-31"
+     ]
+    },
+    "A09": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:a551ad43b64325d9f550cde64eb748ede2a0cb6600ac5fd01bab4e6ec929a403",
+       "run_id": "run:historical-period:5560e08a4debd098e4dd5781079165e54e365311b4a260e1754ca9e92f602a20"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-008131"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:3d94e6ea0573af3a263c9059ceb4a25734ab919ba49299cfc55fea2f56346eec",
+      "spec_closure_hash": "sha256:aaafb1f1c5a4318007074875776ccc6f92edffe5a78d610a729f0a46775b7dd4",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "published": "0.0066",
+     "read": "0.0066",
+     "reads": [
+      {
+       "figure": "0.66",
+       "row": [
+        "Firmwide nonaccrual loans to total loans outstanding",
+        "0.66",
+        "%",
+        "0.66",
+        "%"
+       ],
+       "table_ordinal": 221,
+       "value": "0.0066",
+       "window": [
+        "2025-12-31",
+        "2025-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2025-12-31",
+      "2025-12-31"
+     ]
+    },
+    "A11": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:7aaa6981ca2df52c66a172c5e3ffae8f9ef44da1ca8faffa4f0a94f1ea6bf5f6",
+       "run_id": "run:historical-period:9d9e322e1d651732bc5829c0a47ff60fa90d11cf78d6f0cc6f135eaf90161db2"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-008131"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "scope_key": "sha256:99e384e563aa2518f34769ac5874c0115ef95257f91a4411ccc8d55c901e28d9",
+      "spec_closure_hash": "sha256:87645fa1422b2ac635a9383b5b30d40091d45a819a3789d8415c1ed00dbc234b",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "4791000000000",
+     "read": "4791000000000",
+     "reads": [
+      {
+       "figure": "4,791",
+       "row": [
+        "Total assets under management",
+        "4,791",
+        "4,045",
+        "3,422"
+       ],
+       "table_ordinal": 148,
+       "value": "4791000000000",
+       "window": [
+        "2025-12-31",
+        "2025-12-31"
+       ]
+      },
+      {
+       "figure": "4,791",
+       "row": [
+        "Total assets under management",
+        "$",
+        "4,791",
+        "$",
+        "4,045",
+        "$",
+        "3,422"
+       ],
+       "table_ordinal": 148,
+       "value": "4791000000000",
+       "window": [
+        "2025-12-31",
+        "2025-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2025-12-31",
+      "2025-12-31"
+     ]
+    },
+    "A12": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:234e0c71f22834d87a88087af2a13e7b6fd2eb1abddf5fbb6ad4f7e6aebe8245",
+       "run_id": "run:historical-period:f8dab49f67c99a0633e729f7a64518b11b6994f65fb4cb4d770357ebe20229f0"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-008131"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:c3369a19083ecd0d1653c03badefdf47b6ace414ed59467a2d58bbb1370642d5",
+      "spec_closure_hash": "sha256:338264b583c2d2458cb3f73d060e1a42fa9d90a20e51be961394fc27ae62b213",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "40000000",
+     "read": "40000000",
+     "reads": [
+      {
+       "figure": "40",
+       "row": [
+        "Total VaR",
+        "$",
+        "40",
+        "$",
+        "25",
+        "$",
+        "136",
+        "$",
+        "47",
+        "$",
+        "30",
+        "$",
+        "91"
+       ],
+       "table_ordinal": 279,
+       "value": "40000000",
+       "window": [
+        "2025-01-01",
+        "2025-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2025-01-01",
+      "2025-12-31"
+     ]
+    },
+    "A13": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335",
+       "result_id": "sha256:72324c5663967e8d8632d86f5ca7eb983c61299c05143d09a9c25fb9bab2976e",
+       "run_id": "run:historical-period:0cacdc0d816e13845921f182ed6c56cf2df71d32731b7dadc2e7977c12303ef2"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened",
+       "window"
+      ],
+      "entities": [
+       "19617"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-26-008131"
+      ],
+      "not_named_by_the_reading": [],
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "scope_key": "sha256:1beed0e0fed6eb64e1a5aacc0c1592cf9c9fd49e62f17e055bea498d8d58bee0",
+      "spec_closure_hash": "sha256:94699b6e1c2c5d8f8e5b048007c5f863416fb4072489b274929dd4ae03716b09",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "published": "42758000000",
+     "read": "42758000000",
+     "reads": [
+      {
+       "figure": "42,758",
+       "row": [
+        "Total international",
+        "42,758",
+        "25,276",
+        "17,482",
+        "12,475",
+        "1,081,469"
+       ],
+       "table_ordinal": 639,
+       "value": "42758000000",
+       "window": [
+        "2025-01-01",
+        "2025-12-31"
+       ]
+      }
+     ],
+     "verdict": "MATCH",
+     "why_not_read": null,
+     "window": [
+      "2025-01-01",
+      "2025-12-31"
+     ]
+    }
+   },
+   "period_end": "2025-12-31",
+   "registrant_name": "JPMorgan Chase & Co"
+  }
+ },
+ "reader": "tools/read_bank_measures.py",
+ "requirement_closure_hash": "sha256:004c577178a4a90af7f82c79ef9fa31926c822f17d730c19b5ce3c67863e7335"
+}

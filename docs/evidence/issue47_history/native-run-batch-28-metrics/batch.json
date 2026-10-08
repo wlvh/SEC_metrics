@@ -1,0 +1,212 @@
+{
+ "record_type": "ISSUE_47_NATIVE_RUN_BATCH",
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "what_ran": "every wired metric on every pinned period whose target original is saved: 11 company-periods, 28 wired metrics plus the trait-gated structural ones, one process per period, one read-only runtime tree, zero calls of any kind.",
+ "positions_attempted": 374,
+ "runtime_manifest_sha256": "9d916a2306806b0eb3bf2e444d06be041fc46cb5f4271d927af3721a9578dc6d",
+ "outcome": {
+  "frozen_runs_with_public_rows": 372,
+  "failed": 2,
+  "run_receipts_read_and_hash_verified": 372
+ },
+ "the_372_is_not_the_delivery": "A structural non-applicability and a withheld Result both render a row, so counting rows counts three different things as one.",
+ "three_layers": {
+  "value": 153,
+  "value_exact": 151,
+  "value_approx": 2,
+  "structurally_not_applicable": 169,
+  "ran_without_a_value": 50,
+  "of_which_are_answers": {
+   "count": 5,
+   "what": "DENOMINATOR_NONPOSITIVE (3) and RATIO_NUMERATOR_NOT_POSITIVE (2) are the metric saying the ratio is not meaningful for that company, which is a result."
+  },
+  "of_which_name_missing_material_or_a_settled_policy": 45,
+  "verified_outcome": 320,
+  "content_acceptance": 0,
+  "why_content_acceptance_is_zero": "a frozen Run with a public row says the route computed something and the bytes are bound; it does not say the value is the right value. Stated as unproven rather than omitted."
+ },
+ "what_changed_since_the_25_metric_batch": {
+  "wired_metrics": "25 -> 28 (C03, B10, B11)",
+  "values": "139 -> 153",
+  "paramount_failures": "14 -> 2, because the successor-registrant Company Facts and B01/B03 routes were wired: its A-series now resolves structurally and B01/B03 give ANNUAL_DURATION_OUT_OF_RANGE, which is the ordinary route's own answer for a 146-day first period.",
+  "marriott_earlier_years": "2023 delivered 7 values, now 9; 2024 delivered 9, now 11; 2025 delivered 16, now 19. The increments are exactly B10/B11 in all three years and C03 in the newest - earlier years name the proxy they could not read rather than borrowing the latest one."
+ },
+ "the_two_failures": [
+  {
+   "case": "paramount-2025",
+   "metric_id": "B06",
+   "error": "HISTORICAL_B06_SUCCESSOR_SCOPE_NOT_IMPLEMENTED",
+   "reading": "a named implementation gap, already recorded. The B06 cascade has no successor-registrant form."
+  },
+  {
+   "case": "paramount-2025",
+   "metric_id": "C03",
+   "error": "Observation DerivedAsset is absent",
+   "reading": "a defect in this issue's own C03 wiring, found by this batch and fixed after it. The compensation-table stage rebuilds the annual report's grid and the component did not carry it. So this batch is evidence for the closure it ran under, not for the current one.",
+   "fixed_in": "the commit that adds _check_bound_assets at the shared component entry"
+  }
+ ],
+ "cold_read_by_route_family": {
+  "why_not_one_per_period": "the driver samples one cold read per period, which is arbitrary - eleven reads that may all exercise the same route. The question is whether a frozen Run of each kind can be read back from its own bytes by a process that did not create it, so this is one per route family.",
+  "families_covered": [
+   "accession",
+   "companyfacts",
+   "debt",
+   "governance",
+   "lodging",
+   "structural",
+   "text",
+   "zero_ai_event",
+   "zero_ai_statement"
+  ],
+  "families_not_present": [],
+  "reads": 16,
+  "all_passed": true,
+  "a_defect_in_the_check_itself": "the first run reported B03 as a mismatch. The read was correct; the comparison took results[0], and a B03 Run carries B01's result too because it consumes it. A comparison that reads whatever is first fails in both directions, so it now selects the Run's own primary metric and asserts exactly one result for it."
+ },
+ "how_to_read_the_frame": {
+  "target_positions": 1950,
+  "waiting_on_acquisition": 1521,
+  "of_which": {
+   "SOURCE_MISSING_TARGET_ORIGINAL": 1170,
+   "TARGET_PERIOD_NOT_DISCOVERED": 273,
+   "TARGET_PERIOD_METADATA_BLOCKED": 78
+  },
+  "reachable_today": 429,
+  "no_route": 55,
+  "route_implemented_not_run": 2,
+  "runs": 372
+ },
+ "a_frame_that_looked_normal_and_was_not": "the first frame built for this batch reported ROUTE_IMPLEMENTED_NOT_RUN for all 374 positions and zero verified receipts. The batch writes <root>/<period>/run-<period>-<metric> and the receipt collector scans one level, so it found nothing - and reported that absence as a fact. The collector now refuses a root that holds directories and no Run at all, by name, because looking in the wrong place is not an absence.",
+ "status_counts": {
+  "HISTORICAL_ROUTE_NOT_WIRED": 55,
+  "NO_VALUE_PUBLISHED": 7,
+  "N_A_STRUCTURAL": 169,
+  "ROUTE_IMPLEMENTED_NOT_RUN": 2,
+  "SOURCE_MISSING_TARGET_ORIGINAL": 1170,
+  "TARGET_PERIOD_METADATA_BLOCKED": 78,
+  "TARGET_PERIOD_NOT_DISCOVERED": 273,
+  "VALUE_APPROX": 2,
+  "VALUE_EXACT": 151,
+  "WITHHELD_SOURCE_OR_ROUTE": 43
+ },
+ "dimension_counts": {
+  "business_content_accepted": 0,
+  "historical_route_implemented": 1646,
+  "known_content_defect": 2,
+  "native_run_receipt": 372,
+  "run_receipt_hashes_verified": 372,
+  "target_original_saved": 429,
+  "target_period_established": 1599,
+  "verified_outcome": 320
+ },
+ "delivery_layer_counts": {
+  "content_acceptance": 0,
+  "native_run": 372,
+  "public_row": 372
+ },
+ "per_period": {
+  "enphase-2025": {
+   "attempted": 34,
+   "value": 18,
+   "structural": 16,
+   "ran_without_value": 0,
+   "failed": 0,
+   "seconds": 3717
+  },
+  "ford-2025": {
+   "attempted": 34,
+   "value": 16,
+   "structural": 16,
+   "ran_without_value": 2,
+   "failed": 0,
+   "seconds": 5177
+  },
+  "lumen-2025": {
+   "attempted": 34,
+   "value": 16,
+   "structural": 16,
+   "ran_without_value": 2,
+   "failed": 0,
+   "seconds": 4445
+  },
+  "macys-2026": {
+   "attempted": 34,
+   "value": 18,
+   "structural": 16,
+   "ran_without_value": 0,
+   "failed": 0,
+   "seconds": 3556
+  },
+  "marriott-2023": {
+   "attempted": 34,
+   "value": 9,
+   "structural": 14,
+   "ran_without_value": 11,
+   "failed": 0,
+   "seconds": 3176
+  },
+  "marriott-2024": {
+   "attempted": 34,
+   "value": 11,
+   "structural": 14,
+   "ran_without_value": 9,
+   "failed": 0,
+   "seconds": 3382
+  },
+  "marriott-2025": {
+   "attempted": 34,
+   "value": 19,
+   "structural": 14,
+   "ran_without_value": 1,
+   "failed": 0,
+   "seconds": 3549
+  },
+  "paramount-2025": {
+   "attempted": 31,
+   "value": 1,
+   "structural": 16,
+   "ran_without_value": 12,
+   "failed": 2,
+   "seconds": 5347
+  },
+  "pfizer-2025": {
+   "attempted": 34,
+   "value": 17,
+   "structural": 16,
+   "ran_without_value": 1,
+   "failed": 0,
+   "seconds": 5160
+  },
+  "salesforce-2026": {
+   "attempted": 34,
+   "value": 12,
+   "structural": 15,
+   "ran_without_value": 7,
+   "failed": 0,
+   "seconds": 3647
+  },
+  "southwest-2025": {
+   "attempted": 34,
+   "value": 16,
+   "structural": 16,
+   "ran_without_value": 2,
+   "failed": 0,
+   "seconds": 4799
+  }
+ },
+ "unreadable_run_directories": [
+  {
+   "claimed_run_status": "OPEN",
+   "reading": "RUN_IS_BEING_WRITTEN",
+   "reason": "RUN_RECEIPT_FILE_CHANGED:records.jsonl",
+   "run_directory_name": "run-paramount-2025-C03"
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ },
+ "production_authorized": false
+}

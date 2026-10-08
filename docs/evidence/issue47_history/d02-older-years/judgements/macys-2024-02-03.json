@@ -1,0 +1,51 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "macys:2024-02-03",
+ "reader": "independent subagent reading: a fresh agent given the reader brief and the packet, not the selector's rules or any earlier reading (its prompt carried the executor's header-row decision; see reader-prompts.md)",
+ "reader_note": "Item 3 is now a single ordinary-course proceedings statement (the hazardous-waste matter of the earlier years no longer appears). The value adds the self-insurance accrual for workers compensation and general liability claims, which I count as D02, and the '(a)' footnote on a 2022 tax benefit from resolved state income tax litigation, which I judge a tax item outside D02.",
+ "packet_document_id": "sha256:7509f13a3ce20a20068e538c10ab4847ff50b1a93b4c912d53193798f6099eba",
+ "packet_candidate_hash": "sha256:a7cdb313decae03eab99601f2988baa0c63f07963e654eaeb6924f056607322f",
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 455,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3: ordinary-course proceedings, not expected to be material",
+   "text": "The Company and its subsidiaries are involved in various proceedings that are incidental to the normal course of their businesses. As of the date of this report, the Company does not expect that any of such proceedings will have a material adverse effect on the Company's financial position or results of operations.",
+   "text_sha256": "sha256:d543806cc5cd631c1c7eb08c98ec512da074abc5f6272cffcb49eff6878ab362",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1064,
+   "verdict": "DISCLOSURE",
+   "why": "accrual for self-insured workers compensation and general liability claims against the registrant",
+   "text": "The Company, through its insurance subsidiary, is self-insured for workers compensation and general liability claims up to certain maximum liability amounts. Although the amounts accrued are actuarially determined based on analysis of historical trends of losses, settlements, litigation costs and other factors, the amounts the Company will ultimately disburse could differ from such accrued amounts.",
+   "text_sha256": "sha256:795024f91393de4b57cde74a9efee944f58e819e734896cb26d69d5be0713d2e",
+   "order": 1,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1467,
+   "verdict": "DISCLOSURE",
+   "why": "states the favorable resolution of the registrant's state income tax litigation - a specific resolved legal matter, not litigation named as a category",
+   "text": "(a)2022 includes an income tax benefit from the favorable resolution of state income tax litigation.",
+   "text_sha256": "sha256:45703b95e6a7452fbc368c79ea1b99033d10033facbde461e1b11bc864db7234",
+   "reader_verdict": "NOT_DISCLOSURE",
+   "reader_why": "table footnote explaining an income tax benefit; a resolved tax dispute is a tax item, not a legal-proceedings disclosure",
+   "adjudication_rule": "SPECIFIC_LEGAL_MATTER_IS_DISCLOSURE",
+   "order": 2,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1813,
+   "verdict": "NOT_D02",
+   "why": "commitments note heading; names no legal proceedings or contingencies",
+   "text": "14. Commitments",
+   "text_sha256": "sha256:6ec2bb39d413c4895702021d968ec7392ae2a08ca495166ecb2709e30b32116e"
+  }
+ ]
+}

@@ -1,0 +1,251 @@
+# 交给 #28 的材料（COLLAB-28-47-v1）
+
+本目录只放索引，不复制原件、不另造运行环境。所引文件都是已有文件；固定提交写在各节开头，GitHub 上按该提交打开即可。规则见 Issue #47 / #28 正文的“跨 Issue 协作”节（版本以区块标题为准，2026-10-02 起为 COLLAB-28-47-v1.1），本方副本在 `AGENTS.md`。
+
+## 以后如何接入（2026-10-02 起，按 v1.1 第 4 条）
+
+- **共用实现由明确的一方维护。** C02 共用选择器由本方（#47）维护，开发路径是 `scripts/vnext/historical_board_composition_v3.py`。
+- **接收方固定自己实际消费的版本。** 接收方用它自己路线专用的版本化后继路径（或已有的等效版本机制）放入某个固定提交的字节，并核对实际导入的实现、配置（`catalog/r6/C02_board_composition_terms_v1.json`）、Spec 和受绑定的依赖，不能只复制一个文件就算接好。不再默认由接收方绑定提供方的开发源路径、再由提供方迁移。
+- **提供方给出三样东西，不另造交付包：** 固定提交；实际接口与依赖的变化（例如修复 13 起 `board_composition_facts` 必须收到目标年度第一天 `period_start`）；已有的差异量测（`../c02-selector-repairs/README.md` 各节及其 measured 文件，以及对最新年各值的影响）。
+- **已绑定的旧路径按历史身份保留，不为整理目录倒迁或重签。** `historical_board_composition.py`：#28 issue_28_v13/v14 的清单按字节记录本方 `546d10d1` 的字节；`historical_board_composition_v2.py`：#28 v13/v14 记录本方 `4d0b2b9d` 的字节（两者在 #28 `8dfe5147` 的清单里都在，`_v3` 不在）；`historical_board_composition_v3.py`：本方开发路径，绑定在 issue_47_v1。
+- 下文“选择器路径”两节记录的两次迁移（合并 `2cc97e3a`、`22146e52` 时）是当时的实际做法，保留作历史，不是以后的默认。
+
+## 第一轮（2026-10-01）
+
+### B02：两年用了不同概念的防错
+
+固定提交 `48b46a2d742eb3e3b8bd5a6404908745046b5d2f`。
+
+| 内容 | 位置 |
+|---|---|
+| 实现 | `scripts/vnext/historical_results.py` 第 46–121 行：常量 `PAIRED_MEASURE_REASON`、`_paired_concept_lists`、`_claim_view`、`paired_measure_problem`；历史路线的调用点在同文件 `paired_measure_problem(` 处（约第 336 行） |
+| 用例 | `tests/vnext/test_historical_paired_measure.py`（7 例，约 0.2 秒，fast 层；只读检出里已存的 Pfizer Company Facts） |
+| 注错 | `docs/evidence/issue47_history/b02-revenue-concept/injections.py` → `injections.json`：4 个（不问两个概念、任何报值都当桥、在上年申报里找桥、把所有概念组都当成对），全部由对应用例抓到 |
+| 量测与端到端 | 同目录 `README.md`、`measure.py` → `measured.json`、`targeted-runs.json` |
+
+**哪部分是通用判断。** `paired_measure_problem(route=, claims=, current_claims=, accessions=)` 只用四样东西：指标的目录分支（找出“当年”与“上年”两个分量读同一组已批概念的那一对）、冻结计算图实际用到的 claims、目标 accession 的全部 Company Facts claims、本期与上期两个 accession 号。它不读期间选择、不读文件、没有副作用。普通路线可以在 `_deterministic_metric_graph` 算出图之后、发布结果之前调用它：本期 accession 用选定的最新年报，上期用 `_prior_filing` 选出的那份。依赖只有 `decimal.Decimal`、目录结构（`branches[].components[].approved_concepts / accession_role`）和 claim 的 `locator / attributes / unit / value` 字段。不需要整体导入 `historical_results.py`，拷贝这四个名字或从该模块导入都可以。
+
+**哪部分依赖历史选期。** 调用点里的 `prepared["filing"]`、`filings["prior"]` 是钉定期间的选择。扣留用的 `withheld_metric_result(... reason_code=PAIRED_MEASURE_REASON)`，以及 detail 里的 `MEASURE_NOT_COMPARABLE` / `paired_measure_bridge`，是历史路线自己的记录方式。普通路线按自己的扣留机制接，不必照搬。
+
+**验收目标（建议在普通入口逐项核对）。**
+1. 拦住范围混用。两个 claim 落在不同概念上，且目标年报没有用本期概念、以上期 claim 的同一个数报出上年时，按名扣留。历史实例：Pfizer FY2023 用产品收入除以总收入，发布 −49.3%；FY2024 用总收入除以产品收入，发布 +25.0%。
+2. 有依据的标签变化不误拒。目标年报用本期概念报出的上年数等于上期 claim 的值时，保留结果并记下这座“桥”。历史实例：Pfizer FY2022，Revenues 与合同收入两个概念对 2021 年都是 812.88 亿美元，+23.4% 保留。
+3. 当期原本正确的结果不受损。#47 量过 Pfizer FY2025 两年都用 Revenues，不会触发。其余公司的最新年度需要 #28 在自己的普通入口逐个确认；#47 没有替 #28 跑普通路线。
+
+**边界。** 这是防错，不是收入可比性的证明。两个概念恰好同数、含义却不同时，会被当成同一个量。目标年报对上年的重述不参与判断：分支仍取上期申报的原数，与“当时报告”的口径一致。它不包含、也不批准“两年共有的第一个标签”政策，不切换到最新重述口径。
+
+**扩展：同一概念下目标年报重述了上一年（固定提交 `336ab3ae`，[shared-with-#28]）。** 上面"边界"一段描述的是 `48b46a2d` 版本——那时目标年报对上年的重述不参与判断。全帧报表阅读随后读出 Pfizer FY2021 的 B02 不一致：两年都用合同收入概念，FY2021 10-K 把 Meridian 列为终止经营，按同一概念重述 2020 年为 416.51 亿美元，分支取的却是 FY2020 10-K 首次报告的 419.08 亿，分子分母口径不一。`paired_measure_problem` 现在同一概念下也问一次：目标年报对上一年报了一个与上年取值不同的数时，按名扣留并标 `same_concept_recast`；目标年报报的上年数等于上年取值、或没报上年数时，不问。仍不按重述数重算（那等于把上年数的来源改成目标年报，属改变已批分支）。
+
+| 内容 | 位置 |
+|---|---|
+| 实现 | `scripts/vnext/historical_results.py` 的 `paired_measure_problem`（同一函数，签名不变） |
+| 用例 | `tests/vnext/test_historical_paired_measure.py`（9 例：Pfizer FY2021 的真实重述被扣留；FY2024 对 FY2023 的 Revenues 是另一个真实重述，也被扣留；上年取值等于目标年报的数、或目标年报没报上年时不问；概念不同的扣留不带重述标记） |
+| 注错与量测 | `docs/evidence/issue47_history/b02-same-concept-recast/`：4 个注错各由为它写的用例抓到；50 期间里有值的 B02 与 A07 共 46 个位置，只移动 Pfizer FY2021 |
+
+对普通路线的含义：#28 已接收的 `48b46a2d` 版本不会扣留这种重述。按本方对同一批申报的量测，有已发布 B02 的八家最新年度都不受这次扩展影响（目标年报的比较数等于上年取值；Paramount 与 JPMorgan 的最新年度没有已发布的 B02，没有量），但这一点要 #28 在自己的普通入口确认；接不接由 #28 决定。已在 [#28 评论 5945127100](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5945127100) 通知；#28 留下处置之前，本方记为未确认接收。
+
+### C02：材料索引与共用修复分工
+
+固定提交 `48b46a2d742eb3e3b8bd5a6404908745046b5d2f`；往年位置的缺陷登记在本索引所在的提交里。
+
+| 目录（都在 `docs/evidence/issue47_history/` 下） | 是什么 |
+|---|---|
+| `c02-board-read/` | 冻结选择器 `text_business_candidates.board_composition_candidates` 的反例与影响范围。该选择器在各世代冻结，普通路线与历史路线共用。读的十个值是**九家公司的最新期间（不含 JPMorgan）加 Paramount 前身 FY2024**，不是十家公司各自的最新期。246 条摘录里有 94 条在任何口径下都不属于董事会构成，其中 87 条是“块里任意位置有委员会名、任意位置有结构词”这条标签放进来的。见 `README.md`、`excerpt-judgements.json`、`deterministic-narrowing.json`（关键词收窄会丢掉对的、留下错的，不可行）、`core-fact-reach.json`（漏选方向的核心事实触达） |
+| `c02-composition-facts/` | 后继选择器 `scripts/vnext/historical_board_composition.py`（#47 规则文件；合并 `2cc97e3a` 起为 `historical_board_composition_v2.py`，Spec 为 `C02_board_disclosures_historical_v2.md`，见下文“选择器路径”）。它只替换 C02 治理文档的 proposal，冻结的来源准备、候选构造、Evidence 与记录形状原样复用；条目上限按修订机制放到 192（`catalog/r6/C02_board_disclosures_v2.md`）。在同十份最新材料上双向核对：765 选、0 误选、0 漏选，其中 52 块依赖两条执行者裁定（`adjudication.json`）；30 个注错全部抓到（`fault-injections.json`）。局限：规则就是在这十份申报上写、也在这十份上核对的，属开发/回归材料，不是留出验证；读者是同族子代理，不是人工验收 |
+| `c02-older-years/` | 27 个往年位置（41 期批次 21 个，闭包 `ed360ebc`；第三轮 6 个，闭包 `8530710b`）的双向判读，全部读完（`judgements/`）。与当前代码从已存申报算出的选择对比（`comparison.json`）：26 个不一致，共 49 个误选块、256 个漏选块；Pfizer FY2024 一致。读者之间在若干类别上判断相反，需要按类别统一裁定，且裁定同样适用于最新十个位置的判读。读法、池规则、读者提示和答案交叉核对见 `README.md` |
+
+**当前状态。** 最新十个位置（同上口径）由后继选择器产出的新结果已读并接受；冻结选择器的十条缺陷只对这十个新结果释放。27 个往年值一个都没有被接受；不一致的 26 个已按坐标登记为缺陷撤回（`../known_result_defects.json`，`C02_*_OLDER_YEAR_READING_DISAGREES`），一致的 Pfizer FY2024 也还没有对它的结果做接受核对。这 27 份判读已经或将要用于调整规则，所以它们对之后的修复也只算开发/回归材料。“27 份读完”不等于结果被接受。
+
+**对方接收状态（2026-10-01 读到 `3473308b` 为止）。** B02：#28 在 `32faa26d` 把三个函数接入普通路线（逐 AST 与本方 `48b46a2d` 相同，原因码改为普通路线专用），`f2018837` 的限定独立审阅为 PASS_WITH_BOUNDS——**已确认接收**。C02：#28 在 `3473308b` 读了 `c02-board-read/` 并据其中两处判定撤回自己最新年 Marriott、Pfizer 的三个结果身份，后继选择器与上表修复的普通路线接入**尚未开始**，按其记录是下一步。
+
+**对方接收状态（读到 `2cc97e3a` 为止）。** C02：#28 在 `e17cf333` 按本方 `877793e9` 把共用选择器接入普通路线的显式后继（选择器字节等于本方 `546d10d1`，即下表修复 1–6；它自己的 Spec v2 上限 64，Marriott、Pfizer 超过 64 条时按名失败、不截断），旧的冻结默认路线不变——修复 1–6 **已接收**。`2cc97e3a` 按本方统一裁定撤回它 Enphase 2025 的两个私有结果，点名六块（57、210、212、232、243、2338）；这六块正是下表修复 8、9 移走的块。修复 7–12 **尚未接收**；它对最新年各值的影响见下文“选择器路径”。修复 13 在其后提交，最新年只移动 Paramount 2025（新增 8 块）。
+
+**对方接收状态（读到 `22146e52` 为止）。** C02：#28 在 `5ff55541` 把本方 `4d0b2b9d` 的选择器（修复 1–18，Git blob `cf7c0ac6`）原样放到**同一路径** `scripts/vnext/historical_board_composition_v2.py` 并绑定进 issue_28_v13/v14，在自己的记录里写明了这一点；`22146e52` 是其限定独立审阅。按本方约定的做法（对方选择直接绑定时，#47 另起后继文件），本方合并该基线时把 `_v2` 留给对方绑定的字节，修复 19 起的本方选择器移到 `scripts/vnext/historical_board_composition_v3.py`，见下文“选择器路径（第二次）”。修复 1–18 **已接收**；修复 19–22 尚未接收。
+
+**分工。** 共用选择器修复默认由 #47 继续实现，#28 负责普通路线接入和独立检查。修复按“一个明确的误选或漏选问题”为单位提交，提交标 `[shared-with-#28]`，并在本目录登记问题、提交、用例与历史侧验证结果。#28 现在的普通路线用的仍是冻结选择器，所以它最新年度的 C02 结果与 `c02-board-read/` 读的十个值同属一类问题；这部分的核对与接入由 #28 在自己的记录里处置，#47 不代为宣布普通路线已通过。
+
+### C02 共用修复登记
+
+每一项是一个边界清楚的误选或漏选问题，提交标 `[shared-with-#28]`。可复用位置都是选择器在该提交的版本：第 1–12 项提交时它在 `scripts/vnext/historical_board_composition.py`，合并 `2cc97e3a` 起在 `scripts/vnext/historical_board_composition_v2.py`，合并 `22146e52` 起在 `scripts/vnext/historical_board_composition_v3.py`（见下文“选择器路径”与“选择器路径（第二次）”）；问题、成因、用例、注错与历史侧量测见 `../c02-selector-repairs/README.md` 对应一节。量测把修复前后的选择器在全部 37 份判读（27 个往年、10 个最新）上各跑一次，列出移动的每一块。
+
+| # | 问题 | 提交 | 用例 | 历史侧量测 |
+|---|---|---|---|---|
+| 1 | 匹配 "as <委员会名> committee chair" 的模式带 `re.I`，`[A-Z]` 也匹配小写，把遴选标准 "Previous service as a Board committee chair" 读成有人任委员会主席 | `5f803852` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_criterion_for_choosing_a_chair_seats_no_one`；注错 `A_LOWER_CASE_WORD_NAMES_A_COMMITTEE` | 只移动 Macy's 四个往年位置的这四块（都是判读判为非事实的块）；误选 49→45，漏选 256 不变，最新十个位置不变（`../c02-selector-repairs/measured-1-capitalised-committee-name.json`） |
+| 2 | 委员会名单在每个名字前单独印项目符号，"◾" 与 "·" 不在选择器的符号集里，名单在第一个符号处结束，一个名字都没读到 | `9b7465ab` | `test_historical_board_composition.ACommitteePageIsReadAsAStructure.test_a_roster_marked_with_each_glyph_filings_print`；注错 `THE_SQUARE_BULLET_IS_NOT_A_BULLET`、`THE_MIDDLE_DOT_IS_NOT_A_BULLET` | 只在 Ford、Macy's 各一个往年位置新增 43 + 24 块，全部是判读判为事实的块；漏选 256→175，误选不变，最新十个位置不变（`../c02-selector-repairs/measured-2-bullet-glyphs.json`） |
+| 3 | 委员会成员行写成句子（末尾句号、最后一个 "and" 前有逗号），`name_list` 整行失败，成员行与委员会标题都没取 | `a88147a4` | `test_historical_board_composition.ACommitteePageIsReadAsAStructure.test_a_members_line_written_as_a_sentence`；注错 `A_SERIAL_COMMA_ENDS_A_LIST`、`A_FINAL_PERIOD_ENDS_A_LIST` | 只在 Marriott 两个往年位置新增 6 + 8 块，全部是判读判为事实的块；漏选 175→160，误选不变，最新十个位置不变（`../c02-selector-repairs/measured-3-sentence-member-lists.json`） |
+| 4 | 卡片在 "Director since …" 之后一行一个委员会、没有 "Committees:" 标签，选择器只认带标签的卡片，漏掉主席标注 | `a6975a47` | `test_historical_board_composition.ADirectorCardIsReadOnlyWhenItNamesItsDirector.test_unlabelled_committees_on_the_lines_after_the_tenure`；注错 `AN_EMPHASISED_HEADING_IS_A_CARD_ITEM`、`UNLABELLED_ITEMS_NEED_NO_DIRECTOR`、`UNLABELLED_CARD_ITEMS_UNREAD` | Enphase 三个往年位置新增 15 + 15 + 19 块，全部是判读判为事实的块，漏选 160→156，误选不变。**最新年份 Enphase 2025 也新增 19 块**（判读同样判为事实），已接受的值只对应旧结果，要重新核对接受；普通路线接入后最新年度 Enphase 的值同样会变（`../c02-selector-repairs/measured-4-unlabelled-card-items.json`） |
+| 5 | 名字中间印着引号昵称（"Steven T. “Terry” Clontz"），`person_name` 拒绝含引号的块，卡片读不出、名单读到他就断 | `5c595159` | `test_historical_board_composition.ANameIsTheWholeBlock.test_a_quoted_nickname_between_the_names`；注错 `NICKNAMES_STAY_IN_THE_NAME`、`ANY_QUOTED_WORD_IS_A_NICKNAME` | Lumen 三个往年位置各 5 块、Marriott 一个往年位置 2 块，全部新增、全部是判读判为事实的块；漏选 156→146，误选不变，最新十个位置不变（`../c02-selector-repairs/measured-5-quoted-nicknames.json`） |
+| 6 | 管理层委员会（成员是高管、员工，或由某某 Officer 主持）被构成句式当成董事会委员会 | `546d10d1` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_committee_of_management_is_not_the_board_s`；注错 `MANAGEMENT_SEATS_A_BOARD_COMMITTEE`、`ANY_WORDS_OPEN_THE_MEMBER_LIST` | 只移走 Lumen、Marriott、Pfizer 四个往年位置的 5 个误选块（都是判读判为非事实的块）；误选 45→40，漏选不变，最新十个位置不变（`../c02-selector-repairs/measured-6-management-committees.json`） |
+| 7 | 董事长与 CEO 分设或合一的陈述（不点名）一句都没取；统一裁定判为事实 | `852a6e90` | `test_historical_board_composition.ALeadershipOrMembershipFactNamesThisBoardAndThePerson.test_whether_the_chair_and_the_chief_executive_are_one_person`、`test_a_choice_a_policy_or_a_proposal_states_no_structure`；注错 `THE_CHAIR_CEO_STRUCTURE_STATES_NOTHING`、`NAMING_BOTH_CHOICES_STATES_A_STRUCTURE`、`A_POLICY_OR_A_PROPOSAL_STATES_A_STRUCTURE` | 新增块全是判读或统一裁定判为事实的块，未移走任何块；漏选 144→118，误选 46 不变，不一致位置 28→26；最新年 Lumen、Marriott 恢复一致；最新年 Ford、Macy's 的值随之变化，需重读后才接受（`../c02-selector-repairs/measured-7-chair-ceo-structure.json`） |
+| 8 | 分级董事会每年只改选一级，"To elect our three nominees" 这类一级候选人数被当成董事会规模；"has nominated three directors" 也被当成 "has three directors" | `bed088ee` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_on_a_classified_board_the_slate_is_not_the_board_s_size`、`test_the_filing_says_whether_its_board_is_classified`；注错 `A_CLASSIFIED_BOARD_STILL_COUNTS_ITS_SLATE`、`NO_FILING_IS_CLASSIFIED`、`HAS_NOMINATED_COUNTS_AS_THE_BOARD_S_SIZE` | 只移走 Enphase 五个位置的 12 块，全部是读者或统一裁定判为非事实的块；误选 46→34。最新年 Enphase 2025 移走 57、210、2338（`../c02-selector-repairs/measured-8-classified-slate.json`） |
+| 9 | 董事分组标题（"Continuing Class III Directors (Until 2027 …)"）连同其下的名字一起被取 | `bd181df0` | `test_historical_board_composition.ACardOrTableStatesWhoAndWhat.test_a_table_of_directors_by_class_and_not_a_card_under_a_heading`；注错 `THE_GROUP_HEADING_IS_TAKEN_AGAIN`、`ONE_NAME_MAKES_A_TABLE` | 只移走 13 个分组标题（Enphase 四年各 3 个、Lumen 2024 一个），名字一个不少；误选 34→21，不一致位置 26→24。Enphase 2025 移走 212、232、243，修复 8、9 之后该位置的选择与读者判读、统一裁定一致（`../c02-selector-repairs/measured-9-group-headings.json`） |
+| 10 | 全员每年改选的董事会写 "Each nominee is currently a member of the Board"，没取 | `16c4821e` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_slate_of_sitting_directors_says_who_the_members_are`；注错 `A_SITTING_SLATE_STATES_NOTHING`、`ANOTHER_BOARD_SEATS_THE_SLATE` | 只在 Macy's 五个位置各新增这一块；漏选 118→113，最新年 Macy's 恢复一致（`../c02-selector-repairs/measured-10-sitting-slate.json`） |
+| 11 | 由具名董事组成的董事会工作组（Macy's "Digital Innovation Task Force"）没取，选择器只认 committee | `35b93187` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_task_force_of_named_directors_is_a_body_of_the_board`；注错 `A_TASK_FORCE_STATES_NOTHING`、`A_TASK_FORCE_TITLE_IS_NOT_TAKEN`、`ANY_TASK_FORCE_TITLE_HEADS_THE_MEMBERS` | 只在 Macy's 2022、2023 各新增标题与成员句两块；漏选 113→109，最新十个位置不变（`../c02-selector-repairs/measured-11-task-force.json`） |
+| 12 | 出席情况句里的上年董事人数（"of the twelve then current members of the Board"）随出席话题被整句排除 | `60aa9f7b` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_the_board_s_size_on_a_past_date_wherever_it_is_printed`；注错 `A_PAST_COUNT_IS_SET_ASIDE_WITH_ATTENDANCE` | 只在 Ford 2021、2022 各新增这一块；漏选 109→107，最新十个位置不变（`../c02-selector-repairs/measured-12-past-board-size.json`） |
+| 13 | 董事加入日期不看目标年度：年度之前加入的（"who joined our Board in February 2020"）被当成成员变动取，年度之内加入的（"has served as … a director of the Company since February 2021"）没取 | `2926b7d0` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard` 的 `test_a_join_dated_before_the_year_is_tenure`、`test_a_join_dated_in_the_year_is_a_change`、`test_a_join_is_dated_as_precisely_as_it_is_printed`、`test_the_target_year_is_a_date_and_the_proposal_names_it`；注错 `A_DATED_JOIN_COUNTS_IN_ANY_YEAR`、`AN_IN_YEAR_JOIN_STATES_NOTHING`、`A_JOIN_IN_A_PAY_SENTENCE_IS_SET_ASIDE`、`A_PRINTED_DAY_IS_IGNORED`、`A_MONTH_ALONE_IS_PLACED_AT_ITS_START`、`ANY_TARGET_YEAR_IS_ACCEPTED` | 移走 Enphase 2021、2022、Lumen 2022 三块，新增 Marriott 2021 两块；误选 21→18，漏选 107→105。最新年 Paramount 2025 新增 8 块 2025 年加入的董事履历（读者判为含事实），该位置仍一致，但值会变。**接口变化**：`board_composition_facts` 必须收到 `period_start`（目标年度第一天），接这一版时请传 `target["period_start"]`（`../c02-selector-repairs/measured-13-joins-by-period.json`） |
+| 14 | 写成名词的加入日期没被认出（"prior to Mr. Munoz's appointment to the Board in January 2022"），Salesforce FY2026 第 4300 块被当成员变动取（#28 `9f8b855f` 的内容核对发现） | `84627bed` | `test_historical_board_composition.AProseFactIsAStatementAboutThisBoard.test_a_join_written_as_a_noun_is_dated_too`；注错 `A_NOUN_FORM_JOIN_IS_NOT_DATED` | 统一裁定的 JOIN 句式同时补名词写法，多一条裁定（4300 非事实）；只移动 Salesforce 2026：去掉 4300，新增年度内名词加入的 919；误选 19→18（`../c02-selector-repairs/measured-14-noun-form-joins.json`） |
+| 15 | 带日期的职务接任没被取（Salesforce FY2026 第 933 块，Roos 2025 年 3 月 21 日接任治理委员会主席），量测又把读者"已被覆盖"的说法照单全收（#28 同一核对发现） | `43f07e94` | `test_taking_over_a_chair_or_the_lead_role`；`test_historical_board_composition_filings.ADatedRoleChangeIsCoveredOnlyByTheSameChange`；注错 `TAKING_OVER_A_COMMITTEE_CHAIR_IS_NOT_READ`、`TAKING_OVER_THE_LEAD_ROLE_IS_NOT_READ`、`A_READER_CITATION_STANDS_OVER_THE_ADJUDICATION`、`A_YEAR_COVERS_A_DAY`、`ANOTHER_PERSONS_CHANGE_COVERS`、`A_CHANGE_BEFORE_THE_YEAR_IS_DECIDED` | 统一裁定新增 `DATED_ROLE_CHANGE`，37 份判读上多两条（Salesforce 933 无覆盖、Macy's FY2024 2358 由已选的 1044 覆盖）；只移动 Salesforce 2026（新增 933），漏选 106→105；该位置的选择现与判读一致（`../c02-selector-repairs/measured-15-dated-role-changes.json`） |
+| 16 | 年度内加入的董事履历（"has served as a member of our Board since August 2025"）没取，量测又把读者引用的名单（第 84 块）当成覆盖（#28 `3a661897` 对 Paramount FY2025 的内容核对发现） | `006795dd` | `test_a_long_title_before_the_join`；`test_historical_board_composition_filings.AJoinInTheYearIsCoveredOnlyByTheSamePersonsJoin`；注错 `THE_JOIN_REACH_IS_SIXTY`、`A_ROSTER_COVERS_A_JOIN`、`A_JOINER_IS_ANY_NAME_BEFORE_THE_PRONOUN`、`ANOTHER_PERSONS_JOIN_COVERS` | 统一裁定的 `JOIN_IN_THE_YEAR` 改为只由同一人、日期至少一样精确的加入覆盖；选择器 "has served as … a member of our Board since" 中间长度 60→80 字符。只移动 Paramount 2025（新增第 100 块），漏选 106→105；该位置的选择现与判读、裁定一致。第 168 块（提名理由）是否算资格认定，两边口径不同，记为待对齐（`../c02-selector-repairs/measured-16-join-coverage.json`） |
+| 17 | 具名董事任期在年会结束的句子（"The terms of Mr. Brown, Mr. Clontz and Ms. Siegel will end … at the 2025 annual meeting"）没取；脚注编号贴着称谓（"6Ms. Boulet’s term …"）时看不到人 | `ace44471` | `test_a_named_director_s_term_ending_at_a_meeting`、`test_a_footnote_number_printed_against_the_honorific`；`test_historical_board_composition_filings.ATermEndingIsCoveredOnlyByTheSameDeparture`；注错 `A_TERM_ENDING_IS_NOT_READ`、`A_TERM_OF_ANYTHING_IS_A_PERSONS`、`A_GLUED_MARK_HIDES_THE_PERSON`、`AN_AMOUNT_IS_A_MARK` 及五个裁定注错 | 统一裁定新增 `TERM_END_AT_A_MEETING`（只为判读池外的三块写裁定）；只移动 Lumen 五年，漏选 105→91；Lumen 2024 恢复一致；最新年 Lumen 2025 新增 1370、1373（原值已覆盖，值会变）（`../c02-selector-repairs/measured-17-term-endings.json`） |
+| 18 | 带交叉引用链接的陈述（"… Our committee membership is as noted on page 9"）被当成导航跳过；Ford 2024 第 1590 块是董事会对全部独立董事的认定 | `4d0b2b9d` | `test_a_statement_carrying_a_cross_reference_is_read`；注错 `A_LINKED_STATEMENT_IS_NAVIGATION` | 37 份文档里带链接又有标签的只有四块，读者都判为事实：Ford 2024 1590、Marriott 2023 6851、Pfizer 2022 3068、Pfizer 2025 4015；漏选 91→73。最新年 Pfizer 2025 新增 4015（原值已覆盖，值会变）（`../c02-selector-repairs/measured-18-linked-statements.json`） |
+| 19 | 委员会标签找姓名的范围被零宽空白块和单独的项目符号用掉，Farley 卡片的 "Committees: N/A" 找不到姓名 | `f01950d7` | `test_spacer_blocks_do_not_carry_a_committee_label_out_of_reach`、`test_a_designation_s_reach_still_counts_every_block`；注错 `SPACERS_COUNT_FOR_A_COMMITTEE_LABEL`、`SPACERS_ARE_FREE_FOR_A_DESIGNATION` | 只用于委员会标签：套到所有读法会去掉 Macy's 三处 "Independent"、取进别家公司名；只移动 Ford 2021/2023/2024 六块，漏选 73→69；最新年不变（`../c02-selector-repairs/measured-19-card-reach.json`） |
+| 20 | 章程句里一并点名的三个以上委员会（"the charter of each of the Audit Committee, …, and Sustainability, Innovation and Policy Committee"）说明设有哪些委员会，选择器没有对应句式 | `d1cabb48` | `test_the_committees_named_together_on_their_charters`；注错 `A_CHARTER_SET_IS_NOT_READ`、`COMMITTEE_WORDS_COUNT_AS_COMMITTEES`、`A_RENAME_COUNTS_AS_A_SET` | 按不同的委员会名计数，不按 "committee" 一词；改名句不算一组。只新增七块（Ford 五年各一块、Salesforce 两年各一块），都由读者或统一裁定判为事实；漏选 69→55，误选不变。最新年 Ford 2025 新增 438（原值已覆盖，值会变），Salesforce 2026 新增 602（该坐标已因第 14、15 项撤回）（`../c02-selector-repairs/measured-20-committee-set.json`） |
+| 21 | 委员会改名（"The Compensation Committee changed its name to …"、"update the name of the CTC Committee from … to …"）没取，原句式只认 "was renamed … <年份>" | `56a43fe2` | `test_a_committee_that_changed_its_name`；注错 `A_RENAME_IS_NOT_READ`、`A_RENAMED_PLAN_IS_A_COMMITTEE` | 被改名的必须是委员会，计划、政策改名不取。只移动 Ford 2021（新增 626、4055、3096）；漏选 55→52，误选不变，最新年不变（`../c02-selector-repairs/measured-21-committee-rename.json`） |
+| 22 | 政策否决词 "family member" 把点名 Ford 家族董事的句子整句搁置（Ford 2021 第 760 块，含 2021 年会上的加入） | `1f3f446c` | `test_a_named_family_member_is_not_an_independence_standard`；注错 `A_NAMED_FAMILY_MEMBER_IS_A_STANDARD`、`A_FAMILY_MEMBER_IS_NEVER_A_STANDARD` | 只在句子不点名任何人时才算独立性标准；不点名人的九块标准条款仍被否决。只新增 Ford 2021 第 760 块；漏选 52→51，不一致位置 22→21，最新年不变。Ford 2022–2024 的同一句（406、749、942）仍开放：要先为主席事实写覆盖核对（`../c02-selector-repairs/measured-22-named-family-member.json`） |
+| 23 | 设立句里委员会名字夹在冠词和 "committee" 之间（"the Audit Committee established a cybersecurity subcommittee"、"the Board formed a special CEO Succession Committee"），原句式只允许 new、special 等修饰词，没取 | `9de70354` | `test_a_committee_the_board_set_up_under_its_own_name`；注错 `A_NAMED_SETUP_IS_NOT_READ`、`ANY_SUBJECT_SETS_UP_A_NAMED_COMMITTEE`、`A_CLAUSE_IS_A_NAME` | 设立者必须是董事会或某个委员会（"We have also established a Lumen Sustainability Management committee" 不算），名字只能是词。只新增 Enphase 2023 第 447 块、Lumen 2022 第 1281、1879 块；漏选 51→47，误选不变，最新年不变（`../c02-selector-repairs/measured-23-named-committee-setup.json`） |
+| 24 | 物色董事时才组成的遴选委员会（"The NCG Committee forms a search committee that is comprised of the Chairman of the Board, …, and the CEO"）被当成委员会构成取 | `002aa55c` | `test_a_committee_formed_for_each_search_is_a_step`；注错 `A_SEARCH_STEP_IS_COMPOSITION`、`A_PAST_FORMATION_IS_A_STEP` | 现在时或 will/may 的"每次组成"不算构成，过去时的设立不受影响。只移走 Lumen 2022 第 842 块、2023 第 1085 块（读者都判为非事实）；误选 18→16，最新年不变（`../c02-selector-repairs/measured-24-search-committee-step.json`） |
+| 25 | 用 "became" 接任的职务（"Mr. Glenn became Lumen’s independent, non-executive Chairman"）没取，原职务动词都要带 "as" | `2870fd74` | `test_a_role_taken_up_with_became`；注错 `BECAME_TAKES_NO_ROLE`、`BECAME_ANY_OWNERS_CHAIR`、`BECAME_A_COMMITTEE_CHAIR_IS_NOT_READ` | 只加语料里出现的两种写法：所有格本公司主席、委员会主席；不按日期筛（读者把"谁担任某职务"的带日期陈述都判为事实）。只新增 Lumen 2021 第 897 块；漏选 47→42，最新年不变（`../c02-selector-repairs/measured-25-became.json`） |
+| 26 | 带日期的离任（"Mr. Buchanan ceased serving on the Board on November 25, 2024 and forfeited the RSUs …"）没取：句式不认 "ceased serving on the Board"，且薪酬脚注整句被薪酬话题排除 | `926fba4e` | `test_a_departure_dated_in_the_year_is_a_change_wherever_printed`；注错 `A_DATED_DEPARTURE_IS_NOT_READ`、`A_DEPARTURE_BEFORE_THE_YEAR_COUNTS`、`AN_OFFICER_S_DEPARTURE_IS_THE_BOARD_S` | 与年度内加入同一规则：日期在年度内或之后，就在薪酬话题排除之前读；早于年度不算；必须是 "on the Board"。只新增 Macy's 2024 第 1981、1982 块和 2025 第 1813、1814、1816 块；漏选 42→39，最新年不变（`../c02-selector-repairs/measured-26-dated-departures.json`） |
+| 27 | 与职务一起被任命为董事（"the Board elected Anthony Capuano to serve as CEO of the Company and as a member of the Board"）没取：任命句式要 "to the Board"，带日期的加入要日期在后 | `4e1423ac` | `test_appointed_with_an_office_and_as_a_member_of_the_board`；注错 `AN_APPOINTMENT_WITH_AN_OFFICE_IS_NOT_READ`、`AN_APPOINTMENT_BEFORE_THE_YEAR_COUNTS`、`ANY_DATED_APPOINTMENT_IS_TENURE` | 读句子里所有日期，只在年度之前的算任期（与加入同一规则）。只新增 Marriott 2021 第 1144 块、Macy's 2023 第 40 块、2024 第 2737 块；漏选 39→36，最新年不变（`../c02-selector-repairs/measured-27-appointed-a-member.json`） |
+| 28 | 在另一家公司的年会上不再连任（"will not be standing for re-election at the Xerox Holdings Corporation’s Annual Meeting"）被当成本董事会的离任 | `a683c871` | `test_standing_down_at_another_company_s_meeting`；注错 `ANOTHER_COMPANY_S_MEETING_IS_THIS_BOARD_S`、`THE_REGISTRANT_S_OWN_MEETING_IS_ANOTHER_S`、`THE_ARTICLE_NAMES_THE_COMPANY` | 所有格年会的名字不是本公司时算别的机构；句首冠词不算名字。只移走 Pfizer 2022 第 446、547 块；误选 16→14，最新年不变（`../c02-selector-repairs/measured-28-another-company-meeting.json`） |
+| 29 | 年度内委员会构成没有变化（"There were no changes to Committee compositions in 2022"）没取，选择器没有对应句式 | `38dedeb4` | `test_no_change_to_the_committees_in_the_year`；注错 `NO_CHANGE_TO_THE_COMMITTEES_IS_NOT_READ`、`AN_EARLIER_YEAR_S_STABILITY_COUNTS` | 只收语料里的写法，年份不早于目标年度才算。只新增 Pfizer 2022 第 799 块、2023 第 884 块（读者都判为含事实）；漏选 36→34，误选 14 不变，最新年不变（`../c02-selector-repairs/measured-29-no-committee-change.json`） |
+| 30 | 名单里的 "J.W. Marriott, Jr. (Chair), Anthony G. Capuano, …" 整行读不出：两个连写首字母不算名字词，逗号后的 "Jr." 被切成单独一项 | `23872d56` | `test_two_initials_printed_together_before_the_surname`、`test_a_suffix_after_a_comma_ends_the_name_before_it`；注错 `JOINED_INITIALS_ARE_NOT_A_NAME`、`JOINED_INITIALS_ANYWHERE`、`A_SUFFIX_IS_A_NAME_OF_ITS_OWN`、`A_SUFFIX_JOINS_A_SURNAME_ALONE` | 连写首字母只在恰好两个、紧挨姓之前时算；"Jr." 只并入至少两个词的前一项（"Phillips, Jr., Charles E." 不变）。只新增 Marriott 2021 第 990、991 块；漏选 34→32，误选 14 不变，最新年不变（`../c02-selector-repairs/measured-30-joined-initials-and-suffix.json`） |
+| 31 | 委员会页上单独一块 "Chair:"、主席名在下一块（Pfizer 2022 五个委员会；"Helen H." / "Hobbs, M.D." 还拆成两块）没取，选择器只认同一块里的 "Chair: 名字" | `2e03ab0f` | `test_a_chair_label_on_a_line_of_its_own`；注错 `A_CHAIR_LABEL_ALONE_IS_NOT_READ`、`A_CHAIR_LABEL_WITH_NO_NAME_COUNTS`、`THE_LABELLED_CHAIR_IS_A_MEMBER` | 只收 "Chair:" 这一写法，其后紧跟名字才取，名字标为主席名。只在 Pfizer 2022 新增 11 块（读者都判为事实）；漏选 32→29，误选 14 不变，最新年不变（`../c02-selector-repairs/measured-31-chair-label-line.json`） |
+| 32 | "Our Board has a Lead Independent Director, Mr. Gomo, …"（Enphase 2021 第 216 块）没取：句式只认 "our/the + 职务 + , + 人名" | `bf9bbbcb` | `test_a_board_that_has_a_lead_director_names_the_holder`；注错 `A_LEAD_DIRECTOR_INTRODUCED_WITH_A_IS_NOT_READ`、`A_LOWER_CASE_WORD_AFTER_THE_COMMA_IS_A_HOLDER` | 冠词加 "a"，逗号后仍须是大写人名（Macy's、Pfizer 的 "a lead independent director, and/establish …" 不受影响）。只新增这一块；漏选 28→27，误选 14 不变，最新年不变（`../c02-selector-repairs/measured-32-has-a-lead-director.json`） |
+| 33 | 董事表名字后的脚注标记（"Steven J. Gomo(2)"）和表下的职务注释（"(2)Chair of the Audit Committee"）没有读法（Enphase 2021） | `9218b883` | `test_a_table_s_names_and_the_notes_that_give_their_committee_roles`；注错 `A_ROLE_NOTE_IS_NOT_READ`、`A_ROLE_NOTE_WITHOUT_NAMES_IS_TAKEN`、`A_NAME_CITING_ANOTHER_MARK_IS_THE_NOTE_S` | 与已有的脚注变动读法同样处理：注释只和标记对应的名字一起取。只在 Enphase 2021 新增 11 块（都判为事实）；漏选 27→24，误选 14 不变，最新年不变（`../c02-selector-repairs/measured-33-footnoted-committee-roles.json`） |
+| 34 | 董事薪酬表的引导句（"each member of the Board who is not our employee was eligible for the following cash compensation"）被当成委员会成员资格认定：政策名里的 "Non-Employee Director" 碰上资格词 | `1b9e2dcc` | `test_who_is_eligible_for_pay_is_not_a_qualification`；注错 `PAY_ELIGIBILITY_IS_A_QUALIFICATION` | "eligible for … compensation" 归入已有的薪酬话题排除。只移走 Enphase 2021 第 943 块、2022 第 531 块、2023 第 515 块（读者都判为非事实）；误选 14→11，漏选不变，最新年不变（`../c02-selector-repairs/measured-34-pay-eligibility.json`） |
+| 35 | 履历里 "… the Consumer Goods Forum, where he served on the board of directors, co-chaired the governance committee" 被当成本董事会委员会构成 | `4171fa69` | `test_a_board_a_where_clause_is_about_is_that_body_s`；注错 `A_WHERE_CLAUSE_BODY_IS_THIS_BOARD`、`THE_REGISTRANT_BEFORE_WHERE_IS_ANOTHER_BODY` | "where he/she/they" 从句前的大写名字不是本公司时算别的机构。只移走 Marriott 2022 第 959 块、2023 第 1583 块（读者都判为非事实）；误选 11→9，漏选不变，最新年不变（`../c02-selector-repairs/measured-35-where-clause-body.json`） |
+| 36 | 别家公司名后括号里的委员会职务（"Cineverse Corporation (Chairman of the Audit Committee, and serves on the Compensation and Nominating Committees)"）被当成本董事会委员会构成 | `309a6723` | `test_a_company_named_with_the_roles_held_there`；注错 `A_COMPANY_S_ROLES_ARE_THIS_BOARD_S`、`THE_REGISTRANT_WITH_ROLES_IS_ANOTHER_BODY` | 整句是"大写名字 + 括号里写着委员会"、名字不是本公司时，括号里的职务算那家机构的。只移走 Lumen 2023 第 790 块（读者判为非事实）；误选 9→8，漏选不变，最新年不变（`../c02-selector-repairs/measured-36-company-roles-in-parentheses.json`） |
+| 37 | 出席情况里写出的董事人数（"All 14 directors then serving attended …"，不分级董事会上的 "All 12 directors nominated for election in 2024 attended …"）因出席话题整句被排除 | `8338b62e` | `test_the_board_s_size_where_attendance_at_its_meeting_is_reported`；注错 `A_THEN_SERVING_COUNT_IS_SET_ASIDE`、`A_NOMINATED_COUNT_IS_SET_ASIDE`、`A_CLASS_S_NOMINEES_ARE_THE_BOARD`、`ANY_COUNT_AFTER_ALL_IS_A_SIZE` | 与第 12 处一样在出席话题排除之前读；候选人人数只在董事会不分级时算规模。只在 Marriott 2022–2025 各新增一块（都判为含事实）；漏选 24→23，误选 7 不变。最新年 Marriott 2025 多取第 1199 块，值会变、不缺事实，不撤回（`../c02-selector-repairs/measured-37-board-size-at-attendance.json`） |
+| 38 | "having a Ford family member, William Clay Ford, Jr., as our Executive Chair …" 写出了董事会主席是谁，领导结构句式没有担任类动词就读不到 | `db2a3857` | `test_having_a_named_director_as_our_chair`；注错 `HAVING_A_CHAIR_IS_NOT_READ`、`A_HAVING_HOLDER_NEED_NOT_BE_NAMED`、`A_HAVING_COMMITTEE_CHAIR_IS_THE_BOARD_S` | "having" 之后 "as our <限定词> Chair"、句中写出人名时算领导结构；委员会主席不算。只在 Ford 2022–2025 各新增一块（都判为含事实）；漏选 23→20，误选 7 不变。最新年 Ford 2025 多取第 411 块，值会变、不缺事实，不撤回（`../c02-selector-repairs/measured-38-having-as-our-chair.json`） |
+| 39 | Lumen 旧递延薪酬计划段落里 "Common Shares" 被认成人名，"Qwest directors who joined our Board following the merger" 因此被当成本董事会成员变动；段尾真正写出的离任（"… following which he ceased to serve on our Board"）又读不到 | `e63ca401` | `test_a_departure_at_a_dated_meeting_where_deferred_pay_is_explained`；注错 `COMMON_SHARES_IS_A_NAME`、`A_DEPARTURE_AT_A_MEETING_IS_NOT_READ`、`A_MEETING_DEPARTURE_IS_ALWAYS_THIS_YEAR` | "shares" 进人名停用词；这段的两种离任写法按带日期离任的规则读（排除之前读，会议在目标年度或之后才算）。只移走 Lumen 2021、2022 两块（都判为非事实），2023、2024 两块仍被取、标注改由离任句给出；误选 7→5，漏选不变，最新年不变（`../c02-selector-repairs/measured-39-legacy-plan-paragraph.json`） |
+| 40 | Macy's 委员会报告的签名写在 "Respectfully submitted," 下面，委员会名只写在上一句 "The foregoing report was submitted by the Audit Committee …" 里，签名一块都没取；Macy's 2022 因此漏了 Bryant、Blake 的主席签名，以及以它们为覆盖的卡片字段 | `30e39a26` | `test_a_report_signed_under_a_sign_off_below_the_sentence_naming_its_committee`；注错 `THE_REPORT_SIGNATURES_ARE_NOT_READ`、`A_SIGN_OFF_NEED_NOT_FOLLOW_A_NAMED_COMMITTEE`、`THE_COMMITTEE_NAME_IS_NOT_CHECKED`、`A_LONE_SIGNATURE_IS_A_ROSTER`、`THE_SIGN_OFF_IS_TAKEN` | 先按第 20、21 条统一裁定（`cd581ac9`）：点名委员会的那一句为事实，"Respectfully submitted," 为非事实。新读法取那一句和签名，不取 "Respectfully submitted,"。只在 Macy's 五个位置新增 67 块，都是判读或裁定判为事实的块；漏选 20→16，误选不变；最新年 Macy's 2026 多取 14 块，值会变（`../c02-selector-repairs/measured-40-report-signatures.json`） |
+| 41 | Lumen 2021–2023 的 "•Rotated NCG Committee Chair at 2020 annual meeting" 不带主语，选择器的委员会主席句式都要动词带主语，三个位置各漏一块 | `403abb33` | `test_a_committee_chair_rotated_at_a_dated_meeting`；注错 `A_ROTATED_CHAIR_IS_NOT_READ`、`A_ROTATION_NEED_NOT_BE_AT_A_MEETING`、`A_ROTATED_CHAIR_NEED_NOT_NAME_A_COMMITTEE` | 新句式："Rotated" + 大写的委员会名 + "Committee Chair at" + 某年的年会；与第 25 处一样不按年份筛。只新增这三块，漏选 16→13，误选不变，最新年不变（`../c02-selector-repairs/measured-41-rotated-committee-chair.json`） |
+| 42 | Lumen 2023 "the retirement in 2023 of our former Vice Chairman, W. Bruce Hanks" 写成名词、年份在职务之前，带日期离任句式都要动词，读不到；以它为覆盖的脚注（"when our Vice Chairman retired and was not replaced"）也算漏选 | `6241253f` | `test_our_vice_chairman_s_retirement_dated_in_the_year`；注错 `AN_OFFICER_RETIREMENT_IS_NOT_READ`、`AN_OFFICER_RETIREMENT_IS_ALWAYS_THIS_YEAR`、`ANY_VICE_CHAIRMAN_IS_OURS` | 新句式 "retirement in <年份> of our [former] Vice Chairman"，按带日期离任规则读（目标年度或之后、写出人名）；"of our" 把它与董事在别家公司的退休分开。只新增这一块，Lumen 2023 现与判读一致；漏选 13→11，误选不变，最新年不变（`../c02-selector-repairs/measured-42-vice-chairman-retirement.json`） |
+| 43 | Lumen 代理访问条款里的 "Based on the 11 directors constituting our Board immediately following the meeting, … would be required …" 被政策否决整句跳过；四份判读都判为部分事实，2022 没有别的块覆盖 | `ab31c364` | `test_the_board_s_size_on_which_a_proxy_access_limit_is_based`；注错 `THE_PROXY_ACCESS_COUNT_IS_VETOED`、`ANY_BOARD_S_COUNT_IS_OURS` | 新增 `_CONSTITUTING_THE_BOARD`（"<人数> directors constituting our Board"），在政策否决之前读为董事会规模。只新增 Lumen 2021–2024 这四块，漏选 11→10，误选不变，最新年不变（`../c02-selector-repairs/measured-43-proxy-access-board-count.json`） |
+| 44 | Salesforce 2025 候选人资格清单里的 "having served on our Board and its M&A Committee through periods of immense growth" 被委员会任职句式读成成员；读者判为非事实（资格描述） | `16835c17` | `test_having_served_on_a_committee_is_a_qualification`；注错 `HAVING_SERVED_IS_A_MEMBERSHIP` | 委员会任职句式前面是 "having" 时不读。37 份文档只移走这一块，Salesforce 2025 现与判读一致；误选 5→4，漏选不变，最新年不变（`../c02-selector-repairs/measured-44-having-served.json`） |
+| 45 | "the Firm's independent external auditor"：审计委员会和董事会续聘外部审计师的决定被读成成员资格认定（#28 在摩根大通 FY2025 原件第 3367 块发现，[评论 5949695188](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5949695188)） | `72858e3c` | `test_the_external_auditor_s_independence_is_not_the_members`；注错 `THE_EXTERNAL_AUDITOR_IS_A_DIRECTOR`、`ONLY_THE_REGISTERED_FIRM_IS_THE_AUDITOR`、`ANY_INDEPENDENT_IS_THE_AUDITOR` | 排除别人独立性的写法补上 "independent external/outside auditor"。37 份判读一块不动；没有判读的 12 个已发布位置里只有摩根大通 FY2022–FY2025 各移走这一段（3463、3571、3344、3367），其余八个不动；#28 要求保住的同件正例第 3409 块（成员组成、独立、财务专家）仍入选（`../c02-selector-repairs/measured-45-external-auditor.json`、`measured-45-jpmorgan-and-unread.json`） |
+
+这些修复都不让任何坐标重新获得信用：选择仍与判读不一致的坐标继续撤回；已经一致的坐标，其已发布结果是旧版本算的，要等重算、重读后按结果编号释放。修复 7–12 是否、何时接入 #28 的普通路线由 #28 自己处置；#47 不代为宣布普通路线已通过。
+
+### 选择器路径（自合并 `2cc97e3a` 起）
+
+#28 的 issue_28_v13 现在按字节记录 `scripts/vnext/historical_board_composition.py`（本方 `546d10d1` 的字节）与 `catalog/r6/C02_board_composition_terms_v1.json`，并在 `catalog/r6/C02_board_disclosures_v2.md` 新建了它自己的普通路线 Spec（上限 64）——本方的历史 C02 Spec（上限 192）原来就在这个路径。两个世代都按字节绑定同一路径时，一棵代码树只能满足其中一个：本方若继续在原路径上修，#28 的普通 Run 在本分支的合并树上会因执行字节不符而失败，它断言 Enphase 2025 选 54 块、含 210 的用例也会失败；反过来本方的修复会停在 `546d10d1`。所以合并时：
+
+* 两个共用路径保留 #28 绑定的字节，issue_47_v1 从父代权威继承它们；
+* 本方的选择器从此在 `scripts/vnext/historical_board_composition_v2.py` 继续（合并时等于 `60aa9f7b` 的字节，只加一段说明），历史 C02 Spec 改为 `catalog/r6/C02_board_disclosures_historical_v2.md`（字节不变；Spec 闭包哈希只由内容决定，不随路径变）；
+* 约定：本方不改 #28 世代绑定的路径。#28 接新版本时，把 `_v2` 在某个固定提交的字节复制到它自己的路径（例如原路径）再记录；若直接绑定 `_v2`，本方下一次修复时同样的冲突会再出现。#28 若更愿意直接绑定 `_v2`，请在双方记录里说明，本方届时另起后继文件。
+
+两个版本在同 37 份文档上的差别逐块列在 `selector-path-split.json`：差别正好是修复 7–12。最新年：Enphase 54→48（移走上面六块，不新增），Ford 80→82，Lumen 98→99，Macy's 97→99，Marriott 96→98，Paramount、Pfizer、Salesforce、Southwest 不变。这里只量了本方的文档；#28 的普通文档经同一冻结准备生成，是否逐块相同由 #28 在自己的链路里核对。Marriott（98）、Pfizer（79）在两个版本下都超过普通路线的 64 条上限；本方历史路线用 `historical_spec_revision.py` 与 `historical_text_protocol.py` 把上限放到 192，是可供参考的现成实现，不是对 #28 Spec 的要求。
+
+### C02 读者分歧的统一裁定（[shared-with-#28]）
+
+`../c02-composition-facts/adjudicate.py` 把读者判断相反的类别各用一条规则决定（16 条，按文字界定、不看路线是否选取），对全部 37 份判读适用，表格与两处取舍的说明见 `../c02-composition-facts/README.md`。用今天的选择器：误选 40→46，漏选 146→144，一致位置 11→9；对路线有利与不利的裁定大致相当。**影响 #28 普通路线的部分**：这些是"什么算构成事实"的判定，与选择器实现无关；#28 用自己的读法核对最新年度时，若读到同类块（董事长/CEO 分设句、分级董事会一级候选人数、分组标题、"每位候选人现为董事"等）可以直接引用这些规则，也可以不同意并说明。最新年 Enphase、Lumen、Macy's、Marriott 的值按新裁定与读者判读不一致，#47 已撤回这四个值（`C02_*_UNIFIED_ADJUDICATION_DISAGREES`）；后续选择器修复按类别逐项提交，仍标 `[shared-with-#28]` 并在上表登记。
+
+**#28 的内容核对引出的两处补充（读到 `34338e4e` 之后）。** #28 对它自己 Salesforce FY2026 结果的核对指出两处错，本方的量测也有同样的缺口：一是 JOIN 句式只认动词，没认名词写法（"prior to Mr. Munoz's appointment to the Board in January 2022"）；二是读者把一块记为"已被覆盖"，量测就照单全收，而被引用的块只写了现任主席、另一人的月份和费用季度。补上之后统一裁定共 16 条规则（原文误记为 17 类）：JOIN 增加名词写法，新增 `DATED_ROLE_CHANGE`（带日期的职务接任，只由写明同一变动的块覆盖，读者的引用被拒时由裁定替换）。在全部 37 份判读上只多三条裁定（Salesforce FY2026 第 4300、933 块，Macy's FY2024 第 2358 块），只移动 Salesforce FY2026 一个位置（见下表第 14、15 行）。
+
+**第 18 条规则 `NOMINEE_CARD_NO_COMMITTEE`（非事实）。** 尚未任董事的候选人卡片上的 "Committees: N/A"（紧挨在前的是本卡片的 "Director since: N/A"）不说明本董事会委员会的成员：候选人不在委员会是因为还不在董事会。读者 3:1 相反（Paramount FY2024 三处没取，FY2022 第 819 块取了），与选择器原有的做法一致，所以选择器不改。只产生一条裁定，Paramount FY2022 由不一致变为一致；最新年不受影响。#28 若用自己的读法核对候选人卡片，可直接引用这条，也可以不同意并说明。
+
+**第 19 条规则 `INDEPENDENCE_RELATIONSHIP_DETERMINATION`（事实）。** 委员会对每位非雇员董事、就独立性标准所查关系作出的认定（Macy's "the NCG Committee determined that neither the director nor any immediate family member was employed by a company providing goods or services to Macy’s or the amounts involved were below the monetary thresholds"）是对董事的独立性认定。读者 3:1（FY2023 没取，FY2024–FY2026 取了）。只产生一条裁定，Macy's FY2023 由不一致变为一致；最新年 Macy's FY2026 的读者本来就取了这句，不受影响。
+
+**第 20、21 条规则 `REPORT_SIGNERS_COMMITTEE`（事实）与 `REPORT_SIGN_OFF`（非事实）。** Macy's 五份代理里审计委员会与 CMD 委员会的报告都这样收尾：一句 "The foregoing report was submitted by the Audit Committee and shall not be deemed …"，一块 "Respectfully submitted,"，然后是成员签名。签名不写委员会名，靠这一句才能读成哪个委员会的成员与主席；别家代理在签名上方写出委员会名的标题每位读者都取了。所以这一句判为事实，其中的法律声明不是事实。这与多数读者相反：10 处里 2 处判为部分事实，8 处没取。"Respectfully submitted," 不写委员会也不写人，判为非事实，读者 4 比 4。共 12 条裁定；用今天的选择器，各位置的误选与漏选都不变。最新年 Macy's FY2026 多两条事实裁定（第 1755、2235 块），由签名各自的复述覆盖，仍一致。#28 若用自己的读法核对 Macy's 的签名，可以引用这两条，也可以不同意并说明。
+
+**第 22 条规则 `SUBCOMMITTEE_DUTY`（非事实）。** Lumen 风险与安全委员会职责列表里的 "Oversees our classified activities and facilities through a subcommittee" 是委员会工作描述，所有者口径不包括；它不写成员，也不是设立委员会的决定（Enphase "the Audit Committee established a cybersecurity subcommittee, which includes a board member …" 是，第 23 处已取）。读者 1 比 3（FY2022 取了，FY2021、FY2023、FY2024 没取），裁定与多数一致。只产生一条裁定，Lumen 2022 漏选少一块；最新年不受影响。
+
+### 选择器路径（第二次）
+
+- **发生了什么。** #28 在 `5ff55541` 把本方 `4d0b2b9d` 的 `historical_board_composition_v2.py`（修复 1–18）原样放进它的分支、按字节绑定进 issue_28_v13/v14，在 `collab-c02-normal-20261001/README.md` 里写明。本方 `1f3f446c` 的同一路径已含修复 19–22，合并时出现 add/add 冲突。
+- **怎样处理。** 按第一次分开时的约定（对方选择直接绑定，本方另起后继文件）：
+  - `_v2` 取对方绑定的字节，与本方 `4d0b2b9d` 的 blob `cf7c0ac6` 相同；
+  - 本方选择器移到 `historical_board_composition_v3.py`。代码与 `1f3f446c` 的 `_v2` 相同，只改了模块说明里解释为何有三个文件的那一段；
+  - 历史路线、身份检查、统一裁定、量测与测试改为导入 `_v3`；
+  - mint 工具的规则文件由 `_v2` 改为 `_v3`。
+
+  这样 `_v2` 随父代权威继承，本世代不再点名它。
+- **核对。**
+  - 统一裁定在新路径下重跑，决定与规则逐项不变。
+  - 量测工具按 `_v3`、`_v2`、首个路径的顺序找某一提交的选择器：`_v3` 存在时，`_v2` 是对方的副本，不是本方的选择器。
+  - 合并后的树上，本方 C02 测试与对方 `test_normal_c02_composition` 同时通过。
+- **以后。** （2026-10-02 更正）本条原文是：“约定不变：哪一方的世代绑定了某个路径，另一方就不再改它。对方若要接修复 19 及以后，可以复制某个固定提交的 `_v3` 字节到它自己的路径；若再次直接绑定本方路径，本方再另起后继文件。”其中“若再次直接绑定本方路径，本方再另起后继文件”已不是现行做法：按 v1.1 第 4 条，接收方固定自己消费的版本，见上文“以后如何接入”。
+
+## 2026-10-02 读到 #28 `eea7821c`
+
+### D01 跨页标题（#28 发现、本方处置）
+
+#28 复用本方 `historical_text_emphasis.py`（固定 `2b4f571e`）时，限定独审查出跨页合并的两处问题：两个标题之间只有一个数字块也会合并；合并后的标题无法用 TEXT_V1 的单一原始跨度逐字表示（[评论 5945148937](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945148937)）。本方没有照搬结论，在自己的 Run 上核对：表示问题在本方 Southwest FY2022/FY2023 的合并结果里成立（记录的跨度里夹着"36 Table of Contents"），误合判据在 50 份申报里没有实例。处置是移植 #28 `865d8220` 的同一版式拒绝（`D01_MULTISPAN_HEADING_UNSUPPORTED`），两个合并结果按坐标撤回。详见 `../d01-risk-headings/page-boundary/README.md`。这是 #28 提供修复、本方接收的一次：本方固定的是 `865d8220` 的版式判据，写在本方自己的规则文件里。
+
+### E01 8.01 正文读取（#28 的反例对本方的影响）
+
+#28 对它自己的 `e01_item_source.py` 的独审给出两类反例（`7fc74694`）：视窗外文字（`right`/`bottom` 或正的大偏移）被当成可见；只有一个带链接的目录标题时把目录当正文起点。两套实现不同，本方逐条在 `historical_event_items.py` 上试过：两类在本方都成立，已有 56 个候选条目里都没有实例，E01 也还没有发过确认调用，所以没有结果移动。本方的修复见 `../e01-item-text/README.md` 末节；#28 的代码不移植。
+
+## 2026-10-02 读到 #28 `7f7b4eb0`
+
+### D02 Item 8 类别提及（#28 反例、本方修复）
+
+#28 在 `de22326d` 把本方 D02 类别提及规则（固定 `104876d6` 的字节、`36c64ab6` 的接线）复制到自己的版本化路径，限定独审查出一个误删：关键词后面的单个逗号被当成列表证据，`We face litigation, which could result in a significant loss.` 与 `Litigation, brought by a customer against us in 2025, remains unresolved.` 都被移出（[评论 5948676381](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5948676381)）。#28 随后在 `0ccf5363` 暂停了自己的 D02 后继新 Run 与更新信用，等本方修复。
+
+归属：D02 共用规则由本方维护（v1.1 第 4 条；#28 提供反例、必须保住的正例与普通路线接入验证）。修复是规则第 2 版：`scripts/vnext/d02_item_8_category_mentions.py` 加 `catalog/r6/D02_item_8_category_mention_v2.json`，提交 `147957c4`，注错记录 `dca84f46`，说明见 `../d02-keyword-repair/v2/README.md`；已在 [Issue #28 评论 5950737671](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5950737671) 通知对方固定这两个文件。做法是在第 1 版的证据上加结构条件，只读封闭词类：关键词所在短语不是从句、不点名当事方或本公司；不是句子第一项；与另一个列表项用并列连词连起来；这个系列不是谓语的主语，也不由本公司作主语直接支配。另外在暴露词里加了四条关系，都是在一份独立反例集上看到的说法。接口不变，`classify` 多返回每处的原因码。
+
+验证（零调用，`../d02-keyword-repair/v2/compare.json`）：
+
+- 已判读的 159 个 Item 8 关键词块，两版逐块相同。
+- 独立反例集：由一个没看过规则的子代理写，共 40 段真实事项、25 段类别提及。第 1 版移出 20 段真实事项，第 2 版 0 段；类别提及第 1 版移出 11 段，第 2 版 8 段。这份反例集是在后两项改动之前跑的，所以只算设计材料，不算留出验证。
+- 全部 64 份已存年报的 158 个 Item 8 关键词块：第 1 版移出 29 块，第 2 版 28 块；第 2 版没有移出任何第 1 版保留的块。唯一移动的是 ViacomCBS FY2020 第 2382 块（2018 年法律程序与调查费用），现在保留；它不是框架的目标年份。
+- #28 核过的四处排除（Lumen 1670、Pfizer 2175/2240、Paramount 2257）仍移出，Paramount 2108 仍保留。
+
+接入时要知道：提案里只要有被移出的块，就会记下规则词表的哈希（`item_8_category_mentions_left_out.terms_hash`）。所以对 Lumen、Pfizer、Paramount 2025 这类有移出块的申报，即使移出的块不变，候选哈希也会变。仍然做不到的写在 v2 README：读不到开放词类；系列作主语、谓语动词贴在最后一项上时（"In 2025, litigation, fines and penalties increased."）仍会当成列表。
+
+## 2026-10-02 读到 #28 `0bc24734`
+
+### D02 共用规则第 3 版（#28 限定独审 P2，本方修复）
+
+#28 在 `79677ed2` 把本方规则第 2 版（固定 `147957c4` 的字节）复制成 `d02_item8_category_28_v2.py` 接进普通路线；限定独审结论 NEEDS_FIX（P2）：`During 2025, our company faced litigation, regulatory proceedings and fines.` 说的是本公司自己面临诉讼，第 2 版却当成类别清单移出（原因：本公司词表只认句首的 we / the Company，不认 our company；句首时间状语后的逗号让关键词不再是第一项；暴露关系不认 faced）。#28 随后在 `b99748ac` 停用了第 2 版的新原生结果与更新信用（停用门限定复核 PASS_GATE_ONLY），等本方修复。该句是合成反例，两边都没在已存原件里见到。
+
+归属不变：规则由本方维护。修复是第 3 版（提交 `2a98ba84`、`1672097b`，说明 `../d02-keyword-repair/v3/README.md`）。没有逐个补词，而是把要求改成"判为类别必须有证据"：先原样跑第 2 版的判断，只有它判为类别时才再要证明——关键词在自己那一项里前面只能是限定词；本公司作主语出现在该项里就不算类别；句中前面提到本公司时，系列必须挂在介词、including 或 such as 上，且离它最近的本公司主语/宾语指代不是同一分句里的本公司主语（"advise us on" 的 us 是被建议的一方；"our company was hit with" 是本公司自己的事项）；例子和括号例子同样检查前文；暴露关系加 faced。这样第 2 版保留的块，第 3 版按结构一定保留。第一版第 3 版没有这样分层，构造句 "We defended regulatory actions, claims that name us in suits, litigation and fines." 被它误删而第 2 版保留，才改成分层。
+
+验证（零调用，`../d02-keyword-repair/v3/compare.json`）：
+
+- 已判读的 174 个 Item 8 关键词块（往年判读加 1e1ef948 轮的新判读，取入与未取都算）两版逐块相同；64 份已存年报两版都移出同样 28 块，没有一块移动。
+- #28 的句子与两个对照、本方写的 11 个变体：第 2 版误删 1 句与 8 句，第 3 版 0。
+- 第二组独立句子库（没看过规则的子代理写，在看内容之前跑一次，留作检验；之后的四处改动都来自构造句、不来自这组句子，重跑数字不变）：40 句真实事项第 2 版误删 1 句、第 3 版 0 句；25 句类别提及第 2 版移出 4 句、第 3 版 3 句。
+- 代价：构造的类别提及移出得更少（第一组 25 句里 8→5，第二组 4→3），这是审阅要的保守方向。
+- 注错 28 个全部由为它写的用例抓到（在 `1672097b` 的独立工作树里跑）。
+
+接入时要知道：接口不变；第 2 版判为非类别处，原因码照旧；判为类别处可能变成 `KEYWORD_PHRASE_FOLLOWS_OTHER_WORDS`、`REGISTRANT_NAMED_AND_NO_GOVERNOR_PROVEN` 或 `GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT`（都是非类别）。词表保留第 2 版 `category_mention` 的全部键和模式，新增 `registrant_actor`、`head_determiner` 与暴露关系 `REGISTRANT_FACES_A_LEGAL_MATTER`。#28 核过的四处排除（Lumen 1670、Pfizer 2175/2240、Paramount 2257）仍移出，Paramount 2108 仍保留。词表哈希变了，所以有移出块的申报（Lumen 2022–2025、Pfizer 2021–2025、Paramount 2025、摩根大通 2021–2025）在新闭包下候选哈希与结果编号都会变，摘录不变；本方已接受的值只对应它们点名的旧结果，新结果要重跑、核对、再释放。仍然做不到：公司用自己的名字出现在系列中间且动词不是 face（"Kestrel defended regulatory proceedings, litigation and fines."）；系列作开放类动词的主语（"In 2025, litigation, fines and penalties increased."）。
+
+### C02 Paramount FY2025 第 168 块（#28 询问的范围问题）
+
+#28 问（[评论 5945743839](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5945743839)）："We believe Mr. Thornton is qualified to serve as a member of our Board because of his extensive investment and management experience" 是否属于 C02 要取的资格认定。
+
+本方倾向：不取。理由按已批决定和现行 Spec：
+
+1. 所有者原文是"包括董事会规模、独立董事人数、委员会设置、成员、主席，以及相关独立性和资格认定；不扩展到一般治理流程"。"相关"把资格认定系在前面这些构成要素上。Spec 举的例子（财务素养、审计委员会财务专家、非雇员董事、成员不是高管）都是决定某人能否担任某个构成角色的认定。
+2. 这句话是 Item 401(e) 要求披露的"导致结论认为此人应担任董事的经验、资格、特质或技能"，也就是提名理由。两份 Spec 都把提名与评估程序放在范围之外。
+3. 第 168 块前半段列的是 Thornton 在其他机构的董事席位，Spec 明确排除"另一机构的董事会或委员会"。摘录按整块取，取这一块就会把范围外的内容一起放进值里。
+
+实测（`../c02-composition-facts/qualification-narratives.json`，零调用；37 个已双向判读的位置）：带"任职资格"类句子的位置有 19 个，共 34 块，其中 11 块已因别的事实入选。逐位董事的"qualified to serve as a member of our Board"只出现在 Paramount FY2025：10 块中 9 块已因任职日期入选，只有第 168 块没有。其余未入选的块是技能矩阵导语和提名标准，读者都判为非事实，两种读法下都不会进入值。所以两种读法的输出差别只有这一块。
+
+若 #28 仍认为现行合同不能排除"取"这种读法，按 v1.1 把两种读法的输出影响集中成一个用户问题。
+
+## 2026-10-02 读到 #28 `3275aa7b`
+
+### C02 摩根大通第 3367 块（#28 反例、本方修复）
+
+#28 在 `4e81fc19` 撤回了它摩根大通 FY2025 的两个 C02 结果身份：第 3367 块写的是审计委员会和董事会认为续聘 PwC 作为独立外部审计师符合股东利益，不是董事会构成（[评论 5949695188](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5949695188)）。这块是本方维护的共用选择器选进来的。本方在自己保存的代理上核对：FY2022–FY2025 四个已发布值都含同一段，FY2025 与 #28 读的是同一份字节。修复是上表第 45 项：只补 "independent external/outside auditor" 这一种写法，接口不变；同件第 3409 块（审计委员会成员组成、独立性、财务专家）仍入选。摩根大通 C02 四个年度按坐标登记缺陷；本方没有摩根大通 C02 的判读，所以修复不让任何值获得接受。同件第 3436 块（审计委员会报告里讲各方职责的段落）也入选，读起来像委员会工作描述，没人判读过，本次不改，记在第 45 节"未做"。
+
+### E01 条目读取器（#28 消费本方固定版本）
+
+#28 在 `dcd36df3` 把本方 `historical_event_items.py` 固定在 `488a6173`（Git blob `ff6996d2`，与本方现在的文件逐字节相同）放进它自己的 `scripts/vnext/e01_item_text_28_v1.py`，`3275aa7b` 是它的限定独审（PASS_LIMITED_SOURCE_INPUT）。本方没有改这个文件，不需要再提供什么。#28 的审阅记了一个局限：候选条目来自 SEC 头文件的条目索引，没有证明主文件里不存在头文件漏列的条目标题。这对本方 E01 的候选与头文件阅读同样成立，记为未核对的局限，没有当成已知缺陷。
+
+## 2026-10-02 读到 #28 `d6f82b22`
+
+### C02 修复 45 的接收（#28 在自己的路径上）
+
+#28 在 `df9feafa` 把本方修复 45 的表达式放进它自己的 `scripts/vnext/c02_board_composition_28_v3.py`，并记入 `issue_28_v13`；`d6f82b22` 是它的限定独审。本方不需要改任何文件；父快照因此移动，本方在 `4ad20447` 合并并重铸（父闭包 `51890efc…`）。
+
+### C02 摩根大通第 3436 块（#28 询问，本方按合同回答并修复）
+
+#28 问（[评论 5954343457](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5954343457)）第 3436 块末句 "The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee’s responsibility is to monitor and oversee these processes." 算不算资格认定。现有合同能回答，不需要提新的口径问题：Spec 列出的成员认定是财务素养、审计委员会财务专家、非雇员董事、成员不是高管或雇员；"委员会做什么"不在范围内。这句话没有认定任何人符合任何标准，也不是列出的资格；后半句写明它在说委员会的监督职责。块里其余内容是管理层、PwC、内部审计的职责。所以整块不属于 C02，#28 的初读成立。
+
+这也是本方选择器的缺陷：任何 "members of the … Committee are …" 都被当成构成陈述。修复 46（`4fcb1eba`，[shared-with-#28]）要求动词后面到分号为止写出人名或列出的身份。37 份双向判读一块不动；12 个未判读的已发布位置里只有摩根大通四年各移走这一块（3532、3642、3413、3436），第 3409 块保留。详见 `../c02-selector-repairs/README.md` 第 46 节。摩根大通 FY2022–FY2025 按坐标另登记一条缺陷；本方仍没有摩根大通 C02 的判读，所以重算后的值也要先读过才能接受。
+
+## 2026-10-02 读到 #28 `65706fd8`
+
+### C02 修复 46 的两条独审反例（本方修复 48）
+
+#28 在 `ee289953` 把修复 46 的成员从句放进它自己的 `c02_board_composition_28_v4.py`，限定独审结论 NEEDS_FIX（[评论 5958422081](https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-5958422081) ），并在 `c98ab43c` 让新 v4 在写入前停用。两条反例都在本方复现：修复 46 用 `_mentions_person` 找人名，要求姓至少三个字母，漏掉 "Jack Ma and John Wu"；在整段里任何位置找，把职责从句里提到的审计师当成成员。修复 48 改为只读动词后开头的词：名单或列出的身份，开头前只允许量词、副词和开引号；分号截断和审计师独立性剔除两步没有能区分的例子了，一并删除。49 个位置一块不动，注错 158/158。详见 `../c02-selector-repairs/README.md` 第 48 节。#28 若接收，需改的是 `_members_are` 及其三个新名字（`_COMPLEMENT_LEAD`、`_EXPERT_TERM`、`_HONORIFIC_OPEN`），依赖 `_QUALIFICATION`、`_NOT_EMPLOYED`、`_LIST_SEPARATOR`、`_LIST_END`、`person_name`；接口不变。另一条规则 `COMMITTEE_MEMBER_QUALIFICATION` 的同类局限（职责从句里的资格词）没有真实例子，本次不改，已写明。
+
+### E01 布局读取（#28 消费本方固定版本）
+
+#28 在 `8ea442a3` 把本方 `9caada4e` 从 `RULE` 到 `_primary_bytes` 之前逐字节放进 `e01_item_text_28_v2.py`，`65706fd8` 是它的限定独审（PASS_LIMITED）。本方不需要改任何文件。独审记下的继承局限（正文里有非空的隐藏节点时整体保守拒绝，可能降低自动完成率）本方同样存在。
+

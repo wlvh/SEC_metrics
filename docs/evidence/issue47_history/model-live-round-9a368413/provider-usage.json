@@ -1,0 +1,461 @@
+{
+ "record_type": "ISSUE_47_FINAL_PROVIDER_USAGE_READ",
+ "counts": [
+  35,
+  35,
+  0
+ ],
+ "all_http_statuses_200": true,
+ "all_actual_usage_known": true,
+ "totals": {
+  "input_tokens": 3037062,
+  "output_tokens": 13893,
+  "cache_hit_input_tokens": 31360,
+  "cache_miss_input_tokens": 3005702
+ },
+ "by_metric": {
+  "E01": {
+   "requests": 7,
+   "input_tokens": 43109,
+   "output_tokens": 3824
+  },
+  "D02": {
+   "requests": 12,
+   "input_tokens": 417576,
+   "output_tokens": 8336
+  },
+  "D04": {
+   "requests": 16,
+   "input_tokens": 2576377,
+   "output_tokens": 1733
+  }
+ },
+ "slots": [
+  {
+   "slot": "0001",
+   "metric_id": "E01",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 0,
+    "cache_miss_input_tokens": 3804,
+    "input_tokens": 3804,
+    "output_tokens": 633
+   }
+  },
+  {
+   "slot": "0002",
+   "metric_id": "E01",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 17473,
+    "input_tokens": 17601,
+    "output_tokens": 1004
+   }
+  },
+  {
+   "slot": "0003",
+   "metric_id": "E01",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 3990,
+    "input_tokens": 4118,
+    "output_tokens": 607
+   }
+  },
+  {
+   "slot": "0004",
+   "metric_id": "E01",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 2105,
+    "input_tokens": 2233,
+    "output_tokens": 201
+   }
+  },
+  {
+   "slot": "0005",
+   "metric_id": "E01",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 10414,
+    "input_tokens": 10542,
+    "output_tokens": 779
+   }
+  },
+  {
+   "slot": "0006",
+   "metric_id": "E01",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 2821,
+    "input_tokens": 2949,
+    "output_tokens": 282
+   }
+  },
+  {
+   "slot": "0007",
+   "metric_id": "E01",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 1734,
+    "input_tokens": 1862,
+    "output_tokens": 318
+   }
+  },
+  {
+   "slot": "0008",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 0,
+    "cache_miss_input_tokens": 39840,
+    "input_tokens": 39840,
+    "output_tokens": 819
+   }
+  },
+  {
+   "slot": "0009",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 835,
+    "input_tokens": 963,
+    "output_tokens": 13
+   }
+  },
+  {
+   "slot": "0010",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 54757,
+    "input_tokens": 54885,
+    "output_tokens": 944
+   }
+  },
+  {
+   "slot": "0011",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 27268,
+    "input_tokens": 27396,
+    "output_tokens": 686
+   }
+  },
+  {
+   "slot": "0012",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 24139,
+    "input_tokens": 24267,
+    "output_tokens": 397
+   }
+  },
+  {
+   "slot": "0013",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 24480,
+    "input_tokens": 24608,
+    "output_tokens": 379
+   }
+  },
+  {
+   "slot": "0014",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 24119,
+    "input_tokens": 24247,
+    "output_tokens": 571
+   }
+  },
+  {
+   "slot": "0015",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 43656,
+    "input_tokens": 43784,
+    "output_tokens": 750
+   }
+  },
+  {
+   "slot": "0016",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 50828,
+    "input_tokens": 50956,
+    "output_tokens": 834
+   }
+  },
+  {
+   "slot": "0017",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 56674,
+    "input_tokens": 56802,
+    "output_tokens": 1511
+   }
+  },
+  {
+   "slot": "0018",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 29722,
+    "input_tokens": 29850,
+    "output_tokens": 642
+   }
+  },
+  {
+   "slot": "0019",
+   "metric_id": "D02",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 128,
+    "cache_miss_input_tokens": 39850,
+    "input_tokens": 39978,
+    "output_tokens": 790
+   }
+  },
+  {
+   "slot": "0020",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 1152,
+    "cache_miss_input_tokens": 162715,
+    "input_tokens": 163867,
+    "output_tokens": 110
+   }
+  },
+  {
+   "slot": "0021",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 176193,
+    "input_tokens": 178241,
+    "output_tokens": 89
+   }
+  },
+  {
+   "slot": "0022",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 192026,
+    "input_tokens": 194074,
+    "output_tokens": 131
+   }
+  },
+  {
+   "slot": "0023",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 23047,
+    "input_tokens": 25095,
+    "output_tokens": 26
+   }
+  },
+  {
+   "slot": "0024",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 1152,
+    "cache_miss_input_tokens": 168352,
+    "input_tokens": 169504,
+    "output_tokens": 110
+   }
+  },
+  {
+   "slot": "0025",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 177412,
+    "input_tokens": 179460,
+    "output_tokens": 89
+   }
+  },
+  {
+   "slot": "0026",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 178900,
+    "input_tokens": 180948,
+    "output_tokens": 131
+   }
+  },
+  {
+   "slot": "0027",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 75881,
+    "input_tokens": 77929,
+    "output_tokens": 68
+   }
+  },
+  {
+   "slot": "0028",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 1152,
+    "cache_miss_input_tokens": 184385,
+    "input_tokens": 185537,
+    "output_tokens": 209
+   }
+  },
+  {
+   "slot": "0029",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 158084,
+    "input_tokens": 160132,
+    "output_tokens": 89
+   }
+  },
+  {
+   "slot": "0030",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 182035,
+    "input_tokens": 184083,
+    "output_tokens": 89
+   }
+  },
+  {
+   "slot": "0031",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 186728,
+    "input_tokens": 188776,
+    "output_tokens": 89
+   }
+  },
+  {
+   "slot": "0032",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 169825,
+    "input_tokens": 171873,
+    "output_tokens": 89
+   }
+  },
+  {
+   "slot": "0033",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 187119,
+    "input_tokens": 189167,
+    "output_tokens": 152
+   }
+  },
+  {
+   "slot": "0034",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 2048,
+    "cache_miss_input_tokens": 164852,
+    "input_tokens": 166900,
+    "output_tokens": 152
+   }
+  },
+  {
+   "slot": "0035",
+   "metric_id": "D04",
+   "status_code": 200,
+   "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": 1152,
+    "cache_miss_input_tokens": 159639,
+    "input_tokens": 160791,
+    "output_tokens": 110
+   }
+  }
+ ],
+ "source": "Original ledger wire/journal.json, not provider account records; costs are not inferred.",
+ "calls_to_read": [
+  0,
+  0,
+  0
+ ]
+}

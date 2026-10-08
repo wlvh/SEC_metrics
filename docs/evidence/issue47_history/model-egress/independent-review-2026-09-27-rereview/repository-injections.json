@@ -1,0 +1,174 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "caught": 13,
+ "controls": {
+  "tests.vnext.test_historical_counted_calls": 7,
+  "tests.vnext.test_historical_semantic_routes.ARegisteredAssessmentTravelsToATextResultTest.test_a_live_record_without_the_calls_that_answered_it_is_refused": 1
+ },
+ "injections": [
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_an_e01_record_written_as_live_is_not_read",
+    "test_e01_refuses_a_live_confirmation_without_counted_calls"
+   ],
+   "file": "scripts/vnext/historical_ma_confirmation.py",
+   "id": "E01_REGISTERS_LIVE_WITHOUT_CALLS",
+   "suites": [
+    "tests.vnext.test_historical_counted_calls"
+   ],
+   "tests_run": 7
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_a_d02_record_written_as_live_is_not_read",
+    "test_d02_refuses_a_live_review_without_counted_calls"
+   ],
+   "file": "scripts/vnext/historical_legal_review.py",
+   "id": "D02_REGISTERS_LIVE_WITHOUT_CALLS",
+   "suites": [
+    "tests.vnext.test_historical_counted_calls"
+   ],
+   "tests_run": 7
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_a_live_record_without_the_calls_that_answered_it_is_refused"
+   ],
+   "file": "scripts/vnext/historical_semantic_results.py",
+   "id": "D04_REGISTERS_LIVE_WITHOUT_CALLS",
+   "suites": [
+    "tests.vnext.test_historical_semantic_routes.ARegisteredAssessmentTravelsToATextResultTest.test_a_live_record_without_the_calls_that_answered_it_is_refused"
+   ],
+   "tests_run": 1
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_a_live_record_without_the_calls_that_answered_it_is_refused"
+   ],
+   "file": "scripts/vnext/historical_semantic_results.py",
+   "id": "A_LIVE_D04_RECORD_IS_READ_WITHOUT_CALLS",
+   "suites": [
+    "tests.vnext.test_historical_semantic_routes.ARegisteredAssessmentTravelsToATextResultTest.test_a_live_record_without_the_calls_that_answered_it_is_refused"
+   ],
+   "tests_run": 1
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_a_live_registration_without_a_block_is_refused"
+   ],
+   "file": "scripts/vnext/historical_counted_calls.py",
+   "id": "NO_BLOCK_IS_ACCEPTED",
+   "suites": [
+    "tests.vnext.test_historical_counted_calls"
+   ],
+   "tests_run": 7
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_a_block_that_is_not_its_seal_mode_or_ledger_is_refused"
+   ],
+   "file": "scripts/vnext/historical_counted_calls.py",
+   "id": "THE_BLOCK_S_SEAL_IS_NOT_READ",
+   "suites": [
+    "tests.vnext.test_historical_counted_calls"
+   ],
+   "tests_run": 7
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_a_block_that_is_not_its_seal_mode_or_ledger_is_refused"
+   ],
+   "file": "scripts/vnext/historical_counted_calls.py",
+   "id": "THE_BLOCK_S_MODE_IS_NOT_READ",
+   "suites": [
+    "tests.vnext.test_historical_counted_calls"
+   ],
+   "tests_run": 7
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_a_block_that_is_not_its_seal_mode_or_ledger_is_refused"
+   ],
+   "file": "scripts/vnext/historical_counted_calls.py",
+   "id": "THE_LEDGER_S_MODE_IS_NOT_READ",
+   "suites": [
+    "tests.vnext.test_historical_counted_calls"
+   ],
+   "tests_run": 7
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_a_block_that_is_not_its_seal_mode_or_ledger_is_refused"
+   ],
+   "file": "scripts/vnext/historical_counted_calls.py",
+   "id": "NO_CALL_ANSWERS",
+   "suites": [
+    "tests.vnext.test_historical_counted_calls"
+   ],
+   "tests_run": 7
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_calls_only_count_in_the_ledger_a_registered_approval_granted"
+   ],
+   "file": "scripts/vnext/historical_counted_calls.py",
+   "id": "ANY_LEDGER_WILL_DO",
+   "suites": [
+    "tests.vnext.test_historical_counted_calls"
+   ],
+   "tests_run": 7
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_calls_only_count_in_the_ledger_a_registered_approval_granted"
+   ],
+   "file": "scripts/vnext/historical_counted_calls.py",
+   "id": "ANY_TRANSPORT_WILL_DO",
+   "suites": [
+    "tests.vnext.test_historical_counted_calls"
+   ],
+   "tests_run": 7
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_calls_only_count_in_the_ledger_a_registered_approval_granted"
+   ],
+   "file": "scripts/vnext/historical_counted_calls.py",
+   "id": "THE_GRANTED_RECORD_S_SEAL_IS_NOT_READ",
+   "suites": [
+    "tests.vnext.test_historical_counted_calls"
+   ],
+   "tests_run": 7
+  },
+  {
+   "caught": true,
+   "failed_cases": [
+    "test_calls_only_count_in_the_ledger_a_registered_approval_granted"
+   ],
+   "file": "scripts/vnext/historical_counted_calls.py",
+   "id": "NO_REGISTERED_APPROVAL_IS_NEEDED",
+   "suites": [
+    "tests.vnext.test_historical_counted_calls"
+   ],
+   "tests_run": 7
+  }
+ ],
+ "record_type": "ISSUE_47_N1_REPOSITORY_FAULT_INJECTIONS",
+ "total": 13
+}

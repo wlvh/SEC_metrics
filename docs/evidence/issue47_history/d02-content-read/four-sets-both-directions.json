@@ -1,0 +1,45 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "production_authorized": false,
+ "record_type": "ISSUE_47_D02_FOUR_SETS_BOTH_DIRECTIONS",
+ "sets": {
+  "enphase_energy 2025-12-31": {
+   "accepted": false,
+   "excerpts": 18,
+   "taken": "fourteen Item 3 blocks and two headings covering the securities class actions (Hayes, Local 464A) and the shareholder derivative suits (Ibarra, Isaac, Hirani, Hanowski), plus two contingency blocks in Item 8. Seventeen of the eighteen are disclosure.",
+   "the_one_that_is_not": "block 755, the page footer 'Enphase Energy, Inc. | 2025 Form 10-K | 46'.",
+   "untaken_in_narrow_scopes": "one block in Item 3: the 'Table of Contents' link at 756, the other half of the same page break. Correctly out.",
+   "withdrawn_by": "D02_ENPHASE_2025_PAGE_FOOTER_CARRIES_ITS_PAGE_NUMBER"
+  },
+  "ford_motor_company 2025-12-31": {
+   "accepted": true,
+   "excerpts_after": 45,
+   "excerpts_before": 53,
+   "taken": "twenty Item 3 blocks - product liability, asbestos, consumer matters including the DPS6 transmission litigation, environmental including the Ringwood NJDEP complaint, class actions and the Brazilian tax assessments - and Note 24 'Commitments and Contingencies' whole, which its Item 3 incorporates as 'a discussion of loss contingencies' without naming a caption: guarantees and indemnifications, litigation and claims, and the warranty and field service accrual.",
+   "the_eight_that_were_not": "three page breaks inside Note 24, each contributing 'FORD MOTOR COMPANY AND SUBSIDIARIES', 'NOTES TO THE FINANCIAL STATEMENTS' and, on two of them, 'NOTE 24. COMMITMENTS AND CONTINGENCIES (Continued)'. Fixed in this reading by giving every scope the furniture criterion; see page-furniture-by-scope.",
+   "the_judgement_that_is_not_obvious": "whether guarantees, indemnifications and the warranty accrual belong. They do here and did not for Marriott, and the difference is what each filing's own Item 3 incorporates: Marriott names a caption inside its note, so the scope stops at that caption; Ford names the note's subject - loss contingencies - and all three of its parts are loss contingencies.",
+   "untaken_in_narrow_scopes": "nine blocks: page numbers 36, 37, 168, 169, 170, two 'Item 3. Legal Proceedings (Continued)' running heads already excluded by the inherited navigation-header rule, the table column header '20242025', and Item 8's single block, which is a cross-reference to Item 15. Correctly out."
+  },
+  "salesforce 2026-01-31": {
+   "accepted": true,
+   "excerpts": 15,
+   "note": "this filing is the positive control for the furniture criterion. Its Item 3 names the note's own title, the note gets an INCORPORATED_CAPTION scope, and the scope carries the criterion, so its three page breaks are already dropped.",
+   "taken": "three Item 3 blocks - the claims-evaluation paragraph, the outcome-uncertainty paragraph and the sentence incorporating Note 14 - and twelve blocks of Note 14 'Legal Proceedings and Claims', covering the ordinary-course paragraph, the provisioning policy, the Slack securities litigation and the Backpage actions.",
+   "untaken_in_narrow_scopes": "six blocks in Note 14: three bare page numbers (90, 91, 92) and three 'Table of Contents' links. Correctly out."
+  },
+  "southwest_airlines 2025-12-31": {
+   "accepted": true,
+   "excerpts": 25,
+   "taken": "twenty Item 3 blocks - the DOJ civil investigative demand, the capacity antitrust class actions, the USERRA military-leave class action and its settlement, the California wage-and-hour class action, the 2020 derivative action, the MAX contract-of-carriage class action, the December 2022 disruption securities and derivative matters and the Special Litigation Committee, the 2025 retirement-plan ERISA action and the bag-fee demand letter - and five Item 8 blocks, the same matters as stated in the notes.",
+   "untaken_in_narrow_scopes": "twelve blocks in Item 3: six bare page numbers (51-56) and six 'Table of Contents' links. Correctly out."
+  }
+ },
+ "what_this_does_not_establish": "that the route is right in general. Four filings at one period each were read, and the two judgements that carry weight - Ford's whole-note scope and Enphase's footer - each rest on one filing.",
+ "what_this_is": "the four D02 results that had no independent reading, read in both directions: every excerpt the selector took, judged against the approved source (Item 3, legal proceedings, contingencies notes) and the Spec's entity_scope of registrant; and every block inside a declared scope that it did not take, in the narrow scopes where reading all of them is possible.",
+ "why_the_broad_scope_is_not_read_here": "ITEM_8 runs to over a thousand blocks in each filing and the blocks it admits get in through the _LEGAL keyword proxy. That direction was already measured across all eleven saved periods - 24 admitted, 19 correct, 5 wrong - and the five wrong ones belong to Pfizer, Lumen and Paramount, none of which is in this group. The complementary direction, whether any contingencies or legal-proceedings note heading goes unreached, was also already measured across all eleven."
+}

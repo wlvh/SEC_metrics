@@ -68,6 +68,10 @@ def install_runtime(*, output_root, kind='baseline'):
     for directory in ('scripts', 'tools', 'requirements', 'catalog', 'config'):
         paths.update(p.relative_to(ROOT).as_posix() for p in (ROOT/directory).rglob('*')
                      if p.is_file() and '__pycache__' not in p.parts)
+    attachment_module = ROOT/'scripts/vnext/historical_event_attachments.py'
+    if attachment_module.is_file():
+        from .historical_event_attachments import POLICY_PATH as attachment_policy
+        paths.add(attachment_policy)
     # Some native consumers read the approved business definition at the
     # repository root. It is a rule input, not a home-directory dependency.
     for manifest_path in (ROOT/'requirements').glob('*/baseline_manifest.json'):
@@ -242,6 +246,8 @@ def install_runtime(*, output_root, kind='baseline'):
     (output/frozen_parent).parent.mkdir(parents=True, exist_ok=True)
     (output/frozen_parent).write_bytes(canonical_json_bytes(value=parent))
     authority['files'][frozen_parent] = binding(output/frozen_parent)
+    if attachment_module.is_file():
+        authority['files'][attachment_policy] = binding(output/attachment_policy)
     baseline = {'record_type': 'REQUIREMENT_BASELINE_MANIFEST', 'schema_version': 1,
         'requirement_id': requirement_id, 'requirement_generation': 'COMPANY_SEPARATION_V1',
         'artifact_requirement_generation': 'EXPLICIT_REQUIREMENT_V1',

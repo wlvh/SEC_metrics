@@ -1,0 +1,106 @@
+{
+ "runs": {
+  "run-macys-2023-A03": {
+   "differing_files": [],
+   "evidence_equal": true,
+   "files": 4,
+   "row_equal": true
+  },
+  "run-macys-2023-B01": {
+   "differing_files": [],
+   "evidence_equal": true,
+   "files": 4,
+   "row_equal": true
+  },
+  "run-macys-2023-B03": {
+   "differing_files": [],
+   "evidence_equal": true,
+   "files": 4,
+   "row_equal": true
+  },
+  "run-macys-2023-B06": {
+   "differing_files": [],
+   "evidence_equal": true,
+   "files": 4,
+   "row_equal": true
+  },
+  "run-macys-2023-B10": {
+   "differing_files": [],
+   "evidence_equal": true,
+   "files": 4,
+   "row_equal": true
+  },
+  "run-macys-2023-B12": {
+   "differing_files": [],
+   "evidence_equal": true,
+   "files": 4,
+   "row_equal": true
+  },
+  "run-macys-2023-C01": {
+   "differing_files": [],
+   "evidence_equal": true,
+   "files": 4,
+   "row_equal": true
+  },
+  "run-macys-2023-C03": {
+   "differing_files": [],
+   "evidence_equal": true,
+   "files": 4,
+   "row_equal": true
+  },
+  "run-macys-2023-C04": {
+   "differing_files": [],
+   "evidence_equal": true,
+   "files": 4,
+   "row_equal": true
+  },
+  "run-macys-2023-D01": {
+   "decisions_equal_apart_from_time": true,
+   "differing_files": [
+    "manifest.json",
+    "review_decisions.jsonl",
+    "validation.json"
+   ],
+   "evidence_equal": true,
+   "files": 6,
+   "manifest_keys_differing": [
+    "audit_manifest_hash",
+    "review_decisions_file_hash",
+    "validation_file_hash"
+   ],
+   "only_the_decision_time_differs": true,
+   "row_equal": true,
+   "validation_equal_apart_from_the_decisions": true
+  },
+  "run-macys-2023-D02": {
+   "decisions_equal_apart_from_time": true,
+   "differing_files": [
+    "manifest.json",
+    "review_decisions.jsonl",
+    "validation.json"
+   ],
+   "evidence_equal": true,
+   "files": 6,
+   "manifest_keys_differing": [
+    "audit_manifest_hash",
+    "review_decisions_file_hash",
+    "validation_file_hash"
+   ],
+   "only_the_decision_time_differs": true,
+   "row_equal": true,
+   "validation_equal_apart_from_the_decisions": true
+  },
+  "run-macys-2023-E02": {
+   "differing_files": [],
+   "evidence_equal": true,
+   "files": 4,
+   "row_equal": true
+  }
+ },
+ "summary": {
+  "identical": 10,
+  "only_the_decision_time_differs": 2,
+  "rows_and_evidence_equal": 12,
+  "runs_compared": 12
+ }
+}

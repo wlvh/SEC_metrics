@@ -1,0 +1,2 @@
+
+接公共PR60/9c65bf30的窄导入改动：同一_manual_result_trace移到现有Calculator，zero_ai_r2保留同一callable导出；normal_lodging_results直接从Calculator导入，已选读取/计算核心不改。saved_source在本方先前共享来源增量已换annual_sources，不重复应用。第二个替换因已收到被本方数量检查拒绝，未放宽守卫；实际7导入/兼容例0.423秒、19选源/计算例0.081秒过。仅消费该窄增量，不重算年度值，未宣称历史DEI/Run全部退出；旧版本仍独立读取。

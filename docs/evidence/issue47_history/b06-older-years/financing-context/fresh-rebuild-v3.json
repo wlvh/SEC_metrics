@@ -1,0 +1,297 @@
+{
+ "record_type": "ISSUE47_B06_FULL_SOURCE_FRESH_REBUILD_V3",
+ "all_seven_artifacts_byte_identical": true,
+ "files": [
+  {
+   "name": "document.json",
+   "bytes": 840181,
+   "sha256": "87e1112c63804161448ced4027608de96e62331aef8e826c9c17b6f982fb4bd9"
+  },
+  {
+   "name": "metadata.json",
+   "bytes": 1746,
+   "sha256": "f40d93b9174df9b09a42f7a77a1e596b9766a71ec4d77e85945f5ba723dddc03"
+  },
+  {
+   "name": "native-current-financing-facts.json",
+   "bytes": 265709,
+   "sha256": "1728dd8dc7ed7611ca6a9f24192069138ccc5574b30f3730925948bfd2aea140"
+  },
+  {
+   "name": "normal-b06-source-binding.json",
+   "bytes": 11864,
+   "sha256": "8bead84e624769cab754e4da9685f6ad673611aeca28bfbe229e3569365a3ed3"
+  },
+  {
+   "name": "source-only-package.json",
+   "bytes": 651453,
+   "sha256": "8ccd641b89506d3fb3bdb8c201e7be224f407ebcc8839dc5a7a3ac219e31f7ff"
+  },
+  {
+   "name": "table-grid.json",
+   "bytes": 3812835,
+   "sha256": "d12b78b1006472f7c9d71531b7bb56f559622546f925e431df81e6123d694a2b"
+  },
+  {
+   "name": "view.json",
+   "bytes": 383243,
+   "sha256": "d232beaf3551dbe55a95405cd46332ed3db94b9df7c9314098ed26c9f9236b76"
+  }
+ ],
+ "v2_all_original_text_tables_native_candidates_unchanged": true,
+ "added_source_candidates": {
+  "primary": [
+   {
+    "ordinal": 172,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "AccruedLiabilitiesCurrent"
+    ]
+   },
+   {
+    "ordinal": 174,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "AccruedIncomeTaxesCurrent"
+    ]
+   },
+   {
+    "ordinal": 267,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"
+    ]
+   },
+   {
+    "ordinal": 268,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"
+    ]
+   },
+   {
+    "ordinal": 269,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"
+    ]
+   },
+   {
+    "ordinal": 270,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"
+    ]
+   },
+   {
+    "ordinal": 271,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"
+    ]
+   },
+   {
+    "ordinal": 272,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"
+    ]
+   },
+   {
+    "ordinal": 924,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "AccruedRentCurrent"
+    ]
+   },
+   {
+    "ordinal": 934,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "AccrualForTaxesOtherThanIncomeTaxesCurrent"
+    ]
+   },
+   {
+    "ordinal": 938,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "InterestPayableCurrent"
+    ]
+   },
+   {
+    "ordinal": 942,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "OtherAccruedLiabilitiesCurrent"
+    ]
+   },
+   {
+    "ordinal": 944,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "AccruedLiabilitiesCurrent"
+    ]
+   },
+   {
+    "ordinal": 1015,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "DeferredTaxAssetsTaxDeferredExpenseReservesAndAccrualsAccruedLiabilities"
+    ]
+   },
+   {
+    "ordinal": 1081,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "IncomeTaxExaminationPenaltiesAndInterestAccrued"
+    ]
+   },
+   {
+    "ordinal": 1083,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "IncomeTaxExaminationPenaltiesAndInterestAccrued"
+    ]
+   },
+   {
+    "ordinal": 1085,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "IncomeTaxExaminationPenaltiesAndInterestAccrued"
+    ]
+   }
+  ],
+  "xml": [
+   {
+    "ordinal": 172,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "accruedliabilitiescurrent"
+    ]
+   },
+   {
+    "ordinal": 174,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "accruedincometaxescurrent"
+    ]
+   },
+   {
+    "ordinal": 267,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "stockholdersequityincludingportionattributabletononcontrollinginterest"
+    ]
+   },
+   {
+    "ordinal": 268,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "stockholdersequityincludingportionattributabletononcontrollinginterest"
+    ]
+   },
+   {
+    "ordinal": 269,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "stockholdersequityincludingportionattributabletononcontrollinginterest"
+    ]
+   },
+   {
+    "ordinal": 270,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "stockholdersequityincludingportionattributabletononcontrollinginterest"
+    ]
+   },
+   {
+    "ordinal": 271,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "stockholdersequityincludingportionattributabletononcontrollinginterest"
+    ]
+   },
+   {
+    "ordinal": 272,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "stockholdersequityincludingportionattributabletononcontrollinginterest"
+    ]
+   },
+   {
+    "ordinal": 924,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "accruedrentcurrent"
+    ]
+   },
+   {
+    "ordinal": 934,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "accrualfortaxesotherthanincometaxescurrent"
+    ]
+   },
+   {
+    "ordinal": 938,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "interestpayablecurrent"
+    ]
+   },
+   {
+    "ordinal": 942,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "otheraccruedliabilitiescurrent"
+    ]
+   },
+   {
+    "ordinal": 944,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "accruedliabilitiescurrent"
+    ]
+   },
+   {
+    "ordinal": 1015,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "deferredtaxassetstaxdeferredexpensereservesandaccrualsaccruedliabilities"
+    ]
+   },
+   {
+    "ordinal": 1081,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "incometaxexaminationpenaltiesandinterestaccrued"
+    ]
+   },
+   {
+    "ordinal": 1083,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "incometaxexaminationpenaltiesandinterestaccrued"
+    ]
+   },
+   {
+    "ordinal": 1085,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "incometaxexaminationpenaltiesandinterestaccrued"
+    ]
+   }
+  ]
+ },
+ "v3_increment": "Broaden source candidate census to interest/accrual names, including non-financing false positives. No semantic role or zero normalization repair.",
+ "comparison_script_initial_error": "dictionary changed size during iteration; comparison restarted over a fixed key list; no source packet modified",
+ "network_forbidden": true,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "runtime_wired": false,
+ "new_runs": 0,
+ "new_acceptances": 0
+}

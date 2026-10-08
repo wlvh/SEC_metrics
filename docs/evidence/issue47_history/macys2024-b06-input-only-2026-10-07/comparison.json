@@ -1,0 +1,51 @@
+{
+  "request_sha256": "bdad31f0dc7b55a5f49f9308c74168b41dd44ee8748156bdfeeabc1ffa7a1966",
+  "frozen_reference_sha256": "017eee122c0c6a7d6c8a1b258543b80c467c7999db1c9e87abf70fcad10d3f4d",
+  "reference_status": "pre-trial developer reference; not supplied to child and not acceptance authority",
+  "answer_sha256": "e3d7f1bdc831a3248316c89b94f44fe288cbd5beead92710dc1b1e267a98d69d",
+  "counts": {
+    "components": 19,
+    "relations": 9,
+    "unresolved": 2,
+    "blocks": 116,
+    "native": 70,
+    "cells": 50
+  },
+  "schema_subject_period_id_reference_and_arithmetic_checks": "PASS",
+  "forward_content_review": "19 component values and cited relation measurements checked against supplied native facts, complete Note6 schedule and necessary paragraphs/grids; bounded component support, not complete financing coverage",
+  "matching_reference_relations": [
+    "current6/noncurrent2773, including zero noncurrent occurrence",
+    "gross2785+premium14-cost20=carrying2779",
+    "finance15=current2+noncurrent13, includes nonlease1",
+    "operating3279 separate; future finance23 less interest8=carrying15",
+    "ABL ending0 and annual301 flow distinct",
+    "separate bank agreement literal1million, ending0",
+    "standby144, capacity2856 and availability2459 retained in reason",
+    "SCF116 ordinary unchanged supplier terms and merchandise-payable presentation",
+    "separate interest48 unresolved; tax interest25 distinct",
+    "same consolidated equity4552"
+  ],
+  "reverse_content_gaps": [
+    "Credit limit3000, capacity2856, inventory reduction397 and availability2459 appear only in abl.reason; separate typed components and sum/difference relation absent. An automatic consumer cannot recover the required capacity graph from fields alone.",
+    "Property-related current446, Other current194 and noncurrent Other902 residual99 are not retained as concrete unresolved items. They are not asserted excluded and debt remains null; full coverage still not demonstrated."
+  ],
+  "debt_complete": false,
+  "total_and_ratio_null": true,
+  "output_measurement": {
+    "literal_reference_tokens": 6168,
+    "whitespace_compact_reference_tokens": 6168,
+    "original_output_budget": 4096,
+    "fits": false,
+    "input_reference_tokens": 188798,
+    "provider_usage": null
+  },
+  "method_status": "NOT_READY_OUTPUT_BUDGET_AND_STRUCTURED_COVERAGE_GAPS",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_runs": 0,
+  "new_acceptances": 0,
+  "production_authorized": false
+}

@@ -1,0 +1,75 @@
+{
+ "evidence": [
+  {
+   "accession": "0001628280-24-004372",
+   "cik": "1048286",
+   "company": "Marriott International",
+   "concept_or_section": "Defined source scope",
+   "content_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+   "context_or_dimension": "{\"assessment_mode\": \"LIVE\", \"assessment_set_id\": \"sha256:f64c8a7e168e062d6b9c2fdb91904491dcebbfff124a6320f37504007f3e022b\", \"scope\": \"SAVED_ANNUAL_PRIMARY_AND_ALL_CURRENT_ANNUAL_AMENDMENTS_VISIBLE_AND_NATIVE\", \"source_unit_ids\": [\"sha256:4a04bc2e07867ac0b21433e5146d0e5bce8893781aa28980a53df40be120388c\", \"sha256:295c1c875c20b19978e14b5fbd2a9e6d50f36bff057fe02acc7797b1b1563c9e\", \"sha256:8883f3b6ec2cfcf6bd86ac3eed6c3db1c5c26d8ed8fd83949822ff62907d7f1b\", \"sha256:19e139ed0c5050c81e6c249ad52199aeef43bf5e25d309621d42b26470a0a18a\", \"sha256:c5a107d679d32510d2b74d95e2e19c6ba9610c75458412f6588fb99f337b9044\", \"sha256:e1240c76bf6a57fb598281f2007cf8ea42ee4ea77532855b04f38e0d2976917f\", \"sha256:a25dd337c31f13bf34e631dbbccaf865240dd87dd594219879dfdeca7d1c0b5c\", \"sha256:0f12438492c956b9f25af8ce828c0eba156df2ce88a869c3b49974a88f449334\", \"sha256:dea23913ee6bbb97e5ae1b2c5c413906a16d0b2aae9103fc3140925924a79187\", \"sha256:1a03def333daccaadd5387afcf5536dbe9254b394860d050cd887718497f66c9\", \"sha256:fcb6457ea9403e4013312101b212d1213fbdba7b63fdae5170fd571a70071560\", \"sha256:0ecc2f488ddae1b734b246d4711816fec255e1cb981d01c3e2ac5695fd4de3db\", \"sha256:bcb192c7bdd872196b1752eda1830c445d06dd289a9a450d5956d9fa1b70313e\", \"sha256:94676db39ca67b1471f080a7872c6c4fa2cb26ba4ef8fb1d95d3e0f9158ece05\", \"sha256:2c87ee0700b24ec189e68bb8dcf63143d8d2fe6043ca09c4a5949f65fec17da0\", \"sha256:67751b6b29d49ec7e998e6afd242ae4d933bcf547429564610cc103771203418\"]}",
+   "document_name": "mar-20231231.htm",
+   "evidence_quote": "Host scope-check record; no source quotation or numeric value is asserted.",
+   "extraction_method": "complete_native_d04_assessment",
+   "metric_id": "D04",
+   "parser_version": "capacity_run",
+   "period_end": "2023-12-31",
+   "period_start": "2023-01-01",
+   "repo_relative_path": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+   "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm",
+   "unit": "text",
+   "value_normalized": "",
+   "value_raw": ""
+  }
+ ],
+ "receipt": {
+  "calls": {
+   "paid": 0,
+   "provider": 0,
+   "sec": 0
+  },
+  "evidence_count": 1,
+  "evidence_hash": "sha256:e1a0289942c9c2fbb8989db0affe0114e61275ab412f597446b77d6d25adfb1c",
+  "period_selection_id": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30",
+  "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+  "primary_metric_id": "D04",
+  "production_authorized": false,
+  "receipt_id": "sha256:97bd8a830b34af6e6b7af065e8608b0a21f818bd6461196e79ecb01ff7848fce",
+  "record_type": "HISTORICAL_PERIOD_ROW_RECEIPT",
+  "renderer_sha256": "2c0bc4b7c135f21e95b91c7c10967624aec0e468e153082c521f26ff0a90f286",
+  "requirement_id": "issue_47_v1",
+  "result_id": "sha256:5e9b76db44ac9c93a778d3cf2645d7ee662e6c502a17dbc0997d102a1212e0b5",
+  "row_hash": "sha256:2cdc6525ae493803dd1f570780bf2534387c432a4d7fa0f20d5e6d5ff07ca0a0",
+  "run_id": "run:historical-period:a2d027c281dae7e5e079e0c73a1ac4f8a1b9acf0c27586b3f16f1c071ca082b6",
+  "run_status": "FROZEN",
+  "semantic_assessment_mode": "LIVE",
+  "source_required_metric_ids": [
+   "D04"
+  ],
+  "source_validation": "FULL_NATIVE_HISTORICAL_RUN_REPLAY",
+  "status": "FROZEN_CANDIDATE"
+ },
+ "record_type": "HISTORICAL_PERIOD_ROW_BUNDLE",
+ "row": {
+  "accession": "0001628280-24-004372",
+  "cik": "1048286",
+  "company": "Marriott International",
+  "concept_or_section": "",
+  "confidence": "",
+  "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"period_selection_id\": \"sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30\", \"requested_fiscal_year\": null, \"scope\": {\"disclosure_basis\": \"going_concern_source_text\", \"entity_scope\": \"source_reported\", \"period_basis\": \"annual_filing_disclosures\"}, \"source_reference_ids\": [\"sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4\", \"sha256:764b4a0070051896ab4c62a7901f9e11cc215232d41c1d6200223bf4dab45baa\", \"sha256:a2c079f199f84719d579c7fd7ee95e42f27031d90bf8d6abb6d461dbdf28726c\"], \"target_report_end\": \"2023-12-31\"}",
+  "filed_date": "2024-02-13",
+  "fiscal_period": "TARGET_PERIOD",
+  "fiscal_year": "2023",
+  "form": "10-K",
+  "formula": "source-reported going concern statements",
+  "metric_id": "D04",
+  "metric_name": "Going concern source statements and defined-scope assessment",
+  "notes": "未披露持续经营疑虑：已检查保存的完整年报及本期修订、原生事实和续接对象；这不表示对未来财务状况作保证。 No accepted value is asserted for this target period. Native state: WITHHELD; reason: D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE. Pinned historical period; values come only from the sources named in the evidence, as selected for this period. No latest-restated view is applied.",
+  "period_end": "2023-12-31",
+  "period_start": "2023-01-01",
+  "source_class": "10-K",
+  "status": "TEXT_QUAL",
+  "unit": "text",
+  "value": ""
+ },
+ "schema_version": 1
+}

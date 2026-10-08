@@ -1,0 +1,110 @@
+{
+  "elapsed_seconds": 1.5877516667824239,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261006T213736Z-4bc2776e",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "B10",
+    "B11"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B10",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "4bbf9cfc95574e3f81e3913c1e8ef539",
+      "version": "6cf508ab5e694c80975c9e3cddfaede2",
+      "result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119",
+      "result_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-history-range-20261007/state/updates/B10/periods/FY2025/results/6cf508ab5e694c80975c9e3cddfaede2",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025,
+      "defect_holds": [],
+      "read_result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119",
+      "record_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-history-range-20261007/state/updates/B10/periods/FY2025/results/6cf508ab5e694c80975c9e3cddfaede2",
+      "program_version": {
+        "commit": "d37fbec46a9aaeb2621d1f5233b96a5260f3ddfd",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B11",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "01bc42c28e5f41919ba969cc294c1aa6",
+      "version": "38241ab6fb984d149940acbfd8cc9c19",
+      "result_id": "sha256:a5e7be84a5c4f67ec4fce97e29fcf61d6532ac6befee6d250607fc58524fde19",
+      "result_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-history-range-20261007/state/updates/B11/periods/FY2025/results/38241ab6fb984d149940acbfd8cc9c19",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025,
+      "defect_holds": [],
+      "read_result_id": "sha256:a5e7be84a5c4f67ec4fce97e29fcf61d6532ac6befee6d250607fc58524fde19",
+      "record_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-history-range-20261007/state/updates/B11/periods/FY2025/results/38241ab6fb984d149940acbfd8cc9c19",
+      "program_version": {
+        "commit": "d37fbec46a9aaeb2621d1f5233b96a5260f3ddfd",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B10",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "b6c586c8210146db859dbdb5ce034fca",
+      "error_type": "PeriodSelectionError",
+      "reason": "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2026
+    },
+    {
+      "metric_id": "B11",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "1456941238a949caaf0e024b9d9bd0a0",
+      "error_type": "PeriodSelectionError",
+      "reason": "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2026
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006",
+  "record_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-history-range-20261007/state",
+  "output_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-history-range-20261007/outputs/20261006T213736Z-4bc2776e",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2025,
+    2026
+  ]
+}

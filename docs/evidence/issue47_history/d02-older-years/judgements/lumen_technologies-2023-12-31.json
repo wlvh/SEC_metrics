@@ -1,0 +1,510 @@
+{
+ "record_type": "ISSUE_47_D02_READING",
+ "position": "lumen_technologies:2023-12-31",
+ "reader": "independent subagent reading: a fresh agent given the reader brief and the packet, not the selector's rules or any earlier reading (its prompt carried one example from the latest-year Lumen finding; see reader-prompts.md)",
+ "reader_note": "Item 3 names the two Note 18 subheadings verbatim; the value takes both captions plus the note's opening claims and accrual paragraphs (2613, 2614), so every matter (Houser, Voigt, McLemore, Missouri tax, billing practices, outage, Latin American tax, Huawei investigations, Marshall Fire, 911 surcharge, other proceedings) is present and the commitments sections are left out. The two Note 1 keyword admissions (SG&A definition 1219, legal-fee policy 1254) are incidental. Skipped and context blocks are page numbers and the 'putative' definition, whose class actions the value states.",
+ "packet_document_id": "sha256:440beee5e547037ad01a916400c34acfa18853071309dcccb827e477e808a1f9",
+ "packet_candidate_hash": "sha256:eb900eae0b3fecac7f18c0d86bd97ef303ebdac6be84fa12bbe3562dfcbdaf3f",
+ "judgements": [
+  {
+   "kind": "TAKEN",
+   "i": 575,
+   "verdict": "DISCLOSURE",
+   "why": "Item 3 sentence incorporating the two Note 18 subheadings by reference",
+   "text": "The information contained under the subheadings \"Principal Proceedings\" and \"Other Proceedings, Disputes and Contingencies\" in Note 18—Commitments, Contingencies and Other Items to our consolidated financial statements included in Item 8 of Part II of this report is incorporated herein by reference.",
+   "text_sha256": "sha256:359b05eb52f52fba686b1a6298b0740c1fd5645545555799c3c7cd09048c60df",
+   "order": 0,
+   "scope": "ITEM_3"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1219,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "SG&A definition; litigation expense only listed as a cost category",
+   "text": "•Selling, general and administrative expenses are corporate overhead and other operating expenses. These expenses include: employee-related expenses (such as salaries, wages, internal commissions, benefits and professional fees) directly attributable to selling products or services and employee-related expenses for administrative functions; marketing and advertising; property and other operating taxes and fees; external commissions; litigation expenses associated with general matters; bad debt expense; and other selling, general and administrative expenses.",
+   "text_sha256": "sha256:aba2ba73128954a6ea31880dffff0b8e8e952cf9785aac912a766de06e3e70ff",
+   "order": 1,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 1254,
+   "verdict": "NOT_DISCLOSURE",
+   "why": "legal-fee expensing policy; litigation only listed among matters counsel advises on",
+   "text": "In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on finance, regulatory, litigation and other matters. Subject to certain exceptions, we expense these costs as the related services are received.",
+   "text_sha256": "sha256:5acb9d4eb968bda9502ea3c22c34100b8a3bf64997d436bcf820e1ea0545f785",
+   "order": 2,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2613,
+   "verdict": "DISCLOSURE",
+   "why": "registrant subject to claims, legal proceedings and contingent liabilities",
+   "text": "We are subject to various claims, legal proceedings and other contingent liabilities, including the matters described below, which individually or in the aggregate could materially affect our financial condition, future results of operations or cash flows. As a matter of course, we are prepared to both litigate these matters to judgment as needed, as well as to evaluate and consider reasonable settlement opportunities.",
+   "text_sha256": "sha256:57b9b1d892b5a5aed774dc8eafaafc81ceb1cf04c1e212c8c6f81fcce8630057",
+   "order": 3,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2614,
+   "verdict": "DISCLOSURE",
+   "why": "litigation accrual policy, accrued amounts and no estimate beyond accrual",
+   "text": "We review our litigation accrual liabilities on a quarterly basis, but in accordance with applicable accounting guidelines only establish accrual liabilities when losses are deemed probable and reasonably estimable and only revise previously-established accrual liabilities when warranted by changes in circumstances, in each case based on then-available information. As such, as of any given date we could have exposure to losses under proceedings as to which no liability has been accrued or as to which the accrued liability is inadequate. Subject to these limitations, at December 31, 2023 and December 31, 2022, we had accrued $84 million and $88 million, respectively, in the aggregate for our litigation and non-income tax contingencies, which is included in other current liabilities or other liabilities in our consolidated balance sheet as of such date. We cannot at this time estimate the reasonably possible loss or range of loss in excess of this $84 million accrual due to the inherent uncertainties and speculative nature of contested proceedings. The establishment of an accrual does not mean that actual funds have been set aside to satisfy a given contingency. Thus, the resolution of a particular contingency for the amount accrued could have no effect on our results of operations but nonetheless could have an adverse effect on our cash flows.",
+   "text_sha256": "sha256:b0a022a3237d061e391a800536aed0448bf96934bc8640f78c2a91720cbdb7f7",
+   "order": 4,
+   "scope": "ITEM_8"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2617,
+   "verdict": "DISCLOSURE",
+   "why": "label: Principal Proceedings",
+   "text": "Principal Proceedings",
+   "text_sha256": "sha256:22cbef47765d6177cdaffde01d4fa2eaa6701257ac0d6d4aa02de6c872879631",
+   "order": 5,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2618,
+   "verdict": "DISCLOSURE",
+   "why": "case label: shareholder class action suits",
+   "text": "Shareholder Class Action Suits",
+   "text_sha256": "sha256:12be4c3da0fa4f49e543a287d756d8a338a18fb0e172e271c2db22aaaae4610e",
+   "order": 6,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2619,
+   "verdict": "DISCLOSURE",
+   "why": "Houser shareholder class action, dismissed again and appealed",
+   "text": "Lumen and certain Lumen Board of Directors members and officers were named as defendants in a putative shareholder class action lawsuit filed on June 12, 2018 in the Boulder County District Court of the state of Colorado, captioned Houser et al. v. CenturyLink, et al. The complaint asserted claims on behalf of a putative class of former Level 3 shareholders who became CenturyLink, Inc. shareholders as a result of our acquisition of Level 3. It alleged that the proxy statement provided to the Level 3 shareholders failed to disclose various material information of several kinds, including information about strategic revenue, customer loss rates, and customer account issues, among other items. The complaint seeks damages, costs and fees, rescission, rescissory damages, and other equitable relief. In May 2020, the court dismissed the complaint. Plaintiffs appealed that decision, and in March 2022, the appellate court affirmed the district court's order in part and reversed it in part. It then remanded the case to the district court for further proceedings. Plaintiff filed an amended complaint, and we filed a motion to dismiss. The court granted our motion to dismiss and the plaintiffs have appealed that dismissal.",
+   "text_sha256": "sha256:64e2a579335f262950e04aa7dc67378ba8a8545e7d605753c53f346b5c29e92f",
+   "order": 7,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2620,
+   "verdict": "DISCLOSURE",
+   "why": "Voigt putative securities class action",
+   "text": "On March 3, 2023, a purported shareholder of Lumen filed a putative class action complaint captioned Voigt v. Lumen Technologies, Inc., et al., Case 3:23-cv-00286-TAD-KDM, in the U.S. District Court for the Western District of Louisiana. The complaint alleges that Lumen and certain of its current or former officers violated the federal securities laws by omitting or misstating material information related to Lumen’s expansion of its Quantum Fiber business. The complaint seeks money damages, attorneys’ fees and costs, and other relief.",
+   "text_sha256": "sha256:e8b9c383968b98c5e46290390c24c304be824271f4c4d4df2c264f5212862da5",
+   "order": 8,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2621,
+   "verdict": "DISCLOSURE",
+   "why": "McLemore putative securities class action",
+   "text": "On September 15, 2023, a purported shareholder of Lumen filed a putative class action complaint captioned McLemore v. Lumen Technologies, Inc., et al., Case 3:23-cv-01290, in the U.S. District Court for the Western District of Louisiana. The complaint alleges that Lumen and certain of its current or former officers violated the federal securities laws by omitting or misstating material information related to Lumen’s responsibility for environmental degradation allegedly caused by the lead sheathing of certain telecommunications cables. The complaint seeks money damages, attorneys’ fees and costs, and other relief.",
+   "text_sha256": "sha256:b282a1f069c127e016607d1fb864bb3f8788e6f22cf29638a2b9d467253802a3",
+   "order": 9,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2622,
+   "verdict": "DISCLOSURE",
+   "why": "label: State Tax Suits",
+   "text": "State Tax Suits",
+   "text_sha256": "sha256:1fa6506b49a148a12478ab2d53c6c3fd45480177d837745fb070bccd29d0261e",
+   "order": 10,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2623,
+   "verdict": "DISCLOSURE",
+   "why": "Missouri municipalities' tax suits and appeals",
+   "text": "Since 2012, a number of Missouri municipalities have asserted claims in the Circuit Court of St. Louis County, Missouri, alleging that we and several of our subsidiaries have underpaid taxes. These municipalities are seeking, among other things, declaratory relief regarding the application of business license and gross receipts taxes and back taxes from 2007 to the present, plus penalties and interest. In a February 2017 ruling in connection with one of these pending cases, the court entered an order awarding the plaintiffs $4 million and broadening the tax base on a going-forward basis. We appealed that decision to the Missouri Supreme Court. In December 2019, it affirmed the circuit court's order in some respects and reversed it in others, remanding the case to the circuit court for further proceedings. The Missouri Supreme Court's decision reduced our exposure in the case. In a June 2021 ruling in one of the pending cases, another trial court awarded the cities of Columbia and Joplin approximately $55 million, plus statutory interest. On appeal, the Missouri Court of Appeals affirmed in part and reversed in part, vacated the judgment and remanded the case to the trial court with instructions for further proceedings consistent with the Missouri Supreme Court's decision. We continue to vigorously defend against these claims.",
+   "text_sha256": "sha256:f44fedbb9c36931f68c8d753bb261d98e822f61a74f5a5bce1d50af2c1f6dc54",
+   "order": 11,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2624,
+   "verdict": "DISCLOSURE",
+   "why": "label: Billing Practices Suits",
+   "text": "Billing Practices Suits",
+   "text_sha256": "sha256:4ba66154e8a80f2d5e9a635166c789e63ff7d6592c64397c7866b4979d1cc83a",
+   "order": 12,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2625,
+   "verdict": "DISCLOSURE",
+   "why": "billing practices lawsuits, class actions and derivative suits",
+   "text": "In June 2017, a former employee filed an employment lawsuit against us claiming that she was wrongfully terminated for alleging that we charged some of our retail customers for products and services they did not authorize. Thereafter, based in part on the allegations made by the former employee, several legal proceedings were filed, including consumer class actions in federal and state courts, a series of securities investor class actions in federal courts and several shareholder derivative actions in federal and Louisiana state courts. The derivative cases were brought on behalf of CenturyLink, Inc. against certain current and former officers and directors of the Company and seek damages for alleged breaches of fiduciary duties.",
+   "text_sha256": "sha256:afebf14c3dcab7756f0dfc6c99927905ef1aaa5ddb6d14e289c9fb5abcebc482",
+   "order": 13,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2626,
+   "verdict": "DISCLOSURE",
+   "why": "consolidated sales practices litigation settled",
+   "text": "The consumer class actions, the securities investor class actions, and the federal derivative actions were transferred to the U.S. District Court for the District of Minnesota for coordinated and consolidated pretrial proceedings as In Re: CenturyLink Sales Practices and Securities Litigation. We have settled the consumer and securities investor class actions and the derivative actions.",
+   "text_sha256": "sha256:4f0751db14c32d706fa740094362434919e340809a0f87c837e0db792e09a46f",
+   "order": 14,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2628,
+   "verdict": "DISCLOSURE",
+   "why": "state attorneys general claims and settlements",
+   "text": "We have engaged in discussions regarding related claims with a number of state attorneys general, and have entered into agreements settling certain of the consumer practices claims asserted by state attorneys general. While we do not agree with allegations raised in these matters, we have been willing to consider reasonable settlements where appropriate.",
+   "text_sha256": "sha256:5f8251ebab58890300625d996a580fca3c7212296c511452c60adb0b322821cf",
+   "order": 15,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2629,
+   "verdict": "DISCLOSURE",
+   "why": "label: December 2018 Outage Proceedings",
+   "text": "December 2018 Outage Proceedings",
+   "text_sha256": "sha256:425681583783d2eed1971e323056e43acd994e7dab9bd9b7f8bef62afb0bd303",
+   "order": 16,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2630,
+   "verdict": "DISCLOSURE",
+   "why": "the outage underlying the proceedings",
+   "text": "We experienced an outage on one of our transport networks that impacted voice, IP, 911, and transport services for some of our customers between the 27th and 29th of December 2018. We believe that the outage was caused by a faulty network management card from a third-party equipment vendor.",
+   "text_sha256": "sha256:ae1b2070fee4657ff82ff4db1200a40b74b0ba6a150a529fa12dd2742d94ce80",
+   "order": 17,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2631,
+   "verdict": "DISCLOSURE",
+   "why": "FCC and state investigations; FCC settlement",
+   "text": "The FCC and four states (both Washington Utilities and Transportation Commission (\"WUTC\") and the Washington Attorney General; the Montana Public Service Commission; the Nebraska Public Service Commission; and the Wyoming Public Service Commission) initiated formal investigations. In November 2020, following the FCC's release of a public report on the outage, we negotiated a settlement which was released by the FCC in December 2020. The amount of the settlement was not material to our financial statements.",
+   "text_sha256": "sha256:bd4b08bd888b97b5da86669df1db1fcd7157384c3167a1ec241744cb8309768b",
+   "order": 18,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2632,
+   "verdict": "DISCLOSURE",
+   "why": "WUTC complaint, penalty order, reconsideration motions",
+   "text": "In December 2020, the Staff of the WUTC filed a complaint against us based on the December 2018 outage, seeking penalties of approximately $7 million for alleged violations of Washington regulations and laws. The Washington Attorney General's office sought penalties of $27 million. Following trial before the WUTC, it issued an order in June 2023 penalizing us for approximately $1 million. We and the Washington Attorney General's office have both filed for reconsideration. Those motions are pending.",
+   "text_sha256": "sha256:9eb19da5b7b1242c45f9be3494e4342dc3b6a7b3bf2268967f3369e9f793106b",
+   "order": 19,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2633,
+   "verdict": "DISCLOSURE",
+   "why": "label: Latin American Tax Litigation and Claims",
+   "text": "Latin American Tax Litigation and Claims",
+   "text_sha256": "sha256:606f881e054bbd5a1d6edf73da75d345dcd472aff2e88ce820b168aabae2f6d1",
+   "order": 20,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2634,
+   "verdict": "DISCLOSURE",
+   "why": "tax claims assumed by purchaser; indemnity for Brazilian claims",
+   "text": "In connection with the 2022 divestiture of our Latin American business, the purchaser assumed responsibility for the Peruvian tax litigation and Brazilian tax claims described in our prior periodic reports filed with the SEC. We agreed to indemnify the purchaser for amounts paid in respect of the Brazilian tax claims. The value of this indemnification is included in the indemnification amount as disclosed in Note 14—Fair Value of Financial Instruments.",
+   "text_sha256": "sha256:e057f10dbb290f090020ac659473ca62baaf4b18298b1eeaf504dfd84b650cb0",
+   "order": 21,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2635,
+   "verdict": "DISCLOSURE",
+   "why": "label: Huawei Network Deployment Investigations",
+   "text": "Huawei Network Deployment Investigations",
+   "text_sha256": "sha256:894689a24bfcdb97a070492d547cf5c39f142e2046d1c6c97938c9c457789b2e",
+   "order": 22,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2636,
+   "verdict": "DISCLOSURE",
+   "why": "federal agencies' information requests on Huawei equipment",
+   "text": "Lumen has received requests from the following federal agencies for information relating to the use of equipment manufactured by Huawei Technologies Company (\"Huawei\") in Lumen’s networks.",
+   "text_sha256": "sha256:4d2d17f49934a71a6f53658c0cded8e85d181749b581a974a070e88604aef399",
+   "order": 23,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2637,
+   "verdict": "DISCLOSURE",
+   "why": "DOJ False Claims Act civil investigative demand",
+   "text": "•DOJ. Lumen has received a civil investigative demand from the U.S. Department of Justice in the course of a False Claims Act investigation alleging that Lumen Technologies, Inc. and Lumen Technologies Government Solutions, Inc. failed to comply with the requirements in federal contracts concerning their use of Huawei equipment.",
+   "text_sha256": "sha256:6aa477980a6e6e8d13d90677668c6d5648441b3fbf23bed475556a7acbd9475c",
+   "order": 24,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2638,
+   "verdict": "DISCLOSURE",
+   "why": "FCC Enforcement Bureau letter of inquiry",
+   "text": "•FCC. The FCC’s Enforcement Bureau issued a Letter of Inquiry to Lumen Technologies, Inc. regarding its written certifications to the FCC that Lumen has complied with FCC rules governing the use of resources derived from the High Cost Program, Lifeline Program, Rural Health Care Program, E-Rate Program, Emergency Broadband Benefit Program, and the Affordable Connectivity Program. Under these programs, federal funds may not be used to facilitate the deployment or maintenance of equipment or services provided by Huawei, a company that the FCC has determined poses a national security threat to the integrity of communications networks or the communications supply chain.",
+   "text_sha256": "sha256:7cdcf4c149878fcb5fd7fb35737bea0c20158c346bce816c57f490f4d98c3eda",
+   "order": 25,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2639,
+   "verdict": "DISCLOSURE",
+   "why": "Team Telecom inquiry",
+   "text": "•Team Telecom. The Committee for the Assessment of Foreign Participation in the United States Telecommunications Service Sector (comprised of the U.S. Attorney General, and the Secretaries of the Department of Homeland Security, and the Department of Defense), commonly referred to as Team Telecom, issued questions and requests for information relating to Lumen’s FCC licenses and its use of Huawei equipment.",
+   "text_sha256": "sha256:76fc05d9b6ccadb87770526c99643720795ef81bdcc559c7e112e5d7b4491181",
+   "order": 26,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2640,
+   "verdict": "DISCLOSURE",
+   "why": "registrant cooperating with the investigations",
+   "text": "We are cooperating with the investigations.",
+   "text_sha256": "sha256:f3031f787937db8408bb280e2c4a559f1b0b6c351161ffe59ff11c9144b880dd",
+   "order": 27,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2642,
+   "verdict": "DISCLOSURE",
+   "why": "label: Marshall Fire Litigation",
+   "text": "Marshall Fire Litigation",
+   "text_sha256": "sha256:d4ddfa52d113f83c56bce992f26e9c655f3ad2ec13592e40b20470e7fede63d8",
+   "order": 28,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2643,
+   "verdict": "DISCLOSURE",
+   "why": "Marshall Fire lawsuits naming Qwest",
+   "text": "On December 30, 2021, a wildfire referred to as the Marshall Fire ignited near Boulder, Colorado. The Marshall Fire killed two people, and it burned thousands of acres, including entire neighborhoods. Approximately 300 lawsuits naming various defendants and asserting various claims for relief have been filed. To date, three of those name our affiliate Qwest Corporation as being at fault: Allstate Fire and Casualty Insurance Company, et al., v. Qwest Corp., et al., Case No. 2023-cv-3048, and Wallace, et al. v, Qwest Corp., et al, Case No. 2023-cv-30488, both of which have been consolidated with Kupfner et al v Public Service Company of Colorado, et al. Case No. 2022-cv-30195. The consolidated proceeding is pending in Colorado District Court, Boulder, Colorado, Preliminary estimates of potential damage claims exceed $2 billion. Qwest is vigorously defending the claims.",
+   "text_sha256": "sha256:9a1f7aafcf4a09bcdb2ab35f8672ae8d5213c0a21aa8db420c19261ad0109ea3",
+   "order": 29,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2644,
+   "verdict": "DISCLOSURE",
+   "why": "label: 911 Surcharge",
+   "text": "911 Surcharge",
+   "text_sha256": "sha256:eebc1775a28e07a081a0d5c0ffec004ac9c9890b89730adea486a9c651403783",
+   "order": 30,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2645,
+   "verdict": "DISCLOSURE",
+   "why": "New Mexico 911 surcharge fraud complaint",
+   "text": "In June 2021, the Company was served with a complaint filed in the Santa Fe County District Court by Phone Recovery Services, LLC (“PRS”), acting on behalf of the State of New Mexico. The complaint claims Qwest Corporation and CenturyTel of the Southwest have violated the New Mexico Fraud Against Taxpayers Act since 2004 by failing to bill, collect and remit certain 911 surcharges from customers. Through pre-trial proceedings, the Court has narrowed the issues to be resolved by jury, ruling that Lumen bears the burden of proving that its actions were reasonable or known and approved by the State. Qwest is defending the New Mexico claims vigorously, as it has done successfully with other 911 claims involving PRS in other states.",
+   "text_sha256": "sha256:8e9cba9c1d0fe99bb5241982fc39097ff03ef4c405b1a60775c112c14c793c31",
+   "order": 31,
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2646,
+   "verdict": "DISCLOSURE",
+   "why": "label: Other Proceedings, Disputes and Contingencies",
+   "text": "Other Proceedings, Disputes and Contingencies",
+   "text_sha256": "sha256:4ef29f53085f16ffc03e4633c7ab8010a9184a9b43b6245aa01a02f74f0a11f1",
+   "order": 32,
+   "scope": "NOTE_18_CAPTION_2646"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2647,
+   "verdict": "DISCLOSURE",
+   "why": "other proceedings incidental to the business",
+   "text": "From time to time, we are involved in other proceedings incidental to our business, including patent infringement allegations, regulatory hearings relating primarily to our rates or services, actions relating to employee claims, various tax issues, environmental law issues, grievance hearings before labor regulatory agencies and miscellaneous third-party tort actions or commercial disputes.",
+   "text_sha256": "sha256:54985edc067361c51d6c1d9fb41d20e6a2fc0fa0c408726c36ffa6d439576612",
+   "order": 33,
+   "scope": "NOTE_18_CAPTION_2646"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2648,
+   "verdict": "DISCLOSURE",
+   "why": "patent infringement lawsuits by non-practicing entities",
+   "text": "We are currently defending several patent infringement lawsuits asserted against us by non-practicing entities, many of which are seeking substantial recoveries. These cases have progressed to various stages and one or more may go to trial within the next twelve months if they are not otherwise resolved. Where applicable, we are seeking full or partial indemnification from our vendors and suppliers. As with all litigation, we are vigorously defending these actions and, as a matter of course, are prepared to litigate these matters to judgment, as well as to evaluate and consider all reasonable settlement opportunities.",
+   "text_sha256": "sha256:7e60631409da4aee220ae0089c8555d1311cd5a99bae528ef4e90baf36fbe8b1",
+   "order": 34,
+   "scope": "NOTE_18_CAPTION_2646"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2649,
+   "verdict": "DISCLOSURE",
+   "why": "environmental proceedings and potential remediation liability",
+   "text": "We are subject to various foreign, federal, state and local environmental protection and health and safety laws. From time to time, we are subject to judicial and administrative proceedings brought by various governmental authorities under these laws. Several such proceedings are currently pending, but none is reasonably expected to exceed $300,000 in fines and penalties. In addition, in the past we acquired companies that had installed lead-sheathed cables several decades earlier, or had operated certain manufacturing companies in the first part of the 1900s. Under applicable environmental laws, we could be named as a potentially responsible party for a share of the remediation of environmental conditions arising from the historical operations of our predecessors.",
+   "text_sha256": "sha256:bf9d5da7bb793abfc0224bd1783df7c4612d5b1b0b12853d83f75fe006fe9412",
+   "order": 35,
+   "scope": "NOTE_18_CAPTION_2646"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2650,
+   "verdict": "DISCLOSURE",
+   "why": "outcome assessment of the other proceedings",
+   "text": "The outcome of these other proceedings described under this heading is not predictable. However, based on current circumstances, we do not believe that the ultimate resolution of these other proceedings, after considering available defenses and any insurance coverage or indemnification rights, will have a material adverse effect on us.",
+   "text_sha256": "sha256:eceb1edee0cde537345b948207fbb78be1a54fe16b5f891627207a43301cf6e8",
+   "order": 36,
+   "scope": "NOTE_18_CAPTION_2646"
+  },
+  {
+   "kind": "TAKEN",
+   "i": 2651,
+   "verdict": "DISCLOSURE",
+   "why": "listed matters not all contingencies; outcomes may differ",
+   "text": "The matters listed in this Note do not reflect all of our contingencies. The ultimate outcome of the above-described matters may differ materially from the outcomes anticipated, estimated, projected or implied by us in certain of our statements appearing above in this Note, and proceedings currently viewed as immaterial by us may ultimately materially impact us.",
+   "text_sha256": "sha256:27fe9020aafb768f5ed4d6946fad668c51c665c09fe77a125d1738892b306620",
+   "order": 37,
+   "scope": "NOTE_18_CAPTION_2646"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2627,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "135",
+   "text_sha256": "sha256:13671077b66a29874a2578b5240319092ef2a1043228e433e9b006b5e53e7513",
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2641,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "136",
+   "text_sha256": "sha256:36ebe205bcdfc499a25e6923f4450fa8d48196ceb4fa0ce077d9d8ec4a36926d",
+   "scope": "NOTE_18_CAPTION_2617"
+  },
+  {
+   "kind": "SKIPPED",
+   "i": 2652,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "137",
+   "text_sha256": "sha256:d80eae6e96d148b3b2abbbc6760077b66c4ea071f847dab573d507a32c4d99a5",
+   "scope": "NOTE_18_CAPTION_2646"
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2615,
+   "verdict": "COVERED_ELSEWHERE",
+   "why": "explains 'putative' for the class actions the value describes as putative",
+   "text": "In this Note, when we refer to a class action as \"putative\" it is because a class has been alleged, but not certified, in that matter.",
+   "text_sha256": "sha256:7174417511034c93edfd291374fc9555d600627dcce5c85605352b70ae2b4114",
+   "covered_by": [
+    2619,
+    2620,
+    2621
+   ]
+  },
+  {
+   "kind": "CONTEXT",
+   "i": 2616,
+   "verdict": "CORRECTLY_SKIPPED",
+   "why": "bare page number",
+   "text": "134",
+   "text_sha256": "sha256:5d389f5e2e34c6b0bad96581c22cee0be36dcf627cd73af4d4cccacd9ef40cc3"
+  },
+  {
+   "kind": "HEADING",
+   "i": 574,
+   "verdict": "REACHED",
+   "why": "Item 3 heading; its incorporation sentence is taken",
+   "text": "ITEM 3. LEGAL PROCEEDINGS",
+   "text_sha256": "sha256:dbb42f43bcffb34a940ab059bead73da216c54a7637a624a1f891edfda4f4d8e"
+  },
+  {
+   "kind": "HEADING",
+   "i": 849,
+   "verdict": "NOT_D02",
+   "why": "MD&A critical accounting estimate heading",
+   "text": "Loss Contingencies and Litigation Reserves",
+   "text_sha256": "sha256:1922db985d710a381db4863a699c9ddc691ae0cd65187b478626e40b714db4f7"
+  },
+  {
+   "kind": "HEADING",
+   "i": 1100,
+   "verdict": "NOT_D02",
+   "why": "balance sheet caption",
+   "text": "COMMITMENTS AND CONTINGENCIES (Note 18)",
+   "text_sha256": "sha256:e0223062ab5b3bf248de807e84e865f26a122cb8e4082b124732bf42ede5877a"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2612,
+   "verdict": "REACHED",
+   "why": "contingencies note heading; its claims paragraphs and incorporated captions are taken",
+   "text": "(18) Commitments, Contingencies and Other Items",
+   "text_sha256": "sha256:aefff77fe593f81eac8ecfc23885912b7f28664323b6a758fa7256df633498c9"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2633,
+   "verdict": "REACHED",
+   "why": "Latin American tax litigation subsection is taken",
+   "text": "Latin American Tax Litigation and Claims",
+   "text_sha256": "sha256:606f881e054bbd5a1d6edf73da75d345dcd472aff2e88ce820b168aabae2f6d1"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2642,
+   "verdict": "REACHED",
+   "why": "Marshall Fire litigation subsection is taken",
+   "text": "Marshall Fire Litigation",
+   "text_sha256": "sha256:d4ddfa52d113f83c56bce992f26e9c655f3ad2ec13592e40b20470e7fede63d8"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2646,
+   "verdict": "REACHED",
+   "why": "other proceedings subsection is taken",
+   "text": "Other Proceedings, Disputes and Contingencies",
+   "text_sha256": "sha256:4ef29f53085f16ffc03e4633c7ab8010a9184a9b43b6245aa01a02f74f0a11f1"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2655,
+   "verdict": "NOT_D02",
+   "why": "rental and right-of-way commitments",
+   "text": "Future Rental Commitments and ROW Agreements",
+   "text_sha256": "sha256:d33bddf512ab8b7e614a993e3462eb60aa3ebea98230c400ac540637f6644167"
+  },
+  {
+   "kind": "HEADING",
+   "i": 2664,
+   "verdict": "NOT_D02",
+   "why": "purchase commitments",
+   "text": "Purchase Commitments",
+   "text_sha256": "sha256:ecd722b9c278146dcf0b04306bbca9c5503e1b79965d795039b8e43a6500b218"
+  }
+ ]
+}

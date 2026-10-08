@@ -1,0 +1,31 @@
+{
+ "record_type": "ISSUE47_FAST_VERIFICATION_WITH_SCOPED_RERUN",
+ "initial_batch_status": "FAILED",
+ "initial_batch_seconds": 435.187,
+ "entry_count": 182,
+ "initial_passed_entries": 181,
+ "initial_failed_entries": [
+  {
+   "duration_seconds": 30.036,
+   "return_code": 124,
+   "stderr_tail": "\nFAST_TEST_TIMEOUT_SECONDS=30\n",
+   "stdout_tail": "",
+   "test": "tests.vnext.test_historical_requirement_snapshot"
+  }
+ ],
+ "rerun": {
+  "selector": "tests.vnext.test_historical_requirement_snapshot",
+  "per_case_timeout_seconds": 30,
+  "same_original_runner": true,
+  "result": {
+   "test": "tests.vnext.test_historical_requirement_snapshot",
+   "return_code": 0,
+   "duration_seconds": 16.673,
+   "stderr_tail": "----------------------------------------------------------------------\nRan 5 tests in 16.473s\n\nOK\n",
+   "stdout_tail": "issue_47_v1 snapshot matches the current tree\nissue_47_v1 snapshot matches the current tree\n"
+  }
+ },
+ "all_entries_verified_across_two_invocations": true,
+ "single_batch_all_passed": false,
+ "case_timeout_unchanged": 30
+}

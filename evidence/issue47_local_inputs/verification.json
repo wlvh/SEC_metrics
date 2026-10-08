@@ -1,0 +1,88 @@
+{
+ "record_type": "ISSUE47_LOCAL_TRANSFER_VERIFICATION",
+ "source_commit": "7b7f6ad9b5f00f704af93951bf9e48f31bdab882",
+ "archive_count": 3,
+ "verified_file_count": 96,
+ "every_archive_and_member_sha256_matches_manifest": true,
+ "no_absolute_or_parent_member_paths": true,
+ "c02_full_source_view_and_original_block_span_checks": [
+  {
+   "position": "ford_motor_company:2022-12-31",
+   "block_count": 4912,
+   "tables": 402,
+   "request_sha256": "146142032aea59dcc713cd07e6dfd1a44aaa0b8083ce8a5bcbc53115440b9f32",
+   "all_block_raw_spans_match": true,
+   "full_view_matches": true
+  },
+  {
+   "position": "jpmorgan_chase:2021-12-31",
+   "block_count": 4064,
+   "tables": 428,
+   "request_sha256": "c912d3a8bcd1ab5350eef9c733110e3a9fa9ae6ce7ec4ac1a635dd454835931a",
+   "all_block_raw_spans_match": true,
+   "full_view_matches": true
+  },
+  {
+   "position": "lumen_technologies:2021-12-31",
+   "block_count": 5219,
+   "tables": 629,
+   "request_sha256": "c6c224c5d73152b7a2712114d4715053934b2318cebf397d63c37193256b67a5",
+   "all_block_raw_spans_match": true,
+   "full_view_matches": true
+  },
+  {
+   "position": "pfizer:2022-12-31",
+   "block_count": 3511,
+   "tables": 344,
+   "request_sha256": "c40ac56cfdb82f068c81091e23e1cef22344d0306af6a99288fe9b7d00890f8b",
+   "all_block_raw_spans_match": true,
+   "full_view_matches": true
+  }
+ ],
+ "b06_fresh_rebuild_from_extracted_capture": {
+  "normal_saved_source_admission_rebuilt": true,
+  "all_seven_files_byte_identical": true,
+  "files": [
+   {
+    "file": "document.json",
+    "sha256": "87e1112c63804161448ced4027608de96e62331aef8e826c9c17b6f982fb4bd9"
+   },
+   {
+    "file": "metadata.json",
+    "sha256": "f40d93b9174df9b09a42f7a77a1e596b9766a71ec4d77e85945f5ba723dddc03"
+   },
+   {
+    "file": "native-current-financing-facts.json",
+    "sha256": "1728dd8dc7ed7611ca6a9f24192069138ccc5574b30f3730925948bfd2aea140"
+   },
+   {
+    "file": "normal-b06-source-binding.json",
+    "sha256": "8bead84e624769cab754e4da9685f6ad673611aeca28bfbe229e3569365a3ed3"
+   },
+   {
+    "file": "source-only-package.json",
+    "sha256": "8ccd641b89506d3fb3bdb8c201e7be224f407ebcc8839dc5a7a3ac219e31f7ff"
+   },
+   {
+    "file": "table-grid.json",
+    "sha256": "d12b78b1006472f7c9d71531b7bb56f559622546f925e431df81e6123d694a2b"
+   },
+   {
+    "file": "view.json",
+    "sha256": "d232beaf3551dbe55a95405cd46332ed3db94b9df7c9314098ed26c9f9236b76"
+   }
+  ]
+ },
+ "ford_reference_rebuilt_from_extracted_source_and_exact_request": {
+  "byte_identical": true,
+  "sha256": "bdaf80e1feec073ddaf331803a5f316db6c7c2760ca4e3cf2691c63b7775a84b"
+ },
+ "provider_paid_sec_calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0,
+ "production_authorized": false
+}

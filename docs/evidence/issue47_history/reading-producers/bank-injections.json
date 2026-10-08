@@ -1,0 +1,161 @@
+{
+ "reader": "tools/read_bank_measures.py",
+ "record_type": "ISSUE_47_BANK_MEASURES_READER_FAULT_INJECTIONS",
+ "results": [
+  {
+   "as_expected": true,
+   "expected_failing": [],
+   "failing": [],
+   "injection": "CONTROL",
+   "ran": 18,
+   "what": "nothing"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_tables_that_disagree_are_not_read"
+   ],
+   "failing": [
+    "test_tables_that_disagree_are_not_read"
+   ],
+   "injection": "FIRST_READ_WINS",
+   "ran": 18,
+   "what": "tables that state the measure differently: the first is taken"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_header_without_the_target_year_is_not_read"
+   ],
+   "failing": [
+    "test_a_header_without_the_target_year_is_not_read"
+   ],
+   "injection": "ANY_YEAR_COLUMN",
+   "ran": 18,
+   "what": "the first column of years is read whether or not it is the target year"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_header_without_the_window_is_not_read"
+   ],
+   "failing": [
+    "test_a_header_without_the_window_is_not_read"
+   ],
+   "injection": "NO_WINDOW_CHECK",
+   "ran": 18,
+   "what": "a figure whose header does not state the year ended on the period end"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_every_position_of_every_reading_re_derives",
+    "test_two_scales_in_a_header_are_not_read"
+   ],
+   "failing": [
+    "test_every_position_of_every_reading_re_derives",
+    "test_two_scales_in_a_header_are_not_read"
+   ],
+   "injection": "ANY_SCALE",
+   "ran": 18,
+   "what": "a header stating two scales: one is picked"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_average_var_needs_the_avg_min_max_split",
+    "test_every_position_of_every_reading_re_derives",
+    "test_the_counterfactual_var_total_is_not_the_average"
+   ],
+   "failing": [
+    "test_average_var_needs_the_avg_min_max_split",
+    "test_every_position_of_every_reading_re_derives",
+    "test_the_counterfactual_var_total_is_not_the_average"
+   ],
+   "injection": "NO_SPLIT_REQUIRED",
+   "ran": 18,
+   "what": "a Total VaR row in a table not split into Avg., Min and Max (the counterfactual adjustment)"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_subsidiarys_lcr_is_not_the_registrants",
+    "test_every_position_of_every_reading_re_derives"
+   ],
+   "failing": [
+    "test_a_subsidiarys_lcr_is_not_the_registrants",
+    "test_every_position_of_every_reading_re_derives"
+   ],
+   "injection": "NO_REGISTRANT_GROUP",
+   "ran": 18,
+   "what": "an LCR row under another entity's group (the bank subsidiary)"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_subsidiarys_lcr_is_not_the_registrants",
+    "test_one_source_alone_is_not_read"
+   ],
+   "failing": [
+    "test_a_subsidiarys_lcr_is_not_the_registrants",
+    "test_one_source_alone_is_not_read"
+   ],
+   "injection": "ONE_SOURCE_SUFFICES",
+   "ran": 18,
+   "what": "an LCR stated by one of the two sources only"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_a_segment_ratio_is_not_the_firmwide_ratio",
+    "test_every_position_of_every_reading_re_derives"
+   ],
+   "failing": [
+    "test_a_segment_ratio_is_not_the_firmwide_ratio",
+    "test_every_position_of_every_reading_re_derives"
+   ],
+   "injection": "NOT_ONLY_FIRMWIDE",
+   "ran": 18,
+   "what": "a segment's nonaccrual ratio as the firm's"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_every_position_of_every_reading_re_derives",
+    "test_the_yield_excluding_a_business_is_not_the_managed_basis"
+   ],
+   "failing": [
+    "test_every_position_of_every_reading_re_derives",
+    "test_the_yield_excluding_a_business_is_not_the_managed_basis"
+   ],
+   "injection": "ANY_YIELD_BY_PREFIX",
+   "ran": 18,
+   "what": "the net yield excluding a business as the managed-basis yield"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_international_revenue_is_read_only_under_a_revenue_column"
+   ],
+   "failing": [
+    "test_international_revenue_is_read_only_under_a_revenue_column"
+   ],
+   "injection": "ANY_FIRST_COLUMN",
+   "ran": 18,
+   "what": "an international total under a first figure column that is not revenue"
+  },
+  {
+   "as_expected": true,
+   "expected_failing": [
+    "test_no_import_names_a_financial_module"
+   ],
+   "failing": [
+    "test_no_import_names_a_financial_module"
+   ],
+   "injection": "IMPORT_A_FINANCIAL_INSPECTOR",
+   "ran": 18,
+   "what": "the reader importing a financial inspector"
+  }
+ ],
+ "suite": "tests.vnext.test_bank_measures_reading"
+}

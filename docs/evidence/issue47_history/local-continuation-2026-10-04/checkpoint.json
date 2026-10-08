@@ -1,0 +1,67 @@
+{
+ "record_type": "ISSUE47_LOCAL_CONTINUATION_CHECKPOINT",
+ "start_commit": "e182857946cc4add2ef3e24a1ece6feffc93227d",
+ "branch": "task/issue47-local-continue",
+ "worktree": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local",
+ "peer_commit_read": "df84865dd64260b7dd6307b852b058f3305a307e",
+ "b06_request": {
+  "request_sha256": "9feffb1239bfeae017d9ad233fa1267333f14d98b7b6491132fd80d42aee951e",
+  "input_tokens": 187863,
+  "output_reserve": 4096,
+  "total": 191959,
+  "fits": true
+ },
+ "lumen_packet_input_tokens": [
+  193573,
+  193102
+ ],
+ "lumen_total_input_tokens": 386675,
+ "lumen_semantics_proven": false,
+ "ford_blind_trial": {
+  "facts": 54,
+  "unresolved": 3,
+  "output_tokens": 4448,
+  "reverse_reference_units_present": 34,
+  "omitted_reference": "F35",
+  "scope_pending_issuer_assessments": 14,
+  "original_answer_unchanged": true,
+  "target_model_ready": false
+ },
+ "ford_response_shape_prototype_tokens": 3570,
+ "full_fast_rerun": {
+  "status": "PASSED",
+  "selectors": 185,
+  "duration": 193.922,
+  "per_case_timeout": 30
+ },
+ "extra_final_fast_selector": {
+  "return_code": 0,
+  "timeout": 30
+ },
+ "source_cascade_tests": 61,
+ "targeted_input_transform_tests": 28,
+ "old_e182_ci": {
+  "vnext_run": 37192293732,
+  "reference_run": 37192293730,
+  "both_completed_successfully": true
+ },
+ "d04_unacquired_official_images": 14,
+ "d02_complete_development_proposals": 12,
+ "new_runs": 0,
+ "new_acceptances": 0,
+ "unchanged_acceptance_register": 909,
+ "unchanged_result_defect_objects": 104,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "old_model_count": [
+  35,
+  35,
+  0
+ ],
+ "sec_cumulative": 1771,
+ "production_authorized": false,
+ "pending_user_input": "One new B06 independent input-only child has been requested but is not authorized yet."
+}

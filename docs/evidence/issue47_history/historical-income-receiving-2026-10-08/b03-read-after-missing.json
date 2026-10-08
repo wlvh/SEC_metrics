@@ -1,0 +1,58 @@
+{
+  "elapsed_seconds": 0.011474041966721416,
+  "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+  "company_id": "marriott_international",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+  "metrics": [
+    {
+      "metric_id": "B03",
+      "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": 2025,
+      "value": "0.1756281982738868097456656229",
+      "unit": "ratio",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+      "requested_in_latest_execution": true,
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-cli-20261008/state/updates/B03/periods/FY2025/results/d8044b539b944fa68a7868f6f8dd08c5"
+    },
+    {
+      "metric_id": "B03",
+      "value": null,
+      "result_validity": "NO_CURRENT_RESULT",
+      "latest_observation": "INPUT_OR_EXECUTION_FAILED",
+      "fiscal_year": 2026,
+      "requested_in_latest_execution": true
+    },
+    {
+      "metric_id": "B03",
+      "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "fiscal_year": 2024,
+      "value": "0.1653386454183266932270916335",
+      "unit": "ratio",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+      "requested_in_latest_execution": false,
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-cli-20261008/state/updates/B03/periods/FY2024/results/963c6428ec5a439595d3cc18baa55aa9"
+    }
+  ],
+  "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-b03-cli-20261008/after-missing-daily"
+}

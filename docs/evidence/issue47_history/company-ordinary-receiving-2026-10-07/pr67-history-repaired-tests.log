@@ -1,0 +1,41 @@
+..E............E..F..E......................
+======================================================================
+ERROR: test_existing_update_entry_selects_current_record_storage_explicitly (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_existing_update_entry_selects_current_record_storage_explicitly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tests/vnext/test_ordinary_current_update.py", line 53, in test_existing_update_entry_selects_current_record_storage_explicitly
+    result=run_once(state_root=self.root,source_root=ROOT,company_id='marriott_international',
+                    metric_ids=['B01'],current_records=True)
+TypeError: run_once() got an unexpected keyword argument 'current_records'
+
+======================================================================
+ERROR: test_new_withheld_result_is_shown_instead_of_old_success (tests.vnext.test_company_current_records.CurrentCompanyTest.test_new_withheld_result_is_shown_instead_of_old_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tests/vnext/test_company_current_records.py", line 145, in test_new_withheld_result_is_shown_instead_of_old_success
+    old=self.values[str(self.work/'updates/B01/results/first')]
+        ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: '/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpz2gt825d/state/updates/B01/results/first'
+
+======================================================================
+ERROR: test_wrong_metric_saved_record_is_not_exported (tests.vnext.test_company_current_records.CurrentCompanyTest.test_wrong_metric_saved_record_is_not_exported)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tests/vnext/test_company_current_records.py", line 90, in test_wrong_metric_saved_record_is_not_exported
+    self.values[str(path)]['result']['company_id']='wrong-company'
+    ~~~~~~~~~~~^^^^^^^^^^^
+KeyError: '/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmp1v_xb5zr/state/updates/B01/results/first'
+
+======================================================================
+FAIL: test_two_metrics_share_source_and_program_without_installer (tests.vnext.test_company_current_records.CurrentCompanyTest.test_two_metrics_share_source_and_program_without_installer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/tests/vnext/test_company_current_records.py", line 57, in test_two_metrics_share_source_and_program_without_installer
+    self.assertTrue(all(row['source_root']==str(self.source) for row in self.rows(r)))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 44 tests in 0.114s
+
+FAILED (failures=1, errors=3)

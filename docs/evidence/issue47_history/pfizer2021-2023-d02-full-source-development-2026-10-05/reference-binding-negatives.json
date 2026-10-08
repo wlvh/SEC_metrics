@@ -1,0 +1,29 @@
+{
+ "checks": [
+  {
+   "name": "changed_packet_text",
+   "returncode": 1,
+   "rejected_before_output": true,
+   "isolated_copy": true
+  },
+  {
+   "name": "unfinished_reading",
+   "returncode": 1,
+   "rejected_before_output": true,
+   "isolated_copy": true
+  },
+  {
+   "name": "changed_exact_request",
+   "returncode": 1,
+   "rejected_before_output": true,
+   "isolated_copy": true
+  }
+ ],
+ "all_rejected": true,
+ "original_inputs_changed": false,
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

@@ -1,0 +1,24 @@
+{
+  "public_code": "9c65bf3013490c2198fe4f4fd0fd7ced3f801288",
+  "shared_read_and_calculation_unchanged": true,
+  "legacy_constructor_same_callable": true,
+  "source_saved_reader_already_received": true,
+  "actual_tests": {
+    "imports_and_compatibility": {
+      "count": 7,
+      "seconds": 0.423
+    },
+    "selected_source_calculation": {
+      "count": 19,
+      "seconds": 0.081
+    }
+  },
+  "failed_receive_guard": "The second import replacement was already applied by prior shared-source receiving, so the edit count guard rejected that redundant edit; no guard relaxed or duplicate patch applied.",
+  "history_values_not_recalculated": true,
+  "full_pipeline_lightening_not_claimed": true,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

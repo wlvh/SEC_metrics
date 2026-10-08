@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-runtime-20261004/tools/prepare_c02_table_context.py", line 237, in <module>
+    main()
+    ~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-runtime-20261004/tools/prepare_c02_table_context.py", line 233, in main
+    prepare(args.source_root.resolve(), company, end, args.out.resolve())
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-runtime-20261004/tools/prepare_c02_table_context.py", line 200, in prepare
+    measurement = measure_request(wire(request), require_reference=True)
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-runtime-20261004/scripts/vnext/continuous_request_context.py", line 90, in measure_request
+    _need(not require_reference or tokenizer is not None,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:' + str(fallback))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-runtime-20261004/scripts/vnext/continuous_request_context.py", line 29, in _need
+    raise ValueError(reason)
+ValueError: CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:TOKENIZER_DEPENDENCY_UNAVAILABLE

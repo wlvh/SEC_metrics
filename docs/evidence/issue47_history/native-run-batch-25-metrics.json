@@ -1,0 +1,191 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "content_acceptance": "Zero, everywhere, and stated as unproven rather than omitted. A frozen Run with a public row says the route computed something and the bytes are bound; it does not say the value is the right value.",
+ "five_of_the_forty_are_answers_not_gaps": "DENOMINATOR_NONPOSITIVE and RATIO_NUMERATOR_NOT_POSITIVE are the metric saying the ratio is not meaningful for that company, which is a result. The other 35 name missing material.",
+ "frame_after": {
+  "delivery_layer_counts": {
+   "content_acceptance": 0,
+   "native_run": 343,
+   "public_row": 343
+  },
+  "dimension_counts": {
+   "business_content_accepted": 0,
+   "historical_route_implemented": 1572,
+   "known_content_defect": 1,
+   "native_run_receipt": 343,
+   "run_receipt_hashes_verified": 343,
+   "target_original_saved": 429,
+   "target_period_established": 1599,
+   "verified_outcome": 302
+  },
+  "first_blocking_reason_counts": {
+   "HISTORICAL_ROUTE_NOT_WIRED": 72,
+   "NO_VALUE_PUBLISHED": 5,
+   "N_A_STRUCTURAL": 164,
+   "ROUTE_IMPLEMENTED_NOT_RUN": 14,
+   "SOURCE_MISSING_TARGET_ORIGINAL": 1170,
+   "TARGET_PERIOD_METADATA_BLOCKED": 78,
+   "TARGET_PERIOD_NOT_DISCOVERED": 273,
+   "VALUE_APPROX": 2,
+   "VALUE_EXACT": 137,
+   "WITHHELD_SOURCE_OR_ROUTE": 35
+  },
+  "target_frame_positions": 1950
+ },
+ "how_to_read_the_frame": "1950 is the five-year target. 1521 of it (1170 missing originals, 273 periods not discovered, 78 metadata blocked) is waiting on acquisition and no amount of implementation moves it. What is reachable today is 429 - the 11 periods that have their original, times 39 metrics. Of those 429, 357 have a route (72 do not: the six unwired metrics plus B10/B11 at the one lodging company), 343 produced a Run, and 139 carry a value.",
+ "outcome": {
+  "carries_a_value": 139,
+  "failed": 14,
+  "frozen_run_and_public_row": 343,
+  "ran_without_a_value": 40,
+  "structurally_not_applicable": 164
+ },
+ "per_period": {
+  "enphase-2025": {
+   "attempted": 33,
+   "duration_seconds": 4872,
+   "structurally_not_applicable": 16,
+   "value": 17
+  },
+  "ford-2025": {
+   "attempted": 33,
+   "duration_seconds": 6724,
+   "ran_without_a_value": 2,
+   "structurally_not_applicable": 16,
+   "value": 15
+  },
+  "lumen-2025": {
+   "attempted": 33,
+   "duration_seconds": 5769,
+   "ran_without_a_value": 2,
+   "structurally_not_applicable": 16,
+   "value": 15
+  },
+  "macys-2026": {
+   "attempted": 33,
+   "duration_seconds": 4743,
+   "structurally_not_applicable": 16,
+   "value": 17
+  },
+  "marriott-2023": {
+   "attempted": 31,
+   "duration_seconds": 3669,
+   "ran_without_a_value": 10,
+   "structurally_not_applicable": 14,
+   "value": 7
+  },
+  "marriott-2024": {
+   "attempted": 31,
+   "duration_seconds": 3946,
+   "ran_without_a_value": 8,
+   "structurally_not_applicable": 14,
+   "value": 9
+  },
+  "marriott-2025": {
+   "attempted": 31,
+   "duration_seconds": 4184,
+   "ran_without_a_value": 1,
+   "structurally_not_applicable": 14,
+   "value": 16
+  },
+  "paramount-2025": {
+   "attempted": 33,
+   "duration_seconds": 4259,
+   "failed": 14,
+   "ran_without_a_value": 7,
+   "structurally_not_applicable": 11,
+   "value": 1
+  },
+  "pfizer-2025": {
+   "attempted": 33,
+   "duration_seconds": 6823,
+   "ran_without_a_value": 1,
+   "structurally_not_applicable": 16,
+   "value": 16
+  },
+  "salesforce-2026": {
+   "attempted": 33,
+   "duration_seconds": 4857,
+   "ran_without_a_value": 7,
+   "structurally_not_applicable": 15,
+   "value": 11
+  },
+  "southwest-2025": {
+   "attempted": 33,
+   "duration_seconds": 6209,
+   "ran_without_a_value": 2,
+   "structurally_not_applicable": 16,
+   "value": 15
+  }
+ },
+ "positions_attempted": 357,
+ "production_authorized": false,
+ "ran_without_a_value_reasons": {
+  "ALL_BRANCHES_REJECTED": 1,
+  "B06_SOURCE_RELATIONSHIP_UNRESOLVED": 3,
+  "DENOMINATOR_NONPOSITIVE": 3,
+  "HISTORICAL_B06_SOURCE_ROUTE_UNRESOLVED": 1,
+  "HISTORICAL_COMPANYFACTS_ROUTE_UNRESOLVED": 1,
+  "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED": 5,
+  "HISTORICAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED": 24,
+  "RATIO_NUMERATOR_NOT_POSITIVE": 2
+ },
+ "record_type": "ISSUE_47_NATIVE_RUN_BATCH",
+ "requirement_closure_hash": "sha256:95a0f340dbd55a8b10b0fd562f4d5285b558dc4294e80a755282cc2a15a7280b",
+ "the_14_failures": {
+  "HISTORICAL_AMENDMENT_INPUT_CLASS_NOT_CLEARED:ORIGINAL_STATEMENT_VALUES": {
+   "count": 13,
+   "metric_ids": [
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A10",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B07",
+    "B08",
+    "B09"
+   ],
+   "note": "The approved amendment policy refusing statement-class inputs for Paramount's Part III amendment. A bounded review of that refusal was done and recorded; the decision it needs changes what inputs a metric accepts, so it is the owner's and was not made here."
+  },
+  "HISTORICAL_B06_SUCCESSOR_SCOPE_NOT_IMPLEMENTED": {
+   "count": 1,
+   "metric_ids": [
+    "B06"
+   ],
+   "note": "Named when B06 was wired; the successor-subject gap every route has."
+  },
+  "all_in": "paramount-2025"
+ },
+ "the_343_is_not_the_delivery": "A structural non-applicability and a withheld Result both render a row, so counting rows counts three different things as one. 164 of the 343 are the metric not applying to that company - a true answer, not a gap - and 40 ran without producing a value.",
+ "values_by_metric": {
+  "B01": 10,
+  "B02": 9,
+  "B03": 9,
+  "B04": 10,
+  "B05": 10,
+  "B06": 3,
+  "B07": 8,
+  "B08": 10,
+  "B09": 10,
+  "B12": 1,
+  "C01": 7,
+  "C04": 6,
+  "D02": 11,
+  "E01": 7,
+  "E02": 7,
+  "E03": 7,
+  "E04": 7,
+  "E05": 7
+ },
+ "what_ran": "Every wired metric on every pinned period whose target original is saved: 11 company-periods, 25 wired metrics plus the trait-gated structural ones, one process per period, one read-only runtime code tree, zero new calls of any kind.",
+ "why_357": "It is exactly the frame's ROUTE_IMPLEMENTED_NOT_RUN count before this batch. Every position that had a route and no Run now has one or a named refusal."
+}

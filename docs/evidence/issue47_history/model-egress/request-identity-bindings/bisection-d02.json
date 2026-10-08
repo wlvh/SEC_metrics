@@ -1,0 +1,132 @@
+{
+ "metric": "D02",
+ "position": "marriott_international:2024-12-31",
+ "base_ids": {
+  "request_ids": [
+   "sha256:de5a7e20f0a1276e150da741a125aa8ecb175509d5b021a3c63f43ae14d689da"
+  ],
+  "body_digests": [
+   "sha256:33ea0f80b92f00a1e8a62d91347105e24cdc59e413da7602bdc12689c109f356"
+  ]
+ },
+ "candidates": 102,
+ "found": [
+  {
+   "file": "config/company_registry.csv",
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  }
+ ],
+ "runs": [
+  {
+   "files": 102,
+   "seconds": 2,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 51,
+   "seconds": 9,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 51,
+   "seconds": 2,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 25,
+   "seconds": 9,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 26,
+   "seconds": 2,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 13,
+   "seconds": 8,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 13,
+   "seconds": 2,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 6,
+   "seconds": 8,
+   "outcome": "SAME",
+   "moved_fields": []
+  },
+  {
+   "files": 7,
+   "seconds": 2,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 3,
+   "seconds": 8,
+   "outcome": "SAME",
+   "moved_fields": [],
+   "perturbed": [
+    "catalog/r6/D02_item_8_category_mention_v4.json",
+    "catalog/r6/text_business_candidates_v1.json",
+    "catalog/r6/text_results_v2_policy.json"
+   ]
+  },
+  {
+   "files": 4,
+   "seconds": 2,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv"
+  },
+  {
+   "files": 2,
+   "seconds": 3,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv",
+   "perturbed": [
+    "config/company_registry.csv",
+    "config/normal_candidate_sources_v1.json"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 3,
+   "outcome": "BUILD_REFUSED",
+   "error": "vnext.normal_source_authority.NormalSourceAuthorityError: TRUSTED_SAVED_BASELINE_BYTES_CHANGED:config/company_registry.csv",
+   "perturbed": [
+    "config/company_registry.csv"
+   ]
+  },
+  {
+   "files": 1,
+   "seconds": 9,
+   "outcome": "SAME",
+   "moved_fields": [],
+   "perturbed": [
+    "config/normal_candidate_sources_v1.json"
+   ]
+  },
+  {
+   "files": 2,
+   "seconds": 8,
+   "outcome": "SAME",
+   "moved_fields": [],
+   "perturbed": [
+    "config/normal_fiscal_year_labels_v1.json",
+    "config/normal_period_selection_v1.json"
+   ]
+  }
+ ],
+ "not_perturbed": []
+}

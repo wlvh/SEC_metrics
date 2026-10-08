@@ -17,7 +17,10 @@ def main(argv=None):
     sub = parser.add_subparsers(dest='command', required=True)
     run = sub.add_parser('run', help='Discover SEC sources, compute and export one configured company')
     run.add_argument('--company', required=True)
-    run.add_argument('--period', default='latest-complete-fy', choices=['latest-complete-fy'])
+    run.add_argument('--period', default='latest-complete-fy', choices=['latest-complete-fy', 'fiscal-years'])
+    run.add_argument('--fiscal-year-start', type=int)
+    run.add_argument('--fiscal-year-end', type=int)
+    run.add_argument('--source-root', type=Path, help='Saved SEC sources for current mode or prepared history; never fetches when supplied')
     run.add_argument('--work-dir', required=True, type=Path)
     run.add_argument('--output-dir', required=True, type=Path)
     run.add_argument('--metric', action='append', help='Debug subset; summary retains all configured statuses')
@@ -78,6 +81,13 @@ def main(argv=None):
     period = compute.add_mutually_exclusive_group()
     period.add_argument('--report-end')
     period.add_argument('--fiscal-year', type=int)
+    compute_range = sub.add_parser('compute-range', help='Compute one issuer fiscal-year range from one installed source version')
+    compute_range.add_argument('--state-root', required=True, type=Path)
+    compute_range.add_argument('--trust-root', required=True, type=Path)
+    compute_range.add_argument('--company', required=True)
+    compute_range.add_argument('--metric', required=True, action='append')
+    compute_range.add_argument('--fiscal-year-start', required=True, type=int)
+    compute_range.add_argument('--fiscal-year-end', required=True, type=int)
     results = sub.add_parser('export-results', help='Export native rows, evidence and replay inputs')
     results.add_argument('--state-root', required=True, type=Path)
     results.add_argument('--output-root', required=True, type=Path)
@@ -91,17 +101,23 @@ def main(argv=None):
     results.add_argument('--c02-review-trust-root', type=Path)
     view = sub.add_parser('results', help='Read all native company metric/period references')
     view.add_argument('--state-root', required=True, type=Path)
-    view.add_argument('--trust-root', required=True, type=Path)
+    view.add_argument('--trust-root', type=Path, help='Required only for retained native source histories')
     view.add_argument('--company', required=True)
     view.add_argument('--defects-file', type=Path)
     view.add_argument('--runtime-root', action='append', type=Path, default=[])
+    view.add_argument('--output-root', type=Path,
+                      help='Write daily CSV/JSON from saved records; no calculation replay or attempt copy')
     args = parser.parse_args(argv)
     start = time.monotonic()
     if args.command == 'run':
         from vnext.company_local import run_local
+        if args.period == 'latest-complete-fy' and any(value is not None for value in (
+                args.fiscal_year_start, args.fiscal_year_end)):
+            parser.error('Fiscal-year range arguments require --period fiscal-years')
         result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
             period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
-            sec_allowance=args.sec_allowance)
+            sec_allowance=args.sec_allowance, fiscal_year_start=args.fiscal_year_start,
+            fiscal_year_end=args.fiscal_year_end, source_root=args.source_root)
     elif args.command == 'acquire':
         from vnext.company_local import absolute, configure_task, configured_scope, _invoke
         from vnext.company_handoff import external, locked_company
@@ -134,9 +150,14 @@ def main(argv=None):
             from vnext.historical_source_acquisition import declared_frame
             declaration = lambda source, company: declared_frame(
                 repo_root=source, company_id=company, years=args.history_years)
-        result = export_company(source_root=args.source_root, output_root=args.output_root,
-                                trust_root=args.trust_root, company_id=args.company,
-                                metric_ids=args.metric, declared_frame=declaration)
+        from vnext.historical_run_replay import run_checks_replay_once
+        # Both consumers may receive a complete saved acquisition history.
+        # Every new state still executes the original frozen checkpoint;
+        # pure ledger work and identical-state replays reuse the existing scope.
+        with run_checks_replay_once():
+            result = export_company(source_root=args.source_root, output_root=args.output_root,
+                                    trust_root=args.trust_root, company_id=args.company,
+                                    metric_ids=args.metric, declared_frame=declaration)
     elif args.command == 'export-processing':
         from vnext.company_processing import export_processing
         result = export_processing(installed_root=args.installed_root, output_root=args.output_root,
@@ -149,7 +170,13 @@ def main(argv=None):
     elif args.command == 'install-runtime':
         from vnext.company_runtime_install import install_runtime
         result = install_runtime(output_root=args.output_root, kind=args.kind)
+    elif args.command == 'results' and (args.state_root/'company-task.json').is_file():
+        from vnext.company_result_view import read_company_results
+        result = read_company_results(state_root=args.state_root, company_id=args.company,
+                                     defects_file=args.defects_file, output_root=args.output_root)
     else:
+        if args.trust_root is None:
+            parser.error('Retained native state requires --trust-root and its original runtime')
         from vnext.company_source_authority import TRUST_VARIABLE
         os.environ[TRUST_VARIABLE] = str(args.trust_root)
         if getattr(args, 'c02_review_trust_root', None):
@@ -162,6 +189,13 @@ def main(argv=None):
             from vnext.company_handoff import install_company
             result = install_company(package_root=args.package_root, state_root=args.state_root,
                                      company_id=args.company)
+        elif args.command == 'compute-range':
+            from vnext.company_worker_guard import install_worker_guards
+            install_worker_guards(ROOT)
+            from vnext.company_compute import compute_company_range
+            result = compute_company_range(state_root=args.state_root, company_id=args.company,
+                metric_ids=args.metric, fiscal_year_start=args.fiscal_year_start,
+                fiscal_year_end=args.fiscal_year_end)
         elif args.command == 'import-c02-review':
             from vnext.company_worker_guard import install_worker_guards
             install_worker_guards(ROOT)
@@ -181,9 +215,14 @@ def main(argv=None):
                                      processing_source_runtime=args.processing_source_runtime,
                                      processing_source_trust=args.processing_source_trust_root)
         elif args.command == 'results':
-            from vnext.company_result_view import read_company_results
-            result = read_company_results(state_root=args.state_root, company_id=args.company,
-                                         defects_file=args.defects_file, runtime_roots=args.runtime_root)
+            if args.output_root:
+                from vnext.company_daily_results import write_daily_results
+                result = write_daily_results(state_root=args.state_root, output_root=args.output_root,
+                    company_id=args.company, defects_file=args.defects_file, runtime_roots=args.runtime_root)
+            else:
+                from vnext.company_result_view import read_company_results
+                result = read_company_results(state_root=args.state_root, company_id=args.company,
+                                             defects_file=args.defects_file, runtime_roots=args.runtime_root)
         else:
             from vnext.company_result_export import export_results
             result = export_results(state_root=args.state_root, output_root=args.output_root,
@@ -195,10 +234,10 @@ def main(argv=None):
         return 0 if result['status'] == 'FLOW_COMPLETED' else 2
     if args.command == 'acquire':
         return 0 if result.get('status') == 'SOURCES_READY' else 2
-    if args.command == 'compute':
+    if args.command in {'compute', 'compute-range'}:
         return 0 if all(m['status'] in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
                         for m in result['metrics']) else 2
-    return 2 if result.get('status') == 'EXPORTED_PARTIAL' else 0
+    return 2 if result.get('status') in {'EXPORTED_PARTIAL','READ_PARTIAL'} else 0
 
 
 if __name__ == '__main__':

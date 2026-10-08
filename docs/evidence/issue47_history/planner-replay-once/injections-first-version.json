@@ -1,0 +1,161 @@
+{
+ "A_BLOCK_IS_SHARED_ACROSS_THREADS": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_block_is_for_one_thread",
+  "failed_cases": [
+   "test_a_block_is_for_one_thread"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 158
+ },
+ "A_NESTED_BLOCK_STARTS_ITS_OWN_MEMO": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_block_inside_another_keeps_the_outer_memo",
+  "failed_cases": [
+   "test_a_block_inside_another_keeps_the_outer_memo",
+   "test_a_block_is_for_one_thread"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 159
+ },
+ "CONTROL": {
+  "returncode": 0,
+  "seconds": 156
+ },
+ "ENTRIES_WITHOUT_DIRECTORIES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_directory_beside_another_capture_is_replayed_again",
+  "failed_cases": [
+   "test_a_directory_beside_another_capture_is_replayed_again"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 153
+ },
+ "ENTRIES_WITHOUT_THE_CHANGE_TIME": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_another_capture_rewritten_with_its_time_put_back_is_replayed_again",
+  "failed_cases": [
+   "test_another_capture_rewritten_with_its_time_put_back_is_replayed_again"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 155
+ },
+ "KEY_WITHOUT_THE_CHECKPOINT_AND_BASELINE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_another_input_is_another_state",
+  "failed_cases": [
+   "test_another_input_is_another_state"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 156
+ },
+ "KEY_WITHOUT_THE_CODE_MANIFEST": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_code_manifest_is_part_of_the_state",
+  "failed_cases": [
+   "test_the_code_manifest_is_part_of_the_state"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 156
+ },
+ "KEY_WITHOUT_THE_EVIDENCE_ENTRIES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_another_capture_rewritten_with_its_time_put_back_is_replayed_again",
+  "failed_cases": [
+   "test_a_directory_beside_another_capture_is_replayed_again",
+   "test_a_second_link_to_another_capture_is_replayed_again",
+   "test_a_state_that_moves_during_the_replay_is_not_stored",
+   "test_another_capture_rewritten_with_its_time_put_back_is_replayed_again"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 159
+ },
+ "KEY_WITHOUT_THE_REGISTRY": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_registry_change_is_replayed_again",
+  "failed_cases": [
+   "test_a_registry_change_is_replayed_again",
+   "test_a_symlinked_config_directory_is_refused_as_the_replay_refuses"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 156
+ },
+ "REGISTRY_READ_THROUGH_ITS_ALIASES": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_symlinked_config_directory_is_refused_as_the_replay_refuses",
+  "failed_cases": [
+   "test_a_symlinked_config_directory_is_refused_as_the_replay_refuses"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 157
+ },
+ "STORED_ALTHOUGH_THE_STATE_MOVED_DURING_THE_REPLAY": {
+  "caught_by_the_case_written_for_it": false,
+  "expected_case": "test_a_state_that_moves_during_the_replay_is_not_stored",
+  "failed_cases": [],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 0,
+  "seconds": 157
+ },
+ "THE_FRAME_HAS_NO_BLOCK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_one_replay_per_frame_and_the_same_frame",
+  "failed_cases": [
+   "test_one_replay_per_frame_and_the_same_frame"
+  ],
+  "file": "scripts/vnext/historical_source_acquisition.py",
+  "returncode": 1,
+  "seconds": 131
+ },
+ "THE_FROZEN_REPLAY_IS_NOT_PUT_BACK_ON_FAILURE": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_block_puts_the_frozen_replay_back",
+  "failed_cases": [
+   "test_the_block_puts_the_frozen_replay_back",
+   "test_the_code_manifest_is_part_of_the_state"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 157
+ },
+ "THE_KEY_IS_SET_BEFORE_THE_REPLAY": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_refused_replay_is_not_remembered",
+  "failed_cases": [
+   "test_a_refused_replay_is_not_remembered"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 159
+ },
+ "THE_PLAN_HAS_NO_BLOCK": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_a_plan_alone_replays_once",
+  "failed_cases": [
+   "test_a_plan_alone_replays_once"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 157
+ },
+ "THE_SHARED_ANSWER_IS_HANDED_OUT": {
+  "caught_by_the_case_written_for_it": true,
+  "expected_case": "test_the_answer_is_a_copy",
+  "failed_cases": [
+   "test_the_answer_is_a_copy"
+  ],
+  "file": "scripts/vnext/normal_history_plan.py",
+  "returncode": 1,
+  "seconds": 160
+ },
+ "all_caught": false
+}

@@ -1,0 +1,34 @@
+test_an_alias_in_another_item_does_not_make_the_item_carry_it (tests.vnext.test_e01_eight_o_one_reading.EachFilingSpecificStepTest.test_an_alias_in_another_item_does_not_make_the_item_carry_it) ... ok
+test_pfizer_heads_its_item_results_of_other_events (tests.vnext.test_e01_eight_o_one_reading.EachFilingSpecificStepTest.test_pfizer_heads_its_item_results_of_other_events)
+The first extraction looked for 'Other Events' and read this item as ... ok
+test_the_item_ends_before_item_9_01 (tests.vnext.test_e01_eight_o_one_reading.EachFilingSpecificStepTest.test_the_item_ends_before_item_9_01) ... ok
+test_each_item_re_derives_from_the_saved_bytes (tests.vnext.test_e01_eight_o_one_reading.TheCommittedReadingSaysWhatTheFilingsSayTest.test_each_item_re_derives_from_the_saved_bytes) ... ok
+test_every_judgement_is_about_a_filing_a_window_holds (tests.vnext.test_e01_eight_o_one_reading.TheCommittedReadingSaysWhatTheFilingsSayTest.test_every_judgement_is_about_a_filing_a_window_holds) ... ok
+test_every_withheld_window_is_one_this_reading_also_sees_an_alias_in (tests.vnext.test_e01_eight_o_one_reading.TheCommittedReadingSaysWhatTheFilingsSayTest.test_every_withheld_window_is_one_this_reading_also_sees_an_alias_in) ... ok
+test_the_identity_was_recorded_when_the_reading_was_made (tests.vnext.test_e01_eight_o_one_reading.TheCommittedReadingSaysWhatTheFilingsSayTest.test_the_identity_was_recorded_when_the_reading_was_made) ... ok
+test_the_verdicts (tests.vnext.test_e01_eight_o_one_reading.TheCommittedReadingSaysWhatTheFilingsSayTest.test_the_verdicts) ... ok
+test_it_imports_none_of_the_route_s_event_modules (tests.vnext.test_e01_eight_o_one_reading.TheReaderIsNotTheRouteTest.test_it_imports_none_of_the_route_s_event_modules) ... ok
+test_accepted_where_no_reading_moves_the_count (tests.vnext.test_e01_eight_o_one_reading.TheRegisterTakesE01FromThisReadingOnlyTest.test_accepted_where_no_reading_moves_the_count) ... ok
+test_pfizer_s_defect_withdraws_the_published_zero_and_releases_only_the_repair (tests.vnext.test_e01_eight_o_one_reading.TheRegisterTakesE01FromThisReadingOnlyTest.test_pfizer_s_defect_withdraws_the_published_zero_and_releases_only_the_repair) ... ok
+test_an_unjudged_item_makes_the_reading_incomplete_whatever_the_counts (tests.vnext.test_e01_eight_o_one_reading.TheVerdictDoesNotRestOnTheOpenDecisionTest.test_an_unjudged_item_makes_the_reading_incomplete_whatever_the_counts) ... ok
+test_counts_are_in_the_route_s_unit (tests.vnext.test_e01_eight_o_one_reading.TheVerdictDoesNotRestOnTheOpenDecisionTest.test_counts_are_in_the_route_s_unit)
+One per matched item: a filing with a 1.01 and an admitted 8.01 counts twice. ... ok
+test_match_only_when_every_reading_gives_the_published_count (tests.vnext.test_e01_eight_o_one_reading.TheVerdictDoesNotRestOnTheOpenDecisionTest.test_match_only_when_every_reading_gives_the_published_count) ... ok
+test_the_judged_reading_needs_the_alias_as_well (tests.vnext.test_e01_eight_o_one_reading.TheVerdictDoesNotRestOnTheOpenDecisionTest.test_the_judged_reading_needs_the_alias_as_well) ... ok
+test_e01_paid_reading (unittest.loader._FailedTest.test_e01_paid_reading) ... ERROR
+
+======================================================================
+ERROR: test_e01_paid_reading (unittest.loader._FailedTest.test_e01_paid_reading)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_e01_paid_reading
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'tests.vnext.test_e01_paid_reading'
+
+
+----------------------------------------------------------------------
+Ran 16 tests in 1.723s
+
+FAILED (errors=1)

@@ -1,0 +1,107 @@
+{
+ "record_type": "ISSUE_47_SEMANTIC_LITERAL_REPAIR",
+ "found_by": "a local run of tools/check_vnext_semantics.py before a commit, 2026-09-29; CI runs no repository-wide semantic audit",
+ "hits_before": [
+  {
+   "file": "scripts/vnext/historical_board_composition.py",
+   "lines": [
+    65,
+    392,
+    513,
+    515,
+    882,
+    894
+   ],
+   "literal": "independent director",
+   "what": "the lead-director role in four patterns, a word set whose source listed the two words side by side, and a docstring quoting a card's designation"
+  },
+  {
+   "file": "scripts/vnext/historical_capacity_results.py",
+   "line": 1,
+   "literal": "capacity utilization",
+   "what": "module docstring quoting the definition's B13 heading"
+  },
+  {
+   "file": "scripts/vnext/historical_event_items.py",
+   "line": 1,
+   "literal": "Item 1.01 / Item 5.02",
+   "what": "module docstring examples"
+  },
+  {
+   "file": "scripts/vnext/historical_lodging_results.py",
+   "line": 1,
+   "literal": "occupancy / revpar",
+   "what": "module docstring"
+  }
+ ],
+ "repair": {
+  "catalog": "catalog/r6/C02_board_composition_terms_v1.json holds the role phrase; the reader refuses a record of another type, metric or schema and a phrase that is not lower-case words and single spaces, since it goes into four patterns unescaped",
+  "word_set": "the designation words are listed in another order; a frozenset has none",
+  "docstrings": "reworded without the phrases"
+ },
+ "module_values_compared": {
+  "how": "every module-level value of the four modules, docstrings aside, before and after: compiled patterns by pattern text and flags, sets by members, functions by bytecode and non-docstring constants (fingerprint.py, run from a scratch directory)",
+  "result": {
+   "vnext.historical_board_composition": {
+    "values_before": 130,
+    "values_after": 133,
+    "added": [
+     "_LEAD_ROLE",
+     "_TERMS_PATH",
+     "_lead_role"
+    ],
+    "removed": [],
+    "changed": [
+     "_other_organization"
+    ]
+   },
+   "vnext.historical_capacity_results": {
+    "values_before": 10,
+    "values_after": 10,
+    "added": [],
+    "removed": [],
+    "changed": []
+   },
+   "vnext.historical_event_items": {
+    "values_before": 32,
+    "values_after": 32,
+    "added": [],
+    "removed": [],
+    "changed": []
+   },
+   "vnext.historical_lodging_results": {
+    "values_before": 10,
+    "values_after": 10,
+    "added": [],
+    "removed": [],
+    "changed": []
+   }
+  },
+  "the_one_changed_value": "_other_organization: identical bytecode; two frozenset constants print their members in another order because set iteration order depends on the process's hash seed; with the members sorted the constants are equal",
+  "patterns_that_carry_the_catalog_phrase": [
+   "_CHAIR_TAIL",
+   "_NOT_DIRECTOR_INDEPENDENCE",
+   "_LEADERSHIP[0]",
+   "_LEADERSHIP[1]"
+  ]
+ },
+ "after": {
+  "tools/check_vnext_semantics.py": "PASS (the run rewrites the tracked outputs/semantic_audit_receipt.json, which is base's file and was restored)",
+  "tests.vnext.test_historical_board_composition_filings": "OK on the ten saved governance filings",
+  "tests.vnext.test_semantic_audit.test_repository_vnext_and_bridge_boundary_is_clean": "OK (it failed before this repair)",
+  "requirement_snapshot": "re-minted: 46 rule files; the Requirement closure moves, as every rule-file change does"
+ },
+ "not_this_repair": {
+  "tests.vnext.test_semantic_audit.test_fixed_openai_transport_is_narrowly_allowed": "fails on the base (8fc4f5d4) in a worktree of its own, with tools/check_vnext_semantics.py, the test and scripts/vnext/ai_adapter.py identical to the base's here; it writes a synthetic adapter and the scanner reports 'open' on it. Issue #28's code, not changed here."
+ },
+ "guards_added": {
+  "tests.vnext.test_historical_business_literals": "runs the audit's own per-file check on #47's files (the rule files the mint tool records and the modules and tools named for the history work, within the audit's reach); in CI's fast tier",
+  "tests.vnext.test_historical_board_composition.TheLeadRoleIsReadFromTheCatalog": "the four patterns carry the catalog's phrase; five kinds of bad record are refused"
+ },
+ "fault_injections": "injections.json: 4 of 4 caught by the case named for each",
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

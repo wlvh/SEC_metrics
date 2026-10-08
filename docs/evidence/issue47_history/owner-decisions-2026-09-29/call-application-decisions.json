@@ -1,0 +1,38 @@
+{
+ "record_type": "ISSUE_47_OWNER_DECISIONS",
+ "schema_version": 1,
+ "recorded_by": "the executor, transcribing; not a GitHub comment by the owner",
+ "source": "the owner's answers in the Claude Code session on 2026-09-29 (UTC) to the executor's questions on items 1, 3 and 5 of the model call application (docs/evidence/issue47_history/model-egress/call-application.md)",
+ "what_this_record_is_not": "a model-call allowance. The approval is the owner's own comment on issue 47 posting the approval body that propose_model_allowance.py writes after the offline verification is re-sealed; no gate reads this record. Not a grant of Ready, merge, adoption, deployment or active switch",
+ "questions_and_answers_verbatim": [
+  {
+   "question": "模型调用批哪几组？（计量：D04 16 次、参考输入约 257 万 token；E01 7 次、约 4.3 万；D02 12 次、约 41.8 万。执行顺序 E01→D02→D04；遇到 402、结果未知、用量对不上等停止条件时，整份许可立即停下。）",
+   "answer": "三组全批 [35,35,0] (Recommended)"
+  },
+  {
+   "question": "最新年份的 D04（66 次请求）#28 已经对同样的申报发过。#47 怎么处理？",
+   "answer": "这个你详细说说"
+  },
+  {
+   "question": "最新年份的 D04（10 个位置，#28 已用同一合同审过、尚未被接受）怎么处理？",
+   "answer": "A 等 #28 采纳后引用 (Recommended)",
+   "asked_after": "the executor's explanation: #28 has reviewed the ten latest-year filings with the same request contract (ten complete candidates, each 'no doubt disclosed within the defined scope'), not semantically accepted, a scoped independent review of #28's D04 module found a blocker, no production permission; #47 cannot use #28's answers directly (request identities differ in 43 bookkeeping leaves although the source units are equal, and the N1 fix requires a LIVE registration to carry counted calls in #47's own granted ledger); options A (wait for #28's adoption and reference its published results; no spend), B (re-review: 66 requests for nine companies, 11,056,361 reference input tokens measured with zero calls, about 3.6 times the 35 approved requests; the same method sampled a second time, not an independent check; JPMorgan +27 later) and C (import #28's paid answers under #47; a new cross-Issue path around the protection just fixed, needing another security review)"
+  },
+  {
+   "question": "E01 确认并购公告时，要不要读 8-K 的附件（EX-99 新闻稿）？",
+   "answer": "只看条目自身文字 (Recommended)"
+  }
+ ],
+ "decisions": {
+  "ITEM_1_GRANTS": "all three groups: D04 16, E01 7, D02 12, cap [35, 35, 0], in one approval with one ledger. The executor runs E01 first, then D02, then D04; any stop condition (HTTP 402, an unknown outcome, usage that does not match the reference count, and the rest of the stop set) stops the whole allowance",
+  "ITEM_3_LATEST_YEAR_D04": "option A: the latest-year D04 positions wait until #28's D04 results are accepted and adopted, and #47 then references #28's published results; #47 sends no calls for them and imports none of #28's raw answers. Until then they are pending on #28, not on #47's own calls",
+  "ITEM_5_E01_ATTACHMENTS": "E01 confirms from the item's own text only. A window whose items cannot be settled from their own text is withheld by name (HISTORICAL_E01_ITEM_TEXT_DOES_NOT_SETTLE_IT) - a correct refusal, not a delivered value; no EX-99 exhibit is requested"
+ },
+ "what_still_has_to_happen_before_any_call": [
+  "the offline verification of the call path is re-sealed (running from commit efbeecbd)",
+  "propose_model_allowance.py writes the approval body naming the new receipt",
+  "the owner posts that body as the owner's own comment on issue 47",
+  "the owner adds a DeepSeek key to the environment settings when the executor asks (recommended: a key dedicated to this run, only this run's credit available in the account, revoked afterwards); it takes effect in a new session"
+ ],
+ "production_authorized": false
+}

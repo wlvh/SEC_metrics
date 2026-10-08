@@ -1,0 +1,267 @@
+{
+  "public_code": "72394740c3140b72119ae4627a6ce1fd5257a29e",
+  "company_cli": "tools/vnext_company.py",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "task_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-ordinary-history-range-20261007",
+  "actual_rows": [
+    {
+      "metric_id": "B10",
+      "fiscal_year": "2024",
+      "value": "69.8",
+      "unit": "percent"
+    },
+    {
+      "metric_id": "B11",
+      "fiscal_year": "2024",
+      "value": "128.23",
+      "unit": "USD"
+    },
+    {
+      "metric_id": "B10",
+      "fiscal_year": "2025",
+      "value": "69.3",
+      "unit": "percent"
+    },
+    {
+      "metric_id": "B11",
+      "fiscal_year": "2025",
+      "value": "128.8",
+      "unit": "USD"
+    }
+  ],
+  "operations": [
+    {
+      "label": "history-range-first",
+      "elapsed_seconds": 22.5642154160887,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "fiscal_year": 2024,
+          "status": "CANDIDATE_READY",
+          "calculation_performed": true,
+          "reason": null
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": 2024,
+          "status": "CANDIDATE_READY",
+          "calculation_performed": true,
+          "reason": null
+        },
+        {
+          "metric_id": "B10",
+          "fiscal_year": 2025,
+          "status": "CANDIDATE_READY",
+          "calculation_performed": true,
+          "reason": null
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": 2025,
+          "status": "CANDIDATE_READY",
+          "calculation_performed": true,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "label": "history-range-repeat",
+      "elapsed_seconds": 3.073775334050879,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "fiscal_year": 2024,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "calculation_performed": false,
+          "reason": null
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": 2024,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "calculation_performed": false,
+          "reason": null
+        },
+        {
+          "metric_id": "B10",
+          "fiscal_year": 2025,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "calculation_performed": false,
+          "reason": null
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": 2025,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "calculation_performed": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "label": "history-range-independent-read",
+      "elapsed_seconds": 0.9644810419995338,
+      "exit_code": 0,
+      "status": null,
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "fiscal_year": null,
+          "status": null,
+          "calculation_performed": null,
+          "reason": null
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": null,
+          "status": null,
+          "calculation_performed": null,
+          "reason": null
+        },
+        {
+          "metric_id": "B10",
+          "fiscal_year": null,
+          "status": null,
+          "calculation_performed": null,
+          "reason": null
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": null,
+          "status": null,
+          "calculation_performed": null,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "label": "history-range-current-mode",
+      "elapsed_seconds": 7.327917667105794,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "fiscal_year": null,
+          "status": "CANDIDATE_READY",
+          "calculation_performed": true,
+          "reason": null
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": null,
+          "status": "CANDIDATE_READY",
+          "calculation_performed": true,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "label": "history-range-missing-year",
+      "elapsed_seconds": 1.8259354159235954,
+      "exit_code": 2,
+      "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "fiscal_year": 2025,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "calculation_performed": false,
+          "reason": null
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": 2025,
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "calculation_performed": false,
+          "reason": null
+        },
+        {
+          "metric_id": "B10",
+          "fiscal_year": 2026,
+          "status": "INPUT_OR_EXECUTION_FAILED",
+          "calculation_performed": null,
+          "reason": "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": 2026,
+          "status": "INPUT_OR_EXECUTION_FAILED",
+          "calculation_performed": null,
+          "reason": "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS"
+        }
+      ]
+    },
+    {
+      "label": "history-range-read-after-missing",
+      "elapsed_seconds": 0.9614984160289168,
+      "exit_code": 0,
+      "status": null,
+      "metrics": [
+        {
+          "metric_id": "B10",
+          "fiscal_year": null,
+          "status": null,
+          "calculation_performed": null,
+          "reason": null
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": null,
+          "status": null,
+          "calculation_performed": null,
+          "reason": null
+        },
+        {
+          "metric_id": "B10",
+          "fiscal_year": null,
+          "status": null,
+          "calculation_performed": null,
+          "reason": null
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": null,
+          "status": null,
+          "calculation_performed": null,
+          "reason": null
+        },
+        {
+          "metric_id": "B10",
+          "fiscal_year": null,
+          "status": null,
+          "calculation_performed": null,
+          "reason": null
+        },
+        {
+          "metric_id": "B11",
+          "fiscal_year": null,
+          "status": null,
+          "calculation_performed": null,
+          "reason": null
+        }
+      ]
+    }
+  ],
+  "repeat_case_factory_forbidden": true,
+  "result_files_and_pointers_preserved_on_repeat_and_failure": true,
+  "ledger_unchanged_sha256": "a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262",
+  "program_tree_copies": [],
+  "source_tree_copies": [],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "native_runs": 0,
+  "full_five_year_business_accepted": false,
+  "remaining_consumer_gap": {
+    "missing_year_read": "Public no-result JSON/CSV reader omits requested FY2026, although run CSV retains it; reported to public owner, no recompute needed for fix.",
+    "version_dependencies": "Public selected factory currently tracks producer file only; historical selection/DEI/fiscal policies still need explicit dependency configuration.",
+    "main": "History selector/case and new range adapter are not in main; only necessary family integration proven on historical branch."
+  }
+}

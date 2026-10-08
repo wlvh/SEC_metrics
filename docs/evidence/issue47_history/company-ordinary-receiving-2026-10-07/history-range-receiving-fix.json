@@ -1,0 +1,32 @@
+{
+  "public_code": "ce26b854ba924ca06102e27df40f7c4623905cfb",
+  "read_seconds": 0.9584375000558794,
+  "missing_requested_fiscal_year": 2026,
+  "missing_rows": 2,
+  "missing_value_and_dates_empty": true,
+  "original_state_files_unchanged": 86,
+  "no_updates_or_recalculation": true,
+  "historical_processing_files": [
+    "scripts/vnext/normal_period_selection.py",
+    "scripts/vnext/normal_history_catalog.py",
+    "scripts/vnext/historical_annual_input.py",
+    "scripts/vnext/historical_dei.py",
+    "scripts/vnext/historical_fiscal_labels.py",
+    "scripts/vnext/fiscal_year_labels.py",
+    "scripts/vnext/normal_annual_input_v2.py",
+    "scripts/vnext/normal_governance_input.py",
+    "scripts/vnext/historical_amendment_admission.py",
+    "scripts/vnext/annual_amendment_scope.py",
+    "config/normal_period_selection_v1.json",
+    "config/normal_fiscal_year_labels_v1.json",
+    "config/annual_amendment_scope_v1.json"
+  ],
+  "processing_files_exist": true,
+  "prior_saved_records_not_resigned": "They retain the originally saved program/version; next update uses the explicit dependency configuration.",
+  "rules_root_increment": "B01/B02 received only; other families retain current defaults. No repeat of the accepted two-year B01 verification.",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

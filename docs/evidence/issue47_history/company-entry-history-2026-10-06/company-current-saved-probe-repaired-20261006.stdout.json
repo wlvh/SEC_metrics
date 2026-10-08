@@ -1,0 +1,100 @@
+{
+  "status": "PASSED",
+  "stages": [
+    {
+      "stage": "runtime",
+      "command": [
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/tools/vnext_company.py",
+        "install-runtime",
+        "--kind",
+        "ordinary",
+        "--output-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/program"
+      ],
+      "exit_code": 0,
+      "seconds": 2.2770677090156823
+    },
+    {
+      "stage": "prepare",
+      "command": [
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/tools/vnext_company.py",
+        "export",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--output-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/package",
+        "--trust-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/trust",
+        "--company",
+        "macys",
+        "--metric",
+        "B01"
+      ],
+      "exit_code": 0,
+      "seconds": 37.66162366606295
+    },
+    {
+      "stage": "install",
+      "command": [
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/program/tools/vnext_company.py",
+        "install",
+        "--package-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/package",
+        "--state-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/state",
+        "--trust-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/trust",
+        "--company",
+        "macys"
+      ],
+      "exit_code": 0,
+      "seconds": 14.514460457954556
+    },
+    {
+      "stage": "compute",
+      "command": [
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/program/tools/vnext_company.py",
+        "compute",
+        "--state-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/state",
+        "--trust-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/trust",
+        "--company",
+        "macys",
+        "--metric",
+        "B01"
+      ],
+      "exit_code": 0,
+      "seconds": 194.6681436249055
+    },
+    {
+      "stage": "export",
+      "command": [
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local/work/issue47-venv/bin/python",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/tools/vnext_company.py",
+        "export-results",
+        "--state-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/state",
+        "--output-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/output",
+        "--trust-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/trust",
+        "--company",
+        "macys",
+        "--runtime-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-current-probe-repaired-20261006/program"
+      ],
+      "exit_code": 0,
+      "seconds": 55.05574195808731
+    }
+  ],
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

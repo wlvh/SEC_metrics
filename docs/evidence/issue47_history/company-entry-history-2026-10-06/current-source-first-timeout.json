@@ -1,0 +1,14 @@
+{
+ "status": "FAILED_BEFORE_COMPUTATION",
+ "stage": "current-source-preparation",
+ "seconds_limit": 600,
+ "timeout_unchanged": true,
+ "new_business_calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "reason": "Ordinary company export over1547-row historical acquisition was not inside existing state-keyed replay scope; actual child was stopped by the probe timeout.",
+ "repair": "Same original bounded replay scope now surrounds both current and historical company export. No frozen checker source changed."
+}

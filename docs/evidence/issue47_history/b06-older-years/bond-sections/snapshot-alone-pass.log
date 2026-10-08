@@ -1,0 +1,16 @@
+test_a_module_this_generation_imports_directly_must_be_named (tests.vnext.test_historical_requirement_snapshot.ExecutionAuthorityClosureTest.test_a_module_this_generation_imports_directly_must_be_named)
+The check that a D02 Run needed and the module-scope one did not give. ... ok
+test_the_historical_authority_names_everything_it_imports (tests.vnext.test_historical_requirement_snapshot.ExecutionAuthorityClosureTest.test_the_historical_authority_names_everything_it_imports) ... ok
+test_the_inherited_list_is_the_one_that_was_short (tests.vnext.test_historical_requirement_snapshot.ExecutionAuthorityClosureTest.test_the_inherited_list_is_the_one_that_was_short)
+Pins where the gap came from, so the fix is not mistaken for noise. ... ok
+test_one_changed_rule_byte_is_enough_to_fail_the_check (tests.vnext.test_historical_requirement_snapshot.HistoricalRequirementSnapshotTest.test_one_changed_rule_byte_is_enough_to_fail_the_check)
+And the check is byte-sensitive rather than a file-existence test. ... ok
+test_the_committed_snapshot_matches_the_current_tree (tests.vnext.test_historical_requirement_snapshot.HistoricalRequirementSnapshotTest.test_the_committed_snapshot_matches_the_current_tree)
+Fails the moment a rule file moves without ``--mint`` being re-run. ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 15.731s
+
+OK
+issue_47_v1 snapshot matches the current tree
+issue_47_v1 snapshot matches the current tree

@@ -1,0 +1,73 @@
+{
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "production_authorized": false,
+ "record_type": "ISSUE_47_PART_III_STATEMENT_INPUT_REVIEW",
+ "status": "REVIEW_DONE_DECISION_NOT_TAKEN",
+ "superseded_in_part": "2026-09-26: the '13 coordinates, one positive' scope here is stale. Five of the thirteen now answer structurally, B01/B03 answer through the approved successor income input, and the predecessor FY2024 amendment is now classified (historical_amendment_note), so there are two positives. The current scope is statement-values-request.json: 8 coordinates at 2024-12-31 and 6 at 2025-12-31. The recommendation is per-amendment, evidence-constrained admission, not a two-condition rule for future Part III amendments.",
+ "the_amendment": {
+  "accession": "0001140361-26-016758",
+  "cik": "2041610",
+  "company_id": "paramount_skydance_paramount_global",
+  "document_name": "ef20071103_10ka.htm",
+  "filing_date": "2026-04-24",
+  "form": "10-K/A",
+  "target": {
+   "accession": "0002041610-26-000011",
+   "document_name": "psky-20251231.htm",
+   "filing_date": "2026-02-25",
+   "form": "10-K"
+  }
+ },
+ "the_decision_this_needs": {
+  "not_taken_unilaterally": "no policy file or clearing rule was changed by this review.",
+  "recommended_option": {
+   "cost": "a revision to config/annual_amendment_scope_v1.json and the two-line clearing rule in annual_amendment_scope.py, through the existing revision mechanism, with the historical semantics preserved.",
+   "effect_if_taken": "13 coordinates on this period stop being refused. It does not make them correct - they would then have to run, and content acceptance is separate as everywhere else.",
+   "id": "CONDITIONAL_CLEARING",
+   "what": "let a Part III addition clear ORIGINAL_STATEMENT_VALUES only when both mechanical proofs hold: the no-financial-statement declaration is present, and the amendment carries no native fact outside the governance taxonomy.",
+   "why": "it keeps the standing rule intact - nothing clears automatically, the classification alone still clears nothing - while letting a case that proves itself through. A Part III amendment that did restate something would carry a financial fact and would still be refused."
+  },
+  "the_alternative": {
+   "id": "LEAVE_AS_IS",
+   "what": "keep the refusal and keep the 13 in the denominator with this finding attached",
+   "why_someone_might_prefer_it": "a conditional rule is still a rule written from one amendment. Only one Part III amendment exists in this repository's saved material, so the condition has been tested on a single positive and no negative."
+  },
+  "who": "the owner, because it changes which inputs a metric will accept, which is a correctness standard rather than an implementation choice. The repository's standing rule is that Part III does not AUTOMATICALLY approve a financial or subject-consolidation scope - the word is 'automatically', and this is the non-automatic path."
+ },
+ "three_independent_grounds": [
+  {
+   "and": {
+    "block_index": 76,
+    "quote": "Except as explicitly set forth herein, this Amendment does not otherwise change, modify or update the disclosures in, or exhibits to, the Initial Form 10-K."
+   },
+   "block_index": 75,
+   "ground": "the amendment's own explanatory note",
+   "quote": "...to amend Part III, Items 10, 11, 12, 13 and 14 of the Initial Form 10-K to include the information required by such Items."
+  },
+  {
+   "block_index": 1565,
+   "ground": "an explicit declaration inside the amendment",
+   "note": "the policy already recognises this sentence - it is no_financial_statement_pattern - and it is what names the classification.",
+   "quote": "No financial statements or supplemental data are filed with this Amendment. See Index to Financial Statements and Supplemental Data of the Initial Form 10-K."
+  },
+  {
+   "amendment_non_dei_native_facts": 7,
+   "ground": "what the amendment actually carries, counted rather than argued",
+   "non_dei_facts_are_governance_taxonomy": true,
+   "note": "the scope inspector proves the seven are governance taxonomy. No financial-statement fact is filed with the amendment at all, so there is nothing in it a statement-class metric could read even if it tried.",
+   "original_non_dei_native_facts": 2926
+  }
+ ],
+ "what_this_answers": "The approved policy classifies Paramount's amendment as PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS, clears the event window, does not clear ORIGINAL_STATEMENT_VALUES, and sets original_statement_admission_requires_further_review. That flag is the policy asking for a review; this is the review. It is not the decision.",
+ "what_this_finding_does_not_cover": {
+  "other_part_iii_amendments": "this is about this amendment. Another Part III amendment could restate something, and the policy's caution as a class is not wrong in general.",
+  "subject_continuity": "unrelated and still separately required. Paramount's successor/predecessor question is not answered here.",
+  "the_nine_not_covered_metric_ids": "B06, B13, C02, C03, C04, D01, D02, D03, D04 stay refused whatever the classification, and that is right: Item 13 related-party and Item 10 governance content is exactly what several of them read. This finding does not touch them."
+ },
+ "why_it_matters": "13 coordinates - A05, A06, A07, A08, A10, B01, B02, B03, B04, B05, B07, B08, B09 - are refused on this period. 'Needs further review' is not 'permanently unsupported', so they stay in the denominator."
+}

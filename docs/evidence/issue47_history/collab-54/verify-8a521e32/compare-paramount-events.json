@@ -1,0 +1,409 @@
+{
+ "record_type": "ISSUE_47_COMPANY_HISTORICAL_CONSUMER_CHECK",
+ "company_id": "paramount_skydance_paramount_global",
+ "report_end": "2024-12-31",
+ "positions": [
+  {
+   "metric_id": "C01",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:11c8d0dc26a93fa5237de09a929811fafd6cf3e24fd99d7da1b925198ced9e23",
+    "result_id": "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "9",
+    "entities": [],
+    "filings": [
+     "0000813828-24-000009",
+     "0000813828-24-000018",
+     "0000813828-24-000023",
+     "0000813828-24-000028",
+     "0000813828-24-000033",
+     "0000813828-24-000034",
+     "0000813828-24-000038",
+     "0000813828-24-000042",
+     "0000813828-24-000063",
+     "0000813828-24-000069",
+     "0000813828-24-000073",
+     "0000813828-24-000075",
+     "0000813828-24-000081",
+     "0000813828-24-000083",
+     "0000813828-24-000085",
+     "0000813828-24-000087",
+     "0001193125-24-050664",
+     "0001193125-24-122356",
+     "0001193125-24-177535",
+     "0001193125-24-196053",
+     "0001193125-24-196972",
+     "0001193125-24-253719"
+    ],
+    "period": [
+     "2024-01-01",
+     "2024-12-31"
+    ],
+    "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "row_hash": "sha256:b58a1f976922ff37547e2fd35b118da140367d9dbf96ac971f3716d4722a53d0"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:11c8d0dc26a93fa5237de09a929811fafd6cf3e24fd99d7da1b925198ced9e23",
+     "result_ids": [
+      "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:11c8d0dc26a93fa5237de09a929811fafd6cf3e24fd99d7da1b925198ced9e23",
+     "result_ids": [
+      "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7",
+    "row_hash": "sha256:b58a1f976922ff37547e2fd35b118da140367d9dbf96ac971f3716d4722a53d0",
+    "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  },
+  {
+   "metric_id": "E01",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:46d45b447e41f780b7f1ff0d27c39b88fd2dcc84c8e09f0b11d32e616e8fa9f2",
+    "result_id": "sha256:88677eb8642ea938756070c5e4aaaf4774c94be38492274aac975671c992dce8",
+    "publication": "WITHHELD",
+    "reason_code": "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED",
+    "value": null,
+    "entities": [],
+    "filings": [],
+    "period": [
+     "2024-01-01",
+     "2024-12-31"
+    ],
+    "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "row_hash": "sha256:deb3073ac70d51b9466106e799312b7c023b9fc92c8e00f264720d76bbb5828d"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:46d45b447e41f780b7f1ff0d27c39b88fd2dcc84c8e09f0b11d32e616e8fa9f2",
+     "result_ids": [
+      "sha256:88677eb8642ea938756070c5e4aaaf4774c94be38492274aac975671c992dce8"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:46d45b447e41f780b7f1ff0d27c39b88fd2dcc84c8e09f0b11d32e616e8fa9f2",
+     "result_ids": [
+      "sha256:88677eb8642ea938756070c5e4aaaf4774c94be38492274aac975671c992dce8"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:88677eb8642ea938756070c5e4aaaf4774c94be38492274aac975671c992dce8",
+    "row_hash": "sha256:deb3073ac70d51b9466106e799312b7c023b9fc92c8e00f264720d76bbb5828d",
+    "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "publication": "WITHHELD",
+    "reason_code": "HISTORICAL_E01_CONTENT_CONFIRMATION_NOT_REGISTERED"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  },
+  {
+   "metric_id": "E02",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:fbff7df97d37b099294479c58277983065dab95c86ab35c0df83d767bca316a7",
+    "result_id": "sha256:e10afa0f60c42c6478f87330c094ee7b7a8d5cda2eea8952ae73d2d952942b2f",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "0",
+    "entities": [],
+    "filings": [
+     "0000813828-24-000009",
+     "0000813828-24-000018",
+     "0000813828-24-000023",
+     "0000813828-24-000028",
+     "0000813828-24-000033",
+     "0000813828-24-000034",
+     "0000813828-24-000038",
+     "0000813828-24-000042",
+     "0000813828-24-000063",
+     "0000813828-24-000069",
+     "0000813828-24-000073",
+     "0000813828-24-000075",
+     "0000813828-24-000081",
+     "0000813828-24-000083",
+     "0000813828-24-000085",
+     "0000813828-24-000087",
+     "0001193125-24-050664",
+     "0001193125-24-122356",
+     "0001193125-24-177535",
+     "0001193125-24-196053",
+     "0001193125-24-196972",
+     "0001193125-24-253719"
+    ],
+    "period": [
+     "2024-01-01",
+     "2024-12-31"
+    ],
+    "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "row_hash": "sha256:bf388a39020bd2d61855f2ecea1c5c330f85e7c687e601bd8999f07a7462c723"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:fbff7df97d37b099294479c58277983065dab95c86ab35c0df83d767bca316a7",
+     "result_ids": [
+      "sha256:e10afa0f60c42c6478f87330c094ee7b7a8d5cda2eea8952ae73d2d952942b2f"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:fbff7df97d37b099294479c58277983065dab95c86ab35c0df83d767bca316a7",
+     "result_ids": [
+      "sha256:e10afa0f60c42c6478f87330c094ee7b7a8d5cda2eea8952ae73d2d952942b2f"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:e10afa0f60c42c6478f87330c094ee7b7a8d5cda2eea8952ae73d2d952942b2f",
+    "row_hash": "sha256:bf388a39020bd2d61855f2ecea1c5c330f85e7c687e601bd8999f07a7462c723",
+    "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  },
+  {
+   "metric_id": "E03",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:9bb001be4c78e5f011821db42000aabc25070db6df380d6d4a860bc7dbabfc90",
+    "result_id": "sha256:55f584e9bfb494fa20c9ea7da786e5910a89ecf24684b628b2297630671a9923",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "9",
+    "entities": [],
+    "filings": [
+     "0000813828-24-000009",
+     "0000813828-24-000018",
+     "0000813828-24-000023",
+     "0000813828-24-000028",
+     "0000813828-24-000033",
+     "0000813828-24-000034",
+     "0000813828-24-000038",
+     "0000813828-24-000042",
+     "0000813828-24-000063",
+     "0000813828-24-000069",
+     "0000813828-24-000073",
+     "0000813828-24-000075",
+     "0000813828-24-000081",
+     "0000813828-24-000083",
+     "0000813828-24-000085",
+     "0000813828-24-000087",
+     "0001193125-24-050664",
+     "0001193125-24-122356",
+     "0001193125-24-177535",
+     "0001193125-24-196053",
+     "0001193125-24-196972",
+     "0001193125-24-253719"
+    ],
+    "period": [
+     "2024-01-01",
+     "2024-12-31"
+    ],
+    "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "row_hash": "sha256:6fab449021ebea9ac4c92fc6a8e14afdca4867f0530e6fa4c6c8fd90bb8b15ca"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:9bb001be4c78e5f011821db42000aabc25070db6df380d6d4a860bc7dbabfc90",
+     "result_ids": [
+      "sha256:55f584e9bfb494fa20c9ea7da786e5910a89ecf24684b628b2297630671a9923"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:9bb001be4c78e5f011821db42000aabc25070db6df380d6d4a860bc7dbabfc90",
+     "result_ids": [
+      "sha256:55f584e9bfb494fa20c9ea7da786e5910a89ecf24684b628b2297630671a9923"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:55f584e9bfb494fa20c9ea7da786e5910a89ecf24684b628b2297630671a9923",
+    "row_hash": "sha256:6fab449021ebea9ac4c92fc6a8e14afdca4867f0530e6fa4c6c8fd90bb8b15ca",
+    "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  },
+  {
+   "metric_id": "E04",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:849b7ee5b9a36cfd6fa73fd4688b1179b298069081b1fec139baef7f9012c2a1",
+    "result_id": "sha256:0b49d91e36add194157c3ed3d4aa3f9db7b23582dba981a7405b79a709006b0c",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "0",
+    "entities": [],
+    "filings": [
+     "0000813828-24-000009",
+     "0000813828-24-000018",
+     "0000813828-24-000023",
+     "0000813828-24-000028",
+     "0000813828-24-000033",
+     "0000813828-24-000034",
+     "0000813828-24-000038",
+     "0000813828-24-000042",
+     "0000813828-24-000063",
+     "0000813828-24-000069",
+     "0000813828-24-000073",
+     "0000813828-24-000075",
+     "0000813828-24-000081",
+     "0000813828-24-000083",
+     "0000813828-24-000085",
+     "0000813828-24-000087",
+     "0001193125-24-050664",
+     "0001193125-24-122356",
+     "0001193125-24-177535",
+     "0001193125-24-196053",
+     "0001193125-24-196972",
+     "0001193125-24-253719"
+    ],
+    "period": [
+     "2024-01-01",
+     "2024-12-31"
+    ],
+    "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "row_hash": "sha256:325c3f159399694d164dae967038833b323160d975d31147f692c1b9db5c0293"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:849b7ee5b9a36cfd6fa73fd4688b1179b298069081b1fec139baef7f9012c2a1",
+     "result_ids": [
+      "sha256:0b49d91e36add194157c3ed3d4aa3f9db7b23582dba981a7405b79a709006b0c"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:849b7ee5b9a36cfd6fa73fd4688b1179b298069081b1fec139baef7f9012c2a1",
+     "result_ids": [
+      "sha256:0b49d91e36add194157c3ed3d4aa3f9db7b23582dba981a7405b79a709006b0c"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:0b49d91e36add194157c3ed3d4aa3f9db7b23582dba981a7405b79a709006b0c",
+    "row_hash": "sha256:325c3f159399694d164dae967038833b323160d975d31147f692c1b9db5c0293",
+    "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  },
+  {
+   "metric_id": "E05",
+   "company_path": {
+    "requirement_id": "issue_54_v3",
+    "run_id": "run:historical-period:52432208453021753d2a038a8df9892af4655c2907dd74d1573a0bb20685a518",
+    "result_id": "sha256:eebd9525bc97c329f9bbbcf22a720100aff7c7f3d8e674671b3274db394de9a7",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "2",
+    "entities": [],
+    "filings": [
+     "0000813828-24-000009",
+     "0000813828-24-000018",
+     "0000813828-24-000023",
+     "0000813828-24-000028",
+     "0000813828-24-000033",
+     "0000813828-24-000034",
+     "0000813828-24-000038",
+     "0000813828-24-000042",
+     "0000813828-24-000063",
+     "0000813828-24-000069",
+     "0000813828-24-000073",
+     "0000813828-24-000075",
+     "0000813828-24-000081",
+     "0000813828-24-000083",
+     "0000813828-24-000085",
+     "0000813828-24-000087",
+     "0001193125-24-050664",
+     "0001193125-24-122356",
+     "0001193125-24-177535",
+     "0001193125-24-196053",
+     "0001193125-24-196972",
+     "0001193125-24-253719"
+    ],
+    "period": [
+     "2024-01-01",
+     "2024-12-31"
+    ],
+    "period_selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "row_hash": "sha256:6402d5423ced5385bb18914d1a9fcd9fd0a14bdf007e754d5a865c24c205f1de"
+   },
+   "separate_process_read_back": {
+    "receipt_check": {
+     "manifest_file_hashes_verified": true,
+     "run_id": "run:historical-period:52432208453021753d2a038a8df9892af4655c2907dd74d1573a0bb20685a518",
+     "result_ids": [
+      "sha256:eebd9525bc97c329f9bbbcf22a720100aff7c7f3d8e674671b3274db394de9a7"
+     ]
+    },
+    "native_cold_replay": {
+     "status": "FROZEN",
+     "run_id": "run:historical-period:52432208453021753d2a038a8df9892af4655c2907dd74d1573a0bb20685a518",
+     "result_ids": [
+      "sha256:eebd9525bc97c329f9bbbcf22a720100aff7c7f3d8e674671b3274db394de9a7"
+     ],
+     "row_bytes_equal_compute_rows": true,
+     "evidence_bytes_equal_compute_rows": true
+    }
+   },
+   "direct_path": {
+    "result_id": "sha256:eebd9525bc97c329f9bbbcf22a720100aff7c7f3d8e674671b3274db394de9a7",
+    "row_hash": "sha256:6402d5423ced5385bb18914d1a9fcd9fd0a14bdf007e754d5a865c24c205f1de",
+    "selection_id": "sha256:6d66f921cd4036d8da5d7d5d436fcb64ace1c0e84db448e52557fce58dd15b31",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS"
+   },
+   "same_result_id": true,
+   "same_period_selection": true,
+   "same_row_hash": true
+  }
+ ],
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

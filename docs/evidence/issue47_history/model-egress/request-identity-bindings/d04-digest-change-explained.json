@@ -1,0 +1,123 @@
+{
+ "record_type": "ISSUE_47_D04_REQUEST_DIGEST_CHANGE_EXPLAINED",
+ "position": "marriott_international:2023-12-31",
+ "old_tree": "9f3f4d95 (the commit the 09-28 measurement was taken at; sparse worktree, same saved filings)",
+ "new_tree": "51250475",
+ "old_body_digests": [
+  "sha256:adf1c359d831c5ee44cb7e0d28f9d2ef347633d75af684729683dec34b88bfab",
+  "sha256:fbaba8d0c117ec8c3acffb4d5dbf397deb15fad488111e473b38a160f316082a",
+  "sha256:b917c1c78a45ba1cdc07f912c26f6b4db24fd55abcdfc218ae0478e3e69c610b",
+  "sha256:9b383bd3f96810ef7afec75ac566ecb01e85c5f19ba88047c348fe92b5b2b372"
+ ],
+ "new_body_digests": [
+  "sha256:747f62c1d9a1b4b8e324ead0f159805b9a86b7e639092e556c4e887a05e36498",
+  "sha256:324f28f648f7e0d90272a658aea87580b009d9b61728dd1a535b1c9fd758ad56",
+  "sha256:993791c6e85746d21d91f121234cfaefab09b72ef91857b4643a5ec4405cdc64",
+  "sha256:2478c41eb2e2d5229ceecd1a214632bc155effa627503a23e63195067f0fa754"
+ ],
+ "old_tree_reproduces_the_09_28_digests": true,
+ "body_lengths_equal": [
+  493298,
+  529340,
+  630961,
+  84179
+ ],
+ "fields_that_differ_in_each_body": [
+  "/messages[1]/content<json>/request_id",
+  "/messages[1]/content<json>/source_id"
+ ],
+ "body_diff_report": [
+  "== marriott_international_2023-12-31_0.json 2 differences",
+  "   1 /messages[*]/content<json>/request_id",
+  "   1 /messages[*]/content<json>/source_id",
+  "   e.g. ('/messages[1]/content<json>/request_id', 'VAL', \"'sha256:622c5c0046104e3eedce91bd4b70ad139838c498649cc92e7215ddd6080cf177'\", \"'sha256:5c73fd9e90db901c5bfc1a4043a643008df6c6fdfffdad95f6e2e98282cbe925'\")",
+  "   e.g. ('/messages[1]/content<json>/source_id', 'VAL', \"'sha256:9514c6f7b8075d265bd082b67a69b1fd2c023ec67d157b2eeaf4ae0e307d47fc'\", \"'sha256:c65c0acca441ffe0e892cfca2dc6c120163a545292ba514a0215ab973b872db8'\")",
+  "== marriott_international_2023-12-31_1.json 2 differences",
+  "   1 /messages[*]/content<json>/request_id",
+  "   1 /messages[*]/content<json>/source_id",
+  "   e.g. ('/messages[1]/content<json>/request_id', 'VAL', \"'sha256:553e9d8bd3a1673c5873d237d48041dee852bf8e6b576e2cd7c7b6d9c0c6d2ad'\", \"'sha256:19c732449333cbbbe30ecde3fc466ca588f3ff297c2aa053537c63ac1d4ad5eb'\")",
+  "   e.g. ('/messages[1]/content<json>/source_id', 'VAL', \"'sha256:9514c6f7b8075d265bd082b67a69b1fd2c023ec67d157b2eeaf4ae0e307d47fc'\", \"'sha256:c65c0acca441ffe0e892cfca2dc6c120163a545292ba514a0215ab973b872db8'\")",
+  "== marriott_international_2023-12-31_2.json 2 differences",
+  "   1 /messages[*]/content<json>/request_id",
+  "   1 /messages[*]/content<json>/source_id",
+  "   e.g. ('/messages[1]/content<json>/request_id', 'VAL', \"'sha256:8a8b67c65bd2d59e79671be73b3a49b1f29cbaf79e6773a6612020ff6b04a9fc'\", \"'sha256:5813f2c24ab13499459631c2a2df392aba32394b4ba8778db60da06f76612b12'\")",
+  "   e.g. ('/messages[1]/content<json>/source_id', 'VAL', \"'sha256:9514c6f7b8075d265bd082b67a69b1fd2c023ec67d157b2eeaf4ae0e307d47fc'\", \"'sha256:c65c0acca441ffe0e892cfca2dc6c120163a545292ba514a0215ab973b872db8'\")",
+  "== marriott_international_2023-12-31_3.json 2 differences",
+  "   1 /messages[*]/content<json>/request_id",
+  "   1 /messages[*]/content<json>/source_id",
+  "   e.g. ('/messages[1]/content<json>/request_id', 'VAL', \"'sha256:a7e595d83e8f0ae5371d7ee4b6b35ce93e3d7e3711afecfc7fefb0f1453c92ad'\", \"'sha256:d01dc15d197e751b2ffc398b296b307e7c69314f171931f3492294bd1a160498'\")",
+  "   e.g. ('/messages[1]/content<json>/source_id', 'VAL', \"'sha256:9514c6f7b8075d265bd082b67a69b1fd2c023ec67d157b2eeaf4ae0e307d47fc'\", \"'sha256:c65c0acca441ffe0e892cfca2dc6c120163a545292ba514a0215ab973b872db8'\")"
+ ],
+ "source_and_selection_fields_that_differ": [
+  {
+   "path": "/selection/selection_id",
+   "old": "sha256:d7d01a1c426567311184cfafe7107bfe184e96031c81d646cebabeff3a352b77",
+   "new": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30"
+  },
+  {
+   "path": "/selection/source_set_identity",
+   "old": "sha256:ebb95ddf5507e22ee18c61d828fb572a595b161088963372c9b300851ef15c75",
+   "new": "sha256:e240deda1080bd317a72241c999cdfa68bdd12b58e4b30a17cfef297662d6ab8"
+  },
+  {
+   "path": "/source/original_complete_source_id",
+   "old": "sha256:0f1e7588163470469f1113c8af4ffa899f5ce67f1a7dbe79d1e9dfac72cb50fb",
+   "new": "sha256:211b9e736ab2ac455cdcfbeb9eca30961250d9697b8800e88b4a3c5b3386ec20"
+  },
+  {
+   "path": "/source/original_source_packet_id",
+   "old": "sha256:e37e99e011b9446ab4f1c69b3f486717ded66b9c064cf3bedf87f530bbde2887",
+   "new": "sha256:d6f4e23f44ef0c643be4a754363812459a518c20f899e23389a24917928fee1a"
+  },
+  {
+   "path": "/source/prepared_annual_input/input_id",
+   "old": "sha256:b33d0676532aa3037b15287f03d1ac333c426ec8fd240022ba9379b3694fe9f8",
+   "new": "sha256:508c097d373baf50913843ef17181ace500bddeca97b4d01e268e5bc1f404060"
+  },
+  {
+   "path": "/source/prepared_annual_input/original_input/input_id",
+   "old": "sha256:1c1bab81b7b8442865090059beb7d5441971054255e630f76bb8d41b56dac202",
+   "new": "sha256:769e921a026d5ba99c508bcf5c47c8418901da41b92fc450f4fb9824d43b27b2"
+  },
+  {
+   "path": "/source/prepared_annual_input/original_input/period_selection/selection_id",
+   "old": "sha256:d7d01a1c426567311184cfafe7107bfe184e96031c81d646cebabeff3a352b77",
+   "new": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30"
+  },
+  {
+   "path": "/source/prepared_annual_input/original_input/period_selection/source_set_identity",
+   "old": "sha256:ebb95ddf5507e22ee18c61d828fb572a595b161088963372c9b300851ef15c75",
+   "new": "sha256:e240deda1080bd317a72241c999cdfa68bdd12b58e4b30a17cfef297662d6ab8"
+  },
+  {
+   "path": "/source/prepared_annual_input/period_selection/selection_id",
+   "old": "sha256:d7d01a1c426567311184cfafe7107bfe184e96031c81d646cebabeff3a352b77",
+   "new": "sha256:35dc6737eabc30bb12aa715f19a7ea0ff1e2ae4d9d80dc8f968743217e9c3c30"
+  },
+  {
+   "path": "/source/prepared_annual_input/period_selection/source_set_identity",
+   "old": "sha256:ebb95ddf5507e22ee18c61d828fb572a595b161088963372c9b300851ef15c75",
+   "new": "sha256:e240deda1080bd317a72241c999cdfa68bdd12b58e4b30a17cfef297662d6ab8"
+  },
+  {
+   "path": "/source/semantic_source_id",
+   "old": "sha256:9514c6f7b8075d265bd082b67a69b1fd2c023ec67d157b2eeaf4ae0e307d47fc",
+   "new": "sha256:c65c0acca441ffe0e892cfca2dc6c120163a545292ba514a0215ab973b872db8"
+  }
+ ],
+ "catalog_identity_fields_that_differ": [
+  "catalog_id",
+  "catalog_module_sha256"
+ ],
+ "catalog_module_sha256": {
+  "old": "b1fab9704294b5ee9678bca456c9580f3be702a1ac5a22e77e24f6f66d65a89e",
+  "new": "dfca9ac9ee1907d7b5ddc1ec98b682a0fc8d0792c4c2c0a8fd0fcd89fde1f2c3"
+ },
+ "commit_that_changed_the_module": "509ac1ce (history-block coherence, 2026-09-30)",
+ "reference_token_change": "the two changed fields are hex digests of the same length; they tokenize into a different number of tokens (-1, -18, -15, -18 for the four requests)",
+ "calls": {
+  "provider": 0,
+  "paid": 0,
+  "sec": 0
+ }
+}

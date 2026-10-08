@@ -1,0 +1,159 @@
+{
+ "calls": {
+  "paid": 0,
+  "provider": 0,
+  "sec": 0
+ },
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "per_position": {
+  "macys-2023": {
+   "company_id": "macys",
+   "concepts_used": {
+    "capex": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "d_and_a": "DepreciationDepletionAndAmortization",
+    "d_and_a_parts": null,
+    "interest": "InterestExpense",
+    "net_income": "NetIncomeLoss",
+    "operating_income": "OperatingIncomeLoss",
+    "operating_income_crosscheck": null,
+    "prior_revenue_context": [
+     "2021-01-31",
+     "2022-01-29",
+     false
+    ],
+    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax"
+   },
+   "document": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm",
+   "document_sha256": "876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+   "later_chain_concepts_the_filing_also_tags": {
+    "interest": {
+     "InterestExpenseDebt": "185000000"
+    },
+    "net_income": {
+     "NetIncomeLossAvailableToCommonStockholdersBasic": "1177000000",
+     "ProfitLoss": "1177000000"
+    }
+   },
+   "metrics": {
+    "B01": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+       "result_id": "sha256:a4237cca3788296cffd90e794cbf00efd6398610b770176331570331957aafd7",
+       "run_id": "run:historical-period:5d5e03ef2ba540d7ec7795e7c8b6a93eb13e320370a67ea4c29ea39f32ee2503"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "794367"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-23-009154"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2023-01-28",
+      "period_start": "2022-01-30",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "unit": "USD",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "24442000000",
+     "read": "24442000000",
+     "verdict": "MATCH"
+    },
+    "B02": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "-0.0007358953393295175797219950940",
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B03": {
+     "checked_identity": {
+      "bound_from": {
+       "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+       "result_id": "sha256:25ec5ac50915af9e5efb95ebe4f42ea8098ae29fd306ad65365e9a6505d1eb9f",
+       "run_id": "run:historical-period:b6b68a6f08083a3f3d0ff41f24014c0b4d55ac7d6c8d3f910fa90feea33316df"
+      },
+      "checked_against_the_reading": [
+       "value",
+       "filings_contain_the_filing_the_reading_opened"
+      ],
+      "entities": [
+       "794367"
+      ],
+      "established_by": "RECORDED_AT_READING_TIME",
+      "filings": [
+       "0001628280-23-009154"
+      ],
+      "not_named_by_the_reading": [
+       "window"
+      ],
+      "period_end": "2023-01-28",
+      "period_start": "2022-01-30",
+      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+      "unit": "ratio",
+      "value_kind": null
+     },
+     "exact_string_match": true,
+     "published": "0.1058424024220603878569675149",
+     "read": "0.1058424024220603878569675149",
+     "verdict": "MATCH"
+    },
+    "B04": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "1177000000",
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B05": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "727000000",
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B07": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "9.885714285714285714285714286",
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B08": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "1.204073235959679078378934376",
+     "verdict": "NO_PUBLISHED_VALUE"
+    },
+    "B09": {
+     "exact_string_match": false,
+     "published": null,
+     "read": "862000000",
+     "verdict": "NO_PUBLISHED_VALUE"
+    }
+   },
+   "needed_facts_not_read": [],
+   "period": {
+    "period_end": "2023-01-28",
+    "period_start": "2022-01-30"
+   },
+   "period_end": "2023-01-28"
+  }
+ },
+ "production_authorized": false,
+ "reader": "tools/read_statement_facts.py",
+ "record_type": "ISSUE_47_CROSS_SOURCE_CONTENT_READ",
+ "requirement_closure_hash": "sha256:7c22e5837fd224383be124c9cb3b6737bccf4c171f2f9c7920a5b2605de8126a",
+ "result": {
+  "MATCH": 2,
+  "NO_PUBLISHED_VALUE": 6
+ },
+ "same_method_as": "docs/evidence/issue47_history/content-acceptance/cross-source-read.json",
+ "what_this_is": "eight statement metrics read out of each company's own 10-K by tools/read_statement_facts.py, and compared to what the route published. The route resolves them from the Company Facts API; this walks the filing's primary document."
+}

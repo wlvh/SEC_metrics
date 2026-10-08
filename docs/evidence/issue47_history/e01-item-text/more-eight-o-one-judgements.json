@@ -1,0 +1,24 @@
+{
+ "record_type": "ISSUE_47_E01_EIGHT_O_ONE_JUDGEMENTS_OUTSIDE_THE_VALUE_WINDOWS",
+ "what_this_is": "The seventeen saved 8.01 items outside the seven windows e01-keyword-branch/eight-o-one-judgements.json covers (JPMorgan 8, Paramount 8, Salesforce 1), each read in full from its own text by eye. Kept apart from that file because its reader fails on a judgement about a filing its windows do not hold. Same question and same two decisions: does the item report a merger, acquisition or business combination the registrant or a subsidiary is party to - announced, agreed or completed.",
+ "decisions": ["REPORTS_A_TRANSACTION_THE_REGISTRANT_IS_PARTY_TO", "DOES_NOT_REPORT_A_TRANSACTION"],
+ "per_filing": {
+  "0000019617-25-000509": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "JPMorgan's press release on its preliminary Stress Capital Buffer requirement, filed as Exhibit 99."},
+  "0001193125-25-012230": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "JPMorgan closed public offerings of four series of notes; legality opinion filed as Exhibit 5.1."},
+  "0001193125-25-013396": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "Redemption of the Series HH preferred depositary shares."},
+  "0001193125-25-020070": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "Completed issuance and sale of Series OO preferred shares under an underwriting agreement."},
+  "0001193125-25-078015": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "Prospectus supplement for the Dividend Reinvestment Plan and its legality opinion."},
+  "0001193125-25-089203": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "JPMorgan closed public offerings of two series of fixed-to-floating notes."},
+  "0001193125-25-163423": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "JPMorgan closed a public offering of subordinated notes."},
+  "0001193125-25-246803": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "JPMorgan closed public offerings of two series of fixed-to-floating notes."},
+  "0001104659-25-123496": {"decision": "REPORTS_A_TRANSACTION_THE_REGISTRANT_IS_PARTY_TO", "judgement": "Paramount Skydance announced the amendment and extension of its previously announced tender offer for all outstanding Series A shares of Warner Bros. Discovery - an acquisition offer the registrant makes. No declared alias occurs in the item: it says 'tender offer' and 'shares of ... Warner Bros. Discovery'."},
+  "0001193125-25-310710": {"decision": "REPORTS_A_TRANSACTION_THE_REGISTRANT_IS_PARTY_TO", "judgement": "Paramount Skydance announced its proposal 'to acquire all of the outstanding shares of common stock of Warner Bros. Discovery'. An announced proposal, not an agreement; no declared alias occurs - 'acquire' does not contain 'acquisition'."},
+  "0000813828-24-000009": {"decision": "REPORTS_A_TRANSACTION_THE_REGISTRANT_IS_PARTY_TO", "judgement": "Paramount subsidiaries agreed to sell their entire 13.01% equity interest in Viacom 18 to Reliance Industries for about $517 million, defined as 'the Transaction' - a disposition by sale agreement. The alias hit is the defined term 'Transaction'; no named-counterparty pattern ('acquisition of X', 'merger with X') occurs."},
+  "0000813828-24-000018": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "Paramount issued a press release filed as Exhibit 99; the item's own text says nothing else. The exhibit is not saved, so what it announces is not read here."},
+  "0000813828-24-000033": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "Compensation actions for the Office of the CEO appointments (severance plan participation, target bonus)."},
+  "0000813828-24-000073": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "Compensation changes for the co-CEOs, cross-referring to Item 5.02."},
+  "0000813828-24-000081": {"decision": "REPORTS_A_TRANSACTION_THE_REGISTRANT_IS_PARTY_TO", "judgement": "Paramount Global 'completed the previously announced sale of its entire 13.01% equity interest in Viacom 18 Media Private Limited to Reliance Industries Limited' for $508 million - the completion of the disposition agreed in 0000813828-24-000009. No declared alias occurs in the item."},
+  "0000813828-24-000087": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "Accelerated vesting of executives' RSUs and PSUs to mitigate the section 280G impact. The alias hit is 'Transaction Agreement', naming the pending Skydance merger agreement under which the PSUs convert; the item reports compensation decisions made because of that transaction, not the transaction."},
+  "0001108524-25-000083": {"decision": "DOES_NOT_REPORT_A_TRANSACTION", "judgement": "A $20.0 billion increase in the share repurchase authorization. The alias hit is 'open market transactions', the repurchase methods."}
+ }
+}

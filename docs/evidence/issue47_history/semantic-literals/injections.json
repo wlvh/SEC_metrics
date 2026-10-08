@@ -1,0 +1,50 @@
+{
+ "record_type": "ISSUE_47_SEMANTIC_LITERAL_GUARD_INJECTIONS",
+ "results": [
+  {
+   "id": "THE_PHRASE_COMES_BACK_INTO_THE_CODE",
+   "file": "scripts/vnext/historical_board_composition.py",
+   "why_it_matters": "the set is the same, and the source spells the phrase the audit forbids again",
+   "outcome": "CAUGHT",
+   "expected_case": "test_no_file_spells_a_family_owned_phrase",
+   "failed_cases": [
+    "test_no_file_spells_a_family_owned_phrase"
+   ]
+  },
+  {
+   "id": "ANY_CATALOG_PHRASE_IS_COMPILED",
+   "file": "scripts/vnext/historical_board_composition.py",
+   "why_it_matters": "the phrase goes into four patterns unescaped; a group or an alternation reshapes them",
+   "outcome": "CAUGHT",
+   "expected_case": "test_terms_that_could_reshape_a_pattern_are_refused",
+   "failed_cases": [
+    "test_terms_that_could_reshape_a_pattern_are_refused"
+   ]
+  },
+  {
+   "id": "A_PATTERN_STOPS_READING_THE_CATALOG",
+   "file": "scripts/vnext/historical_board_composition.py",
+   "why_it_matters": "a pattern that no longer carries the catalog's phrase is no longer bound by it",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_four_patterns_carry_the_catalog_s_phrase",
+   "failed_cases": [
+    "test_the_four_patterns_carry_the_catalog_s_phrase"
+   ]
+  },
+  {
+   "id": "THE_FILE_SET_COMES_BACK_EMPTY",
+   "file": "tests/vnext/test_historical_business_literals.py",
+   "why_it_matters": "an empty set passes the audit case by finding nothing",
+   "outcome": "CAUGHT",
+   "expected_case": "test_the_files_are_found_before_they_are_judged",
+   "failed_cases": [
+    "test_the_files_are_found_before_they_are_judged"
+   ]
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

@@ -1,0 +1,51 @@
+{
+ "an_order_that_was_wrong_and_was_redone": "the first end-to-end ran under closure sha256:7588e4ff..., before the two new modules were added as rule files. Adding them moved the closure, so that run was evidence for a version the repository no longer mints. Re-minted and re-run under sha256:6d6feef5... with the same result. This is the lesson already in AGENTS.md - local green carries a timestamp - applied to a closure rather than to a test suite.",
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "issue": "https://github.com/wlvh/SEC_metrics/issues/47",
+ "measured_end_to_end": {
+  "marriott_2023-12-31": {
+   "evidence_rows": 0,
+   "limitation": "SAVED_SOURCE_MISSING on the prior accession's index.json",
+   "publication": "WITHHELD",
+   "quality": "NONE",
+   "reason": "HISTORICAL_GOVERNANCE_SOURCE_ROUTE_UNRESOLVED",
+   "row_status": "WITHHELD",
+   "run_status": "FROZEN",
+   "value": null
+  },
+  "marriott_2025-12-31": {
+   "evidence_rows": 1,
+   "new_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+   },
+   "publication": "PUBLISHED",
+   "quality": "EXACT",
+   "row_fiscal_year": "2025",
+   "row_status": "OK",
+   "run_status": "FROZEN",
+   "value": "0"
+  },
+  "runtime_closure": "sha256:6d6feef5...",
+  "why_both_matter": "a route that ignored the period would give these two the same answer."
+ },
+ "record_type": "ISSUE_47_C04_HISTORICAL_ROUTE",
+ "the_fault_injection_took_two_rounds": {
+  "first": "replacing the withheld branch with a confirmed no-change flag failed three cases - but with 'Observation source binding is incomplete'. That is the record validator catching a fabricated binding, not the cases catching the semantics, so it proved nothing about them.",
+  "second": "the same injection with a complete binding taken from the filing the selection actually pinned. The validator has nothing to object to, and two cases fail on ('NONE','WITHHELD') against ('EXACT','PUBLISHED') - which is the failure C04 is most exposed to: a missing file becoming a confirmed no-change flag."
+ },
+ "the_frame_before_and_after": {
+  "HISTORICAL_ROUTE_NOT_WIRED": "94 -> 83",
+  "ROUTE_IMPLEMENTED_NOT_RUN": "335 -> 346",
+  "historical_route_implemented": "1472 -> 1522",
+  "wired_metrics": "23 -> 24"
+ },
+ "the_one_rule_that_changed": "select_governance_metadata decides which annual report is current by taking the maximum report date across the loaded rows and requiring it to equal the period it was given - right only for the newest year. The blocks the event window needs were already loaded by a cutoff written in terms of the period, so that needed no successor. resolve_c04's comparison is untouched.",
+ "what_this_does_not_deliver": "C04 for five years. Every period but the most recent withholds, because the accession index and instance the comparison reads are class A of the acquisition plan. Wiring the route and delivering the metric are separate, and this is the first.",
+ "what_was_withdrawn": "A few commits ago I wrote that wiring C04 would deliver nothing new, because the latest period is already covered by the ordinary route. That reasoning swapped one frame for another: in the historical frame C04 reported HISTORICAL_ROUTE_NOT_WIRED for every period, and a value there is new whatever a different route does elsewhere."
+}

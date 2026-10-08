@@ -31,6 +31,11 @@ jobs:
         # Keep each selected case's existing 30-second limit, with two workers.
         run: python3 tools/run_fast_tests_v2.py --jobs 2
 
+      - name: Verify delivered company entry and historical range consumers
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tests/required_unittests.py tests.vnext.test_company_handoff tests.vnext.test_company_source_authority tests.vnext.test_company_results tests.vnext.test_company_processing tests.vnext.test_company_event_census tests.vnext.test_company_local tests.vnext.test_company_historical_range
+
   source_material_parts:
     name: vNext saved-source material (shard ${{ matrix.shard_index }})
     runs-on: ubuntu-latest
@@ -38,7 +43,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard_index: [0, 1, 2]
+        shard_index: [0, 1, 2, 3]
     steps:
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
@@ -53,7 +58,7 @@ jobs:
       - name: Run complete saved-source material tests
         env:
           PYTHONDONTWRITEBYTECODE: "1"
-        run: python3 tools/run_fast_tests_v2.py --suite source-material --jobs 2 --shard-index ${{ matrix.shard_index }} --shard-count 3
+        run: python3 tools/run_fast_tests_v2.py --suite source-material --jobs 2 --shard-index ${{ matrix.shard_index }} --shard-count 4
 
   source-material:
     name: vNext saved-source material

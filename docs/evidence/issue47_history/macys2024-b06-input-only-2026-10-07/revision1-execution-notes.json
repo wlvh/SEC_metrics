@@ -1,0 +1,179 @@
+{
+  "input_path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-local-recovered-20261006/work/issue47-input-only/macys2024-b06-revision1/request-body.json",
+  "input_sha256": "56ed6a605e153f39ee216045f2e49251927a512bc119458faa847916f584e56a",
+  "input_file_bytes": 653220,
+  "input_unchanged": true,
+  "single_answer_attempt": true,
+  "answer_generated_once": true,
+  "answer_revisions": 0,
+  "outer_max_tokens": 8192,
+  "original_context_budget": 200000,
+  "tool_calls": {
+    "functions_exec": 36,
+    "exec_command": 36,
+    "total_including_orchestration_and_underlying": 72,
+    "other_tools": 0
+  },
+  "ordinary_commentary_messages": 3,
+  "network_calls": 0,
+  "sec_calls": 0,
+  "deepseek_calls": 0,
+  "paid_business_calls": 0,
+  "other_files_read": [],
+  "outputs_written": [
+    "answer.json",
+    "execution-notes.json"
+  ],
+  "reading": {
+    "system_message": "messages[0].content, complete",
+    "user_message": "messages[1].content decoded as JSON without modification",
+    "primary_block_ranges": [
+      [
+        0,
+        202
+      ],
+      [
+        203,
+        278
+      ],
+      [
+        279,
+        324
+      ],
+      [
+        325,
+        430
+      ],
+      [
+        431,
+        591
+      ],
+      [
+        592,
+        721
+      ],
+      [
+        722,
+        1004
+      ],
+      [
+        1005,
+        1101
+      ],
+      [
+        1102,
+        1521
+      ],
+      [
+        1522,
+        1750
+      ],
+      [
+        1751,
+        1928
+      ],
+      [
+        1929,
+        2139
+      ]
+    ],
+    "primary_blocks_read": 2140,
+    "primary_text_chars": 291245,
+    "tables_read": 108,
+    "table_id_ranges": [
+      [
+        0,
+        24
+      ],
+      [
+        25,
+        43
+      ],
+      [
+        44,
+        62
+      ],
+      [
+        63,
+        80
+      ],
+      [
+        81,
+        94
+      ],
+      [
+        95,
+        101
+      ],
+      [
+        102,
+        107
+      ]
+    ],
+    "explicit_nonblank_origin_cells_read": 3432,
+    "native_records_per_source": {
+      "primary": 336,
+      "xml": 336
+    },
+    "native_fields_per_record": 12,
+    "native_row_index_ranges_both_sources": [
+      [
+        0,
+        47
+      ],
+      [
+        48,
+        96
+      ],
+      [
+        97,
+        144
+      ],
+      [
+        145,
+        195
+      ],
+      [
+        196,
+        245
+      ],
+      [
+        246,
+        289
+      ],
+      [
+        290,
+        334
+      ],
+      [
+        335,
+        335
+      ]
+    ],
+    "native_lossless_display": "Full primary field-order record plus every differing XML field; complete context/unit/nil dictionary values printed separately. Equal XML fields were verified equal and inherit their primary values in the display.",
+    "native_context_unit_nil_values_read": 123,
+    "initial_additional_special_value_scan": "First 116 of 795 context/unit/attribute/nil value entries printed, then replaced by complete context/unit/nil reading and attributes in every full native record.",
+    "truncations": [
+      {
+        "request": "primary B0-B399 initial display",
+        "reported_original_tokens": 25126,
+        "action": "Continuous full rereads B0-B202,B203-B278,B279-B324,B325-B430; remaining coverage completed sequentially."
+      }
+    ],
+    "unrepaired_truncations": false,
+    "keyword_prefiltering": false,
+    "raw_images_interpreted": false,
+    "all_raw_native_universe_claimed": false
+  },
+  "calculation_checks": {
+    "noncurrent_instrument_gross_sum_usd": "2779000000",
+    "gross_plus_premium_less_cost_usd": "2779000000",
+    "identified_bond_and_finance_lease_subtotal_usd": "2794000000",
+    "note7_group_sum_usd": "2625000000",
+    "property_lease_numerical_comparison_usd": "79000000",
+    "other_noncurrent_proved_excluded_subsets_usd": "803000000",
+    "other_noncurrent_arithmetic_remainder_usd": "99000000"
+  },
+  "completed_at_utc": "2026-10-06T18:54:28.293620+00:00",
+  "answer_utf8_bytes": 35980
+}

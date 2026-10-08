@@ -1,0 +1,150 @@
+{
+ "record_type": "ISSUE_47_C02_BOUNDED_COMPLETE_LAYOUT_SIZE_EXPERIMENTS",
+ "experiments_per_source": 3,
+ "sources": [
+  {
+   "position": "ford_motor_company-2022-12-31",
+   "original_request_sha256": "146142032aea59dcc713cd07e6dfd1a44aaa0b8083ce8a5bcbc53115440b9f32",
+   "block_count": 4912,
+   "table_count": 402,
+   "literal_substrings_reused": 181,
+   "variants": [
+    {
+     "variant": "deduplicated_strings_and_grouped_rows",
+     "payload_sha256": "23c313eec60fbd1ea33b966264a9918a2e45cbeb57f72a11aa14c26938d8e9f2",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 162206,
+     "fits_with_old_prompt_lower_bound": true,
+     "valid_new_layout_prompt_or_independent_read": false
+    },
+    {
+     "variant": "linear_positions_and_flat_cell_arrays",
+     "payload_sha256": "3467872d2731520be6196105829281ad7debd2638d2a17bcd14f913a51658c53",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 154243,
+     "fits_with_old_prompt_lower_bound": true,
+     "valid_new_layout_prompt_or_independent_read": false
+    },
+    {
+     "variant": "linear_positions_and_exact_block_substrings",
+     "payload_sha256": "0db0bdd799fce60d9a8b0800f833ea4bebceb488368888a67812f508ba715a42",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 148869,
+     "fits_with_old_prompt_lower_bound": true,
+     "valid_new_layout_prompt_or_independent_read": false
+    }
+   ]
+  },
+  {
+   "position": "jpmorgan_chase-2021-12-31",
+   "original_request_sha256": "c912d3a8bcd1ab5350eef9c733110e3a9fa9ae6ce7ec4ac1a635dd454835931a",
+   "block_count": 4064,
+   "table_count": 428,
+   "literal_substrings_reused": 57,
+   "variants": [
+    {
+     "variant": "deduplicated_strings_and_grouped_rows",
+     "payload_sha256": "be901256f0efdc6c21fcdfb066aab2b286ad56248f8f25c12f7db760877edd29",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 143700,
+     "fits_with_old_prompt_lower_bound": true,
+     "valid_new_layout_prompt_or_independent_read": false
+    },
+    {
+     "variant": "linear_positions_and_flat_cell_arrays",
+     "payload_sha256": "895d0407fa743ce75da5217dff43ea78d9f1b8310bc7f0fd5edb8aad60b424c8",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 138361,
+     "fits_with_old_prompt_lower_bound": true,
+     "valid_new_layout_prompt_or_independent_read": false
+    },
+    {
+     "variant": "linear_positions_and_exact_block_substrings",
+     "payload_sha256": "d344b0a723b174e5dc30f2b031044dafeee1ec5506a4268e678532e556fe819f",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 137762,
+     "fits_with_old_prompt_lower_bound": true,
+     "valid_new_layout_prompt_or_independent_read": false
+    }
+   ]
+  },
+  {
+   "position": "lumen_technologies-2021-12-31",
+   "original_request_sha256": "c6c224c5d73152b7a2712114d4715053934b2318cebf397d63c37193256b67a5",
+   "block_count": 5219,
+   "table_count": 629,
+   "literal_substrings_reused": 193,
+   "variants": [
+    {
+     "variant": "deduplicated_strings_and_grouped_rows",
+     "payload_sha256": "2b4f8f19664034a341efc7f9c97aa6cdb6e7ad0f2e3bfc9ac69ff80f3961c1a5",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 220272,
+     "fits_with_old_prompt_lower_bound": false,
+     "valid_new_layout_prompt_or_independent_read": false
+    },
+    {
+     "variant": "linear_positions_and_flat_cell_arrays",
+     "payload_sha256": "fffd85980d5b956509b8cccb0f59d34da48c765463c1426eab1d2584d554daf1",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 205481,
+     "fits_with_old_prompt_lower_bound": false,
+     "valid_new_layout_prompt_or_independent_read": false
+    },
+    {
+     "variant": "linear_positions_and_exact_block_substrings",
+     "payload_sha256": "48fce2ebe06c68c5b3cb821baa148ffe5f65103834d67b1924b914f99d486e77",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 204549,
+     "fits_with_old_prompt_lower_bound": false,
+     "valid_new_layout_prompt_or_independent_read": false
+    }
+   ]
+  },
+  {
+   "position": "pfizer-2022-12-31",
+   "original_request_sha256": "c40ac56cfdb82f068c81091e23e1cef22344d0306af6a99288fe9b7d00890f8b",
+   "block_count": 3511,
+   "table_count": 344,
+   "literal_substrings_reused": 85,
+   "variants": [
+    {
+     "variant": "deduplicated_strings_and_grouped_rows",
+     "payload_sha256": "4bb7f0820a7a668a770bb31088af250752ba41435d0bf33721725d36633aa068",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 158292,
+     "fits_with_old_prompt_lower_bound": true,
+     "valid_new_layout_prompt_or_independent_read": false
+    },
+    {
+     "variant": "linear_positions_and_flat_cell_arrays",
+     "payload_sha256": "7f429d39d32c2fd02ce8ad3f79f55632a9f76883dc8ad4dc379871f909da3323",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 150814,
+     "fits_with_old_prompt_lower_bound": true,
+     "valid_new_layout_prompt_or_independent_read": false
+    },
+    {
+     "variant": "linear_positions_and_exact_block_substrings",
+     "payload_sha256": "daa61da21e7612cb824bad28c9c305cad50b6ea1578e8f47ac1aaea9f0a7b312",
+     "all_blocks_and_expanded_text_header_grids_equal": true,
+     "input_token_lower_bound": 149862,
+     "fits_with_old_prompt_lower_bound": true,
+     "valid_new_layout_prompt_or_independent_read": false
+    }
+   ]
+  }
+ ],
+ "limits_unchanged": {
+  "context": 200000,
+  "output_reserve": 4096
+ },
+ "next_constraint": "Lumen remains outside even optimistic single-request bounds. Complete responsibility/context grouping needs a separately justified contract; source cuts or cap increases are not used.",
+ "current_prepare_tool_changed": false,
+ "provider_requests_sent": 0,
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

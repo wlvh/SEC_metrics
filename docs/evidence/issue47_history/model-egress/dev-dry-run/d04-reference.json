@@ -1,0 +1,620 @@
+{
+ "record_type": "ISSUE_47_D04_PRE_CALL_REFERENCE",
+ "written_before_any_paid_answer": true,
+ "made_by": "the executor, one reader; not an independent human acceptance",
+ "inputs": "the exact messages of the 16 approved D04 requests (dump_requests.py on the run package), each checked against d04-inputs-index.json",
+ "assessment_pattern": "(?i)going[ -]concern|substantial doubt|continue as a going",
+ "cue_pattern": "(?i)\\bdoubt|ability to continue|cease operations|bankrupt|chapter 11|next (?:twelve|12) months",
+ "judgements": [
+  {
+   "name": "OTHER_PARTIES_BANKRUPTCY_AS_A_BUSINESS_RISK",
+   "pattern": "(?i)bankruptcy of a hotel owner|(?:owners|hotel owners) could declare bankruptcy|foreclosures or bankruptcies",
+   "judgement": "A risk factor about hotel owners' or franchisees' bankruptcy ending Marriott's agreements; not an assessment of Marriott's own ability to continue as a going concern.",
+   "categories_a_correct_answer_may_give_if_it_lists_it": [
+    "OTHER_ENTITY",
+    "CONDITIONAL_OR_BOILERPLATE"
+   ],
+   "hits": 6
+  },
+  {
+   "name": "CONTRACTUAL_AMOUNTS_DUE_WITHIN_TWELVE_MONTHS",
+   "pattern": "(?i)payable within the next 12 months|not expected to be funded within the next 12 months",
+   "judgement": "Contractual obligations (debt, transition tax, guarantees) falling due within a year; a maturity disclosure, not a going-concern assessment, and not an express statement that doubt is absent.",
+   "categories_a_correct_answer_may_give_if_it_lists_it": [],
+   "hits": 6
+  },
+  {
+   "name": "TAX_POSITIONS_WITHIN_TWELVE_MONTHS",
+   "pattern": "(?i)resolution of income tax examinations|reserve for uncertain tax positions will significantly change",
+   "judgement": "An accounting estimate about tax examinations; no going-concern meaning.",
+   "categories_a_correct_answer_may_give_if_it_lists_it": [],
+   "hits": 6
+  },
+  {
+   "name": "PREPAYMENTS_EXPENSED_WITHIN_TWELVE_MONTHS",
+   "pattern": "(?i)expected to be expensed over the next 12 months",
+   "judgement": "A balance-sheet classification of programming prepayments; no going-concern meaning.",
+   "categories_a_correct_answer_may_give_if_it_lists_it": [],
+   "hits": 3
+  },
+  {
+   "name": "DOUBTFUL_ACCOUNTS",
+   "pattern": "(?i)doubtful accounts|ProvisionForDoubtful",
+   "judgement": "Credit-loss accounting for receivables (the word 'doubtful'); no going-concern meaning.",
+   "categories_a_correct_answer_may_give_if_it_lists_it": [],
+   "hits": 4
+  },
+  {
+   "name": "ABILITY_TO_CONTINUE_TO_ATTRACT_USERS",
+   "pattern": "(?i)ability to continue to attract, engage and retain streaming subscribers",
+   "judgement": "A streaming risk factor: the ability to continue to attract subscribers, the words in another meaning. Paramount request 1 requires an assessment of this block.",
+   "categories_a_correct_answer_may_give_if_it_lists_it": [
+    "VALUATION_OR_OTHER_MEANING",
+    "CONDITIONAL_OR_BOILERPLATE"
+   ],
+   "hits": 1
+  }
+ ],
+ "expected": {
+  "per_position": [
+   {
+    "company_id": "marriott_international",
+    "report_end": "2023-12-31",
+    "outcome": "NO_GOING_CONCERN_DOUBT_DISCLOSED_IN_THE_SUPPLIED_UNITS"
+   },
+   {
+    "company_id": "marriott_international",
+    "report_end": "2024-12-31",
+    "outcome": "NO_GOING_CONCERN_DOUBT_DISCLOSED_IN_THE_SUPPLIED_UNITS"
+   },
+   {
+    "company_id": "paramount_skydance_paramount_global",
+    "report_end": "2024-12-31",
+    "outcome": "NO_GOING_CONCERN_DOUBT_DISCLOSED_IN_THE_SUPPLIED_UNITS"
+   }
+  ],
+  "an_answer_is_wrong_if": [
+   "it gives any of DOUBT_DISCLOSED, DOUBT_ALLEVIATED, NO_DOUBT_DECLARATION about the target registrant: no supplied unit carries going-concern assessment wording, and the definitions say no ordinary risk, maturity table or clean opinion may stand in for one",
+   "it classifies a required candidate outside its acceptable categories, or leaves it UNRESOLVED (the block itself settles its meaning)",
+   "it omits a required candidate (the contract's own check refuses that)"
+  ],
+  "not_wrong": "listing a judged cue under one of its acceptable categories; the definitions discourage it, and it does not move the outcome"
+ },
+ "what_this_cannot_see": [
+  "doubt stated in words neither pattern matches; no unit was read in full except the contexts the hits point at",
+  "whether DeepSeek reads every unit: a long request answered with no findings is indistinguishable here from one that skipped units, which the contract's coverage check (every required unit answered) only partly addresses"
+ ],
+ "requests": [
+  {
+   "file": "D04-marriott_international-2023-12-31-r1",
+   "company_id": "marriott_international",
+   "report_end": "2023-12-31",
+   "ledger_digest": "sha256:55a916ad4477b19ca732202dd1582a6ad7bbba3d7c16dce1db84c7a66a367594",
+   "input_sha256": "cc505179cb43b149c3c5fe111998101a4c38a15b7c738f19c8eb52e519cfd554",
+   "units": 5,
+   "characters_searched": 385458,
+   "assessment_wording_hits": [],
+   "cue_hits": [
+    {
+     "path": [
+      "units",
+      0,
+      "payload",
+      "blocks",
+      "343",
+      5
+     ],
+     "matched": "bankrupt",
+     "judgement": "OTHER_PARTIES_BANKRUPTCY_AS_A_BUSINESS_RISK"
+    },
+    {
+     "path": [
+      "units",
+      0,
+      "payload",
+      "blocks",
+      "379",
+      5
+     ],
+     "matched": "bankrupt",
+     "judgement": "OTHER_PARTIES_BANKRUPTCY_AS_A_BUSINESS_RISK"
+    },
+    {
+     "path": [
+      "units",
+      0,
+      "payload",
+      "blocks",
+      "379",
+      5
+     ],
+     "matched": "bankrupt",
+     "judgement": "OTHER_PARTIES_BANKRUPTCY_AS_A_BUSINESS_RISK"
+    },
+    {
+     "path": [
+      "units",
+      1,
+      "payload",
+      "blocks",
+      "628",
+      5
+     ],
+     "matched": "next 12 months",
+     "judgement": "CONTRACTUAL_AMOUNTS_DUE_WITHIN_TWELVE_MONTHS"
+    },
+    {
+     "path": [
+      "units",
+      1,
+      "payload",
+      "blocks",
+      "630",
+      5
+     ],
+     "matched": "next 12 months",
+     "judgement": "CONTRACTUAL_AMOUNTS_DUE_WITHIN_TWELVE_MONTHS"
+    },
+    {
+     "path": [
+      "units",
+      1,
+      "payload",
+      "blocks",
+      "631",
+      5
+     ],
+     "matched": "next 12 months",
+     "judgement": "CONTRACTUAL_AMOUNTS_DUE_WITHIN_TWELVE_MONTHS"
+    },
+    {
+     "path": [
+      "units",
+      2,
+      "payload",
+      "blocks",
+      "1166",
+      5
+     ],
+     "matched": "next 12 months",
+     "judgement": "TAX_POSITIONS_WITHIN_TWELVE_MONTHS"
+    }
+   ],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-marriott_international-2023-12-31-r2",
+   "company_id": "marriott_international",
+   "report_end": "2023-12-31",
+   "ledger_digest": "sha256:d91c36576d9c38a5c89369a5e2e1c130747fd00ce18ff3328015082f3f489249",
+   "input_sha256": "a05554d275f0c2213da33ef2849cb133bcb552cc1c7ed96905c30b2dc93faa4b",
+   "units": 4,
+   "characters_searched": 353219,
+   "assessment_wording_hits": [],
+   "cue_hits": [],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-marriott_international-2023-12-31-r3",
+   "company_id": "marriott_international",
+   "report_end": "2023-12-31",
+   "ledger_digest": "sha256:adc49b8026b936a2ecd920cac84dbce86186f142236bd9de206a52542ad4c918",
+   "input_sha256": "9272d784275a32f44e17ef09c886aa0dd1a9b4d49a97591af8d11b383890aa04",
+   "units": 6,
+   "characters_searched": 490056,
+   "assessment_wording_hits": [],
+   "cue_hits": [
+    {
+     "path": [
+      "units",
+      3,
+      "payload",
+      "objects",
+      1,
+      "raw_xml"
+     ],
+     "matched": "next 12 months",
+     "judgement": "TAX_POSITIONS_WITHIN_TWELVE_MONTHS"
+    }
+   ],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-marriott_international-2023-12-31-r4",
+   "company_id": "marriott_international",
+   "report_end": "2023-12-31",
+   "ledger_digest": "sha256:0f2cadb8118c068808eeb4a0f5e13e7586f1c7a2f863b24d34e15cab8cb65ec9",
+   "input_sha256": "a9f90bdb1be1ff9fa43beab17190c94c94f2875396b975cfe3f16e89775bb0f7",
+   "units": 1,
+   "characters_searched": 59089,
+   "assessment_wording_hits": [],
+   "cue_hits": [],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-marriott_international-2024-12-31-r1",
+   "company_id": "marriott_international",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:e863215103cc78a95cd5746cd25721b2d9995ec9952e623bc44372f9f1fd8345",
+   "input_sha256": "bb64927538da4b79ee185b93b8998513804e0b5589180432c39d9721d5c00c22",
+   "units": 5,
+   "characters_searched": 394667,
+   "assessment_wording_hits": [],
+   "cue_hits": [
+    {
+     "path": [
+      "units",
+      0,
+      "payload",
+      "blocks",
+      "351",
+      5
+     ],
+     "matched": "bankrupt",
+     "judgement": "OTHER_PARTIES_BANKRUPTCY_AS_A_BUSINESS_RISK"
+    },
+    {
+     "path": [
+      "units",
+      0,
+      "payload",
+      "blocks",
+      "394",
+      5
+     ],
+     "matched": "bankrupt",
+     "judgement": "OTHER_PARTIES_BANKRUPTCY_AS_A_BUSINESS_RISK"
+    },
+    {
+     "path": [
+      "units",
+      0,
+      "payload",
+      "blocks",
+      "394",
+      5
+     ],
+     "matched": "bankrupt",
+     "judgement": "OTHER_PARTIES_BANKRUPTCY_AS_A_BUSINESS_RISK"
+    },
+    {
+     "path": [
+      "units",
+      1,
+      "payload",
+      "blocks",
+      "658",
+      5
+     ],
+     "matched": "next 12 months",
+     "judgement": "CONTRACTUAL_AMOUNTS_DUE_WITHIN_TWELVE_MONTHS"
+    },
+    {
+     "path": [
+      "units",
+      1,
+      "payload",
+      "blocks",
+      "660",
+      5
+     ],
+     "matched": "next 12 months",
+     "judgement": "CONTRACTUAL_AMOUNTS_DUE_WITHIN_TWELVE_MONTHS"
+    },
+    {
+     "path": [
+      "units",
+      1,
+      "payload",
+      "blocks",
+      "661",
+      5
+     ],
+     "matched": "next 12 months",
+     "judgement": "CONTRACTUAL_AMOUNTS_DUE_WITHIN_TWELVE_MONTHS"
+    },
+    {
+     "path": [
+      "units",
+      2,
+      "payload",
+      "blocks",
+      "1197",
+      5
+     ],
+     "matched": "next 12 months",
+     "judgement": "TAX_POSITIONS_WITHIN_TWELVE_MONTHS"
+    }
+   ],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-marriott_international-2024-12-31-r2",
+   "company_id": "marriott_international",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:f762a3f5dc100706d6e04b5193f988eeb04884da9cc2e80ffecb2d2d663551a9",
+   "input_sha256": "2fa384ea323d37c811168c067559f01476f267bc1f6d525fc9f91ea3b50d7ec2",
+   "units": 4,
+   "characters_searched": 359326,
+   "assessment_wording_hits": [],
+   "cue_hits": [],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-marriott_international-2024-12-31-r3",
+   "company_id": "marriott_international",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:035b339ef0b73eadebc60eca7d9f96325163ad05cd4961192dfdf0c7e0d97c64",
+   "input_sha256": "91c795f62926bb7863a014951960c4bf16df1e6289ec6c629347bd340c339a0f",
+   "units": 6,
+   "characters_searched": 420807,
+   "assessment_wording_hits": [],
+   "cue_hits": [
+    {
+     "path": [
+      "units",
+      4,
+      "payload",
+      "objects",
+      2,
+      "raw_xml"
+     ],
+     "matched": "next 12 months",
+     "judgement": "TAX_POSITIONS_WITHIN_TWELVE_MONTHS"
+    }
+   ],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-marriott_international-2024-12-31-r4",
+   "company_id": "marriott_international",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:049d0a5c43268e2a45bbb70d0a3a95b0d3123ab72a0739bb70b64ffed46fd329",
+   "input_sha256": "ba926403d90a4ef9e2fe78f2dda77a0a98fce082b6045ff6583b269ab15883aa",
+   "units": 3,
+   "characters_searched": 207097,
+   "assessment_wording_hits": [],
+   "cue_hits": [],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-paramount_skydance_paramount_global-2024-12-31-r1",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:5eed18a990ab06fb4aad25490c36773af56b8912c2851d279882e0e0c600202d",
+   "input_sha256": "1501472129244950f8aedf434ef6c0e1aa1b5ef47db577b1abf35ae58dfe6037",
+   "units": 5,
+   "characters_searched": 507068,
+   "assessment_wording_hits": [],
+   "cue_hits": [
+    {
+     "path": [
+      "units",
+      0,
+      "payload",
+      "blocks",
+      "340",
+      5
+     ],
+     "matched": "ability to continue",
+     "judgement": "ABILITY_TO_CONTINUE_TO_ATTRACT_USERS"
+    },
+    {
+     "path": [
+      "units",
+      4,
+      "payload",
+      "blocks",
+      "1678",
+      5
+     ],
+     "matched": "next 12 months",
+     "judgement": "PREPAYMENTS_EXPENSED_WITHIN_TWELVE_MONTHS"
+    },
+    {
+     "path": [
+      "units",
+      4,
+      "payload",
+      "blocks",
+      "1740",
+      5
+     ],
+     "matched": "doubt",
+     "judgement": "DOUBTFUL_ACCOUNTS"
+    }
+   ],
+   "required_candidates": [
+    {
+     "kind": "VISIBLE_BLOCK",
+     "source_index": 340,
+     "unit_id": "sha256:ce26db118075f03c050e81a8d2a0f7d2d991b5d8a3dca58c40b7d18f2fbe643d",
+     "text": "Streaming is intensely competitive and cash intensive and there can be no assurance our streaming business will be profitable or otherwise successful. Our ability to continue to attract, engage and retain streaming subscribers and active users (together, “users”), as well as generate corresponding subscription and advertising revenues, depends on a number of factors, including our ability to consistently provide appealing and differentiated content",
+     "judgement": "ABILITY_TO_CONTINUE_TO_ATTRACT_USERS",
+     "acceptable_categories": [
+      "VALUATION_OR_OTHER_MEANING",
+      "CONDITIONAL_OR_BOILERPLATE"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "D04-paramount_skydance_paramount_global-2024-12-31-r2",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:a2ade001c7940bd186a0bf56f6a3a4afadce1ccc6c81395931c11047f93b8794",
+   "input_sha256": "9358bb8f93255c3c2f6c28fadfe5cf98fd75c0db3018c9600f9d613f23411d2e",
+   "units": 4,
+   "characters_searched": 315950,
+   "assessment_wording_hits": [],
+   "cue_hits": [
+    {
+     "path": [
+      "units",
+      1,
+      "payload",
+      "blocks",
+      "2461",
+      5
+     ],
+     "matched": "next 12 months",
+     "judgement": "TAX_POSITIONS_WITHIN_TWELVE_MONTHS"
+    },
+    {
+     "path": [
+      "units",
+      2,
+      "payload",
+      "blocks",
+      "2967",
+      5
+     ],
+     "matched": "doubt",
+     "judgement": "DOUBTFUL_ACCOUNTS"
+    }
+   ],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-paramount_skydance_paramount_global-2024-12-31-r3",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:4c6375760e553f73d5468bc4d6e0ce32237b503c6b655ee160436864ff5db36b",
+   "input_sha256": "a28aaf217943f720bf179ec9ae887a3d371f24920a1b107658ec6c8538850806",
+   "units": 4,
+   "characters_searched": 360565,
+   "assessment_wording_hits": [],
+   "cue_hits": [
+    {
+     "path": [
+      "units",
+      1,
+      "payload",
+      "facts",
+      "574",
+      2,
+      6
+     ],
+     "matched": "next 12 months",
+     "judgement": "PREPAYMENTS_EXPENSED_WITHIN_TWELVE_MONTHS"
+    }
+   ],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-paramount_skydance_paramount_global-2024-12-31-r4",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:a4b09fc4e72c1dadb2f17232080d6a71a53c31e442915463548d4be9bd9b7a0b",
+   "input_sha256": "3890a3d94c6dd03aeef5b8f2ba31e4ad3c839d2a54c634f4541d91565b00da85",
+   "units": 4,
+   "characters_searched": 364107,
+   "assessment_wording_hits": [],
+   "cue_hits": [],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-paramount_skydance_paramount_global-2024-12-31-r5",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:6c7f77dfb0d3861df13c26b4b6a98df4fec9e9ab2cc573b52b2cd13ae92b8f6f",
+   "input_sha256": "1dd7a90aa38d7a611c55719434e3954fad74f31117e0cd53d88d9f88654be71f",
+   "units": 4,
+   "characters_searched": 349755,
+   "assessment_wording_hits": [],
+   "cue_hits": [],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-paramount_skydance_paramount_global-2024-12-31-r6",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:352746682d884c5d94cb468f463b5d4f0e2358573eacaa40c896d0522c33a349",
+   "input_sha256": "7ad1cd6c77d26b7e255687efa5e2d0ff989e4a69a9a381f5036d54837c0b3c4b",
+   "units": 7,
+   "characters_searched": 530122,
+   "assessment_wording_hits": [],
+   "cue_hits": [
+    {
+     "path": [
+      "units",
+      0,
+      "payload",
+      "objects",
+      5,
+      "raw_xml"
+     ],
+     "matched": "next 12 months",
+     "judgement": "PREPAYMENTS_EXPENSED_WITHIN_TWELVE_MONTHS"
+    },
+    {
+     "path": [
+      "units",
+      0,
+      "payload",
+      "objects",
+      10,
+      "raw_xml"
+     ],
+     "matched": "doubt",
+     "judgement": "DOUBTFUL_ACCOUNTS"
+    }
+   ],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-paramount_skydance_paramount_global-2024-12-31-r7",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:aafe3604c3f15935d635a9632317972fc8737560d451108260fb8fc730ccfb0a",
+   "input_sha256": "95d3d19a790f20f49608380f48fe3ab02d1ae0e087602e247509c73f96b936a6",
+   "units": 7,
+   "characters_searched": 456470,
+   "assessment_wording_hits": [],
+   "cue_hits": [
+    {
+     "path": [
+      "units",
+      0,
+      "payload",
+      "objects",
+      2,
+      "raw_xml"
+     ],
+     "matched": "next 12 months",
+     "judgement": "TAX_POSITIONS_WITHIN_TWELVE_MONTHS"
+    },
+    {
+     "path": [
+      "units",
+      6,
+      "payload",
+      "objects",
+      0,
+      "raw_xml"
+     ],
+     "matched": "doubt",
+     "judgement": "DOUBTFUL_ACCOUNTS"
+    }
+   ],
+   "required_candidates": []
+  },
+  {
+   "file": "D04-paramount_skydance_paramount_global-2024-12-31-r8",
+   "company_id": "paramount_skydance_paramount_global",
+   "report_end": "2024-12-31",
+   "ledger_digest": "sha256:2f553f5aa318cf0327158b681f0908ef203c50381083b6ce9c7461c581d396f1",
+   "input_sha256": "06f0f4aff8bd653b27258d6e93bba3c55919237ed311a0471d6a3cace6726730",
+   "units": 5,
+   "characters_searched": 344737,
+   "assessment_wording_hits": [],
+   "cue_hits": [],
+   "required_candidates": []
+  }
+ ],
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}

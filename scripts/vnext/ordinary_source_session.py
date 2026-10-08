@@ -15,7 +15,7 @@ from sec_urls import submissions_url,companyfacts_url
 from git_workspace import first_symlink_in_path
 from .annual_update import saved_source
 from .batch_workflow import validate_request_attempt_binding
-from .canonical import content_hash,sha256_file,strict_json_file,canonical_json_bytes
+from .canonical import content_hash,sha256_file,sha256_bytes,strict_json_file,canonical_json_bytes
 from .normal_annual_input import _registry_rows,prepare_saved_annual_input
 from .normal_source_authority import ROOT,MANIFEST_PATH,_baseline_file,verify_saved_source_proofs
 
@@ -201,7 +201,7 @@ def recorded_source_session(*,data_root,journal_root,company_id,max_responses=3)
                                  max_responses=max_responses,_factory=_FACTORY)
 
 
-def compare_annual_inputs(*,previous,current):
+def compare_annual_inputs(*,previous,current,task_metric_id=None,previous_root=None,current_root=None):
     """Compare already verified inputs; this function grants no authenticity.
 
     Attempts, header timestamps and storage paths do not change financial input
@@ -218,6 +218,9 @@ def compare_annual_inputs(*,previous,current):
             _need(key not in result or result[key]==proof['content_sha256'],'SOURCE_UPDATE_CONFLICTING_BODIES')
             result[key]=proof['content_sha256']
         return result
+    _need(task_metric_id in {None,'D04'},'SOURCE_UPDATE_PARSED_TASK_UNSUPPORTED')
+    _need(task_metric_id is None or previous_root is not None and current_root is not None,
+          'SOURCE_UPDATE_PARSED_TASK_ROOTS_REQUIRED')
     old,new=filing(previous['filing']),filing(current['filing'])
     if new['reportDate']<old['reportDate']:
         status='SOURCE_SELECTION_REGRESSED';process=False
@@ -226,7 +229,40 @@ def compare_annual_inputs(*,previous,current):
         status='AMENDMENT_INPUT_CHANGED';process=True
     elif previous['table_input']['target_period']!=current['table_input']['target_period']:
         status='PERIOD_INTERPRETATION_CHANGED';process=True
-    elif bodies(previous)!=bodies(current):status='SOURCE_CONTENT_CHANGED';process=True
+    elif bodies(previous)!=bodies(current):
+        status='SOURCE_CONTENT_CHANGED';process=True
+        if task_metric_id=='D04':
+            left,right=bodies(previous),bodies(current)
+            changed=[key for key in left if left.get(key)!=right.get(key)]
+            # D04 consumes the selected annual filing/amendment set, entity
+            # and period above, not unrelated new 8-K rows in submissions.
+            # Those mechanical selections have already been compared. Other
+            # JSON sources remain conservative raw changes in this first step.
+            metadata_url=submissions_url(cik=int(previous['entity']))
+            documents=[k for k in changed if k[0]!=metadata_url]
+            # New/missing files or changed non-HTML dependencies remain a
+            # change. No Source proof or old assessment ID is projected.
+            if set(left)==set(right) and all(k[2].lower().endswith(('.htm','.html')) for k in documents):
+                from .ordinary_task_input import parsed_d04_document
+                from .sources import raw_blob_record,source_reference_record,resolve_repository_file
+                fingerprints=[]
+                for value,root in ((previous,Path(previous_root)),(current,Path(current_root))):
+                    items=[]
+                    for key in documents:
+                        proof=next(p for p in value['source_proofs']
+                            if (p['source_url'],p['accession'],p['document_name'])==key)
+                        raw=resolve_repository_file(repo_root=root,repo_relative_path=proof['request_repo_relative_path']).read_bytes()
+                        _need(sha256_bytes(content=raw)==proof['content_sha256'],'SOURCE_UPDATE_PARSED_ORIGINAL_BYTES_CHANGED')
+                        blob=raw_blob_record(repo_root=root,repo_relative_path=proof['request_repo_relative_path'],media_type='text/html')
+                        ref=source_reference_record(raw_blob=blob,company_id=value['company_id'],
+                            source_url=key[0],accession=key[1],document_name=key[2],source_role='target_primary',
+                            request_attempt_id=proof['request_attempt_id'])
+                        parsed=parsed_d04_document(raw_bytes=raw,raw_blob=blob,source_reference=ref,
+                            expected_company_id=value['company_id'],expected_cik=value['entity'],
+                            expected_period_end=value['table_input']['target_period']['period_end'])
+                        items.append(parsed['parsed_input_sha256'])
+                    fingerprints.append(items)
+                if fingerprints[0]==fingerprints[1]:status='PARSED_TASK_INPUT_UNCHANGED';process=False
     else:status='NO_SOURCE_CONTENT_CHANGE';process=False
     return {'status':status,'requires_candidate_processing':process,
             'input_authenticity_verified_by_comparison':False,'production_authorized':False}

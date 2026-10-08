@@ -1,0 +1,200 @@
+{
+ "status": "FLOW_INCOMPLETE",
+ "request": {
+  "fiscal_year_start": 2010,
+  "fiscal_year_end": 2011
+ },
+ "summary": {
+  "elapsed_seconds": "152.233187",
+  "record_type": "LOCAL_COMPANY_HISTORICAL_RUN_SUMMARY_V1",
+  "company_id": "macys",
+  "run_id": "20261006T060952Z-2b6dcfe7",
+  "period_request": "fiscal-years",
+  "fiscal_year_start": 2010,
+  "fiscal_year_end": 2011,
+  "selected_metrics": [
+   "B01"
+  ],
+  "configured_metrics": [
+   "A01",
+   "A02",
+   "A03",
+   "A04",
+   "A05",
+   "A06",
+   "A07",
+   "A08",
+   "A09",
+   "A10",
+   "A11",
+   "A12",
+   "A13",
+   "B01",
+   "B02",
+   "B03",
+   "B04",
+   "B05",
+   "B06",
+   "B07",
+   "B08",
+   "B09",
+   "B10",
+   "B11",
+   "B12",
+   "B13",
+   "C01",
+   "C02",
+   "C03",
+   "C04",
+   "D01",
+   "D02",
+   "D03",
+   "D04",
+   "E01",
+   "E02",
+   "E03",
+   "E04",
+   "E05"
+  ],
+  "output_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-output-20261006/20261006T060952Z-2b6dcfe7",
+  "preparation_program_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006",
+  "calls": {
+   "provider": 0,
+   "paid": 0,
+   "sec": 0
+  },
+  "production_authorized": false,
+  "stages": {
+   "handoff": {
+    "returncode": 0,
+    "elapsed_seconds": "107.289863",
+    "command": [
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/tools/vnext_company.py",
+     "export",
+     "--source-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+     "--output-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/handoffs/20261006T060952Z-2b6dcfe7",
+     "--trust-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/trust/company",
+     "--company",
+     "macys",
+     "--history-years",
+     "5",
+     "--metric",
+     "B01"
+    ],
+    "report_file": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-output-20261006/20261006T060952Z-2b6dcfe7/stages/handoff.json"
+   },
+   "install": {
+    "returncode": 0,
+    "elapsed_seconds": "16.905479",
+    "command": [
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/programs/historical-03d65fc886b8699aaf5d807061c257773390b4b51b8ff93de83b030a24cf064c/tools/vnext_company.py",
+     "install",
+     "--package-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/handoffs/20261006T060952Z-2b6dcfe7",
+     "--state-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/historical-company-state",
+     "--trust-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/trust/company",
+     "--company",
+     "macys"
+    ],
+    "report_file": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-output-20261006/20261006T060952Z-2b6dcfe7/stages/install.json"
+   },
+   "compute": {
+    "returncode": 1,
+    "elapsed_seconds": "3.997468",
+    "command": [
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/programs/historical-03d65fc886b8699aaf5d807061c257773390b4b51b8ff93de83b030a24cf064c/tools/vnext_company.py",
+     "compute-range",
+     "--state-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/historical-company-state",
+     "--trust-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/trust/company",
+     "--company",
+     "macys",
+     "--fiscal-year-start",
+     "2010",
+     "--fiscal-year-end",
+     "2011",
+     "--metric",
+     "B01"
+    ],
+    "report_file": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-output-20261006/20261006T060952Z-2b6dcfe7/stages/compute.json"
+   },
+   "preserved-results": {
+    "returncode": 0,
+    "elapsed_seconds": "24.032914",
+    "command": [
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-check-20261006/tools/vnext_company.py",
+     "export-results",
+     "--state-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/historical-company-state",
+     "--output-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/result-exports/20261006T060952Z-2b6dcfe7-preserved",
+     "--trust-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/trust/company",
+     "--company",
+     "macys",
+     "--runtime-root",
+     "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/programs/historical-03d65fc886b8699aaf5d807061c257773390b4b51b8ff93de83b030a24cf064c"
+    ],
+    "report_file": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-output-20261006/20261006T060952Z-2b6dcfe7/stages/export-results.json"
+   }
+  },
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "source_status": "SAVED_SOURCE_VERIFIED",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-task-20261006/programs/historical-03d65fc886b8699aaf5d807061c257773390b4b51b8ff93de83b030a24cf064c",
+  "fixed_program_identity": {
+   "requirement_id": "issue_54_v3",
+   "baseline": {
+    "sha256": "2e0f5683f43c52b604a826d1d94f642cbaba51a45be561fd58ddb7d94c4b08a6",
+    "size": 68727
+   },
+   "entry": {
+    "sha256": "7bf687fe40bccc0621a6f76f401c1c35ed5425572965dc0134f2448c21208992",
+    "size": 13066
+   },
+   "range_entry_protocol": "COMPANY_FISCAL_RANGE_V1",
+   "relation": "LAUNCHER_VERIFIES_AND_CALLS_PINNED_ENTRY"
+  },
+  "periods": [],
+  "failure": {
+   "reason": "LOCAL_HISTORY_RANGE_COMPUTE_FAILED",
+   "error_type": "ValueError"
+  },
+  "flow_completed": false,
+  "status": "FLOW_INCOMPLETE",
+  "all_configured_business_metrics_completed": false,
+  "metrics": [
+   {
+    "requested_fiscal_year": 2010,
+    "metric_id": "B01",
+    "status": "SOURCE_INPUT_REQUIRED",
+    "business_metric_completed": false,
+    "reason": "LOCAL_HISTORY_RANGE_COMPUTE_FAILED"
+   },
+   {
+    "requested_fiscal_year": 2011,
+    "metric_id": "B01",
+    "status": "SOURCE_INPUT_REQUIRED",
+    "business_metric_completed": false,
+    "reason": "LOCAL_HISTORY_RANGE_COMPUTE_FAILED"
+   }
+  ],
+  "outputs": {
+   "metrics_matrix.csv": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-output-20261006/20261006T060952Z-2b6dcfe7/metrics_matrix.csv",
+   "metric_evidence.csv": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-output-20261006/20261006T060952Z-2b6dcfe7/metric_evidence.csv",
+   "run_summary.json": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-output-20261006/20261006T060952Z-2b6dcfe7/run_summary.json"
+  }
+ },
+ "old_native_files_unchanged": 16,
+ "new_runs": 0,
+ "new_business_calls": [
+  0,
+  0,
+  0
+ ]
+}

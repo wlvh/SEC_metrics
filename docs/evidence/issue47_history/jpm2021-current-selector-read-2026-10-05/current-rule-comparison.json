@@ -1,0 +1,123 @@
+{
+ "record_type": "ISSUE47_JPM2021_CURRENT_RULE_EXISTING_WITHDRAWAL_OVERLAY",
+ "reference_sha256": "883d74c9f96a7bef7a53a114bdcbb2ac93358e471319981d2a7b833b1901c3f8",
+ "authenticated_normal_source_root_read": true,
+ "private_clone_seven_relevant_modules_byte_equal_to_head": "c1ceeb180fe6d402e6ce94080790710c4faa2e76",
+ "selected_excerpts": 51,
+ "all_text_and_raw_spans_bound_to_full_read_source": true,
+ "same_51_ordered_blocks_and_all_UTF8_text_hashes_as_original_reading": true,
+ "current_proposal_status": {
+  "coverage_status": "COMPLETE_LOCAL_DOCUMENT",
+  "selection_policy": "BOARD_COMPOSITION_FACTS_V1",
+  "numeric_board_counts_asserted": false,
+  "board_measurement_date_assigned": false,
+  "native_result_created": false
+ },
+ "missing_source_relationship_anchors": {
+  "full_chair_name": [
+   42,
+   55,
+   718
+  ],
+  "ten_current_director_since": [
+   609,
+   634,
+   665,
+   684,
+   717,
+   739,
+   772,
+   796,
+   823,
+   849
+  ],
+  "standing_committee_full_set": [
+   1041
+  ],
+  "Stock_and_Executive_names": [
+   1111,
+   1112
+  ],
+  "specific_committee_names_and_table": [
+   1115,
+   1116,
+   1117,
+   1129,
+   1130,
+   1131,
+   1132,
+   1133,
+   1134,
+   1135,
+   1136,
+   1137,
+   1138,
+   1139,
+   1140,
+   1141,
+   1142,
+   1143,
+   1144,
+   1145,
+   1146
+  ],
+  "financial_expert_and_federal_risk_determinations": [
+   1052
+  ],
+  "named_nine_independence": [
+   891
+  ],
+  "all_nominees_are_current": [
+   527
+  ],
+  "dated_CMDC_report": [
+   2679,
+   2680,
+   2681,
+   2682,
+   2683
+  ],
+  "exact_Audit_report_date": [
+   3356
+  ]
+ },
+ "known_supported_content": [
+  "Nine nonCEO director names and their16positive cardcommittee items are selected; they are plain ordered excerpts, not a new typed relation response.",
+  "Audit fullnamed roster/current qualification paragraph is selected3324/3357-60, but its exactMarch14date3356 is not.",
+  "LeadBurke serving since2021 andreappointment in970 are present; March2022 explicitframe969 is omitted.",
+  "Additionalstanding count1110 is present butactualStock/Executivenames1111/12 absent."
+ ],
+ "existing_defect_id": "C02_JPMORGAN_2021_FIRST_READING_OF_A_NEW_LAYOUT_DISAGREES",
+ "original_result_already_withdrawn": "sha256:9d42878a4b7a7bb8c80103b748216b6e1368f7f1aaf027484ee9b42ebc522d00",
+ "source_definition_or_reference_annotations": [
+  {
+   "original_object": "known_result_defects.json:C02_JPMORGAN_2021_FIRST_READING_OF_A_NEW_LAYOUT_DISAGREES",
+   "original_phrase": "that Dimon sits on no committee",
+   "clarification": "The fullprinted currenttable has blankDimon committee cells; it covers fiveprincipal andtwoSpecificPurpose columns. Stock/Executive members remainunidentified. Do not inferglobal no-committee membership solelyfrom thoseblanks. B3510 broadall-committee independence is a separateattributed statement whoseadditionalbody scope is unresolved.",
+   "effect": "Preserveoriginaldefectobject; allotherconfirmedmissingidentity/name/committee/qualification relationships stillhold. This isnot a release."
+  },
+  {
+   "original_object": "c02-older-years/judgements/jpmorgan_chase-2021-12-31.json:selected357",
+   "original_phrase": "board size after the meeting",
+   "clarification": "357nominates10 andsays ifelected; it isnot a guarantee of anactualfutureBoard measurement. Currentincumbency527/currentmembertable are separatesupport for current10.",
+   "effect": "Do not rewritehistoricaljudgment or propagate the futureclaim; frozenfullreference preservesconditions."
+  },
+  {
+   "original_object": "currentselector531:BOARD_INDEPENDENCE_STATEMENT",
+   "clarification": "Independentperspective attributes allnominees, includingnonindependentCEO; it doesnot establishNYSE/Firmdirector independence. Whetherissuerattributes belongasqualification/role evaluation ispending, anddoesnot change this distinction."
+  }
+ ],
+ "whole_register_sha256_unchanged": "e86e09edc543b05ca6f7bfba40bfb7a8def282e070f4844951cbf96f2bb31133",
+ "original_104_defect_objects_changed": false,
+ "new_defect_duplicated": false,
+ "original_acceptance_objects_changed": false,
+ "new_release_or_view_credit": false,
+ "new_native_result_or_run": false,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "new_runs": 0,
+ "new_acceptances": 0
+}

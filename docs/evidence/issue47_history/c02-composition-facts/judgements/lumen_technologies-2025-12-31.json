@@ -1,0 +1,4245 @@
+{
+ "position": "lumen_technologies:2025-12-31",
+ "reader": "independent subagent reading, 2026-09-27",
+ "read_as": "independent subagent reading: a fresh agent given the owner's decision and the filing's blocks, not the selector's rules or the earlier reading",
+ "packet_selection": [
+  290,
+  366,
+  491,
+  537,
+  546,
+  547,
+  548,
+  551,
+  552,
+  566,
+  567,
+  568,
+  573,
+  841,
+  870,
+  872,
+  875,
+  876,
+  877,
+  878,
+  879,
+  880,
+  881,
+  882,
+  883,
+  884,
+  885,
+  928,
+  931,
+  932,
+  933,
+  934,
+  935,
+  936,
+  937,
+  938,
+  939,
+  940,
+  981,
+  984,
+  985,
+  986,
+  987,
+  988,
+  989,
+  1033,
+  1036,
+  1037,
+  1038,
+  1039,
+  1040,
+  1041,
+  1042,
+  1043,
+  1044,
+  1372,
+  2228,
+  2229,
+  2230,
+  2231,
+  2232,
+  2394,
+  3974
+ ],
+ "packet_pool_size": 703,
+ "pool_blocks_read": 703,
+ "selected": [
+  {
+   "i": 290,
+   "verdict": "MIXED",
+   "why": "States the board-size fact '9 director nominees'; the same block also carries the unrelated agenda item to ratify KPMG as auditor.",
+   "text_sha256": "sha256:84a927c616f96d1f0c02daff12987213bd5843cd7d55f5afc32dab33c8ff3dd6"
+  },
+  {
+   "i": 366,
+   "verdict": "FACT",
+   "why": "Goldberg appointed Chair of the Audit Committee and Linear Chair of the Risk (and Security) Committee following the Annual Meeting.",
+   "text_sha256": "sha256:682fd27eb37af1ab6249577b61dc2bebcc232609fe2d2fc85c9bfdccbe02073d"
+  },
+  {
+   "i": 491,
+   "verdict": "FACT",
+   "why": "Nine nominees for one-year terms; Michael Collins is the new nominee, all others were elected at the 2025 annual meeting (the 'following NCG recommendation' lead-in is incidental).",
+   "text_sha256": "sha256:edac8233683e5cf0049870e31e44bbfe975e310edeca554e7fc376d78d08f7c4"
+  },
+  {
+   "i": 537,
+   "verdict": "FACT",
+   "why": "Glenn and Jones retire at the Annual Meeting; Fowler resigned Dec 2025; board size fixed at ten with one vacancy after the meeting.",
+   "text_sha256": "sha256:23e566dc195c90b7292edd93b522a9a7c478467bdf0d1bb54cd7d86199a119e1"
+  },
+  {
+   "i": 546,
+   "verdict": "MIXED",
+   "why": "Fact: Kate Johnson joined the Board in Nov 2022 (as CEO). Rest is the rationale for selecting her.",
+   "text_sha256": "sha256:32d9779c126b0af822a30e06ecd1c72ef09b237266d864119d458b2f7b076408"
+  },
+  {
+   "i": 547,
+   "verdict": "MIXED",
+   "why": "Fact: Diankha Linear added to the Board effective Feb 21, 2024. Rest is selection rationale/biography.",
+   "text_sha256": "sha256:aa6e37f5e255508b696d19b9b726a1471ac94adc71f1667f2fdc1bd6fbc96c9e"
+  },
+  {
+   "i": 548,
+   "verdict": "MIXED",
+   "why": "Fact: Stephen McMillan added to the Board effective May 15, 2025. Rest is selection rationale.",
+   "text_sha256": "sha256:6ea5abafc4f469fd57721f390285027c892ee147297f6b4e4a7cbf51dce720f7"
+  },
+  {
+   "i": 551,
+   "verdict": "MIXED",
+   "why": "Fact: Christopher Capossela added to the Board effective Oct 29, 2024. Rest is selection rationale.",
+   "text_sha256": "sha256:e30120a3163617808d36d1d988ce2f1e4cebfac25143129b6e0d96eb0065a25d"
+  },
+  {
+   "i": 552,
+   "verdict": "MIXED",
+   "why": "Fact: Michelle J. Goldberg added to the Board effective May 15, 2025. Rest is selection rationale.",
+   "text_sha256": "sha256:859f4c6d665259aeefeb4c046b6765aeb0c3157fe04da32a70594e95c9139510"
+  },
+  {
+   "i": 566,
+   "verdict": "FACT",
+   "why": "Former CEO Jeffrey K. Storey retired from the Board in Nov 2022.",
+   "text_sha256": "sha256:5fed66fd1423887630c3e9023e992ea31226f744784294de6486df6fd72f9bb7"
+  },
+  {
+   "i": 567,
+   "verdict": "FACT",
+   "why": "Hanks retired from the Board at the 2023 annual meeting (31 years of service).",
+   "text_sha256": "sha256:2c85beeeae9c4778eeb00086e31cddc7d03c8eb4bdba2ff06c3c25e5c3a068ff"
+  },
+  {
+   "i": 568,
+   "verdict": "FACT",
+   "why": "Departures with dates: Roberts (2024 meeting); Brown, Clontz, Siegel (2025 meeting); Fowler (Dec 2025); Glenn and Jones at the 2026 Annual Meeting.",
+   "text_sha256": "sha256:dbcbe3dd28ea5e983d14eb7d2888480897389281bebfa33188c6b2f76acce2ab"
+  },
+  {
+   "i": 573,
+   "verdict": "FACT",
+   "why": "Election of the nine nominees; committee information shown reflects anticipated post-meeting membership and leadership.",
+   "text_sha256": "sha256:d4d419c035e224698d1d6096ab854cf2059c9e700b2e523a1e9e9a8c20cbb064"
+  },
+  {
+   "i": 841,
+   "verdict": "FACT",
+   "why": "Independence determinations: every current director and nominee independent except CEO Ms. Johnson; current/incoming HRCC and Audit members meet heightened independence and qualification requirements incl. NYSE financial literacy; Capossela, Collins, Jones, McMillan and Goldberg are audit committee financial experts; directors who left in 2025 were independent.",
+   "text_sha256": "sha256:4294bb276716083d8779a045e8860b8ee9269d02c2bedc64e0bb9a68aac184ad"
+  },
+  {
+   "i": 870,
+   "verdict": "MIXED",
+   "why": "Fact: the Board has four standing committees. Rest describes committee responsibilities and charters.",
+   "text_sha256": "sha256:1c0caaf04df99005e9e588c414d233dacabe0e83267f4ef47a791e5e001de0fa"
+  },
+  {
+   "i": 872,
+   "verdict": "FACT",
+   "why": "Heading of the Audit Committee roster (committee exists; chair, members and financial-expert note follow in 875-877).",
+   "text_sha256": "sha256:56a2b1b7beb375eff377ff18a8e53a0acbbc5876bc85cb3be6fe4017be827e18"
+  },
+  {
+   "i": 875,
+   "verdict": "FACT",
+   "why": "Audit Committee Chair: Michelle J. Goldberg.",
+   "text_sha256": "sha256:f4b81f5959e96c1e3a5575295258febea9bcf87b03acb63227fd319ee97a70a5"
+  },
+  {
+   "i": 876,
+   "verdict": "FACT",
+   "why": "Audit Committee members: Goldberg, Capossela, Collins, McMillan.",
+   "text_sha256": "sha256:a80629f8994c946223ddf7cc89761a91f57dbcccdc5911874d65b65661fc4a06"
+  },
+  {
+   "i": 877,
+   "verdict": "FACT",
+   "why": "Capossela, Collins, McMillan and Goldberg are audit committee financial experts.",
+   "text_sha256": "sha256:ba9f90b1a03bc3f2026ad047c39dfe122bb87c8f40b3ca6480f751225b62d488"
+  },
+  {
+   "i": 878,
+   "verdict": "FACT",
+   "why": "'Additions' label of the Audit Committee change list; its names are in 879-881.",
+   "text_sha256": "sha256:966ff94170d3cde6acb3384c255e3cf9084760862d550c8f2d729eac4520bb54"
+  },
+  {
+   "i": 879,
+   "verdict": "FACT",
+   "why": "Goldberg joined the Audit Committee in May 2025.",
+   "text_sha256": "sha256:fd0fbe39848a9e45faccedc94192471cbe2ea6e53645e0bba510bb9a95bbd899"
+  },
+  {
+   "i": 880,
+   "verdict": "FACT",
+   "why": "May 2026 Audit Committee addition: Goldberg (continues in 881 'as Chair').",
+   "text_sha256": "sha256:f4b4abfe9be289e6884045bb97a3691588b970b6c6955d38ea60f319eba28513"
+  },
+  {
+   "i": 881,
+   "verdict": "FACT",
+   "why": "Continuation of 880: Goldberg as Chair; Collins and McMillan join the Audit Committee in May 2026 if elected.",
+   "text_sha256": "sha256:f06e1ab10dbe539c392fd425dbea8b3714013f1f757da99470e23119fcd7db93"
+  },
+  {
+   "i": 882,
+   "verdict": "FACT",
+   "why": "'Departures' label of the Audit Committee change list; its names are in 883-885.",
+   "text_sha256": "sha256:b5876f73d88a74eec36ee5eb339db6a2c601d62184081d1058217dcb4f9713c1"
+  },
+  {
+   "i": 883,
+   "verdict": "FACT",
+   "why": "Peter C. Brown left the Audit Committee in May 2025.",
+   "text_sha256": "sha256:ef05b9f7528e8f5310ea81e4e385955cb4ee153d113ede9f9352becac99c4c2d"
+  },
+  {
+   "i": 884,
+   "verdict": "FACT",
+   "why": "James Fowler left the Audit Committee in Dec 2025.",
+   "text_sha256": "sha256:e6bff4a24bb4c09f8cbb83544b12b8f58f6367068b011a6070b742f3478c8cfd"
+  },
+  {
+   "i": 885,
+   "verdict": "FACT",
+   "why": "Jones and Chilton leave the Audit Committee in May 2026.",
+   "text_sha256": "sha256:5ad0063130bf60e4a9fdc84a92be603fcdf233bd43c6f418666bbfac43508be8"
+  },
+  {
+   "i": 928,
+   "verdict": "FACT",
+   "why": "Heading of the Human Resources and Compensation Committee roster (chair and members follow in 931-934).",
+   "text_sha256": "sha256:1f94eded315603027e09c2c3afddfc94ef2023853dcf4abb728455de4a14a0eb"
+  },
+  {
+   "i": 931,
+   "verdict": "FACT",
+   "why": "HRCC Chair: Quincy L. Allen.",
+   "text_sha256": "sha256:87ce60321ce7ac82092b4e762d43d3f0efe9b531f7e522b3c27226d66a36f84a"
+  },
+  {
+   "i": 932,
+   "verdict": "FACT",
+   "why": "HRCC members: Allen, Béjar.",
+   "text_sha256": "sha256:ca1a9bf1bdba3f6f1ec31efa5c8e1fd321ff85f6c7e736101ee57b1eab9ff246"
+  },
+  {
+   "i": 933,
+   "verdict": "FACT",
+   "why": "HRCC member: Capossela.",
+   "text_sha256": "sha256:8124c005d877542c50bf3c1e6bf2734fcef1eafe6462f65dc906c41682a58419"
+  },
+  {
+   "i": 934,
+   "verdict": "FACT",
+   "why": "HRCC member: Chilton.",
+   "text_sha256": "sha256:718d9cddaf3d07865c0bed799ab34cb9fc3c31cd384305f53271e5493563bc8a"
+  },
+  {
+   "i": 935,
+   "verdict": "FACT",
+   "why": "'Additions' label of the HRCC change list; its names are in 936-937.",
+   "text_sha256": "sha256:966ff94170d3cde6acb3384c255e3cf9084760862d550c8f2d729eac4520bb54"
+  },
+  {
+   "i": 936,
+   "verdict": "FACT",
+   "why": "May 2025: Allen became HRCC Chair and McMillan joined the HRCC.",
+   "text_sha256": "sha256:3d6f78edec1bbc553cb4f4c56a863519a0468a562a26909e069757f9652faca8"
+  },
+  {
+   "i": 937,
+   "verdict": "FACT",
+   "why": "Chilton joins the HRCC in May 2026 if elected.",
+   "text_sha256": "sha256:5b6731b984bbb511b7571e81db683d4d7add4abdaa49783702bf13a007524204"
+  },
+  {
+   "i": 938,
+   "verdict": "FACT",
+   "why": "'Departures' label of the HRCC change list; its names are in 939-940.",
+   "text_sha256": "sha256:b5876f73d88a74eec36ee5eb339db6a2c601d62184081d1058217dcb4f9713c1"
+  },
+  {
+   "i": 939,
+   "verdict": "FACT",
+   "why": "Clontz and Siegel left the HRCC in May 2025.",
+   "text_sha256": "sha256:5f585787d51ba4f024579cef6e80daed6d6525fed4b0e9bad6213eefa4de50d9"
+  },
+  {
+   "i": 940,
+   "verdict": "FACT",
+   "why": "Glenn and McMillan leave the HRCC in May 2026.",
+   "text_sha256": "sha256:b3bf48df4d4568e2fb5fba28529c0d9e2f85575ac045bdef9cdc3b0969879dbc"
+  },
+  {
+   "i": 981,
+   "verdict": "FACT",
+   "why": "Heading of the Nominating and Corporate Governance Committee roster (chair and members follow in 984-985).",
+   "text_sha256": "sha256:4a3ee15e5c1100b6a5e9330beaca61a4b2cfa148a1c3fda8c4d93a32ee8ca29c"
+  },
+  {
+   "i": 984,
+   "verdict": "FACT",
+   "why": "NCG Committee Chair: Martha Helena Béjar.",
+   "text_sha256": "sha256:b0b312afaae9c00f13e6444de53e33db4eb87e41a4e72776891d9b884f31e110"
+  },
+  {
+   "i": 985,
+   "verdict": "FACT",
+   "why": "NCG Committee members: Béjar, Allen, Linear, McMillan.",
+   "text_sha256": "sha256:d83b9375132acb069c9af5748ae008e16f364dc4e840e5e4d0eaa6eacce6807d"
+  },
+  {
+   "i": 986,
+   "verdict": "FACT",
+   "why": "'Additions' label of the NCG change list; its name is in 987.",
+   "text_sha256": "sha256:966ff94170d3cde6acb3384c255e3cf9084760862d550c8f2d729eac4520bb54"
+  },
+  {
+   "i": 987,
+   "verdict": "FACT",
+   "why": "McMillan joined the NCG Committee in May 2025.",
+   "text_sha256": "sha256:c95a9ea916a25a9d949e3096ff5cf5643b48b3a633737d6d02530248ffdaf181"
+  },
+  {
+   "i": 988,
+   "verdict": "FACT",
+   "why": "'Departures' label of the NCG change list; its names are in 989.",
+   "text_sha256": "sha256:b5876f73d88a74eec36ee5eb339db6a2c601d62184081d1058217dcb4f9713c1"
+  },
+  {
+   "i": 989,
+   "verdict": "FACT",
+   "why": "Clontz and Siegel left the NCG Committee in May 2025.",
+   "text_sha256": "sha256:5f585787d51ba4f024579cef6e80daed6d6525fed4b0e9bad6213eefa4de50d9"
+  },
+  {
+   "i": 1033,
+   "verdict": "FACT",
+   "why": "Heading of the Risk and Security Committee roster (members follow in 1036-1037).",
+   "text_sha256": "sha256:604cb1e59303a404a6c26377286eb693ec5adcac43269cbe406b22a5a9baca83"
+  },
+  {
+   "i": 1036,
+   "verdict": "FACT",
+   "why": "Risk and Security Committee members: Linear, Collins.",
+   "text_sha256": "sha256:ab049cacae803dcbc35089c56dabefb9b16560483a5e67352d803685e83e9818"
+  },
+  {
+   "i": 1037,
+   "verdict": "FACT",
+   "why": "Risk and Security Committee member: Goldberg.",
+   "text_sha256": "sha256:c575a0aca29870d7a02b83542b457f06efb465aa84f051aedd01087c346c1d0b"
+  },
+  {
+   "i": 1038,
+   "verdict": "FACT",
+   "why": "'Additions' label of the Risk and Security Committee change list; names in 1039-1040.",
+   "text_sha256": "sha256:966ff94170d3cde6acb3384c255e3cf9084760862d550c8f2d729eac4520bb54"
+  },
+  {
+   "i": 1039,
+   "verdict": "FACT",
+   "why": "Goldberg joined the Risk and Security Committee in May 2025.",
+   "text_sha256": "sha256:fd0fbe39848a9e45faccedc94192471cbe2ea6e53645e0bba510bb9a95bbd899"
+  },
+  {
+   "i": 1040,
+   "verdict": "FACT",
+   "why": "May 2026: Linear becomes Risk and Security Committee Chair; Collins joins if elected.",
+   "text_sha256": "sha256:07b8853447f6c8798544797ada379ba7c5d29d3bb80cbfea031fcfa4683f6669"
+  },
+  {
+   "i": 1041,
+   "verdict": "FACT",
+   "why": "'Departures' label of the Risk and Security Committee change list; names in 1042-1044.",
+   "text_sha256": "sha256:b5876f73d88a74eec36ee5eb339db6a2c601d62184081d1058217dcb4f9713c1"
+  },
+  {
+   "i": 1042,
+   "verdict": "FACT",
+   "why": "Brown left the Risk and Security Committee in May 2025.",
+   "text_sha256": "sha256:ef05b9f7528e8f5310ea81e4e385955cb4ee153d113ede9f9352becac99c4c2d"
+  },
+  {
+   "i": 1043,
+   "verdict": "FACT",
+   "why": "Fowler left the Risk and Security Committee in Dec 2025.",
+   "text_sha256": "sha256:e6bff4a24bb4c09f8cbb83544b12b8f58f6367068b011a6070b742f3478c8cfd"
+  },
+  {
+   "i": 1044,
+   "verdict": "FACT",
+   "why": "Jones and Chilton leave the Risk and Security Committee in May 2026.",
+   "text_sha256": "sha256:5ad0063130bf60e4a9fdc84a92be603fcdf233bd43c6f418666bbfac43508be8"
+  },
+  {
+   "i": 1372,
+   "verdict": "FACT",
+   "why": "Fowler resigned from the Board effective Dec 5, 2025 (director-pay table footnote, but the footnote itself states only the resignation).",
+   "text_sha256": "sha256:69267fcbdaf354a8555e94376042d8a4189a779ae98ea30cf5bb230fcf0a655f"
+  },
+  {
+   "i": 2228,
+   "verdict": "MIXED",
+   "why": "Fact: the HRCC is composed solely of independent directors. Rest introduces the HRCC's responsibilities.",
+   "text_sha256": "sha256:d784392799b864d06882018d8f42a61b8a83071d839dc5e843dfc9ab4921dd69"
+  },
+  {
+   "i": 2229,
+   "verdict": "NOT",
+   "why": "HRCC duty (determining officer compensation); no composition fact. Selected as a continuation bullet of 2228.",
+   "text_sha256": "sha256:d419f5cd11216f550fc7e8665a746846bee04782f8d670054972ac6161d66c11"
+  },
+  {
+   "i": 2230,
+   "verdict": "NOT",
+   "why": "HRCC duty (equity plan design/share usage oversight); no composition fact.",
+   "text_sha256": "sha256:2d92ee5cadb1c85e014cd71413544c6d9fa9d378042a0d20d86048109d58de22"
+  },
+  {
+   "i": 2231,
+   "verdict": "NOT",
+   "why": "HRCC duty (recommending board compensation); no composition fact.",
+   "text_sha256": "sha256:e664587e1b90cb7b8cd6bcab5278b368818a6e0ddfe0701860048b0476585bac"
+  },
+  {
+   "i": 2232,
+   "verdict": "NOT",
+   "why": "HRCC duty (shareholder relations on executive pay); no composition fact.",
+   "text_sha256": "sha256:e65e12ec49ca092d75472918d2d5b4fa2ad43d5a652b399e83105126b7abb359"
+  },
+  {
+   "i": 2394,
+   "verdict": "MIXED",
+   "why": "Fact: board join dates - Capossela Oct 29, 2024; Goldberg and McMillan May 13, 2025 (548/552 say May 15, 2025). Rest is stock-ownership-guideline compliance deadlines.",
+   "text_sha256": "sha256:980d18f6266e968e6a80e2e0bf5a82b5a42bca5ef8a0a31d82191cef2eda826d"
+  },
+  {
+   "i": 3974,
+   "verdict": "FACT",
+   "why": "Voting-table agenda item: elect the nine director nominees (board size).",
+   "text_sha256": "sha256:3d29cb35dec1d85e3d96ed4466c0ef7cf1274f04d26b37019c93760ef6b7262c"
+  }
+ ],
+ "pool_facts": [
+  {
+   "i": 55,
+   "verdict": "MIXED",
+   "why": "Fact: General Kevin P. Chilton selected as the next Chairman of the Board. Rest is succession-process framing and commentary.",
+   "text_sha256": "sha256:7cc28fee0162881ed1f8591825872489243364763a1c621458593266760a815a",
+   "redundant_with": [
+    865
+   ]
+  },
+  {
+   "i": 61,
+   "verdict": "FACT",
+   "why": "Letter signature title 'Chairman of the Board' for T. Michael Glenn (names in block 60): Glenn is Chairman.",
+   "text_sha256": "sha256:8ccc6826d4c6549c24cbdea7acc928942d800f7b109539e18d08901760853bfc",
+   "redundant_with": [
+    848,
+    849,
+    865
+   ]
+  },
+  {
+   "i": 62,
+   "verdict": "FACT",
+   "why": "Letter signature title 'Incoming Chairman of the Board' for General Kevin P. Chilton (names in block 60; 'Lumen Technologies' is Glenn's company line).",
+   "text_sha256": "sha256:f9fe8f3090614e6922709f16204cae34c2149300892ba0e4888378a726a25243",
+   "redundant_with": [
+    850,
+    851,
+    865
+   ]
+  },
+  {
+   "i": 365,
+   "verdict": "FACT",
+   "why": "Goldberg and McMillan elected to the Board for the first time in 2025.",
+   "text_sha256": "sha256:17d661a4a5a87355962afd00ef4fe995db9e276d03b2b84cec0e50d48df12456",
+   "redundant_with": [
+    548,
+    552
+   ]
+  },
+  {
+   "i": 367,
+   "verdict": "FACT",
+   "why": "Michael Collins nominated for election to the Board for the first time at the Annual Meeting.",
+   "text_sha256": "sha256:fd0bd491e538be5c8afba5d9c45f1d340992eeb73d6ba056b2a92b80bf6a5478",
+   "redundant_with": [
+    491,
+    554
+   ]
+  },
+  {
+   "i": 492,
+   "verdict": "MIXED",
+   "why": "Restates the count of nine nominees inside the majority-vote standard (voting process).",
+   "text_sha256": "sha256:309c858dc70be06aa1e92eed4a1c8dfc65249525f80958927af7aade3f2275f8",
+   "redundant_with": [
+    491,
+    573
+   ]
+  },
+  {
+   "i": 495,
+   "verdict": "MIXED",
+   "why": "Cross-reference that restates the count of nine nominees for election.",
+   "text_sha256": "sha256:90e6492d18c8e2ccd27dc62a73a28f08c5651baf2f9f0c2b227e7e6343a75942",
+   "redundant_with": [
+    491,
+    573
+   ]
+  },
+  {
+   "i": 545,
+   "verdict": "FACT",
+   "why": "'Additions' timeline graphic name labels: Kate Johnson, Diankha Linear, Stephen McMillan added to the Board.",
+   "text_sha256": "sha256:ca2cc24c76f0643800cb186f9f1d86755b006f033979d1f4247b4c0e4fbaf561",
+   "redundant_with": [
+    546,
+    547,
+    548
+   ]
+  },
+  {
+   "i": 549,
+   "verdict": "FACT",
+   "why": "'Nominee' label of the Recent Board Changes timeline; its name (Michael Collins) is block 553.",
+   "text_sha256": "sha256:8d8d0be9efa0e6390abf74bab606eb1b1242f2ac43c5eaf02a55bd615293e74e",
+   "redundant_with": [
+    491,
+    554
+   ]
+  },
+  {
+   "i": 550,
+   "verdict": "FACT",
+   "why": "'Additions' timeline graphic name labels: Christopher Capossela, Michelle J. Goldberg added to the Board.",
+   "text_sha256": "sha256:c7baec597d37776a4ec2e13e94ecd7c1510b4dd3491325e45ef1fb8f7311bba2",
+   "redundant_with": [
+    551,
+    552
+   ]
+  },
+  {
+   "i": 553,
+   "verdict": "FACT",
+   "why": "Timeline name label under 'Nominee': Michael Collins is the new nominee.",
+   "text_sha256": "sha256:f52b5d47bff3154f69e4dafeafa81102f513d20346cd6c90e73fab63986961e5",
+   "redundant_with": [
+    491,
+    554
+   ]
+  },
+  {
+   "i": 554,
+   "verdict": "MIXED",
+   "why": "Fact: Collins is nominated for election to the Board at the Annual Meeting. Rest is nomination rationale.",
+   "text_sha256": "sha256:70a51f6fcf3af241491e869d22b6243b4195fa691fd15fd0b34c6664c4478bd9",
+   "redundant_with": [
+    491,
+    367
+   ]
+  },
+  {
+   "i": 557,
+   "verdict": "FACT",
+   "why": "Two current directors will retire from the Board at the 2026 annual meeting (names in the timeline, block 565).",
+   "text_sha256": "sha256:8510872fdf1f360e8fc4da27d12146606f7d0ec570a92096b116043513a0397b",
+   "redundant_with": [
+    537,
+    568
+   ]
+  },
+  {
+   "i": 558,
+   "verdict": "FACT",
+   "why": "'Departures' timeline name fragment 'Jeffrey K.' (Storey, who retired from the Board in 2022).",
+   "text_sha256": "sha256:fc4a358a8222c43e1d15e8776a1c0a063406da6a3840725572436e22287309e0",
+   "redundant_with": [
+    566
+   ]
+  },
+  {
+   "i": 560,
+   "verdict": "FACT",
+   "why": "'Departures' timeline name fragment: (W. Bruce) Hanks and Michael (Roberts), departed directors.",
+   "text_sha256": "sha256:8b85633c7c54a020c79c62bd4c6991d3dad4240b04d01808623f4ff9e0dcebe3",
+   "redundant_with": [
+    567,
+    568
+   ]
+  },
+  {
+   "i": 561,
+   "verdict": "FACT",
+   "why": "'Departures' timeline name fragment: (Michael) Roberts and Peter C. (Brown), departed directors.",
+   "text_sha256": "sha256:531f20523111ac531c0e2786e071f3194ccbbd729535738b54a6a66719d6e765",
+   "redundant_with": [
+    568
+   ]
+  },
+  {
+   "i": 562,
+   "verdict": "FACT",
+   "why": "'Departures' timeline name fragment: (Peter C.) Brown and Steven T. (Clontz), departed directors.",
+   "text_sha256": "sha256:a732508a59b8f5c1ffd37a84f3d834f0f36dbfb5394ec62837be5984d87a5575",
+   "redundant_with": [
+    568
+   ]
+  },
+  {
+   "i": 563,
+   "verdict": "FACT",
+   "why": "'Departures' timeline name fragment: (Steven T.) Clontz and Laurie (Siegel), departed directors.",
+   "text_sha256": "sha256:7591987d02c989a38ca34669a3fc2bf382817442347610df18467632b3c3c576",
+   "redundant_with": [
+    568
+   ]
+  },
+  {
+   "i": 574,
+   "verdict": "FACT",
+   "why": "Name heading of a nominee card: Quincy L. Allen is one of the nine director nominees. No block lists the slate by name; 573 plus the post-meeting rosters naming Allen place him on the post-meeting board.",
+   "text_sha256": "sha256:653c7d5cd1eea5c16f2bd3fcb306b2d71c214e89aabdc16b5788aceac3edc499",
+   "redundant_with": [
+    573,
+    931,
+    932,
+    985
+   ]
+  },
+  {
+   "i": 575,
+   "verdict": "FACT",
+   "why": "Nominee card: Allen is independent.",
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def",
+   "redundant_with": [
+    841
+   ]
+  },
+  {
+   "i": 577,
+   "verdict": "FACT",
+   "why": "Nominee card: Allen has been a director since 2021 (year he joined the Board). No other block states when Allen joined.",
+   "text_sha256": "sha256:9ffe0f86a3d9c105dc8f4a0543ea6cee25fbd2932d296630a9102d8b582c8570",
+   "redundant_with": []
+  },
+  {
+   "i": 578,
+   "verdict": "FACT",
+   "why": "Nominee card: Allen serves on the HRCC (Chair) and the NCG Committee.",
+   "text_sha256": "sha256:2bf2d0a70ad723e8cd993875b599a8ef420fdd0419f79787412747e933be3528",
+   "redundant_with": [
+    931,
+    932,
+    985
+   ]
+  },
+  {
+   "i": 595,
+   "verdict": "FACT",
+   "why": "Name heading of a nominee card: Martha Helena Béjar is one of the nine nominees (same basis as 574).",
+   "text_sha256": "sha256:6d841ecd8f8ae19360a660f1ef83ca6cc39e4633bd59656173b56e24d278e134",
+   "redundant_with": [
+    573,
+    932,
+    984,
+    985
+   ]
+  },
+  {
+   "i": 596,
+   "verdict": "FACT",
+   "why": "Nominee card: Béjar is independent.",
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def",
+   "redundant_with": [
+    841
+   ]
+  },
+  {
+   "i": 598,
+   "verdict": "FACT",
+   "why": "Nominee card: Béjar has been a director since 2016. No other block states when Béjar joined.",
+   "text_sha256": "sha256:c7b792edf42f2caa270587a2935812938aa40cb6b6281e8251d2ba7680ce6d09",
+   "redundant_with": []
+  },
+  {
+   "i": 599,
+   "verdict": "FACT",
+   "why": "Nominee card: Béjar serves on the HRCC and chairs the NCG Committee.",
+   "text_sha256": "sha256:a2ba45f57c28cf52865217d601739b93bfba551fea142ece95dfd52d366d61a7",
+   "redundant_with": [
+    932,
+    984,
+    985
+   ]
+  },
+  {
+   "i": 630,
+   "verdict": "FACT",
+   "why": "Name heading of a nominee card: Christopher Capossela is one of the nine nominees (same basis as 574).",
+   "text_sha256": "sha256:90ae9d1c4d33d59e3ea255abe755aeb421c2af1f6fe3c697673638bfa9a19a52",
+   "redundant_with": [
+    573,
+    876,
+    933
+   ]
+  },
+  {
+   "i": 631,
+   "verdict": "FACT",
+   "why": "Nominee card: Capossela is independent.",
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def",
+   "redundant_with": [
+    841
+   ]
+  },
+  {
+   "i": 633,
+   "verdict": "FACT",
+   "why": "Nominee card: Capossela has been a director since 2024.",
+   "text_sha256": "sha256:579ee9e03183c20915fc05458e890163c62b7c206d2458b4fbb532d5ba0c33fb",
+   "redundant_with": [
+    551,
+    2394
+   ]
+  },
+  {
+   "i": 634,
+   "verdict": "FACT",
+   "why": "Nominee card: Capossela serves on the Audit Committee and the HRCC.",
+   "text_sha256": "sha256:b4e696d92f24d752e2a78563af57645fdcb047879e67e77226aa034bccbc677e",
+   "redundant_with": [
+    876,
+    933
+   ]
+  },
+  {
+   "i": 645,
+   "verdict": "FACT",
+   "why": "Name heading of a nominee card: General Kevin P. Chilton is one of the nine nominees (same basis as 574).",
+   "text_sha256": "sha256:32c40788db975f9a6463e9af0859a88c15d60a7e68a634bc4bef068319f176d9",
+   "redundant_with": [
+    573,
+    934,
+    937
+   ]
+  },
+  {
+   "i": 646,
+   "verdict": "FACT",
+   "why": "Nominee card: Chilton is independent.",
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def",
+   "redundant_with": [
+    841
+   ]
+  },
+  {
+   "i": 648,
+   "verdict": "FACT",
+   "why": "Nominee card: Chilton has been a director since 2017. No other block states when Chilton joined.",
+   "text_sha256": "sha256:c808bd1aa865b1942197f80ef235eae6679e0d4103678409e8d4991a79888d73",
+   "redundant_with": []
+  },
+  {
+   "i": 649,
+   "verdict": "FACT",
+   "why": "Nominee card: Chilton's committees are 'A' (Audit) only. This conflicts with the post-meeting rosters, which put him on the HRCC (934, 937) and remove him from Audit and Risk and Security in May 2026 (885, 1044); only the pre-meeting Audit report signature (1468) also places him on Audit. Not restated anywhere as post-meeting membership.",
+   "text_sha256": "sha256:dcbc7d65c14a9a55cd4606263e8891b8fc1691996d0065f737600f0d2634dc1c",
+   "redundant_with": []
+  },
+  {
+   "i": 671,
+   "verdict": "FACT",
+   "why": "Nominee card: Collins is independent (841 covers each director nominee).",
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def",
+   "redundant_with": [
+    841
+   ]
+  },
+  {
+   "i": 673,
+   "verdict": "FACT",
+   "why": "Nominee card: Collins 'Director since: Nominated for 2026' - a new nominee.",
+   "text_sha256": "sha256:b60dd19f8a691e72f5aa40f72acc5e00f137b7c3b3a1fa788262c96ca0f320ad",
+   "redundant_with": [
+    491,
+    554
+   ]
+  },
+  {
+   "i": 674,
+   "verdict": "FACT",
+   "why": "Nominee card: Collins will serve on the Audit Committee and the Risk and Security Committee.",
+   "text_sha256": "sha256:1284da5e05111b950fea14634e7d54acc3e9fe91a3dee3d83c2cf68a92a9c7ec",
+   "redundant_with": [
+    876,
+    881,
+    1036,
+    1040
+   ]
+  },
+  {
+   "i": 688,
+   "verdict": "FACT",
+   "why": "Nominee card: Goldberg is independent.",
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def",
+   "redundant_with": [
+    841
+   ]
+  },
+  {
+   "i": 690,
+   "verdict": "FACT",
+   "why": "Nominee card: Goldberg has been a director since 2025.",
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "redundant_with": [
+    552,
+    365
+   ]
+  },
+  {
+   "i": 691,
+   "verdict": "FACT",
+   "why": "Nominee card: Goldberg chairs the Audit Committee and serves on the Risk and Security Committee.",
+   "text_sha256": "sha256:70141a52875bbcd884a4ffc8906b4d78a822350b7b3bee6210828a8b3924a267",
+   "redundant_with": [
+    875,
+    876,
+    1037
+   ]
+  },
+  {
+   "i": 710,
+   "verdict": "FACT",
+   "why": "Name heading of a nominee card: Kate Johnson (CEO) is one of the nine nominees.",
+   "text_sha256": "sha256:eaba6ec18aa7b880a3e5fe77f955a73b34f01a4ea3afdd63fa57e49671dc3b8a",
+   "redundant_with": [
+    841,
+    1858
+   ]
+  },
+  {
+   "i": 712,
+   "verdict": "FACT",
+   "why": "Nominee card: Johnson has been a director since 2022.",
+   "text_sha256": "sha256:1a5c994de0ae6e07f0fb34fa77df21b78f0b66e07252745a572ebce1b30471ae",
+   "redundant_with": [
+    546
+   ]
+  },
+  {
+   "i": 713,
+   "verdict": "FACT",
+   "why": "Nominee card: Johnson sits on no committee. Not said in words elsewhere; it follows from the complete post-meeting rosters, none of which lists her.",
+   "text_sha256": "sha256:60642e7992069657d2a22cc9f4a25e83fd3b91cc7bb68098c2b523043877bde4",
+   "redundant_with": [
+    876,
+    932,
+    933,
+    934,
+    985,
+    1036,
+    1037
+   ]
+  },
+  {
+   "i": 732,
+   "verdict": "FACT",
+   "why": "Nominee card: Linear is independent.",
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def",
+   "redundant_with": [
+    841
+   ]
+  },
+  {
+   "i": 734,
+   "verdict": "FACT",
+   "why": "Nominee card: Linear has been a director since 2024.",
+   "text_sha256": "sha256:579ee9e03183c20915fc05458e890163c62b7c206d2458b4fbb532d5ba0c33fb",
+   "redundant_with": [
+    547
+   ]
+  },
+  {
+   "i": 735,
+   "verdict": "FACT",
+   "why": "Nominee card: Linear serves on the NCG Committee and chairs the Risk and Security Committee.",
+   "text_sha256": "sha256:0298c5fc6a86d4c43b57e3b071ba945d36b4eeb13d3d38a43b63b6fa395abf97",
+   "redundant_with": [
+    985,
+    1036,
+    1040
+   ]
+  },
+  {
+   "i": 758,
+   "verdict": "FACT",
+   "why": "Nominee card: McMillan is independent.",
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def",
+   "redundant_with": [
+    841
+   ]
+  },
+  {
+   "i": 760,
+   "verdict": "FACT",
+   "why": "Nominee card: McMillan has been a director since 2025.",
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "redundant_with": [
+    548,
+    365
+   ]
+  },
+  {
+   "i": 761,
+   "verdict": "FACT",
+   "why": "Nominee card: McMillan serves on the Audit Committee and the NCG Committee.",
+   "text_sha256": "sha256:cf810a8631f2b5ff7002fa04460d9f483bae50efdffb6438f569774c90e96108",
+   "redundant_with": [
+    876,
+    881,
+    985
+   ]
+  },
+  {
+   "i": 814,
+   "verdict": "MIXED",
+   "why": "Nomination-process paragraph; its last sentence identifies Michael Collins as a director nominee (found via Egon Zehnder).",
+   "text_sha256": "sha256:01e4ae3829d4c040673d5ba77636e962ce070e55674a651e77c65e6f9767b8ef",
+   "redundant_with": [
+    491,
+    554
+   ]
+  },
+  {
+   "i": 848,
+   "verdict": "FACT",
+   "why": "Board Leadership Structure graphic: T. Michael Glenn (paired with 849 'Retiring Chairman of the Board').",
+   "text_sha256": "sha256:f9f2a62a430cbce3c1c949bd0a7fd8f47a773225499c7ca6fd64b26402dc0ea9",
+   "redundant_with": [
+    865
+   ]
+  },
+  {
+   "i": 849,
+   "verdict": "FACT",
+   "why": "'Retiring Chairman of the Board' designation for Glenn (848).",
+   "text_sha256": "sha256:13fdf5361e8c12e27a23d7b2b43bc7b29d02683580a75d6b54f0142c2707e3f1",
+   "redundant_with": [
+    865
+   ]
+  },
+  {
+   "i": 850,
+   "verdict": "FACT",
+   "why": "Board Leadership Structure graphic: General Kevin P. Chilton (paired with 851 'Incoming Chairman of the Board').",
+   "text_sha256": "sha256:32c40788db975f9a6463e9af0859a88c15d60a7e68a634bc4bef068319f176d9",
+   "redundant_with": [
+    865,
+    55
+   ]
+  },
+  {
+   "i": 851,
+   "verdict": "FACT",
+   "why": "'Incoming Chairman of the Board' designation for Chilton (850).",
+   "text_sha256": "sha256:825a567982110e2c8987aa4dfa6e474dcb977328ef70f9e07d4c00608f3c4cd6",
+   "redundant_with": [
+    865,
+    55
+   ]
+  },
+  {
+   "i": 865,
+   "verdict": "MIXED",
+   "why": "Facts: Glenn has served as independent, non-executive Chairman since May 2020 until his retirement at the Annual Meeting; the Board appointed Chilton non-executive Chairman effective after the meeting if elected. Rest is succession process and Chilton's qualifications. The 'since May 2020' start of Glenn's chairmanship appears nowhere else; the Glenn-to-Chilton chair designation is repeated only in other pool blocks (55, 61-62, 848-851, 1087, 1329), never in a selected block.",
+   "text_sha256": "sha256:ce30ea0a1ccf589a72e90cc46830d02aa8c0525ff60d6987b2a5a88f5b4df7fc",
+   "redundant_with": []
+  },
+  {
+   "i": 1087,
+   "verdict": "MIXED",
+   "why": "Quote (from NCG Chair Béjar): Chilton appointed new Chair of the Board following the Annual Meeting; Collins nominated. Rest is succession-planning narrative.",
+   "text_sha256": "sha256:0f45f2d06ccf30c76da30b0e232cf148d4ddf4b3079b92562506e3b78a9a4baa",
+   "redundant_with": [
+    865,
+    491
+   ]
+  },
+  {
+   "i": 1088,
+   "verdict": "FACT",
+   "why": "Quote attribution name Martha Helena Béjar, paired with 1089 'Nominating and Corporate Governance Committee Chair'.",
+   "text_sha256": "sha256:6d841ecd8f8ae19360a660f1ef83ca6cc39e4633bd59656173b56e24d278e134",
+   "redundant_with": [
+    984
+   ]
+  },
+  {
+   "i": 1089,
+   "verdict": "FACT",
+   "why": "Designation of Béjar (1088) as NCG Committee Chair.",
+   "text_sha256": "sha256:64bb1588e498dbb6bb8ea476d07811cf782e3011a1240c8b1cd1a708fefd6cbb",
+   "redundant_with": [
+    984
+   ]
+  },
+  {
+   "i": 1177,
+   "verdict": "FACT",
+   "why": "Board refreshment counts: five new directors added since 2022 (incl. CEO), one new nominee, two retiring at the meeting, one resigned in 2025 to become an executive officer.",
+   "text_sha256": "sha256:b7064ab2f7b54698da6e9d96fa585970c1c56ff289d8744ef903261571464caa",
+   "redundant_with": [
+    546,
+    547,
+    548,
+    551,
+    552,
+    491,
+    537
+   ]
+  },
+  {
+   "i": 1205,
+   "verdict": "MIXED",
+   "why": "Executive-appointment bullet that states James Fowler is a former director (left the Board).",
+   "text_sha256": "sha256:ff9e4f61103a61344028f7c7a10e80da04bd9782eb7cf59ab622f53a5f929b73",
+   "redundant_with": [
+    537,
+    568
+   ]
+  },
+  {
+   "i": 1304,
+   "verdict": "MIXED",
+   "why": "Fact: the HRCC consists entirely of independent directors. Rest is its director-compensation role.",
+   "text_sha256": "sha256:7b4bca2e297153ac5189417502ec008f04c147f4630dc57b6d838c0e63376669",
+   "redundant_with": [
+    841,
+    2228
+   ]
+  },
+  {
+   "i": 1329,
+   "verdict": "MIXED",
+   "why": "Fact: Mr. Glenn is the non-executive Chairman of the Board. Rest is his supplemental fee and chair duties reference.",
+   "text_sha256": "sha256:0775f59c7b1b08c4e5d1495e7382404ff6cde9475b0ec24eb4b1e06342bca89e",
+   "redundant_with": [
+    865,
+    848,
+    849
+   ]
+  },
+  {
+   "i": 1346,
+   "verdict": "FACT",
+   "why": "Director-pay table group label 'Continuing Directors:' over the rows for Allen, Béjar, Capossela, Chilton, Goldberg, Linear, McMillan (continuing on the Board).",
+   "text_sha256": "sha256:44d4f5745dbd6d25d1e00caed50f75b381891b7e0122a5e2f9ed1534e2617caa",
+   "redundant_with": [
+    491,
+    574,
+    595,
+    630,
+    645,
+    687,
+    731,
+    757
+   ]
+  },
+  {
+   "i": 1354,
+   "verdict": "FACT",
+   "why": "Director-pay table group label 'Retiring Directors' (Glenn, Jones; footnote 4 = 1370).",
+   "text_sha256": "sha256:b78bf7c9bef76d6fd57a75c2939e550389e07f9e638eaaf8d30fc5c6eb7e8989",
+   "redundant_with": [
+    537,
+    568,
+    1370
+   ]
+  },
+  {
+   "i": 1355,
+   "verdict": "FACT",
+   "why": "Director-pay table name cell under 'Retiring Directors': Glenn is retiring.",
+   "text_sha256": "sha256:da5cbafcf6b9a0453bb2a4305c925c88e5b4717614a2ca2677ebb469828b0302",
+   "redundant_with": [
+    537,
+    568
+   ]
+  },
+  {
+   "i": 1358,
+   "verdict": "FACT",
+   "why": "Director-pay table group label 'Former Directors' over Fowler, Brown, Clontz, Siegel (rows outside the pool).",
+   "text_sha256": "sha256:1161817e53017d09763eb12f7bf98dc1678bacd0dcbf2147422735952ee89052",
+   "redundant_with": [
+    537,
+    568,
+    1372,
+    1373
+   ]
+  },
+  {
+   "i": 1370,
+   "verdict": "FACT",
+   "why": "Glenn's and Jones's terms end at the 2026 annual meeting.",
+   "text_sha256": "sha256:fda32790f48aa1a704cef2d8830004f0468e8c27c910cfac76b3125feba754b5",
+   "redundant_with": [
+    537,
+    568
+   ]
+  },
+  {
+   "i": 1373,
+   "verdict": "FACT",
+   "why": "Brown's, Clontz's and Siegel's terms ended at the 2025 annual meeting.",
+   "text_sha256": "sha256:48cb1022730789c84f7f97a3a369c22391fb6cc9e665b827a368ab147bb99f74",
+   "redundant_with": [
+    568
+   ]
+  },
+  {
+   "i": 1374,
+   "verdict": "MIXED",
+   "why": "Pay footnote (charitable contribution) that states Siegel and Clontz retired from the Board.",
+   "text_sha256": "sha256:10fc559328992aa062b6056561f696eee3f89fcedee3988c9be628b8194360d8",
+   "redundant_with": [
+    568,
+    1373
+   ]
+  },
+  {
+   "i": 1465,
+   "verdict": "FACT",
+   "why": "Audit Committee Report signature header 'as of February 16, 2026'; with 1466-1468 it lists the committee's members: Jones (Chair), Capossela, Chilton, Goldberg. The chair designation is not stated elsewhere (see 1467).",
+   "text_sha256": "sha256:de053bd39f89cce58fd480064252190c8c1e6375f27069b29fc538b548944af6",
+   "redundant_with": []
+  },
+  {
+   "i": 1466,
+   "verdict": "FACT",
+   "why": "Audit Committee Report signatory Hal Stanley Jones, designated Chair in 1467. Jones's membership follows from 885, but no other block says he is the current Audit Committee Chair.",
+   "text_sha256": "sha256:c278a8197c04e65a71568940a1c37954886acb362a5af6388d8bd480bdc746d2",
+   "redundant_with": []
+  },
+  {
+   "i": 1467,
+   "verdict": "FACT",
+   "why": "'(Chair)' for Jones (1466): Jones is Chair of the Audit Committee as of Feb 16, 2026. This is the only statement of who currently chairs the Audit Committee (366 and 875 give only the post-meeting chair Goldberg).",
+   "text_sha256": "sha256:eb94b301fdf373c29da6a04eb4557b6c0c00c4ee27bb8f43a2536cbff5501cd0",
+   "redundant_with": []
+  },
+  {
+   "i": 1468,
+   "verdict": "FACT",
+   "why": "Audit Committee Report signatories: Capossela, Chilton, Goldberg (members as of Feb 16, 2026).",
+   "text_sha256": "sha256:b09f4e2c758ace8f2c1bcbe5246b13e855aed05ad80696a5f05ed245728d4031",
+   "redundant_with": [
+    876,
+    879,
+    885
+   ]
+  },
+  {
+   "i": 1724,
+   "verdict": "MIXED",
+   "why": "Pay footnote stating Glenn and Jones retire and that eight non-employee directors will serve after the meeting. The number eight is not written elsewhere; it follows from 573 (nine nominees) and 841 (all but Ms. Johnson independent).",
+   "text_sha256": "sha256:3937e1a52e855e001f08b86b910583481f36e56bb761ffdcb306e76629f96aac",
+   "redundant_with": [
+    537,
+    573,
+    841
+   ]
+  },
+  {
+   "i": 1858,
+   "verdict": "MIXED",
+   "why": "NEO section: Ms. Johnson also serves as a director and her biography is under 'Our Director Nominees'.",
+   "text_sha256": "sha256:8ec9ab663f82c7d93f351077db10e81234405ae6716b82170406c167553c0d35",
+   "redundant_with": [
+    546,
+    841
+   ]
+  },
+  {
+   "i": 1872,
+   "verdict": "MIXED",
+   "why": "Fact: Fowler served on the Board from 2023 until 2025. Rest is commentary. His 2025 departure is in 537/568/1372, but his 2023 appointment appears nowhere else, and the 'Recent Board Changes' additions (545-552) and the count in 1177 omit him.",
+   "text_sha256": "sha256:eefcff8179cea45acef9736a83a89b71343a1c68749d2f512dc72768b1459720",
+   "redundant_with": []
+  },
+  {
+   "i": 1906,
+   "verdict": "FACT",
+   "why": "Letter signature: Quincy L. Allen, paired with 1907-1908 'Chair of the Human Resources and Compensation Committee'.",
+   "text_sha256": "sha256:653c7d5cd1eea5c16f2bd3fcb306b2d71c214e89aabdc16b5788aceac3edc499",
+   "redundant_with": [
+    931,
+    936
+   ]
+  },
+  {
+   "i": 1907,
+   "verdict": "FACT",
+   "why": "Signature title (first half) designating Allen as HRCC Chair.",
+   "text_sha256": "sha256:cf8c0710a311573859edab46630095ba98999ce2c96b2ccdaf649dbb3b1952db",
+   "redundant_with": [
+    931,
+    936
+   ]
+  },
+  {
+   "i": 1908,
+   "verdict": "FACT",
+   "why": "Signature title (second half) designating Allen as HRCC Chair.",
+   "text_sha256": "sha256:291760aedf0f111cb392eca41159e04d0c3de9330b68e969fc4fbb54ceee2d24",
+   "redundant_with": [
+    931,
+    936
+   ]
+  },
+  {
+   "i": 2100,
+   "verdict": "MIXED",
+   "why": "Fact: the NCG Committee Chair is also a member of the HRCC. Rest is shareholder engagement.",
+   "text_sha256": "sha256:5a236394a2ecd028158f6e029a80bcd6f8bd73dece5af1838e7ca85632b4c8f4",
+   "redundant_with": [
+    984,
+    932
+   ]
+  },
+  {
+   "i": 3157,
+   "verdict": "FACT",
+   "why": "HRCC Report signature header 'as of March 5, 2026'; with 3158-3160 it lists the HRCC: Allen (Chair), Béjar, Capossela, Glenn, McMillan.",
+   "text_sha256": "sha256:f04619323f80d82644a4e61569dde411a21e06d520b430176c1be1fadeb4a83b",
+   "redundant_with": [
+    931,
+    932,
+    933,
+    936,
+    940
+   ]
+  },
+  {
+   "i": 3158,
+   "verdict": "FACT",
+   "why": "HRCC Report signatory Quincy L. Allen, designated Chair (3159).",
+   "text_sha256": "sha256:653c7d5cd1eea5c16f2bd3fcb306b2d71c214e89aabdc16b5788aceac3edc499",
+   "redundant_with": [
+    931,
+    936
+   ]
+  },
+  {
+   "i": 3159,
+   "verdict": "FACT",
+   "why": "'(Chair)' for Allen: HRCC Chair.",
+   "text_sha256": "sha256:eb94b301fdf373c29da6a04eb4557b6c0c00c4ee27bb8f43a2536cbff5501cd0",
+   "redundant_with": [
+    931,
+    936
+   ]
+  },
+  {
+   "i": 3884,
+   "verdict": "MIXED",
+   "why": "Ownership footnote stating Collins has been nominated for election to the Board. Rest is his share ownership.",
+   "text_sha256": "sha256:a87ab5e59ec8409090a31800612dd2d04ab6ecba9cf874cba817de97bb32f59d",
+   "redundant_with": [
+    491,
+    554
+   ]
+  },
+  {
+   "i": 3898,
+   "verdict": "FACT",
+   "why": "Compensation Committee Interlocks: HRCC members during 2025 were Allen, Béjar, Capossela, Clontz, Glenn, McMillan and Siegel; no HRCC member has ever been an officer or employee of the Company or its subsidiaries; no executive officer served on the board of a company employing any Lumen director. The roster part follows from 931-940, but the 'never an officer or employee' determination and the no-interlock statement appear nowhere else.",
+   "text_sha256": "sha256:92262fd17262649fb9f9fd1124910113d6e9e33ac8bf4e4f5eca6fcd4e50891f",
+   "redundant_with": []
+  }
+ ],
+ "outside_pool_facts": [
+  {
+   "i": 60,
+   "verdict": "FACT",
+   "why": "Letter signature names T. Michael Glenn and General Kevin P. Chilton, whose titles are pool blocks 61 ('Chairman of the Board') and 62 ('Incoming Chairman of the Board').",
+   "text_sha256": "sha256:9ca768e696b9962c3d943601374d333f23bd57b32443ea85da93021b76f5b7d4",
+   "redundant_with": [
+    848,
+    849,
+    850,
+    851,
+    865
+   ]
+  },
+  {
+   "i": 544,
+   "verdict": "FACT",
+   "why": "'Additions' label of the Recent Board Changes timeline; its names are 545 and 550.",
+   "text_sha256": "sha256:966ff94170d3cde6acb3384c255e3cf9084760862d550c8f2d729eac4520bb54",
+   "redundant_with": [
+    546,
+    547,
+    548,
+    551,
+    552
+   ]
+  },
+  {
+   "i": 556,
+   "verdict": "FACT",
+   "why": "'Departures' label of the Recent Board Changes timeline; its names are 558-565.",
+   "text_sha256": "sha256:b5876f73d88a74eec36ee5eb339db6a2c601d62184081d1058217dcb4f9713c1",
+   "redundant_with": [
+    566,
+    567,
+    568,
+    537
+   ]
+  },
+  {
+   "i": 559,
+   "verdict": "FACT",
+   "why": "'Departures' timeline name fragment: (Jeffrey K.) Storey and W. Bruce (Hanks), departed directors.",
+   "text_sha256": "sha256:170636f014a21d6e7bde205174f3cd8efa6fb69f983ddbc0f6085ac7cacd7056",
+   "redundant_with": [
+    566,
+    567
+   ]
+  },
+  {
+   "i": 564,
+   "verdict": "FACT",
+   "why": "'Departures' timeline name fragment: (Laurie) Siegel and James (Fowler), departed directors.",
+   "text_sha256": "sha256:33128614e6ed62b15f9e921514e30f3169f3f5d6dd03f43a14cd26a5fea79b18",
+   "redundant_with": [
+    568
+   ]
+  },
+  {
+   "i": 565,
+   "verdict": "FACT",
+   "why": "'Departures' timeline name labels: (James) Fowler, T. Michael Glenn, Hal Stanley Jones.",
+   "text_sha256": "sha256:f72f42fff8013a36f191ed02fbd1cd49e9a01d817c216eb06b9bf80d62ac2c07",
+   "redundant_with": [
+    568,
+    537
+   ]
+  },
+  {
+   "i": 669,
+   "verdict": "FACT",
+   "why": "Name heading (first half) of Collins's nominee card: 'Michael'.",
+   "text_sha256": "sha256:f089eaef57aba315bc0e1455985c0c8e40c247f073ce1f4c5a1f8ffde8773176",
+   "redundant_with": [
+    491,
+    554
+   ]
+  },
+  {
+   "i": 670,
+   "verdict": "FACT",
+   "why": "Name heading (second half) of Collins's nominee card: 'Collins'. Collins is the new nominee.",
+   "text_sha256": "sha256:e2120ffdc0d2287d8b9502c4c3d62f66c95c622fb10c97638caaf066eeec7fe1",
+   "redundant_with": [
+    491,
+    554
+   ]
+  },
+  {
+   "i": 687,
+   "verdict": "FACT",
+   "why": "Name heading of a nominee card: Michelle J. Goldberg is one of the nine nominees (same basis as 574).",
+   "text_sha256": "sha256:06b834b6d34b5edd398153271af677994d056b6b7cc46260173166e59a739175",
+   "redundant_with": [
+    573,
+    875,
+    876,
+    1037
+   ]
+  },
+  {
+   "i": 731,
+   "verdict": "FACT",
+   "why": "Name heading of a nominee card: Diankha Linear is one of the nine nominees (same basis as 574).",
+   "text_sha256": "sha256:0a2c4ca7ccef583b14ff8aadbc88e87509ca1780e1a3e54367d25003667139f8",
+   "redundant_with": [
+    573,
+    985,
+    1036,
+    1040
+   ]
+  },
+  {
+   "i": 757,
+   "verdict": "FACT",
+   "why": "Name heading of a nominee card: Stephen McMillan is one of the nine nominees (same basis as 574).",
+   "text_sha256": "sha256:4b0cd3d5e9f635d3314707a397ad6214ce15bacd53a94eebb223488ba3a7bf30",
+   "redundant_with": [
+    573,
+    876,
+    985
+   ]
+  },
+  {
+   "i": 3160,
+   "verdict": "FACT",
+   "why": "HRCC Report signatories Béjar, Capossela, Glenn, McMillan (HRCC members as of March 5, 2026; header 3157).",
+   "text_sha256": "sha256:084970da1364661d97790f7557beb4aa1f1b37c353b5540bbd2cf4d0ac17e37a",
+   "redundant_with": [
+    932,
+    933,
+    936,
+    940
+   ]
+  }
+ ],
+ "pool": [
+  {
+   "i": 50,
+   "text_sha256": "sha256:33eb0792650b562d0d51493a49ee712754f8d24b11a65aeb528c993ec9ff29a3"
+  },
+  {
+   "i": 53,
+   "text_sha256": "sha256:19fbdd9e08363cdc375295b6f519d010012e4aab56808818a3a3aa7a02bccd95"
+  },
+  {
+   "i": 54,
+   "text_sha256": "sha256:cad69fc59421a5696fa0da70327b5b77c3ee785d5f6c465893bac91c5079b412"
+  },
+  {
+   "i": 55,
+   "text_sha256": "sha256:7cc28fee0162881ed1f8591825872489243364763a1c621458593266760a815a"
+  },
+  {
+   "i": 56,
+   "text_sha256": "sha256:8197dc157d70f38716496e1652be022819be4cfc30d6b8204a3169258fba3e2c"
+  },
+  {
+   "i": 57,
+   "text_sha256": "sha256:7bc80496c93778f87cf89259c59f2f47ebb71cdcc949a26c1be456de2bfea8a9"
+  },
+  {
+   "i": 61,
+   "text_sha256": "sha256:8ccc6826d4c6549c24cbdea7acc928942d800f7b109539e18d08901760853bfc"
+  },
+  {
+   "i": 62,
+   "text_sha256": "sha256:f9fe8f3090614e6922709f16204cae34c2149300892ba0e4888378a726a25243"
+  },
+  {
+   "i": 247,
+   "text_sha256": "sha256:c14d5666f05d49225eca8d4806d5b78dafdb844950c535018c32763d5b79886d"
+  },
+  {
+   "i": 260,
+   "text_sha256": "sha256:7737a439e7d5cea4815f04c434117be57b04e76058a77b3b4205b6fdb019b459"
+  },
+  {
+   "i": 263,
+   "text_sha256": "sha256:d4fd3453e048e34edb2735dc709f76e5948d2373901937680eb37e61998864a5"
+  },
+  {
+   "i": 272,
+   "text_sha256": "sha256:c0a6cc829cd08735294765c75938a7da2b0f222d52e98bff13cb237cd99deaac"
+  },
+  {
+   "i": 275,
+   "text_sha256": "sha256:15b61974b2707a7b3d4201385e0f01f4ff5eb1f17c5639d98788ee5add2025cd"
+  },
+  {
+   "i": 328,
+   "text_sha256": "sha256:8a269a7e845c8f9e82ba7d2fb0ad23f779b9c2ba0a648105896f772e6f3afc75"
+  },
+  {
+   "i": 365,
+   "text_sha256": "sha256:17d661a4a5a87355962afd00ef4fe995db9e276d03b2b84cec0e50d48df12456"
+  },
+  {
+   "i": 367,
+   "text_sha256": "sha256:fd0bd491e538be5c8afba5d9c45f1d340992eeb73d6ba056b2a92b80bf6a5478"
+  },
+  {
+   "i": 373,
+   "text_sha256": "sha256:70c100c196fdc61e3c3339b227783fd229262f87d113f774525bdf3487d52107"
+  },
+  {
+   "i": 375,
+   "text_sha256": "sha256:43ba8425453279b0f69d5cb178ad019569fdc91db9e8cf5b83da3030c99d2560"
+  },
+  {
+   "i": 376,
+   "text_sha256": "sha256:64b5d8af292b2bc2c849787760b951f2b1cacc14cb24e4bb76df699a55f5fd10"
+  },
+  {
+   "i": 377,
+   "text_sha256": "sha256:3a8cac73b38954a3536d7bfdd60d8d041ee6487c1a105b774485ddc6db2468f6"
+  },
+  {
+   "i": 378,
+   "text_sha256": "sha256:2f9bdfc70885e5a1a205232dd300919bd33f9b98e148fc395053a5c5bb924ea0"
+  },
+  {
+   "i": 379,
+   "text_sha256": "sha256:5db2a248c3dd130d3cb83032f5c03fca335c5c1b755a195b9cbb62f237ffdd99"
+  },
+  {
+   "i": 384,
+   "text_sha256": "sha256:987733270158b57932795b321f0541dfafc7ecee84281ffe997498a0a06bb737"
+  },
+  {
+   "i": 393,
+   "text_sha256": "sha256:aa56a5760a793295bc9b9c77e3cf729f4d7c8c586626b994cbfded19ad81a3fe"
+  },
+  {
+   "i": 397,
+   "text_sha256": "sha256:b44484a0fa28c471455e0f2d2165094f0b547486058f593121260e74c4c7808e"
+  },
+  {
+   "i": 409,
+   "text_sha256": "sha256:6b27710dfaafdcec2b06b7d3c6abe56d98162848b08a9da01e88863e2add413f"
+  },
+  {
+   "i": 429,
+   "text_sha256": "sha256:c056c6229183967e8aaeb6e027265215e3457fd14c3f399828154a01fb58943e"
+  },
+  {
+   "i": 431,
+   "text_sha256": "sha256:eced44ed9452a038af187096cbfcd4ec175c7c13ee66cd243b709db8bd216615"
+  },
+  {
+   "i": 432,
+   "text_sha256": "sha256:2352aad3a6c8bb39c4f8d26cfad4a0187f04ec54e719ae0b0a0b545c3fddf600"
+  },
+  {
+   "i": 436,
+   "text_sha256": "sha256:61b55087d6e55fc214285c7213acf06cd0a7d27e1b0513e2f5b8959170cef101"
+  },
+  {
+   "i": 437,
+   "text_sha256": "sha256:8c5397699e4f47c1f4491c9c386b876848c6d4baf5e1e6ac821ac4f2a7b6c4f5"
+  },
+  {
+   "i": 445,
+   "text_sha256": "sha256:5604cc69ca8533136238c43cef77bb45e23fc63cc69b7e53210de9f631e3f8e3"
+  },
+  {
+   "i": 446,
+   "text_sha256": "sha256:2352aad3a6c8bb39c4f8d26cfad4a0187f04ec54e719ae0b0a0b545c3fddf600"
+  },
+  {
+   "i": 450,
+   "text_sha256": "sha256:b8f2f36c444b58ff35e4e4ff1076a2e56eb1f23cb508f54869b8cdbeb3ef3e21"
+  },
+  {
+   "i": 451,
+   "text_sha256": "sha256:2352aad3a6c8bb39c4f8d26cfad4a0187f04ec54e719ae0b0a0b545c3fddf600"
+  },
+  {
+   "i": 457,
+   "text_sha256": "sha256:2352aad3a6c8bb39c4f8d26cfad4a0187f04ec54e719ae0b0a0b545c3fddf600"
+  },
+  {
+   "i": 461,
+   "text_sha256": "sha256:1ccda44acb23305bd1b7a2c7d856db213f25d3c9d71ee063c7145d28816b2fca"
+  },
+  {
+   "i": 485,
+   "text_sha256": "sha256:c73b66d28da938c84ed40465cc493250c20832475bfa40debaa6dc711cd5c209"
+  },
+  {
+   "i": 486,
+   "text_sha256": "sha256:6aa64b917745fffb50c556e5fe9251acbeeca13ba7c35d653f62d5c75ad07391"
+  },
+  {
+   "i": 489,
+   "text_sha256": "sha256:70c100c196fdc61e3c3339b227783fd229262f87d113f774525bdf3487d52107"
+  },
+  {
+   "i": 492,
+   "text_sha256": "sha256:309c858dc70be06aa1e92eed4a1c8dfc65249525f80958927af7aade3f2275f8"
+  },
+  {
+   "i": 493,
+   "text_sha256": "sha256:59d9411ef08cdce96338b088ed39618a7bdd9a68185b72e70843b7e82f1147fd"
+  },
+  {
+   "i": 494,
+   "text_sha256": "sha256:129d1d031cd70dc533caf79fdd0ec2daa34dc676dd979a2c59453a52745d1be6"
+  },
+  {
+   "i": 495,
+   "text_sha256": "sha256:90e6492d18c8e2ccd27dc62a73a28f08c5651baf2f9f0c2b227e7e6343a75942"
+  },
+  {
+   "i": 496,
+   "text_sha256": "sha256:02e76ce6fc4cad240911784d88bbc2180a31e3dd2838ccfe16a10e79c4bc3911"
+  },
+  {
+   "i": 500,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 502,
+   "text_sha256": "sha256:4b38597c42dcc11d052ef7bbdc8bc2d004978fe0e9ae067fc404b050b735ad0c"
+  },
+  {
+   "i": 503,
+   "text_sha256": "sha256:7aec88d03d6c6b6f48badeea15ed4e518afd4714ddd4aa56eff2ff4ada679ebc"
+  },
+  {
+   "i": 518,
+   "text_sha256": "sha256:6b27710dfaafdcec2b06b7d3c6abe56d98162848b08a9da01e88863e2add413f"
+  },
+  {
+   "i": 530,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 532,
+   "text_sha256": "sha256:9cc5c3418d9d1122efe668b1c33669bcdb4814181a429b9c0795414cce0dabde"
+  },
+  {
+   "i": 533,
+   "text_sha256": "sha256:8391cc09d881cc67e40f1ece22e20718a70eef969b2777299b1b0df2d2eea922"
+  },
+  {
+   "i": 536,
+   "text_sha256": "sha256:c4b3108230b75bdb3cdb4c24f6861e88cdfd0b494ba4a1b1e68513cc6e94741e"
+  },
+  {
+   "i": 541,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 542,
+   "text_sha256": "sha256:1ca85eb642e0af310174d941c8512dab673c56561265d53a1eb8ec1e3ab2208f"
+  },
+  {
+   "i": 543,
+   "text_sha256": "sha256:05c3d71bb52cd5366784cefddec20512398c0683e1aa0b2ddeb3c6f9c2b0eb30"
+  },
+  {
+   "i": 545,
+   "text_sha256": "sha256:ca2cc24c76f0643800cb186f9f1d86755b006f033979d1f4247b4c0e4fbaf561"
+  },
+  {
+   "i": 549,
+   "text_sha256": "sha256:8d8d0be9efa0e6390abf74bab606eb1b1242f2ac43c5eaf02a55bd615293e74e"
+  },
+  {
+   "i": 550,
+   "text_sha256": "sha256:c7baec597d37776a4ec2e13e94ecd7c1510b4dd3491325e45ef1fb8f7311bba2"
+  },
+  {
+   "i": 553,
+   "text_sha256": "sha256:f52b5d47bff3154f69e4dafeafa81102f513d20346cd6c90e73fab63986961e5"
+  },
+  {
+   "i": 554,
+   "text_sha256": "sha256:70a51f6fcf3af241491e869d22b6243b4195fa691fd15fd0b34c6664c4478bd9"
+  },
+  {
+   "i": 557,
+   "text_sha256": "sha256:8510872fdf1f360e8fc4da27d12146606f7d0ec570a92096b116043513a0397b"
+  },
+  {
+   "i": 558,
+   "text_sha256": "sha256:fc4a358a8222c43e1d15e8776a1c0a063406da6a3840725572436e22287309e0"
+  },
+  {
+   "i": 560,
+   "text_sha256": "sha256:8b85633c7c54a020c79c62bd4c6991d3dad4240b04d01808623f4ff9e0dcebe3"
+  },
+  {
+   "i": 561,
+   "text_sha256": "sha256:531f20523111ac531c0e2786e071f3194ccbbd729535738b54a6a66719d6e765"
+  },
+  {
+   "i": 562,
+   "text_sha256": "sha256:a732508a59b8f5c1ffd37a84f3d834f0f36dbfb5394ec62837be5984d87a5575"
+  },
+  {
+   "i": 563,
+   "text_sha256": "sha256:7591987d02c989a38ca34669a3fc2bf382817442347610df18467632b3c3c576"
+  },
+  {
+   "i": 569,
+   "text_sha256": "sha256:d531e855aa33490cbfd8ea0a114f5107b4d08fa7e20a3d353e7fe88eb5450c80"
+  },
+  {
+   "i": 571,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 572,
+   "text_sha256": "sha256:008b043b1d54ad2e82a4f1b1cb26a55299585a29ddad79d2219b2c45a2be8f35"
+  },
+  {
+   "i": 574,
+   "text_sha256": "sha256:653c7d5cd1eea5c16f2bd3fcb306b2d71c214e89aabdc16b5788aceac3edc499"
+  },
+  {
+   "i": 575,
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def"
+  },
+  {
+   "i": 577,
+   "text_sha256": "sha256:9ffe0f86a3d9c105dc8f4a0543ea6cee25fbd2932d296630a9102d8b582c8570"
+  },
+  {
+   "i": 578,
+   "text_sha256": "sha256:2bf2d0a70ad723e8cd993875b599a8ef420fdd0419f79787412747e933be3528"
+  },
+  {
+   "i": 592,
+   "text_sha256": "sha256:8892d6547a6e0cb04c91a8487f8bd83861694be4a2f35462c5e8b80647135998"
+  },
+  {
+   "i": 595,
+   "text_sha256": "sha256:6d841ecd8f8ae19360a660f1ef83ca6cc39e4633bd59656173b56e24d278e134"
+  },
+  {
+   "i": 596,
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def"
+  },
+  {
+   "i": 598,
+   "text_sha256": "sha256:c7b792edf42f2caa270587a2935812938aa40cb6b6281e8251d2ba7680ce6d09"
+  },
+  {
+   "i": 599,
+   "text_sha256": "sha256:a2ba45f57c28cf52865217d601739b93bfba551fea142ece95dfd52d366d61a7"
+  },
+  {
+   "i": 612,
+   "text_sha256": "sha256:942deb412ffe4ee98f733fc2bdd1d1b81f8709d3b24dc70278e961e33561ca48"
+  },
+  {
+   "i": 620,
+   "text_sha256": "sha256:f51538a314fa0b9f9bb6ccf7decda99a9bb7610bd3b6b5da35ad1fb8e6d2ae14"
+  },
+  {
+   "i": 621,
+   "text_sha256": "sha256:f3288dd45d9d7d1f292268e68952df4a29360ebdb3db24e6dce03bb5b5abc76e"
+  },
+  {
+   "i": 629,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 630,
+   "text_sha256": "sha256:90ae9d1c4d33d59e3ea255abe755aeb421c2af1f6fe3c697673638bfa9a19a52"
+  },
+  {
+   "i": 631,
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def"
+  },
+  {
+   "i": 633,
+   "text_sha256": "sha256:579ee9e03183c20915fc05458e890163c62b7c206d2458b4fbb532d5ba0c33fb"
+  },
+  {
+   "i": 634,
+   "text_sha256": "sha256:b4e696d92f24d752e2a78563af57645fdcb047879e67e77226aa034bccbc677e"
+  },
+  {
+   "i": 645,
+   "text_sha256": "sha256:32c40788db975f9a6463e9af0859a88c15d60a7e68a634bc4bef068319f176d9"
+  },
+  {
+   "i": 646,
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def"
+  },
+  {
+   "i": 648,
+   "text_sha256": "sha256:c808bd1aa865b1942197f80ef235eae6679e0d4103678409e8d4991a79888d73"
+  },
+  {
+   "i": 649,
+   "text_sha256": "sha256:dcbc7d65c14a9a55cd4606263e8891b8fc1691996d0065f737600f0d2634dc1c"
+  },
+  {
+   "i": 652,
+   "text_sha256": "sha256:36b78592ed4c261a71ac6dd6b75564abc7d781f2b87bb842a4c3f39a941c68db"
+  },
+  {
+   "i": 668,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 671,
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def"
+  },
+  {
+   "i": 673,
+   "text_sha256": "sha256:b60dd19f8a691e72f5aa40f72acc5e00f137b7c3b3a1fa788262c96ca0f320ad"
+  },
+  {
+   "i": 674,
+   "text_sha256": "sha256:1284da5e05111b950fea14634e7d54acc3e9fe91a3dee3d83c2cf68a92a9c7ec"
+  },
+  {
+   "i": 688,
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def"
+  },
+  {
+   "i": 690,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5"
+  },
+  {
+   "i": 691,
+   "text_sha256": "sha256:70141a52875bbcd884a4ffc8906b4d78a822350b7b3bee6210828a8b3924a267"
+  },
+  {
+   "i": 694,
+   "text_sha256": "sha256:6ea954c8638945327091291ad911b8e8a67db51b60e24a5f50b7209eb34a5ca0"
+  },
+  {
+   "i": 700,
+   "text_sha256": "sha256:92171e3fb91374946f91271fff1a540bbe9c0eb8ed29636bb9378d6af735321e"
+  },
+  {
+   "i": 709,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 710,
+   "text_sha256": "sha256:eaba6ec18aa7b880a3e5fe77f955a73b34f01a4ea3afdd63fa57e49671dc3b8a"
+  },
+  {
+   "i": 712,
+   "text_sha256": "sha256:1a5c994de0ae6e07f0fb34fa77df21b78f0b66e07252745a572ebce1b30471ae"
+  },
+  {
+   "i": 713,
+   "text_sha256": "sha256:60642e7992069657d2a22cc9f4a25e83fd3b91cc7bb68098c2b523043877bde4"
+  },
+  {
+   "i": 717,
+   "text_sha256": "sha256:faae7186de420ea7d3ea31bf5f924569487a8dcedab2e209355933fb3e191c84"
+  },
+  {
+   "i": 730,
+   "text_sha256": "sha256:33b3e1fe94396a07b8da8e9514c48129378d8c5216692dcb59c27178639ec75f"
+  },
+  {
+   "i": 732,
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def"
+  },
+  {
+   "i": 734,
+   "text_sha256": "sha256:579ee9e03183c20915fc05458e890163c62b7c206d2458b4fbb532d5ba0c33fb"
+  },
+  {
+   "i": 735,
+   "text_sha256": "sha256:0298c5fc6a86d4c43b57e3b071ba945d36b4eeb13d3d38a43b63b6fa395abf97"
+  },
+  {
+   "i": 744,
+   "text_sha256": "sha256:d15daceb5594229ae67674d6808f764d31c34262e80afbdc3e946740c2dd87e5"
+  },
+  {
+   "i": 746,
+   "text_sha256": "sha256:ed4dfe61a9d0df2953fffd722235d490def3986eb2354e8814ae7cc1d0d097e7"
+  },
+  {
+   "i": 756,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 758,
+   "text_sha256": "sha256:c108e4d88dc3a84238bd4795f263ab910269ec0013304be470d2dda05ac56def"
+  },
+  {
+   "i": 760,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5"
+  },
+  {
+   "i": 761,
+   "text_sha256": "sha256:cf810a8631f2b5ff7002fa04460d9f483bae50efdffb6438f569774c90e96108"
+  },
+  {
+   "i": 780,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 781,
+   "text_sha256": "sha256:3ea646cce98e5480e44b87219e1e6c3913b6ab8c5fd76b16aca511cfb517c3da"
+  },
+  {
+   "i": 783,
+   "text_sha256": "sha256:769791e803b47de414bc10672e628505e58a4c1379ed0a18e1b529bd75d4cde9"
+  },
+  {
+   "i": 785,
+   "text_sha256": "sha256:2c25d5aa36e088e770fce072e825069721c7fb3c62fd3a9413d6ddcadc696fa4"
+  },
+  {
+   "i": 786,
+   "text_sha256": "sha256:7067b16e325bfcb501d75f45cec3514703204335845f1249e32ca650680c6a14"
+  },
+  {
+   "i": 788,
+   "text_sha256": "sha256:06be622ad5591810c27fbaeb9ae7d27f5c4779b671196221e5d2d760416e4e81"
+  },
+  {
+   "i": 789,
+   "text_sha256": "sha256:8d5ed46691c9affdb15552625fc92cf5553a0944dbc92c57dc2edd821f6f211f"
+  },
+  {
+   "i": 790,
+   "text_sha256": "sha256:b012b1cd27873baeb19d07283f89f3a09ec29a9ebf4f59d497c45dc3c3dd27ef"
+  },
+  {
+   "i": 794,
+   "text_sha256": "sha256:4ce84b887fe2def76f07146f7a4585c3f0edd8e620b0b4c2bfef49956d91a501"
+  },
+  {
+   "i": 795,
+   "text_sha256": "sha256:96a0d801b4d664c080be870482daeaa51e123aabaa4e6f94a6060b82fc9f81b0"
+  },
+  {
+   "i": 796,
+   "text_sha256": "sha256:53414cd16bbe8a21b321bc5f8ae7948666aa2b9a09d5c6b825e0eb62344bf3c7"
+  },
+  {
+   "i": 798,
+   "text_sha256": "sha256:9e9c9880df84820133f8be320a4e2ac8997dc0faaf2231ee64e3a2da344c4309"
+  },
+  {
+   "i": 799,
+   "text_sha256": "sha256:5f92805f3d6e72ca5c5fb1c70e18685189ad3bb0799882f0c17427bd9cfb3236"
+  },
+  {
+   "i": 801,
+   "text_sha256": "sha256:20965cdee97a47612bc7c8ddb401c2e3e7b61e5f6e7d19696333c3233668b197"
+  },
+  {
+   "i": 803,
+   "text_sha256": "sha256:06f1e8d0d7caf5ba6e1ad912c9bd66937c69c7b7d36cd28b7861ed8494141fae"
+  },
+  {
+   "i": 804,
+   "text_sha256": "sha256:2027f13cbe71e8a53f6067202d6c78d7d49abf5429c91e0b44995cedc0c5d9b2"
+  },
+  {
+   "i": 805,
+   "text_sha256": "sha256:56dcca6c98a51d31ee1d20d3c2c3a9bc014982bec1cf2bd0e156322702373462"
+  },
+  {
+   "i": 806,
+   "text_sha256": "sha256:d18c8e39563c4c371144f02a597cd0e3b1fd04d4229a433cc89617212acec510"
+  },
+  {
+   "i": 808,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 809,
+   "text_sha256": "sha256:79ef3a5e9d47a730f1db309ece62b17a350c7cea34f4036d88f81a31f3c92f34"
+  },
+  {
+   "i": 811,
+   "text_sha256": "sha256:5d495a6c5afcb50ba998ed23d22ffc1d389449d0fba82bc851d203f524ecab80"
+  },
+  {
+   "i": 813,
+   "text_sha256": "sha256:aca2b4023e1ba73d7b9f35e3bad8e65d04ea4fc4564ae692514cda71c5573204"
+  },
+  {
+   "i": 814,
+   "text_sha256": "sha256:01e4ae3829d4c040673d5ba77636e962ce070e55674a651e77c65e6f9767b8ef"
+  },
+  {
+   "i": 816,
+   "text_sha256": "sha256:83b5bf8ed01e78911b6f728a418b20cba60767f83295a94d267dd6cca1cebfb1"
+  },
+  {
+   "i": 817,
+   "text_sha256": "sha256:0719554866bddc858854d165d401ffdb1e3e23f1d00983f7871a72716d8fdae4"
+  },
+  {
+   "i": 820,
+   "text_sha256": "sha256:5d4a458bc41e2109888a5be7579e3d237a494758d99b6e55dbd27cc0d5262673"
+  },
+  {
+   "i": 824,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 825,
+   "text_sha256": "sha256:890d67e1c7590bb29a65b4bb634d37dce48f39815843602c56d032b39c20bd10"
+  },
+  {
+   "i": 826,
+   "text_sha256": "sha256:d59d32c11b5f599e4d1c5b4842fcf1d96c2b6cb1c7e29e23d6d94f74071eca2e"
+  },
+  {
+   "i": 828,
+   "text_sha256": "sha256:efadb50e73d60f7f37fdd9a0674c0db99f69679e051399f09df745a105ae6f50"
+  },
+  {
+   "i": 829,
+   "text_sha256": "sha256:77aeebfa4371b0f7bcc24bd18b647a65a90b439e180cf50e534caa27566ec4c2"
+  },
+  {
+   "i": 831,
+   "text_sha256": "sha256:e20f88b267a1117c3c74eb9426c8163540a76af215db214a4a910bb25b9149b2"
+  },
+  {
+   "i": 833,
+   "text_sha256": "sha256:cf2f916435bb874e5b9cda41f9f7794f56ee54d11415bb85e61ac8b5da09ccde"
+  },
+  {
+   "i": 834,
+   "text_sha256": "sha256:d78da9ca5c8004218d6859b8fe7366d9dfd27cfe8cad5c5c96a84a2aaf31163c"
+  },
+  {
+   "i": 835,
+   "text_sha256": "sha256:3016eeaa15467737ee13105fb6825dd810c11130a49c95e6dab4d3a159a9c00f"
+  },
+  {
+   "i": 836,
+   "text_sha256": "sha256:2ff1d006c8cdb2f1c63070de4aafbdf9e4452ca76951f71e33b3b924c15dbd3f"
+  },
+  {
+   "i": 838,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 839,
+   "text_sha256": "sha256:f36e6d01e2c6c2234f28e210439c0a6a9ae3cfc1b3213477fbd67510c9e469ce"
+  },
+  {
+   "i": 840,
+   "text_sha256": "sha256:9ba58d4ed60784763330c1afb4752a45b37172389088b2812edd1abee15540fd"
+  },
+  {
+   "i": 845,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 846,
+   "text_sha256": "sha256:2153df29b82b494b06b663b147e2a1f30111f7be27784e5b6f0cfb1ca973a1cd"
+  },
+  {
+   "i": 847,
+   "text_sha256": "sha256:5b91eba836f552f4b0c6246c5d93c558b84ef6221a05a12556084a5beb3b2ac7"
+  },
+  {
+   "i": 848,
+   "text_sha256": "sha256:f9f2a62a430cbce3c1c949bd0a7fd8f47a773225499c7ca6fd64b26402dc0ea9"
+  },
+  {
+   "i": 849,
+   "text_sha256": "sha256:13fdf5361e8c12e27a23d7b2b43bc7b29d02683580a75d6b54f0142c2707e3f1"
+  },
+  {
+   "i": 850,
+   "text_sha256": "sha256:32c40788db975f9a6463e9af0859a88c15d60a7e68a634bc4bef068319f176d9"
+  },
+  {
+   "i": 851,
+   "text_sha256": "sha256:825a567982110e2c8987aa4dfa6e474dcb977328ef70f9e07d4c00608f3c4cd6"
+  },
+  {
+   "i": 852,
+   "text_sha256": "sha256:a822e55f81206932d267f891b3069b15f7b654ed8878b3dc26e2d04a5e74f94d"
+  },
+  {
+   "i": 853,
+   "text_sha256": "sha256:b45e20d29cd73c84e54ac149bdcd7e254bc7ca317069a43c20e072deede49bdc"
+  },
+  {
+   "i": 854,
+   "text_sha256": "sha256:8a50a3d52151342fe0847f4f323597f9cca1ebc8f8f02ac3ec15ec9b62904961"
+  },
+  {
+   "i": 855,
+   "text_sha256": "sha256:2f7b29ac5db9ac8f3d46e6c3e3331c7a428e714af53471534baedf110b4db5ed"
+  },
+  {
+   "i": 856,
+   "text_sha256": "sha256:e14655034f7cccd1459d6e1374a90a5de1cc19a550e494169f520fb325596aee"
+  },
+  {
+   "i": 857,
+   "text_sha256": "sha256:5248f40b073fc50498de5ea8d01119ac707007126942757225c5e1cd023776e4"
+  },
+  {
+   "i": 858,
+   "text_sha256": "sha256:0e300c9f2ffafa83f1febe991cdc8575ab05074fa49a38a9b393edd11ae9440f"
+  },
+  {
+   "i": 859,
+   "text_sha256": "sha256:cb1080632c85f810d8ea1fd578aecb895a3c056434b67e99b01275bdb50a2063"
+  },
+  {
+   "i": 860,
+   "text_sha256": "sha256:8ad63926fe26a028919c347e230cd642a77c11f0d28372ebd019e04138bb6ae9"
+  },
+  {
+   "i": 862,
+   "text_sha256": "sha256:31c26f0f623333e78181556d5670956371d791ac9510775af166ecd3f8f13992"
+  },
+  {
+   "i": 863,
+   "text_sha256": "sha256:575d89862d61c2e4324c7f099961dc1a97c99cf9931af6b8c24ef54b3166f8a7"
+  },
+  {
+   "i": 864,
+   "text_sha256": "sha256:fb0164f0c82cb0a1dafb9ce3dd695ebff51185114c6ed01e2b8563fcf6f71e96"
+  },
+  {
+   "i": 865,
+   "text_sha256": "sha256:ce30ea0a1ccf589a72e90cc46830d02aa8c0525ff60d6987b2a5a88f5b4df7fc"
+  },
+  {
+   "i": 866,
+   "text_sha256": "sha256:8d5a39dfc762357e6af33cc386c27eda1cda1cfb100b280318da8cd0922f46bd"
+  },
+  {
+   "i": 868,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 869,
+   "text_sha256": "sha256:6471929f11f034e3fcf9f485e00039c4cacd171cdb99be1db1c669680eeca502"
+  },
+  {
+   "i": 871,
+   "text_sha256": "sha256:3290bf338cd9858825a73109f95860db92b1f6cbe7f30982ea7b89165a597548"
+  },
+  {
+   "i": 888,
+   "text_sha256": "sha256:1cc29e47b26beb8281587cc958dd9faf1fe2bd7dad79dd41fc36a68fa76ef03d"
+  },
+  {
+   "i": 889,
+   "text_sha256": "sha256:289841fe81d24082cbce72a8044703e6e9f1aaccd054b1e2577f99effc3eefaf"
+  },
+  {
+   "i": 890,
+   "text_sha256": "sha256:44d6d8278ebd1c29a63df71ae1c30b7d4a7162bcd5e2d878a8b0d81daf09bb7f"
+  },
+  {
+   "i": 894,
+   "text_sha256": "sha256:47c53b6597e6b23c6fa2b652ff6dc4bd353bdbf03ab7b28ae0a939b4f2204857"
+  },
+  {
+   "i": 897,
+   "text_sha256": "sha256:3503f49828303fb4766e9035155766040a0fe34dafb5b9204c058856e794e19d"
+  },
+  {
+   "i": 902,
+   "text_sha256": "sha256:eac7d5b8010ce5554b7a370c62dcc0bf9690b03bf0c52c67ad9a2e19f5097ba0"
+  },
+  {
+   "i": 908,
+   "text_sha256": "sha256:eac7d5b8010ce5554b7a370c62dcc0bf9690b03bf0c52c67ad9a2e19f5097ba0"
+  },
+  {
+   "i": 914,
+   "text_sha256": "sha256:eac7d5b8010ce5554b7a370c62dcc0bf9690b03bf0c52c67ad9a2e19f5097ba0"
+  },
+  {
+   "i": 916,
+   "text_sha256": "sha256:7126fa9406e0781775fcdc3389298c58bfadcf5ec00cbd45c71a92c5aab2b705"
+  },
+  {
+   "i": 921,
+   "text_sha256": "sha256:eac7d5b8010ce5554b7a370c62dcc0bf9690b03bf0c52c67ad9a2e19f5097ba0"
+  },
+  {
+   "i": 922,
+   "text_sha256": "sha256:ac8b1d5b7895c8488fe379489a5a658fce6c4d22b9cb101fbefbd7d6550f2a69"
+  },
+  {
+   "i": 923,
+   "text_sha256": "sha256:b4405535e33083c8635750e4d982f754a726ae0f13081da2d850a101027a2a80"
+  },
+  {
+   "i": 927,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 947,
+   "text_sha256": "sha256:efb6e7b1b11d7cb9622c0c8be20324967b9b2f2bf24e589e7c92c7cc92d7e3ff"
+  },
+  {
+   "i": 963,
+   "text_sha256": "sha256:a560d962d41e0e43f87405d73e3171dbaa1774ee3c6c6ebfff250016a3351b1f"
+  },
+  {
+   "i": 973,
+   "text_sha256": "sha256:7126fa9406e0781775fcdc3389298c58bfadcf5ec00cbd45c71a92c5aab2b705"
+  },
+  {
+   "i": 978,
+   "text_sha256": "sha256:b4405535e33083c8635750e4d982f754a726ae0f13081da2d850a101027a2a80"
+  },
+  {
+   "i": 980,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 991,
+   "text_sha256": "sha256:dfbe266dd408401ab3482784700c9c8d88dd3732e3e6e5a4babd1b91e2c501c5"
+  },
+  {
+   "i": 992,
+   "text_sha256": "sha256:124ef98a17c165358623ea9468eb1b701dcd901a2727677c7ccef578fcac1471"
+  },
+  {
+   "i": 993,
+   "text_sha256": "sha256:da3804fc780d6c01ba459198877559006aeab5e1c2763fdd34f2953434627436"
+  },
+  {
+   "i": 994,
+   "text_sha256": "sha256:20bb6dac40e364fd8d2c1a17a0b722208dc7f0878c103e630fcf83eeca6bd2ca"
+  },
+  {
+   "i": 995,
+   "text_sha256": "sha256:316e59a72881ade9b76bd3350f84fc98cc0987cdb55320df3abf68ebd65d3c0c"
+  },
+  {
+   "i": 998,
+   "text_sha256": "sha256:01929843e179cd2fcfad8fe5e2c4c7949214b23e2f58959d76ffc545ae5340c7"
+  },
+  {
+   "i": 999,
+   "text_sha256": "sha256:50fbae5c3d46088b8645848c78d484ac75c2ead701c272868f3c509cd1b18b5b"
+  },
+  {
+   "i": 1005,
+   "text_sha256": "sha256:9970bd4613c9192fd8bd4e8d9cc927afa3b60f97d8a2b5e43c228e0ac0572283"
+  },
+  {
+   "i": 1006,
+   "text_sha256": "sha256:404578fe8739395a5f9ccedde9142f1627b50694e2169de3dadff347ec8b3955"
+  },
+  {
+   "i": 1007,
+   "text_sha256": "sha256:5583ae8ece3dc9f529ea265fa695d358651cc45838a7a8ba7b9a29ef8f287bf4"
+  },
+  {
+   "i": 1009,
+   "text_sha256": "sha256:f080039e7507fa9cebda66ea9d42d7b2e17382b9f8fecfcae26bda678c830ecd"
+  },
+  {
+   "i": 1010,
+   "text_sha256": "sha256:622e73fcc9e58a1c1fabd4d29ffa9a264fa411f53f74feb9604b97aa573bc23c"
+  },
+  {
+   "i": 1015,
+   "text_sha256": "sha256:0a8ea10616d787ca7d95f42c5d4b1b159514d8b26818c43a1351ecb5e2d49a21"
+  },
+  {
+   "i": 1019,
+   "text_sha256": "sha256:cb279592c6dcbbb96cda24d051921fa6926730cdf83c4a7e259ded0fb60d0837"
+  },
+  {
+   "i": 1020,
+   "text_sha256": "sha256:7126fa9406e0781775fcdc3389298c58bfadcf5ec00cbd45c71a92c5aab2b705"
+  },
+  {
+   "i": 1023,
+   "text_sha256": "sha256:a620a0b451070e8bd17055adc98dda7d4faa6ed293083c1c6c1657c19f134580"
+  },
+  {
+   "i": 1026,
+   "text_sha256": "sha256:d02cf08cf86a65ba5f1f31bf27405d2b59a3621adf5f5ef3a45a66bcd06c3cfa"
+  },
+  {
+   "i": 1032,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1046,
+   "text_sha256": "sha256:7e94504521e6a2c34dcfd63c5b72f515ccca99191a5b18c9e194d78a50fcf9df"
+  },
+  {
+   "i": 1049,
+   "text_sha256": "sha256:00d78705e74996f4bc65b87174fe411edf2c79ed2c3d335bafabb29bbb260a4c"
+  },
+  {
+   "i": 1054,
+   "text_sha256": "sha256:fe8e297eb81ba1638575cc429bc3ff4745789023d179b7f3030c16badf4c13a9"
+  },
+  {
+   "i": 1062,
+   "text_sha256": "sha256:ad127ee3969b78955fb56d160eea14ede3815293bca3b0f52711f520ef1ad3ad"
+  },
+  {
+   "i": 1069,
+   "text_sha256": "sha256:ad127ee3969b78955fb56d160eea14ede3815293bca3b0f52711f520ef1ad3ad"
+  },
+  {
+   "i": 1074,
+   "text_sha256": "sha256:7126fa9406e0781775fcdc3389298c58bfadcf5ec00cbd45c71a92c5aab2b705"
+  },
+  {
+   "i": 1076,
+   "text_sha256": "sha256:ad127ee3969b78955fb56d160eea14ede3815293bca3b0f52711f520ef1ad3ad"
+  },
+  {
+   "i": 1081,
+   "text_sha256": "sha256:b4405535e33083c8635750e4d982f754a726ae0f13081da2d850a101027a2a80"
+  },
+  {
+   "i": 1083,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1084,
+   "text_sha256": "sha256:4ab9a69222f7b3f8a1f907c0f3e49802c1debde4d579a29eb9009fa618a1a722"
+  },
+  {
+   "i": 1085,
+   "text_sha256": "sha256:57ce70ea3e0fe7c50a31350dc6c702d9feec83f363ed5e179e57d72ebb5654be"
+  },
+  {
+   "i": 1086,
+   "text_sha256": "sha256:6ad5ef631edeb7976911a650467592d8debc9cd7d63952ec46333246ee37e3ea"
+  },
+  {
+   "i": 1087,
+   "text_sha256": "sha256:0f45f2d06ccf30c76da30b0e232cf148d4ddf4b3079b92562506e3b78a9a4baa"
+  },
+  {
+   "i": 1088,
+   "text_sha256": "sha256:6d841ecd8f8ae19360a660f1ef83ca6cc39e4633bd59656173b56e24d278e134"
+  },
+  {
+   "i": 1089,
+   "text_sha256": "sha256:64bb1588e498dbb6bb8ea476d07811cf782e3011a1240c8b1cd1a708fefd6cbb"
+  },
+  {
+   "i": 1090,
+   "text_sha256": "sha256:792020900e1949e4779b447f61653ec6d2776f44242e7377d02fa3f18395798d"
+  },
+  {
+   "i": 1094,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1095,
+   "text_sha256": "sha256:8e722df69665b0c1f82068a06227d401c9eb9213082d26e5ce02aafd934b4ab0"
+  },
+  {
+   "i": 1096,
+   "text_sha256": "sha256:fffda0b58dec11fc72184c5330e65f7356eaf7ece08ec2f70a1221043a59e704"
+  },
+  {
+   "i": 1102,
+   "text_sha256": "sha256:72db3e820e37975c1b4d982660c9b3b3cc3ac6d8c9a1df826a9514031e508c7f"
+  },
+  {
+   "i": 1103,
+   "text_sha256": "sha256:2f8e8f2fa1f7a8a1c13910e449cb826757c7c53b8016fc4627572dd82f4d9f67"
+  },
+  {
+   "i": 1104,
+   "text_sha256": "sha256:5abf8c5e69b663b72a7caa1d9f5ebab7216e4754f464d579dcb4ce97f5bb7497"
+  },
+  {
+   "i": 1105,
+   "text_sha256": "sha256:0beaac8d631576eda8b7fb509620b71e03c246e52b450fb3366a1a12fa8b302f"
+  },
+  {
+   "i": 1106,
+   "text_sha256": "sha256:4137616a797262272bdb99a8a8fe8f63ab7ac8d8decb26f3072a60f6328c2908"
+  },
+  {
+   "i": 1107,
+   "text_sha256": "sha256:72c279cec18b6f07bac900ccec7dae3335f4d6bd79d92453dae5b8dd386c0d28"
+  },
+  {
+   "i": 1108,
+   "text_sha256": "sha256:77bfdef90b585f7424547682bd10b81384e43c5e779d5b92210837a352c91c6f"
+  },
+  {
+   "i": 1109,
+   "text_sha256": "sha256:56ca2f6c0de8cce3b56e30ab6cbdfe8be04c77376dd47ece7ef236b15402e448"
+  },
+  {
+   "i": 1111,
+   "text_sha256": "sha256:333ccf9fc89b8ff7f49179850fd4a45871d1f8a5e4e1cf3c880e29d27fb00166"
+  },
+  {
+   "i": 1112,
+   "text_sha256": "sha256:66f0d97ad4657a14a3ba7a6f34683c579d136fa718502a89ef70f2881fcb0a84"
+  },
+  {
+   "i": 1114,
+   "text_sha256": "sha256:83f587d268c1fa4aae5da3db4dd461410de44f0498bb0f2df9edcd08a9fec7e8"
+  },
+  {
+   "i": 1116,
+   "text_sha256": "sha256:a7e721a9ecb49b07ff02bddc0f339909a1938416f8396a06d5b808d53d3d7ae7"
+  },
+  {
+   "i": 1120,
+   "text_sha256": "sha256:247249930a03e7d1febb5dcf38ce4b3dd1e2afb369e13380a1880f79711d478e"
+  },
+  {
+   "i": 1124,
+   "text_sha256": "sha256:20281d1b6cf1a97468ec8153ec64a4f14b0675023b6fc2b32a1e0afcdf689298"
+  },
+  {
+   "i": 1126,
+   "text_sha256": "sha256:2063ee5bbf168ce996df3f9703b80398819efefaa95f6254e8e694687aeef9a0"
+  },
+  {
+   "i": 1127,
+   "text_sha256": "sha256:9830db8606850f899e23965fb0bb10e3ec0fe24539af09198116fc656ad7ec6d"
+  },
+  {
+   "i": 1128,
+   "text_sha256": "sha256:83f587d268c1fa4aae5da3db4dd461410de44f0498bb0f2df9edcd08a9fec7e8"
+  },
+  {
+   "i": 1131,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1139,
+   "text_sha256": "sha256:a6d869a7af9cda49979a301b5db60a0ddf95df93cf7b381429ae3e86d7a5c5cd"
+  },
+  {
+   "i": 1144,
+   "text_sha256": "sha256:778e7f0da6ad92f65af3be4d813f0e5e4494b76aedc3599bb912643682ff24e2"
+  },
+  {
+   "i": 1145,
+   "text_sha256": "sha256:b7ef5af40434ec4003dc2252200dbcfca4b80ff6a1c7d9e4ed6bf2a2dd8764fa"
+  },
+  {
+   "i": 1147,
+   "text_sha256": "sha256:1f44b13c0c0e2593d93032966ee2f94de8abc09020e7fe25a7990b11fd1f2b0d"
+  },
+  {
+   "i": 1149,
+   "text_sha256": "sha256:427aec27631fe43b0317b9b6f8fe81fb30c1b01796edf7cef8f87a7114f48fe7"
+  },
+  {
+   "i": 1153,
+   "text_sha256": "sha256:816b86dea9c2052a18ba592f332a463a07a9d53954ece1ce6ba5a8bde3b72b97"
+  },
+  {
+   "i": 1156,
+   "text_sha256": "sha256:8c15dde36562354068d4aa295e55c50312d627654e330a0f9a5773fd0cc3dc5c"
+  },
+  {
+   "i": 1170,
+   "text_sha256": "sha256:55df3d5b0e489aa76d3bdd477ea5f83835b1c548c6f89e56fd22ed3008761d4c"
+  },
+  {
+   "i": 1175,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1177,
+   "text_sha256": "sha256:b7064ab2f7b54698da6e9d96fa585970c1c56ff289d8744ef903261571464caa"
+  },
+  {
+   "i": 1178,
+   "text_sha256": "sha256:8f318447e79981bff61c251b9e37f47e8c7ba8aa9cb5add44947be7b08b43807"
+  },
+  {
+   "i": 1186,
+   "text_sha256": "sha256:ee97b1f2237b3d2621e55378f4fa53f24a1edf72e5c8ab599c6e2c5ba3e41814"
+  },
+  {
+   "i": 1187,
+   "text_sha256": "sha256:b030551ee13f4dc522c875cc1d43736ac68d2e9f4d1a9c66af0754fba77cfebc"
+  },
+  {
+   "i": 1191,
+   "text_sha256": "sha256:91c722aeb7a0e51135e747bd7fd016d5ed482fd3e44774db8054c7135aa3c8e2"
+  },
+  {
+   "i": 1193,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1195,
+   "text_sha256": "sha256:eca7ce1ca4cf73cfa390aa4b12cb9169e1fd9a6a7ae96481e91f3585a1657ede"
+  },
+  {
+   "i": 1201,
+   "text_sha256": "sha256:ed89e04603d4099c95438e8c20d1ee6a181abdfbd0b037bcecc9efe95d61819c"
+  },
+  {
+   "i": 1204,
+   "text_sha256": "sha256:320900191cf405a9f4fe6bbe0914ea4cab3e917bde12847f5b4005b64d366c2b"
+  },
+  {
+   "i": 1205,
+   "text_sha256": "sha256:ff9e4f61103a61344028f7c7a10e80da04bd9782eb7cf59ab622f53a5f929b73"
+  },
+  {
+   "i": 1210,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1212,
+   "text_sha256": "sha256:8e45b72e30cb92a87173cb0612f74c36cc53ba689c470f8b328632d3511ad499"
+  },
+  {
+   "i": 1215,
+   "text_sha256": "sha256:ef7785bd7cb23c4a8ee01481649470177cc5027f9c13cc4a7608a5d93329c607"
+  },
+  {
+   "i": 1218,
+   "text_sha256": "sha256:42d9d09c5414ff7824d6304fdaf56f641ff0c1542146d56fd6befe421ea452b4"
+  },
+  {
+   "i": 1220,
+   "text_sha256": "sha256:d59094c5ded72c1128027878335908c9b82f92c250b1f17d3297bc96fa1cd3ea"
+  },
+  {
+   "i": 1222,
+   "text_sha256": "sha256:7ce7329a96f046a871ead025747f6392acffe7dd8d24bf62efb4039cf5b477b8"
+  },
+  {
+   "i": 1225,
+   "text_sha256": "sha256:25a4292e8de51986f3e8c016aa02430696c75fd66dd63aab013ca7a9c790ae38"
+  },
+  {
+   "i": 1226,
+   "text_sha256": "sha256:bdcf7c508d73c561edd10ce06e10ed3fd80700fb59ccc6711dce24371b2e80cb"
+  },
+  {
+   "i": 1229,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1231,
+   "text_sha256": "sha256:c08348fdae7318238a5635ad2f9d3f6b21b78aba0072490e9e34fe50fc846cbd"
+  },
+  {
+   "i": 1232,
+   "text_sha256": "sha256:6e8176aefb47a5c87e4ebfd997b4749e3f4db4fdfd261d0b13de7a002beacbd8"
+  },
+  {
+   "i": 1233,
+   "text_sha256": "sha256:604cb1e59303a404a6c26377286eb693ec5adcac43269cbe406b22a5a9baca83"
+  },
+  {
+   "i": 1234,
+   "text_sha256": "sha256:1f94eded315603027e09c2c3afddfc94ef2023853dcf4abb728455de4a14a0eb"
+  },
+  {
+   "i": 1235,
+   "text_sha256": "sha256:4a3ee15e5c1100b6a5e9330beaca61a4b2cfa148a1c3fda8c4d93a32ee8ca29c"
+  },
+  {
+   "i": 1252,
+   "text_sha256": "sha256:d4ece289543cc248d1e0d94f34713c23a2c46febad64f1aef5494577ad82b3e3"
+  },
+  {
+   "i": 1253,
+   "text_sha256": "sha256:b35f4f6643d20cb44037580d01304f2cb2d3069d95ad0ab72051ea665e1b292e"
+  },
+  {
+   "i": 1256,
+   "text_sha256": "sha256:97b617f196c9e1aad1e3541b6a65f63b31dddbb0abbdf596b6e3a795b0b054b1"
+  },
+  {
+   "i": 1258,
+   "text_sha256": "sha256:b7629cecee74de732c203019eb744cbca8f67a67c4e39575063e2e5c282094cf"
+  },
+  {
+   "i": 1260,
+   "text_sha256": "sha256:b4e01e9a007e3d5fa0d125fa717e61c16c846ad7d583e9b79ad082e4cdbf771e"
+  },
+  {
+   "i": 1261,
+   "text_sha256": "sha256:97742ccfb519f21499abd755cb301d0e3db5c6db4437824d8490c9aa0267dd95"
+  },
+  {
+   "i": 1262,
+   "text_sha256": "sha256:4c2e1df4570bebd69829cce149ba6421d1589b3d7cfab3c833e921b9da0798f2"
+  },
+  {
+   "i": 1264,
+   "text_sha256": "sha256:02ddd0e02c8e809b6e75a5500367fbb01f318017c0318cd2e0b8b4f165ef0d94"
+  },
+  {
+   "i": 1265,
+   "text_sha256": "sha256:2f9064ca4a9daee7a3d6b6ad3b01f14ef76d7018296d12eab8af30be1829d77b"
+  },
+  {
+   "i": 1266,
+   "text_sha256": "sha256:a90b9720802cd48f457683dc822bc8be7baa000faf920492ad81a8f9e6df19ba"
+  },
+  {
+   "i": 1267,
+   "text_sha256": "sha256:b1b1b4e5e8d796ce71667cf34f0aa7c824da30757b3ebd41c6aeb0645701d669"
+  },
+  {
+   "i": 1268,
+   "text_sha256": "sha256:920100e75de64f070d32b48dbfde27145842ff0dc32baca45a24c33d75915336"
+  },
+  {
+   "i": 1272,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1275,
+   "text_sha256": "sha256:d6e7030cdb68d35eb75c129a5ca4b0b4b31b79695280e6dc11d471350d5a5a63"
+  },
+  {
+   "i": 1285,
+   "text_sha256": "sha256:192ac0d118544e545278e9a62dd28a5db8d3a552a3e9d70e694c51bf78137ab8"
+  },
+  {
+   "i": 1287,
+   "text_sha256": "sha256:6bd8bbecef8be26706e7b656d97a5d666a2135d5405cbb5ce4232812ec27472d"
+  },
+  {
+   "i": 1289,
+   "text_sha256": "sha256:97cfee92bdf2dc2914df8099e5c71f9e95b3c6478a44d6b4ba5c7fe176a7c8ae"
+  },
+  {
+   "i": 1291,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1293,
+   "text_sha256": "sha256:18658270574acbc2c0ba62ff6e321798548feed66f6756af638340018a52e0fa"
+  },
+  {
+   "i": 1299,
+   "text_sha256": "sha256:723f19f58b508470a7e7f34650e21fc30bf8beae596e7a16d60bf2a52ddf6268"
+  },
+  {
+   "i": 1301,
+   "text_sha256": "sha256:f77f62741f7a866b779f3175642cbcbdc3210fc0a1c695e16f7e0fd25b0593ea"
+  },
+  {
+   "i": 1302,
+   "text_sha256": "sha256:0166a91694e443967a7acc99c4f09ecf0243b9e177937776328fe0f8cfd216ea"
+  },
+  {
+   "i": 1304,
+   "text_sha256": "sha256:7b4bca2e297153ac5189417502ec008f04c147f4630dc57b6d838c0e63376669"
+  },
+  {
+   "i": 1305,
+   "text_sha256": "sha256:80ebef0a01739b4749144e8514fe4eb315de6973de4b5bb19e08bc442397052e"
+  },
+  {
+   "i": 1309,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1312,
+   "text_sha256": "sha256:fa921d6dbdf6d1ca3b0a6894bfc7817430ee93d8d0f2da7f2e78e33201965750"
+  },
+  {
+   "i": 1313,
+   "text_sha256": "sha256:d892837400db3ac7be2dd46643a9ebaf53d69afabccd64c453ca798ed0e75e12"
+  },
+  {
+   "i": 1314,
+   "text_sha256": "sha256:4a531db8b30beb63547cc7df90be7c378ac57d2668cee54ae9508a58c6408ceb"
+  },
+  {
+   "i": 1315,
+   "text_sha256": "sha256:f09b34e37f6d34328475524ddb8ffcc1307d366be659df32a3db52b81b54a4a8"
+  },
+  {
+   "i": 1316,
+   "text_sha256": "sha256:6e8176aefb47a5c87e4ebfd997b4749e3f4db4fdfd261d0b13de7a002beacbd8"
+  },
+  {
+   "i": 1317,
+   "text_sha256": "sha256:c1ae5ecb5ebb226c1a37639471712188ad362d92fa64ff635010c290729ae1ce"
+  },
+  {
+   "i": 1318,
+   "text_sha256": "sha256:944472b49682f0f072f3b38442983c5fcfc3219cc295d7d5188342b0a201bea2"
+  },
+  {
+   "i": 1319,
+   "text_sha256": "sha256:4a3ee15e5c1100b6a5e9330beaca61a4b2cfa148a1c3fda8c4d93a32ee8ca29c"
+  },
+  {
+   "i": 1320,
+   "text_sha256": "sha256:eb4bee64595e5d947312b1814437b7d2f67e73dc830c94356f977c6c697c5483"
+  },
+  {
+   "i": 1321,
+   "text_sha256": "sha256:0b6ae8de4eb6ad5d7fc8b4437342400f49caf9f0ffef4ef0a6670a6a53661d2e"
+  },
+  {
+   "i": 1322,
+   "text_sha256": "sha256:291760aedf0f111cb392eca41159e04d0c3de9330b68e969fc4fbb54ceee2d24"
+  },
+  {
+   "i": 1323,
+   "text_sha256": "sha256:c1ae5ecb5ebb226c1a37639471712188ad362d92fa64ff635010c290729ae1ce"
+  },
+  {
+   "i": 1324,
+   "text_sha256": "sha256:944472b49682f0f072f3b38442983c5fcfc3219cc295d7d5188342b0a201bea2"
+  },
+  {
+   "i": 1325,
+   "text_sha256": "sha256:604cb1e59303a404a6c26377286eb693ec5adcac43269cbe406b22a5a9baca83"
+  },
+  {
+   "i": 1326,
+   "text_sha256": "sha256:eb4bee64595e5d947312b1814437b7d2f67e73dc830c94356f977c6c697c5483"
+  },
+  {
+   "i": 1327,
+   "text_sha256": "sha256:0b6ae8de4eb6ad5d7fc8b4437342400f49caf9f0ffef4ef0a6670a6a53661d2e"
+  },
+  {
+   "i": 1328,
+   "text_sha256": "sha256:702622a32956d7c3c48d7762b6960026e88cb39706866f0d352bfd6e31cca7da"
+  },
+  {
+   "i": 1329,
+   "text_sha256": "sha256:0775f59c7b1b08c4e5d1495e7382404ff6cde9475b0ec24eb4b1e06342bca89e"
+  },
+  {
+   "i": 1330,
+   "text_sha256": "sha256:2a42774235a42443c695f23665dbb7251708460a8257e612f322cd27757461cf"
+  },
+  {
+   "i": 1332,
+   "text_sha256": "sha256:12ad6dbec71ab869f8809751ba4d92784a9e192d5c9c442cb885d140063c37b6"
+  },
+  {
+   "i": 1333,
+   "text_sha256": "sha256:5b3aa66a8df7932393f86519a6d2924de73f1f514422af268610e1cc69832253"
+  },
+  {
+   "i": 1334,
+   "text_sha256": "sha256:8d2c58ad736d12beea8c229d15a168b544cbb19bea292c24ca8c54316bee3a06"
+  },
+  {
+   "i": 1336,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1337,
+   "text_sha256": "sha256:bf97012d3bbd70013e2aa424fa00dacf6512f36a67a404ffc4005b5b85b7fbd4"
+  },
+  {
+   "i": 1338,
+   "text_sha256": "sha256:38ed1ec260ab149547970162767095ea750925a030f97092d7c853e0913e3d76"
+  },
+  {
+   "i": 1346,
+   "text_sha256": "sha256:44d4f5745dbd6d25d1e00caed50f75b381891b7e0122a5e2f9ed1534e2617caa"
+  },
+  {
+   "i": 1354,
+   "text_sha256": "sha256:b78bf7c9bef76d6fd57a75c2939e550389e07f9e638eaaf8d30fc5c6eb7e8989"
+  },
+  {
+   "i": 1355,
+   "text_sha256": "sha256:da5cbafcf6b9a0453bb2a4305c925c88e5b4717614a2ca2677ebb469828b0302"
+  },
+  {
+   "i": 1358,
+   "text_sha256": "sha256:1161817e53017d09763eb12f7bf98dc1678bacd0dcbf2147422735952ee89052"
+  },
+  {
+   "i": 1367,
+   "text_sha256": "sha256:c0b93dfd85500c948aaffe1e30db935582c064d8dbd78c27426e2db11723a969"
+  },
+  {
+   "i": 1368,
+   "text_sha256": "sha256:c5c74094c77d4a2714a13b8d73805e0425d5388c9bc2aa95d703b0498033ff82"
+  },
+  {
+   "i": 1369,
+   "text_sha256": "sha256:158794a2c241ed1151e943edc528ff37c8c8ee4db0b0430fc41a5e9689cc7e7e"
+  },
+  {
+   "i": 1370,
+   "text_sha256": "sha256:fda32790f48aa1a704cef2d8830004f0468e8c27c910cfac76b3125feba754b5"
+  },
+  {
+   "i": 1373,
+   "text_sha256": "sha256:48cb1022730789c84f7f97a3a369c22391fb6cc9e665b827a368ab147bb99f74"
+  },
+  {
+   "i": 1374,
+   "text_sha256": "sha256:10fc559328992aa062b6056561f696eee3f89fcedee3988c9be628b8194360d8"
+  },
+  {
+   "i": 1378,
+   "text_sha256": "sha256:c010e57cbfea4c2d11afeb4e013d1b166b988839344b6578499c0f390d61b5b1"
+  },
+  {
+   "i": 1380,
+   "text_sha256": "sha256:9521dc7ff7d57f0668f5f185edd99e8bee1fd9140d46c24ff65e83babeb70c5e"
+  },
+  {
+   "i": 1381,
+   "text_sha256": "sha256:5bc354d78a27761400a08315f35617322dd9d882d3c4f4185245ceb32f104c84"
+  },
+  {
+   "i": 1382,
+   "text_sha256": "sha256:91da1447701a0a9eb53a74d73af0d572911bdb4e4bfaf3a9e1dd245de3f92e49"
+  },
+  {
+   "i": 1383,
+   "text_sha256": "sha256:d1a99da36fc22a3d2ad4c4c528f8fe39f699f2eb6bee0653932114f71082c219"
+  },
+  {
+   "i": 1384,
+   "text_sha256": "sha256:bbc75c8f3f87626c631225b64696e59fc65c7fdfc5145b1e5566a6c960dbf67d"
+  },
+  {
+   "i": 1386,
+   "text_sha256": "sha256:7e004c54545da0dae4578043e4bcd1571dfe1e288e64d45244df199d4f050e20"
+  },
+  {
+   "i": 1387,
+   "text_sha256": "sha256:abce54b02ca8ef72b503043a7bb8e1108260f757c0472a288ccf86a20a803738"
+  },
+  {
+   "i": 1390,
+   "text_sha256": "sha256:754ba52426416bc751b60b63df76b76c6ac63ad8fcf0af687ec48e2b5d296c2f"
+  },
+  {
+   "i": 1391,
+   "text_sha256": "sha256:fccb1dc0e37a7e6ef980599d3caa7c0fd714826803e04e400d6f4bc7b9093261"
+  },
+  {
+   "i": 1392,
+   "text_sha256": "sha256:6a0febd0631fed1d7caf8121a2edef8a779d32194b0db01a46ca25aab572539e"
+  },
+  {
+   "i": 1394,
+   "text_sha256": "sha256:21846fe8f68de0d276ae780843143b15a3d3c012ffad0a16ece1775710083cc4"
+  },
+  {
+   "i": 1396,
+   "text_sha256": "sha256:989420bdc793ff2744995d5255d30d1d621e61881f744bc440c18562a07453ae"
+  },
+  {
+   "i": 1397,
+   "text_sha256": "sha256:081b18c380728706a086695118f32cd91d94d09bee466584b5803cd31f2e1da0"
+  },
+  {
+   "i": 1401,
+   "text_sha256": "sha256:fc9b93b297717b2281d347e2078521154b63a335b99fd66affcf975c14a2ba7a"
+  },
+  {
+   "i": 1402,
+   "text_sha256": "sha256:41642393673b521bea05c0038c808914ebee919ddbf5e6d7690d939737b1b4c2"
+  },
+  {
+   "i": 1403,
+   "text_sha256": "sha256:b3cb41fb0c268e0c13164ddd45d35b86dedf4ca7c4379f25ec4c82e1176648ab"
+  },
+  {
+   "i": 1406,
+   "text_sha256": "sha256:0d7f6df9190e4d0cd7598a2cdbd2909ca283658fe5cc5af982014bba69888fa2"
+  },
+  {
+   "i": 1407,
+   "text_sha256": "sha256:f0d5fd85e1b729c15cb49880e125e2bb979c4d92537db0aefc8fe719b8d25e4d"
+  },
+  {
+   "i": 1408,
+   "text_sha256": "sha256:44a7ff55693ebec8cc6ff926758ca81ce76d58c231dc3ff256931b3b32ecac0d"
+  },
+  {
+   "i": 1409,
+   "text_sha256": "sha256:51b5a7a00e3de29d1f899c91f031263791a3e6304fec4e16472b0b69ef795840"
+  },
+  {
+   "i": 1410,
+   "text_sha256": "sha256:51347ce87f68f66691b6bdd3959dc443ca4ff7d20d26c895d699afb511c93e57"
+  },
+  {
+   "i": 1411,
+   "text_sha256": "sha256:f0097d5821a6a28ee12eaae58f79db3d0bfbde85657c087111157d3f093d31ac"
+  },
+  {
+   "i": 1414,
+   "text_sha256": "sha256:4963947b8190b7139d8300fc704b6f2d54be2a3d9cccd7c1ac1e308b8c61ec64"
+  },
+  {
+   "i": 1433,
+   "text_sha256": "sha256:fc9b93b297717b2281d347e2078521154b63a335b99fd66affcf975c14a2ba7a"
+  },
+  {
+   "i": 1434,
+   "text_sha256": "sha256:6eeb88ef03af60b1fe28ce7c8578f3deebb911ec530ef3e437f968958bfc4b76"
+  },
+  {
+   "i": 1435,
+   "text_sha256": "sha256:97e1e546d81ef377bc3e8d8067dba980e3a2256cea60cf8b6d428af4d53b0590"
+  },
+  {
+   "i": 1436,
+   "text_sha256": "sha256:215d7c810a367f62618590481f25cc5a1439d0bc1fa7d87b70c89486b612df42"
+  },
+  {
+   "i": 1438,
+   "text_sha256": "sha256:219c160b36f66b6c0e44fb91b62409172f880457862d839a6f136572048f4988"
+  },
+  {
+   "i": 1439,
+   "text_sha256": "sha256:f7acaf9883aa92a1309dce187fbd7519580f0113d2f451bef7f909942f34ea00"
+  },
+  {
+   "i": 1440,
+   "text_sha256": "sha256:3aa70f4abbaf4021b6d17ffb8fd5c8b4e7e5a00c192a5555b7587a69eda88d13"
+  },
+  {
+   "i": 1441,
+   "text_sha256": "sha256:022962637250b940c3f924f036597ab945993de7ad6adbd14b1bbe7f1fe630f1"
+  },
+  {
+   "i": 1445,
+   "text_sha256": "sha256:fc9b93b297717b2281d347e2078521154b63a335b99fd66affcf975c14a2ba7a"
+  },
+  {
+   "i": 1446,
+   "text_sha256": "sha256:3cc2f34116a8fc465c0a288b3b51636105656425cd3de5fc7e9d31110acdf6c6"
+  },
+  {
+   "i": 1457,
+   "text_sha256": "sha256:5756c5eab67d0145b888af26622bff7ac1bf9fdcd91a36e0837905a845af2d05"
+  },
+  {
+   "i": 1463,
+   "text_sha256": "sha256:419413c2139c6edff542c881ddd422b1cd8a3121c50999f259c1e02d27dbea6f"
+  },
+  {
+   "i": 1464,
+   "text_sha256": "sha256:37d339cdda2cf5e35c4c16cab437d2d95543e913ed171053e41c94059db02fed"
+  },
+  {
+   "i": 1465,
+   "text_sha256": "sha256:de053bd39f89cce58fd480064252190c8c1e6375f27069b29fc538b548944af6"
+  },
+  {
+   "i": 1466,
+   "text_sha256": "sha256:c278a8197c04e65a71568940a1c37954886acb362a5af6388d8bd480bdc746d2"
+  },
+  {
+   "i": 1467,
+   "text_sha256": "sha256:eb94b301fdf373c29da6a04eb4557b6c0c00c4ee27bb8f43a2536cbff5501cd0"
+  },
+  {
+   "i": 1468,
+   "text_sha256": "sha256:b09f4e2c758ace8f2c1bcbe5246b13e855aed05ad80696a5f05ed245728d4031"
+  },
+  {
+   "i": 1472,
+   "text_sha256": "sha256:3c9ecc5a44853c7496153921d1d1b20909732a69aaea23ee4a896e3a9b612b6a"
+  },
+  {
+   "i": 1473,
+   "text_sha256": "sha256:764240adb8a5408e2eb5cb097d7b4242aab41b16d9d77602b271bc87e3e8dd56"
+  },
+  {
+   "i": 1480,
+   "text_sha256": "sha256:826bd4989c787019efbd558d21939d3b77f4f4bb39a9b9b7ff25cbce9fc38916"
+  },
+  {
+   "i": 1481,
+   "text_sha256": "sha256:3607d00987069c9405eebee0eb80127b40ef0371fe8d75b9c7dc2a9297313530"
+  },
+  {
+   "i": 1482,
+   "text_sha256": "sha256:79e2ff1e7eaed804bbf0723b6052d9fe3d299f4b8c7389e5f99340ff109185e1"
+  },
+  {
+   "i": 1485,
+   "text_sha256": "sha256:17147444033c9abad7178071d7c9309ab1d9745edd0c4f91fa78a62ccd639306"
+  },
+  {
+   "i": 1489,
+   "text_sha256": "sha256:5a5946f9d518f80fcc640e2a5ebe4f7e8792438ea169ea18297114cbf3116946"
+  },
+  {
+   "i": 1493,
+   "text_sha256": "sha256:84fd37ee2b20e2beb2fde1e8f459e25fcd795e71472878705fa7c13fd0162df7"
+  },
+  {
+   "i": 1494,
+   "text_sha256": "sha256:b4194540a6e642261d384854732fd64fd7826f2df4434190c75137b5f615c7a2"
+  },
+  {
+   "i": 1496,
+   "text_sha256": "sha256:2447f22765974fc86bb810b13955e4f339284a02d7aef2071173dcf54ca534d6"
+  },
+  {
+   "i": 1497,
+   "text_sha256": "sha256:b727bee39e64bb64c22c1b426a11c4bd8fd406f0d93f02d2a1b4fe65d71a5b91"
+  },
+  {
+   "i": 1502,
+   "text_sha256": "sha256:11f951093cf93ca5630c7f7481bf9611a8f3197f579f0c033926e6fcd45e1629"
+  },
+  {
+   "i": 1508,
+   "text_sha256": "sha256:6d885ffe126c8b4d761134279b2c796d81d3a52b2c9105b8182b686ca475798f"
+  },
+  {
+   "i": 1515,
+   "text_sha256": "sha256:e483a444a37808b7386ad34a8cb81ba1b9ca960109caf5f1001c4d905e661fc2"
+  },
+  {
+   "i": 1522,
+   "text_sha256": "sha256:d49d83ea3f1e32474be937352bb0aa544a9fd82d08166a9d79ecb8085cd3d166"
+  },
+  {
+   "i": 1526,
+   "text_sha256": "sha256:bda9775ee8c7ebfe8700604b917a280605cde02d37c9e625d0427dca6bad431d"
+  },
+  {
+   "i": 1527,
+   "text_sha256": "sha256:90763201616238099637792785b271b1e6c99455b8bb5772bc6227f414e92e64"
+  },
+  {
+   "i": 1531,
+   "text_sha256": "sha256:e97ff599cb9797bef0e6c26368c728ba2c9115f589377aafc9ad2bd66c29cfde"
+  },
+  {
+   "i": 1532,
+   "text_sha256": "sha256:624e92de1dd4c0eb03ab021f0e2e4684bfd9ccd906ee8bbd56cb82c5e3b63a9f"
+  },
+  {
+   "i": 1533,
+   "text_sha256": "sha256:80b4e534e6b5079cc1d6c253b0b34123096f3729094207e0a0b02271c4e9673c"
+  },
+  {
+   "i": 1534,
+   "text_sha256": "sha256:af6201b29d77356bac890457658d576b8b805e673aeb5a2e96b81d2aedbe14bb"
+  },
+  {
+   "i": 1536,
+   "text_sha256": "sha256:15f69db5720221e938c12df3ff0f8493c2f6dea39af77ce24b9893f6f37c3c52"
+  },
+  {
+   "i": 1537,
+   "text_sha256": "sha256:3f339deb5e10c4abfad9741ea843714eb5322fa9de4ad33e3645a9d047e3aa6e"
+  },
+  {
+   "i": 1540,
+   "text_sha256": "sha256:9218073ca02d18a69b831e30ee65746c886ecd6b4beb4a757f64779178c346aa"
+  },
+  {
+   "i": 1545,
+   "text_sha256": "sha256:fc2dcf164c13d9ed9477b63915eb3cd87133666348a9ce7329f06bdc6f49c382"
+  },
+  {
+   "i": 1551,
+   "text_sha256": "sha256:51c31c97588fe57a4dd858153afd6f63f49148081eebfcf73add151ba0fb8f53"
+  },
+  {
+   "i": 1556,
+   "text_sha256": "sha256:9e290db8553dfec5082d66a0e2eb71d130b3398cc36226b63e920a5ef2bb7004"
+  },
+  {
+   "i": 1557,
+   "text_sha256": "sha256:9e3662d138fb573ab75c43c4f380719b7059b1f673e7474890363badf0e05522"
+  },
+  {
+   "i": 1558,
+   "text_sha256": "sha256:95bdfde09c00c539e53e4bdd8bfcb0d47d2d31fd0a5a67e82841ae3d989d591f"
+  },
+  {
+   "i": 1561,
+   "text_sha256": "sha256:3354d57e19e057fee5e7c676c2b6a713aaad6c0554270c101809b380ce4d540c"
+  },
+  {
+   "i": 1562,
+   "text_sha256": "sha256:c29ab809364410030f557106891b1b94e7db508661f4fc6b2c5dd273b9501aa2"
+  },
+  {
+   "i": 1565,
+   "text_sha256": "sha256:b2d319072df9083095b4b908e203c67355a92f1bab36ff341337d262ab99630b"
+  },
+  {
+   "i": 1574,
+   "text_sha256": "sha256:4231ceb37445fc974ed3b07f84b86080379112b650d1b14a417877bb2201ffd1"
+  },
+  {
+   "i": 1575,
+   "text_sha256": "sha256:a00571bcb257e86300664e627eb41fdab70d591ec10f43dba357b0bd4ce3a420"
+  },
+  {
+   "i": 1577,
+   "text_sha256": "sha256:62026a42b2390a87bf21a984cabce8067c2bddf5031a519a11397f38a0ee828c"
+  },
+  {
+   "i": 1579,
+   "text_sha256": "sha256:f1117beb86778dbf4b64ad4da44d0ec74c8756df2cf36123ef3721b818964914"
+  },
+  {
+   "i": 1580,
+   "text_sha256": "sha256:a00571bcb257e86300664e627eb41fdab70d591ec10f43dba357b0bd4ce3a420"
+  },
+  {
+   "i": 1581,
+   "text_sha256": "sha256:d4ea333d8b1f432c73d97d81947536c714ae300328c6191c4d690b488c899e9f"
+  },
+  {
+   "i": 1582,
+   "text_sha256": "sha256:2a7c11f3569e429bc5fc33bf05ab392e1f2975c4403e0b63c42e60a142662841"
+  },
+  {
+   "i": 1583,
+   "text_sha256": "sha256:c406421c2b35a533caa25ee477a07f5843fb564d687f8a2c13d2e2968ac66e6e"
+  },
+  {
+   "i": 1585,
+   "text_sha256": "sha256:f1117beb86778dbf4b64ad4da44d0ec74c8756df2cf36123ef3721b818964914"
+  },
+  {
+   "i": 1586,
+   "text_sha256": "sha256:a00571bcb257e86300664e627eb41fdab70d591ec10f43dba357b0bd4ce3a420"
+  },
+  {
+   "i": 1587,
+   "text_sha256": "sha256:d4ea333d8b1f432c73d97d81947536c714ae300328c6191c4d690b488c899e9f"
+  },
+  {
+   "i": 1588,
+   "text_sha256": "sha256:72bd2b99193d25399a32fa18adfcc572e312e802a701a26186ac8d194e3a82b7"
+  },
+  {
+   "i": 1590,
+   "text_sha256": "sha256:ec0fad25382b164208db5569ef38152b17f88cea3df334667db69292a6a95f5d"
+  },
+  {
+   "i": 1591,
+   "text_sha256": "sha256:b38ae2c5b84529e8027b43a69c8ce9426a3cb081dae97b77bdcd2fdc5a9df742"
+  },
+  {
+   "i": 1620,
+   "text_sha256": "sha256:b0efb1c1e20377a1d68314abde453be4e7fd130cb58afe8f0314328e0a54a240"
+  },
+  {
+   "i": 1623,
+   "text_sha256": "sha256:ca09099db777280913785b3b55431797a8c5ae67c711a93ea806210f417512e8"
+  },
+  {
+   "i": 1634,
+   "text_sha256": "sha256:2c5b85cfc4ef3b5b37e40e3ff5eae6ca007cf53dc8e54300dc8b138ea056aca9"
+  },
+  {
+   "i": 1635,
+   "text_sha256": "sha256:72d968b51af05f3ea161397ad4455c956f144cc0d414727d516bc21277bf0beb"
+  },
+  {
+   "i": 1636,
+   "text_sha256": "sha256:da4db0ef3092697548b8e3b6795da1290bd77470463364845510134ba2c08bf8"
+  },
+  {
+   "i": 1643,
+   "text_sha256": "sha256:257fbba0da12eed3836fdc9e5799b49d8a63556f82d3f6934f147cf5ec052cbd"
+  },
+  {
+   "i": 1649,
+   "text_sha256": "sha256:0026c0f53755fba3c043ea168d48b126c3d96456f05f7742895c54681486f870"
+  },
+  {
+   "i": 1651,
+   "text_sha256": "sha256:2b3c8ec4e262a01c80adb2a6a0f95b134f339a3bfcbc18ab5d993ade6abc202c"
+  },
+  {
+   "i": 1653,
+   "text_sha256": "sha256:585b99a942fe8c27eada6592c713fadb72137ab977a3921ba261e430fb5effed"
+  },
+  {
+   "i": 1654,
+   "text_sha256": "sha256:b435e2276f2895fffcc01127a47053bc5abb62cddf6c32abdc29baa550493c44"
+  },
+  {
+   "i": 1657,
+   "text_sha256": "sha256:859b656e90e8072c33855254e2da47e46944d8420e06679917773d2e56e4fe3b"
+  },
+  {
+   "i": 1662,
+   "text_sha256": "sha256:8cb88e950ccd28f5cea2d74b222235cc6396add4c0f188efdb17aa73aa1092a9"
+  },
+  {
+   "i": 1663,
+   "text_sha256": "sha256:4486780b90a021fab69871a8017e05597e9eeb421e6c1aae0a5e987c3525cf04"
+  },
+  {
+   "i": 1664,
+   "text_sha256": "sha256:5bf723f6bf73222def5a3dc36ae9d5ba85c0ef25538526fa8ded46e995eb5e04"
+  },
+  {
+   "i": 1665,
+   "text_sha256": "sha256:44f5ab4c77bfe8710492e4a3865cdd581ed0e64376b3476bc0ee7f06058169b8"
+  },
+  {
+   "i": 1666,
+   "text_sha256": "sha256:31b124c8810a5afb6ddea8d211731cf658b0784f419b0f55c49633028fe5fab5"
+  },
+  {
+   "i": 1669,
+   "text_sha256": "sha256:9e83daa98a3b33a0c47621b38090b9ab169453a0eaaef61021e5571b002b2450"
+  },
+  {
+   "i": 1671,
+   "text_sha256": "sha256:3a69a3e58967a78c7018dbfab130d1f04e25c26d08e0cfaeba727558120a54c4"
+  },
+  {
+   "i": 1674,
+   "text_sha256": "sha256:a3e9e556fd38df8c784558834f84ef7287c34ea75961fce1b66694660d8990e0"
+  },
+  {
+   "i": 1675,
+   "text_sha256": "sha256:719f02fa8ce51055fb6868c9d39bbcd9032c7083e05987d24c002962eb88de2e"
+  },
+  {
+   "i": 1676,
+   "text_sha256": "sha256:49ed4ec9fad0803354618e03c1478d6f47f92184fba3440b4cf4ab8cf86354ef"
+  },
+  {
+   "i": 1686,
+   "text_sha256": "sha256:66986a3f266ce59f662ad2eb4a4cbb28d06748310f677ef13c83de2639d40508"
+  },
+  {
+   "i": 1707,
+   "text_sha256": "sha256:bdfa0d8c6dc3a9c1b2c22740599286b661d4e23157950ba36651d4f655713b2f"
+  },
+  {
+   "i": 1722,
+   "text_sha256": "sha256:c4811ea7333adb05fd312770a35c47ba7302219d17b6d9da150571141903c325"
+  },
+  {
+   "i": 1724,
+   "text_sha256": "sha256:3937e1a52e855e001f08b86b910583481f36e56bb761ffdcb306e76629f96aac"
+  },
+  {
+   "i": 1756,
+   "text_sha256": "sha256:4beaac91e2569a2d87592d15e0affb8fa1f465ce6e2a0c3d6015fe70d5083648"
+  },
+  {
+   "i": 1757,
+   "text_sha256": "sha256:8ed2e6036f0ed3d7d6b4241026b334996fabf33e15272e0201bfe4257101686f"
+  },
+  {
+   "i": 1768,
+   "text_sha256": "sha256:b5db3c871763a2351f4ff801bb258b6180146ea2eaf55501ada3e32a7aa97451"
+  },
+  {
+   "i": 1810,
+   "text_sha256": "sha256:36c3d5e0ab6e82cbb52379df87367c1c1bf0f628f57a383e07d266d1cf551e87"
+  },
+  {
+   "i": 1850,
+   "text_sha256": "sha256:6da6bc74ff05f3a5562754f254c55a387cc6f5d4f6901498cf739dd75d958eec"
+  },
+  {
+   "i": 1855,
+   "text_sha256": "sha256:b5c66a27da813b4c9691f306c043f4098fd36b21096384a6059fe63e40996fb7"
+  },
+  {
+   "i": 1858,
+   "text_sha256": "sha256:8ec9ab663f82c7d93f351077db10e81234405ae6716b82170406c167553c0d35"
+  },
+  {
+   "i": 1872,
+   "text_sha256": "sha256:eefcff8179cea45acef9736a83a89b71343a1c68749d2f512dc72768b1459720"
+  },
+  {
+   "i": 1890,
+   "text_sha256": "sha256:b774a0db36a5c08fc2b5917dff552f877f927fe43dd4fa9e2bfac12225b476f8"
+  },
+  {
+   "i": 1893,
+   "text_sha256": "sha256:613d9c33935d167797992f9477d78df992463977fc9d6239a95b5fff6c24aaf7"
+  },
+  {
+   "i": 1895,
+   "text_sha256": "sha256:af10ade5e7d48cddf231bdc37f9d056b995b485300e172b82040629c7e4e49ac"
+  },
+  {
+   "i": 1901,
+   "text_sha256": "sha256:a6c7be428067ed055542013d4b45694d43c5143fb81e73b9bac6adacecb699b2"
+  },
+  {
+   "i": 1906,
+   "text_sha256": "sha256:653c7d5cd1eea5c16f2bd3fcb306b2d71c214e89aabdc16b5788aceac3edc499"
+  },
+  {
+   "i": 1907,
+   "text_sha256": "sha256:cf8c0710a311573859edab46630095ba98999ce2c96b2ccdaf649dbb3b1952db"
+  },
+  {
+   "i": 1908,
+   "text_sha256": "sha256:291760aedf0f111cb392eca41159e04d0c3de9330b68e969fc4fbb54ceee2d24"
+  },
+  {
+   "i": 1916,
+   "text_sha256": "sha256:116cd635939debf71c84d54209b3ccd6d0fe766169e11b951a131dfbf84032fe"
+  },
+  {
+   "i": 1920,
+   "text_sha256": "sha256:a1076ef81cd0665f0f1ad0b3b108fa3de101be21c901eeb5002e67a185279bbd"
+  },
+  {
+   "i": 1924,
+   "text_sha256": "sha256:081b18c380728706a086695118f32cd91d94d09bee466584b5803cd31f2e1da0"
+  },
+  {
+   "i": 1928,
+   "text_sha256": "sha256:92375f997ffe65ab7f04eeda8cb2d7f69ebea949a06132afd53c83fff276ef54"
+  },
+  {
+   "i": 1994,
+   "text_sha256": "sha256:53731762d653c41a59d5cfa131f3cefa9277f1f0b1f2c3e9f15e0c87df27796b"
+  },
+  {
+   "i": 1996,
+   "text_sha256": "sha256:eaba6ec18aa7b880a3e5fe77f955a73b34f01a4ea3afdd63fa57e49671dc3b8a"
+  },
+  {
+   "i": 1998,
+   "text_sha256": "sha256:6dc94d3ae8aafd58880ba262a8f05bda9555dc633c9a9cf42f49d88609c9a4f5"
+  },
+  {
+   "i": 2000,
+   "text_sha256": "sha256:367bbd4452030de153ab2bf7ee3d2a29d61c13d8e5a36dff34fab726868ae8b3"
+  },
+  {
+   "i": 2021,
+   "text_sha256": "sha256:35b1ccca8e4b650c9537ce31c48fd03bce22ec1cd167117c6b2ae870c77595b0"
+  },
+  {
+   "i": 2024,
+   "text_sha256": "sha256:c43a5d3b1ef10975b773cabf6f428b24ec5805df11af0758c5a8ba3e0e1cac5b"
+  },
+  {
+   "i": 2042,
+   "text_sha256": "sha256:279163ed0ad29bd42ebff78296e3343cfb23c7b33102a592523439e7b462b567"
+  },
+  {
+   "i": 2059,
+   "text_sha256": "sha256:442aded87a55aa8c8f7d5ff0c30228150d4b1cb8756e4be138d615ca4708fc26"
+  },
+  {
+   "i": 2060,
+   "text_sha256": "sha256:114599121ee48c26de5851421de722da39d2e1a43b8245b06d911fbb54dd4192"
+  },
+  {
+   "i": 2061,
+   "text_sha256": "sha256:f6eb884394031829c9233516dc29566d46d922fc55acc23076b6efe9ed2b7348"
+  },
+  {
+   "i": 2065,
+   "text_sha256": "sha256:773660f28ede02e28c7f61ddeb64a36beccffd99caee7e409b39dd9eb04f06b9"
+  },
+  {
+   "i": 2068,
+   "text_sha256": "sha256:c4b7330bd91e0c971041618056cb7201fd3f384e5db390bc89230d70712d7a47"
+  },
+  {
+   "i": 2099,
+   "text_sha256": "sha256:6515f56d01a72e11420983a5e6e804f38c8f43eb53ffb8866426e4974372c1c7"
+  },
+  {
+   "i": 2100,
+   "text_sha256": "sha256:5a236394a2ecd028158f6e029a80bcd6f8bd73dece5af1838e7ca85632b4c8f4"
+  },
+  {
+   "i": 2101,
+   "text_sha256": "sha256:a824ab9943ac6574e859db6d42cd823ee1f64ee0efd2bfe79b5dc03c84c68b27"
+  },
+  {
+   "i": 2113,
+   "text_sha256": "sha256:776b0684d53f1db80c1c39489360cc5aaf12eef40eb4938df131ed908898ccd8"
+  },
+  {
+   "i": 2118,
+   "text_sha256": "sha256:65eddd013e103f2cb9f047285afbd9db5987a9c9f735cdc102c41b9616d2e781"
+  },
+  {
+   "i": 2125,
+   "text_sha256": "sha256:38545039683f25f88eeb5b559a94db1f0e2f9275ab0aed13c8b40d447b14ec5a"
+  },
+  {
+   "i": 2130,
+   "text_sha256": "sha256:0a0871e2b82b476c256fa96e02aeaaf41668fd4b96ec99920f50323661866bdf"
+  },
+  {
+   "i": 2150,
+   "text_sha256": "sha256:26aaf37404879036cc78e553469c15e9cf4154970961ff9307eb55adf7f352dc"
+  },
+  {
+   "i": 2226,
+   "text_sha256": "sha256:a12a84a205460eaa42bcdd0b4fe8da9e2f585aed372df72d125a5d8d75069e31"
+  },
+  {
+   "i": 2233,
+   "text_sha256": "sha256:5c75126182ec340ba66820464c535d2a392a75d45382dd48bf49ce81ee07d7c3"
+  },
+  {
+   "i": 2243,
+   "text_sha256": "sha256:4353533775728701e546ff5036ba11ebe3f315c5d83154866b1143c8c2ae5aef"
+  },
+  {
+   "i": 2246,
+   "text_sha256": "sha256:e8863700e68451bf7d96241a3994ffb0ea94d7abc1bc1994d3c57c0ecdc0b7a1"
+  },
+  {
+   "i": 2247,
+   "text_sha256": "sha256:e7ca6142a34d38c9bf71684d007f07c7d8571b31c30cd7d462b46196eae5cbc7"
+  },
+  {
+   "i": 2248,
+   "text_sha256": "sha256:b89760c9a8a8a39280f41568d14851703e71f2e852ba2ad0d43c2723b7e958d9"
+  },
+  {
+   "i": 2259,
+   "text_sha256": "sha256:19609a30d49cf71ed0f72654e99372218b9bbd78a79d73efa580a10613140a64"
+  },
+  {
+   "i": 2261,
+   "text_sha256": "sha256:d37e709b3f198fbe0d2762942286aa696a32bd53baa408a4ec0780eb499df915"
+  },
+  {
+   "i": 2262,
+   "text_sha256": "sha256:aa903cf5c5ed03e53f8bb590a01b47ac674ad9b0c30a35d5671492a2b9bffca5"
+  },
+  {
+   "i": 2263,
+   "text_sha256": "sha256:5526088480b432d5d5c64a1f21a03cccec8266a5fde614ffaf19361be50e16e6"
+  },
+  {
+   "i": 2265,
+   "text_sha256": "sha256:81d7aff8cb783ac1479bdf32fa61f561462acc1cab92710c45ffd137bb75ff86"
+  },
+  {
+   "i": 2273,
+   "text_sha256": "sha256:227c58dce4c91973330f4051dd2d1ecaa1fb6b51a73d24b201032f4d838d6fca"
+  },
+  {
+   "i": 2279,
+   "text_sha256": "sha256:e8b25bf2a91c69972fc24a5da8870f963ef06746dff62cd50525a5a0e91ef1c4"
+  },
+  {
+   "i": 2282,
+   "text_sha256": "sha256:a804fc4f19e6aba08139c0ee435a2b00120a5faa8a8a5343319e72ee171ff956"
+  },
+  {
+   "i": 2290,
+   "text_sha256": "sha256:f7c6f0b8f63e88630653524d9c09a239cb4463ee9af7a691438151f7fe87331a"
+  },
+  {
+   "i": 2296,
+   "text_sha256": "sha256:903e3956333960203bcdbe0613ba74a034dfb140c11ab048d26eb275ef14869d"
+  },
+  {
+   "i": 2300,
+   "text_sha256": "sha256:e1a148b65a9c871aa2eb7fd165745bb0cc55efd7630b119c7c17937764035e70"
+  },
+  {
+   "i": 2303,
+   "text_sha256": "sha256:53f31cfdf0d151c64f758251b49aa7cac1649a5c80dbb565913366e61cdcdaaf"
+  },
+  {
+   "i": 2326,
+   "text_sha256": "sha256:a9aa7d0200edbbf09d2d8c3dc6c1f90bfbf3994a127166e204aa656e37f78225"
+  },
+  {
+   "i": 2342,
+   "text_sha256": "sha256:f27dc0849316365b26fb21ffa3e28930c24fbda31d9ce4c963fec889789b7f06"
+  },
+  {
+   "i": 2348,
+   "text_sha256": "sha256:61ca6df16b7d3a9fe2b9c1ca6511a4c500da49d32737f5ebb234e0130960e1a3"
+  },
+  {
+   "i": 2352,
+   "text_sha256": "sha256:342d56318683e016d5f44da0d5cd81b1e9492db2d23b5c37f2a8dede1248cce3"
+  },
+  {
+   "i": 2360,
+   "text_sha256": "sha256:a2c6ade4fec70d6299b1d9d8c3784aa35dd5b140ee42da98525ea274399f08bf"
+  },
+  {
+   "i": 2363,
+   "text_sha256": "sha256:b518f54945964c796267ec36fc0034b3ca69181c2ab2171bd7441f977de739cd"
+  },
+  {
+   "i": 2382,
+   "text_sha256": "sha256:3727d78b7e3804b35204cb75bb86d7cc66d5faa29b5fc2f6c133450166b45708"
+  },
+  {
+   "i": 2391,
+   "text_sha256": "sha256:012ced827ab574375801e6aba34c1ea8ab66852679ef142e53976fadd188f6c8"
+  },
+  {
+   "i": 2392,
+   "text_sha256": "sha256:417d6cc63c3bc2d235a256e238a62961b6c3f1c46e64c332e508bcc41d2c736b"
+  },
+  {
+   "i": 2544,
+   "text_sha256": "sha256:64f796ad278abfbbd0d7c99b652cbcd799adca9bb5c13f6cca6baafb2b54d90b"
+  },
+  {
+   "i": 2711,
+   "text_sha256": "sha256:f83f7245fefb382f1368c5af65eed6c4512784f541075f788085576686fbd971"
+  },
+  {
+   "i": 2713,
+   "text_sha256": "sha256:cdc739c66ae58e828f007ff762d979088cbf8291b6caeb528e2bdf7b0b7fb381"
+  },
+  {
+   "i": 2781,
+   "text_sha256": "sha256:30594756ebd07848209daab0d6644d31ff77dd3224722484d65e0c4ffb318fff"
+  },
+  {
+   "i": 2831,
+   "text_sha256": "sha256:8e03d9a54fd65ff0938260a6a6ce8df82f0de88674e2cac14a129fa4e93f3467"
+  },
+  {
+   "i": 2894,
+   "text_sha256": "sha256:324da15ffc922141516c525ff5de03b03be07bb1919b6fd4536fef539b8ebcf5"
+  },
+  {
+   "i": 2935,
+   "text_sha256": "sha256:5a2ad4982cbda8ddeba0114421c86d3bfeab3f75eb47ac0e615511a024bc8c7c"
+  },
+  {
+   "i": 3040,
+   "text_sha256": "sha256:d63f709f67348b12fc7b2a6e454f43a8063432eb6c60e67f75604567e0f4ea1b"
+  },
+  {
+   "i": 3041,
+   "text_sha256": "sha256:472fc8f98bdac8b02908bacc0b565b73607c629430bcab58395afa1a7e354959"
+  },
+  {
+   "i": 3054,
+   "text_sha256": "sha256:fa16ee1b744cdf1648944d03601875934ca8ab32c434bbb1cef0fc9c7086fd80"
+  },
+  {
+   "i": 3088,
+   "text_sha256": "sha256:c5b7be1c5c33f1ae1cac774fdfbcf74acc1f15dd24efb753a4795cdbb51b3765"
+  },
+  {
+   "i": 3109,
+   "text_sha256": "sha256:22b3cf0eb09c67aabc4430c34ed145af4af682258f40d5a17bbf7ac8d583efe4"
+  },
+  {
+   "i": 3110,
+   "text_sha256": "sha256:822887eaf4db9b122b636cff9ac3bbe7da6f635cabedd1d1a49cdddfcf32b0b4"
+  },
+  {
+   "i": 3134,
+   "text_sha256": "sha256:b2a3f544e6d080590d182a463e02451debb80a3ffd2a83229c6e0b747d5d871b"
+  },
+  {
+   "i": 3143,
+   "text_sha256": "sha256:a7cfb06c35aefbf6b81e3438a0d0f23cf0273a43971a61908f29b80236b0de5e"
+  },
+  {
+   "i": 3146,
+   "text_sha256": "sha256:16662dab6f40c23de106e44e8da08670cc13b4f78a12f2942abcf5f004633992"
+  },
+  {
+   "i": 3155,
+   "text_sha256": "sha256:dcd6e57d57b30b5a0a9fd888e8d7644114fc94f556a35b2537759c5940636ab1"
+  },
+  {
+   "i": 3156,
+   "text_sha256": "sha256:47a5aa1de6fea03d111ae06ea18a352b8fbade1d233e5103f208519cb1c78d07"
+  },
+  {
+   "i": 3157,
+   "text_sha256": "sha256:f04619323f80d82644a4e61569dde411a21e06d520b430176c1be1fadeb4a83b"
+  },
+  {
+   "i": 3158,
+   "text_sha256": "sha256:653c7d5cd1eea5c16f2bd3fcb306b2d71c214e89aabdc16b5788aceac3edc499"
+  },
+  {
+   "i": 3159,
+   "text_sha256": "sha256:eb94b301fdf373c29da6a04eb4557b6c0c00c4ee27bb8f43a2536cbff5501cd0"
+  },
+  {
+   "i": 3169,
+   "text_sha256": "sha256:afc19f1734c1d195bd8ba741b795a57120beb0a837ceddc2654ed7c486a6ea72"
+  },
+  {
+   "i": 3170,
+   "text_sha256": "sha256:e74bcdd12c1cce2b898d65c7cf3502acffa21cc225617eb4933d10de91584e3f"
+  },
+  {
+   "i": 3171,
+   "text_sha256": "sha256:0aa11413e5d3642ecfa063b5b467c1ed39902b161396f1c99b614c061eae81a0"
+  },
+  {
+   "i": 3174,
+   "text_sha256": "sha256:7a98cc8a361b7fc4302fee266de7141e0d799cb52e3f686577fd980b2033f90f"
+  },
+  {
+   "i": 3175,
+   "text_sha256": "sha256:2ebd466648cac47b6396ba39cce5336548d5ac4afb41dbd1444f3c9c27903828"
+  },
+  {
+   "i": 3181,
+   "text_sha256": "sha256:eaba6ec18aa7b880a3e5fe77f955a73b34f01a4ea3afdd63fa57e49671dc3b8a"
+  },
+  {
+   "i": 3186,
+   "text_sha256": "sha256:6dc94d3ae8aafd58880ba262a8f05bda9555dc633c9a9cf42f49d88609c9a4f5"
+  },
+  {
+   "i": 3464,
+   "text_sha256": "sha256:aae8fdfd0a310823699f297686056d381c2f3cbcfe60d1f34c29b2e39e4ae03d"
+  },
+  {
+   "i": 3830,
+   "text_sha256": "sha256:fe814392cf1403a56193405b6e32244a8681351bcfa91b0853e1062995ed7fbb"
+  },
+  {
+   "i": 3831,
+   "text_sha256": "sha256:457d19e9e913de17a943833b0edde0b9c95a829324f7b2aa12d88f06673b00c5"
+  },
+  {
+   "i": 3860,
+   "text_sha256": "sha256:d6c2b15f09e81bc468309c9c87f877c10b4d13b455a42706b672528cffd14008"
+  },
+  {
+   "i": 3875,
+   "text_sha256": "sha256:74e886c82d7326e7e0502eae4b6a900f01404e381fd322800737c17345662c4a"
+  },
+  {
+   "i": 3880,
+   "text_sha256": "sha256:2370b2fb3c1ee7ac34f9dc9d1b1ae80bc88ef7902771f901d3fcc283be67a872"
+  },
+  {
+   "i": 3884,
+   "text_sha256": "sha256:a87ab5e59ec8409090a31800612dd2d04ab6ecba9cf874cba817de97bb32f59d"
+  },
+  {
+   "i": 3889,
+   "text_sha256": "sha256:1e921c827766ec7de644c650e81b4d5ea9ce5c1a457ae27cdfa397050b1c2f2f"
+  },
+  {
+   "i": 3892,
+   "text_sha256": "sha256:e507d8a5502a98e098740e7c7474290f55438c2c94c36ed814ae790cd58208bc"
+  },
+  {
+   "i": 3893,
+   "text_sha256": "sha256:03fbad902351d6803ed9fe058941866a924f76c076d4575cb9117893026b79b0"
+  },
+  {
+   "i": 3896,
+   "text_sha256": "sha256:77c363a1906de4af22201ced8460976494d50736e159fb42a6443be1eaa046f0"
+  },
+  {
+   "i": 3897,
+   "text_sha256": "sha256:00189997b5a83595ae538b4ee80e4ec4374410a8508f6433cbeb998d4f7872d1"
+  },
+  {
+   "i": 3898,
+   "text_sha256": "sha256:92262fd17262649fb9f9fd1124910113d6e9e33ac8bf4e4f5eca6fcd4e50891f"
+  },
+  {
+   "i": 3903,
+   "text_sha256": "sha256:6b862186ccc1d557a5ad2d070bcc79fa3490869e64fd925ff09c217bad722192"
+  },
+  {
+   "i": 3920,
+   "text_sha256": "sha256:ec796dc9fc608abdf06fb5a76abdc85cbf570e85748b00944df7b28f661ae333"
+  },
+  {
+   "i": 3923,
+   "text_sha256": "sha256:a3db5f7016292b4119250e85caf73e59f0e0a5b81e786f1fc7871e8f56bddc10"
+  },
+  {
+   "i": 3924,
+   "text_sha256": "sha256:51d7ead9970447730088aa1ed521db454eb4e1c3317f92f04967e9b50279222d"
+  },
+  {
+   "i": 3929,
+   "text_sha256": "sha256:e4cd9570430fccedbbfe7d3f5429ca5e69062fe527a04302d7ad7f17d63de831"
+  },
+  {
+   "i": 3930,
+   "text_sha256": "sha256:b839633888cd848ee81e040d6db08c86b6f706c5c6e119977cc9a9a244f488d8"
+  },
+  {
+   "i": 3931,
+   "text_sha256": "sha256:72ade056da5faa4d6be03e3c925d8003646ef6f5fae0bdbf903b7c8fced7ce79"
+  },
+  {
+   "i": 3936,
+   "text_sha256": "sha256:c598369590945c3769f9a037cbe433cfce0d94937cb73c4f56e61077273fbc18"
+  },
+  {
+   "i": 3937,
+   "text_sha256": "sha256:daf92eabcbc1e0c432b8fd81b636b4a6562499a6b638d4a04f4ed94a76359b3c"
+  },
+  {
+   "i": 3938,
+   "text_sha256": "sha256:b70890643fb0acdaf7b05992beb36843a133783ccb9eaa5e6d8d8cb4e4abcb2b"
+  },
+  {
+   "i": 3939,
+   "text_sha256": "sha256:5f5c276673e0917afdb9474a1f6892fed270bef84092d2246ef73cc96b47fc3b"
+  },
+  {
+   "i": 3942,
+   "text_sha256": "sha256:abb72860df47b1a7dcba983ea9f225a23319181ff3ffa86e34bbf85aab86e819"
+  },
+  {
+   "i": 3946,
+   "text_sha256": "sha256:8f1594c99725d748ea55b5ff1a769a8824d7ffd66d8db53df5eb18f32053690f"
+  },
+  {
+   "i": 3963,
+   "text_sha256": "sha256:3fcacd6b528c89618aa8a9fe60499bfff122c0b9f9b8c3a8ad255e050cb24fa9"
+  },
+  {
+   "i": 3978,
+   "text_sha256": "sha256:35122955cafba8c23fdace45e17ed219b70cbe467232591a2a7f0d1af89e6b44"
+  },
+  {
+   "i": 4012,
+   "text_sha256": "sha256:a951c0f2cf546a92b565072a36b8779c58ead19da18b697d021bd15ba99d9180"
+  },
+  {
+   "i": 4023,
+   "text_sha256": "sha256:63c5971a43140d98346d0b54745b9ffe1f3f238784c8c66d12effb7baeab86a9"
+  },
+  {
+   "i": 4031,
+   "text_sha256": "sha256:d7d67376cf74910fd1f31c8a158910133eec614639cb1da29f2ef9f1c583aaa0"
+  },
+  {
+   "i": 4033,
+   "text_sha256": "sha256:984ba825a99e83e1502014cdbbae4f468a1eac6fb6388d6943a373945d35ebd2"
+  },
+  {
+   "i": 4035,
+   "text_sha256": "sha256:e0368d8938d7dfafeeda28cc66b3a37d8910ea5720f3b1066757ea37f8c060a2"
+  },
+  {
+   "i": 4040,
+   "text_sha256": "sha256:300e390b0b03b13f986d661ddd6d5721c221e6558ca1e5ada3450d01f0b61433"
+  },
+  {
+   "i": 4050,
+   "text_sha256": "sha256:5daf86965e419eeafeb9a4e306af70a0d68064d96083583cd53adbe37f8ab98a"
+  },
+  {
+   "i": 4052,
+   "text_sha256": "sha256:41de99a9c35394216039defa15169fd18bbd7a7102c0515b55f9b396484871b1"
+  },
+  {
+   "i": 4054,
+   "text_sha256": "sha256:2487e5eb1f8870183991764ec57364930a6c284f71e1aa3c3bda454dd67387cc"
+  },
+  {
+   "i": 4063,
+   "text_sha256": "sha256:32e80e51d2b1114c3d607738a685be8d5f1293b1227586076e64196f8eda5874"
+  },
+  {
+   "i": 4064,
+   "text_sha256": "sha256:fd36691e95e617753c8b78df9c0b41fb1c711ffbe263f76b8432ead02c7a5878"
+  },
+  {
+   "i": 4066,
+   "text_sha256": "sha256:880dead453df989640d326fc94fd5fd30fa3f7a2a618c75a6941e049b210678f"
+  },
+  {
+   "i": 4067,
+   "text_sha256": "sha256:abcc5ae910127286876a47172d74cf37761b388961b080214e9b3257025d7f5b"
+  },
+  {
+   "i": 4077,
+   "text_sha256": "sha256:5470f592ebc858364ae850bc5b5f82a2904a2138c3d4efef277be35b4d7bfd03"
+  },
+  {
+   "i": 4082,
+   "text_sha256": "sha256:573fdbd10676009dfefacabd8ae4656c743c5ccb515886e05e6462380c80ee54"
+  },
+  {
+   "i": 4527,
+   "text_sha256": "sha256:91bec439e450e55d46f5cdc925c69aba13ab456954ad3e5357915eb97efafdb7"
+  },
+  {
+   "i": 4767,
+   "text_sha256": "sha256:93e8f4b02c6770b0acabbf68a98fa47930818b509f061b9d583469b726fa725a"
+  },
+  {
+   "i": 4811,
+   "text_sha256": "sha256:e614b455b2a37923fcfeaec702e88b4df850a4a8dee6c3f02edaa252b5688d54"
+  },
+  {
+   "i": 4812,
+   "text_sha256": "sha256:97720d74b5b249eeafda6fb874e7c0ec18c2cefaa1953a38e1698e0094c9cb05"
+  },
+  {
+   "i": 4816,
+   "text_sha256": "sha256:66774b356d04c9798ed744e62cb524933e233d9fb91ca5a2a0babf8dbb773064"
+  },
+  {
+   "i": 4818,
+   "text_sha256": "sha256:ddf71eecf94ac31c2a37e286fa16126c4c039d1d3c9e1fa0930228779acd30ca"
+  },
+  {
+   "i": 4823,
+   "text_sha256": "sha256:820d936087e70e9d04db91febfaaf171accbcd5194783acf0a34213c9cb901dd"
+  },
+  {
+   "i": 4838,
+   "text_sha256": "sha256:52a1bbeeafc3016c5d53ecdd4fda6abb9b15ebfe7b7491f4e12074147ed0d9e8"
+  },
+  {
+   "i": 4844,
+   "text_sha256": "sha256:e614b455b2a37923fcfeaec702e88b4df850a4a8dee6c3f02edaa252b5688d54"
+  },
+  {
+   "i": 4845,
+   "text_sha256": "sha256:97720d74b5b249eeafda6fb874e7c0ec18c2cefaa1953a38e1698e0094c9cb05"
+  },
+  {
+   "i": 4848,
+   "text_sha256": "sha256:5f3cb22cf91d1539c7916da777042383d3c5e25372a21edbd1a6715e192ba910"
+  },
+  {
+   "i": 4849,
+   "text_sha256": "sha256:a6846b653d288ab6f4793dc22a419ef7ccecd6f53cd96949b592691e6c7d95da"
+  },
+  {
+   "i": 4851,
+   "text_sha256": "sha256:51caba709c0069710707534fa8a4420dc179239a02d13e60bce7aa709f4549f4"
+  },
+  {
+   "i": 4854,
+   "text_sha256": "sha256:6088d639ba1d88ff886db26a0697f62db740bf483bc9abfd4d1c755e0557cdfd"
+  },
+  {
+   "i": 4857,
+   "text_sha256": "sha256:52a1bbeeafc3016c5d53ecdd4fda6abb9b15ebfe7b7491f4e12074147ed0d9e8"
+  },
+  {
+   "i": 4868,
+   "text_sha256": "sha256:8675e2df241960a209fafefe9424b2aa08362ff39736a04dab5b6b478e070ed0"
+  },
+  {
+   "i": 5184,
+   "text_sha256": "sha256:7cf898237b77bbb1f120d31f66c71115042ad2e6a59ce7ea493cdee0ab1f55d3"
+  },
+  {
+   "i": 5221,
+   "text_sha256": "sha256:ab38dce170ff8a5808d7bbb559f4fe360861566e3c54cb15db49588009b6971e"
+  },
+  {
+   "i": 5241,
+   "text_sha256": "sha256:17040738dd34d19735bd17cb7a0708d118d1a87f499e9661dc2540983a6e8d46"
+  },
+  {
+   "i": 6300,
+   "text_sha256": "sha256:4f50853c7090760ce2cf86648eefcf84d1e0f75fd4f028afd81f75af5119c403"
+  },
+  {
+   "i": 6486,
+   "text_sha256": "sha256:c28056f9f905227ee2b72b57b0a774e2a49ac985b74eb61d88a50cc5aaf5388a"
+  },
+  {
+   "i": 6496,
+   "text_sha256": "sha256:b38ae2c5b84529e8027b43a69c8ce9426a3cb081dae97b77bdcd2fdc5a9df742"
+  },
+  {
+   "i": 6498,
+   "text_sha256": "sha256:61ae51df8d6709edf2ad6c5d649ff594a46f3c41d698e76a555b507c7be649b4"
+  },
+  {
+   "i": 6535,
+   "text_sha256": "sha256:1fbf105d479109f8c880b87c726db8b06e6edeae98e3a48252bbea2bb6f0d945"
+  },
+  {
+   "i": 6792,
+   "text_sha256": "sha256:4ba1ee19c95f5575821a2647ff4b69f63c8ecba9fc80f53e49dc9b6083ae66c8"
+  },
+  {
+   "i": 6797,
+   "text_sha256": "sha256:d41f5dc76e583fd32180926a1d1c984f9464119679e9a6e4c69d02ce5db1aab8"
+  },
+  {
+   "i": 6810,
+   "text_sha256": "sha256:0cb8fe5e1e31f92e8bed0bd6d38277212b0e0b561a7d77fbdb610d0cb57c9a75"
+  },
+  {
+   "i": 6823,
+   "text_sha256": "sha256:76fc05d9b6ccadb87770526c99643720795ef81bdcc559c7e112e5d7b4491181"
+  },
+  {
+   "i": 6828,
+   "text_sha256": "sha256:d4ddfa52d113f83c56bce992f26e9c655f3ad2ec13592e40b20470e7fede63d8"
+  },
+  {
+   "i": 6830,
+   "text_sha256": "sha256:9ccbebb9059f917d5902c5996829e96bca874460d556cbfdc53e5164026ccd40"
+  },
+  {
+   "i": 6840,
+   "text_sha256": "sha256:6bc9a799b7b2925c9b4780642aea079be976e972d31dd321a76791666904c81e"
+  },
+  {
+   "i": 6841,
+   "text_sha256": "sha256:21e9e82ebf8b00b847684ebafc58c675c45f9fa6ed1b35a0bfaa8b25572374d2"
+  },
+  {
+   "i": 6851,
+   "text_sha256": "sha256:ecd722b9c278146dcf0b04306bbca9c5503e1b79965d795039b8e43a6500b218"
+  },
+  {
+   "i": 6956,
+   "text_sha256": "sha256:58214f46c6837566480efcd96c79724f652c9f9e0c07ad83a893baaa2b30d51e"
+  },
+  {
+   "i": 6958,
+   "text_sha256": "sha256:c2e82753678d015da7d9a55338e8a5166d0bd60ab8c6e2f8f179a41cc4ce1663"
+  },
+  {
+   "i": 6963,
+   "text_sha256": "sha256:d3665d027271b90bc5c38d60fa33dd11209c3a5e252b5a9d1e9a5ebe51f16762"
+  },
+  {
+   "i": 6965,
+   "text_sha256": "sha256:f4783a28dbc9ed82c1d10afdba49cd4efbe35431fc7a1808ce4480822778afa7"
+  },
+  {
+   "i": 6976,
+   "text_sha256": "sha256:4366b9a83dd64e417c363d1ebbdb777872dcca7cbfeefb57fb96fe273c19faaf"
+  },
+  {
+   "i": 6977,
+   "text_sha256": "sha256:b5a70e25a3371fa691d9b76b85626758cfed27958fcbdc556b1b5d5454501b93"
+  },
+  {
+   "i": 6983,
+   "text_sha256": "sha256:1d80471fa8e7a559be20c4e66f7efcf4ddd5d7a68b468b17f2413be4be067bdb"
+  },
+  {
+   "i": 6988,
+   "text_sha256": "sha256:f9c08e6a8b6ae8340d344b9454d5c2d8ce775e6bd27aa1a8f5d29ae23fc00ee5"
+  },
+  {
+   "i": 7000,
+   "text_sha256": "sha256:9a21add1be3e7f1e324378ac58ad091fd1a32f4682d62da46f515c9727333a89"
+  },
+  {
+   "i": 7010,
+   "text_sha256": "sha256:5d857206355c6492975770d0ff4ac4b4808f49b4942319425c33dda3d6e3c357"
+  },
+  {
+   "i": 7022,
+   "text_sha256": "sha256:2c18d0350c15d2a03803f5b20185e90db20674999aa7a187e2d0eb8b1124fe29"
+  },
+  {
+   "i": 7029,
+   "text_sha256": "sha256:a6c238654d1c067d48c42a815e88624fdc44e8fb4ba3ca23debbf24d8725849e"
+  },
+  {
+   "i": 7031,
+   "text_sha256": "sha256:dd396953d70d5d2bc24e8f29bebe7cf2c801b0b855ba1f18404cf4afb4b5ca36"
+  },
+  {
+   "i": 7032,
+   "text_sha256": "sha256:8c83e34a87cdad1bbda54061726e59c1afe7aacfcb5ddd9216fd34982a8a3a1d"
+  },
+  {
+   "i": 7036,
+   "text_sha256": "sha256:e41e93fad028e6d504ea50d557413b2b090a6a7e7853b3ab4e7ee40372356343"
+  },
+  {
+   "i": 7042,
+   "text_sha256": "sha256:f4a7b8225a8cf0156ffeece9759d072d39a14ce7334a9c79f784c02eb0d47163"
+  },
+  {
+   "i": 7052,
+   "text_sha256": "sha256:9060d93071d535af51c09a070a195b4b13538c3ea8c61c518c9d6e37721a9547"
+  },
+  {
+   "i": 7054,
+   "text_sha256": "sha256:38f96d7bca4dca91beac575743831700ea6e6e7c36451fd48d8d3d1b92fa51ea"
+  },
+  {
+   "i": 7055,
+   "text_sha256": "sha256:2615d5b190188774b90596648715f26d8930b2526e6526752b4900df128b065e"
+  },
+  {
+   "i": 7057,
+   "text_sha256": "sha256:cfba4a731bb79176234fb68830b414ea2c2a9309cb21a2c99a3d23a4a9940e80"
+  },
+  {
+   "i": 7058,
+   "text_sha256": "sha256:9cb112ba128ce71c9afb7d759f1ea76034904cd27c15678bbbedfe027b71e6c7"
+  },
+  {
+   "i": 7070,
+   "text_sha256": "sha256:617f4d972540147751e7863f334b573190f9b90de8dc3f988df2b08ed2a9c25e"
+  },
+  {
+   "i": 7072,
+   "text_sha256": "sha256:36f3c0daeaa77c29d6d760fc9e37fd13ce71a0efc5b795b6aa39a272e85c00bc"
+  },
+  {
+   "i": 7075,
+   "text_sha256": "sha256:c0c6281f4b97518e4814090f68a271f4503216992976b823ed7abfdfece2d58f"
+  },
+  {
+   "i": 7078,
+   "text_sha256": "sha256:456b73d2125f26329dfaab39610e16424631ca131c937d7222ad2ddb610f167d"
+  },
+  {
+   "i": 7079,
+   "text_sha256": "sha256:8271295a9ea0204d7d4ccdb25f4965d2b0e77b54628fcde0c45d9476f77967d7"
+  },
+  {
+   "i": 7080,
+   "text_sha256": "sha256:449251bf6485c316f9c42af14540ed93870ae991eecff8a71dfb570c0ec2c8f4"
+  },
+  {
+   "i": 7081,
+   "text_sha256": "sha256:b3896eb53a39205a2163fd53eaa1c08ea5d0aaa624a04886760be47963863cba"
+  },
+  {
+   "i": 7082,
+   "text_sha256": "sha256:52b303489db6aa606b11e5b5a7808afd66d3fcd670afc36783d65e0ea43b9a5f"
+  },
+  {
+   "i": 7087,
+   "text_sha256": "sha256:d45691c7c7b6878c78bc480d568059a096999897a526da94d929af75f93426f0"
+  },
+  {
+   "i": 7088,
+   "text_sha256": "sha256:84a77c1b6cbde3526c79b44b0a7257a429e4c3d88442752f56f300db972b57b3"
+  },
+  {
+   "i": 7090,
+   "text_sha256": "sha256:6f65f6fe049af2dfcd0bb29f496076f446ccfad3342ac7ccb25396d8546d6ac8"
+  },
+  {
+   "i": 7091,
+   "text_sha256": "sha256:c0c0c4e42b596bacf10d4d335baf26bf86648cd94e077f6177de6f6dbf77ae02"
+  },
+  {
+   "i": 7095,
+   "text_sha256": "sha256:8e9f3b82d15737b8b3bcc27b2ca9dada270da2de3e9e59376eaeb1b2c5b53314"
+  },
+  {
+   "i": 7096,
+   "text_sha256": "sha256:f8ef925ddcd25ff2dfaaae72d9bfd9a62eb71b0dd982f0f1bfe49fbfcbf6ff45"
+  },
+  {
+   "i": 7099,
+   "text_sha256": "sha256:cab7b7fbc2f6c5e9fd2bf9964953873db7e574622062fe0501c685363c843356"
+  },
+  {
+   "i": 7103,
+   "text_sha256": "sha256:7616cdc638c8facfb49a62865d53aa1d988cc82edb251d095fc24f45b902a5c8"
+  },
+  {
+   "i": 7104,
+   "text_sha256": "sha256:8565200748b9bac9637260f92fd22c5b03c182a2cbcb88d3f7971a7ed752269d"
+  },
+  {
+   "i": 7107,
+   "text_sha256": "sha256:34c3402c0acf186f044215f436066af7009092ed676978e3dfbbc2501962a453"
+  },
+  {
+   "i": 7109,
+   "text_sha256": "sha256:d975b500450a36f4926dc65fa78090acac8dc7974eb38874166567721097b996"
+  },
+  {
+   "i": 7110,
+   "text_sha256": "sha256:88a10fe74fe23cc5a00b1db80fbce458ccb5abb888a453e24c5e9c77e8645eee"
+  },
+  {
+   "i": 7119,
+   "text_sha256": "sha256:b543d23b2d87d30ad0550a9296ee7f7ae84ed6f69dc1620295b9a4f872b519b3"
+  },
+  {
+   "i": 7122,
+   "text_sha256": "sha256:b6bba90671f854010775a56f83bd7a640152beed1a8de0318edc10d03d18b2d4"
+  },
+  {
+   "i": 7123,
+   "text_sha256": "sha256:aaccac0951a34bdcb413c085b990dd0105a75842c05e459d75c38e358e7b7fb6"
+  },
+  {
+   "i": 7125,
+   "text_sha256": "sha256:39d85b1bce038ad9219542c17c4e86efa21a1feda6e0f076fb5ddf26a6798d2c"
+  },
+  {
+   "i": 7130,
+   "text_sha256": "sha256:91e5ee6591066127178f7a3c2d2e9ba619141864c8c18b2fdcfb2973950bb3a2"
+  },
+  {
+   "i": 7135,
+   "text_sha256": "sha256:c5a76b00a55b9276f2610a705573fa6bca765713249f9f8bfbf91ff843a46012"
+  },
+  {
+   "i": 7137,
+   "text_sha256": "sha256:e504e430d548ec2cd4805a16348e67e19c660b5d2dd06148401e08d0c0a8a8c9"
+  },
+  {
+   "i": 7139,
+   "text_sha256": "sha256:0239064e064e3dede48f1e981b0a73a4a33d6ba892acf8b4e5916f72d395af59"
+  },
+  {
+   "i": 7146,
+   "text_sha256": "sha256:78c0d91767a94372ca05df36dc871bed497335b4da73ce1ad8857de616109c3c"
+  },
+  {
+   "i": 7147,
+   "text_sha256": "sha256:2d7aa6cdb93403f4b9881b75961df6a4b3be673a7b983a8bb18292cad5525517"
+  },
+  {
+   "i": 7148,
+   "text_sha256": "sha256:476886644a05fabb63b45d364a2f210db46f6dba74de36b5b61d6621f04d1a80"
+  },
+  {
+   "i": 7149,
+   "text_sha256": "sha256:953f820258c8df3949877226672a09744ff68f78bc751b7e3b32614dd1c5c687"
+  },
+  {
+   "i": 7156,
+   "text_sha256": "sha256:be7f9da9f66574c6976ae7af52071a3884e19ad3186b9f12ac06376f58f4a4b4"
+  },
+  {
+   "i": 7157,
+   "text_sha256": "sha256:81fe8d32a601d4630febdeb9df2cd974ef0a4edd599aed35c2c4ed349ea88cca"
+  },
+  {
+   "i": 7164,
+   "text_sha256": "sha256:b500f657b043b94b2449da6a2511827109eafe6f5970adcbb8cb038ae8374c37"
+  },
+  {
+   "i": 7165,
+   "text_sha256": "sha256:6abb05f91115f207f5ceb319586d87cc4b17dfae9b7f5fab01bbbbdf4d96b191"
+  },
+  {
+   "i": 7166,
+   "text_sha256": "sha256:0a85a3447f0ebdbdf35b575250c09cb6c1d393a657a506f1b7a1d78ff0faabac"
+  },
+  {
+   "i": 7167,
+   "text_sha256": "sha256:823a4e0831dbc3322d187086710389569970ec7685bbb96ea5f2463b678ee3dd"
+  },
+  {
+   "i": 7176,
+   "text_sha256": "sha256:6cc4f8a927833d00cc38c9693827b854900bae57feeb03b826aafed3f3c8cc70"
+  },
+  {
+   "i": 7177,
+   "text_sha256": "sha256:0789179b5a961966243eedf43bfd6b713d9b4d6419e80edaca6c86e0c9b8776e"
+  },
+  {
+   "i": 7179,
+   "text_sha256": "sha256:148213299b3ee80dfcccd485843a77de88ddb6d44155d769e5984b000459d0fb"
+  },
+  {
+   "i": 7185,
+   "text_sha256": "sha256:add959196b7f11d55ce1e542966a411ff28082254dc577ba549925ceed576724"
+  },
+  {
+   "i": 7186,
+   "text_sha256": "sha256:cfda8e74aad363aa4b6b15465c2f784f147ac1afafccb92ca0abec51cdd3c337"
+  },
+  {
+   "i": 7188,
+   "text_sha256": "sha256:547a2653fcaf77d3eab124b88ad48a9065e9d973d261da6561dfb3affc2e6085"
+  },
+  {
+   "i": 7189,
+   "text_sha256": "sha256:f03a50a6c7298550393a6e1d69cc60d80d7adb7b34b2c25c6bafce99ab9742e0"
+  },
+  {
+   "i": 7194,
+   "text_sha256": "sha256:f67bc72fb22a3ae492a112ec45d1b861ee41f348b0f6dbac55264ee4f54e7948"
+  },
+  {
+   "i": 7199,
+   "text_sha256": "sha256:31ba8935a40621d6ee169abe00756c6d5a85b1ecb2505a780d6785fb473a1016"
+  },
+  {
+   "i": 7200,
+   "text_sha256": "sha256:26d8861e3f302e9e1869d9c70089caf11c82f07a9c8d4a82e55f94d9344c412a"
+  },
+  {
+   "i": 7201,
+   "text_sha256": "sha256:3a829c88ad35fd9c397f9a7c3601136e3dc1179d7c367a72e863af5dbaa4bcf6"
+  },
+  {
+   "i": 7208,
+   "text_sha256": "sha256:69fa201f2389a9560b2b1e1bcdc67a453d78cc2be25b2ef04bdbd85d320e9b7e"
+  },
+  {
+   "i": 7215,
+   "text_sha256": "sha256:40607f44b00a274996d57977dc6f90cc5c9ba7a353b8c164129e7c9ab95e0286"
+  },
+  {
+   "i": 7216,
+   "text_sha256": "sha256:4fc03f38236172e60debcec83ce62c4a255b1797f836c3d8f7165611fcaadb3d"
+  },
+  {
+   "i": 7225,
+   "text_sha256": "sha256:12e26b14810715395908340192131523f22f7fd8c1213134ff169126f26b7067"
+  },
+  {
+   "i": 7229,
+   "text_sha256": "sha256:ee97b1f2237b3d2621e55378f4fa53f24a1edf72e5c8ab599c6e2c5ba3e41814"
+  },
+  {
+   "i": 7230,
+   "text_sha256": "sha256:f930fff0323f343fbcdf1068ff36a8ee46f4cac283b8bb906c69d8a8d7a47fb7"
+  }
+ ]
+}

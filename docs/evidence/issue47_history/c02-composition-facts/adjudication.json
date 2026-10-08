@@ -1,0 +1,3106 @@
+{
+ "record_type": "C02_COMPOSITION_ADJUDICATION",
+ "decided_by": "executor, applying each rule to every block of its class in every reading",
+ "readings": [
+  "docs/evidence/issue47_history/c02-composition-facts/judgements",
+  "docs/evidence/issue47_history/c02-older-years/judgements"
+ ],
+ "rules": {
+  "CARD_TENURE_FIELD": {
+   "decision": "NOT",
+   "reason": "Tenure of a sitting director is not in the owner's meaning (size, independence, committee setup, members, chairs, related determinations)."
+  },
+  "CARD_SUBJECT_NAME": {
+   "decision": "FACT",
+   "reason": "A field states nothing without whose it is; the same reading's reason for the field names this person."
+  },
+  "NOMINEE_CARD_NO_COMMITTEE": {
+   "decision": "NOT",
+   "reason": "A nominee who is not yet a director sits on no committee because the nominee does not sit on the board; the field says nothing about the board's committees."
+  },
+  "CHAIR_CEO_STRUCTURE": {
+   "decision": "FACT",
+   "reason": "Whether the board's chair and the CEO are two people or one says who can hold the board's chair, the kind of fact every reading takes when the holder is named."
+  },
+  "CLASSIFIED_SLATE_COUNT": {
+   "decision": "NOT",
+   "reason": "On a classified board the nominees of one class are neither the board's size nor a change in who sits on it."
+  },
+  "DIRECTOR_GROUP_HEADING": {
+   "decision": "NOT",
+   "reason": "Class, election standing and term are tenure-like; the names and fields under the heading carry who the directors are."
+  },
+  "DIRECTOR_TABLE_NAME": {
+   "decision": "FACT",
+   "reason": "A director listed in a table whose columns mark independence carries the table's determination, marked or not."
+  },
+  "DIRECTOR_COUNT_ON_A_DATE": {
+   "decision": "FACT",
+   "reason": "A count of the board's directors, or of its non-employee directors, on a date is a composition fact wherever it is printed."
+  },
+  "COMPENSATION_COMMITTEE_INTERLOCKS": {
+   "decision": "FACT",
+   "reason": "That no compensation committee member is or was an officer or employee is a determination about the committee's members."
+  },
+  "INDEPENDENCE_RELATIONSHIP_DETERMINATION": {
+   "decision": "FACT",
+   "reason": "A committee's determination about the relationships the independence standards test, for each non-employee director, is an independence determination."
+  },
+  "MEMBERSHIP_CRITERIA_DETERMINATION": {
+   "decision": "FACT",
+   "reason": "The board's determination that its directors meet the criteria for membership is a qualification determination."
+  },
+  "PRESIDING_DUTY": {
+   "decision": "NOT",
+   "reason": "Presiding over the independent directors' sessions is a duty of an office; who holds the office is the composition fact, stated where the holder is named."
+  },
+  "BOARD_TASK_FORCE": {
+   "decision": "FACT",
+   "reason": "A body of the board made up of named directors is committee setup and membership."
+  },
+  "NOMINEES_ARE_SITTING_DIRECTORS": {
+   "decision": "FACT",
+   "reason": "The statement that each nominee is a current member says the slate is the sitting board."
+  },
+  "COMMITTEES_NAMED_AS_A_SET": {
+   "decision": "FACT",
+   "reason": "A sentence naming the board's committees together states committee setup."
+  },
+  "JOIN_BEFORE_THE_YEAR": {
+   "decision": "NOT",
+   "reason": "A join dated before the target year is tenure in other words."
+  },
+  "JOIN_IN_THE_YEAR": {
+   "decision": "FACT",
+   "reason": "A join dated in the target year or after it is a change in who sits on the board in the period the filing reports."
+  },
+  "DATED_ROLE_CHANGE": {
+   "decision": "FACT",
+   "reason": "A named director taking up a board leadership role or a committee chair on a date in the target year or after is a change in who holds it; only a block giving the same person's change in that role on the same date states it."
+  },
+  "TERM_END_AT_A_MEETING": {
+   "decision": "FACT",
+   "reason": "A named director's term ending at an annual meeting is a departure from the board; only a block naming the same people leaving at the same meeting states it."
+  },
+  "REPORT_SIGNERS_COMMITTEE": {
+   "decision": "FACT",
+   "reason": "The sentence closing a committee report that names the committee submitting it makes the names signed beneath it that committee's members and chair, as the other proxies' signature heads do; its legal notice is no fact."
+  },
+  "REPORT_SIGN_OFF": {
+   "decision": "NOT",
+   "reason": "\"Respectfully submitted,\" names neither a committee nor a person; the sentence above it names the committee and the signatures name the people."
+  },
+  "SUBCOMMITTEE_DUTY": {
+   "decision": "NOT",
+   "reason": "A committee's duty carried out through a subcommittee describes the committee's work, which the owner's meaning leaves out; it names no member and no decision setting a committee up."
+  },
+  "CARD_DESIGNATION_UNMARKED": {
+   "decision": "FACT",
+   "reason": "A card's designation 'Director', where the filing's other cards print 'Independent Director', marks the director not independent, as a table's unmarked row does; a block naming the same director as not independent states it."
+  }
+ },
+ "decisions": [
+  {
+   "position": "enphase_energy:2021-12-31",
+   "i": 180,
+   "text_sha256": "sha256:fcab1f9053dc3d9f0837c33619a84c54cb27b501d0bf0031f439c2fe2512e0eb",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Biography sentence: Kothandaraman was appointed a member of the Board in September 2017 (a join with its date); the rest is biography. The other bios and 382 give tenure ('has served ... since'), read",
+   "dates": [
+    "September 2017"
+   ]
+  },
+  {
+   "position": "enphase_energy:2021-12-31",
+   "i": 957,
+   "text_sha256": "sha256:d888d9fadcb4fcc2d4ceae4b803d4ae4d10f16f7f26a25d5c7106dca83bc877e",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Malchow joined the Board in February 2020 (a sentence giving a join with its date); the rest is his equity and consulting compensation.",
+   "dates": [
+    "February 2020"
+   ]
+  },
+  {
+   "position": "enphase_energy:2022-12-31",
+   "i": 169,
+   "text_sha256": "sha256:aa37c168524e6cb14a76b6f20af37fbe7acaa5db967bc3515ceeb9b54e84ca66",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Board-table heading: with 170/174/178 names the three Class II directors standing for re-election (part of the seven-director roster)."
+  },
+  {
+   "position": "enphase_energy:2022-12-31",
+   "i": 182,
+   "text_sha256": "sha256:903398c8caba9df5fcd28f64874e1bd12c1cbdeddb564118edc96e877e569afa",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Board-table heading: with 183/186 names the two continuing Class III directors (part of the seven-director roster)."
+  },
+  {
+   "position": "enphase_energy:2022-12-31",
+   "i": 189,
+   "text_sha256": "sha256:7c63ede67eb3785355cb1eeb2a9a64f2daafedc9c2ac1eb11d8c5650c8f85155",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Board-table heading: with 190/194 names the two continuing Class I directors (part of the seven-director roster)."
+  },
+  {
+   "position": "enphase_energy:2022-12-31",
+   "i": 342,
+   "text_sha256": "sha256:341c3836a2291997c15d6d271ebb898f0462d73a0130895d2090d6d403642a20",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Card-section heading: with the cards below names the three Class II nominees (Haenggi, Kortlang, Mora)."
+  },
+  {
+   "position": "enphase_energy:2022-12-31",
+   "i": 378,
+   "text_sha256": "sha256:1f256219a0afa9a66ff0a1e16328ca203f830df96dd9222d996fd5c101a348ca",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Card-section heading: with the cards below names the two continuing Class III directors (Kothandaraman, Malchow)."
+  },
+  {
+   "position": "enphase_energy:2022-12-31",
+   "i": 382,
+   "text_sha256": "sha256:929c110c76358df4539b1eaf414ae0f3f33ab954079af879cc1b64b7860f59ed",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Bio sentence: Kothandaraman appointed a member of the Board in September 2017 (join with date), among career history.",
+   "dates": [
+    "September 2017"
+   ]
+  },
+  {
+   "position": "enphase_energy:2022-12-31",
+   "i": 400,
+   "text_sha256": "sha256:bb622c921f8c90669fad0c2f274a9b46dbed731ae4ade07ee1e6da3affd2873e",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Card-section heading: with the cards below names the two continuing Class I directors (Gomo, Rodgers)."
+  },
+  {
+   "position": "enphase_energy:2022-12-31",
+   "i": 547,
+   "text_sha256": "sha256:d2107a1902f4f283f712cee4353da7b973cc4989bcf4e9b749087fbe64beded2",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Malchow joined the Board in February 2020 (join with date) - within his equity compensation and consulting arrangement.",
+   "dates": [
+    "February 2020"
+   ]
+  },
+  {
+   "position": "enphase_energy:2023-12-31",
+   "i": 170,
+   "text_sha256": "sha256:ff854df7cbd0efb803da873836c945b442465448dbdd50208ede9f30915be8bb",
+   "rule": "DIRECTOR_TABLE_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT",
+   "reader_why": "Kothandaraman's name in the summary table; his row shows only his title - no IND tag and no committee marker in the text - so it states no composition fact (his non-independence is stated in 419 and 2",
+   "redundant_with": []
+  },
+  {
+   "position": "enphase_energy:2023-12-31",
+   "i": 173,
+   "text_sha256": "sha256:13cc46077e924b484973978bad6267cdc2ab44391dd62378e8071ff980aac517",
+   "rule": "DIRECTOR_TABLE_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT",
+   "reader_why": "Malchow's name in the summary table; his row shows only his title, no IND tag or committee marker, so no composition fact (non-independence stated in 419 and 293).",
+   "redundant_with": []
+  },
+  {
+   "position": "enphase_energy:2023-12-31",
+   "i": 331,
+   "text_sha256": "sha256:2d7cb13b18b148f7689304f2f4e282072c0cc80be157323a7f6bc11c01d8878a",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Bio sentence: Kothandaraman was appointed a member of the Board in September 2017 (a join with its date); the rest is career biography. Elsewhere only tenure fields (337, 292), which are not facts.",
+   "dates": [
+    "September 2017"
+   ]
+  },
+  {
+   "position": "enphase_energy:2024-12-31",
+   "i": 422,
+   "text_sha256": "sha256:43df899878ef244404f68130374f0c83c64b43a59ad595857319541f1f4a8d9d",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Biography sentence: Kothandaraman was appointed a member of the Board in September 2017 (a join with its date); elsewhere only his card's tenure field 'Director since April 2017', which gives a differ",
+   "dates": [
+    "September 2017"
+   ]
+  },
+  {
+   "position": "ford_motor_company:2021-12-31",
+   "i": 910,
+   "text_sha256": "sha256:ce7cd96bd9d996dc5fbe899bd760c8dcb8652d4bc5c347e9af9e9c92c356bc25",
+   "rule": "COMMITTEES_NAMED_AS_A_SET",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "committees": [
+    "Audit",
+    "Compensation",
+    "Finance",
+    "Nominating",
+    "Sustainability"
+   ],
+   "redundant_with": [
+    400,
+    775,
+    779,
+    781,
+    782,
+    783,
+    785,
+    787,
+    788,
+    789,
+    791,
+    792,
+    793,
+    923,
+    1003,
+    1004,
+    1065,
+    1135,
+    1215
+   ]
+  },
+  {
+   "position": "ford_motor_company:2022-12-31",
+   "i": 789,
+   "text_sha256": "sha256:2dee3d057a0d42abcd5d770fd4a613c7431fd3b0c8e6ace67ef54a0fe9f41e2a",
+   "rule": "DIRECTOR_COUNT_ON_A_DATE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": []
+  },
+  {
+   "position": "lumen_technologies:2021-12-31",
+   "i": 1210,
+   "text_sha256": "sha256:e75c992ae1bf29d2d8e4473971043bfc0b469487ad0933832f5f2c14c67234c8",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "FACT",
+   "reader_why": "Allen joined the Board on February 25, 2021.",
+   "reader_redundant_with": [
+    470,
+    2542
+   ],
+   "redundant_with": [
+    2542
+   ],
+   "dates": [
+    "February 25, 2021"
+   ]
+  },
+  {
+   "position": "lumen_technologies:2021-12-31",
+   "i": 1211,
+   "text_sha256": "sha256:a608ea37778efb8bdefc70e034d9958ef2992321b65c7efd532a78aceb331168",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "FACT",
+   "reader_why": "Ms. Boulet's term ended at the 2021 annual shareholders' meeting.",
+   "reader_redundant_with": [
+    1204,
+    1205
+   ],
+   "redundant_with": [],
+   "leavers": [
+    {
+     "surnames": [
+      "Boulet"
+     ],
+     "year": "2021"
+    }
+   ]
+  },
+  {
+   "position": "lumen_technologies:2022-12-31",
+   "i": 946,
+   "text_sha256": "sha256:495ef286ae2cfa6442891ec54135c9f0e17b1467737ed69bbbd78267ef053f31",
+   "rule": "SUBCOMMITTEE_DUTY",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "the Risk and Security Committee has a subcommittee for classified activities and facilities - in its responsibilities list"
+  },
+  {
+   "position": "lumen_technologies:2022-12-31",
+   "i": 954,
+   "text_sha256": "sha256:8a635e9412ad66e6ef9ce33055bc16da2d37a8cc44735ed0c5ebd536818341b0",
+   "rule": "PRESIDING_DUTY",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "independent directors' executive sessions are led by the Chairman - among meeting and attendance counts"
+  },
+  {
+   "position": "lumen_technologies:2022-12-31",
+   "i": 1315,
+   "text_sha256": "sha256:2dddf317d8e0d009a2b07ce381b5bc1832b2df75774ae0ee8af1a62ee80b7308",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "leavers": [
+    {
+     "surnames": [
+      "Hanks"
+     ],
+     "year": "2023"
+    }
+   ],
+   "redundant_with": [
+    876,
+    1280
+   ]
+  },
+  {
+   "position": "lumen_technologies:2022-12-31",
+   "i": 2784,
+   "text_sha256": "sha256:97aee347a96d5a7852515e228b05bef7ea2e9a0fcceaf98c4827c680cf797e0b",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Allen joined the Board February 25, 2021 and Jones January 1, 2020 - within stock-ownership-guideline compliance text",
+   "dates": [
+    "February 25, 2021",
+    "January 1, 2020"
+   ]
+  },
+  {
+   "position": "lumen_technologies:2023-12-31",
+   "i": 1644,
+   "text_sha256": "sha256:20525918483d4b278c702d3d3252a3c225f2cd0ad96fba91e32a79815152596b",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "leavers": [
+    {
+     "surnames": [
+      "Roberts"
+     ],
+     "year": "2024"
+    }
+   ],
+   "redundant_with": [
+    684,
+    1656
+   ]
+  },
+  {
+   "position": "lumen_technologies:2023-12-31",
+   "i": 1645,
+   "text_sha256": "sha256:7c982c8c3a17478f98e1b1a25fa9dbec54817b34a1998eee073067b2b98efe9f",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "leavers": [
+    {
+     "surnames": [
+      "Hanks"
+     ],
+     "year": "2023"
+    }
+   ],
+   "redundant_with": [
+    685
+   ]
+  },
+  {
+   "position": "lumen_technologies:2024-12-31",
+   "i": 575,
+   "text_sha256": "sha256:b33e87ff1b507ccc5915496c00e8521b5cc3cc40ba24b6660f9dd4bcdfba2c4b",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "names Brown as one of the three retiring at the 2025 meeting; tenure line is not a fact",
+   "dates": [
+    "2009"
+   ]
+  },
+  {
+   "position": "lumen_technologies:2024-12-31",
+   "i": 576,
+   "text_sha256": "sha256:415cc31d0bd62c5b8a6b644940357bf7671478a10ce3c6534e306f23f972f92d",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "names Clontz as one of the three retiring at the 2025 meeting; tenure line is not a fact",
+   "dates": [
+    "2017"
+   ]
+  },
+  {
+   "position": "lumen_technologies:2024-12-31",
+   "i": 577,
+   "text_sha256": "sha256:69fac1e485270154479285cd40261a7ab2503ac935cd0035e4dc7f75bff0aac7",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "names Siegel as one of the three retiring at the 2025 meeting; tenure line is not a fact",
+   "dates": [
+    "2009"
+   ]
+  },
+  {
+   "position": "lumen_technologies:2024-12-31",
+   "i": 1483,
+   "text_sha256": "sha256:44d4f5745dbd6d25d1e00caed50f75b381891b7e0122a5e2f9ed1534e2617caa",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "director-compensation table group label: the listed directors continue on the Board (vs. Retiring and Former groups)"
+  },
+  {
+   "position": "lumen_technologies:2024-12-31",
+   "i": 1506,
+   "text_sha256": "sha256:198201ea77e4408cff2b6a560e43d0c5968eee39a43e054ae341d7ae0be69489",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "FACT",
+   "reader_why": "terms of Brown, Clontz and Siegel end at the 2025 annual meeting",
+   "reader_redundant_with": [
+    559,
+    565,
+    566,
+    567,
+    568,
+    569,
+    570,
+    575,
+    576,
+    577,
+    1494,
+    1495,
+    1496,
+    1497,
+    1823
+   ],
+   "redundant_with": [],
+   "leavers": [
+    {
+     "surnames": [
+      "Brown",
+      "Clontz",
+      "Siegel"
+     ],
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "position": "lumen_technologies:2024-12-31",
+   "i": 1507,
+   "text_sha256": "sha256:7f51edffb5ae623b482376ac62a387b806aaa8a0bb8e7615f3cda19ce743bf36",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "FACT",
+   "reader_why": "Roberts' term ended at the 2024 annual meeting",
+   "reader_redundant_with": [
+    563,
+    564,
+    574,
+    1498,
+    1499,
+    1515,
+    1516
+   ],
+   "redundant_with": [
+    574,
+    1515,
+    1516
+   ],
+   "leavers": [
+    {
+     "surnames": [
+      "Roberts"
+     ],
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "position": "macys:2022-01-29",
+   "i": 629,
+   "text_sha256": "sha256:4e7f7e72b9efce03cf35c3aa6fd5b242dc735c708a95c9035a533baaa4dceb2d",
+   "rule": "NOMINEES_ARE_SITTING_DIRECTORS",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": []
+  },
+  {
+   "position": "macys:2022-01-29",
+   "i": 1875,
+   "text_sha256": "sha256:12de1e0e4b861e2d2ee613bbb10ac9bec1d9e81e23a674b0f89da9768a7e69d2",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    673,
+    703,
+    749,
+    886,
+    918,
+    1127,
+    1129,
+    1131,
+    1133,
+    1135
+   ]
+  },
+  {
+   "position": "macys:2022-01-29",
+   "i": 1943,
+   "text_sha256": "sha256:40ff89c145d67c5812e7b1949101cc97032fbed8195ab096ee00140a3f50c6f1",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    640,
+    808,
+    944,
+    974,
+    1155,
+    1157,
+    1159
+   ]
+  },
+  {
+   "position": "macys:2023-01-28",
+   "i": 709,
+   "text_sha256": "sha256:3f4ea01e70d50ca1719f281ed86beac1606fded2ee3058fefbdb561f90fb3fab",
+   "rule": "NOMINEES_ARE_SITTING_DIRECTORS",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": []
+  },
+  {
+   "position": "macys:2023-01-28",
+   "i": 1107,
+   "text_sha256": "sha256:b710789a2cc90a3018edade5f1a11bf657a88097bf55082db0ca1375713f2fe5",
+   "rule": "INDEPENDENCE_RELATIONSHIP_DETERMINATION",
+   "decision": "FACT",
+   "reader_verdict": "NOT",
+   "reader_why": "basis of the NCG Committee's independence review (no employment by suppliers, or amounts below thresholds); does not say which directors are independent",
+   "redundant_with": []
+  },
+  {
+   "position": "macys:2023-01-28",
+   "i": 1351,
+   "text_sha256": "sha256:9bbda3b408156b33d30c466d2b51ea01417ee45f7260f92175b48ad5443c977b",
+   "rule": "BOARD_TASK_FORCE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    1352
+   ]
+  },
+  {
+   "position": "macys:2023-01-28",
+   "i": 1352,
+   "text_sha256": "sha256:96bdb0eefa86753c8f1e16df012bfc97488211caec0a8af846d95ce4a55c6783",
+   "rule": "BOARD_TASK_FORCE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": []
+  },
+  {
+   "position": "macys:2023-01-28",
+   "i": 2197,
+   "text_sha256": "sha256:a0fee356f8359873a75bc863c27fd771648ca8a4ec219caa0325ef2a71e1830b",
+   "rule": "REPORT_SIGN_OFF",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "lead-in of the Audit Committee report signature"
+  },
+  {
+   "position": "macys:2023-01-28",
+   "i": 2246,
+   "text_sha256": "sha256:a0fee356f8359873a75bc863c27fd771648ca8a4ec219caa0325ef2a71e1830b",
+   "rule": "REPORT_SIGN_OFF",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "lead-in of the CMD Committee report signature"
+  },
+  {
+   "position": "macys:2024-02-03",
+   "i": 2254,
+   "text_sha256": "sha256:c8e30d9b91c8b63dd52df112f2ca84bc322f124ff95403efe0eb2586b015ac8c",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    675,
+    683,
+    705,
+    713,
+    745,
+    753,
+    781,
+    789,
+    924,
+    932,
+    1126,
+    1134,
+    1344,
+    1345,
+    1346,
+    1347,
+    1348,
+    1349
+   ]
+  },
+  {
+   "position": "macys:2024-02-03",
+   "i": 2558,
+   "text_sha256": "sha256:40ff89c145d67c5812e7b1949101cc97032fbed8195ab096ee00140a3f50c6f1",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    636,
+    644,
+    850,
+    858,
+    887,
+    895,
+    958,
+    966,
+    1091,
+    1099,
+    1372,
+    1373,
+    1374,
+    1375,
+    1376
+   ]
+  },
+  {
+   "position": "macys:2025-02-01",
+   "i": 563,
+   "text_sha256": "sha256:dc3818fdf9e66f679b2408e8592905a579eada8092e4ede00f8a9cbfd758c6a0",
+   "rule": "NOMINEES_ARE_SITTING_DIRECTORS",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": []
+  },
+  {
+   "position": "macys:2025-02-01",
+   "i": 1934,
+   "text_sha256": "sha256:c8e30d9b91c8b63dd52df112f2ca84bc322f124ff95403efe0eb2586b015ac8c",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    611,
+    616,
+    618,
+    642,
+    647,
+    649,
+    711,
+    716,
+    718,
+    743,
+    749,
+    751,
+    993,
+    998,
+    1000,
+    1196,
+    1197,
+    1198,
+    1200,
+    1201,
+    1202
+   ]
+  },
+  {
+   "position": "macys:2025-02-01",
+   "i": 1935,
+   "text_sha256": "sha256:a0fee356f8359873a75bc863c27fd771648ca8a4ec219caa0325ef2a71e1830b",
+   "rule": "REPORT_SIGN_OFF",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Audit Committee report signature lead-in (signers Chandoha as chair, Boone, Chopra, Clark, Zhen)"
+  },
+  {
+   "position": "macys:2025-02-01",
+   "i": 1962,
+   "text_sha256": "sha256:40ff89c145d67c5812e7b1949101cc97032fbed8195ab096ee00140a3f50c6f1",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    573,
+    578,
+    580,
+    788,
+    793,
+    795,
+    823,
+    828,
+    830,
+    894,
+    899,
+    901,
+    960,
+    965,
+    967,
+    1220,
+    1221,
+    1222,
+    1223,
+    1224,
+    1225,
+    1226,
+    1227,
+    1228,
+    1229
+   ]
+  },
+  {
+   "position": "macys:2025-02-01",
+   "i": 1963,
+   "text_sha256": "sha256:a0fee356f8359873a75bc863c27fd771648ca8a4ec219caa0325ef2a71e1830b",
+   "rule": "REPORT_SIGN_OFF",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "CMD Committee report signature lead-in (signers Granoff as chair, Arel, Connelly, Levinson, Sesler, Varga)"
+  },
+  {
+   "position": "macys:2025-02-01",
+   "i": 2358,
+   "text_sha256": "sha256:b740a599a9b532b39259ce6c59735a923f60aaf1158fdb9d7c84adf64050f375",
+   "rule": "DATED_ROLE_CHANGE",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Spring appointed Chairman in April 2024 - within compensation text",
+   "reader_redundant_with": [
+    38,
+    39,
+    41,
+    48,
+    49,
+    453,
+    464,
+    933,
+    934,
+    939,
+    952,
+    1044,
+    1045,
+    2010,
+    2012,
+    2672,
+    2682,
+    2692
+   ],
+   "redundant_with": [
+    1044
+   ],
+   "changes": [
+    {
+     "surname": "Spring",
+     "role": "board",
+     "dates": [
+      "April 2024"
+     ]
+    }
+   ]
+  },
+  {
+   "position": "marriott_international:2021-12-31",
+   "i": 613,
+   "text_sha256": "sha256:0bb5413b8164dc9352587cff95e666e361ba40505b405b7e58785a0fd3da16fc",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "dates": [
+    "February 2021"
+   ],
+   "redundant_with": []
+  },
+  {
+   "position": "marriott_international:2021-12-31",
+   "i": 2882,
+   "text_sha256": "sha256:19d8c8780ef353b38d508cf31c4eb402c6d3b828d7644ee5250c0601610c3430",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Marriott",
+   "field": 2884,
+   "redundant_with": [
+    56,
+    62,
+    63,
+    567,
+    585,
+    589,
+    649,
+    1338,
+    2863,
+    2869,
+    2873,
+    2883
+   ]
+  },
+  {
+   "position": "marriott_international:2022-12-31",
+   "i": 367,
+   "text_sha256": "sha256:ded677ebdc4f714757351a503ced4296d676a0d2dd8d3dbacdb6aaafb4ea1652",
+   "rule": "DIRECTOR_COUNT_ON_A_DATE",
+   "decision": "FACT",
+   "reader_verdict": "NOT",
+   "reader_why": "plan eligibility; '13 non-employee directors' is neither the board's size nor its independent count",
+   "redundant_with": []
+  },
+  {
+   "position": "marriott_international:2022-12-31",
+   "i": 661,
+   "text_sha256": "sha256:c149bc14e45c0d92e0adae72d5dfa10ad2fde44aebb562d6c1fedebf30ceaca1",
+   "rule": "CARD_DESIGNATION_UNMARKED",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Capuano",
+   "redundant_with": [
+    1054
+   ]
+  },
+  {
+   "position": "marriott_international:2022-12-31",
+   "i": 726,
+   "text_sha256": "sha256:c149bc14e45c0d92e0adae72d5dfa10ad2fde44aebb562d6c1fedebf30ceaca1",
+   "rule": "CARD_DESIGNATION_UNMARKED",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Harrison",
+   "redundant_with": [
+    1054
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2021-12-31",
+   "i": 375,
+   "text_sha256": "sha256:4009db61740ed42fa48449db6389bfe7c103eb6c954912ef0394d1ce92bca6f6",
+   "rule": "PRESIDING_DUTY",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "the independent Chair of the Nominating and Governance Committee presides at meetings of the independent directors (presiding independent director); rest on executive sessions"
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2021-12-31",
+   "i": 583,
+   "text_sha256": "sha256:c387c8ddcf8e14d71ff5dd55b72c3c897ffb306431cd1b6315816f08e752be4a",
+   "rule": "COMPENSATION_COMMITTEE_INTERLOCKS",
+   "decision": "FACT",
+   "reader_verdict": "NOT",
+   "reader_why": "Compensation Committee interlocks disclosure (no member an officer/employee, no interlocks); no membership, count, chair or board determination",
+   "redundant_with": []
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2022-12-31",
+   "i": 426,
+   "text_sha256": "sha256:6dec1c518bd6015ae5ff99e1d92ee6f6ab3916bb890b4d9caa48a6d4ccd38a6b",
+   "rule": "PRESIDING_DUTY",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "independent Chair of the N&G Committee presides at meetings of the independent directors; rest is executive-session practice"
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2022-12-31",
+   "i": 819,
+   "text_sha256": "sha256:10282050ad6e94693c3c1a6b0f50ebf043b6a751f737e95c95725d26593c344f",
+   "rule": "NOMINEE_CARD_NO_COMMITTEE",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Ostroff card's Committees field: N/A (no committee)"
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2022-12-31",
+   "i": 2681,
+   "text_sha256": "sha256:ebea8a6a2002d7da1aaf333834ecedc645b1d2fd0cf6efad7b46d082e6d6ea49",
+   "rule": "PRESIDING_DUTY",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "independent Chair of the N&G Committee presides at independent directors' meetings; rest is executive-session topics"
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2023-12-31",
+   "i": 421,
+   "text_sha256": "sha256:d5e7bb51f65d28fcd0304160fe70440583d123530da5b54e7176691a080e001b",
+   "rule": "PRESIDING_DUTY",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "The independent Chair of the Nominating and Governance Committee presides at meetings of the independent directors (rest: executive sessions)"
+  },
+  {
+   "position": "pfizer:2022-12-31",
+   "i": 364,
+   "text_sha256": "sha256:51a02753a3c8b4f127594c54c9a624127f282306e979feeefb7ed830bafe9a3a",
+   "rule": "MEMBERSHIP_CRITERIA_DETERMINATION",
+   "decision": "FACT",
+   "reader_verdict": "NOT",
+   "reader_why": "Annual evaluation process and a generic finding that membership criteria are met; no size, independence, committee or chair fact",
+   "redundant_with": []
+  },
+  {
+   "position": "pfizer:2022-12-31",
+   "i": 897,
+   "text_sha256": "sha256:ee025975f701e68cbfd0026462099b3af28452f94085fc5b681064e6d2c77f79",
+   "rule": "MEMBERSHIP_CRITERIA_DETERMINATION",
+   "decision": "FACT",
+   "reader_verdict": "NOT",
+   "reader_why": "G&S report on assessment and evaluation process, overboarding compliance, retirement-age policy and director pay review; no composition outcome",
+   "redundant_with": []
+  },
+  {
+   "position": "pfizer:2023-12-31",
+   "i": 1453,
+   "text_sha256": "sha256:5e13f820973d2431daa8ef3538024ac20e04cb35f3d5f436e15add375be29e0c",
+   "rule": "DIRECTOR_COUNT_ON_A_DATE",
+   "decision": "FACT",
+   "reader_verdict": "NOT",
+   "reader_why": "Stock-plan eligibility: employees and 11 non-employee Directors eligible for awards; compensation-plan content, not board size, independence or committee facts.",
+   "redundant_with": []
+  },
+  {
+   "position": "salesforce:2025-01-31",
+   "i": 54,
+   "text_sha256": "sha256:93a21a35414946d7bc7f08863af3c04ced6770523df1d6a9c52c5d35201c1c92",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "letter writer (Lead Independent Director Donald, per signature 70-71) joined the Board in January 2023; rest is the company's transformation",
+   "dates": [
+    "January 2023"
+   ]
+  },
+  {
+   "position": "salesforce:2025-01-31",
+   "i": 619,
+   "text_sha256": "sha256:9d02f496eb9ca38f9aff86bb3f1a3b5de6dce42329681ebf5ffcd25d72715922",
+   "rule": "COMMITTEES_NAMED_AS_A_SET",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "committees": [
+    "Audit",
+    "Compensation",
+    "Nominating"
+   ],
+   "redundant_with": [
+    714
+   ]
+  },
+  {
+   "position": "enphase_energy:2025-12-31",
+   "i": 57,
+   "text_sha256": "sha256:7e4815746cd9606c36de06738eb945ff7f405cb161e6e44f5098b2abbcee02ce",
+   "rule": "CLASSIFIED_SLATE_COUNT",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Agenda item states the nominee count: three director nominees, to hold office until the 2029 annual meeting."
+  },
+  {
+   "position": "enphase_energy:2025-12-31",
+   "i": 210,
+   "text_sha256": "sha256:04902520848149fc07e86a43042f797d7530ef47bd94de86db8b6abac45ec204",
+   "rule": "CLASSIFIED_SLATE_COUNT",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Fact: the Board has nominated three directors for three-year terms until 2029 (classified board). The rest praises the nominees' skills and explains why the board is classified."
+  },
+  {
+   "position": "enphase_energy:2025-12-31",
+   "i": 212,
+   "text_sha256": "sha256:84c41411bac1bf0ab36a18313a485eaecbbffb701dd69de6b3a45193159cffe2",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Roster heading in the proxy-summary director table. With the names under it, it states that the Class II nominees (Haenggi, Kortlang, Mora) stand for terms until 2029."
+  },
+  {
+   "position": "enphase_energy:2025-12-31",
+   "i": 232,
+   "text_sha256": "sha256:c40419fde2455d34258a29afc37f04754df68739fef51a219d1d0459cecd5f7d",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Roster heading: continuing Class III directors (Kothandaraman and Malchow listed under it), terms until 2027."
+  },
+  {
+   "position": "enphase_energy:2025-12-31",
+   "i": 243,
+   "text_sha256": "sha256:3c6e129b9ce6687fa4488d961018da08f29c8affc1c8250f0e3d5ec0a2f28363",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Roster heading: continuing Class I directors (Gomo and Rodgers, at 244 and 250), terms until 2028."
+  },
+  {
+   "position": "enphase_energy:2025-12-31",
+   "i": 390,
+   "text_sha256": "sha256:d4c62170921c38e19c734d7dc6d736de49bc0b8ddb59ceee0453aba8acc91920",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Heading of the Class II nominee director cards (Haenggi, Kortlang, Mora), terms until the 2029 annual meeting."
+  },
+  {
+   "position": "enphase_energy:2025-12-31",
+   "i": 429,
+   "text_sha256": "sha256:27ebf6083f7c62ef26538ab36509caa51a4daeb99b74dcb607932ca45c7932cc",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Heading of the Class III director cards (Kothandaraman, Malchow), continuing in office until the 2027 annual meeting."
+  },
+  {
+   "position": "enphase_energy:2025-12-31",
+   "i": 452,
+   "text_sha256": "sha256:f6e4777538f6baec85f958830dcb3a2f480c749b26040d9b897130d4f4a8d629",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Heading of the Class I director cards (Gomo, Rodgers), continuing in office until the 2028 annual meeting."
+  },
+  {
+   "position": "enphase_energy:2025-12-31",
+   "i": 2338,
+   "text_sha256": "sha256:9f33f85e9e1b8218d5fe2ff258e67404be8bb92993c87d6c3d723547430b89b7",
+   "rule": "CLASSIFIED_SLATE_COUNT",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Voting item: election of three nominees as Class II directors to serve until the 2029 annual meeting."
+  },
+  {
+   "position": "enphase_energy:2025-12-31",
+   "i": 2360,
+   "text_sha256": "sha256:38a5bab9606cb5f4e58a75f9bbe65c05819d6b4d3f8d72ef0560395dd0903ee0",
+   "rule": "CLASSIFIED_SLATE_COUNT",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Fact: Proposal 1 is the election of three director nominees. The rest explains broker non-votes."
+  },
+  {
+   "position": "enphase_energy:2025-12-31",
+   "i": 2364,
+   "text_sha256": "sha256:e431ae4cf5129c75bf755b09c647f656e2595a8e5ee0be07f1020d00134fdee2",
+   "rule": "CLASSIFIED_SLATE_COUNT",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Fact: three Class II nominees. The rest is how an unmarked proxy is voted by default."
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 32,
+   "text_sha256": "sha256:354d47d1e9f5cfff3172896030fbdba776c76a3218431a79454c0123a54c45cc",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Ford",
+   "field": 33,
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 42,
+   "text_sha256": "sha256:354d47d1e9f5cfff3172896030fbdba776c76a3218431a79454c0123a54c45cc",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Ford",
+   "field": 43,
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 146,
+   "text_sha256": "sha256:650bd84e1714ac935b2123125b805dc3da428a427773242305bcc8e9206ec64a",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Casiano",
+   "field": 147,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 155,
+   "text_sha256": "sha256:a7bc611ad63d0d738c9f60004f2eedfaeb6ebd5c87a4d5026e340dc4e556e6d9",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Cisneros",
+   "field": 156,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 164,
+   "text_sha256": "sha256:ef22ae2cf3596cb7ed7a53c202e8729ebac673a90e6f790c1a4d8097a899274d",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "English",
+   "field": 169,
+   "redundant_with": [
+    494,
+    495,
+    497
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 178,
+   "text_sha256": "sha256:83fe939693e82b4657b097c2bae730112c839cbc0411e0c62883473981f61f1f",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Ford",
+   "field": 183,
+   "redundant_with": [
+    494,
+    495,
+    498
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 185,
+   "text_sha256": "sha256:354d47d1e9f5cfff3172896030fbdba776c76a3218431a79454c0123a54c45cc",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Ford",
+   "field": 186,
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 192,
+   "text_sha256": "sha256:b88240239162421ab15af4d13284198dbac3051545f28af3c15d8badba4bd8f8",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Helman",
+   "field": 193,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 201,
+   "text_sha256": "sha256:e9991839dc5d49aac7df5163dee169737e657a5da84e3e8991e3a040f4a90597",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Huntsman",
+   "field": 202,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 209,
+   "text_sha256": "sha256:b4d0252ea426274b619e88ae5b1f35bafc1c2025f357fd396724577c1dd4b63f",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Kennard",
+   "field": 210,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 220,
+   "text_sha256": "sha256:f2b16046a4a19329b7306b2c11a9344d703c94f34a4681fe552b91d74aa6e1ce",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "May",
+   "field": 221,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 230,
+   "text_sha256": "sha256:d6079a3b4a18ce211b4740cdb56fdcde248cca43cdaf61e14ccc8424bed05caa",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Mooney",
+   "field": 231,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 239,
+   "text_sha256": "sha256:76ce5226bcebb502259061ad48498c68641269e60918b0cb5f3e8bdb42daa1c9",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Radakovich",
+   "field": 240,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 251,
+   "text_sha256": "sha256:43d3336eaef2409c184fd79a1b0d1909d25ad52e56bc1f8cd50161661f8572ff",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Thornton",
+   "field": 252,
+   "redundant_with": [
+    395,
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 262,
+   "text_sha256": "sha256:d7334fe83acce612f23763716abfc557be00ccc87096ad3df44be01e5db8768f",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Veihmeyer",
+   "field": 263,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 271,
+   "text_sha256": "sha256:32d6b9c88f455a344e23a168dee4b4e61edc7f33951fb107149de59359cb83e3",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Weinberg",
+   "field": 272,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 905,
+   "text_sha256": "sha256:7d0e0cedfe8058452373df73fb0d287d411a613f255bfce6809aa66ff37053b0",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Casiano",
+   "field": 908,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 906,
+   "text_sha256": "sha256:13db797050587e5469e3f6922764aaa598f4345b4d6917c3f771fbd13cd8ea68",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Casiano",
+   "field": 908,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 919,
+   "text_sha256": "sha256:ee6aa9381e07c60412e8bca2932326f413828ccabca7b96380b4170f7e704605",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Cisneros",
+   "field": 922,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 920,
+   "text_sha256": "sha256:95bf1232214945db2af87dafee0cd0df4e1de607630df6a0d0f3b189e9f07d24",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Cisneros",
+   "field": 922,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 934,
+   "text_sha256": "sha256:0bb09269b6f5ad4db69ccf7bd2c4688a187ab4b57bdcadede6e5b87bd6a815f9",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Ford",
+   "field": 938,
+   "redundant_with": [
+    494,
+    495,
+    497,
+    545,
+    546,
+    550
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 944,
+   "text_sha256": "sha256:8af6848704a716f58074fe1857d0ab8e169d959d52c31f8ee275cb5809fbeed2",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Farley",
+   "field": 948,
+   "redundant_with": [
+    441,
+    442,
+    443,
+    444,
+    445,
+    470,
+    471,
+    472,
+    473,
+    474,
+    475,
+    476,
+    494,
+    495,
+    496,
+    497,
+    498,
+    499,
+    500,
+    501,
+    502,
+    503,
+    516,
+    517,
+    518,
+    519,
+    520,
+    521,
+    522,
+    523,
+    524,
+    525,
+    526,
+    527,
+    528,
+    545,
+    546,
+    547,
+    548,
+    549,
+    550,
+    551,
+    552,
+    553,
+    554,
+    555,
+    556
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 945,
+   "text_sha256": "sha256:bbb285dc7356e76d8ab19174dab43ef8078c86af232d5710afd5ceae1b58000f",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Farley",
+   "field": 948,
+   "redundant_with": [
+    441,
+    442,
+    443,
+    444,
+    445,
+    470,
+    471,
+    472,
+    473,
+    474,
+    475,
+    476,
+    494,
+    495,
+    496,
+    497,
+    498,
+    499,
+    500,
+    501,
+    502,
+    503,
+    516,
+    517,
+    518,
+    519,
+    520,
+    521,
+    522,
+    523,
+    524,
+    525,
+    526,
+    527,
+    528,
+    545,
+    546,
+    547,
+    548,
+    549,
+    550,
+    551,
+    552,
+    553,
+    554,
+    555,
+    556
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 956,
+   "text_sha256": "sha256:83fe939693e82b4657b097c2bae730112c839cbc0411e0c62883473981f61f1f",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Ford",
+   "field": 959,
+   "redundant_with": [
+    494,
+    495,
+    498,
+    545,
+    546,
+    551
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 977,
+   "text_sha256": "sha256:1315b3e3614119650d810ef4d7f6c9a909cae990d346ab6f43b417a3ac6a5f6a",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Helman",
+   "field": 980,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 978,
+   "text_sha256": "sha256:66e927a8bdca683ae02b6853ed775fcc8b40b1bd4916b79986816b5a72f99a2b",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Helman",
+   "field": 980,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 990,
+   "text_sha256": "sha256:55d851d99eb2e542b0970692ce37066840f739ec9d3b5c5c7fd6428d91fe62f3",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Huntsman",
+   "field": 994,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 991,
+   "text_sha256": "sha256:ef44c41fee625810282023ce111cc16ed0f68d6c28827e03abf0531215b37717",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Huntsman",
+   "field": 994,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 1006,
+   "text_sha256": "sha256:eeab98f7a151b698b1c848efa19358cbfe050dfeccd9ede02e3bcd0ee9cd5613",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Kennard",
+   "field": 1009,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 1007,
+   "text_sha256": "sha256:81ae550b7a3a4160ddf265dc697a48a6740bf93eba74f43d28da049c619ad204",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Kennard",
+   "field": 1009,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 1022,
+   "text_sha256": "sha256:f2b16046a4a19329b7306b2c11a9344d703c94f34a4681fe552b91d74aa6e1ce",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "May",
+   "field": 1024,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 1035,
+   "text_sha256": "sha256:d6079a3b4a18ce211b4740cdb56fdcde248cca43cdaf61e14ccc8424bed05caa",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Mooney",
+   "field": 1037,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 1048,
+   "text_sha256": "sha256:76ce5226bcebb502259061ad48498c68641269e60918b0cb5f3e8bdb42daa1c9",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Radakovich",
+   "field": 1050,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 1063,
+   "text_sha256": "sha256:43d3336eaef2409c184fd79a1b0d1909d25ad52e56bc1f8cd50161661f8572ff",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Thornton",
+   "field": 1065,
+   "redundant_with": [
+    395
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 1080,
+   "text_sha256": "sha256:649d56c875e37ecb49efc496e8e259f461207b9a5414f2af80b721d44ce4bf5c",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Veihmeyer",
+   "field": 1083,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 1081,
+   "text_sha256": "sha256:d58a519db3e3e18dbed257933dd6985d0ba228f58e0e28dec7636fcc82b36a59",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Veihmeyer",
+   "field": 1083,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 1092,
+   "text_sha256": "sha256:55daef2eab680e664c3f1ee5d767efebbd11a8197f9f68abf4edf1529f004e77",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Weinberg",
+   "field": 1095,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "ford_motor_company:2025-12-31",
+   "i": 1093,
+   "text_sha256": "sha256:128c7619be0058d069a9e64b6e114990b33171e1614d2f07d6a6fa67418b9617",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Weinberg",
+   "field": 1095,
+   "redundant_with": [
+    638
+   ]
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 577,
+   "text_sha256": "sha256:9ffe0f86a3d9c105dc8f4a0543ea6cee25fbd2932d296630a9102d8b582c8570",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Nominee card: Allen has been a director since 2021 (year he joined the Board). No other block states when Allen joined."
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 598,
+   "text_sha256": "sha256:c7b792edf42f2caa270587a2935812938aa40cb6b6281e8251d2ba7680ce6d09",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Nominee card: Béjar has been a director since 2016. No other block states when Béjar joined."
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 633,
+   "text_sha256": "sha256:579ee9e03183c20915fc05458e890163c62b7c206d2458b4fbb532d5ba0c33fb",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Nominee card: Capossela has been a director since 2024."
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 648,
+   "text_sha256": "sha256:c808bd1aa865b1942197f80ef235eae6679e0d4103678409e8d4991a79888d73",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Nominee card: Chilton has been a director since 2017. No other block states when Chilton joined."
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 673,
+   "text_sha256": "sha256:b60dd19f8a691e72f5aa40f72acc5e00f137b7c3b3a1fa788262c96ca0f320ad",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Nominee card: Collins 'Director since: Nominated for 2026' - a new nominee."
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 690,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Nominee card: Goldberg has been a director since 2025."
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 712,
+   "text_sha256": "sha256:1a5c994de0ae6e07f0fb34fa77df21b78f0b66e07252745a572ebce1b30471ae",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Nominee card: Johnson has been a director since 2022."
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 734,
+   "text_sha256": "sha256:579ee9e03183c20915fc05458e890163c62b7c206d2458b4fbb532d5ba0c33fb",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Nominee card: Linear has been a director since 2024."
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 760,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Nominee card: McMillan has been a director since 2025."
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 864,
+   "text_sha256": "sha256:fb0164f0c82cb0a1dafb9ce3dd695ebff51185114c6ed01e2b8563fcf6f71e96",
+   "rule": "CHAIR_CEO_STRUCTURE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": []
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 1346,
+   "text_sha256": "sha256:44d4f5745dbd6d25d1e00caed50f75b381891b7e0122a5e2f9ed1534e2617caa",
+   "rule": "DIRECTOR_GROUP_HEADING",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Director-pay table group label 'Continuing Directors:' over the rows for Allen, Béjar, Capossela, Chilton, Goldberg, Linear, McMillan (continuing on the Board)."
+  },
+  {
+   "position": "lumen_technologies:2025-12-31",
+   "i": 1370,
+   "text_sha256": "sha256:fda32790f48aa1a704cef2d8830004f0468e8c27c910cfac76b3125feba754b5",
+   "rule": "TERM_END_AT_A_MEETING",
+   "decision": "FACT",
+   "reader_verdict": "FACT",
+   "reader_why": "Glenn's and Jones's terms end at the 2026 annual meeting.",
+   "reader_redundant_with": [
+    537,
+    568
+   ],
+   "redundant_with": [
+    537,
+    1724
+   ],
+   "leavers": [
+    {
+     "surnames": [
+      "Glenn",
+      "Jones"
+     ],
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 51,
+   "text_sha256": "sha256:354a5a605664389dbc73e59c89ce42f50cdfbc088bafbdeb5918138c544809d4",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Spring",
+   "field": 52,
+   "redundant_with": [
+    821,
+    826,
+    839
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 442,
+   "text_sha256": "sha256:354a5a605664389dbc73e59c89ce42f50cdfbc088bafbdeb5918138c544809d4",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Spring",
+   "field": 453,
+   "redundant_with": [
+    821,
+    826,
+    839
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 508,
+   "text_sha256": "sha256:b57905636057d11ba0a9f49c509137bdc8d661beb9468ee36e0aa36d681e27c2",
+   "rule": "NOMINEES_ARE_SITTING_DIRECTORS",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": []
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 521,
+   "text_sha256": "sha256:283eb482b5e5722ae1899d7fa9663526d425f7b50955e0896e7e656e86f9aafb",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Arel",
+   "field": 523,
+   "redundant_with": [
+    912
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 561,
+   "text_sha256": "sha256:9cd661dec95fce07cc2497c7d0904551a40ad8a4cc9042cb74e13ce7f6981c85",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Boone",
+   "field": 563,
+   "redundant_with": [
+    912
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 594,
+   "text_sha256": "sha256:9ff17d028927be6dcfb9fc170d40a88be115f01c7d50dc6969437625ffb2bb6e",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Chandoha",
+   "field": 596,
+   "redundant_with": [
+    912
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 632,
+   "text_sha256": "sha256:2b226ff2b503175fd7d0f8b26aa5b5a57efeee2f333f84b612923c1513c6326f",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Chavez",
+   "field": 634,
+   "redundant_with": [
+    912
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 671,
+   "text_sha256": "sha256:6d71a3b1d6575c2ced0fc12c4e3832101a582abf1be5f2f538ca6423a13c4a3f",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Chopra",
+   "field": 673,
+   "redundant_with": [
+    912
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 704,
+   "text_sha256": "sha256:aa9f4366bd849edbb261a9babc906dd2b5366ff9b7cbf71d2375f598f0f9481e",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Connelly",
+   "field": 706,
+   "redundant_with": [
+    912
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 743,
+   "text_sha256": "sha256:f883d9646809496d13e6ae1264c6f5d6bdc776844431f2bb704f57b50bd68cc2",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Granoff",
+   "field": 745,
+   "redundant_with": [
+    912
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 783,
+   "text_sha256": "sha256:cd0c4f336817295f9a41145704827f7dfaf67701b65e9ea4f6d597d439c0b5ef",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Markee",
+   "field": 785,
+   "redundant_with": [
+    912
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 820,
+   "text_sha256": "sha256:354a5a605664389dbc73e59c89ce42f50cdfbc088bafbdeb5918138c544809d4",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Spring",
+   "field": 821,
+   "redundant_with": [
+    453,
+    826,
+    839
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 849,
+   "text_sha256": "sha256:a15da1b333fcc9cb719563876dbea88d0d76dc920e772b9616ed183ec94ff376",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Varga",
+   "field": 851,
+   "redundant_with": [
+    927
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 1755,
+   "text_sha256": "sha256:c8e30d9b91c8b63dd52df112f2ca84bc322f124ff95403efe0eb2586b015ac8c",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    601,
+    1044,
+    1045,
+    1046,
+    1047,
+    1048,
+    1049
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 2235,
+   "text_sha256": "sha256:40ff89c145d67c5812e7b1949101cc97032fbed8195ab096ee00140a3f50c6f1",
+   "rule": "REPORT_SIGNERS_COMMITTEE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    750,
+    1065,
+    1066,
+    1067,
+    1068,
+    1069,
+    1070
+   ]
+  },
+  {
+   "position": "macys:2026-01-31",
+   "i": 2294,
+   "text_sha256": "sha256:354a5a605664389dbc73e59c89ce42f50cdfbc088bafbdeb5918138c544809d4",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Spring",
+   "field": 2295,
+   "redundant_with": [
+    826
+   ]
+  },
+  {
+   "position": "marriott_international:2025-12-31",
+   "i": 520,
+   "text_sha256": "sha256:e429802443b35e31b5f236773dc442394ebe045c2f19822d225d05447e1e4a58",
+   "rule": "CHAIR_CEO_STRUCTURE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    521
+   ]
+  },
+  {
+   "position": "marriott_international:2025-12-31",
+   "i": 521,
+   "text_sha256": "sha256:42905c2487c7bbe213609fffabddaeabbe9c0298f856d2b79f75d0d7b2b93f75",
+   "rule": "CHAIR_CEO_STRUCTURE",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "redundant_with": [
+    520
+   ]
+  },
+  {
+   "position": "marriott_international:2025-12-31",
+   "i": 664,
+   "text_sha256": "sha256:c149bc14e45c0d92e0adae72d5dfa10ad2fde44aebb562d6c1fedebf30ceaca1",
+   "rule": "CARD_DESIGNATION_UNMARKED",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Capuano",
+   "redundant_with": [
+    1218
+   ]
+  },
+  {
+   "position": "marriott_international:2025-12-31",
+   "i": 765,
+   "text_sha256": "sha256:c149bc14e45c0d92e0adae72d5dfa10ad2fde44aebb562d6c1fedebf30ceaca1",
+   "rule": "CARD_DESIGNATION_UNMARKED",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Harrison",
+   "redundant_with": [
+    1218
+   ]
+  },
+  {
+   "position": "marriott_international:2025-12-31",
+   "i": 1155,
+   "text_sha256": "sha256:1d089a2adcce96e56d00f1b7f3b219105c2bb97630e27ae39d0fca517f398c53",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Tresvant's card: joined the Board in 2025 (appointment within the reported year; other cards' join years are tenure, not counted)"
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2024-12-31",
+   "i": 418,
+   "text_sha256": "sha256:31b7a4115824b1e13f0760a9ccf7fa23c49e3c270eb554e9da753101aff51b76",
+   "rule": "PRESIDING_DUTY",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Fact: the Chair of the Nominating and Governance Committee is independent. Other content: executive-session practice; presiding at independent-director sessions is read as a duty, not a designation."
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 89,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Ellison card 'Director since: 2025': he is a director (stated in 84); the start year is read as tenure, not a change event."
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 97,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Brandon-Gordon card 'Director since: 2025': he is a director (84); start year read as tenure."
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 100,
+   "text_sha256": "sha256:08cc57e2b8da66643d5ec224be01bb1145e7bc31e1b12d09e75bf44e4967ac3a",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Bio: Brandon-Gordon is 'a member of our Board' (and CSO/COO) since August 2025; rest is career, Harbor Lights board, qualification rationale.",
+   "reader_redundant_with": [
+    84
+   ],
+   "redundant_with": [],
+   "dates": [
+    "August 2025"
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 105,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Byrne card 'Director since: 2025': she is a director (84); start year read as tenure."
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 110,
+   "text_sha256": "sha256:28935641f660adbe453df2a5b49a680a28792131ddb9468105a54023595090a5",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Bio: Byrne 'has served as a member of our Board since August 2025'; rest is career, other boards (incl. Paramount Global/CBS), qualification rationale.",
+   "reader_redundant_with": [
+    84
+   ],
+   "redundant_with": [],
+   "dates": [
+    "August 2025"
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 113,
+   "text_sha256": "sha256:496b6a73a76c0efef00ee4f17a490f1023e7538087aa76c57dcb3818f26d2b14",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Campion card 'Director since: 2026': he is a director (84). The 2026 start is after the fiscal year end; read as tenure here - if post-year-end joins count as changes, only 113/117 state it."
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 117,
+   "text_sha256": "sha256:c441444a1803e705faf2cb8262fe095096806dd774985801f0fdf316cbbac3dc",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Bio: Campion 'has served as a member of our Board since January 2026' (post-year-end start, read as tenure); rest is career, other companies' boards, qualification rationale.",
+   "reader_redundant_with": [
+    84
+   ],
+   "redundant_with": [],
+   "dates": [
+    "January 2026"
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 122,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Cardinale card 'Director since: 2025': he is a director (84); start year read as tenure."
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 126,
+   "text_sha256": "sha256:b0e50f506ef4ab9b04279f38db47bd11cf2b138a4e9050fdcc8a03f6abcea80d",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Bio: Cardinale 'has served as a member of our Board since August 2025'; rest is RedBird/Goldman career and qualification rationale.",
+   "reader_redundant_with": [
+    84
+   ],
+   "redundant_with": [],
+   "dates": [
+    "August 2025"
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 129,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Catz card 'Director since: 2025': she is a director (84); start year read as tenure."
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 133,
+   "text_sha256": "sha256:1ae449b569d9368a0337a14182bd3bf78c570cea1ba820f6bae9feabccbb0768",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Bio: Catz 'has served as a member of our Board since August 2025'; rest is Oracle/Disney roles and qualification rationale.",
+   "reader_redundant_with": [
+    84
+   ],
+   "redundant_with": [],
+   "dates": [
+    "August 2025"
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 138,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Hamill card 'Director since: 2025': he is a director (84); start year read as tenure."
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 143,
+   "text_sha256": "sha256:b4b9acff60e0f6a21cfd30c9359d66fdacea4cbc087931c4fe73011949f47e3a",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Bio: Hamill 'has served as a member of our Board since August 2025'; rest is Silver Lake/Latham career and qualification rationale.",
+   "reader_redundant_with": [
+    84
+   ],
+   "redundant_with": [],
+   "dates": [
+    "August 2025"
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 146,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Lansing card 'Director since: 2025': she is a director (84); start year read as tenure."
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 150,
+   "text_sha256": "sha256:963ffe2be88cdaeef72f0ccd2c76098f23da357cf7f15482c7d33cec3db51860",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Bio: Lansing 'has served as a member of our Board since August 2025'; rest is film career, UMG board chair (another organisation), qualification rationale.",
+   "reader_redundant_with": [
+    84
+   ],
+   "redundant_with": [],
+   "dates": [
+    "August 2025"
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 155,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Marinelli card 'Director since: 2025': he is a director (84); start year read as tenure."
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 159,
+   "text_sha256": "sha256:1e626fa928a5cea18b8ae281503748150455e8f762b5f11eaec8db4dd00f89e0",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Bio: Marinelli 'has served as a member of our Board since August 2025'; rest is Lawrence Investments career, other companies' boards, qualification rationale.",
+   "reader_redundant_with": [
+    84
+   ],
+   "redundant_with": [],
+   "dates": [
+    "August 2025"
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 162,
+   "text_sha256": "sha256:c340653d04df86263782a3dc6738c989de988bfd395534bcd493318e804fb4e5",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Thornton card 'Director since: 2025': he is a director (84); start year read as tenure."
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 166,
+   "text_sha256": "sha256:201d8e78e0d7513042cf16de0baefc0a6da76dc3a3aaf8100afe9b43892db0b5",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Bio: Thornton 'has served as a member of our Board since August 2025'; rest is RedBird/Barrick roles and lead-independent-director roles at Ford and Lenovo (other organisations).",
+   "reader_redundant_with": [
+    84
+   ],
+   "redundant_with": [],
+   "dates": [
+    "August 2025"
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 194,
+   "text_sha256": "sha256:f9fbe3483495088dbaec6d44fc428f646245336848ef7dcd1e224ecd48a6ab74",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Ellison",
+   "field": 196,
+   "redundant_with": [
+    86,
+    92,
+    281,
+    700,
+    1594
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 200,
+   "text_sha256": "sha256:8bfdcbb6e24c35d9d9412c5e48ae67085c57e75d73d832e4d519a828da94736f",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Brandon-Gordon",
+   "field": 202,
+   "redundant_with": [
+    84
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 280,
+   "text_sha256": "sha256:feb817a0cf941c8bfd1c2066f0b18d3cb7594a021844040b1f956e63fb941112",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Ellison",
+   "field": 281,
+   "redundant_with": [
+    86,
+    92,
+    196,
+    700,
+    1594
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 699,
+   "text_sha256": "sha256:feb817a0cf941c8bfd1c2066f0b18d3cb7594a021844040b1f956e63fb941112",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Ellison",
+   "field": 700,
+   "redundant_with": [
+    86,
+    92,
+    196,
+    281,
+    1594
+   ]
+  },
+  {
+   "position": "paramount_skydance_paramount_global:2025-12-31",
+   "i": 1593,
+   "text_sha256": "sha256:feb817a0cf941c8bfd1c2066f0b18d3cb7594a021844040b1f956e63fb941112",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Ellison",
+   "field": 1594,
+   "redundant_with": [
+    86,
+    92,
+    196,
+    281,
+    700
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 49,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "NOT_READ",
+   "reader_why": "",
+   "surname": "Benioff",
+   "field": 50,
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 76,
+   "text_sha256": "sha256:62f416d4621c2178c26054dfea7bd4280e032d421f80a36b252bd4e7e3a7daf6",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Donald",
+   "field": 77,
+   "redundant_with": [
+    665
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 602,
+   "text_sha256": "sha256:a394ef9b3d64520cdb57491e3c88c89eef486ea5be5930012a292955d0316cd0",
+   "rule": "COMMITTEES_NAMED_AS_A_SET",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "committees": [
+    "Audit",
+    "Compensation",
+    "Nominating"
+   ],
+   "redundant_with": [
+    696
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 919,
+   "text_sha256": "sha256:b005c48faee1cac05f0579d6190f660d12d14da7d4017a56f1553a69bcf64fb0",
+   "rule": "JOIN_IN_THE_YEAR",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Director RSU grants; states Chang and Kirk were appointed to the Board in July 2025",
+   "reader_redundant_with": [
+    806,
+    4717
+   ],
+   "redundant_with": [],
+   "dates": [
+    "July 2025"
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 933,
+   "text_sha256": "sha256:e756e68fbf90cd91b2e24ce9b7f12fa99b41bb9a426ee8eaaf355ac655761c7a",
+   "rule": "DATED_ROLE_CHANGE",
+   "decision": "FACT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Director-pay intro; Washington's former roles as Lead Independent Director and Governance Committee Chair ended when she became COFO effective 3/21/2025, when Donald became LID and Roos became Governa",
+   "reader_redundant_with": [
+    665,
+    962,
+    964,
+    3091
+   ],
+   "redundant_with": [],
+   "changes": [
+    {
+     "surname": "Donald",
+     "role": "lead",
+     "dates": [
+      "March 21, 2025"
+     ]
+    },
+    {
+     "surname": "Roos",
+     "role": "committee:governance",
+     "dates": [
+      "March 21, 2025"
+     ]
+    }
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1122,
+   "text_sha256": "sha256:88c3cf364123a25bbab687d4fe8ec6284836b9f00654eda361579d584a43343e",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Benioff",
+   "field": 1124,
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1123,
+   "text_sha256": "sha256:6128c81fc02ff4444cf69ba6264caba6529c551dc82b155bf9a26f8ba2a0d1e3",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Benioff",
+   "field": 1124,
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1129,
+   "text_sha256": "sha256:330d942f92e2d3ec8d8e535ca9bbb306af9dc120590c96577a35fbda13da04c9",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Benioff bio card: Director since 1999 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1157,
+   "text_sha256": "sha256:f0b8649dbd8cc269a6a9f57166490602cb5e17344007e29c1591f6cdad29aa37",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Alber",
+   "field": 1162,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1158,
+   "text_sha256": "sha256:9f47616cf36181ab3caff967309cf0048328673757392abe29c787f2cfe98930",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Alber",
+   "field": 1162,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1162,
+   "text_sha256": "sha256:bdafed20e9489e3cf65dfd9bb9127b452aba5f4493dc7cf018e151279dfdacca",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Alber bio card: Director since 2021 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1194,
+   "text_sha256": "sha256:6410ef0d3a6d3324fcba02131e5742215c99301055398a75457a27ac89dffb5f",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Chang",
+   "field": 1202,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1195,
+   "text_sha256": "sha256:2511229ed62cf4619cc5c26da9ca56575d08ff061686ab4778c7cc6169ab9075",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Chang",
+   "field": 1202,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1202,
+   "text_sha256": "sha256:6c7d7619fed1c6b8ae9f54d6bffb00c8dd1eb5cf0cb8f63e3e85d6644d96064b",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Chang bio card: Director since 2025 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1233,
+   "text_sha256": "sha256:8da8dcc64180bb40d2508ee04c409b0d0fecaf79454a0bac355aa898e1e26461",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Conway",
+   "field": 1238,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1234,
+   "text_sha256": "sha256:ca3e7995c79976c23aeb7eb96f34a8e0b985bff2ee28a69993993520a5e762a7",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Conway",
+   "field": 1238,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1238,
+   "text_sha256": "sha256:74fdd7ffabcad25799ce858559e062c628630111a5d44331656e98ed7a9b69d0",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Conway bio card: Director since 2005 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1276,
+   "text_sha256": "sha256:3ccea6fa629fb6ad2149312db9403174f15f612f813d9c3e34eb3f15b5d217a7",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Donald",
+   "field": 1278,
+   "redundant_with": [
+    665
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1277,
+   "text_sha256": "sha256:5991ce426259a177aa1e0a9a0317e4bb0a21c09cf28e4743c5c1e2c91a306d3e",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Donald",
+   "field": 1278,
+   "redundant_with": [
+    665
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1284,
+   "text_sha256": "sha256:dad50312c6590e54037c6b903ba09f17a5fa207892512169f1ca5fd672afb3f0",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Donald bio card: Director since 2023 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1314,
+   "text_sha256": "sha256:92039f1a7ad82575787e314975b24ac559b72031e5b7f84702e75821225f2929",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Harris",
+   "field": 1321,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1315,
+   "text_sha256": "sha256:56d3e80582af937e546f8e3f744c536d16b47c0e4d1fcc6f78ee2c3fad769012",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Harris",
+   "field": 1321,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1321,
+   "text_sha256": "sha256:27c869abb4bf4552ff306448c7ff4b1bc14f1fcbc025dde27757c06dd92787c1",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Harris bio card: Director since 2018 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1354,
+   "text_sha256": "sha256:792f063190f7b91e2ae22e27c228c420b26471befd2466aa1bdac8573e71f502",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Kirk",
+   "field": 1361,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1355,
+   "text_sha256": "sha256:00e5382695bbb61b87bdde2eb79567ec9ee216c491e4be1155470978263893fc",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Kirk",
+   "field": 1361,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1361,
+   "text_sha256": "sha256:6c7d7619fed1c6b8ae9f54d6bffb00c8dd1eb5cf0cb8f63e3e85d6644d96064b",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Kirk bio card: Director since 2025 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1393,
+   "text_sha256": "sha256:5f5ccdf75a01a94f8912d5adc1c8f4d138522cebab964c9f174542dfb3fc4abf",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Kroes",
+   "field": 1400,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1394,
+   "text_sha256": "sha256:f943f7bff7c859c04e4e07e1129d136c17cd81b758291561171fd6d6bf7cac0e",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Kroes",
+   "field": 1400,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1400,
+   "text_sha256": "sha256:169613c30cae7e9f19de8f089c50a33dd111dbe6b6c8df34ed3fb1c00a01157a",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Kroes bio card: Director since 2016 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1430,
+   "text_sha256": "sha256:964fa766292d50c62019ed7d33232559c0af511cddd5e55938aa845698f771b9",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Mehra",
+   "field": 1432,
+   "redundant_with": [
+    696
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1431,
+   "text_sha256": "sha256:7e1fbf0a594c27cf2359f902d19cbc922563fde54a5af26cae20c6ce9d603b6a",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Mehra",
+   "field": 1432,
+   "redundant_with": [
+    696
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1437,
+   "text_sha256": "sha256:dad50312c6590e54037c6b903ba09f17a5fa207892512169f1ca5fd672afb3f0",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Mehra bio card: Director since 2023 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1473,
+   "text_sha256": "sha256:dad50312c6590e54037c6b903ba09f17a5fa207892512169f1ca5fd672afb3f0",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Morfit bio card: Director since 2023 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1508,
+   "text_sha256": "sha256:ca66a852a9e96c40f4cce7972d994914909b646b2564e8d25dd4003656b3dd63",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Munoz",
+   "field": 1514,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1509,
+   "text_sha256": "sha256:62f32e9a96dac6ba51de458a6d62c38cb3fb67ad2afa2c6508090da27a4b6107",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Munoz",
+   "field": 1514,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1514,
+   "text_sha256": "sha256:85898b8c0c63316825fd64f1a3ffb08247ab2d7617bcaa18d4a41b4342081af0",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Munoz bio card: Director since 2022 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1552,
+   "text_sha256": "sha256:4013ed24c1bca4cd539b8b7af76c92ef10f70f7cbe2d7e2bba73f64623c259fd",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Roos",
+   "field": 1560,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1553,
+   "text_sha256": "sha256:262335107b7af3b68f5c369f3bba8bead1dc58fb8e4793433d12939da8ec167a",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Roos",
+   "field": 1560,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1560,
+   "text_sha256": "sha256:21b7c28442cf9fd0faa5eb146fd06dc4512dc6000256480e2c6438fb981622cc",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Roos bio card: Director since 2013 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1595,
+   "text_sha256": "sha256:b4eb71306c2267a12979550569be28017dff1b00e790ac016129b80c3d660214",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Washington",
+   "field": 1602,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1596,
+   "text_sha256": "sha256:6b9031df058346a877deaba0a830b576fa81b9da8692e183e4eb4c9dc949054c",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Washington",
+   "field": 1602,
+   "redundant_with": [
+    4717
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 1602,
+   "text_sha256": "sha256:21b7c28442cf9fd0faa5eb146fd06dc4512dc6000256480e2c6438fb981622cc",
+   "rule": "CARD_TENURE_FIELD",
+   "decision": "NOT",
+   "reader_verdict": "FACT",
+   "reader_why": "Washington bio card: Director since 2013 (board membership)"
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 2976,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Benioff",
+   "field": 2977,
+   "redundant_with": [
+    649
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 4300,
+   "text_sha256": "sha256:790a348ea7b2fda1946183c2dc5e872b896c38bf2345df0fc744ac63fb0d85fd",
+   "rule": "JOIN_BEFORE_THE_YEAR",
+   "decision": "NOT",
+   "reader_verdict": "MIXED",
+   "reader_why": "Related-party employees; states Munoz was appointed to the Board in January 2022",
+   "dates": [
+    "January 2022"
+   ]
+  },
+  {
+   "position": "salesforce:2026-01-31",
+   "i": 5123,
+   "text_sha256": "sha256:e47fe14cdd1dfba3ea358fa3f9328caf17f052ebda9858243b474af9282d0b14",
+   "rule": "CARD_SUBJECT_NAME",
+   "decision": "FACT",
+   "reader_verdict": "LEFT_OUT_OF_POOL_FACTS",
+   "reader_why": "",
+   "surname": "Benioff",
+   "field": 5124,
+   "redundant_with": [
+    649
+   ]
+  }
+ ]
+}

@@ -1,0 +1,114 @@
+{
+ "record_type": "ISSUE47_REPORTED_BOND_SECTIONS_COMPONENT_DEVELOPMENT",
+ "company_id": "macys",
+ "fiscal_year": 2024,
+ "report_end": "2025-02-01",
+ "filing": {
+  "form": "10-K",
+  "reportDate": "2025-02-01",
+  "filingDate": "2025-03-21",
+  "accessionNumber": "0001628280-25-014315",
+  "primaryDocument": "m-20250201.htm"
+ },
+ "sources": {
+  "primary": {
+   "sha256": "29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+   "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:f4ab1a06f4defda3612d67c8ce20995cd849527646f612d53144363543ae4daf",
+    "raw_asset_id": "sha256:29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+    "company_id": "macys",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm",
+    "accession": "0001628280-25-014315",
+    "document_name": "m-20250201.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:bf643f1928306b75aa3feb59d16108ca1e06f2428d4f7bf337e3b9da60ec08e4"
+   }
+  },
+  "xml": {
+   "sha256": "5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e",
+   "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00",
+    "raw_asset_id": "sha256:5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e",
+    "company_id": "macys",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201_htm.xml",
+    "accession": "0001628280-25-014315",
+    "document_name": "m-20250201_htm.xml",
+    "source_role": "auditor_facts",
+    "request_attempt_id": "request:attempt:5239c978e928ce4e3c96b0c74865248cd2ed1e9a20f8532e1085c209be6741f9"
+   }
+  }
+ },
+ "frozen_scope_reason": "BOND_LEASE_BOND_MEMBER_DUPLICATED",
+ "candidate_full_scope_selection": {
+  "classification": "SOURCE_OR_RELATIONSHIP_UNRESOLVED",
+  "reason": "BOND_LEASE_STANDBY_CAPACITY_NATURE_UNPROVEN"
+ },
+ "candidate_result": {
+  "company_id": "macys",
+  "metric_id": "B06",
+  "period_start": "2025-02-01",
+  "period_end": "2025-02-01",
+  "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+  "spec_closure_hash": "sha256:79ca5c03e6b51ccf3e4adbccf422a171e3fdfab2a0cadcea8750d5ac1799140d",
+  "applicability": "APPLICABLE",
+  "quality": "NONE",
+  "publication": "WITHHELD",
+  "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+  "value": null,
+  "unit": null,
+  "trace_id": "sha256:e90ac20e74e32bd23d70a6309dcc31fdec90f2c9ab894a04c83f6cfb85e0505a",
+  "record_type": "METRIC_RESULT",
+  "result_id": "sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb"
+ },
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "network_disabled": true,
+ "new_runs": 0,
+ "new_acceptances": 0,
+ "complete_b06_proven": false,
+ "production_authorized": false,
+ "raw_report_sha256": "4ad1a37b4fe110155976527fd4254d5def51ea49a88d8c0367a63bbebfe92ec5",
+ "raw_report_bytes": 406039,
+ "component_amount": "2794000000",
+ "borrowings": "2779000000",
+ "finance_leases": "15000000",
+ "section_member_counts": {
+  "current": 1,
+  "noncurrent": 20
+ },
+ "native_member_count": 21,
+ "repeated_bond_native_facts": [
+  {
+   "classification": "noncurrent",
+   "dimensions": {
+    "us-gaap:DebtInstrumentAxis": "m:SevenPointSixPercentSeniorDebenturesDueTwoThousandTwentyFiveMember"
+   },
+   "value": "0",
+   "xml_ordinals": [
+    705
+   ],
+   "primary_rows": [
+    7
+   ]
+  },
+  {
+   "classification": "current",
+   "dimensions": {
+    "us-gaap:DebtInstrumentAxis": "m:SevenPointSixPercentSeniorDebenturesDueTwoThousandTwentyFiveMember",
+    "us-gaap:ShortTermDebtTypeAxis": "m:CurrentPortionOfOtherLongTermObligationsMember"
+   },
+   "value": "6000000",
+   "xml_ordinals": [
+    699
+   ],
+   "primary_rows": [
+    4
+   ]
+  }
+ ]
+}

@@ -1,0 +1,151 @@
+{
+ "record_type": "ISSUE47_B06_FIXED_ZERO_DEVELOPMENT_DIAGNOSTIC",
+ "source_sha256": {
+  "primary": "29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+  "xml": "5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e"
+ },
+ "same_manual_reference_diagnostic_only": true,
+ "runtime_operands": false,
+ "complete_b06_proven": false,
+ "calls": [
+  0,
+  0,
+  0
+ ],
+ "inventory_counts": {
+  "xml": 135,
+  "primary": 135
+ },
+ "zero_rows": {
+  "xml": [
+   {
+    "ordinal": 829,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "lineofcreditfacilityfairvalueofamountoutstanding"
+    ],
+    "context": {
+     "context_ref": "c-149",
+     "dimensions": {
+      "us-gaap:CreditFacilityAxis": "us-gaap:RevolvingCreditFacilityMember",
+      "us-gaap:DebtInstrumentAxis": "m:NewABLCreditFacilityMember",
+      "us-gaap:LongtermDebtTypeAxis": "us-gaap:LineOfCreditMember"
+     },
+     "entity_identifier": "0000794367",
+     "period_end": "2025-02-01",
+     "period_start": "2025-02-01",
+     "typed_dimension_count": 0
+    },
+    "value": "0",
+    "decimals": "INF",
+    "unit_definition": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "disposition": "EXPLICIT_CURRENT_ZERO"
+   },
+   {
+    "ordinal": 833,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "lineofcredit"
+    ],
+    "context": {
+     "context_ref": "c-152",
+     "dimensions": {
+      "us-gaap:CreditFacilityAxis": "us-gaap:RevolvingCreditFacilityMember",
+      "us-gaap:DebtInstrumentAxis": "m:BankCreditAgreementMember",
+      "us-gaap:LongtermDebtTypeAxis": "us-gaap:LineOfCreditMember"
+     },
+     "entity_identifier": "0000794367",
+     "period_end": "2025-02-01",
+     "period_start": "2025-02-01",
+     "typed_dimension_count": 0
+    },
+    "value": "0",
+    "decimals": "INF",
+    "unit_definition": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "disposition": "EXPLICIT_CURRENT_ZERO"
+   }
+  ],
+  "primary": [
+   {
+    "ordinal": 829,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "LineOfCreditFacilityFairValueOfAmountOutstanding"
+    ],
+    "context": {
+     "context_ref": "c-149",
+     "dimensions": {
+      "us-gaap:DebtInstrumentAxis": "m:NewABLCreditFacilityMember",
+      "us-gaap:CreditFacilityAxis": "us-gaap:RevolvingCreditFacilityMember",
+      "us-gaap:LongtermDebtTypeAxis": "us-gaap:LineOfCreditMember"
+     },
+     "entity_identifier": "0000794367",
+     "period_end": "2025-02-01",
+     "period_start": "2025-02-01",
+     "typed_dimension_count": 0
+    },
+    "value": "0",
+    "decimals": "INF",
+    "unit_definition": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "disposition": "EXPLICIT_CURRENT_ZERO"
+   },
+   {
+    "ordinal": 833,
+    "concept_qname": [
+     "http://fasb.org/us-gaap/2024",
+     "LineOfCredit"
+    ],
+    "context": {
+     "context_ref": "c-152",
+     "dimensions": {
+      "us-gaap:DebtInstrumentAxis": "m:BankCreditAgreementMember",
+      "us-gaap:CreditFacilityAxis": "us-gaap:RevolvingCreditFacilityMember",
+      "us-gaap:LongtermDebtTypeAxis": "us-gaap:LineOfCreditMember"
+     },
+     "entity_identifier": "0000794367",
+     "period_end": "2025-02-01",
+     "period_start": "2025-02-01",
+     "typed_dimension_count": 0
+    },
+    "value": "0",
+    "decimals": "INF",
+    "unit_definition": {
+     "measures": [
+      [
+       "http://www.xbrl.org/2003/iso4217",
+       "USD"
+      ]
+     ],
+     "divided": false
+    },
+    "disposition": "EXPLICIT_CURRENT_ZERO"
+   }
+  ]
+ },
+ "new_runs": 0,
+ "new_acceptances": 0
+}

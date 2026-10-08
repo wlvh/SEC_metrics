@@ -1,0 +1,123 @@
+{
+ "record_type": "ISSUE47_B06_ALL_PARSED_CURRENT_SOURCE_INPUT_ARCHIVE",
+ "archive": "input-materials.tar.gz",
+ "archive_bytes": 454041,
+ "archive_sha256": "b1901d9a94acefb87a9e191ef86173bd119d000cd27453aa6d09e32ec874efc1",
+ "member_count": 21,
+ "members": [
+  {
+   "path": "census/additional-non-USD-0.txt",
+   "bytes": 19278,
+   "sha256": "e5b8aab030d876dc8e8d58830268892e4928bab3635c6d40ce3ca90792877120"
+  },
+  {
+   "path": "census/additional-non-USD-1.txt",
+   "bytes": 18897,
+   "sha256": "173d338511bf535e2ba179556644ce4f537ad8521a612e51a39b77d5f6d77afb"
+  },
+  {
+   "path": "census/all-parsed-current-instant-facts.json",
+   "bytes": 857170,
+   "sha256": "aee43b7caea242ee96ba8ae1fec7f6bd3dc2a9abfed9fb4d3f92d58563d3b2dd"
+  },
+  {
+   "path": "census/census.json",
+   "bytes": 2268,
+   "sha256": "9970bef4fa1cbcf3e0d2fe7a5730be3825bab794467e7bc966fc14ddc7cffad5"
+  },
+  {
+   "path": "census/primary-additional-parsed-current-instants.txt",
+   "bytes": 188446,
+   "sha256": "4891847864356d8e010392df82273dc67f2788078f35c022a3ad599db1b4ebdb"
+  },
+  {
+   "path": "census/xml-additional-parsed-current-instants.txt",
+   "bytes": 170229,
+   "sha256": "49fed662f147cacaa334c818ac991160a9e18ad891eb8f39fe31c0f86f5c9253"
+  },
+  {
+   "path": "census-build.log",
+   "bytes": 2057,
+   "sha256": "77557393a485df822d5bfe16878426447b32502124965a143b49b3ac8cf58eb3"
+  },
+  {
+   "path": "inspect_all_current_instants.py",
+   "bytes": 3852,
+   "sha256": "b83756cf278f7933a6b18761b0acdeff4a521aa70cd8663b3d0acec5a2c8ced9"
+  },
+  {
+   "path": "original-request/context-measurement.json",
+   "bytes": 1174,
+   "sha256": "e0e71eb8339461549b86c7e6bb488240147a5df4d7178292f36538043dec9530"
+  },
+  {
+   "path": "original-request/metadata.json",
+   "bytes": 936,
+   "sha256": "11510d7248b7d049c32b7ba5e79bd6012610894b4d477fe45dbf165c74e4f44e"
+  },
+  {
+   "path": "original-request/prompt.txt",
+   "bytes": 6831,
+   "sha256": "60e25b792da77285c2cf244a68ecee1de19e1ca8620895612571eecb548c7694"
+  },
+  {
+   "path": "original-request/request-body.json",
+   "bytes": 699605,
+   "sha256": "9feffb1239bfeae017d9ad233fa1267333f14d98b7b6491132fd80d42aee951e"
+  },
+  {
+   "path": "prepare_complete_native_request.py",
+   "bytes": 8389,
+   "sha256": "0a9d85f582fb4ff67985b628b5b941615ca331d190299ffae55fc67e06d6e873"
+  },
+  {
+   "path": "request-rebuild.log",
+   "bytes": 1083,
+   "sha256": "72598e65b43922f7024cfb97cb93568d02deadf6d0464c97df0d98105c5e8c05"
+  },
+  {
+   "path": "requests/additional-native-reading.json",
+   "bytes": 8599,
+   "sha256": "2b43de993390f7235bfb9437005a3932c28698b82ea151dbbdbe3cb78a7dbe74"
+  },
+  {
+   "path": "requests/literal/context-measurement.json",
+   "bytes": 1273,
+   "sha256": "4f0e128315de3a95ef4c86fbc6a5143f6dc3c276d49cd3026684b924b96e8d19"
+  },
+  {
+   "path": "requests/literal/request-body.json",
+   "bytes": 1083132,
+   "sha256": "eb68c20f5ca14019a811276150dca8b6dcdea3e459fe702bffb98a43a573458d"
+  },
+  {
+   "path": "requests/proposal.json",
+   "bytes": 1083,
+   "sha256": "72598e65b43922f7024cfb97cb93568d02deadf6d0464c97df0d98105c5e8c05"
+  },
+  {
+   "path": "requests/representation-negatives.json",
+   "bytes": 585,
+   "sha256": "deb26f3baf2ec4c57fd4f9766e4cfbc241d23ea17d8e91e5e90e133fbc77a9f1"
+  },
+  {
+   "path": "requests/shared-values/context-measurement.json",
+   "bytes": 1270,
+   "sha256": "05ae15dc87b327d6c08a2deb06b3acfc91add9427d73bf2a632a8e1ae984aa53"
+  },
+  {
+   "path": "requests/shared-values/request-body.json",
+   "bytes": 652231,
+   "sha256": "bdad31f0dc7b55a5f49f9308c74168b41dd44ee8748156bdfeeabc1ffa7a1966"
+  }
+ ],
+ "source_dependencies": [
+  "evidence/issue47_local_inputs/b06-financing-v3.tar.gz"
+ ],
+ "original_request_sha256": "9feffb1239bfeae017d9ad233fa1267333f14d98b7b6491132fd80d42aee951e",
+ "calls": [
+  0,
+  0,
+  0
+ ]
+}
