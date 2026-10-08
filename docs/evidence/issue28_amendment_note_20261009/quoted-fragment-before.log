@@ -1,0 +1,17 @@
+test_quoted_word_fragment_cannot_erase_conditional_review (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_quoted_word_fragment_cannot_erase_conditional_review) ... FAIL
+
+======================================================================
+FAIL: test_quoted_word_fragment_cannot_erase_conditional_review (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_quoted_word_fragment_cannot_erase_conditional_review)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_instant_amendment_paragraph_api.py", line 79, in test_quoted_word_fragment_cannot_erase_conditional_review
+    self.assertEqual(quoted['decision'],'WITHHELD')
+AssertionError: 'INPUT_PROPERTY_PROVEN' != 'WITHHELD'
+- INPUT_PROPERTY_PROVEN
++ WITHHELD
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.017s
+
+FAILED (failures=1)

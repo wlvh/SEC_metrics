@@ -67,3 +67,14 @@ class InstantParagraphApiTest(unittest.TestCase):
                 self.assertIn('FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED',result['issues'][0]['reason'])
                 hidden_only=self.inspect('<div><span '+hidden+'>We have corrected our financial statements.</span>Governance only.</div>')
                 self.assertEqual(hidden_only['decision'],'INPUT_PROPERTY_PROVEN')
+
+    def test_quoted_word_fragment_cannot_erase_conditional_review(self):
+        text=('✓ Clawback Policy: In addition to maintaining a clawback policy as required by the Exchange Act Rule 10D-1 and Nasdaq listing standards '
+              '(which we apply beyond executive officers to other senior executives of the Company), provide for forfeiture, repayment or adjustment '
+              'of incentive compensation in the event of a financial restatement without regard to misconduct in our NEOs’ employment agreements')
+        ordinary=self.inspect('<div>'+text+'</div>')
+        self.assertEqual(ordinary['decision'],'INPUT_PROPERTY_PROVEN')
+        self.assertEqual(len(ordinary['details']['conditional_compensation_references']),1)
+        quoted=self.inspect('<div>'+text.replace('financial','finan<q><div style="display:inline">cial</div></q>')+'</div>')
+        self.assertEqual(quoted['decision'],'WITHHELD')
+        self.assertIn('FINANCIAL_CORRECTION_LANGUAGE_UNRESOLVED',quoted['issues'][0]['reason'])

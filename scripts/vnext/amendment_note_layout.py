@@ -13,7 +13,7 @@ class _Gap(HTMLParser):
         self.stack = []
 
     def handle_starttag(self, tag, attrs):
-        allowed = {'font','span','b','i','u','strong','em','sub','sup','a',
+        allowed = {'font','span','b','i','u','strong','em','sub','sup','a','q',
                    'ix:nonnumeric','ix:nonfraction'}
         attrs = dict(attrs)
         style = attrs.get('style', '')
@@ -41,7 +41,7 @@ class _Gap(HTMLParser):
             index = matches[-1]
             if not self.stack[index][1] and not self.stack[index][2]:self.inline = False
             del self.stack[index:]
-        elif tag not in {'font','span','b','i','u','strong','em','sub','sup','a','ix:nonnumeric','ix:nonfraction'}:
+        elif tag not in {'font','span','b','i','u','strong','em','sub','sup','a','q','ix:nonnumeric','ix:nonfraction'}:
             self.inline = False
 
     def handle_data(self, text):
