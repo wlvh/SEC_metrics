@@ -26,3 +26,13 @@ python /path/to/SEC_metrics/tools/vnext_company.py results \
 ```
 
 Macy’s改为macys、仍2021–2025；余额时点以原件年度末日为准，实际年度容器和来源URL/申报/单位留在CSV与出处。当前模式分派保持，其他家族的原factory/处理依赖未改；旧Run仍由原版本读取。两家公司20位置没有重新阅读或重建旧native Run，只验证新公司消费者。其余公司接收、修订/继承及在线历史来源准备继续是实际缺口，原完整目标不缩小。
+
+## 同家族的修订与主体边界接续
+
+实际其他公司验证发现原接收守卫将所有10-K/A或继任主体拒绝，形成了Southwest FY2025和Paramount FY2025的接入缺口。既有共同catalog已经允许B08/B09的current/current_instant/ALLOW，因此历史消费者改为直接向同一inspect_instant_balance_amendment提供所选申报原件，不调用latest准备，不另写修订核心，也不改政策/公式。范围限所选CIK的年末余额，原年报收入August7/August8冲突与短期流量、旧拒绝记录保留，不推为可比年度或跨主体拼接。
+
+共同检查Paramount25实际返回INPUT_PROPERTY_PROVEN/issues为空；同公司两项最终13.120秒得到原1.256722332295499575431644495 ratio与3,274,000,000 USD、2025-12-31时点，原阅读值/单位/日期相同。成功scope检查、CIK及annual_continuity_proven=false保存为既有input-assessments侧车；禁止选源/计算复跑0.543秒、16文件不变，独立读取保留。Southwest25初次两项实现拒绝保留，接后两项9.421秒得到0.5168940573207581723285413424 ratio及3,231,000,000 USD。构造未决修订检查4.880秒验证计算调用0、WITHHELD/null及具名AMENDMENT_INPUT_UNRESOLVED，不冒充真实财报结论。
+
+Paramount前身21–23六项同年自身CIK已成功，24两项仍具名扣留：共同annual._note把原说明的10-K等内联font文本拆成独立块，95到108共13块触发旧8块界限。完整说明三段与原始跨度已保存，明确只补PartIII10–14而无其他改动；这属于公共解析缺口，已交#28，不将计数界限改大、删块、改原文或复制检查器放行。元数据未决不等于真实金额变化，也不取消后续修复责任。[定向主要接收摘要](amendment-receiving.json)及[完整有限材料](amendment-receiving-materials.tar.gz)保留正反证据。
+
+公共提供的PR76最小短CI patch已原样接收：既有类共19项0.018秒、零skip；36项受影响状态/期间/历史case控制0.106秒过。原580九项CI已全部SUCCESS；后继提交独立核新CI，不借旧绿灯。当前case接收修订/选定继任主体的即期范围，原文开头的“未修订连续主体”只解释首个开发版本，不能用于描述此后继现行边界。main仍未接入，在线来源准备、Paramount24解析和其他业务责任继续。

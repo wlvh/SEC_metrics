@@ -11,9 +11,12 @@ class HistoricalLiquidityScopeTest(TestCase):
                 cases.prepare_historical_liquidity_year_case(repo_root=Path('/constructed'),company_id='constructed',metric_id='B03',fiscal_year=2024)
             select.assert_not_called()
 
-    def test_amendment_and_successor_are_implementation_gaps_before_calculation(self):
-        for amendments,mode in [([{'form':'10-K/A'}],'CONTINUOUS_PRIMARY'),([], 'SUCCESSOR_PREDECESSOR')]:
-            with self.subTest(mode=mode),patch.object(cases,'resolve_period_selection',return_value={}),patch.object(cases,'prepare_historical_annual_input',return_value={'amendments':amendments,'subject_policy':{'mode':mode}}),patch.object(cases,'_deterministic_metric_graph') as calc:
-                with self.assertRaisesRegex(ValueError,'AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED'):
+    def test_unknown_or_cross_entity_subject_is_rejected_before_calculation(self):
+        policies=[{'mode':'SUCCESSOR_PREDECESSOR'},
+                  {'mode':'SUCCESSOR_REGISTRANT_ONLY','selected_cik':'2','cross_entity_combination_authorized':False},
+                  {'mode':'SUCCESSOR_REGISTRANT_ONLY','selected_cik':'1','cross_entity_combination_authorized':True}]
+        for policy in policies:
+            with self.subTest(policy=policy),patch.object(cases,'resolve_period_selection',return_value={}),patch.object(cases,'prepare_historical_annual_input',return_value={'entity':'1','subject_policy':policy}),patch.object(cases,'_deterministic_metric_graph') as calc:
+                with self.assertRaisesRegex(ValueError,'SUBJECT_SCOPE_NOT_RECEIVED'):
                     cases.prepare_historical_liquidity_year_case(repo_root=Path('/constructed'),company_id='constructed',metric_id='B08',fiscal_year=2024)
                 calc.assert_not_called()
