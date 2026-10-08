@@ -20,5 +20,18 @@
     "tests/vnext/test_history_business_boundaries.py": true
   },
   "CI_registration_patch_author": "Issue28 Codex shared-short-selectors-20261008/h2.patch",
-  "no_runner_function_changes": true
+  "no_runner_function_changes": true,
+  "explicit_CI_short_step": {
+    "tests": 15,
+    "seconds": 0.003,
+    "result": "PASS",
+    "log": "----------------------------------------------------------------------\nRan 15 tests in 0.003s\n\nOK\n"
+  },
+  "declared_historical_checkout": {
+    "public_commit": "c56e63354271d9c674bf18bb56856e420ce334cc",
+    "scope": "Only declared main-foundation checkout/fetch stanza",
+    "test_commands_and_timeout_unchanged": true,
+    "public_stanza_equal": true
+  },
+  "previous_head_CI": "b6677c0b main-foundation CANCELLED, reason not yet available while overall run continues; do not claim timeout or green"
 }
