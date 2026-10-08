@@ -55,9 +55,23 @@ def _correction_flag(raw,scope):
     return found[0]
 
 
+def _cover_matches(blocks, raw, pattern, note_layout):
+    if note_layout=='inline-paragraphs-v2':
+        from .amendment_note_layout import paragraph_blocks
+        groups=paragraph_blocks(blocks,raw)
+        return [{'text':' '.join(b['text'] for b in group),'source_blocks':group,
+                 'block_indices':[b['block_index'] for b in group]}
+                for group in groups if re.fullmatch(pattern,' '.join(b['text'] for b in group))]
+    return [b for b in blocks if re.fullmatch(pattern,b['text'])]
+
+
 def _part_iii_details(scope,raw):
     note=scope['explanatory_note'];new=scope['amendment'];old=scope['original']
-    match=re.fullmatch(POLICY['part_iii_note_pattern'],note['text'])
+    pattern=POLICY['part_iii_note_pattern']
+    if scope.get('note_layout')=='inline-paragraphs-v2':
+        from .amendment_note_layout import part_iii_pattern
+        pattern=part_iii_pattern(pattern)
+    match=re.fullmatch(pattern,note['text'])
     _need(match is not None,'INSTANT_AMENDMENT_COMPLETE_NOTE_UNSUPPORTED')
     _need(re.fullmatch(POLICY['alias_list_pattern'],match['aliases']) is not None,
           'INSTANT_AMENDMENT_NOTE_ALIAS_LIST_UNSUPPORTED')
@@ -73,11 +87,14 @@ def _part_iii_details(scope,raw):
     _need(len(banners)==1 and banners[0]['text'] in {expected,'('+expected+')'}
           and banners[0]['block_index'] not in quoted,
           'INSTANT_AMENDMENT_NOTE_NUMBER_CONFLICT')
-    corrections=[b for b in blocks[:note['start']] if re.fullmatch(POLICY['error_correction_cover_pattern'],b['text'])]
-    _need(len(corrections)==1 and corrections[0]['block_index'] not in quoted,
+    layout=scope.get('note_layout','blocks-v1')
+    corrections=_cover_matches(blocks[:note['start']],raw,POLICY['error_correction_cover_pattern'],layout)
+    correction_indices=(corrections[0].get('block_indices',[corrections[0].get('block_index')]) if len(corrections)==1 else [])
+    _need(len(corrections)==1 and not (set(correction_indices)&quoted),
           'INSTANT_AMENDMENT_CORRECTION_COVER_UNSUPPORTED')
-    restatements=[b for b in blocks[:note['start']] if re.fullmatch(POLICY['restatement_cover_pattern'],b['text'])]
-    _need(len(restatements)==1 and restatements[0]['block_index'] not in quoted,
+    restatements=_cover_matches(blocks[:note['start']],raw,POLICY['restatement_cover_pattern'],layout)
+    restatement_indices=(restatements[0].get('block_indices',[restatements[0].get('block_index')]) if len(restatements)==1 else [])
+    _need(len(restatements)==1 and not (set(restatement_indices)&quoted),
           'INSTANT_AMENDMENT_RESTATEMENT_COVER_UNSUPPORTED')
     declarations=scope['details']['no_new_financial_statement_declarations']
     _need(len(declarations)==1 and re.fullmatch(POLICY['no_new_statements_pattern'],declarations[0]['text'])
@@ -89,16 +106,20 @@ def _part_iii_details(scope,raw):
     # nearby assertions and any other correction remain in the residual text.
     financial=re.compile(POLICY['financial_subject_pattern'],re.I)
     revision=re.compile(POLICY['revision_pattern'],re.I)
+    conditional_patterns=POLICY['conditional_recovery_block_patterns']
+    if layout=='inline-paragraphs-v2':
+        from .amendment_note_layout import conditional_recovery_patterns
+        conditional_patterns=conditional_recovery_patterns(conditional_patterns)
     conflicts=[];conditionals=[]
     for block in blocks:
-        if block['block_index']==corrections[0]['block_index']:continue
+        if block['block_index'] in correction_indices:continue
         text=block['text']
         if re.search(POLICY['balance_statement_pattern'],text,re.I):
             conflicts.append(block);continue
         if not financial.search(text) or not revision.search(text):continue
         remaining=text
         conditional_block=(block['block_index'] not in quoted and any(
-            re.fullmatch(pattern,text,re.I) for pattern in POLICY['conditional_recovery_block_patterns']))
+            re.fullmatch(pattern,text,re.I) for pattern in conditional_patterns))
         if not conditional_block:
             conflicts.append(block);continue
         for pattern in POLICY['conditional_recovery_patterns']:
@@ -115,9 +136,11 @@ def _part_iii_details(scope,raw):
             'conditional_compensation_references':conditionals,'unresolved_correction_blocks':conflicts}
 
 
-def inspect_instant_balance_amendment(*,original,amendment,company_id,cik):
+def inspect_instant_balance_amendment(*,original,amendment,company_id,cik,
+                                      note_layout='blocks-v1'):
     _need(strict_json_file(path=ROOT/POLICY_PATH)==POLICY,'INSTANT_AMENDMENT_POLICY_CHANGED_DURING_PROCESS')
-    scope=inspect_annual_amendment_scope(original=original,amendment=amendment,company_id=company_id,cik=cik)
+    scope=inspect_annual_amendment_scope(original=original,amendment=amendment,company_id=company_id,cik=cik,
+        **({} if note_layout=='blocks-v1' else {'note_layout':note_layout}))
     issues=[];details={};decision='WITHHELD'
     try:
         _need(scope['fiscal_window_unchanged'] and not scope['issues'],'INSTANT_AMENDMENT_SOURCE_SCOPE_UNRESOLVED')
@@ -137,6 +160,7 @@ def inspect_instant_balance_amendment(*,original,amendment,company_id,cik):
         'policy_sha256':sha256_file(path=ROOT/POLICY_PATH),'source_acquisition_credit':False,
         'annual_continuity_proven':False,'debt_completeness_proven':False,'metric_result_created':False,
         'production_authorized':False})
+    if note_layout!='blocks-v1':body['note_layout']=note_layout
     return {**body,'instant_scope_id':content_hash(value=body)}
 
 
