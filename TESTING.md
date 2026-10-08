@@ -10,10 +10,12 @@
 
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 
-公司导入事务与独立信任：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。
+旧固定运行版本的公司导入/独立信任兼容测试：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。
 
-公司事件 census 接缝：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_event_census -v`。该组件测试使用真实独立信任读取和原 header 解析，账本重放为替身；验证窗口／前身 CIK、缺件／额外件／别名、错公司和本地重哈希不能授信。实际材料另验证只读固定树下公司 C01、重复与公司出口，不能以组件测试宣称六事件内容或 OpenShift 验收。
+公司事件 census 接缝：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_event_census -v`。此处保留旧固定版本的组件测试，使用其原独立信任读取和原 header 解析，账本重放为替身；验证窗口／前身 CIK、缺件／额外件／别名、错公司和本地重哈希不能授信。实际材料另验证只读固定树下公司 C01、重复与公司出口，不能以组件测试宣称六事件内容或 OpenShift 验收。
 <!-- capability-anchor: CAPABILITY.company_import_transaction -->
+
+上述独立信任/防伪说明只解释旧任务兼容；新保存来源路径使用当前普通记录测试，不重新要求建立信任登记或封存。
 
 ## 确切年度候选正式采纳接线
 

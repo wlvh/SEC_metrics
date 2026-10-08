@@ -495,3 +495,5 @@ The consumed B02 paired_measure_v1.py guard was absent from the actual processin
 ### PR61 receiving seam
 
 Actual merge-tree61→5f had two conflicts: TESTING.md and run_foundation_ci.py. The candidate now explicitly receives fixedPR61 rather than assuming textual mergeability. The runner retains exact5f active/material/retired accounting and stdout capture; TESTING retains current company semantics plus the shared preparation entry. All tracked production/config/catalog/requirements/tools/tests/workflow bytes remain exactly5f. PR61's six historical test-evidence files are received under their original path; no metric family, permission or business result is added. Only short partition/controller tests need local revalidation; unchanged real-source evidence is reused, not rerun.
+
+Exact5496164a post-receiving CI now hasall9checks SUCCESS:271fast108.212s/command109.905s,147directed172.426s,materialcommand366.867s. This is the actual newhead observation, not copied5f results or a speedup ratio. Source/program behavior remains5f; receive61 then this candidate is now conflict-free.
