@@ -4608,6 +4608,514 @@
       "report_written_at": "2026-10-06T11:57:29.355177+00:00",
       "report_corrected_at": "2026-10-06T12:14:02.251820+00:00",
       "elapsed_seconds_to_report_correction": 8111.25182
+    },
+    {
+      "task_name": "review_maincompany_7a5b328",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW",
+      "module": "main_company_current_delivery",
+      "scope_paths": [
+        "scripts/vnext/company_compute.py",
+        "scripts/vnext/ordinary_scalability_audit.py",
+        "scripts/vnext/publication.py",
+        "tools/check_main_scalability.py",
+        "config/ordinary_scalability_exemptions_v1.json",
+        "config/main_scalability_exemptions_v1.json",
+        "config/issue28_normal_results_v2.json",
+        "requirements/issue_28_v13",
+        "requirements/issue_28_v14",
+        "tests/vnext/test_company_results.py",
+        ".github/workflows/vnext-fast.yml",
+        "docs/evidence/issue28_continuous/main-company-ci-integration-20261006"
+      ],
+      "patch_sha": "7a5b328b4df55fdbe2a60878832d2ae9b4076b4b",
+      "spawned_at": "2026-10-06T13:16:36.195790+00:00",
+      "ended_at": "2026-10-06T13:23:42Z",
+      "tool_calls": 48,
+      "result_path": "docs/evidence/issue28_continuous/main-company-ci-integration-20261006/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_WITH_MESSAGE_CAP_VIOLATION",
+      "tool_call_cap": 80,
+      "time_cap_minutes": 90,
+      "ordinary_message_cap": 3,
+      "review_requested_target_minutes": 30,
+      "reader_started_at": "2026-10-06T13:17:19Z",
+      "ordinary_messages": 4,
+      "resource_cap_compliant": false,
+      "reported_message_count_note": "Conclusion reports3 process messages plus final separately; total4 ordinary communications, above3 cap. No continuation."
+    },
+    {
+      "task_name": "review_b03_input_scope_b922856",
+      "purpose": "limited_independent_review",
+      "module": "b03_input_scope",
+      "scope_paths": [
+        "scripts/vnext/ordinary_b03_input_scope.py",
+        "scripts/vnext/ordinary_da_scope_v1.py",
+        "scripts/vnext/normal_zero_ai_results.py",
+        "scripts/vnext/ordinary_saved_result.py",
+        "scripts/vnext/ordinary_income_input.py",
+        "scripts/vnext/annual_amendment_scope.py",
+        "scripts/vnext/instant_balance_amendment.py",
+        "scripts/vnext/normal_governance_input.py",
+        "scripts/vnext/normal_candidates.py",
+        "scripts/vnext/normal_run_inputs.py",
+        "tests/vnext/test_b03_current_input_scope.py"
+      ],
+      "patch_sha": "b9228566e24ec8bd175c3f47a4bfc3a6f044bb51",
+      "spawned_at": "2026-10-06T23:54:56.864710+00:00",
+      "ended_at": "2026-10-07T00:01:36Z",
+      "tool_calls": 49,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/docs/evidence/issue28_company_records_20261007/independent-b03-b922856/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "dedup_checked": "live agents completed; original register no sameSHA/purpose-module; current evidence no sameSHA review",
+      "messages": 3,
+      "findings": [
+        "B03 context policy omitted from update dependencies",
+        "composition original fact lookup rejects equivalent GAAP prefix alias"
+      ]
+    },
+    {
+      "task_name": "review_b03_input_scope_44c8b22",
+      "purpose": "limited_independent_review",
+      "module": "b03_input_scope",
+      "scope_paths": [
+        "scripts/vnext/ordinary_current_update.py",
+        "scripts/vnext/b03_contract_amortization_scope.py",
+        "scripts/vnext/b03_depreciation_scope.py",
+        "tests/vnext/test_b03_current_input_scope.py"
+      ],
+      "patch_sha": "44c8b22a6fd7a4ba309f1c0e458355ce274f5cbf",
+      "spawned_at": "2026-10-07T00:13:25.735126+00:00",
+      "ended_at": "2026-10-07T00:19:32Z",
+      "tool_calls": 40,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/docs/evidence/issue28_company_records_20261007/independent-b03-p2-44c8b22/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "dedup_checked": "No live/sameSHA review; b922 reviewer ended at3messages, new scope only its two findings repair increment.",
+      "messages": 3,
+      "findings": [
+        "custom namespace same local name causes false rejection; candidate filter must match URI and local name together"
+      ]
+    },
+    {
+      "task_name": "review_b03_input_scope_01a007f",
+      "purpose": "limited_independent_review",
+      "module": "b03_input_scope",
+      "scope_paths": [
+        "scripts/vnext/b03_contract_amortization_scope.py",
+        "tests/vnext/test_b03_current_input_scope.py"
+      ],
+      "patch_sha": "01a007f9fa2a76339c5b81c0e1c18a8612c8ca26",
+      "spawned_at": "2026-10-07T00:25:46.778457+00:00",
+      "ended_at": "2026-10-07T00:29:02Z",
+      "tool_calls": 26,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/docs/evidence/issue28_company_records_20261007/independent-b03-uri-01a007f/conclusion.md",
+      "verdict": "PASS_LIMITED",
+      "dedup_checked": "Prior reviewers ended at3message caps; only new URI/local filter and regression, no whole-scope re-review.",
+      "messages": 3,
+      "scope_limit": "URI/local-name candidate filter only; inherited earlier covered boundaries, not full B03 business acceptance"
+    },
+    {
+      "task_name": "review_successor_period_c5487b7",
+      "purpose": "limited_independent_review",
+      "module": "successor_income_projection",
+      "scope_paths": [
+        "scripts/vnext/ordinary_projection.py",
+        "scripts/vnext/ordinary_saved_result.py",
+        "tests/vnext/test_successor_income_projection.py"
+      ],
+      "patch_sha": "c5487b73961b12fb336f7e59d59e6164ce32eb65",
+      "spawned_at": "2026-10-07T01:16:45.479718+00:00",
+      "ended_at": "2026-10-07T02:44:47.144818+00:00",
+      "tool_calls": 51,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/docs/evidence/issue28_company_records_20261007/independent-successor-c5487b7/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "dedup_checked": "No live agent, same patch or successor-projection result; prior B03 reviews are ended and different scope.",
+      "messages": 1,
+      "findings": [
+        "visible successor header start2025-08-07 conflicts with XBRL start2025-08-08; output did not show the conflict"
+      ]
+    },
+    {
+      "task_name": "review_successor_period_c5487b7",
+      "purpose": "limited_independent_review",
+      "module": "successor_income_period_repair",
+      "scope_paths": [
+        "scripts/vnext/ordinary_income_input.py",
+        "scripts/vnext/normal_zero_ai_results.py",
+        "scripts/vnext/ordinary_saved_result.py",
+        "tests/vnext/test_successor_income_projection.py"
+      ],
+      "patch_sha": "883f04b2cd18619fdca7be9e1b320a6596dc1fa6",
+      "spawned_at": "2026-10-07T16:22:48.009245+00:00",
+      "ended_at": "2026-10-07T16:27:50Z",
+      "tool_calls": 66,
+      "remaining_tool_calls": 29,
+      "remaining_messages": 2,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/docs/evidence/issue28_company_records_20261007/independent-successor-883f04b/conclusion.md",
+      "verdict": "PASS_LIMITED_WITH_CUMULATIVE_TIME_CAP_VIOLATION",
+      "dedup_checked": "Same existing agent ended1message/51calls; only its new source-period repair diff, no sameSHA result. Resume without resetting cumulative resources.",
+      "messages": 2,
+      "resource_cap_compliant": false,
+      "cumulative_active_seconds_upper_bound": 5520,
+      "resource_note": "Original report file written02:43:42 from01:16:45 start (~87min), repair16:22:48..16:27:50 (~5min): cumulative~92min. Parent interrupted after resource audit. Technical report complete and reused only for its P2; report claim of <=90min contradicted by timestamps. No further followup."
+    },
+    {
+      "task_name": "diagnose_retained_ci_01efa3d",
+      "purpose": "offline_failure_diagnosis",
+      "module": "retained_native_ci",
+      "scope_paths": [
+        "docs/evidence/issue28_company_records_20261007/closeout-current-ci-failed.log",
+        "/private/tmp/issue28-7944-failed.log",
+        ".github/workflows/vnext-fast.yml",
+        "tests/vnext/test_c04_source_only_install.py",
+        "tests/vnext/test_d04_run_material.py",
+        "tests/vnext/test_remaining_source_run_material.py",
+        "tests/vnext/test_normal_run_v3_material.py"
+      ],
+      "patch_sha": "01efa3d5d0fa486fac395ba4a3c931fc8dc1eb1b",
+      "spawned_at": "2026-10-07T19:29:24.455905+00:00",
+      "ended_at": "2026-10-07T19:36:28.863Z",
+      "tool_calls": 20,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/docs/evidence/issue28_company_records_20261007/diagnose-retained-ci-01efa3d/conclusion.md",
+      "verdict": "PASS_LIMITED_OFFLINE_DIAGNOSIS",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "messages": 3,
+      "resource_cap_compliant": true,
+      "resource_note": "Local agent session has20exec tool calls and3ordinary messages; first/last19:29:45..19:36:28 (~7min). No long runs or implementation.20exec orchestrations include nested commands; session id01a117d7-decd-7f41-ab08-654b9200c297."
+    },
+    {
+      "task_name": "review_b06_relations_508c434",
+      "purpose": "limited_independent_review",
+      "module": "industrial_lease_relations",
+      "scope_paths": [
+        "scripts/vnext/industrial_lease_relation.py",
+        "scripts/vnext/ordinary_special_debt_scope.py",
+        "tests/vnext/test_industrial_lease_relation.py"
+      ],
+      "patch_sha": "508c4346d33d11fe218edd449c88d66d92564695",
+      "spawned_at": "2026-10-07T21:05:28.551579+00:00",
+      "ended_at": "2026-10-07T21:13:43.297408+00:00",
+      "tool_calls": 25,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics/docs/evidence/issue28_b06_relations_20261008/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "dedup_checked": "No live agent; no sameSHA/purpose+module register or independent evidence; new narrow code difference only.",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "messages": 3,
+      "resource_cap_compliant": true,
+      "findings": [
+        "P2 lease can exceed inclusive Other debt row while less than parent debt total; erroneouslyREPORTED_INCLUDED"
+      ]
+    },
+    {
+      "task_name": "review_b06_carrier_c5a46ff",
+      "purpose": "limited_independent_review",
+      "module": "b06_carrier_amount",
+      "scope_paths": [
+        "scripts/vnext/industrial_lease_relation.py",
+        "scripts/vnext/ordinary_special_debt_scope.py",
+        "tests/vnext/test_industrial_lease_relation.py"
+      ],
+      "patch_sha": "c5a46ff556afacbc29e6fc9cfc8f720e068c2baf",
+      "spawned_at": "2026-10-07T21:27:32.213533+00:00",
+      "ended_at": "2026-10-07T21:32:59.261164+00:00",
+      "tool_calls": 31,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics/docs/evidence/issue28_b06_relations_20261008/independent-carrier-repair/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "dedup_checked": "No live agent; original508c reviewer ended25calls/3messages and cannot be resumed. NewSHA only uncovered row amount/scale repair; previousNEEDS_FIX retained.",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "messages": 3,
+      "resource_cap_compliant": true,
+      "findings": [
+        "P2 inclusive row ownscale ignored; consistent226000USD carrier can erroneously contain136000000USD lease"
+      ]
+    },
+    {
+      "task_name": "review_b06_nativecarrier_bd1e1dd",
+      "purpose": "limited_independent_review",
+      "module": "b06_native_carrier",
+      "scope_paths": [
+        "scripts/vnext/industrial_lease_relation.py",
+        "scripts/vnext/ordinary_special_debt_scope.py",
+        "tests/vnext/test_industrial_lease_relation.py"
+      ],
+      "patch_sha": "bd1e1ddbc9ffac750ea32b85fdd4bf03f1acf9b5",
+      "spawned_at": "2026-10-07T22:11:27.425934+00:00",
+      "ended_at": "2026-10-07T22:18:43.466768+00:00",
+      "tool_calls": 35,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics/docs/evidence/issue28_b06_relations_20261008/independent-native-carrier/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "dedup_checked": "Original2agents ended/capped3msgs; no aliveagent/newSHA result. Directnative source method is truly uncovered newdiff; originalNEEDS_FIX remains.",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "messages": 3,
+      "resource_cap_compliant": true,
+      "findings": [
+        "P2 parentrawQName/text comparison admitswrongnamespace/refusesvalidalias",
+        "P2 ownnativevalues canconflictwith explicitvisible tableunit without rejection"
+      ]
+    },
+    {
+      "task_name": "review_b06_qnameunit_48b2417",
+      "purpose": "limited_independent_review",
+      "module": "b06_qname_and_visible_unit",
+      "scope_paths": [
+        "scripts/vnext/industrial_lease_relation.py",
+        "tests/vnext/test_industrial_lease_relation.py"
+      ],
+      "patch_sha": "48b24178707917d7c475854d53663773901f90d0",
+      "spawned_at": "2026-10-07T22:37:35.082057+00:00",
+      "ended_at": "2026-10-07T22:43:41.874198+00:00",
+      "tool_calls": 40,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics/docs/evidence/issue28_b06_relations_20261008/independent-qname-unit/conclusion.md",
+      "verdict": "NEEDS_FIX",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "dedup_checked": "Prioragentsended35tools/3msgs or earliercaps; sameSHA/delta resultabsent; onlynew2P2 mechanicalrepair covered, notwholemodule.",
+      "messages": 3,
+      "resource_cap_compliant": true,
+      "findings": [
+        "P2 Euro business description inintroduction incorrectly treatedas reportingcurrency"
+      ]
+    },
+    {
+      "task_name": "review_b06_unitscope_487b053",
+      "purpose": "limited_independent_review",
+      "module": "b06_reporting_unit_scope",
+      "scope_paths": [
+        "scripts/vnext/industrial_lease_relation.py",
+        "tests/vnext/test_industrial_lease_relation.py"
+      ],
+      "patch_sha": "487b0531d80bb028c2784a5ef5cf4bac42abdfdf",
+      "spawned_at": "2026-10-07T22:50:46.558487+00:00",
+      "ended_at": "2026-10-08T09:58:03.557308+00:00",
+      "tool_calls": 43,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics/docs/evidence/issue28_b06_relations_20261008/independent-unit-scope/conclusion.md",
+      "verdict": "NEEDS_FIX_ORIGINAL_WITH_INCREMENTAL_PASS_AND_TIME_LIMIT_STOP",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "dedup_checked": "list_agents empty; same SHA/module register absent; same SHA independent evidence absent; prior reviews ended at caps, only new unit-scope delta.",
+      "messages": 3,
+      "resource_cap_compliant": true,
+      "incremental_review": {
+        "patch_sha": "89d2d64960e895dc52466af5dedd1f71b1ed7cd9",
+        "base_sha": "487b0531d80bb028c2784a5ef5cf4bac42abdfdf",
+        "started_at": "2026-10-07T22:56:50.011299+00:00",
+        "ended_at": "2026-10-07T23:01:26+00:00",
+        "verdict": "PASS_LIMITED_SYMBOL_DELTA",
+        "scope": "Explicit foreign-unit symbol repair only; previous NEEDS_FIX preserved.",
+        "cumulative_tool_calls": 37,
+        "cumulative_messages": 2
+      },
+      "second_incremental_review": {
+        "patch_sha": "930a3df29df8dbc8cd519044a23aeb682c09f80c",
+        "base_sha": "7ae99dfdca49ead83fdee669d158083c85714233",
+        "started_at": "2026-10-08T09:56:12.373383+00:00",
+        "ended_at": "2026-10-08T09:58:03.557308+00:00",
+        "verdict": "NOT_COMPLETED_RESOURCE_LIMIT",
+        "scope": "Explicit table unit + adjacent introduction only; reuse prior 37tool/2msg budget.",
+        "cumulative_tool_calls": 43,
+        "cumulative_messages": 3,
+        "tests_run": false
+      }
+    },
+    {
+      "task_name": "review_b06_adjacency_930a3df",
+      "purpose": "limited_independent_review",
+      "module": "b06_explicit_table_unit_adjacency",
+      "scope_paths": [
+        "scripts/vnext/industrial_lease_relation.py",
+        "tests/vnext/test_industrial_lease_relation.py"
+      ],
+      "patch_sha": "930a3df29df8dbc8cd519044a23aeb682c09f80c",
+      "spawned_at": "2026-10-08T09:59:27.674030+00:00",
+      "ended_at": "2026-10-08T13:22:50.798291+00:00",
+      "tool_calls": 52,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics/docs/evidence/issue28_b06_relations_20261008/independent-adjacency/conclusion.md",
+      "verdict": "PASS_930_WITH_SUCCESSOR_REVIEW_RESOURCE_STOP",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "dedup_checked": "list_agents none; prior reviewer capped43tools/3msgs and cumulative wallclock expired, 930 dynamic tests not executed. Only unresolved new adjacency delta; historical report reused, no duplicate completed review.",
+      "messages": 2,
+      "resource_cap_compliant": true,
+      "successor_incremental_review": {
+        "patch_sha": "4b16b4d8513be47d9b108da5cd44205f07073e4c",
+        "base_sha": "adc9c85d3b1713fd198f630e8725d61082e74dd7",
+        "started_at": "2026-10-08T11:08:49.600054+00:00",
+        "ended_at": "2026-10-08T13:22:50.798291+00:00",
+        "verdict": "NOT_COMPLETED_RESOURCE_LIMIT",
+        "scope": "New explicit successor case-original reopening and wrapping, default-file restoration. Old lease/QName/unit logic reused.",
+        "tests_run": false,
+        "cumulative_tool_calls": 52,
+        "cumulative_messages": 2
+      }
+    },
+    {
+      "task_name": "review_b06_successor_4b16b4d",
+      "purpose": "limited_independent_review",
+      "module": "b06_explicit_source_reopening",
+      "scope_paths": [
+        "scripts/vnext/ordinary_reported_lease_scope.py",
+        "tests/vnext/test_reported_lease_successor.py"
+      ],
+      "patch_sha": "4b16b4d8513be47d9b108da5cd44205f07073e4c",
+      "spawned_at": "2026-10-08T13:28:09.536464+00:00",
+      "ended_at": "2026-10-08T13:34:45+00:00",
+      "tool_calls": 47,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics/docs/evidence/issue28_b06_relations_20261008/independent-successor/conclusion.md",
+      "verdict": "PASS_LIMITED_SOURCE_SUCCESSOR_REOPENING",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "dedup_checked": "No live agent. Prior4b supplement stopped at expired cumulative deadline, no dynamic tests or final verdict; reuse its static byte checks. Only unreviewed new source reopening wrapper.",
+      "messages": 2,
+      "resource_cap_compliant": true
+    },
+    {
+      "task_name": "review_retained_journal_497e045",
+      "purpose": "limited_independent_review",
+      "module": "retained_ordinary_journal_read",
+      "scope_paths": [
+        "scripts/vnext/company_result_view.py",
+        "tools/vnext_company.py",
+        "tests/vnext/test_company_results.py"
+      ],
+      "patch_sha": "497e0458ea1e8b279d37150b4b2dad60a7147a48",
+      "spawned_at": "2026-10-08T14:41:33.101914+00:00",
+      "ended_at": "2026-10-08T14:47:44.389419+00:00",
+      "tool_calls": 37,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/docs/evidence/issue28_company_records_20261007/independent-retained-journal/conclusion.md",
+      "verdict": "PASS_LIMITED_RETAINED_JOURNAL_REFERENCES",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "dedup_checked": "No active same-purpose agent; same SHA/module register absent; no same SHA result.",
+      "messages": 1,
+      "resource_cap_compliant": true
+    },
+    {
+      "task_name": "develop_e01_pfizer_bccfda8",
+      "purpose": "offline_development_extraction",
+      "module": "e01_pfizer_content_blind",
+      "scope_paths": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/e01-pfizer-content-development-20261008/input-package"
+      ],
+      "patch_sha": "7a5b328b4df55fdbe2a60878832d2ae9b4076b4b",
+      "input_sha": "sha256:bccfda8803a7b0db6a076a153b553d082aab8b972351a40aefa63276f4a15346",
+      "spawned_at": "2026-10-08T15:13:03.388766+00:00",
+      "ended_at": "2026-10-08T15:15:10+00:00",
+      "tool_calls": 9,
+      "result_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/e01-pfizer-content-development-20261008/blind-initial/conclusion.md",
+      "verdict": "OFFLINE_OUTPUT_PRODUCED",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "dedup_checked": "No active context; no previous Issue28 E01 content blind register/result; existing source-only evidence reused. Native Issue28 section5.8 explicitly authorizes input-only developer extraction.",
+      "messages": 1,
+      "resource_cap_compliant": true
+    },
+    {
+      "task_name": "review_b03_sources_e349491",
+      "purpose": "limited_independent_review",
+      "module": "b03_original_candidates",
+      "scope_paths": [
+        "scripts/vnext/ordinary_depreciation_sources.py",
+        "tests/vnext/test_ordinary_depreciation_sources.py"
+      ],
+      "patch_sha": "e349491db03e50e286c178b3d2d6f6425f770952",
+      "spawned_at": "2026-10-08T15:39:05+00:00",
+      "ended_at": "2026-10-08T15:46:49+00:00",
+      "tool_calls": 42,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source/SEC_metrics/docs/evidence/issue28_b03_source_candidates_20261008/independent/conclusion.md",
+      "verdict": "NEEDS_FIX_THREE_SOURCE_INPUT_P2",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "dedup_checked": "list_agents all prior agents completed; exact SHA/module original register absent; no exact SHA independent evidence result. PR61 unchanged evidence reused.",
+      "messages": 1,
+      "resource_cap_compliant": true
+    },
+    {
+      "task_name": "review_b03_sources_e349491",
+      "purpose": "limited_independent_review",
+      "module": "b03_original_candidates",
+      "scope_paths": [
+        "scripts/vnext/ordinary_depreciation_sources.py",
+        "tests/vnext/test_ordinary_depreciation_sources.py"
+      ],
+      "patch_sha": "af660f1e52bf7b1199d7c56ea65e6b20227ec930",
+      "spawned_at": "2026-10-08T15:50:48+00:00",
+      "ended_at": "2026-10-08T15:55:03+00:00",
+      "tool_calls": 18,
+      "prior_cumulative_tool_calls": 42,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source/SEC_metrics/docs/evidence/issue28_b03_source_candidates_20261008/independent/numeric-repair-conclusion.md",
+      "verdict": "PASS_LIMITED_NUMERIC_REPAIR",
+      "tool_cap": 80,
+      "remaining_tool_cap": 38,
+      "absolute_deadline": "2026-10-08T17:09:05Z",
+      "messages_cap": 3,
+      "prior_messages": 1,
+      "dedup_checked": "Prior same reviewer completed below caps; af660 new numeric repair not covered. Reuse prior original-binding/full-source limited findings.",
+      "cumulative_tool_calls": 60,
+      "cumulative_messages": 2,
+      "resource_cap_compliant": true
+    },
+    {
+      "task_name": "review_b03_sources_e349491",
+      "purpose": "limited_independent_review",
+      "module": "b03_numeric_current_consumer",
+      "scope_paths": [
+        "scripts/vnext/reported_monetary_literal.py",
+        "scripts/vnext/ordinary_b03_input_scope.py",
+        "scripts/vnext/ordinary_current_update.py",
+        "tests/vnext/test_b03_current_input_scope.py"
+      ],
+      "patch_sha": "f78d7e60e24924c62f78f493e18578ea702713e6",
+      "spawned_at": "2026-10-08T16:37:32+00:00",
+      "ended_at": "2026-10-08T16:44:01+00:00",
+      "tool_calls": 20,
+      "prior_cumulative_tool_calls": 60,
+      "remaining_tool_cap": 20,
+      "prior_messages": 2,
+      "messages_cap": 3,
+      "absolute_deadline": "2026-10-08T17:09:05Z",
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source/SEC_metrics/docs/evidence/issue28_b03_source_candidates_20261008/independent/current-consumer-conclusion.md",
+      "verdict": "PASS_LIMITED_CURRENT_NUMERIC_CONSUMER",
+      "dedup_checked": "Prior reviewer ended within original caps, new exact consumer/helper delta not previously reviewed; reuse numeric source findings, do not reopen originals.",
+      "cumulative_tool_calls": 80,
+      "cumulative_messages": 3,
+      "resource_cap_compliant": true,
+      "available_for_more_work": false
+    },
+    {
+      "task_name": "review_metricrouting_5a0352d",
+      "purpose": "limited_independent_review",
+      "module": "company_per_metric_producers",
+      "scope_paths": [
+        "scripts/vnext/company_current_records.py",
+        "tests/vnext/test_company_current_records.py"
+      ],
+      "patch_sha": "5a0352d1fa2ca19c66f99de6c2338fe7a07c1b92",
+      "spawned_at": "2026-10-08T17:11:48+00:00",
+      "ended_at": "2026-10-08T17:17:26.024761+00:00",
+      "tool_calls": 21,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-metric-routing/SEC_metrics/docs/evidence/issue28_metric_routing_20261009/independent/conclusion.md",
+      "verdict": "PASS_LIMITED_PER_METRIC_ROUTING",
+      "tool_cap": 80,
+      "minutes_cap": 90,
+      "messages_cap": 3,
+      "absolute_deadline": "2026-10-08T18:41:48Z",
+      "dedup_checked": "No active agents; exact patch SHA register/result absent; new routing module unreviewed. All capped previous agents remain ended.",
+      "ended_at_basis": "review artifact write recorded in review.log; final verified before parent observation17:19:03Z",
+      "messages": 1,
+      "resource_cap_compliant": true
     }
   ],
   "ci_capacity_20260922": {
@@ -14715,6 +15223,899 @@
     "prior_frozen_runtime_read_preserved": true,
     "new_company_csv_d01_result": "sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89",
     "new_business_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "current_engineering_rules_20261006": {
+    "authority": "https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006",
+    "server_updated_at": "2026-10-06T13:04:29Z",
+    "supersedes_conflicting_v11_v13_and_same_big_pr_engineering_rules": true,
+    "business_and_budget_unchanged": true,
+    "first_main_delivery": "R1 light ordinary imports and affected tests with minimal current-entry docs",
+    "original_source_branch_preserved": true,
+    "c02_pending_status": "Implemented on branch ba9d9e64; pending main reception; business not accepted",
+    "old_merge_7a_status": "Preserved local source/evidence; found missing ordinary snapshot audit dependency. Main8588 already binds module; no need transplant defective old manifest."
+  },
+  "current_main_small_pr_20261006": {
+    "rule": "https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-runtime-tools/SEC_metrics",
+    "branch": "task/issue28-runtime-tools",
+    "draft_pr": "https://github.com/wlvh/SEC_metrics/pull/60",
+    "head": "9c65bf3013490c2198fe4f4fd0fd7ced3f801288",
+    "status": "R1_B01_CURRENT_SAVED_SOURCE_CLI_PASS_DRAFT_PENDING_MAIN",
+    "existing_source_result": "Marriott FY2025 B01 26186000000 USD EXACT, 365-day registrant scope",
+    "pure_spec_source_csv_helpers_do_not_import_governance": true,
+    "fast_business_tests": 34,
+    "original_branch_preserved": "task/b06-new-source at local7a5b328b, original PR43 unchanged",
+    "c02_pending": "ba9 branch implementation preserved; pending main reception; business not accepted",
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "T1 one-process fast feedback from main; R2 source/config before prepare/replay and current company read integration",
+    "pr": 60,
+    "actual_tested_commit": "e6dd436b5ba78d61c370fc14df2786f9ad64b86c",
+    "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-runtime-tools/SEC_metrics",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/issue28-runtime-tools/SEC_metrics",
+    "saved_record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/r1-committed-e6dd436b/runs/marriott_international/B01",
+    "source_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+    "scope": "B01 saved-source CLI, ordinary record/CSV/read; full company run and other native paths remain legacy",
+    "current_ci": {
+      "runtime": "SUCCESS_37480509523",
+      "main_workflow": "NOT_SUCCESS_37480509127_SOME_JOBS_FAILED_OTHER_JOBS_QUEUED",
+      "last_observed": "queued"
+    },
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "lodging_subtraction": {
+      "original_modules": 270,
+      "new_modules": 240,
+      "imports_removed": [
+        "publication",
+        "qualification",
+        "zero_ai_release",
+        "zero_ai_r2"
+      ],
+      "remaining": [
+        "run_store",
+        "requirements"
+      ],
+      "moved_function_ast_identical": true,
+      "tests": {
+        "count": 31,
+        "seconds": 1.038
+      },
+      "evidence": "docs/evidence/issue28_runtime_tools_20261006/lodging-light-entry-measured.json"
+    },
+    "latest_ci_observed": {
+      "dedicated": {
+        "id": 37544113496,
+        "conclusion": "success"
+      },
+      "main": {
+        "id": 37544113468,
+        "conclusion": "failure",
+        "observed_log": "normal_annual_input.py ancestor byte gate and UPDATES_PARTIAL/INCOMPLETE old expectation"
+      },
+      "reference": {
+        "id": 37544113559,
+        "conclusion": "success"
+      }
+    }
+  },
+  "current_fast_feedback_pr_20261006": {
+    "pr": 61,
+    "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "base": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "head": "86e63816d00e2f241f626c59f58041d04d9064cd",
+    "status": "DRAFT_PENDING_MAIN",
+    "same_59_before_seconds": 2.72728179092519,
+    "same_59_after_seconds": 1.0164185410831124,
+    "full_fast": {
+      "tests": 273,
+      "seconds": 80.30034275003709,
+      "skips": 0,
+      "scope": "before stdout redirect only; final five runner +59 tests pass"
+    },
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "R2 selected sources/config before full prepare/replay; ordinary company view/export integration",
+    "ci_terminal": {
+      "run_id": 37483542355,
+      "conclusion": "cancelled",
+      "successful_jobs": 12,
+      "incomplete_job": "Foundation inherited source material",
+      "incomplete_duration": "15m16s",
+      "failure_semantics": "No suite result was printed; do not claim business assertions failed or all CI success",
+      "material_step_actual_elapsed_seconds": 33
+    },
+    "current_ci": {
+      "id": 37493740502,
+      "status": "completed",
+      "conclusion": "success"
+    },
+    "shallow_validation": "True shallow one-commit tree;7tests pass8.631s; not all43 materials"
+  },
+  "current_daily_results_pr_20261006": {
+    "pr": 63,
+    "head": "52c3877b",
+    "base": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "branch": "task/issue28-daily-results",
+    "status": "DRAFT_PENDING_MAIN_DAILY_READ_PASS",
+    "actual_tested_commit": "47285a3745e4cdc95aff18b3ea4df9fd332c968d",
+    "actual_saved_company_result": "sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89",
+    "read_seconds": 0.5571057500783354,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "tests": "43directed0.466s; received e419 per-period view dependencies; actual small save/view/CSV pipeline",
+    "peer_read": "6e968a630028b395560f4ef06ad6714e252509ac",
+    "ci": {
+      "dedicated": "SUCCESS_37491750265",
+      "broad": "IN_PROGRESS_37491749618"
+    },
+    "remaining": "run_once still prepares/replays before change detection; raw/parsed task comparison and source/program sharing remain",
+    "initial_range_test_failure": "357447f6 failed helper row assumption; retained initial-range-test-failure.log; corrected df90e1f4",
+    "peer_consumer_verification": {
+      "fixed_commit": "e419a1b7",
+      "record": "docs/evidence/issue47_history/company-daily-read-2026-10-07/README.md",
+      "scope": "Own peer save_execution/view/CSV small range counterexample;35directed tests; unchanged success branch reuses their df90 old-company read",
+      "evidence_kind": "Read peer executed material; not parent independent rerun",
+      "business_acceptance_credit": false
+    }
+  },
+  "current_input_change_pr_20261007": {
+    "pr": 64,
+    "head": "7cf6c623744aa46dde03c682bce2918b26bf2f1d",
+    "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "branch": "task/issue28-input-change",
+    "status": "DRAFT_PENDING_MAIN_FIRST_LEVEL_ONLY",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "scope": "run_once current_records=True via existing saved-source CLI; default native journals retained",
+    "actual_b01_initial_seconds": 2.1121383749414235,
+    "actual_b01_repeat_seconds": 0.07889608293771744,
+    "repeat_factory_assertion": "PASS_NO_CALCULATION_FACTORY",
+    "tests": "9 controller tests0.031s, mocks explicit; real source CLI separate",
+    "next": "fixed-parsed complete task comparison for changed bytes; D04 actual script variants; default company update integration",
+    "ci": {
+      "id": 37499450563,
+      "conclusion": "failure",
+      "scope": "Old native byte gates and old fast/material scope remain; not a green new update validation"
+    }
+  },
+  "current_parsed_task_input_pr_20261007": {
+    "pr": 65,
+    "head": "95849b6e",
+    "branch": "task/issue28-parsed-task-input",
+    "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "scope": "Existing compare_annual_inputs explicit D04 mechanical input equality; default remains old; company update caller not yet selected",
+    "actual_raw_sources": [
+      "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "2068d81830ea882910ef7043026445bae69f925c094dbb40d030de4afc001151"
+    ],
+    "source_archive_commit": "4227fb98d8c1f8eaeaeb2e0850ef373b0f288c98",
+    "source_archive_sha256": "10d5e21437f3ceea4d3fd5b20b41076bca35ec0bcdd31173ba0dcd538833db34",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "actual_source_flow_result": "PARSED_TASK_INPUT_UNCHANGED",
+    "actual_source_flow_seconds": 2.223310375120491,
+    "tests": "21directed0.226s; source identity/period, numeric/units/table/media relations/IDs/opaque script/Unicode preserved",
+    "result_or_original_response_credit": false,
+    "next": "Company update/processing caller integration with same task/prompt/model config; M1 explicit output limits for development only",
+    "ci": {
+      "dedicated": 37509183166,
+      "dedicated_conclusion": "success",
+      "broad": 37509182989,
+      "broad_last_observed": "in_progress"
+    },
+    "head_sha": "9042dcd2b1b76522fb95078a4441f9998308e1e0",
+    "svg_peer_defect": "FIXED_AUTHOR_REGRESSION_VERIFIED",
+    "svg_tests": "22 passed 0.297s; real pair unchanged 1.7642/2.5061s; not independent review",
+    "new_head_ci": "37513500405 queued at first read; dedicated37513500457 queued"
+  },
+  "m1_consumer_requirement_20261007": {
+    "source": "Issue47 peer notification (record8ab4af87; actual development only)",
+    "required_entry": "request_body/digest, render_prompt/measure_request, usage_error same explicit limits",
+    "default_unchanged": {
+      "output_tokens": 4096,
+      "max_context_tokens": 200000
+    },
+    "development_candidate": {
+      "input_reference": 188798,
+      "output_tokens": 8192,
+      "sum": 196990
+    },
+    "current_status": "actual hardcoded sites inspected; implementation not delivered",
+    "new_live_permission": false,
+    "status": "IMPLEMENTED_DRAFT_PR66",
+    "head_sha": "ddcc61920d608d5ede64458bb02f3f166953f3df",
+    "actual_saved_request": "bdad31f0dc7b55a5f49f9308c74168b41dd44ee8748156bdfeeabc1ffa7a1966",
+    "reference_total_context_tokens": 196990,
+    "dedicated_ci": "37512275939 SUCCESS",
+    "live_boundary": "PreparedSemanticRequest remains4096; no new calls",
+    "evidence_path": "docs/evidence/issue28_request_limits_20261007/"
+  },
+  "current_company_records_pr_20261007": {
+    "head_sha": "ce26b854ba924ca06102e27df40f7c4623905cfb",
+    "base_sha": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "pr": "https://github.com/wlvh/SEC_metrics/pull/67",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "status": "DRAFT_IMPLEMENTED_PENDING_MAIN_AND_BUSINESS_ACCEPTANCE",
+    "real_routes": [
+      "Marriott FY2025 B01/B02",
+      "Macy FY2025 B01 noncalendar",
+      "JPM FY2025 B01 structuralN_A with saved source-observation failure"
+    ],
+    "tests": {
+      "count": 90,
+      "seconds": 28.817
+    },
+    "native_parse_before_after": "6-to-1 current annual;7.0105-to-6.0410s; exact B01/B02ResultIDs preserved",
+    "common_read": "0.00257s in-process; B02requested/B01retained; no update or native recovery",
+    "evidence_path": "docs/evidence/issue28_company_records_20261007/",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "ledger_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+    "ci": "ce26dedicated37540769881SUCCESS, main37540769865/ref37540769890queued lastread.723mainFAILURE, targetedPASS",
+    "remaining": [
+      "other family/amendment rule-root separation",
+      "new online import/discovery path",
+      "second-level parsed input/AI reuse integration",
+      "full390 business acceptance"
+    ],
+    "peer_read_sha": "d7d5938ecd92929baa1feff308ca371a87d5a2bc",
+    "peer_read_note": "actualtask/issue47-local-continue remote does not exist; actual origin/task/sec-history-five-year read afterfetch; M1/SVGreceiving evidence read, not copied as business credit",
+    "daily_csv": "actual existingCLIresults --output-root0.3562s, no update; canonical and supplied defects both consumed",
+    "old_installation_failure": "actualkind=local1.316185s RequirementError normal_annual_input.py binding mismatch beforeoutput; old fixed packages not rewritten",
+    "next_action": "Verify actual nonempty amendment/successor financial input from source-only roots, then events/new online continuation; retain exact named unavailable/conflicting metrics.",
+    "received_shared_lodging_core": "a06853465fa64b07c308b9d9311548d3533b5b18; only producer/calculator/test/fixture files",
+    "case_writer": "save_calculated_case; selected annual optional to pure renderer; defaults of native wrapper retained",
+    "lodging_current": "companyrun10.339s; B10=69.3percent/B11=128.8USD FY2025; repeat1.552s with factory prohibited; daily0.861s no update",
+    "lodging_previous": "actual FY2024 original + existing shared source/calculation + constructed case package128.23USD,2.876s no latest reselection; not full historical pipeline acceptance",
+    "source_material_storage": "one3568995byte grid shared; result30682/30555bytes; independent corruption/missing rejection",
+    "configuration_scope": "UnusedLOD family removed for22zeroAI; shared parser/calculator/record/spec/source/traits dependencies now explicit; broader dependency specificity remains",
+    "source_checker_received": "399e35e1",
+    "selected_range_interface": "run_saved_company(... fiscal_years=None,case_factory=None); defaults preserved,explicit1..5 unique years,per-year updater namespace and commonreader",
+    "actual_no_journal_company_scope": "B01run/save/CSV1.762s; initial allSpec dependency failure preserved, not fullycode/source separated",
+    "rule_source_roots": "B01/B02/B10/B11/A01/A02/B12 and CompanyFacts program rules; B03/events/amendments remain",
+    "actual_source_only_run": "B01no-rule source9files1.4116s26186000000USD; B02initialmissingpriorwithheld, add only2preexistingraw/header, combined2.153s4.326693227% growth",
+    "missing_year_reader": "requestedfiscalFY toJSON/CSV, datesblank; failureserror_type/year/error_category retained",
+    "case_dependencies": "processing_files=() finiteunique reporelative sourcecode/config under ROOT; actualSHA configuration; related/unrelated/path-error tests",
+    "head": "7448fe54a01e3d66491ff52acfb6d2515e108922",
+    "lodging_rule_root": {
+      "status": "WRAPPER_ADAPTED_SAVED_SOURCE_COMPANY_CSV_VERIFIED",
+      "metrics": [
+        "B10",
+        "B11"
+      ],
+      "source_package_has_program_rules": false,
+      "actual_company_seconds": 6.262718125013635,
+      "tests": {
+        "count": 90,
+        "seconds": 15.598
+      },
+      "evidence": "docs/evidence/issue28_company_records_20261007/lodging-source-only-rule-root.json",
+      "peer_core_changed": false
+    },
+    "current_ci": {
+      "dedicated": {
+        "id": 37543026979,
+        "status": "in_progress"
+      },
+      "main": {
+        "id": 37543027078,
+        "status": "queued"
+      },
+      "reference": {
+        "id": 37543027018,
+        "status": "queued"
+      }
+    },
+    "retired_creator_trust_tests": {
+      "head": "12585e75",
+      "removed": 4,
+      "retained": "old checkpoint export, unknown/failed-session, actual saved-source negative cases"
+    },
+    "native_source_only": {
+      "evidence": "docs/evidence/issue28_company_records_20261007/native-source-only-company-results.json",
+      "salesforce_B12_seconds": 1.571355083025992,
+      "jpm_A01_A02_seconds": 8.94289862504229,
+      "business_scope": "source-original native instant values only; old unrelated event failures retained"
+    },
+    "current_ci_observed": {
+      "head": "7448fe54a01e3d66491ff52acfb6d2515e108922",
+      "dedicated": {
+        "id": 37552342566,
+        "conclusion": "success"
+      },
+      "reference": {
+        "id": 37552342861,
+        "conclusion": "success"
+      },
+      "main": {
+        "id": 37552342588,
+        "status": "in_progress"
+      }
+    },
+    "received_lodging_light_helpers": "9c65bf3013490c2198fe4f4fd0fd7ced3f801288",
+    "exact_ci_tests": {
+      "count": 97,
+      "seconds": 53.013,
+      "log": "docs/evidence/issue28_company_records_20261007/light-entry-exact-ci-tests.log"
+    },
+    "actual_company_after_light_entry": "docs/evidence/issue28_company_records_20261007/company-after-light-entry.json",
+    "b03_current_scope": {
+      "status": "CURRENT_EXPLICIT_ADAPTER_AND_LIMITED_INCREMENT_REVIEW",
+      "code_head": "01a007f9fa2a76339c5b81c0e1c18a8612c8ca26",
+      "marriott": "458m D&A,135m revenue deduction excluded, current source-only company candidate2.787s",
+      "salesforce": "namedWITHHELD, no subtotal/larger-value credit, B01 retained3.189s",
+      "evidence": "docs/evidence/issue28_company_records_20261007/b03-current-company-results.json",
+      "review": "docs/evidence/issue28_company_records_20261007/independent-b03-uri-01a007f/conclusion.md",
+      "scope_limit": "not wholeB03/whole390/business adoption; nonempty amendments/successor source-only still unverified"
+    }
+  },
+  "current_source_checks_pr_20261007": {
+    "pr": "https://github.com/wlvh/SEC_metrics/pull/68",
+    "head_sha": "f2927361eae278465babcfe3925ad54d15575bd9",
+    "code_sha": "399e35e1",
+    "base_sha": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "status": "DRAFT_SOURCE_CHECKS_IMPLEMENTED_PENDING_MAIN",
+    "real_scope": "no.git/journal selected3source annual/fiscal preparation1.194s,actualB01calc1.458s samee279",
+    "tests": "14 directed6.027s; original negative fail accession mismatch fixed",
+    "ci": "37530396141/source and37530395953/reference SUCCESS;37530395963/main FAILURE. Actual logs20normal_source byte bindings,4legacy trust assertion missing exceptions,1status assertion",
+    "ledger_unchanged": true,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "evidence_path": "docs/evidence/issue28_source_checks_20261007/",
+    "main_read": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "peer_read": "0bc22a45b09b5bddb1b67a0df4edcf63b5c51807"
+  },
+  "current_company_records_closeout": {
+    "head": "8819dbff4fffeac9b7910224a8aebe7904b6d04f",
+    "branch": "task/issue28-company-records",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "pr": 67,
+    "scope": "existing saved-source delivery; no new families or online system",
+    "completed_check_pointer": "completed-check.json",
+    "success_pointer": "current-result.json",
+    "stable_withheld_status": "PREVIOUS_INPUT_WITHHELD",
+    "small_tests": {
+      "count": 50,
+      "seconds": 2.726
+    },
+    "current_fast": {
+      "count": 271,
+      "seconds": 69.76195,
+      "status": "PASS",
+      "skips": 0,
+      "retired_selector": "tests.vnext.test_normal_candidate_authority"
+    },
+    "dedicated_local": {
+      "count": 136,
+      "seconds": 59.952,
+      "status": "PASS",
+      "outer_seconds": 60.572382,
+      "tested_head": "b23f16a7; before two completed-reader regression cases"
+    },
+    "latest_ci": {
+      "head_sha": "8819dbff4fffeac9b7910224a8aebe7904b6d04f",
+      "main": {
+        "run_id": 37822214210,
+        "status": "completed",
+        "conclusion": "success",
+        "jobs_successful": 7,
+        "fast_tests": 271,
+        "fast_test_seconds": 111.915950032,
+        "fast_command_seconds": 113.930482349,
+        "longest_command_seconds": 322.562387604,
+        "longest_job_seconds": 340
+      },
+      "dedicated": {
+        "run_id": 37822214191,
+        "status": "completed",
+        "conclusion": "success",
+        "tests": 145,
+        "test_seconds": 154.408,
+        "job_seconds": 177
+      },
+      "reference": {
+        "run_id": 37822214181,
+        "status": "completed",
+        "conclusion": "success"
+      }
+    },
+    "next": "Exact PR61/test foundation, PR58+PR62 dependent short business tests and PR67 saved-source reception; PR74 narrow routing follows public base. No Ready/merge/production. Existing online acquisition prototype retained for next batch, not this closeout.",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "checkout_fix": "candidate depth1 plus full objects of declared issue_28_v1 baseline at depth1; final historicaljob179s/34tests141.117s",
+    "alias_tests": {
+      "count": 42,
+      "seconds": 0.157
+    },
+    "current_head_ci": "8819dbff main37822214210/dedicated37822214191/reference37822214181 allSUCCESS",
+    "subset_read_fix": "completed-check chosen per coordinate even after other metric request",
+    "subset_read": {
+      "seconds": 0.011882833,
+      "actual_company": "paramount_skydance_paramount_global",
+      "values": "B01/B03 current WITHHELD/null; B08 unchanged"
+    },
+    "retained_old_read": {
+      "company": "jpmorgan_chase",
+      "metric": "D01",
+      "seconds": 0.636577875,
+      "runtime": "company-main-integrated-runtime-20261006",
+      "status": "PASS_NO_NEW_CONTENT_CREDIT"
+    },
+    "migrated_ci": {
+      "history_mixed": {
+        "tests": 47,
+        "seconds": 6.301
+      },
+      "source_count_request": {
+        "tests": 65,
+        "seconds": 23.661
+      },
+      "routing": {
+        "tests": 8,
+        "seconds": 0.086
+      }
+    },
+    "document_head_ci": {
+      "head": "01efa3d5d0fa486fac395ba4a3c931fc8dc1eb1b",
+      "dedicated": 37672931165,
+      "dedicated_status": "SUCCESS",
+      "reference": 37672931288,
+      "reference_status": "SUCCESS",
+      "main": 37672931093,
+      "main_status": "FAILURE"
+    },
+    "peer_independent_read": "PR71 receiver: subset after latest other metric preserves historical hold and three other values,0.859s56result/pointerfiles unchanged; receiver-only evidence, not parent business acceptance",
+    "ci_01efa3d": {
+      "run_id": 37672931093,
+      "head_sha": "01efa3d5d0fa486fac395ba4a3c931fc8dc1eb1b",
+      "status": "completed",
+      "conclusion": "failure",
+      "remaining_failures": "sixoldnativejobs:16errors/20tests before business assertions at retiredissue_28_v11sourcebyteguard; diagnosiscomplete"
+    },
+    "code_head": "8819dbff4fffeac9b7910224a8aebe7904b6d04f",
+    "main_head": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "peer_read_sha": "f8b3db7db43ff17628ab7363bf6fc8bd6027bcc8",
+    "candidate_scope": "existing saved-source current company entry only; no new C04/D04/remaining12family/online installation",
+    "ci_scope_disposition": "old whole-native creation jobs removed from currentcandidate mandatorycohort; originaltests and savedruntime remain; C04retained26source/subject/prior/eventchecks7.768s0skip",
+    "ci_a4a568b1": {
+      "main": {
+        "run_id": 37676590569,
+        "conclusion": "cancelled",
+        "successful_jobs": 6,
+        "remaining_job": "historical-object audit job10min cancelled after34tests187.808s/scalability/egress/reference PASS; fullhistoryfetch~385s"
+      },
+      "dedicated": {
+        "run_id": 37676590583,
+        "conclusion": "success"
+      },
+      "reference": {
+        "run_id": 37676590535,
+        "conclusion": "success"
+      }
+    },
+    "historical_ci_minimal_fix": "candidatedepth1 plusdeclaredbaseline e0cd1da completeobjects depth1; no tests/cap weakening; requiresactualnewCI",
+    "latest_ci_runs": [
+      {
+        "databaseId": 37678715757,
+        "headSha": "adee30366a13c0c4ead3f30ec5344db19ebf746f",
+        "workflowName": "Company saved-source records"
+      },
+      {
+        "databaseId": 37678715800,
+        "headSha": "adee30366a13c0c4ead3f30ec5344db19ebf746f",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "databaseId": 37678715908,
+        "headSha": "adee30366a13c0c4ead3f30ec5344db19ebf746f",
+        "workflowName": "Metrics reference tables"
+      }
+    ],
+    "current_candidate_state": "TECHNICALLY_REVIEWABLE_SAVED_SOURCE_SCOPE_NOT_BUSINESS_ACCEPTED",
+    "remaining": "new online installation, C04/D04/remainingfamilies and newmodelchain notthisbatch; wholeIssue390 andnormalautomaticnewfilings notcomplete",
+    "project_calls_unchanged": {
+      "provider": 143,
+      "paid": 143,
+      "sec": 52,
+      "claims": 195,
+      "claims_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb"
+    }
+  },
+  "b06_reported_lease_relations_20261008": {
+    "status": "PASS_LIMITED_SOURCE_SUCCESSOR_CURRENT_CI_SUCCESS",
+    "code_sha": "4b16b4d8513be47d9b108da5cd44205f07073e4c",
+    "base_sha": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics",
+    "branch": "task/issue28-b06-relations",
+    "reported_relations_default": "Original signature/default restored byte-identical to main; opt-in now separate module.",
+    "source_case_default_identical_to_main": true,
+    "record_type_selected": "ORDINARY_B06_SPECIAL_SCOPE_SOURCE_V2",
+    "reported_industrial_debt": 21919000000,
+    "lease_component_total": 890000000,
+    "lease_additional_amount": 0,
+    "B06_value": null,
+    "B06_publication": "WITHHELD",
+    "complete_B06": false,
+    "source_and_persistence_seconds": 11.896889084018767,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "native_run_or_company_result_created": false,
+    "company_entry_consumes_new_option": false,
+    "evidence_path": "docs/evidence/issue28_b06_relations_20261008/",
+    "review_task": "review_b06_successor_4b16b4d",
+    "next": "Read current PR72 own final CI at natural checkpoint, resolve any actual new failure; no B06 full ratio/Run/company credit, PR67 fixed.",
+    "carrier_conflict_status": "UNRESOLVED",
+    "small_tests": 23,
+    "accepted_relation_credit": false,
+    "remote_branch": "task/issue28-b06-relations",
+    "draft_pr_created": true,
+    "method": "ownfact/cell/context/USD andsameconcept/contextXML pair; no borrowedscale",
+    "peer_sha_read": "0f9d55834b3e941afc1698454f6554f3ed3cdf3b",
+    "partial_relation_verified": true,
+    "archive_sha": "a8ebdb11e443143e2511805f3a050877c60fdce4",
+    "remote_ci": "NO_RUNS_BRANCH_WITHOUT_PR",
+    "source_only": true,
+    "peer_increment_observation": "H4 historical income consumers only. Native/source default B06 unchanged and new source successor remains not consumed; no historical credit borrowed.",
+    "remaining_unit_scope_limit": "No table-internal declaration: old bounded introduction support remains limited, not universal semantic scope.",
+    "draft_pr_url": "https://github.com/wlvh/SEC_metrics/pull/72",
+    "current_api": [
+      "ordinary_reported_lease_scope.prepare_reported_lease_case",
+      "ordinary_reported_lease_scope.inspect_reported_lease_scope"
+    ],
+    "default_file_byte_identical_to_main": true,
+    "test_foundation_received_sha": "86e63816d00e2f241f626c59f58041d04d9064cd",
+    "pending_local_process": null,
+    "local_received_fast_tests": 273,
+    "local_received_fast_seconds": 74.98355062492192,
+    "current_ci": {
+      "run": 37788081905,
+      "head": "a8ebdb11e443143e2511805f3a050877c60fdce4",
+      "status": "completed",
+      "reference_run": 37788081789,
+      "reference_status": "success",
+      "observation": "Actual main37788081905 and reference37788081789 SUCCESS at a8ebdb11; all12 main jobs success.",
+      "conclusion": "success"
+    },
+    "previous_ci": {
+      "run": 37784491170,
+      "head": "41bb544fc9800ed4e686f49b41338efa9e36cf0e",
+      "status": "failure",
+      "fast_failures": "Two inherited NormalAnnualInputTest selectors30s timeout; addressed by received PR61 T1"
+    }
+  },
+  "runtime_goal_observation": {
+    "status": "active",
+    "source": "get_goal actual record after resumed native Goal",
+    "note": "Full objective incomplete; new source-adjacency code and necessary targeted controls are concrete progress. PR67 remains fixed."
+  },
+  "retained_c04_reader_probe_20261008": {
+    "checked_at": "2026-10-08T14:19:27.497780+00:00",
+    "scope": "Availability and current-company-entry compatibility only; no original C04 recomputation or acceptance",
+    "marriott_old_cli_state": "NOT_FOUND at /private/tmp/issue28-marriott-c04-cli-20260929",
+    "marriott_real_refresh_state": "NOT_FOUND at /private/tmp/issue28-c04-live-zero-refresh-20260926-03",
+    "historical_refresh_receipt_preserved": "docs/evidence/issue28_continuous/c04-real-refresh-second-20260927/real-second-summary.json",
+    "southwest_native_run_exists": true,
+    "southwest_run_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/private-c04-southwest-20260927/attempts/43ae2e481d324ac9a1db2fc15fc76e9b/runs/C04",
+    "southwest_result_id": "sha256:2f06895d80507148edfd7602427abffb8f6918323a48689c26345345c8170fe6",
+    "southwest_old_native_status": "OPEN",
+    "current_company_checkpoint_task_exists": false,
+    "current_cli_result_read_proven": true,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "Candidate ready for technical review; no new C04 calculation or acceptance.",
+    "status": "ACTUAL_COMPANY_RESULTS_READ_PASS_LIMITED_REVIEW",
+    "reviewed_sha": "497e0458ea1e8b279d37150b4b2dad60a7147a48",
+    "review_path": "docs/evidence/issue28_company_records_20261007/independent-retained-journal/conclusion.md",
+    "real_cli_seconds": 0.3216798328794539,
+    "original_files_unchanged": true,
+    "independent_file_count_including_lock": 927,
+    "new_native_run_or_company_checkpoint": false,
+    "current_source_verification": false,
+    "delivery_head": "c56e63354271d9c674bf18bb56856e420ce334cc",
+    "pr": 67,
+    "affected_suite_tests": 46,
+    "affected_suite_seconds": 6.522,
+    "ci": {
+      "main": 37796004601,
+      "dedicated": 37796004020,
+      "status": "completed",
+      "reference": 37796004449,
+      "reference_status": "success",
+      "dedicated_status": "success",
+      "main_status": "success",
+      "actual_current_head_job_seconds": {
+        "fast_job": 232,
+        "fast_command": 210,
+        "dedicated_job": 183,
+        "dedicated_command": 163,
+        "longest_material_job": 392,
+        "material_command": 371,
+        "head": "c56e63354271d9c674bf18bb56856e420ce334cc"
+      }
+    }
+  },
+  "e01_pfizer_content_development_20261008": {
+    "status": "PASS_DEVELOPMENT_LIMITED",
+    "source_input_id": "sha256:d5f97b6eb57fc2d980441179cc7417994f8b86330cd916b9e02fe909889dbbe6",
+    "request_id": "sha256:bccfda8803a7b0db6a076a153b553d082aab8b972351a40aefa63276f4a15346",
+    "company_id": "pfizer",
+    "candidate_items": 3,
+    "saved_filings": 9,
+    "method_scope": "candidate own text content classification only, no numeric metric",
+    "root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/e01-pfizer-content-development-20261008",
+    "initial_consumed": true,
+    "correction_consumed": false,
+    "business_calls": [
+      0,
+      0,
+      0
+    ],
+    "target_model_authorized": false,
+    "comparison_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/e01-pfizer-content-development-20261008/comparison.json",
+    "reference_matches": 3,
+    "exact_quotes": 3,
+    "native_result_created": false,
+    "deepseek_validated": false,
+    "archived_commit": "b3f7c15b"
+  },
+  "b03_original_candidates_20261008": {
+    "status": "PASS_LIMITED_SOURCE_API_NOT_COMPLETE_B03",
+    "patch_sha": "af660f1e52bf7b1199d7c56ea65e6b20227ec930",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source/SEC_metrics",
+    "evidence": "docs/evidence/issue28_b03_source_candidates_20261008/",
+    "peer_request_sha": "b4b57e7cba3d2f8ea82a22b7510d5aba27bb9b05",
+    "peer_source_locations_sha": "621034e6",
+    "old_income_default_unchanged": true,
+    "current_metric_result_created": false,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "review_result": "Original binding review reused; incremental numeric review PASS, cumulative60/80 tools2/3 messages, original NEEDS_FIX preserved",
+    "real_years": [
+      2021,
+      2022,
+      2023
+    ],
+    "delivery_head": "844dd2fc50b75105314679695d94aa1562dcfa93",
+    "pr": 73,
+    "current_source_and_tests_equal_reviewed_sha": "af660f1e52bf7b1199d7c56ea65e6b20227ec930",
+    "ci": {
+      "main": 37811730966,
+      "reference": 37811731120,
+      "status": "completed",
+      "reference_status": "success",
+      "superseded_main": 37806827850,
+      "superseded_cancel_requested": true,
+      "main_status": "success"
+    },
+    "source_adapter_remaining": [
+      "original structural blocks may need cross-page context reopening",
+      "reported containment and full approved D&A must be independently established",
+      "no ordinary/company B03 input integration or result acceptance"
+    ],
+    "shared_short_selectors_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/shared-short-selectors-20261008/manifest.json",
+    "workflow_receiving": "c56 historical candidate checkout depth1 + explicit declared baseline only; unchanged tests/10min deadline; local declared active object checked",
+    "shared_helper_source": "f78d7e60e24924c62f78f493e18578ea702713e6",
+    "shared_helper_exact_bytes": true
+  },
+  "shared_short_selectors_20261008": {
+    "author": "Issue28",
+    "receiver": "Issue47 original PR58/62",
+    "base": "86e63816d00e2f241f626c59f58041d04d9064cd",
+    "patch_paths": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/shared-short-selectors-20261008/",
+    "h1_reported_head": "295e9926",
+    "h2_reported_head": "b6677c0b",
+    "receiver_reported_tests": [
+      15,
+      15
+    ],
+    "evidence_boundary": "Read receiver message; no local independent30-test execution or whole CI pass claim",
+    "pr67_scope_unchanged": true,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "peer_increment_20261009": {
+    "fixed_peer_sha": "23c895bac1388b813083a37d7f4f38879cad0605",
+    "previous_read_sha": "621034e6",
+    "known_defects_delta": "Only peer read/integration metadata appended; no new defect mutation",
+    "ordinary_source_adapter_consumer_report": "Three original years reread by peer using9a7; source candidates only, no Calc/null release",
+    "main_still": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "latest_read_sha": "afe4fc362fc582a2e1c4c0028e03f153ac8e2d6e",
+    "b03_receiver_evidence_read": {
+      "path": "docs/evidence/issue47_history/historical-income-receiving-2026-10-08/b03-numeric-peer-receiving.json",
+      "tests": 33,
+      "seconds": 0.052,
+      "original2021_candidates_unchanged": true,
+      "year2024_saved_id_value_unchanged": true,
+      "new_acceptance": false,
+      "parent_independent_rerun": false
+    }
+  },
+  "b03_current_numeric_20261009": {
+    "status": "PASS_LIMITED_ACTUAL_COMPANY_ENTRY_REVIEW_COMPLETE",
+    "patch_sha": "f78d7e60e24924c62f78f493e18578ea702713e6",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "known_error": "Current B03 inspector returns KEEP for non-XBRL numeric tag and unformatted1,38 normalized138; unit-level confirmed, no affected real Result established",
+    "actual_current_cli": {
+      "marriott_b03": "0.1756281982738868097456656229",
+      "salesforce_b01": "41525000000",
+      "salesforce_b03": "WITHHELD",
+      "repeat_factory_forbidden": true,
+      "result_files_unchanged": true
+    },
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "review_tools_cumulative": 80,
+    "review_messages_cumulative": 3,
+    "review_result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source/SEC_metrics/docs/evidence/issue28_b03_source_candidates_20261008/independent/current-consumer-conclusion.md",
+    "delivery_head": "8819dbff4fffeac9b7910224a8aebe7904b6d04f",
+    "ci": {
+      "main": 37822214210,
+      "reference": 37822214181,
+      "dedicated": 37822214191,
+      "main_status": "success",
+      "reference_status": "success",
+      "dedicated_status": "success"
+    },
+    "review_report_archive": "https://github.com/wlvh/SEC_metrics/blob/844dd2fc50b75105314679695d94aa1562dcfa93/docs/evidence/issue28_b03_source_candidates_20261008/independent/current-consumer-conclusion.md",
+    "processing_dependency_followup": {
+      "file": "scripts/vnext/ordinary_current_update.py",
+      "function": "_configuration",
+      "added_actual_dependency": "scripts/vnext/zero_ai_r2.py",
+      "changes_formula": false,
+      "small_tests": 26,
+      "seconds": 0.112,
+      "first_regression_failed_before_repair": true,
+      "synthetic_actual_controller_change_then_reuse": true,
+      "no_large_material_rerun_locally": true,
+      "evidence": "docs/evidence/issue28_company_records_20261007/graph-dependency/README.md"
+    }
+  },
+  "mixed_saved_metric_entry_20261009": {
+    "status": "PUBLIC_ROUTING_REVIEWED_FIXED_REAL_RECEIVER_EVIDENCE_READ",
+    "scope": "Explicit per-metric factory/dependencies only; no new family/second controller; PR67/71 closeout not expanded",
+    "reported_error": "COMPANY_CURRENT_SELECTED_YEARS_REQUIRE_CASE_FACTORY",
+    "reproducer": "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/work/mixed-history-interface-reproducer.json",
+    "owner": "Issue28 public entry; Issue47 historical mapping/consumer verification",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "pr": 74,
+    "patch_sha": "5a0352d1fa2ca19c66f99de6c2338fe7a07c1b92",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-metric-routing/SEC_metrics",
+    "dependency": "PR67@8819dbff4fffeac9b7910224a8aebe7904b6d04f",
+    "small_tests": 24,
+    "small_seconds": 0.141,
+    "affected_tests": 29,
+    "affected_seconds": 6.518,
+    "real_mixed_source_credit": "Receiver fixed material evidence read; parent independently checked one Marriott FY2024 B04 original, not60-position business acceptance",
+    "limited_difference_review_pending": false,
+    "ci": {
+      "main": 37813795688,
+      "dedicated": 37813795611,
+      "reference": 37813795617,
+      "status": "completed",
+      "main_status": "success",
+      "dedicated_status": "success",
+      "reference_status": "success"
+    },
+    "limited_review_result": "PASS_LIMITED",
+    "review_scope": "24short tests plus invalid mappings/nonempty dependency identity/actual controller synthetic reentry; no real mixed-history business credit",
+    "archive_head": "2c4909417f3cdb41fb2fcf83bc3de94e7a5a5807",
+    "review_code_unchanged": true,
+    "review_artifact": "docs/evidence/issue28_metric_routing_20261009/independent/conclusion.md",
+    "next": "Technically reviewable narrow increment after PR67; history owner integrates/validates its actual consumers. No new family or broad acceptance",
+    "current_ci": {
+      "head": "2c4909417f3cdb41fb2fcf83bc3de94e7a5a5807",
+      "main": 37822928970,
+      "dedicated": 37822928985,
+      "reference": 37822929023,
+      "all_checks": "SUCCESS"
+    },
+    "fixed_receiver": {
+      "sha": "46c30d29712c7db05a4550417fa5f9bccc3c97f7",
+      "pr": 75,
+      "evidence_read_not_rerun": true,
+      "three_company_positions": 60,
+      "mixed_company": "marriott_international",
+      "mixed_year": 2024,
+      "metrics": [
+        "B04",
+        "B10",
+        "B11"
+      ],
+      "hotel_prepare_calls": 0,
+      "unchanged_saved_files": 28,
+      "parent_original_check": "Primary SHA32a365d5 and six same-registrant full-year USD NetIncomeLoss2375m agree with CSV2375000000USD",
+      "parent_business_check_scope": "Only this B04 fact/period/unit/source, not all60 independent acceptance",
+      "evidence": "docs/evidence/issue28_metric_routing_20261009/mixed-marriott-source-check.json"
+    }
+  },
+  "historical_acquisition_receiving_20261009": {
+    "status": "PARTIAL_RECORDED_PURPOSE_PROTOTYPE_RETAINED_NEXT_BATCH",
+    "fixed_peer_sha": "b0e79ea4f0563c5e49c56ccbbd71f844ea3799aa",
+    "read_entry": "scripts/vnext/historical_sec_session.py::live_historical_session",
+    "source_lines_read": [
+      1794,
+      1865
+    ],
+    "blocked_point": "relocated limited-resume verify_offline_wiring; needs ordinary transition preserving original counts/purpose/failure states, not receipt re-sign",
+    "awaiting_specific_record_paths_from_owner": false,
+    "scope": "Do not expand current PR67/74 closeout with online system; preserve partial offline prototype without GET or original ledger writes",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-sec-purpose/SEC_metrics",
+    "branch": "task/issue28-sec-purpose",
+    "base": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "committed": false,
+    "live_frontend_complete": false,
+    "remaining": "Actual existing ledger/session/backend/receipt/checkpoint receiving; original claimed programRoot absent, recorded harness uses existing readonly peer code and synthetic ledger only",
+    "evidence": "docs/evidence/issue28_sec_purpose_20261009/README.md",
+    "small_tests": 5,
+    "small_seconds": 0.004,
+    "native_recorded_probe": "PASS_RECORDED_NOT_REAL_MIGRATION"
+  },
+  "last_zero_call_check": {
+    "ledger_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+    "claims": 195,
+    "own_usage": [
+      143,
+      143,
+      52
+    ],
+    "new_calls": [
       0,
       0,
       0
