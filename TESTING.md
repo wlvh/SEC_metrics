@@ -1,5 +1,7 @@
 # SEC_metrics 测试与验证流程
 
+2026-10-06当前CI快测：`python3 tools/run_foundation_ci.py --suite fast --jobs 1`使用一个进程及unittest类/模块准备，记录每项失败、导入错误与明确跳过；测试stdout/stderr进入报告，不破坏JSON。完整年报的`NormalAnnualInputTest`归材料层（`--suite source-material`），选择器仍全部对账、未删除业务断言。旧runner保持供旧版本诊断，本改动不宣布公司run或所有材料验收完成。主要测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`。
+
 本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。真实SEC首次＋重复运行尚待许可，不把录制准入换成LIVE。
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 
