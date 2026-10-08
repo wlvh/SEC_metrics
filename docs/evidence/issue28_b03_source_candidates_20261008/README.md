@@ -23,3 +23,9 @@ The e349 shared fast run passed273tests75.217s (whole76.565s),0skip; the numeric
 Final numeric delta review af660f1e is PASS_LIMITED:11tests plus18independent numeric/nil/representation experiments; cumulative60/80tools and2/3ordinary messages, within original90minute window. Original binding review covers one actualFY2021 pair; the incremental review reads all3repair summaries but does not rerun the originals. Parent reran all3actual pairs after numeric changes. Original NEEDS_FIX remains.
 
 CI adds an explicit11test source-candidate step: merely appending a v2 selector would not run it in the received foundation runner, which deliberately retains its original inherited set. This direct CI command also passes locally0.016s. No new kernel or test framework.
+
+## Receiving the already-proved historical checkout reduction
+
+At9a7f340a main37805158661 historical-object job113407406674 actually cancelled at its unchanged10minute deadline: checkout15:58:59–16:06:24 took445s; test execution began16:06:24 and was cancelled16:09:10 before a full test summary. This is NOT_COMPLETED, not a semantic PASS or observed assertion failure. Other completed jobs are separate. Raw log is retained; first GitHub log read rejected terminal escape output and its diagnostic is also kept.
+
+The workflow now receives only PR67/c56’s existing candidate-depth1 plus explicit declared-baseline fetch stanza. Test commands, selectors and10minute limit remain exactly unchanged; no current code or company-record behaviour is received. Static consumer tracing still names the one baseline; the actual old active-publication object was read and agrees with its manifest. c56’s same stanza already has actual remote successful historical-object evidence, reused here; no local full-material rerun or shallow fetch mutating the shared local repository was performed. New-head CI must validate this receiver.
