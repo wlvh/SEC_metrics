@@ -71,3 +71,5 @@ PYTHONPATH=scripts:. python docs/evidence/issue47_history/historical-income-rece
 ```
 
 源发现/在线补齐尚未接同一公司入口，也没有将全部历史能力接入main；本次新增SEC/provider/paid=0/0/0、无新native Run或完整五年接受。Marriott三年B03原件位置、XML的SOURCE_REFERENCE/请求proof已补[b03-source-locations.json](b03-source-locations.json)，供#28从实际已选原件实现共用源适配；本方三个null保持。
+
+同脚本加`--source-only`可只复现规则根隔离检查。实现提交621034e6后，原必读`mint --check`在旧祖先normal_source_authority字节门禁先拒绝（catalog-postcommit-mint.log），不重新铸造旧Requirement。结构检查先因已推进的peer base b3f7新增CAPABILITY.local_company_run缺失而失败；9506a0ed只补这条已交付入口声明并写清本方范围/未main/仍缺，不接入peer新E01或B06代码。再检查20.302秒PASS，两个副产物按检查前字节还原。结构PASS不作业务或全CI通过。

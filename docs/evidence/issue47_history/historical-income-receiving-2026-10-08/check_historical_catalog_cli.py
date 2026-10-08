@@ -13,9 +13,38 @@ import time
 parser = argparse.ArgumentParser()
 parser.add_argument('--source-root', type=Path, required=True)
 parser.add_argument('--state-parent', type=Path, required=True)
+parser.add_argument('--source-only', action='store_true',
+                    help='Only verify the existing B04 producer cannot read rules from the source package')
 args = parser.parse_args()
 repo = Path(__file__).resolve().parents[4]
 base = Path(__file__).resolve().parent
+if args.source_only:
+    from unittest.mock import patch
+    from vnext.historical_saved_case import prepare_historical_deterministic_year_case
+    source = args.source_root.resolve()
+    original = Path.open
+
+    def guarded(path, *a, **kw):
+        path = Path(path).resolve()
+        if source in path.parents:
+            relative = path.relative_to(source)
+            if (relative.parts[0] in ('scripts', 'tools', 'catalog', 'config')
+                    and relative.as_posix() != 'config/company_registry.csv'):
+                raise AssertionError('No source-package program rules: '+str(relative))
+        return original(path, *a, **kw)
+
+    started = time.monotonic()
+    with patch.object(Path, 'open', guarded), \
+         patch('socket.socket.connect', side_effect=AssertionError('No business network')):
+        case = prepare_historical_deterministic_year_case(repo_root=source, company_id='macys',
+                                                        metric_id='B04', fiscal_year=2023)
+    assert case['results']['B04']['value'] == '105000000'
+    value = {'source_root': str(source), 'metric': 'B04', 'fiscal_year': 2023,
+        'source_program_config_reads_forbidden': True, 'only_source_company_registry_permitted': True,
+        'source_or_program_tree_copy_count': 0, 'seconds': time.monotonic()-started,
+        'result_id': case['results']['B04']['result_id'], 'new_calls': {'sec': 0, 'provider': 0, 'paid': 0}}
+    (base/'catalog-source-only-check.json').write_text(json.dumps(value, indent=2)+'\n')
+    print(json.dumps(value)); raise SystemExit(0)
 task = args.state_parent.resolve()/'historical-catalog-cli-20261008'
 for n in range(100):
     candidate = task if n == 0 else task.with_name(task.name+'-'+str(n))

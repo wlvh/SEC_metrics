@@ -373,5 +373,21 @@
     "prior_pilot_or_two_year_B01_recomputed": false,
     "main_received": false,
     "new_business_acceptance": false
-  }
+  },
+  "catalog_postcommit_checks": {
+    "mint": {
+      "exit_code": 1,
+      "reason": "Old parent normal_source_authority byte gate; no snapshot re-mint",
+      "log": "catalog-postcommit-mint.log"
+    },
+    "capability_alignment": {
+      "code_commit": "9506a0ed",
+      "base_at_start": "b3f7c15b7835140618d35c8dbdfd7e8695c3e12c",
+      "exit_code": 0,
+      "elapsed_seconds": 20.302233916940168,
+      "checker_side_products_restored": true
+    },
+    "first_missing_new_upstream_anchor_failure_retained": "catalog-postcommit-alignment.log"
+  },
+  "current_mode_dispatch_AST_unchanged_from_b4b57e7c": true
 }
