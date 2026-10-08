@@ -76,6 +76,31 @@ class DepreciationSourcesTest(unittest.TestCase):
         self.assertEqual(['138'], [c['value'] for c in r['candidates']])
         self.assertEqual('PRIMARY_XML_CANDIDATE_MISSING', r['issues'][0]['reason'])
 
+    def test_wrong_numeric_tag_is_not_confirmed_by_a_valid_peer(self):
+        p = self.packet()
+        self.replace_raw(p, 'primary', b'xmlns:ix="http://www.xbrl.org/2013/inlineXBRL"',
+                         b'xmlns:ix="http://example.com/non-XBRL"')
+        r = inspect_depreciation_sources(**p)
+        self.assertEqual([], r['candidates'])
+        self.assertTrue(any(x['reason'].endswith('NUMERIC_TAG_NOT_SUPPORTED') for x in r['issues']))
+
+    def test_unsupported_unformatted_comma_does_not_become_an_agreeing_number(self):
+        p = self.packet(); self.replace_raw(p, 'xml', b'>138</ix:', b'>1,38</ix:')
+        r = inspect_depreciation_sources(**p)
+        self.assertEqual(['49'], [c['value'] for c in r['candidates']])
+        self.assertTrue(any(x['reason'].endswith('NUMERIC_LEXICAL_FORM_NOT_SUPPORTED') for x in r['issues']))
+
+    def test_nil_is_a_local_missing_value_not_zero_or_whole_input_failure(self):
+        p = self.packet()
+        for kind in ('primary', 'xml'):
+            self.replace_raw(p, kind, b'<html ', b'<html xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ')
+            self.replace_raw(p, kind, b'decimals="0">49</ix:nonFraction>',
+                             b'decimals="0" xsi:nil="true"></ix:nonFraction>')
+        r = inspect_depreciation_sources(**p)
+        self.assertEqual(['138'], [c['value'] for c in r['candidates']])
+        self.assertEqual(2, len([x for x in r['issues'] if 'NIL_OR_INVALID_SOURCE_VALUE' in x['reason']]))
+        self.assertFalse(r['definition_complete'])
+
     def test_changed_body_url_and_accession_are_rejected(self):
         for field in ('body', 'source_url', 'accession', 'company_id'):
             p = self.packet()

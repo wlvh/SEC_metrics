@@ -13,15 +13,18 @@ from .canonical import content_hash, sha256_bytes
 from .composite_scope import index_source_structure
 from .deterministic_router import parse_accession_xbrl_source
 from .financial_structured import _InlineTableIndex
-from .governance_signals import _source_value
+from .governance_signals import _qname, _source_value
 from .r5_b06_scope import precision_choice
-from .text_results_v2 import _ReportedFactMetadata, _verified_context
+from .text_results_v2 import _CAPABILITY_POLICY, _ReportedFactMetadata, _verified_context
 
 
 CONCEPTS = {'Depreciation', 'AmortizationOfIntangibleAssets',
     'DepreciationDepletionAndAmortization', 'DepreciationAndAmortization',
     'DepreciationAmortizationAndAccretionNet'}
 USD = {'measures': [('http://www.xbrl.org/2003/iso4217', 'USD')], 'divided': False}
+NUMERIC_POLICY = {key: _CAPABILITY_POLICY[key] for key in (
+    'numeric_inline_namespaces', 'dot_decimal_supported_lexical_pattern',
+    'unformatted_decimal_lexical_pattern')}
 
 
 def _need(condition, reason):
@@ -34,6 +37,30 @@ def _scope(context):
         tuple(sorted((x['kind'], x['value']) for x in context['period_fields'])),
         tuple(sorted((tuple(x['dimension_qname']), tuple(x['member_qname']))
                      for x in context['dimensions'])))
+
+
+def _numeric_value(fact, info):
+    """Check the source representation before the shared amount normalizer."""
+    tag_uri, tag_name = _qname(info['tag'], info['namespaces'])
+    inline = tag_uri in NUMERIC_POLICY['numeric_inline_namespaces'] and tag_name == 'nonfraction'
+    xml = (tag_uri == info['concept'][0]
+           and tag_name.casefold() == info['concept'][1].casefold())
+    _need(inline or xml, 'NUMERIC_TAG_NOT_SUPPORTED')
+    nil = [v for k, v in info['attrs'].items()
+           if _qname(k, info['namespaces']) == ('http://www.w3.org/2001/XMLSchema-instance', 'nil')]
+    _need(not nil or nil == ['false'] or nil == ['0'], 'NIL_OR_INVALID_SOURCE_VALUE')
+    transform = info['attrs'].get('format', '')
+    if xml:
+        _need(not transform and info['attrs'].get('scale', '0') == '0'
+              and not info['attrs'].get('sign'), 'XML_NUMERIC_ATTRIBUTES_NOT_SUPPORTED')
+    local = _qname(transform, info['namespaces'])[1] if transform else ''
+    if local not in {'fixed-zero', 'numdash'}:
+        pattern = NUMERIC_POLICY['dot_decimal_supported_lexical_pattern'] if transform else NUMERIC_POLICY['unformatted_decimal_lexical_pattern']
+        _need(re.fullmatch(pattern, str(fact['text']).strip()) is not None, 'NUMERIC_LEXICAL_FORM_NOT_SUPPORTED')
+    try:
+        return _source_value(fact, info)
+    except ValueError as error:
+        raise ValueError('DEPRECIATION_SOURCE_NUMERIC_VALUE_NOT_SUPPORTED:' + str(error)) from error
 
 
 def _annual_identity(parsed, meta, *, filing, entity, period, namespaces):
@@ -92,9 +119,13 @@ def _read(source, *, source_kind, company_id, filing, entity, period, namespace_
             issues.append({'ordinal': f['ordinal'], 'reason': 'CONCEPT_NAMESPACE_NOT_SELECTED'}); continue
         if c['typed_dimension_count'] or meta.units.get(f['unit_ref']) != USD:
             issues.append({'ordinal': f['ordinal'], 'reason': 'TYPED_SCOPE_OR_NON_USD'}); continue
-        proof = _verified_context(native={**c, 'dimensions': dict(c['dimensions'])}, metadata=meta)
+        try:
+            proof = _verified_context(native={**c, 'dimensions': dict(c['dimensions'])}, metadata=meta)
+            value = _numeric_value(f, info)
+        except ValueError as error:
+            issues.append({'ordinal': f['ordinal'], 'reason': str(error)}); continue
         reports.append({'ordinal': f['ordinal'], 'concept': [uri, name],
-            'value': _source_value(f, info), 'decimals': info['attrs'].get('decimals'),
+            'value': value, 'decimals': info['attrs'].get('decimals'),
             'unit': 'USD', 'reported_scale': f['scale'], 'context_proof': proof,
             'source_reference': ref})
     return parsed, reports, issues
@@ -164,7 +195,8 @@ def inspect_depreciation_sources(*, primary, xml, company_id, filing, entity,
                     'reported_inclusion_requires_content_check': True})
     body = {'record_type': 'ORDINARY_DEPRECIATION_SOURCE_CANDIDATES',
         'company_id': company_id, 'filing': filing, 'entity': str(int(entity)),
-        'period': period, 'namespace_policy': namespace_policy, 'candidates': candidates,
+        'period': period, 'namespace_policy': namespace_policy,
+        'numeric_literal_policy': NUMERIC_POLICY, 'candidates': candidates,
         'scope_relations': relations, 'issues': issues,
         'remaining_scope': ['FULL_APPROVED_DA_COVERAGE_NOT_ESTABLISHED',
                             'REPORTED_INCLUSION_AND_IMPAIRMENT_REQUIRE_CONTENT_CHECK'],

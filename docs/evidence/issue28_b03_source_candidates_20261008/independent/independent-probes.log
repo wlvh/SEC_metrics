@@ -1,0 +1,146 @@
+[
+  {
+    "name": "prefix_and_context_id_rename_pairs",
+    "check_passed": true,
+    "values": [
+      "138",
+      "49"
+    ],
+    "issues": [],
+    "relations": 1
+  },
+  {
+    "name": "compatible_reported_rounding_pairs",
+    "check_passed": true,
+    "values": [
+      "138",
+      "49"
+    ],
+    "issues": [],
+    "relations": 1
+  },
+  {
+    "name": "incompatible_amount_blocks_only_that_fact",
+    "check_passed": true,
+    "values": [
+      "49"
+    ],
+    "issues": [
+      "PRIMARY_XML_AMOUNT_CONFLICT"
+    ],
+    "relations": 0
+  },
+  {
+    "name": "different_member_does_not_pair",
+    "check_passed": true,
+    "values": [
+      "138"
+    ],
+    "issues": [
+      "PRIMARY_XML_CANDIDATE_MISSING",
+      "PRIMARY_XML_CANDIDATE_MISSING"
+    ],
+    "relations": 0
+  },
+  {
+    "name": "currency_namespace_mismatch_blocks",
+    "check_passed": true,
+    "values": [],
+    "issues": [
+      "TYPED_SCOPE_OR_NON_USD",
+      "TYPED_SCOPE_OR_NON_USD",
+      "TYPED_SCOPE_OR_NON_USD",
+      "TYPED_SCOPE_OR_NON_USD"
+    ],
+    "relations": 0
+  },
+  {
+    "name": "invalid_xml_numeric_lexical_should_not_pair",
+    "check_passed": false,
+    "values": [
+      "138",
+      "49"
+    ],
+    "issues": [],
+    "relations": 1
+  },
+  {
+    "name": "wrong_inline_tag_namespace_should_not_pair",
+    "check_passed": false,
+    "values": [
+      "138",
+      "49"
+    ],
+    "issues": [],
+    "relations": 1
+  },
+  {
+    "name": "nil_candidate_isolated_from_valid_peer",
+    "exception": "GovernanceSignalError",
+    "detail": "C03_NIL_TARGET_COMPENSATION"
+  },
+  {
+    "name": "saved_2021_self_ids",
+    "top_hash_matches": true,
+    "candidate_hashes_match": true,
+    "candidates": 4,
+    "relation_count": 2,
+    "issues": 0,
+    "metric_result_created": false,
+    "definition_complete": false
+  },
+  {
+    "name": "saved_2022_self_ids",
+    "top_hash_matches": true,
+    "candidate_hashes_match": true,
+    "candidates": 4,
+    "relation_count": 2,
+    "issues": 0,
+    "metric_result_created": false,
+    "definition_complete": false
+  },
+  {
+    "name": "saved_2023_self_ids",
+    "top_hash_matches": true,
+    "candidate_hashes_match": true,
+    "candidates": 4,
+    "relation_count": 2,
+    "issues": 0,
+    "metric_result_created": false,
+    "definition_complete": false
+  },
+  {
+    "name": "real_2021_independent_original_replay",
+    "output_matches_saved": true,
+    "raw_hashes_verified": true,
+    "raw_span_hashes_verified": true,
+    "candidates": 4,
+    "scope_relations": 2,
+    "spans": [
+      {
+        "concept": "AmortizationOfIntangibleAssets",
+        "value": "165000000",
+        "visible_text": "For contracts acquired in business combinations and other intangible assets, we recorded amortization expense of $165 million in 2021, $97 million in 2020, and $105 million in 2019 (of which $62 million in 2021 and none in 2020 and 2019 was included in the “Reimbursed expenses” caption of our Income Statements). For these assets, we estimate that our aggregate amortization expense will be $163 million in 2022, $147 million in 2023, $134 million in 2024, $122 million in 2025, and $110 million in 2026.",
+        "source_span_sha256": "231f332cba492c60f3ec6b21729aafb6ef0b259117e9e2d05f5a97ea6d6678e8"
+      },
+      {
+        "concept": "AmortizationOfIntangibleAssets",
+        "value": "62000000",
+        "visible_text": "For contracts acquired in business combinations and other intangible assets, we recorded amortization expense of $165 million in 2021, $97 million in 2020, and $105 million in 2019 (of which $62 million in 2021 and none in 2020 and 2019 was included in the “Reimbursed expenses” caption of our Income Statements). For these assets, we estimate that our aggregate amortization expense will be $163 million in 2022, $147 million in 2023, $134 million in 2024, $122 million in 2025, and $110 million in 2026.",
+        "source_span_sha256": "231f332cba492c60f3ec6b21729aafb6ef0b259117e9e2d05f5a97ea6d6678e8"
+      },
+      {
+        "concept": "Depreciation",
+        "value": "138000000",
+        "visible_text": "We record property and equipment at cost, including interest and real estate taxes we incur during development and construction. We capitalize the cost of improvements that extend the useful life of property and equipment when we incur them. These capitalized costs may include structural costs, equipment, fixtures, floor, and wall coverings. We expense all repair and maintenance costs when we incur them. We compute depreciation using the straight-line method over the estimated useful lives of the assets (generally three to 40 years), and we amortize leasehold improvements over the shorter of the asset life or lease term. Our gross depreciation expense totaled $138 million in 2021, $322 million in 2020, and $346 million in 2019 (of which $49 million in 2021, $109 million in 2020, and $121 million in 2019 was included in the “Reimbursed expenses” caption of our Income Statements). Fixed assets attributed to operations located outside the U.S. were $623 million at year-end 2021 and $679 million at year-end 2020. Our gross depreciation expense included impairment charges for property and equipment, including ",
+        "source_span_sha256": "48e0006fefee0ba5e43e1cc9abc7677f48a858d289324b63f767361fea2878c2"
+      },
+      {
+        "concept": "Depreciation",
+        "value": "49000000",
+        "visible_text": "We record property and equipment at cost, including interest and real estate taxes we incur during development and construction. We capitalize the cost of improvements that extend the useful life of property and equipment when we incur them. These capitalized costs may include structural costs, equipment, fixtures, floor, and wall coverings. We expense all repair and maintenance costs when we incur them. We compute depreciation using the straight-line method over the estimated useful lives of the assets (generally three to 40 years), and we amortize leasehold improvements over the shorter of the asset life or lease term. Our gross depreciation expense totaled $138 million in 2021, $322 million in 2020, and $346 million in 2019 (of which $49 million in 2021, $109 million in 2020, and $121 million in 2019 was included in the “Reimbursed expenses” caption of our Income Statements). Fixed assets attributed to operations located outside the U.S. were $623 million at year-end 2021 and $679 million at year-end 2020. Our gross depreciation expense included impairment charges for property and equipment, including ",
+        "source_span_sha256": "48e0006fefee0ba5e43e1cc9abc7677f48a858d289324b63f767361fea2878c2"
+      }
+    ]
+  }
+]
