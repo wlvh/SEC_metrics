@@ -111,14 +111,14 @@ git worktree add -b review/issue47-average-risk ../SEC_metrics-average-risk-revi
   origin/task/issue47-average-risk-history-20261010
 cd ../SEC_metrics-average-risk-review
 python3 tools/vnext_company.py run --company jpmorgan_chase \
-  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2021 \
+  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2025 \
   --metric A03 --metric A12 --source-root /saved/sec/source-inputs \
   --work-dir /new/average-risk/state --output-dir /new/average-risk/runs
 python3 tools/vnext_company.py results --company jpmorgan_chase \
   --state-root /new/average-risk/state --output-root /new/average-risk/read-01
 ```
 
-来源仍用上节保留历史分支恢复的实际 `source-inputs` 根；原件只读，目录名称已占用时另选。JPM FY2021 已实测 A03=1.11 ratio（111%），实际2021-10-01至12-31；FY2021是年报分组，不能把该季度平均值年化。A12=55,000,000 USD，是全年平均VaR；95%/一日为风险口径，不是一日测量窗口。同一CLI计算、禁工厂复用、独立读取及原格出处已贯通，见[唯一接收记录](evidence/issue47_average_risk_receiving_20261010/README.md)。其余四年、修订/继任金额处理、其他金融族及在线历史取源仍待；默认当期指标集合没有因此扩大。
+来源仍用上节保留历史分支恢复的实际 `source-inputs` 根；原件只读，目录名称已占用时另选。JPM FY2021 已实测 A03=1.11 ratio（111%），实际2021-10-01至12-31；FY2021是年报分组，不能把该季度平均值年化。A12=55,000,000 USD，是全年平均VaR；95%/一日为风险口径，不是一日测量窗口。同一CLI计算、禁工厂复用、独立读取及原格出处已贯通，见[唯一接收记录](evidence/issue47_average_risk_receiving_20261010/README.md)。JPM FY2021–FY2025十坐标已完成同入口计算、全范围禁工厂复用、独立读取和原参考对照；修订/继任金额处理、其他金融族及在线历史取源仍待；默认当期指标集合没有因此扩大。
 
 ## 状态、复跑和局部失败
 

@@ -8,7 +8,7 @@
 
 A03原年报容器FY2021是2021-01-01至12-31；实际LCR披露平均测量期2021-10-01至12-31、值1.11（当前普通CSV为1.11 ratio，相当于111%），不年化。A12原全年平均VaR55百万USD，95%/one-day是风险口径，不把one-day当结果日期。实际JPM21源和两完整组件已在PR52金融主记录保存；复用其原件、来源SHA、表格及原解释，不重读整年或调模型。
 
-公共直接检查器的新DEI接口已能读原件但旧措辞仍未决，不把接口通过写成业务成功。普通投影另有拒绝季度target的实际接缝，由公共侧按原Spec/Trace/原件绑定修复；本方不另造保存器。精确公共提交和消费者实测终态待记录，当前分支未main。
+公共直接检查器的新DEI接口已能读原件但旧措辞仍未决，不把接口通过写成业务成功。普通投影另有拒绝季度target的实际接缝，由公共侧按原Spec/Trace/原件绑定修复；本方不另造保存器。本节为首次准备记录；下方已补固定公共提交和实际五年消费者终态，当前分支仍未main。
 
 ## 明确边界
 
@@ -22,7 +22,7 @@ A03原年报容器FY2021是2021-01-01至12-31；实际LCR披露平均测量期20
 
 ## 取得当前开发版本
 
-`origin/task/issue47-average-risk-history-20261010`已有本方已提交薄适配及35定向例；公共受控DEI与季度保存接口尚待固定提交接入，不能现在运行它来宣称公司计算成立。真实来源恢复沿保留task/sec-history-five-year的restore入口，复用已有恢复根、不再复制整树；来源只读、审查输出用外部新目录。待公共提交后此处给同一可取得代码组合及run/results完整命令。
+`origin/task/issue47-average-risk-history-20261010`已有本方已提交薄适配及35定向例；公共受控DEI与季度保存接口已在cd0aada7固定接入，下方记录实际五年公司终态；仍是候选而非main。真实来源恢复沿保留task/sec-history-five-year的restore入口，复用已有恢复根、不再复制整树；来源只读、审查输出用外部新目录。同一可取得代码组合与run/results命令见docs/historical_company_usage.md的A03/A12节。
 
 ## 固定公共接收及真实首次失败
 
@@ -39,3 +39,13 @@ A03原年报容器FY2021是2021-01-01至12-31；实际LCR披露平均测量期20
 最小CI接收只增加本短测试路径和既有Historical dispatch步骤中的模块；实际原步骤38例0.188s零skip，workflow-short.log。新远端head具体用例执行仍另核，不能借公共PR107绿灯。
 
 历史年报接口受影响的原companyfacts金额不等拒绝、当前公司/历史分派/状态与本方两族/公共季度检查共74项7.127s零skip通过，consumer-neighbors.log；复用既有酒店/两年B01实测，未重算其财报。
+
+## JPMorgan FY2021–FY2025 实际范围完成
+
+同一616fe531只新增FY2022–FY2025八坐标，原FY2021保护不重算；各年两指标首102.920/98.493/70.515/44.258s。完整十坐标禁止factory复跑18.162s/调用0、另进程全状态读0.650s，80结果/pointer文件保持且没有相同新结果目录。five-year-summary.json/log给实际终态。LCR五值1.11/1.12/1.13/1.13/1.11 ratio，全部各年Q4/QUARTER；VaR五值55/58/43/47/40百万USD，全部全年。各年FY label、CIK19617、源格/对应申报和SHA保持。
+
+直接复用原bcc0c0bc bank-measures-read-full-frame.json中的两族已读参考，十个值、单位、精确测量窗口及primary SHA全部匹配，five-year-reference-comparison.json与existing-reference-index.json保原参考SHA/子集。没有重新读整年原件、不按旧NO_PUBLISHED_VALUE/旧矩阵取得信用。比较器初误读证据CSV不存在的fiscal_year列，改按其实际period_start/end匹配；只读取已存输出，不重算业务。
+
+616fe531远端十项CI全部terminal SUCCESS；company run37960593110/job113922138261原历史步骤实际38方法0.234s、零skip。本地日志初仅数同一行 ...ok漏两项有长docstring的方法，改按方法头确认38，与Ran38一致；测试未删/skip。仅测试文件变化的paths已配置，不为证明触发制造提交。原日志保GitHub，此记录引用实际终态、不为日志再次循环重跑。
+
+真实缺FY2026负例.903s准确返回两指标INPUT_OR_EXECUTION_FAILED／ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS，空值不借FY2025；独立读.629s保原十值/ResultIDs、80文件保持，另列两个缺年空状态。missing-year.json/log保实际结果，不当结构NA、正确零或模型失败。全部本批真实SEC/provider/paid=0，旧Run/调用批次未动。
