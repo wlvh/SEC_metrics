@@ -5281,6 +5281,38 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/docs/evidence/issue28_company_online_20261009/independent-p2/conclusion.md",
       "verdict": "APPROVE_WITHIN_P2_INCREMENT",
       "message_count": 3
+    },
+    {
+      "task_name": "review_companyonlinestore_d91489e",
+      "purpose": "review-source-store-and-recorded-http",
+      "scope_paths": [
+        "scripts/vnext/company_online.py",
+        "scripts/vnext/recorded_sec_http.py",
+        "tests/vnext/test_company_online.py"
+      ],
+      "patch_sha": "d91489e39240a81d2a11527c2c293a0b307e6f68",
+      "spawned_at": "2026-10-09T03:42:32.775047+00:00",
+      "ended_at": "2026-10-09T03:50:13Z",
+      "tool_calls": 30,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/docs/evidence/issue28_company_online_20261009/independent-store/conclusion.md",
+      "verdict": "APPROVE_WITHIN_STORE_AND_RECORDED_INCREMENT",
+      "message_count": 3
+    },
+    {
+      "task_name": "review_defaultcompany_818dd87",
+      "purpose": "review-default-company-compatibility",
+      "scope_paths": [
+        "scripts/vnext/company_local.py",
+        "scripts/vnext/company_retained_local.py",
+        "tests/vnext/test_company_retained_local.py"
+      ],
+      "patch_sha": "818dd8711b87dccedc727986070746d48f0b003f",
+      "spawned_at": "2026-10-09T04:23:13.755128+00:00",
+      "ended_at": "2026-10-09T04:30:25Z",
+      "tool_calls": 36,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/docs/evidence/issue28_company_records_20261007/default-online-review-20261009/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_COMPATIBILITY",
+      "message_count": 2
     }
   ],
   "ci_capacity_20260922": {
@@ -16623,5 +16655,37 @@
     ],
     "doc_entry": "docs/company_local_run.md",
     "peer_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-6073433127"
+  },
+  "first_pr_review_20261009": {
+    "main_sha": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "pr61_sha": "86e63816d00e2f241f626c59f58041d04d9064cd",
+    "pr67_head": "c850cf21841283275998f8abdea01cf77e14d0af",
+    "product_sha": "818dd8711b87dccedc727986070746d48f0b003f",
+    "default_entry_pair": {
+      "main_seconds": 166.35841491702013,
+      "main_exit": 0,
+      "old_candidate_seconds": 1.8369820420630276,
+      "old_candidate_exit": 2,
+      "old_candidate_failure": "Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py",
+      "fixed_seconds": 165.19891941687092,
+      "fixed_exit": 0,
+      "external_reply_only": true,
+      "isolated_recorded_sec_slots": 29,
+      "real_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    "review": "PASS_LIMITED_COMPATIBILITY",
+    "support_count": 38,
+    "configured_count": 39,
+    "record": "https://github.com/wlvh/SEC_metrics/blob/c850cf21841283275998f8abdea01cf77e14d0af/docs/evidence/issue28_company_records_20261007/default-online-review-20261009/README.md",
+    "pr67_comment": "https://github.com/wlvh/SEC_metrics/pull/67#issuecomment-6074324998",
+    "pr61_comment": "https://github.com/wlvh/SEC_metrics/pull/61#issuecomment-6074362818",
+    "pr71_workflow_owner": "issue47_codex",
+    "new_head_ci_last_observed": "IN_PROGRESS",
+    "pr83_first_batch_included": false,
+    "merge_authorized": false
   }
 }
