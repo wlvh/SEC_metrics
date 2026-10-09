@@ -1,0 +1,23 @@
+--- a/.github/workflows/vnext-fast.yml
++++ b/.github/workflows/vnext-fast.yml
+@@ -27,19 +27,17 @@
+           PYTHONDONTWRITEBYTECODE: "1"
+         run: python3 -m unittest -v tests.vnext.test_company_handoff tests.vnext.test_company_source_authority tests.vnext.test_company_results tests.vnext.test_company_processing tests.vnext.test_company_event_census tests.vnext.test_company_local
+ 
+-<<<<<<< 7a07dba9
+       - name: Historical statement scope, inventory and shared dispatch (small state)
+         env:
+           PYTHONDONTWRITEBYTECODE: "1"
+           PYTHONPATH: scripts:tools
+         run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest
+-=======
++
+       - name: Selected filing income source checks (small state)
+         env:
+           PYTHONDONTWRITEBYTECODE: "1"
+           PYTHONPATH: scripts:tools
+         run: python3 -m unittest -v tests.vnext.test_selected_income_source_v1
+->>>>>>> d4b0db79324419eb74f2ce3aa7b00053fa161b05
+ 
+       - name: Run fast suite
+         env:

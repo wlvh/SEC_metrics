@@ -1,0 +1,20 @@
+{
+  "peer_sha": "54b3b524de725802fbf989116d0533f5bff22a52",
+  "main_sha": "6d09bf464c5d2ed7bb77f94dfbc8bcd948bfb623",
+  "virtual_merge_tree": "b9e9c6816d77d2e757befe94a3bfe05b2a3c0009",
+  "resolved_runner_sha256": "e065aa6dc24301ac9510ce239f9b2776f4311da98052374480db5559b251da4b",
+  "resolved_workflow_sha256": "cfd6679d4dd5664f34e3c442c79bb91e8ea249ed3299becb520eccbde3056e75",
+  "runner_functions_unchanged": true,
+  "all_parent_selectors_retained": true,
+  "new_small_selectors": [
+    "tests.vnext.test_historical_event_cases.HistoricalEventCaseTest",
+    "tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest",
+    "tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest"
+  ],
+  "files": [
+    "tools/run_fast_tests_v2.py",
+    ".github/workflows/company-current-records.yml"
+  ],
+  "verification": "STATIC_PATCH_ONLY_RECEIVER_RUNS_CLASSES",
+  "apply_note": "apply to peer54b file contents; during uncommitted6d09 merge restore ours version of the two files first then git apply; preserves both parent selector sides"
+}

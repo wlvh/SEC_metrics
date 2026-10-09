@@ -5349,6 +5349,64 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-native-rate-path/SEC_metrics/docs/evidence/issue28_native_rate_path_20261009/independent-review/conclusion.md",
       "verdict": "PASS_LIMITED_NATIVE_RATE_AND_INSTALLATION",
       "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_eventsource_820461a",
+      "purpose": "review",
+      "module": "eventsource",
+      "scope_paths": [
+        "scripts/vnext/selected_event_source_v1.py",
+        "scripts/vnext/normal_zero_ai_results.py",
+        "tests/vnext/test_selected_event_source_v1.py",
+        ".github/workflows/company-current-records.yml",
+        "tools/run_fast_tests_v2.py"
+      ],
+      "patch_sha": "820461a084ace0e1824ba2da06a8b7be89e5cc5d",
+      "spawned_at": "2026-10-09T08:42:20.588082+00:00",
+      "ended_at": "2026-10-09T08:52:36Z",
+      "tool_calls": 37,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-source-recheck/SEC_metrics/docs/evidence/issue28_selected_event_source_20261009/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_GAP_BLOCK_SELECTION",
+      "ordinary_messages": 2
+    },
+    {
+      "task_name": "review_eventsource_820461a",
+      "purpose": "review",
+      "module": "eventsource",
+      "scope_paths": [
+        "scripts/vnext/normal_zero_ai_results.py:history_last_days",
+        "scripts/vnext/selected_event_source_v1.py:history_last_days",
+        "tests/vnext/test_selected_event_source_v1.py:gap_day"
+      ],
+      "patch_sha": "35b9329d28bd3fa0e9f47f988713d5f90b7fc152",
+      "spawned_at": "2026-10-09T08:57:13.518736+00:00",
+      "ended_at": "2026-10-09T09:01:24Z",
+      "tool_calls": 10,
+      "previous_tool_calls": 37,
+      "previous_ordinary_messages": 2,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-source-recheck/SEC_metrics/docs/evidence/issue28_selected_event_source_20261009/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_GAP_INCREMENT",
+      "cumulative_tool_calls": 47,
+      "ordinary_messages": 1,
+      "cumulative_ordinary_messages": 3
+    },
+    {
+      "task_name": "review_eventwindow_e2ca7c8",
+      "purpose": "review",
+      "module": "eventwindow",
+      "scope_paths": [
+        "scripts/vnext/ordinary_projection.py",
+        "tests/vnext/test_registered_event_projection.py",
+        ".github/workflows/company-current-records.yml",
+        "tools/run_fast_tests_v2.py"
+      ],
+      "patch_sha": "e2ca7c8f1101ccf915cd9a7887d93b0101e18109",
+      "spawned_at": "2026-10-09T09:26:30.203732+00:00",
+      "ended_at": "2026-10-09T09:31:59Z",
+      "tool_calls": 27,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/docs/evidence/issue28_event_window_projection_20261009/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_REGISTERED_WINDOW_PROJECTION",
+      "ordinary_messages": 3
     }
   ],
   "ci_capacity_20260922": {
@@ -16801,7 +16859,13 @@
         0
       ]
     },
-    "reception_review": "Claude6074762763: two increments pass within scope; default retained-program transition/full Git objects dependency explicit; no merge authority"
+    "reception_review": "Claude6074762763: two increments pass within scope; default retained-program transition/full Git objects dependency explicit; no merge authority",
+    "main_received_pr67": {
+      "merge_sha": "06971ec75db0935f3df4dead9e88a544e935c87d",
+      "merged_at": "2026-10-09T06:01:37Z",
+      "performed_by": "external_reception_session",
+      "root_merge_action": false
+    }
   },
   "shared_short_selectors_20261008_pr84": {
     "peer_sha": "dd8b8909eda88cb4ce2241b0b159f300985f73ef",
@@ -16902,5 +16966,67 @@
     ],
     "record": "docs/evidence/issue28_native_rate_path_20261009/README.md",
     "remaining": "Actual new-head CI terminal and separate reception; not all39/live/production credit"
+  },
+  "selected_event_source_interface_20261009": {
+    "base_sha": "3d6030b1bc5e1e7b22833a0101fbeb8f88341498",
+    "patch_sha": "35b9329d28bd3fa0e9f47f988713d5f90b7fc152",
+    "workspace": "/Users/lyuhongwang/.codex/worktrees/issue28-source-recheck/SEC_metrics",
+    "status": "LIMITED_REVIEW_PASS_WITH_REGISTERED_WINDOW_SAVE_INCREMENT_NEW_HEAD_CI_PENDING",
+    "evidence_path": "docs/evidence/issue28_selected_event_source_20261009",
+    "ordinary_saved_originals": {
+      "company": "marriott_international",
+      "fiscal_year": 2025,
+      "claims": 20,
+      "filings": 10,
+      "proofs": 21,
+      "old_and_new_equal": true,
+      "source_only": true,
+      "credit": "SOURCE_INTERFACE_COMPARISON_ONLY"
+    },
+    "known_remaining": "Historical consumer must declare callback code/config and verify company export; approved wide event window rejected by public projection, next scoped repair",
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "no_result_run_or_e01_credit": true,
+    "pr": 89,
+    "head_sha": "b82111a56d0e24d17d4e54279e87222da2a2963d"
+  },
+  "selected_event_window_projection_20261009": {
+    "patch_sha": "e2ca7c8f1101ccf915cd9a7887d93b0101e18109",
+    "status": "LIMITED_REVIEW_PASS_REAL_PERSISTENCE_CHECK",
+    "workspace": "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics",
+    "evidence_path": "docs/evidence/issue28_event_window_projection_20261009",
+    "actual_tested_tree": "70cd4a7803cf727bf9469616cca889e40a1dead7",
+    "shared_function": "ordinary_projection._registered_event_period/render_ordinary_records",
+    "metrics": [
+      "C01",
+      "E02",
+      "E03",
+      "E04",
+      "E05"
+    ],
+    "excluded": [
+      "financial",
+      "E01"
+    ],
+    "case_producer_sha": "8102c3829e64e79d831d28f5c9a3c755b8e164e3",
+    "result_check": "Paramount FY2025 C01=12 count; measurement 2024-01-01..2025-12-31; annual 2025-01-01..2025-12-31 unchanged",
+    "credit": "PUBLIC_INTERFACE_INTEGRATION_ONLY_NOT_ISSUE28_BUSINESS_ACCEPTANCE",
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "pr": 89,
+    "head_sha": "b82111a56d0e24d17d4e54279e87222da2a2963d"
+  },
+  "shared_short_selectors_pr90_20261009": {
+    "peer_sha": "54b3b524de725802fbf989116d0533f5bff22a52",
+    "main_sha": "6d09bf464c5d2ed7bb77f94dfbc8bcd948bfb623",
+    "evidence_path": "docs/evidence/issue28_continuous/shared-short-selectors-20261008/pr90-6d09-event-selectors.json",
+    "status": "STATIC_TWO_FILE_PATCH_PROVIDED_RECEIVER_TESTS_PENDING",
+    "runner_function_changed": false
   }
 }
