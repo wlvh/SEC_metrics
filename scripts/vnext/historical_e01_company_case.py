@@ -40,6 +40,18 @@ PROCESSING_FILES = tuple('scripts/vnext/'+name+'.py' for name in (
 PROCESSING_FILES = tuple(dict.fromkeys((*EVENT_PROCESSING_FILES, *PROCESSING_FILES)))
 
 
+def _display_assessment(assessment):
+    """Keep daily source pointers; complete checks remain in saved evidence."""
+    return {**assessment, 'annual_amendment_checks': [
+        {key:check[key] for key in ('scope_id','classification',
+            'fiscal_window_unchanged','unchanged_input_classes','issues')} |
+        {'original': {key:check['original'][key] for key in
+            ('filing','period','raw_sha256','source_reference')},
+         'amendment': {key:check['amendment'][key] for key in
+            ('filing','period','raw_sha256','source_reference')}}
+        for check in assessment['annual_amendment_checks']]}
+
+
 def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal_year):
     if metric_id != 'E01':
         raise ValueError('HISTORICAL_E01_FAMILY_NOT_RECEIVED')
@@ -146,17 +158,7 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
         'attachment_dependencies':dependencies,'matching_response_available':False,
         'old_answer_reused':False,'partial_count_exported':False,
         'target_model_execution_authorized':False,'new_calls':[0,0,0]}
-    # Full amendment evidence remains in input-assessments and the input
-    # binding. The daily CSV needs the conclusion and precise source pointers,
-    # not a second copy of every document/fact in the mechanical scope record.
-    display_assessment = {**assessment, 'annual_amendment_checks': [
-        {key:check[key] for key in ('scope_id','classification',
-            'fiscal_window_unchanged','unchanged_input_classes','issues')} |
-        {'original': {key:check['original'][key] for key in
-            ('filing','period','raw_sha256','source_reference')},
-         'amendment': {key:check['amendment'][key] for key in
-            ('filing','period','raw_sha256','source_reference')}}
-        for check in amendment_checks]}
+    display_assessment = _display_assessment(assessment)
     binding={'record_type':'HISTORICAL_E01_COMPANY_SOURCE_INPUT','prepared_input':annual,
         'period_selection':selection,'source_proofs':proofs,'request':current_request,
         'predecessor_request_id':None if request is None else request['request_id'],
