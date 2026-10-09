@@ -27,3 +27,50 @@ source root用原EX99已执行账本的source-inputs，保存材料完整，不�
 在这个**刚恢复、尚未用于任务结果的新来源目录**中导入已提交最小增量，旧运行根不要原地覆盖：只取增量中的source-inputs/config/company_registry.csv、源CSV/manifest以及EX99原件和headers。逐成员SHA按ex99-increment-index.json验证；registry须与基础相同，旧CSV完整字节须为新CSV前缀，新增行只有指定EX99，保留原行次序。不要解包calls、claims到任何执行账本。该操作只恢复已经消费的材料，不创建新的可执行额度或许可。
 
 本轮已核该归档所有成员及五个源成员的实际SHA，increment-source-check.json。源CSV SHA9cb8adec对应原一次GET后的2532行；EX99原件0baae3b3/18964字节。导入后用现有ordinary source verifier或该E01 case只读重建八项/V2 request，预期request2aa878ef；无需再次GET、start/resume或模型请求。完整首次基础restore是已有材料取得流程，尚未统一到公司在线发现/补齐入口，不将这份恢复说明当作该责任已取消或已完成。
+
+
+以下命令在基础restore之后执行。`HISTORY_CHECKOUT`指可取得的原历史分支checkout，`SOURCE_ROOT`指**新恢复且尚未用于任务的data_root**；现有完整根无需运行。没有执行账本导入，也不会GET。示例中的导入操作按先原件、后完整CSV/manifest保存，要求目录此时没有读写任务。
+
+```bash
+export HISTORY_CHECKOUT=/path/to/retained-history-checkout
+export SOURCE_ROOT=/path/to/new-restore/source-inputs
+python3 - "$SOURCE_ROOT" \
+  "$HISTORY_CHECKOUT/docs/evidence/issue47_history/acquisition-wiring/ordinary-public-receiving-20261009/ex99-increment.tar.gz" \
+  "$HISTORY_CHECKOUT/docs/evidence/issue47_history/acquisition-wiring/ordinary-public-receiving-20261009/ex99-increment-index.json" <<'PY_SOURCE_ONLY'
+import hashlib,json,os,sys,tarfile,tempfile
+from pathlib import Path
+root=Path(sys.argv[1]); archive=Path(sys.argv[2]); index=json.loads(Path(sys.argv[3]).read_text())
+def sha(value):return hashlib.sha256(value).hexdigest()
+with tarfile.open(archive,'r:gz') as tar:
+    contents={name:tar.extractfile(name).read() for name in index['member_sha256'] if name.startswith('source-inputs/')}
+for name,raw in contents.items():
+    if sha(raw)!=index['member_sha256'][name]:raise ValueError('SOURCE_INCREMENT_MEMBER_CHANGED: '+name)
+log=root/'evidence/requests_log.csv'; old=log.read_bytes(); new=contents['source-inputs/evidence/requests_log.csv']
+if sha(old)==index['source_log_sha256']:
+    for name,raw in contents.items():
+        if (root/name.removeprefix('source-inputs/')).read_bytes()!=raw:raise ValueError('EXISTING_INCREMENT_SOURCE_CHANGED')
+    print(json.dumps({'status':'ALREADY_PRESENT','new_calls':[0,0,0]}));sys.exit(0)
+if sha(old)!=index['previous_source_log_sha256'] or not new.startswith(old):raise ValueError('BASE_SOURCE_LOG_NOT_EXPECTED')
+if (root/'config/company_registry.csv').read_bytes()!=contents['source-inputs/config/company_registry.csv']:raise ValueError('REGISTRY_CHANGED')
+# Only use this on a newly restored, unused source directory. All checks precede writes.
+for name,raw in contents.items():
+    if '/request_attempts/' in name:
+        path=root/name.removeprefix('source-inputs/')
+        if path.exists() and path.read_bytes()!=raw:raise ValueError('EXISTING_ATTACHMENT_CHANGED')
+# Put the immutable body/headers first; publish the complete log and its matching manifest last.
+names=sorted(contents,key=lambda n:('requests_log' in n,n.endswith('_manifest.json')))
+for name in names:
+    path=root/name.removeprefix('source-inputs/');raw=contents[name]
+    if path.exists() and path.read_bytes()==raw:continue
+    path.parent.mkdir(parents=True,exist_ok=True)
+    fd,tmp=tempfile.mkstemp(prefix=path.name+'.restore-',dir=path.parent)
+    try:
+        with os.fdopen(fd,'wb') as stream:stream.write(raw);stream.flush();os.fsync(stream.fileno())
+        os.replace(tmp,path)
+    finally:
+        if os.path.exists(tmp):os.unlink(tmp)
+print(json.dumps({'status':'RESTORED_SAVED_SOURCE_ONLY','source_log_sha256':sha(log.read_bytes()),'new_calls':[0,0,0],'execution_ledger_imported':False}))
+PY_SOURCE_ONLY
+```
+
+命令已在小型构造恢复目录实际执行：仅放同一registry及原完整源CSV，首次只加入指定EX99源成员，第二次`ALREADY_PRESENT`；现有`saved_source`及`verify_ordinary_source_proofs`以.113s读取18964字节并核原attempt。increment-source-import-control.json明确这是小型恢复控制，不能冒充完整公司来源重建或公司CLI验证。没有复制755份HTML、没有修改实际来源根、没有导入calls/claims、没有新增调用。
