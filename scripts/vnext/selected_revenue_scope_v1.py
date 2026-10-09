@@ -17,7 +17,7 @@ EXTRA_REVENUE_CONCEPTS = (
     'us-gaap:RevenueFromCollaborativeArrangementExcludingRevenueFromContractWithCustomer',
     'us-gaap:RoyaltyRevenue', 'us-gaap:Revenues',
 )
-UNIT_HEADER = (r"\(?(?:dollars in )?(?:millions|thousands)(?:, except (?:per share|per-share) data)?\)?",)
+UNIT_HEADER = (r"\(?(?:dollars in |in )?(?:millions|thousands)(?:, except (?:per share|per-share) data)?\)?",)
 
 STATEMENT_CONCEPTS = ('us-gaap:NetIncomeLoss', 'us-gaap:ProfitLoss',
                       'us-gaap:CostOfRevenue', 'us-gaap:CostOfGoodsAndServicesSold')
@@ -37,6 +37,60 @@ def _label(table, cell):
 
 def _label_key(text):
     return re.sub(r'\s+', ' ', re.sub(r'\([a-z0-9]+\)', '', text.casefold())).strip()
+
+
+def _statement_scope(raw, index, parsed, table):
+    """Bind the actual consolidated statement title and unassigned prose.
+
+    An unfamiliar local scope statement is unresolved, not silently ignored.
+    Native data rows and mechanically proven headers remain handled elsewhere.
+    """
+    from .composite_scope import index_source_structure
+    from .financial_duration import _cell_proof
+    structure = index_source_structure(source_bytes=raw)
+    span = structure['tables'][table['order']]
+    previous = max((t['end_byte'] for t in structure['tables']
+                    if t['end_byte'] <= span['start_byte']), default=0)
+    intro = [b for b in structure['blocks'] if not b['inside_table']
+             and previous <= b['start_byte'] < b['end_byte'] <= span['start_byte']]
+    title_pattern = r'consolidated statements? of (?:income|operations|earnings)'
+    titles = [b for b in intro if re.fullmatch(title_pattern, _label_key(b['visible_text']))]
+    caption = table.get('caption', '').strip()
+    _need(not caption or re.fullmatch(title_pattern, _label_key(caption)), 'STATEMENT_CAPTION_SCOPE_UNRESOLVED')
+    _need(bool(titles) or bool(caption), 'CONSOLIDATED_STATEMENT_TITLE_UNPROVEN')
+    def company_key(text):
+        return re.sub(r'[^a-z0-9]', '', text.casefold())
+    registrants = {company_key(f['text']) for f in parsed.facts
+                   if f['qualified_name'].split(':')[-1].casefold()=='entityregistrantname'}
+    issuer_lines = {name+suffix for name in registrants
+                    for suffix in ('','andsubsidiaries','andsubsidiarycompanies')}
+    after_title = [b for b in intro if titles and b['start_byte'] >= titles[-1]['end_byte']]
+    _need(all(company_key(b['visible_text']) in issuer_lines for b in after_title),
+          'STATEMENT_INTRODUCTION_SCOPE_UNRESOLVED')
+    # Capture every nonempty explanatory row, not just a cancellation keyword.
+    # An annotation without native data is not given a financial meaning by
+    # the native context of a different row in the same table.
+    builder = index.tables[table['order']]
+    native_rows = {n for n, row in enumerate(builder.rows)
+                   if any(index.cell_ordinals.get(id(c)) for c in row)}
+    unknown = []
+    for row in table['rows']:
+        if row['row_index'] in native_rows:
+            continue
+        cells = [c for c in row['cells'] if c['is_origin'] and c['text'].strip()]
+        for c in cells:
+            text = _label_key(c['text'])
+            header = (re.fullmatch(r'[0-9]{4}', text)
+                      or re.fullmatch(r'(?:for the )?years? ended [a-z]+ [0-9]{1,2},?', text)
+                      or any(re.fullmatch(p, text) for p in UNIT_HEADER)
+                      or re.fullmatch(title_pattern, text)
+                      or re.fullmatch(r'(?:revenues|costs and expenses|earnings per (?:common )?share[–— -]*(?:basic|diluted)):', text))
+            if not header:
+                unknown.append(_cell_proof(table=table, cell=c))
+    _need(not unknown, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')
+    return {'title_sources':titles[-1:] if titles else [], 'caption':caption,
+            'table_span':span, 'intervening_sources':intro,
+            'unresolved_annotations':unknown}
 
 
 def _key(row):
@@ -80,15 +134,6 @@ def selected_revenue_scope(*, primary, annual, approved_concepts, xml=None,
             continue
         column, headers, reason = _column_period(table=table, selected=cell, extra_header_descriptors=UNIT_HEADER)
         _need(not reason and column['year'] == int(total['period_end'][:4]), 'VISIBLE_YEAR_UNRESOLVED')
-        intervals, duration_headers = _annual_interval(table=table, column=column)
-        _need({(p['period_start'],p['period_end']) for p in intervals}
-              == {(total['period_start'],total['period_end'])}, 'VISIBLE_DURATION_UNRESOLVED')
-        unit_headers = [c for r in table['rows'][:column['row_index']+1] for c in r['cells']
-                        if c['is_origin'] and any(re.fullmatch(pattern, c['text'].strip(), re.I)
-                                                  for pattern in UNIT_HEADER)]
-        scales = {6 if 'million' in c['text'].casefold() else 3 for c in unit_headers}
-        _need(len(scales)==1, 'VISIBLE_UNIT_UNRESOLVED')
-        visible_scale = next(iter(scales))
         # Keep the whole visible year-column group (e.g. separate $ and amount
         # cells), rather than assuming equal numeric column indices.
         year_group = {(h['origin_row_index'], h['origin_column_index']) for h, _, _ in headers}
@@ -120,6 +165,16 @@ def selected_revenue_scope(*, primary, annual, approved_concepts, xml=None,
             if parts:
                 _need(Decimal(parts[0]['value']) == Decimal(total['value']), 'INCOMPLETE_REVENUE_BLOCK')
             continue
+        intervals, duration_headers = _annual_interval(table=table, column=column)
+        _need({(p['period_start'],p['period_end']) for p in intervals}
+              == {(total['period_start'],total['period_end'])}, 'VISIBLE_DURATION_UNRESOLVED')
+        statement_scope = _statement_scope(raw, index, parsed, table)
+        unit_headers = [c for r in table['rows'][:column['row_index']+1] for c in r['cells']
+                        if c['is_origin'] and any(re.fullmatch(pattern, c['text'].strip(), re.I)
+                                                  for pattern in UNIT_HEADER)]
+        scales = {6 if 'million' in c['text'].casefold() else 3 for c in unit_headers}
+        _need(len(scales)==1, 'VISIBLE_UNIT_UNRESOLVED')
+        visible_scale = next(iter(scales))
         _need(len({_key(p) for p in parts}) == len(parts), 'COMPONENT_REUSED')
         # Existing reported decimals bound rounding; no missing balancing item
         # is invented, and no larger native number is treated as the answer.
@@ -140,7 +195,7 @@ def selected_revenue_scope(*, primary, annual, approved_concepts, xml=None,
             _need(bool(matches), 'PRIMARY_XML_COMPONENT_OR_TOTAL_DIFFERS')
             xml_matches.append({'primary_ordinal':r['ordinal'], 'xml_reports':matches})
         splits.append({'table_id':table['table_id'], 'source_reference':primary['source_reference'],
-            'total':total, 'parts':parts, 'total_cell':_cell_proof(table=table, cell=cell),
+            'total':total, 'parts':parts, 'statement_scope':statement_scope, 'total_cell':_cell_proof(table=table, cell=cell),
             'part_cells':[_cell_proof(table=table, cell=bound[p['ordinal']][1]) for p in parts],
             'labels':{'total':_label(table, cell), 'parts':[_label(table, bound[p['ordinal']][1]) for p in parts]},
             'year_headers':[_cell_proof(table=table, cell=h) for h, _, _ in headers],
