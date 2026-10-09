@@ -5718,6 +5718,56 @@
       },
       "dedup": "listagents allnonrootDONE; register/evidence no samepurpose module; exactsubtotal failure diagnostic, not endeddevagent reopened",
       "ordinary_messages": 2
+    },
+    {
+      "task_name": "review_revenuescope_83eaa4d",
+      "purpose": "review",
+      "module": "selected_revenue_scope_v1",
+      "scope_paths": [
+        "scripts/vnext/selected_revenue_scope_v1.py",
+        "scripts/vnext/financial_duration.py",
+        "scripts/vnext/normal_zero_ai_results.py",
+        "scripts/vnext/normal_run_inputs.py",
+        "scripts/vnext/ordinary_saved_result.py",
+        "scripts/vnext/ordinary_current_update.py",
+        "tests/vnext/test_selected_revenue_scope_v1.py"
+      ],
+      "patch_sha": "83eaa4da5d18c7accc0c093b1ef4db5f5158da16",
+      "spawned_at": "2026-10-09T21:03:49.448410+00:00",
+      "ended_at": "2026-10-09T21:08:27Z",
+      "tool_calls": 23,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-complete-revenue/SEC_metrics/docs/evidence/issue28_complete_revenue_20261010/independent-review/conclusion.md",
+      "verdict": "CHANGES_REQUIRED_P2_RESTRICTED_STATEMENT_SCOPE",
+      "limits": {
+        "tools": 40,
+        "minutes": 20,
+        "ordinary_messages": 2
+      },
+      "dedup": "all prior agents DONE; no exact patch/module review in register or evidence; new public source-admission diff",
+      "ordinary_messages": 2
+    },
+    {
+      "task_name": "review_statementscope_62243bf",
+      "purpose": "review",
+      "module": "revenue_statement_scope_increment",
+      "scope_paths": [
+        "selected_revenue_scope_v1.py:_statement_scope and demonstrated-split placement",
+        "ordinary_current_update.py:scope dependency correction",
+        "test_selected_revenue_scope_v1.py:context regression"
+      ],
+      "patch_sha": "62243bfdce042a79508f242df65cc897fcfaf035",
+      "spawned_at": "2026-10-09T21:19:35.304130+00:00",
+      "ended_at": "2026-10-09T21:23:39.109123+00:00",
+      "tool_calls": 18,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-complete-revenue/SEC_metrics/docs/evidence/issue28_complete_revenue_20261010/independent-context-fix/conclusion.md",
+      "verdict": "CHANGES_REQUIRED_P2_NATIVE_ROW_SCOPE_ANNOTATION",
+      "limits": {
+        "tools": 20,
+        "minutes": 15,
+        "ordinary_messages": 2
+      },
+      "dedup": "prior83e result reused and P2 inherited; new62 source-context implementation not covered. Originalreviewdone at2msg assignedlimit; no identical SHA evidence or activeagent; only newdelta scope reviewed, not originalmodule again",
+      "ordinary_messages": 2
     }
   ],
   "ci_capacity_20260922": {
@@ -17808,7 +17858,7 @@
     "ci": "all11SUCCESS actual499eb; MERGEABLE"
   },
   "revenue_scope_followup_20261010": {
-    "pr": 118,
+    "pr": 119,
     "sha": "b962b6c9a69d3d7fd85541f6b92346a7b651c093",
     "peer_source": "0dc5de75",
     "scope": "sameconcept explicit priorcomparison conflict rejected, originalprior/concept/Spec notchanged; defaultregistry exactFY23B01subtotal hold",
@@ -17820,6 +17870,62 @@
       0,
       0
     ],
-    "peer_actual_received": "Actually read fixed45126b1a: originalPfizer task only FY21B02 added10.057s/WITHHELD; forbiddenfactoryrepeat.939s/0; defaultresults.578s preserves22/25 and23/24holds, exactFY23B01 held withoutoptionalregistry. Parent did not write/reexecute peerstate; README165 vs notification166 count not promoted"
+    "peer_actual_received": "Actually read fixed45126b1a: originalPfizer task only FY21B02 added10.057s/WITHHELD; forbiddenfactoryrepeat.939s/0; defaultresults.578s preserves22/25 and23/24holds, exactFY23B01 held withoutoptionalregistry. Parent did not write/reexecute peerstate; README165 vs notification166 count not promoted",
+    "status": "Reported total admission implemented on separate main-based Draft119; exact FY2023 original/Calculator positive and currentFY25company loop verified, new limited review pending",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-complete-revenue/SEC_metrics",
+    "branch": "task/issue28-complete-revenue",
+    "patch_sha": "209cdcdd48520d02eb8715a4118217a216262b8a",
+    "evidence": "docs/evidence/issue28_complete_revenue_20261010/README.md",
+    "actual": "Original a6e50.914bn reproduced; new128c58.496bn via same Calculator; no FY23company claim yet. FY25formalCLI62579m unchanged; 2.240/.082/.116 seconds; forbiddenfactoryrepeat sevenfiles stable.",
+    "public_interfaces": [
+      "selected_revenue_scope_v1.selected_revenue_scope",
+      "selected_revenue_scope_v1.admit_revenue_facts",
+      "selected_revenue_scope_v1.verify_revenue_observations"
+    ],
+    "shared_defaults": "normal_run_inputs and normal_zero_ai new validate_revenue_scope=False defaults; financial_duration extra_header_descriptors=() default. FrozenSpec/Calculator/oldincome/selectedreader/historicalconsumer unchanged.",
+    "consumer_owner": "#47 receives same interface before historical B01 calculation; no peer tree or state modified",
+    "ci": "209cdcdd latest actual elevenchecks terminalSUCCESS; original83e failures and repair evidence retained, content receiving confirmation separate",
+    "review": "83e and622 limitedCHANGES_REQUIRED preserved. Minimal native-row direct-scope repair2a6/209 actualcounterpositive25testsPy3.14 passed; no parent independentPASS, final receiving confirmation pending.",
+    "historical_consumer": "#47 Draft120 consumes118+119, actualPf23CLI58496m/128c, onlyaffectedrowrefresh10.140s/forbiddenrepeat.965/read.575 recorded bypeer, current fixed evidence to read. Originala6 andunrelatedoldResult preserved.",
+    "next": "Collect final119CI and receiving incremental check; source-scope originalpositivecomplete. Publicdocs accept onlycb6 historicalguide file; then actualshared-source preparation reuse cost independent nextqueue, no growth of119."
+  },
+  "receiving_status_20261010_increment": {
+    "102": "OPEN878all11SUCCESS; original c3 event-review finding preserved; latest head receiving confirmation remains distinct",
+    "103": "OPEN499all11SUCCESS, receiver comments overlap with mainPR106; this batch NOT_RECEIVED, no further duplicate implementation",
+    "106": "MERGEDab65 by authorized receiver; do not rerun development",
+    "112": "OPEN48aall12SUCCESS, receiving/final limited changes confirmation pending",
+    "117": "OPEN8f28all12SUCCESS; original reviewP2 and repair preserved; final receiving confirmation separate",
+    "118": "OPENb962all11SUCCESS, consumer actual guard complete; total-choice newDraft119 separate"
+  },
+  "historical_usage_docs_receiving_20261010": {
+    "pr": 121,
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-history-usage-docs/SEC_metrics",
+    "sha": "901b7e44",
+    "source": "cb6c1eb5:docs/historical_company_usage.md",
+    "scope": "one actualguide received and fixedpublicCLI/main/candidate/retainedbranch navigation; no history source/product/acceptance copied",
+    "checks": "actualrun/resultshelp+27mainhistoricaldispatch+6finance routes+fences+localreferences+diffcheck; no financialruns",
+    "review": "#47 readactualdoc andrequested main-checkout-return line, nowfixed",
+    "next": "receiving, independent from118/119/120"
+  },
+  "ordinary_preparation_cost_followup_20261010": {
+    "fixed_peer": "da42f474",
+    "evidence": "docs/evidence/issue47_statement_structural_consumer_20261010/README.md",
+    "observed_by": "#47 actualCLI tracer, readbyparent not rerun",
+    "scenario": "JPM21-25 B01/B02/B04/B05 structural N_A20, existingbankresults protected",
+    "timing_seconds": {
+      "first": 1289.948,
+      "forbidden_factory_repeat": 37.337,
+      "independent_read": 0.894
+    },
+    "scope": "reuse existing operation evidence, nextbounded shared/source/preparation cost investigation; no longbatch rerun or competing historicalcontroller",
+    "not_claimed": "speed improvement, new numericresults or whole1950"
+  },
+  "online_period_routing_20261010": {
+    "branch": "task/issue28-online-period-routing",
+    "sha": "ea7a1aaa8fa7376422578925348117b1888a9c61",
+    "scope": "five publicCLI guardlines before context/ledger/HTTP; savedhistory and validcurrent unchanged",
+    "repro": "eeda8fc1 peer realdispatch; parent5 failureinstances before then35/2.175s allpass/0skip",
+    "status": "pushed smallDraft; no new calls",
+    "next": "#47 independentCLI guard consumer then latestheadCI; no oldnative source reprocess"
   }
 }

@@ -666,3 +666,9 @@ PR80/ccf9d56f基于main8588，仅修当前导航与版本边界；12检查成功
 
 
 2026-10-09 已选申报收入来源接口：独立main DraftPR85/5989035b，产品bad59fab。显式selected_income_source_v1只消费已选Source/annual，保原native金额/context/单位/主体/期间和可见列检查；默认旧main3文件原字节。可显式用消费者已有年度读者和YEAR_OR_DATE_RELEASE，不引入新的审批平台或最新财年准备；无Result/CSV信用。7小例.263s，真实Marriott FY2024及Paramount FY2025正文/XML默认原记录相同，9.197s，原Aug7/Aug8冲突保持；首次驱动引用main不存在annual_sources的失败保留，改到actual annual_update后过。bad59限定独审PASS，7例.277s+12小边界.030s，工具24/普通3、原件只读父日志不重跑。review register结束与实际中文结论路径登记；Git源已发布、PR已attach，直接通知#47消费接口并自行绑定读者/namespace配置/源核验/修订/完整性/公司出口。当前85参考/fast/source authority成功，其余运行中，不代整体CI。PR80/de64十三检查全部实际SUCCESS；Claude6074762763已核67两增量通过，固定8588过渡及完整Git依赖仍明确供接收判断，无merge授权。原195槽143/143/52哈希不变，新增0/0/0。继续消费者接缝、其余原指标及实际CI残余，不把新接口或绿色CI当390/完整Goal结束。
+
+### 2026-10-10 收入范围正向修复接续
+
+固定main f6ef7886；独立Draft119/83eaa4da在公共选定收入接口实现有限组件准入。原Pfizer23 a6e50.914bn已实际重现，原件表113/Product+Alliance/Total及XML支持新Calculator128c58.496bn；不是仅扣留，不改旧Result或后年重列。FY25公司正式CLI62579m原ID、禁工厂复跑和独立results/CSV通过；新有限独审正在进行。历史消费者由#47接公共接口，不写对方树/状态。当前source/root/code/hash与原驱动失败见唯一证据issue28_complete_revenue_20261010/README.md。PR119首个CI读取遇Internal Privoxy Error，尚未取得终态。
+
+PR106已经接收；PR103接收方明确与它重叠、本轮不接收，保原证据且不再扩写副本。102/112/117/118最新已读检查均成功，但与内容接受分开。实际新调用0/0/0、143/143/52及已消费机会不变。下一动作：修限定审阅实际发现，#47执行FY23公司消费者；不重复已成立D04/旧金融长链。
