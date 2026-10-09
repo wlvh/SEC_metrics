@@ -182,6 +182,8 @@ FAST_TESTS += ("tests.vnext.test_selected_income_source_v1",)
 FAST_TESTS += ("tests.vnext.test_company_online",)
 FAST_TESTS += ("tests.vnext.test_native_rate_path",)
 FAST_TESTS += ('tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest',)
+FAST_TESTS += ('tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest',)
+FAST_TESTS += ('tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest',)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
