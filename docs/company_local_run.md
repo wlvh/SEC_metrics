@@ -149,3 +149,17 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
 同一原账本已保存的不可变原件，不能因为换任务目录就再取一次。调用上下文可固定既有完整 SEC `source_root`，直接复用其原请求行/原件/身份，不能裁账本或拼不同历史；未给原来源位置但账本已有同URL成功记录时，新入口在申领前返回 `ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED`。元数据刷新单独明确计数。该配置是持久运行配置，不是每年手填来源答案；既有来源根必须在代码和状态/输出根之外。
 
 录制上下文必须指定 `recorded_http_root`；该入口只从保存的HTTP原件读取回复，走原客户端的落盘/日志路径，不打开网络。LIVE上下文拒绝这个录制输入字段，使用正常HTTPS及原真实计数。录制模式不是一个可以免费访问SEC的通道；缺少回复不降级到真实网络。
+
+### 候选：只检查指定报告期的来源
+
+`task/issue28-selected-source-preflight` 的 `sources` 是只读入口，尚未作为 main 能力交付：
+
+```sh
+python3 tools/vnext_company.py sources --company marriott_international \
+  --source-root /path/to/saved-source --report-end 2022-12-31 \
+  --metric B01 --metric B02
+```
+
+该入口按现有保存目录列出这一任务的目标、修订及必要前期年报、目录/XML、Company Facts和选源元数据。`--report-end`是SEC报告期结束日期；原件齐备时显示原件DEI的原始财年标签，不把日期年份当标签；与其他财年文字或机器标签的最终对照仍由既有计算侧选期实现处理，本预检不替代它。文件齐备返回`SAVED_SOURCE_BYTES_AVAILABLE`/exit0；缺件、末次失败或来源身份问题返回具体原因/exit2。只选择B01时不要求未被使用的前期原件；B02需要前期，只有既有完整、来源已核对且日期相邻的原生XML可以满足未保存的前期正文，失败GET不能被替代。
+
+这不是获取或计算，不能证明新鲜度、修订效果、收入范围或结果已被接受。索引未保存时仍有未知XML前沿，计数只是已知URL数，不是获取许可或最终调用预算。当前仅列B01/B02来源依赖，其他指标、历史在线捕获和模型请求仍走各自已交付/待接入路径；不使用一个“来源齐备”状态替代39项业务验收。
