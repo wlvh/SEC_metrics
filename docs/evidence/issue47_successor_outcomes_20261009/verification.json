@@ -1,0 +1,326 @@
+{
+  "status": "APPROVED_SUCCESSOR_LIMIT_RECEIVED_NOT_MAIN_OR_AMOUNT_ACCEPTANCE",
+  "parent": "PR82/d279dcd0",
+  "scope": "Verified registered successor current annual B02/B04/B05/B07 early continuity guard only",
+  "ordinary_common_core_unchanged": true,
+  "catalog_definition_unchanged": true,
+  "global_registry_unchanged": true,
+  "company": "paramount_skydance_paramount_global",
+  "year": 2025,
+  "cik": "2041610",
+  "first_mixed_seconds": 23.321626750053838,
+  "original_B01": {
+    "metric_id": "B01",
+    "status": "INPUT_OR_EXECUTION_FAILED",
+    "attempt_id": "71819032dbb247748de6c19fba6431ee",
+    "error_type": "StatementCaseError",
+    "reason": "HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+    "previous_result": null,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "requested_fiscal_year": 2025,
+    "error_category": "IMPLEMENTATION_GAP"
+  },
+  "four_outcomes": {
+    "checks": [
+      {
+        "row": {
+          "metric_id": "B02",
+          "result_id": "sha256:cbab8165ffac6c5cbe9c4ea0b56a037980e46574a68419bb1916ba8f8a5299ef",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": 2025,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NOT_MEANINGFUL",
+          "reason_code": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/successor-outcomes-paramount-20261009/state/updates/B02/periods/FY2025/results/4fc20c7688d341adba0a3d3c4ebd6332"
+        },
+        "assessment": {
+          "amendment_scope_not_admitted": true,
+          "annual_statement_scope_admitted": false,
+          "category": "APPROVED_COMPARABILITY_LIMIT",
+          "reason": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+          "statement_values_used": false,
+          "subject_policy": {
+            "cross_entity_combination_authorized": false,
+            "mode": "SUCCESSOR_REGISTRANT_ONLY",
+            "per_metric_statement_scope_required": true,
+            "related_predecessor_ciks": [
+              "813828"
+            ],
+            "selected_cik": "2041610"
+          }
+        },
+        "claim_count": 0,
+        "observation_count": 0
+      },
+      {
+        "row": {
+          "metric_id": "B04",
+          "result_id": "sha256:aafc16bdde5283a21fb2a29960bf5283d5fef5a41a1073c34a17db911e50fe6b",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": 2025,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NOT_MEANINGFUL",
+          "reason_code": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/successor-outcomes-paramount-20261009/state/updates/B04/periods/FY2025/results/a36a11fbfd0f4a4ab783dd6ee107b496"
+        },
+        "assessment": {
+          "amendment_scope_not_admitted": true,
+          "annual_statement_scope_admitted": false,
+          "category": "APPROVED_COMPARABILITY_LIMIT",
+          "reason": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+          "statement_values_used": false,
+          "subject_policy": {
+            "cross_entity_combination_authorized": false,
+            "mode": "SUCCESSOR_REGISTRANT_ONLY",
+            "per_metric_statement_scope_required": true,
+            "related_predecessor_ciks": [
+              "813828"
+            ],
+            "selected_cik": "2041610"
+          }
+        },
+        "claim_count": 0,
+        "observation_count": 0
+      },
+      {
+        "row": {
+          "metric_id": "B05",
+          "result_id": "sha256:b014e48036c81dfb2607ecc2ababec4fcd59f48ead8e7c413b07aba690b14ec7",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": 2025,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NOT_MEANINGFUL",
+          "reason_code": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/successor-outcomes-paramount-20261009/state/updates/B05/periods/FY2025/results/a14ef4afd6be4c88acdd8b2f56336e32"
+        },
+        "assessment": {
+          "amendment_scope_not_admitted": true,
+          "annual_statement_scope_admitted": false,
+          "category": "APPROVED_COMPARABILITY_LIMIT",
+          "reason": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+          "statement_values_used": false,
+          "subject_policy": {
+            "cross_entity_combination_authorized": false,
+            "mode": "SUCCESSOR_REGISTRANT_ONLY",
+            "per_metric_statement_scope_required": true,
+            "related_predecessor_ciks": [
+              "813828"
+            ],
+            "selected_cik": "2041610"
+          }
+        },
+        "claim_count": 0,
+        "observation_count": 0
+      },
+      {
+        "row": {
+          "metric_id": "B07",
+          "result_id": "sha256:1422ef8d536f353fe17b295937fdf915cd285d387312caee5368309f2c8a0add",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": 2025,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NOT_MEANINGFUL",
+          "reason_code": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/successor-outcomes-paramount-20261009/state/updates/B07/periods/FY2025/results/a0bd54f896bf4f709268d77f3cff2717"
+        },
+        "assessment": {
+          "amendment_scope_not_admitted": true,
+          "annual_statement_scope_admitted": false,
+          "category": "APPROVED_COMPARABILITY_LIMIT",
+          "reason": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+          "statement_values_used": false,
+          "subject_policy": {
+            "cross_entity_combination_authorized": false,
+            "mode": "SUCCESSOR_REGISTRANT_ONLY",
+            "per_metric_statement_scope_required": true,
+            "related_predecessor_ciks": [
+              "813828"
+            ],
+            "selected_cik": "2041610"
+          }
+        },
+        "claim_count": 0,
+        "observation_count": 0
+      }
+    ],
+    "same_approved_common_guard": true,
+    "annual_amount_credit": false,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "repeat": {
+    "company": "paramount_skydance_paramount_global",
+    "repeat_exit": 0,
+    "repeat_seconds": 1.1646166669670492,
+    "repeat_preparation_calls": 0,
+    "repeat_calculation_calls": 0,
+    "saved_files": 32,
+    "saved_files_unchanged": true,
+    "read_exit": 0,
+    "read_seconds": 0.012734584044665098,
+    "read_selection_calls": 0,
+    "read_update_calls": 0,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "cold": {
+    "exit_code": 0,
+    "seconds": 0.1266307500191033,
+    "source_selection_calls": 0,
+    "update_calls": 0,
+    "saved_files_unchanged": true,
+    "saved_file_count": 32,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "no_financial_selection_test": {
+    "seconds": 25.810149707831442,
+    "rows": [
+      {
+        "metric": "B02",
+        "result_id": "sha256:cbab8165ffac6c5cbe9c4ea0b56a037980e46574a68419bb1916ba8f8a5299ef",
+        "no_statement_extraction": true,
+        "no_component_selection": true
+      },
+      {
+        "metric": "B04",
+        "result_id": "sha256:aafc16bdde5283a21fb2a29960bf5283d5fef5a41a1073c34a17db911e50fe6b",
+        "no_statement_extraction": true,
+        "no_component_selection": true
+      },
+      {
+        "metric": "B05",
+        "result_id": "sha256:b014e48036c81dfb2607ecc2ababec4fcd59f48ead8e7c413b07aba690b14ec7",
+        "no_statement_extraction": true,
+        "no_component_selection": true
+      },
+      {
+        "metric": "B07",
+        "result_id": "sha256:1422ef8d536f353fe17b295937fdf915cd285d387312caee5368309f2c8a0add",
+        "no_statement_extraction": true,
+        "no_component_selection": true
+      }
+    ],
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "driver_issue_recovery": {
+    "driver_issue": "Expected five current rows including B01, but B01 failed without a saved result; subset read returns four saved current conclusions. Original failed first request preserved separately.",
+    "original_assertion_logs_retained": true,
+    "correct_current_result_count": 4,
+    "repeated_calculation": false,
+    "repeat_and_cold_checks_pass": true,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "short_tests": {
+    "count": 50,
+    "seconds": 0.134,
+    "skip": 0
+  },
+  "capability_alignment": "PASS actual PR82 parent",
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_run": false,
+  "new_business_acceptance": false,
+  "remaining": [
+    "B01/B03 income period and successor statement scope",
+    "FY2024 amended annual original input qualification/date conflict",
+    "Online discovery/shared public pipeline receiving",
+    "Full five-year ten-company39 business acceptance"
+  ],
+  "archive": {
+    "members": 44,
+    "bytes": 19844,
+    "sha256": "8bef1f290b1a2459f27300196e66d64bde76cb8ce5c9db012d62834e5c8a42ac"
+  },
+  "structural_applicability_followup": {
+    "problem": "B07 bank trait was incorrectly classified as amount-source failure before applicability",
+    "company": "jpmorgan_chase",
+    "years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "policy_and_calculator_unchanged": true,
+    "uses_existing_metric_is_applicable_and_manual_result_trace": true,
+    "outcome": "N_A_STRUCTURAL/null/TRAIT_NOT_APPLICABLE",
+    "first_seconds": 176.04351129219867,
+    "repeat_seconds": 6.042436624877155,
+    "repeat_preparation_and_calculation_calls": 0,
+    "protected_files": 75,
+    "bytes_unchanged": true,
+    "independent_read_seconds": 0.1455529578961432,
+    "source_amount_extraction_and_graph_calls_in_real_2025_probe": 0,
+    "no_amount_probe_seconds": 20.905365832848474,
+    "complete_existing_successor_case_bytes_unchanged": true,
+    "successor_comparison_seconds": 13.146030124975368,
+    "short_tests": 52,
+    "short_seconds": 0.153,
+    "short_skips": 0,
+    "source_code_sha256": "27cf088331c112cc39737d933ecda72343fa4a7f73208ac3c3013f671570d562",
+    "test_code_sha256": "9f7b76e6153d14aff6426afcc9b81af41700eb71901ceb0970bd3e145e986e8f",
+    "prior_wrong_results": 5,
+    "prior_wrong_result_files_still_unchanged": true,
+    "restorable_normal_result_records": "structural-results-index.json",
+    "new_calls": {
+      "sec": 0,
+      "provider": 0,
+      "paid": 0
+    },
+    "CI_new_class_registration": "Pending public shared runner integration; local exact tests passed, old green not evidence for new class"
+  }
+}

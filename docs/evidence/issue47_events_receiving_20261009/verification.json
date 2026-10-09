@@ -117,5 +117,21 @@
     "annual_unchanged": true,
     "value": "12",
     "unit": "count"
+  },
+  "latest_main_received": "73ead3b4c987ab10e7eaef3feed9bd5cec43e136",
+  "latest_dispatch_tests": {
+    "count": 29,
+    "seconds": 0.167,
+    "skips": 0
+  },
+  "new_history_classes_ci": {
+    "public_patch": "45ca8755 pr90-6d09-event-selectors.patch",
+    "workflow_trigger_test_path": "tests/vnext/test_historical_event_cases.py",
+    "direct_step_count": 9,
+    "seconds": 0.025,
+    "skips": 0,
+    "source_and_wide_public_steps_retained": true,
+    "latest_main_capital_bank_income_selectors_retained": true,
+    "remote_execution_pending": true
   }
 }

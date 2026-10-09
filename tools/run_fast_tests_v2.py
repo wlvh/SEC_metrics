@@ -184,6 +184,16 @@ FAST_TESTS += ("tests.vnext.test_selected_event_source_v1",)
 FAST_TESTS += ("tests.vnext.test_registered_event_projection",)
 
 FAST_TESTS += ("tests.vnext.test_native_rate_path",)
+FAST_TESTS += ('tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest',)
+FAST_TESTS += ('tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest',)
+FAST_TESTS += ('tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest',)
+FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest',)
+FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest',)
+FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest',)
+FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest',)
+FAST_TESTS += ('tests.vnext.test_historical_event_cases.HistoricalEventCaseTest',)
+FAST_TESTS += ('tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest',)
+FAST_TESTS += ('tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest',)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

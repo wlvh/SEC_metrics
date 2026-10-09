@@ -37,3 +37,5 @@ FY2021–FY2025共25位置已通过同公司CLI计算/读取/导出，既有独�
 公共source+宽窗投影已并入同一Draft PR89/b82111a5；本方接其真实祖先/代码而不增加共享PR链，三公共生产文件与该head逐字节相同，正常/宽窗实际source/保存/CSV证据复用未变源码；新增组合小例见public89-combination.log。公共限定source/gap与宽窗投影各自修后PASS，原NEEDS_FIX保留，技术结论不授本方business接受或用户merge许可。
 
 接实际main/6d09（65/87/72/73）后业务源码自动合并无冲突，唯一公共selector冲突只保已有source/wide/native-rate三项、函数AST同main，未新增历史class或改runner；新增历史短class的公共补丁仍待返回。结合小例见latest-main-small-tests.log；未受影响的五年财报/事件记录复用，不因本次上游或日志新增重算。
+
+最新main/73ead（77/78/81/82/84/88）接续时company dispatch有真实两侧冲突，历史侧保所有旧族工厂/各自依赖并加事件分派，29例0.167s过，不重算未变资本/银行/现金流/余额。公共45ca8755给定最小测试patch的workflow逐字节接入；runner保最新main额外selector，只追加公共指定三历史class，函数AST同main。实际required_unittests原命令9例0.025s、零skip；tests/vnext/test_historical_event_cases.py在定向路径过滤内，所有原步骤保留。当前新head远端需要实际确认，不拿前e94/旧head绿灯代替加载执行。
