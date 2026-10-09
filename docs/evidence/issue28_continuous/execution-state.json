@@ -5812,6 +5812,40 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-explicit-risk-headings/SEC_metrics/docs/evidence/issue28_explicit_risk_headings_20261010/independent-review/conclusion.md",
       "verdict": "PASS_LIMITED_DIFFERENCE",
       "message_count": 3
+    },
+    {
+      "task_name": "review_sourcepreflight_0215ec9",
+      "purpose": "review",
+      "module": "selected_source_preflight",
+      "scope_paths": [
+        "scripts/vnext/selected_source_requirements.py",
+        "tools/vnext_company.py",
+        "tests/vnext/test_selected_source_requirements.py",
+        ".github/workflows/company-current-records.yml",
+        "docs/company_local_run.md"
+      ],
+      "patch_sha": "0215ec9d0d8dd7f0bc4f964bc6639aabd4cc29a2",
+      "spawned_at": "2026-10-09T22:54:25.022005+00:00",
+      "ended_at": "2026-10-09T22:58:48+00:00",
+      "tool_calls": 30,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-source-preflight/SEC_metrics/docs/evidence/issue28_selected_source_preflight_20261010/independent-review/conclusion.md",
+      "verdict": "CHANGES_REQUIRED_P2_METADATA_KEYERROR",
+      "message_count": 1,
+      "followup": {
+        "patch_sha": "407b23d3ff45e29883130879ca6f47d47770fc1d",
+        "base_sha": "0215ec9d0d8dd7f0bc4f964bc6639aabd4cc29a2",
+        "started_at": "2026-10-09T23:01:18.601068+00:00",
+        "ended_at": "2026-10-09T23:02:45+00:00",
+        "verdict": "PASS_LIMITED_REPAIR_P2_CLOSED",
+        "prior_cumulative_tool_calls": 30,
+        "prior_cumulative_messages": 1,
+        "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-source-preflight/SEC_metrics/docs/evidence/issue28_selected_source_preflight_20261010/independent-review/conclusion.md",
+        "new_tool_calls": 8,
+        "cumulative_tool_calls": 38,
+        "cumulative_messages": 2
+      },
+      "total_tool_calls": 38,
+      "total_message_count": 2
     }
   ],
   "ci_capacity_20260922": {
@@ -18024,7 +18058,7 @@
     "ci": "ea7a latesteleven remotechecks terminalSUCCESS actuallyread"
   },
   "explicit_d01_interface_20261010": {
-    "status": "PASS_LIMITED_INTERFACE_REVIEW_PENDING_FIXED_HISTORICAL_CONTENT_AND_RECEIVING",
+    "status": "LIMITED_INTERFACE_REVIEW_AND_FIXED_PEER_COMPANY_ENTRY_VALIDATION_PASS_WITH_ID_COMPARISON_LIMITS",
     "patch_sha": "656a1d3c91a7599cab5127049b4b7f26f608d2fe",
     "base": "f6ef7886d6630f7675c25cd42e306c373ab05769",
     "peer_sha": "d8e36eeac2ecefbc90ebc3b79fdfdb60538f4ab4",
@@ -18048,17 +18082,71 @@
     "pr": "https://github.com/wlvh/SEC_metrics/pull/124",
     "archive_sha": "96bcd88038ce1efb7dc25ffed9419d6eda9ec44e",
     "peer_company_notice": {
-      "mode": "PEER_MESSAGE_NOT_YET_FIXED_EVIDENCE_READ",
-      "five_year_cli_seconds": [
+      "mode": "READ_FIXED_PEER_LOGS_NOT_PARENT_RERUN",
+      "Marriott21_25_CLI_seconds": [
         25.442,
         2.027,
         0.698
       ],
-      "old_files_protected": 211,
-      "FY21": "heading originalspan correction being recorded",
-      "FY22": "same37 heading text but record identity difference still under investigation",
-      "FY23_FY24_FY25": "peer reports text/identity same; await fixed record, no parent rerun",
+      "JPM21_D01_seconds": [
+        55.514,
+        3.268,
+        0.864
+      ],
+      "scope": "fiveMarriott+oneJPM sourceheading companyentry, not all50/1950/currentdefault",
+      "limits": "FY21 full risk sentence correction documented against originalspan; FY22 and JPM new/oldnativeID exactfielddifferenceunproven, oldIDs not rewritten; 23-25 text/IDs same",
       "current_business_credit": false
+    },
+    "peer_fixed_evidence": "bc5ee8912105154abb0285c9b01cf5756c300daf",
+    "peer_evidence_path": "docs/evidence/issue47_risk_heading_consumer_20261010/README.md",
+    "remote_ci": {
+      "head": "96bcd88038ce1efb7dc25ffed9419d6eda9ec44e",
+      "checks_success": 11,
+      "terminal": "SUCCESS"
     }
+  },
+  "selected_source_preflight_20261010": {
+    "status": "PASS_READONLY_PUBLIC_CLI_AND_LIMITED_METADATA_REPAIR_REVIEW_PENDING_RECEIVING_CI",
+    "source_sha": "0215ec9d0d8dd7f0bc4f964bc6639aabd4cc29a2",
+    "base": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-source-preflight/SEC_metrics",
+    "branch": "task/issue28-selected-source-preflight",
+    "evidence": "docs/evidence/issue28_selected_source_preflight_20261010/README.md",
+    "scope": [
+      "scripts/vnext/selected_source_requirements.py",
+      "tools/vnext_company.py",
+      "tests/vnext/test_selected_source_requirements.py",
+      ".github/workflows/company-current-records.yml",
+      "docs/company_local_run.md"
+    ],
+    "interface": "sources --source-root --report-end --metric B01/B02; no capture/calculation/authority",
+    "actual_source_probe": "Marriott22,Macy53weekFY23,SalesFY23, selected body/header/registry/logprotected19/19/21",
+    "final_macys_cli_seconds": [
+      1.632028,
+      1.616101
+    ],
+    "test_count": 48,
+    "test_seconds": 3.07,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "raw_DEI_label_not_consumer_fiscal_year_resolution": true,
+    "source_availability_not_business_acceptance": true,
+    "next": "limitedreview/receiving; #47 may consume fixedownsourcecounterexamples, no competingcapture",
+    "pr": 126,
+    "repair_sha": "407b23d3ff45e29883130879ca6f47d47770fc1d",
+    "original_independent_verdict": "CHANGES_REQUIRED_P2_METADATA_KEYERROR",
+    "repair_tests": {
+      "run": 49,
+      "seconds": 3.094,
+      "skips": 0
+    },
+    "limited_followup": "407b23d3:14 source controls/1.018s +null-filings TypeError, 38 cumulative tools/2 messages; not realcompany/fullbusiness",
+    "peer_fixed_source": "a2ec0932f99fdee6ca5680024cda67173f4b02a7",
+    "peer_consumer_evidence": "docs/evidence/issue47_selected_source_consumer_20261010/README.md",
+    "peer_scope": "Read otherexecutor logs, no parent rerun; rawSalesDEI25 notconsumerFY26; Macy371days; Marriottprioramendfilesnotpropertyapproval; Paramown813828/2041610separate, August7/8incomeconflict NOT cleared",
+    "archive_sha": "3de509ac3874f47220d07986d38fdb73a9ee3942"
   }
 }
