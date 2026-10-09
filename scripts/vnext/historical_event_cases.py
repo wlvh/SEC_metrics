@@ -72,8 +72,8 @@ def _history_check_strategy(source, prepared, registered_union):
         all_shards.update({s['name']: shards for s in shards})
         last_days.update(block_last_days(payload=payload, shards=shards))
         proofs.extend(entry['proof'] for entry in reader.proofs.values())
-    def validate(*, shard, body, rows, shards, period):
-        if shards != all_shards[shard['name']]:
+    def validate(*, shard, body, rows, shards, period, last_day):
+        if shards != all_shards[shard['name']] or last_day != last_days[shard['name']]:
             raise HistoryCatalogError('HISTORICAL_EVENT_METADATA_CHANGED_DURING_READ')
         return history_block_coherence(shard=shard, body=body, rows=rows,
                                         last_day=last_days[shard['name']])
@@ -125,13 +125,23 @@ def prepare_historical_event_year_case(*, repo_root, company_id, metric_id, fisc
         validate, last_days, metadata_proofs = _history_check_strategy(source, prepared, registered_union)
         packet = read_selected_event_sources(data_root=source, rules_root=ROOT,
             prepared=prepared, period=period, registered_union=registered_union,
-            history_validator=validate)
+            history_validator=validate, history_last_days=block_last_days)
         for proof in metadata_proofs:
             matching = [p for p in packet['source_proofs'] if p['source_url'] == proof['source_url']]
             if not matching or any(p['content_sha256'] != proof['content_sha256'] for p in matching):
                 raise HistoryCatalogError('HISTORICAL_EVENT_METADATA_CHANGED_DURING_READ')
         claims, source_sets, filings = packet['claims'], packet['source_set_manifests'], packet['filings']
-        reader.records.update({r.get('raw_asset_id') or r['source_reference_id']:r for r in packet['source_records']})
+        for record in packet['source_records']:
+            key = (record['raw_asset_id'] if record['record_type'] == 'RAW_BLOB'
+                   else record['source_reference_id'])
+            existing = reader.records.get(key)
+            if existing is not None and existing != record:
+                if (record['record_type'] != 'RAW_BLOB' or
+                        {k:v for k,v in existing.items() if k != 'storage_uri'} !=
+                        {k:v for k,v in record.items() if k != 'storage_uri'}):
+                    raise NormalZeroAiError('HISTORICAL_EVENT_SOURCE_RECORD_CONFLICT', 'SOURCE_INTEGRITY_ERROR')
+                continue
+            reader.records[key] = record
         reader.proofs.update({p['source_reference_id']:p for p in packet['source_bindings']})
         inventory_reference = packet['inventory_source_reference']
         graph = project_event_result(metric_id=metric_id, claims=claims,

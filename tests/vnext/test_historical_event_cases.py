@@ -98,8 +98,36 @@ class HistoricalEventHistoryStrategyTest(TestCase):
             check, last, proofs = cases._history_check_strategy(Path('/constructed'), PREPARED, False)
         self.assertEqual('2020-12-31', last[shard['name']])
         body = {'filingDate': ['2020-06-01', '2020-12-31']}
-        self.assertIsNone(check(shard=shard, body=body, rows=[], shards=[shard], period=PERIOD))
-        bad = check(shard=shard, body={'filingDate': ['2020-06-01']}, rows=[], shards=[shard], period=PERIOD)
+        self.assertIsNone(check(shard=shard, body=body, rows=[], shards=[shard], period=PERIOD, last_day='2020-12-31'))
+        bad = check(shard=shard, body={'filingDate': ['2020-06-01']}, rows=[], shards=[shard], period=PERIOD, last_day='2020-12-31')
         self.assertIn('FILING_COUNT_DIFFERS_FROM_DECLARED', bad['failed_checks'])
         # Counts include forms that the downstream event list does not retain.
         self.assertEqual([{'source_url': 'constructed'}], proofs)
+
+
+class HistoricalEventRecordRetentionTest(TestCase):
+    def test_source_reference_does_not_overwrite_its_raw_blob(self):
+        reader = SimpleNamespace(records={}, proofs={})
+        raw = {'record_type': 'RAW_BLOB', 'raw_asset_id': 'sha256:constructed',
+               'media_type': 'text/plain', 'storage_uri': 'constructed.hdr'}
+        ref = {'record_type': 'SOURCE_REFERENCE', 'source_reference_id': 'source:constructed',
+               'raw_asset_id': raw['raw_asset_id'], 'source_role': 'sec_submissions_inventory'}
+        packet = {'claims': [], 'source_set_manifests': [{'source_role': 'event_set'}],
+                  'filings': [], 'source_records': [raw, ref], 'source_bindings': [],
+                  'source_proofs': [], 'registered_event_scope': None,
+                  'inventory_source_reference': ref}
+        with ExitStack() as stack:
+            for name, value in [('resolve_period_selection', {}),
+                                ('prepare_historical_annual_input', PREPARED),
+                                ('_Sources', reader), ('_event_amendment_checks', []),
+                                ('_history_check_strategy', (lambda **kwargs: None, {}, [])),
+                                ('read_selected_event_sources', packet),
+                                ('verify_ordinary_source_proofs', {})]:
+                stack.enter_context(patch.object(cases, name, return_value=value))
+            stack.enter_context(patch.object(cases, 'project_event_result',
+                side_effect=cases.NormalZeroAiError('CONSTRUCTED_FAILURE_AFTER_SOURCE_READ')))
+            case = cases.prepare_historical_event_year_case(repo_root=Path('/constructed'),
+                company_id='marriott_international', metric_id='E02', fiscal_year=2024)
+        self.assertIn(raw, case['expected_records']); self.assertIn(ref, case['expected_records'])
+        self.assertIn(ref, case['references'])
+        self.assertIsNone(case['results']['E02']['value'])

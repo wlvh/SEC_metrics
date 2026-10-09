@@ -64,14 +64,25 @@ def _exact_set(prepared, inventory, source, role):
 
 
 def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_required=True,
-                   history_validator=None):
+                   history_validator=None, history_last_days=None):
     """Discover only the actual annual event window, including history shards."""
     period = prepared["table_input"]["target_period"]
     payload = strict_json_loads(text=inventory["raw_bytes"].decode("utf-8"))
     shards = _history_index(payload, prepared["entity"])
+    last_days = {shard['name']: shard['filingTo'] for shard in shards}
+    if history_last_days is not None:
+        from .normal_governance_input import _date
+        _need(callable(history_last_days), 'NORMAL_EVENT_HISTORY_LAST_DAYS_INVALID')
+        _need(callable(history_validator), 'NORMAL_EVENT_HISTORY_VALIDATOR_REQUIRED')
+        last_days = history_last_days(payload=payload, shards=shards)
+        _need(type(last_days) is dict and set(last_days) == {shard['name'] for shard in shards},
+              'NORMAL_EVENT_HISTORY_LAST_DAYS_INVALID')
+        for shard in shards:
+            _need(_date(last_days[shard['name']]) >= shard['filingTo'],
+                  'NORMAL_EVENT_HISTORY_LAST_DAYS_INVALID')
     inventories = [inventory]
     for shard in shards:
-        if shard["filingFrom"] <= period["period_end"] and shard["filingTo"] >= period["period_start"]:
+        if shard["filingFrom"] <= period["period_end"] and last_days[shard['name']] >= period["period_start"]:
             item = reader.read(submissions_file_url(file_name=shard["name"]),
                 role="sec_submissions_history", media_type="application/json")
             data = strict_json_loads(text=item["raw_bytes"].decode("utf-8"))
@@ -80,7 +91,9 @@ def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_r
             rows = _filings(data, inventory_name=shard["name"])
             conflict = (history_body_alignment(shard=shard, rows=rows) if history_validator is None
                         else history_validator(shard=shard, body=data, rows=rows,
-                                               shards=shards, period=period))
+                                               shards=shards, period=period,
+                                               **({} if history_last_days is None else
+                                                  {'last_day': last_days[shard['name']]})))
             _need(conflict is None,
                   "NORMAL_EVENT_HISTORY_SNAPSHOT_CONFLICT", "SOURCE_COVERAGE_CONFLICT")
             inventories.append(item)
@@ -134,7 +147,7 @@ def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_r
 
 
 def _registered_event_sources(*, repo_root, reader, prepared, inventory, period, rules_root=None,
-                              history_validator=None):
+                              history_validator=None, history_last_days=None):
     """Rebuild the approved union from each registered CIK's actual sources."""
     from .traits import repository_company_ciks
     rules=repo_root if rules_root is None else Path(rules_root)
@@ -148,7 +161,8 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period,
             # This is a source-discovery context, not a rewritten annual identity.
             context={'company_id':prepared['company_id'],'entity':cik,'table_input':{'target_period':period}}
             claims,manifests,filings=_event_sources(repo_root=repo_root,reader=current,prepared=context,inventory=current_inventory,
-                installed_census_required=rules_root is None, history_validator=history_validator)
+                installed_census_required=rules_root is None, history_validator=history_validator,
+                history_last_days=history_last_days)
             accessions={f['accessionNumber'] for f in filings}
             _need(not seen.intersection(accessions),'NORMAL_REGISTERED_EVENT_CIK_ACCESSION_OVERLAP','SOURCE_COVERAGE_CONFLICT')
             seen.update(accessions)
