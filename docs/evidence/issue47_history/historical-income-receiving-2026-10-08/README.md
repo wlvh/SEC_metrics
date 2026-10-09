@@ -122,3 +122,7 @@ Lumen FY2021–FY2025进一步消费同一固定PR75/527入口，B01/B02/B04/B05
 实现 bd6ef6d1 提交后能力结构检查 PASS（[日志](selected-income-postcommit-alignment.log)），两个副产物恢复；只是结构证据，不清除旧 mint 门禁或业务缺口。
 
 后续收入原件适配沿用PR75实际发现：原件检查使用历史准备保留的literal original_input，输出保留已经由发行人定义解析的FY标签；原始和输出实际日期不一致仍拒绝。Salesforce FY2026的DEI字面2025与发行人FY2026冲突保持，不把字面标签改写。37相关小例0.163s零skip，原same-source/namespace/字节/单位检查不放宽；主真实源修复证据在PR75同一接收记录，不另外复制完整原件或旧结果。
+
+2026-10-09三旧年B03必要范围增量：复用原四候选/完整段落，只核未决取得合同、履约合同及融资租赁关系，不重算既有FY2024/25或新模型。已选原primary的可见合并/分部表再次证明75/89/88m合同投资摊销扣减gross fee收入；2021、2022分部总额各75/89m，2023分部总额87m、合并88m，原差额保持不擅消。现公共_visible_revenue_deductions遇同时存在分部总额及分部行，因要求每个非合并行必须有StatementBusinessSegmentsAxis而返回None。三年实际全原件输入均拒绝；只读构造诊断去掉分部总额均返回原gross→deduction→net关系。诊断不接入运行、不删实际来源或改Calc，具体最小复现已交#28共享核心维护，见[b03-contract-aggregate-consumer.json](b03-contract-aggregate-consumer.json)。
+
+原Note1明确取得合同摊销在收入扣减位置，履约成本摊销则在Owned/leased/other direct费用；原finance lease政策还有资产摊销。两类费用是否已包含于拟选138+165/114+197/122+226m仍未证明，租赁未来付款/现值不是摊销，履约成本368/379/402m为资产余额也不是年度摊销。该原件增量1.669秒、必要完整段落/原表位置在[b03-remaining-scope-relations.json](b03-remaining-scope-relations.json)。不因新数字候选或检查器修复而释放三个null；完整D&A范围和最终B03交付继续。两个开发读取器错误（原table builder当dict、context mappingproxy直接JSON）只修保存表示，没有计算/来源/Run变化，原失败保留本地work。新SEC/provider/paid/Run/接受0。
