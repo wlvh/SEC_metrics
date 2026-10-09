@@ -30,3 +30,8 @@ PR87 is now main (merge2931d078), PR88 supplies the actual history guide;
 source/window PR89 remains candidate. Current nav/version claims are updated
 again only for those changed delivery facts. Three precommit alignment
 differences are preserved; a postcommit run confirms the actual committed tree.
+
+Postcommit latest-main capability alignment passed on f8506ef9; output in
+latest-main-committed-alignment.log. This is structural/command documentation
+evidence, not a source result acceptance. Incoming runtime and test files are
+from main and unchanged; no existing run package or frozen snapshot is re-signed.
