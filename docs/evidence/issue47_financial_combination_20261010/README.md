@@ -40,3 +40,5 @@ python3 tools/vnext_company.py results --company jpmorgan_chase \
 组合工作流增量检查发现具体保护遗漏：原105和108各自的定向workflow均加载本族模块及测试路径，但组合沿110仅保bank_scope；geography、average_risk两个模块/paths未并入。workflow-combination-gap.json给原候选与组合对照，已直接交公共#28在同一现有步骤集成，不另写runner或以分派mock代替业务反例。当前三模块加分派/状态58例实际.215s零skip，current-three-family-controls.log；没有重算财报。修复尚未返回，远端组合全模块执行未宣通过。
 
 现有六指标混选测试进一步同时检查每族processing_files与原声明完全对应，并把B01/B10/A01已交付族放在同一次选择中；防止后来分派合并保住函数名却覆盖计算依赖。仅这一受影响方法.455s过、零skip，mixed-dependency-control.log。它是分派控制，不当真实财报值或复用验收；原真实30位/混批证据继续复用。
+
+公共方已给固定91087684基础的最小workflow patch，本方接收至同一组合：仅补geography/average_risk两个paths及原Historical步骤的两个模块，既有三模块不丢，没有新runner。按实际步骤命令本地58方法.219s零skip；workflow-five-modules.json/log逐模块确认加载和执行。该组合分支无PR，push本身不会触发pull_request工作流；接收者把同一配置合入实际候选后再核远端步骤，不把本地成功冒充远端CI成功。
