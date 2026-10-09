@@ -1,0 +1,147 @@
+[
+  {
+    "name": "unformatted_literal_138.5",
+    "expected_values": [
+      "138.5",
+      "49"
+    ],
+    "actual_values": [
+      "138.5",
+      "49"
+    ],
+    "check_passed": true,
+    "issues": []
+  },
+  {
+    "name": "unformatted_literal_-138",
+    "expected_values": [
+      "-138",
+      "49"
+    ],
+    "actual_values": [
+      "-138",
+      "49"
+    ],
+    "check_passed": true,
+    "issues": []
+  },
+  {
+    "name": "unformatted_literal_+138",
+    "expected_values": [
+      "138",
+      "49"
+    ],
+    "actual_values": [
+      "138",
+      "49"
+    ],
+    "check_passed": true,
+    "issues": []
+  },
+  {
+    "name": "unformatted_literal_.5",
+    "expected_values": [
+      "0.5",
+      "49"
+    ],
+    "actual_values": [
+      "0.5",
+      "49"
+    ],
+    "check_passed": true,
+    "issues": []
+  },
+  {
+    "name": "unformatted_literal_1,38",
+    "expected_values": [
+      "49"
+    ],
+    "actual_values": [
+      "49"
+    ],
+    "check_passed": true,
+    "issues": [
+      "DEPRECIATION_SOURCE_NUMERIC_LEXICAL_FORM_NOT_SUPPORTED",
+      "DEPRECIATION_SOURCE_NUMERIC_LEXICAL_FORM_NOT_SUPPORTED"
+    ]
+  },
+  {
+    "name": "unformatted_literal_1 38",
+    "expected_values": [
+      "49"
+    ],
+    "actual_values": [
+      "49"
+    ],
+    "check_passed": true,
+    "issues": [
+      "DEPRECIATION_SOURCE_NUMERIC_LEXICAL_FORM_NOT_SUPPORTED",
+      "DEPRECIATION_SOURCE_NUMERIC_LEXICAL_FORM_NOT_SUPPORTED"
+    ]
+  },
+  {
+    "name": "unformatted_literal_1e2",
+    "expected_values": [
+      "49"
+    ],
+    "actual_values": [
+      "49"
+    ],
+    "check_passed": true,
+    "issues": [
+      "DEPRECIATION_SOURCE_NUMERIC_LEXICAL_FORM_NOT_SUPPORTED",
+      "DEPRECIATION_SOURCE_NUMERIC_LEXICAL_FORM_NOT_SUPPORTED"
+    ]
+  },
+  {
+    "name": "direct_xml_fractional_decimal",
+    "expected_values": [
+      "138.5",
+      "49"
+    ],
+    "actual_values": [
+      "138.5",
+      "49"
+    ],
+    "check_passed": true,
+    "issues": []
+  },
+  {
+    "name": "dot_transform_1,380",
+    "expected_values": [
+      "1380",
+      "49"
+    ],
+    "actual_values": [
+      "1380",
+      "49"
+    ],
+    "check_passed": true,
+    "issues": []
+  },
+  {
+    "name": "dot_transform_1,380.5",
+    "expected_values": [
+      "1380.5",
+      "49"
+    ],
+    "actual_values": [
+      "1380.5",
+      "49"
+    ],
+    "check_passed": true,
+    "issues": []
+  },
+  {
+    "name": "actual_policy_regexes",
+    "policy": {
+      "numeric_inline_namespaces": [
+        "http://www.xbrl.org/2013/inlineXBRL",
+        "http://www.xbrl.org/2008/inlineXBRL"
+      ],
+      "dot_decimal_supported_lexical_pattern": "[+-]?(?:(?:[0-9]+|[0-9]{1,3}(?:,[0-9]{3})+)(?:\\.[0-9]*)?|\\.[0-9]+)",
+      "unformatted_decimal_lexical_pattern": "[+-]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)"
+    },
+    "decimal_138_5_matches": true
+  }
+]

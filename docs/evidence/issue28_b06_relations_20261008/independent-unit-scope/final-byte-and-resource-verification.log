@@ -1,0 +1,46 @@
+{
+  "start_utc": "2026-10-07T22:51:15+00:00",
+  "end_utc": "2026-10-07T22:55:14.882642+00:00",
+  "elapsed_seconds": 239.882642,
+  "head": "487b0531d80bb028c2784a5ef5cf4bac42abdfdf",
+  "tracked_diff": "",
+  "initial_final_hashes": {
+    "scripts/vnext/industrial_lease_relation.py": {
+      "initial": "723f979389b84afb4049fd0992272aa9330051459269518e0f5ddd534b276ea7",
+      "final": "723f979389b84afb4049fd0992272aa9330051459269518e0f5ddd534b276ea7"
+    },
+    "tests/vnext/test_industrial_lease_relation.py": {
+      "initial": "ee736d4f0c33c98f44f1e8a0b736a3a1e5871afc16359c68eead673bce0f904c",
+      "final": "ee736d4f0c33c98f44f1e8a0b736a3a1e5871afc16359c68eead673bce0f904c"
+    },
+    "docs/evidence/issue28_b06_relations_20261008/verify_table_unit_scope.py": {
+      "initial": "84c8cd3a54b09484703534f41ba62c300412a3b41ec7fadc9dd1cbc9e2c88780",
+      "final": "84c8cd3a54b09484703534f41ba62c300412a3b41ec7fadc9dd1cbc9e2c88780"
+    }
+  },
+  "tool_calls": {
+    "functions_exec": 10,
+    "exec_command": 18,
+    "clock": 1,
+    "total": 29
+  },
+  "ordinary_messages_including_final": 1,
+  "questions": 0,
+  "new_provider_paid_sec_account_calls": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "files": [
+    "base-versus-patch-controls.log",
+    "conclusion.md",
+    "final-byte-and-resource-verification.log",
+    "independent-unit-controls.log",
+    "initial-byte-verification.log",
+    "saved-currency-control-setup-error.log",
+    "saved-explicit-currency-control.log",
+    "saved-introduction-control.log",
+    "unit-tests.log"
+  ]
+}

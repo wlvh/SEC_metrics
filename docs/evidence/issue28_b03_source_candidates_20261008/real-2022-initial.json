@@ -1,0 +1,76 @@
+{
+  "record_type": "ORDINARY_DEPRECIATION_SOURCE_CANDIDATES",
+  "company_id": "marriott_international",
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2022-12-31",
+    "filingDate": "2023-02-14",
+    "accessionNumber": "0001628280-23-003485",
+    "primaryDocument": "mar-20221231.htm"
+  },
+  "entity": "1048286",
+  "period": {
+    "fiscal_year": 2022,
+    "period_start": "2022-01-01",
+    "period_end": "2022-12-31"
+  },
+  "namespace_policy": {
+    "concept_namespaces": [
+      "http://fasb.org/us-gaap/2022-01-31"
+    ],
+    "dei_namespaces": [
+      "http://xbrl.sec.gov/dei/2022"
+    ]
+  },
+  "candidates": [],
+  "scope_relations": [],
+  "issues": [
+    {
+      "source_kind": "primary",
+      "ordinal": 877,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "primary",
+      "ordinal": 880,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "primary",
+      "ordinal": 916,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "primary",
+      "ordinal": 919,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 877,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 880,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 916,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 919,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    }
+  ],
+  "remaining_scope": [
+    "FULL_APPROVED_DA_COVERAGE_NOT_ESTABLISHED",
+    "REPORTED_INCLUSION_AND_IMPAIRMENT_REQUIRE_CONTENT_CHECK"
+  ],
+  "metric_result_created": false,
+  "definition_complete": false,
+  "source_candidates_id": "sha256:8d3714eea4e00cb14ae88ba09cb176bdb0d56e2b43bbe3489967019875ec1e3c"
+}

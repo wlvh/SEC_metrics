@@ -128,7 +128,9 @@ def rate_scope():
     This does not allocate 10 requests/s separately to each company process.
     """
     from git_workspace import first_symlink_in_path
-    root = Path('/tmp')/('sec-metrics-sec-rate-'+str(os.getuid()))
+    # macOS exposes the system /tmp through /private/tmp. Canonicalize that
+    # system location, while retaining one physical gate per Unix user.
+    root = Path('/tmp').resolve()/('sec-metrics-sec-rate-'+str(os.getuid()))
     need(first_symlink_in_path(path=root) is None, 'LOCAL_SEC_RATE_ALIAS')
     root.mkdir(mode=0o700, exist_ok=True)
     need(root.stat().st_uid == os.getuid(), 'LOCAL_SEC_RATE_OWNER_CHANGED')

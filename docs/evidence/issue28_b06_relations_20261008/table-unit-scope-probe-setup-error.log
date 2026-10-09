@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics/docs/evidence/issue28_b06_relations_20261008/verify_table_unit_scope.py", line 28, in <module>
+    selected = [t for t in structure['tables'] if t['table_id'] == table_id]
+                                                  ~^^^^^^^^^^^^
+KeyError: 'table_id'

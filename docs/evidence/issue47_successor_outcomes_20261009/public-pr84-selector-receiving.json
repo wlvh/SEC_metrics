@@ -1,0 +1,30 @@
+{
+  "parent": "dd8b8909",
+  "public_patch_sha256": "86c8c1e3cee01229454b7b0dfbfcc47fdd36827554daf3ff07797bec02092d34",
+  "actual_workflow_command": "python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest",
+  "selected_classes": [
+    "tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest",
+    "tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks",
+    "tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest",
+    "tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest",
+    "tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest",
+    "tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest",
+    "tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest",
+    "tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest",
+    "tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest",
+    "tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest",
+    "tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest"
+  ],
+  "tests": 46,
+  "failures": 0,
+  "skips": 0,
+  "five_new_methods_loaded_and_executed": true,
+  "runner_function_and_class_AST_unchanged": true,
+  "two_file_SHAs_match_public_static_check": true,
+  "no_business_rerun": true,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

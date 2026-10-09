@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "entries": [
+    {
+      "name": "first",
+      "enter_monotonic": 1967066.5214585,
+      "gate": "/private/tmp/rate-review-process-vqzr4f9o/real/sec-metrics-sec-rate-501"
+    },
+    {
+      "name": "second",
+      "enter_monotonic": 1967067.790318791,
+      "gate": "/private/tmp/rate-review-process-vqzr4f9o/real/sec-metrics-sec-rate-501"
+    }
+  ],
+  "gap_seconds": 1.2688602909911424,
+  "shared_gate": true,
+  "different_TMPDIR": true,
+  "first_hold_seconds": 1.25,
+  "lock_excludes_second_entry_until_first_yield_finishes": true,
+  "note": "Hold exceeds the 1-second timestamp interval, so timestamp wait alone would not explain exclusion."
+}

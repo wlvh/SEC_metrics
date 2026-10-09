@@ -1,0 +1,18 @@
+{"control": "original_scale_0", "status": "REPORTED_INCLUDED", "additional_debt_amount": "0", "relationships": [{"role": "current_debt", "component": "10", "inclusive": "25", "scale": "0", "column": 1, "span": 1}, {"role": "noncurrent_debt", "component": "20", "inclusive": "50", "scale": "0", "column": 1, "span": 1}]}
+{"control": "valid_million_scale", "status": "REPORTED_INCLUDED", "additional_debt_amount": "0", "relationships": [{"role": "current_debt", "component": "10000000", "inclusive": "25000000", "scale": "6", "column": 1, "span": 1}, {"role": "noncurrent_debt", "component": "20000000", "inclusive": "50000000", "scale": "6", "column": 1, "span": 1}]}
+{"control": "current_lease_equal_inclusive_row", "status": "REPORTED_INCLUDED", "additional_debt_amount": "0", "relationships": [{"role": "current_debt", "component": "25", "inclusive": "25", "scale": "0", "column": 1, "span": 1}, {"role": "noncurrent_debt", "component": "20", "inclusive": "50", "scale": "0", "column": 1, "span": 1}]}
+{"control": "noncurrent_inclusive_50_lease_51_total_200", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "current_column_5_other_column_999_lease_10", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "missing_matching_current_column", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "carrier_span_mismatch", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "duplicate_origin_same_column", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "wrong_parent_unit", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "total_visible_native_amount_conflict", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "carrier_lexical_'25 EUR'", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "carrier_lexical_'25 million'", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "carrier_lexical_'$25'", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "carrier_lexical_'(25)'", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "carrier_lexical_'-25'", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "carrier_lexical_''", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+{"control": "carrier_lexical_'25%'", "status": "UNRESOLVED", "additional_debt_amount": null, "relationships": []}
+independent_checks_passed 17

@@ -1,0 +1,16 @@
+COMMAND: TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools /private/tmp/issue28-company-c02-venv-20261006/bin/python -m unittest discover -s tests/vnext -p test_ordinary_depreciation_sources.py -v
+test_changed_body_url_and_accession_are_rejected (test_ordinary_depreciation_sources.DepreciationSourcesTest.test_changed_body_url_and_accession_are_rejected) ... ok
+test_dimensioned_reports_preserved_without_full_role_or_additive_credit (test_ordinary_depreciation_sources.DepreciationSourcesTest.test_dimensioned_reports_preserved_without_full_role_or_additive_credit) ... ok
+test_missing_xml_candidate_is_not_replaced_by_primary (test_ordinary_depreciation_sources.DepreciationSourcesTest.test_missing_xml_candidate_is_not_replaced_by_primary) ... ok
+test_namespace_policy_explicit_and_official (test_ordinary_depreciation_sources.DepreciationSourcesTest.test_namespace_policy_explicit_and_official) ... ok
+test_non_usd_and_wrong_concept_namespace_do_not_supply_candidates (test_ordinary_depreciation_sources.DepreciationSourcesTest.test_non_usd_and_wrong_concept_namespace_do_not_supply_candidates) ... ok
+test_period_and_entity_changes_are_rejected (test_ordinary_depreciation_sources.DepreciationSourcesTest.test_period_and_entity_changes_are_rejected) ... ok
+test_xml_conflict_is_named_and_not_selected (test_ordinary_depreciation_sources.DepreciationSourcesTest.test_xml_conflict_is_named_and_not_selected) ... ok
+test_xml_element_names_and_inline_names_share_canonical_concept (test_ordinary_depreciation_sources.DepreciationSourcesTest.test_xml_element_names_and_inline_names_share_canonical_concept) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.014s
+
+OK
+
+EXIT: 0

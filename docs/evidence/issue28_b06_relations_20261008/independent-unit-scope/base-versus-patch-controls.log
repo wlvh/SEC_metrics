@@ -1,0 +1,47 @@
+{
+  "base": "48b24178707917d7c475854d53663773901f90d0",
+  "patch": "487b0531d80bb028c2784a5ef5cf4bac42abdfdf",
+  "comparison_uses_exact_base_source_in_memory": true,
+  "cases": [
+    {
+      "name": "explicit_euro_symbol",
+      "base_status": "UNRESOLVED",
+      "patch_status": "REPORTED_INCLUDED",
+      "patch_additional_amount": "0",
+      "primary_sha256": "sha256:fcb3fe52f472840112a7786c03814cb43e8b9128e07c795f14214e1e9d6fd082",
+      "caption": "<caption>Amounts (in €)</caption>"
+    },
+    {
+      "name": "explicit_pound_symbol",
+      "base_status": "UNRESOLVED",
+      "patch_status": "REPORTED_INCLUDED",
+      "patch_additional_amount": "0",
+      "primary_sha256": "sha256:e93369f0b322e8f2c8b2c1db18095c5f4a4e38d12b1470693b4f17003818d640",
+      "caption": "<caption>Amounts (in £)</caption>"
+    },
+    {
+      "name": "explicit_yen_symbol",
+      "base_status": "UNRESOLVED",
+      "patch_status": "REPORTED_INCLUDED",
+      "patch_additional_amount": "0",
+      "primary_sha256": "sha256:057877aceeac10d7ae5ce0caf12092b0878afd87ad83348f772f63a47bdbed2b",
+      "caption": "<caption>Amounts (in ¥)</caption>"
+    },
+    {
+      "name": "euro_business",
+      "base_status": "UNRESOLVED",
+      "patch_status": "REPORTED_INCLUDED",
+      "patch_additional_amount": "0",
+      "primary_sha256": "sha256:0005014919caa2b6ea77bc2ae752fc832ebbdee0fc3db162f93922d8ffc560e0",
+      "caption": ""
+    },
+    {
+      "name": "prior_as_follows_issuance",
+      "base_status": "UNRESOLVED",
+      "patch_status": "UNRESOLVED",
+      "patch_additional_amount": null,
+      "primary_sha256": "sha256:393e0f59035c19e457d447856f46588cdd0c532c793ad2861e14b2d97c1aa013",
+      "caption": "<caption>Carrying amounts (in dollars)</caption>"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+Final source/original verification
+Actual checkpoint: 2026-10-08 13:34:10 UTC
+Returncode: 0
+{
+  "head": "41bb544fc9800ed4e686f49b41338efa9e36cf0e",
+  "tracked_changes": [],
+  "git_status": "?? docs/evidence/issue28_b06_relations_20261008/independent-successor/",
+  "checks": [
+    {
+      "path": "scripts/vnext/ordinary_reported_lease_scope.py",
+      "matches_patch": true,
+      "sha256": "d25a97510f2a68d34e160c76a830c57c319add18b1671a2a7bb9d0632eb2d903"
+    },
+    {
+      "path": "scripts/vnext/ordinary_special_debt_scope.py",
+      "matches_patch": true,
+      "sha256": "9c2bc47b455fd6a6deedfc52fc5f6bc406f35725f5f3f58b90482b78962d50c0"
+    },
+    {
+      "path": "scripts/vnext/industrial_lease_relation.py",
+      "matches_patch": true,
+      "sha256": "a8d00f12ad5341905a048060002aab35d1944ecaf0609e8e25fa48f790f6cde0"
+    },
+    {
+      "path": "scripts/vnext/b06_inclusive_table.py",
+      "matches_patch": true,
+      "sha256": "86737168913971dc62ad11123998dc1d0e538aa58116b4f2928dea55d38d1f57"
+    },
+    {
+      "path": "tests/vnext/test_reported_lease_successor.py",
+      "matches_patch": true,
+      "sha256": "308827d602b0df5edbc564ea89b36e96bc33c83a70cf0c3e015358cfdb58c963"
+    },
+    {
+      "path": "tests/vnext/test_industrial_lease_relation.py",
+      "matches_patch": true,
+      "sha256": "1283a20fdc54d58d1a58aff73f10b378d1b2a769c564256dccbe4b81e7feb999"
+    },
+    {
+      "path": "docs/evidence/issue28_b06_relations_20261008/verify_default_and_persistence.py",
+      "matches_patch": true,
+      "sha256": "33416466395de7e8ae2e7f0a50689e93225edd095ea18959d49c09d0d2726f1a"
+    }
+  ],
+  "originals": [
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+      "sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/35/35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe/f-20251231_htm.xml",
+      "sha256": "35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe",
+      "unchanged": true
+    }
+  ],
+  "new_output_files": [
+    "byte-verification.log",
+    "conclusion.md",
+    "default-and-persistence.log",
+    "small-tests.log",
+    "source-and-case-invariants.log"
+  ]
+}
+

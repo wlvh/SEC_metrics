@@ -1,0 +1,30 @@
+{
+  "tested_parent_sha": "95849b6eb9e4e195afa6bc0202befd3c381927cb",
+  "uncommitted_difference": [
+    "scripts/vnext/ordinary_task_input.py",
+    "tests/vnext/test_ordinary_task_input.py"
+  ],
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+  "results": [
+    {
+      "raw_source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "parsed_input_sha256": "bad4336fabe7d01d6614423901c102a594bad469087a628dacee83662d6073cb",
+      "blocks": 1965,
+      "facts": 1229,
+      "tables": 68,
+      "svg_subtrees": 0,
+      "seconds": 1.7642
+    },
+    {
+      "raw_source_sha256": "2068d81830ea882910ef7043026445bae69f925c094dbb40d030de4afc001151",
+      "parsed_input_sha256": "bad4336fabe7d01d6614423901c102a594bad469087a628dacee83662d6073cb",
+      "blocks": 1965,
+      "facts": 1229,
+      "tables": 68,
+      "svg_subtrees": 0,
+      "seconds": 2.5061
+    }
+  ],
+  "assertion": "SAME_PARSED_D04_INPUT",
+  "business_calls": 0
+}
