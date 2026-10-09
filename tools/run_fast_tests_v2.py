@@ -176,6 +176,8 @@ FAST_TESTS += ('tests.vnext.test_historical_bank_performance_cases.BankSourceRol
 FAST_TESTS += ('tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest',)
 FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest',)
 FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest',)
+FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest',)
+FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest',)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
