@@ -362,7 +362,8 @@ class ContractAggregateTest(unittest.TestCase):
         marker=b'<td><ix:nonFraction contextRef="synthetic" scale="6">-7'
         for style in ('display:none;display:table-cell',
                       'display:none!important;display:table-cell!important',
-                      '/* display:none; */ display:table-cell'):
+                      '/* display:none; */ display:table-cell',
+                      'display:table-cell;/* x;display:none; */'):
             with self.subTest(style=style):
                 extra=('<td colspan="4" style="'+style+'"></td>').encode()
                 self.assertIsNone(self.check((raw.replace(marker,extra+marker),parsed,amounts)))

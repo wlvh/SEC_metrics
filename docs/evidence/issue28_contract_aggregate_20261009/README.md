@@ -59,3 +59,12 @@ duplicate declarations as original cells. Three reported variants are added
 to the existing finite regression. It does not implement CSS precedence or
 prove general CSS rendering. The final original-source triples are rechecked
 in style-fix-saved.json; complete historical B03 credit remains unassigned.
+
+The98930711 style-only increment passes separate limited review:7 tests plus
+21 mechanical probes,28 tools/3messages. The three exact old variants fail on
+base and refuse on patch. Reviewer noted the author's original comment sample
+did not reproduce that specific base defect; the exact independently tested
+comment style is now added to the existing regression. Seven tests pass again
+in actual-comment-regression.log. Production bytes remain98930711; original
+three-source proofs and26-test module remain applicable without rerunning.
+Original NEEDS_FIX and all intermediate failed logs remain historical.
