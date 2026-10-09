@@ -69,3 +69,38 @@ compatibility reported by#47 is a separate necessary shared fix.
 New SEC/provider/paid0/0/0. Original budget/failed opportunities/history/Run/
 Result/call identities and active are unchanged. Candidate scope/read only,
 not formal adoption, Ready, merge, deployment or full390 acceptance.
+
+## Limited review and consumed-rule repair
+
+The original d8c36ca limited review is CHANGES_REQUESTED: source construction
+and interpretation dependencies were missing from D04 update configuration.
+The review is retained in independent-review/conclusion.md with its exact
+scope (71 short tests and 11 finite replay controls; no company long rerun).
+The original head's 12 remote checks reached SUCCESS; this does not close the
+new dependency counterexample.
+
+The repair names the actual annual/text/native-unit preparation, reference
+restoration, saved-response validation and directly consumed policies in the
+existing D04-only configuration. It does not build an authority/closure
+framework or change old requests, response contracts, results or calls.
+Capacity review policy files used only by B13 are not added just because D04
+imports its representation helpers; regulatory assertion policies are likewise
+not used by D04's quotation helper. Source and interpretation code shared with
+those modules is included because D04 executes that code.
+
+The new controller regression first fails on four previously missing paths,
+then passes five finite source/rule/interpretation cases: first WITHHELD,
+changed consumed rule processes once and keeps the old record, unchanged next
+run returns PREVIOUS_INPUT_WITHHELD with a forbidden producer. Actual
+_configuration/run_once execute; source observations and saved records are
+explicit small substitutes, not model or company evidence. The focused process
+takes .430s. Corrected four-module command runs 72 tests in 7.036s, zero skips,
+failures or errors. An initial command used a nonexistent SDK test module; its
+failure log is retained separately, not counted as passing.
+
+These tests ran on d8c36ca plus the two named uncommitted source/test diffs;
+dependency-regression-timing.json records their exact hashes/code root. The
+already verified real company aggregation/CLI and original-byte checks are
+reused for unchanged behavior. They are not a claim that a pre-repair saved
+configuration equals the new one: the repaired configuration legitimately
+requires one new local revalidation, without purchasing a model call.
