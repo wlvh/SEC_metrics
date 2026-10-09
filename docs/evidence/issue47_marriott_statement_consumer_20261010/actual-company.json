@@ -1,0 +1,66 @@
+{
+  "code_commit": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+  "actual_main": "f6ef7886",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/liquidity-marriott-20261009/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-early-revenue-8z08j3ov",
+  "operations": [
+    {
+      "name": "first-three-missing",
+      "seconds": 14.890578124905005,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "repeat-forbid-factory",
+      "seconds": 1.5911832500714809,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "independent-results",
+      "seconds": 0.5196769998874515,
+      "exit_code": 0,
+      "status": null
+    }
+  ],
+  "comparisons": [
+    {
+      "metric_id": "B01",
+      "fiscal_year": "2021",
+      "value": "13857000000",
+      "unit": "USD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "result_id": "sha256:8334becd198826e02fb2681363e1877c9a77be504c9012f4c5d97bae9d7e8856"
+    },
+    {
+      "metric_id": "B01",
+      "fiscal_year": "2022",
+      "value": "20773000000",
+      "unit": "USD",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:466d49394dc2f5b51ce63fde2de373f8d78d3ffef91acd1aa243d326b27f04de"
+    },
+    {
+      "metric_id": "B01",
+      "fiscal_year": "2023",
+      "value": "23713000000",
+      "unit": "USD",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:7d0aeb48394b6fde5e28865ffc7cd3b337e81f5f51d53ed9f93370afab8b4a96"
+    }
+  ],
+  "old_balance_files": 80,
+  "all_result_pointer_files": 107,
+  "old_files_preserved": true,
+  "repeat_factory_calls": 0,
+  "two_year_b01_hotel_and_previous_b04_not_repeated": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
