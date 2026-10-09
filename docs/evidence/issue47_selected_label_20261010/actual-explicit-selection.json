@@ -1,0 +1,32 @@
+{
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "preceding_fiscal_search_calls": 0,
+  "selection_source_rebuild_preserved": true,
+  "operations": [
+    {
+      "name": "selected-valid",
+      "seconds": 2.3224106249399483,
+      "result_id": "sha256:8929038392f9d4b4016de922ef06cc76c017681219668af81f35e08b7e3a11de",
+      "value": "0.4990979288446272641985999856",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31"
+    },
+    {
+      "name": "wrong-accession",
+      "seconds": 0.09526945906691253,
+      "error_type": "PeriodSelectionError",
+      "reason": "ORDINARY_PERIOD_SELECTION_CHANGED"
+    },
+    {
+      "name": "wrong-requested-year",
+      "seconds": 1.4437483749352396,
+      "error_type": "StatementCaseError",
+      "reason": "HISTORICAL_STATEMENT_REQUESTED_FISCAL_YEAR_CHANGED"
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
