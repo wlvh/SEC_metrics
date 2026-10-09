@@ -1,10 +1,10 @@
 # 本地运行一家公司的当前财年或历史财年范围
 
-历史范围的正式使用说明见[历史公司使用指南](historical_company_usage.md)。截至2026-10-09，main仍为8588ccbb，历史范围接线属于PR71候选，依赖PR67公共保存来源入口；这里的历史命令不能直接套用到main。首批支持保存来源的B10/B11，不自动发现或补齐历史材料。原PR52和旧任务入口保留。
+历史范围的正式使用说明见[历史公司使用指南](historical_company_usage.md)。截至2026-10-09，main已接PR67/71，保存来源酒店B10/B11历史命令可用；本分支额外接收的B01/B02/B04/B05仍是PR75候选。历史模式不自动发现或补齐材料。原PR52和旧任务入口保留。
 
 公司入口已经由PR55/PR56基础及PR57交付到main；代码交付与业务结果接受是不同状态。来源与计算仍为独立阶段，`run`只负责顺序调度；没有OpenShift部署、正式发布、active切换或新模型调用。旧分阶段入口及运行树仍可读取旧Run。
 
-以下 `run --source-root` 属于 PR67 候选，尚未进入 main；main8588没有这个参数。候选的普通记录路径不安装旧Requirement/trust树：
+以下 `run --source-root` 已随PR67进入main；普通记录路径不安装旧Requirement/trust树：
 
 ```bash
 python /path/to/SEC_metrics/tools/vnext_company.py run \
@@ -16,7 +16,7 @@ python /path/to/SEC_metrics/tools/vnext_company.py results \
   --output-root /writable/daily-output
 ```
 
-这条路径仅消费已经保存的来源，不进行在线发现、获取或AI调用。程序根/来源根共享读取；B01/B02/B03、CompanyFacts、A01/A02/B12及B10/B11的规则/Spec/trait由程序根提供，来源包不必携带计算catalog或代码。状态及输出分开，B10/B11等来源派生材料在公司共享输入目录只保存一次；状态固定公司和运行时来源位置。每项结果保存自己的记录、出处、程序版本和失败，重复输入先比较后直接读取；来源失败显示本次失败及旧结果的原期间，不冒充新财报成功。同次运行复用相同原件的不可变native解析，仍分别核对主体/期间/单位；正常CSV不重放计算或复制全部来源/程序；`results`经共用公司结果视图只读结果，不检查在线新来源；后一次仅选部分指标时，其余已保存当前结果仍可读，并标明未在该次请求中。旧native任务保留原入口，不原地改格式。公共更新器可由既有历史消费者显式传fiscal_year/case_factory，并各自保存期间指针；本地当期CLI不据此自动展开历史范围。已知错误按确切Result身份扣留，旧E01计数不当作新并购口径结果，缺少AI处理不造答案。
+这条路径仅消费已经保存的来源，不进行在线发现、获取或AI调用。程序根/来源根共享读取；B01/B02/B03、CompanyFacts、A01/A02/B12及B10/B11的规则/Spec/trait由程序根提供，来源包不必携带计算catalog或代码。状态及输出分开，B10/B11等来源派生材料在公司共享输入目录只保存一次；状态固定公司和运行时来源位置。每项结果保存自己的记录、出处、程序版本和失败，重复输入先比较后直接读取；来源失败显示本次失败及旧结果的原期间，不冒充新财报成功。同次运行复用相同原件的不可变native解析，仍分别核对主体/期间/单位；正常CSV不重放计算或复制全部来源/程序；`results`经共用公司结果视图只读结果，不检查在线新来源；后一次仅选部分指标时，其余已保存当前结果仍可读，并标明未在该次请求中。旧native任务保留原入口，不原地改格式。公共更新器由历史消费者显式传期间和各指标的原计算函数，分别保存期间指针。本历史候选还支持同一`run --period fiscal-years --fiscal-year-start <首年> --fiscal-year-end <末年>`入口：已保存、未修订、连续主体的B01/B02/B04/B05和B10/B11，最多五个财年；来源发现/补齐尚未接入历史模式。实际分支组合、五年先导结果、复跑与CSV命令见[历史四指标公司接收记录](evidence/issue47_statement_pilot_20261009/README.md)，尚未入main。已知错误按确切Result身份扣留，旧E01计数不当作新并购口径结果，缺少AI处理不造答案。
 
 已完成的稳定扣留与成功都能复用未变输入：`completed-check.json`记录最近完成结论，`current-result.json`仅保留最近成功。复用扣留仍为`PREVIOUS_INPUT_WITHHELD`并显示原因，不计算、不新增结果目录；旧成功只能按原期间作为历史读取。来源/相关配置变化重新处理；中断和程序异常不当成稳定结论。
 
@@ -99,6 +99,26 @@ Marriott真实空来源首跑和同目录复跑已完成：累计31次真实SEC 
 
 ## 首批接收回修：默认空任务
 
-PR67修前29c9c9e在normal_source_authority旧绑定处、HTTP前失败；实际main相同回复/公司/B01/B02成功。本轮保持不带source-root的原用户命令与main支持范围，新默认native程序从可取得的固定main8588程序/规则安装，程序内没有SEC原件，真实来源仍需原适用许可；原已存在任务优先保留原program_root。当前轻量source-root生产者不变，没有引入PR83。该保留native路径是过渡兼容，不表示新轻量在线39项或业务接受已经完成。
+PR67修前29c9c9e在normal_source_authority旧绑定处、HTTP前失败；实际main相同回复/公司/B01/B02成功。本轮保持不带source-root的原用户命令与main支持范围，新默认native程序从可取得的固定main8588程序/规则安装，程序内没有SEC原件，真实来源仍需原适用许可；原已存在任务优先保留原program_root。PR67本批的source-root生产者保持，不将本PR83的轻量在线后继视为PR67前置。该保留native路径是过渡兼容，不表示新轻量在线39项或业务接受已经完成。
 
 需要含main8588及旧规则Git对象的代码仓库；审查的HTTP录制使用Python3.12/B01/B02，所有实际子进程运行且网络禁止。准确三入口、只读原件位置、全新目录命令与成对证据见 [主要回修记录](evidence/issue28_company_records_20261007/default-online-review-20261009/README.md)。新轻量记录state-root是work-dir；旧native才使用company-state及原runtime/trust，不混用参数。
+
+## 轻量在线接续候选：有限指标从空来源完成
+
+这是 PR67 之后的代码候选，尚未进入 main。`run --call-context` 将来源发现/获取与普通记录计算/CSV串接；首批只支持 B01/B02，不调用旧计算，不新建真实额度或恢复失败机会。当前验证替换外部 HTTP 返回，使用真实保存 SEC 原件，发现、落盘、解析、计算、保存和导出均走实际程序；不代表新的真实 SEC 验收或全部39指标完成。
+
+```bash
+python /path/to/online-candidate/tools/vnext_company.py run \
+  --company marriott_international --period latest-complete-fy \
+  --work-dir /data/marriott-task --output-dir /data/marriott-output \
+  --call-context /data/existing-sec-call-context.json \
+  --metric B01 --metric B02 --max-sec-requests 20
+```
+
+调用上下文只说明本次适用的既有账本/用途/公司/指标、原调用上限、原执行模式和运行版本；不能用这个文件给自己新增许可。真实运行须先核原适用授权，本文没有为当前候选授予新用途。原账本的初始化锚点、历史行、停止和计数继续生效，不能通过新任务目录拆分/重置额度；未知远端结果或落盘中断保留占用并停止，不自动重发。`--sec-allowance`不覆盖已有账本上限。
+
+来源保存在任务 `sources`，普通计算状态在 `company-state`，输出在指定输出目录；用户不手工准备 FULL_SOURCE 或选择内部程序树。独立采集用同版 `acquire --company ... --work-dir ... --call-context ... --metric B01 --metric B02 --max-sec-requests 20`；单独计算可用同版保存来源 `run --source-root <任务/sources>` 指向另一个普通状态目录。日常读取用 `results --state-root <任务/company-state> --company ...`，不重放计算。已有原生任务继续原固定入口，不用此候选覆盖旧状态。
+
+同一原账本已保存的不可变原件，不能因为换任务目录就再取一次。调用上下文可固定既有完整 SEC `source_root`，直接复用其原请求行/原件/身份，不能裁账本或拼不同历史；未给原来源位置但账本已有同URL成功记录时，新入口在申领前返回 `ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED`。元数据刷新单独明确计数。该配置是持久运行配置，不是每年手填来源答案；既有来源根必须在代码和状态/输出根之外。
+
+录制上下文必须指定 `recorded_http_root`；该入口只从保存的HTTP原件读取回复，走原客户端的落盘/日志路径，不打开网络。LIVE上下文拒绝这个录制输入字段，使用正常HTTPS及原真实计数。录制模式不是一个可以免费访问SEC的通道；缺少回复不降级到真实网络。

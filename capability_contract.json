@@ -406,7 +406,7 @@
         "anchor_id": "CAPABILITY.local_company_run",
         "type": "capability",
         "status": "active",
-        "statement": "Draft本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际空源29+2为录制，非真实SEC验收。已有判断按独立输入及原版本认证/来源等价复用，无新模型调用权限。Marriott真实首次、复跑和局部重入已在获准额度内完成（docs/evidence/issue54_company/live2）；不授Merge/部署/发布/active。",
+        "statement": "保留原生版本的Draft本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际空源29+2为录制，非真实SEC验收。已有判断按独立输入及原版本认证/来源等价复用，无新模型调用权限。Marriott真实首次、复跑和局部重入已在获准额度内完成（docs/evidence/issue54_company/live2）；不授Merge/部署/发布/active。 本候选另有有限run/acquire --call-context，接原计数上下文到普通B01/B02计算和CSV；只替换外部HTTP的原件接缝已验证，新轻量在线39项及新AI未接入，不继承原生流程的全部新任务信用。整体状态从run_summary.json读，计算阶段记录单独说明。",
         "audience": [
           "business_user",
           "operator",
@@ -416,6 +416,19 @@
         "test_anchor": "tests/vnext/test_company_local.py::CompanyLocalTest",
         "test_status": "automated_partial_scenario",
         "since": "2026-10-03"
+      },
+      {
+        "anchor_id": "CAPABILITY.inline_amendment_source_layout",
+        "type": "capability",
+        "status": "active",
+        "statement": "显式instant_balance_amendment_v2的inline-paragraphs-v2来源API将空行内排版连接为真实可见段落，保持原始块/字节引用、主体/期间、隐藏与引用限制，区分条件性与已发生财务更正；blocks-v1默认及原对象保持。只产生瞬时余额来源属性检查，不产生公司结果、年度连续性、获取或生产信用。消费者须显式接入并验证自身公司出口。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_instant_amendment_paragraph_api.py::InstantParagraphApiTest.test_quoted_word_fragment_cannot_erase_conditional_review",
+        "test_status": "automated_recorded",
+        "since": "2026-10-09"
       }
     ],
     "capability_boundaries": [

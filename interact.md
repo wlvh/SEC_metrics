@@ -1,6 +1,8 @@
 # SEC_metrics 用户可观察行为
 
-本地入口 `python tools/vnext_company.py run --company <已配置公司> --period latest-complete-fy --work-dir <任务目录> --output-dir <导出目录>` 自动调度来源与公司计算，输出独立运行目录下的 `metrics_matrix.csv`、`metric_evidence.csv`、`run_summary.json`。相对路径安全转绝对路径，任务目录须在源码树之外；用户不逐次选择运行树。默认请求配置中全部39项，未实现的D03、未提供的完整判断及失败分别列状态；`--metric`调试子集仍保留39项状态，未请求项不冒充完成。来源部分或指标待处理时为 `FLOW_COMPLETED_WITH_LIMITATIONS` / exit 2，完整阶段失败为 `FLOW_INCOMPLETE`；流程结束不授业务正确性信用。真实SEC需本任务许可，默认单次及累积最多120、零重试/每用户本入口共享1次每秒；旧#28/#47额度不借用。已有来源按内容复用，新判断没有本入口调用授权。详见 [本地运行说明](docs/company_local_run.md)。
+本候选的用户入口有三种明确路径：`run --source-root`只处理保存来源；新增`run --call-context`以原存在且适用的计数上下文，从空来源完成当期B01/B02发现、落盘、普通计算和CSV/证据；无这两个参数的原生安装仍是保留实现，不表示新轻量在线39项已经接通。当前验证只替换外部HTTP，真实调用需核原用途许可。整体在线状态/计数从`run_summary.json`读取，`company-results.json`和`latest-execution.json`描述计算阶段。命令与限制见 `docs/company_local_run.md`。
+
+保留原生版本入口（无source-root/call-context）`python tools/vnext_company.py run --company <已配置公司> --period latest-complete-fy --work-dir <任务目录> --output-dir <导出目录>` 自动调度来源与公司计算，输出独立运行目录下的 `metrics_matrix.csv`、`metric_evidence.csv`、`run_summary.json`。相对路径安全转绝对路径，任务目录须在源码树之外；用户不逐次选择运行树。默认请求配置中全部39项，未实现的D03、未提供的完整判断及失败分别列状态；`--metric`调试子集仍保留39项状态，未请求项不冒充完成。来源部分或指标待处理时为 `FLOW_COMPLETED_WITH_LIMITATIONS` / exit 2，完整阶段失败为 `FLOW_INCOMPLETE`；流程结束不授业务正确性信用。真实SEC需本任务许可，默认单次及累积最多120、零重试/每用户本入口共享1次每秒；旧#28/#47额度不借用。已有来源按内容复用，新判断没有本入口调用授权。详见 [本地运行说明](docs/company_local_run.md)。
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 
 公司来源包可以在未生成AI判断或Result时交付。`tools/vnext_company.py`在显式独立路径导入、计算和导出，每次只处理所选公司；导入失败明确记录，旧结果不冒充新来源完成。B13/D04无既有判断返回需处理输入状态。详见 `docs/company_compute_boundary.md` 及其实际覆盖限制。
@@ -69,6 +71,9 @@ Marriott recorded候选沿既有审核链产生；其中Result的 `PUBLISHED` �
 exact-head 激活与独立的一次调用批准，不由此入口授予。
 <!-- capability-anchor: CAPABILITY.saved_annual_input_candidate -->
 
+显式来源API `vnext.instant_balance_amendment_v2.inspect_instant_balance_amendment(..., note_layout='inline-paragraphs-v2')` 在原主体/期间与Part III规则内按可见段落处理行内拆分，保留原始块/字节引用、隐藏文字和引用限制。默认 `blocks-v1` 及历史对象不变；这里只验证瞬时余额输入的来源属性，不生成指标、公司CSV或年度连续性结论。消费者须显式选择并声明amendment_note_layout、annual_amendment_scope_v2、instant_balance_amendment_v2及实际旧帮助函数的处理依赖；公司接入仍需本路线验证。
+<!-- capability-anchor: CAPABILITY.inline_amendment_source_layout -->
+
 开发者可用 `tools/vnext_annual_candidate.py plan` 生成未授权的普通 B10 计划。
 计划给出真实来源、期间、完整请求哈希/大小/估算、代码身份及外部隔离目录；
 它不查询 GitHub、不调用 SEC/provider、不签发许可。执行需要分别批准新
@@ -81,6 +86,8 @@ usage 缺失、矛盾、输入超200000或内容失败均停止，无额外请�
 
 保存来源公司 `run --source-root` 输出普通CSV/出处及逐项状态，计算和读取共享固定来源/程序根，状态另写。输入未变复用结果；当前来源检查失败时，旧值只显示原期间及PREVIOUS_RESULT。确切已知错误清空数值并显示WITHHELD_KNOWN_DEFECT。`results`读取新普通记录不运行更新；旧native任务仍明确要求原trust/runtime。保存来源读取不声称在线发现或业务正式接受。
 <!-- capability-anchor: CAPABILITY.current_saved_company_run -->
+
+显式已选年度的计算调用可传`case_factories`和`processing_files_by_metric`，让不同已支持指标共用同一公司入口。未提供映射时保持原单函数行为；它不开放新指标或真实模型调用，混合历史业务结果仍须实际验证。
 
 B03来源数值标签或未声明的数字写法不受支持时，结果仍显示具名WITHHELD及对应原件事实原因；有效的其它来源事实保留，不把缺值改为0。正常金额、期间、单位和既有公式不变。
 

@@ -1,0 +1,16 @@
+{"case": "text_oracle_0", "expected": "financial statements", "html": "<div>finan<div style=\"display:inline\">cial statements</div></div>", "source_blocks_retained": true, "text": "financial statements"}
+{"case": "text_oracle_1", "expected": "financial statements", "html": "<div>financial <div style=\"display:inline\">statements</div></div>", "source_blocks_retained": true, "text": "financial statements"}
+{"case": "text_oracle_2", "expected": "financial statements", "html": "<div>financial<div style=\"display:inline\"> statements</div></div>", "source_blocks_retained": true, "text": "financial statements"}
+{"case": "text_oracle_3", "expected": "financial statements", "html": "<div>financial\t\n<div style=\"display:inline\">statements</div></div>", "source_blocks_retained": true, "text": "financial statements"}
+{"case": "text_oracle_4", "expected": "financial statements", "html": "<div>financial&nbsp;<div style=\"display:inline\">statements</div></div>", "source_blocks_retained": true, "text": "financial statements"}
+{"case": "text_oracle_5", "expected": "financial statements", "html": "<div>finan<!-- comment --><div style=\"display:inline\">cial statements</div></div>", "source_blocks_retained": true, "text": "financial statements"}
+{"case": "text_oracle_6", "expected": "financial statements", "html": "<div>finan<span hidden>no visible space</span>cial statements</div>", "source_blocks_retained": true, "text": "financial statements"}
+{"case": "text_oracle_7", "expected": "financialstatements", "html": "<div>financial<span style=\"display:none\">not a space</span>statements</div>", "source_blocks_retained": true, "text": "financialstatements"}
+{"case": "text_oracle_8", "expected": "“例” financial statements", "html": "<div>“例” finan<div style=\"display:inline\">cial statements</div></div>", "source_blocks_retained": true, "text": "“例” financial statements"}
+{"case": "conditional_plain", "conditional_count": 1, "decision": "INPUT_PROPERTY_PROVEN", "issues": [], "synthetic_in_memory": true}
+{"case": "conditional_word_cut", "conditional_count": 1, "decision": "INPUT_PROPERTY_PROVEN", "issues": [], "synthetic_in_memory": true}
+{"case": "conditional_phrase_split", "conditional_count": 1, "decision": "INPUT_PROPERTY_PROVEN", "issues": [], "synthetic_in_memory": true}
+{"case": "conditional_hidden_word", "conditional_count": 1, "decision": "INPUT_PROPERTY_PROVEN", "issues": [], "synthetic_in_memory": true}
+Traceback (most recent call last):
+  File "<stdin>", line 48, in <module>
+AssertionError: ('quoted_conditional_fragment', [])
