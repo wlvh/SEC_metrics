@@ -77,3 +77,11 @@ a separate Python process results.120s preserves original result files. The
 unrelated recorded source-discovery error remains visible/exit2, while NIM's
 selected sources/result stay ready. final-company-validation.json records the
 actual commit, roots and reports. No long ten-company or provider execution.
+
+Current head37bef company job37985882099/114007629778 cancelled after
+five-minute job budget: base saved-source step181s, historical3s, added NIM96s
+all pass, then old SEC-compat step is cancelled. This is not a NIM assertion
+failure or unknown source result. The same NIM module is now a separate
+five-minute job in the existing workflow; all original company modules remain
+in their original job. No timeout increase, skip, weakened assertion or rerun
+of passed company material locally. Remote new head terminal is separate.
