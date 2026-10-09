@@ -78,3 +78,7 @@ python3 tools/vnext_company.py results --company salesforce \
 公共c3ee8c84已原样接入561482f9：74/abb的null修复经限定独审12例+27有限反例通过，原79ff P1保留；范围、未覆盖及一次越限定GitHub只读请求如实在公共nullable-review/conclusion.md，不冒充全公司/全历史审阅。独审另发现两个旧selector重复导致真实runner开跑前FAST_TEST_SUCCESSOR_SELECTOR_CONFLICT，公共只删第二条相同声明。
 
 本方既有runner实际定向执行两事件模块+reporter纯类22例/总1.464s全部rc0，173个fast及99个source共272登记全唯一，四函数/类AST同5ee，源/计算代码不变；dedup-receiving.json为消费者执行。初核对脚本把已含继承项的successor FAST列表再次接inherited而错误断言，修为实际runner使用FAST+SOURCE，不改生产或为重复字段开新测试平台。59组合/所有实际CLI和财报不重跑，5ee十项CI终态保持为旧版本，新head另核。有限组件可审查、接收决定及用户合并权限仍各自独立。
+
+## 2026-10-10：实际历史事件出口接收边界
+
+用户要求公共CIK修复同时核实际事件出口。固定51bfa32d纯渲染Param FY21/C01原Result(value1)、Trace(entity/accession为合法null)、25个完整813828事件hdr/primary/submissions引用时，公共renderer拒ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN。原事件case不携带annual primary引用；B12的null兼容通过不能代替这一类完整event-scope接收。historical-events-reporter-boundary.json/log保原字段/准确失败，已给#28公共作者。没有重算事件、GET、改Trace/来源、覆盖旧state或扩大B12结论。原20位计划首位即止，其他未验证位置不说通过。修后沿同一个公共renderer定向纯保存/冷读，原值/证据字节保留。
