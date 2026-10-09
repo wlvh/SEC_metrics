@@ -1,6 +1,12 @@
 # SEC_metrics 架构说明
 
-本候选的用户入口有三种明确路径：`run --source-root`只处理保存来源；新增`run --call-context`以原存在且适用的计数上下文，从空来源完成当期B01/B02发现、落盘、普通计算和CSV/证据；无这两个参数的原生安装仍是保留实现，不表示新轻量在线39项已经接通。当前验证只替换外部HTTP，真实调用需核原用途许可。整体在线状态/计数从`run_summary.json`读取，`company-results.json`和`latest-execution.json`描述计算阶段。命令与限制见 `docs/company_local_run.md`。
+## 公司入口的当前交付边界
+
+#28维护公共 runtime/CLI 与当期集成，#47维护历史消费者。已核 main `73ead3b4` 包含 PR67 普通记录、PR83 有限在线续接及 PR71/75/76 历史消费者；实际支持范围、输入、调用与旧任务命令见 [公司运行](docs/company_local_run.md)。代码交付、运行成功和业务接受分别判断。
+
+新普通记录按 [受信任内部工具决定](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006)简化；下述 native/Requirement/信任/封存章节仅说明旧固定版本和旧任务。来源与计算分离、公司/期间、引用、计数、原子写入、必要锁和恢复仍适用。
+
+当前 main 的用户入口有三种明确路径：`run --source-root`只处理保存来源；新增`run --call-context`以原存在且适用的计数上下文，从空来源完成当期B01/B02发现、落盘、普通计算和CSV/证据；无这两个参数的原生安装仍是保留实现，不表示新轻量在线39项已经接通。当前验证只替换外部HTTP，真实调用需核原用途许可。整体在线状态/计数从`run_summary.json`读取，`company-results.json`和`latest-execution.json`描述计算阶段。命令与限制见 `docs/company_local_run.md`。
 
 保留原生版本（不带source-root/call-context）的 `run` 薄编排见 `docs/company_local_run.md`：固定程序自动安装，独立子进程依次执行现有 SEC 发现/捕获、公司交接/安装、计算和原生冷出口。新任务使用仅登记/规则/空账本的 `issue_54_v4` 固定树；原获取及计算模块只在该新安装树做必要分派，不改旧执行字节、来源历史或额度。来源 journal 移至独立可写 trust，计算仍禁网和拒绝采集现场读取；原 LIVE 判断和其原 SEC 版本由各自运行树独立认证。工作目录固定公司、累积上限和程序版本，重复运行不重置；输出按本次运行保留，失败仍可原生读取旧结果并明确本次状态。
 <!-- capability-anchor: CAPABILITY.local_company_run -->

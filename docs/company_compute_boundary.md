@@ -1,8 +1,10 @@
 # 公司级来源交接与独立计算
 
-**状态：Draft 开发接口；实际覆盖见证据索引。** 对应 `COMPANY-SEPARATION-v2.1-20261002`。当前接口不授生产、active 切换或部署权限。
+**版本：PR57 已交付 main 的原生交接接口；下列安装/信任命令仅适用该固定版本及保留的原生任务。** 对应历史 `COMPANY-SEPARATION-v2.1-20261002`；代码交付不等于业务接受、部署或发布。
 
-任务范围、连续执行委托、接口责任和唯一当前队列见 [Issue #54](https://github.com/wlvh/SEC_metrics/issues/54)。本页用于承接最终的稳定使用说明，不复制 Issue 进度或建立另一份待办。
+main 73ead3b4已接收PR67的保存来源普通记录、默认原生过渡兼容以及PR83的有限在线B01/B02。普通路径不恢复本页旧固定版本的独立信任/递归权限链；本页原PR57事务细节只适用于其保存任务。版本对应命令见 [公司运行](company_local_run.md)。来源/计算分离、原件与引用、公司/期间、调用计数、原子写入、锁及恢复继续保留。
+
+当前公共及当期集成、唯一队列见 [Issue #28](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification)，历史消费者由 [#47](https://github.com/wlvh/SEC_metrics/issues/47#history-simplification-20261006)维护。[#54](https://github.com/wlvh/SEC_metrics/issues/54)仅保留已交付来源和证据。本页用于承接最终的稳定使用说明，不复制 Issue 进度或建立另一份待办。
 
 ## 目标边界
 
@@ -12,13 +14,13 @@
 
 ## 与已有能力的关系
 
-[Issue #28](https://github.com/wlvh/SEC_metrics/issues/28) 保留普通指标、正常更新、统一生产与旧路径退出责任；[Issue #47](https://github.com/wlvh/SEC_metrics/issues/47) 保留五年历史期间、依赖和业务验收责任。#54 负责两阶段边界、公司运行和集成验证，不复制业务内核，不重建正式发布、选版或认证平台。
+[Issue #28](https://github.com/wlvh/SEC_metrics/issues/28) 保留普通指标、正常更新、统一生产与旧路径退出责任；[Issue #47](https://github.com/wlvh/SEC_metrics/issues/47) 保留五年历史期间、依赖和业务验收责任。#54/PR57已交付两阶段边界；后续公共接口由#28维护并适配，历史消费者由#47验证，不等待原#54执行者。
 
 首个内网平台为 OpenShift。镜像、任务、卷、网络、脚本及内网 AI 接线留给下一 Issue；本期没有集群部署或 OpenShift 验收。新增真实 SEC/provider/paid 调用为 0/0/0。
 
-## 使用与证据
+## 保留原生版本的使用与证据
 
-日常本地使用优先走 [单命令 `run` 与独立 `acquire`](company_local_run.md)，由程序管理以下内部步骤。本文分阶段命令继续用于两个环境分别调度、诊断和既有来源恢复；新任务的空来源路径与保存混合来源恢复分别说明，不能相互充当验收。
+main 固定原生版本使用 [单命令 `run` 与独立 `acquire`](company_local_run.md)；PR67保存来源路径使用该页对应示例；默认新任务自动安装固定main8588原生程序。不要把保存来源记录与本文保留的安装/trust参数混用。本文分阶段命令继续用于两个环境分别调度、诊断和既有来源恢复；新任务的空来源路径与保存混合来源恢复分别说明，不能相互充当验收。
 
 `tools/vnext_company.py` 提供 `export`、`install-runtime`、`install`、`compute`、`results`、`export-results`、`export-processing`。所有路径必须显式传入、绝对且无 symlink，输出不得覆盖程序或 active 工作区。下面的 `/srv/sec-metrics` 是部署方选择的示例，不要求该目录、个人 HOME、root 或特权功能。
 
@@ -114,7 +116,7 @@ python3 "$PROGRAM/tools/vnext_company.py" export-results --state-root "$STATE" \
 
 <!-- capability-anchor: CAPABILITY.company_saved_processing_exact_source -->
 
-## 保存处理输入的实际接口与限制
+## 保留原生版本：保存处理输入的接口与限制
 
 #28 原接口为 `capacity_assessment_input.load_registered_input(data_root, source, requirement, mode, input_record_id)`；`source` 必须由同版原工厂重建并保持原 source_id/请求集合，登记记录不能改签成新输入。早期只读探针核对合法旧 D04 录制材料、原 V14 规则及固定 tokenizer 0.22.2 的6个请求，当时未创建 Result。收口探针已由下述公司入口生成原生 Run 和公司行；全程未调用模型。
 

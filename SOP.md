@@ -1,6 +1,8 @@
 # SEC_metrics 标准操作流程导航
 
-PR32 的 R4 标签修复使用 `issue_28_v3` 和独立的 `docs/r4_v3/qualified_cases`。
+当前公司入口先读 [公司运行](docs/company_local_run.md)，工程以 [#28 简化队列](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification)为准；旧发布/封存流程用于对应原版本，不是新普通记录的开发前置。
+
+历史 PR32 的 R4 标签修复使用 `issue_28_v3` 和独立的 `docs/r4_v3/qualified_cases`。
 正常 controller→freeze→独立 replay 的定向回归见 TESTING.md。
 产品规则批准不代替 exact-head transition activation 或新 live grant。
 
@@ -69,7 +71,7 @@ effective D-36 禁用仓库金额预算执法，花费权威是 `EXTERNAL_API_AC
 
 Fresh stability必须按Occupancy 1 → RevPAR 1 → Occupancy 2 → RevPAR 2 → Occupancy 3 → RevPAR 3推进；每个ordinal的两个task均FROZEN前不得进入下一ordinal。相同task的三轮provider request bytes可以相同，但每个qualification task plan使用独立plan-owned WB-3 namespace并必须产生新的provider execution；`REUSED_SUCCESS`没有fresh credit。任一usage/terminal失败停止剩余序列。
 
-## 快速入口：只读取现有结果
+## 历史发布批次：只读取现有结果
 
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
@@ -78,7 +80,7 @@ Fresh stability必须按Occupancy 1 → RevPAR 1 → Occupancy 2 → RevPAR 2 �
 | 3 | 阅读报告和具体结果 | `REPORT_十公司财务指标.md`；`outputs/metrics_matrix.csv`；`outputs/metric_evidence.csv` | verdict、value/status、期间、口径和 evidence 能闭合 |
 | 4 | 复核限制和人工责任 | `interact.md`；`docs/business_user_guide.md` | 未把 light、caveat、NOT_EVALUATED 或历史快照写成 full PASS |
 
-## SOP 1：SEC 阶段 00-12 完整批次运行
+## 历史批次入口：SEC 阶段 00-12 完整运行
 
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
@@ -150,7 +152,7 @@ PublicationView回读，测试按 `TESTING.md` 对应章节；实际R3和正式r
 集中审核后才允许真实activate与release。测试批准、文件模板与代码合并本身均
 不能签发实际根权限。有限操作及同intent恢复顺序见`docs/annual_publication.md`。
 
-## SOP 3：PR 发布（仅用户明确要求时）
+## 历史封存流程：PR 发布（对应原版本）
 
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|

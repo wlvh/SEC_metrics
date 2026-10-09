@@ -8,7 +8,8 @@
     "没有自动测试的契约必须使用 test_anchor: null，并明确 untested_reason 与 pending_since。",
     "契约区分流程实现、实际运行、recorded、staging、active 与 full 证据；vNext formal/full acquisition 编排存在不等于本轮 live acquisition 或 Cutover 已完成，不得虚构前端、API、调度或数据库能力。",
     "alignment checker 只证明 anchor、path 与 symbol 等结构存在；symbol 存在不等于 claim 已被证明，证据强度仍由 reviewer 判断。",
-    "test_status 是必填受控证据分类，并必须与 test_anchor 有无一致；它不是 PASS 结论，也不能把 symbol 存在升级为 statement 已被证明。"
+    "test_status 是必填受控证据分类，并必须与 test_anchor 有无一致；它不是 PASS 结论，也不能把 symbol 存在升级为 statement 已被证明。",
+    "active 表示契约当前登记，不表示任意源码版本可创建新任务；公司入口须区分 main 原生、PR67 保存来源候选及保留任务，PR67默认新任务自动安装固定main8588原生程序已限定验证；轻量在线后继PR83仍单独待接收。"
   ],
   "deprecated_anchor_ids": [],
   "contracts": {
@@ -60,7 +61,7 @@
         "anchor_id": "CAPABILITY.company_import_transaction",
         "type": "capability",
         "status": "active",
-        "statement": "Draft公司来源导入在独立state保持稳定source_root、不可变版本和共同计算锁；三个中断位置及首次导入中断恢复旧提交或隔离未提交输入，失败保留旧结果，重复安装幂等，跨公司及非前缀历史拒绝。非root只读来源包仅在私有暂存根临时增加跨目录rename所需权限并恢复版本原模式，输入包不改；只读包更新/中断/重启通过事务测试。交易测试替身只验证事务边界；真实原件准入、业务值、普通/历史及OpenShift验收各按独立证据说明，不由该测试推断。",
+        "statement": "main及保留原生版本的公司来源导入在独立state保持稳定source_root、不可变版本和共同计算锁；三个中断位置及首次导入中断恢复旧提交或隔离未提交输入，失败保留旧结果，重复安装幂等，跨公司及非前缀历史拒绝。非root只读来源包仅在私有暂存根临时增加跨目录rename所需权限并恢复版本原模式，输入包不改；只读包更新/中断/重启通过事务测试。交易测试替身只验证事务边界；真实原件准入、业务值、普通/历史及OpenShift验收各按独立证据说明，不由该测试推断。 此处独立信任/Requirement行为是旧原生版本的兼容范围，不是PR67新普通记录必须重建的前置；候选覆盖单独验证。",
         "audience": [
           "developer",
           "reviewer",
@@ -74,7 +75,7 @@
         "anchor_id": "CAPABILITY.company_saved_processing_exact_source",
         "type": "capability",
         "status": "active",
-        "statement": "Draft公司D04保存处理输入与SEC来源分别交付和授信，原完整请求/响应/接受/source/input/Requirement不改签。基线以原V14计算；acquired历史须另外提供同公司原基线SEC版本，先由固定公司树重建完整当前语义来源并通过原source_equivalence再复用判断，当前账本完整保留。冷读重建来源和等价，源码根不得仅由receipt提名；局部或变更来源、跨公司、无原版本及未提供固定树拒绝。控制回归使用worker替身；真实13捕获混合历史/Enphase原173–178 LIVE公司入口与原录制材料的实际范围另见证据，不授新模型执行、整家公司业务或生产信用。B13与历史处理适配仍有限制。",
+        "statement": "main及保留原生版本的公司D04保存处理输入与SEC来源分别交付和授信，原完整请求/响应/接受/source/input/Requirement不改签。基线以原V14计算；acquired历史须另外提供同公司原基线SEC版本，先由固定公司树重建完整当前语义来源并通过原source_equivalence再复用判断，当前账本完整保留。冷读重建来源和等价，源码根不得仅由receipt提名；局部或变更来源、跨公司、无原版本及未提供固定树拒绝。控制回归使用worker替身；真实13捕获混合历史/Enphase原173–178 LIVE公司入口与原录制材料的实际范围另见证据，不授新模型执行、整家公司业务或生产信用。B13与历史处理适配仍有限制。 此处独立信任/Requirement行为是旧原生版本的兼容范围，不是PR67新普通记录必须重建的前置；候选覆盖单独验证。",
         "audience": [
           "developer",
           "reviewer",
@@ -88,7 +89,7 @@
         "anchor_id": "CAPABILITY.company_result_period_and_validity",
         "type": "capability",
         "status": "active",
-        "statement": "Draft公司结果视图保留Run归档period，另从哈希核验的原生结果或冷重放投影读取measurement_period；不从财年推测事件窗口。公司CSV分别列归档期间、测量窗口和核验状态。已登记缺陷仍按结果编号与Requirement closure双绑定释放；同结果仅在其它运行版本获释放时显示CURRENT_RUNTIME_RELEASE_REQUIRED及原接受引用，公司值仍扣留，不说成新内容错误或当前版本通过。不同结果、未释放缺陷和重放失败继续扣留。编排回归明确模拟底层计算，真实历史事件及固定D02登记对照分别保存，不授业务接受或生产信用。",
+        "statement": "main及保留原生版本的公司结果视图保留Run归档period，另从哈希核验的原生结果或冷重放投影读取measurement_period；不从财年推测事件窗口。公司CSV分别列归档期间、测量窗口和核验状态。已登记缺陷仍按结果编号与Requirement closure双绑定释放；同结果仅在其它运行版本获释放时显示CURRENT_RUNTIME_RELEASE_REQUIRED及原接受引用，公司值仍扣留，不说成新内容错误或当前版本通过。不同结果、未释放缺陷和重放失败继续扣留。编排回归明确模拟底层计算，真实历史事件及固定D02登记对照分别保存，不授业务接受或生产信用。 此处独立信任/Requirement行为是旧原生版本的兼容范围，不是PR67新普通记录必须重建的前置；候选覆盖单独验证。",
         "audience": [
           "developer",
           "reviewer",
@@ -419,7 +420,7 @@
         "anchor_id": "CAPABILITY.local_company_run",
         "type": "capability",
         "status": "active",
-        "statement": "保留原生版本的Draft本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际空源29+2为录制，非真实SEC验收。已有判断按独立输入及原版本认证/来源等价复用，无新模型调用权限。Marriott真实首次、复跑和局部重入已在获准额度内完成（docs/evidence/issue54_company/live2）；不授Merge/部署/发布/active。 本候选另有有限run/acquire --call-context，接原计数上下文到普通B01/B02计算和CSV；只替换外部HTTP的原件接缝已验证，新轻量在线39项及新AI未接入，不继承原生流程的全部新任务信用。整体状态从run_summary.json读，计算阶段记录单独说明。",
+        "statement": "保留原生版本的本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际空源29+2为录制，非真实SEC验收。已有判断按独立输入及原版本认证/来源等价复用，无新模型调用权限。Marriott真实首次、复跑和局部重入已在获准额度内完成（docs/evidence/issue54_company/live2）；不授Merge/部署/发布/active。 main 已接收 PR83 的有限 run/acquire --call-context，接原计数上下文到普通B01/B02计算和CSV；只替换外部HTTP的原件接缝已验证，新轻量在线39项及新AI未接入，不继承原生流程的全部新任务信用。整体状态从run_summary.json读，计算阶段记录单独说明。",
         "audience": [
           "business_user",
           "operator",

@@ -2,17 +2,21 @@
 
 ## 当前工程入口（2026-10-06）
 
-按 [Issue #28 受信任内部工具](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006)及[运行/测试减负唯一队列](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification)实施；冲突的旧工程要求已被替代。#54/PR57已交付，#28负责公共runtime和当期公司集成，#47负责历史接入及既有C02/D02共用核心。下文旧PR、封存和工作树描述只解释历史，不支配新路径。
+按 [#28 受信任内部工具决定](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006) 和 [运行、测试简化队列](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification) 工作。与这两项决定冲突的旧防伪、递归权限证明和默认同一大 PR 要求已被替代；新改动用范围明确的小 Draft PR，保留业务、来源、期间、计数、失败隔离与恢复检查。
 
-## 公司级边界工作（#54已交付）
+#28负责公共 CLI、运行/结果基础、公共文档及当期集成；[#47](https://github.com/wlvh/SEC_metrics/issues/47#history-simplification-20261006)负责历史能力和消费者，共用核心沿既有负责人维护。协作职责见 [#28 当前共同协作节](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1)；10月6日决定已替代冲突的 v1.3 工程前置，保留已确定的公司入口责任。
 
-[Issue #54](https://github.com/wlvh/SEC_metrics/issues/54) 的唯一当前执行记录与 `COMPANY-SEPARATION-v2.1-20261002` 管理本期范围；运行说明见 `docs/company_compute_boundary.md`，材料见 `docs/evidence/issue54_company/`。#54/PR57已完成公司交接；#28维护公共及当期入口，#47维护历史消费者。首个平台OpenShift，部署和内网AI接线下期；普通/历史固定树分开，禁止把历史注册补丁打入#28路径。
+[#54](https://github.com/wlvh/SEC_metrics/issues/54)/[PR57](https://github.com/wlvh/SEC_metrics/pull/57)已交付公司边界，不再是当前队列或待接线责任方。使用版本与输入前提见 [公司运行](docs/company_local_run.md)，获取/计算边界见 [接口说明](docs/company_compute_boundary.md)。main 已接收 PR67 的保存来源/普通记录、PR83 的有限在线接线及 PR71/75/76 历史消费者；保留原生默认入口自动安装固定 main8588。各入口与业务接受范围分别说明。OpenShift部署另期。
 
 ## 0. 按任务选择阅读路径
 
 首次进入仓库时先判断任务，再读取对应的标准流程。`SOP.md` 是标准工作流的一级导航；专项文档负责提供具体事实和命令。
 
-### 只读取当前结果
+### 读取公司任务的现有结果
+
+公司 `results` 的版本和参数见 [公司运行](docs/company_local_run.md)。普通记录读取不默认重算；保留原生任务提供创建它的固定程序及来源登记，不用当前文件重签旧 Run。
+
+### 读取旧已发布批次（历史入口）
 
 当前保存来源普通任务先读 `docs/company_local_run.md`，使用：
 
@@ -33,7 +37,7 @@ SOP.md「只读取现有结果」
 
 manifest 不是成功证明本身。`result` 必须是 `PASSED` 或 `PASSED_WITH_CAVEATS`，且 snapshot checker 必须证明当前 source-input tree 与关键 artifact bytes 仍和该 run 绑定。
 
-### 执行完整批次
+### 执行旧完整批次（原版本入口）
 
 ```text
 SOP.md「SOP 1：SEC 阶段 00-12 完整批次运行」
@@ -61,15 +65,15 @@ architecture.md
 → PR_Checklist.md
 ```
 
-需要发布 PR 时，先读取 `SOP.md` 的 PR 发布章节，再执行 `PR_Checklist.md`。涉及 SEC 访问、证据、manifest、verdict、source provenance 或 artifact publication 的改动，必须同时核对用户可观察后果和负例测试。
+开发小 PR 按当前 Issue 队列和受影响验证交付。旧 `PR_Checklist.md` 的封存/防伪前置只解释旧阶段，不作为新路径开发门禁；来源、结果和写入仍验证业务、计数与恢复反例。合并和生产操作另需明确许可。
 
-当前工程使用上述入口；保存来源计算可从现有 `tools/vnext_company.py run --source-root <来源根>` 执行，程序、来源共用只读位置，状态与输出另存；不获取来源或发AI请求。旧native任务按原固定运行时读取，不原地迁移。具体边界和命令见 `docs/company_local_run.md`。
+AI开发按 [#28 第5.8节](https://github.com/wlvh/SEC_metrics/issues/28#ai-development-20261003)及有效修订，开发抽取、录制接线、真实验收与正式采纳分开。
 
-历史现场：`task/issue28-foundation-main-candidate` 是当时main基础接收候选，PR43保存存量实现与证据；这些描述不是当前小PR的工作树身份。
+历史现场：`task/issue28-foundation-main-candidate` 曾用于基础接收，见 `docs/evidence/issue28_foundation_integration_20261004/README.md`；不是当前默认工作树。PR43保留存量实现及证据，下面原版本流程不规定新路径前置。
 
-### 开发、复核 successor vNext Ratchet
+### 历史：PR30/32 successor vNext Ratchet 原版本流程
 
-当前 PR32 的正常 R4 接线首先读取 `requirements/issue_28_v3/` 与
+当时 PR32 的正常 R4 接线首先读取 `requirements/issue_28_v3/` 与
 `docs/r4_minimal_fix/README.md`。标签政策已获 owner 批准；exact-head
 激活、implementation merge、新 live plan/grant 仍按既有顺序独立完成。
 旧 v2 快照、engine 与证书目录只按原规则解释，不改历史失败。
@@ -87,11 +91,11 @@ requirements/issue_28_v1/CONTRACT.md（successor outcome/boundary）
 → SOP.md「vNext operator 与正式 Cutover」
 ```
 
-Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；旧被拒head/closure永不恢复为审批候选。当前PR #30的`issue_28_v2`是未激活的离线policy revision：在上述阅读链前先读v2五文件和`docs/r4_offline/README.md`，不得把代码/测试完成当成exact-head activation。版本注册表保留V1/V2/V3 engine，Requirement revision与engine generation是不同编号；同kind可按ratchet拥有多个实例。Decision Register是policy-content authority，transfer按parent叶级义务唯一分类。旧RUN/Publication保留hash-only字节，旧ISSUE_15_RELEASE_PLAN保留原id/closure；三个SUCCESSOR_* subtype强制generation与id/closure/hashes。historical parent只从记录hashes与冻结snapshot重建，不跟随current root漂移。PR22 archive无credit/reuse；两份SEC acquisition已完成且quota耗尽，provider/paid/live/publication仍未授权，PR30不得自动Ready/merge或启动PR-C。
+Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；旧被拒head/closure永不恢复为审批候选。当时PR #30的`issue_28_v2`是未激活的离线policy revision：在上述阅读链前先读v2五文件和`docs/r4_offline/README.md`，不得把代码/测试完成当成exact-head activation。版本注册表保留V1/V2/V3 engine，Requirement revision与engine generation是不同编号；同kind可按ratchet拥有多个实例。Decision Register是policy-content authority，transfer按parent叶级义务唯一分类。旧RUN/Publication保留hash-only字节，旧ISSUE_15_RELEASE_PLAN保留原id/closure；三个SUCCESSOR_* subtype强制generation与id/closure/hashes。historical parent只从记录hashes与冻结snapshot重建，不跟随current root漂移。PR22 archive无credit/reuse；两份SEC acquisition已完成且quota耗尽，provider/paid/live/publication仍未授权，PR30不得自动Ready/merge或启动PR-C。
 
-当前lodging authority在owner批准的compact prompt、same-target-table八字段locator、Marriott FY2024 second layout、Marriott FY2023 post-freeze holdout和Marriott FY2025 fresh source上冻结。Occupancy与RevPAR context均由各自provider-reported actual usage证明不超过200000；qualification没有复用measurement response。SECOND_LAYOUT、POST_FREEZE_HOLDOUT和三个FRESH ordinals按ordinal-major顺序形成十个独立provider execution，全部Evidence PASS、D-06 SYSTEM APPROVE、Result PUBLISHED、validation PASSED且usage terminal通过。任何新exact-head push不会重签这些已提交的无关family证据。PR-B的JPM/BAC/Citi已通过同一生产parser、512MiB/no-swap/network-none测量，max_total_cells仅提高至210000；这只解除本地materialization阻断，不授予financial live资格。
+该阶段lodging authority在owner批准的compact prompt、same-target-table八字段locator、Marriott FY2024 second layout、Marriott FY2023 post-freeze holdout和Marriott FY2025 fresh source上冻结。Occupancy与RevPAR context均由各自provider-reported actual usage证明不超过200000；qualification没有复用measurement response。SECOND_LAYOUT、POST_FREEZE_HOLDOUT和三个FRESH ordinals按ordinal-major顺序形成十个独立provider execution，全部Evidence PASS、D-06 SYSTEM APPROVE、Result PUBLISHED、validation PASSED且usage terminal通过。任何新exact-head push不会重签这些已提交的无关family证据。PR-B的JPM/BAC/Citi已通过同一生产parser、512MiB/no-swap/network-none测量，max_total_cells仅提高至210000；这只解除本地materialization阻断，不授予financial live资格。
 
-代码已具备同一 recorded/live operator、D-06 optional HUMAN/SYSTEM audited Review、固定 DeepSeek/SEC 边界、资格门、legacy migrated producer 退出、PublicationView consumers、正式 publication/rollback primitives 与 new/rollback/restore 终态编排。Issue #15 R1 已只读导入 verified legacy A，以 immutable SEC attempts 冻结十公司 B01/B03 successor B，并真实完成 A→B、rollback→A、restore→B。R2 又以 commit-bound immutable SEC blobs、完整submissions current/history shards和request-ledger绑定的acquisition receipt补集累计加入其余14个DET_ONLY与C01/E01–E05。R3在R2上新增lodging B10/B11：重验十个qualification terminals，为两个APPLICABLE fresh坐标生成模型Result，并为其余18个坐标生成零AI`N_A_STRUCTURAL` Runs。当前active为R3的24指标/240个累计vNext Result keys/327行public matrix，previous精确为R2；发布期间还真实完成R3→R2 rollback→修正版R3。该事实仍不证明financial/text、39指标最终Cutover或full acceptance。
+代码已具备同一 recorded/live operator、D-06 optional HUMAN/SYSTEM audited Review、固定 DeepSeek/SEC 边界、资格门、legacy migrated producer 退出、PublicationView consumers、正式 publication/rollback primitives 与 new/rollback/restore 终态编排。Issue #15 R1 已只读导入 verified legacy A，以 immutable SEC attempts 冻结十公司 B01/B03 successor B，并真实完成 A→B、rollback→A、restore→B。R2 又以 commit-bound immutable SEC blobs、完整submissions current/history shards和request-ledger绑定的acquisition receipt补集累计加入其余14个DET_ONLY与C01/E01–E05。R3在R2上新增lodging B10/B11：重验十个qualification terminals，为两个APPLICABLE fresh坐标生成模型Result，并为其余18个坐标生成零AI`N_A_STRUCTURAL` Runs。该历史阶段active为R3的24指标/240个累计vNext Result keys/327行public matrix，previous精确为R2；发布期间还真实完成R3→R2 rollback→修正版R3。该事实仍不证明financial/text、39指标最终Cutover或full acceptance。
 
 ## 1. 文件简介
 

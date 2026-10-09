@@ -1,8 +1,17 @@
 # SEC_metrics 测试与验证流程
 
-轻量在线B01/B02候选：`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_company_online -v`核原计数、UNKNOWN、落盘中断摘要、前期依赖隔离；正式CLI HTTP边界录制与原件/计算/读取实际链见 `docs/evidence/issue28_company_online_20261009/README.md`，不授真实SEC或业务接受。下述旧原生/独立信任检查只解释保留版本，不恢复为新普通记录前置。
+## 按实际运行版本选检查
 
-当前公司候选采用PR61共享进程/类准备与完整材料分层；`python3 tools/run_foundation_ci.py --suite fast --jobs 1`一次加载选中小测试，失败/导入错误/skip显式输出。原选择器以fast/source-material/retired完整对账；仅已取消的旧祖先防伪模块退休，业务断言保留。PR61原测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`，当前公司候选测量见 `docs/evidence/issue28_company_records_20261007/README.md`，不能拼成同场景提速。
+2026-10-06当前CI快测：`python3 tools/run_foundation_ci.py --suite fast --jobs 1`使用一个进程及unittest类/模块准备，记录每项失败、导入错误与明确跳过；测试stdout/stderr进入报告，不破坏JSON。完整年报的`NormalAnnualInputTest`归材料层（`--suite source-material`），选择器仍全部对账、未删除业务断言。旧runner保持供旧版本诊断，本改动不宣布公司run或所有材料验收完成。主要测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`。
+
+- main 的 PR57 原生版本：下述 company handoff/source-authority/native 检查用于原程序及保留任务；固定依赖按原身份读取。不要用旧快照要求当前新开发文件永远不变。
+- main 已接收的 PR67 普通记录：快速业务例及保存原件集成验证公司/期间/单位/引用、已知错误、成功/稳定扣留复用、计数、失败隔离、中断恢复和旧读取。实际命令及终态以 [PR67](https://github.com/wlvh/SEC_metrics/pull/67)主要验证记录为准，共用快测准备/材料分层已由PR61进入main；公司检查见当前 Company saved-source records 工作流。
+- 已退休的独立信任、防伪批准、祖先字节证明和封存要求不作为新路径必须通过的测试；保留源码供原版本诊断。退出专属测试不允许静默跳过仍适用的业务与普通故障反例。
+- 文档改动核对实际 CLI 参数、链接和能力范围，不默认重跑全部财报。新接线须经过用户入口的真实解析/保存/计算/读取；只替换外部 HTTP 的录制与真实 SEC 验收分开。
+
+main 已交付的有限在线 B01/B02 接线检查：`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_company_online -v`核原计数、UNKNOWN、落盘中断摘要、前期依赖隔离；正式CLI HTTP边界录制与原件/计算/读取实际链见 `docs/evidence/issue28_company_online_20261009/README.md`，不授真实SEC或业务接受。下述旧原生/独立信任检查只解释保留版本，不恢复为新普通记录前置。
+
+当前 main 采用已接收的 PR61共享进程/类准备与完整材料分层；`python3 tools/run_foundation_ci.py --suite fast --jobs 1`一次加载选中小测试，失败/导入错误/skip显式输出。原选择器以fast/source-material/retired完整对账；仅已取消的旧祖先防伪模块退休，业务断言保留。PR61原测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`，PR67 实际候选测量见 `docs/evidence/issue28_company_records_20261007/README.md`，不能拼成同场景提速。
 
 本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。既有Marriott真实SEC首次与重复运行已按其原许可完成；录制测试不转成LIVE信用，业务结果仍分别等待接受。
 已退出的creator journal/伪造sidecar/冻结前缀拒绝不再作为当前来源必过测试；原版本在Git历史保留。原件/header/attempt/申报/最新失败检查见test_saved_source_checks，旧checkpoint导出及UNKNOWN保护仍保留。
@@ -46,7 +55,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_annual_publicatio
 
 <!-- capability-anchor: CAPABILITY.annual_candidate_formal_adoption -->
 
-## 普通年度候选完整发布链隔离验收
+## 历史固定版本：普通年度候选完整发布链隔离验收
 
 `tools/run_fast_tests.py` 的白名单入口包括
 `tests.vnext.test_annual_publication` 整个模块（4项短边界测试）。GitHub fast CI

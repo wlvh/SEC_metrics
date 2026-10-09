@@ -1,6 +1,6 @@
 # SEC_metrics 用户可观察行为
 
-本候选的用户入口有三种明确路径：`run --source-root`只处理保存来源；新增`run --call-context`以原存在且适用的计数上下文，从空来源完成当期B01/B02发现、落盘、普通计算和CSV/证据；无这两个参数的原生安装仍是保留实现，不表示新轻量在线39项已经接通。当前验证只替换外部HTTP，真实调用需核原用途许可。整体在线状态/计数从`run_summary.json`读取，`company-results.json`和`latest-execution.json`描述计算阶段。命令与限制见 `docs/company_local_run.md`。
+当前 main 的用户入口有三种明确路径：`run --source-root`只处理保存来源；新增`run --call-context`以原存在且适用的计数上下文，从空来源完成当期B01/B02发现、落盘、普通计算和CSV/证据；无这两个参数的原生安装仍是保留实现，不表示新轻量在线39项已经接通。当前验证只替换外部HTTP，真实调用需核原用途许可。整体在线状态/计数从`run_summary.json`读取，`company-results.json`和`latest-execution.json`描述计算阶段。命令与限制见 `docs/company_local_run.md`。
 
 保留原生版本入口（无source-root/call-context）`python tools/vnext_company.py run --company <已配置公司> --period latest-complete-fy --work-dir <任务目录> --output-dir <导出目录>` 自动调度来源与公司计算，输出独立运行目录下的 `metrics_matrix.csv`、`metric_evidence.csv`、`run_summary.json`。相对路径安全转绝对路径，任务目录须在源码树之外；用户不逐次选择运行树。默认请求配置中全部39项，未实现的D03、未提供的完整判断及失败分别列状态；`--metric`调试子集仍保留39项状态，未请求项不冒充完成。来源部分或指标待处理时为 `FLOW_COMPLETED_WITH_LIMITATIONS` / exit 2，完整阶段失败为 `FLOW_INCOMPLETE`；流程结束不授业务正确性信用。真实SEC需本任务许可，默认单次及累积最多120、零重试/每用户本入口共享1次每秒；旧#28/#47额度不借用。已有来源按内容复用，新判断没有本入口调用授权。详见 [本地运行说明](docs/company_local_run.md)。
 <!-- capability-anchor: CAPABILITY.local_company_run -->
