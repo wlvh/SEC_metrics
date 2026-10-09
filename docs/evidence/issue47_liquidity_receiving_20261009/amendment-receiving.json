@@ -1,0 +1,108 @@
+{
+  "scope": "Selected reporting CIK and current-instant ALLOW only; common instant amendment check, no annual continuity/cross-entity claim",
+  "paramount_2025": 13.119531083852053,
+  "paramount_repeat": 0.5424887919798493,
+  "southwest_2025": 9.420985291013494,
+  "source_inspection": {
+    "paramount_2025_decision": "INPUT_PROPERTY_PROVEN",
+    "paramount_2024": {
+      "reason": "AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED",
+      "note_block_count": 13,
+      "block_range": [
+        95,
+        108
+      ],
+      "status": "SOURCE_PARSER_GAP_WITHHELD_NOT_FINANCIAL_CHANGE",
+      "shared_owner_notified": true
+    }
+  },
+  "original_failures_retained": true,
+  "success_and_failure_checks_persisted_in_input_assessments": true,
+  "constructed_negative": {
+    "constructed_control": true,
+    "actual_financial_conclusion": false,
+    "seconds": 4.879749832907692,
+    "calculation_calls": 0,
+    "checks": 1,
+    "result": {
+      "value": null,
+      "publication": "WITHHELD",
+      "reason_code": "HISTORICAL_LIQUIDITY_ROUTE_UNRESOLVED"
+    },
+    "assessment": {
+      "historical_liquidity": {
+        "annual_continuity_proven": false,
+        "category": "AMENDMENT_INPUT_UNRESOLVED",
+        "checks": [
+          {
+            "decision": "WITHHELD",
+            "issues": [
+              {
+                "reason": "CONSTRUCTED_UNRESOLVED_CORRECTION"
+              }
+            ],
+            "metric_ids": [
+              "B08",
+              "B09"
+            ]
+          }
+        ],
+        "error_type": "NormalCompanyfactsError",
+        "reason": "HISTORICAL_LIQUIDITY_AMENDMENT_INPUT_UNRESOLVED"
+      },
+      "historical_liquidity_scope": {
+        "amendment_checks": [
+          {
+            "decision": "WITHHELD",
+            "issues": [
+              {
+                "reason": "CONSTRUCTED_UNRESOLVED_CORRECTION"
+              }
+            ],
+            "metric_ids": [
+              "B08",
+              "B09"
+            ]
+          }
+        ],
+        "annual_continuity_proven": false,
+        "cross_entity_combination_authorized": false,
+        "selected_cik": "92380",
+        "subject_policy": {
+          "cross_entity_combination_authorized": false,
+          "mode": "CONTINUOUS_PRIMARY",
+          "selected_cik": "92380"
+        },
+        "subject_scope": "SELECTED_CIK_CURRENT_INSTANT_ONLY"
+      }
+    },
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "short_ci_tests": {
+    "count": 19,
+    "seconds": 0.018,
+    "skips": 0,
+    "public_patch_sha256": "7f333f5b1cce2476d2953962b56a3a15db3575965e24c43294b325470bd4a183"
+  },
+  "affected_tests": {
+    "count": 36,
+    "seconds": 0.106,
+    "skips": 0
+  },
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_run": false,
+  "new_acceptance": false,
+  "archive": {
+    "members": 10,
+    "bytes": 20388,
+    "sha256": "f14be7e4b8f8175654f77b6805e80b3ce01a8fbfafd527bf1a4fb505609fe1dd"
+  }
+}
