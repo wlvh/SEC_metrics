@@ -1,0 +1,82 @@
+{
+  "record_type": "HISTORICAL_STATEMENT_REFERENCE_GAP",
+  "gaps": [
+    {
+      "company_id": "pfizer",
+      "metric_id": "B02",
+      "period": {
+        "period_end": "2021-12-31",
+        "period_start": "2021-01-01"
+      },
+      "saved_old_result_value": "0.9396773885654290350291113868",
+      "existing_source_reading_value": "0.9516458188278792826102614583",
+      "existing_verdict": "DIFFERS",
+      "filings": [
+        "0000078003-21-000038",
+        "0000078003-22-000027"
+      ],
+      "prior_context_in_current_filing": [
+        "2020-01-01",
+        "2020-12-31",
+        false
+      ],
+      "source_document": "evidence/request_attempts/a6/a6dc538da8dd8c78563933a612ccb61bcc77ed9d067383ee6ed394612d5f0dd8/pfe-20211231.htm",
+      "source_document_sha256": "a6dc538da8dd8c78563933a612ccb61bcc77ed9d067383ee6ed394612d5f0dd8",
+      "pending": "Check identical revenue scope and approved current/prior accession policy; do not treat either old output or current-filing comparative reading as automatically correct."
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B02",
+      "period": {
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01"
+      },
+      "saved_old_result_value": "-0.4925346357021827967706568325",
+      "existing_source_reading_value": "-0.4453389692024446308542045690",
+      "existing_verdict": "DIFFERS",
+      "filings": [
+        "0000078003-23-000024",
+        "0000078003-24-000039"
+      ],
+      "prior_context_in_current_filing": [
+        "2022-01-01",
+        "2022-12-31",
+        false
+      ],
+      "source_document": "evidence/request_attempts/e8/e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0/pfe-20231231.htm",
+      "source_document_sha256": "e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0",
+      "pending": "Check identical revenue scope and approved current/prior accession policy; do not treat either old output or current-filing comparative reading as automatically correct."
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B02",
+      "period": {
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01"
+      },
+      "saved_old_result_value": "0.2496955650705110578622775661",
+      "existing_source_reading_value": "0.06840965190670495189159236311",
+      "existing_verdict": "DIFFERS",
+      "filings": [
+        "0000078003-24-000039",
+        "0000078003-25-000054"
+      ],
+      "prior_context_in_current_filing": [
+        "2023-01-01",
+        "2023-12-31",
+        false
+      ],
+      "source_document": "evidence/request_attempts/05/05b77064b72e16b39bc80dfa10d12d18e4b470c0df63c2cb89d3884e813bb97f/pfe-20241231.htm",
+      "source_document_sha256": "05b77064b72e16b39bc80dfa10d12d18e4b470c0df63c2cb89d3884e813bb97f",
+      "pending": "Check identical revenue scope and approved current/prior accession policy; do not treat either old output or current-filing comparative reading as automatically correct."
+    }
+  ],
+  "main_policy": "B02 uses current/current_annual and prior/prior_annual accession roles with paired scope checks",
+  "new_result_not_computed_from_conflicting_reference": true,
+  "other_metrics_not_declared_failed": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

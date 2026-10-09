@@ -1,0 +1,37 @@
+# 已交付基础财务入口的剩余公司消费者
+
+本批只使用实际main f6ef7886的既有B01/B02/B04/B05公司分派、来源准备、共同计算、普通保存与独立results，不新增指标方法/公共模块/runner，不改变接收中的96/114。代码未改；与原Ford/Salesforce/Macy先导不同的公司任务尚未贯通，故执行一次新消费者验证。原先导60位置、酒店/金融/事件及模型批次不重跑。
+
+复用PR52已提交cross-source-read、batch及full-frame的独立原件阅读，保存本批必要子集和原参考SHA；先核所选原件SHA，再核新出口的值/单位/实际期间。旧published/Run/接受数不是本批正确性依据，DIFFERS不当正确参考。输入用既有完整source-inputs只读，不复制整树或重新GET。
+
+| 公司及明确范围 | 首次CLI | 禁原factory复跑 | 独立results | 实际结果 |
+|---|---:|---:|---:|---|
+| Enphase FY2021–2025，B01/B02/B04/B05 | 98.828s | 6.871s | .576s | 二十项与原参考值/单位/全年窗一致，165结果/pointer字节保持 |
+| Lumen FY2021–2025，同四指标 | 110.649s | 7.056s | .585s | 二十项与原参考一致，165文件保持 |
+| Pfizer FY2021–2025，B01/B04/B05 | 108.018s | 5.340s | .559s | 十五项与原参考一致，125文件保持；B02单列待核，不推断失败或零 |
+| Southwest FY2021–2024，同四指标 | 初五年99.426s/exit2 | 成功子集5.773s | .572s | 十六项数值/单位/期间一致，FY2025四项实现缺口保留；FY2023B02仅尾零字符串不同，Decimal相等，未改输出 |
+
+全过程socket禁止；复跑和独立读禁止原函数调用，结果目录/指针哈希保持，无新增模型/SEC/NativeRun/接受或active。首次运行使用本分支未提交记录，program版本仍f6、has_uncommitted_changes如实保；记录提交不改生产字节。不把运行行数换算成1950整体完成率。
+
+## 精确未完边界
+
+SouthwestFY2025的原primary与amended材料实际存在，当前主体连续，amendment为0000092380-26-000006。main历史statement入口尚未接该修订，四项返回IMPLEMENTATION_GAP/HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED；不是缺源/结构NA/正确零。southwest-fy2025-amendment-gap.json给实际所读依赖。前四年已保存结果不抹掉，也不整体重算；最近请求改成功子集后results列十六成功，原五年失败报告单独保留，不能虚称本次还显示二十行。
+
+PfizerB02 FY2021/2023/2024既有独立读数与旧值不同，pfizer-b02-reference-gap.json保两者、申报和源SHA。当前contract明确当前/前期两个accession角色，旧阅读取当前filing的prior context；需要核相同收入范围及合法前期/重述关系，尚不能任选一个当正确。最初材料只读batch漏FY2021，随后找到full-frame；没有因为参考冲突重读全年或新调模型。FY2022/FY2025 B02已有MATCH参考，本轮尚未处理，其责任继续。
+
+驱动首次假定Southwest全成功，保其原失败；子集读又误期待包含过去无结果的FY2025失败行，之后只读取现成CSV按实际十六行及原失败报告核对，没有重算。尾零断言也只改比较为Decimal等值，原文本均保存。仅驱动假设纠正，不放松主体、期间、单位或业务范围。
+
+## 同一入口的可运行命令
+
+检出实际main f6ef7886或包含它的本记录分支。来源已存在时复用；首次来源恢复沿保留历史分支运行原restore并使用返回data_root，不把恢复父目录当根，不GET。
+
+```bash
+python3 tools/vnext_company.py run --company enphase_energy --period fiscal-years \
+  --fiscal-year-start 2021 --fiscal-year-end 2025 \
+  --metric B01 --metric B02 --metric B04 --metric B05 \
+  --source-root /saved/sec/source-inputs --work-dir /new/enphase/state --output-dir /new/enphase/runs
+python3 tools/vnext_company.py results --company enphase_energy \
+  --state-root /new/enphase/state --output-root /new/enphase/read-01
+```
+
+Lumen仅改company为lumen_technologies。Pfizer本轮只选B01/B04/B05；Southwest完整五年会显示上述修订缺口，不能把其退出码2视为所有结果失败。已有任务读取自己的原state；输出目录须新。各company.json保本轮实际状态/目录/比较和调用边界，原件参考不修改。完整历史在线发现/补齐、修订适配、其他指标及五年业务责任继续。

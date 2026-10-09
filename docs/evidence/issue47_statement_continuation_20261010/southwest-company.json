@@ -1,0 +1,295 @@
+{
+  "actual_main": "f6ef7886",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/southwest-statements-company-j7od5ap_/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/southwest-statements-company-j7od5ap_",
+  "first_operation": {
+    "seconds": 99.42562562506646,
+    "exit_code": 2,
+    "status": "FLOW_COMPLETED_WITH_LIMITATIONS"
+  },
+  "successful_subset_operations": [
+    {
+      "name": "repeat-forbid-factory",
+      "seconds": 5.772804999956861,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "independent-results",
+      "seconds": 0.5722228749655187,
+      "exit_code": 0,
+      "status": null
+    }
+  ],
+  "comparisons": [
+    {
+      "metric_id": "B01",
+      "fiscal_year": "2021",
+      "value": "15790000000",
+      "unit": "USD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "result_id": "sha256:b4f733af9bc97d8ec52492130cd2697b5436deeb72ef6d4a5310a387d5438977",
+      "reference_value": "15790000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B02",
+      "fiscal_year": "2021",
+      "value": "0.7451370468611847922192749779",
+      "unit": "ratio",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "result_id": "sha256:87ab0affdc2695ea2e540ef516ee000eae5a5bd43bb080a0867d6506fa729698",
+      "reference_value": "0.7451370468611847922192749779",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B04",
+      "fiscal_year": "2021",
+      "value": "977000000",
+      "unit": "USD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "result_id": "sha256:2d32b1debd511353d8e95c3ad5ffb4992ed7e4db6a770cfce212ea4b2c66018c",
+      "reference_value": "977000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B05",
+      "fiscal_year": "2021",
+      "value": "1817000000",
+      "unit": "USD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "result_id": "sha256:57adb35f4178b3a4cdd14d855b24fe66cb98832ca9d97d5ed5db892c04af5104",
+      "reference_value": "1817000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B01",
+      "fiscal_year": "2022",
+      "value": "23814000000",
+      "unit": "USD",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:3848c4aea06a647daa20af5a2d10ac1ee26c974f2a86b943b768aa89faa00bd1",
+      "reference_value": "23814000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B02",
+      "fiscal_year": "2022",
+      "value": "0.5081697276757441418619379354",
+      "unit": "ratio",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:baf9e4dcbe0c80a388279077b7dcb98f1c9173c8a3ad144f4b9b09b194237662",
+      "reference_value": "0.5081697276757441418619379354",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B04",
+      "fiscal_year": "2022",
+      "value": "539000000",
+      "unit": "USD",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:775f787ece338d6d60140a1fb4d2df6c98c0fac2d231fd7538b628085dfadc17",
+      "reference_value": "539000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B05",
+      "fiscal_year": "2022",
+      "value": "-134000000",
+      "unit": "USD",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:27c4f72a1f184f6a3267677fca5b2f5f320e1a31a1d19582095902cc50b06771",
+      "reference_value": "-134000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B01",
+      "fiscal_year": "2023",
+      "value": "26091000000",
+      "unit": "USD",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:06b9aa145e1235055f682355a755a7539a82091173e57338d0aadb4ed7232f62",
+      "reference_value": "26091000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B02",
+      "fiscal_year": "2023",
+      "value": "0.0956160241874527588813303099",
+      "unit": "ratio",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:1496d825ac477bf00ad206a266f7dcf3cd7d8d716f488c6b081513ea67639213",
+      "reference_value": "0.09561602418745275888133030990",
+      "exact_string_equal": false,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B04",
+      "fiscal_year": "2023",
+      "value": "465000000",
+      "unit": "USD",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:ece215eeaee5815018f2aa53f2d71cd9263a7bda8ffb00939f778b19ac2974e9",
+      "reference_value": "465000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B05",
+      "fiscal_year": "2023",
+      "value": "-356000000",
+      "unit": "USD",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:ab23aabc079e493a1e726c5d27f35446d8aa4ec2e6397f2d745317749ae217c7",
+      "reference_value": "-356000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B01",
+      "fiscal_year": "2024",
+      "value": "27483000000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "result_id": "sha256:505c372892895a5be9c486c1e0c358ed227aff2529f2f73e7158e55af5690173",
+      "reference_value": "27483000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B02",
+      "fiscal_year": "2024",
+      "value": "0.05335173048177532482465217891",
+      "unit": "ratio",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "result_id": "sha256:faec5ed7eb79c0ec742371faa389d7b3493f0647fee8647a8aed5902692f96c3",
+      "reference_value": "0.05335173048177532482465217891",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B04",
+      "fiscal_year": "2024",
+      "value": "465000000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "result_id": "sha256:e8c43784db5aa9c38d40984820c9ee538cc53f4195a5aedf5db04f88cd613107",
+      "reference_value": "465000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    },
+    {
+      "metric_id": "B05",
+      "fiscal_year": "2024",
+      "value": "-1592000000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "result_id": "sha256:77afb9add28bb398f749f55caa32a685cd94f4da38350aa26da68dd373e34f30",
+      "reference_value": "-1592000000",
+      "exact_string_equal": true,
+      "decimal_equal": true
+    }
+  ],
+  "initial_four_fy2025_implementation_gaps": [
+    {
+      "metric_id": "B01",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "06aebc628ca44e8b80ee61e6b832f5f2",
+      "error_type": "StatementCaseError",
+      "reason": "HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025,
+      "error_category": "IMPLEMENTATION_GAP"
+    },
+    {
+      "metric_id": "B02",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "0a7b1f678da340798d3293e93825fd62",
+      "error_type": "StatementCaseError",
+      "reason": "HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025,
+      "error_category": "IMPLEMENTATION_GAP"
+    },
+    {
+      "metric_id": "B04",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "2dc3266125654608a879a01b01e92962",
+      "error_type": "StatementCaseError",
+      "reason": "HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025,
+      "error_category": "IMPLEMENTATION_GAP"
+    },
+    {
+      "metric_id": "B05",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "440e29ad0cdc4a5883f032ae0aab641e",
+      "error_type": "StatementCaseError",
+      "reason": "HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025,
+      "error_category": "IMPLEMENTATION_GAP"
+    }
+  ],
+  "latest_read_scope": "FY2021\u2013FY2024 only after successful-subset request; original FY2025 failure report retained separately",
+  "protected_files": 132,
+  "protected_unchanged_during_subset_repeat_read": true,
+  "repeat_factory_calls": 0,
+  "driver_assumption_failures_retained": true,
+  "one_trailing_zero_difference": "FY2023 B02 exact strings differ; Decimal values equal, no value edited",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
