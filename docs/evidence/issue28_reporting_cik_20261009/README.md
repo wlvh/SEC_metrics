@@ -90,11 +90,12 @@ test assertion in nullable-small.log was moved back into its scope test; no
 production guard was removed to satisfy it. Changed code is still uncommitted
 in those logs; the actual commit is recorded through Git below.
 
-The nullable correction is not yet independently reviewed. The one user-
-authorized development agent is working in a separate request-preparation
-worktree and cannot touch these reporter files; parent/receiver validation
-does not masquerade as independent review. The original review's63tools/
-3messages remain capped. No new business request or original state write.
+The nullable correction at abb7abdd has a new limited PASS review in
+nullable-review/conclusion.md:12 tests9.266s plus27 finite checks,24 tools/
+3 messages. Its original REQUEST_CHANGES/P1 remains unchanged. The authorized
+development agent completed separate request-preparation work; it did not
+touch reporter files. This is not full historical/financial acceptance, and
+no new business request or original state write occurred.
 
 Receiving CI found a parent selector typo: SOURCE_MATERIAL_TESTS did not exist
 (actual list is SOURCE_TESTS). The original runner CLI NameError is retained;
@@ -102,3 +103,15 @@ import with correct tools path, CLI help, exact one fast/source selector and
 unchanged runner-body AST now pass. No financial material is rerun for this
 one-line registration repair. First import probe lacked tools on sys.path;
 its ModuleNotFoundError is a harness issue, not the CI failure.
+
+## Existing duplicate fast selector repair
+
+The limited reviewer identified two baseline selectors registered twice.
+runner-duplicates-before.log retains the actual pre-run conflict. Only the
+second identical declarations were removed; all four runner function ASTs
+remain unchanged. This is a necessary correction to existing registration,
+not an optional selector reorder or runner rewrite. runner-duplicates-after.json
+records272 unique selectors and22 tests executed through the existing real
+subprocess case runner in0.574s (8 source-event,5 event-projection,9 pure
+reporter tests); this is directed execution, not a full-suite PASS claim.
+Unchanged financial sources and company cold reads were not repeated.
