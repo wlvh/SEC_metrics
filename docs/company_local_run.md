@@ -48,6 +48,16 @@ python /path/to/SEC_metrics/tools/vnext_company.py results \
 
 [PR67 回修记录](https://github.com/wlvh/SEC_metrics/blob/f7905156f7972b214e71d7f0a9a1172f7ac969cf/docs/evidence/issue28_company_records_20261007/default-online-review-20261009/README.md)保存原三入口比较；[PR83 接线记录](evidence/issue28_company_online_20261009/README.md)保存有限在线验证。PR87平台修正已入main；PR89事件来源/宽窗出口是未合入的候选，不写成main现有能力。来源与计算继续可分别调用，保留原生入口是过渡兼容，不是永久双系统。
 
+## 保留原生安装的退出条件
+
+不带 `--source-root/--call-context` 的默认新任务目前自动安装固定 `8588ccbb` 原生程序，是用户 2026-10-09 接受的过渡安排，不是长期入口。它在以下条件同时满足后退出，由一个小 PR 删除 `company_retained_local` 的安装分支并更新本页，不新建部署或迁移平台：
+
+1. 默认新任务对已配置指标能由 main 自身的保存来源/有限在线路径得到与保留程序相同的结果：空目录 Marriott B01/B02 的成对录制比较仍是最低核对样本，扩大到其他公司/指标时按差异补对照。
+2. 新任务不再需要本地完整 Git 对象：无 `.git` 的安装位置（含 OpenShift 镜像）能完成同样的默认任务，`RETAINED_LOCAL_SOURCE_UNAVAILABLE` 不再是正常失败路径。
+3. 已存在的任务继续用各自记录的 `program_root` 读取，不迁移、不重签；`retained_main_commit` 只是描述创建时程序版本的字段，退出后仅用于读取旧任务。
+
+退出前，本页与 `interact.md` 继续如实写明该入口需要完整 Git 对象与匹配依赖；不得把保留安装写成已实现的轻量在线全量能力。
+
 ## 保留原生版本：默认新任务兼容流程
 
 下面是不带 `--source-root/--call-context` 的固定原生入口，需要前表所述完整Git对象、原依赖及有效许可；不用于证明新的轻量在线全量能力。
