@@ -2,8 +2,10 @@
 
 ## 按实际运行版本选检查
 
+2026-10-06当前CI快测：`python3 tools/run_foundation_ci.py --suite fast --jobs 1`使用一个进程及unittest类/模块准备，记录每项失败、导入错误与明确跳过；测试stdout/stderr进入报告，不破坏JSON。完整年报的`NormalAnnualInputTest`归材料层（`--suite source-material`），选择器仍全部对账、未删除业务断言。旧runner保持供旧版本诊断，本改动不宣布公司run或所有材料验收完成。主要测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`。
+
 - main 的 PR57 原生版本：下述 company handoff/source-authority/native 检查用于原程序及保留任务；固定依赖按原身份读取。不要用旧快照要求当前新开发文件永远不变。
-- PR67 普通记录候选：快速业务例及保存原件集成验证公司/期间/单位/引用、已知错误、成功/稳定扣留复用、计数、失败隔离、中断恢复和旧读取。实际命令及终态以 [PR67](https://github.com/wlvh/SEC_metrics/pull/67)主要验证记录为准，候选快测改动尚未进入 main。
+- PR67 普通记录候选：快速业务例及保存原件集成验证公司/期间/单位/引用、已知错误、成功/稳定扣留复用、计数、失败隔离、中断恢复和旧读取。实际命令及终态以 [PR67](https://github.com/wlvh/SEC_metrics/pull/67)主要验证记录为准，共用快测准备/材料分层已由PR61进入main；候选独有公司检查仍在PR67。
 - 已退休的独立信任、防伪批准、祖先字节证明和封存要求不作为新路径必须通过的测试；保留源码供原版本诊断。退出专属测试不允许静默跳过仍适用的业务与普通故障反例。
 - 文档改动核对实际 CLI 参数、链接和能力范围，不默认重跑全部财报。新接线须经过用户入口的真实解析/保存/计算/读取；只替换外部 HTTP 的录制与真实 SEC 验收分开。
 

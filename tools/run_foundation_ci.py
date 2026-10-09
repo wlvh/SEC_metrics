@@ -1,29 +1,55 @@
-"""CI-only partition of the fixed inherited selectors; no added business suite.
+"""Current CI: small tests share a process; full originals keep their own tier.
 
-Reuse the existing v2 source-material classification and workers. Keep every
-selector in the frozen inherited runner exactly once, without changing either
-runner's functions, per-case limits or old CLI behavior.
+The old runner stays available for saved-version diagnostics. This current
+entry keeps its selectors visible without launching Python for each unit test.
 """
 import argparse
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import redirect_stderr, redirect_stdout
 import json
+import io
+import sys
 import time
+import unittest
 
 import run_fast_tests as inherited
 import run_fast_tests_v2 as v2
+
+# These methods parse full originals across several companies. They are not
+# small-input tests and cannot meaningfully use the old 30-second unit budget.
+MATERIAL_PREFIXES = ('tests.vnext.test_normal_annual_input.NormalAnnualInputTest.',)
 
 
 def partition():
     original = tuple(inherited.FAST_TESTS)
     source = tuple(s for s in original
                    if s == v2.REPLACED
-                   or any(s.startswith(prefix) for prefix in v2.SOURCE_PREFIXES))
+                   or any(s.startswith(prefix) for prefix in (*v2.SOURCE_PREFIXES, *MATERIAL_PREFIXES)))
     fast = tuple(s for s in original if s not in source)
     if (len(set(original)) != len(original) or set(fast) & set(source)
             or set(fast) | set(source) != set(original)
             or len(fast) + len(source) != len(original)):
         raise inherited.FastTestError('FOUNDATION_CI_SELECTOR_COVERAGE_CHANGED')
     return {'fast':fast, 'source-material':source}
+
+
+def run_fast_suite(selected):
+    """Use unittest's class/module fixtures once; keep each failure observable."""
+    # Direct script invocation starts with tools/, whereas `python -m unittest`
+    # starts with the repository root. In-process loading needs that same root.
+    if str(inherited.REPO_ROOT) not in sys.path:
+        sys.path.insert(0, str(inherited.REPO_ROOT))
+    suite = unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(s) for s in selected)
+    stream = io.StringIO(); start = time.monotonic()
+    with redirect_stdout(stream), redirect_stderr(stream):
+        result = unittest.TextTestRunner(stream=stream, verbosity=1).run(suite)
+    return {'return_code': 0 if result.wasSuccessful() else 1,
+            'duration_seconds': time.monotonic()-start,
+            'test_count': result.testsRun,
+            'failures': [{'test': str(t), 'traceback': error} for t,error in result.failures],
+            'errors': [{'test': str(t), 'traceback': error} for t,error in result.errors],
+            'skips': [{'test': str(t), 'reason': reason} for t,reason in result.skipped],
+            'diagnostics': stream.getvalue()}
 
 
 def main():
@@ -40,15 +66,16 @@ def main():
         return 0
     if not 1 <= args.jobs <= len(selected):
         raise inherited.FastTestError('FAST_TEST_JOBS_INVALID')
-    def worker(name):
-        return (inherited._run_case(test_name=name) if args.suite == 'fast'
-                else v2._run_source_case(name))
     start = time.monotonic()
-    with ThreadPoolExecutor(max_workers=args.jobs) as pool:
-        results = list(pool.map(worker, selected))
+    if args.suite == 'fast':
+        results = [run_fast_suite(selected)]
+    else:
+        with ThreadPoolExecutor(max_workers=args.jobs) as pool:
+            results = list(pool.map(v2._run_source_case, selected))
     status = 'PASSED' if all(r['return_code'] == 0 for r in results) else 'FAILED'
     print(json.dumps({'suite':args.suite, 'status':status,
-        'duration_seconds':time.monotonic()-start, 'jobs':args.jobs,
+        'duration_seconds':time.monotonic()-start,
+        'jobs':1 if args.suite == 'fast' else args.jobs, 'selected_selectors': selected,
         'total_inherited':len(inherited.FAST_TESTS), 'tests':results}, sort_keys=True))
     return 0 if status == 'PASSED' else 1
 

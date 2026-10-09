@@ -2,7 +2,7 @@
 
 ## 先核对命令所属版本
 
-main 的原生 `run` 与 PR67 的保存来源候选分开。PR67 `run --source-root` 可生成当前公司 CSV/证据；省略该参数的新在线安装尚未接通。旧任务读取使用创建它的固定程序和依赖。下面的原生安装、独立信任和 Requirement 行为只适用于保留版本；新普通记录不以这些旧机制作为前置。具体参数与支持范围见 [公司运行](docs/company_local_run.md)，程序通过或状态表齐全不等于业务接受。
+main 的原生 `run` 与 PR67 的保存来源候选分开。PR67 `run --source-root` 可生成当前公司 CSV/证据；省略该参数时，PR67兼容修复自动安装固定main8588的原生程序，无需用户切Git版本；新的轻量在线后继在独立PR83。旧任务读取使用创建它的固定程序和依赖。下面的原生安装、独立信任和 Requirement 行为只适用于保留版本；新普通记录不以这些旧机制作为前置。具体参数与支持范围见 [公司运行](docs/company_local_run.md)，程序通过或状态表齐全不等于业务接受。
 
 main 固定原生版本（8588ccbb / PR57）入口 `python tools/vnext_company.py run --company <已配置公司> --period latest-complete-fy --work-dir <任务目录> --output-dir <导出目录>` 自动调度来源与公司计算，输出独立运行目录下的 `metrics_matrix.csv`、`metric_evidence.csv`、`run_summary.json`。相对路径安全转绝对路径，任务目录须在源码树之外；用户不逐次选择运行树。默认请求配置中全部39项，未实现的D03、未提供的完整判断及失败分别列状态；`--metric`调试子集仍保留39项状态，未请求项不冒充完成。来源部分或指标待处理时为 `FLOW_COMPLETED_WITH_LIMITATIONS` / exit 2，完整阶段失败为 `FLOW_INCOMPLETE`；流程结束不授业务正确性信用。真实SEC需本任务许可，默认单次及累积最多120、零重试/每用户本入口共享1次每秒；旧#28/#47额度不借用。已有来源按内容复用，新判断没有本入口调用授权。详见 [本地运行说明](docs/company_local_run.md)。
 <!-- capability-anchor: CAPABILITY.local_company_run -->

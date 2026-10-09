@@ -2,7 +2,7 @@
 
 ## 公司入口的当前交付边界
 
-#28维护公共 runtime/CLI 与当期集成，#47维护历史消费者。main 已有 PR57 原生流程；[PR67](https://github.com/wlvh/SEC_metrics/pull/67)提供普通记录的保存来源候选，尚未合入 main，新的在线安装仍未接通。`run` 是否能从空来源运行取决于版本，不能从同名 CLI 推断。版本/命令与限制见 [公司运行](docs/company_local_run.md)。
+#28维护公共 runtime/CLI 与当期集成，#47维护历史消费者。main 已有 PR57 原生流程；[PR67](https://github.com/wlvh/SEC_metrics/pull/67)提供普通记录的保存来源候选，尚未合入main；其默认新任务已通过固定main8588原生程序的自动安装兼容修复，新的轻量在线后继在独立PR83。`run` 是否能从空来源运行取决于版本，不能从同名 CLI 推断。版本/命令与限制见 [公司运行](docs/company_local_run.md)。
 
 新普通记录路径按 [受信任内部工具决定](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006)简化；下述 native/Requirement/信任/封存章节说明旧固定版本和旧任务，不是新路径必须重建的框架。来源与计算分离、公司/期间、引用、计数、原子写入、必要锁和恢复仍适用。
 

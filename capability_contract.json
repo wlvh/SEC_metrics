@@ -9,7 +9,7 @@
     "契约区分流程实现、实际运行、recorded、staging、active 与 full 证据；vNext formal/full acquisition 编排存在不等于本轮 live acquisition 或 Cutover 已完成，不得虚构前端、API、调度或数据库能力。",
     "alignment checker 只证明 anchor、path 与 symbol 等结构存在；symbol 存在不等于 claim 已被证明，证据强度仍由 reviewer 判断。",
     "test_status 是必填受控证据分类，并必须与 test_anchor 有无一致；它不是 PASS 结论，也不能把 symbol 存在升级为 statement 已被证明。",
-    "active 表示契约当前登记，不表示任意源码版本可创建新任务；公司入口须区分 main 原生、PR67 保存来源候选及保留任务，候选新在线安装尚未接通。"
+    "active 表示契约当前登记，不表示任意源码版本可创建新任务；公司入口须区分 main 原生、PR67 保存来源候选及保留任务，PR67默认新任务自动安装固定main8588原生程序已限定验证；轻量在线后继PR83仍单独待接收。"
   ],
   "deprecated_anchor_ids": [],
   "contracts": {
@@ -377,7 +377,7 @@
         "anchor_id": "CAPABILITY.local_company_run",
         "type": "capability",
         "status": "active",
-        "statement": "main固定原生版本（8588ccbb / PR57）本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际空源29+2为录制，非真实SEC验收。已有判断按独立输入及原版本认证/来源等价复用，无新模型调用权限。Marriott真实首次、复跑和局部重入已在获准额度内完成（docs/evidence/issue54_company/live2）；不授Merge/部署/发布/active。 PR67普通记录候选仅支持run --source-root；尚未进入main，其新的在线安装未接通，不能继承本契约的新任务信用。版本和参数见docs/company_local_run.md。",
+        "statement": "main固定原生版本（8588ccbb / PR57）本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际空源29+2为录制，非真实SEC验收。已有判断按独立输入及原版本认证/来源等价复用，无新模型调用权限。Marriott真实首次、复跑和局部重入已在获准额度内完成（docs/evidence/issue54_company/live2）；不授Merge/部署/发布/active。 PR67候选尚未进入main：run --source-root走普通保存记录；不带该参数的新任务经兼容修复自动安装固定main8588原生程序，Marriott B01/B02同录制HTTP从空目录完整验证，用户不手选Git版本。此代表性验证不证明全部39项业务通过；新的轻量在线后继PR83单独待接收。版本、Git对象及依赖前提见docs/company_local_run.md。",
         "audience": [
           "business_user",
           "operator",

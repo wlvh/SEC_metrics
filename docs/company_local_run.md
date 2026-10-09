@@ -5,19 +5,21 @@
 | 版本/入口 | 能做什么 | 前提与限制 |
 |---|---|---|
 | main 既有实现，固定基线 `8588ccbbb1c91d81e0fb1a89dff3575214282549` | `run` 从空任务发现/获取来源，调度原生计算和 CSV/证据出口；`acquire` 独立采集 | 这是 PR57 已交付的原生流程，使用其固定依赖及原任务账本。真实请求仍须适用许可；39项状态不代表39项内容通过。 |
-| [PR67](https://github.com/wlvh/SEC_metrics/pull/67) 保存来源候选 `29c9c9e2080a1de8c809660ac8fbdfc49072ef12` | `run --source-root` 处理已保存来源，普通记录 `results` 日常读取 | 尚未进入 main；新在线安装未接通，不能在这个候选上省略 `--source-root` 后宣称全流程可用。已接入指标和验证见 PR67。 |
+| [PR67](https://github.com/wlvh/SEC_metrics/pull/67) 保存来源及兼容候选 `f7905156f7972b214e71d7f0a9a1172f7ac969cf` | `run --source-root` 处理已保存来源，普通记录 `results` 日常读取 | 尚未进入main；省略`--source-root`会自动安装固定main8588原生程序，需完整Git对象及其匹配依赖。Marriott B01/B02从空目录的完整录制HTTP入口已验证；这不是全部39项业务接受。 |
 | 已有原生任务 | `results` / 显式审计导出读取原 Run | 使用创建该任务的固定程序、状态、来源登记及依赖；新 CLI 与任意旧程序混用不保证兼容。 |
 
-来源与计算分别运行，`run`只顺序调度。main 原生流程与 PR67 普通记录是过渡版本，不是永久双系统。轻量在线续接由 #28 在保存来源阶段后接入，尚未实现的能力不写成默认可用。代码交付、运行成功、业务接受和正式发布分别判断。
+本页最新main核对为`f447a374`，已含PR61测试基础和PR58 D02检查；本文所述原生运行的完整录制基线仍是`8588ccbb`，不能把该成对结果扩为新main所有指标的重新验收。PR67的默认入口兼容、三个审查入口及限定证据见[接收前主要记录](https://github.com/wlvh/SEC_metrics/blob/f7905156f7972b214e71d7f0a9a1172f7ac969cf/docs/evidence/issue28_company_records_20261007/default-online-review-20261009/README.md)。
+
+来源与计算分别运行，`run`只顺序调度。main 原生流程与 PR67 普通记录是过渡版本，不是永久双系统。轻量在线续接由#28在独立PR83交付候选；已实现但尚未接收的能力不写成main默认可用。代码交付、运行成功、业务接受和正式发布分别判断。
 
 ## main 固定原生版本：新任务完整流程
 
-下面命令仅用于上述固定 main 实现及其匹配依赖，不用于 PR67 的新在线安装。Marriott 的既有真实首次、重复运行与局部重入见本页末材料；不是对所有公司/指标的完成保证。
+下面命令适用于上述固定main实现；PR67兼容修复也接受相同命令并自动安装固定main8588程序。更广指标仍需要各自匹配依赖，已有任务保留原程序。Marriott 的既有真实首次、重复运行与局部重入见本页末材料；不是对所有公司/指标的完成保证。
 
 在源码目录之外的工作位置执行，固定源码也可用绝对路径指定：
 
 ```bash
-python /path/to/main-8588ccbb/SEC_metrics/tools/vnext_company.py run \
+python /path/to/SEC_metrics/tools/vnext_company.py run \
   --company marriott_international \
   --period latest-complete-fy \
   --work-dir ./work/sec-metrics \
@@ -89,4 +91,4 @@ python /path/to/pr67/SEC_metrics/tools/vnext_company.py results \
   --state-root /data/company-task --company marriott_international
 ```
 
-此候选不默认重放/复制整套状态来日常出表；成功和稳定扣留均可复用已完成检查，扣留仍显示原原因。新在线采集、未接入族与新模型执行不在该候选交付范围。保留原生任务的 `results` 仍需匹配原版 `--runtime-root` 与 `--trust-root`，不能套用普通记录无 trust 的示例。
+此候选不默认重放/复制整套状态来日常出表；成功和稳定扣留均可复用已完成检查，扣留仍显示原原因。新的轻量在线实现、未接入族与新模型执行不在该候选交付范围；默认命令的原生兼容路径见前述版本表。保留原生任务的 `results` 仍需匹配原版 `--runtime-root` 与 `--trust-root`，不能套用普通记录无 trust 的示例。

@@ -2,7 +2,7 @@
 
 **版本：PR57 已交付 main 的原生交接接口；下列安装/信任命令仅适用该固定版本及保留的原生任务。** 对应历史 `COMPANY-SEPARATION-v2.1-20261002`；代码交付不等于业务接受、部署或发布。
 
-PR67 的新普通记录路径在候选分支实现，使用已保存 `source-root`，不恢复本页的独立信任/递归权限链作为新路径前置；候选的新在线安装仍未接通。版本对应命令见 [公司运行](company_local_run.md)。来源/计算分离、原件与引用、公司/期间、调用计数、原子写入、锁及恢复继续保留。
+PR67 的新普通记录路径在候选分支实现，使用已保存 `source-root`，不恢复本页的独立信任/递归权限链作为新路径前置；候选默认新任务已通过固定main8588程序的自动安装兼容修复，新的轻量在线后继在独立PR83。版本对应命令见 [公司运行](company_local_run.md)。来源/计算分离、原件与引用、公司/期间、调用计数、原子写入、锁及恢复继续保留。
 
 当前公共及当期集成、唯一队列见 [Issue #28](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification)，历史消费者由 [#47](https://github.com/wlvh/SEC_metrics/issues/47#history-simplification-20261006)维护。[#54](https://github.com/wlvh/SEC_metrics/issues/54)仅保留已交付来源和证据。本页用于承接最终的稳定使用说明，不复制 Issue 进度或建立另一份待办。
 
@@ -20,7 +20,7 @@ PR67 的新普通记录路径在候选分支实现，使用已保存 `source-roo
 
 ## 保留原生版本的使用与证据
 
-main 固定原生版本使用 [单命令 `run` 与独立 `acquire`](company_local_run.md)；PR67候选只用该页保存来源示例，不能自动套用本文安装链。本文分阶段命令继续用于两个环境分别调度、诊断和既有来源恢复；新任务的空来源路径与保存混合来源恢复分别说明，不能相互充当验收。
+main 固定原生版本使用 [单命令 `run` 与独立 `acquire`](company_local_run.md)；PR67保存来源路径使用该页对应示例；默认新任务自动安装固定main8588原生程序。不要把保存来源记录与本文保留的安装/trust参数混用。本文分阶段命令继续用于两个环境分别调度、诊断和既有来源恢复；新任务的空来源路径与保存混合来源恢复分别说明，不能相互充当验收。
 
 `tools/vnext_company.py` 提供 `export`、`install-runtime`、`install`、`compute`、`results`、`export-results`、`export-processing`。所有路径必须显式传入、绝对且无 symlink，输出不得覆盖程序或 active 工作区。下面的 `/srv/sec-metrics` 是部署方选择的示例，不要求该目录、个人 HOME、root 或特权功能。
 
