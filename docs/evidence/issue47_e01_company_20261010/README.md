@@ -88,3 +88,5 @@ PY_SOURCE_ONLY
 驱动读取CSV时默认131072字段容量失败，实际三个CLI均正常；仅读现成输出核对发现本方完整修订scope对象嵌进daily selection造成2.55MB单格。现只在本producer展示scopeID/classification/明确窗口/来源引用，完整评估/原请求仍在input-assessments及绑定。9短例.008s零skip；已算case纯writer2.003s验证CSV字段7910字符/默认csv可读，完整assessment/ResultID同，不重读源。
 
 这一真正展示代码变化只正常迁移原E01该一坐标22.861s，原旧版本保留，禁factory复3.371s/calculationfalse、独立results.603s；15旧新结果/pointer文件保持，全年/CIK/null/2aa完整请求及annual amendment原评估均在。company-cli-display-final.json/log。没有其他公司/年份重算，原大CSV保旧版本。正式用户入口现在能写出可读未决和具体来源依赖，但内容确认模型业务仍未交付；新SEC/provider/paid0，无NativeRun/接受/active。
+
+公共方按885c固定tree提供最小CI patch，现PR114接收：只追加本consumer/完整附件合同/原MA合同三测试path及原Selected event步骤三模块，原source/projection/explicit门不丢、金融历史步骤不变。按同一实际步骤命令53方法.130s零skip，workflow-six-modules.json/log逐模块确认。此为小型纯合同/程序控制，真实ParamCLI复用上节，不以这些控制增加模型接受；新head远端执行单独核。

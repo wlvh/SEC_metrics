@@ -22,6 +22,9 @@ name: Company saved-source records
       - 'tests/vnext/test_selected_event_source_v1.py'
       - 'tests/vnext/test_historical_event_cases.py'
       - 'tests/vnext/test_registered_event_projection.py'
+      - 'tests/vnext/test_historical_e01_company_case.py'
+      - 'tests/vnext/test_historical_e01_incorporated_input.py'
+      - 'tests/vnext/test_historical_ma_confirmation.py'
       - 'tests/vnext/test_existing_historical_sec_state.py'
       - 'tests/vnext/test_historical_sec_capture_adapter.py'
       - 'tests/vnext/test_separate_rule_root.py'
@@ -62,7 +65,7 @@ jobs:
       - name: Selected event sources and explicit history validation
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1 tests.vnext.test_registered_event_projection tests.vnext.test_explicit_e01_company
+        run: python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1 tests.vnext.test_registered_event_projection tests.vnext.test_explicit_e01_company tests.vnext.test_historical_e01_company_case tests.vnext.test_historical_e01_incorporated_input tests.vnext.test_historical_ma_confirmation
       - name: Historical selected event scope and record retention
         env:
           PYTHONDONTWRITEBYTECODE: '1'
