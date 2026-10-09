@@ -1,0 +1,62 @@
+test_current_online_without_history_arguments_keeps_original_dispatch (tests.vnext.test_history_online_period_guard.HistoryOnlinePeriodGuardTest.test_current_online_without_history_arguments_keeps_original_dispatch) ... ok
+test_history_online_range_refuses_before_public_online_or_call_context (tests.vnext.test_history_online_period_guard.HistoryOnlinePeriodGuardTest.test_history_online_range_refuses_before_public_online_or_call_context) ... FAIL
+test_latest_online_cannot_silently_discard_either_year_bound (tests.vnext.test_history_online_period_guard.HistoryOnlinePeriodGuardTest.test_latest_online_cannot_silently_discard_either_year_bound) ... 
+  test_latest_online_cannot_silently_discard_either_year_bound (tests.vnext.test_history_online_period_guard.HistoryOnlinePeriodGuardTest.test_latest_online_cannot_silently_discard_either_year_bound) (extra=('--fiscal-year-start', '2021')) ... FAIL
+test_latest_online_cannot_silently_discard_either_year_bound (tests.vnext.test_history_online_period_guard.HistoryOnlinePeriodGuardTest.test_latest_online_cannot_silently_discard_either_year_bound) ... ERROR
+test_saved_history_still_forwards_actual_requested_range (tests.vnext.test_history_online_period_guard.HistoryOnlinePeriodGuardTest.test_saved_history_still_forwards_actual_requested_range) ... ok
+
+======================================================================
+ERROR: test_latest_online_cannot_silently_discard_either_year_bound (tests.vnext.test_history_online_period_guard.HistoryOnlinePeriodGuardTest.test_latest_online_cannot_silently_discard_either_year_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_history_online_period_guard.py", line 31, in test_latest_online_cannot_silently_discard_either_year_bound
+    self.assertEqual(caught.exception.code, 2)
+                     ^^^^^^^^^^^^^^^^
+AttributeError: '_AssertRaisesContext' object has no attribute 'exception'
+
+======================================================================
+FAIL: test_history_online_range_refuses_before_public_online_or_call_context (tests.vnext.test_history_online_period_guard.HistoryOnlinePeriodGuardTest.test_history_online_range_refuses_before_public_online_or_call_context)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_history_online_period_guard.py", line 20, in test_history_online_range_refuses_before_public_online_or_call_context
+    main(self.args('--period', 'fiscal-years', '--fiscal-year-start', '2021', '--fiscal-year-end', '2025'))
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tools/vnext_company.py", line 98, in main
+    result = run_online_company(company_id=args.company, work_dir=args.work_dir,
+        output_dir=args.output_dir, metric_ids=args.metric,
+        call_context=args.call_context, max_sec_requests=args.max_sec_requests)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: No online operation
+
+======================================================================
+FAIL: test_latest_online_cannot_silently_discard_either_year_bound (tests.vnext.test_history_online_period_guard.HistoryOnlinePeriodGuardTest.test_latest_online_cannot_silently_discard_either_year_bound) (extra=('--fiscal-year-start', '2021'))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_history_online_period_guard.py", line 30, in test_latest_online_cannot_silently_discard_either_year_bound
+    main(self.args(*extra))
+    ~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tools/vnext_company.py", line 98, in main
+    result = run_online_company(company_id=args.company, work_dir=args.work_dir,
+        output_dir=args.output_dir, metric_ids=args.metric,
+        call_context=args.call_context, max_sec_requests=args.max_sec_requests)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1241, in _execute_mock_call
+    raise effect
+AssertionError: No online operation
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.326s
+
+FAILED (failures=2, errors=1)
