@@ -56,3 +56,15 @@ python3 tools/vnext_company.py results --company salesforce \
 实际同一公司CLI另核只FY2021/B12一个相关处理版本：首7.998s/禁factory复.905s/独立读全部5年.582s，FY2021 CSV.cik=813828、原ResultID保持。其余四年未处理，30旧结果文件字节相同；旧年度CSV仍按原版本读取，不暗中重渲染。见reporting-cik-company-subset.json/log。结构NA在当前controller按CANDIDATE_READY→NO_SOURCE_CONTENT_CHANGE保存，其业务行仍N_A_STRUCTURAL/null，不误称业务扣留。当前真实当期SF旧Trace兼容失败仍待公共后继，不借这一历史路径通过消除限制。
 
 同固定83225a57程序另核受影响的Param FY2022/FY2023/FY2024原预计算记录：26.159s纯保存/读，三年CSV唯一CIK2041610→813828，原Result/Trace/input及日期/空值保持；金额提取/Calculator禁止，旧每年六文件保持，不更新原公司state/其他年份。见reporting-cik-remaining-predecessor.json/log。首驱动漏已有admission字段在保存阶段被拒，补现有verify_ordinary_source_proofs返回后重做，未构造新scope或修改原件。四个前身年均有实际修正呈现验证，不据此授予当期null Trace兼容或完整B12五年接受。
+
+## 公共null Trace修复后的实际组合
+
+固定公共74b05a60已原样接入fa6619bc。已有填值entity/accession仍须同annual匹配，合法null需要同CIK/申报的已保存primary引用；仅无金额/无text的元数据状态可用同CIK inventory。缺字段、未知或foreign来源、混主体及未证明scope仍拒绝。原79ff独审NEEDS_FIX保留，74修后独审尚待公共方，父/消费者测试不冒充独审或接收批准。
+
+本方59项组合29.896s/零skip全部通过，覆盖同公共controller的历史成功/稳定构造扣留/来源处理变化/子集读取，以及实际current Marriott酒店与Salesforce RPO保存/读。原52项中的真实当期B12拒绝已消除，旧失败日志保留。reporting-cik-nullable-combination.log为本方实际执行，不借作者37项或旧CI。
+
+最终同一Param FY21/B12公司入口只处理一个相关版本：首7.869s、禁止factory复.874s/调用0、全5年独立读.520s，新CIK813828、原Result ID保持；其他四年未处理，36旧结果文件不变。reporting-cik-nullable-company-subset.json/log保准确执行fa6619bc。未重跑三旧期纯呈现或45结构NA，旧年度CSV仍保原版本。全家族当期/历史接缝通过不等于完整1950或在线取源。
+
+已读并收到实际main67ae2c19到候选d66ddbc5，仅新增PR100的独立SecureGPT探针/说明/公共入口；相对fa6619bc，scripts/vnext、公司CLI、所用期间/展示配置字节无变化，因此不重复财报计算。没有执行探针或授内网调用；共享95/97/主体修复未main前仍是本候选的明确代码依赖。当前远端终态须按本次push的head核，原e4绿不移签。
+
+提交前capability结构检查因本主要记录尚未进入HEAD而报clean-clone evidence differs，日志保留；不是业务断言失败，不修改检查器或重铸旧材料。先提交真实已验证代码/记录，再按当前main重复这个受影响结构检查；两个检查副产物始终还原为检查前字节。
