@@ -18,6 +18,14 @@ Unchanged actual CLI repeat with range discovery/business case/Calculator forbid
 
 ## Controls and reuse
 
-62 range/pure-label/source/dispatch controls2.635s/zero skip pass. Initial syntax and incomplete control fixture failures retained. First broad recent-candidate attempt wrongly required absent2017–2020body files; initial-company-cli.json shows actual failure/no financial processing. Existing catalog window2021-01-30 forrequested22–23 was measured, then all in-window originals retained and outside rows recorded. This is a scope receiving correction, not a new fiscal-year naming rule or full older-company scan.
+Original run reported62 executions2.635s/zero skip; the limited reviewer identified48unique IDs because14 fixture tests were imported twice. The fixture is now imported as a module so no duplicate coverage is counted. Initial syntax and incomplete control fixture failures retained. First broad recent-candidate attempt wrongly required absent2017–2020body files; initial-company-cli.json shows actual failure/no financial processing. Existing catalog window2021-01-30 forrequested22–23 was measured, then all in-window originals retained and outside rows recorded. This is a scope receiving correction, not a new fiscal-year naming rule or full older-company scan.
 
 No full5year/bank1290s batch/model request, SDK/account action, main write, old record re-sign,Ready/merge/adoption/deploy/active. Exact tested-tree hashes/limited new-difference review and remote CI are separate from these original uncommitted-tree observations. PR126/127 needed upsteam; PR122 period guards and PR119/120 income repairs must be retained during combination, not overwritten by this source discovery feature.
+
+## Limited review and P2 repair
+
+Review of exact5511d77b returned CHANGES_REQUIRED, not approval: inherited current fiscal definitions accepted conditional/hypothetical examples(P1), and lazy factory referenced a caller-mutable year list(P2). Original conclusion and counterexamples remain in independent-review/. #47 owns the P1 reader repair; public range code is not growing a second fiscal parser.
+
+P2 now copies the requested years to an immutable tuple at factory creation. Appending a third year is refused before discovery/producer; replacing/reordering the original caller list leaves the2024–2025 discovery bounds and both allowed years unchanged. Original source/case behavior and unrelated factories are retained. The regression and fixture-import repair ran49unique tests in1.772s, zero failures/errors/skips, on the uncommitted repair tree. Two earlier command attempts named nonexistent test modules and failed imports; their logs are retained and are not passes. Final command uses the original history_company_dispatch module. No real company recomputation, model or SEC call occurred. Parent test success is not independent-review approval; P1 remains unresolved at this checkpoint.
+
+Remote exact5511d77b now has11SUCCESS checks, observed2026-10-10; this is the oldhead terminal and does not cover these new repairs.

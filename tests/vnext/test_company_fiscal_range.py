@@ -6,7 +6,8 @@ from pathlib import Path
 from unittest import TestCase
 from unittest.mock import patch
 
-from tests.vnext.test_selected_source_requirements import SelectedSourceRequirementsTest, COMPANY, CIK
+from tests.vnext import test_selected_source_requirements as source_fixtures
+from tests.vnext.test_selected_source_requirements import COMPANY, CIK
 from tests.vnext.test_selected_historical_fiscal_label import annual
 from sec_urls import companyfacts_url
 from vnext import company_fiscal_range as ranges
@@ -16,7 +17,7 @@ from tools.vnext_company import main
 
 class CompanyFiscalRangeTest(TestCase):
     def setUp(self):
-        self.fixture=SelectedSourceRequirementsTest();self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
+        self.fixture=source_fixtures.SelectedSourceRequirementsTest();self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
         self.source=self.fixture.root
         rows=[]
         for year,filing in zip((2025,2024),self.fixture.filings):
@@ -124,6 +125,28 @@ class CompanyFiscalRangeTest(TestCase):
                 with self.assertRaisesRegex(ValueError,'YEAR_UNRESOLVED'):
                     factory(repo_root=self.source,company_id=COMPANY,metric_id='B01',fiscal_year=2025)
                 producer.assert_not_called()
+
+    def test_lazy_factory_freezes_the_callers_year_scope(self):
+        years=[2024,2025]
+        plan={'tasks':[{'fiscal_year':y,'status':'FISCAL_YEAR_RESOLVED',
+                       'period_selection':{'requested_fiscal_year':y},'limitations':[]} for y in years]}
+        with patch.object(ranges,'discover_fiscal_range',return_value=plan) as discovery:
+            with patch('vnext.historical_statement_cases.prepare_historical_statement_year_case') as producer:
+                factory=ranges.range_case_factories(company_id=COMPANY,fiscal_years=years,
+                    metric_ids=['B01'],case_factories={'B01':producer})['B01']
+                years.append(2026)
+                with self.assertRaisesRegex(ValueError,'FACTORY_SCOPE_CHANGED'):
+                    factory(repo_root=self.source,company_id=COMPANY,metric_id='B01',fiscal_year=2026)
+                discovery.assert_not_called();producer.assert_not_called()
+                # Replacing/reordering the caller's list cannot narrow or change
+                # the original discovery window either.
+                years[:]=[2027,2026]
+                factory(repo_root=self.source,company_id=COMPANY,metric_id='B01',fiscal_year=2024)
+                factory(repo_root=self.source,company_id=COMPANY,metric_id='B01',fiscal_year=2025)
+                self.assertEqual(discovery.call_count,1)
+                self.assertEqual(discovery.call_args.kwargs['fiscal_year_start'],2024)
+                self.assertEqual(discovery.call_args.kwargs['fiscal_year_end'],2025)
+                self.assertEqual([c.kwargs['fiscal_year'] for c in producer.call_args_list],[2024,2025])
 
     def test_invalid_five_year_bounds_and_metric_scope_are_rejected(self):
         for first,last in [(True,2025),(2025,2024),(2020,2025),(1899,1900)]:

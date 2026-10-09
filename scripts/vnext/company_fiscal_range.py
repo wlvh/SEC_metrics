@@ -157,19 +157,20 @@ def discover_fiscal_range(*,repo_root,company_id,fiscal_year_start,fiscal_year_e
 
 def range_case_factories(*,company_id,fiscal_years,metric_ids,case_factories):
     """Operation-local lazy source discovery, only after the updater needs work."""
-    _need(fiscal_years==_years(min(fiscal_years),max(fiscal_years)), 'YEARS_NOT_CONTIGUOUS')
+    years=tuple(fiscal_years)
+    _need(bool(years) and years==tuple(_years(min(years),max(years))), 'YEARS_NOT_CONTIGUOUS')
     selected=set(metric_ids)&METRIC_IDS
     _need(selected<=set(case_factories),'BUSINESS_CASE_MISSING')
     cache={}; result=dict(case_factories); expected_company=company_id
     def make(producer,metric):
         def prepare_year_case(*,repo_root,company_id,metric_id,fiscal_year):
-            _need(company_id==expected_company and metric_id==metric and fiscal_year in fiscal_years,'FACTORY_SCOPE_CHANGED')
+            _need(company_id==expected_company and metric_id==metric and fiscal_year in years,'FACTORY_SCOPE_CHANGED')
             source=Path(repo_root).resolve()
             key=(str(source),sha256_file(path=source/'evidence/requests_log.csv'),
                  sha256_file(path=source/'config/company_registry.csv'))
             if key not in cache:
                 cache[key]=discover_fiscal_range(repo_root=source,company_id=company_id,
-                    fiscal_year_start=fiscal_years[0],fiscal_year_end=fiscal_years[-1],metric_ids=sorted(selected))
+                    fiscal_year_start=years[0],fiscal_year_end=years[-1],metric_ids=sorted(selected))
             task=next(t for t in cache[key]['tasks'] if t['fiscal_year']==fiscal_year)
             _need(task['status']=='FISCAL_YEAR_RESOLVED','YEAR_UNRESOLVED:'+str(task['limitations']))
             # The actual business case still revalidates the supplied selection,
