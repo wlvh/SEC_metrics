@@ -357,6 +357,28 @@ class GeneratedTablesTest(unittest.TestCase):
         self.assertEqual(39, len(rows))
         self.assertEqual(generator.DEFINITIONS_CSV_COLUMNS, list(rows[0]))
 
+    def test_owner_scope_decisions_are_visible_in_json_and_csv_without_replacing_main_definitions(self) -> None:
+        with io.StringIO(self.built["files"]["catalog/reference/generated/metric_definitions.csv"].decode("utf-8")) as handle:
+            csv_rows = {row["metric_id"]: row for row in csv.DictReader(handle)}
+        for metric_id, status, date_value, phrase in (
+            ("B02", "POLICY_PENDING", None, "尚未决定"),
+            ("C02", "DECIDED_TARGET", "2026-09-27", "构成事实"),
+            ("E01", "DECIDED_TARGET", "2026-09-27", "经内容确认"),
+        ):
+            record = self.by_metric[metric_id]
+            decision = record["owner_scope_decision"]
+            self.assertEqual(status, decision["status"])
+            self.assertEqual(date_value, decision["decision_date"])
+            self.assertEqual("2026-10-01", decision["recorded_date"])
+            self.assertIn(phrase, decision["content_zh"])
+            self.assertIn("/blob/" + decision["source"]["commit"] + "/",
+                          decision["source"]["url"])
+            self.assertEqual(decision, json.loads(csv_rows[metric_id]["owner_scope_decision"]))
+            self.assertEqual(_read_json("catalog/reference/metric_metadata.json")["metrics"][metric_id]["description_zh"],
+                             record["description_zh"])
+        self.assertIsNone(self.by_metric["B03"]["owner_scope_decision"])
+        self.assertEqual("", csv_rows["B03"]["owner_scope_decision"])
+
     def test_reference_directory_is_not_scanned_by_runtime_code(self) -> None:
         offenders = []
         for directory in ("scripts", "tools"):
@@ -772,6 +794,21 @@ class NegativeCasesTest(unittest.TestCase):
             "not in the status vocabulary",
             relative="catalog/reference/metric_metadata.json",
         )
+
+    def test_owner_scope_status_date_and_fixed_source_are_validated(self) -> None:
+        relative = "catalog/reference/metric_metadata.json"
+        self._assert_error(
+            lambda payload: payload["metrics"]["C02"]["owner_scope_decision"].__setitem__("status", "POLICY_PENDING"),
+            "C02: owner_scope_decision status or content differs", relative=relative)
+        self._assert_error(
+            lambda payload: payload["metrics"]["E01"]["owner_scope_decision"].__setitem__("decision_date", "2026-99-99"),
+            "E01: owner_scope_decision date invalid", relative=relative)
+        self._assert_error(
+            lambda payload: payload["metrics"]["B02"]["owner_scope_decision"]["source"].__setitem__("url", "https://github.com/example/changed"),
+            "B02: owner_scope_decision fixed source invalid", relative=relative)
+        self._assert_error(
+            lambda payload: payload["metrics"]["C02"].pop("owner_scope_decision"),
+            "owner_scope_decision must cover exactly B02, C02 and E01", relative=relative)
 
     def test_check_mode_writes_nothing(self) -> None:
         with _TempCopy() as root:
