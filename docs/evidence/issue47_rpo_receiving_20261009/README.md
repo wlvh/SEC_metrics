@@ -68,3 +68,7 @@ python3 tools/vnext_company.py results --company salesforce \
 已读并收到实际main67ae2c19到候选d66ddbc5，仅新增PR100的独立SecureGPT探针/说明/公共入口；相对fa6619bc，scripts/vnext、公司CLI、所用期间/展示配置字节无变化，因此不重复财报计算。没有执行探针或授内网调用；共享95/97/主体修复未main前仍是本候选的明确代码依赖。当前远端终态须按本次push的head核，原e4绿不移签。
 
 提交前capability结构检查因本主要记录尚未进入HEAD而报clean-clone evidence differs，日志保留；不是业务断言失败，不修改检查器或重铸旧材料。先提交真实已验证代码/记录，再按当前main重复这个受影响结构检查；两个检查副产物始终还原为检查前字节。
+
+远端f3dd9b31实际终态：company-current run37939874754/job113851224576 SUCCESS，172项143.849s含新真实current null来源/guard逐项ok，历史两模块21项.962s、事件13项.171s/9项.044s也执行。vNext37939874755整体FAILURE：fast/material/foundation三作业导入run_fast_tests_v2.py:200报NameError SOURCE_MATERIAL_TESTS未定义，原清单名为SOURCE_TESTS；其余四作业成功。失败完整日志及公司摘录在ci-f3dd9b31-*，公共#28修最小登记名，本方不改runner、旧快照或业务断言，不把公司SUCCESS称整CI全绿。登记修复后只核导入/实际选择器归属及新远端终态，不重算财报或重跑59已通过业务。
+
+已原样接公共abb7abdd到0e6aff15：唯一清单名SOURCE_MATERIAL_TESTS→SOURCE_TESTS，不变业务/runner函数。实际导入通过，9guard在FAST_TESTS一次、3真实current来源类在SOURCE_TESTS一次且不在快测，加载12无error，函数/类AST与f3相同；runner-fix-receiving.json保接收结果。上述f3远端失败不删除，后继新head另核CI；本次不重跑已通过59组合或财报。
