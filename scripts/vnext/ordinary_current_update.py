@@ -14,7 +14,7 @@ from urllib.parse import urlsplit
 from .annual_sources import _rows
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
-from .ordinary_saved_result import METRIC_IDS, SAVED_METRIC_IDS, create_saved_result, read_saved_result, save_calculated_case
+from .ordinary_saved_result import METRIC_IDS, SAVED_METRIC_IDS, CURRENT_FINANCIAL_METRICS, create_saved_result, read_saved_result, save_calculated_case
 from .traits import repository_company_ciks
 
 
@@ -33,8 +33,9 @@ def _configuration(source, company, metric):
     # These files belong solely to the lodging producer. The zero-AI Spec
     # set never prepares a lodging case; unrelated edits must not recalculate
     # B01/B02 or their other supported deterministic neighbours.
-    if metric in METRIC_IDS:
-        paths.add('scripts/vnext/zero_ai_r2.py')
+    if metric in METRIC_IDS or metric in CURRENT_FINANCIAL_METRICS:
+        if metric in METRIC_IDS:
+            paths.add('scripts/vnext/zero_ai_r2.py')
         paths.difference_update({'scripts/vnext/normal_lodging_results.py',
             'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
             'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
@@ -60,6 +61,15 @@ def _configuration(source, company, metric):
         paths.update('scripts/vnext/'+name+'.py' for name in (
             'ordinary_da_scope_v1','ordinary_b03_input_scope','xbrl_namespace_policy','b03_depreciation_scope',
             'b03_contract_amortization_scope','financial_structured','text_results_v2','reported_monetary_literal'))
+    if metric in CURRENT_FINANCIAL_METRICS:
+        paths.update('scripts/vnext/'+name+'.py' for name in (
+            'financial_results','financial_relationships','financial_duration',
+            'financial_candidates','financial_balance_scope','financial_structured',
+            'composite_scope','constraints','r4_task_contracts','table_task_contracts',
+            'annual_update','normal_source_authority'))
+        paths.update({'catalog/r4_normal/A04_net_interest_margin.md',
+            'catalog/r4_v2/A04_net_interest_margin.md','catalog/table_task_contracts.json',
+            'config/r4_task_contracts_v2.json','docs/evidence/issue_28_prb_policy_revision.json'})
     return {'company_id':company,'metric_id':metric,'source_root':str(source),
         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
         'source_registry_sha256':sha256_file(path=source/'config/company_registry.csv'),

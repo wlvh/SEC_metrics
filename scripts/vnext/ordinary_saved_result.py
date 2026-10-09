@@ -18,7 +18,8 @@ from .records import validate_record
 
 METRIC_IDS = frozenset(installed_ordinary_spec_documents())
 LODGING_METRIC_IDS = frozenset({'B10','B11'})
-SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS
+CURRENT_FINANCIAL_METRICS = frozenset({'A04'})
+SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | CURRENT_FINANCIAL_METRICS
 
 
 def _program_version(root):
@@ -82,10 +83,30 @@ def _ordinary_case(source, company, metric):
         'selection': detail.get('selection', detail.get('inspection'))}
 
 
+def _current_financial_case(source, company, metric):
+    """Adapt the existing current financial resolution, without recalculating."""
+    from .financial_results import resolve_ordinary_financial_metric
+    resolution = resolve_ordinary_financial_metric(repo_root=source,
+        company_id=company, metric_id=metric)
+    return {'primary_metric_id':metric, 'kind':'STRUCTURED',
+        'input_binding':resolution['input_binding'],
+        'compiled_specs':{metric:resolution['compiled_spec']},
+        'spec_paths':{metric:resolution['spec_path']},
+        'references':resolution['source_references'], 'source_proofs':resolution['source_proofs'],
+        'admission':resolution['source_admission'], 'target_period':resolution['target_period'],
+        'prepared_annual_input':resolution['prepared_input'],
+        'expected_records':resolution['records'], 'results':{metric:resolution['result']},
+        'traces':{metric:resolution['trace']},
+        'selection':{**resolution['selection'], 'source_fact':resolution['source_fact']},
+        'rules_root':str(Path(__file__).resolve().parents[2])}
+
+
 def create_saved_result(*, source_root, output_root, company_id, metric_id, shared_input_root=None):
     """Prepare through the existing Calculator and save its actual records."""
     _need(metric_id in SAVED_METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')
     def prepare(source):
+        if metric_id in CURRENT_FINANCIAL_METRICS:
+            return _current_financial_case(source,company_id,metric_id)
         if metric_id in LODGING_METRIC_IDS:
             from .normal_lodging_results import prepare_ordinary_lodging_case
             return prepare_ordinary_lodging_case(repo_root=source,company_id=company_id,metric_id=metric_id,
