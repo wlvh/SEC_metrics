@@ -62,6 +62,15 @@ class SelectedHistoricalFiscalLabelTest(unittest.TestCase):
         r=self.resolve(raw=raw)
         self.assertEqual(r['selected_fiscal_year'],2022)
 
+    def test_other_sentence_in_same_block_does_not_qualify_actual_mapping(self):
+        for sentence in [
+            'If the proposed naming convention is approved, we will publish a notice. ',
+            'A hypothetical example is discussed in the following section. ',
+        ]:
+            raw=annual().replace(b'</body></html>',('<p>Our fiscal year ends on December 31. '+sentence+'References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021.</p></body></html>').encode())
+            with self.subTest(sentence=sentence):
+                self.assertEqual(self.resolve(raw=raw)['selected_fiscal_year'],2022)
+
     def test_prepared_historical_reader_uses_same_scope_without_changing_retained_scan(self):
         from vnext import historical_fiscal_labels as labels
         from vnext.historical_dei import release_aware
