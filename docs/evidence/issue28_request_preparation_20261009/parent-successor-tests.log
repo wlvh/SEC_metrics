@@ -1,0 +1,44 @@
+test_default_wire_bytes_and_context_identity_are_preserved (tests.vnext.test_request_limits.RequestLimitsTest.test_default_wire_bytes_and_context_identity_are_preserved) ... ok
+test_digest_records_resource_change_without_inventing_call_permission (tests.vnext.test_request_limits.RequestLimitsTest.test_digest_records_resource_change_without_inventing_call_permission) ... ERROR
+test_explicit_8192_reaches_wire_measurement_and_usage_validation (tests.vnext.test_request_limits.RequestLimitsTest.test_explicit_8192_reaches_wire_measurement_and_usage_validation) ... ok
+test_grouper_uses_same_limit_without_dropping_units (tests.vnext.test_request_limits.RequestLimitsTest.test_grouper_uses_same_limit_without_dropping_units) ... ok
+test_output_reserve_total_context_payload_and_invalid_types_are_distinct (tests.vnext.test_request_limits.RequestLimitsTest.test_output_reserve_total_context_payload_and_invalid_types_are_distinct) ... ok
+test_saved_envelope_changes_only_output_parameter_and_preserves_source_strings (tests.vnext.test_request_limits.RequestLimitsTest.test_saved_envelope_changes_only_output_parameter_and_preserves_source_strings) ... ok
+test_unknown_usage_cost_and_legacy_check_behavior_stay_explicit (tests.vnext.test_request_limits.RequestLimitsTest.test_unknown_usage_cost_and_legacy_check_behavior_stay_explicit) ... ok
+test_complete_payload_boundary_and_rejection_before_tokenization (tests.vnext.test_development_request_preparation.DevelopmentRequestPreparationTest.test_complete_payload_boundary_and_rejection_before_tokenization) ... ok
+test_default_matches_actual_saved_wire_digest_and_main_measurement (tests.vnext.test_development_request_preparation.DevelopmentRequestPreparationTest.test_default_matches_actual_saved_wire_digest_and_main_measurement) ... ERROR
+test_input_plus_output_reserve_inclusive_boundary_and_rejection (tests.vnext.test_development_request_preparation.DevelopmentRequestPreparationTest.test_input_plus_output_reserve_inclusive_boundary_and_rejection) ... ok
+test_missing_reference_cannot_fall_back_to_a_development_acceptance (tests.vnext.test_development_request_preparation.DevelopmentRequestPreparationTest.test_missing_reference_cannot_fall_back_to_a_development_acceptance) ... ok
+test_nondefault_keeps_all_source_unicode_prompt_and_response_protocol (tests.vnext.test_development_request_preparation.DevelopmentRequestPreparationTest.test_nondefault_keeps_all_source_unicode_prompt_and_response_protocol) ... ok
+test_same_explicit_limits_build_and_measure_exactly_once (tests.vnext.test_development_request_preparation.DevelopmentRequestPreparationTest.test_same_explicit_limits_build_and_measure_exactly_once) ... ok
+test_wrong_configuration_rejects_before_building_wire (tests.vnext.test_development_request_preparation.DevelopmentRequestPreparationTest.test_wrong_configuration_rejects_before_building_wire) ... ok
+
+======================================================================
+ERROR: test_digest_records_resource_change_without_inventing_call_permission (tests.vnext.test_request_limits.RequestLimitsTest.test_digest_records_resource_change_without_inventing_call_permission)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-request-preparation/SEC_metrics/tests/vnext/test_request_limits.py", line 93, in test_digest_records_resource_change_without_inventing_call_permission
+    default=request_digest(request,POLICY)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-request-preparation/SEC_metrics/scripts/vnext/development_semantic_requests.py", line 65, in request_digest
+    return sha256_bytes(content=_json(body))
+           ^^^^^^^^^^^^
+NameError: name 'sha256_bytes' is not defined
+
+======================================================================
+ERROR: test_default_matches_actual_saved_wire_digest_and_main_measurement (tests.vnext.test_development_request_preparation.DevelopmentRequestPreparationTest.test_default_matches_actual_saved_wire_digest_and_main_measurement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-request-preparation/SEC_metrics/tests/vnext/test_development_request_preparation.py", line 60, in test_default_matches_actual_saved_wire_digest_and_main_measurement
+    self.assertEqual(calls.request_digest(self.request, POLICY), self.saved_digest)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-request-preparation/SEC_metrics/scripts/vnext/development_semantic_requests.py", line 65, in request_digest
+    return sha256_bytes(content=_json(body))
+           ^^^^^^^^^^^^
+NameError: name 'sha256_bytes' is not defined
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.535s
+
+FAILED (errors=2)
+{"allowed_skips": 0, "errors": 2, "failures": 0, "run": 14, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_request_limits", "tests.vnext.test_development_request_preparation"]}

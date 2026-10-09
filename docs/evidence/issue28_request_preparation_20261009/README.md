@@ -55,3 +55,24 @@ bindings、ledger 或工厂，不能用本候选旧 prepare_requests 宣称真�
 接受或生产采纳。新 provider/paid/SEC 调用为 0/0/0；无探针、账户操作、commit 或 push。
 未运行全 CI/公司演练。可选的 test_continuous_request_context 模块在当前 main 中不存在，
 未创建或冒充运行它。只修改授权五个源码/测试文件和本证据目录。
+
+## Parent receiving adaptation: preserve old factory bytes
+
+The child's full increment is retained in844055a2. To prevent the observed old
+V14 binding regression without adding a new proof/approval chain, the parent
+moves the resource-aware pure functions to explicit development_request_context
+and development_semantic_requests modules. request_limits remains exactly the
+PR66 class. The two old bound modules are byte-identical to main4a03 again;
+requirements and ledger are not changed. Existing live factory still uses its
+original4096 configuration. The new modules never enter that factory or gain
+call authority. Tokenizer loading/validation remains the existing module's
+implementation; body/digest/usage helpers retain the child/PR66 code.
+
+Tests now import the explicit development modules. parent-final-tests.log:
+14 pass/0.535s/zero skip; saved68 wire/digest/default identity and Unicode
+coverage remain. Parent adaptation first omitted sha256_bytes import; the
+NameError in parent-successor-tests.log is kept and fixed, not hidden.
+parent-binding-preserved.json proves both old modules still match the exact
+old V14 entries. Scope-specific CI installs the existing pinned tokenizer and
+runs both modules; no new platform, real request or retired-proof requirement.
+This is parent work, not part of the child's51tools/3messages result.

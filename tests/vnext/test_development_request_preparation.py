@@ -7,8 +7,8 @@ import unittest
 from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT
-from vnext import continuous_request_context as context
-from vnext import continuous_semantic_calls as calls
+from vnext import development_request_context as context
+from vnext import development_semantic_requests as calls
 from vnext.request_limits import DEFAULT_LIMITS, RequestLimits
 
 

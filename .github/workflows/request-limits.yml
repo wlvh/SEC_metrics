@@ -1,0 +1,35 @@
+name: Offline development request preparation
+on:
+  pull_request:
+    paths:
+      - 'scripts/vnext/request_limits.py'
+      - 'scripts/vnext/development_request_context.py'
+      - 'scripts/vnext/development_semantic_requests.py'
+      - 'scripts/vnext/continuous_request_context.py'
+      - 'scripts/vnext/continuous_semantic_calls.py'
+      - 'scripts/vnext/native_unit_index.py'
+      - 'config/tokenizers/**'
+      - 'requirements-continuous-context.txt'
+      - 'tests/vnext/test_request_limits.py'
+      - 'tests/vnext/test_development_request_preparation.py'
+      - 'docs/evidence/issue28_continuous/b13-source-indexing/original68/**'
+      - '.github/workflows/request-limits.yml'
+permissions:
+  contents: read
+jobs:
+  request-limits:
+    name: Request format, context and observed usage
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14'
+      - run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+      - env:
+          PYTHONDONTWRITEBYTECODE: '1'
+          PYTHONPATH: scripts
+        run: python3 tests/required_unittests.py tests.vnext.test_request_limits tests.vnext.test_development_request_preparation
