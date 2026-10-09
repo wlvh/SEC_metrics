@@ -1,0 +1,75 @@
+{
+  "code_commit": "f8a43c0a36637ec8dcd64f22c04cc53958cce3d7",
+  "actual_main": "f6ef7886",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/liquidity-marriott-20261009/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-comparable-growth-37z5on6j",
+  "operations": [
+    {
+      "name": "first-four-b02-missing",
+      "seconds": 17.750684208003804,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "repeat-forbid-factory",
+      "seconds": 2.0077454168349504,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "independent-results",
+      "seconds": 0.5412604999728501,
+      "exit_code": 0,
+      "status": null
+    }
+  ],
+  "comparisons": [
+    {
+      "metric_id": "B02",
+      "fiscal_year": "2022",
+      "value": "0.4990979288446272641985999856",
+      "unit": "ratio",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:8929038392f9d4b4016de922ef06cc76c017681219668af81f35e08b7e3a11de"
+    },
+    {
+      "metric_id": "B02",
+      "fiscal_year": "2023",
+      "value": "0.1415298705049824291147162182",
+      "unit": "ratio",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:aae9df4d466327b9d8af21caafb38a5af5afe2aed10f891ae10994cd88e0c166"
+    },
+    {
+      "metric_id": "B02",
+      "fiscal_year": "2024",
+      "value": "0.05849112301269345928393708093",
+      "unit": "ratio",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "result_id": "sha256:0e7f01224cd6f8f8ed6419907f0392993fbc75cfdb393b5307de062d49b4d8ce"
+    },
+    {
+      "metric_id": "B02",
+      "fiscal_year": "2025",
+      "value": "0.04326693227091633466135458167",
+      "unit": "ratio",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:dff8ee332821e42e593acd7b7c3b80d8c6a629abf9c1266bef7cc32b33178159"
+    }
+  ],
+  "old_balance_files": 107,
+  "all_result_pointer_files": 139,
+  "old_files_preserved": true,
+  "repeat_factory_calls": 0,
+  "two_year_b01_hotel_and_previous_b04_not_repeated": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

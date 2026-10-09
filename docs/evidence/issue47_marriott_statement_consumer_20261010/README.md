@@ -15,3 +15,9 @@ python3 tools/vnext_company.py results --company marriott_international \
 ```
 
 已有state必须绑定同一source-root；新任务用外部新目录，results输出须新。首次完整SEC材料恢复用保留历史分支原restore/返回data_root，无新GET。旧任务/结果读自己的身份，不手工拼接结果或造第二renderer。FY2020前期修订影响FY2021 B02仍未接；FY2024/25收入原验证复用，完整统一五年company状态及其他指标继续。此次记录是新普通消费者三位贯通，不宣全部1950/在线来源/业务正式采纳。调用0/0/0，无新Run/Ready/merge/active。
+
+## FY2022–2025同比缺位
+
+同一原task只新增四个B02，首17.751s，禁factory复2.008s计算0，独立results .541s；原107余额/早年收入结果pointer文件及最终139文件保持。值依次.4990979288446272641985999856、.1415298705049824291147162182、.05849112301269345928393708093、.04326693227091633466135458167 ratio，实际完整年度与原独立参考一致。b02-existing-reference/actual-company.json保新旧范围。
+
+本批仍未运行FY2021 B02，其原FY2020修订不能仅按相同收入表解除全部来源限制。原hotel/两年B01/FY2024混合B04不算，未来完整公司状态接续和配对公共增量按实际影响处理。没有新增生产方法或scope取值策略，未给旧Run或历史阅读添接受登记。
