@@ -95,3 +95,10 @@ authorized development agent is working in a separate request-preparation
 worktree and cannot touch these reporter files; parent/receiver validation
 does not masquerade as independent review. The original review's63tools/
 3messages remain capped. No new business request or original state write.
+
+Receiving CI found a parent selector typo: SOURCE_MATERIAL_TESTS did not exist
+(actual list is SOURCE_TESTS). The original runner CLI NameError is retained;
+import with correct tools path, CLI help, exact one fast/source selector and
+unchanged runner-body AST now pass. No financial material is rerun for this
+one-line registration repair. First import probe lacked tools on sys.path;
+its ModuleNotFoundError is a harness issue, not the CI failure.
