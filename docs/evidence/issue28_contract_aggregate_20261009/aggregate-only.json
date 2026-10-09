@@ -1,0 +1,220 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics",
+  "years": [
+    {
+      "year": 2021,
+      "primary_source_sha256": "54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+      "source_proof": {
+        "request_body_sha256": "54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+        "request_body_size": 2562434,
+        "request_headers_repo_relative_path": "evidence/request_attempts/54/54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5/mar-20211231.htm.e467a6217cbb78188fe5bd22f4eec924bbff0eda1cedae8535c851f5952c12c6.headers.json",
+        "request_headers_sha256": "e467a6217cbb78188fe5bd22f4eec924bbff0eda1cedae8535c851f5952c12c6",
+        "request_headers_size": 1659,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/54/54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5/mar-20211231.htm",
+        "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+      },
+      "amounts": [
+        {
+          "ordinal": 67,
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "75000000"
+        },
+        {
+          "ordinal": 1058,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "55000000"
+        },
+        {
+          "ordinal": 1059,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "20000000"
+        },
+        {
+          "ordinal": 1060,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "75000000"
+        }
+      ],
+      "original_relations": null,
+      "relations": null,
+      "all_four_original_facts_retained": false,
+      "B03_complete_or_released": false
+    },
+    {
+      "year": 2022,
+      "primary_source_sha256": "c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+      "source_proof": {
+        "request_body_sha256": "c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+        "request_body_size": 2403362,
+        "request_headers_repo_relative_path": "evidence/request_attempts/c0/c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d/mar-20221231.htm.31b82ed62b8c28f67fa15dc85ee92f0274718449e062e9b1cb291d97f3342d9f.headers.json",
+        "request_headers_sha256": "31b82ed62b8c28f67fa15dc85ee92f0274718449e062e9b1cb291d97f3342d9f",
+        "request_headers_size": 1685,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/c0/c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d/mar-20221231.htm",
+        "request_attempt_id": "request:attempt:5836da53826ffe45979f0e9f98d74d08d6dbf8e96fb514089e19cb748bde4924"
+      },
+      "amounts": [
+        {
+          "ordinal": 62,
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "89000000"
+        },
+        {
+          "ordinal": 1014,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+          },
+          "value_usd": "60000000"
+        },
+        {
+          "ordinal": 1015,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember"
+          },
+          "value_usd": "29000000"
+        },
+        {
+          "ordinal": 1016,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "89000000"
+        }
+      ],
+      "original_relations": null,
+      "relations": null,
+      "all_four_original_facts_retained": false,
+      "B03_complete_or_released": false
+    },
+    {
+      "year": 2023,
+      "primary_source_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+      "source_proof": {
+        "request_body_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+        "request_body_size": 1949041,
+        "request_headers_repo_relative_path": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm.d6210fc22623f5c2fbacadea8e284764df4a6064ad645bdb5b4f395483f545ee.headers.json",
+        "request_headers_sha256": "d6210fc22623f5c2fbacadea8e284764df4a6064ad645bdb5b4f395483f545ee",
+        "request_headers_size": 1087,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+        "request_attempt_id": "request:attempt:921b491d86173c117fd783a7ed6ba311ef7f1640bec796ee26fdeb212cd13a79"
+      },
+      "amounts": [
+        {
+          "ordinal": 62,
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "88000000"
+        },
+        {
+          "ordinal": 1007,
+          "dimensions": {
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "resolved_dimensions": {
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "value_usd": "65000000"
+        },
+        {
+          "ordinal": 1008,
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "resolved_dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "value_usd": "22000000"
+        },
+        {
+          "ordinal": 1009,
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "resolved_dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "value_usd": "87000000"
+        }
+      ],
+      "original_relations": null,
+      "relations": null,
+      "all_four_original_facts_retained": false,
+      "B03_complete_or_released": false
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
