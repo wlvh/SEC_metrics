@@ -1,0 +1,39 @@
+{
+  "egress_capability_references": [
+    "scripts/vnext/ai_adapter.py::_ApprovedTransportAdapter._complete_repository_transport",
+    "scripts/vnext/ai_adapter.py::_InvocationControllerTransport.send",
+    "scripts/vnext/ai_adapter.py::_ScopedInvocationControllerTransport.send",
+    "scripts/vnext/ai_adapter.py::_TableContextMeasurementTransport.send",
+    "scripts/vnext/ai_adapter.py::_open_provider_request",
+    "scripts/vnext/continuous_semantic_calls.py::_Transport.send"
+  ],
+  "gate_receipt_id": "sha256:34097ce390f239afc2c92cf707d65ccd5b6049f971aa5d2a57fd343738aefbf7",
+  "provider_boundary_callers": [
+    "scripts/vnext/ai_adapter.py::_DeepSeekChatCompletionsTransport.complete",
+    "scripts/vnext/ai_adapter.py::_OpenAIResponsesTransport.complete"
+  ],
+  "provider_opener_allowed_call_sites": [
+    "scripts/vnext/ai_adapter.py::_open_provider_request"
+  ],
+  "record_type": "PROVIDER_EGRESS_CALL_GRAPH_GATE",
+  "remote_adapter_constructors": [
+    "scripts/vnext/ai_adapter.py::build_annual_candidate_transport_adapter",
+    "scripts/vnext/ai_adapter.py::build_invocation_controlled_transport_adapter",
+    "scripts/vnext/ai_adapter.py::build_scoped_qualification_transport_adapter",
+    "scripts/vnext/ai_adapter.py::build_table_context_measurement_transport",
+    "scripts/vnext/ai_adapter.py::build_table_qualification_transport_adapter"
+  ],
+  "repository_transport_callers": [
+    "scripts/vnext/ai_adapter.py::_InvocationControllerTransport.send",
+    "scripts/vnext/ai_adapter.py::_TableContextMeasurementTransport.send"
+  ],
+  "repository_transport_factories": [
+    "scripts/vnext/ai_adapter.py::_ApprovedTransportAdapter._complete_repository_transport",
+    "scripts/vnext/ai_adapter.py::_ScopedInvocationControllerTransport.send",
+    "scripts/vnext/continuous_semantic_calls.py::_Transport.send"
+  ],
+  "scanned_file_count": 384,
+  "scanned_source_set_hash": "sha256:e80312a52c9520c1f2ce24738de70e1b6693be77be3d50bd332048dccde25f95",
+  "schema_version": 1,
+  "status": "PASS"
+}

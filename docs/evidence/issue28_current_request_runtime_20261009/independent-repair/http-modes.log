@@ -1,0 +1,11 @@
+Equivalent required command: /private/tmp/issue28-company-c02-venv-20261006/bin/python tests/required_unittests.py tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_recorded_http_cannot_relabel_a_live_execution tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_recorded_ledger_without_recorded_http_never_claims_or_sends
+Process guard: connect/connect_ex/create_connection/getaddrinfo blocked before imports; bytecode disabled.
+test_recorded_http_cannot_relabel_a_live_execution (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_recorded_http_cannot_relabel_a_live_execution) ... ok
+test_recorded_ledger_without_recorded_http_never_claims_or_sends (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_recorded_ledger_without_recorded_http_never_claims_or_sends) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 6.610s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_recorded_http_cannot_relabel_a_live_execution", "tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_recorded_ledger_without_recorded_http_never_claims_or_sends"]}
+Independent guard attempts: 0

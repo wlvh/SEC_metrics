@@ -1,0 +1,31 @@
+{
+  "base": "6e51f416b12d2e284be1662482ca7a46a37d1e43",
+  "tested_uncommitted_tree": true,
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics",
+  "files": {
+    "scripts/vnext/continuous_semantic_calls.py": "440062bdf8fe22e26b4e20def3f6415292a5d64c7ed276751a21aa435b1360e3",
+    "scripts/vnext/continuous_request_context.py": "73b9964471b9266f6aa5164e6298e7126cf07686ce7024570a7a1618976907ea",
+    "scripts/vnext/current_request_configuration.py": "5de07dffda4ffb39a4c9b91c3216681a003cf695513a4151604c1751eb5dec58",
+    "scripts/vnext/continuous_call_policy.py": "86f9c58ff4eeedf8e8245577def1dd0105d3b2022cb77982cf28c17c4ce61933",
+    "scripts/vnext/continuous_call_ledger.py": "dee7ef8e4885d188214d8bfcfdeac4d7a83fd670eb99c4e24c68636677c56b89",
+    "scripts/vnext/invocation_control.py": "7d9e9ec54e22a26803990d9aaab8d6278b9b189e97fc8bac725edc4a64662e8f",
+    "scripts/vnext/native_assessment_replay.py": "c75ec8d63491b23e69b1424980dc905ba768b1a95967ed50660e380206c80f03",
+    "scripts/vnext/request_limits.py": "9d01304547afbe88305f8274acd6e4e85bf9836aed7d30a5b9c253ea9cf3d557",
+    "tools/vnext_continuous_semantic.py": "c38d778ad15d45b3456c20e40556b9affd3aa207c879acb9555338057f766c15",
+    "config/issue28_current_request_runtime_v1.json": "9b0307f0b44cc3358b731b25df20141c9cf3f21ac4967a0f85ed6b244516c8a7",
+    ".github/workflows/request-limits.yml": "5643aef277035cb27ff91f28f7d4305f4a1144fc3e9dde8fddbe292e9b294adb",
+    "tests/vnext/test_current_request_runtime.py": "76b8984930eea9b32a996b2b72441af90d5f849e6509e9e18e0d08483621f4de",
+    "tests/vnext/test_request_limits.py": "25a53e18d87c367fce575226915d5e13551c75ec7b1dec17fb683a76ece5b6be",
+    "scripts/vnext/ai_adapter.py": "4a5d6faece68cd57426efad0bc88f463eeeca81f1fdff245c0bbfa9c461ef117"
+  },
+  "actual_original_ledger_claims_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "final_tests": {
+    "combined": "55/88.910s/zero skips before final early relabel guard",
+    "mode_increment": "2 cases final early relabel/recorded boundary guards"
+  }
+}

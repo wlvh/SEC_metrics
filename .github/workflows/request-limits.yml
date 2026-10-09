@@ -1,0 +1,34 @@
+name: Explicit request limits
+on:
+  pull_request:
+    paths:
+      - "scripts/**"
+      - "tools/vnext_continuous_semantic.py"
+      - "tests/vnext/test_request_limits.py"
+      - "tests/vnext/test_current_request_runtime.py"
+      - "tests/vnext/test_continuous_call_ledger.py"
+      - "config/**"
+      - "catalog/**"
+      - "evidence/**"
+      - "docs/evidence/**"
+      - "requirements-continuous-context.txt"
+      - ".github/workflows/request-limits.yml"
+permissions:
+  contents: read
+jobs:
+  request-limits:
+    name: Request format, context and observed usage
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14'
+      - run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+      - env:
+          PYTHONDONTWRITEBYTECODE: '1'
+          PYTHONPATH: scripts
+        run: python3 tests/required_unittests.py tests.vnext.test_request_limits tests.vnext.test_current_request_runtime tests.vnext.test_continuous_call_ledger
