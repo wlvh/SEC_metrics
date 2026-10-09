@@ -1,0 +1,136 @@
+{
+  "result": {
+    "company_id": "paramount_skydance_paramount_global",
+    "metric_id": "C01",
+    "period_start": "2024-01-01",
+    "period_end": "2025-12-31",
+    "scope_key": "sha256:aa85fcede6c548f9026301ce7efdde8c38a2d7d2db9d01d8f101a6f46f8564dc",
+    "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "12",
+    "unit": "count",
+    "trace_id": "sha256:bba6033648af2b4ada229116183f21d9de1fa7095785d06e443f9764c699bca8",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a"
+  },
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2024-01-01",
+    "period_end": "2025-12-31"
+  },
+  "annual_container": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "registered_scope": {
+    "registered_ciks": [
+      "2041610",
+      "813828"
+    ],
+    "window": {
+      "fiscal_year": 2025,
+      "period_start": "2024-01-01",
+      "period_end": "2025-12-31"
+    },
+    "per_cik_sources": [
+      {
+        "cik": "2041610",
+        "source_window": {
+          "fiscal_year": 2025,
+          "period_start": "2024-01-01",
+          "period_end": "2025-12-31"
+        },
+        "inventory_source_reference": {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:1675e3728606efda84d87ed739d2743656f0c40054b565754e0caf43ec55dd99",
+          "raw_asset_id": "sha256:322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103",
+          "company_id": "paramount_skydance_paramount_global",
+          "source_url": "https://data.sec.gov/submissions/CIK0002041610.json",
+          "accession": "SUBMISSIONS-2041610",
+          "document_name": "CIK0002041610.json",
+          "source_role": "sec_submissions_inventory",
+          "request_attempt_id": "request:attempt:98d4ba07a2daed1c2e2730244ad274f701e586a0f8dd2b3fd68429250b3b75fb"
+        },
+        "source_set_manifest_ids": [
+          "sha256:0cb8d0174964939cdcc7b6468b38083daf0dc01f91daa7450feed62905f771eb"
+        ],
+        "accessions": [
+          "0001104659-25-123496",
+          "0001193125-25-310710",
+          "0002041610-25-000021",
+          "0002041610-25-000042"
+        ]
+      },
+      {
+        "cik": "813828",
+        "source_window": {
+          "fiscal_year": 2025,
+          "period_start": "2024-01-01",
+          "period_end": "2025-12-31"
+        },
+        "inventory_source_reference": {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:61199b5b50703b802a686ef3abe519dc58675db5fc17338abd4b76b8ba5aaf6a",
+          "raw_asset_id": "sha256:bdb17feef9c7303a0ad11d4ce6a74caf168b4ff7c65249202331ba06e7524130",
+          "company_id": "paramount_skydance_paramount_global",
+          "source_url": "https://data.sec.gov/submissions/CIK0000813828.json",
+          "accession": "SUBMISSIONS-813828",
+          "document_name": "CIK0000813828.json",
+          "source_role": "sec_submissions_inventory",
+          "request_attempt_id": "request:attempt:8d0153590c00d0c131f673d04f1541b772a6c4e1b04ee7d93400f2bf59b5f477"
+        },
+        "source_set_manifest_ids": [
+          "sha256:c90426fc3748decd9b48a45b5a79d6a09c8ed90cb50d111f2c0104ba1cf4606a"
+        ],
+        "accessions": [
+          "0000813828-24-000009",
+          "0000813828-24-000018",
+          "0000813828-24-000023",
+          "0000813828-24-000028",
+          "0000813828-24-000033",
+          "0000813828-24-000034",
+          "0000813828-24-000038",
+          "0000813828-24-000042",
+          "0000813828-24-000063",
+          "0000813828-24-000069",
+          "0000813828-24-000073",
+          "0000813828-24-000075",
+          "0000813828-24-000081",
+          "0000813828-24-000083",
+          "0000813828-24-000085",
+          "0000813828-24-000087",
+          "0000813828-25-000015",
+          "0000813828-25-000019",
+          "0001193125-24-050664",
+          "0001193125-24-122356",
+          "0001193125-24-177535",
+          "0001193125-24-196053",
+          "0001193125-24-196972",
+          "0001193125-24-253719",
+          "0001193125-25-036747",
+          "0001193125-25-052917",
+          "0001193125-25-115947",
+          "0001193125-25-120877",
+          "0001193125-25-165497",
+          "0001193125-25-170521",
+          "0001193125-25-175027"
+        ]
+      }
+    ],
+    "event_projection_catalog_sha256": "dffbbf944488d1865c7b858504c4bc519e3e4210e15a159afefaba68287c0db5",
+    "company_registry_sha256": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "financial_cross_entity_combination_authorized": false
+  },
+  "filing_count": 35,
+  "source_proofs": 75,
+  "seconds": 17.09733129083179,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

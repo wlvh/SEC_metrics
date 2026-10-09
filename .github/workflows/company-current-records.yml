@@ -14,6 +14,9 @@ name: Company saved-source records
       - 'tests/vnext/test_xbrl_namespace_policy.py'
       - 'tests/vnext/test_successor_income_projection.py'
       - 'tests/vnext/test_event_rule_root.py'
+      - 'tests/vnext/test_selected_event_source_v1.py'
+      - 'tests/vnext/test_historical_event_cases.py'
+      - 'tests/vnext/test_registered_event_projection.py'
       - 'tests/vnext/test_existing_historical_sec_state.py'
       - 'tests/vnext/test_historical_sec_capture_adapter.py'
       - 'tests/vnext/test_separate_rule_root.py'
@@ -48,6 +51,14 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state -v
+      - name: Selected event sources and explicit history validation
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1 tests.vnext.test_registered_event_projection
+      - name: Historical selected event scope and record retention
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_historical_event_cases.HistoricalEventCaseTest tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest
       - name: Existing historical SEC count and recorded capture compatibility
         env:
           PYTHONDONTWRITEBYTECODE: '1'

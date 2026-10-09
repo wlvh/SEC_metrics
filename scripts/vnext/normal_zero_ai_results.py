@@ -63,21 +63,38 @@ def _exact_set(prepared, inventory, source, role):
         inventory_bytes=inventory["raw_bytes"])
 
 
-def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_required=True):
+def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_required=True,
+                   history_validator=None, history_last_days=None):
     """Discover only the actual annual event window, including history shards."""
     period = prepared["table_input"]["target_period"]
     payload = strict_json_loads(text=inventory["raw_bytes"].decode("utf-8"))
     shards = _history_index(payload, prepared["entity"])
+    last_days = {shard['name']: shard['filingTo'] for shard in shards}
+    if history_last_days is not None:
+        from .normal_governance_input import _date
+        _need(callable(history_last_days), 'NORMAL_EVENT_HISTORY_LAST_DAYS_INVALID')
+        _need(callable(history_validator), 'NORMAL_EVENT_HISTORY_VALIDATOR_REQUIRED')
+        last_days = history_last_days(payload=payload, shards=shards)
+        _need(type(last_days) is dict and set(last_days) == {shard['name'] for shard in shards},
+              'NORMAL_EVENT_HISTORY_LAST_DAYS_INVALID')
+        for shard in shards:
+            _need(_date(last_days[shard['name']]) >= shard['filingTo'],
+                  'NORMAL_EVENT_HISTORY_LAST_DAYS_INVALID')
     inventories = [inventory]
     for shard in shards:
-        if shard["filingFrom"] <= period["period_end"] and shard["filingTo"] >= period["period_start"]:
+        if shard["filingFrom"] <= period["period_end"] and last_days[shard['name']] >= period["period_start"]:
             item = reader.read(submissions_file_url(file_name=shard["name"]),
                 role="sec_submissions_history", media_type="application/json")
             data = strict_json_loads(text=item["raw_bytes"].decode("utf-8"))
             _need("cik" not in data or str(data["cik"]).isdigit() and int(data["cik"]) == int(prepared["entity"]),
                   "NORMAL_EVENT_HISTORY_ENTITY_CONFLICT", "SOURCE_INTEGRITY_ERROR")
             rows = _filings(data, inventory_name=shard["name"])
-            _need(history_body_alignment(shard=shard, rows=rows) is None,
+            conflict = (history_body_alignment(shard=shard, rows=rows) if history_validator is None
+                        else history_validator(shard=shard, body=data, rows=rows,
+                                               shards=shards, period=period,
+                                               **({} if history_last_days is None else
+                                                  {'last_day': last_days[shard['name']]})))
+            _need(conflict is None,
                   "NORMAL_EVENT_HISTORY_SNAPSHOT_CONFLICT", "SOURCE_COVERAGE_CONFLICT")
             inventories.append(item)
     sets, claims, seen, filing_rows = [], [], set(), []
@@ -129,7 +146,8 @@ def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_r
     return claims, [s["manifest"] for s in sets] + [collection], filing_rows
 
 
-def _registered_event_sources(*, repo_root, reader, prepared, inventory, period, rules_root=None):
+def _registered_event_sources(*, repo_root, reader, prepared, inventory, period, rules_root=None,
+                              history_validator=None, history_last_days=None):
     """Rebuild the approved union from each registered CIK's actual sources."""
     from .traits import repository_company_ciks
     rules=repo_root if rules_root is None else Path(rules_root)
@@ -143,7 +161,8 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period,
             # This is a source-discovery context, not a rewritten annual identity.
             context={'company_id':prepared['company_id'],'entity':cik,'table_input':{'target_period':period}}
             claims,manifests,filings=_event_sources(repo_root=repo_root,reader=current,prepared=context,inventory=current_inventory,
-                installed_census_required=rules_root is None)
+                installed_census_required=rules_root is None, history_validator=history_validator,
+                history_last_days=history_last_days)
             accessions={f['accessionNumber'] for f in filings}
             _need(not seen.intersection(accessions),'NORMAL_REGISTERED_EVENT_CIK_ACCESSION_OVERLAP','SOURCE_COVERAGE_CONFLICT')
             seen.update(accessions)
@@ -156,7 +175,16 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period,
         finally:
             if current is not reader:
                 for key,value in current.records.items():
-                    _need(key not in reader.records or reader.records[key]==value,'NORMAL_REGISTERED_EVENT_RECORD_CONFLICT')
+                    existing = reader.records.get(key)
+                    if existing is not None and existing != value:
+                        # Both readers already checked these exact bytes.
+                        # A content-addressed blob can have two saved paths;
+                        # retain one locator and both distinct request proofs.
+                        _need(existing['record_type'] == value['record_type'] == 'RAW_BLOB'
+                              and {k:v for k,v in existing.items() if k != 'storage_uri'}
+                              == {k:v for k,v in value.items() if k != 'storage_uri'},
+                              'NORMAL_REGISTERED_EVENT_RECORD_CONFLICT')
+                        continue
                     reader.records[key]=value
                 reader.proofs.update(current.proofs);reader.failed_attempts.update(current.failed_attempts)
     collection=_event_collection_manifest(company_id=prepared['company_id'],target=period,

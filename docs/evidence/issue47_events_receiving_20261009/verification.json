@@ -1,0 +1,173 @@
+{
+  "base_main": "ae8a13c82b11cc5f64fabf217298bed0257778d7",
+  "public_source_interface": "PR89/8ed718e3; source/renderer bytes remain original reviewed35b/1d",
+  "public_files": {
+    "scripts/vnext/normal_zero_ai_results.py": "67543d1c08b8c84177ef92382a8ccaacb72dcffaeceaa51bdae18b9d3e2735f3",
+    "scripts/vnext/selected_event_source_v1.py": "040be9d0b4c95a22cd98f0f5085935eda3858dbb44ac7561c0e67d0de696ac20"
+  },
+  "historical_source_and_window_tests": {
+    "count": 15,
+    "seconds": 0.103,
+    "skips": 0
+  },
+  "consumer_tests": {
+    "count": 25,
+    "seconds": 0.171,
+    "skips": 0
+  },
+  "paramount2025_case": {
+    "file": "paramount2025-case.json",
+    "value": "12",
+    "unit": "count",
+    "registered_ciks": [
+      "2041610",
+      "813828"
+    ],
+    "filings": 35,
+    "proofs": 75,
+    "annual_container": "2025-01-01..2025-12-31",
+    "event_measurement": "2024-01-01..2025-12-31"
+  },
+  "save_blocker": {
+    "file": "paramount2025-save.json",
+    "reason": "ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED",
+    "owner": "#28 public projection",
+    "annual_dates_unchanged": true,
+    "resolved_by": "public ordinary_projection1d612b82, original unchanged case and same company CLI validated"
+  },
+  "history_boundary_gap": "explicit block_last_days selection plus same-bound full-body validation; shared limited review passed, old NEEDS_FIX retained",
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "old_runs_or_results_changed": false,
+  "business_acceptance_added": false,
+  "public_gap_interface": "35b9329d",
+  "latest_combined_tests": {
+    "count": 34,
+    "seconds": 0.281,
+    "skips": 0
+  },
+  "record_retention_fix": "SourceReference and RawBlob share raw_asset_id; consumer now indexes by record type. Original save failure retained.",
+  "jpm2023": {
+    "file": "jpm2023-case.json",
+    "seconds": 47.869356625014916,
+    "C02_proxy_not_read": true
+  },
+  "marriott_main_consumer": {
+    "file": "marriott-cli.json",
+    "operations": [
+      {
+        "name": "first",
+        "seconds": 34.716465040808544
+      },
+      {
+        "name": "repeat",
+        "seconds": 7.339980083052069
+      },
+      {
+        "name": "read",
+        "seconds": 0.5664693750441074
+      }
+    ],
+    "protected_file_count": 40,
+    "values": {
+      "C01": "3",
+      "E02": "0",
+      "E03": "3",
+      "E04": "0",
+      "E05": "0"
+    }
+  },
+  "wide_save_reproducer": "reproduce_wide_event_save.py --source-root <restored source-inputs> --output-root <new directory>; writes full case.json before save; no network",
+  "marriott_fiveyear": {
+    "file": "marriott-fiveyear.json",
+    "coordinates": 25,
+    "independent_difference_count": 0,
+    "only_missing_coordinates_completed": 6,
+    "interrupted_intents": 1,
+    "old_versions_unchanged": true
+  },
+  "history_callback_reads": "one public source walk, block_last_days computed from its actual inventory; full body checker; no duplicate metadata preparation",
+  "wide_projection_public_file_sha256": "c865be5554fa57650732611ed95bb59c1fde91d8332cd747e004dff1e6752911",
+  "wide_original_case_reuse": {
+    "file": "wide-original-case-consumer.json",
+    "save_seconds": 3.0703965418506414,
+    "read_seconds": 0.007601874880492687,
+    "calculation_calls": 0
+  },
+  "wide_cli": {
+    "file": "paramount-wide-cli.json",
+    "operations": [
+      {
+        "name": "wide-first",
+        "seconds": 20.67524441680871
+      },
+      {
+        "name": "wide-reuse",
+        "seconds": 4.908691375050694
+      },
+      {
+        "name": "wide-cold",
+        "seconds": 0.5613640840165317
+      }
+    ],
+    "saved_files": 8,
+    "annual_unchanged": true,
+    "value": "12",
+    "unit": "count"
+  },
+  "latest_main_received": "73ead3b4c987ab10e7eaef3feed9bd5cec43e136",
+  "latest_dispatch_tests": {
+    "count": 29,
+    "seconds": 0.167,
+    "skips": 0
+  },
+  "new_history_classes_ci": {
+    "public_patch": "45ca8755 pr90-6d09-event-selectors.patch",
+    "workflow_trigger_test_path": "tests/vnext/test_historical_event_cases.py",
+    "direct_step_count": 9,
+    "seconds": 0.025,
+    "skips": 0,
+    "source_and_wide_public_steps_retained": true,
+    "latest_main_capital_bank_income_selectors_retained": true,
+    "remote_execution_pending": false,
+    "code_commit": "65471ee1bfb4ace20fee5bcf0e3adaa236fc8f10",
+    "run_id": 37914378589,
+    "job_id": 113766881497,
+    "remote_tests": 9,
+    "remote_seconds": 0.069,
+    "remote_skips": 0,
+    "all_checks_success": 10
+  },
+  "macys_salesforce_fiveyear": {
+    "file": "macys-salesforce-fiveyear.json",
+    "code_commit": "65471ee1bfb4ace20fee5bcf0e3adaa236fc8f10",
+    "positions": 50,
+    "full_header_pool_difference_count": 0,
+    "value_unit_period_difference_count": 0,
+    "calculation_factory_calls_on_repeat": 0,
+    "historical_reading_names_matched_by_actual_dates": true,
+    "raw_source_inputs_not_modified": true
+  },
+  "ex99_current": {
+    "file": "ex99-current-readonly.json",
+    "target_get_consumed": false,
+    "cumulative_sec_count": 1771,
+    "approved_target_maximum": 1772,
+    "retry_count": 0,
+    "migration_owner": "#28 public capture/call records",
+    "ordinary_ledger_schema_compatible": false,
+    "old_binding_modified": false
+  },
+  "ford_fiveyear": {
+    "file": "ford-fiveyear.json",
+    "code_commit": "b764066037cb7b472ae90853822529309ef55589",
+    "positions": 25,
+    "full_header_pool_difference_count": 0,
+    "value_unit_period_difference_count": 0,
+    "factory_calls_on_repeat": 0,
+    "protected_files": 200
+  }
+}

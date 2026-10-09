@@ -1,0 +1,30 @@
+usage: vnext_company.py run [-h] --company COMPANY
+                            [--period {latest-complete-fy,fiscal-years}]
+                            [--fiscal-year-start FISCAL_YEAR_START]
+                            [--fiscal-year-end FISCAL_YEAR_END]
+                            --work-dir WORK_DIR --output-dir OUTPUT_DIR
+                            [--metric METRIC] [--source-root SOURCE_ROOT]
+                            [--call-context CALL_CONTEXT]
+                            [--max-sec-requests MAX_SEC_REQUESTS]
+                            [--sec-allowance SEC_ALLOWANCE]
+
+options:
+  -h, --help            show this help message and exit
+  --company COMPANY
+  --period {latest-complete-fy,fiscal-years}
+  --fiscal-year-start FISCAL_YEAR_START
+  --fiscal-year-end FISCAL_YEAR_END
+  --work-dir WORK_DIR
+  --output-dir OUTPUT_DIR
+  --metric METRIC       Select metrics; online call-context supports B01/B02,
+                        retained native summary lists configured statuses
+  --source-root SOURCE_ROOT
+                        Use saved sources and ordinary records; no online
+                        discovery, capture or AI calls
+  --call-context CALL_CONTEXT
+                        Existing scoped SEC ledger context for the lightweight
+                        online B01/B02 path; no new allowance
+  --max-sec-requests MAX_SEC_REQUESTS
+                        Invocation cap, no automatic retries
+  --sec-allowance SEC_ALLOWANCE
+                        Fixed cumulative task allowance

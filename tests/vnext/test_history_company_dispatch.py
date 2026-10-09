@@ -192,3 +192,26 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertFalse(row['requested_in_latest_execution'])
         self.assertIsNone(row['value'])
         self.assertEqual('WITHHELD', row['publication'])
+
+
+    def test_event_family_keeps_existing_income_balance_and_hotel_factories(self):
+        from vnext.historical_event_cases import prepare_historical_event_year_case, PROCESSING_FILES
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case, INCOME_PROCESSING_FILES
+        from vnext.historical_liquidity_cases import prepare_historical_liquidity_year_case
+        from vnext.historical_lodging_results import prepare_historical_lodging_year_case
+        from vnext.historical_statement_cases import prepare_historical_current_annual_year_case
+        from vnext.historical_capital_cases import prepare_historical_capital_year_case
+        from vnext.historical_bank_performance_cases import prepare_historical_bank_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(metric_ids=['C01', 'E02', 'B01', 'B08', 'B10', 'B07', 'A01', 'A05'])
+        args = shared.call_args.kwargs
+        for metric in ('C01', 'E02'):
+            self.assertIs(prepare_historical_event_year_case, args['case_factories'][metric])
+            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+        self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B01'])
+        self.assertIs(prepare_historical_liquidity_year_case, args['case_factories']['B08'])
+        self.assertIs(prepare_historical_lodging_year_case, args['case_factories']['B10'])
+        self.assertIs(prepare_historical_current_annual_year_case, args['case_factories']['B07'])
+        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
+        self.assertIs(prepare_historical_bank_year_case, args['case_factories']['A05'])

@@ -1,9 +1,9 @@
 # SEC_metrics：业务人员首次使用指南
 
-直接运行一家公司的本地入口、工作目录与输出示例见 [本地公司运行](company_local_run.md)。它自动选择已披露完整财年并管理固定程序、来源交接和公司状态；CSV同时保留原结果身份及本次状态，摘要逐项交代39项，包括未实现/待判断。Marriott已在获准的真实SEC额度内完成首次下载、同目录复跑及局部重入（见 [真实运行材料](evidence/issue54_company/live2/README.md)）；此前29＋2次录制接线不算真实取数。完整业务接受与阶段完成分开，Draft输出不作正式发布。
+先按版本选择公司入口：main 的 PR57 原生全流程、PR67 保存来源候选及保留旧任务的读取参数不同，候选尚未接通新的在线安装。具体命令、工作目录与输出示例见 [本地公司运行](company_local_run.md)。它自动选择已披露完整财年并管理固定程序、来源交接和公司状态；CSV同时保留原结果身份及本次状态，摘要逐项交代39项，包括未实现/待判断。Marriott已在获准的真实SEC额度内完成首次下载、同目录复跑及局部重入（见 [真实运行材料](evidence/issue54_company/live2/README.md)）；此前29＋2次录制接线不算真实取数。完整业务接受与阶段完成分开，Draft输出不作正式发布。
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 
-公司独立计算提供待审核的公司矩阵及证据表；局部更新保留已存在的其它指标和期间。查看每行的期间、来源版本、当前匹配/未复核及有效性，旧值不计成本次更新成功。已保存的完整D04判断可独立接入；来源改变或判断不完整时保留缺口，本入口不会调用新模型。这个Draft出口的固定程序、来源和信任要求见[公司接口说明](company_compute_boundary.md)。
+公司独立计算提供待审核的公司矩阵及证据表；局部更新保留已存在的其它指标和期间。查看每行的期间、来源版本、当前匹配/未复核及有效性，旧值不计成本次更新成功。已保存的完整D04判断可独立接入；来源改变或判断不完整时保留缺口，本入口不会调用新模型。保留原生版本的固定程序、来源和信任要求见[公司接口说明](company_compute_boundary.md)。
 
 归档财年与实际测量窗口分别显示：例如 Paramount FY2025 的事件可能覆盖2024-01-01至2025-12-31。相同结果在其它运行版本已获缺陷释放、当前版本尚未释放时，仍扣留公司值并显示原接受引用；这不是新的内容错误结论，也不是当前版本已通过。
 <!-- capability-anchor: CAPABILITY.company_saved_processing_exact_source -->
@@ -81,7 +81,7 @@ SEC_metrics 为当前 registry 中配置的公司生成最近年度 SEC 申报�
 - 不替人做投资、信用、报价、监管或外部审计决定。
   <!-- capability-anchor: RESPONSIBILITY.human_reviews_caveats_and_decides -->
 
-## 4. 第一次阅读的最短路径
+## 4. 读取旧正式发布批次的最短路径
 
 1. 先读 `outputs/validation_run_manifest.json`，确认 mode、result，以及本次真正刷新的 tracked validation/audit artifact；`FAILED` 或 `IN_PROGRESS` 时停止验收。
 2. 运行 `python3 tools/check_validation_snapshot.py`。`config/validation_source_policy.json` 无效、SOP 权威引用角色不一致、source-input tree dirty/不一致、显式 acceptance source 缺失、provenance 缺失，或关键 artifact SHA-256/size 失配时停止验收。
