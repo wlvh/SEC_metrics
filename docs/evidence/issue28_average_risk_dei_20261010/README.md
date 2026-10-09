@@ -75,3 +75,21 @@ program receiving evidence; the historical owner's actual JPM21 company run is
 separate and still in progress at this observation. Saved original failure and
 repair log are retained here. Prior default/current-source tests are reused,
 not repeated for this thin historical adapter.
+
+## Limited independent review and terminal CI
+
+80ca9883 received a limited independent PASS:80 specified tests/7.354s plus
+5 finite control methods/0.093s, zero skips. Actual save/projection call and
+source/entity/value/unit/measurement/Trace consistency, finite DEI defaults and
+explicit factory gates were examined. Review used34 tools/3 messages,
+2026-10-09T16:39:11Z–16:46:28Z. It did not rerun the historical company long
+chain or grant content/production acceptance. Conclusion and four logs are
+under independent-review/. All10 checks on80ca reached SUCCESS; this archive
+commit changes only this primary record and review evidence, not product bytes.
+
+The fixed peer616fe531 source consumer and saved summary were read in Git;
+10 shared source files match80ca. Actual reported company A03 Q4/1.11ratio and
+A12 annual/USD55m, zero factory repeat and independent reading support receiving,
+not an exact committed-tree execution proof (the recorded execution was dirty)
+or author-independent financial content acceptance. The initial percent111
+harness assumption was corrected by reading saved output without recalculation.
