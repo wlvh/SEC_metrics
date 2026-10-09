@@ -88,3 +88,8 @@ limited review remains its historical scope; this new increment is separate.
 Receiver read-only JSON reports counts1771/effective1867/narrow1772 unchanged,
 1547 claims/2531request rows,no Capture constructor/claim/GET. This is receiver
 evidence actually read by author, not an author live test or acquisition.
+
+The dad13e77 context increment passes separate limited review:17 short tests
+and four context/order probes;33 tools/3 messages. Continuous missing closure
+still refuses before claim/transport. Real receiving preflight/live capture
+and remote CI remain separate; no grant is inferred from the review.
