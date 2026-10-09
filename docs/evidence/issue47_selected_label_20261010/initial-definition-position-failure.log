@@ -1,0 +1,28 @@
+test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata) ... FAIL
+test_consistent_original_metadata_resolves_without_end_year_inference (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_consistent_original_metadata_resolves_without_end_year_inference) ... ok
+test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it) ... FAIL
+test_hash_subject_and_same_accession_evidence_are_required (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_hash_subject_and_same_accession_evidence_are_required) ... ok
+test_historical_release_is_controlled_and_fake_dei_is_not_admitted (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_historical_release_is_controlled_and_fake_dei_is_not_admitted) ... ok
+
+======================================================================
+FAIL: test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 47, in test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata
+    with self.assertRaisesRegex(ValueError,'FISCAL_LABEL_UNRESOLVED'):self.resolve(raw=raw)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 40, in test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it
+    r=self.resolve(raw=raw);self.assertEqual(r['selected_fiscal_year'],2022)
+                            ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2021 != 2022
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.024s
+
+FAILED (failures=2)
