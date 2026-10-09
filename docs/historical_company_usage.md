@@ -136,6 +136,17 @@ cd ../SEC_metrics-average-risk-review
   --work-dir /new/average-risk/state --output-dir /new/average-risk/runs
   --state-root /new/average-risk/state --output-root /new/average-risk/read-01
 来源仍用上节保留历史分支恢复的实际 `source-inputs` 根；原件只读，目录名称已占用时另选。JPM FY2021 已实测 A03=1.11 ratio（111%），实际2021-10-01至12-31；FY2021是年报分组，不能把该季度平均值年化。A12=55,000,000 USD，是全年平均VaR；95%/一日为风险口径，不是一日测量窗口。同一CLI计算、禁工厂复用、独立读取及原格出处已贯通，见[唯一接收记录](evidence/issue47_average_risk_receiving_20261010/README.md)。JPM FY2021–FY2025十坐标已完成同入口计算、全范围禁工厂复用、独立读取和原参考对照；修订/继任金额处理、其他金融族及在线历史取源仍待；默认当期指标集合没有因此扩大。
+## A04/A09/A11：候选分支的金融历史范围
+`task/issue47-bank-scope-history-20261010` 在 main `6e51f416` 上包含公共 PR109 的受控 DEI 参数及显式历史工厂接口，尚未进入 main。只接所选 NIM、不良贷款比率和 AUM 的既有共同计算与有限历史措辞，未扩大默认当期指标集合。
+git fetch origin task/issue47-bank-scope-history-20261010
+git worktree add -b review/issue47-bank-scope ../SEC_metrics-bank-scope-review \
+  origin/task/issue47-bank-scope-history-20261010
+cd ../SEC_metrics-bank-scope-review
+  --metric A04 --metric A09 --metric A11 --source-root /saved/sec/source-inputs \
+  --work-dir /new/bank-scope/state --output-dir /new/bank-scope/runs
+  --state-root /new/bank-scope/state --output-root /new/bank-scope/read-01
+来源使用保留历史分支恢复所得实际 `source-inputs` 根，原件只读，状态/输出写外部新目录。JPM FY2021实际A04=.0164 ratio、全年；A09=.0072 ratio及A11=3,113,000,000,000 USD均为12月31日时点，财年是年度容器。A09仍先做完整原生结构化检查，只有明确歧义且来源集合完整才可使用现有HTML解释；缺源或程序异常不能替代。原申报、原格与单位/期间都由同一CSV/出处读口保存。
+同CLI首跑、禁工厂复用及另进程读取已核，见[唯一接收记录](evidence/issue47_bank_scope_receiving_20261010/README.md)。JPM FY2021–FY2025十五坐标已完成同入口处理、全范围复用、独立读取和原参考逐项核对；修订/继任金额、其他金融族和在线历史取源尚待；候选接线不等于完整业务接受。
 
 ## 状态、复跑和局部失败
 
