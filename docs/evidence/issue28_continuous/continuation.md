@@ -1,11 +1,15 @@
 <!-- closeout-current-20261009:BEGIN -->
-**2026-10-09 当前接收与公共接口：**PR67的默认空任务兼容及选期/期间处理身份修复已由接收方合入main（06971ec7）；原f790的9检查全部成功、Claude限定复核保留，不重做。正常数据/相关配置未变，成功和稳定扣留均复用；相关normal_annual_input改变触发一次处理，旧成功仅历史。main已持续接收61/58/62/67/71/74/75/76/79/83/85及87/72/73等候选，实际最新main以fetch为准，本方没有执行任何merge/Ready/采纳/生产切换。
+**2026-10-09 当前接收与公共接口：**PR67默认空任务兼容与normal_annual_input处理身份修复已由接收方合入main06971ec7，原真实HTTP录制对照/限定复核/9检查保留，不重跑。成功与稳定扣留均未变复用，旧成功只按旧期间读取。实际main已核4a03f223；本方没有执行merge、Ready、采纳、部署或active切换。
 
-公共源接口Draft PR89当前8ed718e3：来源只读根与规则根分开，复用现有event walk；完整history回调及block_last_days同一边界解决gap日漏选，默认旧策略不变。原820 NEEDS_FIX完整保留，35b限定修后PASS（累计47工具/3消息）。同已核Marriott FY2025十申报/20claims/21proofs与旧读取相同，源接口自身不造Result/Run/E01信用。公共ordinary_projection只对显式C01/E02–E05已批准登记窗口例外：catalog派生窗口、登记CIK、实际库存/源集合与结果一致、原annual不改，财务/E01不借用。真实Paramount C01=12 case在原renderer仍失败、新保存2.998s/独立读.0078s成立，直接原headers核12个5.02；这是公共接口组合测试，不借#47业务信用。e2限定独审PASS（27工具/3消息），已审源字节保持。旧4118的9检查SUCCESS仅覆盖源-only前驱；b821因main selector冲突未触发Actions，已收到main73ead并保两方清单/函数AST，新8ed当前8检查SUCCESS、材料与兼容2作业仍运行，未整体终态。证据在PR89两主要目录；#47自行验证公司CLI/历史消费者，本方不改对方状态或账本。
+PR89源-only事件及显式登记宽窗保存已经入main；原820 NEEDS_FIX、35b/e2限定PASS及实际保存范围仍保留。PR80公共文档ba606330的9检查SUCCESS已核，main已消费当前入口文档；不为文字重算财报。PR87 /tmp保留安装与PR85所选收入源已有有效证据复用。
 
-PR87 native /tmp规范化及保留安装一行适配已由接收方入main；原159.595s禁网真实默认入口LIVE代码分支/原值期间、7短测/静态实装及限定复核保留，不重跑。LIVE测试标签不是真实SEC信用。PR85已入main的selected_income源能力及实际历史消费按限定范围保留。PR80公共文档ba606330已收到main73ead并9检查全部SUCCESS，消除“67/83/75尚未进入main”和旧当前入口混用，保历史指南/旧任务；不为文档重算财报。给PR90@54b+main6d09的两文件selector union与三个历史短class明确CI步骤已静态生成，runner函数不改，接收方负责执行，非全历史通过。
+公共Draft PR94 ca457364保原历史账本schema/计数/来源根和单URL上限；170与dad13字段接缝各有独审，当前10检查SUCCESS。接收方实际旧reader和当前上下文只读通过，继而按其原许可执行EX99一次HTTP200/零重试、原累计1771→1772；本方实际读终态、没有调用或写对方root，不借其来源/业务信用到#28。
 
-原195claims、provider/paid/SEC143/143/52、余97/97/28和SHA6023不变，本段0/0/0；不恢复191/192机会。D04十家真实候选保留；B13/D03旧开发批次已结束，不改名第三次尝试，不新增真实用途。当前指标、C04更新、B06范围、AI验证、390及生产/旧路径责任未完成。原生Goal实读仍blocked（无budget），现有模型工具不能resume；官方生命周期由用户/系统控制。当前工程仍有可执行任务，不写成全部因权限受阻；阶段交付不是Goal完成；原PR43保留存量/原件/证据。
+Draft PR95 7e22943a移除未使用ordinary_source_session默认处理摘要，显式消费者依赖/选期/来源/Calculator仍有效；独审PASS，39例及真实Marriott C01重复factory禁用/六文件不变，10远端检查SUCCESS。安装代码仍有一次正常版本变化处理，之后无关session改动不重算。Draft PR97 e53609e7仅B12显示RPO/cRPO非ARR、非churn；实际Salesforce26 72.4bn USD/asof2026-1-31的Result/Trace不改，10例/当前10检查SUCCESS，旧CSV不重签。
+
+Draft PR99 981de20f保留三真实原件全部四条合同收入扣减关系，识别重叠segment total不重复加回；私有table proof仅省略明确display:none空leaf列，原字节/fact顺序/普通spacer保留。原2bec样式P2 NEEDS_FIX留历史，989仅增量PASS，26例及准确comment回归通过；新head CI仍运行。FY23 segment87m vs consolidated88m不抹平，完整D&A/fulfillment/lease问题另存，三个历史B03不升级成功。下一步仅按实际消费者/CI差异处理，再推进原当期B03/B06、C04/AI/390未完成责任，不重建通用parser或全历史重跑。
+
+原#28账本195claims、143/143/52、余97/97/28及SHA6023精确不变，本段0/0/0，不恢复191/192机会；D04十家候选保留，B13/D03新真实用途仍未授。原生Goal最新实读ACTIVE、无budget，先前blocked观察保历史；目标未完成，不因一次PR/CI/报告标complete。原PR43保留存量实现/原件/证据；后续公共能力继续main短分支按权限交付。
 <!-- closeout-current-20261009:END -->
 
 **2026-10-06 main公司入口追加集成：**固定main8588接入当前218e32，30冲突保留当前C02/D01/普通默认/旧收据；合并main公司CI的10独立作业及导入检查，原作业与v2runner字节保持。新增main审计显式工具/规则严格绑定；仅普通rule_paths新增依赖，业务及连续调用policy字节不变，父子closure与transfer同步通过，原两次严格校验失败保留不豁免。当前公司D01显式用已审header-v3及独立journal，其他指标dispatch保持；真实安装/来源交接/拒原checkout及程序写入compute127s＋独立创建者出口39s，JPM FY2025 f8原Result对象和原56标题／跨度一致，证据CSV逐字节同原内容验收；只差不借旧新增获取信用的notes。不新增公司数据/模型回答，原195claims143/143/52 SHA6023保持0/0/0。新程序实际读旧C02任务，旧6d1仍扣留、待审不升级。39定向＋160fast107.942s通过，6D01/update执行通过及1原可选材料skip；当前merge源码实际安装hash已记，不冒充已提交SHA。待mergecommit后的clone证据对齐、限定新差异独审和远端CI；#47固定读取2d6，缺陷未新增／解除，不合历史整支、不借验收。证据main-company-ci-integration-20261006/；Goal active，其他原责任保留。

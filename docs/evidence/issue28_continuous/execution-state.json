@@ -5407,6 +5407,90 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/docs/evidence/issue28_event_window_projection_20261009/independent-review/conclusion.md",
       "verdict": "PASS_LIMITED_REGISTERED_WINDOW_PROJECTION",
       "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_secledger_17002f3",
+      "purpose": "review",
+      "module": "secledger",
+      "scope_paths": [
+        "scripts/vnext/existing_historical_sec_state.py",
+        "scripts/vnext/company_online.py",
+        "tests/vnext/test_existing_historical_sec_state.py",
+        "tests/vnext/test_historical_sec_capture_adapter.py"
+      ],
+      "patch_sha": "17002f37358042e4c6f43b1d5d866f26dae35b55",
+      "spawned_at": "2026-10-09T11:12:52.473155+00:00",
+      "ended_at": "2026-10-09T11:21:47Z",
+      "tool_calls": 44,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/docs/evidence/issue28_existing_sec_ledger_20261009/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_EXISTING_SEC_ADAPTER",
+      "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_reuse_0ff6fc9",
+      "purpose": "review",
+      "module": "reuse",
+      "scope_paths": [
+        "scripts/vnext/ordinary_current_update.py",
+        "tests/vnext/test_ordinary_current_update.py",
+        "tests/vnext/test_event_rule_root.py"
+      ],
+      "patch_sha": "0ff6fc9ec493213f64d01fd4303981d5397a2535",
+      "spawned_at": "2026-10-09T11:31:58.801803+00:00",
+      "ended_at": "2026-10-09T11:36:36Z",
+      "tool_calls": 30,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-reuse-dependencies/SEC_metrics/docs/evidence/issue28_reuse_dependencies_20261009/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_PROCESSING_DEPENDENCY",
+      "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_seccontext_dad13e7",
+      "purpose": "review",
+      "module": "seccontext",
+      "scope_paths": [
+        "scripts/vnext/company_online.py",
+        "tests/vnext/test_historical_sec_capture_adapter.py"
+      ],
+      "patch_sha": "dad13e7779327c6a8dc4a169c77eee5eee61ceb4",
+      "spawned_at": "2026-10-09T11:44:58.952973+00:00",
+      "ended_at": "2026-10-09T11:51:04Z",
+      "tool_calls": 33,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/docs/evidence/issue28_existing_sec_ledger_20261009/context-review/conclusion.md",
+      "verdict": "PASS_LIMITED_HISTORICAL_CONTEXT",
+      "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_contractaggregate_2bec346",
+      "purpose": "review",
+      "module": "contractaggregate",
+      "scope_paths": [
+        "scripts/vnext/b03_contract_amortization_scope.py",
+        "tests/vnext/test_b03_current_input_scope.py",
+        "tools/run_fast_tests_v2.py"
+      ],
+      "patch_sha": "2bec3464e735bc5cbf928573b1bd1538b06789f3",
+      "spawned_at": "2026-10-09T12:05:59.633177+00:00",
+      "ended_at": "2026-10-09T12:13:11Z",
+      "tool_calls": 32,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics/docs/evidence/issue28_contract_aggregate_20261009/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_DISPLAY_DECLARATION_P2",
+      "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_contractstyle_9893071",
+      "purpose": "review",
+      "module": "contractstyle",
+      "scope_paths": [
+        "scripts/vnext/b03_contract_amortization_scope.py",
+        "tests/vnext/test_b03_current_input_scope.py"
+      ],
+      "patch_sha": "98930711a31d85d1b5406149ef83271cce793543",
+      "spawned_at": "2026-10-09T12:15:30.986676+00:00",
+      "ended_at": "2026-10-09T12:21:12Z",
+      "tool_calls": 28,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics/docs/evidence/issue28_contract_aggregate_20261009/style-review/conclusion.md",
+      "verdict": "PASS_LIMITED_DISPLAY_DECLARATION_FIX",
+      "ordinary_messages": 3
     }
   ],
   "ci_capacity_20260922": {
@@ -16548,18 +16632,25 @@
     "native_recorded_probe": "PASS_RECORDED_NOT_REAL_MIGRATION"
   },
   "last_zero_call_check": {
-    "ledger_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
-    "claims": 195,
-    "own_usage": [
+    "observed_at": "2026-10-09T12:25:41.560743+00:00",
+    "claims_rows": 195,
+    "claims_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+    "cumulative": [
       143,
       143,
       52
     ],
-    "new_calls": [
+    "remaining": [
+      97,
+      97,
+      28
+    ],
+    "author_increment": [
       0,
       0,
       0
-    ]
+    ],
+    "peer_one_SEC_separate_ledger": true
   },
   "amendment_source_layout_20261009": {
     "pr": 79,
@@ -17062,8 +17153,8 @@
   "existing_historical_sec_compatibility_20261009": {
     "workspace": "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics",
     "branch": "task/issue28-existing-sec-ledger",
-    "sha": "79fb10c318101362c628c59fa6f47f8acc420124",
-    "status": "READ_ONLY_PROTOTYPE_NOT_CAPTURE_INTERFACE",
+    "sha": "17002f37358042e4c6f43b1d5d866f26dae35b55",
+    "status": "DRAFT_PR94_RECORDED_AND_RECEIVING_CONTEXT_PASS",
     "fixed_peer_sha": "0918862af42e146ba573de04fcc59a5d2974ce24",
     "observed_counts": [
       0,
@@ -17085,16 +17176,78 @@
       1772
     ],
     "remaining": [
-      "lock-held claim with old intent/plan schema",
-      "receipt/terminal and old-reader/checkpoint compatibility",
-      "source-log duplicate/stop scope",
-      "full recorded transport and limited review"
+      "receiver business/attachment interpretation and separate merge/adoption decisions"
     ],
     "new_calls": {
       "provider": 0,
       "paid": 0,
       "sec": 0
     },
-    "old_roots_untouched": true
-  }
+    "old_roots_untouched": true,
+    "test_terminal": "21 passed / 5.073s / zero skip",
+    "live_preflight": "read-only context/count/URL scope; transport not constructed",
+    "review_sha": "17002f37358042e4c6f43b1d5d866f26dae35b55",
+    "draft_pr": "https://github.com/wlvh/SEC_metrics/pull/94",
+    "delivery_sha": "ca4573647bd6a7e10c71a0159ea1bf697004941f",
+    "review_increment": "dad13e7779327c6a8dc4a169c77eee5eee61ceb4",
+    "remote_checks": "10 SUCCESS at ca457364",
+    "receiver_execution": {
+      "source": "issue47-ex99-receiving/work/ex99-execution-terminal.json actually read",
+      "code_sha": "ca4573647bd6a7e10c71a0159ea1bf697004941f",
+      "http_status": 200,
+      "sec_count_after": 1772,
+      "original_root_initial_snapshot_preserved": true,
+      "executed_by": "Issue47 receiving executor",
+      "issue28_business_calls": [
+        0,
+        0,
+        0
+      ],
+      "not_issue28_result_credit": true
+    }
+  },
+  "goal_runtime_observation_20261009_resume": {
+    "observed_at": "2026-10-09T11:14:10.548197+00:00",
+    "native_status": "active",
+    "source": "get_goal_after_native_goal_continuation",
+    "prior_blocked_observation_retained": true,
+    "budget": null,
+    "completed": false,
+    "progress": "Existing ledger interface, update reuse, RPO display and bounded B03 revenue relation delivered for review; full objective incomplete"
+  },
+  "shared_runtime_pending_increment_20261009": [
+    {
+      "module": "ordinary_current_update._configuration",
+      "status": "DRAFT_PR95_LIMITED_REVIEW_AND_10_REMOTE_CHECKS_PASS",
+      "draft_pr": "https://github.com/wlvh/SEC_metrics/pull/95",
+      "head": "7e22943aece2511c3e0bf4054654e34bf405cf1c",
+      "product_sha": "0ff6fc9ec493213f64d01fd4303981d5397a2535",
+      "effect": "Exclude unused legacy session; explicit dependency and actual annual/source/calculator checks remain. One normal migration on install, then unrelated session change does not recalculate.",
+      "real_saved_author_case": "Marriott FY2025 C01=3 count; forbidden repeat factory; six result files unchanged",
+      "receiver_scope": "Paramount FY2025 C01 receiving evidence reported/read by Issue47; no full historical acceptance"
+    },
+    {
+      "module": "config/ordinary_public_projection_v1.json B12 notes",
+      "status": "DRAFT_PR97_10_REMOTE_CHECKS_PASS",
+      "draft_pr": "https://github.com/wlvh/SEC_metrics/pull/97",
+      "head": "e53609e7",
+      "effect": "Display only RPO/cRPO != ARR, not churn; old CSV/results retain original bytes.",
+      "real_saved_author_case": "Salesforce FY2026 72400000000 USD/asof2026-01-31; Result and Trace unchanged; 10 tests/4.866s"
+    },
+    {
+      "module": "b03_contract_amortization_scope._visible_revenue_deductions/_RevenueTableIndex",
+      "status": "DRAFT_PR99_P2_FIXED_LIMITED_REVIEW_PASS_REMOTE_PENDING",
+      "draft_pr": "https://github.com/wlvh/SEC_metrics/pull/99",
+      "head": "981de20f2e0fa33f073549d9fe19fc5aeb258979",
+      "reviewed_product": "98930711a31d85d1b5406149ef83271cce793543",
+      "old_review": "2bec3464 NEEDS_FIX retained",
+      "effect": "All four original revenue-deduction facts retained; overlapping segment total is not added twice; only explicit hidden empty cells omitted from visible columns; ambiguous styles preserved.",
+      "actual_source_author_checks": "FY2021 55+20=75m, FY2022 60+29=89m, FY2023 65+22=87m vs consolidated88m; each request/body proven; gross-to-net and visible year retained",
+      "remaining": [
+        "receiving consumer validation",
+        "fulfillment/lease amortization completeness; three historical B03 not released",
+        "new head CI"
+      ]
+    }
+  ]
 }
