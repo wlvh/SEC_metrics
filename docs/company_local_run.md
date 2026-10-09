@@ -2,6 +2,8 @@
 
 main已通过PR57交付当期公司入口；`fiscal-years`为存量历史分支已实现功能，尚未入main。历史侧接续[#28可信内部工具规则](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006)及[#47 H4](https://github.com/wlvh/SEC_metrics/issues/47#history-simplification-20261006)。来源与计算仍为独立阶段，`run`负责顺序调度；没有OpenShift部署、正式发布或active切换。旧分阶段入口及运行树仍按原身份读取旧Run。
 
+2026-10-09的首批可接收历史版本是[PR71/task/issue47-history-consumers](https://github.com/wlvh/SEC_metrics/pull/71)，已接PR67/29c9公共候选；[正式历史使用指南](https://github.com/wlvh/SEC_metrics/blob/task/issue47-history-consumers/docs/historical_company_usage.md)给出其可取得代码、提交内Marriott输入、两年B10/B11命令、实际日期/单位及输出位置。PR71不支持下文存量分支的Macy's B01例，也不包含后续PR75—79/83等能力。存量PR52继续保存较广的历史实现、原件及旧Run，不能整体作为main接收增量。main、首批候选及后续分支能力分别解释，不因命令同名推定实现相同。
+
 在源码目录之外的工作位置执行，固定源码也可用绝对路径指定：
 
 ```bash
@@ -33,7 +35,7 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
 
 来源准备端完整验证原账本；最终计算端只接收目标公司包与独立信任登记。`historical-company.json`固定历史程序，`historical-company-state`保留历史来源版本、原生Run和请求观察；已有`local-company.json`、当期程序与状态保留。计算整个范围持有同一个导入锁，每个Run仍保留原生期间和身份。CSV为每个请求财年/指标记录状态，旧范围外结果保留并标记未请求；单年失败不冒充零值，也不覆盖别年的请求状态。复跑沿原输入指纹核验已有候选。日常保存结果由当前入口检查记录、值、期间、出处字节和已知缺陷；需要原生重放时另用原固定版本的显式审计出口。
 
-历史分支已接收公共日常读取接口。读取已有任务时，不重新执行上面的范围计算：
+历史分支已接收公共日常读取接口。下面只用于已经保存了`historical-company-state`及原固定程序的旧native任务；上述新普通任务仍直接读取原`work-dir`。读取已有任务时，不重新执行范围计算：
 
 ```bash
 python /path/to/SEC_metrics/tools/vnext_company.py results \
