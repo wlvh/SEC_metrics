@@ -35,3 +35,13 @@ python3 tools/vnext_company.py results --company enphase_energy \
 ```
 
 Lumen仅改company为lumen_technologies。Pfizer本轮只选B01/B04/B05；Southwest完整五年会显示上述修订缺口，不能把其退出码2视为所有结果失败。已有任务读取自己的原state；输出目录须新。各company.json保本轮实际状态/目录/比较和调用边界，原件参考不修改。完整历史在线发现/补齐、修订适配、其他指标及五年业务责任继续。
+
+## 后继：有限原财务数值修订接收
+
+SouthwestFY25阻塞已定位为消费者未接已成立公共证明：修订只更正Exhibit3.2公司章程超链接，并增加规定的认证；公共annual_amendment_scope_v2严格验证相同封面/Item15、限用途note/链接/签名、无非DEI财务事实和期间不变，实际分类EXHIBIT_LINK_CORRECTION_WITH_IDENTICAL_ORIGINAL_ITEM15，明确允许ORIGINAL_STATEMENT_VALUES。southwest-amendment-scope.json保完整所读说明文字、原件与修订SHA/分类及policy scopeID。首摘要取错rawblob字段KeyError保本地，校正后仅读取scope，不运行财务。
+
+本方薄适配只为B01/B02/B04/B05连续主体消费这一现有证明，不改共享checker/policy/计算或任意关键词。全部修订须有明确原数值许可、无issue/期间不变、further-review=false，否则在金额选择前拒；PartIII仅事件许可不接财务，B07、其他指标、继任主体、前期修订等原边界保持。处理依赖列实际四文件/政策；保存精确scopeID/分类及原修订proof，展示不嵌整份文档。
+
+新20scope例.028s，含无修订不读源、原数值许可、事件-only/期变/issue/待审拒、第二份修订失败拒全部；受影响历史分派/状态及公共paragraph解析联合54例.175s零skip。仅在原Southwesttask补FY25四指标，首20.724s全部READY，原16位132文件字节保持；禁factory复2.039s0、另进程读.576s保五年二十值/单位/实际日期/168结果pointer文件。原四失败日志保持、不重算邻居；源码在提交前已同字节验证，如实标uncommitted。新源/模型/Run/正式接受0。
+
+该修补尚在本短分支，不在main。它将一个具体“来源齐但消费者不支持”缺口变为同公司CLI可用；不证明所有修订、PartIII、PfizerB02冲突或完整1950已解决。本记录以前SouthwestFY25未完段保原时间边界，现本段为后继终态。
