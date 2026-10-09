@@ -17,6 +17,26 @@
     "verified_by_generator": false,
     "note": "development_references 只是开发期间只读核对该固定提交后记录的路径与内容摘要；生成、校验与 CI 不读取该分支或其 Git 对象，也不把这些引用当作定义来源或上线状态。"
   },
+  "owner_scope_decision_sources": {
+    "purpose_zh": "owner_scope_decision 的固定出处登记：预期状态、路径与定位只在这里维护。生成器只核对 metric_metadata.json 中每条决定的 source 与此一致并展示，不在代码里写死路径、日期或指标集合；登记不授予任何指标上线状态。",
+    "metrics": {
+      "B02": {
+        "status": "POLICY_PENDING",
+        "path": "AGENTS.md",
+        "locator": "COLLAB-28-47-v1 §2"
+      },
+      "C02": {
+        "status": "DECIDED_TARGET",
+        "path": "docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json",
+        "locator": "decisions.C02"
+      },
+      "E01": {
+        "status": "DECIDED_TARGET",
+        "path": "docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json",
+        "locator": "decisions.E01"
+      }
+    }
+  },
   "binding_authorities": {
     "active_release_r3": {
       "paths": [

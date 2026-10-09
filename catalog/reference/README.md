@@ -104,7 +104,7 @@ PR #43（固定提交 `8346c326f04be5a863dc8bf2f010087a6f2025a3`）上的后继 
 
 ## 所有者范围决定与当前参考实现分开
 
-定义表在 JSON 和 CSV 中都显示 `owner_scope_decision`，只为 B02、C02、E01 填值；其他指标为 null/空单元格。它显示决定状态、内容、决定日、记录日和固定提交出处，不改变 `definition_source`、`method.reference_implementation` 或当前 main 代码。C02 的“构成事实”和 E01 的“经内容确认的并购公告”源于 [2026-09-27 决定记录](https://github.com/wlvh/SEC_metrics/blob/48b46a2d742eb3e3b8bd5a6404908745046b5d2f/docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json)，经 [COLLAB-28-47-v1](https://github.com/wlvh/SEC_metrics/blob/32faa26d87b47a882e13145e450e565df0eaa1d3/AGENTS.md) 适用于两条路线。B02“改成两年共有的第一个收入标签”仍为待决政策；现有配对防错不代表该政策已获批准。各分支实际接入与验收进度留在各自 Issue 执行记录，不写进此参考表。
+定义表在 JSON 和 CSV 中都显示 `owner_scope_decision`，只为 B02、C02、E01 填值；其他指标为 null/空单元格。 每条决定的预期状态、出处路径与定位登记在 `source_selection.json` 的 `owner_scope_decision_sources`；生成器只核对 `metric_metadata.json` 的 `source` 与该登记一致，代码中不写死路径、日期或指标集合。它显示决定状态、内容、决定日、记录日和固定提交出处，不改变 `definition_source`、`method.reference_implementation` 或当前 main 代码。C02 的“构成事实”和 E01 的“经内容确认的并购公告”源于 [2026-09-27 决定记录](https://github.com/wlvh/SEC_metrics/blob/48b46a2d742eb3e3b8bd5a6404908745046b5d2f/docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json)，经 [COLLAB-28-47-v1](https://github.com/wlvh/SEC_metrics/blob/32faa26d87b47a882e13145e450e565df0eaa1d3/AGENTS.md) 适用于两条路线。B02“改成两年共有的第一个收入标签”仍为待决政策；现有配对防错不代表该政策已获批准。各分支实际接入与验收进度留在各自 Issue 执行记录，不写进此参考表。
 
 未命中任何基线范围的 SIC：映射表 `unmatched_sic_policy` = PENDING_CONFIRMATION，并记录
 legacy pipeline 的运行默认（`profile_from_sic_rules` 返回 `default_non_fi`）。范围重叠会

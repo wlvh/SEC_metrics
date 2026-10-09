@@ -810,6 +810,24 @@ class NegativeCasesTest(unittest.TestCase):
             lambda payload: payload["metrics"]["C02"].pop("owner_scope_decision"),
             "owner_scope_decision must cover exactly B02, C02 and E01", relative=relative)
 
+    def test_owner_scope_decision_sources_are_registered_in_source_selection_only(self) -> None:
+        relative = "catalog/reference/source_selection.json"
+        self._assert_error(
+            lambda payload: payload["owner_scope_decision_sources"]["metrics"]["C02"].__setitem__("path", "docs/other.json"),
+            "C02: owner_scope_decision fixed source invalid", relative=relative)
+        self._assert_error(
+            lambda payload: payload["owner_scope_decision_sources"]["metrics"]["B02"].__setitem__("status", "DECIDED_TARGET"),
+            "B02: owner_scope_decision status or content differs", relative=relative)
+        self._assert_error(
+            lambda payload: payload["owner_scope_decision_sources"]["metrics"].pop("E01"),
+            "owner_scope_decision must cover exactly B02 and C02", relative=relative)
+        self._assert_error(
+            lambda payload: payload["owner_scope_decision_sources"]["metrics"]["E01"].__setitem__("path", "../outside.json"),
+            "E01: owner_scope_decision_sources path or locator invalid", relative=relative)
+        source_text = (REPO_ROOT / "tools" / "generate_metrics_reference.py").read_text(encoding="utf-8")
+        self.assertNotIn("owner-decisions-", source_text)
+        self.assertNotIn("decisions.C02", source_text)
+
     def test_check_mode_writes_nothing(self) -> None:
         with _TempCopy() as root:
             before = {path: path.read_bytes() for path in sorted(root.rglob("*")) if path.is_file()}
