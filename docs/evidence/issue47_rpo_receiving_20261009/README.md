@@ -85,4 +85,4 @@ python3 tools/vnext_company.py results --company salesforce \
 
 实际修后Param21–24五事件族二十位90.900s纯保存/冷读全部成功，120旧文件保持。只添加原选期已验证annual RAW/SOURCE，使共享renderer证明报送主体；矩阵及证据CIK均813828，原Result/Trace/input/值/单位/期间/状态、引用原文与金额/locator保持。CSVcontext新增annualref；纯重构首驱动遗漏原filing metadata导致form/filed回到annual，改用已存真实submissions metadata恢复原事件form/date（不是放宽业务检查），另零值证据允许其实际CIK submissions URL。三个驱动失败保本地，未算事件/GET/改旧结果。historical-events-reporter-fixed.json/log。九shared reporter反例.002s通过，错CIK/错acc/未知/无证明scope仍拒；30历史source/dispatch/state.186s零skip。此二十位的实证补齐，不能扩大为全事件/1950。
 
-同一公司入口再核实际FY21/C01一个受影响处理版本：首13.161s/禁factory复2.247s0/独立读全任务.886s，新矩阵CIK813828、原ResultID保持。只此source-proof呈现依赖改变的坐标处理；其他年/指标及旧结果文件不动，原200文件保护，新增后208文件复/读保持。historical-event-company-subset.json/log精确终态；其余旧版本仍按原字节读，二十位纯渲染新输出不暗改旧current指针。不把这个代表迁移说成所有历史事件现行版本已全部切换。无新calls/Run/采纳。
+同一公司入口再核实际FY21/C01一个受影响处理版本：首13.161s/禁factory复2.247s0/独立读全任务.886s，新矩阵CIK813828、原ResultID保持。只此source-proof呈现依赖改变的坐标处理；其他年/指标及旧结果文件不动，原206文件保护，新增后212文件复/读保持。historical-event-company-subset.json/log精确终态；其余旧版本仍按原字节读，二十位纯渲染新输出不暗改旧current指针。不把这个代表迁移说成所有历史事件现行版本已全部切换。无新calls/Run/采纳。
