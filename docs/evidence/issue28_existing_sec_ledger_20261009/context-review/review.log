@@ -1,0 +1,280 @@
+CONTEXT FIELD-SELECTION REVIEW
+Initial read UTC: 2026-10-09 11:45:42
+Logging UTC: 2026-10-09T11:47:41.557573+00:00
+
+COMMAND: ['git', 'rev-parse', 'HEAD']
+EXIT: 0
+dad13e7779327c6a8dc4a169c77eee5eee61ceb4
+
+COMMAND: ['git', 'show', '-s', '--format=%H %P %cI', '20398f3e1b7d07b6de36b8a57bfef86c9162b92e', 'dad13e7779327c6a8dc4a169c77eee5eee61ceb4']
+EXIT: 0
+20398f3e1b7d07b6de36b8a57bfef86c9162b92e 32d406bbd9f231bc9b4eb22fa3903de45524c10a 2026-10-09T19:27:09+08:00
+dad13e7779327c6a8dc4a169c77eee5eee61ceb4 20398f3e1b7d07b6de36b8a57bfef86c9162b92e 2026-10-09T19:44:35+08:00
+
+COMMAND: ['git', 'diff', '--stat', '20398f3e1b7d07b6de36b8a57bfef86c9162b92e', 'dad13e7779327c6a8dc4a169c77eee5eee61ceb4']
+EXIT: 0
+ .../issue28_existing_sec_ledger_20261009/README.md | 16 ++++++++++++
+ .../missing-closure-after.log                      | 29 ++++++++++++++++++++++
+ .../missing-closure-before.log                     | 19 ++++++++++++++
+ scripts/vnext/company_online.py                    |  6 ++++-
+ tests/vnext/test_historical_sec_capture_adapter.py | 12 +++++++++
+ 5 files changed, 81 insertions(+), 1 deletion(-)
+
+COMMAND: ['git', 'diff', '20398f3e1b7d07b6de36b8a57bfef86c9162b92e', 'dad13e7779327c6a8dc4a169c77eee5eee61ceb4', '--', 'scripts/vnext/company_online.py', 'tests/vnext/test_historical_sec_capture_adapter.py']
+EXIT: 0
+diff --git a/scripts/vnext/company_online.py b/scripts/vnext/company_online.py
+index 1ead689c..1279372d 100644
+--- a/scripts/vnext/company_online.py
++++ b/scripts/vnext/company_online.py
+@@ -96,7 +96,11 @@ class Capture:
+         self.attempted.add(url)
+         request={'method':'GET','url':url,'company_id':self.context['company_id'],
+                  'refresh_metadata':refresh,'source_log_before_sha256':sha256_file(path=log)}
+-        requirement={k:self.context[k] for k in ('requirement_id','requirement_closure_hash')}
++        # The original historical allowance stores requirement_id only. Keep
++        # the continuous ledger's two-field contract on its own path.
++        requirement_fields = (('requirement_id',) if hasattr(self.ledger, 'check_request')
++                              else ('requirement_id', 'requirement_closure_hash'))
++        requirement={k:self.context[k] for k in requirement_fields}
+         with self.ledger.locked():
+             # A new task directory is not permission to re-fetch a previously
+             # captured immutable document. Metadata refresh is an explicit
+diff --git a/tests/vnext/test_historical_sec_capture_adapter.py b/tests/vnext/test_historical_sec_capture_adapter.py
+index 643e32d1..7cbe63fe 100644
+--- a/tests/vnext/test_historical_sec_capture_adapter.py
++++ b/tests/vnext/test_historical_sec_capture_adapter.py
+@@ -68,6 +68,18 @@ class HistoricalSecCaptureAdapterTest(TestCase):
+             other.get(self.url)
+         self.assertEqual(inspect_existing_historical_sec(self.root)['counts'],[0,0,4])
+ 
++    def test_original_historical_context_without_closure_hash_can_capture(self):
++        self.context.pop('requirement_closure_hash')
++        binding = (self.root/'binding.json').read_bytes()
++        with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply', return_value=(200, b'{"saved":true}', {}, '')) as transport:
++            self.capture().get(self.url)
++        self.assertEqual(transport.call_count, 1)
++        self.assertEqual((self.root/'binding.json').read_bytes(), binding)
++        intent = json.loads((self.root/'calls/0002/intent.json').read_text())
++        self.assertEqual(intent['requirement_id'], 'issue_47_v1')
++        self.assertNotIn('requirement_closure_hash', intent)
++        self.assertEqual(inspect_existing_historical_sec(self.root)['counts'], [0, 0, 4])
++
+     def test_wrong_url_root_refresh_and_limit_refuse_before_transport(self):
+         with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',side_effect=AssertionError('No transport')):
+             with self.assertRaisesRegex(ValueError,'OUTSIDE_BOUNDED_PURPOSE'):self.capture().get(self.url+'x')
+
+COMMAND: ['git', 'ls-tree', '-r', '--name-only', '0918862a', '--', 'scripts/vnext']
+EXIT: 0
+scripts/vnext/historical_ledger_start.py
+scripts/vnext/historical_model_session.py
+scripts/vnext/historical_sec_extension.py
+scripts/vnext/historical_sec_resume.py
+scripts/vnext/historical_sec_session.py
+
+SUPPLEMENTAL PROBE SOURCE
+
+import ast,json,subprocess
+from unittest.mock import patch
+from tests.vnext.test_company_online import CompanyOnlineTest
+from tests.vnext.test_historical_sec_capture_adapter import HistoricalSecCaptureAdapterTest
+from vnext import company_online as online
+from vnext.existing_historical_sec_state import inspect_existing_historical_sec
+
+def fixture(kind):
+ case=kind();case.setUp();return case
+
+def run(name,body):
+ body();print('PASS '+name)
+
+def continuous_positive():
+ case=fixture(CompanyOnlineTest)
+ try:
+  binding=(case.ledger.root/'binding.json').read_bytes();events=[];requirements=[]
+  original_claim=case.ledger.claim;original_json=online._atomic_json
+  def claim(**kwargs):
+   events.append('claim');requirements.append(kwargs['requirement']);return original_claim(**kwargs)
+  def save(path,value):
+   if path.name=='sec-plan.json':events.append('plan')
+   return original_json(path,value)
+  def reply(*args,**kwargs):events.append('transport');return (200,b'{}',{},'')
+  with patch.object(case.ledger,'claim',side_effect=claim),patch.object(online,'_atomic_json',side_effect=save),patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',side_effect=reply) as transport:
+   case.capture.get(case.url)
+  expected={key:case.context[key] for key in ('requirement_id','requirement_closure_hash')}
+  assert requirements==[expected],requirements
+  intent=json.loads((case.ledger.root/'calls/0001/intent.json').read_text())
+  assert all(intent[key]==value for key,value in expected.items())
+  assert events==['claim','plan','transport'],events
+  assert transport.call_count==1
+  with case.ledger.locked():assert case.ledger.snapshot()['counts']==[0,0,1]
+  assert (case.ledger.root/'binding.json').read_bytes()==binding
+ finally:case.doCleanups()
+
+def continuous_missing_closure():
+ case=fixture(CompanyOnlineTest)
+ try:
+  case.context.pop('requirement_closure_hash');binding=(case.ledger.root/'binding.json').read_bytes()
+  with patch.object(case.ledger,'claim',wraps=case.ledger.claim) as claim,patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',side_effect=AssertionError('No transport')) as transport:
+   try:case.capture.get(case.url)
+   except KeyError as error:assert error.args==('requirement_closure_hash',)
+   else:raise AssertionError('Continuous context must still require closure')
+  assert claim.call_count==0 and transport.call_count==0
+  with case.ledger.locked():assert case.ledger.snapshot()['counts']==[0,0,0]
+  assert (case.ledger.root/'binding.json').read_bytes()==binding
+ finally:case.doCleanups()
+
+def historical_no_closure():
+ case=fixture(HistoricalSecCaptureAdapterTest)
+ try:
+  case.context.pop('requirement_closure_hash');binding=(case.root/'binding.json').read_bytes();events=[];requirements=[]
+  original_claim=case.ledger.claim;original_json=online._atomic_json
+  def claim(**kwargs):
+   events.append('claim');requirements.append(kwargs['requirement']);return original_claim(**kwargs)
+  def save(path,value):
+   if path.name=='sec-plan.json':events.append('plan')
+   return original_json(path,value)
+  def reply(*args,**kwargs):events.append('transport');return (200,b'{}',{},'')
+  with patch.object(case.ledger,'claim',side_effect=claim),patch.object(online,'_atomic_json',side_effect=save),patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',side_effect=reply) as transport:
+   case.capture().get(case.url)
+  assert requirements==[{'requirement_id':'issue_47_v1'}],requirements
+  assert events==['claim','plan','transport'],events
+  assert transport.call_count==1
+  assert inspect_existing_historical_sec(case.root)['counts']==[0,0,4]
+  assert (case.root/'binding.json').read_bytes()==binding
+  for filename in ('intent.json','sec-plan.json','sec-receipt.json'):
+   assert 'requirement_closure_hash' not in json.loads((case.root/'calls/0002'/filename).read_text()),filename
+ finally:case.doCleanups()
+
+def base_reproduces_missing_closure():
+ source=subprocess.run(['git','show','20398f3e1b7d07b6de36b8a57bfef86c9162b92e:scripts/vnext/company_online.py'],text=True,capture_output=True,check=True).stdout
+ node=next(node for node in ast.parse(source).body if isinstance(node,ast.ClassDef) and node.name=='Capture')
+ method=next(node for node in node.body if isinstance(node,ast.FunctionDef) and node.name=='get')
+ namespace=dict(online.__dict__)
+ exec(compile(ast.Module(body=[method],type_ignores=[]),'<read-only-base-get>','exec'),namespace)
+ case=fixture(HistoricalSecCaptureAdapterTest)
+ try:
+  case.context.pop('requirement_closure_hash')
+  with patch.object(online.Capture,'get',namespace['get']),patch.object(case.ledger,'claim',wraps=case.ledger.claim) as claim,patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',side_effect=AssertionError('No base transport')) as transport:
+   try:case.capture().get(case.url)
+   except KeyError as error:assert error.args==('requirement_closure_hash',)
+   else:raise AssertionError('Base should reproduce the removed field requirement')
+  assert claim.call_count==0 and transport.call_count==0
+  assert inspect_existing_historical_sec(case.root)['counts']==[0,0,3]
+ finally:case.doCleanups()
+
+run('continuous_positive_preserves_two_fields_and_claim_plan_transport_order',continuous_positive)
+run('continuous_missing_closure_refuses_before_claim_and_transport',continuous_missing_closure)
+run('historical_without_closure_passes_requirement_id_only_preserves_binding_and_order',historical_no_closure)
+run('exact_base_get_reproduces_missing_closure_before_claim_without_file_edits',base_reproduces_missing_closure)
+print('Supplemental probes: 4 passed; real SEC/provider calls: 0/0')
+
+
+COMMAND: ['sandbox-exec', '-p', '(version 1) (allow default) (deny network*)', 'env', '-u', 'PYTHONPATH', 'PYTHONDONTWRITEBYTECODE=1', 'python3', 'tests/required_unittests.py', 'tests.vnext.test_historical_sec_capture_adapter', 'tests.vnext.test_company_online']
+START UTC: 2026-10-09T11:49:14.975398+00:00
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 17, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_sec_capture_adapter", "tests.vnext.test_company_online"]}
+test_new_403_is_persisted_as_a_stop (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_new_403_is_persisted_as_a_stop) ... SEC retry exhausted for https://data.sec.gov/submissions/CIK0001048286-attachments-001.json; status=403; error=
+ok
+test_original_historical_context_without_closure_hash_can_capture (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_original_historical_context_without_closure_hash_can_capture) ... ok
+test_plan_interrupt_consumes_opportunity_without_http_or_fake_terminal (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_plan_interrupt_consumes_opportunity_without_http_or_fake_terminal) ... ok
+test_recorded_capture_preserves_prior_rows_and_uses_next_old_format_slot (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_recorded_capture_preserves_prior_rows_and_uses_next_old_format_slot) ... ok
+test_unclaimed_new_log_row_is_not_treated_as_old_imported_history (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_unclaimed_new_log_row_is_not_treated_as_old_imported_history) ... ok
+test_unknown_and_new_rate_refusal_remain_charged_and_stopped (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_unknown_and_new_rate_refusal_remain_charged_and_stopped) ... ok
+test_wrong_url_root_refresh_and_limit_refuse_before_transport (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_wrong_url_root_refresh_and_limit_refuse_before_transport) ... ok
+test_claim_is_reported_pending_before_plan_persistence (tests.vnext.test_company_online.CompanyOnlineTest.test_claim_is_reported_pending_before_plan_persistence) ... ok
+test_existing_real_ledger_never_created (tests.vnext.test_company_online.CompanyOnlineTest.test_existing_real_ledger_never_created) ... ok
+test_new_task_source_directory_does_not_reset_immutable_capture (tests.vnext.test_company_online.CompanyOnlineTest.test_new_task_source_directory_does_not_reset_immutable_capture) ... ok
+test_one_native_http_attempt_uses_existing_count_and_no_retry (tests.vnext.test_company_online.CompanyOnlineTest.test_one_native_http_attempt_uses_existing_count_and_no_retry) ... ok
+test_persistence_interrupt_leaves_counted_pending_no_second_transport (tests.vnext.test_company_online.CompanyOnlineTest.test_persistence_interrupt_leaves_counted_pending_no_second_transport) ... ok
+test_prior_metadata_missing_does_not_prevent_current_sources (tests.vnext.test_company_online.CompanyOnlineTest.test_prior_metadata_missing_does_not_prevent_current_sources) ... ok
+test_recorded_context_without_replies_cannot_use_network (tests.vnext.test_company_online.CompanyOnlineTest.test_recorded_context_without_replies_cannot_use_network) ... ok
+test_scope_or_limits_cannot_be_changed_by_call_context (tests.vnext.test_company_online.CompanyOnlineTest.test_scope_or_limits_cannot_be_changed_by_call_context) ... ok
+test_unknown_remote_blocks_next_claim_and_is_not_zero (tests.vnext.test_company_online.CompanyOnlineTest.test_unknown_remote_blocks_next_claim_and_is_not_zero) ... ok
+test_unsupported_metric_rejected_before_sources_or_claim (tests.vnext.test_company_online.CompanyOnlineTest.test_unsupported_metric_rejected_before_sources_or_claim) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 6.076s
+
+OK
+
+EXIT: 0
+ELAPSED_SECONDS: 6.322328
+END UTC: 2026-10-09T11:49:21.298216+00:00
+
+COMMAND: ['sandbox-exec', '-p', '(version 1) (allow default) (deny network*)', 'env', 'PYTHONDONTWRITEBYTECODE=1', 'PYTHONPATH=scripts:.', 'python3', '-c', '<probe source above>']
+START UTC: 2026-10-09T11:49:21.298293+00:00
+PASS continuous_positive_preserves_two_fields_and_claim_plan_transport_order
+PASS continuous_missing_closure_refuses_before_claim_and_transport
+PASS historical_without_closure_passes_requirement_id_only_preserves_binding_and_order
+PASS exact_base_get_reproduces_missing_closure_before_claim_without_file_edits
+Supplemental probes: 4 passed; real SEC/provider calls: 0/0
+
+EXIT: 0
+ELAPSED_SECONDS: 2.075049
+END UTC: 2026-10-09T11:49:23.373384+00:00
+
+Original historical binding excerpt (read-only Git object, lines 1783-1802)
+    # The location is not in the binding: the live session separately requires
+    # the ledger to be the granted root, and a binding that named its own path
+    # would make an intact ledger unreadable wherever it was copied for review.
+    body = {"record_type": LEDGER_TYPE, "requirement_id": REQUIREMENT_ID,
+            "limits": list(allowance["maximum_additional_provider_paid_sec_calls"]),
+            "purposes": list(allowance["scope"]["purposes"]),
+            "execution_mode": "LIVE" if live else "RECORDED_TEST_ONLY"}
+    return HistoricalCallLedger(factory=_FACTORY, root=root,
+                                binding=_sealed(body, "binding_id"), live=live)
+
+
+def live_historical_session(*, branch_tip, runtime_ledger_root=None):
+    """Issue #47's granted session, or a refusal naming what is missing.
+
+    ``acquisition_allowance`` never falls back to Issue #28's record, so while
+    ``config/issue47_historical_calls_v1.json`` does not exist this raises and
+    no transport is constructed. The rest of the chain is built and exercised
+    regardless, because an execution path that first appears alongside its
+    grant is a path nobody has run.
+
+
+Original historical claim excerpt (read-only Git object, lines 690-716)
+    def claim(self, *, channel, request_digest, plan_id, purpose):
+        """Consume one call of ``channel`` and return its slot and intent."""
+        _need(self._locked, "ISSUE_47_LEDGER_LOCK_REQUIRED")
+        _need(purpose in self.binding["purposes"],
+              "ISSUE_47_PURPOSE_NOT_IN_ALLOWANCE:" + purpose)
+        state = self.require_unblocked()
+        index = {"PROVIDER": 0, "PAID": 1, SEC: 2}[channel]
+        delta = [0, 0, 0]
+        delta[index] = 1
+        _need(all(a + b <= c for a, b, c in
+                  zip(state["counts"], delta, state["limits"])),
+              "ISSUE_47_CUMULATIVE_LIMIT_REACHED:" + channel + ":"
+              + str(state["counts"]) + " of " + str(state["limits"]))
+        # The same request twice is a redraw, and zero retries forbids it.
+        _need(request_digest not in state["request_digests"],
+              "ISSUE_47_UNCHANGED_REQUEST_REDRAW_FORBIDDEN")
+        ordinal = state["slot_count"] + 1
+        path = self.root / "calls" / ("%04d" % ordinal)
+        intent = _sealed({"record_type": "ISSUE_47_HISTORICAL_CALL_INTENT",
+                          "requirement_id": REQUIREMENT_ID, "channel": channel,
+                          "ordinal": ordinal, "execution_mode": self.mode,
+                          "allowance_binding_id": self.binding["binding_id"],
+                          "previous_intent_id": state["previous_intent_id"],
+                          "request_digest": request_digest, "plan_id": plan_id,
+                          "purpose": purpose, "automatic_retry_count": 0,
+                          "counts_before": state["counts"],
+                          "production_authorized": False}, "intent_id")
+
+READS AND SCOPE
+One read-only GitHub Issue #28 inspection via gh issue view; no SEC/provider request.
+Prior conclusion reused: docs/evidence/issue28_existing_sec_ledger_20261009/independent-review/conclusion.md (original reviewed patch 17002f37358042e4c6f43b1d5d866f26dae35b55).
+No original reviewer followup, spawn, commit, push, real data-root access, allowance claim or production action.
+Only new deliverables: this log and conclusion.md under context-review.
+
+FINAL OUTPUT AUDIT
+Completion UTC: 2026-10-09 11:51:04 UTC
+HEAD: dad13e7779327c6a8dc4a169c77eee5eee61ceb4
+Tracked diff exit: 0
+Status:
+?? docs/evidence/issue28_existing_sec_ledger_20261009/context-review/conclusion.md
+?? docs/evidence/issue28_existing_sec_ledger_20261009/context-review/review.log
+Files: ['conclusion.md', 'review.log']
+Actual tool calls: 33 (9 functions.exec wrappers + 24 nested tools)
+Ordinary messages: 3 including final; questions: 0; spawn/followup/commit/push: 0

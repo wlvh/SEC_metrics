@@ -200,6 +200,8 @@ FAST_TESTS += ("tests.vnext.test_financial_dei_release",)
 FAST_TESTS += ("tests.vnext.test_reported_average_period",)
 FAST_TESTS += ("tests.vnext.test_dei_release_selection",)
 FAST_TESTS += ("tests.vnext.test_bank_scope_dei_release",)
+FAST_TESTS += ('tests.vnext.test_existing_historical_sec_state',)
+FAST_TESTS += ('tests.vnext.test_historical_sec_capture_adapter',)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
