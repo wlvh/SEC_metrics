@@ -5491,6 +5491,64 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics/docs/evidence/issue28_contract_aggregate_20261009/style-review/conclusion.md",
       "verdict": "PASS_LIMITED_DISPLAY_DECLARATION_FIX",
       "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_reporter_79ff47b",
+      "purpose": "review",
+      "module": "reporter",
+      "scope_paths": [
+        "scripts/vnext/ordinary_projection.py",
+        "tests/vnext/test_reporting_company_projection.py",
+        "tests/vnext/test_precalculated_case.py",
+        ".github/workflows/company-current-records.yml",
+        "tools/run_fast_tests_v2.py"
+      ],
+      "patch_sha": "79ff47b4aad95946f4bd403d5a06f5731656d369",
+      "spawned_at": "2026-10-09T12:54:29.103623+00:00",
+      "ended_at": "2026-10-09T13:04:43Z",
+      "tool_calls": 63,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/docs/evidence/issue28_reporting_cik_20261009/independent-review/conclusion.md",
+      "verdict": "REQUEST_CHANGES_NULL_ISSUER_TRACE_P1",
+      "ordinary_messages": 3
+    },
+    {
+      "task_name": "develop_requestprep_4a03f22",
+      "purpose": "development",
+      "module": "requestprep",
+      "base_sha": "4a03f22393182eb642a0472f1480354ff430267c",
+      "patch_sha": "844055a25632d688455e20db957346bde24cbf0b",
+      "scope_paths": [
+        "scripts/vnext/request_limits.py",
+        "scripts/vnext/continuous_request_context.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "tests/vnext/test_request_limits.py",
+        "tests/vnext/test_development_request_preparation.py"
+      ],
+      "spawned_at": "2026-10-09T13:38:30.580086+00:00",
+      "ended_at": "2026-10-09T13:48:58Z",
+      "tool_calls": 51,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-request-preparation/SEC_metrics/docs/evidence/issue28_request_preparation_20261009/README.md",
+      "verdict": "COMPLETED_DEVELOPMENT_14_TESTS_BINDING_GAP_REPORTED",
+      "ordinary_messages": 3,
+      "parent_adapted_sha": "ab90043da9d8c95e235afea3e5b308ab065629d3"
+    },
+    {
+      "task_name": "review_reporternull_abb7abd",
+      "purpose": "review",
+      "module": "reporternull",
+      "scope_paths": [
+        "scripts/vnext/ordinary_projection.py",
+        "tests/vnext/test_reporting_company_projection.py",
+        "tools/run_fast_tests_v2.py"
+      ],
+      "patch_sha": "abb7abdd78b0330b0c2464668e81cd4de7fdf375",
+      "spawned_at": "2026-10-09T14:10:42.773080+00:00",
+      "ended_at": "2026-10-09T14:19:44.815664+00:00",
+      "tool_calls": 24,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/docs/evidence/issue28_reporting_cik_20261009/nullable-review/conclusion.md",
+      "verdict": "PASS_LIMITED_NULLABLE_P1_AND_SELECTORS_BASELINE_DUPLICATES_REMAINED",
+      "ordinary_messages": 3,
+      "operational_deviation": "One read-only GitHub Issue28 HTTP outside no-real-request scope; no SEC/provider/paid"
     }
   ],
   "ci_capacity_20260922": {
@@ -17263,5 +17321,37 @@
     "author_merged": false,
     "complete_objective": false,
     "original_issue28_claims_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb"
+  },
+  "development_batch_20261009": {
+    "user_exception": "one bounded code agent; parent concurrent nonoverlapping work; prior review-only restriction replaced only for this task",
+    "agent_worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-request-preparation/SEC_metrics",
+    "agent_task": "PR66 helpers plus one explicit offline request construction+measurement seam",
+    "parent_task": "ordinary_projection reporter/null Trace correction",
+    "peer_task": "historical RPO/event/E01 consumers; no public renderer or limits overlap",
+    "base": "4a03f22393182eb642a0472f1480354ff430267c",
+    "reuse_pr66": "ddcc61920d608d5ede64458bb02f3f166953f3df",
+    "budget_increment": [
+      0,
+      0,
+      0
+    ],
+    "agent_cannot_commit_push_spawn": true,
+    "agent_complete": true,
+    "parent_received_sha": "32e4f8a23d5effee47c58b09d60fb938d886df74",
+    "request_preparation_pr": "https://github.com/wlvh/SEC_metrics/pull/103",
+    "reporter_pr": "https://github.com/wlvh/SEC_metrics/pull/102",
+    "reporter_head": "c3ee8c84cae534b34280113269a7ab709340eb09",
+    "parent_tests": {
+      "request_preparation": "14/0.535s/zero skips",
+      "combination": "51/28.881s/zero skips; exact two-product uncommitted combination logged",
+      "duplicate_runner": "22/0.574s;272 unique selectors;functions AST unchanged"
+    },
+    "binding": "Explicit development successor imports; two old continuous modules exact main bytes; old live4096 untouched",
+    "ci_observation": {
+      "PR102": "c3ee8c84 all10 IN_PROGRESS at14:26Z;abb7 prior10SUCCESS not latest credit",
+      "PR103": "32e4f8a2 10SUCCESS and1 IN_PROGRESS inherited source material at14:25Z"
+    },
+    "scope_limit": "offline construction/measurement and reporter integration; no new model/business/company credit",
+    "next": "Read CI at natural checkpoint; receive finite DEI release support for actual A13 historical parsing consumer; N1 transport schema pending"
   }
 }
