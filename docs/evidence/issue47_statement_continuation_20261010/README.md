@@ -45,3 +45,5 @@ SouthwestFY25阻塞已定位为消费者未接已成立公共证明：修订只�
 新20scope例.028s，含无修订不读源、原数值许可、事件-only/期变/issue/待审拒、第二份修订失败拒全部；受影响历史分派/状态及公共paragraph解析联合54例.175s零skip。仅在原Southwesttask补FY25四指标，首20.724s全部READY，原16位132文件字节保持；禁factory复2.039s0、另进程读.576s保五年二十值/单位/实际日期/168结果pointer文件。原四失败日志保持、不重算邻居；源码在提交前已同字节验证，如实标uncommitted。新源/模型/Run/正式接受0。
 
 该修补尚在本短分支，不在main。它将一个具体“来源齐但消费者不支持”缺口变为同公司CLI可用；不证明所有修订、PartIII、PfizerB02冲突或完整1950已解决。本记录以前SouthwestFY25未完段保原时间边界，现本段为后继终态。
+
+公共方提供f79固定tree最小workflow patch已接：只加statement测试路径和原Historical步骤的四个新修订方法，原金融三模块/dispatch/state保持；同实际步骤63例.176s零skip，新四方法实际加载。statement-workflow.json/log。真实FY25公司结果不重跑，新head远端执行另核，不造新runner或无意义触发提交。
