@@ -5693,6 +5693,31 @@
       "dedup": "allnonroot DONE; no matching323SHA/currentnim register/result/evidence; new actualadapter only, no D04 or endeddevelopmenttask reopened",
       "ordinary_messages": 2,
       "tests": "50/32.447s; actual original source CIK/installed traits mismatch negative, no parentCLI rerun"
+    },
+    {
+      "task_name": "audit_revenuescope_f6ef788",
+      "purpose": "audit",
+      "module": "revenue_scope_diagnosis",
+      "patch_sha": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+      "scope_paths": [
+        "selected_income_source_v1.py",
+        "ordinary_income_input.py:verify_income_observations",
+        "historical_statement_cases.py:B01",
+        "normal_zero_ai_results.py:B01",
+        "0dc5de75:pfizer2023-revenue-tables.json"
+      ],
+      "spawned_at": "2026-10-09T20:38:17.197545+00:00",
+      "ended_at": "2026-10-09T20:48:35.599760+00:00",
+      "tool_calls": 18,
+      "result_path": "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/revenue-scope-diagnosis-20261010/conclusion.md",
+      "verdict": "DONE_OFFLINE_DIAGNOSIS",
+      "limits": {
+        "tools": 20,
+        "minutes": 10,
+        "ordinary_messages": 2
+      },
+      "dedup": "listagents allnonrootDONE; register/evidence no samepurpose module; exactsubtotal failure diagnostic, not endeddevagent reopened",
+      "ordinary_messages": 2
     }
   ],
   "ci_capacity_20260922": {
@@ -17664,7 +17689,7 @@
     "actual": "JPM25 .025ratio/year2025/managed/CIK19617; source-only9files; first8.678/repeat.114/read.0048",
     "final": "a541 repair code normalrevalidation8.794/forbiddenrepeat.221/independentread.120, old6files preserved",
     "review": "323limitedNEEDS_FIX P2 source row/installed traits mismatch; selected-company fields guard repaired/47.304s; originalreview retained, final receiving confirmation pending",
-    "ci": "37bef company job cancelled at5min after all steps test commands passed; measuredbase181s+NIM96s; moveNIM to separate same5min job, freshheadCI pending"
+    "ci": "8f28e09e actual current-head all12checksSUCCESS; review323P2 repaired, receiving confirmation remains separate"
   },
   "company_model_closeout_20261010": {
     "instruction": "Newuserpriority: receiving102103106104107109 + one D04complete real-saved company ordinaryCLI/store/results/evidence; no redevelop oldunblocking",

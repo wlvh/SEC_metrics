@@ -1,0 +1,157 @@
+{
+  "mode": "READ_ONLY_STDLIB_ORIGINAL_INSPECTION_NO_METRIC_EXECUTION",
+  "baseline": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+  "specified_result_id": "sha256:a6e31052ee3e389e46442777fa69c0d06c6ec43e847dd65c412c0e05509aa8f7",
+  "sources": [
+    {
+      "kind": "primary",
+      "path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/e8/e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0/pfe-20231231.htm",
+      "sha256": "e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0",
+      "length": 5349302,
+      "selected_native_fact_rows": [
+        {
+          "ordinal": 97,
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-39"
+          },
+          "visible_fact_text": "50,914",
+          "row_visible_text": "Product revenues (a) $ 50,914 $ 91,793 $ 73,636"
+        },
+        {
+          "ordinal": 100,
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:RevenueFromCollaborativeArrangementExcludingRevenueFromContractWithCustomer",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-42"
+          },
+          "visible_fact_text": "7,582",
+          "row_visible_text": "Alliance revenues (a) 7,582 8,537 7,652"
+        },
+        {
+          "ordinal": 103,
+          "attributes": {
+            "unitref": "usd",
+            "contextref": "c-1",
+            "decimals": "-6",
+            "name": "us-gaap:Revenues",
+            "format": "ixt:num-dot-decimal",
+            "scale": "6",
+            "id": "f-45"
+          },
+          "visible_fact_text": "58,496",
+          "row_visible_text": "Total revenues 58,496 100,330 81,288"
+        }
+      ],
+      "context_c1_original_xml": "<xbrli:context id=\"c-1\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0000078003</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2023-01-01</xbrli:startDate><xbrli:endDate>2023-12-31</xbrli:endDate></xbrli:period></xbrli:context>",
+      "pinned_table_000113_revenue_rows": [
+        [],
+        [
+          "Year Ended December 31,"
+        ],
+        [
+          "(MILLIONS, EXCEPT PER SHARE DATA)",
+          "2023",
+          "2022",
+          "2021"
+        ],
+        [
+          "Revenues:"
+        ],
+        [
+          "Product revenues(a)",
+          "$",
+          "50,914",
+          "$",
+          "91,793",
+          "$",
+          "73,636"
+        ],
+        [
+          "Alliance revenues(a)",
+          "7,582",
+          "8,537",
+          "7,652"
+        ],
+        [
+          "Total revenues",
+          "58,496",
+          "100,330",
+          "81,288"
+        ]
+      ]
+    },
+    {
+      "kind": "xml",
+      "path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/6d/6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291/pfe-20231231_htm.xml",
+      "sha256": "6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291",
+      "length": 6740193,
+      "selected_native_facts": [
+        {
+          "qualified_tag": "{http://fasb.org/us-gaap/2023}RevenueFromContractWithCustomerExcludingAssessedTax",
+          "attributes": {
+            "contextRef": "c-1",
+            "decimals": "-6",
+            "id": "f-39",
+            "unitRef": "usd"
+          },
+          "text": "50914000000"
+        },
+        {
+          "qualified_tag": "{http://fasb.org/us-gaap/2023}Revenues",
+          "attributes": {
+            "contextRef": "c-1",
+            "decimals": "-6",
+            "id": "f-45",
+            "unitRef": "usd"
+          },
+          "text": "58496000000"
+        },
+        {
+          "qualified_tag": "{http://fasb.org/us-gaap/2023}Revenues",
+          "attributes": {
+            "contextRef": "c-1",
+            "decimals": "-6",
+            "id": "f-2996",
+            "unitRef": "usd"
+          },
+          "text": "58496000000"
+        },
+        {
+          "qualified_tag": "{http://fasb.org/us-gaap/2023}Revenues",
+          "attributes": {
+            "contextRef": "c-1",
+            "decimals": "-6",
+            "id": "f-3038",
+            "unitRef": "usd"
+          },
+          "text": "58496000000"
+        },
+        {
+          "qualified_tag": "{http://fasb.org/us-gaap/2023}Revenues",
+          "attributes": {
+            "contextRef": "c-1",
+            "decimals": "-6",
+            "id": "f-3071",
+            "unitRef": "usd"
+          },
+          "text": "58496000000"
+        }
+      ]
+    }
+  ],
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}
