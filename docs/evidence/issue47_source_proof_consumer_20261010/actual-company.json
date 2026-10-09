@@ -1,0 +1,106 @@
+{
+  "base_main": "f6ef7886",
+  "public_commit": "08d3e620239426bd692f2bdb3577c21c352aa2f9",
+  "code_commit": "0a91d2b9",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-source-proof-consumer-acxavnhq",
+  "scenes": [
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B01",
+      "fiscal_year": 2021,
+      "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-performance-jpm-20261009/state",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "operations": [
+        {
+          "name": "first-after-checker-change",
+          "seconds": 0.9499948748853058,
+          "exit_code": 0,
+          "status": "FLOW_COMPLETED"
+        },
+        {
+          "name": "repeat-unchanged",
+          "seconds": 0.8050120829138905,
+          "exit_code": 0,
+          "status": "FLOW_COMPLETED"
+        },
+        {
+          "name": "independent-results",
+          "seconds": 0.7968956250697374,
+          "exit_code": 0,
+          "status": null
+        }
+      ],
+      "selected_row": {
+        "metric_id": "B01",
+        "fiscal_year": "2021",
+        "value": "",
+        "unit": "USD",
+        "status": "N_A_STRUCTURAL",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "result_id": "sha256:2b5095227baf78becce06a05d2c696c2125b86f70b6eb41d6fbb9f5e139b3a9c"
+      },
+      "old_files": 380,
+      "all_old_files_preserved": true,
+      "comparison": {
+        "status": "N_A_STRUCTURAL",
+        "value": ""
+      }
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B02",
+      "fiscal_year": 2022,
+      "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/liquidity-marriott-20261009/state",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "operations": [
+        {
+          "name": "first-after-checker-change",
+          "seconds": 0.7121811250690371,
+          "exit_code": 0,
+          "status": "FLOW_COMPLETED"
+        },
+        {
+          "name": "repeat-unchanged",
+          "seconds": 0.7114020409062505,
+          "exit_code": 0,
+          "status": "FLOW_COMPLETED"
+        },
+        {
+          "name": "independent-results",
+          "seconds": 0.5616298748645931,
+          "exit_code": 0,
+          "status": null
+        }
+      ],
+      "selected_row": {
+        "metric_id": "B02",
+        "fiscal_year": "2022",
+        "value": "0.4990979288446272641985999856",
+        "unit": "ratio",
+        "status": "OK",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "result_id": "sha256:8929038392f9d4b4016de922ef06cc76c017681219668af81f35e08b7e3a11de"
+      },
+      "old_files": 211,
+      "all_old_files_preserved": true,
+      "comparison": {
+        "metric_id": "B02",
+        "fiscal_year": "2022",
+        "value": "0.4990979288446272641985999856",
+        "unit": "ratio",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "result_id": "sha256:8929038392f9d4b4016de922ef06cc76c017681219668af81f35e08b7e3a11de"
+      }
+    }
+  ],
+  "preparation_amount_and_graph_calls": 0,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "harness_failure": "Last numeric expectation was a mistyped decimal. All CLI/protection assertions passed; existing output was compared to committed533a9615 reference, without rerunning."
+}
