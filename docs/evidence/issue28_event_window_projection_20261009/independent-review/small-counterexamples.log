@@ -1,0 +1,29 @@
+PASS C01 direct binding
+PASS C01 component binding
+PASS E02 direct binding
+PASS E02 component binding
+PASS E03 direct binding
+PASS E03 component binding
+PASS E04 direct binding
+PASS E04 component binding
+PASS E05 direct binding
+PASS E05 component binding
+PASS same-issuer history shard alongside main inventory
+PASS annual wrong company
+PASS annual predecessor instead of primary registrant
+PASS annual wrong subject policy
+PASS manifest wrong company
+PASS manifest unsupported reporting coordinate
+PASS result wrong start
+PASS result wrong end
+PASS registered CIK set missing predecessor
+PASS per-CIK row wrong CIK
+PASS inventory reference absent from case
+PASS inventory company mismatch
+PASS source-set missing
+PASS source-set foreign company
+PASS source-set foreign inventory
+PASS source-set unlisted inventory
+PASS foreign-issuer history shard
+PASS absent registered scope grants no exception
+SUMMARY positive= 11 rejected= 16 no_exception=1

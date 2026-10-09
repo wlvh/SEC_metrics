@@ -69,3 +69,13 @@ acceptance, E01 content acceptance, new source acquisition or production use.
 No new SEC/provider/paid calls; original #28 ledger remains unchanged.
 The dedicated company consumer's actual CSV/reentry remains #47 responsibility.
 Old Runs/Results and their saved programs are not rewritten.
+
+Limited independent review at `e2ca7c8f` passed: 5 new tests, 9 necessary
+neighbour tests, workflow 13 tests and 28 small boundary probes; no original
+event material rerun. Its 27 tools/3 messages and exact scope are preserved in
+`independent-review/conclusion.md`. Source interface bytes remain the already
+reviewed `35b9329d` version. Product renderer/test bytes equal the material-tested
+`70cd4a78` tree (the executed summary keeps that actual tested commit).
+#47 independently consumed the same renderer at `1d612b82` and reported its
+company CLI first run/forbidden-factory reentry/read; that remains consumer-side
+evidence, not another parent execution or formal adoption.
