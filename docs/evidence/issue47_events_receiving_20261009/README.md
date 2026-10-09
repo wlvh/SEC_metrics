@@ -13,3 +13,7 @@
 另发现公共source walk在调用body validator之前按declared filingTo筛块，若窗口仅命中filingTo后的已允许gap日，完整块未读取；已交公共侧加最小显式last-day策略与反例，旧默认保留。历史侧不另写walk或人为扩大window绕过。
 
 本项仍分支开发：完整正值/宽窗保存、复跑/独立读/导出及五年接收待上述实质接缝，在线历史发现/补齐继续原H4责任。源/旧结果/Run/调用账本不改，新增provider/paid/SEC、Run/接受0。验证和失败只有本主要记录，各Issue/PR引用，不建立新测试或审阅平台。
+
+后继公共35b9329d提供显式history_last_days接口，历史消费者直接传现有block_last_days函数，callback校验同一个last_day，完整body及declared shard均保留，不另写walk。34联合小例0.294s零skip，包含仅跨年gap日的真实小source集合，原window不变；公共有限增量审阅尚未终，不称新业务接受。
+
+JPM FY2023真实分片与E05零计数初次save发现本方聚合records把SOURCE_REFERENCE也按raw_asset_id建key，覆盖RAW_BLOB；原缺绑定失败保留。改为按实际record_type分别索引，冲突只在完全同blob且storage_uri不同情况下保一个locator，其他字段差异拒绝，全部来源引用/proofs保留。新增小控制进入实际consumer，源和引用均保留。实际JPM E05=0/2023全年经过完整来源读取、同一writer保存和read47.869s；没有重读C02原件、原35模型批次或其他年度。宽窗Paramount保存仍被公共投影守卫拒绝，未改annual或把失败变成功。

@@ -7,6 +7,14 @@ test_successor_keeps_wide_measurement_and_pinned_container (tests.vnext.test_his
 test_unknown_program_error_is_not_mislabeled_as_disclosure_absence (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_unknown_program_error_is_not_mislabeled_as_disclosure_absence) ... ok
 test_complete_body_and_gap_day_use_the_existing_coherence_rule (tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest.test_complete_body_and_gap_day_use_the_existing_coherence_rule) ... ok
 test_source_reference_does_not_overwrite_its_raw_blob (tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest.test_source_reference_does_not_overwrite_its_raw_blob) ... ok
+test_explicit_history_check_receives_full_body_and_conflict_is_not_empty_success (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_explicit_history_check_receives_full_body_and_conflict_is_not_empty_success) ... ok
+test_gap_day_block_is_selected_and_validated_using_same_effective_last_day (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_gap_day_block_is_selected_and_validated_using_same_effective_last_day) ... ok
+test_missing_header_and_header_date_conflict_remain_failures (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_missing_header_and_header_date_conflict_remain_failures) ... ok
+test_registered_union_reads_both_issuers_and_rules_from_code_root (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_registered_union_reads_both_issuers_and_rules_from_code_root) ... ok
+test_repeated_legacy_gets_are_bound_but_latest_failure_is_visible (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_repeated_legacy_gets_are_bound_but_latest_failure_is_visible) ... ok
+test_same_blob_key_does_not_hide_a_conflicting_media_record (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_same_blob_key_does_not_hide_a_conflicting_media_record) ... ok
+test_source_only_nonempty_claims_keep_real_requests_and_no_results (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_source_only_nonempty_claims_keep_real_requests_and_no_results) ... ok
+test_wrong_registry_selected_entity_or_window_is_rejected (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_wrong_registry_selected_entity_or_window_is_rejected) ... ok
 test_cli_passes_period_arguments_to_the_same_company_entry (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_cli_passes_period_arguments_to_the_same_company_entry) ... ok
 test_completed_withheld_survives_read_after_another_metric_subset (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_completed_withheld_survives_read_after_another_metric_subset)
 Constructed history control: a later subset cannot revive old success. ... ok
@@ -28,6 +36,6 @@ test_missing_year_and_one_metric_failure_preserve_other_periods (tests.vnext.tes
 test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates) ... ok
 
 ----------------------------------------------------------------------
-Ran 26 tests in 0.188s
+Ran 34 tests in 0.294s
 
 OK
