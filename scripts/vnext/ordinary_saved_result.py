@@ -20,6 +20,7 @@ METRIC_IDS = frozenset(installed_ordinary_spec_documents())
 LODGING_METRIC_IDS = frozenset({'B10','B11'})
 CURRENT_FINANCIAL_METRICS = frozenset({'A04'})
 SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | CURRENT_FINANCIAL_METRICS
+EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13'})
 
 
 def _program_version(root):
@@ -87,7 +88,7 @@ def _current_financial_case(source, company, metric):
     """Adapt the existing current financial resolution, without recalculating."""
     from .financial_results import resolve_ordinary_financial_metric
     resolution = resolve_ordinary_financial_metric(repo_root=source,
-        company_id=company, metric_id=metric)
+        company_id=company, metric_id=metric, ordinary_records=True)
     return {'primary_metric_id':metric, 'kind':'STRUCTURED',
         'input_binding':resolution['input_binding'],
         'compiled_specs':{metric:resolution['compiled_spec']},

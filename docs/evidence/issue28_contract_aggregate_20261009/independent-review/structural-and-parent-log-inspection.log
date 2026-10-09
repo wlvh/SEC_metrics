@@ -1,0 +1,150 @@
+{
+  "utc": "2026-10-09T12:11:27.309178+00:00",
+  "base": "9493ed0e973570f1331a898c73633ae4e69c8bab",
+  "patch": "2bec3464e735bc5cbf928573b1bd1538b06789f3",
+  "head": "2bec3464e735bc5cbf928573b1bd1538b06789f3",
+  "extra_index_checks": [
+    {
+      "case": "numeric_fact_child",
+      "old_cell_count": 3,
+      "new_cell_count": 3,
+      "expected_cell_count": 3,
+      "fact_count": 1,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "passed": true
+    },
+    {
+      "case": "child_table",
+      "old_cell_count": 4,
+      "new_cell_count": 4,
+      "expected_cell_count": 4,
+      "fact_count": 0,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "passed": true
+    },
+    {
+      "case": "hidden_nonempty_th",
+      "old_cell_count": 3,
+      "new_cell_count": 3,
+      "expected_cell_count": 3,
+      "fact_count": 0,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "passed": true
+    },
+    {
+      "case": "hidden_empty_th",
+      "old_cell_count": 3,
+      "new_cell_count": 2,
+      "expected_cell_count": 2,
+      "fact_count": 0,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "passed": true
+    }
+  ],
+  "runner_function_ast_unchanged": true,
+  "parent_final_saved_log_inspection_only_not_independent_source_execution": [
+    {
+      "year": 2021,
+      "consolidated": [
+        "75000000"
+      ],
+      "segments": [
+        "55000000",
+        "20000000"
+      ],
+      "operating_total": [
+        "75000000"
+      ],
+      "proof_ordinals": [
+        67,
+        1058,
+        1059,
+        1060
+      ],
+      "fact_ordinals": [
+        67,
+        1058,
+        1059,
+        1060
+      ],
+      "classes": [
+        "CONSOLIDATED_REVENUE_DEDUCTION",
+        "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+        "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+        "OPERATING_SEGMENTS_TOTAL_REVENUE_DEDUCTION"
+      ],
+      "old_helper_none": true,
+      "complete_or_released": false
+    },
+    {
+      "year": 2022,
+      "consolidated": [
+        "89000000"
+      ],
+      "segments": [
+        "60000000",
+        "29000000"
+      ],
+      "operating_total": [
+        "89000000"
+      ],
+      "proof_ordinals": [
+        62,
+        1014,
+        1015,
+        1016
+      ],
+      "fact_ordinals": [
+        62,
+        1014,
+        1015,
+        1016
+      ],
+      "classes": [
+        "CONSOLIDATED_REVENUE_DEDUCTION",
+        "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+        "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+        "OPERATING_SEGMENTS_TOTAL_REVENUE_DEDUCTION"
+      ],
+      "old_helper_none": true,
+      "complete_or_released": false
+    },
+    {
+      "year": 2023,
+      "consolidated": [
+        "88000000"
+      ],
+      "segments": [
+        "65000000",
+        "22000000"
+      ],
+      "operating_total": [
+        "87000000"
+      ],
+      "proof_ordinals": [
+        62,
+        1007,
+        1008,
+        1009
+      ],
+      "fact_ordinals": [
+        62,
+        1007,
+        1008,
+        1009
+      ],
+      "classes": [
+        "CONSOLIDATED_REVENUE_DEDUCTION",
+        "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+        "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+        "OPERATING_SEGMENTS_TOTAL_REVENUE_DEDUCTION"
+      ],
+      "old_helper_none": true,
+      "complete_or_released": false
+    }
+  ]
+}

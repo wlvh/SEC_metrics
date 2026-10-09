@@ -1,0 +1,502 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics",
+  "years": [
+    {
+      "year": 2021,
+      "primary_source_sha256": "54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+      "source_proof": {
+        "request_body_sha256": "54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+        "request_body_size": 2562434,
+        "request_headers_repo_relative_path": "evidence/request_attempts/54/54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5/mar-20211231.htm.e467a6217cbb78188fe5bd22f4eec924bbff0eda1cedae8535c851f5952c12c6.headers.json",
+        "request_headers_sha256": "e467a6217cbb78188fe5bd22f4eec924bbff0eda1cedae8535c851f5952c12c6",
+        "request_headers_size": 1659,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/54/54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5/mar-20211231.htm",
+        "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+      },
+      "amounts": [
+        {
+          "ordinal": 67,
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "75000000"
+        },
+        {
+          "ordinal": 1058,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "55000000"
+        },
+        {
+          "ordinal": 1059,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "20000000"
+        },
+        {
+          "ordinal": 1060,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "75000000"
+        }
+      ],
+      "original_relations": null,
+      "relations": [
+        {
+          "fact_ordinal": 67,
+          "relation_class": "CONSOLIDATED_REVENUE_DEDUCTION",
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "table_id": "table_000028",
+          "table_grid_sha256": "sha256:e8a64a23efe65f8ca0b09b91d475fe943e8d8146421c960673c188e1f8cdc015",
+          "gross_row": 6,
+          "deduction_row": 7,
+          "net_row": 8,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "2694",
+            "-75",
+            "2619"
+          ]
+        },
+        {
+          "fact_ordinal": 1058,
+          "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "table_id": "table_000055",
+          "table_grid_sha256": "sha256:ec9e49d63a7295ee5e199ae3fcee3bedc98e61af227bd67e2783e0b74ae803c6",
+          "gross_row": 3,
+          "deduction_row": 4,
+          "net_row": 5,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "1580",
+            "-55",
+            "1525"
+          ]
+        },
+        {
+          "fact_ordinal": 1059,
+          "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "table_id": "table_000055",
+          "table_grid_sha256": "sha256:ec9e49d63a7295ee5e199ae3fcee3bedc98e61af227bd67e2783e0b74ae803c6",
+          "gross_row": 3,
+          "deduction_row": 4,
+          "net_row": 5,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "568",
+            "-20",
+            "548"
+          ]
+        },
+        {
+          "fact_ordinal": 1060,
+          "relation_class": "OPERATING_SEGMENTS_TOTAL_REVENUE_DEDUCTION",
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "table_id": "table_000055",
+          "table_grid_sha256": "sha256:ec9e49d63a7295ee5e199ae3fcee3bedc98e61af227bd67e2783e0b74ae803c6",
+          "gross_row": 3,
+          "deduction_row": 4,
+          "net_row": 5,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "2148",
+            "-75",
+            "2073"
+          ]
+        }
+      ],
+      "all_four_original_facts_retained": true,
+      "B03_complete_or_released": false
+    },
+    {
+      "year": 2022,
+      "primary_source_sha256": "c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+      "source_proof": {
+        "request_body_sha256": "c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d",
+        "request_body_size": 2403362,
+        "request_headers_repo_relative_path": "evidence/request_attempts/c0/c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d/mar-20221231.htm.31b82ed62b8c28f67fa15dc85ee92f0274718449e062e9b1cb291d97f3342d9f.headers.json",
+        "request_headers_sha256": "31b82ed62b8c28f67fa15dc85ee92f0274718449e062e9b1cb291d97f3342d9f",
+        "request_headers_size": 1685,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/c0/c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d/mar-20221231.htm",
+        "request_attempt_id": "request:attempt:5836da53826ffe45979f0e9f98d74d08d6dbf8e96fb514089e19cb748bde4924"
+      },
+      "amounts": [
+        {
+          "ordinal": 62,
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "89000000"
+        },
+        {
+          "ordinal": 1014,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+          },
+          "value_usd": "60000000"
+        },
+        {
+          "ordinal": 1015,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember"
+          },
+          "value_usd": "29000000"
+        },
+        {
+          "ordinal": 1016,
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "89000000"
+        }
+      ],
+      "original_relations": null,
+      "relations": [
+        {
+          "fact_ordinal": 62,
+          "relation_class": "CONSOLIDATED_REVENUE_DEDUCTION",
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "table_id": "table_000026",
+          "table_grid_sha256": "sha256:e8b3ec50c47af21dc106898ef8d5dd4441ae8d377157f80d9ec707bd7519f439",
+          "gross_row": 6,
+          "deduction_row": 7,
+          "net_row": 8,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "4078",
+            "-89",
+            "3989"
+          ]
+        },
+        {
+          "fact_ordinal": 1014,
+          "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+          },
+          "table_id": "table_000052",
+          "table_grid_sha256": "sha256:120bb99663d451f0ae78142eb152595e589a0a580be233cdfc9fb2413429fffc",
+          "gross_row": 3,
+          "deduction_row": 4,
+          "net_row": 5,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "2486",
+            "-60",
+            "2426"
+          ]
+        },
+        {
+          "fact_ordinal": 1015,
+          "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember"
+          },
+          "table_id": "table_000052",
+          "table_grid_sha256": "sha256:120bb99663d451f0ae78142eb152595e589a0a580be233cdfc9fb2413429fffc",
+          "gross_row": 3,
+          "deduction_row": 4,
+          "net_row": 5,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "917",
+            "-29",
+            "888"
+          ]
+        },
+        {
+          "fact_ordinal": 1016,
+          "relation_class": "OPERATING_SEGMENTS_TOTAL_REVENUE_DEDUCTION",
+          "dimensions": {
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "table_id": "table_000052",
+          "table_grid_sha256": "sha256:120bb99663d451f0ae78142eb152595e589a0a580be233cdfc9fb2413429fffc",
+          "gross_row": 3,
+          "deduction_row": 4,
+          "net_row": 5,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "3403",
+            "-89",
+            "3314"
+          ]
+        }
+      ],
+      "all_four_original_facts_retained": true,
+      "B03_complete_or_released": false
+    },
+    {
+      "year": 2023,
+      "primary_source_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+      "source_proof": {
+        "request_body_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+        "request_body_size": 1949041,
+        "request_headers_repo_relative_path": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm.d6210fc22623f5c2fbacadea8e284764df4a6064ad645bdb5b4f395483f545ee.headers.json",
+        "request_headers_sha256": "d6210fc22623f5c2fbacadea8e284764df4a6064ad645bdb5b4f395483f545ee",
+        "request_headers_size": 1087,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+        "request_attempt_id": "request:attempt:921b491d86173c117fd783a7ed6ba311ef7f1640bec796ee26fdeb212cd13a79"
+      },
+      "amounts": [
+        {
+          "ordinal": 62,
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "resolved_dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "value_usd": "88000000"
+        },
+        {
+          "ordinal": 1007,
+          "dimensions": {
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "resolved_dimensions": {
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "value_usd": "65000000"
+        },
+        {
+          "ordinal": 1008,
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "resolved_dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "value_usd": "22000000"
+        },
+        {
+          "ordinal": 1009,
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "resolved_dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "value_usd": "87000000"
+        }
+      ],
+      "original_relations": null,
+      "relations": [
+        {
+          "fact_ordinal": 62,
+          "relation_class": "CONSOLIDATED_REVENUE_DEDUCTION",
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+          },
+          "table_id": "table_000026",
+          "table_grid_sha256": "sha256:db77c8fc239580d81120962dc9edd5dc4a943541c7d0bfcc125bb3621ab43f8f",
+          "gross_row": 6,
+          "deduction_row": 7,
+          "net_row": 8,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "4824",
+            "-88",
+            "4736"
+          ]
+        },
+        {
+          "fact_ordinal": 1007,
+          "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+          "dimensions": {
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember",
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "table_id": "table_000052",
+          "table_grid_sha256": "sha256:762e81cea5a791a757a5b0188ab96b6f5439203b0132560450f042dc793bc149",
+          "gross_row": 3,
+          "deduction_row": 4,
+          "net_row": 5,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "2799",
+            "-65",
+            "2734"
+          ]
+        },
+        {
+          "fact_ordinal": 1008,
+          "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "us-gaap:StatementBusinessSegmentsAxis": "mar:InternationalSegmentMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "table_id": "table_000052",
+          "table_grid_sha256": "sha256:762e81cea5a791a757a5b0188ab96b6f5439203b0132560450f042dc793bc149",
+          "gross_row": 3,
+          "deduction_row": 4,
+          "net_row": 5,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "1290",
+            "-22",
+            "1268"
+          ]
+        },
+        {
+          "fact_ordinal": 1009,
+          "relation_class": "OPERATING_SEGMENTS_TOTAL_REVENUE_DEDUCTION",
+          "dimensions": {
+            "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+            "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember"
+          },
+          "table_id": "table_000052",
+          "table_grid_sha256": "sha256:762e81cea5a791a757a5b0188ab96b6f5439203b0132560450f042dc793bc149",
+          "gross_row": 3,
+          "deduction_row": 4,
+          "net_row": 5,
+          "reported_labels": [
+            "Gross fee revenues",
+            "Contract investment amortization",
+            "Net fee revenues"
+          ],
+          "displayed_amounts": [
+            "4089",
+            "-87",
+            "4002"
+          ]
+        }
+      ],
+      "all_four_original_facts_retained": true,
+      "B03_complete_or_released": false
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

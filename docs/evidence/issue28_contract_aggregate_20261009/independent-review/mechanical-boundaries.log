@@ -1,0 +1,198 @@
+{
+  "utc": "2026-10-09T12:10:15.151540+00:00",
+  "head": "2bec3464e735bc5cbf928573b1bd1538b06789f3",
+  "description": "Independent small synthetic checks; existing material generator, no parent historical source reads or new requests.",
+  "summary": {
+    "cases": 16,
+    "passed": 13,
+    "failed": 3
+  },
+  "cases": [
+    {
+      "case": "ordinary_visible_spacer",
+      "expected_proved": false,
+      "actual_proved": false,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": null
+    },
+    {
+      "case": "hidden_empty_leaf",
+      "expected_proved": true,
+      "actual_proved": true,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "case": "hidden_whitespace_leaf",
+      "expected_proved": true,
+      "actual_proved": true,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "case": "hidden_child_empty_span",
+      "expected_proved": false,
+      "actual_proved": false,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": null
+    },
+    {
+      "case": "hidden_child_selfclosing_span",
+      "expected_proved": false,
+      "actual_proved": false,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": null
+    },
+    {
+      "case": "hidden_nonempty_text",
+      "expected_proved": false,
+      "actual_proved": false,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": null
+    },
+    {
+      "case": "hidden_entity_reference",
+      "expected_proved": false,
+      "actual_proved": false,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": null
+    },
+    {
+      "case": "hidden_character_reference",
+      "expected_proved": false,
+      "actual_proved": false,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": null
+    },
+    {
+      "case": "display_none_overridden_visible",
+      "expected_proved": false,
+      "actual_proved": true,
+      "pass": false,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "case": "important_none_overridden_visible",
+      "expected_proved": false,
+      "actual_proved": true,
+      "pass": false,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "case": "visible_with_none_in_css_comment",
+      "expected_proved": false,
+      "actual_proved": true,
+      "pass": false,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "case": "wrong_year_header",
+      "expected_proved": false,
+      "actual_proved": false,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": null
+    },
+    {
+      "case": "wrong_gross_net",
+      "expected_proved": false,
+      "actual_proved": false,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": null
+    },
+    {
+      "case": "duplicate_consolidated",
+      "expected_proved": false,
+      "actual_proved": false,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": null
+    },
+    {
+      "case": "aggregate_without_segments",
+      "expected_proved": false,
+      "actual_proved": false,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": null
+    },
+    {
+      "case": "segment_sum_exceeds_consolidated",
+      "expected_proved": false,
+      "actual_proved": false,
+      "pass": true,
+      "raw_unchanged": true,
+      "fact_count_preserved": true,
+      "fact_positions_preserved": true,
+      "proof_ordinals": null
+    }
+  ],
+  "minimal_reproducer": "import sys\nfrom pathlib import Path\nsys.path.insert(0, str(Path.cwd()/\"scripts\"))\nfrom tests.vnext.test_b03_current_input_scope import ContractAggregateTest, PERIOD\nfrom vnext.b03_contract_amortization_scope import _visible_revenue_deductions\nfixture = ContractAggregateTest()\nraw, parsed, amounts = fixture.material()\nmarker = b'<td><ix:nonFraction contextRef=\"synthetic\" scale=\"6\">-7'\nextra = b'<td colspan=\"4\" style=\"display:none;display:table-cell\"></td>'\nanswer = _visible_revenue_deductions(raw=raw.replace(marker, extra+marker),\n    parsed=parsed, amounts=amounts, period=PERIOD)\nprint(answer is None)  # Expected True; patch prints False.\n"
+}

@@ -39,6 +39,49 @@ class HistoricalEventCaseTest(TestCase):
         window, union = cases.selected_event_window(PREPARED)
         self.assertFalse(union); self.assertEqual(PERIOD, window)
 
+    def test_part_iii_window_clearance_does_not_admit_financial_inputs(self):
+        # Constructed complete filings use the real shared amendment parser.
+        # They protect this consumer boundary and have no acquisition credit.
+        from tempfile import TemporaryDirectory
+        from tests.vnext.test_instant_amendment_paragraph_api import filing_html
+        from vnext.sources import raw_blob_record, source_reference_record
+        with TemporaryDirectory() as folder:
+            root = Path(folder).resolve(); items = {}
+            for amended in (False, True):
+                accession = '0000000001-25-00000' + ('2' if amended else '1')
+                name = 'amended.htm' if amended else 'original.htm'
+                flag = ('<ix:nonNumeric name="dei:AmendmentFlag" contextRef="C">'
+                        + str(amended).lower() + '</ix:nonNumeric></ix:hidden>').encode()
+                raw = filing_html(amended).replace(b'</ix:hidden>', flag)
+                (root/name).write_bytes(raw)
+                blob = raw_blob_record(repo_root=root, repo_relative_path=name, media_type='text/html')
+                ref = source_reference_record(raw_blob=blob, company_id='constructed',
+                    source_url='https://www.sec.gov/Archives/edgar/data/1/' + accession.replace('-', '') + '/' + name,
+                    accession=accession, document_name=name, source_role='target_primary',
+                    request_attempt_id='constructed-no-acquisition-credit')
+                filing = {'form': '10-K/A' if amended else '10-K', 'reportDate': '2024-12-31',
+                    'filingDate': '2025-04-25' if amended else '2025-02-26',
+                    'accessionNumber': accession, 'primaryDocument': name}
+                items[amended] = {'raw_bytes': raw, 'raw_blob': blob,
+                    'source_reference': ref, 'filing': filing}
+            prepared = {'company_id': 'constructed', 'entity': '1',
+                'filing': items[False]['filing'], 'amendments': [items[True]['filing']]}
+            reader = SimpleNamespace(primary=lambda filing: items[filing['form'] == '10-K/A'])
+            scopes = cases._event_amendment_checks(reader, prepared)
+            self.assertEqual(['FISCAL_EVENT_WINDOW'], scopes[0]['unchanged_input_classes'])
+            self.assertTrue(scopes[0]['fiscal_window_unchanged'])
+            # A changed annual start cannot borrow the original clearance.
+            raw = items[True]['raw_bytes'].replace(b'2024-01-01', b'2024-01-02')
+            (root/'amended.htm').write_bytes(raw)
+            blob = raw_blob_record(repo_root=root, repo_relative_path='amended.htm', media_type='text/html')
+            ref = source_reference_record(raw_blob=blob, company_id='constructed',
+                source_url=items[True]['source_reference']['source_url'],
+                accession=items[True]['filing']['accessionNumber'], document_name='amended.htm',
+                source_role='target_primary', request_attempt_id='constructed-no-acquisition-credit')
+            items[True].update(raw_bytes=raw, raw_blob=blob, source_reference=ref)
+            with self.assertRaisesRegex(cases.EventAmendmentError, 'WINDOW_NOT_CLEARED'):
+                cases._event_amendment_checks(reader, prepared)
+
     def control(self, error):
         reader = SimpleNamespace(records={}, proofs={},
             read=lambda *args, **kwargs: {'source_reference': {'source_reference_id': 'constructed'}})

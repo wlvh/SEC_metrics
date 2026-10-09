@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "configuration_id": "issue28_current_request_runtime_v1",
+  "source_decision": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+  "engineering_decision": "https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006",
+  "transport": {
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "api": "chat_completions",
+    "endpoint_host": "api.deepseek.com",
+    "region": "provider-managed-no-residency-guarantee",
+    "retention": "provider-managed; no zero-retention claim",
+    "data_use": "provider-managed; no training or data-use guarantee",
+    "timeout_seconds": 120,
+    "retry_count": 0,
+    "maximum_payload_bytes": 8388608,
+    "filing_egress_policy": "PUBLIC_SEC_FILING_CONTENT_ONLY"
+  },
+  "allowed_live_request_limits": {
+    "output_tokens": 4096,
+    "max_context_tokens": 200000,
+    "max_payload_bytes": 8388608
+  },
+  "allowed_metrics": [
+    "B13",
+    "D03",
+    "D04"
+  ],
+  "live_metrics": [
+    "B13",
+    "D04"
+  ],
+  "automatic_retry_count": 0,
+  "unknown_usage_may_be_zero": false,
+  "response_redraw_authorized": false
+}

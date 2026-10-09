@@ -169,5 +169,70 @@
     "value_unit_period_difference_count": 0,
     "factory_calls_on_repeat": 0,
     "protected_files": 200
+  },
+  "main_event_code_receiving": {
+    "main": "1c578c6121f281154f74f9bca5fc3e638dcfb8d7",
+    "source_merge": "44719c7e",
+    "history_merge": "408e89e2",
+    "runtime_files_equal_to_validated_branch": true,
+    "document_and_reference_changes_not_financial_recalculation": true
+  },
+  "additional_company_fiveyear": {
+    "file": "additional-company-fiveyear.json",
+    "companies_complete": [
+      "enphase_energy",
+      "lumen_technologies",
+      "pfizer",
+      "southwest_airlines"
+    ],
+    "positions_compared": 100,
+    "full_header_pool_differences": 0,
+    "value_unit_period_differences": 0,
+    "factory_calls_on_repeat": 0,
+    "partial_series_not_reported_as_complete": true
+  },
+  "paramount2024_amendment_case": {
+    "file": "paramount2024-amendment-case.json",
+    "scope_clearance": "FISCAL_EVENT_WINDOW only",
+    "C01": "9 count",
+    "case_only_not_company_delivery": true,
+    "income_Aug7_Aug8_conflict_not_cleared": true
+  },
+  "amendment_consumer_short": {
+    "file": "amendment-consumer-short.log",
+    "count": 10,
+    "seconds": 0.041,
+    "skips": 0,
+    "shared_parser_used": true,
+    "constructed_control_no_source_credit": true,
+    "existing_class_and_workflow_retained": true
+  },
+  "jpm_fiveyear": {
+    "file": "jpm-fiveyear.json",
+    "positions": 25,
+    "first_seconds": 1140.9444506249856,
+    "repeat_seconds": 127.17011662502773,
+    "read_seconds": 1.2302137080114335,
+    "source_header_pool_differences": 0,
+    "value_unit_period_differences": 0,
+    "factory_calls_on_repeat": 0
+  },
+  "paramount_fiveyear_partial": {
+    "file": "paramount-fiveyear-partial.json",
+    "new_positions_completed": 24,
+    "existing_C01_reuse_failed": true,
+    "all_25_old_and_new_rows_readable": true,
+    "reference_differences": 0,
+    "complete_flow_passed": false,
+    "public_fix_owner": "#28 ordinary configuration",
+    "old_configuration_not_modified": true
+  },
+  "main_receiving_short": {
+    "file": "main-receiving-amendment-short.log",
+    "base_main": "9493ed0e973570f1331a898c73633ae4e69c8bab",
+    "tests": 30,
+    "seconds": 0.196,
+    "skips": 0,
+    "source_or_company_cli_implementation_changed": false
   }
 }

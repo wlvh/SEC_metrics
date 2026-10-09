@@ -366,6 +366,52 @@ class MixedSavedBusinessOutcomeTest(unittest.TestCase):
 
 class PerMetricProducerTest(unittest.TestCase):
     setUp=CurrentCompanyTest.setUp
+    def test_explicit_a13_factory_reaches_same_update_boundary(self):
+        def factory(**kw): return None
+        seen=[]
+        def update(**kw):
+            seen.append(kw)
+            return {'status':'INPUT_OR_EXECUTION_FAILED','reason':'Constructed routing control, no calculation'}
+        with patch.object(current,'run_once',side_effect=update):
+            report=current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['A13'],fiscal_years=[2021],
+                case_factories={'A13':factory},processing_files_by_metric={'A13':('explicit-a13.py',)})
+        self.assertEqual(len(seen),1)
+        self.assertIs(seen[0]['case_factory'],factory)
+        self.assertEqual(seen[0]['processing_files'],('explicit-a13.py',))
+        self.assertEqual(report['metrics'][0]['status'],'INPUT_OR_EXECUTION_FAILED')
+
+    def test_default_a13_stays_unimplemented_and_unknown_explicit_core_rejects(self):
+        with patch.object(current,'run_once',side_effect=AssertionError('No default A13 calculator')):
+            report=current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['A13'])
+        self.assertEqual(report['metrics'][0]['status'],'PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED')
+        with self.assertRaisesRegex(ValueError,'METRIC_FACTORIES_INVALID'):
+            current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['D03'],fiscal_years=[2021],
+                case_factories={'D03':lambda **kw: None})
+
+    def test_explicit_a13_saved_reading_keeps_value_and_content_unaccepted(self):
+        # Storage/dispatch control only; the real A13 financial case is received
+        # separately by the historical owner. Never a financial golden answer.
+        original_update=current.run_once
+        def update(**kw):
+            period=kw['state_root']/'periods'/'FY2021'
+            observation=original_update(**{**kw,'state_root':period})
+            value=self.values[observation['result_root']]
+            value['result'].update(value='100',unit='USD',publication='PUBLISHED')
+            pointer=period/'current-result.json'
+            state=json.loads(pointer.read_text());state['requested_fiscal_year']=2021
+            pointer.write_text(json.dumps(state))
+            return observation
+        with patch.object(current,'run_once',side_effect=update):
+            current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['A13'],fiscal_years=[2021],
+                case_factories={'A13':lambda **kw: None})
+        view=current.read_current_company(state_root=self.work,company_id='marriott_international')
+        self.assertEqual(view['metrics'][0]['value'],'100')
+        self.assertEqual(view['metrics'][0]['result_validity'],'SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED')
+
     def test_each_selected_metric_keeps_its_factory_and_exact_dependencies(self):
         def income(**kw): return None
         def lodging(**kw): return None

@@ -11,6 +11,7 @@ import json
 
 from .canonical import content_hash, sha256_bytes, strict_json_loads
 from .normal_source_authority import ROOT
+from .request_limits import DEFAULT_LIMITS, RequestLimits, configured_limits
 
 TOKENIZER_PATH = 'config/tokenizers/deepseek_v41/tokenizer.json.gz'
 TOKENIZER_SHA256 = 'c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b'
@@ -19,9 +20,9 @@ UPSTREAM_REVISION = 'dba1be0a40aa45a94ad051997016db3960a90277'
 UPSTREAM_FORMAT_SHA256 = '502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1'
 FORMAT_VERSION = 'deepseek-v41-two-message-json-chat-1'
 ENGINE_VERSION = '0.22.2'
-MAX_CONTEXT = 200000
-MAX_BYTES = 8 * 1024 * 1024
-OUTPUT_RESERVE = 4096
+MAX_CONTEXT = DEFAULT_LIMITS.max_context_tokens
+MAX_BYTES = DEFAULT_LIMITS.max_payload_bytes
+OUTPUT_RESERVE = DEFAULT_LIMITS.output_tokens
 
 
 def _need(ok, reason):
@@ -29,11 +30,12 @@ def _need(ok, reason):
         raise ValueError(reason)
 
 
-def render_prompt(request_body, *, provider, model, api):
+def render_prompt(request_body, *, provider, model, api, limits=None):
     """Render every model-visible byte, including the JSON response hint."""
     _need((provider, model, api) == ('deepseek', 'deepseek-flash', 'chat_completions'),
           'CONTINUOUS_CONTEXT_SERVICE_UNSUPPORTED')
-    _need(type(request_body) is bytes and 0 < len(request_body) <= MAX_BYTES,
+    limits = configured_limits(limits)
+    _need(type(request_body) is bytes and 0 < len(request_body) <= limits.max_payload_bytes,
           'CONTINUOUS_CONTEXT_PAYLOAD_LIMIT')
     body = strict_json_loads(text=request_body.decode('utf-8'))
     _need(type(body) is dict and set(body) == {
@@ -41,7 +43,7 @@ def render_prompt(request_body, *, provider, model, api):
         'CONTINUOUS_CONTEXT_FORMAT_UNSUPPORTED')
     _need(body['model'] == model and body['response_format'] == {'type': 'json_object'}
           and type(body['temperature']) is int and body['temperature'] == 0
-          and type(body['max_tokens']) is int and body['max_tokens'] == OUTPUT_RESERVE
+          and type(body['max_tokens']) is int and body['max_tokens'] == limits.output_tokens
           and body['stream'] is False and body['thinking'] == {'type': 'disabled'},
           'CONTINUOUS_CONTEXT_PARAMETERS_UNSUPPORTED')
     messages = body['messages']
@@ -58,6 +60,24 @@ def render_prompt(request_body, *, provider, model, api):
             + json.dumps(body['response_format'], ensure_ascii=False))
     return ('<｜begin▁of▁sentence｜><｜System｜>' + messages[0]['content'] + hint
             + '<｜User｜>' + messages[1]['content'] + '<｜Assistant｜></think>')
+
+
+def with_request_limits(request_body, *, limits, provider='deepseek',model='deepseek-flash',api='chat_completions'):
+    """Configure a saved envelope; preserve every model-visible string.
+
+    This returns new bytes when the output parameter changes, never edits a
+    saved request or opens a provider socket. Call permission stays separate.
+    """
+    limits=configured_limits(limits)
+    body=strict_json_loads(text=request_body.decode('utf-8'))
+    old=RequestLimits(output_tokens=body['max_tokens'],max_context_tokens=limits.max_context_tokens,
+                      max_payload_bytes=limits.max_payload_bytes)
+    render_prompt(request_body,provider=provider,model=model,api=api,limits=old)
+    if body['max_tokens']==limits.output_tokens:return request_body
+    body['max_tokens']=limits.output_tokens
+    raw=json.dumps(body,ensure_ascii=False,separators=(',',':')).encode('utf-8')
+    render_prompt(raw,provider=provider,model=model,api=api,limits=limits)
+    return raw
 
 
 def _load_tokenizer():
@@ -84,8 +104,9 @@ def _decode_tokenizer(archived):
 
 
 def measure_request(request_body, *, provider='deepseek', model='deepseek-flash',
-                    api='chat_completions', require_reference=False):
-    prompt = render_prompt(request_body, provider=provider, model=model, api=api)
+                    api='chat_completions', require_reference=False, limits=None):
+    limits = configured_limits(limits)
+    prompt = render_prompt(request_body, provider=provider, model=model, api=api, limits=limits)
     tokenizer, fallback = _load_tokenizer()
     _need(not require_reference or tokenizer is not None,
           'CONTINUOUS_CONTEXT_REFERENCE_REQUIRED:' + str(fallback))
@@ -96,19 +117,21 @@ def measure_request(request_body, *, provider='deepseek', model='deepseek-flash'
                 'upstream_revision': UPSTREAM_REVISION, 'upstream_format_sha256': UPSTREAM_FORMAT_SHA256,
                 'tokenizer_sha256': TOKENIZER_SHA256, 'tokenizer_engine': 'tokenizers',
                 'tokenizer_engine_version': ENGINE_VERSION, 'method': method,
-                'output_reserve': OUTPUT_RESERVE}
+                'output_reserve': limits.output_tokens}
+    if limits != DEFAULT_LIMITS:
+        identity['request_limits'] = limits.as_dict()
     return {'request_sha256': sha256_bytes(content=request_body), 'request_bytes': len(request_body),
             'rendered_prompt_sha256': sha256_bytes(content=prompt.encode('utf-8')),
             'rendered_prompt_bytes': len(prompt.encode('utf-8')), 'input_tokens': tokens,
-            'output_reserve_tokens': OUTPUT_RESERVE, 'context_tokens': tokens + OUTPUT_RESERVE,
-            'maximum_context_tokens': MAX_CONTEXT, 'maximum_payload_bytes': MAX_BYTES,
-            'fits': tokens + OUTPUT_RESERVE <= MAX_CONTEXT, 'fallback_reason': fallback,
+            'output_reserve_tokens': limits.output_tokens, 'context_tokens': tokens + limits.output_tokens,
+            'maximum_context_tokens': limits.max_context_tokens, 'maximum_payload_bytes': limits.max_payload_bytes,
+            'fits': tokens + limits.output_tokens <= limits.max_context_tokens, 'fallback_reason': fallback,
             'context_authority_hash': content_hash(value=identity),
             'estimator_id': 'continuous_bounded_chat_context', 'estimator_version': FORMAT_VERSION,
             'estimator_method': method, 'identity': identity}
 
 
-def measured_groups(units, request_for_group):
+def measured_groups(units, request_for_group, *, limits=None):
     """Greedy full-envelope grouping; document and source order stay intact.
 
     The factory must include final source/navigation/prompt/schema/request IDs.
@@ -117,13 +140,14 @@ def measured_groups(units, request_for_group):
     from types import SimpleNamespace
     from .continuous_semantic_calls import request_body
     policy = SimpleNamespace(model='deepseek-flash')
+    limits = configured_limits(limits)
     groups, current = [], []
 
     def fits(group):
-        body = request_body(request_for_group(group), policy)
-        if len(body) > MAX_BYTES:
+        body = request_body(request_for_group(group), policy, limits=limits)
+        if len(body) > limits.max_payload_bytes:
             return False
-        return measure_request(body, require_reference=True)['fits']
+        return measure_request(body, require_reference=True, limits=limits)['fits']
 
     for unit in units:
         if current and (unit['document_id'] != current[0]['document_id'] or not fits(current + [unit])):

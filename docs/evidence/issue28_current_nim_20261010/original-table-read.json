@@ -1,0 +1,102 @@
+{
+  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+  "content_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+  "table_id": "table_000100",
+  "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+  "rows_read_from_original": [
+    {
+      "row": 1,
+      "label": "Year ended December 31, (in millions, except rates)",
+      "year2025_columns": [
+        "2025",
+        "2025",
+        "2025"
+      ],
+      "raw": [
+        "2025",
+        "2025",
+        "2025"
+      ]
+    },
+    {
+      "row": 2,
+      "label": "Net interest income – reported(a)",
+      "year2025_columns": [
+        "$",
+        "95,443",
+        ""
+      ],
+      "raw": [
+        "$",
+        "95,443&#160;",
+        ""
+      ]
+    },
+    {
+      "row": 3,
+      "label": "Fully taxable-equivalent adjustments",
+      "year2025_columns": [
+        "425",
+        "425",
+        ""
+      ],
+      "raw": [
+        "425&#160;",
+        "425&#160;",
+        ""
+      ]
+    },
+    {
+      "row": 4,
+      "label": "Net interest income – managed basis",
+      "year2025_columns": [
+        "$",
+        "95,868",
+        ""
+      ],
+      "raw": [
+        "$",
+        "95,868&#160;",
+        ""
+      ]
+    },
+    {
+      "row": 7,
+      "label": "Average interest-earning assets(a)",
+      "year2025_columns": [
+        "$",
+        "3,834,359",
+        ""
+      ],
+      "raw": [
+        "$",
+        "3,834,359&#160;",
+        ""
+      ]
+    },
+    {
+      "row": 10,
+      "label": "Net yield on average interest-earning assets – managed basis",
+      "year2025_columns": [
+        "2.50",
+        "2.50",
+        "%"
+      ],
+      "raw": [
+        "2.50&#160;",
+        "2.50&#160;",
+        "%"
+      ]
+    }
+  ],
+  "managed_income_millions": "95868",
+  "average_earning_assets_millions": "3834359",
+  "reported_rate_ratio": "0.025",
+  "scope": "parent original-table content/math check under installed managed-basis Spec; uses existing metric-neutral table transform, not independent code review",
+  "comparison_to_result": true,
+  "earlier_read_helper_errors": [
+    "SOURCE_REFERENCE has no repo_relative_path; use manifest source proof",
+    "ResourceLimits field is max_expanded_text_chars",
+    "table rows contain cells, not root cells"
+  ]
+}

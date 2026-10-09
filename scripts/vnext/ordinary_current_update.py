@@ -14,7 +14,8 @@ from urllib.parse import urlsplit
 from .annual_sources import _rows
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
-from .ordinary_saved_result import METRIC_IDS, SAVED_METRIC_IDS, CURRENT_FINANCIAL_METRICS, create_saved_result, read_saved_result, save_calculated_case
+from .ordinary_saved_result import (METRIC_IDS, SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS,
+    CURRENT_FINANCIAL_METRICS, create_saved_result, read_saved_result, save_calculated_case)
 from .traits import repository_company_ciks
 
 
@@ -30,6 +31,10 @@ def _write(path, value):
 def _configuration(source, company, metric):
     policy = strict_json_file(path=ROOT/'config/issue28_normal_results_v2.json')
     paths = set(policy['rule_paths']) | set(policy['presentation_paths'])
+    # Ordinary records verify saved inputs directly, without registering a
+    # legacy RecordedSourceSession. Consumers that actually use that session
+    # may still name it explicitly in run_once(processing_files=...).
+    paths.discard('scripts/vnext/ordinary_source_session.py')
     # These files belong solely to the lodging producer. The zero-AI Spec
     # set never prepares a lodging case; unrelated edits must not recalculate
     # B01/B02 or their other supported deterministic neighbours.
@@ -64,12 +69,18 @@ def _configuration(source, company, metric):
     if metric in CURRENT_FINANCIAL_METRICS:
         paths.update('scripts/vnext/'+name+'.py' for name in (
             'financial_results','financial_relationships','financial_duration',
-            'financial_candidates','financial_balance_scope','financial_structured',
             'composite_scope','constraints','r4_task_contracts','table_task_contracts',
-            'annual_update','normal_source_authority'))
+            'annual_update','normal_annual_input_v2','fiscal_year_labels',
+            'ordinary_source_authority','text_results_v2','text_coverage'))
         paths.update({'catalog/r4_normal/A04_net_interest_margin.md',
             'catalog/r4_v2/A04_net_interest_margin.md','catalog/table_task_contracts.json',
-            'config/r4_task_contracts_v2.json','docs/evidence/issue_28_prb_policy_revision.json'})
+            'config/r4_task_contracts_v2.json','docs/evidence/issue_28_prb_policy_revision.json',
+            'config/normal_fiscal_year_labels_v1.json','catalog/r6/text_results_v2_policy.json'})
+        # The existing task-catalog inspector actually compiles all six
+        # retained task Specs before selecting NIM; no authority recursion.
+        paths.update('catalog/r4_v2/'+name+'.md' for name in (
+            'A03_liquidity_coverage_ratio','A09_nonperforming_loan_ratio',
+            'A11_assets_under_management','A12_trading_exposure','A13_geographic_exposure'))
     return {'company_id':company,'metric_id':metric,'source_root':str(source),
         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
         'source_registry_sha256':sha256_file(path=source/'config/company_registry.csv'),
@@ -172,7 +183,8 @@ def _recover_completed_check(root):
 def run_once(*, state_root, source_root, company_id, metric_id, shared_input_root=None,
              fiscal_year=None, case_factory=None, processing_files=()):
     """One current deterministic update; identical raw input never calculates."""
-    _need(metric_id in SAVED_METRIC_IDS,'CURRENT_UPDATE_METRIC_UNSUPPORTED')
+    _need(metric_id in SAVED_METRIC_IDS or metric_id in EXPLICIT_CASE_METRICS
+          and fiscal_year is not None and callable(case_factory),'CURRENT_UPDATE_METRIC_UNSUPPORTED')
     _need(fiscal_year is None or type(fiscal_year) is int and 1900<=fiscal_year<=9998,
           'CURRENT_UPDATE_REQUESTED_FISCAL_YEAR_INVALID')
     _need(fiscal_year is None or callable(case_factory), 'CURRENT_UPDATE_SELECTED_PERIOD_REQUIRES_CASE_FACTORY')
