@@ -44,6 +44,19 @@
         "pending_since": null
       },
       {
+        "anchor_id": "CAPABILITY.depreciation_original_candidates",
+        "type": "capability",
+        "status": "active",
+        "statement": "显式普通D&A源适配只读取已选年度primary/XML原件和明确namespace版本，保留主体/实际期间/USD/维度、金额精度与原文块，配对相同源事实或给具名冲突。维度细分不作为包含或可加证明；不创建MetricResult/Run，不证明完整D&A，不自动解除旧B03扣留。旧普通选择/默认路径保持。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_ordinary_depreciation_sources.py::DepreciationSourcesTest",
+        "test_status": "automated_partial_scenario",
+        "since": "2026-10-08"
+      },
+      {
         "anchor_id": "CAPABILITY.company_import_transaction",
         "type": "capability",
         "status": "active",

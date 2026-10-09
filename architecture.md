@@ -777,6 +777,9 @@ R3已在clean committed implementation上形成active successor，previous为R2�
 
 更新器通过PublicationView.native_result与authority_bytes取得结果所有者和覆盖权威，不在调用点猜内部目录；原R3未嵌入的原生内容明确拒绝。annual_continuity把三处进度、固定预算根与每输入计划接到annual_runtime共享执行器；annual_continuity_snapshot只增加新来源/旧起点的重放适配，annual_continuity_publication经既有PublicationPermission和intent/receipt提交明确前驱的隔离版本。旧v1/v2解释不变，不向实际根授连续写入。有限trigger直接调用同一run-once，未安装常驻调度。详见docs/annual_update_continuity.md。
 
+显式D&A原件候选入口 `ordinary_depreciation_sources.inspect_depreciation_sources` 只收已选原件、申报与真实期间及namespace策略。它配对primary/XML的同一主体/期间/维度事实，保留原文；维度细分与包含关系分别处理，完整D&A仍未证明。不改变普通选源/计算默认，也不创建公司结果。
+<!-- capability-anchor: CAPABILITY.depreciation_original_candidates -->
+
 ## R5 B06结构化主路径候选
 
 2026-10-08 独立来源增量：`ordinary_reported_lease_scope` 的显式 `prepare_reported_lease_case` / `inspect_reported_lease_scope` 经 `industrial_lease_relation` 读取包含行自身原生金额、USD、完整QName/上下文、XML对应值及可见表单位，记录融资租赁已含与追加额。旧 `ordinary_special_debt_scope` 保持main原字节与接口；新模块从旧case已验证的确切来源引用重开原件并补关系，不重选财报或改写旧case。该后继未接公司入口，不生成完整B06比值或Run。工业权益与债务完整性仍独立检查；具体实现、正反例与有限引言支持见 `docs/evidence/issue28_b06_relations_20261008/README.md`。以下R5版本/发布机制保留其历史范围，不是这项来源API的新运行前置。

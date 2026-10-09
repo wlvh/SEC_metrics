@@ -1,0 +1,212 @@
+{
+  "year": 2021,
+  "seconds": 0.5439749581273645,
+  "id": "sha256:e4b1ee44ade45f3786de62444c3236a399b6386e8ce12969959bfbd28c90d8b7",
+  "candidates": [
+    {
+      "concept": [
+        "http://fasb.org/us-gaap/2021-01-31",
+        "AmortizationOfIntangibleAssets"
+      ],
+      "value": "165000000",
+      "dimensions": [
+        {
+          "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+          "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+          "dimension_qname": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "FiniteLivedIntangibleAssetsByMajorClassAxis"
+          ],
+          "member_qname": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "ContractBasedIntangibleAssetsMember"
+          ]
+        }
+      ],
+      "id": "sha256:c7c813e0b84c37c360859f4521831cab6a480aa5c4e32da248758b639bd2aad8"
+    },
+    {
+      "concept": [
+        "http://fasb.org/us-gaap/2021-01-31",
+        "AmortizationOfIntangibleAssets"
+      ],
+      "value": "62000000",
+      "dimensions": [
+        {
+          "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+          "member_raw": "mar:ReimbursedExpensesMember",
+          "dimension_qname": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "IncomeStatementLocationAxis"
+          ],
+          "member_qname": [
+            "http://www.marriott.com/20211231",
+            "ReimbursedExpensesMember"
+          ]
+        },
+        {
+          "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+          "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+          "dimension_qname": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "FiniteLivedIntangibleAssetsByMajorClassAxis"
+          ],
+          "member_qname": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "ContractBasedIntangibleAssetsMember"
+          ]
+        }
+      ],
+      "id": "sha256:c1c1512b4d549052d5dabdf713a36007a354f462256ad56eaac5112ad9c56a97"
+    },
+    {
+      "concept": [
+        "http://fasb.org/us-gaap/2021-01-31",
+        "Depreciation"
+      ],
+      "value": "138000000",
+      "dimensions": [],
+      "id": "sha256:b616f3e90912987ab24302a1f4da4fe71c33ba0442e8890e6e66ee8166159e9f"
+    },
+    {
+      "concept": [
+        "http://fasb.org/us-gaap/2021-01-31",
+        "Depreciation"
+      ],
+      "value": "49000000",
+      "dimensions": [
+        {
+          "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+          "member_raw": "mar:ReimbursedCostsMember",
+          "dimension_qname": [
+            "http://fasb.org/us-gaap/2021-01-31",
+            "IncomeStatementLocationAxis"
+          ],
+          "member_qname": [
+            "http://www.marriott.com/20211231",
+            "ReimbursedCostsMember"
+          ]
+        }
+      ],
+      "id": "sha256:62acf3ad734a3aa617d8218c1aae6ef972282ee0f5a3163c9724c67f775b61dc"
+    }
+  ],
+  "relations": [
+    {
+      "parent_candidate_id": "sha256:c7c813e0b84c37c360859f4521831cab6a480aa5c4e32da248758b639bd2aad8",
+      "child_candidate_id": "sha256:c1c1512b4d549052d5dabdf713a36007a354f462256ad56eaac5112ad9c56a97",
+      "kind": "CONTEXT_SCOPE_SPECIALIZATION",
+      "additive_relationship_established": false,
+      "reported_inclusion_requires_content_check": true
+    },
+    {
+      "parent_candidate_id": "sha256:b616f3e90912987ab24302a1f4da4fe71c33ba0442e8890e6e66ee8166159e9f",
+      "child_candidate_id": "sha256:62acf3ad734a3aa617d8218c1aae6ef972282ee0f5a3163c9724c67f775b61dc",
+      "kind": "CONTEXT_SCOPE_SPECIALIZATION",
+      "additive_relationship_established": false,
+      "reported_inclusion_requires_content_check": true
+    }
+  ],
+  "issues": [],
+  "definition_complete": false
+}
+{
+  "year": 2022,
+  "seconds": 0.5045630419626832,
+  "id": "sha256:8d3714eea4e00cb14ae88ba09cb176bdb0d56e2b43bbe3489967019875ec1e3c",
+  "candidates": [],
+  "relations": [],
+  "issues": [
+    {
+      "source_kind": "primary",
+      "ordinal": 877,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "primary",
+      "ordinal": 880,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "primary",
+      "ordinal": 916,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "primary",
+      "ordinal": 919,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 877,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 880,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 916,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 919,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    }
+  ],
+  "definition_complete": false
+}
+{
+  "year": 2023,
+  "seconds": 0.501937999855727,
+  "id": "sha256:09cd539c17d93fba742a07f302dc2f4e09046092aab6888ff3926ba2e8cfa38d",
+  "candidates": [],
+  "relations": [],
+  "issues": [
+    {
+      "source_kind": "primary",
+      "ordinal": 873,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "primary",
+      "ordinal": 876,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "primary",
+      "ordinal": 912,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "primary",
+      "ordinal": 915,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 873,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 876,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 912,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    },
+    {
+      "source_kind": "xml",
+      "ordinal": 915,
+      "reason": "CONCEPT_NAMESPACE_NOT_SELECTED"
+    }
+  ],
+  "definition_complete": false
+}

@@ -1,0 +1,94 @@
+[
+  {
+    "name": "original_P2_1_wrong_tag_exact_replay",
+    "passed": true,
+    "values": [],
+    "issues": [
+      "DEPRECIATION_SOURCE_NUMERIC_TAG_NOT_SUPPORTED",
+      "DEPRECIATION_SOURCE_NUMERIC_TAG_NOT_SUPPORTED",
+      "PRIMARY_XML_CANDIDATE_MISSING",
+      "PRIMARY_XML_CANDIDATE_MISSING"
+    ],
+    "full_role_never_granted": true
+  },
+  {
+    "name": "original_P2_2_unformatted_comma_exact_replay",
+    "passed": true,
+    "values": [
+      "49"
+    ],
+    "issues": [
+      "DEPRECIATION_SOURCE_NUMERIC_LEXICAL_FORM_NOT_SUPPORTED",
+      "PRIMARY_XML_CANDIDATE_MISSING"
+    ],
+    "full_role_never_granted": true
+  },
+  {
+    "name": "original_P2_3_nil_exact_replay",
+    "passed": true,
+    "values": [
+      "138"
+    ],
+    "issues": [
+      "DEPRECIATION_SOURCE_NIL_OR_INVALID_SOURCE_VALUE",
+      "DEPRECIATION_SOURCE_NIL_OR_INVALID_SOURCE_VALUE"
+    ],
+    "full_role_never_granted": true
+  },
+  {
+    "name": "direct_xml_inline_scale_not_accepted",
+    "passed": true,
+    "values": [
+      "49"
+    ],
+    "issues": [
+      "DEPRECIATION_SOURCE_XML_NUMERIC_ATTRIBUTES_NOT_SUPPORTED",
+      "PRIMARY_XML_CANDIDATE_MISSING"
+    ],
+    "full_role_never_granted": true
+  },
+  {
+    "name": "legal_inline_scaled_signed_pairs_with_plain_xml",
+    "passed": true,
+    "values": [
+      "-1380",
+      "49"
+    ],
+    "issues": [],
+    "full_role_never_granted": true
+  },
+  {
+    "name": "legal_inline_fixed_zero_pairs_with_plain_xml",
+    "passed": true,
+    "values": [
+      "0",
+      "49"
+    ],
+    "issues": [],
+    "full_role_never_granted": true
+  },
+  {
+    "name": "unsupported_transform_is_local",
+    "passed": true,
+    "values": [
+      "138"
+    ],
+    "issues": [
+      "DEPRECIATION_SOURCE_NUMERIC_VALUE_NOT_SUPPORTED:C03_UNSUPPORTED_NUMERIC_TRANSFORM",
+      "PRIMARY_XML_CANDIDATE_MISSING"
+    ],
+    "full_role_never_granted": true
+  },
+  {
+    "name": "direct_xml_unformatted_bad_decimal_is_local",
+    "passed": true,
+    "values": [
+      "49"
+    ],
+    "issues": [
+      "DEPRECIATION_SOURCE_NUMERIC_LEXICAL_FORM_NOT_SUPPORTED",
+      "PRIMARY_XML_CANDIDATE_MISSING"
+    ],
+    "full_role_never_granted": true
+  }
+]
