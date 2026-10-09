@@ -1,0 +1,100 @@
+{
+  "reference_path": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
+  "reference_sha256": "65559571cb7638cc04ec82caa0b8ba2ce329f87d71edc84484ac0e51ea8afe8a",
+  "checks": [
+    {
+      "metric_id": "A03",
+      "value": "1.11",
+      "actual_measurement_window": [
+        "2021-10-01",
+        "2021-12-31"
+      ],
+      "original_reference_read": [
+        {
+          "figure": "111",
+          "row": [
+            "Firm Liquidity coverage ratio (\u201cLCR\u201d) (average) (d)",
+            "111",
+            "110",
+            "116"
+          ],
+          "source": "SELECTED_FINANCIAL_DATA",
+          "table_ordinal": 63,
+          "value": "1.11",
+          "window": [
+            "2021-10-01",
+            "2021-12-31"
+          ]
+        },
+        {
+          "figure": "111",
+          "group": "JPMorgan Chase & Co.:",
+          "row": [
+            "LCR",
+            "111",
+            "%",
+            "112",
+            "%",
+            "110",
+            "%"
+          ],
+          "source": "QUARTER_AVERAGE_TABLE",
+          "table_ordinal": 198,
+          "value": "1.11",
+          "window": [
+            "2021-10-01",
+            "2021-12-31"
+          ]
+        }
+      ],
+      "source_sha256": "7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478",
+      "matches_existing_reading": true,
+      "annual_container_not_measurement_for_A03": true,
+      "new_metric_result_created": false
+    },
+    {
+      "metric_id": "A12",
+      "value": "55000000",
+      "actual_measurement_window": [
+        "2021-01-01",
+        "2021-12-31"
+      ],
+      "original_reference_read": [
+        {
+          "figure": "55",
+          "row": [
+            "Total VaR",
+            "$",
+            "55",
+            "$",
+            "24",
+            "$",
+            "153",
+            "$",
+            "95",
+            "$",
+            "32",
+            "$",
+            "164"
+          ],
+          "table_ordinal": 286,
+          "value": "55000000",
+          "window": [
+            "2021-01-01",
+            "2021-12-31"
+          ]
+        }
+      ],
+      "source_sha256": "7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478",
+      "matches_existing_reading": true,
+      "annual_container_not_measurement_for_A03": false,
+      "new_metric_result_created": false
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "old_reading_not_rewritten": true
+}

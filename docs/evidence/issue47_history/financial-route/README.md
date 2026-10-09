@@ -69,3 +69,9 @@ A03/A04/A09/A11/A12/A13 按 `financial` 特征门控。此前历史路线只答�
 同一最短bundle进一步调用既有historical_financial_wording.fact（已有适配，不新增计算/提示/模型）：4.170s返回A13 STRUCTURED_PRIMARY_RESOLVED、28971000000 USD、regional_sum_used=false，原native ordinal7406/完整context/原格table_000614(6,6)/出处保持。该时长仅此已准备bundle上的调用，不与先前57.291s含选期/准备的边界混比，不宣称性能优化。完整来源组件保存在a13-jpm2021-existing-reader-20261009.json，仍无MetricResult/Run/接受。
 
 执行者直接读同SHA原件相关完整表（2021/2020/2019栏保留）、2021 Total international行28,971、usd/scale6及已记录原定义脚注字节SHA：Revenue含net interest income和noninterest revenue。原件核对见a13-jpm2021-original-table-read-20261009.json，不依计算器的PASS替代原件；不称整份年报/全部地域含义或五年独立内容接受。旧适配证明现有检查/金额读取可复用，新普通历史接线仍待显式受控namespace接缝；不把release_aware全族搬入新公司pipeline，不改共同core、旧Result或原失败。
+
+## A03/A12下一有限历史接续的现有组件
+
+只在同JPM21已核SHA7c58/034分片bundle调用既有历史读取器，不建立新金额/范围内核。A0327.397s返回1.11，明确2021-10-01至12-31/3个月平均、annual_average_claimed=false，两处披露相符；A12 9.680s返回55000000USD、一个全年平均VaR total，SINGLE_SOURCE_SEMANTIC_FACT。两值/实际窗口与原bank-measures-read-full-frame.json的已读原表逐项MATCH，a03-a12-jpm2021-reference-comparison-20261009.json给原参考SHA/行/窗口；原阅读不改、不重读未变整年。gzip保存完整组件而非删源，解码后为原211853B JSON，无模型、MetricResult/Run或接受信用。
+
+当前共用financial_candidates LCR及financial_balance_scope VaR检查器仍在annual_period用旧默认；普通显式公司门只接A13。下一slice公共#28需传同受控DEI选项并增加有限显式case门，历史侧保季度测量/全年容器、来源选择与同入口保存读接线；不并行修改这些共同核心、不扩PR105/104、不把组件PASS说公司或五年交付。完整源bundle复用前页A13参数，全部本批新增SEC/provider/paid0。
