@@ -1,0 +1,90 @@
+{
+  "seconds": 22.644361958839,
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-sec-ledger-resume-20261006/source-inputs",
+  "result": {
+    "company_id": "paramount_skydance_paramount_global",
+    "metric_id": "E01",
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31",
+    "scope_key": "sha256:8715d9acc89656dae7a4be7d39314730969fa79672bd27958d2a392c822bd2f1",
+    "spec_closure_hash": "sha256:49ada0cc825244dc113cbbdd6e60c5a4708b22a0d31f1c34079a8364298cce44",
+    "applicability": "APPLICABLE",
+    "quality": "NONE",
+    "publication": "WITHHELD",
+    "reason_code": "E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST",
+    "value": null,
+    "unit": null,
+    "trace_id": "sha256:af751a361537080c4a6d63332ff651881bc256089b7da080aaefca0c29900508",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:3331877123ff9ef80e76165c7ab4b471840361617535342b21d6f953e3507f12"
+  },
+  "period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "assessment": {
+    "status": "WITHHELD",
+    "reason_code": "E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST",
+    "complete_annual_count": null,
+    "candidate_item_ids": [
+      "0000813828-24-000009#8.01@2402",
+      "0000813828-24-000018#8.01@2224",
+      "0000813828-24-000033#8.01@4324",
+      "0000813828-24-000073#8.01@5204",
+      "0000813828-24-000081#8.01@2227",
+      "0000813828-24-000087#8.01@5109",
+      "0001193125-24-177535#1.01@2210",
+      "0001193125-24-196053#1.01@2212"
+    ],
+    "request_id": "sha256:2aa878ef4a047f929a40e4b808a5e7d01cc4211e254db42c9738692dbc866a41",
+    "request_contract": "E01_SUPPLIED_ITEM_AND_INCORPORATED_TEXT_V2_DEVELOPMENT",
+    "attachment_dependencies": [
+      {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+        "media_type": "text/html",
+        "accession": "0000813828-24-000018",
+        "document_name": "ex-99.htm",
+        "dependency_class": "FISCAL_EVENT_FILING",
+        "source_roles": [
+          "incorporated_EX99"
+        ],
+        "consumers": [
+          "period:2024-12-31",
+          "E01_SUCCESSOR_INCORPORATED_ATTACHMENT"
+        ],
+        "parent_source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/para-20240429.htm",
+        "parent_sha256": "04c3af26f90298c45c7430014fe6b8b4e19e4e7690b3485e52d34f9e1889fbf0",
+        "parent_item_id": "0000813828-24-000018#8.01@2224",
+        "declared_by": "docs/evidence/issue47_history/event-attachment-declarations-v1.json",
+        "primary_cik": "813828",
+        "registrant_cik": "813828",
+        "saved_status": "VERIFIED_SAVED_SOURCE",
+        "saved_reason": null,
+        "new_acquisition_required": false,
+        "acquisition_kind": null,
+        "source_acquisition_credit": false,
+        "retry_count": 0,
+        "maximum_sec_attempts": 1,
+        "source_contract_scope": "SUCCESSOR_INPUT_ONLY_NO_OLD_REQUEST_OR_RUN_REBINDING"
+      }
+    ],
+    "matching_response_available": false,
+    "old_answer_reused": false,
+    "partial_count_exported": false,
+    "target_model_execution_authorized": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "predecessor_request_id": "sha256:3831616f67165ebfc27c770cc69a79835c7cf9205c7e35ec734159907dc90753",
+  "source_proof_count": 50,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "native_run_created": false
+}
