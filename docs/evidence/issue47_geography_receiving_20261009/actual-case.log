@@ -1,0 +1,36 @@
+f\", \"sha256:484adcd42253b2fbda427fa21e40ba9dee9739ccdab6b19bd7d3d948e166f8b3\", \"sha256:4dd1f26077fc38f6ce02018dede19fe5a9d2814555dbcc4aa4f6192b2d264f6f\"]}",
+    "confidence": "",
+    "notes": "International net revenue for the actual interval, not regional gross revenue or an inferred regional sum. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS."
+  },
+  "evidence": [
+    {
+      "company": "JPMorgan Chase",
+      "cik": "19617",
+      "metric_id": "A13",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961722000272/jpm-20211231.htm",
+      "repo_relative_path": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+      "content_sha256": "7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478",
+      "accession": "0000019617-22-000272",
+      "document_name": "jpm-20211231.htm",
+      "concept_or_section": "us-gaap:Revenues",
+      "context_or_dimension": "{\"attributes\": {\"adapter_id\": \"ACCESSION_XBRL\", \"canonical_name\": \"us-gaap:Revenues\", \"context\": {\"context_ref\": \"i51f1831d6a2a46a585226ebec0383592_D20210101-20211231\", \"dimensions\": {\"srt:StatementGeographicalAxis\": \"jpm:TotalInternationalMember\"}, \"entity_identifier\": \"0000019617\", \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\", \"typed_dimension_count\": 0}, \"deterministic_router_semantic_version\": \"2\", \"lexical_value\": \"28,971\"}, \"locator\": {\"context_ref\": \"i51f1831d6a2a46a585226ebec0383592_D20210101-20211231\", \"ordinal\": 7406, \"qualified_name\": \"us-gaap:Revenues\"}, \"verified_claim_id\": \"sha256:9a7424132afd78577e201f9c9d45641a9955996cc5bcb55927bd43821a7cc942\"}",
+      "unit": "usd",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "value_raw": "",
+      "value_normalized": "28971000000",
+      "evidence_quote": "Parsed source fact: {\"locator\": {\"context_ref\": \"i51f1831d6a2a46a585226ebec0383592_D20210101-20211231\", \"ordinal\": 7406, \"qualified_name\": \"us-gaap:Revenues\"}, \"unit\": \"usd\", \"value\": \"28971000000\"}",
+      "extraction_method": "native_verified_observation_projection",
+      "parser_version": "normal_numeric_projection_v1"
+    }
+  ],
+  "result_id": "sha256:666c1ed05956617cc52fb2aaccfea389ca10be9ed457439c42ee7be1e4c22b97",
+  "trace_id": "sha256:facbf899082b606b89f8599f51120646ab3e486ed89ca00511fa62ff55d4a0f0",
+  "public_dependency": "78767a7c",
+  "ordinary_company_dispatch_not_yet_received": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
