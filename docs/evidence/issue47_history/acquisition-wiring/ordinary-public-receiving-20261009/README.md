@@ -19,3 +19,35 @@ ex99-increment.tar.gz是本次最小可取得增量，含原件/headers、当前
 旧source-only导出仍按旧版本解释；本增量不重签旧export/checkpoint，也不改变正在使用的运行包。初恢复记录器误取item['proof']（实际proof在reader.proofs）失败，修后仅读取已解包目录，不重取材料，原失败保留本地work。
 
 现行E01输入消费边界进一步核对：historical_ma_confirmation.confirmation_request及SYSTEM_PROMPT明确只读每个item自身text，validate_answer只许quote为该text的子串；历史e01_confirmation_request仍走此V1。附件依赖已取到并验证不等于现程序把附件提供给抽取上下文。后继输入需显式保父item全文及独立附件全文/SourceReference/proof、在独立源上定位quote，并有不同输入/请求身份；不能把附件拼进原V1text或给原35包/旧回答补成功。指定来源已获准，后继开发接线可继续；任何新目标模型执行仍无额度，完整年度E01接受未证明。此为具体消费者开发缺口，不重新申请已批准的GET、不重启旧批次、不引入压缩/第三轮模型试验或新的信任证明层。
+
+## 完整附件输入接线（分支开发，未改变公司执行分派）
+
+`historical_e01_incorporated_input.prepare_incorporated_e01_input` 从原已保存 V1 source 对象消费整个候选池，调用已有附件依赖和普通来源读取器；只给声明中的父 item 增加独立附件全文、完整原 HTML、块位置及 SourceReference。八个原 item ID/全文/窗口不变；实际附件 18964 字节、50 个来源证明验证通过，准备 3.815 秒。新输入合同为 `E01_SUPPLIED_ITEM_AND_INCORPORATED_TEXT_V2_DEVELOPMENT`，请求身份与旧请求不同。
+
+实际输入、完整两消息请求及本地计量已提交为本目录的 `e01-incorporated-*.json.gz/json`。既有 `continuous_semantic_calls.request_body` 封装后逐项核对，供应文本、原 HTML 和位置保持相同；既有参考 tokenizer 计量输入 53761、输出预留 4096、总 57857，原上限 200000。这个数是本地参考计量，不是服务商实耗或执行批准。gzip 只保存文件，不改变解码后的模型输入；没有筛掉候选、压缩源文本或提高输出预算。
+
+`validate_incorporated_answer` 将源定位约束到相同 item，区分并购、非并购及材料不能判断；只机械核对结构、类型、逐 item 完整性、原文匹配和原 20–600 字符合同，不判断法律/交易含义。29 个短回归 0.012 秒通过、零 skip，包含跨 item 引用、幻觉引文、缺源、缺答、重复答、类型错误、真实但过长引文和旧 V1 拒绝新格式。构造答案只用于控制测试，不冒充真实模型结果。原 V1、旧回答、原注册、失败和 Run 未改。
+
+复核保存输入可直接解码本目录文件；重建时在新的来源目录使用已提交 SEC 导出的 `restore`，再消费上面的 EX99 源增量。它只是来源恢复，不能把增量审查记录初始化成新执行账本。原 source 对象从已提交模型归档抽取，不依赖本地未提交阅读材料：
+
+```bash
+mkdir -p work/e01-incorporated-review
+tar -xzf evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz \
+  -C work/e01-incorporated-review root/calls/0005/source.json
+PYTHONPATH=scripts:tools:. python3 -m unittest -v \
+  tests.vnext.test_historical_e01_incorporated_input \
+  tests.vnext.test_historical_event_attachments \
+  tests.vnext.test_historical_ma_confirmation
+```
+
+```python
+import json
+from pathlib import Path
+from vnext.historical_e01_incorporated_input import prepare_incorporated_e01_input
+
+original = json.loads(Path('work/e01-incorporated-review/root/calls/0005/source.json').read_text())
+prepared = prepare_incorporated_e01_input(
+    data_root=Path('/absolute/new-source-root'), predecessor_source=original)
+```
+
+原归档成员和新保存文件 SHA/字节数见 `e01-incorporated-real-input.json`。当前交付是可复用的真实完整输入及纯后处理接口，历史公司 E01 默认执行仍为 V1；新目标模型执行为 0，年度结果未创建，没有为旧未决 item 补信用。后续仍需把显式后继规则接到同一公司模型消费者，并在有效用途/调用条件下核对完整年度内容。本次不默认申请或执行下一轮。
