@@ -52,3 +52,9 @@ python3 tools/vnext_company.py results --company jpmorgan_chase \
 现有组合树正常合入该main为076cd45e，四冲突采用main实际公司分派/工作流/指南/原测试，额外保本方六族+B01/B10/A01依赖保护；该受影响1方法.424s通过。导入的原历史日志有既有空白，未为diff-check改写证据。后续只接公共cfg无关变化修补并验证代表复跑，不重算30位。96/102尚未main，E01仍待公共显式门。
 
 main合并的指南中A03/A12和A04/A09/A11段缺代码围栏与python主命令，已正常修回可执行完整命令，并标三个族已main及同次六指标入口。仅shell语法/实际CLI参数控制检查（处理替身、不读源）三段通过，guide-command-controls.json；不为说明修补重算财报。修补在组合后继4166，指南尚待接回main，不隐瞒两处实际main说明缺陷。
+
+## 有限公共配置复用修补的真实消费者
+
+公共Draft115固定bfa0c35b接为d1ead947，纯金融main组合不混E01/其他未接接口。先只读原scope任务FY21六指标配置，均满足公共明确三差异兼容规则；不据此说原独立average/geography任务或30所有版本等价。真正公司run仅代表混选A03/A04/A13，身份profile禁止三工厂/socket：兼容复8.583s、NO_SOURCE_CONTENT_CHANGE/calculationfalse，并由公共写当前completed-check元数据；原Result/最后成功pointer保持。普通相等复8.524s、零factory、无compat标记/无再次元数据迁移；另进程读.749s保18值/日期，A03Q4与A04/A13全年分开。finite-repeat-summary.json/log及representative-config-compatible.json；不手改配置，不重算其他年度，18保存结果只读。
+
+这是已源码核对的特定过渡：旧session/controller剔除/B12note，未知或相关源/规则变化不能借此复用。旧独立average还有真实额外解析/writer变更，公共首次不匹配记录保持；后继E01/D04或其他main变化要按实际影响接收，不改兼容常量凑过。金融候选已main、公共115尚待接收；完整历史业务/在线来源/模型仍未完成。
