@@ -167,7 +167,7 @@ python3 tools/vnext_company.py results --company jpmorgan_chase \
   --state-root /new/jpm/state --output-root /new/jpm/read-01
 ```
 
-各候选原30个五年结果已由干净main独立读回，值/单位/期间/ResultID及285旧结果文件保持；main分派/状态/三族59小例通过，三个业务模块和测试路径也保留。已有任务读取无需重算。跨版本重复run目前仍有公共处理指纹缺口：仅B12说明及未使用依赖变化可能触发A03无关重算，已交#28，未通过手改旧配置或全量重算掩盖。候选原版本的复用结果保持其范围，修补后只验证受影响代表坐标；[同一主要组合记录](https://github.com/wlvh/SEC_metrics/blob/task/issue47-financial-combination-20261010/docs/evidence/issue47_financial_combination_20261010/README.md)给实际版本和边界。
+各候选原30个五年结果已由干净main独立读回，值/单位/期间/ResultID及285旧结果文件保持；main分派/状态/三族59小例通过，三个业务模块和测试路径也保留。已有任务读取无需重算。跨版本重复run的具体处理指纹问题已由公共PR115固定bfa0c35b提供有限修补，尚未入main。现有组合分支已消费：原scope任务FY2021混选A03/A04/A13两次禁止factory复跑均零计算，独立读取保18旧值/日期；只允许已核的未使用session/controller剔除及B12说明变化，不手改旧配置。原独立average任务有额外实际解析和writer变更，不能套用该兼容结论；其他来源、规则及公共组合变化继续按实际影响处理。候选原版本的复用结果保持其范围；[同一主要组合记录](https://github.com/wlvh/SEC_metrics/blob/task/issue47-financial-combination-20261010/docs/evidence/issue47_financial_combination_20261010/README.md)给实际版本和边界。
 
 main本批已支持27个历史指标分派，仍要求保存来源；B12候选PR96及公共主体修复PR102尚未main。E01完整内容、在线历史来源发现/补齐、修订与主体变化的未成熟金额路径及完整1950业务责任继续。
 
