@@ -1,0 +1,21 @@
+.E
+======================================================================
+ERROR: test_system_alias_uses_same_physical_uid_gate_and_preserves_wait (tests.vnext.test_native_rate_path.NativeRatePathTest.test_system_alias_uses_same_physical_uid_gate_and_preserves_wait)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-native-rate-path/SEC_metrics/tests/vnext/test_native_rate_path.py", line 21, in test_system_alias_uses_same_physical_uid_gate_and_preserves_wait
+    with acquisition.rate_scope():pass
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-native-rate-path/SEC_metrics/scripts/vnext/company_local_acquisition.py", line 132, in rate_scope
+    need(first_symlink_in_path(path=root) is None, 'LOCAL_SEC_RATE_ALIAS')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-native-rate-path/SEC_metrics/scripts/vnext/continuous_call_policy.py", line 15, in need
+    raise ValueError(reason)
+ValueError: LOCAL_SEC_RATE_ALIAS
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.003s
+
+FAILED (errors=1)
