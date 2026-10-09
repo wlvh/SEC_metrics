@@ -235,10 +235,12 @@ def _aum_reported_scope(*, builders, structure, disclosures, target_period, issu
 
 
 def inspect_aum_balance(*, repo_root: Path, source_bytes: bytes, expected_source_sha256: str,
-                        expected_cik: str, target_period: dict) -> dict:
+                        expected_cik: str, target_period: dict,
+                        dei_release="YEAR_ONLY") -> dict:
     """Inspect complete named AUM balances and consistent repeated disclosures."""
     task, builders, structure = _prepare(repo_root=repo_root, source_bytes=source_bytes,
-        expected_source_sha256=expected_source_sha256, expected_cik=expected_cik, target_period=target_period, metric_id="A11")
+        expected_source_sha256=expected_source_sha256, expected_cik=expected_cik,
+        target_period=target_period, metric_id="A11", dei_release=dei_release)
     if task["required_claims"] != {"asset_scope": "total_assets_under_management"}:
         raise FinancialBalanceScopeError("AUM_SCOPE_CONTRACT_UNSUPPORTED")
     aliases = task["scope_contract"]["exact_enum_aliases"]["asset_scope"]["total_assets_under_management"]
@@ -288,7 +290,8 @@ def inspect_aum_balance(*, repo_root: Path, source_bytes: bytes, expected_source
     if len(values) > 1:
         unresolved.append({"reason": "CONFLICTING_SAME_SCOPE_AUM_BALANCES"})
     issuer = _issuer_identity(source_bytes=source_bytes, expected_cik=expected_cik,
-                              target_period=target_period, structure=structure)
+                              target_period=target_period, structure=structure,
+                              dei_release=dei_release)
     whole = _aum_reported_scope(builders=builders, structure=structure, disclosures=accepted,
                                target_period=target_period, issuer=issuer) if accepted and not unresolved else None
     body = {"record_type": "AUM_BALANCE_SCOPE_COMPONENT", "schema_version": 1,
