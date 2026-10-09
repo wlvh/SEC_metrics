@@ -405,6 +405,18 @@
       "name_zh": "收入同比增长率",
       "description_zh": "(本年收入 − 上年收入) ÷ 上年收入。主体不可比（successor/predecessor 合并年）时为 NOT_MEANINGFUL。",
       "description_en": "(Current revenue − prior revenue) ÷ prior revenue. NOT_MEANINGFUL when the entity is not comparable (successor/predecessor years).",
+      "owner_scope_decision": {
+        "status": "POLICY_PENDING",
+        "content_zh": "是否改为两年共有的第一个收入标签尚未决定；已批准的配对防错不改变原事实选择或采用最新重述值。",
+        "decision_date": null,
+        "recorded_date": "2026-10-01",
+        "source": {
+          "commit": "32faa26d87b47a882e13145e450e565df0eaa1d3",
+          "path": "AGENTS.md",
+          "locator": "COLLAB-28-47-v1 §2",
+          "url": "https://github.com/wlvh/SEC_metrics/blob/32faa26d87b47a882e13145e450e565df0eaa1d3/AGENTS.md"
+        }
+      },
       "expected_statuses": [
         "OK",
         "NOT_MEANINGFUL",
@@ -672,6 +684,18 @@
     },
     "C02": {
       "name_zh": "董事会构成",
+      "owner_scope_decision": {
+        "status": "DECIDED_TARGET",
+        "content_zh": "采用构成事实：董事会规模、独立董事人数、委员会设置、成员、主席及相关独立性和资格认定；不纳入一般治理流程或委员会工作描述。",
+        "decision_date": "2026-09-27",
+        "recorded_date": "2026-10-01",
+        "source": {
+          "commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+          "path": "docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json",
+          "locator": "decisions.C02",
+          "url": "https://github.com/wlvh/SEC_metrics/blob/48b46a2d742eb3e3b8bd5a6404908745046b5d2f/docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json"
+        }
+      },
       "description_zh": "来自最新 DEF 14A 的董事会构成信号（董事人数、独立董事数、委员会信息）。main 基线只按关键词捕获董事会章节文本片段，输出定性状态 TEXT_QUAL，结构化人数需人工复核；无 MetricSpec。",
       "description_en": "Board composition signal from the latest DEF 14A (director count, independent directors, committees). The main baseline only captures a board-section text snippet by keyword and yields qualitative TEXT_QUAL; structured counts need review; no MetricSpec exists on main.",
       "unit": null,
@@ -1018,6 +1042,18 @@
     },
     "E01": {
       "name_zh": "并购公告",
+      "owner_scope_decision": {
+        "status": "DECIDED_TARGET",
+        "content_zh": "采用经内容确认的并购公告；旧按条目或关键词得到的值不能直接继承为新目标的正确结果，具体计数与去重仍须另核。",
+        "decision_date": "2026-09-27",
+        "recorded_date": "2026-10-01",
+        "source": {
+          "commit": "48b46a2d742eb3e3b8bd5a6404908745046b5d2f",
+          "path": "docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json",
+          "locator": "decisions.E01",
+          "url": "https://github.com/wlvh/SEC_metrics/blob/48b46a2d742eb3e3b8bd5a6404908745046b5d2f/docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json"
+        }
+      },
       "description_zh": "财年窗口内 8-K Item 1.01 / 2.01 事件，以及正文含 merger / acquisition / combine / transaction 关键词的 Item 8.01 事件。",
       "description_en": "8-K Item 1.01 / 2.01 events within the fiscal-year window, plus Item 8.01 events whose text contains merger / acquisition / combine / transaction keywords.",
       "expected_statuses": [
