@@ -155,6 +155,21 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['A08'])
         self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
 
+    def test_average_risk_family_preserves_existing_metric_factories(self):
+        from vnext.historical_average_risk_cases import prepare_historical_average_risk_year_case, PROCESSING_FILES
+        from vnext.historical_capital_cases import prepare_historical_capital_year_case
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        from vnext.historical_lodging_results import prepare_historical_lodging_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(company_id='jpmorgan_chase', metric_ids=['A03', 'A12', 'A01', 'B01', 'B10'])
+        args = shared.call_args.kwargs
+        for metric in ('A03', 'A12'):
+            self.assertIs(prepare_historical_average_risk_year_case, args['case_factories'][metric])
+            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+        self.assertIs(prepare_historical_lodging_year_case, args['case_factories']['B10'])
+
     def test_cli_passes_period_arguments_to_the_same_company_entry(self):
         with (patch.object(local, 'run_local', return_value={'status': 'FLOW_COMPLETED'}) as selected,
               patch('sys.stdout')):

@@ -125,6 +125,17 @@ python3 tools/vnext_company.py results --company jpmorgan_chase \
 ```
 
 来源使用上面的已提交 SEC 导出恢复根；所有状态和输出写新外部目录。实测五年结果依次为 28,971,000,000、31,968,000,000、34,873,000,000、38,233,000,000、42,758,000,000 USD，各年实际1月1日至12月31日、CIK 19617。修订、接续主体及未决范围分别保留具名限制；其他金融指标、当期 A13 默认入口、其他公司与完整五年业务还待接续。主要记录见 [A13 历史消费者验证](evidence/issue47_geography_receiving_20261009/README.md)。公共接缝允许的是明确传入的历史 A13 工厂，没有默认打开 39 项计算或自动取得来源。
+## A03/A12：候选分支的历史测量期
+`task/issue47-average-risk-history-20261010` 在 main `6e51f416` 上消费公共 PR107 的受控旧 DEI 版本、显式历史工厂及季度保存接口，尚未进入 main。本候选只添加 A03/A12 和三项既有历史措辞适配，不要求先运行其他公司，也不复制公共控制器/保存器。
+git fetch origin task/issue47-average-risk-history-20261010
+git worktree add -b review/issue47-average-risk ../SEC_metrics-average-risk-review \
+  origin/task/issue47-average-risk-history-20261010
+cd ../SEC_metrics-average-risk-review
+  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2025 \
+  --metric A03 --metric A12 --source-root /saved/sec/source-inputs \
+  --work-dir /new/average-risk/state --output-dir /new/average-risk/runs
+  --state-root /new/average-risk/state --output-root /new/average-risk/read-01
+来源仍用上节保留历史分支恢复的实际 `source-inputs` 根；原件只读，目录名称已占用时另选。JPM FY2021 已实测 A03=1.11 ratio（111%），实际2021-10-01至12-31；FY2021是年报分组，不能把该季度平均值年化。A12=55,000,000 USD，是全年平均VaR；95%/一日为风险口径，不是一日测量窗口。同一CLI计算、禁工厂复用、独立读取及原格出处已贯通，见[唯一接收记录](evidence/issue47_average_risk_receiving_20261010/README.md)。JPM FY2021–FY2025十坐标已完成同入口计算、全范围禁工厂复用、独立读取和原参考对照；修订/继任金额处理、其他金融族及在线历史取源仍待；默认当期指标集合没有因此扩大。
 
 ## 状态、复跑和局部失败
 
