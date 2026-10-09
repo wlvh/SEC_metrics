@@ -188,6 +188,8 @@ FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalCurrentAnn
 FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest',)
 FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest',)
 FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest',)
+FAST_TESTS += ('tests.vnext.test_existing_historical_sec_state',)
+FAST_TESTS += ('tests.vnext.test_historical_sec_capture_adapter',)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

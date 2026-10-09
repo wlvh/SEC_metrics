@@ -37,6 +37,9 @@ def _ledger(context, company, metrics):
     _need(context['company_id'] == company and set(metrics) <= set(context['metric_ids']), 'PURPOSE_SCOPE_CHANGED')
     _need(context['purpose'] in binding['purposes'], 'PURPOSE_NOT_IN_EXISTING_ALLOWANCE')
     _need(context['execution_mode'] == binding['execution_mode'], 'MODE_CHANGED')
+    if binding.get('record_type') == 'ISSUE_47_HISTORICAL_CALL_ALLOWANCE':
+        from .existing_historical_sec_state import ExistingHistoricalSecLedger
+        return ExistingHistoricalSecLedger(root=root, context=context)
     _need(context['maximum_counts'] == binding['limits'], 'EXISTING_LIMITS_CHANGED')
     return CallLedger(factory=_FACTORY, root=root, binding=binding, live=binding['execution_mode']=='LIVE')
 
@@ -47,6 +50,10 @@ class Capture:
         self.maximum, self.captures, self.stop = maximum, [], None
         self.attempted = set()
         self.pending = None
+        if hasattr(ledger, 'check_request'):
+            _need(self.source.resolve() == ledger.source_root, 'EXISTING_LEDGER_SOURCE_ROOT_CHANGED')
+            _need(self.source.is_dir() and (self.source/'config/company_registry.csv').is_file(),
+                  'EXISTING_LEDGER_SOURCE_REQUIRED')
         self.source.mkdir(parents=True, exist_ok=True)
         registry = self.source/'config/company_registry.csv'
         if registry.exists():
@@ -66,16 +73,20 @@ class Capture:
         # global client default or rely on its retrying configuration.
         self.client.config = {**self.client.config, 'max_retries':0, 'rate_limit_per_sec':1}
         validate_request_log_manifest(log_path=self.source/'evidence/requests_log.csv')
-        for row in parse_request_log_rows(text=(self.source/'evidence/requests_log.csv').read_text()):
+        historical = hasattr(ledger, 'check_request')
+        for row in ([] if historical else parse_request_log_rows(text=(self.source/'evidence/requests_log.csv').read_text())):
             if row['status_code'] in {'403','429'}:
                 self.stop='HTTP_'+row['status_code']
 
     def get(self, url, *, refresh=False, accession=''):
+        if hasattr(self.ledger, 'check_request'):
+            self.ledger.check_request(source=self.source,url=url,refresh=refresh)
         _need(not self.stop, 'CHANNEL_STOPPED:'+str(self.stop))
         if url in self.attempted:
             return saved_source(repo_root=self.source,url=url,accession=accession)
         log=self.source/'evidence/requests_log.csv'
         rows=parse_request_log_rows(text=log.read_text())
+        log_before_bytes=log.read_bytes()
         matching=[r for r in rows if r['source_url']==url]
         if matching and not refresh and (matching[-1]['status_code']!='200' or matching[-1]['error']):
             raise ValueError('LATEST_SOURCE_REQUEST_FAILED:'+url)
@@ -100,7 +111,9 @@ class Capture:
             slot,intent=self.ledger.claim(channel='SEC',request_digest=content_hash(value=request),
                 requirement=requirement,plan_id=content_hash(value=request),purpose=self.context['purpose'])
             self.pending = intent['ordinal']
-            _atomic_json(slot/'sec-plan.json', request)
+            plan = ({'company_id':self.context['company_id'],'request':request,
+                     'requirement_id':self.context['requirement_id']} if hasattr(self.ledger,'check_request') else request)
+            _atomic_json(slot/'sec-plan.json', plan)
             before=len(rows)
             path=self.source/'evidence/raw'/content_hash(value={'url':url})[7:]/urlsplit(url).path.rsplit('/',1)[-1]
             # An exception after claim intentionally leaves an incomplete slot;
@@ -117,6 +130,32 @@ class Capture:
                 'execution_mode':self.context['execution_mode'],'actual_sec_egress_count':int(self.ledger.live),
                 'automatic_retry_count':0,'status':'SUCCEEDED' if row['status_code']=='200' and not row['error'] else 'FAILED_TERMINAL',
                 'stop_reason':stop,'source_root':str(self.source),'ledger_row_index':before,'ledger_row':row}
+            if hasattr(self.ledger, 'check_request'):
+                from sec_http import request_log_attempt_id
+                from .request_bindings import validate_request_attempt_binding
+                from .canonical import sha256_bytes
+                from .invocation_control import _exclusive_write_bytes
+                _need(log.read_bytes().startswith(log_before_bytes), 'EXISTING_LOG_PREFIX_CHANGED')
+                wire={}
+                for name,location in (('body',result.local_path),('headers',result.headers_path)):
+                    if location:
+                        raw=Path(location).read_bytes()
+                        _exclusive_write_bytes(path=slot/'sec-wire'/(name+'.bin'),content=raw)
+                        wire[name]={'source_path':Path(location).relative_to(self.source).as_posix(),
+                                    'sha256':sha256_bytes(content=raw),'size':len(raw)}
+                proof=None
+                if body['status']=='SUCCEEDED':
+                    binding=validate_request_attempt_binding(repo_root=self.source,source_url=url,
+                        content_sha256=row['content_sha256'],accession=accession,document_name=row['document_name'],
+                        request_attempt_id=request_log_attempt_id(row_index=before,row=row),require_immutable=True)
+                    proof={'source_url':url,'accession':accession,'document_name':row['document_name'],
+                           'content_sha256':row['content_sha256'],**binding}
+                body.update(record_type='ISSUE_47_HISTORICAL_SEC_RECEIPT',company_id=self.context['company_id'],
+                    requirement_id=self.context['requirement_id'],production_authorized=False,
+                    ledger_before_sha256=sha256_bytes(content=log_before_bytes),ledger_after_sha256=sha256_file(path=log),
+                    proof=proof,wire=wire,transport={'network':'HTTPS' if self.ledger.live else 'NONE_RECORDED_RESPONSE'})
+                if row['status_code']=='0':body['status']='UNKNOWN_REMOTE_OUTCOME'
+                if row['status_code'] in {'403','429'}:body['stop_reason']='HTTP_'+row['status_code']
             receipt={**body,'receipt_id':content_hash(value=body)}
             _atomic_json(slot/'sec-receipt.json',receipt)
             self.ledger.finish_sec(path=slot,intent=intent,receipt=receipt)

@@ -13,7 +13,8 @@ class ExistingHistoricalSecStateTest(unittest.TestCase):
         temp = tempfile.TemporaryDirectory(); self.addCleanup(temp.cleanup)
         self.root = (Path(temp.name)/'existing').resolve(); self.root.mkdir()
         binding = {'record_type':'ISSUE_47_HISTORICAL_CALL_ALLOWANCE','binding_id':'fixture-binding',
-                   'requirement_id':'issue_47_v1','execution_mode':'RECORDED_TEST_ONLY','limits':[0,0,2]}
+                   'requirement_id':'issue_47_v1','execution_mode':'RECORDED_TEST_ONLY','limits':[0,0,2],
+                   'purposes':['ISSUE47_HISTORICAL_SOURCE_DEPENDENCY']}
         self.write(self.root/'binding.json', binding)
         self.intent = {'record_type':'ISSUE_47_HISTORICAL_CALL_INTENT','intent_id':'fixture-intent',
             'allowance_binding_id':'fixture-binding','requirement_id':'issue_47_v1',
@@ -21,10 +22,12 @@ class ExistingHistoricalSecStateTest(unittest.TestCase):
             'previous_intent_id':None,'request_digest':'fixture-request'}
         self.claims = (json.dumps(self.intent)+'\n').encode()
         (self.root/'claims.jsonl').write_bytes(self.claims)
+        (self.root.parent/('.'+self.root.name+'.claims.jsonl')).write_bytes(self.claims)
         self.slot = self.root/'calls/0001'; self.slot.mkdir(parents=True)
         self.write(self.slot/'intent.json', self.intent)
         self.row = {key:'' for key in REQUEST_LOG_FIELDNAMES}
-        self.row.update(method='GET', status_code='200', source_url='https://data.sec.gov/submissions/CIK0001048286.json')
+        self.row.update(method='GET', status_code='200', source_url='https://data.sec.gov/submissions/CIK0001048286.json',
+                        document_name='CIK0001048286.json')
         log = self.root/'source-inputs/evidence/requests_log.csv'; log.parent.mkdir(parents=True)
         log.write_bytes(request_log_csv_bytes(rows=[self.row])); refresh_request_log_manifest(workdir=self.root/'source-inputs',log_path=log)
         self.receipt = {'receipt_id':'fixture-receipt','intent_id':'fixture-intent','execution_mode':'RECORDED_TEST_ONLY',
@@ -33,11 +36,14 @@ class ExistingHistoricalSecStateTest(unittest.TestCase):
                         'execution_mode':'RECORDED_TEST_ONLY','status':'SUCCEEDED','stop_reason':''}
         self.write(self.slot/'sec-receipt.json',self.receipt);self.write(self.slot/'terminal.json',self.terminal)
         self.extension = self.root.parent/('.'+self.root.name+'.extension-1.json')
-        self.write(self.extension,{'maximum_additional_provider_paid_sec_calls':[0,0,2],
+        self.write(self.extension,{'extension_ordinal':1,'maximum_additional_provider_paid_sec_calls':[0,0,2],
             'ledger_state':{'claims':{'size':len(self.claims),'sha256':sha256_bytes(content=self.claims)},'claim_count':1}})
         self.resume = self.root.parent/('.'+self.root.name+'.resumes.jsonl')
         self.resume.write_text(json.dumps({'record_type':'ISSUE_47_SEC_LEDGER_RESUME','budget_root':str(self.root),
-            'lost_segment':{'reserve_sec_calls':2},'bounded_capture':{'maximum_counts':[0,0,4]}})+'\n')
+            'lost_segment':{'reserve_sec_calls':2},'bounded_capture':{'maximum_counts':[0,0,4],
+                'counts_before':[0,0,3],'maximum_additional_sec_calls':1,'retry_count':0,
+                'company_id':'marriott_international',
+                'source_url':'https://data.sec.gov/submissions/CIK0001048286-attachments-001.json'}})+'\n')
 
     def write(self,path,value):path.write_text(json.dumps(value))
 
@@ -63,7 +69,7 @@ class ExistingHistoricalSecStateTest(unittest.TestCase):
         self.intent['allowance_binding_id']='other';self.write(self.slot/'intent.json',self.intent)
         with self.assertRaisesRegex(ValueError,'INTENT_RELATION_DIFFERS'):self.read()
         self.intent['allowance_binding_id']='fixture-binding';self.write(self.slot/'intent.json',self.intent)
-        self.write(self.extension,{'maximum_additional_provider_paid_sec_calls':[0,0,2],
+        self.write(self.extension,{'extension_ordinal':1,'maximum_additional_provider_paid_sec_calls':[0,0,2],
             'ledger_state':{'claims':{'size':len(self.claims),'sha256':'wrong'},'claim_count':1}})
         with self.assertRaisesRegex(ValueError,'EXTENSION_PREFIX_DIFFERS'):self.read()
 

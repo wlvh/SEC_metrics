@@ -14,6 +14,8 @@ name: Company saved-source records
       - 'tests/vnext/test_xbrl_namespace_policy.py'
       - 'tests/vnext/test_successor_income_projection.py'
       - 'tests/vnext/test_event_rule_root.py'
+      - 'tests/vnext/test_existing_historical_sec_state.py'
+      - 'tests/vnext/test_historical_sec_capture_adapter.py'
       - 'tests/vnext/test_separate_rule_root.py'
       - 'tests/vnext/test_selected_lodging_calculation.py'
       - 'tests/vnext/test_selected_lodging_source.py'
@@ -46,3 +48,7 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state -v
+      - name: Existing historical SEC count and recorded capture compatibility
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_existing_historical_sec_state tests.vnext.test_historical_sec_capture_adapter tests.vnext.test_company_online
