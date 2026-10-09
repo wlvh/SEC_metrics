@@ -3,26 +3,25 @@
   "public_commits": [
     "b962b6c9a69d3d7fd85541f6b92346a7b651c093",
     "83eaa4da5d18c7accc0c093b1ef4db5f5158da16",
-    "62243bfdce042a79508f242df65cc897fcfaf035",
-    "2a6d2fbd64778139e4d96a9a00b409068f0ad8e1"
+    "62243bfdce042a79508f242df65cc897fcfaf035"
   ],
   "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
   "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state",
-  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-revenue-scope-u2dsbviy",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-revenue-scope-tapnqlhu",
   "operations": [
     {
       "name": "correct-known-scope",
-      "seconds": 10.13956016721204,
+      "seconds": 10.836227792082354,
       "exit_code": 0,
       "status": "FLOW_COMPLETED",
       "metrics": [
         {
           "metric_id": "B01",
           "status": "CANDIDATE_READY",
-          "attempt_id": "86c5e32e49f84ad8b01ad0ccf1341bf1",
-          "version": "67804a9fef994a71a134e9471ee4c7e3",
+          "attempt_id": "37d508834df5429592c6499c540091fa",
+          "version": "0e3678dd8091416ca70544683d040ea3",
           "result_id": "sha256:128c170a19b5505f3ce22e837aaea836159b4652e334aa4b5bdf298e007786da",
-          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/67804a9fef994a71a134e9471ee4c7e3",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3",
           "calculation_performed": true,
           "new_candidate_created": true,
           "result_reason_code": "PASS",
@@ -36,9 +35,9 @@
           "requested_fiscal_year": 2023,
           "defect_holds": [],
           "read_result_id": "sha256:128c170a19b5505f3ce22e837aaea836159b4652e334aa4b5bdf298e007786da",
-          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/67804a9fef994a71a134e9471ee4c7e3",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3",
           "program_version": {
-            "commit": "d28a156587c326234fca5927a2de85b808403151",
+            "commit": "25c797034a6cebf3e79f067e210afb1226259f38",
             "has_uncommitted_changes": true
           }
         }
@@ -46,17 +45,17 @@
     },
     {
       "name": "repeat-forbid-factory",
-      "seconds": 0.9648036248981953,
+      "seconds": 1.0237185419537127,
       "exit_code": 0,
       "status": "FLOW_COMPLETED",
       "metrics": [
         {
           "metric_id": "B01",
           "status": "NO_SOURCE_CONTENT_CHANGE",
-          "attempt_id": "1374e16989034042875d254808508dde",
-          "version": "67804a9fef994a71a134e9471ee4c7e3",
+          "attempt_id": "8fa91ccc776b4dcda8b5eb7938bf4dbe",
+          "version": "0e3678dd8091416ca70544683d040ea3",
           "result_id": "sha256:128c170a19b5505f3ce22e837aaea836159b4652e334aa4b5bdf298e007786da",
-          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/67804a9fef994a71a134e9471ee4c7e3",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3",
           "result_reason_code": "PASS",
           "raw_input_unchanged": true,
           "calculation_performed": false,
@@ -71,9 +70,9 @@
           "requested_fiscal_year": 2023,
           "defect_holds": [],
           "read_result_id": "sha256:128c170a19b5505f3ce22e837aaea836159b4652e334aa4b5bdf298e007786da",
-          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/67804a9fef994a71a134e9471ee4c7e3",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3",
           "program_version": {
-            "commit": "d28a156587c326234fca5927a2de85b808403151",
+            "commit": "25c797034a6cebf3e79f067e210afb1226259f38",
             "has_uncommitted_changes": true
           }
         }
@@ -81,7 +80,7 @@
     },
     {
       "name": "independent-results",
-      "seconds": 0.5752819168847054,
+      "seconds": 0.612768542021513,
       "exit_code": 0,
       "status": null,
       "metrics": [
@@ -100,7 +99,7 @@
           "defect_holds": [],
           "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
           "requested_in_latest_execution": true,
-          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/67804a9fef994a71a134e9471ee4c7e3"
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3"
         },
         {
           "metric_id": "B01",
@@ -451,7 +450,7 @@
     "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
     "company_id": "pfizer",
     "result_id": "sha256:128c170a19b5505f3ce22e837aaea836159b4652e334aa4b5bdf298e007786da",
-    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/67804a9fef994a71a134e9471ee4c7e3",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3",
     "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
     "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
     "period_role": "REQUESTED_RESULT",
@@ -461,9 +460,9 @@
     "requested_in_latest_execution": "True"
   },
   "total_coordinates_read": 20,
-  "old_files": 180,
-  "protected_old_files": 178,
-  "final_files": 187,
+  "old_files": 173,
+  "protected_old_files": 171,
+  "final_files": 180,
   "old_results_and_other_coordinates_preserved": true,
   "repeat_factory_and_calculator_calls": 0,
   "new_calls": [
@@ -471,7 +470,9 @@
     0,
     0
   ],
-  "processing_refresh_reason": "Public scope now rejects direct operations/subsidiary/segment limits on native data rows; only FY2023 B01 requested.",
-  "tested_source_commit": "d28a156587c326234fca5927a2de85b808403151",
-  "source_tree_modified_files": []
+  "processing_refresh_reason": "Public scope now binds consolidated title/local context; consumer display and actual dependency configuration also changed. Only FY2023 B01 was requested.",
+  "tested_source_commit": "25c797034a6cebf3e79f067e210afb1226259f38",
+  "source_tree_modified_files": [
+    "scripts/vnext/historical_statement_cases.py"
+  ]
 }
