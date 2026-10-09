@@ -1,0 +1,7 @@
+PASS repeated identical latest GET uses its distinct row identity
+PASS missing latest source refuses even with valid revised manifest
+PASS valid append between latest selection and batch snapshot refuses
+PASS stale caller-pinned log digest refuses
+PASS batch still requires an explicit boolean binding tier
+PASS producer/year/declared input/Spec/parser/prompt/registry comparison remains exact
+SUPPLEMENTAL_CASES 6
