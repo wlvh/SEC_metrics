@@ -9,6 +9,24 @@ from vnext import company_local as local
 
 
 class HistoryCompanyDispatchTest(TestCase):
+    def test_geography_keeps_existing_factories_and_declares_its_source_dependencies(self):
+        from vnext.historical_geography_cases import prepare_historical_geography_year_case, PROCESSING_FILES
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        from vnext.historical_capital_cases import prepare_historical_capital_year_case
+        from vnext.historical_lodging_results import prepare_historical_lodging_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(company_id='jpmorgan_chase', metric_ids=['A13', 'A01', 'B01', 'B10'],
+                             fiscal_year_start=2021, fiscal_year_end=2021)
+        args = shared.call_args.kwargs
+        self.assertIs(prepare_historical_geography_year_case, args['case_factories']['A13'])
+        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+        self.assertIs(prepare_historical_lodging_year_case, args['case_factories']['B10'])
+        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['A13'])
+        self.assertIn('scripts/vnext/financial_structured.py', PROCESSING_FILES)
+        self.assertIn('scripts/vnext/normal_annual_input.py', PROCESSING_FILES)
+        self.assertFalse((self.root/'state').exists())
+
     def test_interest_coverage_adds_only_its_current_annual_case(self):
         from vnext.historical_statement_cases import (
             prepare_historical_current_annual_year_case, prepare_historical_statement_year_case,

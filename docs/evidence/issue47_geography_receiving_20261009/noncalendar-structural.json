@@ -1,0 +1,140 @@
+{
+  "company_id": "macys",
+  "fiscal_year": 2023,
+  "actual_days": 371,
+  "row": {
+    "company": "Macy's",
+    "cik": "794367",
+    "metric_id": "A13",
+    "metric_name": "International net revenue",
+    "value": "",
+    "unit": "USD",
+    "status": "N_A_STRUCTURAL",
+    "source_class": "NOT_AVAILABLE",
+    "formula": "source-reported international net revenue",
+    "period_start": "2023-01-29",
+    "period_end": "2024-02-03",
+    "fiscal_year": "2023",
+    "fiscal_period": "STRUCTURAL",
+    "accession": "",
+    "form": "",
+    "filed_date": "",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2024-02-03\", \"period_start\": \"2023-01-29\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"geography_scope\": \"international\"}, \"selection\": null, \"source_reference_ids\": [\"sha256:bda4fee952c97c0a8f9ff51423551e575d045b61ac6b079ddc6c9267eb6249a6\", \"sha256:d96b6b700eede53248bc2246f5bcb3e5b8bef0b1e0643076c96589ff9a0b46c5\"]}",
+    "confidence": "",
+    "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+    "company_id": "macys",
+    "result_id": "sha256:4bbee10e9582053ea0be7d63c8f8dc6dca587f7a1fd5fc3af67e9667e510e842",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/a13-noncalendar-structural-kpc39glo/state/updates/A13/periods/FY2023/results/1212f7ac49134e959005076a9ae65d4f",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "operations": [
+    {
+      "name": "first",
+      "seconds": 5.243444541003555,
+      "exit_code": 0,
+      "metrics": [
+        {
+          "metric_id": "A13",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "91e21a68b9164686ae8a5817f82762e6",
+          "version": "1212f7ac49134e959005076a9ae65d4f",
+          "result_id": "sha256:4bbee10e9582053ea0be7d63c8f8dc6dca587f7a1fd5fc3af67e9667e510e842",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/a13-noncalendar-structural-kpc39glo/state/updates/A13/periods/FY2023/results/1212f7ac49134e959005076a9ae65d4f",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2023,
+          "defect_holds": [],
+          "read_result_id": "sha256:4bbee10e9582053ea0be7d63c8f8dc6dca587f7a1fd5fc3af67e9667e510e842",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/a13-noncalendar-structural-kpc39glo/state/updates/A13/periods/FY2023/results/1212f7ac49134e959005076a9ae65d4f",
+          "program_version": {
+            "commit": "b6317e6edeb8b553d270284136e5df152e9c4e2d",
+            "has_uncommitted_changes": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "repeat",
+      "seconds": 0.796432624803856,
+      "exit_code": 0,
+      "metrics": [
+        {
+          "metric_id": "A13",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "a800bd38c45544bba8b7629a1cf8204d",
+          "version": "1212f7ac49134e959005076a9ae65d4f",
+          "result_id": "sha256:4bbee10e9582053ea0be7d63c8f8dc6dca587f7a1fd5fc3af67e9667e510e842",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/a13-noncalendar-structural-kpc39glo/state/updates/A13/periods/FY2023/results/1212f7ac49134e959005076a9ae65d4f",
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2023,
+          "defect_holds": [],
+          "read_result_id": "sha256:4bbee10e9582053ea0be7d63c8f8dc6dca587f7a1fd5fc3af67e9667e510e842",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/a13-noncalendar-structural-kpc39glo/state/updates/A13/periods/FY2023/results/1212f7ac49134e959005076a9ae65d4f",
+          "program_version": {
+            "commit": "b6317e6edeb8b553d270284136e5df152e9c4e2d",
+            "has_uncommitted_changes": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "read",
+      "seconds": 0.5098319170065224,
+      "exit_code": 0,
+      "metrics": [
+        {
+          "metric_id": "A13",
+          "result_id": "sha256:4bbee10e9582053ea0be7d63c8f8dc6dca587f7a1fd5fc3af67e9667e510e842",
+          "period_start": "2023-01-29",
+          "period_end": "2024-02-03",
+          "fiscal_year": 2023,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NONE",
+          "reason_code": "TRAIT_NOT_APPLICABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/a13-noncalendar-structural-kpc39glo/state/updates/A13/periods/FY2023/results/1212f7ac49134e959005076a9ae65d4f"
+        }
+      ]
+    }
+  ],
+  "financial_inspector_forbidden": true,
+  "repeat_factory_calls": 0,
+  "protected_files": 6,
+  "protected_unchanged": true,
+  "structural_by_approved_trait_not_disclosure_absence": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

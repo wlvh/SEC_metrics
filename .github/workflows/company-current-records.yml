@@ -25,6 +25,7 @@ name: Company saved-source records
       - 'tests/vnext/test_selected_lodging_calculation.py'
       - 'tests/vnext/test_selected_lodging_source.py'
       - 'tests/vnext/test_history_company_dispatch.py'
+      - 'tests/vnext/test_historical_geography_cases.py'
       - 'tests/vnext/test_selected_history_result_state.py'
       - 'tests/fixtures/lodging_selected_table.html'
       - 'config/**'
@@ -52,7 +53,7 @@ jobs:
       - name: Historical dispatch and saved result states
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state -v
+        run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state tests.vnext.test_historical_geography_cases -v
       - name: Selected event sources and explicit history validation
         env:
           PYTHONDONTWRITEBYTECODE: '1'

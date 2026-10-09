@@ -101,6 +101,31 @@ python3 tools/vnext_company.py results \
 
 实际事件来源窗口、申报、原header条目和出处都经同一保存/读取出口。C01/E03按现行Item5.02披露计数，不把相同集合解释为已经区分任命与离任事件。Paramount FY2025仍有2025全年年报容器及目录批准的2024-01-01至2025-12-31事件测量宽窗；只对这几个事件指标成立，财务及E01不能借用。验证和具体运行版本见[事件主要记录](evidence/issue47_events_receiving_20261009/README.md)。E01内容确认、在线历史发现和缺件补齐不在此已实现范围，完整交付责任继续。
 
+## A13 国际净收入：候选分支的有限接收
+
+审查此能力需明确检出该候选，前面的 main 酒店命令不会取得 A13 适配。使用已有仓库的新目录，例如：
+
+```bash
+git fetch origin task/issue47-geography-history-20261009
+git worktree add -b review/issue47-a13 ../SEC_metrics-a13-review \
+  origin/task/issue47-geography-history-20261009
+cd ../SEC_metrics-a13-review
+```
+
+分支已包含其需要的公共 PR104 接缝；无需另外复制未提交文件。来源恢复需在保留历史分支执行上节命令，随后把返回的实际 `source-inputs` 根传入此候选。若分支名或目录已占用，选择新名字，不能覆盖现有任务。
+
+`task/issue47-geography-history-20261009` 在实际 main `6e51f416` 上消费公共 PR104 的显式旧标记版本解析及 A13 公司更新接缝。该分支尚未入 main；当前已实际验证 JPMorgan FY2021–FY2025 的选源、共用检查和计算、同公司首跑／复用、独立 CSV 与出处读取。A13 为源表披露的全年国际净收入金额，使用原表国际合计、收入定义、USD 单位和实际全年窗口。
+
+```bash
+python3 tools/vnext_company.py run --company jpmorgan_chase \
+  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2025 --metric A13 \
+  --source-root /saved/sec/source-inputs --work-dir /new/a13/state --output-dir /new/a13/runs
+python3 tools/vnext_company.py results --company jpmorgan_chase \
+  --state-root /new/a13/state --output-root /new/a13/read-01
+```
+
+来源使用上面的已提交 SEC 导出恢复根；所有状态和输出写新外部目录。实测五年结果依次为 28,971,000,000、31,968,000,000、34,873,000,000、38,233,000,000、42,758,000,000 USD，各年实际1月1日至12月31日、CIK 19617。修订、接续主体及未决范围分别保留具名限制；其他金融指标、当期 A13 默认入口、其他公司与完整五年业务还待接续。主要记录见 [A13 历史消费者验证](evidence/issue47_geography_receiving_20261009/README.md)。公共接缝允许的是明确传入的历史 A13 工厂，没有默认打开 39 项计算或自动取得来源。
+
 ## 状态、复跑和局部失败
 
 同一指标按财年各自保存。成功同输入复跑为 `NO_SOURCE_CONTENT_CHANGE`；已经完整检查但因业务原因扣留的同输入复跑为 `PREVIOUS_INPUT_WITHHELD`。两者均不再调用计算工厂，不新增相同结果目录。改变实际相关来源、补齐依赖或处理配置后重新处理；普通异常和未完成记录不被缓存为已完成业务结论。
