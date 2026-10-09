@@ -16,7 +16,7 @@ from .company_handoff import _atomic_json
 from .csv_output import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
 from .normal_source_authority import ROOT
 from .ordinary_current_update import run_once
-from .ordinary_saved_result import SAVED_METRIC_IDS, read_saved_result
+from .ordinary_saved_result import SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS, read_saved_result
 
 EXTRA_FIELDS = ('company_id', 'result_id', 'record_root', 'source_root',
                 'local_metric_status', 'period_role', 'result_validity',
@@ -27,7 +27,6 @@ CURRENT_METRICS = SAVED_METRIC_IDS - {'E01'}
 # A13 has an existing native Spec/writer but no default current producer.
 # A selected-year consumer must explicitly supply its per-metric factory;
 # other unimplemented families remain closed. Verified saved A13 is readable.
-EXPLICIT_CASE_METRICS = frozenset({'A13'})
 
 
 def _need(condition, reason):

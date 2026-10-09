@@ -79,3 +79,5 @@ company business completion. Original writer/reader/Calculator unchanged.
 The historical owner receives the actual case and verifies real save/CSV/read.
 No old result rewrite or complete390 claim. This is necessary company integration
 for the same A13 increment, not a new family default or second controller.
+
+Real peer company receiving entered company gate but found CURRENT_UPDATE_METRIC_UNSUPPORTED in run_once before factory. update-gate-before.log independently reproduces it; updater now shares the same finite EXPLICIT_CASE_METRICS and accepts A13 only with explicit fiscal year/callable factory. Default/families stay closed. Public writer/reader shared enum owns no new selector or algorithm. Follow-up actual peer company result is still required.
