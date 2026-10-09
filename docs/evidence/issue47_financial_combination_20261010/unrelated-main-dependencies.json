@@ -1,0 +1,21 @@
+{
+  "actual_main": "cf8e997be3bd0bad77349496ae7e3bf596892d43",
+  "company_id": "jpmorgan_chase",
+  "metric_id": "A03",
+  "fiscal_year": 2021,
+  "configuration_equal": false,
+  "differences": {
+    "processing_files": [
+      "scripts/vnext/ordinary_source_session.py",
+      "scripts/vnext/ordinary_current_update.py",
+      "config/ordinary_public_projection_v1.json"
+    ]
+  },
+  "old_processing_source_record": "unchanged",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "old_state_not_modified": true
+}

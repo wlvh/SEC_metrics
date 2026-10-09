@@ -13,3 +13,11 @@
 五个接收的既有生产/短测试文件逐字同原候选，component-receiving.json仅这个有限组合来源摘要，不建立逐文件迁移总台账。普通共享核心和源/状态仍沿原110，不用旧快照重签或SourceBook复制。
 
 只读sample PID43668一秒采样确认715次code_hash采样，监视中的每调用code-object set成员检查重复递归哈希是主要开销；这是验证驱动问题，不改业务抽取器、不把该wall time当产品性能。profile-sample仅本地诊断，不增审批证明材料。原业务写入不杀掉、不重启；后继驱动改为对象身份比较。
+
+实际同state六指标混批已终态：只新FY21 A03/A12/A13三个缺位，原15 scope工厂禁止且135旧files保持；六族禁factory复跑0调用，随后独立read保全部18正确坐标；此前缺26日志按原版本保留，本次最新请求FY21不把它们算成本次缺年行、159结果/pointer文件保持。mixed-summary.json/log。首2533.924s、复291.997s包含错误code_hash profile开销，冷读4.087s；它们仅诚实报告此harness，不当性能benchmark。三新增值/精确季度或全年窗同原候选参考，原15值/ID均同，不复制三任务目录或手拼结果。
+
+## 实际main更新后的接收边界
+
+origin/main已接95/97为cf8e997b，组合普通合入为02209ec9；仍未把三个金融候选合入GitHub main。58定向例.207s过。只读比对A03FY21刚保存配置：仅processing_files里未使用ordinary_source_session移除、ordinary_current_update自身hash及公共呈现配置（仅B12说明）变动；源、Spec、caseproducer及declared实际依赖同。现公共字典比较会触发无关LCR再计算，unrelated-main-dependencies.json已给#28。旧记录/配置不手改，不重算30位，也不借7b92禁factory成功宣布cf8复跑通过。新组合仍可独立读取旧正确值，保存完整性与当前处理复用缺口分开。公共一方修controller/依赖接缝，本方消费同一修复。
+
+实际main cf8组合独立读三旧任务（identity guard无code哈希）：.661/.682/.831s，30原五年正确值/日期/ID全保，另读新增3混批值；285结果/pointer文件字节保持、计算/网络0。actual-main-old-state-read.json/log给实际行分类；A13/平均族仍展示其最近缺26行，scope最近请求FY21只显示18成功保存值，旧缺年报告留原版本，不虚称本次仍请求26。
