@@ -61,3 +61,7 @@ B01同族接缝：本PR仅接公共PR85/541b的已选收入原件模块与原样
 15个旧B01观察值进一步直接过新原件检查（不重新计算），14个支持、Salesforce FY2026暴露DEI字面2025与已解析发行人FY2026不相等，原拒绝保留在[原检查](main-receiving-saved-b01-originals-before.json)。既有发行人定义规则已证明FY2026，实际日期2025-02-01→2026-01-31不变；修复只把原件读者指向prepared中保留的`original_input`，输出/观察值仍使用解析后的发行人标签，并显式拒绝原始/实际日期变化。没有改公共API、用答案覆盖原件或放宽单位/主体/期间检查。实际受影响FY2026重新过入口，B01=41525000000 USD、Result ID和值/单位/期间与原包相同，4.020s；原标签冲突及定义依据保存[修复核对](main-receiving-salesforce-label-fixed.json)。
 
 FY2026真正进入同一公司CLI并保存/导出：首跑内部4.368s，观察原工厂但禁止调用的复跑0.399s，独立读取外部0.348s，CSV为FY2026/2025-02-01→2026-01-31/41525000000 USD，9结果与pointer文件读取前后保持；见[CLI核对](main-receiving-salesforce-label-cli.json)。初次开发验证误用MagicMock替换工厂，改变了程序身份而报TypeError，修正为保留函数身份的只读调用观察；另一次记录器误取不存在的read status键失败，均保留日志。完成记录直接消费已经写出的结果并只重做读取，不抹掉失败或补造计时；first/repeat为CLI内部耗时，final read为外部wall。
+
+## 2026-10-10 总收入范围订正
+
+新公共范围接入亲核原件发现：Macy FY2023 原损益表明确 NetSales23092m＋OtherRevenue774m＝TotalRevenue23866m。本记录原 same-concept金额/期间MATCH与CLI机械链不能据此证明完整B01。确切旧B01 `5f17ec97…` 及其增长B02 `db609edd…` 当前正确值信用停止；原Result/Run/CSV及早期验证不改写。FY2022 `a4237cca…`/`bf5f4bdc…` 暂为范围待核线索而非已确诊错误，后期FY2023比较列不回填原FY2022。其他指标/公司/年份不因本条被推断为错误。具体原件表格、字节SHA、关系及精确四ID见[同一来源核对记录](https://github.com/wlvh/SEC_metrics/blob/26f34c39/docs/evidence/issue47_macys_revenue_scope_20261010/README.md)。后继共用核心与准确默认缺陷扣留由公共#28接收，不手工注入数值、重算60位置或恢复调用。
