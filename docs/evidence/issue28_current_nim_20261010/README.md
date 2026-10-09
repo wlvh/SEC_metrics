@@ -80,7 +80,9 @@ actual commit, roots and reports. No long ten-company or provider execution.
 
 Current head37bef company job37985882099/114007629778 cancelled after
 five-minute job budget: base saved-source step181s, historical3s, added NIM96s
-all pass, then old SEC-compat step is cancelled. This is not a NIM assertion
+all pass; the old SEC-compat command also reports22 passing methods, then
+the step/job is cancelled during completion. The job terminal is still
+CANCELLED. This is not a NIM assertion
 failure or unknown source result. The same NIM module is now a separate
 five-minute job in the existing workflow; all original company modules remain
 in their original job. No timeout increase, skip, weakened assertion or rerun
