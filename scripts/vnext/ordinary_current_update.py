@@ -43,6 +43,7 @@ def _configuration(source, company, metric):
             'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
             'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
     paths.update({'scripts/vnext/ordinary_current_update.py','scripts/vnext/ordinary_saved_result.py',
+                  'scripts/vnext/ordinary_update_compatibility.py',
                   'scripts/vnext/csv_output.py','config/issue28_normal_results_v2.json'})
     # The old Requirement inherited these dependencies implicitly. Ordinary
     # records must name their actual shared parser/calculator dependencies.
@@ -223,7 +224,10 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                 current = _current_sources(source,saved['manifest']['source_proofs'])
                 old = [{k:p[k] for k in ('source_url','accession','document_name','content_sha256')}
                        for p in saved['manifest']['source_proofs']]
-                if configuration==comparison['configuration'] and census==comparison.get('source_census') and current==old:
+                from .ordinary_update_compatibility import compatible_configuration
+                compatible = (configuration!=comparison['configuration']
+                    and compatible_configuration(comparison['configuration'],configuration))
+                if (configuration==comparison['configuration'] or compatible) and census==comparison.get('source_census') and current==old:
                     status=('PREVIOUS_INPUT_WITHHELD' if saved['result']['publication']=='WITHHELD'
                             else 'NO_SOURCE_CONTENT_CHANGE')
                     report = {'status':status,'attempt_id':identity,
@@ -234,7 +238,16 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
                     if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
-                    _write(attempt/'terminal.json',report); _write(root/'latest-check.json',report)
+                    if compatible:
+                        # A new completed check carries the current metadata;
+                        # original terminals/results and success pointer stay.
+                        report['configuration_compatibility']='FINITE_FINANCE_UNUSED_SESSION_AND_B12_NOTE'
+                        report['completed_check']={**comparison,'configuration':configuration,
+                            'status':'CANDIDATE_WITHHELD' if saved['result']['publication']=='WITHHELD' else 'CANDIDATE_READY'}
+                    _write(attempt/'terminal.json',report)
+                    if compatible:_write(root/'completed-check.json',report['completed_check'])
+                    _write(root/'latest-check.json',report)
+                    if compatible:report.pop('completed_check')
                     return report
             # Full selection/period/subject checks only run for changed/new
             # input. A newly selected filing necessarily changes submissions.

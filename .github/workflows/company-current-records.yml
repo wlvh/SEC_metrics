@@ -6,6 +6,7 @@ name: Company saved-source records
       - 'tools/vnext_company.py'
       - 'tests/vnext/test_company_current_records.py'
       - 'tests/vnext/test_ordinary_current_update.py'
+      - 'tests/vnext/test_ordinary_configuration_compatibility.py'
       - 'tests/vnext/test_company_parse_reuse.py'
       - 'tests/vnext/test_precalculated_case.py'
       - 'tests/vnext/test_saved_source_checks.py'
@@ -58,6 +59,10 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases -v
+      - name: Finite ordinary configuration compatibility
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_ordinary_configuration_compatibility
       - name: Selected event sources and explicit history validation
         env:
           PYTHONDONTWRITEBYTECODE: '1'
