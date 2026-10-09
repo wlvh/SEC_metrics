@@ -1,0 +1,42 @@
+{
+  "metric_id": "A13",
+  "company_id": "jpmorgan_chase",
+  "requested_fiscal_year": 2021,
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2021-12-31",
+    "filingDate": "2022-02-22",
+    "accessionNumber": "0000019617-22-000272",
+    "primaryDocument": "jpm-20211231.htm"
+  },
+  "actual_period": {
+    "fiscal_year": 2021,
+    "period_start": "2021-01-01",
+    "period_end": "2021-12-31"
+  },
+  "inventory_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-034.json",
+  "primary_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:7a658afc2bc677dad3fa43df9855352a93dd04afa38766574ae0c3d094105cf0",
+    "raw_asset_id": "sha256:7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478",
+    "company_id": "jpmorgan_chase",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961722000272/jpm-20211231.htm",
+    "accession": "0000019617-22-000272",
+    "document_name": "jpm-20211231.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:11c6ef68b6f931651350515faf7899bf4762ef3a0bd2b635064a8d2dd93c1540"
+  },
+  "source_proof_count": 43,
+  "outcome": {
+    "error_type": "NormalAnnualInputError",
+    "reason": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+    "passed": false
+  },
+  "seconds": 57.291181499836966,
+  "metric_result_created": false,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

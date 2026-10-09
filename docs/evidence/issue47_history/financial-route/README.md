@@ -57,3 +57,11 @@ A03/A04/A09/A11/A12/A13 按 `financial` 特征门控。此前历史路线只答�
 **7 个扣留由同一次失败请求挡住**：C01、C04、E01–E05 的原因全是 `LATEST_SOURCE_REQUEST_FAILED: …/0000019617-25-000332.hdr.sgml`——账本里这份 8-K 头文件最近一次 GET 没有响应（status 0，2026-07-09T08:55:56Z），此前三次都是 200。`saved_source` 按设计拒绝"最近一次失败"的网址，所以旧的成功不能顶替；与 Salesforce 那六个事件加 C04 同形。**这是第一个阻断，不等于唯一阻断**，所以逐份量了事件遍历自己要读的材料（`measure_bank_event_material.py` → `bank-event-material.json`）：窗口里 20 份 8-K、跨 7 个块，正文 20 份全存，头文件 19 份可用，**不可用的恰好就是这一份**。C04 另读的本期与上一期审计师材料也经路线自己的读取器查过：两份 accession 的 `index.json` 与 XBRL 实例（`jpm-20251231_htm.xml`、`jpm-20241231_htm.xml`）都已存。遍历之后的步骤要这一份头文件可用才走得到，没有量。B06 是普通路线对银行自己的具名限制（`BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED`），不是缺来源。
 
 **首跑 B13 失败，是安装器的缺陷**：`[Errno 2] No such file … 02_指标定义_SEC_10公司单年指标.md`。B13 的范围从已批定义读，定义在仓库根，路线从数据根读它，而安装器只复制 `config/` 与 `catalog/`。安装器改为装入所有非代码的执行授权输入（`scripts/vnext/historical_sec_session.py`，两个方向各有用例、两个注错都被抓）后，向同一个根补装，B13 重跑得出公共行（结构性不适用）。
+
+## 2026-10-09：普通历史消费者接续的具体接口缺口
+
+复用已保存JPM FY2021原件（accession0000019617-22-000272、primarySHA7c58f18f…36d478），现有普通历史选择/annual及43proofs可读；真正列该申报的submissions-034原件由已有filing_inventory选取，source_set验证已到达后续DEI检查，不再以早期旧README说目录不可读。只调用共享financial_results._fact(A13)，57.291s、无金额/Result/Run，当前默认在financial_structured.inspect_inline_financial_claims→normal_annual_input.annual_period因仅支持四位年DEI URI报DEI_MISSING_OR_AMBIGUOUS:DocumentType。不是原件缺少DocumentType或取源失败，也不证明后续A13范围成立。
+
+最短bundle参数、真实来源引用/SourceSet及原DEI字段在a13-jpm2021-minimal-bundle-20261009.json，4651B；六字段确为http://xbrl.sec.gov/dei/2021q4，同一个2021-01-01至2021-12-31 context，DocumentType为10-K、CIK19617、FY2021、AmendmentFlag FALSE；按原件给name属性字节位置，不伪造新声明。探针是在原PR96 eb03aa84开始的只读开发调用，后来reporter补丁不改financial/选期源码；没有新金融候选/公司分派或模型试验。原预计算/Run/答案和本目录早期失败保留。
+
+最小公共接缝已交#28：保持当期默认，给现有金融原件检查器受控的历史taxonomy政策参数，消费已有历史DEI校验；优先明确YEAR_OR_DATE_RELEASE等受控枚举，不提供任意regex/调用者validator、不复制年报解析或金额内核。历史侧随后传实际选择来源/期间并验证公司消费者；本轮未改shared normal_annual_input/financial_structured，不以一个namespace探针宣布六指标或A13已交付。所有新增SEC/provider/paid为0。
