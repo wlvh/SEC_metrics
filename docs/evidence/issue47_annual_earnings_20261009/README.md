@@ -21,3 +21,5 @@ python /path/to/SEC_metrics/tools/vnext_company.py run --company macys \
 python /path/to/SEC_metrics/tools/vnext_company.py results --company macys \
   --state-root /writable/macys-state --output-root /writable/macys-read
 ```
+
+后续固定efee代码接收Salesforce FY2022–2026和Marriott/Pfizer/Enphase FY2021–2025各五B07位置，首26.546/21.412/36.593/25.527s；19数值与原读取值/单位/实际窗口一致，Salesforce24一个批准来源gap明确扣留，资料未证明缺披露。Pfizer五项维持既定APPROX重建分支，不提升EXACT；Salesforce非自然年保原1月末及发行人FY。稳定复跑1.210/1.087/1.156/1.088s准备/计算0，各35保存文件未变；另进程读均约0.141s，update0。无生产代码改动、原三公司不重做。[补充接收记录](broader-company-receiving.json)及[实际结果/日志材料](broader-company-materials.tar.gz)补入同一主目录，原208成员包保留；20行不等于20全部数值接受，原完整Goal继续。
