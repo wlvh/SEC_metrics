@@ -187,3 +187,14 @@ class HistoricalBankScopeWordingTest(TestCase):
         self.assertIsNotNone(evaluate(newer))
         self.assertIsNone(evaluate(old.replace('Corporate segment','Treasury segment')))
         self.assertIsNone(evaluate(old,newer))
+
+
+class HistoricalBankScopeClassificationTest(TestCase):
+    prepare = HistoricalBankScopeCaseTest.prepare
+    def test_source_conflict_remains_distinct_from_implementation_gap(self):
+        for fact,category in (({'outcome':'UNRESOLVED','value':None},'IMPLEMENTATION_GAP'),
+                             ({'outcome':'STRUCTURED_SOURCE_CONFLICT','value':None},'SOURCE_CONFLICT')):
+            with self.subTest(category=category):
+                case,_,_=self.prepare(metric_id='A09',inspector=fact)
+                self.assertIsNone(case['results']['A09']['value'])
+                self.assertEqual(category,case['input_assessments']['financial_source']['classification'])

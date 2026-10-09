@@ -3,7 +3,7 @@ from pathlib import Path
 from sec_urls import submissions_url
 from .calculator import calculate_metric, calculate_observation_metric, metric_is_applicable, withheld_metric_result
 from .canonical import content_hash
-from .financial_results import _installed_rule, _actual_period, RESOLVER, _ROLES
+from .financial_results import _installed_rule, _actual_period, _failure_classification, RESOLVER, _ROLES
 from .historical_bank_scope_wording import inspect_historical_bank_scope
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_filing_inventory import filing_inventory
@@ -114,10 +114,14 @@ def prepare_historical_bank_scope_year_case(*, repo_root, company_id, metric_id,
         'period_selection': selection, 'source_set_manifest': manifest, 'source_fact': component,
         'source_proofs': proofs, 'metric_id': metric_id, 'dei_release': DEI_RELEASE,
         'measurement_time_basis': basis, 'spec_closure_hash': spec['spec_closure_hash']}
+    assessment = {'status': 'N_A_STRUCTURAL' if not applicable else 'SOURCE_SEMANTIC_FACT' if passed else 'UNRESOLVED',
+        'classification': 'STRUCTURAL' if not applicable else 'VERIFIED_SOURCE_FACT' if passed
+                          else _failure_classification(component), 'source_fact': component}
     return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id, 'input_binding': binding,
         'compiled_specs': {metric_id: spec}, 'spec_paths': {metric_id: path}, 'target_period': actual,
         'prepared_annual_input': prepared, 'expected_records': [*records, *observations, trace, result],
         'results': {metric_id: result}, 'traces': {metric_id: trace},
         'references': [record for record in records if record['record_type'] == 'SOURCE_REFERENCE'],
         'source_proofs': proofs, 'admission': admission, 'selection': {'source_fact': component},
+        'input_assessments': {'financial_source': assessment},
         'rules_root': str(ROOT)}
