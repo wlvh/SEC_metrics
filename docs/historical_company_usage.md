@@ -105,7 +105,7 @@ python3 tools/vnext_company.py results \
 
 实际main为`cf8e997b`，已接公共PR95/97及PR106；保存来源的历史分派仍为A01/A02/A05/A06/A07/A08/A10、B01/B02/B04/B05/B07/B08/B09/B10/B11、C01/E02/E03/E04/E05。下列候选仍未合入main：PR96的历史B12和旧报送主体修补、PR105的A13、PR108的A03/A12、PR110的A04/A09/A11。PR106共享模型请求核心入main也不等于这些历史指标或完整公司模型链已交付。
 
-三个金融候选的原件核对、五年CSV及各自复跑均已完成。接收者可取得`origin/task/issue47-financial-combination-20261010`，它在实际main上合并三个有限消费者与公共PR109必要依赖，保留原已交付族；这是可取得的组合分支，尚不是GitHub main。各自公共依赖为PR104、PR107和PR109，不能用相同CLI名称替代实际依赖接收。原件仍沿本指南保存来源恢复方式取得，不取新源。
+三个金融候选的原件核对、五年CSV及各自复跑均已完成。接收者可取得`origin/task/issue47-financial-combination-20261010`，它在实际main上合并三个有限消费者与公共PR109必要依赖，保留原已交付族；这是可取得的组合分支，尚不是GitHub main。各自公共依赖为PR104、PR107和PR109，不能用相同CLI名称替代实际依赖接收。 原主要记录仍在各候选固定版本：[A13](https://github.com/wlvh/SEC_metrics/blob/62bf7b491063b6f721507f23165b41f6051be6dc/docs/evidence/issue47_geography_receiving_20261009/README.md)、[A03/A12](https://github.com/wlvh/SEC_metrics/blob/aefcca1001bcb12331fbe567aa4ef12d23d37d62/docs/evidence/issue47_average_risk_receiving_20261010/README.md)、[A04/A09/A11](https://github.com/wlvh/SEC_metrics/blob/5b3e6ee72408634f51935b0c90d5800b3a6b7f81/docs/evidence/issue47_bank_scope_receiving_20261010/README.md)，组合树只接必要生产/测试文件，不复制三份材料目录。原件仍沿本指南保存来源恢复方式取得，不取新源。
 
 A03的五年值1.11/1.12/1.13/1.13/1.11 ratio对应各年Q4平均，实际窗口10月1日至12月31日；A12的55/58/43/47/40百万USD是全年平均VaR，其一日风险持有期不当成测量窗口。A13的28.971/31.968/34.873/38.233/42.758十亿美元是全年国际净收入。A04保全年NIM，A09/A11保各年末时点。使用同一`run`重复`--metric`混选，`results`从同一state独立读取，无需先运行其他公司或手工拼接年份。
 
