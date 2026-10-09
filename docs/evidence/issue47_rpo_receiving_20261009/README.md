@@ -24,3 +24,9 @@ python3 tools/vnext_company.py run --company salesforce --period fiscal-years \
 python3 tools/vnext_company.py results --company salesforce \
   --state-root /writable/rpo/state --output-root /writable/rpo/read-01
 ```
+
+## 公共展示增量接收
+
+实际已接公共PR97/e53609e7，只有ordinary_public_projection_v1的B12公开说明。旧任务results只读保持原保存CSV文字，未原地改旧版本，不能把这次读口当新说明已覆盖旧数据；见display-old-read.json。随后以原五份已算records/Result/Trace及输入ID，通过现有save_calculated_case纯保存/渲染/读29.413秒，禁止原生金额检查器与Calculator，5结果和Trace/输入ID都相同，旧文件保持，新另存CSV明确RPO!=ARR/cRPO!=ARR/not a churn rate。只补实际期间/身份元数据，不重算原金额。见rendered-saved-summary.json。初保存输入未带原claims导致SELECTED_CLAIM_MISSING，原拒绝保持；补的是保存records里的原claim引用，不是新答案或手工操作数，随后在新目录保存。
+
+公共PR95/0ff6fc9e也作为实际必要普通更新依赖接收：不让未用录制source_session变动触发旧结果复算，当前ordinary_current_update仍由#28实现，本方未重写；其Paramount唯一C01消费者验证在原事件主记录接续，不扩本RPO业务族。两个共享增量未入main前，本候选明确依赖其源码，旧记录/现行新展示版本分开，当前新用户RPO入口仍需受影响最终公司读取验证。
