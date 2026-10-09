@@ -9,3 +9,5 @@
 真实JPM五年原参考已保存于PR52 bank-measures-read-full-frame.json和旧wording measured.json；下一实际验证只复用原来源、已读参考，不重读整年/调模型。当前source需要公共三族同一dei_release传递和有限EXPLICIT_CASE_METRICS接缝，等待固定提交，不把本小控制/函数存在当公司成功。A09原源集合/实际submissions shard及primary核对不省略。
 
 新增SEC/provider/paid0，无Native Run/旧信用/发布/active；其他金融族、修订/主体金额、在线来源发现/缺件补齐及完整1950仍未完成。本记录为唯一主要记录，实际公司终态后补。
+
+后继复用原小反例直接调用共享业务函数：AUM单冒号形式可读、两个冒号/其他标点不读，selected客户范围仍判子集；旧分部句式可绑定原章节，新句式保持，Treasury余项或矛盾分部列表均不绑定。13本模块例+现有分派/状态34项0.167s零skip，原业务要求未放松。

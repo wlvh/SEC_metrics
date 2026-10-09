@@ -8,6 +8,8 @@ test_wrong_family_refuses_before_selecting_any_sources (tests.vnext.test_histori
 test_a09_local_import_rebinding_retains_native_ambiguity_gate (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_a09_local_import_rebinding_retains_native_ambiguity_gate) ... ok
 test_compilation_keeps_shared_functions_and_known_forms_are_finite (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_compilation_keeps_shared_functions_and_known_forms_are_finite) ... ok
 test_missing_native_source_propagates_and_never_reaches_html (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_missing_native_source_propagates_and_never_reaches_html) ... ok
+test_old_glossary_accepts_one_colon_and_preserves_subset_text (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_old_glossary_accepts_one_colon_and_preserves_subset_text) ... ok
+test_old_segment_list_cannot_hide_conflicting_or_noncorporate_remainder (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_old_segment_list_cannot_hide_conflicting_or_noncorporate_remainder) ... ok
 test_original_native_success_is_kept_without_old_form (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_original_native_success_is_kept_without_old_form) ... ok
 test_bank_performance_family_uses_original_factories_for_other_families (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_bank_performance_family_uses_original_factories_for_other_families) ... ok
 test_bank_scope_family_preserves_existing_metric_factories (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_bank_scope_family_preserves_existing_metric_factories) ... ok
@@ -34,6 +36,6 @@ test_missing_year_and_one_metric_failure_preserve_other_periods (tests.vnext.tes
 test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates) ... ok
 
 ----------------------------------------------------------------------
-Ran 32 tests in 0.161s
+Ran 34 tests in 0.167s
 
 OK

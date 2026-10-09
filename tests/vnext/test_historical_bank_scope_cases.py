@@ -157,3 +157,33 @@ class HistoricalBankScopeWordingTest(TestCase):
         self.assertEqual(originals,(wording.relationships.inspect_nim_relationships,
             wording.relationships._reported_segment_sections,wording.balances._aum_definitions,
             wording.relationships.inspect_nonaccrual_loan_ratio))
+
+    def test_old_glossary_accepts_one_colon_and_preserves_subset_text(self):
+        from vnext import historical_bank_scope_wording as wording
+        reader=wording._known_form(wording.balances._aum_definitions,wording.GLOSSARY_COLON)
+        text='AUM: “Assets under management”: Represent assets managed by AWM on behalf of its institutional and retail clients. Includes “Committed capital not Called.”'
+        def definitions(value):return reader({'blocks':[{'inside_table':False,'visible_text':value}]})
+        self.assertEqual(1,len(definitions(text)))
+        self.assertEqual(definitions(text.replace('AUM:','AUM'))[0][:2],definitions(text)[0][:2])
+        for form in ('AUM::','AUM;','AUM —'):
+            self.assertEqual([],definitions(text.replace('AUM:',form)))
+        subset=definitions(text.replace('institutional and retail','selected institutional'))
+        scope=wording.balances._client_population(subset[0][1])
+        self.assertFalse(scope['complete_unqualified_enumeration'])
+        self.assertEqual(['selected'],scope['subset_qualifiers'])
+
+    def test_old_segment_list_cannot_hide_conflicting_or_noncorporate_remainder(self):
+        from vnext import historical_bank_scope_wording as wording
+        from vnext.table_grid import _AllTablesParser
+        from vnext.composite_scope import index_source_structure
+        old='There are four major reportable business segments – Consumer & Community Banking, Corporate & Investment Bank, Commercial Banking and Asset & Wealth Management. In addition, there is a Corporate segment.'
+        newer='The Firm has three reportable business segments – Consumer & Community Banking, Commercial & Investment Bank, and Asset & Wealth Management – with the remaining activities in Corporate.'
+        inspector=wording._known_form(wording.relationships._reported_segment_sections,wording.SEGMENT_LIST)
+        def evaluate(*definitions):
+            raw=('<html><body>'+''.join('<div>'+s+'</div>' for s in definitions)+'<table><tr><td>ASSET &amp; WEALTH MANAGEMENT</td></tr></table></body></html>').encode()
+            parser=_AllTablesParser();parser.feed(raw.decode());parser.close()
+            return inspector(parser.tables,index_source_structure(source_bytes=raw))[0]['segment_definition']
+        self.assertIsNotNone(evaluate(old))
+        self.assertIsNotNone(evaluate(newer))
+        self.assertIsNone(evaluate(old.replace('Corporate segment','Treasury segment')))
+        self.assertIsNone(evaluate(old,newer))
