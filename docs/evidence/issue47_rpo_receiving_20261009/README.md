@@ -72,3 +72,9 @@ python3 tools/vnext_company.py results --company salesforce \
 远端f3dd9b31实际终态：company-current run37939874754/job113851224576 SUCCESS，172项143.849s含新真实current null来源/guard逐项ok，历史两模块21项.962s、事件13项.171s/9项.044s也执行。vNext37939874755整体FAILURE：fast/material/foundation三作业导入run_fast_tests_v2.py:200报NameError SOURCE_MATERIAL_TESTS未定义，原清单名为SOURCE_TESTS；其余四作业成功。失败完整日志及公司摘录在ci-f3dd9b31-*，公共#28修最小登记名，本方不改runner、旧快照或业务断言，不把公司SUCCESS称整CI全绿。登记修复后只核导入/实际选择器归属及新远端终态，不重算财报或重跑59已通过业务。
 
 已原样接公共abb7abdd到0e6aff15：唯一清单名SOURCE_MATERIAL_TESTS→SOURCE_TESTS，不变业务/runner函数。实际导入通过，9guard在FAST_TESTS一次、3真实current来源类在SOURCE_TESTS一次且不在快测，加载12无error，函数/类AST与f3相同；runner-fix-receiving.json保接收结果。上述f3远端失败不删除，后继新head另核CI；本次不重跑已通过59组合或财报。
+
+## 修后限定独审与既有登记重复项接收
+
+公共c3ee8c84已原样接入561482f9：74/abb的null修复经限定独审12例+27有限反例通过，原79ff P1保留；范围、未覆盖及一次越限定GitHub只读请求如实在公共nullable-review/conclusion.md，不冒充全公司/全历史审阅。独审另发现两个旧selector重复导致真实runner开跑前FAST_TEST_SUCCESSOR_SELECTOR_CONFLICT，公共只删第二条相同声明。
+
+本方既有runner实际定向执行两事件模块+reporter纯类22例/总1.464s全部rc0，173个fast及99个source共272登记全唯一，四函数/类AST同5ee，源/计算代码不变；dedup-receiving.json为消费者执行。初核对脚本把已含继承项的successor FAST列表再次接inherited而错误断言，修为实际runner使用FAST+SOURCE，不改生产或为重复字段开新测试平台。59组合/所有实际CLI和财报不重跑，5ee十项CI终态保持为旧版本，新head另核。有限组件可审查、接收决定及用户合并权限仍各自独立。
