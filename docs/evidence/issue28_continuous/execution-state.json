@@ -5667,6 +5667,32 @@
         "ordinary_messages": 2
       },
       "ordinary_messages": 2
+    },
+    {
+      "task_name": "review_currentnim_323eabf",
+      "purpose": "review",
+      "module": "currentnim",
+      "base_sha": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+      "patch_sha": "323eabf155376ae14bc130635fd86f77fb75d9d1",
+      "scope_paths": [
+        "scripts/vnext/financial_results.py:ordinary_records",
+        "scripts/vnext/ordinary_saved_result.py:A04current",
+        "scripts/vnext/ordinary_current_update.py:NIMdeps",
+        "tests/vnext/test_current_nim_company.py"
+      ],
+      "spawned_at": "2026-10-09T20:03:37.610159+00:00",
+      "ended_at": "2026-10-09T20:07:59.465790Z",
+      "tool_calls": 14,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics/docs/evidence/issue28_current_nim_20261010/independent-review/conclusion.md",
+      "verdict": "NEEDS_FIX_P2_SOURCE_COMPANY_REGISTRATION",
+      "limits": {
+        "tools": 20,
+        "minutes": 10,
+        "ordinary_messages": 2
+      },
+      "dedup": "allnonroot DONE; no matching323SHA/currentnim register/result/evidence; new actualadapter only, no D04 or endeddevelopmenttask reopened",
+      "ordinary_messages": 2,
+      "tests": "50/32.447s; actual original source CIK/installed traits mismatch negative, no parentCLI rerun"
     }
   ],
   "ci_capacity_20260922": {
@@ -17613,10 +17639,10 @@
     "remaining": "Only technical reception/consumer nextyears and original business goals; public fourparameter increment not independentlyreviewed asnewscope; prior107 finitePASS inherited byteunchangedparts only"
   },
   "current_financial_entry_20261010": {
-    "status": "Prototype safely parked by user newD04companypriority; no candidatePR and no runningwrites",
+    "status": "Current A04 company entry implemented and tested; Draft117 receiving review pending",
     "probe_code_sha": "dbd2a4cbc19da93c9cb404f0a111fd0e079f0553",
     "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-bank-scope-dei/SEC_metrics",
-    "source_root": "same tracked saved-source root for this read-only probe; not a source-only external package claim",
+    "source_root": "/private/tmp/issue28-current-nim-complete-ee8p63he/source",
     "probe": "resolve_ordinary_financial_metric JPM25/A04 in no_answers_or_network context,7.6796s; returned keys include result/trace/records/selection, value notprinted; no new savedResult/CLI proof",
     "actual_dependency": "ordinary_saved_result._ordinary_case currently zero-AI22 only; company_current_records CURRENT excludes six financial default routes; original financial_results resolver and raw source/Spec/Calculator already usable",
     "next": "One bounded current NIM producer adapter using existing resolver, ordinarywriter/controller and companyCLI; verify source-only external root/separation plus no-factoryrepeat/independentread; do not alter historyfactorymapping or addcompetitive sourcechecker",
@@ -17631,8 +17657,14 @@
       "scripts/vnext/ordinary_saved_result.py",
       "scripts/vnext/ordinary_current_update.py"
     ],
-    "tests": "60 originalcontrollers7.577s zero skip; initialharness wronglyrefusedCSVwrite; corrected realCLI rejectedmissing fiscal_year_label_resolution, resultnotcompleted/reused",
-    "remaining": "Currentresolver preparedannualv1 needs existing v2 fiscal-label proof before writer; do not claim NIMcompanyCLIcomplete; code/testlogs/state preserved, no newcalls"
+    "tests": "oldAPI amount/unit/period/ScopeKey equality, corruptbody oldpointer retention; actualMacy structuralN_A; newmode/deps controls",
+    "remaining": "currentA09/A11 and other unreceived routes remain closed; no all39 adoption; unrelatedoldheaderfailure stayssourceobservations",
+    "sha": "8f28e09e7bc09527420d0430fb420ade3bafab1b",
+    "pr": 117,
+    "actual": "JPM25 .025ratio/year2025/managed/CIK19617; source-only9files; first8.678/repeat.114/read.0048",
+    "final": "a541 repair code normalrevalidation8.794/forbiddenrepeat.221/independentread.120, old6files preserved",
+    "review": "323limitedNEEDS_FIX P2 source row/installed traits mismatch; selected-company fields guard repaired/47.304s; originalreview retained, final receiving confirmation pending",
+    "ci": "37bef company job cancelled at5min after all steps test commands passed; measuredbase181s+NIM96s; moveNIM to separate same5min job, freshheadCI pending"
   },
   "company_model_closeout_20261010": {
     "instruction": "Newuserpriority: receiving102103106104107109 + one D04complete real-saved company ordinaryCLI/store/results/evidence; no redevelop oldunblocking",
@@ -17748,6 +17780,20 @@
     "main": "f6ef7886",
     "scope": "two add/add test/workflow conflicts only; productiontests exact main; originalofflineAPItests nameddevelopment_request_limits; no endedagent reopened",
     "tests": "46/78.218s zero skip actualsamecombinedworkflowcommand",
-    "ci": "lastreadnewhead running; MERGEABLE"
+    "ci": "all11SUCCESS actual499eb; MERGEABLE"
+  },
+  "revenue_scope_followup_20261010": {
+    "pr": 118,
+    "sha": "b962b6c9a69d3d7fd85541f6b92346a7b651c093",
+    "peer_source": "0dc5de75",
+    "scope": "sameconcept explicit priorcomparison conflict rejected, originalprior/concept/Spec notchanged; defaultregistry exactFY23B01subtotal hold",
+    "current_impact": "actualFY25B01Revenues62.579bn andB02 -0.016470995from62.579/63.627 remain correct selected values; no currentFY25 hold",
+    "tests": "73/6.917s zero skip; actualFY21 facts adaptedguardholds41.908priorvs41.651comparison",
+    "remaining": "historicalFY23 complete revenue selection stillunfinished; peer actualFY21 company receiving next; CIinprogress",
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
   }
 }
