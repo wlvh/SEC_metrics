@@ -40,3 +40,23 @@ README, tested-tree, driver source and saved CLI JSON/logs were inspected, witho
 Only this independent-review directory was written. No product/tests changed; no spawn, commit/push, network, real SEC/model, tar, or peer #47 worktree/ledger/state access occurred. The initially supplied repository/user boundaries were read with the exact patch/base scope. Live Issue #28 and GitHub CI were not fetched because this review expressly prohibits network.
 
 Not covered: the real three-company/material batch; financial quantities, amended financial meaning, business/39metric acceptance, final issuer FY consumer comparison, online acquisition/grants/counters, original run/acquire consumers and the unmerged PR122 routing change, all other workflow jobs, live GitHub CI, real SEC/model results, release/adoption/active and production. No claim of coverage or authorization is made for them.
+
+
+## Bounded P2 repair follow-up — 407b23d3
+
+Current bounded repair verdict: P2 CLOSED; LIMITED_REPAIR_ACCEPTED for `407b23d3ff45e29883130879ca6f47d47770fc1d` relative to the original reviewed `0215ec9d0d8dd7f0bc4f964bc6639aabd4cc29a2`. The original LIMITED_CHANGES_REQUESTED verdict and its reproduced failures above retain their original meaning and bytes; this is a later repair conclusion, not a re-signing of the original patch.
+
+Follow-up start: 2026-10-09 23:01:42 UTC. Follow-up end: 2026-10-09T23:02:45.377519+00:00. Original task start remains 2026-10-09 22:54:54 UTC.
+Additional tools: 8 = 3 functions.exec + 4 exec_command + 1 clock. Cumulative tools including nested calls: 38 = 14 functions.exec + 21 exec_command + 3 clock. Additional ordinary outgoing messages: 1 final; cumulative ordinary outgoing messages: 2 finals, 0 interim/questions. No collaboration-message calls. Resources have not been reset.
+
+The exact code difference catches `(ValueError, KeyError, TypeError)` at both the initial metadata selection and fallback discovery branches, and labels KeyError/TypeError as `SOURCE_SCHEMA_OR_READER_ERROR`. Thus the previously unhandled missing dictionary/column failures remain source/schema reader limitations, preserve the selected submissions dependency and return an unresolved graph, without claiming missing financial disclosure, source freshness, business acceptance or a fetch allowance. The added public CLI method contains both original recorded JSON counterexamples and checks parsed JSON, exit2, unresolved status, graph completeness false, specific error type/reason/category, dependency presence and unchanged input bytes.
+
+Personally executed once on the exact repair head: `PYTHONDONTWRITEBYTECODE=1 python3 tests/required_unittests.py tests.vnext.test_selected_source_requirements`. All 14 tests passed in 1.018s; zero skips/errors/failures. This includes both original KeyError counterexamples. Evidence: `metadata-repair-required-tests.log`.
+
+One additional small recorded TypeError counterpart, `{"cik":1048286,"filings":null}`, was personally run through the public in-process main with socket/URL/SEC fetch, Calculator and both full preparation entry points forbidden. It returned JSON/exit2, `SELECTED_SOURCE_DEPENDENCIES_UNRESOLVED`, graph completeness false, `SOURCE_SCHEMA_OR_READER_ERROR` and unchanged source bytes. Evidence: `metadata-repair-verification.log`. No metadata resolver/proof/parser was substituted.
+
+The two changed source/test files match their precommit `tested-tree-metadata-repair.json` SHA-256 and the repair commit's actual bytes. CLI, workflow and company-local documentation match the original reviewed patch byte-for-byte. The original broader 48-test review is reused only for the unchanged scope; the broader modules were not rerun during this follow-up.
+
+Parent `metadata-repair-tests.log` was read, not personally rerun: it reports 49 tests/3.094s with no failures or skips. Parent `metadata-repair-macys-cli.json` was read, not rerun: both reports bind the final repair source SHA `ee7e05e2...`, guarded execution and unchanged saved inputs. No real company/material batch or peer data root was reopened.
+
+Only this existing independent-review directory was written, adding two necessary logs and this appended section. No product/tests edits, second evidence directory/platform, spawn, commit/push, network/SEC/model, tar or #47 state/ledger access. The original review's untested business, all39, other entrypoints, PR122, CI/live, acquisition/grant, production and formal adoption boundaries remain unchanged. P2 closure accepts only the identified error-path repair and adds no full-PR/business/production credit.
