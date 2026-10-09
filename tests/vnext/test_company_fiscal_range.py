@@ -82,6 +82,24 @@ class CompanyFiscalRangeTest(TestCase):
                 self.assertTrue(r['tasks'][0]['limitations'])
                 self.assertFalse(r['metric_executed'])
 
+    def test_independent_sentence_does_not_cancel_actual_range_definition(self):
+        mapping='References to fiscal 2026, for example, refer to the fiscal year ending December 31, 2025.'
+        others=[
+            'A hypothetical example of an expense calculation follows.',
+            'If the lending covenant changes, our naming convention remains unaffected.',
+        ]
+        for other in others:
+            for text in (mapping+' '+other,other+' '+mapping):
+                raw=annual().replace(b'19617',str(CIK).encode()).replace(b'2021',b'2025')
+                raw=raw.replace(b'</body></html>',('<p>Our fiscal year ends on December 31. '+text+'</p></body></html>').encode())
+                self.fixture.record(self.fixture.urls[2025],raw)
+                with self.subTest(text=text):
+                    r=self.discover(2026,2026)
+                    self.assertEqual(r['status'],'FISCAL_RANGE_RESOLVED')
+                    self.assertTrue(r['all_source_bytes_available'])
+                    self.assertEqual(r['tasks'][0]['label']['fiscal_year'],2026)
+                    self.assertFalse(r['metric_executed'])
+
     def test_missing_candidate_cannot_be_silently_excluded_for_label_uniqueness(self):
         self.fixture.remove_get(self.fixture.urls[2025]);r=self.discover(2024,2024)
         self.assertEqual(r['status'],'FISCAL_RANGE_UNRESOLVED')

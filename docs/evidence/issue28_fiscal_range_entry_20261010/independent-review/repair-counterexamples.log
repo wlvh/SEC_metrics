@@ -1,0 +1,138 @@
+{
+  "probes": [
+    {
+      "name": "original_conditional",
+      "input_text": "Our fiscal year ends on December 31. If the proposed naming convention is approved, References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021.",
+      "checked_status": "EXPLICIT_DEFINITION_UNRESOLVED",
+      "same_inspection_object": false,
+      "same_inspection_id": false,
+      "outcome": "REJECTED",
+      "reason": "ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED"
+    },
+    {
+      "name": "original_hypothetical",
+      "input_text": "Our fiscal year ends on December 31. The following is a hypothetical example, not our actual naming convention: \"References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021.\"",
+      "checked_status": "EXPLICIT_DEFINITION_UNRESOLVED",
+      "same_inspection_object": false,
+      "same_inspection_id": false,
+      "outcome": "REJECTED",
+      "reason": "ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED"
+    },
+    {
+      "name": "original_ordered",
+      "input_text": "Our fiscal year ends on December 31. If the proposed naming convention is approved, Fiscal years 2022 and 2021 ended on December 31, 2021 and December 31, 2020, respectively, and included 52 weeks.",
+      "checked_status": "EXPLICIT_DEFINITION_UNRESOLVED",
+      "same_inspection_object": false,
+      "same_inspection_id": false,
+      "outcome": "REJECTED",
+      "reason": "ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED"
+    },
+    {
+      "name": "actual_unconditional",
+      "input_text": "Our fiscal year ends on December 31. References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021.",
+      "checked_status": "SOURCE_LABEL_CONFLICT",
+      "same_inspection_object": true,
+      "same_inspection_id": true,
+      "outcome": "ACCEPTED",
+      "selected": 2022,
+      "inherited_choose": [
+        2022,
+        "EXPLICIT_SOURCE_ISSUER_DEFINITION"
+      ]
+    },
+    {
+      "name": "actual_plus_unrelated_hypothetical",
+      "input_text": "Our fiscal year ends on December 31. References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021. A hypothetical example of an expense calculation follows.",
+      "checked_status": "EXPLICIT_DEFINITION_UNRESOLVED",
+      "same_inspection_object": false,
+      "same_inspection_id": false,
+      "outcome": "REJECTED",
+      "reason": "ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED",
+      "inherited_choose": [
+        2022,
+        "EXPLICIT_SOURCE_ISSUER_DEFINITION"
+      ]
+    },
+    {
+      "name": "actual_plus_unrelated_condition",
+      "input_text": "Our fiscal year ends on December 31. References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021. If the lending covenant changes, our naming convention remains unaffected.",
+      "checked_status": "EXPLICIT_DEFINITION_UNRESOLVED",
+      "same_inspection_object": false,
+      "same_inspection_id": false,
+      "outcome": "REJECTED",
+      "reason": "ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED",
+      "inherited_choose": [
+        2022,
+        "EXPLICIT_SOURCE_ISSUER_DEFINITION"
+      ]
+    },
+    {
+      "name": "original_mutability",
+      "out_of_scope": "COMPANY_FISCAL_RANGE_FACTORY_SCOPE_CHANGED",
+      "discovery_before_valid": 0,
+      "discovery_start": 2024,
+      "discovery_end": 2025,
+      "producer_years": [
+        2024,
+        2025
+      ]
+    },
+    {
+      "name": "actual_discovery_original_conditional",
+      "status": "FISCAL_RANGE_UNRESOLVED",
+      "task_status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+      "source_available": false,
+      "limitations": [
+        {
+          "phase": "FISCAL_LABEL",
+          "reason": "ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED",
+          "error_type": "NormalAnnualInputError",
+          "category": "SOURCE_LABEL_UNRESOLVED",
+          "report_end": "2025-12-31"
+        }
+      ]
+    },
+    {
+      "name": "actual_discovery_unrelated_hypothetical_regression",
+      "text": "Our fiscal year ends on December 31. References to fiscal 2026, for example, refer to the fiscal year ending December 31, 2025. A hypothetical example of an expense calculation follows.",
+      "status": "FISCAL_RANGE_UNRESOLVED",
+      "task_status": "FISCAL_YEAR_SOURCE_UNRESOLVED",
+      "source_available": false,
+      "limitations": [
+        {
+          "phase": "FISCAL_LABEL",
+          "reason": "ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED",
+          "error_type": "NormalAnnualInputError",
+          "category": "SOURCE_LABEL_UNRESOLVED",
+          "report_end": "2025-12-31"
+        }
+      ],
+      "metric_executed": false,
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    }
+  ],
+  "repair_tested_tree_matches": {
+    "scripts/vnext/company_fiscal_range.py": true,
+    "scripts/vnext/historical_fiscal_labels.py": true,
+    "tests/vnext/test_company_fiscal_range.py": true,
+    "tests/vnext/test_selected_historical_fiscal_label.py": true
+  },
+  "peer_labels_exact": true,
+  "test_execution_count": 53,
+  "distinct_tests": 53,
+  "line_locations": [
+    {
+      "line": 190,
+      "text": "reason = (\"DEFINITION_CONDITIONAL_NOT_ADOPTED\" if _CONDITIONAL_DEFINITION.search(item[\"text\"])"
+    },
+    {
+      "line": 191,
+      "text": "else \"DEFINITION_HYPOTHETICAL_NOT_ACTUAL\" if _HYPOTHETICAL_DEFINITION.search(item[\"text\"])"
+    }
+  ],
+  "repair_review_end": "2026-10-10T07:57:36+08:00"
+}
