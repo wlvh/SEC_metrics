@@ -52,3 +52,5 @@ python3 tools/vnext_company.py results --company salesforce \
 同一组合的52项短/保存来源回归21.144秒中，51项通过、1项error、零skip。失败是既有真实当期Salesforce B12的RpoDisplayTest，不是旧防伪机制：_ordinary_case准备的annual实体1108524和accession0001108524-26-000060正确，但当前deterministic_source_set Trace的entity/accession按旧合同为null，新renderer直接要求Trace字段相同因而TRACE_SUBJECT_CHANGED。实际字段在reporting-cik-current-rpo-trace-boundary.json，完整日志在reporting-cik-combination-tests.log。
 
 该具体兼容缺口已直接交公共#28，用既有SourceSet/claims可证明身份处理旧Trace格式，并保留未知/混主体的拒绝；不改旧Trace、删回归或放宽来源检查。当前仅Param旧期另存修复验证成立，组合尚未可接收；不得据此宣称当期不退化或50位置完整导出通过。后继修复返回后只跑受影响回归及必要保存/读取，不重做其余45结构检查或完整五年计算。
+
+实际同一公司CLI另核只FY2021/B12一个相关处理版本：首7.998s/禁factory复.905s/独立读全部5年.582s，FY2021 CSV.cik=813828、原ResultID保持。其余四年未处理，30旧结果文件字节相同；旧年度CSV仍按原版本读取，不暗中重渲染。见reporting-cik-company-subset.json/log。结构NA在当前controller按CANDIDATE_READY→NO_SOURCE_CONTENT_CHANGE保存，其业务行仍N_A_STRUCTURAL/null，不误称业务扣留。当前真实当期SF旧Trace兼容失败仍待公共后继，不借这一历史路径通过消除限制。
