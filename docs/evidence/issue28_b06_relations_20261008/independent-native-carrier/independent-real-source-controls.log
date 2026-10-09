@@ -1,0 +1,451 @@
+{
+  "UTC": "2026-10-07T22:15:54.963150+00:00",
+  "original_status": "REPORTED_INCLUDED",
+  "original_hashes": {
+    "primary": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+    "xml": "35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe"
+  },
+  "cases": [
+    {
+      "case": "member_namespace_differs_from_parent",
+      "changes_per_original": {
+        "primary": 1,
+        "xml": 1
+      },
+      "status": "REPORTED_INCLUDED",
+      "addition": "0",
+      "hashes": {
+        "primary": "6035af117bd602aa54dfc13dbeee5f2f7863d42f64fc00ded270bd3c6b13001e",
+        "xml": "a67debda3ff7c678b7153e06f738ef45d0273f075623f199be607189ce01b4ec"
+      },
+      "B06_definition_complete": false,
+      "B06_ratio": null,
+      "carrier_context_proofs": [
+        {
+          "context_ref": "c-696",
+          "identifiers": [
+            {
+              "value": "0000037996",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "instant",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [
+            {
+              "dimension_raw": "us-gaap:LongtermDebtTypeAxis",
+              "member_raw": "us-gaap:NotesPayableOtherPayablesMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "LongtermDebtTypeAxis"
+              ],
+              "member_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "NotesPayableOtherPayablesMember"
+              ]
+            },
+            {
+              "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+              "member_raw": "f:CompanyExcludingFordCreditMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "StatementBusinessSegmentsAxis"
+              ],
+              "member_qname": [
+                "urn:other-business",
+                "CompanyExcludingFordCreditMember"
+              ]
+            }
+          ],
+          "typed_dimension_count": 0
+        },
+        {
+          "context_ref": "c-696",
+          "identifiers": [
+            {
+              "value": "0000037996",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "instant",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [
+            {
+              "dimension_raw": "us-gaap:LongtermDebtTypeAxis",
+              "member_raw": "us-gaap:NotesPayableOtherPayablesMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "LongtermDebtTypeAxis"
+              ],
+              "member_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "NotesPayableOtherPayablesMember"
+              ]
+            },
+            {
+              "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+              "member_raw": "f:CompanyExcludingFordCreditMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "StatementBusinessSegmentsAxis"
+              ],
+              "member_qname": [
+                "urn:other-business",
+                "CompanyExcludingFordCreditMember"
+              ]
+            }
+          ],
+          "typed_dimension_count": 0
+        }
+      ],
+      "carrier_primary_XML_context_key_equal": true,
+      "current_carrier": "226000000",
+      "current_parent": "5550000000",
+      "lease_current": "136000000",
+      "primary_carrier_scale": "6"
+    },
+    {
+      "case": "same_QName_XML_alias",
+      "changes_per_original": {
+        "primary": 0,
+        "xml": 1
+      },
+      "status": "UNRESOLVED",
+      "addition": null,
+      "hashes": {
+        "primary": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+        "xml": "6b86f473c0d1667d578d924474a72c2a402561b00798f14d1ba430a4b9fda8b9"
+      },
+      "B06_definition_complete": false,
+      "B06_ratio": null,
+      "carrier_context_proofs": [
+        {
+          "context_ref": "c-696",
+          "identifiers": [
+            {
+              "value": "0000037996",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "instant",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [
+            {
+              "dimension_raw": "us-gaap:LongtermDebtTypeAxis",
+              "member_raw": "us-gaap:NotesPayableOtherPayablesMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "LongtermDebtTypeAxis"
+              ],
+              "member_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "NotesPayableOtherPayablesMember"
+              ]
+            },
+            {
+              "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+              "member_raw": "f:CompanyExcludingFordCreditMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "StatementBusinessSegmentsAxis"
+              ],
+              "member_qname": [
+                "http://www.ford.com/20251231",
+                "CompanyExcludingFordCreditMember"
+              ]
+            }
+          ],
+          "typed_dimension_count": 0
+        },
+        {
+          "context_ref": "c-696",
+          "identifiers": [
+            {
+              "value": "0000037996",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "instant",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [
+            {
+              "dimension_raw": "us-gaap:LongtermDebtTypeAxis",
+              "member_raw": "us-gaap:NotesPayableOtherPayablesMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "LongtermDebtTypeAxis"
+              ],
+              "member_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "NotesPayableOtherPayablesMember"
+              ]
+            },
+            {
+              "dimension_raw": "g:StatementBusinessSegmentsAxis",
+              "member_raw": "ff:CompanyExcludingFordCreditMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "StatementBusinessSegmentsAxis"
+              ],
+              "member_qname": [
+                "http://www.ford.com/20251231",
+                "CompanyExcludingFordCreditMember"
+              ]
+            }
+          ],
+          "typed_dimension_count": 0
+        }
+      ],
+      "carrier_primary_XML_context_key_equal": true
+    },
+    {
+      "case": "own_scale_9_conflicts_with_million_table",
+      "changes_per_original": {
+        "primary": 1,
+        "xml": 1
+      },
+      "status": "REPORTED_INCLUDED",
+      "addition": "0",
+      "hashes": {
+        "primary": "fb876442bb473e0fe845e205891f8b320dc2a7cade713cf0be2a53b27e7ebbf5",
+        "xml": "32a2b693cc1c83929b1a3ef6bb6b71ef0f44f2490e1ca42904336926cf5c176a"
+      },
+      "B06_definition_complete": false,
+      "B06_ratio": null,
+      "carrier_context_proofs": [
+        {
+          "context_ref": "c-696",
+          "identifiers": [
+            {
+              "value": "0000037996",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "instant",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [
+            {
+              "dimension_raw": "us-gaap:LongtermDebtTypeAxis",
+              "member_raw": "us-gaap:NotesPayableOtherPayablesMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "LongtermDebtTypeAxis"
+              ],
+              "member_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "NotesPayableOtherPayablesMember"
+              ]
+            },
+            {
+              "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+              "member_raw": "f:CompanyExcludingFordCreditMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "StatementBusinessSegmentsAxis"
+              ],
+              "member_qname": [
+                "http://www.ford.com/20251231",
+                "CompanyExcludingFordCreditMember"
+              ]
+            }
+          ],
+          "typed_dimension_count": 0
+        },
+        {
+          "context_ref": "c-696",
+          "identifiers": [
+            {
+              "value": "0000037996",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "instant",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [
+            {
+              "dimension_raw": "us-gaap:LongtermDebtTypeAxis",
+              "member_raw": "us-gaap:NotesPayableOtherPayablesMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "LongtermDebtTypeAxis"
+              ],
+              "member_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "NotesPayableOtherPayablesMember"
+              ]
+            },
+            {
+              "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+              "member_raw": "f:CompanyExcludingFordCreditMember",
+              "dimension_qname": [
+                "http://fasb.org/us-gaap/2025",
+                "StatementBusinessSegmentsAxis"
+              ],
+              "member_qname": [
+                "http://www.ford.com/20251231",
+                "CompanyExcludingFordCreditMember"
+              ]
+            }
+          ],
+          "typed_dimension_count": 0
+        }
+      ],
+      "carrier_primary_XML_context_key_equal": true,
+      "current_carrier": "226000000000",
+      "current_parent": "5550000000",
+      "lease_current": "136000000",
+      "primary_carrier_scale": "9"
+    }
+  ],
+  "primary_context_start": "<xbrli:context id=\"c-696\">",
+  "xml_context_start": "<context id=\"c-696\">",
+  "original_current_carrier": "226000000",
+  "original_parent_context": {
+    "context_ref": "c-21",
+    "identifiers": [
+      {
+        "value": "0000037996",
+        "scheme": "http://www.sec.gov/CIK"
+      }
+    ],
+    "period_fields": [
+      {
+        "kind": "instant",
+        "value": "2025-12-31"
+      }
+    ],
+    "dimensions": [
+      {
+        "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+        "member_raw": "f:CompanyExcludingFordCreditMember",
+        "dimension_qname": [
+          "http://fasb.org/us-gaap/2025",
+          "StatementBusinessSegmentsAxis"
+        ],
+        "member_qname": [
+          "http://www.ford.com/20251231",
+          "CompanyExcludingFordCreditMember"
+        ]
+      }
+    ],
+    "typed_dimension_count": 0
+  },
+  "original_current_segment": [
+    {
+      "row_index": 0,
+      "label": "",
+      "cell_text": [
+        ""
+      ]
+    },
+    {
+      "row_index": 1,
+      "label": "Average Contractual",
+      "cell_text": [
+        ""
+      ]
+    },
+    {
+      "row_index": 2,
+      "label": "Interest Rates",
+      "cell_text": [
+        ""
+      ]
+    },
+    {
+      "row_index": 3,
+      "label": "Company excluding Ford Credit",
+      "cell_text": [
+        "2025"
+      ]
+    },
+    {
+      "row_index": 4,
+      "label": "Debt payable within one year",
+      "cell_text": [
+        ""
+      ]
+    },
+    {
+      "row_index": 5,
+      "label": "Short-term",
+      "cell_text": [
+        "$"
+      ]
+    },
+    {
+      "row_index": 6,
+      "label": "Long-term payable within one year",
+      "cell_text": [
+        ""
+      ]
+    },
+    {
+      "row_index": 7,
+      "label": "U.K. Export Finance Program",
+      "cell_text": [
+        "—"
+      ]
+    },
+    {
+      "row_index": 8,
+      "label": "Public unsecured debt securities",
+      "cell_text": [
+        "1,672"
+      ]
+    },
+    {
+      "row_index": 9,
+      "label": "Convertible notes",
+      "cell_text": [
+        "2,300"
+      ]
+    },
+    {
+      "row_index": 10,
+      "label": "Other debt (including finance leases) (a)",
+      "cell_text": [
+        "226"
+      ]
+    },
+    {
+      "row_index": 11,
+      "label": "Unamortized (discount)/premium and issuance costs",
+      "cell_text": [
+        "(3)"
+      ]
+    },
+    {
+      "row_index": 12,
+      "label": "Total debt payable within one year",
+      "cell_text": [
+        "5,550"
+      ]
+    }
+  ],
+  "seconds": 14.668518125079572
+}

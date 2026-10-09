@@ -1,0 +1,141 @@
+{
+  "utc": "2026-10-07T22:40:42.266201+00:00",
+  "seconds": 0.05714408284984529,
+  "fixture_source": "tests.vnext.test_industrial_lease_relation.fixture; original source bytes rebuilt and reparsed for each control",
+  "source_inputs": "SYNTHETIC_SMALL_PARSER_ONLY",
+  "cases": [
+    {
+      "case": "both_sources_member_URI_differs_from_parent",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "pass": true,
+      "addition": null
+    },
+    {
+      "case": "both_sources_all_legal_QName_aliases",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "pass": true,
+      "addition": "0"
+    },
+    {
+      "case": "inherited_axis_URI_changes_in_both_sources",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "pass": true,
+      "addition": null
+    },
+    {
+      "case": "extra_debt_axis_cannot_use_company_URI",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "pass": true,
+      "addition": null
+    },
+    {
+      "case": "extra_axis_member_cannot_use_company_URI",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "pass": true,
+      "addition": null
+    },
+    {
+      "case": "missing_inherited_business_axis",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "pass": true,
+      "addition": null
+    },
+    {
+      "case": "no_explicit_visible_unit",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "pass": true,
+      "addition": null
+    },
+    {
+      "case": "caption_unit_without_introduction",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "pass": true,
+      "addition": "0"
+    },
+    {
+      "case": "intro_inside_table_container_div",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "pass": true,
+      "addition": "0"
+    },
+    {
+      "case": "previous_table_conflicting_unit_does_not_leak",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "pass": true,
+      "addition": "0"
+    },
+    {
+      "case": "previous_table_unit_does_not_supply_missing_local_unit",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "pass": true,
+      "addition": null
+    },
+    {
+      "case": "hidden_resources_and_style_text_not_visible_units",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "pass": true,
+      "addition": "0"
+    },
+    {
+      "case": "conflicting_caption_and_intro_units",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "pass": true,
+      "addition": null
+    },
+    {
+      "case": "explicit_foreign_reporting_unit",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "pass": true,
+      "addition": null
+    },
+    {
+      "case": "own_different_scale_consistent_with_visible_thousands",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "pass": true,
+      "addition": "0"
+    },
+    {
+      "case": "own_different_scale_consistent_with_visible_millions",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "pass": true,
+      "addition": "0"
+    },
+    {
+      "case": "foreign_denomination_prose_before_USD_reporting_unit",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "UNRESOLVED",
+      "pass": false,
+      "addition": null
+    },
+    {
+      "case": "separate_prior_prose_unit_conflicts_with_local_caption",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "UNRESOLVED",
+      "pass": false,
+      "addition": null
+    }
+  ],
+  "passed": 16,
+  "total": 18,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

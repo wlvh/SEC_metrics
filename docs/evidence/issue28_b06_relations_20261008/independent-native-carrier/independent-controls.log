@@ -1,0 +1,137 @@
+{
+  "UTC": "2026-10-07T22:14:26.309966+00:00",
+  "controls": [
+    {
+      "case": "unchanged_small_parser_positive",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "matches": true,
+      "error": null,
+      "current_carrier": "25"
+    },
+    {
+      "case": "own_negative_scale_below_lease",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "matches": true,
+      "error": null
+    },
+    {
+      "case": "own_scaled_correct_amount",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "matches": true,
+      "error": null,
+      "current_carrier": "25"
+    },
+    {
+      "case": "equal_carrier_and_lease",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "matches": true,
+      "error": null,
+      "current_carrier": "10"
+    },
+    {
+      "case": "XML_amount_conflict",
+      "expected": "ERROR",
+      "actual": "ERROR",
+      "matches": true,
+      "error": "DEBT_SAME_PRECISION_CONFLICT"
+    },
+    {
+      "case": "primary_carrier_nonUSD",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "matches": true,
+      "error": null
+    },
+    {
+      "case": "xml_carrier_nonUSD",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "matches": true,
+      "error": null
+    },
+    {
+      "case": "missing_XML_carrier",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "matches": true,
+      "error": null
+    },
+    {
+      "case": "XML_fact_prefix_alias_same_QName",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "matches": true,
+      "error": null,
+      "current_carrier": "25"
+    },
+    {
+      "case": "same_carrier_context_QNames_different_prefixes",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "UNRESOLVED",
+      "matches": false,
+      "error": null,
+      "canonical_context_equal": true
+    },
+    {
+      "case": "different_business_member_namespace_same_raw_spelling",
+      "expected": "UNRESOLVED",
+      "actual": "REPORTED_INCLUDED",
+      "matches": false,
+      "error": null,
+      "current_carrier": "25",
+      "parent_dimensions": [
+        {
+          "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+          "member_raw": "f:CompanyExcludingCreditMember",
+          "dimension_qname": [
+            "http://fasb.org/us-gaap/2025",
+            "StatementBusinessSegmentsAxis"
+          ],
+          "member_qname": [
+            "urn:test-company",
+            "CompanyExcludingCreditMember"
+          ]
+        }
+      ],
+      "carrier_dimensions": [
+        {
+          "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+          "member_raw": "f:CompanyExcludingCreditMember",
+          "dimension_qname": [
+            "http://fasb.org/us-gaap/2025",
+            "StatementBusinessSegmentsAxis"
+          ],
+          "member_qname": [
+            "urn:other-business",
+            "CompanyExcludingCreditMember"
+          ]
+        },
+        {
+          "dimension_raw": "us-gaap:LongtermDebtTypeAxis",
+          "member_raw": "us-gaap:NotesPayableOtherPayablesMember",
+          "dimension_qname": [
+            "http://fasb.org/us-gaap/2025",
+            "LongtermDebtTypeAxis"
+          ],
+          "member_qname": [
+            "http://fasb.org/us-gaap/2025",
+            "NotesPayableOtherPayablesMember"
+          ]
+        }
+      ]
+    },
+    {
+      "case": "carrier_greater_than_parent_direct_conflict",
+      "expected": "UNRESOLVED",
+      "actual": "REPORTED_INCLUDED",
+      "matches": false,
+      "error": null,
+      "current_carrier": "250"
+    }
+  ],
+  "observed_mismatches": 3
+}

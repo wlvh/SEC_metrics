@@ -1,0 +1,31 @@
+{
+  "utc": "2026-10-08T13:21:29.816688+00:00",
+  "head": "4b16b4d8513be47d9b108da5cd44205f07073e4c",
+  "base": "adc9c85d3b1713fd198f630e8725d61082e74dd7",
+  "sha256": {
+    "scripts/vnext/ordinary_reported_lease_scope.py": "d25a97510f2a68d34e160c76a830c57c319add18b1671a2a7bb9d0632eb2d903",
+    "scripts/vnext/ordinary_special_debt_scope.py": "9c2bc47b455fd6a6deedfc52fc5f6bc406f35725f5f3f58b90482b78962d50c0",
+    "tests/vnext/test_reported_lease_successor.py": "308827d602b0df5edbc564ea89b36e96bc33c83a70cf0c3e015358cfdb58c963",
+    "docs/evidence/issue28_b06_relations_20261008/verify_default_and_persistence.py": "33416466395de7e8ae2e7f0a50689e93225edd095ea18959d49c09d0d2726f1a"
+  },
+  "exact_patch_bytes": {
+    "scripts/vnext/ordinary_reported_lease_scope.py": true,
+    "scripts/vnext/ordinary_special_debt_scope.py": true,
+    "tests/vnext/test_reported_lease_successor.py": true,
+    "docs/evidence/issue28_b06_relations_20261008/verify_default_and_persistence.py": true
+  },
+  "conclusion_prefix_length": 6825,
+  "conclusion_prefix_sha256": "06a79c3f0191108c8e9aa244f90d23b1cdf2142b35fe8517b68cc2e9126e03fe",
+  "old_review_logs_sha256": {
+    "docs/evidence/issue28_b06_relations_20261008/independent-adjacency/initial-byte-state.log": "4cad4cd19289fe2a5dad4f591f6afafcc3f77ae55f6f9782df495a3051e35d10",
+    "docs/evidence/issue28_b06_relations_20261008/independent-adjacency/final-byte-verification.log": "a51939a59e8e7792ceb8de5315310255f005e120773f171bac5325e9d59bb96f",
+    "docs/evidence/issue28_b06_relations_20261008/independent-adjacency/unit-tests.log": "4cf12a8c3cb1a85a2f1528ba2d6fa2dcc4392200ec08c373af4a965466d9e78d",
+    "docs/evidence/issue28_b06_relations_20261008/independent-adjacency/saved-unit-scope-control.log": "31dcf61a8a1d054d64c7999ea0cbdfd966d949e04412b0994021b6d86cf0f51b",
+    "docs/evidence/issue28_b06_relations_20261008/independent-adjacency/base-patch-adjacency-controls.log": "05c01dc6c738e82f4d020693514efb4722e8226dd8f49cc2ae478122dcf1ddc7"
+  },
+  "old_default_exact_main_bytes": true,
+  "old_parser_and_test_exact_930_bytes": {
+    "scripts/vnext/industrial_lease_relation.py": true,
+    "tests/vnext/test_industrial_lease_relation.py": true
+  }
+}

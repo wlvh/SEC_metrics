@@ -44,6 +44,12 @@ jobs:
           PYTHONPATH: scripts:tools
         run: python3 -m unittest -v tests.vnext.test_native_rate_path tests.vnext.test_company_retained_local
 
+      - name: Run reported lease source regressions
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+        run: python3 -m unittest -v tests.vnext.test_industrial_lease_relation tests.vnext.test_reported_lease_successor
+
 
       - name: Run fast suite
         env:

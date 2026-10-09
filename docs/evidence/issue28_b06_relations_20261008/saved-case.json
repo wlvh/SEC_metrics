@@ -1,0 +1,379 @@
+{
+  "seconds": 3.0441050408408046,
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "record_type": "ORDINARY_B06_SPECIAL_SCOPE_SOURCE_V2",
+  "accession": "0000037996-26-000015",
+  "period_end": "2025-12-31",
+  "reported_subtotal": "21919000000",
+  "lease_inclusion": {
+    "status": "REPORTED_INCLUDED",
+    "additional_debt_amount": "0",
+    "reason": "INCLUSIVE_REPORTED_DEBT_TABLE",
+    "relationships": [
+      {
+        "role": "current_debt",
+        "amount": "136000000",
+        "status": "ALREADY_INCLUDED",
+        "evidence": [
+          {
+            "parent_role": "current_debt",
+            "parent_amount": "5550000000",
+            "component_amount": "136000000",
+            "unit": "USD",
+            "table_id": "table_000136",
+            "inclusive_row_index": 10,
+            "inclusive_label": "Other debt (including finance leases) (a)",
+            "total_cell": {
+              "origin_row_index": 12,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "5,550&#160;",
+              "text": "5,550",
+              "row_index": 12,
+              "column_index": 9,
+              "is_origin": true
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2",
+              "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+              "company_id": "ford_motor_company",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+              "accession": "0000037996-26-000015",
+              "document_name": "f-20251231.htm",
+              "source_role": "target_primary",
+              "request_attempt_id": "request:attempt:f48f8c4bd2da27d84a15410bacc45567b52c7d580d8658b036550fa4a6c414af"
+            },
+            "parent_ordinal": 2447,
+            "component_reports": {
+              "primary": [
+                {
+                  "concept": "FinanceLeaseLiabilityCurrent",
+                  "value": "136000000",
+                  "unit": "USD",
+                  "ordinal": 2497,
+                  "context_ref": "c-21",
+                  "context": {
+                    "context_ref": "c-21",
+                    "dimensions": {
+                      "us-gaap:StatementBusinessSegmentsAxis": "f:CompanyExcludingFordCreditMember"
+                    },
+                    "entity_identifier": "0000037996",
+                    "period_end": "2025-12-31",
+                    "period_start": "2025-12-31",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-21",
+                    "identifiers": [
+                      {
+                        "value": "0000037996",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "instant",
+                        "value": "2025-12-31"
+                      }
+                    ],
+                    "dimensions": [
+                      {
+                        "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+                        "member_raw": "f:CompanyExcludingFordCreditMember",
+                        "dimension_qname": [
+                          "http://fasb.org/us-gaap/2025",
+                          "StatementBusinessSegmentsAxis"
+                        ],
+                        "member_qname": [
+                          "http://www.ford.com/20251231",
+                          "CompanyExcludingFordCreditMember"
+                        ]
+                      }
+                    ],
+                    "typed_dimension_count": 0
+                  },
+                  "decimals": "-6",
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2",
+                    "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+                    "company_id": "ford_motor_company",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+                    "accession": "0000037996-26-000015",
+                    "document_name": "f-20251231.htm",
+                    "source_role": "target_primary",
+                    "request_attempt_id": "request:attempt:f48f8c4bd2da27d84a15410bacc45567b52c7d580d8658b036550fa4a6c414af"
+                  }
+                }
+              ],
+              "xml": [
+                {
+                  "concept": "financeleaseliabilitycurrent",
+                  "value": "136000000",
+                  "unit": "USD",
+                  "ordinal": 2497,
+                  "context_ref": "c-21",
+                  "context": {
+                    "context_ref": "c-21",
+                    "dimensions": {
+                      "us-gaap:StatementBusinessSegmentsAxis": "f:CompanyExcludingFordCreditMember"
+                    },
+                    "entity_identifier": "0000037996",
+                    "period_end": "2025-12-31",
+                    "period_start": "2025-12-31",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-21",
+                    "identifiers": [
+                      {
+                        "value": "0000037996",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "instant",
+                        "value": "2025-12-31"
+                      }
+                    ],
+                    "dimensions": [
+                      {
+                        "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+                        "member_raw": "f:CompanyExcludingFordCreditMember",
+                        "dimension_qname": [
+                          "http://fasb.org/us-gaap/2025",
+                          "StatementBusinessSegmentsAxis"
+                        ],
+                        "member_qname": [
+                          "http://www.ford.com/20251231",
+                          "CompanyExcludingFordCreditMember"
+                        ]
+                      }
+                    ],
+                    "typed_dimension_count": 0
+                  },
+                  "decimals": "-6",
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:a65d4c625e97b1e84b5874bdf447f84206f1d17e70be5daff9b7ff6642d6b47c",
+                    "raw_asset_id": "sha256:35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe",
+                    "company_id": "ford_motor_company",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231_htm.xml",
+                    "accession": "0000037996-26-000015",
+                    "document_name": "f-20251231_htm.xml",
+                    "source_role": "auditor_facts",
+                    "request_attempt_id": "request:attempt:40440a3fb53049e04b00bc7cfdc5e134e1e8b79f2df479713afe840f958fb36b"
+                  }
+                }
+              ]
+            },
+            "note_attributes": {
+              "contextref": "c-1",
+              "name": "us-gaap:DebtDisclosureTextBlock",
+              "id": "f-2413",
+              "continuedat": "f-2413-1",
+              "escape": "true"
+            }
+          }
+        ]
+      },
+      {
+        "role": "noncurrent_debt",
+        "amount": "754000000",
+        "status": "ALREADY_INCLUDED",
+        "evidence": [
+          {
+            "parent_role": "noncurrent_debt",
+            "parent_amount": "16369000000",
+            "component_amount": "754000000",
+            "unit": "USD",
+            "table_id": "table_000136",
+            "inclusive_row_index": 17,
+            "inclusive_label": "Other debt (including finance leases) (a)",
+            "total_cell": {
+              "origin_row_index": 19,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "header": false,
+              "raw_text": "16,369&#160;",
+              "text": "16,369",
+              "row_index": 19,
+              "column_index": 9,
+              "is_origin": true
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2",
+              "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+              "company_id": "ford_motor_company",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+              "accession": "0000037996-26-000015",
+              "document_name": "f-20251231.htm",
+              "source_role": "target_primary",
+              "request_attempt_id": "request:attempt:f48f8c4bd2da27d84a15410bacc45567b52c7d580d8658b036550fa4a6c414af"
+            },
+            "parent_ordinal": 2459,
+            "component_reports": {
+              "primary": [
+                {
+                  "concept": "FinanceLeaseLiabilityNoncurrent",
+                  "value": "754000000",
+                  "unit": "USD",
+                  "ordinal": 2499,
+                  "context_ref": "c-21",
+                  "context": {
+                    "context_ref": "c-21",
+                    "dimensions": {
+                      "us-gaap:StatementBusinessSegmentsAxis": "f:CompanyExcludingFordCreditMember"
+                    },
+                    "entity_identifier": "0000037996",
+                    "period_end": "2025-12-31",
+                    "period_start": "2025-12-31",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-21",
+                    "identifiers": [
+                      {
+                        "value": "0000037996",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "instant",
+                        "value": "2025-12-31"
+                      }
+                    ],
+                    "dimensions": [
+                      {
+                        "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+                        "member_raw": "f:CompanyExcludingFordCreditMember",
+                        "dimension_qname": [
+                          "http://fasb.org/us-gaap/2025",
+                          "StatementBusinessSegmentsAxis"
+                        ],
+                        "member_qname": [
+                          "http://www.ford.com/20251231",
+                          "CompanyExcludingFordCreditMember"
+                        ]
+                      }
+                    ],
+                    "typed_dimension_count": 0
+                  },
+                  "decimals": "-6",
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2",
+                    "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+                    "company_id": "ford_motor_company",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+                    "accession": "0000037996-26-000015",
+                    "document_name": "f-20251231.htm",
+                    "source_role": "target_primary",
+                    "request_attempt_id": "request:attempt:f48f8c4bd2da27d84a15410bacc45567b52c7d580d8658b036550fa4a6c414af"
+                  }
+                }
+              ],
+              "xml": [
+                {
+                  "concept": "financeleaseliabilitynoncurrent",
+                  "value": "754000000",
+                  "unit": "USD",
+                  "ordinal": 2499,
+                  "context_ref": "c-21",
+                  "context": {
+                    "context_ref": "c-21",
+                    "dimensions": {
+                      "us-gaap:StatementBusinessSegmentsAxis": "f:CompanyExcludingFordCreditMember"
+                    },
+                    "entity_identifier": "0000037996",
+                    "period_end": "2025-12-31",
+                    "period_start": "2025-12-31",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-21",
+                    "identifiers": [
+                      {
+                        "value": "0000037996",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "instant",
+                        "value": "2025-12-31"
+                      }
+                    ],
+                    "dimensions": [
+                      {
+                        "dimension_raw": "us-gaap:StatementBusinessSegmentsAxis",
+                        "member_raw": "f:CompanyExcludingFordCreditMember",
+                        "dimension_qname": [
+                          "http://fasb.org/us-gaap/2025",
+                          "StatementBusinessSegmentsAxis"
+                        ],
+                        "member_qname": [
+                          "http://www.ford.com/20251231",
+                          "CompanyExcludingFordCreditMember"
+                        ]
+                      }
+                    ],
+                    "typed_dimension_count": 0
+                  },
+                  "decimals": "-6",
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:a65d4c625e97b1e84b5874bdf447f84206f1d17e70be5daff9b7ff6642d6b47c",
+                    "raw_asset_id": "sha256:35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe",
+                    "company_id": "ford_motor_company",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231_htm.xml",
+                    "accession": "0000037996-26-000015",
+                    "document_name": "f-20251231_htm.xml",
+                    "source_role": "auditor_facts",
+                    "request_attempt_id": "request:attempt:40440a3fb53049e04b00bc7cfdc5e134e1e8b79f2df479713afe840f958fb36b"
+                  }
+                }
+              ]
+            },
+            "note_attributes": {
+              "contextref": "c-1",
+              "name": "us-gaap:DebtDisclosureTextBlock",
+              "id": "f-2413",
+              "continuedat": "f-2413-1",
+              "escape": "true"
+            }
+          }
+        ]
+      }
+    ],
+    "component_total": "890000000",
+    "complete_B06": false
+  },
+  "limitations": [
+    "INDUSTRIAL_ATTRIBUTABLE_EQUITY_NOT_ESTABLISHED",
+    "INDUSTRIAL_DEBT_SET_COMPLETENESS_NOT_ESTABLISHED"
+  ],
+  "result": {
+    "result_id": "sha256:3cfdb4866a546c8ff41a65bfa14463e0b1717f54a946d417a245144b14cea07a",
+    "publication": "WITHHELD",
+    "value": null
+  },
+  "processing_files": {
+    "scripts/vnext/industrial_lease_relation.py": "0e75a7331ed064a0401a4bc0728dfc6afb0de8960e8abe032740527fa6d33a1a",
+    "scripts/vnext/ordinary_special_debt_scope.py": "5aa3bb4db39bafe7eb4393c3331bc91926084da27cacf283240a3941de25676c"
+  },
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "native_run_created": false
+}
