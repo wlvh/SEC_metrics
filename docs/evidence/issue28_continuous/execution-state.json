@@ -5549,6 +5549,34 @@
       "verdict": "PASS_LIMITED_NULLABLE_P1_AND_SELECTORS_BASELINE_DUPLICATES_REMAINED",
       "ordinary_messages": 3,
       "operational_deviation": "One read-only GitHub Issue28 HTTP outside no-real-request scope; no SEC/provider/paid"
+    },
+    {
+      "task_name": "review_currentruntime_ebaf9a3",
+      "purpose": "review",
+      "module": "currentruntime",
+      "base_sha": "6e51f416b12d2e284be1662482ca7a46a37d1e43",
+      "patch_sha": "ebaf9a3631785c6a9b8bb58e8b394b454c7b46d7",
+      "scope_paths": [
+        "scripts/vnext/current_request_configuration.py",
+        "scripts/vnext/continuous_call_policy.py",
+        "scripts/vnext/continuous_call_ledger.py",
+        "scripts/vnext/continuous_semantic_calls.py",
+        "scripts/vnext/continuous_request_context.py",
+        "scripts/vnext/invocation_control.py",
+        "scripts/vnext/ai_adapter.py",
+        "scripts/vnext/native_assessment_replay.py",
+        "tools/vnext_continuous_semantic.py",
+        "config/issue28_current_request_runtime_v1.json",
+        "tests/vnext/test_current_request_runtime.py",
+        ".github/workflows/request-limits.yml"
+      ],
+      "spawned_at": "2026-10-09T15:37:06Z",
+      "ended_at": "2026-10-09T15:47:34Z",
+      "tool_calls": 49,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/docs/evidence/issue28_current_request_runtime_20261009/independent-review/conclusion.md",
+      "verdict": "CHANGES_REQUESTED_3P2",
+      "ordinary_messages": 3,
+      "dedup": "list_agents all nonroot completed; register no same patch/module; no independent evidence for this SHA; new controller/HTTP increment needs limited review, not development delegation"
     }
   ],
   "ci_capacity_20260922": {
@@ -17368,7 +17396,7 @@
     "base": "6e51f416b12d2e284be1662482ca7a46a37d1e43",
     "peer_fixed_sha": "94fdaf25e1ed4439c4570bfc7447c17a008562aa",
     "pr": "https://github.com/wlvh/SEC_metrics/pull/104",
-    "sha": "1da8e6bb86b81e5422adaf1b9c6d12fc2e9cdf95",
+    "sha": "0623ecac6782d59b26f4ce7a38c50ae752a68179",
     "api": "annual_period / inspect_inline_financial_claims optional dei_release=YEAR_ONLY; explicit YEAR_QUARTER_OR_DATE",
     "default": "Old default and return structures retained; CURRENT_METRICS not expanded; explicit A13 per-metric selected-year factory only",
     "actual_source": "JPM21 primary16005889B/SHA7c58 and inventory347650B/SHA77f7 verified read-only; fact7406/table614 A13 28971000000 USD2021",
@@ -17380,7 +17408,7 @@
     },
     "source_full_component_seconds": 4.031599165871739,
     "evidence": "docs/evidence/issue28_dei_release_20261009/README.md",
-    "ci": "latest1da8 in progress at initial read;787 prior success not substituted",
+    "ci": "all10SUCCESS",
     "new_calls": [
       0,
       0,
@@ -17390,7 +17418,11 @@
       "scripts/vnext/normal_annual_input.py:annual_period",
       "scripts/vnext/financial_structured.py:inspect_inline_financial_claims",
       "scripts/vnext/company_current_records.py:run_saved_company/read_current_company"
-    ]
+    ],
+    "peer_actual_read_sha": "b6317e6edeb8b553d270284136e5df152e9c4e2d",
+    "peer_pr": "https://github.com/wlvh/SEC_metrics/pull/105",
+    "peer_evidence_scope": "Read fixed remote evidence: JPM21-25 A13 values28.971/31.968/34.873/38.233/42.758bnUSD, original-year scopes; forbidden factory repeat/independent read/no file changes;FY26 missing retained with5old years; author did not independently rerun5years or adopt results",
+    "peer_ci": "b6319SUCCESS/1 inherited source stillrunning atpeer read, exact remote current check separate"
   },
   "current_request_runtime_20261009": {
     "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics",
@@ -17398,12 +17430,31 @@
     "base": "6e51f416b12d2e284be1662482ca7a46a37d1e43",
     "baseline": "Actual socket-denied prepare_requests Enphase D04 fails1.479s at normal_source_authority ancestor bytes before source/claim/HTTP",
     "evidence": "docs/evidence/issue28_current_request_runtime_20261009/baseline-prepare-failure.log",
-    "status": "Not fixed yet; old chain also in validate/build_plan/transport/execution/CLI/ledger admission; existing count/duplicates/stops retained",
+    "status": "Implemented;3limited-reviewP2 repaired and targeted checks pass;repair independent verification pending",
     "PR103_credit": "Offline preview only, not current execution restoration",
     "new_calls": [
       0,
       0,
       0
-    ]
+    ],
+    "sha": "416391c934f78672ddbd23fde23f418ac26a5f44",
+    "pr": "https://github.com/wlvh/SEC_metrics/pull/106",
+    "source_pipeline": "Actual Enphase29 diagnostic source requests, sole HTTP recording, real WB3/usage/terminal/read; one native Candidate/Evidence/same-config replay synthetic only",
+    "known_increment_defects": [
+      "Early current requirement access precedes replay-only ValueError guard (CI source job113896582274)",
+      "select_native_request_variants rebuild drops prepared.limits (independent reviewer offline reproduction)",
+      "Provider host literal duplicated in current config loader (CI job113896582670;reuse existing ai_adapter constant)"
+    ],
+    "review": "review_currentruntime_ebaf9a3 running;source remains exact patch until conclusion",
+    "tests": {
+      "combined": "55/88.910s zero skip before final early relabel guard",
+      "mode_increment": "2/6.990s zero skip",
+      "CLI": "29REQUEST_PREPARED/default source and8192 config,0calls"
+    },
+    "real_claims_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+    "ci": "ebaf11jobs had2FAILURE/9SUCCESS;416 firstGraphQL observation failedInternal Privoxy Error, no current terminal claim",
+    "repair_evidence": "docs/evidence/issue28_current_request_runtime_20261009/review-fixes-final.log",
+    "repair_tests": "12/0.166s;2HTTP-mode/6.598s;provider-egress PASS",
+    "remaining": "repair-only independent receiving review and newhead CI;scope/190 and complete-company AI acceptance not granted"
   }
 }

@@ -1,3 +1,9 @@
+<!-- current-runtime-repair-20261009:BEGIN -->
+**2026-10-09 当前请求运行实交：**Draft PR106@416391c9在main6e现有WB-3/CallLedger/唯一HTTP边界接普通配置，真实保存Enphase准备29请求、录制HTTP/usage/保存读及当前nativeCandidate/Evidence/same-config replay成立；55组合88.910秒＋最后模式2/6.990秒，非新模型或公司结果。录制无显式HTTP上下文申领前拒、不能转LIVE、录制不读业务密钥。原总账143/143/52、97/97/28、本批21/66/claimsSHA6023保持0新实际调用。
+
+限定ebaf独审3P2/49工具3消息保原结论；416已修replay-only顺序、原生new/success变体limits、host引用，12/0.166秒＋2模式6.598秒及出口扫描PASS，修后独立增量仍待审。原CI两FAILURE均真实接缝，未归退休测试；416首次CI读取GraphQL Privoxy错误，不记运行或全绿，恢复后自然核终态。下一步有限回修接收，继而A03/A12已给原组件/明确Q4与年度窗口的公共最小参数接缝；没有一般开发权限不足。A13公共104@0623十CI成功，peer105@b631五年/缺FY26日志实际已固定读取，非本方重算/正式采纳/1950完成。
+<!-- current-runtime-repair-20261009:END -->
+
 <!-- dei-current-20261009:BEGIN -->
 **2026-10-09 公共A13增量：**Draft PR104@1da8e6bb（main6e51）显式DEI季度/日期后继，原YEAR_ONLY默认/返回不变；actualJPM21完整SourceSet4.032秒解析28.971bn USD，直接原表614/2021列及Revenue(c)说明核对。45小例、当前JPM/Citi原件1例、有限公司A13显式factory门47小状态分别成立；新Result/Run/完整公司0，#47 actual接入保存CSV重读待其实现。公司默认集合不扩、D03等未知mapping拒绝，旧记录不重签。PR102当前10CI、103当前11CI均SUCCESS。
 
