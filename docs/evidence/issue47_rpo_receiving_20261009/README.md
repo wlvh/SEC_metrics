@@ -32,3 +32,11 @@ python3 tools/vnext_company.py results --company salesforce \
 公共PR95/0ff6fc9e也作为实际必要普通更新依赖接收：不让未用录制source_session变动触发旧结果复算，当前ordinary_current_update仍由#28实现，本方未重写；其Paramount唯一C01消费者验证在原事件主记录接续，不扩本RPO业务族。两个共享增量未入main前，本候选明确依赖其源码，旧记录/现行新展示版本分开，当前新用户RPO入口仍需受影响最终公司读取验证。
 
 最后在同一公司入口只处理FY2026一个相关配置迁移：首4.233s、禁止factory复.818s、独立读.510s，72400000000 USD/2026-01-31/原Result ID保持，当前CSV明确RPO非ARR/churn；其余四年没有重算，所有旧Result文件保持。见final-cli-display.json/log。共享95+97实际组合43例19.856s零skip，原公共配置/展示反例进入其真实接口，本方不写第二controller；public-combination.log保结果。这里的公司接线验证成立，完整其他公司年度/在线来源与1950目标仍未完成，正式接受/发布权限不增加。
+
+## 其余公司结构输出与身份缺口
+
+除Salesforce外九公司FY2021–2025/B12共45位已同CLI首次/禁止原factory复跑/独立读，每公司5个源/期间绑定N_A_STRUCTURAL/null/TRAIT_NOT_APPLICABLE，与现行登记subscription_or_contract_revenue范围对应，不声称财报没有RPO。Macy’s期末分别2022-01-29/2023-01-28/2024-02-03/2025-02-01/2026-01-31，其他已选年末保持。全部原保存Result/pointer在复/读不变；实测每家阶段在other-companies-structural.json/log，没有全源或模型重跑。此验证不把空状态数当业务完成率。
+
+逐行再核报送主体发现真实公共投影缺口：Param21–24 Source/Trace实体813828正确，CSV.cik却取今日registry2041610。原ordinary_projection验证prepared.entity属于登记集合后，baseline/_project_result仍用registry.primary_cik，未用已核报送人。此前已核的旧Param21事件CSV五项也出现该错误（values/窗口/源池相符不解除这一问题）。此前消费者核对遗漏CSV的CIK列，现补核并纠正交付范围，不修改旧Result/CSV或借旧接受记录盖章。准确代表源/trace/row见predecessor-cik-mismatch.json，旧事件行见predecessor-affected-old-event-rows.json。公共#28按共享renderer职责处理，本方不写第二版本；修后仅核实际受影响渲染/新读口，45结构结论及50B12完整导出接受目前未证明。
+
+上游main4a03f223只修本指南此前误写的B04/B07名称：B04为净利润，B05为自由现金流，B07为利息保障倍数。该文档增量已接本候选06f02369，原计算/真实数值不因名称修正重跑。原错误及修复版本在Git保留，不把模块名当指标业务定义。
