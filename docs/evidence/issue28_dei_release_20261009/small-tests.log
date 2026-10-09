@@ -1,0 +1,12 @@
+test_conflicting_facts_and_short_context_remain_rejected (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_conflicting_facts_and_short_context_remain_rejected) ... ok
+test_foreign_extension_invalid_quarter_and_extra_suffix_rejected (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_foreign_extension_invalid_quarter_and_extra_suffix_rejected) ... ok
+test_no_arbitrary_regex_or_boolean_selection (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_no_arbitrary_regex_or_boolean_selection) ... ok
+test_old_release_requires_explicit_successor (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_old_release_requires_explicit_successor) ... ok
+test_original_default_and_explicit_year_have_identical_return (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_original_default_and_explicit_year_have_identical_return) ... ok
+test_successor_does_not_relax_entity_or_annual_identity (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_successor_does_not_relax_entity_or_annual_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.013s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 6, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_dei_release_selection"]}

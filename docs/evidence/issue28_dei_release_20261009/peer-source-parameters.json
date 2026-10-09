@@ -1,0 +1,111 @@
+{
+  "metric_id": "A13",
+  "expected_cik": "19617",
+  "target_period": {
+    "fiscal_year": 2021,
+    "period_start": "2021-01-01",
+    "period_end": "2021-12-31"
+  },
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:7a658afc2bc677dad3fa43df9855352a93dd04afa38766574ae0c3d094105cf0",
+    "raw_asset_id": "sha256:7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478",
+    "company_id": "jpmorgan_chase",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961722000272/jpm-20211231.htm",
+    "accession": "0000019617-22-000272",
+    "document_name": "jpm-20211231.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:11c6ef68b6f931651350515faf7899bf4762ef3a0bd2b635064a8d2dd93c1540"
+  },
+  "source_set_manifest": {
+    "schema_version": 1,
+    "record_type": "SOURCE_SET_MANIFEST",
+    "company_id": "jpmorgan_chase",
+    "source_role": "target_primary",
+    "form_types": [
+      "10-K"
+    ],
+    "fiscal_or_date_window": {
+      "period_start": "2022-02-22",
+      "period_end": "2022-02-22"
+    },
+    "discovery_policy": "PINNED_SUBMISSIONS_EXACT_FILING_V1",
+    "discovered_accession_set_hash": "sha256:8bc89290b0ebcd2f467ce02563bd00d1527aecd5c268bb0c5511dadc9e6beec8",
+    "sec_submissions_inventory_hash": "sha256:77f7ffeb5a9778a235b1b9b645d57e407eddeb683d3ab1eda2d3e5483b1de8e6",
+    "inventory_source_reference_id": "sha256:1063739d76a16fab9e1f321b3a268dec6c88f22d37fc823ca7e22b7beb1be24d",
+    "ordered_source_reference_ids": [
+      "sha256:7a658afc2bc677dad3fa43df9855352a93dd04afa38766574ae0c3d094105cf0"
+    ],
+    "cutoff_timestamp_or_pinned_submissions_attempt": "request:attempt:dac03b164b63e26519e5c97f3d1b3c2a9733e362e1e804fe849ed2f9c79fd44d",
+    "source_set_manifest_id": "sha256:db92327f8800e236617ec7d1ec390bc49a5de23b5b758befe1e1087c03b2efa9"
+  },
+  "inventory_source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:1063739d76a16fab9e1f321b3a268dec6c88f22d37fc823ca7e22b7beb1be24d",
+    "raw_asset_id": "sha256:77f7ffeb5a9778a235b1b9b645d57e407eddeb683d3ab1eda2d3e5483b1de8e6",
+    "company_id": "jpmorgan_chase",
+    "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-034.json",
+    "accession": "SUBMISSIONS-19617",
+    "document_name": "CIK0000019617-submissions-034.json",
+    "source_role": "sec_submissions_history",
+    "request_attempt_id": "request:attempt:dac03b164b63e26519e5c97f3d1b3c2a9733e362e1e804fe849ed2f9c79fd44d"
+  },
+  "source_root_example": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "source_bytes_parameter": "read saved primary original at source_reference.source_url; do not replace bytes",
+  "inventory_bytes_parameter": "read saved submissions-034 original at inventory_source_reference.source_url",
+  "dei_facts_in_original": [
+    {
+      "name": "dei:EntityCentralIndexKey",
+      "namespace": "http://xbrl.sec.gov/dei/2021q4",
+      "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+      "text": "0000019617",
+      "raw_name_attribute_offset": 1305
+    },
+    {
+      "name": "dei:AmendmentFlag",
+      "namespace": "http://xbrl.sec.gov/dei/2021q4",
+      "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+      "text": "FALSE",
+      "raw_name_attribute_offset": 1791
+    },
+    {
+      "name": "dei:DocumentFiscalYearFocus",
+      "namespace": "http://xbrl.sec.gov/dei/2021q4",
+      "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+      "text": "2021",
+      "raw_name_attribute_offset": 2289
+    },
+    {
+      "name": "dei:DocumentFiscalPeriodFocus",
+      "namespace": "http://xbrl.sec.gov/dei/2021q4",
+      "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+      "text": "FY",
+      "raw_name_attribute_offset": 2771
+    },
+    {
+      "name": "dei:DocumentType",
+      "namespace": "http://xbrl.sec.gov/dei/2021q4",
+      "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+      "text": "10-K",
+      "raw_name_attribute_offset": 1278415
+    },
+    {
+      "name": "dei:DocumentPeriodEndDate",
+      "namespace": "http://xbrl.sec.gov/dei/2021q4",
+      "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+      "text": "December 31, 2021",
+      "raw_name_attribute_offset": 1280557
+    }
+  ],
+  "old_default_error": {
+    "error_type": "NormalAnnualInputError",
+    "reason": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+    "passed": false
+  },
+  "new_metric_result": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
