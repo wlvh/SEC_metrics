@@ -1,0 +1,17 @@
+import hashlib,json,os,subprocess,sys,tempfile,time
+from pathlib import Path
+source=Path('/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs');output=Path(tempfile.mkdtemp(prefix='selected-source-history-',dir='/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence'))
+protected=['evidence/requests_log.csv','evidence/requests_log_manifest.json','config/company_registry.csv']
+old={n:hashlib.sha256((source/n).read_bytes()).hexdigest() for n in protected}
+scenes=[('paramount_skydance_paramount_global','2024-12-31',['B01','B02'])];results=[]
+for company,end,metrics in scenes:
+ args=['sources','--company',company,'--source-root',str(source),'--report-end',end]
+ for metric in metrics:args.extend(['--metric',metric])
+ code='import sys,json;from unittest.mock import patch;from tools.vnext_company import main\nfrom vnext import calculator,historical_annual_input,normal_annual_input_v2\na=calculator.calculate_metric.__code__;b=historical_annual_input.prepare_historical_annual_input.__code__;c=normal_annual_input_v2.prepare_saved_annual_input.__code__\ndef guard(frame,event,arg):\n if event=="call" and (frame.f_code is a or frame.f_code is b or frame.f_code is c):raise AssertionError("No full annual preparation or metric calculation")\nsys.setprofile(guard)\nwith patch("socket.socket.connect",side_effect=AssertionError("No network")):\n raise SystemExit(main(json.loads(sys.argv[1])))'
+ start=time.monotonic();p=subprocess.run([sys.executable,'-c',code,json.dumps(args)],text=True,capture_output=True,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1','PYTHONPATH':'scripts:tools:.'});(output/(company+'.stdout')).write_text(p.stdout);(output/(company+'.stderr')).write_text(p.stderr);value=json.loads(p.stdout);print(company,p.returncode,value['status'],flush=True)
+ assert p.returncode in (0,2),(p.stdout,p.stderr)
+ assert value['metric_executed'] is False and value['fetch_authorized'] is False and value['consumer_fiscal_year_resolution_performed'] is False
+ assert value['annual_period_label_source']=='RAW_ORIGINAL_DEI_CONTEXT'
+ assert old=={n:hashlib.sha256((source/n).read_bytes()).hexdigest() for n in protected}
+ results.append({'company_id':company,'report_end':end,'seconds':time.monotonic()-start,'exit_code':p.returncode,'status':value['status'],'raw_original_period':value['original_annual_period'],'selection_reporting_cik':value['filing_selection']['reporting_cik'] if value['filing_selection'] else None,'requirements':[{'source_url':r['source_url'],'roles':r['roles'],'saved_status':r['saved_status'],'alternative_status':r.get('alternative_dependency',{}).get('status')} for r in value['requirements']],'unresolved_dependency_urls':value['unresolved_dependency_urls'],'limitations':value['limitations'],'source_bytes_not_metric_acceptance':not value['metric_acceptance_proven'],'output_file':str(output/(company+'.stdout'))})
+Path('docs/evidence/issue47_selected_source_consumer_20261010/actual-paramount-cli.json').write_text(json.dumps({'base_main':'f6ef7886','public_commit':'0215ec9d','code_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'source_root':str(source),'output_root':str(output),'scenes':results,'source_log_manifest_registry_hashes_preserved':True,'full_annual_preparation_and_calculator_calls':0,'new_calls':[0,0,0]},indent=2)+'\n')

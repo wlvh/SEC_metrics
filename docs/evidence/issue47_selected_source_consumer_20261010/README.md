@@ -27,3 +27,9 @@ python tools/vnext_company.py sources --company marriott_international --source-
 ```
 
 Public artifact is a candidate; main stillf6 does not have the command. This delivers selected saved-byte inspection through the company entry, not complete FY-range discovery/supplementation/calculation/export. FullH4and1950business responsibility continues. No new SEC/provider/paid, original ledger/Run modification, merge/Ready/adoption/deploy/active.
+
+## Reporting entity boundary
+
+Two affected actual source-only Paramount tasks also preserve each reporting registrant:FY2024/813828 has12dependencies;FY2025/2041610 has8, each requires that issuer's own CompanyFacts. There is no predecessor financial-value substitution for successorFY2025 and no wrong current2041610 labeling of predecessorFY2024. Existing originallog/manifest/registry protection and calculator/fullprepare/network prohibition remain.
+
+Both return saved-byte availability and rawDEI annual containers Jan1…Dec31; this does not inspect/resolve FY2025 income's visibleAugust7 versus nativeAugust8 interval. Annual identity and income measurement scope remain distinct, and original B01/B03 conflict/holds are not changed. The first driver used an unregistered shorthand companyID and failed before structured output; its original failure is kept. Proper registry ID is paramount_skydance_paramount_global.

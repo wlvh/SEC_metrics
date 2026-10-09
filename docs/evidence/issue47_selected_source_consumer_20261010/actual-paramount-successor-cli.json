@@ -1,0 +1,102 @@
+{
+  "base_main": "f6ef7886",
+  "public_commit": "0215ec9d",
+  "code_commit": "ebf6d877938dd5a700ff4e16952f509f8677a9d3",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-source-history-42gsox_m",
+  "scenes": [
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "report_end": "2025-12-31",
+      "seconds": 3.401588834123686,
+      "exit_code": 0,
+      "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+      "raw_original_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "selection_reporting_cik": "2041610",
+      "requirements": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0002041610.json",
+          "roles": [
+            "selected_submissions_inventory"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm",
+          "roles": [
+            "target_annual_primary"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/index.json",
+          "roles": [
+            "target_annual_accession_index"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231_htm.xml",
+          "roles": [
+            "target_annual_instance"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+          "roles": [
+            "target_amendment_primary"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/index.json",
+          "roles": [
+            "target_amendment_accession_index"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka_htm.xml",
+          "roles": [
+            "target_amendment_instance"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0002041610.json",
+          "roles": [
+            "selected_companyfacts"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        }
+      ],
+      "unresolved_dependency_urls": [],
+      "limitations": [],
+      "source_bytes_not_metric_acceptance": true,
+      "output_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-source-history-42gsox_m/paramount_skydance_paramount_global.stdout"
+    }
+  ],
+  "source_log_manifest_registry_hashes_preserved": true,
+  "full_annual_preparation_and_calculator_calls": 0,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "reporting_issuer_and_own_companyfacts_confirmed": true,
+  "income_measurement_conflict_not_evaluated": true,
+  "annual_container_is_not_income_measurement_window": true
+}
