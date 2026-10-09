@@ -143,6 +143,24 @@ def _text_value(value: Any) -> str:
     raise SecureGPTResponseError('ASSISTANT_TEXT_NOT_FOUND: inspect the saved response; use --text-path')
 
 
+def response_usage(raw: Any) -> dict:
+    """Read documented chat.completion counts; absent billing stays unknown.
+
+    These fields are known from the reported Databricks return shape. They
+    neither prove OpenShift connectivity nor establish an SDK context limit,
+    retry policy, or charge. No token or monetary estimate is substituted.
+    """
+    normalized = normalize_response(raw)
+    usage = normalized.get('usage') if isinstance(normalized, dict) else None
+    usage = usage if isinstance(usage, dict) else {}
+    def count(name):
+        value = usage.get(name)
+        return value if type(value) is int and value >= 0 else None
+    return {'input_tokens':count('prompt_tokens'),
+            'output_tokens':count('completion_tokens'),
+            'total_tokens':count('total_tokens'), 'actual_cost':None}
+
+
 def assistant_content(raw: Any, *, text_path: Optional[str] = None) -> Any:
     """Read only explicit assistant fields; never search error bodies.
 
