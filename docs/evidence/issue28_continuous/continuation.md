@@ -1,3 +1,9 @@
+<!-- dei-current-20261009:BEGIN -->
+**2026-10-09 公共A13增量：**Draft PR104@1da8e6bb（main6e51）显式DEI季度/日期后继，原YEAR_ONLY默认/返回不变；actualJPM21完整SourceSet4.032秒解析28.971bn USD，直接原表614/2021列及Revenue(c)说明核对。45小例、当前JPM/Citi原件1例、有限公司A13显式factory门47小状态分别成立；新Result/Run/完整公司0，#47 actual接入保存CSV重读待其实现。公司默认集合不扩、D03等未知mapping拒绝，旧记录不重签。PR102当前10CI、103当前11CI均SUCCESS。
+
+M1当前真实请求工厂的问题已亲自socket禁网复现：main6e51 Enphase D04 prepare在源/claim/HTTP之前1.479秒祖先字节门失败。103离线helper不代替此修复；自己的current-request-runtime短分支已留完整原失败，准备沿实际validate/plan/transport/execution/CLI去除退休证明依赖，保既有CallLedger账本/次数/停止/防重复及来源/业务，真实RequestLimits与HTTP录制链仍未接通。不因需要这项工程而请求新增预算；本轮0/0/0。
+<!-- dei-current-20261009:END -->
+
 <!-- development-batch-current-20261009:BEGIN -->
 **2026-10-09 单开发子任务首批实交：**临时agent承接PR66，14离线构造/计量测试通过，51工具/3消息结束；父将成果接入显式开发模块，旧两continuous文件字节不变，Draft PR103@32e4f8a2，当前11CI全部SUCCESS（继承来源14:25:37Z终态）。非默认8192仅离线配置，不授真实用途。父同期完成reporter/null Trace P1修补，有限独审abb7通过；Draft PR102@c3ee8c84追加基线重复selector最小修复，272唯一/22定向0.574秒，当前10CI运行。原P1失败及旧真实材料证据保留。双产品组合51例28.881秒/零skip，非整公司业务接受。原总账143/143/52、余97/97/28、本批21/66不变；本轮0/0/0。下一项有限DEI release公共适配有实际消费者，N1内网资料仅阻塞对应接线。
 <!-- development-batch-current-20261009:END -->
