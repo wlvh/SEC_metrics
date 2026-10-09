@@ -230,14 +230,33 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertIs(prepare_historical_bank_year_case, args['case_factories']['A05'])
 
     def test_six_financial_families_keep_each_declared_factory(self):
-        from vnext.historical_bank_scope_cases import prepare_historical_bank_scope_year_case
-        from vnext.historical_average_risk_cases import prepare_historical_average_risk_year_case
-        from vnext.historical_geography_cases import prepare_historical_geography_year_case
-        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        from vnext.historical_bank_scope_cases import (
+            prepare_historical_bank_scope_year_case, PROCESSING_FILES as scope_files)
+        from vnext.historical_average_risk_cases import (
+            prepare_historical_average_risk_year_case, PROCESSING_FILES as average_files)
+        from vnext.historical_geography_cases import (
+            prepare_historical_geography_year_case, PROCESSING_FILES as geography_files)
+        from vnext.historical_statement_cases import (
+            prepare_historical_statement_year_case, INCOME_PROCESSING_FILES as income_files)
+        from vnext.historical_lodging_results import (
+            prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES as hotel_files)
+        from vnext.historical_capital_cases import (
+            prepare_historical_capital_year_case, PROCESSING_FILES as capital_files)
+        selected=['A03','A04','A09','A11','A12','A13','B01','B10','A01']
         with patch('vnext.company_current_records.run_saved_company',return_value={}) as shared:
-            self.run_history(company_id='jpmorgan_chase',metric_ids=['A03','A04','A09','A11','A12','A13','B01'])
-        factories=shared.call_args.kwargs['case_factories']
-        for metric in ['A04','A09','A11']:self.assertIs(prepare_historical_bank_scope_year_case,factories[metric])
-        for metric in ['A03','A12']:self.assertIs(prepare_historical_average_risk_year_case,factories[metric])
-        self.assertIs(prepare_historical_geography_year_case,factories['A13'])
-        self.assertIs(prepare_historical_statement_year_case,factories['B01'])
+            self.run_history(company_id='jpmorgan_chase',metric_ids=selected)
+        args=shared.call_args.kwargs
+        factories=args['case_factories'];files=args['processing_files_by_metric']
+        self.assertEqual(set(selected),set(factories));self.assertEqual(set(selected),set(files))
+        for metric in ['A04','A09','A11']:
+            self.assertIs(prepare_historical_bank_scope_year_case,factories[metric])
+            self.assertEqual(scope_files,files[metric])
+        for metric in ['A03','A12']:
+            self.assertIs(prepare_historical_average_risk_year_case,factories[metric])
+            self.assertEqual(average_files,files[metric])
+        for metric,factory,dependencies in [
+            ('A13',prepare_historical_geography_year_case,geography_files),
+            ('B01',prepare_historical_statement_year_case,income_files),
+            ('B10',prepare_historical_lodging_year_case,hotel_files),
+            ('A01',prepare_historical_capital_year_case,capital_files)]:
+            self.assertIs(factory,factories[metric]);self.assertEqual(dependencies,files[metric])
