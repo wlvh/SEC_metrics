@@ -12,11 +12,16 @@ Full scope, original rows, locators and source evidence persist in the existing 
 
 ## Reproduce using saved sources
 
-Use this branch with the two public candidate commits already included. Create a new source directory using the committed PR52 SEC export (no network):
+Use this branch with the public candidate commits already included for calculation. The restore tool/export live in retained PR52, not in main or this candidate. If the saved root already exists, reuse it. For a first restore, create a separate retained-input checkout (choose a new path/branch if occupied) and execute the existing tool there:
 
 ```bash
-python tools/vnext_historical_sec.py restore --export /path/to/PR52/evidence/issue47_acquired --out /new/source-directory
+git fetch origin task/sec-history-five-year
+git worktree add -b review/issue47-saved-input ../SEC_metrics-saved-input origin/task/sec-history-five-year
+cd ../SEC_metrics-saved-input
+python tools/vnext_historical_sec.py restore --export evidence/issue47_acquired --out /new/source-directory
 ```
+
+Return to this PR120 candidate checkout to execute the company commands below. Restoration makes no SEC/provider calls.
 
 Read the restore result's actual `source-inputs` root. A fresh review state avoids changing the original task. The following uses that root:
 
