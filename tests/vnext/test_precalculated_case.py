@@ -1,5 +1,7 @@
 """Prepared case persistence/period regressions, one shared real B01 input."""
 import copy
+import csv
+import io
 from pathlib import Path
 import tempfile
 import unittest
@@ -9,6 +11,37 @@ from tests.vnext.common import REPO_ROOT
 from vnext import ordinary_saved_result as saved
 from vnext import ordinary_projection as projection
 from vnext.table_grid import build_table_grid
+
+
+class RpoDisplayTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.case = saved._ordinary_case(REPO_ROOT, 'salesforce', 'B12')
+
+    def test_rpo_saved_csv_is_explicitly_not_arr_or_churn(self):
+        # Actual FY2026 source: consolidated RPO72.4bn at2026-01-31. This
+        # tests the current ordinary display, not all five historical years.
+        result = self.case['results']['B12']
+        before = copy.deepcopy(self.case['expected_records'])
+        with tempfile.TemporaryDirectory() as directory, \
+             patch.object(saved, 'prepare_ordinary_zero_ai_run_input', side_effect=AssertionError('No extraction in writer')):
+            written = saved.save_calculated_case(source_root=REPO_ROOT, output_root=Path(directory)/'result',
+                company_id='salesforce', metric_id='B12', case=self.case)
+            reread = saved.read_saved_result(output_root=Path(directory)/'result')
+        rows = list(csv.DictReader(io.StringIO(written['files']['metrics_matrix.csv'].decode())))
+        self.assertEqual(len(rows), 1)
+        row = rows[0]
+        self.assertEqual(row['value'], '72400000000')
+        self.assertEqual(row['unit'], 'USD')
+        self.assertEqual(row['period_start'], '2026-01-31')
+        self.assertEqual(row['period_end'], '2026-01-31')
+        self.assertEqual(row['fiscal_year'], '2026')
+        self.assertIn('RPO != ARR', row['notes'])
+        self.assertIn('cRPO != ARR', row['notes'])
+        self.assertIn('not a churn rate', row['notes'])
+        self.assertEqual(written['result'], result)
+        self.assertEqual(reread['result'], result)
+        self.assertEqual(self.case['expected_records'], before)
 
 
 class PrecalculatedCaseTest(unittest.TestCase):

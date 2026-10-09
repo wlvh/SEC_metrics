@@ -311,6 +311,18 @@ class CallLedger:
 
 
 def live_ledger(*, requirement):
+    if requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        # Reopen the existing allowance verbatim. Never initialize/reset a real
+        # ledger or reinstall consumed recovery permissions on code changes.
+        policy = requirement['policy']
+        root = Path(policy['budget_root'])
+        need((root/'binding.json').is_file(), 'CURRENT_EXISTING_LIVE_LEDGER_REQUIRED')
+        binding = _read(root,'binding.json')
+        need(binding['execution_mode'] == 'LIVE' and binding['root'] == str(root)
+             and binding['limits'] == policy['maximum_additional_provider_paid_sec_calls']
+             and binding['purposes'] == policy['scope']['purposes'],
+             'CURRENT_LIVE_LEDGER_SCOPE_CHANGED')
+        return CallLedger(factory=_FACTORY,root=root,binding=binding,live=True)
     approved = load_delegation(requirement=requirement,online=True)
     policy = requirement['policy']
     body = {'record_type':'CONTINUOUS_CALL_ALLOWANCE','delegation_url':approved['html_url'],

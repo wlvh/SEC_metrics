@@ -16,6 +16,8 @@ import uuid
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from contextvars import ContextVar
+from contextlib import contextmanager
 from pathlib import Path
 from types import MappingProxyType
 from typing import Callable, Dict, Mapping, Optional, Sequence, Tuple
@@ -105,6 +107,30 @@ _DEEPSEEK_OPENER = build_opener(_NoRedirectHandler())
 _RESERVATION_OWNER_EGRESS_CAPABILITY = object()
 
 
+_RECORDED_PROVIDER_HTTP = ContextVar('recorded_provider_http', default=None)
+
+
+@contextmanager
+def recorded_provider_http(open_response):
+    """Replace only HTTP for an explicit recorded operation, never fallback.
+
+    The repository formatter/transport/controller still execute. The supplied
+    recorded response function must handle every URL or fail; no business key
+    is read in this scope. Recorded ledgers require this scope before claim.
+    """
+    if not callable(open_response):
+        raise AIAdapterError('RECORDED_PROVIDER_HTTP_CALLABLE_REQUIRED')
+    token = _RECORDED_PROVIDER_HTTP.set(open_response)
+    try:
+        yield
+    finally:
+        _RECORDED_PROVIDER_HTTP.reset(token)
+
+
+def recorded_provider_http_active():
+    return _RECORDED_PROVIDER_HTTP.get() is not None
+
+
 def _open_provider_request(
     *, opener: object, request: Request, timeout_seconds: int,
     egress_capability: object,
@@ -130,6 +156,10 @@ def _open_provider_request(
         if not callable(before_socket_open):
             raise AIAdapterError("Provider egress marker callback is invalid")
         before_socket_open()
+    recorded = _RECORDED_PROVIDER_HTTP.get()
+    if recorded is not None:
+        return recorded(opener=opener,request=request,timeout_seconds=timeout_seconds,
+                        egress_capability=egress_capability)
     return opener.open(fullurl=request, timeout=timeout_seconds)
 
 
@@ -1340,7 +1370,7 @@ class _OpenAIResponsesTransport:
                 outbound_request_bytes=outbound,
                 output_schema_bytes=schema,
             )
-        api_key = (
+        api_key = 'RECORDED-NO-CREDENTIAL' if recorded_provider_http_active() else (
             os.environ[_OPENAI_API_KEY_ENV]
             if _OPENAI_API_KEY_ENV in os.environ
             else ""
@@ -1541,7 +1571,7 @@ class _DeepSeekChatCompletionsTransport:
                 outbound_request_bytes=outbound,
                 output_schema_bytes=schema,
             )
-        api_key = (
+        api_key = 'RECORDED-NO-CREDENTIAL' if recorded_provider_http_active() else (
             os.environ[_DEEPSEEK_API_KEY_ENV]
             if _DEEPSEEK_API_KEY_ENV in os.environ
             else ""

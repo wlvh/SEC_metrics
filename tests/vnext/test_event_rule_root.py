@@ -3,6 +3,7 @@ from pathlib import Path
 import re
 import shutil
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 from sec_http import parse_request_log_rows,request_log_csv_bytes,refresh_request_log_manifest
@@ -88,6 +89,43 @@ class EventRuleRootTest(unittest.TestCase):
             self.assertIn('LATEST_SOURCE_REQUEST_FAILED',failed_report['metrics'][0]['reason'])
             self.assertEqual(pointer.read_bytes(),old_pointer)
         finally:log.write_bytes(old_log);manifest.write_bytes(old_manifest)
+
+    def test_unused_session_change_reuses_real_company_result_without_calculation(self):
+        from vnext import ordinary_current_update as update
+        company = 'marriott_international'
+        work = self.root/'unused-session-state'
+        args = dict(company_id=company, source_root=self.sources[company], work_dir=work,
+                    output_dir=self.root/'unused-session-output', metric_ids=['C01'])
+        started = time.perf_counter()
+        first = run_saved_company(**args)
+        first_seconds = time.perf_counter() - started
+        self.assertEqual(first['metrics'][0]['status'], 'CANDIDATE_READY')
+        pointer = work/'updates/C01/current-result.json'
+        before_pointer = pointer.read_bytes()
+        result_files = {p.relative_to(work): p.read_bytes() for p in (work/'updates/C01/results').rglob('*') if p.is_file()}
+        original = update.sha256_file
+        with patch.object(update, 'sha256_file', side_effect=lambda *, path:
+                'changed-unused-recorded-session' if path == REPO_ROOT/'scripts/vnext/ordinary_source_session.py'
+                else original(path=path)), \
+             patch.object(update, 'create_saved_result', side_effect=AssertionError('No calculation for unused session')):
+            started = time.perf_counter()
+            repeated = run_saved_company(**args)
+            repeat_seconds = time.perf_counter() - started
+        self.assertEqual(repeated['metrics'][0]['status'], 'NO_SOURCE_CONTENT_CHANGE', repeated['metrics'])
+        self.assertEqual(pointer.read_bytes(), before_pointer)
+        self.assertEqual(result_files, {p.relative_to(work): p.read_bytes()
+            for p in (work/'updates/C01/results').rglob('*') if p.is_file()})
+        started = time.perf_counter()
+        saved = read_saved_result(output_root=first['metrics'][0]['result_root'])
+        read_seconds = time.perf_counter() - started
+        self.assertEqual(saved['result']['value'], '3')
+        self.assertEqual(saved['result']['unit'], 'count')
+        self.assertEqual(saved['result']['period_start'], '2025-01-01')
+        self.assertEqual(saved['result']['period_end'], '2025-12-31')
+        print({'scenario': 'saved Marriott FY2025 C01 unused-session edit',
+               'first_seconds': first_seconds, 'repeat_seconds': repeat_seconds, 'read_seconds': read_seconds,
+               'result_id': saved['result']['result_id'], 'value': '3', 'unit': 'count',
+               'result_files': len(result_files), 'new_calls': [0, 0, 0]})
 
     def test_missing_event_body_cannot_turn_into_smaller_complete_count(self):
         candidate=self.candidates['marriott_international'];source=self.sources['marriott_international']

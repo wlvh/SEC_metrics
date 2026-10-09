@@ -18,6 +18,7 @@ from .normal_source_authority import ROOT, verify_saved_source_proofs
 from .provider_runtime import load_provider_runtime_authority
 from .requirements import load_requirement_snapshot
 from . import invocation_control as control
+from .request_limits import DEFAULT_LIMITS, configured_limits
 
 _FACTORY = object()
 _FEASIBILITY = 'FEASIBILITY_ONLY_NO_NATIVE_EVIDENCE'
@@ -101,7 +102,8 @@ def validate_source_unit_bytes(source):
              'CONTINUOUS_SOURCE_UNIT_SERIALIZATION_CHANGED')
 
 
-def request_body(request, policy):
+def request_body(request, policy, *, limits=None):
+    limits = configured_limits(limits)
     payload = {k:v for k,v in request.items() if k not in
         {'system_prompt','provider_request_sent','provider_tokens_measured','production_authorized'}}
     from .native_unit_index import evidence_json_bytes
@@ -109,11 +111,11 @@ def request_body(request, policy):
     return encode({'model':policy.model,'messages':[
         {'role':'system','content':request['system_prompt']},
         {'role':'user','content':json.dumps(payload,ensure_ascii=False,sort_keys=True,separators=(',',':'))}],
-        'response_format':{'type':'json_object'},'temperature':0,'max_tokens':4096,
+        'response_format':{'type':'json_object'},'temperature':0,'max_tokens':limits.output_tokens,
         'stream':False,'thinking':{'type':'disabled'}})
 
 
-def request_digest(request, policy):
+def request_digest(request, policy, *, limits=None):
     """New code/provenance IDs alone do not authorize another extraction."""
     body = {'model':policy.model,'system_prompt':request['system_prompt'],
         'target_cik':request['target_cik'],'target_period':request['target_period'],
@@ -126,7 +128,7 @@ def request_digest(request, policy):
         # Semantic input IDs do not grant a redraw. Actual decoding settings
         # belong to the request, including the repaired thinking-mode setting.
         'provider_parameters':{k:v for k,v in strict_json_loads(
-            text=request_body(request,policy).decode()).items() if k not in {'messages'}}}
+            text=request_body(request,policy,limits=limits).decode()).items() if k not in {'messages'}}}
     if request['record_type']=='D03_SEMANTIC_VERIFICATION_REQUEST':
         body['verification']={'proposals':request['proposals'],
             'prior_assistant_output_sha256':request['prior_assistant_output_sha256']}
@@ -228,6 +230,7 @@ class SemanticRequest:
     replay_only: bool = False
     current_source_bytes: bytes = None
     current_source_ledger_sha256: str = None
+    limits: object = DEFAULT_LIMITS
 
     def validate(self, policy):
         need(self._factory is _FACTORY, 'CONTINUOUS_SOURCE_FACTORY_REQUIRED')
@@ -245,7 +248,11 @@ class SemanticRequest:
         need((self.data_root in {ROOT,allowed_control_root} or allowed_registered)
              and not any(p.is_symlink() for p in [self.data_root,*self.data_root.parents]),
              'CONTINUOUS_SOURCE_ROOT_NOT_ALLOWED')
-        if self.data_root==ROOT:
+        current_runtime = self.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1'
+        if current_runtime:
+            from .saved_source_checks import verify_saved_inputs
+            verify_saved_inputs(data_root=self.data_root, proofs=source['source_proofs'])
+        elif self.data_root==ROOT:
             verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
         else:
             from .ordinary_source_authority import verify_ordinary_source_proofs
@@ -304,8 +311,13 @@ class SemanticRequest:
                 from .native_unit_index import restore_base_request
                 need('indexed_unit_contract' in request and restore_base_request(request) in original_requests,
                      'CONTINUOUS_REQUEST_NOT_IN_SOURCE')
-        need(configured_transport_policy(requirement=self.requirement,repo_root=ROOT) == policy
-             and request_body(request,policy) == self.provider_request_body_bytes
+        if current_runtime:
+            from .current_request_configuration import transport_policy
+            selected = transport_policy(configuration=self.requirement,repo_root=ROOT,limits=self.limits)
+        else:
+            selected = configured_transport_policy(requirement=self.requirement,repo_root=ROOT)
+        need(selected == policy
+             and request_body(request,policy,limits=self.limits) == self.provider_request_body_bytes
              and _json(request['response_protocol']) == self.output_schema_bytes,
              'CONTINUOUS_PROVIDER_PAYLOAD_CHANGED')
         return request
@@ -313,15 +325,14 @@ class SemanticRequest:
 
 def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,control_id=None, native=False,
                      reference_context=False, complete_response_contract=False, source_root=None, source_ledger=None, program_quantity_roles=False,
-                     d03_replay_only_external=False):
+                     d03_replay_only_external=False, limits=None):
     from .r6_semantic_source import prepare_d04_semantic_source
-    from .requirement_profile import validate_execution_authority
-    requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
-    validate_execution_authority(repo_root=ROOT,requirement=requirement)
-    validate_semantic_rule_bindings(requirement)
-    load_delegation(requirement=requirement)
-    policy = configured_transport_policy(requirement=requirement,repo_root=ROOT)
-    authority = control.prepare_successor_invocation_authority(repo_root=ROOT,requirement_id=REQUIREMENT_ID)
+    from .current_request_configuration import load_current_configuration, transport_policy
+    limits = configured_limits(limits)
+    requirement = load_current_configuration(repo_root=ROOT)
+    policy = transport_policy(configuration=requirement,repo_root=ROOT,limits=limits)
+    authority = control.prepare_current_invocation_context(repo_root=ROOT,
+        configuration=requirement,transport=policy,limits=limits)
     need(metric_id in {'B13','D03','D04'},'CONTINUOUS_SEMANTIC_METRIC_REQUIRED')
     need(type(d03_replay_only_external) is bool and
          (not d03_replay_only_external or (metric_id == 'D03' and source_root is not None
@@ -366,12 +377,12 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
     elif metric_id=='D03':
         from .r6_regulatory_semantics import prepare_regulatory_semantic_source
         source = prepare_regulatory_semantic_source(repo_root=data_root,company_id=company_id,
-            request_context_format=context_format,ordinary_registered=data_root!=ROOT)
+            request_context_format=context_format,ordinary_registered=True)
     elif metric_id == 'B13':
         from .capacity_semantic_source import prepare_capacity_semantic_source
-        source = prepare_capacity_semantic_source(repo_root=data_root,company_id=company_id,request_context_format=context_format,ordinary_registered=data_root!=ROOT)
+        source = prepare_capacity_semantic_source(repo_root=data_root,company_id=company_id,request_context_format=context_format,ordinary_registered=True)
     else:
-        source = prepare_d04_semantic_source(repo_root=data_root,company_id=company_id,ordinary_registered=data_root!=ROOT)
+        source = prepare_d04_semantic_source(repo_root=data_root,company_id=company_id,ordinary_registered=True)
         if native:
             from .d04_native_assessment import native_source
             source = native_source(source, request_context_format=context_format,
@@ -385,14 +396,12 @@ def prepare_requests(*, company_id, metric_id='D04', prior_call_ordinal=None,con
             scope=source.get('quantity_scope_context'))
         need(not program['implementation_unresolved'],
              'B13_PROGRAM_SOURCE_IMPLEMENTATION_UNRESOLVED:'+repr(program['implementation_unresolved']))
-    if data_root==ROOT:verify_saved_source_proofs(data_root=ROOT,proofs=source['source_proofs'])
-    else:
-        from .ordinary_source_authority import verify_ordinary_source_proofs
-        verify_ordinary_source_proofs(data_root=data_root,proofs=source['source_proofs'])
+    from .saved_source_checks import verify_saved_inputs
+    verify_saved_inputs(data_root=data_root,proofs=source['source_proofs'])
     raw = _source_json(source)
-    return [SemanticRequest(_FACTORY,raw,_source_json(request),request_body(request,policy),
+    return [SemanticRequest(_FACTORY,raw,_source_json(request),request_body(request,policy,limits=limits),
         _json(request['response_protocol']),requirement,authority,data_root,source_ledger,
-        replay_only=d03_replay_only_external) for request in source_requests(source)]
+        replay_only=d03_replay_only_external, limits=limits) for request in source_requests(source)]
 
 
 def prepare_d03_replay_only_requests(*, company_id, source_root=None, source_ledger=None):
@@ -410,36 +419,41 @@ def prepare_d03_replay_only_requests(*, company_id, source_root=None, source_led
         need(type(source_ledger) is CallLedger and source_ledger._factory is ledger_factory
              and Path(source_root).resolve() == source_ledger.root/'source-inputs',
              'D03_REPLAY_ONLY_EXTERNAL_SOURCE_NOT_LEDGER_OWNED')
-    requirement = load_requirement_snapshot(snapshot_dir=ROOT/'requirements'/REQUIREMENT_ID)
-    with request_construction_session(requirement):
-        originals = prepare_requests(company_id=company_id, metric_id='D03',
-            reference_context=True, source_root=source_root, source_ledger=source_ledger,
-            d03_replay_only_external=source_root is not None)
-        need(bool(originals) and all(p.source_bytes == originals[0].source_bytes
-            for p in originals), 'D03_REPLAY_ONLY_COMPLETE_SOURCE_REQUIRED')
-        source = strict_json_loads(text=originals[0].source_bytes.decode('utf-8'))
-        from .regulatory_fact_review import candidate_request
-        policy = configured_transport_policy(requirement=originals[0].requirement,
-                                             repo_root=ROOT)
-        selected = []
-        for prepared in originals:
-            original = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
-            request = (candidate_request(original, source=source)
-                       if original.get('source_statement_facts') else original)
-            need(request['source_id'] == source['semantic_source_id']
-                 and request['units'] == original['units']
-                 and request['required_candidate_assessments'] ==
-                     original['required_candidate_assessments'],
-                 'D03_REPLAY_ONLY_SOURCE_OR_REQUIRED_SET_CHANGED')
-            selected.append(replace(prepared, request_bytes=_source_json(request),
-                provider_request_body_bytes=request_body(request, policy),
-                output_schema_bytes=_json(request['response_protocol']),
-                replay_only=True))
-        need([unit['unit_id'] for prepared in selected
-              for unit in strict_json_loads(text=prepared.request_bytes.decode('utf-8'))['units']]
-             == source['required_unit_ids'],
-             'D03_REPLAY_ONLY_SOURCE_UNIT_COVERAGE_CHANGED')
-        return selected
+    originals = prepare_requests(company_id=company_id, metric_id='D03',
+        reference_context=True, source_root=source_root, source_ledger=source_ledger,
+        d03_replay_only_external=source_root is not None)
+    need(bool(originals) and all(p.source_bytes == originals[0].source_bytes
+        for p in originals), 'D03_REPLAY_ONLY_COMPLETE_SOURCE_REQUIRED')
+    source = strict_json_loads(text=originals[0].source_bytes.decode('utf-8'))
+    from .regulatory_fact_review import candidate_request
+    policy = configured_transport_policy(requirement=originals[0].requirement,
+                                         repo_root=ROOT)
+    selected = []
+    for prepared in originals:
+        original = strict_json_loads(text=prepared.request_bytes.decode('utf-8'))
+        request = (candidate_request(original, source=source)
+                   if original.get('source_statement_facts') else original)
+        need(request['source_id'] == source['semantic_source_id']
+             and request['units'] == original['units']
+             and request['required_candidate_assessments'] ==
+                 original['required_candidate_assessments'],
+             'D03_REPLAY_ONLY_SOURCE_OR_REQUIRED_SET_CHANGED')
+        selected.append(replace(prepared, request_bytes=_source_json(request),
+            provider_request_body_bytes=request_body(request, policy),
+            output_schema_bytes=_json(request['response_protocol']),
+            replay_only=True))
+    need([unit['unit_id'] for prepared in selected
+          for unit in strict_json_loads(text=prepared.request_bytes.decode('utf-8'))['units']]
+         == source['required_unit_ids'],
+         'D03_REPLAY_ONLY_SOURCE_UNIT_COVERAGE_CHANGED')
+    return selected
+
+
+def _prepared_transport_policy(prepared):
+    if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        from .current_request_configuration import transport_policy
+        return transport_policy(configuration=prepared.requirement,repo_root=ROOT,limits=prepared.limits)
+    return configured_transport_policy(requirement=prepared.requirement,repo_root=ROOT)
 
 
 def select_native_request_variants(*, prepared_requests, ledger, source_references=False,
@@ -531,18 +545,18 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
             if batch is not None and semantic_role_labels and row['ordinal'] == 111:
                 from .continuous_batch33 import historical_successor_allowed
                 candidate = variant_requests[i][ROLE_VERSION]
-                policy = configured_transport_policy(requirement=prepared_requests[i].requirement, repo_root=ROOT)
+                policy = _prepared_transport_policy(prepared_requests[i])
                 if historical_successor_allowed(authorization=batch, ledger=ledger,
                         ordinal=row['ordinal'], saved_request=saved,
                         replacement_request=candidate,
-                        replacement_digest=request_digest(candidate, policy)):
+                        replacement_digest=request_digest(candidate, policy, limits=getattr(prepared_requests[i],'limits',DEFAULT_LIMITS))):
                     continue
             request = variant_requests[i][version]
             need(saved == request, 'NATIVE_VARIANT_SAVED_REQUEST_CHANGED')
             prepared = prepared_requests[i]
-            policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
+            policy = _prepared_transport_policy(prepared)
             selected = replace(prepared, request_bytes=_source_json(request),
-                provider_request_body_bytes=request_body(request, policy),
+                provider_request_body_bytes=request_body(request, policy, limits=getattr(prepared,'limits',DEFAULT_LIMITS)),
                 output_schema_bytes=_json(request['response_protocol']))
             replay = replay_native_response(prepared=selected, path=path)
             successful[i] = (selected, {'request_id':request['request_id'], 'variant':version,
@@ -554,9 +568,9 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
         else:
             version = (RELEVANCE_VERSION if i == relevance_repair_group_index else selected_version)
             request = variant_requests[i][version]
-            policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
+            policy = _prepared_transport_policy(prepared)
             item = replace(prepared, request_bytes=_source_json(request),
-                provider_request_body_bytes=request_body(request,policy),
+                provider_request_body_bytes=request_body(request,policy,limits=getattr(prepared,'limits',DEFAULT_LIMITS)),
                 output_schema_bytes=_json(request['response_protocol']))
             entry = {'request_id':request['request_id'], 'variant':version, 'original_ordinal':None}
         selected.append(item); report.append(entry)
@@ -587,7 +601,9 @@ def usage_observation(raw):
         'actual_cost':None}
 
 
-def usage_error(raw, *, expected_prompt_tokens=None, enforce_total_context=False):
+def usage_error(raw, *, expected_prompt_tokens=None, enforce_total_context=False, limits=None):
+    explicit_limits = limits is not None
+    limits = configured_limits(limits)
     observed = usage_observation(raw)
     if observed['input_tokens'] is None or observed['output_tokens'] is None:return 'USAGE_UNKNOWN'
     usage = strict_json_loads(text=raw.decode())['usage']
@@ -598,8 +614,10 @@ def usage_error(raw, *, expected_prompt_tokens=None, enforce_total_context=False
     for key,value in [('prompt_cache_hit_tokens',hit),('prompt_cache_miss_tokens',miss)]:
         if key in usage and value is None:return 'USAGE_UNKNOWN'
     if hit is not None and miss is not None and hit+miss!=observed['input_tokens']:return 'USAGE_UNKNOWN'
-    if observed['input_tokens'] > 200000 or (enforce_total_context and total > 200000):
+    if observed['input_tokens'] > limits.max_context_tokens or (enforce_total_context and total > limits.max_context_tokens):
         return 'CONTEXT_LIMIT'
+    if explicit_limits and observed['output_tokens'] > limits.output_tokens:
+        return 'OUTPUT_LIMIT'
     if expected_prompt_tokens is not None and observed['input_tokens'] != expected_prompt_tokens:
         return 'CONTEXT_REFERENCE_MISMATCH'
     return ''
@@ -607,7 +625,11 @@ def usage_error(raw, *, expected_prompt_tokens=None, enforce_total_context=False
 
 def build_plan(prepared, *, d03_native_assessment=False):
     requirement = prepared.requirement
-    policy = configured_transport_policy(requirement=requirement,repo_root=ROOT)
+    if requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        from .current_request_configuration import transport_policy
+        policy = transport_policy(configuration=requirement,repo_root=ROOT,limits=prepared.limits)
+    else:
+        policy = configured_transport_policy(requirement=requirement,repo_root=ROOT)
     request = prepared.validate(policy)
     metric_id = request.get('metric_id','D04')
     need(not d03_native_assessment or
@@ -616,8 +638,8 @@ def build_plan(prepared, *, d03_native_assessment=False):
     runtime = load_provider_runtime_authority(repo_root=ROOT,provider=policy.provider,model=policy.model,api=policy.api)
     from .continuous_request_context import measure_request
     context = measure_request(prepared.provider_request_body_bytes,
-        provider=policy.provider, model=policy.model, api=policy.api)
-    plan = control.build_successor_ai_invocation_plan(repo_root=ROOT,requirement_id=REQUIREMENT_ID,
+        provider=policy.provider, model=policy.model, api=policy.api, limits=prepared.limits)
+    plan = control.build_successor_ai_invocation_plan(repo_root=ROOT,requirement_id=requirement['requirement_id'],
         authority=prepared.authority,
         release_input_plan_id=content_hash(value={'purpose':metric_id+('_SOURCE_ASSESSMENT' if metric_id == 'B13'
             or request.get('native_evidence_requested') is True or d03_native_assessment
@@ -626,7 +648,7 @@ def build_plan(prepared, *, d03_native_assessment=False):
         task_contract_hash=content_hash(value={'metric':metric_id,'prompt':request['system_prompt']}),
         output_schema_hash=content_hash(value=request['response_protocol']),serialization_version='continuous-'+metric_id.lower()+'-chat-v1',
         provider=policy.provider,model=policy.model,api=policy.api,request_body=prepared.provider_request_body_bytes,
-        maximum_payload_bytes=policy.maximum_payload_bytes,maximum_context_tokens=200000,
+        maximum_payload_bytes=policy.maximum_payload_bytes,maximum_context_tokens=prepared.limits.max_context_tokens,
         estimated_context_tokens=context['context_tokens'],
         context_authority_hash=content_hash(value={'provider_runtime':runtime['context_authority_hash'],
             'bounded_chat_context':context['context_authority_hash']}),estimator_id=context['estimator_id'],
@@ -634,7 +656,7 @@ def build_plan(prepared, *, d03_native_assessment=False):
         billing_class=runtime['billing_class'],paid_call_observation_source=runtime['paid_call_observation_source'],
         pricing_snapshot_hash=content_hash(value={'provider':policy.provider,'model':policy.model,
             'status':'NON_BLOCKING_PRICE_UNAVAILABLE'}),estimated_cost=None)
-    need(plan['observability']['estimated_context_tokens']<=200000
+    need(plan['observability']['estimated_context_tokens']<=prepared.limits.max_context_tokens
          and len(prepared.provider_request_body_bytes)<=policy.maximum_payload_bytes,
          'CONTINUOUS_REQUEST_RESOURCE_LIMIT')
     return policy,plan
@@ -643,6 +665,21 @@ def build_plan(prepared, *, d03_native_assessment=False):
 def preserve_execution_rules(prepared, path):
     """Retain the exact rules/configuration used before later draft changes."""
     from .sources import resolve_repository_file
+    if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        import subprocess
+        version = subprocess.run(['git','rev-parse','HEAD'],cwd=ROOT,text=True,
+            capture_output=True,check=False)
+        commit = version.stdout.strip() if version.returncode == 0 else None
+        actual_files = {name:sha256_file(path=ROOT/'scripts/vnext'/name) for name in (
+            'continuous_semantic_calls.py','continuous_request_context.py','request_limits.py',
+            'current_request_configuration.py','continuous_call_ledger.py','invocation_control.py','ai_adapter.py')}
+        control._exclusive_write_json(path=path/'execution-configuration.json', value={
+            'record_type':'CURRENT_REQUEST_EXECUTION_CONFIGURATION','configuration':prepared.requirement,
+            'program_root':str(ROOT),'program_commit':commit,'actual_program_files':actual_files,
+            'request_limits':prepared.limits.as_dict(),
+            'source_sha256':sha256_bytes(content=prepared.source_bytes),
+            'request_sha256':sha256_bytes(content=prepared.provider_request_body_bytes)})
+        return
     prepared.authority._check()
     files = strict_json_loads(text=prepared.authority._files.decode())
     with (path/'execution-rules.tar.gz').open('xb') as output:
@@ -702,10 +739,14 @@ class _Transport:
             except ValueError as error:raise SourceAuthenticityFailure(str(error)) from error
         raw = None; output = None; request_id = ''; error_class = ''; error_detail = ''; status_code = 200
         try:
-            if self.ledger.live:
+            current_runtime = self.prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1'
+            if self.ledger.live or current_runtime:
+                need(self.ledger.live or adapter.recorded_provider_http_active(),
+                     'CURRENT_RECORDED_HTTP_BOUNDARY_REQUIRED')
                 need(self.recorded_wire is None and self.ledger._locked, 'CONTINUOUS_LIVE_LEDGER_REQUIRED')
                 source_check()
-                load_delegation(requirement=self.prepared.requirement,online=True)
+                if not current_runtime:
+                    load_delegation(requirement=self.prepared.requirement,online=True)
                 result = adapter._build_repository_transport(policy=self.policy).complete(
                     prepared_request=self.prepared,
                     egress_capability=adapter._RESERVATION_OWNER_EGRESS_CAPABILITY,
@@ -734,10 +775,9 @@ class _Transport:
             # recorded usage as evidence for the reference tokenizer.
             reference_input = None
             if self.ledger.live and plan['observability']['estimator_method'] == 'PINNED_REFERENCE_CHAT_FORMAT':
-                from .continuous_request_context import OUTPUT_RESERVE
-                reference_input = plan['observability']['estimated_context_tokens'] - OUTPUT_RESERVE
+                reference_input = plan['observability']['estimated_context_tokens'] - self.prepared.limits.output_tokens
             error_class = usage_error(raw, expected_prompt_tokens=reference_input,
-                                      enforce_total_context=self.ledger.live)
+                                      enforce_total_context=self.ledger.live, limits=self.prepared.limits)
         for name,data in [('raw-response.bin',raw),('assistant-output.bin',output)]:
             if data is not None: control._exclusive_write_bytes(path=self.path/'wire'/name,content=data)
         body = {'record_type':'CONTINUOUS_ORIGINAL_WIRE','execution_id':execution_id,
@@ -844,11 +884,12 @@ def _require_d03_recorded_ledger(ledger):
          'D03_NATIVE_RECORDED_LEDGER_REQUIRED')
 
 
-def execute_d03_recorded_assessment(*, prepared, ledger, recorded_wire):
+def execute_d03_recorded_assessment(*, prepared, ledger, recorded_wire=None):
     """Prove the native request chain offline without opening D03 live calls."""
     request = strict_json_loads(text=prepared.request_bytes.decode())
     _require_d03_recorded_ledger(ledger)
-    need(type(recorded_wire) is bytes,
+    current_runtime = prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1'
+    need((recorded_wire is None if current_runtime else type(recorded_wire) is bytes),
          'D03_NATIVE_RECORDED_WIRE_REQUIRED')
     external = (prepared.source_ledger is ledger and
                 prepared.data_root == ledger.root/'source-inputs')
@@ -859,6 +900,9 @@ def execute_d03_recorded_assessment(*, prepared, ledger, recorded_wire):
          and not request.get('source_statement_facts'),
          'D03_NATIVE_REPLAY_ONLY_CURRENT_REQUEST_REQUIRED')
     from .native_request_construction import request_construction_session
+    if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        return _execute_semantic(prepared=prepared, ledger=ledger, recorded_wire=None,
+            native_assessment=True, d03_recorded_native=True)
     with request_construction_session(prepared.requirement):
         return _execute_semantic(prepared=prepared, ledger=ledger,
             recorded_wire=recorded_wire, native_assessment=True,
@@ -887,7 +931,8 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
          and request_fields.get('metric_id') == 'B13'),
          'B13_TWO_STAGE_EXECUTION_SCOPE_CHANGED')
     need(not d03_recorded_native or (native_assessment and not ledger.live
-         and type(recorded_wire) is bytes and prepared.replay_only
+         and (type(recorded_wire) is bytes or prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1'
+              and recorded_wire is None) and prepared.replay_only
          and (prepared.data_root == ROOT or
               prepared.source_ledger is ledger and prepared.data_root == ledger.root/'source-inputs')
          and request_fields.get('record_type') == 'D03_INTERPRETATION_REQUEST'
@@ -903,6 +948,10 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
              'B13_ROLE_V3_LIVE_VALIDATION_NOT_AUTHORIZED')
     need(not prepared.replay_only or d03_recorded_native,
          'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE')
+    if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        from .ai_adapter import recorded_provider_http_active
+        need(not ledger.live or not recorded_provider_http_active(),
+             'CURRENT_RECORDED_HTTP_CANNOT_RUN_LIVE')
     # The D03 source-fact successor is a diagnostic request identity only.
     # A copied dataclass with replay_only=False cannot turn it into a call.
     need('source_fact_review_contract' not in request_fields or d03_recorded_native,
@@ -954,7 +1003,7 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
         from .d04_native_assessment import validate_response
     policy,plan = build_plan(prepared,
         d03_native_assessment=d03_recorded_native)
-    digest = request_digest(request_fields, policy)
+    digest = request_digest(request_fields, policy, limits=prepared.limits)
     batch_group_id = None
     repair189 = None
     v4_enphase = None
@@ -997,6 +1046,9 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
             except (ValueError, KeyError, TypeError) as error:
                 raise control.EvidenceFailureError(str(error)) from error
     if ledger.live:
+        if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+            from .current_request_configuration import live_scope
+            live_scope(configuration=prepared.requirement,metric_id=request_fields['metric_id'],limits=prepared.limits)
         need(recorded_wire is None, 'CONTINUOUS_RECORDED_BYTES_CANNOT_RUN_LIVE')
         need(ledger.root == Path(prepared.requirement['policy']['budget_root'])
              and ledger.binding['delegation_url'] == prepared.requirement['policy']['delegation_url']
@@ -1027,8 +1079,17 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
              'DEEPSEEK_API_KEY_REQUIRED')
         # This flag is installed only after the actual offline bridge and count
         # tests have been saved and bound to this implementation.
-        from .continuous_call_wiring import validate_wiring_receipt
-        validate_wiring_receipt(requirement=prepared.requirement)
+        if prepared.requirement.get('record_type') != 'CURRENT_REQUEST_CONFIGURATION_V1':
+            from .continuous_call_wiring import validate_wiring_receipt
+            validate_wiring_receipt(requirement=prepared.requirement)
+    # Current recorded execution uses the real repository transport. Tests must
+    # replace _open_provider_request at the HTTP boundary, not feed raw output
+    # directly to this controller or turn a recorded ledger into a live one.
+    if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        need(recorded_wire is None, 'CURRENT_RECORDED_EXECUTION_REQUIRES_HTTP_BOUNDARY')
+        from .ai_adapter import recorded_provider_http_active
+        need(ledger.live or recorded_provider_http_active(),
+             'CURRENT_RECORDED_HTTP_BOUNDARY_REQUIRED')
     with ledger.locked():
         path,intent = ledger.claim(channel='PROVIDER',request_digest=digest,
             requirement=prepared.requirement,plan_id=plan['ai_invocation_plan_id'],
@@ -1070,3 +1131,81 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
                     if native_assessment else 'feasibility.json')
         control._exclusive_write_json(path=path/filename,value=result)
         return path,result
+
+
+def reconcile_saved_provider_terminal(*, ledger, ordinal):
+    """Complete a known written terminal after a crash, without sending again.
+
+    An intent/unknown remote outcome is never guessed into success. Existing
+    marker, journal, receipt and original count checks remain ledger-owned.
+    This produces no Candidate/Result and does not reopen a failed opportunity.
+    """
+    need(type(ordinal) is int and ordinal > 0,'CURRENT_RECONCILE_ORDINAL_INVALID')
+    path = ledger.root/'calls'/('%04d' % ordinal)
+    with ledger.locked():
+        ledger.snapshot()
+        if (path/'terminal.json').is_file():
+            return strict_json_file(path=path/'terminal.json')
+        config = strict_json_file(path=path/'execution-configuration.json')
+        need(config['record_type'] == 'CURRENT_REQUEST_EXECUTION_CONFIGURATION',
+             'CURRENT_RECONCILE_CONFIGURATION_REQUIRED')
+        intent = strict_json_file(path=path/'intent.json')
+        wire = strict_json_file(path=path/'wire/journal.json')
+        name = wire['execution_id'].split(':',1)[1]
+        execution = strict_json_file(path=path/'invocation_control/executions'/(name+'.json'))
+        need(wire['intent_id'] == intent['intent_id']
+             and wire['request_sha256'] == config['request_sha256']
+             and wire['execution_id'] == execution['execution_id'],
+             'CURRENT_RECONCILE_EXECUTION_CHANGED')
+        for relative, field in [('raw-response.bin','raw_response_sha256'),
+                                ('assistant-output.bin','assistant_output_sha256')]:
+            need(wire[field] is None or sha256_file(path=path/'wire'/relative) == wire[field],
+                 'CURRENT_RECONCILE_RESPONSE_CHANGED')
+        root = path/'invocation_control'
+        plan = strict_json_file(path=root/'plans'/(intent['plan_id'].split(':',1)[1]+'.json'))
+        need(plan['ai_invocation_plan_id'] == intent['plan_id']
+             and plan['provider_request_body_sha256'] == wire['request_sha256'],
+             'CURRENT_RECONCILE_PLAN_CHANGED')
+        reservation_path = control._reservation_path(root=root,
+            request_identity=plan['provider_request_identity'])
+        if reservation_path.exists():
+            reservation = control._validate_active_reservation_for_plan(
+                reservation=strict_json_file(path=reservation_path),plan=plan)
+            need(reservation['execution_id'] == execution['execution_id'],
+                 'CURRENT_RECONCILE_RESERVATION_CHANGED')
+            control._archive_reservation(root=root,reservation_path=reservation_path,
+                reservation=reservation,terminal_status=execution['status'])
+        return ledger.finish_provider(path=path,intent=intent,execution=execution,wire=wire)
+
+
+def read_saved_semantic_call(*, ledger, ordinal):
+    """Read ordinary saved current call bytes; never replay a paid request."""
+    need(type(ordinal) is int and ordinal > 0,'CURRENT_READ_ORDINAL_INVALID')
+    path = ledger.root/'calls'/('%04d' % ordinal)
+    need((ledger.root/'binding.json').is_file(),'CURRENT_READ_EXISTING_LEDGER_REQUIRED')
+    with ledger.locked():
+        state = ledger.snapshot()
+        need(any(row['ordinal'] == ordinal for row in state['rows']),
+             'CURRENT_READ_CALL_MISSING')
+        config = strict_json_file(path=path/'execution-configuration.json')
+        need(config['record_type'] == 'CURRENT_REQUEST_EXECUTION_CONFIGURATION',
+             'CURRENT_READ_CONFIGURATION_REQUIRED')
+        need(sha256_file(path=path/'source.json') == config['source_sha256'],
+             'CURRENT_READ_SOURCE_CHANGED')
+        source = strict_json_file(path=path/'source.json')
+        request = strict_json_file(path=path/'semantic-request.json')
+        need(request['source_id'] == source['semantic_source_id'],
+             'CURRENT_READ_REQUEST_SOURCE_CHANGED')
+        wire = strict_json_file(path=path/'wire/journal.json')
+        need(wire['request_sha256'] == config['request_sha256'],
+             'CURRENT_READ_REQUEST_CHANGED')
+        raw = (path/'wire/raw-response.bin').read_bytes() if (path/'wire/raw-response.bin').exists() else None
+        output = (path/'wire/assistant-output.bin').read_bytes() if (path/'wire/assistant-output.bin').exists() else None
+        for value, field in [(raw,'raw_response_sha256'),(output,'assistant_output_sha256')]:
+            need((None if value is None else sha256_bytes(content=value)) == wire[field],
+                 'CURRENT_READ_RESPONSE_CHANGED')
+        return {'configuration':config,'source':source,'request':request,'wire':wire,
+            'raw_response':raw,'assistant_output':output,
+            'terminal':strict_json_file(path=path/'terminal.json') if (path/'terminal.json').exists() else None,
+            'calls':{'provider':0,'paid':0,'sec':0},'native_result_created':False,
+            'semantic_correctness_verified':False,'production_authorized':False}
