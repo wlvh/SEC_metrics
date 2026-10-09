@@ -23,3 +23,5 @@
 f1限定P2增量独审APPROVE_WITHIN_P2_INCREMENT：8短例+10边界，见independent-p2/conclusion.md；前次61adc独审REQUEST_CHANGES及两个反例保持。不是全PR/所有公司内容批准。后继仅归档该报告及日志，产品源码/测试仍精确f1，不重新重跑未变材料。
 
 追加防意外重复获取的有限检查：原账本已成功捕获同一不可变URL时，换task/source目录不会重新申领，返回ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED；元数据刷新仍显式计数。9短例2.067s通过。运行配置可指定原完整source_root，不复制/裁剪/重编号账本。实际CLI新公司状态复用原recorded来源库，仅2个元数据HTTP、0不可变原件GET，原请求行保留为18行，B01/B02完成；日志见existing-store-cli.log，未消费旧Result作为答案。这个新增源库接缝及重复目录保护尚需限定增量复核，不能继承f1两个P2的限定结案为其独审。
+
+继续定位到一个实际模式边界缺口：早期recorded上下文依赖测试进程替换urlopen，普通CLI未注入回复时仍可能触达真实HTTP并按模拟计数。这不能交付。现明确RecordedSecHttpClient只读取recorded_http_root的原HTTP回复，复用原客户端持久化/日志，完全不打开网络；缺回复不回退HTTPS，LIVE拒绝录制输入字段。10短例通过；原SecHttpClient/CallLedger/默认原生调用未改。新增模式边界和源库复用待限定增量复核，旧两P2结案不扩大。这不是恢复信任/防伪框架，而是防止普通调用模式错误产生未计数网络。

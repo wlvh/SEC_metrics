@@ -16,7 +16,7 @@ state.mkdir(parents=True,exist_ok=True)
 ledger=recorded_ledger(root=state/'recorded-ledger',limits=(0,0,40))
 with ledger.locked():ledger.snapshot()
 context={'company_id':'marriott_international','metric_ids':['B01','B02'],
-    'ledger_root':str(ledger.root),'maximum_counts':[0,0,40],
+    'recorded_http_root':str(origin),'ledger_root':str(ledger.root),'maximum_counts':[0,0,40],
     'execution_mode':'RECORDED_TEST_ONLY','purpose':'remaining_development_feasibility',
     'requirement_id':'ordinary-company-capture-v1','requirement_closure_hash':content_hash(value={'recorded':True})}
 path=state/'call-context.json';path.write_text(json.dumps(context))
@@ -33,11 +33,16 @@ def http(*,request,timeout):
     assert hashlib.sha256(raw).hexdigest()==row['content_sha256']
     return Response(raw)
 
+def adapted_http(url):
+    from types import SimpleNamespace
+    response=http(request=SimpleNamespace(full_url=url),timeout=60)
+    return response.status,response.getvalue(),response.headers,''
+
 def run(name, *, forbid_calculation=False):
     start=time.monotonic();out=io.StringIO()
     with contextlib.ExitStack() as stack:
         if forbid_calculation:stack.enter_context(patch('vnext.ordinary_saved_result._ordinary_case',side_effect=AssertionError('REPEAT_MUST_NOT_CALCULATE')))
-        stack.enter_context(patch('sec_http.urlopen',side_effect=http))
+        stack.enter_context(patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',side_effect=lambda **kw: adapted_http(kw['url'])))
         stack.enter_context(patch.object(socket.socket,'connect',side_effect=AssertionError('NETWORK_FORBIDDEN')))
         stack.enter_context(patch.object(socket,'getaddrinfo',side_effect=AssertionError('DNS_FORBIDDEN')))
         stack.enter_context(contextlib.redirect_stdout(out))

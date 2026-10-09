@@ -53,8 +53,15 @@ class Capture:
             _need(registry.read_bytes() == (ROOT/'config/company_registry.csv').read_bytes(), 'REGISTRY_CHANGED')
         else:
             write_immutable_bytes(path=registry, content=(ROOT/'config/company_registry.csv').read_bytes())
-        self.client = SecHttpClient(workdir=source, config_path=ROOT/'config/sec_config.json',
-                                    log_path=source/'evidence/requests_log.csv')
+        if ledger.live:
+            _need('recorded_http_root' not in context,'RECORDED_INPUT_CANNOT_ENTER_LIVE')
+            client_type,options=SecHttpClient,{}
+        else:
+            _need(context.get('recorded_http_root'),'RECORDED_HTTP_INPUT_REQUIRED')
+            from .recorded_sec_http import RecordedSecHttpClient
+            client_type,options=RecordedSecHttpClient,{'recorded_root':context['recorded_http_root']}
+        self.client = client_type(workdir=source, config_path=ROOT/'config/sec_config.json',
+                                 log_path=source/'evidence/requests_log.csv',**options)
         # One claim corresponds to exactly one HTTP attempt. Do not alter the
         # global client default or rely on its retrying configuration.
         self.client.config = {**self.client.config, 'max_retries':0, 'rate_limit_per_sec':1}

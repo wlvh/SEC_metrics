@@ -8,7 +8,7 @@ from sec_http import parse_request_log_rows
 from vnext.continuous_call_ledger import CallLedger,_FACTORY
 # Reuse a legal isolated recorded store from the passed original chain, not
 # its Result or old computation. Only metadata gets new HTTP responses.
-ctx=json.loads((state/'call-context.json').read_text());ctx['source_root']=str(state/'task/sources')
+ctx=json.loads((state/'call-context.json').read_text());ctx['recorded_http_root']=str(origin);ctx['source_root']=str(state/'task/sources')
 newctx=state/'shared-context.json';newctx.write_text(json.dumps(ctx))
 rows=parse_request_log_rows(text=(origin/'evidence/requests_log.csv').read_text());byurl={r['source_url']:r for r in rows if r['status_code']=='200' and not r['error'] and (origin/r['repo_relative_path']).is_file()}
 class Response(io.BytesIO):
@@ -19,7 +19,7 @@ def transport(*,request,timeout):
  assert '/submissions/' in url or '/companyfacts/' in url,'Immutable source must be reused, not fetched'
  return Response((origin/byurl[url]['repo_relative_path']).read_bytes())
 out=io.StringIO()
-with patch('sec_http.urlopen',side_effect=transport),patch.object(socket.socket,'connect',side_effect=AssertionError('NO_NETWORK')),patch.object(socket,'getaddrinfo',side_effect=AssertionError('NO_DNS')),contextlib.redirect_stdout(out):
+with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',side_effect=lambda **kw: (200,transport(request=type('Request',(),{'full_url':kw['url']})(),timeout=60).getvalue(),{},'')),patch.object(socket.socket,'connect',side_effect=AssertionError('NO_NETWORK')),patch.object(socket,'getaddrinfo',side_effect=AssertionError('NO_DNS')),contextlib.redirect_stdout(out):
  code=main(['run','--company','marriott_international','--work-dir',str(state/'new-company-task'),'--output-dir',str(state/'new-exports'),'--call-context',str(newctx),'--metric','B01','--metric','B02','--max-sec-requests','20'])
 x=json.loads(out.getvalue());assert code==0 and x['status']=='FLOW_COMPLETED'
 assert len(requested)==2

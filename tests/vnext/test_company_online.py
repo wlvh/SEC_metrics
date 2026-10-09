@@ -21,14 +21,14 @@ class CompanyOnlineTest(unittest.TestCase):
         self.ledger=recorded_ledger(root=self.root/'ledger',limits=(0,0,10))
         with self.ledger.locked():self.ledger.snapshot()
         self.context={'company_id':'marriott_international','metric_ids':['B01','B02'],
-            'ledger_root':str(self.ledger.root),'maximum_counts':[0,0,10],
+            'recorded_http_root':str(self.root/'http-fixtures'),'ledger_root':str(self.ledger.root),'maximum_counts':[0,0,10],
             'execution_mode':'RECORDED_TEST_ONLY','purpose':'remaining_development_feasibility',
             'requirement_id':'ordinary-company-capture-v1','requirement_closure_hash':content_hash(value={'recorded':True})}
         self.url='https://data.sec.gov/submissions/CIK0001048286.json'
         self.capture=online.Capture(self.root/'source',self.ledger,self.context,5)
 
     def test_one_native_http_attempt_uses_existing_count_and_no_retry(self):
-        with patch('sec_http.urlopen',side_effect=lambda **kw:Response(b'{"cik":1048286}')) as transport:
+        with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',return_value=(200,b'{"cik":1048286}',{},'')) as transport:
             self.capture.get(self.url)
             self.capture.get(self.url)
         self.assertEqual(transport.call_count,1)
@@ -38,7 +38,7 @@ class CompanyOnlineTest(unittest.TestCase):
         self.assertTrue((self.root/'source/evidence/requests_log_manifest.json').is_file())
 
     def test_unknown_remote_blocks_next_claim_and_is_not_zero(self):
-        with patch('sec_http.urlopen',side_effect=OSError('unknown remote')) as transport:
+        with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',side_effect=OSError('unknown remote')) as transport:
             with self.assertRaises(ValueError):self.capture.get(self.url)
         self.assertEqual(transport.call_count,1)
         with self.ledger.locked():
@@ -47,7 +47,7 @@ class CompanyOnlineTest(unittest.TestCase):
         with self.assertRaises(ValueError):self.capture.get(self.url)
 
     def test_persistence_interrupt_leaves_counted_pending_no_second_transport(self):
-        with patch('sec_http.urlopen',side_effect=lambda **kw:Response(b'{}')) as transport, \
+        with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',return_value=(200,b'{}',{},'')) as transport, \
              patch('vnext.company_online._atomic_json',side_effect=RuntimeError('interrupted plan')):
             with self.assertRaises(RuntimeError):self.capture.get(self.url)
         self.assertEqual(transport.call_count,0)
@@ -117,7 +117,7 @@ class CompanyOnlineTest(unittest.TestCase):
 
 
     def test_new_task_source_directory_does_not_reset_immutable_capture(self):
-        with patch('sec_http.urlopen',side_effect=lambda **kw:Response(b'{}')) as transport:
+        with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',return_value=(200,b'{}',{},'')) as transport:
             self.capture.get(self.url)
             other=online.Capture(self.root/'different-task-source',self.ledger,self.context,5)
             with self.assertRaisesRegex(ValueError,'ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED'):
@@ -125,3 +125,12 @@ class CompanyOnlineTest(unittest.TestCase):
         self.assertEqual(transport.call_count,1)
         with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,1])
         self.assertIsNone(other.pending)
+
+
+    def test_recorded_context_without_replies_cannot_use_network(self):
+        context={k:v for k,v in self.context.items() if k!='recorded_http_root'}
+        with patch('sec_http.urlopen',side_effect=AssertionError('recorded must not reach live')) as network:
+            with self.assertRaisesRegex(ValueError,'RECORDED_HTTP_INPUT_REQUIRED'):
+                online.Capture(self.root/'missing-replies',self.ledger,context,5)
+        network.assert_not_called()
+        with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,0])
