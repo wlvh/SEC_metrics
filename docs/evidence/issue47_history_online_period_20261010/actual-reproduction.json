@@ -1,0 +1,55 @@
+{
+  "constructed_control": true,
+  "business_result_created": false,
+  "ledger_or_network_access": false,
+  "observations": [
+    {
+      "case": "historical-range",
+      "requested_period_arguments": [
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2025"
+      ],
+      "returncode": 0,
+      "online_called": true,
+      "online_argument_names": [
+        "call_context",
+        "company_id",
+        "max_sec_requests",
+        "metric_ids",
+        "output_dir",
+        "work_dir"
+      ],
+      "period_forwarded": false,
+      "years_forwarded": false,
+      "stdout": "{\n  \"elapsed_seconds\": 1.7458107322454453e-05,\n  \"status\": \"FLOW_COMPLETED\"\n}\n"
+    },
+    {
+      "case": "latest-with-history-years",
+      "requested_period_arguments": [
+        "--period",
+        "latest-complete-fy",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2025"
+      ],
+      "returncode": 0,
+      "online_called": true,
+      "online_argument_names": [
+        "call_context",
+        "company_id",
+        "max_sec_requests",
+        "metric_ids",
+        "output_dir",
+        "work_dir"
+      ],
+      "period_forwarded": false,
+      "years_forwarded": false,
+      "stdout": "{\n  \"elapsed_seconds\": 1.2124888598918915e-05,\n  \"status\": \"FLOW_COMPLETED\"\n}\n"
+    }
+  ]
+}
