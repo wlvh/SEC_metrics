@@ -1,4 +1,10 @@
 <!-- current-runtime-repair-20261009:BEGIN -->
+**2026-10-10 接收与公司模型闭环最新状态：**actualmain为f6ef7886，106及公共104/107/109和对应金融消费者已由接收方进入main；下面早期Draft/原CI状态是各自历史快照。当前112@48a57b29完整复用EnphaseFY2025原173–178六组/29units、非空supplier-risk内容，走当前语义重验/现有汇总/公司CLI/保存/results/CSV；原Result7bf9…f99b及计划/响应身份不改，首次119.895秒、禁计算复.163秒、独读.009秒；合main后独读.0086秒保6files。公开TEXT_QUAL与底层WITHHELD/null保原定义，不是财务健康保证或新公司结果。两个限定review的P2结论历史保留，实际依赖及quotation_tags配置已修，最终一JSON/回归待接收方确认；125组合小例7.069秒，112当前十二CI全SUCCESS/MERGEABLE，不重跑旧长材料。
+
+113@4791ef0b提供选年/每指标工厂的内容确认E01公司门与按Spec呈现，默认旧E01仍闭；十一CI全SUCCESS。#47在114已实际保存ParamFY24无匹配响应null并复/读，旧V1答不用；其摘要修补只缩CSV，完整请求/评估保。公共最小workflow三模块patch已直接接收和实测原步骤53例，无新runner。115@bfa0c35b仅已核finance三无关配置差异：73小例6.982秒及实际mixed配置只读匹配；#47固定5a3668记录三个FY21代表兼容复8.583秒/equality复8.524秒、0factory，独读18结果.749秒，141旧Result/成功pointer保。十一CI全SUCCESS；额外financial/writer变化的较旧独立task仍不匹配，不扩大信用。102@8789b7bd相邻main冲突已保reporter/average原函数，33例12.404秒及十一CI成功；103@499eb0bc仅两测试/workflow冲突已保当前/开发两API，46例78.218秒零skip，最新CI在途，不继承旧绿。
+
+真实新增0/0/0；原账本只读195槽=143provider/paid+52SEC、余97/97/28、本批21/66，claims6023字节不变。现由Claude按实际权限接收；父会话不执行merge/Ready/正式采纳/active。下一项为具体接收增量与受影响组合，不重复102/103/106解阻或重新购买模型。390/正常新财报/旧语义退出仍未完成，Goal仍active，局部待复核不记全局blocked。
+
 **2026-10-10 当前请求运行实交：**Draft PR106最新ab65d453仅归档独审/说明，产品源码仍416391c9。普通配置接现有WB-3/CallLedger/唯一HTTP，实际Enphase保存源准备29请求、录制HTTP/usage/保存读及native单请求Candidate/Evidence/same-config replay成立；55组合88.910秒及最后模式2/6.990秒复用。原ebaf三P2/49工具3消息历史保留；416回修12短例/2模式及出口扫描通过，独立限定回修37工具3消息PASS_LIMITED_REPAIR，已结案，不再写待审。ab65当前11检查已实际全部SUCCESS。上述不是新模型/完整公司结果或生产信用，原账本143/143/52、97/97/28、本批21/66/claimsSHA6023不变。
 
 Draft PR107当前80ca9883：显式A03/A12 DEI＋A03原披露平均窗口接公共保存路径，默认YEAR_ONLY及默认指标集合不扩。原JPM21两个组件的旧措辞仍未决，由#47原有限消费者处理。c5d的真实CI原历史annual包装失效已复现；复用固定b0ead0e5仅historical_dei最小补丁，33定向0.046秒/零skip通过，旧失败不抹除。80ca10检查已全部SUCCESS，原失败fast已恢复。已读取#47固定616fe531实际两指标同CLI终态：A03实际FY2021/Q4保存1.11ratio，A12为55mUSD全年；首恢复125.385秒、禁工厂复跑5.739秒/0、独立读0.572秒、16文件不变。是执行方日志/保存输出读取，不是本方亲跑或正式内容接受。新期间hook有限独审34工具/3消息PASS：80短例7.354秒＋5控制0.093秒，不代公司内容接受；ae7b只归档说明/审阅，产品源码仍80ca，后继CI另看。下一项核实际组合与必要限定复核，保旧Run/Result和当期默认；不重跑已通过大材料或付费请求。
