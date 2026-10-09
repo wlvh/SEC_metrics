@@ -2,7 +2,7 @@
 
 ## 公司入口的当前交付边界
 
-#28维护公共 runtime/CLI 与当期集成，#47维护历史消费者。已核 main `ae8a13c8` 包含 PR67 普通记录、PR83 有限在线续接及 PR71/75/76 历史消费者；实际支持范围、输入、调用与旧任务命令见 [公司运行](docs/company_local_run.md)。代码交付、运行成功和业务接受分别判断。
+#28维护公共 runtime/CLI 与当期集成，#47维护历史消费者。已核 main `73ead3b4` 包含 PR67 普通记录、PR83 有限在线续接及 PR71/75/76 历史消费者；实际支持范围、输入、调用与旧任务命令见 [公司运行](docs/company_local_run.md)。代码交付、运行成功和业务接受分别判断。
 
 新普通记录按 [受信任内部工具决定](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006)简化；下述 native/Requirement/信任/封存章节仅说明旧固定版本和旧任务。来源与计算分离、公司/期间、引用、计数、原子写入、必要锁和恢复仍适用。
 

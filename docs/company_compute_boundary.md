@@ -2,7 +2,7 @@
 
 **版本：PR57 已交付 main 的原生交接接口；下列安装/信任命令仅适用该固定版本及保留的原生任务。** 对应历史 `COMPANY-SEPARATION-v2.1-20261002`；代码交付不等于业务接受、部署或发布。
 
-main ae8a13c8已接收PR67的保存来源普通记录、默认原生过渡兼容以及PR83的有限在线B01/B02。普通路径不恢复本页旧固定版本的独立信任/递归权限链；本页原PR57事务细节只适用于其保存任务。版本对应命令见 [公司运行](company_local_run.md)。来源/计算分离、原件与引用、公司/期间、调用计数、原子写入、锁及恢复继续保留。
+main 73ead3b4已接收PR67的保存来源普通记录、默认原生过渡兼容以及PR83的有限在线B01/B02。普通路径不恢复本页旧固定版本的独立信任/递归权限链；本页原PR57事务细节只适用于其保存任务。版本对应命令见 [公司运行](company_local_run.md)。来源/计算分离、原件与引用、公司/期间、调用计数、原子写入、锁及恢复继续保留。
 
 当前公共及当期集成、唯一队列见 [Issue #28](https://github.com/wlvh/SEC_metrics/issues/28#run-test-simplification)，历史消费者由 [#47](https://github.com/wlvh/SEC_metrics/issues/47#history-simplification-20261006)维护。[#54](https://github.com/wlvh/SEC_metrics/issues/54)仅保留已交付来源和证据。本页用于承接最终的稳定使用说明，不复制 Issue 进度或建立另一份待办。
 

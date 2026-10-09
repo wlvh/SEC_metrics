@@ -23,3 +23,10 @@ run/results help output is in main-receiving-*-help.txt. JSON parses and git
 diff --check pass. The precommit document alignment report refers to the old
 HEAD and therefore reports incoming files/document differences; it is kept
 and is not a final new-tree validation. No financial materials rerun.
+
+Main subsequently advanced to `73ead3b4` through the reception session. The
+doc branch receives it without modifying the delivered public/history code.
+PR87 is now main (merge2931d078), PR88 supplies the actual history guide;
+source/window PR89 remains candidate. Current nav/version claims are updated
+again only for those changed delivery facts. Three precommit alignment
+differences are preserved; a postcommit run confirms the actual committed tree.
