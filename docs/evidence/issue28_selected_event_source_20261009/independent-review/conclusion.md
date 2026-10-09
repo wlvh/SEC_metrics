@@ -47,3 +47,35 @@
 作者的 `README.md`、原件比较及旧当前事件集成日志已读，作为提供的执行侧证据。未独立重跑原件、长链、公司 CSV/保存读取集成、远端 CI 或五年批次；不把它们加入本次独立测试数。
 
 无 commit/push、真实 SEC/provider 请求、账户操作、#47 工作树/账本/状态读取或写入；本次仓库写入仅本目录的 conclusion.md 与必要日志。测试临时目录也放在本目录并已清理，没有 tar/MANIFEST。
+
+
+---
+
+## P2 修后真正新增差异限定复核：35b9329d
+
+**限定结论：PASS；原 P2 在显式 history_last_days 路径已修复，没有新增可行动问题。** 上方 820461a0 的 NEEDS_FIX 结论、原反例及所有原日志原样保留。本结论只接新增差异，不覆盖未测试的历史消费者接线或真实业务完成。
+
+- 新 base：`820461a084ace0e1824ba2da06a8b7be89e5cc5d`。
+- 新 patch / 实际 HEAD：`35b9329d28bd3fa0e9f47f988713d5f90b7fc152`。
+- 本次范围：normal_zero_ai_results.py、selected_event_source_v1.py、test_selected_event_source_v1.py 新 gap 差异，作者 gap-regression-before/after 与 README 尾部。原主体、来源/rules 分离、RAW_BLOB 合并、CI 接线结论复用上一轮，不重新扩大复核。
+- 本次起止：2026-10-09 08:57:52 UTC → 2026-10-09 09:01:24 UTC。
+- 累计起止：2026-10-09 08:43:07 UTC → 2026-10-09 09:01:24 UTC。
+- 本次工具 10；累计工具 **47**（含包装和嵌套）；累计普通输出消息 **3**（原开工/原最终/本次最终），问题 0，子代理 0。仍在 80 工具 / 90 分钟 / 3 消息上限内。
+
+### 修后行为与验证
+
+新增 history_last_days 接收当前 reader 真正读到的同一 payload 和由其产生的 shards。返回值必须是覆盖全部原 shard 名称且无额外名称的 dict，各有效末日必须是标准 ISO 日期且不早于原 filingTo。需要同时提供 callable 的完整 body validator；无 validator、非 callable 策略、缺项/多项、非法日期或缩短声明范围均拒绝。
+
+选块现在使用该有效末日，body validator 接收完全同一个 last_day；原 shard.filingTo、body、issuer 与年度 period 不改。实际独立小例验证：空 acquired census 和含 header census 两种原反例都返回原先漏掉的 2025-01-01 event，1 claim / 4 proofs，完整 body validator 真正执行。两主体 union 的各 payload/shards 分开算有效末日，两 block 均读入并分别验证，2 claims / 8 proofs。完整 body 冲突依旧拒绝，不转空成功。
+
+默认 history_last_days=None 保留原 filingTo 选块。本次以固定 820461a0 Git 对象载入原 selector 和 event walk，对原 gap 小材料比较整个 source-input 返回值，实际完全相等；严格只接原五个 keyword 的旧 history_validator 也成功，未默认塞入 last_day。默认路径保留旧 gap 行为是该兼容选择的明确边界；历史消费者需要实际传入新的策略及对应 validator，并登记它们的程序/config 依赖。这里没有把尚未接入的 #47 消费者写成修复完成。
+
+### 实际测试
+
+1. `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1`：**8/8、0 skips**，unittest 0.098s，进程 0.258046s；`gap-required-tests.log`。
+2. 只针对新差异的独立小材料检查：**8/8、0 skips、0.105s**；`gap-independent-boundary-tests.log`。覆盖两种原 gap 反例、同 payload/shards 与 last_day、默认 None/base 整个返回相等、旧严格回调参数兼容、边界 map 拒绝、无 validator 拒绝、两主体转发和实际 body 冲突。
+3. 三项受审文件与新 patch Git blobs 逐字节相等，限定 diff --check 返回 0。追加前核对上方 conclusion 与四份原独审日志均等于新 patch 提交中保存的原字节；追加后原 conclusion 仍为完整未修改前缀。
+
+作者 before 日志的 TypeError 仅证明新可选参数当时不存在；没有把它当作原语义漏选的证明。原语义漏选依据仍是第一轮独立 history-gap-counterexample.log，本次则独立在两种同类小材料上确认修后行为。
+
+没有重跑原件/长链/远端 CI，没有公司历史或 E01/Result/Run 信用，没有 commit/push/真实 SEC 或 provider 请求/账户操作/#47 工作树或账本操作。所有新增仓库写入仍只在这个原 independent-review 目录，同一 conclusion.md 追加及两份必要日志；原冻结包与原日志未改。
