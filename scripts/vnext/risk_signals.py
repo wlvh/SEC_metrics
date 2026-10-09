@@ -7,13 +7,15 @@ from .canonical import content_hash
 from .text_coverage import TextCoverageError
 
 
-def risk_factor_headings(*, document: Mapping) -> dict:
+def risk_factor_headings(*, document: Mapping, exclude_combined_part_headers=False) -> dict:
     """Return verbatim emphasized items from the entire located Item 1A.
 
     A source heading is a disclosure, not a finding that the risk has occurred.
     A bold lead sentence is kept separately from its following paragraph. The
     native consumer must reconstruct this document from original source bytes.
     """
+    if type(exclude_combined_part_headers) is not bool:
+        raise TextCoverageError("D01_RUNNING_HEADER_POLICY_INVALID")
     if document.get("text_document_id") != content_hash(value={
             k: v for k, v in document.items() if k != "text_document_id"}):
         raise TextCoverageError("TEXT_DOCUMENT_HASH_CHANGED")
@@ -34,6 +36,8 @@ def risk_factor_headings(*, document: Mapping) -> dict:
             if (block["linked"]
                     or not re.search(r"[A-Za-z]", text)
                     or re.match(r"^(?:item\s*1a\b|part\s+[ivx]+$)", text, re.I)
+                    or (exclude_combined_part_headers
+                        and re.fullmatch(r"parts\s+[ivx]+\s+and\s+[ivx]+", text, re.I))
                     or re.sub(r"\W", "", text).casefold() in normalized_names):
                 continue
             # Page repeats remain inspectable. Only identical title text is

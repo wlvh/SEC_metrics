@@ -32,6 +32,7 @@ name: Company saved-source records
       - 'tests/vnext/test_history_company_dispatch.py'
       - 'tests/vnext/test_historical_geography_cases.py'
       - 'tests/vnext/test_selected_history_result_state.py'
+      - 'tests/vnext/test_d01_explicit_running_headers.py'
       - 'tests/fixtures/lodging_selected_table.html'
       - 'config/**'
       - 'catalog/**'
@@ -71,6 +72,10 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 tests/required_unittests.py tests.vnext.test_historical_event_cases.HistoricalEventCaseTest tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest
+      - name: Explicit D01 successor and ordinary factory admission
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_d01_explicit_running_headers
       - name: Existing historical SEC count and recorded capture compatibility
         env:
           PYTHONDONTWRITEBYTECODE: '1'

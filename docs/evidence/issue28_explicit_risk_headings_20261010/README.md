@@ -1,0 +1,13 @@
+# Explicit D01 running-header receiving — 2026-10-10
+
+Main f6 still selects the complete page heading `Parts I and II` as an Item1A risk disclosure. The historical side's selected-year adapter d8e36eeac2ecefbc90ebc3b79fdfdb60538f4ab4 has an actual Marriott FY2024 writer result but its shared company writer gate does not admit D01. This batch receives the existing two-part-header correction (af29ab2/31beeab original limited source repair) through a small explicit policy path; it does not copy the historical adapter or build a new classifier.
+
+`D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER` selects the complete-header exclusion. Candidate construction and Evidence reconstruction both use it. Risk sentences beginning with the same words remain; underline, original raw spans, sections, entity and annual dates retain their existing checks. Optional internal arguments default to False. No-policy and old V2 results retain the old behavior/records; saved old packages are untouched. No text schema, Spec, review decision or business definition changes.
+
+Ordinary `EXPLICIT_CASE_METRICS` admits D01 only with the existing fiscal-year + callable case-factory contract. The default current producer remains unsupported; this is not current/default D01 delivery or all39 family coverage. The historical consumer owns source selection, complete PROCESSING_FILES and company run/repeat/results validation. Its prior writer result and current source completeness are not presumed accepted here.
+
+Final affected controls:88 tests,7.214s unittest,zero failure/error/skip. Tests run on the explicitly recorded uncommitted tree; tested-tree.json supplies file hashes to compare after commit. Two earlier failures are preserved: the tests guessed `METRIC_NOT_IMPLEMENTED`/a later no-factory error, but the unchanged controller actually refuses earlier as `CURRENT_UPDATE_METRIC_UNSUPPORTED`. Only expected error labels were corrected; admission was not relaxed beyond explicit D01.
+
+Tests cover an actual native Candidate/Evidence path over constructed original HTML (including nonempty risks/underline), old/default identity, complete page-header exclusion, a genuine risk starting with the same words, exact raw spans, changed byte/subject/period, wrong policy/metric, and public gate/default distinction. Existing text, coverage, ordinary update and historical dispatch controls are reused. The existing company-current workflow runs the new module. Limited independent review and actual historical company CLI remain pending, separately from these tests.
+
+No SEC/provider/paid requests, account probes, peer-state writes, old Run/Result rewrite, Ready/merge/adoption/deployment/active. Source-proof PR123 is independent and not required for this functionality.
