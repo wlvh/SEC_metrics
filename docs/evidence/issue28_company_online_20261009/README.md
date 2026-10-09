@@ -17,3 +17,7 @@
 现有CompanyLocal模拟测试在本机20项中4项因未解析macOS系统临时目录别名报LOCAL_PATH_ALIAS；原行为未改，不伪称通过。新在线真实用户入口在显式绝对/已解析路径执行，不借该错误跳过计数/恢复验证。
 
 61adc0e限定独审REQUEST_CHANGES保留：申领后计划落盘失败的摘要漏报、B02缺前期先阻断B01。修后pending在claim返回即设置，run/acquire摘要均保留未知槽；当前来源先获取，B02前期限制单独传递，继任主体不强迫前期比较。两个新增回归及原公司入口33项8.311s通过。原34行源/完整演练复用未变的HTTP/计算/保存责任；改变的获取顺序与摘要另作定向检查。非阻断观察：整体在线状态/计数从run_summary.json读，company-results/latest-execution描述计算阶段而非全流程。
+
+精确f1c0088提交的最终HTTP边界链实际PASS（fixed-sha-program-chain.log）：首跑9.164s、禁工厂复跑1.102s、消费数值变化4.073s、503失败1.054s、显式恢复4.093s、禁网禁计算读取0.00841s、前期文件404时局部完成6.675s。原件/来源读取及计算原实现未mock。此前全链日志中的最后AssertionError是测试把程序正确的CANDIDATE_WITHHELD误写为异常；存储检查已确认原真实处理，原日志未改。后续修正测试断言后f1实际完整执行通过，B02具名NORMAL_COMPANYFACTS_ROUTE_UNRESOLVED及404出处保留，不改程序标准来迁就预期。
+
+f1限定P2增量独审APPROVE_WITHIN_P2_INCREMENT：8短例+10边界，见independent-p2/conclusion.md；前次61adc独审REQUEST_CHANGES及两个反例保持。不是全PR/所有公司内容批准。后继仅归档该报告及日志，产品源码/测试仍精确f1，不重新重跑未变材料。
