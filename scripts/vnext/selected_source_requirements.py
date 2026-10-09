@@ -25,9 +25,13 @@ def _need(condition, reason):
 
 
 def _limitation(errors, phase, error, **context):
+    # The saved metadata reader can expose missing/wrong-shaped fields as
+    # KeyError/TypeError. Report this layer explicitly, never disclosure absence.
+    category = ('SOURCE_SCHEMA_OR_READER_ERROR' if isinstance(error, (KeyError, TypeError))
+                else getattr(error, 'category', 'SOURCE_INTEGRITY_ERROR'))
     errors.append({'phase':phase, 'reason':str(error),
                    'error_type':type(error).__name__,
-                   'category':getattr(error, 'category', 'SOURCE_INTEGRITY_ERROR'), **context})
+                   'category':category, **context})
 
 
 def _catalog_requirements(plan, selection):
@@ -138,7 +142,7 @@ def discover_selected_annual_requirements(*, repo_root, company_id, report_end, 
         selection = resolve_period_selection(repo_root=source, company_id=company_id,
             report_end=report_end, rules_root=ROOT)
         _catalog_requirements(plan, selection)
-    except ValueError as error:
+    except (ValueError, KeyError, TypeError) as error:
         _limitation(errors, 'PERIOD_METADATA', error)
         plan.require(submissions_url(cik=int(company['primary_cik'])),
                      'selected_submissions_inventory', 'application/json')
@@ -147,7 +151,7 @@ def discover_selected_annual_requirements(*, repo_root, company_id, report_end, 
             for name in history['considered_shards']:
                 plan.require(submissions_file_url(file_name=name),
                              'selected_submissions_history', 'application/json')
-        except ValueError as detail:
+        except (ValueError, KeyError, TypeError) as detail:
             if str(detail) != str(error):_limitation(errors, 'METADATA_DEPENDENCIES', detail)
     if selection is not None and not errors:
         # The selected reporting CIK is already established from its own catalog;

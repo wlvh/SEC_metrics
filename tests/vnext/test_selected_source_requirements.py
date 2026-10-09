@@ -183,6 +183,28 @@ class SelectedSourceRequirementsTest(unittest.TestCase):
         self.assertEqual(value['status'],'SELECTED_SOURCE_DEPENDENCIES_UNRESOLVED')
         self.assertEqual(len(value['filing_selection']['prior_amendments']),1)
 
+    def test_malformed_recorded_metadata_returns_json_exit2_and_never_a_complete_graph(self):
+        args=['sources','--company',COMPANY,'--source-root',str(self.root),
+              '--report-end','2025-12-31','--metric','B01']
+        for payload,field in (({'cik':CIK},'filings'),
+                ({'cik':CIK,'filings':{'recent':{},'files':[]}},'filingDate')):
+            with self.subTest(payload=payload):
+                self.record(submissions_url(cik=CIK),json.dumps(payload).encode())
+                before=self.digest_tree()
+                with patch('sys.stdout',new_callable=io.StringIO) as output:
+                    code=main(args)
+                value=json.loads(output.getvalue())
+                self.assertEqual(code,2)
+                self.assertEqual(value['status'],'SELECTED_SOURCE_DEPENDENCIES_UNRESOLVED')
+                self.assertFalse(value['complete_known_source_graph'])
+                self.assertFalse(value['metric_acceptance_proven'])
+                issue=next(e for e in value['limitations'] if e['phase']=='PERIOD_METADATA')
+                self.assertEqual(issue['error_type'],'KeyError')
+                self.assertEqual(issue['reason'],repr(field))
+                self.assertEqual(issue['category'],'SOURCE_SCHEMA_OR_READER_ERROR')
+                self.assertIn(submissions_url(cik=CIK),[r['source_url'] for r in value['requirements']])
+                self.assertEqual(before,self.digest_tree())
+
     def test_unconnected_scope_and_invalid_date_refuse_before_discovery(self):
         with patch.object(preflight,'resolve_period_selection',side_effect=AssertionError('No discovery')):
             for metrics in ([],['D04'],['B01','B01']):
