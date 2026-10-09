@@ -441,14 +441,18 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
     from .historical_lodging_results import (SUPPORTED_METRICS as hotel_metrics,
         prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES)
     from .historical_saved_case import SAVED_DETERMINISTIC_METRICS
-    saved_history_metrics = {*hotel_metrics, *SAVED_DETERMINISTIC_METRICS, 'B03'}
+    from .historical_event_cases import METRICS as event_metrics, prepare_historical_event_year_case, PROCESSING_FILES as event_files
+    saved_history_metrics = {*hotel_metrics, *SAVED_DETERMINISTIC_METRICS, *event_metrics, 'B03'}
     ordinary_task = (work/'company-task.json').is_file()
     retained_native = any((work/name).exists() for name in
                           ('historical-company-state', 'local-company.json', 'current_source.json'))
     if ordinary_task:
         need(set(selected) <= set(saved_history_metrics), 'LOCAL_HISTORY_ORDINARY_CASE_NOT_IMPLEMENTED')
     if not retained_native and set(selected) <= set(saved_history_metrics):
-        if set(selected) <= set(hotel_metrics):
+        if set(selected) <= set(event_metrics):
+            factory = prepare_historical_event_year_case
+            processing_files = event_files
+        elif set(selected) <= set(hotel_metrics):
             factory = prepare_historical_lodging_year_case
             processing_files = HISTORICAL_LODGING_PROCESSING_FILES
         elif set(selected) <= {'B01', 'B03'}:
