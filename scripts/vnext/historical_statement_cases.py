@@ -28,6 +28,7 @@ from .traits import repository_company_traits
 from .zero_ai_r2 import _load_deterministic_catalog, _deterministic_metric_graph
 
 METRICS = frozenset({'B01', 'B02', 'B04', 'B05'})
+CURRENT_ANNUAL_METRICS = frozenset({'B04', 'B05', 'B07'})
 PROCESSING_FILES = (
     'scripts/vnext/historical_statement_cases.py',
     'scripts/vnext/normal_period_selection.py',
@@ -75,6 +76,26 @@ def _need(condition, reason, category='SOURCE_INTEGRITY_ERROR'):
 def prepare_historical_statement_year_case(*, repo_root, company_id, metric_id, fiscal_year):
     """Select one issuer year and supply the existing common computation."""
     _need(metric_id in METRICS, 'HISTORICAL_STATEMENT_FAMILY_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
+    return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
+        metric_id=metric_id, fiscal_year=fiscal_year)
+
+
+def prepare_historical_current_annual_year_case(*, repo_root, company_id, metric_id, fiscal_year):
+    """Use the same case core for received current-annual income metrics."""
+    _need(metric_id in CURRENT_ANNUAL_METRICS, 'HISTORICAL_CURRENT_ANNUAL_FAMILY_NOT_RECEIVED',
+          'IMPLEMENTATION_GAP')
+    route = _load_deterministic_catalog(repo_root=ROOT)['metrics'][metric_id]
+    _need(route['adapter_id'] == 'companyfacts' and route['result_period_role'] == 'current_annual'
+          and all(c['accession_role'] == 'current' and c['period_role'] == 'current_annual'
+                  for branch in route['branches'] for c in branch['components']),
+          'HISTORICAL_CURRENT_ANNUAL_SOURCE_ROLE_CHANGED', 'IMPLEMENTATION_GAP')
+    return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
+        metric_id=metric_id, fiscal_year=fiscal_year, withhold_known_source_errors=True)
+
+
+def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fiscal_year,
+                                       withhold_known_source_errors=False):
+    """Shared selected-filing case; catalog and Calculator retain computation."""
     source = Path(repo_root)
     selection = resolve_period_selection(repo_root=source, company_id=company_id,
                                          fiscal_year=fiscal_year, rules_root=ROOT)
@@ -182,20 +203,32 @@ def prepare_historical_statement_year_case(*, repo_root, company_id, metric_id, 
             'registry': {company_id: registry}, 'filings_by_company': {company_id:
                 {role: {'accession': filing['accessionNumber']} if filing else None
                  for role, filing in filings.items()}}}
-        graph = _deterministic_metric_graph(context=context, company_id=company_id, metric_id=metric_id)
-        problem, bridged = paired_measure_problem(route=catalog['metrics'][metric_id],
-            claims=graph['claims'], current_claims=by_role['current'],
-            accessions={role: (filing or {}).get('accessionNumber') for role, filing in filings.items()})
-        if problem:
-            assessment = {'category': 'MEASURE_NOT_COMPARABLE', **problem}
+        try:
+            graph = _deterministic_metric_graph(context=context, company_id=company_id, metric_id=metric_id)
+        except (*_SOURCE_ERRORS, NormalCompanyfactsError) as error:
+            if not withhold_known_source_errors:
+                raise
+            assessment = {'category': 'SOURCE_OR_IMPLEMENTATION_UNRESOLVED',
+                'reason': str(error), 'error_type': type(error).__name__,
+                'catalog_branches': catalog['metrics'][metric_id]['branches'],
+                'does_not_establish_missing_filing_disclosure': True}
             result, trace = withheld_metric_result(compiled_spec=spec, target=target,
-                                                   reason_code='HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE')
+                reason_code='HISTORICAL_CURRENT_ANNUAL_INPUT_UNRESOLVED')
             observations, selected_claims = [], []
         else:
-            result, trace = graph['result'], graph['trace']
-            observations = [graph['observation']] if graph['observation'] else []
-            selected_claims = graph['claims']
-            assessment = {'paired_measure_bridge': bridged} if bridged else None
+            problem, bridged = paired_measure_problem(route=catalog['metrics'][metric_id],
+                claims=graph['claims'], current_claims=by_role['current'],
+                accessions={role: (filing or {}).get('accessionNumber') for role, filing in filings.items()})
+            if problem:
+                assessment = {'category': 'MEASURE_NOT_COMPARABLE', **problem}
+                result, trace = withheld_metric_result(compiled_spec=spec, target=target,
+                    reason_code='HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE')
+                observations, selected_claims = [], []
+            else:
+                result, trace = graph['result'], graph['trace']
+                observations = [graph['observation']] if graph['observation'] else []
+                selected_claims = graph['claims']
+                assessment = {'paired_measure_bridge': bridged} if bridged else None
     proofs = list({content_hash(value=p): p for p in
         [*prepared['source_proofs'], *[s['proof'] for s in reader.proofs.values()]]}.values())
     admission = verify_ordinary_source_proofs(data_root=source, proofs=proofs)

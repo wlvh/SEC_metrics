@@ -9,6 +9,20 @@ from vnext import company_local as local
 
 
 class HistoryCompanyDispatchTest(TestCase):
+    def test_interest_coverage_adds_only_its_current_annual_case(self):
+        from vnext.historical_statement_cases import (
+            prepare_historical_current_annual_year_case, prepare_historical_statement_year_case,
+            PROCESSING_FILES)
+        from vnext.historical_liquidity_cases import prepare_historical_liquidity_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(company_id='macys', metric_ids=['B07', 'B04', 'B05', 'B08'])
+        args=shared.call_args.kwargs
+        self.assertIs(prepare_historical_current_annual_year_case, args['case_factories']['B07'])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B04'])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B05'])
+        self.assertIs(prepare_historical_liquidity_year_case, args['case_factories']['B08'])
+        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B07'])
+
     def setUp(self):
         temporary = tempfile.TemporaryDirectory()
         self.addCleanup(temporary.cleanup)

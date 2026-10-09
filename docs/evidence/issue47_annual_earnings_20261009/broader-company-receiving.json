@@ -1,0 +1,1286 @@
+{
+  "status": "ADDITIONAL_SAVED_SOURCE_CONSUMERS_VALIDATED_NOT_MAIN",
+  "production_version": "efee7e86",
+  "production_changes": false,
+  "companies": {
+    "salesforce": {
+      "company": "salesforce",
+      "first_seconds": 26.54581637517549,
+      "repeat_seconds": 1.2098508749622852,
+      "repeat_preparation_calls": 0,
+      "repeat_calculation_calls": 0,
+      "saved_files": 35,
+      "saved_files_unchanged": true,
+      "cold_seconds": 0.14125654101371765,
+      "cold_update_calls": 0
+    },
+    "marriott": {
+      "company": "marriott_international",
+      "first_seconds": 21.412375916959718,
+      "repeat_seconds": 1.0873431249056011,
+      "repeat_preparation_calls": 0,
+      "repeat_calculation_calls": 0,
+      "saved_files": 35,
+      "saved_files_unchanged": true,
+      "cold_seconds": 0.140067792031914,
+      "cold_update_calls": 0
+    },
+    "pfizer": {
+      "company": "pfizer",
+      "first_seconds": 36.5927172920201,
+      "repeat_seconds": 1.1559910830110312,
+      "repeat_preparation_calls": 0,
+      "repeat_calculation_calls": 0,
+      "saved_files": 35,
+      "saved_files_unchanged": true,
+      "cold_seconds": 0.14088049996644258,
+      "cold_update_calls": 0
+    },
+    "enphase": {
+      "company": "enphase_energy",
+      "first_seconds": 25.526712334016338,
+      "repeat_seconds": 1.0875768328551203,
+      "repeat_preparation_calls": 0,
+      "repeat_calculation_calls": 0,
+      "saved_files": 35,
+      "saved_files_unchanged": true,
+      "cold_seconds": 0.14106512488797307,
+      "cold_update_calls": 0
+    }
+  },
+  "positions": 20,
+  "numeric_positions": 19,
+  "unresolved_source_positions": 1,
+  "differences": [],
+  "checks": [
+    {
+      "company": "salesforce",
+      "year": 2022,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:a360006c268dd3326865fd24d9aa8c547d3b810c5989d4ec7bd986f0b5f78bb6",
+        "period_start": "2021-02-01",
+        "period_end": "2022-01-31",
+        "fiscal_year": 2022,
+        "value": "2.537037037037037037037037037",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-salesforce-20261009/state/updates/B07/periods/FY2022/results/d4760144ba314e638194fb8e9acaa97a"
+      },
+      "old_reference": {
+        "file": "cross-source-read-full-frame.json",
+        "key": "salesforce-2022",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+              "result_id": "sha256:a360006c268dd3326865fd24d9aa8c547d3b810c5989d4ec7bd986f0b5f78bb6",
+              "run_id": "run:historical-period:420d19887d9d3ef5c8424a9bf793f6d398a56ba6f373b44758c4d09764a7735b"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001108524-22-000013"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2022-01-31",
+            "period_start": "2021-02-01",
+            "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "2.537037037037037037037037037",
+          "read": "2.537037037037037037037037037",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2022-01-31",
+          "period_start": "2021-02-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "salesforce",
+      "year": 2023,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:0c978ff5909166b08a11df27d699edfc48ead42057cee06ba0a3141cab5acf4c",
+        "period_start": "2022-02-01",
+        "period_end": "2023-01-31",
+        "fiscal_year": 2023,
+        "value": "3.58885017421602787456445993",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-salesforce-20261009/state/updates/B07/periods/FY2023/results/e2c932a4cde641c7aa80d863b59e9d91"
+      },
+      "old_reference": {
+        "file": "cross-source-read-full-frame.json",
+        "key": "salesforce-2023",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+              "result_id": "sha256:0c978ff5909166b08a11df27d699edfc48ead42057cee06ba0a3141cab5acf4c",
+              "run_id": "run:historical-period:628b4a2550372c95353da83fcc16943cda9badbc471a2a87398b115a6432da0b"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001108524-23-000011"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2023-01-31",
+            "period_start": "2022-02-01",
+            "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": false,
+          "published": "3.58885017421602787456445993",
+          "read": "3.588850174216027874564459930",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2023-01-31",
+          "period_start": "2022-02-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "salesforce",
+      "year": 2024,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:fba08dc11b686e2fc15b193a0ff73b4a9fff465958e4139ca11c4d617788466e",
+        "period_start": "2023-02-01",
+        "period_end": "2024-01-31",
+        "fiscal_year": 2024,
+        "value": null,
+        "unit": null,
+        "publication": "WITHHELD",
+        "quality": "NONE",
+        "reason_code": "HISTORICAL_CURRENT_ANNUAL_INPUT_UNRESOLVED",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "PREVIOUS_INPUT_WITHHELD",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-salesforce-20261009/state/updates/B07/periods/FY2024/results/eca953c82f814525bd442ee30397dc5c"
+      },
+      "old_reference": {
+        "file": "cross-source-read-full-frame.json",
+        "key": "salesforce-2024",
+        "row": {
+          "exact_string_match": false,
+          "published": null,
+          "read": null,
+          "verdict": "NO_PUBLISHED_VALUE"
+        },
+        "period": {
+          "period_end": "2024-01-31",
+          "period_start": "2023-02-01"
+        }
+      },
+      "classification": "APPROVED_SOURCE_GAP",
+      "differences": []
+    },
+    {
+      "company": "salesforce",
+      "year": 2025,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:0818acde294723f6d87f87a92f812400022b582e0048a0ef229dba39cb7eb9d3",
+        "period_start": "2024-02-01",
+        "period_end": "2025-01-31",
+        "fiscal_year": 2025,
+        "value": "26.48897058823529411764705882",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-salesforce-20261009/state/updates/B07/periods/FY2025/results/525115f5c92b4021b5172a3965b8889d"
+      },
+      "old_reference": {
+        "file": "cross-source-read-batch.json",
+        "key": "salesforce-2025",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+              "result_id": "sha256:0f1c34543b6dc48480a5470f008d9766699464009ce709cd1527b0eb528fb0c3",
+              "run_id": "run:historical-period:416354e1f76347cd91ab0b6d4a7383e57a570c324ffcbedb8c73403ee1f6fefc"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001108524-25-000006"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2025-01-31",
+            "period_start": "2024-02-01",
+            "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "26.48897058823529411764705882",
+          "read": "26.48897058823529411764705882",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2025-01-31",
+          "period_start": "2024-02-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "salesforce",
+      "year": 2026,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:85c73b7297aa03d692c149c63fbbe753c3c1c14e3567bc50f2cea3b4bf9c0c8f",
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "fiscal_year": 2026,
+        "value": "25.71296296296296296296296296",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-salesforce-20261009/state/updates/B07/periods/FY2026/results/d3775e0449b94aaba213837c5b91c3c6"
+      },
+      "old_reference": {
+        "file": "cross-source-read.json",
+        "key": "salesforce-2026",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+              "result_id": "sha256:043c03088226133c318ea90f2301bfa9c283ae6c0a36957a46184e75b7ee8875",
+              "run_id": "run:historical-period:849515671bc0b0c201bce94de0affe5a0aaacf860fcdf55f3b95a5579faa80a1"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001108524-26-000060"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2026-01-31",
+            "period_start": "2025-02-01",
+            "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "25.71296296296296296296296296",
+          "read": "25.71296296296296296296296296",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2026-01-31",
+          "period_start": "2025-02-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "marriott_international",
+      "year": 2021,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:89a531796379e975b8e2eefbe9f260d01b2475ef0724b62f251c94a004360b8f",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "fiscal_year": 2021,
+        "value": "4.166666666666666666666666667",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-marriott-20261009/state/updates/B07/periods/FY2021/results/3774ce886ac342669dcc1dc44d365b82"
+      },
+      "old_reference": {
+        "file": "cross-source-read-batch.json",
+        "key": "marriott-2021",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+              "result_id": "sha256:89a531796379e975b8e2eefbe9f260d01b2475ef0724b62f251c94a004360b8f",
+              "run_id": "run:historical-period:15d94fa57b60f7de3a5d5372f5fc3af5080880465eb3f155e4b2cf5d8954ca9e"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001628280-22-002666"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "4.166666666666666666666666667",
+          "read": "4.166666666666666666666666667",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2021-12-31",
+          "period_start": "2021-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "marriott_international",
+      "year": 2022,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:c515aa83614435b169953c0234153552cff76a796c6f5936247a3aacf8a71d3f",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "fiscal_year": 2022,
+        "value": "8.590570719602977667493796526",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-marriott-20261009/state/updates/B07/periods/FY2022/results/c6fac28c92fd4f569f51788bdf68027a"
+      },
+      "old_reference": {
+        "file": "cross-source-read-batch.json",
+        "key": "marriott-2022",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+              "result_id": "sha256:c515aa83614435b169953c0234153552cff76a796c6f5936247a3aacf8a71d3f",
+              "run_id": "run:historical-period:c637193593f5743a0951a4f26a2a2170bcc5db5ca422eef4f2452594fab3a3eb"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001628280-23-003485"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "8.590570719602977667493796526",
+          "read": "8.590570719602977667493796526",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2022-12-31",
+          "period_start": "2022-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "marriott_international",
+      "year": 2023,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:5228211c8444a4472d739cd6a0a18630b6a871f1174eef173dda2222a05fe994",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "fiscal_year": 2023,
+        "value": "6.838938053097345132743362832",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-marriott-20261009/state/updates/B07/periods/FY2023/results/a55f5198fca44e16917d1709b077709e"
+      },
+      "old_reference": {
+        "file": "cross-source-read.json",
+        "key": "marriott-2023",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+              "result_id": "sha256:5228211c8444a4472d739cd6a0a18630b6a871f1174eef173dda2222a05fe994",
+              "run_id": "run:historical-period:28560e33c1a8b574bd26602ee539f08423519f8695185c47ef1cddb4cba1bb21"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001628280-24-004372"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "6.838938053097345132743362832",
+          "read": "6.838938053097345132743362832",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "marriott_international",
+      "year": 2024,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:3bcce4bbceec694e4bdccc70562c79327ae4443ed5f254baf3efeb0af2095292",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "fiscal_year": 2024,
+        "value": "5.420143884892086330935251799",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-marriott-20261009/state/updates/B07/periods/FY2024/results/99f8da6b5a834e83b8e8d704d9a92b2d"
+      },
+      "old_reference": {
+        "file": "cross-source-read.json",
+        "key": "marriott-2024",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+              "result_id": "sha256:3bcce4bbceec694e4bdccc70562c79327ae4443ed5f254baf3efeb0af2095292",
+              "run_id": "run:historical-period:8b6e3502bfaf649ca7598bd1e8181dbf0d31c827627d4dd642b3d7fdde21132a"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001628280-25-004818"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "5.420143884892086330935251799",
+          "read": "5.420143884892086330935251799",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "marriott_international",
+      "year": 2025,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:b5199f67eb551da449705600f3763dfba9df83d981a4445e5120e48499bbe557",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": "5.118665018541409147095179234",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-marriott-20261009/state/updates/B07/periods/FY2025/results/ffd244caded44ec2aafbb11db8311e0a"
+      },
+      "old_reference": {
+        "file": "cross-source-read.json",
+        "key": "marriott-2025",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+              "result_id": "sha256:b5199f67eb551da449705600f3763dfba9df83d981a4445e5120e48499bbe557",
+              "run_id": "run:historical-period:30fa548df59993b83aad7beb00520b79b9fa02e2038b5e788dc8cb3b6fe4d2c4"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001048286-26-000007"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "5.118665018541409147095179234",
+          "read": "5.118665018541409147095179234",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "pfizer",
+      "year": 2021,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:5c04337071f8b633f9c9c1b971a8da2bafb7d24a313b432fb9499c60c1446bf0",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "fiscal_year": 2021,
+        "value": "15.05267234701781564678543765",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "APPROX",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-pfizer-20261009/state/updates/B07/periods/FY2021/results/ddd45f314a0443079750d2284dee4331"
+      },
+      "old_reference": {
+        "file": "cross-source-read-full-frame.json",
+        "key": "pfizer-2021",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+              "result_id": "sha256:5c04337071f8b633f9c9c1b971a8da2bafb7d24a313b432fb9499c60c1446bf0",
+              "run_id": "run:historical-period:97f72789618799c545077a637535f1c1b90e26993812a5cfc8be7096ec4bc061"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0000078003-22-000027"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "15.05267234701781564678543765",
+          "read": "15.05267234701781564678543765",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2021-12-31",
+          "period_start": "2021-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "pfizer",
+      "year": 2022,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:5cd6d3bc50455475aa317e39e680f0d8e96a587805d7a92319f4730911538b46",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "fiscal_year": 2022,
+        "value": "28.227786752827140549273021",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "APPROX",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-pfizer-20261009/state/updates/B07/periods/FY2022/results/09034d2196f04f3bbff0ba5fe906605e"
+      },
+      "old_reference": {
+        "file": "cross-source-read-batch.json",
+        "key": "pfizer-2022",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+              "result_id": "sha256:f0d3502006109233e88910f0e0dfd22845b31ee075fb635f07601cce5fd70de0",
+              "run_id": "run:historical-period:a481039a8c645642e4ebcca8edebe077f0d1091d480c2ee17ec44632e6f008da"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0000078003-23-000024"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": false,
+          "published": "28.227786752827140549273021",
+          "read": "28.22778675282714054927302100",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2022-12-31",
+          "period_start": "2022-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "pfizer",
+      "year": 2023,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:e093dabb3f8d9b716e11d8ac9acc93784da388c452154e6f140307b7c89aa62f",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "fiscal_year": 2023,
+        "value": "0.1009506564056133997283838841",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "APPROX",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-pfizer-20261009/state/updates/B07/periods/FY2023/results/938e7661539340eead6b2cf0748d0004"
+      },
+      "old_reference": {
+        "file": "cross-source-read-batch.json",
+        "key": "pfizer-2023",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+              "result_id": "sha256:424b4af8fcb7ab2cff41ced86cd03742522220cefe4c294137b766ebaf1ebbc8",
+              "run_id": "run:historical-period:19d2f305d1a8624056b15ac37e5650e32d8bb741386fc80a78b5a8929dad4b5d"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0000078003-24-000039"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "0.1009506564056133997283838841",
+          "read": "0.1009506564056133997283838841",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "pfizer",
+      "year": 2024,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:d380646314961dbca72ddf1f5cc3afff0a1b882402050a29fa2f860b7718da5f",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "fiscal_year": 2024,
+        "value": "4.015205435134260757036557748",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "APPROX",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-pfizer-20261009/state/updates/B07/periods/FY2024/results/ff86ea9a0c994911bfe20c89bdc2ad68"
+      },
+      "old_reference": {
+        "file": "cross-source-read-batch.json",
+        "key": "pfizer-2024",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+              "result_id": "sha256:8ad6b7deccae4d65c844c227db652213d19b1fd5d0052a677c197b50a990908e",
+              "run_id": "run:historical-period:1e575be061d69c311c70126d8ca11d174d5f8ca24dfddf790c908567e7d34ce7"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0000078003-25-000054"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "4.015205435134260757036557748",
+          "read": "4.015205435134260757036557748",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "pfizer",
+      "year": 2025,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:42adb2b167f0d84b7af8fbedb3b94285ec73cf85263c4ade82275b7316bdd741",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": "5.332834144515162860351928117",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "APPROX",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-pfizer-20261009/state/updates/B07/periods/FY2025/results/6057bf0cadaa418fb5bf072fb5a332b6"
+      },
+      "old_reference": {
+        "file": "cross-source-read.json",
+        "key": "pfizer-2025",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+              "result_id": "sha256:67a66a040e0c1111a9a1f1b589a3abfc1a9fc17e0c1d89cc977c48abb4ba1af6",
+              "run_id": "run:historical-period:881b4a0af466690b34374a175f17b00cd2b0f3afd3d149c7dc1df3507315fcd3"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0000078003-26-000026"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "5.332834144515162860351928117",
+          "read": "5.332834144515162860351928117",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "enphase_energy",
+      "year": 2021,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:d7cc946bc82053a1fe28fb4c9198cdae9e214ba5061916ecf8c88659fa1a5483",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "fiscal_year": 2021,
+        "value": "4.780120481927710843373493976",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-enphase-20261009/state/updates/B07/periods/FY2021/results/57571fe396c941f8aa52769e044151c7"
+      },
+      "old_reference": {
+        "file": "cross-source-read-batch.json",
+        "key": "enphase-2021",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+              "result_id": "sha256:d7cc946bc82053a1fe28fb4c9198cdae9e214ba5061916ecf8c88659fa1a5483",
+              "run_id": "run:historical-period:40ba1b12a3536be74a24c2a121965778e3e4e84c75f6d44e56c1387fcc107688"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001463101-22-000016"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "4.780120481927710843373493976",
+          "read": "4.780120481927710843373493976",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2021-12-31",
+          "period_start": "2021-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "enphase_energy",
+      "year": 2022,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:a19aa15e114b7889e421dcee9c74e82ad57edf8d17fa3c650759726e5398ef22",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "fiscal_year": 2022,
+        "value": "47.495337995337995337995338",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-enphase-20261009/state/updates/B07/periods/FY2022/results/c1e38d29f2834a47ade581e4d1cbec1f"
+      },
+      "old_reference": {
+        "file": "cross-source-read-batch.json",
+        "key": "enphase-2022",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+              "result_id": "sha256:a19aa15e114b7889e421dcee9c74e82ad57edf8d17fa3c650759726e5398ef22",
+              "run_id": "run:historical-period:28eae0fc11d69153d996e1678654d03da782ea5eb4b212ec00f69bf338e64b62"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001463101-23-000025"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": false,
+          "published": "47.495337995337995337995338",
+          "read": "47.49533799533799533799533800",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2022-12-31",
+          "period_start": "2022-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "enphase_energy",
+      "year": 2023,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:6a9021d950dbe6b64f1c379aecd0e165bb1777c7e08cbe271db86f4fd5f9d826",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "fiscal_year": 2023,
+        "value": "50.42889467134291209412829506",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-enphase-20261009/state/updates/B07/periods/FY2023/results/1e189c6508bd467c845f2abc4867d0cb"
+      },
+      "old_reference": {
+        "file": "cross-source-read-batch.json",
+        "key": "enphase-2023",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+              "result_id": "sha256:6a9021d950dbe6b64f1c379aecd0e165bb1777c7e08cbe271db86f4fd5f9d826",
+              "run_id": "run:historical-period:ac76477ce921099e02ed989682e63fb8cb674b1080d7712163b4d5958a919210"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001463101-24-000024"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "50.42889467134291209412829506",
+          "read": "50.42889467134291209412829506",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "enphase_energy",
+      "year": 2024,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:eef2daa9c0aebc880e7b3782030c5b5327e3bfd93c19275beb6fd09882fa6e4f",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "fiscal_year": 2024,
+        "value": "8.67961819202695115103874228",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-enphase-20261009/state/updates/B07/periods/FY2024/results/1722a69154994d7591fc08e67f43456f"
+      },
+      "old_reference": {
+        "file": "cross-source-read-batch.json",
+        "key": "enphase-2024",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:ed360ebcd2e901d8c3efe3a0252798097868ac30abd90dc92dde0c3d51ac90bd",
+              "result_id": "sha256:eef2daa9c0aebc880e7b3782030c5b5327e3bfd93c19275beb6fd09882fa6e4f",
+              "run_id": "run:historical-period:a2faa67303505dc44f6bf0c8cc3026e08707da68aee156569afc7fd4fd9ade6d"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001463101-25-000024"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01",
+            "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": false,
+          "published": "8.67961819202695115103874228",
+          "read": "8.679618192026951151038742280",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    },
+    {
+      "company": "enphase_energy",
+      "year": 2025,
+      "row": {
+        "metric_id": "B07",
+        "result_id": "sha256:0cf0ab44195a23e8e5758703f604fa3d8d6c00311fc34ae2a2202e0963d42aba",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": "34.84317628843176288431762884",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-enphase-20261009/state/updates/B07/periods/FY2025/results/beba31690cb64dbc91a20bb97072265e"
+      },
+      "old_reference": {
+        "file": "cross-source-read.json",
+        "key": "enphase-2025",
+        "row": {
+          "checked_identity": {
+            "bound_from": {
+              "requirement_closure_hash": "sha256:aa0eff7ed987e6f02c94586f311a7aabbc4482cf2f37c7575988aae199e11cb1",
+              "result_id": "sha256:0cf0ab44195a23e8e5758703f604fa3d8d6c00311fc34ae2a2202e0963d42aba",
+              "run_id": "run:historical-period:ffaa55f64f61407fb05545529a54b1bede10415be2b839d132326b9bc5df47d3"
+            },
+            "checked_against_the_reading": [
+              "value",
+              "filings_contain_the_filing_the_reading_opened"
+            ],
+            "entities": [],
+            "established_by": "RECORDED_AT_READING_TIME",
+            "filings": [
+              "0001463101-26-000013"
+            ],
+            "not_named_by_the_reading": [
+              "window"
+            ],
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+            "spec_closure_hash": "sha256:0eb533e576d3bbcb418812e362d9e377373f83c76dd9bfa62ecb41d49475bb78",
+            "unit": "ratio",
+            "value_kind": null
+          },
+          "exact_string_match": true,
+          "published": "34.84317628843176288431762884",
+          "read": "34.84317628843176288431762884",
+          "verdict": "MATCH"
+        },
+        "period": {
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        }
+      },
+      "classification": "NUMERIC",
+      "differences": []
+    }
+  ],
+  "salesforce2024": "Approved three interest concepts have no target-accession annual CF facts. Native only finance-lease/tax-interest terms seen; not substitutes for full coverage denominator. Missing approved extraction not established missing filing disclosure.",
+  "pfizer_quality": "APPROX per unchanged reconstructed operating income branch; not relabelled EXACT",
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_run": false,
+  "new_business_acceptance": false,
+  "archive": {
+    "members": 138,
+    "bytes": 73958,
+    "sha256": "e05a7fe666f5bd357e8f2fe0bbcc58748ea556d8df27123eee20c506407a8c6c"
+  }
+}
