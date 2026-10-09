@@ -35,6 +35,11 @@ def main(argv=None):
     acquire.add_argument('--metric', action='append', help='Online source scope, B01/B02 only')
     acquire.add_argument('--max-sec-requests', type=int, default=120)
     acquire.add_argument('--sec-allowance', type=int, default=120)
+    sources = sub.add_parser('sources', help='Read-only selected annual B01/B02 source preflight; no fetching or calculation')
+    sources.add_argument('--company', required=True)
+    sources.add_argument('--source-root', required=True, type=Path)
+    sources.add_argument('--report-end', required=True, help='SEC report end date; never a guessed fiscal-year label')
+    sources.add_argument('--metric', required=True, action='append', choices=['B01','B02'])
     export = sub.add_parser('export', help='Controlled preparation: source-only company export')
     export.add_argument('--source-root', required=True, type=Path)
     export.add_argument('--output-root', required=True, type=Path)
@@ -137,6 +142,10 @@ def main(argv=None):
             os.environ[ACQUISITION_TRUST] = str(work/'trust/acquisition')
             session = local_session(root=work/'acquisition', company_id=args.company, allowance=args.sec_allowance)
             result = acquire_only(session=session, company_id=args.company, max_requests=args.max_sec_requests)
+    elif args.command == 'sources':
+        from vnext.selected_source_requirements import discover_selected_annual_requirements
+        result = discover_selected_annual_requirements(repo_root=args.source_root,
+            company_id=args.company, report_end=args.report_end, metric_ids=args.metric)
     elif args.command == 'export':
         from vnext.company_handoff import export_company
         declaration = None
@@ -202,6 +211,8 @@ def main(argv=None):
     if args.command == 'compute':
         return 0 if all(m['status'] in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
                         for m in result['metrics']) else 2
+    if args.command == 'sources':
+        return 0 if result['status']=='SAVED_SOURCE_BYTES_AVAILABLE' else 2
     return 2 if result.get('status') == 'EXPORTED_PARTIAL' else 0
 
 
