@@ -1,0 +1,45 @@
+{
+  "checks": [
+    {
+      "section": "## A03/A12：已入main的历史测量期",
+      "metrics": [
+        "A03",
+        "A12"
+      ],
+      "shell_syntax_valid": true,
+      "actual_cli_arguments_accepted": true,
+      "run_local_constructed_control": true
+    },
+    {
+      "section": "## A04/A09/A11：已入main的金融历史范围",
+      "metrics": [
+        "A04",
+        "A09",
+        "A11"
+      ],
+      "shell_syntax_valid": true,
+      "actual_cli_arguments_accepted": true,
+      "run_local_constructed_control": true
+    },
+    {
+      "section": "## 同一main的六指标组合",
+      "metrics": [
+        "A03",
+        "A04",
+        "A09",
+        "A11",
+        "A12",
+        "A13"
+      ],
+      "shell_syntax_valid": true,
+      "actual_cli_arguments_accepted": true,
+      "run_local_constructed_control": true
+    }
+  ],
+  "financial_processing_performed": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
