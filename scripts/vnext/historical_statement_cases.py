@@ -50,6 +50,7 @@ PROCESSING_FILES = (
 INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
     'scripts/vnext/selected_income_source_v1.py',
     'scripts/vnext/selected_revenue_scope_v1.py',
+    'scripts/vnext/composite_scope.py',
     'scripts/vnext/xbrl_namespace_policy.py',
     'scripts/vnext/ordinary_income_input.py',
     'scripts/vnext/financial_duration.py',

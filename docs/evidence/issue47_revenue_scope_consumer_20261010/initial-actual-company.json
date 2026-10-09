@@ -2,26 +2,25 @@
   "base_main": "f6ef7886d6630f7675c25cd42e306c373ab05769",
   "public_commits": [
     "b962b6c9a69d3d7fd85541f6b92346a7b651c093",
-    "83eaa4da5d18c7accc0c093b1ef4db5f5158da16",
-    "62243bfdce042a79508f242df65cc897fcfaf035"
+    "83eaa4da5d18c7accc0c093b1ef4db5f5158da16"
   ],
   "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
   "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state",
-  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-revenue-scope-tapnqlhu",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-revenue-scope-kiag98ys",
   "operations": [
     {
       "name": "correct-known-scope",
-      "seconds": 10.836227792082354,
+      "seconds": 10.463598332833499,
       "exit_code": 0,
       "status": "FLOW_COMPLETED",
       "metrics": [
         {
           "metric_id": "B01",
           "status": "CANDIDATE_READY",
-          "attempt_id": "37d508834df5429592c6499c540091fa",
-          "version": "0e3678dd8091416ca70544683d040ea3",
+          "attempt_id": "1c68cd8c1ad443f5bb7b610294040d58",
+          "version": "4e25ba36eb44461fa1478ed948d9e4d7",
           "result_id": "sha256:128c170a19b5505f3ce22e837aaea836159b4652e334aa4b5bdf298e007786da",
-          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/4e25ba36eb44461fa1478ed948d9e4d7",
           "calculation_performed": true,
           "new_candidate_created": true,
           "result_reason_code": "PASS",
@@ -35,9 +34,9 @@
           "requested_fiscal_year": 2023,
           "defect_holds": [],
           "read_result_id": "sha256:128c170a19b5505f3ce22e837aaea836159b4652e334aa4b5bdf298e007786da",
-          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/4e25ba36eb44461fa1478ed948d9e4d7",
           "program_version": {
-            "commit": "25c797034a6cebf3e79f067e210afb1226259f38",
+            "commit": "afd38fc14af93880fd3834bc70efcc56a1014274",
             "has_uncommitted_changes": true
           }
         }
@@ -45,17 +44,17 @@
     },
     {
       "name": "repeat-forbid-factory",
-      "seconds": 1.0237185419537127,
+      "seconds": 0.9990407091099769,
       "exit_code": 0,
       "status": "FLOW_COMPLETED",
       "metrics": [
         {
           "metric_id": "B01",
           "status": "NO_SOURCE_CONTENT_CHANGE",
-          "attempt_id": "8fa91ccc776b4dcda8b5eb7938bf4dbe",
-          "version": "0e3678dd8091416ca70544683d040ea3",
+          "attempt_id": "0732f1e1f4e5499896bf45cbb8931185",
+          "version": "4e25ba36eb44461fa1478ed948d9e4d7",
           "result_id": "sha256:128c170a19b5505f3ce22e837aaea836159b4652e334aa4b5bdf298e007786da",
-          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/4e25ba36eb44461fa1478ed948d9e4d7",
           "result_reason_code": "PASS",
           "raw_input_unchanged": true,
           "calculation_performed": false,
@@ -70,9 +69,9 @@
           "requested_fiscal_year": 2023,
           "defect_holds": [],
           "read_result_id": "sha256:128c170a19b5505f3ce22e837aaea836159b4652e334aa4b5bdf298e007786da",
-          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/4e25ba36eb44461fa1478ed948d9e4d7",
           "program_version": {
-            "commit": "25c797034a6cebf3e79f067e210afb1226259f38",
+            "commit": "afd38fc14af93880fd3834bc70efcc56a1014274",
             "has_uncommitted_changes": true
           }
         }
@@ -80,7 +79,7 @@
     },
     {
       "name": "independent-results",
-      "seconds": 0.612768542021513,
+      "seconds": 0.5988867918495089,
       "exit_code": 0,
       "status": null,
       "metrics": [
@@ -99,7 +98,7 @@
           "defect_holds": [],
           "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
           "requested_in_latest_execution": true,
-          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3"
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/4e25ba36eb44461fa1478ed948d9e4d7"
         },
         {
           "metric_id": "B01",
@@ -445,12 +444,12 @@
     "form": "10-K",
     "filed_date": "2024-02-22",
     "concept_or_section": "Revenues",
-    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:db2ee12c653f970ed7ac15a1e5b31016506d3e8e0eedc95a681bc8d9da34a667\", \"source_roles\": [\"primary\", \"xml\"]}], \"selected_revenue_scope\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:e5297018de28377cf3de2d79c2373bb75a73a7ff8c388e0ebdc0234e0b61c1e1\", \"status\": \"REPORTED_COMPONENTS_AND_TOTAL\"}}, \"source_reference_ids\": [\"sha256:87f7d0ca6dc65fc172a1378d692d4b20b313de0f1ec445011a0685d562d836aa\", \"sha256:a38f993e4b99318705b78e21e71cf479002cbbee64e48403e9a71d7e5d3a0b4a\", \"sha256:2f7af44418f80e92861561aaada72799f2e38d7ca659b590081a1bca194200e7\", \"sha256:5b5e0372d5cacd2991c0feae5d30303d3bc98bedca91c7239299b29814f882d1\", \"sha256:8148d497e38777a30ac1ebcd56a042ed6384f899dcff67721ceb82d290cfa1ea\"]}",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:db2ee12c653f970ed7ac15a1e5b31016506d3e8e0eedc95a681bc8d9da34a667\", \"original_reports\": {\"primary\": [{\"concept\": \"us-gaap:Revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0000078003\", \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000078003\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2023-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2023-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 103, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"source_reference\": {\"accession\": \"0000078003-24-000039\", \"company_id\": \"pfizer\", \"document_name\": \"pfe-20231231.htm\", \"raw_asset_id\": \"sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:4907e15186ae81f27b60271cdc91da273a66395ec8484f0fb1059b9057f5efd9\", \"source_reference_id\": \"sha256:a38f993e4b99318705b78e21e71cf479002cbbee64e48403e9a71d7e5d3a0b4a\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/78003/000007800324000039/pfe-20231231.htm\"}, \"unit\": \"USD\", \"value\": \"58496000000\"}, {\"concept\": \"us-gaap:Revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0000078003\", \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000078003\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2023-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2023-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 2997, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"source_reference\": {\"accession\": \"0000078003-24-000039\", \"company_id\": \"pfizer\", \"document_name\": \"pfe-20231231.htm\", \"raw_asset_id\": \"sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:4907e15186ae81f27b60271cdc91da273a66395ec8484f0fb1059b9057f5efd9\", \"source_reference_id\": \"sha256:a38f993e4b99318705b78e21e71cf479002cbbee64e48403e9a71d7e5d3a0b4a\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/78003/000007800324000039/pfe-20231231.htm\"}, \"unit\": \"USD\", \"value\": \"58496000000\"}, {\"concept\": \"us-gaap:Revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0000078003\", \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000078003\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2023-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2023-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 3038, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"source_reference\": {\"accession\": \"0000078003-24-000039\", \"company_id\": \"pfizer\", \"document_name\": \"pfe-20231231.htm\", \"raw_asset_id\": \"sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:4907e15186ae81f27b60271cdc91da273a66395ec8484f0fb1059b9057f5efd9\", \"source_reference_id\": \"sha256:a38f993e4b99318705b78e21e71cf479002cbbee64e48403e9a71d7e5d3a0b4a\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/78003/000007800324000039/pfe-20231231.htm\"}, \"unit\": \"USD\", \"value\": \"58496000000\"}, {\"concept\": \"us-gaap:Revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0000078003\", \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000078003\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2023-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2023-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 3071, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"source_reference\": {\"accession\": \"0000078003-24-000039\", \"company_id\": \"pfizer\", \"document_name\": \"pfe-20231231.htm\", \"raw_asset_id\": \"sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:4907e15186ae81f27b60271cdc91da273a66395ec8484f0fb1059b9057f5efd9\", \"source_reference_id\": \"sha256:a38f993e4b99318705b78e21e71cf479002cbbee64e48403e9a71d7e5d3a0b4a\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/78003/000007800324000039/pfe-20231231.htm\"}, \"unit\": \"USD\", \"value\": \"58496000000\"}], \"xml\": [{\"concept\": \"us-gaap:revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0000078003\", \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000078003\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2023-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2023-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 103, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"source_reference\": {\"accession\": \"0000078003-24-000039\", \"company_id\": \"pfizer\", \"document_name\": \"pfe-20231231_htm.xml\", \"raw_asset_id\": \"sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:f5fa4074c0df1e9ed5dc44081fd08bf93e8e6e487886557feaad2fdd603ac148\", \"source_reference_id\": \"sha256:8148d497e38777a30ac1ebcd56a042ed6384f899dcff67721ceb82d290cfa1ea\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/78003/000007800324000039/pfe-20231231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"58496000000\"}, {\"concept\": \"us-gaap:revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0000078003\", \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000078003\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2023-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2023-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 2997, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"source_reference\": {\"accession\": \"0000078003-24-000039\", \"company_id\": \"pfizer\", \"document_name\": \"pfe-20231231_htm.xml\", \"raw_asset_id\": \"sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:f5fa4074c0df1e9ed5dc44081fd08bf93e8e6e487886557feaad2fdd603ac148\", \"source_reference_id\": \"sha256:8148d497e38777a30ac1ebcd56a042ed6384f899dcff67721ceb82d290cfa1ea\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/78003/000007800324000039/pfe-20231231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"58496000000\"}, {\"concept\": \"us-gaap:revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0000078003\", \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000078003\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2023-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2023-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 3038, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"source_reference\": {\"accession\": \"0000078003-24-000039\", \"company_id\": \"pfizer\", \"document_name\": \"pfe-20231231_htm.xml\", \"raw_asset_id\": \"sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:f5fa4074c0df1e9ed5dc44081fd08bf93e8e6e487886557feaad2fdd603ac148\", \"source_reference_id\": \"sha256:8148d497e38777a30ac1ebcd56a042ed6384f899dcff67721ceb82d290cfa1ea\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/78003/000007800324000039/pfe-20231231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"58496000000\"}, {\"concept\": \"us-gaap:revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0000078003\", \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000078003\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2023-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2023-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 3071, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\", \"source_reference\": {\"accession\": \"0000078003-24-000039\", \"company_id\": \"pfizer\", \"document_name\": \"pfe-20231231_htm.xml\", \"raw_asset_id\": \"sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:f5fa4074c0df1e9ed5dc44081fd08bf93e8e6e487886557feaad2fdd603ac148\", \"source_reference_id\": \"sha256:8148d497e38777a30ac1ebcd56a042ed6384f899dcff67721ceb82d290cfa1ea\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/78003/000007800324000039/pfe-20231231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"58496000000\"}]}}], \"selected_revenue_scope\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:570b4fb6bd58294e3fe5b2f454e4dbe2a5376c0ad0b312b6cfaa637ee7524170\", \"status\": \"REPORTED_COMPONENTS_AND_TOTAL\"}}, \"source_reference_ids\": [\"sha256:87f7d0ca6dc65fc172a1378d692d4b20b313de0f1ec445011a0685d562d836aa\", \"sha256:a38f993e4b99318705b78e21e71cf479002cbbee64e48403e9a71d7e5d3a0b4a\", \"sha256:2f7af44418f80e92861561aaada72799f2e38d7ca659b590081a1bca194200e7\", \"sha256:5b5e0372d5cacd2991c0feae5d30303d3bc98bedca91c7239299b29814f882d1\", \"sha256:8148d497e38777a30ac1ebcd56a042ed6384f899dcff67721ceb82d290cfa1ea\"]}",
     "confidence": "",
     "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
     "company_id": "pfizer",
     "result_id": "sha256:128c170a19b5505f3ce22e837aaea836159b4652e334aa4b5bdf298e007786da",
-    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/0e3678dd8091416ca70544683d040ea3",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B01/periods/FY2023/results/4e25ba36eb44461fa1478ed948d9e4d7",
     "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
     "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
     "period_role": "REQUESTED_RESULT",
@@ -460,19 +459,14 @@
     "requested_in_latest_execution": "True"
   },
   "total_coordinates_read": 20,
-  "old_files": 173,
-  "protected_old_files": 171,
-  "final_files": 180,
+  "old_files": 166,
+  "protected_old_files": 164,
+  "final_files": 173,
   "old_results_and_other_coordinates_preserved": true,
   "repeat_factory_and_calculator_calls": 0,
   "new_calls": [
     0,
     0,
     0
-  ],
-  "processing_refresh_reason": "Public scope now binds consolidated title/local context; consumer display and actual dependency configuration also changed. Only FY2023 B01 was requested.",
-  "tested_source_commit": "25c797034a6cebf3e79f067e210afb1226259f38",
-  "source_tree_modified_files": [
-    "scripts/vnext/historical_statement_cases.py"
   ]
 }

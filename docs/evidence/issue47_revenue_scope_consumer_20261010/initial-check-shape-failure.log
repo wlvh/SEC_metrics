@@ -9,7 +9,7 @@ test_successor_context_keeps_its_existing_noncomparability (tests.vnext.test_his
 test_display_is_bounded_while_complete_scope_evidence_is_retained (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_display_is_bounded_while_complete_scope_evidence_is_retained) ... ok
 test_literal_original_and_resolved_period_must_have_same_dates (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_literal_original_and_resolved_period_must_have_same_dates) ... ok
 test_processing_configuration_includes_shared_scope_dependency (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_processing_configuration_includes_shared_scope_dependency) ... ok
-test_reported_total_is_admitted_before_actual_calculator (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_total_is_admitted_before_actual_calculator) ... ok
+test_reported_total_is_admitted_before_actual_calculator (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_total_is_admitted_before_actual_calculator) ... ERROR
 test_total_cannot_be_borrowed_from_a_later_filing (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_total_cannot_be_borrowed_from_a_later_filing) ... ok
 test_amended_target_and_successor_require_explicit_adaptation (tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest.test_amended_target_and_successor_require_explicit_adaptation) ... ok
 test_companyfacts_amount_must_match_the_selected_original (tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest.test_companyfacts_amount_must_match_the_selected_original) ... ok
@@ -21,16 +21,12 @@ test_revenue_still_requires_statement_scope (tests.vnext.test_historical_stateme
 test_wrong_subject_or_cross_entity_cannot_use_the_metadata_guard (tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest.test_wrong_subject_or_cross_entity_cannot_use_the_metadata_guard) ... ok
 test_approved_legacy_calculator_selects_total_after_component_admission (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_approved_legacy_calculator_selects_total_after_component_admission) ... ok
 test_conflicting_part_total_not_fixed_by_larger_value (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_conflicting_part_total_not_fixed_by_larger_value) ... ok
-test_explicit_local_exclusion_is_not_overruled_by_same_context (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_explicit_local_exclusion_is_not_overruled_by_same_context) ... ok
-test_explicit_scope_after_consolidated_title_is_not_ignored (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_explicit_scope_after_consolidated_title_is_not_ignored) ... ok
-test_income_items_alone_do_not_prove_consolidated_statement (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_income_items_alone_do_not_prove_consolidated_statement) ... ok
 test_missing_revenue_component_is_not_an_empty_success (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_missing_revenue_component_is_not_an_empty_success) ... ok
 test_old_visible_header_parser_default_is_retained (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_old_visible_header_parser_default_is_retained) ... ok
 test_other_filing_facts_and_prior_periods_not_rewritten_or_substituted (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_other_filing_facts_and_prior_periods_not_rewritten_or_substituted) ... ok
 test_primary_only_statement_check_is_explicit_not_faked_xml_check (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_primary_only_statement_check_is_explicit_not_faked_xml_check) ... ok
 test_primary_xml_conflict_rejected (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_primary_xml_conflict_rejected) ... ok
 test_quarter_caption_does_not_accept_annual_native_context (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_quarter_caption_does_not_accept_annual_native_context) ... ok
-test_restricted_caption_does_not_become_no_split_success (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_restricted_caption_does_not_become_no_split_success) ... ok
 test_revenue_note_total_without_full_statement_not_treated_as_company_total (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_revenue_note_total_without_full_statement_not_treated_as_company_total) ... ok
 test_same_total_value_must_exist_in_selected_companyfacts (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_same_total_value_must_exist_in_selected_companyfacts) ... ok
 test_saved_producer_opts_in_for_b01_and_b03_but_not_neighbours (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_saved_producer_opts_in_for_b01_and_b03_but_not_neighbours) ... ok
@@ -73,7 +69,18 @@ test_dependency_source_and_processing_changes_reprocess_withheld_once (tests.vne
 test_missing_year_and_one_metric_failure_preserve_other_periods (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_missing_year_and_one_metric_failure_preserve_other_periods) ... ok
 test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates) ... ok
 
+======================================================================
+ERROR: test_reported_total_is_admitted_before_actual_calculator (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_total_is_admitted_before_actual_calculator)
 ----------------------------------------------------------------------
-Ran 72 tests in 0.363s
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 122, in test_reported_total_is_admitted_before_actual_calculator
+    self.assertEqual(value['input_assessments']['historical_statement']
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                     ['income_observation_checks'][0]['status'], 'MATCH')
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'status'
 
-OK
+----------------------------------------------------------------------
+Ran 68 tests in 0.308s
+
+FAILED (errors=1)
