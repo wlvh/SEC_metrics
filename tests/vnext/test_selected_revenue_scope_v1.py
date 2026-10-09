@@ -82,6 +82,20 @@ class SelectedRevenueScopeTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
             selected_revenue_scope(primary=primary,xml=xml,annual=annual,approved_concepts=APPROVED)
 
+    def test_native_fact_row_does_not_hide_unmarked_scope_clause(self):
+        primary,xml,annual=originals()
+        primary['raw_bytes']=primary['raw_bytes'].replace(b'<td>Net income</td>',b'<td>Net income; Total revenues exclude operations of Subsidiary Beta</td>')
+        primary['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=primary['raw_bytes'])
+        with self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+            selected_revenue_scope(primary=primary,xml=xml,annual=annual,approved_concepts=APPROVED)
+
+    def test_accounting_cost_exclusion_does_not_change_revenue_entity_scope(self):
+        primary,xml,annual=originals()
+        primary['raw_bytes']=primary['raw_bytes'].replace(b'<td>Cost of sales</td>',b'<td>Cost of sales excluding intangible amortization</td>')
+        primary['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=primary['raw_bytes'])
+        scope=selected_revenue_scope(primary=primary,xml=xml,annual=annual,approved_concepts=APPROVED)
+        self.assertTrue(scope['complete_scope_proven'])
+
     def test_explicit_scope_after_consolidated_title_is_not_ignored(self):
         primary,xml,annual=originals()
         primary['raw_bytes']=primary['raw_bytes'].replace(b'</div><table>',b'</div><p>Only Segment Alpha is included in this statement.</p><table>')
