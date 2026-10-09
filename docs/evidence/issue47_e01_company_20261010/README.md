@@ -19,3 +19,11 @@ source root用原EX99已执行账本的source-inputs，保存材料完整，不�
 实际接main0b（eaf16e55）及公共102/c3固定reporter源码，不覆盖controller/runner；61源合同/主体/历史控制.162s零skip。原prepared case经同save_calculated_case/read_saved_result纯保存/冷读，null/WITHHELD/CIK813828、FY2024全年，8item IDs及完整原2aa V2请求已进入普通input-assessments。ordinary-reporter-withheld.json给可读CSV和保存位置。此前未接102时直接输出今日CIK2041610，只新增呈现版本、不改原ResultID/源；这就是本批必要公共依赖。公司CLI有限E01门尚待公共方，直接writer成功不代替用户入口已交付，也不在本阶段新建PR称成功。
 
 后继把已完成的annual amendment来源影响检查保存在e01_content评估内，避免用户只看到结果而看不到为何接受该修订来源。31相关纯合同/consumer控制.017s零skip；不改变既有V2 request对象或计数结论。待同CLI实际终态一次验证，不为这字段重跑历史全部原件。
+
+## 已提交来源的取得顺序
+
+若已有本批真实后继source-inputs根，直接只读复用。首次恢复时，在保留历史代码分支运行原 `tools/vnext_historical_sec.py restore --export evidence/issue47_acquired --out <不存在的新目录>`，记录它返回的data_root。这个基础版本的log SHA是61252ac5，尚无EX99；不能把附件增量单独当成完整公司根。
+
+在这个**刚恢复、尚未用于任务结果的新来源目录**中导入已提交最小增量，旧运行根不要原地覆盖：只取增量中的source-inputs/config/company_registry.csv、源CSV/manifest以及EX99原件和headers。逐成员SHA按ex99-increment-index.json验证；registry须与基础相同，旧CSV完整字节须为新CSV前缀，新增行只有指定EX99，保留原行次序。不要解包calls、claims到任何执行账本。该操作只恢复已经消费的材料，不创建新的可执行额度或许可。
+
+本轮已核该归档所有成员及五个源成员的实际SHA，increment-source-check.json。源CSV SHA9cb8adec对应原一次GET后的2532行；EX99原件0baae3b3/18964字节。导入后用现有ordinary source verifier或该E01 case只读重建八项/V2 request，预期request2aa878ef；无需再次GET、start/resume或模型请求。完整首次基础restore是已有材料取得流程，尚未统一到公司在线发现/补齐入口，不将这份恢复说明当作该责任已取消或已完成。
