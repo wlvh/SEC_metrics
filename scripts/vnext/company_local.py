@@ -365,11 +365,13 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
         prepare_historical_event_year_case, PROCESSING_FILES as event_files)
     from .historical_capital_cases import (METRICS as capital_metrics,
         prepare_historical_capital_year_case, PROCESSING_FILES as capital_files)
+    from .historical_rpo_cases import (METRICS as rpo_metrics,
+        prepare_historical_rpo_year_case, PROCESSING_FILES as rpo_files)
     from .historical_bank_performance_cases import (METRICS as bank_metrics,
         prepare_historical_bank_year_case, PROCESSING_FILES as bank_files)
     selected = configured_scope(company_id) if metric_ids is None else list(metric_ids)
     need(selected and len(selected) == len(set(selected))
-         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | {'B07'},
+         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | set(rpo_metrics) | {'B07'},
          'LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry')
     from .company_current_records import run_saved_company
     if not set(selected) <= set(SUPPORTED_METRICS):
@@ -379,6 +381,7 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
             case_factories={m: (prepare_historical_event_year_case if m in event_metrics else
                                prepare_historical_current_annual_year_case if m == 'B07' else
                                prepare_historical_bank_year_case if m in bank_metrics else
+                               prepare_historical_rpo_year_case if m in rpo_metrics else
                                prepare_historical_capital_year_case if m in capital_metrics else
                                prepare_historical_liquidity_year_case if m in liquidity_metrics else
                                prepare_historical_lodging_year_case if m in SUPPORTED_METRICS
@@ -386,6 +389,7 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
             processing_files_by_metric={m: (event_files if m in event_metrics else
                                             statement_files if m == 'B07' else
                                             bank_files if m in bank_metrics else
+                                            rpo_files if m in rpo_metrics else
                                             capital_files if m in capital_metrics else
                                             liquidity_files if m in liquidity_metrics else
                                             HISTORICAL_LODGING_PROCESSING_FILES if m in SUPPORTED_METRICS

@@ -1,0 +1,26 @@
+# 历史期末RPO的有限公司接收
+
+从实际main9493ed0e短分支接续，不扩事件PR93。现有historical_capital_cases中的已选期末case提为一个私有共用函数，A01/A02原入口/白名单保持；新的B12薄入口同函数、normal_accession原生检查器、Calculator、普通controller/store/read/CSV。政策/公式/普通当前入口不改，不写第二个采集或财务内核。
+
+Salesforce FY2022–FY2026的原primary实例及已有独立rpo-read逐项同：43.7/48.6/56.9/63.4/72.4 billion USD，实际各年1月31日为期末存量，原FY2026 DEI字面2025与发行人FY2026解析及日期保持。五份原件检查29.776秒，FY2022只使用既有受控日期版namespace适配，其余原政策保持。它是RPO替代，不是ARR、cRPO或客户流失率，也不是全年收入。
+
+同公司CLI五年首25.430s、禁止原factory复2.026s、独立读.508s，数值/单位/期末正确，45结果及pointer保护；记录器要求明确RPO != ARR的展示断言失败，原结果不重算，实际CSV仅写RPO substitute，公共投影责任已交#28。展示补齐前不记整段交付通过，见salesforce-fiveyear.json及salesforce-cli.log。
+
+同任务只新增FY2026 B01的混合调用10.055s，旧B12不准备不重算，B01=41525000000 USD；原5年RPO保持。缺FY2027明确拒绝且5旧值仍读，新增一行失败/null不借FY2026。初控制错误把禁止复算施到新缺年，得到AssertionError；初记录器又错误要求读口仅有5行（实际还应有缺年空状态行），均保原log。修后只运行真实缺年.749s和读取.436s，得到源/选期报因、保45原文件，不重做混合或5年计算。见mixed-missing.json/日志。
+
+真实Marriott FY2025 B12在检查器调用即失败下仍返回N_A_STRUCTURAL/null/TRAIT_NOT_APPLICABLE，约3秒，有所选来源/期间/行业规则；不表示财报没有RPO。当前登记只有Salesforce属于B12的subscription_or_contract_revenue范围，不擅扩其他公司。
+
+27历史原件小反例/分派/状态例.164s零skip，保旧资本与其他家族工厂；错误单位/时点/分部范围/收入概念不能冒充RPO总额。初测试变异raw而未重造SourceReference被原校验拒绝，已修构造fixture而非放宽生产规则，原失败log保留。旧A01/A02完整来源证据复用未重读JPM，代码提取会作为相关处理版本变化，旧Run/保存结果仍按原版本读，不要求复刻身份。
+
+本记录全部来源只读/网络禁止，新SEC/provider/paid/native Run/正式接受0。年度来源发现/补齐、修订/继任RPO范围、未测其他公司年度和全1950目标继续。该入口目前分支实现/展示待公共补齐；主要证据仅本目录，不制作新审查包或CI平台。
+
+复现采用已恢复PR52 source-inputs和该分支程序，在外部新目录执行：
+
+```bash
+python3 tools/vnext_company.py run --company salesforce --period fiscal-years \
+  --fiscal-year-start 2022 --fiscal-year-end 2026 --metric B12 \
+  --source-root /saved/sec/source-inputs --work-dir /writable/rpo/state \
+  --output-dir /writable/rpo/runs
+python3 tools/vnext_company.py results --company salesforce \
+  --state-root /writable/rpo/state --output-root /writable/rpo/read-01
+```
