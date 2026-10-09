@@ -60,6 +60,25 @@ def _need(condition, reason, category='SOURCE_INTEGRITY_ERROR'):
         raise StatementCaseError(reason, category)
 
 
+def _registry_for_selected_period(*, registry, prepared, selection):
+    """Reuse the retained history rule for a predecessor's own annual period."""
+    subject = prepared['subject_policy']
+    if subject['mode'] != 'CONTINUOUS_PRIMARY' or registry['entity_continuity_status'] == 'continuous':
+        return registry, None
+    registrant = selection.get('period_registrant') or {}
+    reporting = str(int(prepared['entity']))
+    _need(subject.get('cross_entity_combination_authorized') is False
+          and str(int(subject['selected_cik'])) == reporting
+          and registrant.get('role') == 'PREDECESSOR'
+          and str(int(registrant['reporting_cik'])) == reporting
+          and str(int(registrant['successor_cik'])) == str(int(registry['primary_cik'])),
+          'HISTORICAL_STATEMENT_PERIOD_SUBJECT_NOT_PROVEN')
+    detail = {'company_registry_status': registry['entity_continuity_status'],
+              'period_subject_policy': subject['mode'], 'period_registrant_cik': reporting,
+              'cross_entity_combination_authorized': False}
+    return {**registry, 'primary_cik': reporting, 'entity_continuity_status': 'continuous'}, detail
+
+
 def prepare_historical_statement_year_case(*, repo_root, company_id, metric_id, fiscal_year):
     """Select one issuer year and supply the existing common computation."""
     _need(metric_id in METRICS, 'HISTORICAL_STATEMENT_FAMILY_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
@@ -97,6 +116,8 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
     registry = next(r for r in _registry_rows(repo_root=source) if r['company_id'] == company_id)
     expected = next(r for r in _registry_rows(repo_root=ROOT) if r['company_id'] == company_id)
     _need(registry == expected, 'HISTORICAL_STATEMENT_SOURCE_SUBJECT_CHANGED')
+    period_registry, period_continuity = _registry_for_selected_period(
+        registry=registry, prepared=prepared, selection=selection)
     traits = repository_company_traits(repo_root=ROOT, company_id=company_id)
     reader = _Sources(source, company_id, prepared['entity'])
     main = reader.read(submissions_url(cik=int(prepared['entity'])),
@@ -161,7 +182,7 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
             'role_context': {(company_id, 'companyfacts'): {'sources': sources,
                             'claims_by_accession_role': by_role}},
             'target_periods': {company_id: periods}, 'targets': {company_id: period},
-            'registry': {company_id: registry}, 'filings_by_company': {company_id:
+            'registry': {company_id: period_registry}, 'filings_by_company': {company_id:
                 {role: {'accession': filing['accessionNumber']} if filing else None
                  for role, filing in filings.items()}}}
         try:
@@ -190,6 +211,8 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
                 observations = [graph['observation']] if graph['observation'] else []
                 selected_claims = graph['claims']
                 assessment = {'paired_measure_bridge': bridged} if bridged else None
+    if period_continuity is not None:
+        assessment = {**(assessment or {}), 'period_continuity': period_continuity}
     proofs = list({content_hash(value=p): p for p in
         [*prepared['source_proofs'], *[s['proof'] for s in reader.proofs.values()]]}.values())
     admission = verify_ordinary_source_proofs(data_root=source, proofs=proofs)
