@@ -103,6 +103,17 @@ python3 tools/vnext_company.py results \
 
 ## A13 国际净收入：候选分支的有限接收
 
+审查此能力需明确检出该候选，前面的 main 酒店命令不会取得 A13 适配。使用已有仓库的新目录，例如：
+
+```bash
+git fetch origin task/issue47-geography-history-20261009
+git worktree add -b review/issue47-a13 ../SEC_metrics-a13-review \
+  origin/task/issue47-geography-history-20261009
+cd ../SEC_metrics-a13-review
+```
+
+分支已包含其需要的公共 PR104 接缝；无需另外复制未提交文件。来源恢复需在保留历史分支执行上节命令，随后把返回的实际 `source-inputs` 根传入此候选。若分支名或目录已占用，选择新名字，不能覆盖现有任务。
+
 `task/issue47-geography-history-20261009` 在实际 main `6e51f416` 上消费公共 PR104 的显式旧标记版本解析及 A13 公司更新接缝。该分支尚未入 main；当前已实际验证 JPMorgan FY2021–FY2025 的选源、共用检查和计算、同公司首跑／复用、独立 CSV 与出处读取。A13 为源表披露的全年国际净收入金额，使用原表国际合计、收入定义、USD 单位和实际全年窗口。
 
 ```bash
