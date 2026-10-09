@@ -133,3 +133,10 @@ remains the prefix of the same conclusion. Cumulative agent tools 47/messages
 three reviewed source/test files are byte-identical to `35b9329d`. The new
 combined small test terminal is in `main-receiving-small-tests.log`. Neither
 main reception nor the source interface review grants a full company result.
+
+Latest main 73ead3b4 received at 445d3455 to resolve the selector-only PR
+conflict. Runner function AST equals both parents; each incoming and public
+source/window selector remains once. All five previously reviewed source,
+renderer and test files are byte-identical to b82111a5. The 26 affected public
+source/window/history-dispatch small cases passed in 0.219s with zero skips;
+see latest-main-combined-small.log. Unchanged original material is reused.
