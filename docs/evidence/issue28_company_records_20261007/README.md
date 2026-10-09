@@ -12,7 +12,7 @@ install a runtime, source package, trust root or native Run. Program/source root
 are shared reading locations; checks/results and CSV are written in separate
 roots. No copytree or requirement authentication is needed by this branch.
 Old local/native states are explicitly refused for in-place conversion and
-retain their original fixed entry. Old online/native task commands and their original fixed runtimes are retained; new online installation from this changed tree is not yet migrated.
+retain their original fixed entry. Old online/native task commands and their original fixed runtimes are retained; at the original prototype stage, new online installation was not migrated; the 2026-10-09 default-native compatibility repair below supersedes that current limitation.
 
 Per-metric update uses PR64's compare-before-calculate controller. Identical
 raw inputs/config read saved records. Failure keeps the old successful pointer;
@@ -441,7 +441,7 @@ At b23f16a7, dedicated company CI37666013962 and reference37666014105SUCCESS; ma
 
 History receiver reported4macOS fixture-only failures under /var vs/private/var; public CurrentCompanyTest and small CurrentUpdateTest temporary roots now resolve before using path strings as mocked-record keys.42tiny controls execute with TMPDIR=/var/folders in0.157s, no business assertion relaxed. Receiver's5historical state controls pass under the explicit dual-pointer/status contract; their actual real-company validation is their own scope, not credited to this parent.
 
-For old native records, old source/rule/creator versions stay intact. PR63fixed52c3877b recorded actual JPM56-title saved read with its source/rule runtime,0.574s; current ordinary saved entry uses run --source-root and results --output-root. The retained native results path without output-root can take explicit runtime-root; full audit export remains explicit. Default new online install still fails old current-tree binding, so interface preservation is not claimed as working online compatibility. Confirming the required old saved-runtime path and remaining CI migration is still part of closeout.
+For old native records, old source/rule/creator versions stay intact. PR63fixed52c3877b recorded actual JPM56-title saved read with its source/rule runtime,0.574s; current ordinary saved entry uses run --source-root and results --output-root. The retained native results path without output-root can take explicit runtime-root; full audit export remains explicit. At this historical checkpoint, default new online install failed old current-tree binding, so interface preservation is not claimed as working online compatibility. Confirming the required old saved-runtime path and remaining CI migration is still part of closeout.
 
 ### Closeout continued: current conclusions survive later subset reads
 
@@ -462,7 +462,7 @@ Fixed01efa3d main CI37672931093 is now terminal FAILURE, dedicated37672931165 an
 
 For this saved-source candidate, the workflow removes old complete native creation/installation jobs: acquisition/C04 recovery, native cold read plus recorded update, saved D04 native creation, and the Marriott/JPM remaining-source matrix. Their old test files and saved runtime remain; they are not PASS, skipped tests, migrated company results or silently repaired old installs. The C04 job is explicitly renamed to source and subject checks and executes26retained original/form/CIK/prior/event tests, already actually passed7.768s with zero skips. Current source/count/request, recovery/mixed outcomes, shared fast, inherited business materials and historical object reading remain active. Repository protection is unchanged.
 
-Retiring a current proof-tree recreation job does not retire C04/D04/remaining12business responsibility. They remain outside CURRENT_METRICS and are not this candidate's new capability. The old fixed-runtime CLI read is actually verified for JPM D01 only; its prior0.637s record is reused, no wholesale rerun. Default current-tree new online install remains unsupported. No Requirement/old Run/ledger is rewritten and no new model/SEC request occurs. New-head remote workflow terminal, its longest applicable duration and final reception notes still require verification.
+Retiring a current proof-tree recreation job does not retire C04/D04/remaining12business responsibility. They remain outside CURRENT_METRICS and are not this candidate's new capability. The old fixed-runtime CLI read is actually verified for JPM D01 only; its prior0.637s record is reused, no wholesale rerun. That checkpoint did not support current-tree new online install; the later 2026-10-09 repair below resolves the default native compatibility regression. No Requirement/old Run/ledger is rewritten and no new model/SEC request occurs. New-head remote workflow terminal, its longest applicable duration and final reception notes still require verification.
 
 
 ### Measured historical checkout timeout, not a new assertion failure

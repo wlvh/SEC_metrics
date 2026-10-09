@@ -28,3 +28,6 @@ python3.12 -B <修后PR67>/tools/vnext_company.py run --company marriott_interna
 这里120只隔离录制上限，不是真实调用批准。sitecustomize在实际安装子进程导入自己的acquisition模块时注入HTTP回复，不能把整个_invoke返回或installer/选择器mock成功；缺URL明确REVIEW_SAVED_HTTP_REPLY_MISSING。两个正式run仍能独立执行acquire/计算，观察各stages原stdout/stderr。普通真实在线另核已有适用用途/累计账本，不用这个测试初始化真实额度。
 
 现回修工作树证据不能写成已提交SHA；提交后核对源差异与被测树。保存来源/旧读取不受影响的责任复用，必要默认入口回修限定复核及新headCI尚待。原在线全族业务缺口、39指标、模型和生产责任不因兼容结案解除。
+
+
+818dd871限定复核PASS_LIMITED_COMPATIBILITY：28例6.781s、无网实际静态安装3.838s；程序树8585f541...与main/长链完全相同，配置39项/支持38条同main，未携SEC原件/AI响应或5项处理配置。29HTTP回复Git blob长度/SHA全匹配。注意新增retained_main上层字段未在165s长链重跑，当前静态探针直接核它并比较实装程序树；不声称全上层摘要字节已重跑。旧任务优先原程序，saved-source不进安装。无新费用/合并/生产信用。详见independent-review/conclusion.md。

@@ -2,7 +2,7 @@
 
 公司入口已经由PR55/PR56基础及PR57交付到main；代码交付与业务结果接受是不同状态。来源与计算仍为独立阶段，`run`只负责顺序调度；没有OpenShift部署、正式发布、active切换或新模型调用。旧分阶段入口及运行树仍可读取旧Run。
 
-保存来源可以使用当前普通记录路径，不安装旧Requirement/trust树：
+以下 `run --source-root` 属于 PR67 候选，尚未进入 main；main8588没有这个参数。候选的普通记录路径不安装旧Requirement/trust树：
 
 ```bash
 python /path/to/SEC_metrics/tools/vnext_company.py run \
@@ -20,7 +20,7 @@ python /path/to/SEC_metrics/tools/vnext_company.py results \
 
 B03还保存只读的`input-assessments.json`，保留原件数量比较及收入减项排除；Marriott按既有4.58亿范围计算，Salesforce具体冲突扣留，不替换成较大的现金流数值。Paramount原文表头Aug7与native contextAug8冲突明确扣留，侧车保留两种日期与定位，不选择日期、年化或拼接前身。
 
-本批实测Marriott B01/B02、B10/B11及银行/非自然年结果见 `docs/evidence/issue28_company_records_20261007/`；程序通过与内容接受分别登记。该路径尚未完成在线发现接续、同批表格/CompanyFacts解析共享、AI输入消费和所有39项业务验收。以下描述的是旧固定版本的在线/native路径；本变更树的新在线安装仍受旧字节绑定阻断，尚未迁移，不把接口保留当作新安装已通过。
+本批实测Marriott B01/B02、B10/B11及银行/非自然年结果见 `docs/evidence/issue28_company_records_20261007/`；程序通过与内容接受分别登记。该路径尚未完成在线发现接续、同批表格/CompanyFacts解析共享、AI输入消费和所有39项业务验收。以下描述的是旧固定版本的在线/native路径；修前29c9的新在线安装受旧字节绑定阻断；当前默认native入口已通过固定main8588过渡兼容回修成对验证，尚未迁移，不把接口保留当作新安装已通过。
 
 旧native任务的只读兼容需要其原固定程序与原来源登记位置，当前入口可明确指定：
 
@@ -30,7 +30,7 @@ python /path/to/SEC_metrics/tools/vnext_company.py results \
   --runtime-root /saved/original-runtime --trust-root /saved/original-source-trust
 ```
 
-这不是重新安装或计算：本批已用现有JPM D01任务实际验证，原Run的manifest/records不变。旧任务的来源/程序/登记位置须取自它自己的保存记录；不能以任意新目录代替，也不将只读成功升级为本期业务接受。旧完整审计导出仍显式使用`export-results`；新普通任务用上面的`run --source-root`和`results --output-root`，当前默认在线新安装尚未交付。
+这不是重新安装或计算：本批已用现有JPM D01任务实际验证，原Run的manifest/records不变。旧任务的来源/程序/登记位置须取自它自己的保存记录；不能以任意新目录代替，也不将只读成功升级为本期业务接受。旧完整审计导出仍显式使用`export-results`；新普通任务用上面的`run --source-root`和`results --output-root`，修前默认在线新安装未交付的状态已由本页“首批接收回修”更新；新的轻量在线仍是独立后继。
 
 
 在源码目录之外的工作位置执行，固定源码也可用绝对路径指定：
