@@ -1,20 +1,22 @@
 # 历史公司使用指南
 
-截至2026-10-09，main `f447a3747a88edf080b740dca0681ce18b35c3d2` 已有公司入口及PR61/58的测试基础/机械D02组件，但没有本指南的保存来源历史范围分派；组件合入不等于公司D02模型链完成。PR71 `task/issue47-history-consumers` 接收 PR67 `f7905156f7972b214e71d7f0a9a1172f7ac969cf` 后，通过同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口处理历史 B10/B11。它仍是 Draft 分支能力；技术验证不表示已入 main、正式采纳或完整五年业务接受。
+截至2026-10-09，main `e2d6784c9a464a04b793d3487e6e9868a37614b3` 已接收 PR61/58/62/67/71。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口已支持保存来源的历史 B10/B11；PR59 的共用酒店计算随 PR67 一并接收。下面的两年酒店命令可从 main 运行。PR58 合入的是机械 D02 引文检查，D02 公司模型链、在线历史来源发现与完整五年业务验收仍未完成。
+
+后续历史 B01/B02/B04/B05 等候选仍在各自 Draft PR，不能据分支验证扩大 main 的支持范围。代码合入也不表示正式采纳、发布或 active 切换。
 
 ## 取得代码和已保存输入
 
 审查者在已有仓库创建自己的新目录和新分支，名称被占用时另选，不覆盖已有任务：
 
 ```bash
-git fetch origin task/issue47-history-consumers
+git fetch origin main
 git worktree add -b review/issue47-hotel-history ../SEC_metrics-history-review \
-  origin/task/issue47-history-consumers
+  e2d6784c9a464a04b793d3487e6e9868a37614b3
 cd ../SEC_metrics-history-review
 python3 tools/vnext_company.py run --help
 ```
 
-这份分支已经携带 Marriott FY2024/FY2025 的完整保存原件、HTTP headers、请求日志及公司登记，来源根可以直接是该检出根。规则、指标定义和程序从代码根读取；所有状态和输出写检出根之外的新目录。无需取得开发者的私人来源目录，也不要求审查者建立信任库或修改原任务。本指南的两年命令已经在本组合使用这些提交材料实际运行；对应[主要验证记录](evidence/issue47_history/simplification-closeout-2026-10-08/README.md)。
+这一 main 版本已经携带 Marriott FY2024/FY2025 的完整保存原件、HTTP headers、请求日志及公司登记，来源根可以直接是该检出根。规则、指标定义和程序从代码根读取；所有状态和输出写检出根之外的新目录。无需取得开发者的私人来源目录，也不要求审查者建立信任库或修改原任务。本指南的两年命令已在被 main 接收的同一实现上使用这些提交材料实际运行；合并未改变这些处理文件，复用原计算验证；对应[主要验证记录](evidence/issue47_history/simplification-closeout-2026-10-08/README.md)。
 
 其他既有历史材料仍由 PR52 的已提交 `evidence/issue47_acquired/` 承接。若已经有恢复结果，复用它的实际 `source-inputs` 根，不重新恢复整树。确实需要首次恢复时，使用保留的 `task/sec-history-five-year` 入口：`python tools/vnext_historical_sec.py restore --export evidence/issue47_acquired --out <不存在的新目录>`，并读取返回的 `data_root`；父目录本身不是来源根。恢复不发出 SEC GET，不给未成熟指标授予计算能力。它是既有材料恢复步骤，尚未统一到新公司历史来源准备流程。
 
@@ -37,9 +39,9 @@ python3 tools/vnext_company.py results \
   --output-root "$HOME/sec-metrics-review-20261009/read-01"
 ```
 
-财年起止为包含端点的发行人财年标签，一次最多五年；实际日期来自所选申报 DEI，不能把报告截止日期的公历年份当成财年。例中两年实际各为1月1日至12月31日；Macy’s FY2024 的截止日期是2025-02-01。这只是标签解释，本批 PR71 不支持 Macy’s B01 等后续指标。
+财年起止为包含端点的发行人财年标签，一次最多五年；实际日期来自所选申报 DEI，不能把报告截止日期的公历年份当成财年。例中两年实际各为1月1日至12月31日；Macy’s FY2024 的截止日期是2025-02-01。这只是标签解释，当前 main 历史模式不支持 Macy’s B01 等后续指标。
 
-本组合两年值为 B10 69.8% / 69.3%，B11 128.23 / 128.8 USD。内部 B10 计算值仍为 0.698 / 0.693 ratio，CSV 明确转换成 percent；不能把69.8当成原始比率。出处保留原申报、原表、原格文字及位置，不把展示值代替证据。
+上述保存输入的两年值为 B10 69.8% / 69.3%，B11 128.23 / 128.8 USD。内部 B10 计算值仍为 0.698 / 0.693 ratio，CSV 明确转换成 percent；不能把69.8当成原始比率。出处保留原申报、原表、原格文字及位置，不把展示值代替证据。
 
 `run` 的 JSON 指明本次 `output_root`，CSV 位于该根的 `metrics_matrix.csv` / `metric_evidence.csv`，不要到输出父目录或旧运行目录找本次文件。`results --state-root` 指向原 `work-dir`，无需附加 `historical-company-state`、`company-state` 或 trust；`--output-root` 必须是新的读取目录。两种命令都不修改原件，不执行在线发现、SEC获取或模型调用。
 
@@ -51,7 +53,7 @@ python3 tools/vnext_company.py results \
 
 缺源年份、实现失败和业务扣留分开表达。缺源/处理失败保留空值、请求财年、具体 `error_category` / reason；其他年份及指标的成功记录保留。`FLOW_COMPLETED_WITH_LIMITATIONS` 表示有明确限制，不能当成所有指标交付。`SOURCE_UNAVAILABLE` 不是正确零值；`IMPLEMENTATION_GAP` 表示已有材料或路径尚未实现。首批不支持的历史家族在入口拒绝，不能省略 `--metric` 后把默认39项当成已支持。
 
-本批选择器明确保留修订情况，但尚未完成修订历史酒店处理；主体变换也未取得完整适配接受。Paramount 可见 August7 与原生 context August8 的真实期间冲突仍保留两种证据，不任选日期、年化或拼接前身。它不是本酒店接收的输入；这条范围限制不授其他指标接受。
+当前 main 历史选择器明确保留修订情况，但尚未完成修订历史酒店处理；主体变换也未取得完整适配接受。Paramount 可见 August7 与原生 context August8 的真实期间冲突仍保留两种证据，不任选日期、年化或拼接前身。它不是本酒店接收的输入；这条范围限制不授其他指标接受。
 
 ## 当期模式及旧任务
 
@@ -61,6 +63,6 @@ python3 tools/vnext_company.py results \
 
 ## 仍需交付的部分
 
-首批 PR71 交付保存来源后的范围计算、复跑、读取和CSV/出处；不包含在线历史发现、缺件补齐、其他历史指标或新模型执行链。后续PR75等已经形成的业务候选另行保留，不倒入首批，不据其分支结果扩大本指南的可用范围。
+已入 main 的 PR71 交付保存来源后的范围计算、复跑、读取和CSV/出处；不包含在线历史发现、缺件补齐、其他历史指标或新模型执行链。后续PR75等已经形成的业务候选另行保留，不倒入首批，不据其分支结果扩大本指南的可用范围。
 
 完整历史来源准备仍须把公司、期间、指标贯穿现有来源发现/缺件清单、按具体用途许可获取、同一公司计算和结果出口。年度基础材料已保存不等于附件、图片、前期和所有指标依赖齐备。本项是仍有效的H4/历史交付责任，不因首批范围有限而取消；原十公司×39指标×五年业务目标继续。
