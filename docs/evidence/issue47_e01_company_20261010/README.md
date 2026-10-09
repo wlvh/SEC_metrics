@@ -80,3 +80,11 @@ PY_SOURCE_ONLY
 依赖修补的状态行为另用原SelectedHistoryResultStateTest的小型状态控制验证：传入本E01真实PROCESSING_FILES，初次构造扣留后同输入PREVIOUS_INPUT_WITHHELD；仅在内存改变实际修订政策hash后处理一次，再同输入又复用。总factory2、.020s，无文件规则变更/真实来源复制。declared-dependency-state.json明确构造控制，不冒充Marriott财报结论或公司CLI接收；只是证明该声明经同公共run_once产生所需失效行为。
 
 实际接收main f6（金融公共与三历史族已合入）为192de8d4。公司分派保main六金融映射并加本E01；投影只合原公共c3 reporter与main的reported-average两个相邻函数，函数AST均逐字实现同源，不写第二renderer。42主体负例/季度期间/历史分派/E01控制9.186s零skip；main-receiving-conflict-controls.log及main-receiving-public-functions.json。未重新计算JPM/Paramount，真实E01门仍待公共下一固定补丁。
+
+## 真实公司入口终态
+
+公共PR113固定4791ef0b接为1dd408e0，main f6+c3 reporter+本producer在同树。33公共门/历史consumer/dispatch .083s零skip，随后ParamFY2024同公司run20.959s/CANDIDATE_WITHHELD/exit2，禁factory复3.444s/PREVIOUS_INPUT_WITHHELD/calculationfalse，独立results.638s/exit0；FY24全年/CIK813828、8结果pointer文件保持，完整V2 request2aa及八候选留input-assessments。没有matching V2目标答，原V1不借/null不补部分计数。company-cli-first.json/log。
+
+驱动读取CSV时默认131072字段容量失败，实际三个CLI均正常；仅读现成输出核对发现本方完整修订scope对象嵌进daily selection造成2.55MB单格。现只在本producer展示scopeID/classification/明确窗口/来源引用，完整评估/原请求仍在input-assessments及绑定。9短例.008s零skip；已算case纯writer2.003s验证CSV字段7910字符/默认csv可读，完整assessment/ResultID同，不重读源。
+
+这一真正展示代码变化只正常迁移原E01该一坐标22.861s，原旧版本保留，禁factory复3.371s/calculationfalse、独立results.603s；16旧新结果/pointer文件保持，全年/CIK/null/2aa完整请求及annual amendment原评估均在。company-cli-display-final.json/log。没有其他公司/年份重算，原大CSV保旧版本。正式用户入口现在能写出可读未决和具体来源依赖，但内容确认模型业务仍未交付；新SEC/provider/paid0，无NativeRun/接受/active。
