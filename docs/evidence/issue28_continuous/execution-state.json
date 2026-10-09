@@ -17236,7 +17236,7 @@
     },
     {
       "module": "b03_contract_amortization_scope._visible_revenue_deductions/_RevenueTableIndex",
-      "status": "DRAFT_PR99_P2_FIXED_LIMITED_REVIEW_PASS_REMOTE_PENDING",
+      "status": "DRAFT_PR99_P2_FIXED_LIMITED_REVIEW_AND_10_REMOTE_CHECKS_PASS",
       "draft_pr": "https://github.com/wlvh/SEC_metrics/pull/99",
       "head": "981de20f2e0fa33f073549d9fe19fc5aeb258979",
       "reviewed_product": "98930711a31d85d1b5406149ef83271cce793543",
@@ -17245,9 +17245,23 @@
       "actual_source_author_checks": "FY2021 55+20=75m, FY2022 60+29=89m, FY2023 65+22=87m vs consolidated88m; each request/body proven; gross-to-net and visible year retained",
       "remaining": [
         "receiving consumer validation",
-        "fulfillment/lease amortization completeness; three historical B03 not released",
-        "new head CI"
-      ]
+        "fulfillment/lease amortization completeness; three historical B03 not released"
+      ],
+      "remote_checks": "10 SUCCESS at981de20f"
     }
-  ]
+  ],
+  "public_receiving_terminal_20261009": {
+    "observed_at": "2026-10-09T12:30:30.274712+00:00",
+    "main_read": "4a03f22393182eb642a0472f1480354ff430267c",
+    "issue_queue_readback_verified": true,
+    "drafts": {
+      "94": "ca45736410 SUCCESS",
+      "95": "7e22943a10 SUCCESS",
+      "97": "e53609e710 SUCCESS",
+      "99": "981de20f10 SUCCESS"
+    },
+    "author_merged": false,
+    "complete_objective": false,
+    "original_issue28_claims_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb"
+  }
 }

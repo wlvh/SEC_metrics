@@ -7,7 +7,7 @@ PR89源-only事件及显式登记宽窗保存已经入main；原820 NEEDS_FIX、
 
 Draft PR95 7e22943a移除未使用ordinary_source_session默认处理摘要，显式消费者依赖/选期/来源/Calculator仍有效；独审PASS，39例及真实Marriott C01重复factory禁用/六文件不变，10远端检查SUCCESS。安装代码仍有一次正常版本变化处理，之后无关session改动不重算。Draft PR97 e53609e7仅B12显示RPO/cRPO非ARR、非churn；实际Salesforce26 72.4bn USD/asof2026-1-31的Result/Trace不改，10例/当前10检查SUCCESS，旧CSV不重签。
 
-Draft PR99 981de20f保留三真实原件全部四条合同收入扣减关系，识别重叠segment total不重复加回；私有table proof仅省略明确display:none空leaf列，原字节/fact顺序/普通spacer保留。原2bec样式P2 NEEDS_FIX留历史，989仅增量PASS，26例及准确comment回归通过；新head CI仍运行。FY23 segment87m vs consolidated88m不抹平，完整D&A/fulfillment/lease问题另存，三个历史B03不升级成功。下一步仅按实际消费者/CI差异处理，再推进原当期B03/B06、C04/AI/390未完成责任，不重建通用parser或全历史重跑。
+Draft PR99 981de20f保留三真实原件全部四条合同收入扣减关系，识别重叠segment total不重复加回；私有table proof仅省略明确display:none空leaf列，原字节/fact顺序/普通spacer保留。原2bec样式P2 NEEDS_FIX留历史，989仅增量PASS，26例及准确comment回归通过；当前981de20f的10检查全部SUCCESS。FY23 segment87m vs consolidated88m不抹平，完整D&A/fulfillment/lease问题另存，三个历史B03不升级成功。下一步仅按实际消费者/CI差异处理，再推进原当期B03/B06、C04/AI/390未完成责任，不重建通用parser或全历史重跑。
 
 原#28账本195claims、143/143/52、余97/97/28及SHA6023精确不变，本段0/0/0，不恢复191/192机会；D04十家候选保留，B13/D03新真实用途仍未授。原生Goal最新实读ACTIVE、无budget，先前blocked观察保历史；目标未完成，不因一次PR/CI/报告标complete。原PR43保留存量实现/原件/证据；后续公共能力继续main短分支按权限交付。
 <!-- closeout-current-20261009:END -->
