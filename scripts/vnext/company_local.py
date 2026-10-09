@@ -67,7 +67,8 @@ def _invoke(program, args, *, report_file, environment=None):
 
 def prepare_program(work):
     """Install once and keep each prior program/Run version for native readback."""
-    from .company_runtime_install import SUCCESSOR_MODULES, install_runtime
+    from .company_runtime_install import SUCCESSOR_MODULES
+    from .company_retained_local import install_retained_local, RETAINED_MAIN
     from .company_handoff import binding
     configuration = work/'local-company.json'
     if configuration.exists():
@@ -77,12 +78,13 @@ def prepare_program(work):
             need(program.parent == work/'programs' and (program/'requirements/issue_54_v4').is_dir(),
                  'LOCAL_FIXED_PROGRAM_MISSING_OR_CHANGED')
             return program
-    paths = ['tools/vnext_company.py', *('scripts/vnext/'+m+'.py' for m in SUCCESSOR_MODULES)]
-    code = content_hash(value={p: binding(ROOT/p) for p in paths})[7:]
+    paths = ['tools/vnext_company.py','scripts/vnext/company_retained_local.py', *('scripts/vnext/'+m+'.py' for m in SUCCESSOR_MODULES)]
+    code = content_hash(value={'retained_main_commit':RETAINED_MAIN,
+                               'entry_files':{p:binding(ROOT/p) for p in paths}})[7:]
     program = work/'programs'/code
     if not program.exists():
         staging = program.with_name('.'+code+'-'+uuid4().hex)
-        install_runtime(output_root=staging, kind='local')
+        install_retained_local(repo_root=ROOT,output_root=staging)
         # Only the newly installed private program is sealed. Captures, trust,
         # update journals and results live in separate writable directories.
         for path in [*staging.rglob('*'), staging]:
@@ -103,7 +105,9 @@ def configure_task(work, company_id, sec_allowance):
     else:
         _atomic_json(configuration, identity)
     program = prepare_program(work)
-    _atomic_json(configuration, {**saved, **identity, 'program_root': str(program)})
+    from .company_retained_local import RETAINED_MAIN
+    compatibility={} if saved.get('program_root') else {'retained_main_commit':RETAINED_MAIN}
+    _atomic_json(configuration, {**saved, **identity, **compatibility, 'program_root': str(program)})
     return program
 
 
@@ -207,6 +211,8 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
         try:
             program = configure_task(work, company_id, sec_allowance)
             summary['program_root'] = str(program)
+            retained = strict_json_file(path=work/'local-company.json').get('retained_main_commit')
+            if retained:summary['retained_native_main_commit']=retained
             # A bounded repair may advance preparation while preserving the
             # original acquisition binding and all existing computing Runs.
             preparation = strict_json_file(path=work/'local-company.json').get('preparation_program_root')

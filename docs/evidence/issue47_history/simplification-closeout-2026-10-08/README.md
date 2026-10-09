@@ -79,3 +79,7 @@ Paramount可见表头起日2025-08-07与原生context2025-08-08冲突必须同�
 后续已核公共a4运行37676590569最终CANCELLED：历史对象作业全历史取码约385秒，34项测试187.808秒全部通过及scalability/egress/reference检查通过后，达到原10分钟作业截止；取消不改称失败或整体成功。已接公共adee3036最小取码修复：候选depth1，仅显式fetch baseline_manifest声明的旧提交完整对象，再读取其实际active对象。34 selectors、原命令、10分钟期限与业务生产源码保持；本方6项取码范围回归通过，原61项和实际历史消费者结果复用。新的37678715800现已实际核为SUCCESS，七个作业全部通过；详见[新公共CI终态及取码耗时](public-adee-ci-terminal.json)。这里不证明全部旧运行或新在线安装。
 
 后续接收公共c56e6335（原67自身CI全部SUCCESS），形成可取得组合d68b2d4d：公共增量为旧独立ordinary journal的只读引用及CLI识别；同一ordinary controller/writer/reader、历史公司分派和酒店producer与原ac6910逐字节相同。仅对新CLI组合做旧保存Marriott任务的独立读取0.968秒，选源/计算/业务网络禁止，42个结果和指针不变，仍导出FY2024/25的69.8/128.23与69.3/128.8。不重算本记录既有H4、酒店全帧或B01。[组合检查](c56-combination-verification.json)不借作旧journal计算族或新模型接受。
+
+2026-10-09默认入口回修的历史接收：在固定PR71/c432d035上组合公共818dd871，不引PR83、不重做公共成对fresh任务。历史现有范围例新增prepare_program调用即失败断言；[40项消费者短测试](pr71-retained-native-consumer-short.log)6.923s/零skip，保存范围不进原生安装。[完整处理配置比较](pr71-retained-native-processing-compare.json)证明B10/B11各123文件配置逐字段不变；[原两年保存任务复跑](pr71-retained-native-repeat.json)禁止prepare_program/install_retained_local/producer及socket后2.474s，无计算；[独立进程读](pr71-retained-native-cold-read.json)0.960s，四值/单位/实际期间及32结果/pointer字节保持。没有新财报计算、来源树/程序树复制或业务调用。公共默认任务main166.358s/修后165.199s同HTTP/公司/指标的验证由其主记录负责，本方复用其范围，不把耗时相近写成提速。
+
+上述组合先保存为本地可审查提交，公共818的限定复核及远端发布未返回时不抢先替公共侧发布；它不是新的合并/采纳批准，旧c432的9项CI终态不移签到本组合。现有PR71及首批范围保持，后续只接实际回修，不加业务族；需要原位纠正的公共在线说明旧句已直接反馈#28，公共侧单方维护。

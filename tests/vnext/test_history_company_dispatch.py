@@ -22,7 +22,9 @@ class HistoryCompanyDispatchTest(TestCase):
 
     def test_range_uses_one_public_company_controller_and_existing_case(self):
         from vnext.historical_lodging_results import prepare_historical_lodging_year_case
-        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+        with (patch('vnext.company_current_records.run_saved_company', return_value={}) as shared,
+              patch.object(local, 'prepare_program',
+                  side_effect=AssertionError('Saved history must not install a native program'))):
             self.run_history()
         args = shared.call_args.kwargs
         self.assertEqual([2024, 2025], args['fiscal_years'])

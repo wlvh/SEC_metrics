@@ -96,3 +96,9 @@ python /path/to/SEC_metrics/tools/vnext_company.py acquire \
 Marriott真实空来源首跑和同目录复跑已完成：累计31次真实SEC GET、27份来源复用，复跑36个原生候选独立冷读通过；39项中D02/D03/D04仍明确限制，不是39项业务验收或正式发布。实际CSV、摘要、来源/运行版本、修复与合并依赖见[真实运行材料](evidence/issue54_company/live-marriott/README.md)；[此前本地接线材料](evidence/issue54_company/local-run/README.md)仍按录制范围保留。
 
 2026-10-04另以新工作目录从空来源重新真实运行（新增29+2次GET，含原31次累计62/120），首跑36候选冷读通过、复跑0新Run、局部重入保留其它行；已配置的旧LIVE D04因本次收到的10-K比原版本多一个script元素（注入方未归因）、原始字节身份不同，严格等价按现行规则被拒并如实保留。见[本轮材料](evidence/issue54_company/live2/README.md)。
+
+## 首批接收回修：默认空任务
+
+PR67修前29c9c9e在normal_source_authority旧绑定处、HTTP前失败；实际main相同回复/公司/B01/B02成功。本轮保持不带source-root的原用户命令与main支持范围，新默认native程序从可取得的固定main8588程序/规则安装，程序内没有SEC原件，真实来源仍需原适用许可；原已存在任务优先保留原program_root。当前轻量source-root生产者不变，没有引入PR83。该保留native路径是过渡兼容，不表示新轻量在线39项或业务接受已经完成。
+
+需要含main8588及旧规则Git对象的代码仓库；审查的HTTP录制使用Python3.12/B01/B02，所有实际子进程运行且网络禁止。准确三入口、只读原件位置、全新目录命令与成对证据见 [主要回修记录](evidence/issue28_company_records_20261007/default-online-review-20261009/README.md)。新轻量记录state-root是work-dir；旧native才使用company-state及原runtime/trust，不混用参数。
