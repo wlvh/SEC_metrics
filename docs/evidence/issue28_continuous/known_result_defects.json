@@ -1194,8 +1194,36 @@
       ],
       "original_record_retained": true,
       "released": []
+    },
+    {
+      "defect_id": "ISSUE47_PFIZER_2023_REVENUE_COMPONENT_IS_NOT_TOTAL",
+      "company_id": "pfizer",
+      "metric_id": "B01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:a6e31052ee3e389e46442777fa69c0d06c6ec43e847dd65c412c0e05509aa8f7",
+      "actual_selected_value": "50914000000",
+      "source_total_revenues": "58496000000",
+      "source_product_revenues": "50914000000",
+      "source_alliance_revenues": "7582000000",
+      "source_table": "table_000113",
+      "classification": "SOURCE_SCOPE_SUBTOTAL_INSTEAD_OF_COMPLETE_REVENUES",
+      "previous_reading_match_is_not_business_acceptance": true,
+      "old_result_not_rewritten": true,
+      "new_calls": [
+        0,
+        0,
+        0
+      ],
+      "source_evidence_commit": "0dc5de75",
+      "source_evidence": "https://github.com/wlvh/SEC_metrics/blob/0dc5de75/docs/evidence/issue47_growth_reference_20261010/pfizer2023-revenue-tables.json",
+      "peer_run_id": "run:historical-period:3ea915ac415cf9d21b02c0b24d6dc7bad8201cc13128470f7a97711a82151af3",
+      "current_credit": "WITHDRAWN_EXACT_RESULT_COMPONENT_INSTEAD_OF_TOTAL",
+      "repair_state": "CURRENT_READING_HOLD; shared income selection scope repair pending; no old fact replacement",
+      "original_records_preserved": true,
+      "own_impact": "exact FY2023 result only; current #28 FY2025 selects Revenues62.579bn, not this subtotal, verified separately"
     }
   ],
   "purpose": "Current company read: precise known defects from this Issue; no copied result count or content acceptance summary.",
-  "source_register": "https://github.com/wlvh/SEC_metrics/blob/7a5b328b4df55fdbe2a60878832d2ae9b4076b4b/docs/evidence/issue28_continuous/known_result_defects.json"
+  "source_register": "https://github.com/wlvh/SEC_metrics/blob/7a5b328b4df55fdbe2a60878832d2ae9b4076b4b/docs/evidence/issue28_continuous/known_result_defects.json",
+  "latest_peer_read_commit": "0dc5de75"
 }
