@@ -5846,6 +5846,28 @@
       },
       "total_tool_calls": 38,
       "total_message_count": 2
+    },
+    {
+      "task_name": "review_fiscalrange_5511d77",
+      "purpose": "review",
+      "module": "public_fiscal_range_entry",
+      "scope_paths": [
+        "scripts/vnext/company_fiscal_range.py",
+        "scripts/vnext/company_local.py",
+        "tools/vnext_company.py",
+        "scripts/vnext/historical_fiscal_labels.py",
+        "scripts/vnext/historical_statement_cases.py",
+        "tests/vnext/test_company_fiscal_range.py",
+        "tests/vnext/test_selected_historical_fiscal_label.py",
+        ".github/workflows/company-current-records.yml",
+        "docs/evidence/issue28_continuous/known_result_defects.json"
+      ],
+      "patch_sha": "5511d77b1dea2c0f38a37ec60b40547bd03de622",
+      "spawned_at": "2026-10-09T23:43:53.774986+00:00",
+      "ended_at": null,
+      "tool_calls": null,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-entry/SEC_metrics/docs/evidence/issue28_fiscal_range_entry_20261010/independent-review/conclusion.md",
+      "verdict": "RUNNING"
     }
   ],
   "ci_capacity_20260922": {
@@ -18147,6 +18169,44 @@
     "peer_fixed_source": "a2ec0932f99fdee6ca5680024cda67173f4b02a7",
     "peer_consumer_evidence": "docs/evidence/issue47_selected_source_consumer_20261010/README.md",
     "peer_scope": "Read otherexecutor logs, no parent rerun; rawSalesDEI25 notconsumerFY26; Macy371days; Marriottprioramendfilesnotpropertyapproval; Paramown813828/2041610separate, August7/8incomeconflict NOT cleared",
-    "archive_sha": "3de509ac3874f47220d07986d38fdb73a9ee3942"
+    "archive_sha": "3de509ac3874f47220d07986d38fdb73a9ee3942",
+    "remote_ci": {
+      "head": "3de509ac3874f47220d07986d38fdb73a9ee3942",
+      "terminal": "SUCCESS",
+      "checks_success": 11
+    }
+  },
+  "public_fiscal_range_entry_20261010": {
+    "status": "SOURCE_LABEL_LAZY_COMPANY_CHAIN_IMPLEMENTED_KNOWN_FY23_SCOPE_DEFECT_PRECISE_HOLD_PENDING_LIMITED_REVIEW",
+    "source_sha": "5511d77b1dea2c0f38a37ec60b40547bd03de622",
+    "base": "3de509ac3874f47220d07986d38fdb73a9ee3942",
+    "peer_product": "d52b362076de9d4239cd8c69f9e81b0d81b6f6ee",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-entry/SEC_metrics",
+    "evidence": "docs/evidence/issue28_fiscal_range_entry_20261010/README.md",
+    "Macy22_23_mechanical_company_seconds": 20.84806,
+    "repeat_forbidden_discovery_case_calculator_seconds": 1.235189,
+    "independent_results_seconds": 0.120969,
+    "protected_files": 35,
+    "result_directories": 4,
+    "known_fy23_bad_scope_ids": [
+      "5f17ec97",
+      "db609edd"
+    ],
+    "FY22_scope_not_confirmed_bad": true,
+    "new_correct_company_metric_results_claimed": false,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "limiteddiffreview then source/fiscal-range receiving; shared revenue scope repair remains actual work, not guessed total/manualsum/laterprior values",
+    "pr": 128,
+    "shared_label_api_remote_ci": {
+      "pr": 127,
+      "head": "7e4d41c1eba204322858dfba57ff10a40970f81e",
+      "terminal": "SUCCESS",
+      "checks_success": 11,
+      "new_methods_actual_step_observed_by_peer": "66/.517 actual log; parent only readfixedrecord"
+    }
   }
 }

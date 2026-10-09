@@ -1329,6 +1329,68 @@
       "current_credit": "WITHDRAWN_EXACT_COMPANY_RESULT",
       "repair_state": "C02_SHARED_SELECTION_CORE_OWNER47; ordinary receiving/native developer successor pending full integration",
       "original_records_preserved": true
+    },
+    {
+      "defect_id": "MACYS_FY2023_B01_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK",
+      "metric_id": "B01",
+      "company_id": "macys",
+      "period_end": "2024-02-03",
+      "result_id": "sha256:5f17ec97a234f3b8bae22bcaedd2bdb9ff2ace36056c7a52adfbc821ff088731",
+      "current_credit": "WITHDRAWN_CONFIRMED_REVENUE_SUBTOTAL_SCOPE",
+      "repair_state": "SHARED_TOTAL_ADMISSION_NOT_YET_RECEIVED_FOR_THIS_SOURCE",
+      "summary": "Current original consolidated income statement explicitly reports Net sales23092m plus Other revenue774m and Total revenue23866m. This exact candidate uses the Net sales component or growth derived from it. Old facts/results remain; no later comparative values replace prior original.",
+      "source_read": {
+        "path": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm",
+        "sha256": "50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29",
+        "table_order": 38,
+        "reported_current_millions": {
+          "net_sales": 23092,
+          "other_revenue": 774,
+          "total_revenue": 23866
+        },
+        "native_concepts": [
+          "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "m:OtherRevenueNet",
+          "us-gaap:Revenues"
+        ],
+        "source_read_mode": "PARENT_DIRECT_READ_OF_ORIGINAL_INCOME_TABLE_AND_NATIVE_FACTS",
+        "older_comparative_not_used_to_rewrite_prior": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_fiscal_range_entry_20261010/source-income-table-read.json"
+      ],
+      "released": []
+    },
+    {
+      "defect_id": "MACYS_FY2023_B02_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK",
+      "metric_id": "B02",
+      "company_id": "macys",
+      "period_end": "2024-02-03",
+      "result_id": "sha256:db609edd1f286ee1bf61e51126b8084fea1f0817b03847d8010e02cd1b1e81b7",
+      "current_credit": "WITHDRAWN_CONFIRMED_REVENUE_SUBTOTAL_SCOPE",
+      "repair_state": "SHARED_TOTAL_ADMISSION_NOT_YET_RECEIVED_FOR_THIS_SOURCE",
+      "summary": "Current original consolidated income statement explicitly reports Net sales23092m plus Other revenue774m and Total revenue23866m. This exact candidate uses the Net sales component or growth derived from it. Old facts/results remain; no later comparative values replace prior original.",
+      "source_read": {
+        "path": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm",
+        "sha256": "50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29",
+        "table_order": 38,
+        "reported_current_millions": {
+          "net_sales": 23092,
+          "other_revenue": 774,
+          "total_revenue": 23866
+        },
+        "native_concepts": [
+          "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "m:OtherRevenueNet",
+          "us-gaap:Revenues"
+        ],
+        "source_read_mode": "PARENT_DIRECT_READ_OF_ORIGINAL_INCOME_TABLE_AND_NATIVE_FACTS",
+        "older_comparative_not_used_to_rewrite_prior": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_fiscal_range_entry_20261010/source-income-table-read.json"
+      ],
+      "released": []
     }
   ],
   "latest_peer_read_commit": "32f9696ed146d01bcbbc21916cf6e35b35978f2f",
