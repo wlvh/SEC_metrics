@@ -179,6 +179,7 @@ SOURCE_TESTS += ("tests.vnext.test_ordinary_e01_item_text_input",)
 FAST_TESTS += ("tests.vnext.test_company_retained_local",)
 FAST_TESTS += ("tests.vnext.test_selected_income_source_v1",)
 FAST_TESTS += ("tests.vnext.test_company_online",)
+FAST_TESTS += ("tests.vnext.test_selected_event_source_v1",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

@@ -1,0 +1,18 @@
+test_gap_day_block_is_selected_and_validated_using_same_effective_last_day (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_gap_day_block_is_selected_and_validated_using_same_effective_last_day) ... ERROR
+
+======================================================================
+ERROR: test_gap_day_block_is_selected_and_validated_using_same_effective_last_day (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_gap_day_block_is_selected_and_validated_using_same_effective_last_day)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-recheck/SEC_metrics/tests/vnext/test_selected_event_source_v1.py", line 151, in test_gap_day_block_is_selected_and_validated_using_same_effective_last_day
+    output = self.read(history_last_days=block_last_days, history_validator=coherence)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-recheck/SEC_metrics/tests/vnext/test_selected_event_source_v1.py", line 75, in read
+    return read_selected_event_sources(data_root=self.source, rules_root=ROOT,
+        prepared={'company_id': company, 'entity': cik}, period=PERIOD, **kwargs)
+TypeError: read_selected_event_sources() got an unexpected keyword argument 'history_last_days'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.012s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_gap_day_block_is_selected_and_validated_using_same_effective_last_day"]}

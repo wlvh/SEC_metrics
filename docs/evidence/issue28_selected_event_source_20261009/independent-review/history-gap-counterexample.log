@@ -1,0 +1,35 @@
+CASE 1: saved requests/body/header outside acquired-header namespace
+{
+  "selected_window": {
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": 2025
+  },
+  "declared_shard": {
+    "name": "CIK0001048286-submissions-001.json",
+    "filingFrom": "2024-01-01",
+    "filingTo": "2024-12-31",
+    "filingCount": 2
+  },
+  "effective_last_day": "2025-01-01",
+  "body_contains_in_window_8k": "2025-01-01",
+  "manual_full_body_validator_conflict": null,
+  "expected_claims": 1,
+  "actual_claims": 0,
+  "callback_invocations": 0,
+  "actual_filings": 0,
+  "source_proofs": 1,
+  "native_run_status": "NOT_CREATED",
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}
+CASE 2: same fixture with acquired-header census entry
+{
+  "actual_error": "NORMAL_EVENT_ACQUIRED_SUPPLEMENT_NOT_IMPLEMENTED:0001048286-25-000011",
+  "category": "IMPLEMENTATION_GAP",
+  "callback_invocations": 0
+}
+COUNTEREXAMPLE CONFIRMED: the pre-callback overlap guard skips the older block at the cross-year gap day. A full-body validator cannot read or correct a block the walk never selects. The acquired census converts the missing event into an explicit implementation gap when its header is in that census; it does not recover the needed block.
