@@ -69,3 +69,11 @@ bytes are not an authority gate. Wrong identity/industry/roles now reject,
 normal source-only registries remain usable. Four mismatch controls and a
 cosmetic positive are included;47 affected small checks pass.304s/zero skips.
 Final repair is for receiving-review confirmation, not parent independent PASS.
+
+Final source-registration repair validation on a541a5b6: the existing saved
+company state normally revalidates once8.794s under the final changed code and
+dependency set, then a forbidden-factory repeat.221s performs no calculation;
+a separate Python process results.120s preserves original result files. The
+unrelated recorded source-discovery error remains visible/exit2, while NIM's
+selected sources/result stay ready. final-company-validation.json records the
+actual commit, roots and reports. No long ten-company or provider execution.
