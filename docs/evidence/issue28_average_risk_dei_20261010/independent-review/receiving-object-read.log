@@ -1,0 +1,169 @@
+{
+  "commit_object": "616fe531ab17cc979be839015d5ab751d3df4fec",
+  "summary_sha256": "9cfda00d8b47a59d12590e9b8a8372ebc62b2941bba5cd0c2197e943213ba124",
+  "producer_sha256": "b71df1945c07be213ba5272d62a1faf7f14f1afd9ad3ab520952808e766fde19",
+  "execution_code_commit": "b0ead0e53382d2fc1e46a90af8cb408525de4456",
+  "execution_code_uncommitted": true,
+  "operations": [
+    {
+      "name": "recovered-after-label-view",
+      "seconds": 125.385431290837,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED",
+      "metrics": [
+        {
+          "metric_id": "A03",
+          "status": "CANDIDATE_READY",
+          "result_id": "sha256:bd89a186f692b5704837942015f259fa2671ada46be47a7a948f6cb3ff123c11",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          }
+        },
+        {
+          "metric_id": "A12",
+          "status": "CANDIDATE_READY",
+          "result_id": "sha256:f8f004b8242655b40b4e4dbb66b20ed0e73166f0ae678b373e330a4585ded63e",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "repeat-forbid-factory",
+      "seconds": 5.739425083855167,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED",
+      "metrics": [
+        {
+          "metric_id": "A03",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "result_id": "sha256:bd89a186f692b5704837942015f259fa2671ada46be47a7a948f6cb3ff123c11",
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          }
+        },
+        {
+          "metric_id": "A12",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "result_id": "sha256:f8f004b8242655b40b4e4dbb66b20ed0e73166f0ae678b373e330a4585ded63e",
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "independent-read",
+      "seconds": 0.5715343330521137,
+      "exit_code": 0,
+      "status": null,
+      "metrics": [
+        {
+          "metric_id": "A03",
+          "result_id": "sha256:bd89a186f692b5704837942015f259fa2671ada46be47a7a948f6cb3ff123c11",
+          "period_start": "2021-10-01",
+          "period_end": "2021-12-31",
+          "fiscal_year": 2021,
+          "value": "1.11",
+          "unit": "ratio",
+          "reason_code": "PASS",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED"
+        },
+        {
+          "metric_id": "A12",
+          "result_id": "sha256:f8f004b8242655b40b4e4dbb66b20ed0e73166f0ae678b373e330a4585ded63e",
+          "period_start": "2021-01-01",
+          "period_end": "2021-12-31",
+          "fiscal_year": 2021,
+          "value": "55000000",
+          "unit": "USD",
+          "reason_code": "PASS",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED"
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "metric_id": "A03",
+      "status": "MDA_OK",
+      "value": "1.11",
+      "unit": "ratio",
+      "period_start": "2021-10-01",
+      "period_end": "2021-12-31",
+      "fiscal_year": "2021",
+      "fiscal_period": "QUARTER",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "result_id": "sha256:bd89a186f692b5704837942015f259fa2671ada46be47a7a948f6cb3ff123c11"
+    },
+    {
+      "metric_id": "A12",
+      "status": "MDA_OK",
+      "value": "55000000",
+      "unit": "USD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "fiscal_year": "2021",
+      "fiscal_period": "ANNUAL",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "result_id": "sha256:f8f004b8242655b40b4e4dbb66b20ed0e73166f0ae678b373e330a4585ded63e"
+    }
+  ],
+  "evidence_rows": [
+    {
+      "metric_id": "A03",
+      "unit": "ratio",
+      "period_start": "2021-10-01",
+      "period_end": "2021-12-31",
+      "content_sha256": "7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478",
+      "accession": "0000019617-22-000272",
+      "value_normalized": "1.11"
+    },
+    {
+      "metric_id": "A12",
+      "unit": "USD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "content_sha256": "7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478",
+      "accession": "0000019617-22-000272",
+      "value_normalized": "55000000"
+    }
+  ],
+  "repeat_factory_calls": 0,
+  "protected_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "credit": "READ_INHERITED_RECEIVING_EVIDENCE_ONLY_NOT_INDEPENDENT_CONTENT_ACCEPTANCE",
+  "shared_file_bytes_equal_reviewed_commit": {
+    "normal_annual_input": true,
+    "ordinary_projection": true,
+    "financial_relationships": true,
+    "financial_candidates": true,
+    "financial_balance_scope": true,
+    "financial_structured": true,
+    "historical_dei": true,
+    "ordinary_saved_result": true,
+    "ordinary_current_update": true,
+    "company_current_records": true
+  }
+}

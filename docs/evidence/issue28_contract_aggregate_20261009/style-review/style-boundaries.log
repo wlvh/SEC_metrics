@@ -1,0 +1,293 @@
+{
+  "utc": "2026-10-09T12:18:42.229636+00:00",
+  "cwd": "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics",
+  "base": "2bec3464e735bc5cbf928573b1bd1538b06789f3",
+  "patch": "98930711a31d85d1b5406149ef83271cce793543",
+  "description": "Independent synthetic old-vs-patch target-method replay and current structural probes; no historical source-root read or live request.",
+  "summary": {
+    "helper_cases": 13,
+    "index_cases": 8,
+    "failed": 0,
+    "old_p2_variants_reproduced_and_fixed": 3
+  },
+  "helper_cases": [
+    {
+      "case": "ordinary_visible_spacer",
+      "style": "",
+      "expected_current_proved": false,
+      "old_hidden_decision": false,
+      "current_hidden_decision": false,
+      "old_proved": false,
+      "current_proved": false,
+      "current_proof_ordinals": null,
+      "raw_unchanged": true,
+      "pass": true
+    },
+    {
+      "case": "clear_hidden_leaf",
+      "style": "display:none",
+      "expected_current_proved": true,
+      "old_hidden_decision": true,
+      "current_hidden_decision": true,
+      "old_proved": true,
+      "current_proved": true,
+      "current_proof_ordinals": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "raw_unchanged": true,
+      "pass": true
+    },
+    {
+      "case": "clear_hidden_important",
+      "style": "color:red; DISPLAY : none !important; width:2px;",
+      "expected_current_proved": true,
+      "old_hidden_decision": true,
+      "current_hidden_decision": true,
+      "old_proved": true,
+      "current_proved": true,
+      "current_proof_ordinals": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "raw_unchanged": true,
+      "pass": true
+    },
+    {
+      "case": "old_p2_1_override",
+      "style": "display:none;display:table-cell",
+      "expected_current_proved": false,
+      "old_hidden_decision": true,
+      "current_hidden_decision": false,
+      "old_proved": true,
+      "current_proved": false,
+      "current_proof_ordinals": null,
+      "raw_unchanged": true,
+      "pass": true
+    },
+    {
+      "case": "old_p2_2_important_override",
+      "style": "display:none!important;display:table-cell!important",
+      "expected_current_proved": false,
+      "old_hidden_decision": true,
+      "current_hidden_decision": false,
+      "old_proved": true,
+      "current_proved": false,
+      "current_proof_ordinals": null,
+      "raw_unchanged": true,
+      "pass": true
+    },
+    {
+      "case": "old_p2_3_comment_exact",
+      "style": "display:table-cell;/* x;display:none; */",
+      "expected_current_proved": false,
+      "old_hidden_decision": true,
+      "current_hidden_decision": false,
+      "old_proved": true,
+      "current_proved": false,
+      "current_proof_ordinals": null,
+      "raw_unchanged": true,
+      "pass": true
+    },
+    {
+      "case": "new_test_comment",
+      "style": "/* display:none; */ display:table-cell",
+      "expected_current_proved": false,
+      "old_hidden_decision": false,
+      "current_hidden_decision": false,
+      "old_proved": false,
+      "current_proved": false,
+      "current_proof_ordinals": null,
+      "raw_unchanged": true,
+      "pass": true
+    },
+    {
+      "case": "duplicate_same_none",
+      "style": "display:none;display:none",
+      "expected_current_proved": false,
+      "old_hidden_decision": true,
+      "current_hidden_decision": false,
+      "old_proved": true,
+      "current_proved": false,
+      "current_proof_ordinals": null,
+      "raw_unchanged": true,
+      "pass": true
+    },
+    {
+      "case": "display_none_and_unrelated_comment",
+      "style": "display:none;/* harmless */",
+      "expected_current_proved": false,
+      "old_hidden_decision": true,
+      "current_hidden_decision": false,
+      "old_proved": true,
+      "current_proved": false,
+      "current_proof_ordinals": null,
+      "raw_unchanged": true,
+      "pass": true
+    },
+    {
+      "case": "explicit_visible",
+      "style": "display:table-cell",
+      "expected_current_proved": false,
+      "old_hidden_decision": false,
+      "current_hidden_decision": false,
+      "old_proved": false,
+      "current_proved": false,
+      "current_proof_ordinals": null,
+      "raw_unchanged": true,
+      "pass": true
+    },
+    {
+      "case": "selfclosing_clear_hidden",
+      "expected_current_proved": true,
+      "current_proved": true,
+      "current_proof_ordinals": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "pass": true
+    },
+    {
+      "case": "whitespace_clear_hidden",
+      "expected_current_proved": true,
+      "current_proved": true,
+      "current_proof_ordinals": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "pass": true
+    },
+    {
+      "case": "nonempty_hidden_text",
+      "expected_current_proved": false,
+      "current_proved": false,
+      "current_proof_ordinals": null,
+      "pass": true
+    }
+  ],
+  "index_cases": [
+    {
+      "case": "nonempty_td",
+      "expected_cells_same_as_inherited": true,
+      "cells_same_as_inherited": true,
+      "original_source_preserved": true,
+      "fact_count": 2,
+      "inherited_fact_count": 2,
+      "fact_positions": {
+        "1": 27,
+        "2": 143
+      },
+      "fact_positions_preserved": true,
+      "pass": true
+    },
+    {
+      "case": "fact_child_td",
+      "expected_cells_same_as_inherited": true,
+      "cells_same_as_inherited": true,
+      "original_source_preserved": true,
+      "fact_count": 3,
+      "inherited_fact_count": 3,
+      "fact_positions": {
+        "1": 27,
+        "2": 118,
+        "3": 176
+      },
+      "fact_positions_preserved": true,
+      "pass": true
+    },
+    {
+      "case": "fact_child_th",
+      "expected_cells_same_as_inherited": true,
+      "cells_same_as_inherited": true,
+      "original_source_preserved": true,
+      "fact_count": 3,
+      "inherited_fact_count": 3,
+      "fact_positions": {
+        "1": 27,
+        "2": 118,
+        "3": 176
+      },
+      "fact_positions_preserved": true,
+      "pass": true
+    },
+    {
+      "case": "empty_child_span",
+      "expected_cells_same_as_inherited": true,
+      "cells_same_as_inherited": true,
+      "original_source_preserved": true,
+      "fact_count": 2,
+      "inherited_fact_count": 2,
+      "fact_positions": {
+        "1": 27,
+        "2": 140
+      },
+      "fact_positions_preserved": true,
+      "pass": true
+    },
+    {
+      "case": "entity_child",
+      "expected_cells_same_as_inherited": true,
+      "cells_same_as_inherited": true,
+      "original_source_preserved": true,
+      "fact_count": 2,
+      "inherited_fact_count": 2,
+      "fact_positions": {
+        "1": 27,
+        "2": 133
+      },
+      "fact_positions_preserved": true,
+      "pass": true
+    },
+    {
+      "case": "old_exact_comment_cell",
+      "expected_cells_same_as_inherited": true,
+      "cells_same_as_inherited": true,
+      "original_source_preserved": true,
+      "fact_count": 2,
+      "inherited_fact_count": 2,
+      "fact_positions": {
+        "1": 27,
+        "2": 155
+      },
+      "fact_positions_preserved": true,
+      "pass": true
+    },
+    {
+      "case": "clear_empty_td",
+      "expected_cells_same_as_inherited": false,
+      "cells_same_as_inherited": false,
+      "original_source_preserved": true,
+      "fact_count": 2,
+      "inherited_fact_count": 2,
+      "fact_positions": {
+        "1": 27,
+        "2": 127
+      },
+      "fact_positions_preserved": true,
+      "pass": true
+    },
+    {
+      "case": "clear_empty_th",
+      "expected_cells_same_as_inherited": false,
+      "cells_same_as_inherited": false,
+      "original_source_preserved": true,
+      "fact_count": 2,
+      "inherited_fact_count": 2,
+      "fact_positions": {
+        "1": 27,
+        "2": 140
+      },
+      "fact_positions_preserved": true,
+      "pass": true
+    }
+  ],
+  "nonblocking_test_note": "The new committed comment example already rejects under the old regex; the exact old report comment case independently reproduces old false acceptance and is rejected by the patch."
+}

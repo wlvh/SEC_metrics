@@ -1,0 +1,40 @@
+{
+  "reference_commit": "bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786",
+  "reference_path": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
+  "reference_sha256": "65559571cb7638cc04ec82caa0b8ba2ce329f87d71edc84484ac0e51ea8afe8a",
+  "checks": [
+    {
+      "metric_id": "A04",
+      "fiscal_year": 2021,
+      "value_matches": true,
+      "unit_matches": true,
+      "window_matches": true,
+      "source_sha_matches": true,
+      "old_state_not_used_as_acceptance": true
+    },
+    {
+      "metric_id": "A09",
+      "fiscal_year": 2021,
+      "value_matches": true,
+      "unit_matches": true,
+      "window_matches": true,
+      "source_sha_matches": true,
+      "old_state_not_used_as_acceptance": true
+    },
+    {
+      "metric_id": "A11",
+      "fiscal_year": 2021,
+      "value_matches": true,
+      "unit_matches": true,
+      "window_matches": true,
+      "source_sha_matches": true,
+      "old_state_not_used_as_acceptance": true
+    }
+  ],
+  "new_source_reading": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

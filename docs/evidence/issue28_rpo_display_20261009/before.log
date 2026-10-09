@@ -1,0 +1,16 @@
+test_rpo_saved_csv_is_explicitly_not_arr_or_churn (tests.vnext.test_precalculated_case.RpoDisplayTest.test_rpo_saved_csv_is_explicitly_not_arr_or_churn) ... FAIL
+
+======================================================================
+FAIL: test_rpo_saved_csv_is_explicitly_not_arr_or_churn (tests.vnext.test_precalculated_case.RpoDisplayTest.test_rpo_saved_csv_is_explicitly_not_arr_or_churn)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-rpo-display/SEC_metrics/tests/vnext/test_precalculated_case.py", line 39, in test_rpo_saved_csv_is_explicitly_not_arr_or_churn
+    self.assertIn('RPO != ARR', row['notes'])
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'RPO != ARR' not found in 'Reported remaining performance obligation, used as the approved RPO substitute. Measurement is as of 2026-01-31. Native state: PUBLISHED; reason: PASS. Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding.'
+
+----------------------------------------------------------------------
+Ran 1 test in 2.981s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_precalculated_case.RpoDisplayTest"]}

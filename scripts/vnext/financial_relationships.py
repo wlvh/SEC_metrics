@@ -42,7 +42,11 @@ def _entity_tokens(text):
     return re.findall(r"\w+", text.casefold().replace("&", " and "))
 
 
-def _issuer_identity(*, source_bytes, expected_cik, target_period, structure):
+def _issuer_identity(*, source_bytes, expected_cik, target_period, structure, dei_release="YEAR_ONLY"):
+    from .normal_annual_input import dei_namespace_pattern
+    release_pattern = dei_namespace_pattern(dei_release)
+    if dei_release == "YEAR_ONLY":
+        release_pattern = r"https?://xbrl\.sec\.gov/dei/[0-9]{4}"
     from .deterministic_router import parse_accession_xbrl_source
     from .governance_signals import _FactAttributes
     parsed = parse_accession_xbrl_source(raw_bytes=source_bytes)
@@ -55,7 +59,7 @@ def _issuer_identity(*, source_bytes, expected_cik, target_period, structure):
     for fact in parsed.facts:
         namespace, concept = metadata.facts[fact["ordinal"]]["concept"]
         if (concept.casefold() != "entityregistrantname" or not re.fullmatch(
-                r"https?://xbrl\.sec\.gov/dei/[0-9]{4}", namespace)):
+                release_pattern, namespace)):
             continue
         context = parsed.contexts[fact["context_ref"]]
         if (not str(context["entity_identifier"]).isdigit()
@@ -358,7 +362,8 @@ def _check_rate(numerator, denominator, rate_cell):
 
 
 def inspect_nonaccrual_loan_ratio(*, repo_root: Path, source_bytes: bytes, expected_source_sha256: str,
-                                 expected_cik: str, target_period: dict) -> dict:
+                                 expected_cik: str, target_period: dict,
+                                 dei_release="YEAR_ONLY") -> dict:
     """Prove the source's firmwide nonaccrual/total-loan disclosed ratio.
 
     This is HTML economic evidence, not authority to bypass A09's structured
@@ -371,7 +376,8 @@ def inspect_nonaccrual_loan_ratio(*, repo_root: Path, source_bytes: bytes, expec
             or sha256_bytes(content=source_bytes) != expected_source_sha256):
         raise FinancialRelationshipError("SOURCE_BYTES_DIFFER")
     if annual_period(raw=source_bytes, cik=expected_cik,
-                     filing={"form": "10-K", "reportDate": target_period["period_end"]}) != target_period:
+                     filing={"form": "10-K", "reportDate": target_period["period_end"]},
+                     dei_release=dei_release) != target_period:
         raise FinancialRelationshipError("SOURCE_PERIOD_DIFFERS")
     tasks = [t for t in inspect_r4_task_catalog(repo_root=repo_root)["contracts"] if t["metric_ids"] == ["A09"]]
     if len(tasks) != 1 or tasks[0]["required_claims"] != {"loan_population": "firmwide"}:
@@ -385,7 +391,8 @@ def inspect_nonaccrual_loan_ratio(*, repo_root: Path, source_bytes: bytes, expec
     parser.close()
     structure = index_source_structure(source_bytes=source_bytes)
     issuer = _issuer_identity(source_bytes=source_bytes, expected_cik=expected_cik,
-                              target_period=target_period, structure=structure)
+                              target_period=target_period, structure=structure,
+                              dei_release=dei_release)
     sections = _reported_segment_sections(parser.tables, structure)
     census, selected, unresolved = [], [], []
     lead = re.compile(r"nonaccrual.+\bto\b|non[- ]?perform.*(?:ratio|percent)|loan ratio|\bfirmwide\b", re.I)
@@ -670,6 +677,7 @@ def _explicit_formula(*, tables, structure, period):
 def inspect_nim_relationships(
     *, repo_root: Path, source_bytes: bytes, expected_source_sha256: str,
     expected_cik: str, target_period: dict,
+    dei_release="YEAR_ONLY",
 ) -> dict:
     """Discover and verify source-named NIM relations for one ordinary filing."""
     if (type(source_bytes) is not bytes or not source_bytes
@@ -679,7 +687,8 @@ def inspect_nim_relationships(
     if type(target_period) is not dict or set(target_period) != {"fiscal_year", "period_start", "period_end"}:
         raise FinancialRelationshipError("TARGET_PERIOD_INVALID")
     source_period = annual_period(raw=source_bytes, cik=expected_cik,
-                                  filing={"form": "10-K", "reportDate": target_period["period_end"]})
+                                  filing={"form": "10-K", "reportDate": target_period["period_end"]},
+                                  dei_release=dei_release)
     if source_period != target_period:
         raise FinancialRelationshipError("SOURCE_FISCAL_PERIOD_DIFFERS")
     tasks = [task for task in inspect_r4_task_catalog(repo_root=repo_root)["contracts"] if task["metric_ids"] == ["A04"]]
@@ -768,7 +777,8 @@ def inspect_nim_relationships(
                     item["disposition"] = disposition
                     rate_census.append(item)
     issuer = _issuer_identity(source_bytes=source_bytes, expected_cik=expected_cik,
-                              target_period=target_period, structure=structure)
+                              target_period=target_period, structure=structure,
+                              dei_release=dei_release)
     whole_scope = []
     for relation in relations:
         table = next(t for t, _ in tables if t["table_id"] == relation["rate_locator"]["table_id"])

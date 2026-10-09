@@ -1,0 +1,10 @@
+test_recorded_ledger_without_recorded_http_never_claims_or_sends (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_recorded_ledger_without_recorded_http_never_claims_or_sends) ... ok
+test_recorded_http_cannot_relabel_a_live_execution (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_recorded_http_cannot_relabel_a_live_execution) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 6.813s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_recorded_ledger_without_recorded_http_never_claims_or_sends", "tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_recorded_http_cannot_relabel_a_live_execution"]}
+LIMIT_VARIANT_COUNTEREXAMPLE: [{"variant": "INDEXED_UNITS_V1", "limits_output_tokens": 8192, "wire_max_tokens": 4096, "matches_expected_body": false}, {"variant": "INDEXED_UNITS_V1", "limits_output_tokens": 8192, "wire_max_tokens": 4096, "matches_expected_body": false}, {"variant": "INDEXED_UNITS_V1", "limits_output_tokens": 8192, "wire_max_tokens": 4096, "matches_expected_body": false}]
+Confirmed: selection retains limits 8192 while regenerating default wire 4096; no claim or HTTP.

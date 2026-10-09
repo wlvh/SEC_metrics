@@ -380,6 +380,29 @@ def prepare_successor_invocation_authority(
         repo_root=repo_root, requirement=requirement)
 
 
+def prepare_current_invocation_context(*, repo_root, configuration, transport, limits):
+    """Reuse WB-3 with ordinary configuration and no execution-file closure.
+
+    The existing plan fields keep a configuration identity for diagnosis. No
+    Requirement, approval page, source-tree byte proof or wiring receipt loads.
+    The request factory separately checks current configuration and sources;
+    CallLedger controls permission, counters, group opportunities and stops.
+    """
+    digest = configuration['configuration_hash']
+    identity = {'artifact_requirement_generation': 'CURRENT_CONFIGURATION_V1',
+        'requirement_id': configuration['requirement_id'],
+        'requirement_closure_hash': digest,
+        'requirement_hashes': {'current_configuration': digest}}
+    policy = {'provider_transport_decision_hash': content_hash(value=transport.as_mapping()),
+        'transport_retry_decision_hash': content_hash(value={'automatic_retry_count': 0}),
+        'live_call_bound_decision_hash': content_hash(value=configuration['policy']),
+        'automatic_retry_count': 0, 'response_reuse_authorized': False,
+        'requirement_closure_hash': digest}
+    settings = {**transport.as_mapping(), 'pre_execution_context_tokens_max': limits.max_context_tokens}
+    return SuccessorInvocationAuthority(factory=_SUCCESSOR_AUTHORITY_FACTORY,
+        root=Path(repo_root).resolve(), identity=identity, policy=policy, transport=settings, files={})
+
+
 @contextmanager
 def _successor_plan_context(*, repo_root: Path, requirement_id: str = None,
                             authority=None):
@@ -718,9 +741,11 @@ def _reject_monetary_fields(*, value: object, path: str) -> None:
 def _continuous_observations() -> bool:
     """Only the new explicit policy preserves unavailable observations as null."""
     authority = _SUCCESSOR_AUTHORITY.get()
-    return (type(authority) is SuccessorInvocationAuthority
-            and strict_json_loads(text=authority._identity.decode("utf-8"))
-            .get("requirement_id") == "issue_28_v14")
+    if type(authority) is not SuccessorInvocationAuthority:
+        return False
+    identity = strict_json_loads(text=authority._identity.decode("utf-8"))
+    return (identity.get("requirement_id") == "issue_28_v14"
+            or identity.get("artifact_requirement_generation") == "CURRENT_CONFIGURATION_V1")
 
 
 def _decimal_observation(*, value: object, label: str) -> Optional[str]:

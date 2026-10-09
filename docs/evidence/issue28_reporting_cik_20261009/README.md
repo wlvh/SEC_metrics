@@ -115,3 +115,16 @@ records272 unique selectors and22 tests executed through the existing real
 subprocess case runner in0.574s (8 source-event,5 event-projection,9 pure
 reporter tests); this is directed execution, not a full-suite PASS claim.
 Unchanged financial sources and company cold reads were not repeated.
+
+## Receiving actual main f6ef7886
+
+The received financial-period API left three adjacent conflicts in PR102:
+ordinary_projection helpers, company workflow selection and appended runner
+entries. Combination preserves _reporting_company_view byte-for-byte in AST
+from c3ee8c84 and _reported_average_period from actual main, keeps both helper
+call sites, all existing financial tests and the reporter tests. No alternative
+renderer, Result/Trace migration or business/source recalculation is introduced.
+33 affected reporter/average/store/event controls pass in 12.404s, zero skips;
+log main-receiving-combination.log records the staged merged-tree check. This
+receiving adjustment does not inherit old CI as new-head terminal, or turn
+reading tests into independent business acceptance.

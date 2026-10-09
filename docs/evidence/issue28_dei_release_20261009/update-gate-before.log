@@ -1,0 +1,22 @@
+test_explicit_a13_selected_case_reaches_factory_without_default_expansion (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_explicit_a13_selected_case_reaches_factory_without_default_expansion) ... ERROR
+
+======================================================================
+ERROR: test_explicit_a13_selected_case_reaches_factory_without_default_expansion (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_explicit_a13_selected_case_reaches_factory_without_default_expansion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-release/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 322, in test_explicit_a13_selected_case_reaches_factory_without_default_expansion
+    observed=update.run_once(state_root=self.root,source_root=ROOT,
+        company_id='marriott_international',metric_id='A13',fiscal_year=2021,case_factory=factory)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-release/SEC_metrics/scripts/vnext/ordinary_current_update.py", line 165, in run_once
+    _need(metric_id in SAVED_METRIC_IDS,'CURRENT_UPDATE_METRIC_UNSUPPORTED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-release/SEC_metrics/scripts/vnext/ordinary_current_update.py", line 22, in _need
+    if not condition: raise ValueError(reason)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: CURRENT_UPDATE_METRIC_UNSUPPORTED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_explicit_a13_selected_case_reaches_factory_without_default_expansion"]}
