@@ -65,6 +65,23 @@ class CompanyFiscalRangeTest(TestCase):
         self.assertEqual(issue['reason'],'FISCAL_YEAR_MISSING_OR_AMBIGUOUS')
         self.assertEqual(set(issue['matching_report_ends']),{'2024-12-31','2025-12-31'})
 
+    def test_nonactual_issuer_definitions_do_not_resolve_public_range(self):
+        definitions=[
+            'If the proposed naming convention is approved, References to fiscal 2026, for example, refer to the fiscal year ending December 31, 2025.',
+            'The following is a hypothetical example, not our actual naming convention: "References to fiscal 2026, for example, refer to the fiscal year ending December 31, 2025."',
+            'If the proposed naming convention is approved, Fiscal years 2026 and 2025 ended on December 31, 2025 and December 31, 2024, respectively, and included 52 weeks.',
+        ]
+        for text in definitions:
+            raw=annual().replace(b'19617',str(CIK).encode()).replace(b'2021',b'2025')
+            raw=raw.replace(b'</body></html>',('<p>Our fiscal year ends on December 31. '+text+'</p></body></html>').encode())
+            self.fixture.record(self.fixture.urls[2025],raw)
+            with self.subTest(text=text):
+                r=self.discover(2026,2026)
+                self.assertEqual(r['status'],'FISCAL_RANGE_UNRESOLVED')
+                self.assertFalse(r['all_source_bytes_available'])
+                self.assertTrue(r['tasks'][0]['limitations'])
+                self.assertFalse(r['metric_executed'])
+
     def test_missing_candidate_cannot_be_silently_excluded_for_label_uniqueness(self):
         self.fixture.remove_get(self.fixture.urls[2025]);r=self.discover(2024,2024)
         self.assertEqual(r['status'],'FISCAL_RANGE_UNRESOLVED')
