@@ -69,6 +69,9 @@ Marriott recorded候选沿既有审核链产生；其中Result的 `PUBLISHED` �
 exact-head 激活与独立的一次调用批准，不由此入口授予。
 <!-- capability-anchor: CAPABILITY.saved_annual_input_candidate -->
 
+显式来源API `vnext.instant_balance_amendment_v2.inspect_instant_balance_amendment(..., note_layout='inline-paragraphs-v2')` 在原主体/期间与Part III规则内按可见段落处理行内拆分，保留原始块/字节引用、隐藏文字和引用限制。默认 `blocks-v1` 及历史对象不变；这里只验证瞬时余额输入的来源属性，不生成指标、公司CSV或年度连续性结论。消费者须显式选择并声明amendment_note_layout、annual_amendment_scope_v2、instant_balance_amendment_v2及实际旧帮助函数的处理依赖；公司接入仍需本路线验证。
+<!-- capability-anchor: CAPABILITY.inline_amendment_source_layout -->
+
 开发者可用 `tools/vnext_annual_candidate.py plan` 生成未授权的普通 B10 计划。
 计划给出真实来源、期间、完整请求哈希/大小/估算、代码身份及外部隔离目录；
 它不查询 GitHub、不调用 SEC/provider、不签发许可。执行需要分别批准新

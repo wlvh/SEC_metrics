@@ -33,6 +33,12 @@ jobs:
           PYTHONPATH: scripts:tools
         run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest
 
+      - name: Selected filing income source checks (small state)
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 -m unittest -v tests.vnext.test_selected_income_source_v1
+
       - name: Run fast suite
         env:
           PYTHONDONTWRITEBYTECODE: "1"

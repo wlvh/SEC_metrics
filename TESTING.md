@@ -220,6 +220,8 @@ provider/paid 执行及实际 usage、真实候选内容检查。SEC 刷新、�
 
 ## 保存的年度输入局部回归
 
+显式修订段落路径：`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools python3 -m unittest -v tests.vnext.test_amendment_note_layout tests.vnext.test_instant_amendment_paragraph_api`。17项小输入覆盖完整API的正常/更正/隐藏/引用分支；真实保存原件及旧默认比较见 `docs/evidence/issue28_amendment_note_20261009/README.md`。不联网，不创建公司Result，不代表在线更新或全财务准入。
+
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_input -v`
 验证Marriott FY2023/2024/2025原始submissions/10-K/Company Facts独立准备输入，
 通过既有结构化Run产生B01（原生附带B03），并以FY2025原始绑定响应验证B10。

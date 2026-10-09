@@ -1,0 +1,48 @@
+{
+  "raw_sha256": "5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+  "filing_accession": "0000813828-25-000005",
+  "contract": "02_\u6307\u6807\u5b9a\u4e49_SEC_10\u516c\u53f8\u5355\u5e74\u6307\u6807.md B08 current assets/current liabilities; B09 cash equivalents only",
+  "fixed_peer_receiving_sha": "3eb0c244f9c873c63f28351ed7897288c6f83648",
+  "parent_actual_raw_fact_and_context_read": true,
+  "rows": [
+    {
+      "concept": "us-gaap:AssetsCurrent",
+      "namespace": "http://fasb.org/us-gaap/2024",
+      "raw_fact": "<ix:nonFraction unitRef=\"usd\" contextRef=\"c-9\" decimals=\"-6\" name=\"us-gaap:AssetsCurrent\" format=\"ixt:num-dot-decimal\" scale=\"6\" id=\"f-194\">12,542</ix:nonFraction>",
+      "context_id": "c-9",
+      "cik": "813828",
+      "instant": "2024-12-31",
+      "unit": "USD",
+      "value": "12542000000"
+    },
+    {
+      "concept": "us-gaap:LiabilitiesCurrent",
+      "namespace": "http://fasb.org/us-gaap/2024",
+      "raw_fact": "<ix:nonFraction unitRef=\"usd\" contextRef=\"c-9\" decimals=\"-6\" name=\"us-gaap:LiabilitiesCurrent\" format=\"ixt:num-dot-decimal\" scale=\"6\" id=\"f-226\">9,631</ix:nonFraction>",
+      "context_id": "c-9",
+      "cik": "813828",
+      "instant": "2024-12-31",
+      "unit": "USD",
+      "value": "9631000000"
+    },
+    {
+      "concept": "us-gaap:CashAndCashEquivalentsAtCarryingValue",
+      "namespace": "http://fasb.org/us-gaap/2024",
+      "raw_fact": "<ix:nonFraction unitRef=\"usd\" contextRef=\"c-9\" decimals=\"-6\" name=\"us-gaap:CashAndCashEquivalentsAtCarryingValue\" format=\"ixt:num-dot-decimal\" scale=\"6\" id=\"f-184\">2,661</ix:nonFraction>",
+      "context_id": "c-9",
+      "cik": "813828",
+      "instant": "2024-12-31",
+      "unit": "USD",
+      "value": "2661000000"
+    }
+  ],
+  "b08_ratio": "1.302253140899179732115045167",
+  "b09_cash_reserves_usd": "2661000000",
+  "scope": "Three same-subject same-instant native facts only, not whole company/content acceptance",
+  "new_run_result_acceptance": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

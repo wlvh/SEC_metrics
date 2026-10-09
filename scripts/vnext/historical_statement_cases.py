@@ -155,7 +155,14 @@ def prepare_historical_statement_year_case(*, repo_root, company_id, metric_id, 
                        for kind, media in [('primary', 'text/html'), ('xml', 'application/xml')]}
             _need(all(len(sources) == 1 for sources in by_kind.values()),
                   'HISTORICAL_INCOME_ORIGINAL_SOURCE_SET_AMBIGUOUS')
-            reports = {kind: native_income_reports(sources[0], prepared, concepts,
+            # The annual preparer retains the literal DEI label and separately
+            # resolves the issuer's fiscal label. The source reader checks the
+            # literal original; observations retain the resolved label/dates.
+            source_annual = prepared.get('original_input', prepared)
+            _need(all(source_annual['table_input']['target_period'][key] == period[key]
+                      for key in ('period_start', 'period_end')),
+                  'HISTORICAL_INCOME_ORIGINAL_PERIOD_CHANGED')
+            reports = {kind: native_income_reports(sources[0], source_annual, concepts,
                            check_visible_short_period=kind == 'primary',
                            namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period)
                        for kind, sources in by_kind.items()}

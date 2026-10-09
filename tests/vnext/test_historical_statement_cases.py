@@ -30,3 +30,41 @@ class HistoricalStatementScopeTest(unittest.TestCase):
                 cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
                     company_id='constructed', metric_id='B03', fiscal_year=2024)
             select.assert_not_called()
+
+    def test_companyfacts_amount_must_match_the_selected_original(self):
+        from contextlib import ExitStack
+        from tests.vnext.test_selected_income_source_v1 import fixture
+        from vnext import ordinary_income_input
+        source, annual = fixture()
+        annual.update(amendments=[], subject_policy={'mode': 'CONTINUOUS_PRIMARY'})
+        primary = {**source, 'raw_blob': {'media_type': 'text/html'}}
+        xml = {**source, 'raw_blob': {'media_type': 'application/xml'}}
+        from types import SimpleNamespace
+        reader = SimpleNamespace(read=lambda *args, **kwargs: source,
+            primary=lambda *args: primary, auditor_filing=lambda *args: [primary, xml])
+        period = annual['table_input']['target_period']
+        # Constructed post-calculation control. This is not a financial result.
+        observation = {'observation_id': 'constructed', 'value': '13000000', 'unit': 'USD',
+            'period_start': period['period_start'], 'period_end': period['period_end'],
+            'source_binding': {'entity': annual['entity'],
+                'accession': annual['filing']['accessionNumber'], 'concept': 'us-gaap:Revenues'}}
+        documents = {'B01': {'path': 'unused', 'compiled_spec': {'compiled': {'dependencies': []}}}}
+        with ExitStack() as stack:
+            controls = {
+                'resolve_period_selection': {}, 'prepare_historical_annual_input': annual,
+                'installed_ordinary_spec_documents': documents,
+                '_registry_rows': [{'company_id': annual['company_id']}],
+                'repository_company_traits': {}, '_Sources': reader,
+                'filing_inventory': {}, '_load_deterministic_catalog': {},
+                '_structured_concepts': ['us-gaap:Revenues'],
+                '_filing_source': ({}, []), 'companyfacts_structured_facts': [],
+                'calculate_metric': ({'publication': 'PUBLISHED'}, {}, [observation]),
+            }
+            for name, value in controls.items():
+                stack.enter_context(patch.object(cases, name, return_value=value))
+            stack.enter_context(patch.object(ordinary_income_input, '_prepare_b06',
+                side_effect=AssertionError('Do not prepare the current company')))
+            with self.assertRaisesRegex(ordinary_income_input.IncomeInputError,
+                                        'SELECTED_COMPANYFACTS_AMOUNT_DIFFERS'):
+                cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
+                    company_id=annual['company_id'], metric_id='B01', fiscal_year=2025)

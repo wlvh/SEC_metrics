@@ -55,3 +55,9 @@ PYTHONPATH=scripts:. python -m unittest \
 B01同族接缝：本PR仅接公共PR85/541b的已选收入原件模块与原样namespace helper。B01观察值必须与已选primary/XML原生金额、主体、申报、单位和实际期间相符；不准备当期B06，不更改旧计算公式或修订/继承拒绝。Ford FY2021 136341m、Salesforce FY2022 26492m、Macy FY2023 23092m USD，三定向原件样本实测9.153/6.511/5.681s，值/单位/期间/Result ID与包内旧结果逐字段相同；不是重跑原60位置。新增解析依赖仅分配B01，其他三指标不消费收入接口。29项含新接口的小例0.183s过，详见[本次接收检查](main-receiving.json)。
 
 审查材料恢复：`consumer-results.tar.gz` 是现有普通记录/CSV包，解包到新目录后，可对 `<新目录>/<ford|salesforce|macys>/saved-results/FY<年>/B<指标>` 调用 `read_saved_result(output_root=...)`；本次60条均实读成功。重新计算所需完整原件来自PR52已提交 `evidence/issue47_acquired`，按[历史使用指南](../../historical_company_usage.md)的既有restore入口恢复，使用返回的实际source-inputs根。本PR未添加在线获取；归档中的绝对旧开发路径只作日志，审查命令应替换为自己恢复的根和新状态目录。
+
+实际main随后到d4b0db79：PR74每指标公共映射及PR85原件接口已经合入，现有75与main的公共保存器/原件接口/namespace逐字节相同，不需要新公共实现或额外依赖PR。再接实际main后，现有历史步骤与main收入步骤的相邻插入冲突由公共侧提供解法；双方步骤均保留。最新54选择器小例0.076s、30消费者/接口小例0.179s零skip；新增构造控制故意用13m计算观察值对应12m原件，由实际共享原件核对拒绝，不把机械成功当金额支持，也不将替身当真实财报。原三真实B01样本消费的相关源/解析/计算文件未被main增量改变，复用它们，不重复整组。
+
+15个旧B01观察值进一步直接过新原件检查（不重新计算），14个支持、Salesforce FY2026暴露DEI字面2025与已解析发行人FY2026不相等，原拒绝保留在[原检查](main-receiving-saved-b01-originals-before.json)。既有发行人定义规则已证明FY2026，实际日期2025-02-01→2026-01-31不变；修复只把原件读者指向prepared中保留的`original_input`，输出/观察值仍使用解析后的发行人标签，并显式拒绝原始/实际日期变化。没有改公共API、用答案覆盖原件或放宽单位/主体/期间检查。实际受影响FY2026重新过入口，B01=41525000000 USD、Result ID和值/单位/期间与原包相同，4.020s；原标签冲突及定义依据保存[修复核对](main-receiving-salesforce-label-fixed.json)。
+
+FY2026真正进入同一公司CLI并保存/导出：首跑内部4.368s，观察原工厂但禁止调用的复跑0.399s，独立读取外部0.348s，CSV为FY2026/2025-02-01→2026-01-31/41525000000 USD，9结果与pointer文件读取前后保持；见[CLI核对](main-receiving-salesforce-label-cli.json)。初次开发验证误用MagicMock替换工厂，改变了程序身份而报TypeError，修正为保留函数身份的只读调用观察；另一次记录器误取不存在的read status键失败，均保留日志。完成记录直接消费已经写出的结果并只重做读取，不抹掉失败或补造计时；first/repeat为CLI内部耗时，final read为外部wall。

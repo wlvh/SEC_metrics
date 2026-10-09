@@ -157,6 +157,9 @@ Run ID、目录和 controller namespace 从计划机械派生；相同批准重�
 
 ### 保存的年度原始材料输入准备
 
+显式来源API `vnext.instant_balance_amendment_v2.inspect_instant_balance_amendment(..., note_layout='inline-paragraphs-v2')` 在原主体/期间与Part III规则内按可见段落处理行内拆分，保留原始块/字节引用、隐藏文字和引用限制。默认 `blocks-v1` 及历史对象不变；这里只验证瞬时余额输入的来源属性，不生成指标、公司CSV或年度连续性结论。消费者须显式选择并声明amendment_note_layout、annual_amendment_scope_v2、instant_balance_amendment_v2及实际旧帮助函数的处理依赖；公司接入仍需本路线验证。
+<!-- capability-anchor: CAPABILITY.inline_amendment_source_layout -->
+
 `annual_input.prepare_annual_input(repo_root=..., company_id=..., fiscal_year=...)`
 返回 `companyfacts_input`、`table_input` 与原始请求证明。省略年度时取保存的
 submissions 中最近报告期；指定年度用于历史材料回归。范围限于配置中的

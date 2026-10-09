@@ -1,0 +1,21 @@
+{
+  "base_received": "e2d6784c9a464a04b793d3487e6e9868a37614b3",
+  "tested_tree": "uncommitted merge on PR85 5989035b",
+  "scope": "unchanged selected source API plus current upstream parser/metadata; two existing test selectors retained",
+  "old_evidence_restored_byte_exact": true,
+  "source_api_byte_equal_reviewed_bad59fab": true,
+  "files": {
+    "scripts/vnext/selected_income_source_v1.py": "4dfbb72bcc07eb0df98cf98181012fe2a23bc0ce720bd2bf268f08104c178852",
+    "scripts/vnext/xbrl_namespace_policy.py": "23cd0290485b9ae9e5a58d4ccffc10ebfe1bb8f8e8969fed99f0442a4d09f5bc",
+    "tools/run_fast_tests_v2.py": "e360f2874d5928acbc874023c06dcad6383c65d20933fba7554cd7919696c69c",
+    ".github/workflows/vnext-fast.yml": "3dcf0445ac200fa5775314ecaf19b04d7d94b17b63982a26312c037ad69216c1"
+  },
+  "small_tests": 13,
+  "small_seconds": 0.02,
+  "real_source_pairs": 4,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
