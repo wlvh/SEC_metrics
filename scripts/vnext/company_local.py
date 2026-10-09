@@ -451,7 +451,7 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
         if set(selected) <= set(hotel_metrics):
             factory = prepare_historical_lodging_year_case
             processing_files = HISTORICAL_LODGING_PROCESSING_FILES
-        elif set(selected) == {'B03'}:
+        elif set(selected) <= {'B01', 'B03'}:
             from .historical_saved_case import prepare_historical_income_year_case
             factory = prepare_historical_income_year_case
             processing_files = tuple(sorted({*HISTORICAL_LODGING_PROCESSING_FILES,
@@ -460,7 +460,9 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
                     'historical_da_scope_candidate', 'ordinary_b03_input_scope',
                     'b03_contract_amortization_scope', 'b03_depreciation_scope',
                     'ordinary_da_scope_v1', 'xbrl_namespace_policy',
-                    'reported_monetary_literal', 'financial_structured', 'text_results_v2')),
+                    'reported_monetary_literal', 'financial_structured', 'financial_duration',
+                    'text_results_v2', 'selected_income_source_v1', 'ordinary_income_input',
+                    'governance_signals', 'r5_b06_scope', 'deterministic_router')),
                 'catalog/r6/text_results_v2_policy.json'}))
         else:
             need(set(selected) <= SAVED_DETERMINISTIC_METRICS,
@@ -475,6 +477,19 @@ def _run_history(*, company_id, work_dir, output_dir, metric_ids,
                 'scripts/vnext/historical_filing_inventory.py',
                 'scripts/vnext/historical_zero_ai_results.py',
                 'catalog/deterministic_metrics.json'}))
+            if 'B01' in selected:
+                processing_files = tuple(sorted({*processing_files,
+                    'scripts/vnext/selected_income_source_v1.py',
+                    'scripts/vnext/xbrl_namespace_policy.py',
+                    'scripts/vnext/ordinary_income_input.py',
+                    'scripts/vnext/deterministic_router.py',
+                    'scripts/vnext/financial_duration.py',
+                    'scripts/vnext/financial_structured.py',
+                    'scripts/vnext/text_results_v2.py',
+                    'scripts/vnext/governance_signals.py',
+                    'scripts/vnext/r5_b06_scope.py',
+                    'catalog/r6/text_results_v2_policy.json',
+                }))
         from .company_current_records import run_saved_company
         return run_saved_company(company_id=company_id, source_root=source, work_dir=work,
             output_dir=outputs, metric_ids=selected, fiscal_years=years,

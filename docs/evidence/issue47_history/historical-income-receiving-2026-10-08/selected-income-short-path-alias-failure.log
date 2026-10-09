@@ -1,0 +1,43 @@
+test_explicit_period_reader_inspects_exact_bytes_and_must_match_target (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_explicit_period_reader_inspects_exact_bytes_and_must_match_target) ... ok
+test_non_usd_and_fake_namespace_rejected (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_non_usd_and_fake_namespace_rejected) ... ok
+test_release_date_requires_explicit_policy_and_old_default_unchanged (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_release_date_requires_explicit_policy_and_old_default_unchanged) ... ok
+test_selected_original_default_matches_retained_reader_without_current_preparation (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_selected_original_default_matches_retained_reader_without_current_preparation) ... ok
+test_short_visible_period_conflict_and_missing_header_remain_explicit (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_short_visible_period_conflict_and_missing_header_remain_explicit) ... ok
+test_source_byte_company_and_accession_binding_rejected (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_source_byte_company_and_accession_binding_rejected) ... ok
+test_wrong_annual_period_and_dei_subject_rejected (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_wrong_annual_period_and_dei_subject_rejected) ... ok
+test_revenue_and_margin_share_the_existing_income_case_factory (tests.vnext.test_historical_income_period_conflict.HistoricalIncomeDispatchTest.test_revenue_and_margin_share_the_existing_income_case_factory) ... ERROR
+test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence (tests.vnext.test_historical_income_period_conflict.HistoricalIncomePeriodConflictTest.test_conflicting_dates_produce_named_withholding_with_dependency_and_evidence) ... ok
+test_current_conflict_cannot_be_assigned_to_a_different_selected_filing (tests.vnext.test_historical_income_period_conflict.HistoricalIncomePeriodConflictTest.test_current_conflict_cannot_be_assigned_to_a_different_selected_filing) ... ok
+test_non_income_and_continuous_subjects_do_not_prepare_successor_income (tests.vnext.test_historical_income_period_conflict.HistoricalIncomePeriodConflictTest.test_non_income_and_continuous_subjects_do_not_prepare_successor_income) ... ok
+test_missing_original_and_changed_bytes_are_named_failures (tests.vnext.test_historical_income_period_conflict.SelectedHistoricalIncomeConsumerTest.test_missing_original_and_changed_bytes_are_named_failures) ... ok
+test_selected_reader_and_policy_do_not_prepare_the_current_company (tests.vnext.test_historical_income_period_conflict.SelectedHistoricalIncomeConsumerTest.test_selected_reader_and_policy_do_not_prepare_the_current_company) ... ok
+test_visible_conflict_is_not_cleared_by_native_reader (tests.vnext.test_historical_income_period_conflict.SelectedHistoricalIncomeConsumerTest.test_visible_conflict_is_not_cleared_by_native_reader) ... ok
+test_duplicate_primary_record_is_rejected (tests.vnext.test_historical_saved_case.HistoricalSavedCaseTest.test_duplicate_primary_record_is_rejected) ... ok
+test_missing_dependency_is_not_synthesized (tests.vnext.test_historical_saved_case.HistoricalSavedCaseTest.test_missing_dependency_is_not_synthesized) ... ok
+test_preserves_ids_dependency_and_both_conflicting_dates (tests.vnext.test_historical_saved_case.HistoricalSavedCaseTest.test_preserves_ids_dependency_and_both_conflicting_dates) ... ok
+test_trace_id_and_spec_closure_are_checked (tests.vnext.test_historical_saved_case.HistoricalSavedCaseTest.test_trace_id_and_spec_closure_are_checked) ... ok
+test_unreceived_family_is_explicit (tests.vnext.test_historical_saved_case.HistoricalSavedCaseTest.test_unreceived_family_is_explicit) ... ok
+test_wrong_company_and_period_cannot_become_saved_case (tests.vnext.test_historical_saved_case.HistoricalSavedCaseTest.test_wrong_company_and_period_cannot_become_saved_case) ... ok
+
+======================================================================
+ERROR: test_revenue_and_margin_share_the_existing_income_case_factory (tests.vnext.test_historical_income_period_conflict.HistoricalIncomeDispatchTest.test_revenue_and_margin_share_the_existing_income_case_factory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tests/vnext/test_historical_income_period_conflict.py", line 129, in test_revenue_and_margin_share_the_existing_income_case_factory
+    result = company_local._run_history(company_id='marriott_international',
+        work_dir=state, output_dir=outputs, metric_ids=['B01', 'B03'],
+        fiscal_year_start=2024, fiscal_year_end=2024, source_root=source)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/company_local.py", line 436, in _run_history
+    source = external(absolute(source_root))
+                      ~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/company_local.py", line 22, in absolute
+    need(first_symlink_in_path(path=path) is None, 'LOCAL_PATH_ALIAS')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_PATH_ALIAS
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.058s
+
+FAILED (errors=1)

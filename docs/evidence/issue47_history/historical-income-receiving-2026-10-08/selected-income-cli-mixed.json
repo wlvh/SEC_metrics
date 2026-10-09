@@ -1,0 +1,242 @@
+{
+  "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000",
+  "operations": [
+    {
+      "name": "mixed-first",
+      "seconds": 10.555997000075877,
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "c05842f8615c4a469ed8f0fd8e319c4a",
+          "version": "c32af4cbdd27409c99734ae7213e8c80",
+          "result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B01/periods/FY2024/results/c32af4cbdd27409c99734ae7213e8c80",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "result_reason_code": "PASS",
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2024,
+          "defect_holds": [],
+          "read_result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B01/periods/FY2024/results/c32af4cbdd27409c99734ae7213e8c80",
+          "program_version": {
+            "commit": "17af4871bb1be570078090572fe84d324e7bd207",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "metric_id": "B03",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "7afdb549c0524a8f93d73222a97deb4f",
+          "version": "d80c6c9c30ff4b41bf81709675de90fc",
+          "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B03/periods/FY2024/results/d80c6c9c30ff4b41bf81709675de90fc",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "result_reason_code": "PASS",
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2024,
+          "defect_holds": [],
+          "read_result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B03/periods/FY2024/results/d80c6c9c30ff4b41bf81709675de90fc",
+          "program_version": {
+            "commit": "17af4871bb1be570078090572fe84d324e7bd207",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/outputs/20261009T064956Z-dd2806a1"
+    },
+    {
+      "name": "mixed-repeat",
+      "seconds": 0.904543292010203,
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "fb1ae91e92374373acf2c1b1b52f5068",
+          "version": "c32af4cbdd27409c99734ae7213e8c80",
+          "result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B01/periods/FY2024/results/c32af4cbdd27409c99734ae7213e8c80",
+          "result_reason_code": "PASS",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2024,
+          "defect_holds": [],
+          "read_result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B01/periods/FY2024/results/c32af4cbdd27409c99734ae7213e8c80",
+          "program_version": {
+            "commit": "17af4871bb1be570078090572fe84d324e7bd207",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "metric_id": "B03",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "8833467f0e274418bd76f3b8faed3f52",
+          "version": "d80c6c9c30ff4b41bf81709675de90fc",
+          "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B03/periods/FY2024/results/d80c6c9c30ff4b41bf81709675de90fc",
+          "result_reason_code": "PASS",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2024,
+          "defect_holds": [],
+          "read_result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B03/periods/FY2024/results/d80c6c9c30ff4b41bf81709675de90fc",
+          "program_version": {
+            "commit": "17af4871bb1be570078090572fe84d324e7bd207",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/outputs/20261009T065007Z-9e93f0ea"
+    },
+    {
+      "name": "read",
+      "seconds": 0.20918845804408193,
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "fiscal_year": 2024,
+          "value": "25100000000",
+          "unit": "USD",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B01/periods/FY2024/results/c32af4cbdd27409c99734ae7213e8c80"
+        },
+        {
+          "metric_id": "B03",
+          "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31",
+          "fiscal_year": 2024,
+          "value": "0.1653386454183266932270916335",
+          "unit": "ratio",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B03/periods/FY2024/results/d80c6c9c30ff4b41bf81709675de90fc"
+        }
+      ],
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/read"
+    }
+  ],
+  "csv_rows": [
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B01",
+      "metric_name": "Revenue",
+      "value": "25100000000",
+      "unit": "USD",
+      "status": "OK",
+      "source_class": "STD_XBRL",
+      "formula": "direct",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "fiscal_year": "2024",
+      "fiscal_period": "ANNUAL",
+      "accession": "0001628280-25-004818",
+      "form": "10-K",
+      "filed_date": "2025-02-11",
+      "concept_or_section": "Revenues",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:af01b12ad1237cc7ea83573b89cd8c48b772117ac9ca2bc9783969cf9c251ef4\", \"original_reports\": {\"primary\": [{\"concept\": \"us-gaap:Revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 92, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231.htm\", \"raw_asset_id\": \"sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92\", \"source_reference_id\": \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm\"}, \"unit\": \"USD\", \"value\": \"25100000000\"}, {\"concept\": \"us-gaap:Revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 1164, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231.htm\", \"raw_asset_id\": \"sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92\", \"source_reference_id\": \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm\"}, \"unit\": \"USD\", \"value\": \"25100000000\"}], \"xml\": [{\"concept\": \"us-gaap:revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 92, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231_htm.xml\", \"raw_asset_id\": \"sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292\", \"source_reference_id\": \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"25100000000\"}, {\"concept\": \"us-gaap:revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 1164, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231_htm.xml\", \"raw_asset_id\": \"sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292\", \"source_reference_id\": \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"25100000000\"}]}}], \"reason_code\": \"PASS\", \"selected_fact_ids\": [\"fact:sha256:bfaeba3174709c79421d56ed7d00e1b2064c30a0cbf613ea2ed06ea00acb1556\"], \"source_candidate_count\": 3, \"source_reported_periods\": [[\"2022-01-01\", \"2022-12-31\"], [\"2023-01-01\", \"2023-12-31\"], [\"2024-01-01\", \"2024-12-31\"]]}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"sha256:63687b69a68ec70135351fc580e0a0d4f4f9d369bfc8a4f087772217b312a630\", \"sha256:bf544d4ea45fb264453b4e0afbb986e366f93c73b43e55513e95741b1453b855\", \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "marriott_international",
+      "result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B01/periods/FY2024/results/c32af4cbdd27409c99734ae7213e8c80",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B03",
+      "metric_name": "EBITDA margin",
+      "value": "0.1653386454183266932270916335",
+      "unit": "ratio",
+      "status": "OK",
+      "source_class": "DERIVED",
+      "formula": "(Operating income + D&A) / revenue",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "fiscal_year": "2024",
+      "fiscal_period": "ANNUAL",
+      "accession": "0001628280-25-004818",
+      "form": "10-K",
+      "filed_date": "2025-02-11",
+      "concept_or_section": "Revenues+OperatingIncomeLoss+Depreciation+AmortizationOfIntangibleAssets",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"depreciation_scope\": {\"chain_input\": {\"concept\": \"Depreciation+AmortizationOfIntangibleAssets\", \"value\": \"383000000\"}, \"complete_business_scope_proven\": false, \"composition_originals\": {\"amortization\": {\"concept\": \"us-gaap:AmortizationOfIntangibleAssets\", \"primary_fact_ordinals\": [888], \"value_usd\": \"255000000\"}, \"depreciation\": {\"concept\": \"us-gaap:Depreciation\", \"primary_fact_ordinals\": [936], \"value_usd\": \"128000000\"}}, \"contract_amortization\": {\"amount_added_or_result_recomputed\": false, \"blocked\": false, \"excluded_facts\": [{\"context_ref\": \"c-13\", \"dimensions\": {\"srt:ProductOrServiceAxis\": \"mar:FeeServiceMember\"}, \"ordinal\": 80, \"resolved_dimensions\": {\"srt:ProductOrServiceAxis\": \"{http://www.marriott.com/20241231}FeeServiceMember\"}, \"value_usd\": \"103000000\"}, {\"context_ref\": \"c-231\", \"dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"mar:FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"mar:USAndCanadaSegmentMember\"}, \"ordinal\": 1017, \"resolved_dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"{http://www.marriott.com/20241231}FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"{http://www.marriott.com/20241231}USAndCanadaSegmentMember\"}, \"value_usd\": \"76000000\"}, {\"context_ref\": \"c-232\", \"dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"mar:FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"mar:EMEASegmentMember\"}, \"ordinal\": 1018, \"resolved_dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"{http://www.marriott.com/20241231}FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"{http://www.marriott.com/20241231}EMEASegmentMember\"}, \"value_usd\": \"14000000\"}, {\"context_ref\": \"c-233\", \"dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"mar:FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"mar:GreaterChinaMember\"}, \"ordinal\": 1019, \"resolved_dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"{http://www.marriott.com/20241231}FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"{http://www.marriott.com/20241231}GreaterChinaMember\"}, \"value_usd\": \"1000000\"}, {\"context_ref\": \"c-234\", \"dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"mar:FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"mar:APECMember\"}, \"ordinal\": 1020, \"resolved_dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"{http://www.marriott.com/20241231}FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"{http://www.marriott.com/20241231}APECMember\"}, \"value_usd\": \"5000000\"}], \"primary_source_sha256\": \"32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131\", \"revenue_deduction_proofs\": [{\"deduction_row\": 7, \"dimensions\": {\"srt:ProductOrServiceAxis\": \"mar:FeeServiceMember\"}, \"displayed_amounts\": [\"5170\", \"-103\", \"5067\"], \"fact_ordinal\": 80, \"gross_row\": 6, \"net_row\": 8, \"relation_class\": \"CONSOLIDATED_REVENUE_DEDUCTION\", \"reported_labels\": [\"Gross fee revenues\", \"Contract investment amortization\", \"Net fee revenues\"], \"table_grid_sha256\": \"sha256:2443c5d0b43016c3ce63fe65cbdd2399bbe7bab150c82d985fac8707e96afd29\", \"table_id\": \"table_000026\"}, {\"deduction_row\": 4, \"dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"mar:FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"mar:USAndCanadaSegmentMember\"}, \"displayed_amounts\": [\"2951\", \"-76\", \"2875\"], \"fact_ordinal\": 1017, \"gross_row\": 3, \"net_row\": 5, \"relation_class\": \"OPERATING_SEGMENT_REVENUE_DEDUCTION\", \"reported_labels\": [\"Gross fee revenues\", \"Contract investment amortization\", \"Net fee revenues\"], \"table_grid_sha256\": \"sha256:b267a6e86447b08796fdffc6e7fe9e71cb792dc47c1c290782af3145aa402646\", \"table_id\": \"table_000051\"}, {\"deduction_row\": 4, \"dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"mar:FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"mar:EMEASegmentMember\"}, \"displayed_amounts\": [\"589\", \"-14\", \"575\"], \"fact_ordinal\": 1018, \"gross_row\": 3, \"net_row\": 5, \"relation_class\": \"OPERATING_SEGMENT_REVENUE_DEDUCTION\", \"reported_labels\": [\"Gross fee revenues\", \"Contract investment amortization\", \"Net fee revenues\"], \"table_grid_sha256\": \"sha256:b267a6e86447b08796fdffc6e7fe9e71cb792dc47c1c290782af3145aa402646\", \"table_id\": \"table_000051\"}, {\"deduction_row\": 4, \"dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"mar:FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"mar:GreaterChinaMember\"}, \"displayed_amounts\": [\"250\", \"-1\", \"249\"], \"fact_ordinal\": 1019, \"gross_row\": 3, \"net_row\": 5, \"relation_class\": \"OPERATING_SEGMENT_REVENUE_DEDUCTION\", \"reported_labels\": [\"Gross fee revenues\", \"Contract investment amortization\", \"Net fee revenues\"], \"table_grid_sha256\": \"sha256:b267a6e86447b08796fdffc6e7fe9e71cb792dc47c1c290782af3145aa402646\", \"table_id\": \"table_000051\"}, {\"deduction_row\": 4, \"dimensions\": {\"srt:ConsolidationItemsAxis\": \"us-gaap:OperatingSegmentsMember\", \"srt:ProductOrServiceAxis\": \"mar:FeeServiceMember\", \"us-gaap:StatementBusinessSegmentsAxis\": \"mar:APECMember\"}, \"displayed_amounts\": [\"345\", \"-5\", \"340\"], \"fact_ordinal\": 1020, \"gross_row\": 3, \"net_row\": 5, \"relation_class\": \"OPERATING_SEGMENT_REVENUE_DEDUCTION\", \"reported_labels\": [\"Gross fee revenues\", \"Contract investment amortization\", \"Net fee revenues\"], \"table_grid_sha256\": \"sha256:b267a6e86447b08796fdffc6e7fe9e71cb792dc47c1c290782af3145aa402646\", \"table_id\": \"table_000051\"}], \"selected_components\": {\"amortization\": \"255000000\", \"depreciation\": \"128000000\"}, \"selected_original_facts\": {\"amortization\": {\"concept\": \"us-gaap:AmortizationOfIntangibleAssets\", \"primary_fact_ordinals\": [888], \"value_usd\": \"255000000\"}, \"depreciation\": {\"concept\": \"us-gaap:Depreciation\", \"primary_fact_ordinals\": [936], \"value_usd\": \"128000000\"}}, \"status\": \"COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED\"}, \"entity\": \"1048286\", \"filing_answer\": {\"candidates\": [], \"status\": \"NO_DIRECT_CANDIDATE\", \"why\": \"THE_APPROVED_COMPOSITION_APPLIES\"}, \"period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"primary_sha256\": \"32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131\", \"source_facts\": [{\"concept\": \"AmortizationOfIntangibleAssets\", \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"fact_ordinal\": 888, \"unit_ref\": \"usd\", \"value\": \"255000000\"}, {\"concept\": \"Depreciation\", \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"fact_ordinal\": 936, \"unit_ref\": \"usd\", \"value\": \"128000000\"}], \"status\": \"KEEP\", \"why\": \"THE_APPROVED_COMPOSITION_APPLIES\"}, \"income_observation_checks\": [{\"observation_id\": \"sha256:af01b12ad1237cc7ea83573b89cd8c48b772117ac9ca2bc9783969cf9c251ef4\", \"original_reports\": {\"primary\": [{\"concept\": \"us-gaap:Revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 92, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231.htm\", \"raw_asset_id\": \"sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92\", \"source_reference_id\": \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm\"}, \"unit\": \"USD\", \"value\": \"25100000000\"}, {\"concept\": \"us-gaap:Revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 1164, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231.htm\", \"raw_asset_id\": \"sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92\", \"source_reference_id\": \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm\"}, \"unit\": \"USD\", \"value\": \"25100000000\"}], \"xml\": [{\"concept\": \"us-gaap:revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 92, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231_htm.xml\", \"raw_asset_id\": \"sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292\", \"source_reference_id\": \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"25100000000\"}, {\"concept\": \"us-gaap:revenues\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 1164, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231_htm.xml\", \"raw_asset_id\": \"sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292\", \"source_reference_id\": \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"25100000000\"}]}}, {\"observation_id\": \"sha256:2c234a65f8ae17b04d8f3ee208cc9e6558a1f164dbd6deaf21ba2321caa66164\", \"original_reports\": {\"primary\": [{\"concept\": \"us-gaap:OperatingIncomeLoss\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 113, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231.htm\", \"raw_asset_id\": \"sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92\", \"source_reference_id\": \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm\"}, \"unit\": \"USD\", \"value\": \"3767000000\"}], \"xml\": [{\"concept\": \"us-gaap:operatingincomeloss\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 113, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231_htm.xml\", \"raw_asset_id\": \"sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292\", \"source_reference_id\": \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"3767000000\"}]}}, {\"observation_id\": \"sha256:46e3980620e2fc1440b34ea84d5e3593c5c4dd270349bf99eea455317202c67f\", \"original_reports\": {\"primary\": [{\"concept\": \"us-gaap:Depreciation\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 936, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231.htm\", \"raw_asset_id\": \"sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92\", \"source_reference_id\": \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm\"}, \"unit\": \"USD\", \"value\": \"128000000\"}], \"xml\": [{\"concept\": \"us-gaap:depreciation\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 936, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231_htm.xml\", \"raw_asset_id\": \"sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292\", \"source_reference_id\": \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"128000000\"}]}}, {\"observation_id\": \"sha256:eda9dee2c1c9377bf47d522772ac698ff9f2bf6e080132411c973841a895da31\", \"original_reports\": {\"primary\": [{\"concept\": \"us-gaap:AmortizationOfIntangibleAssets\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 888, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231.htm\", \"raw_asset_id\": \"sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92\", \"source_reference_id\": \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm\"}, \"unit\": \"USD\", \"value\": \"255000000\"}], \"xml\": [{\"concept\": \"us-gaap:amortizationofintangibleassets\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001048286\", \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001048286\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2024-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2024-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 888, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\", \"source_reference\": {\"accession\": \"0001628280-25-004818\", \"company_id\": \"marriott_international\", \"document_name\": \"mar-20241231_htm.xml\", \"raw_asset_id\": \"sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292\", \"source_reference_id\": \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"255000000\"}]}}], \"reason_code\": \"PASS\", \"selected_fact_ids\": [\"fact:sha256:bfaeba3174709c79421d56ed7d00e1b2064c30a0cbf613ea2ed06ea00acb1556\", \"fact:sha256:c8b67afc330386357c7dfba2c190bef98c89785a57d2d0dc8a557acb07ff2f55\", \"fact:sha256:1f516b55dbd323d92e9b4d92e3dae48bd9585daf92e11a78cb9f3f5cc9b08162\", \"fact:sha256:d1e2083e46a6144d2dc727f1955dfba925e0a9a8c0d70e7af4144314d3fe80ae\"], \"source_candidate_count\": 21, \"source_reported_periods\": [[\"2022-01-01\", \"2022-12-31\"], [\"2023-01-01\", \"2023-12-31\"], [\"2024-01-01\", \"2024-12-31\"]]}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"sha256:63687b69a68ec70135351fc580e0a0d4f4f9d369bfc8a4f087772217b312a630\", \"sha256:bf544d4ea45fb264453b4e0afbb986e366f93c73b43e55513e95741b1453b855\", \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "marriott_international",
+      "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-income-consumer-20261009-1791528596122057000/state/updates/B03/periods/FY2024/results/d80c6c9c30ff4b41bf81709675de90fc",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  ],
+  "protected_file_count": 17,
+  "protected_unchanged": true,
+  "latest_preparation_forbidden": true,
+  "repeat_and_read_factory_forbidden": true,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "mixed_income_request_supported": true
+}

@@ -385,6 +385,37 @@ def _successor_income_input(*, repo_root: Path, company_id: str, metric_id: str,
     return income_input
 
 
+def verify_selected_historical_income(*, reader, prepared, concepts, observations):
+    """Check an ordinary historical calculation against its selected originals.
+
+    Selection, amendment admission and calculation remain with their existing
+    callers. The shared reader only inspects this exact filing; it does not
+    prepare today's company or change the measured period.
+    """
+    from .historical_dei import annual_period
+    from .selected_income_source_v1 import IncomeSourceError, native_income_reports
+    from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE
+    from .ordinary_income_input import verify_income_observations
+    sources = reader.auditor_filing(prepared['filing'])
+    by_kind = {kind: [source for source in sources
+                     if source['raw_blob']['media_type'] == media]
+               for kind, media in [('primary', 'text/html'), ('xml', 'application/xml')]}
+    if any(len(items) != 1 for items in by_kind.values()):
+        raise IncomeInputError('HISTORICAL_INCOME_ORIGINAL_SOURCE_SET_AMBIGUOUS')
+    try:
+        reports = {kind: native_income_reports(items[0], prepared, concepts,
+                    check_visible_short_period=kind == 'primary',
+                    namespace_policy=YEAR_OR_DATE_RELEASE,
+                    annual_period_reader=annual_period)
+                   for kind, items in by_kind.items()}
+    except IncomeSourceError as error:
+        raise IncomeInputError(str(error)) from error
+    packet = {'annual_input': prepared,
+              'statement_period': prepared['table_input']['target_period'],
+              'original_reports': reports}
+    return verify_income_observations(packet, observations)
+
+
 def e01_confirmation_request(*, repo_root: Path, company_id: str, period_selection):
     """The content-confirmation request of E01's window at a pinned period, and its source proofs.
 
@@ -544,6 +575,7 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
     filings = [prepared["filing"]]
     selection = {}
     confirmation = None
+    ordinary_income_checks = None
     try:
         if income_failure is not None:
             raise income_failure
@@ -737,6 +769,10 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
                             "why": rechecked["why"] if rechecked["status"] == "WITHHOLD"
                             else "THE_ONE_RETAKE_DID_NOT_MATCH_THE_PRIMARY_SELECTION"})
                     da_scope = {**rechecked, "before_retake": da_scope}
+        if rules_root is not None and result['publication'] == 'PUBLISHED' and observations:
+            ordinary_income_checks = verify_selected_historical_income(
+                reader=reader, prepared=prepared, concepts=approved,
+                observations=observations)
         selection = {"source_candidate_count": len(facts),
                      "selected_fact_ids": [o["source_binding"]["fact_id"] for o in observations],
                      "source_reported_periods": sorted({(f["period_start"], f["period_end"])
@@ -826,6 +862,9 @@ def resolve_historical_zero_ai_metric(*, repo_root: Path, company_id: str, metri
             dependency_result, dependency_trace = withheld_metric_result(
                 compiled_spec=dependency, target=target, reason_code=result["reason_code"])
             dependency_records.extend([dependency_trace, dependency_result])
+    if (rules_root is not None and selection.get('selected_fact_ids')
+            and ordinary_income_checks is not None):
+        selection = {**selection, 'income_observation_checks': ordinary_income_checks}
     if per_filing:
         # A result that relied on the owner's per-filing admission says so,
         # with the conditions that held; one the policy alone decided is

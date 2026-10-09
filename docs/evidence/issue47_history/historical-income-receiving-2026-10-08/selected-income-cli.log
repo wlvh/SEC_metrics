@@ -1,0 +1,15 @@
+first 1 0.40110075008124113 , fiscal_year_start=fiscal_year_start,
+        fiscal_year_end=fiscal_year_end, source_root=source_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/company_local.py", line 468, in _run_history
+    need(set(selected) <= SAVED_DETERMINISTIC_METRICS,
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'LOCAL_HISTORY_MIXED_SAVED_FAMILY_NOT_RECEIVED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_HISTORY_MIXED_SAVED_FAMILY_NOT_RECEIVED
+
+Traceback (most recent call last):
+  File "<stdin>", line 18, in <module>
+  File "<stdin>", line 15, in invoke
+AssertionError: ('', 'Traceback (most recent call last):\n  File "<string>", line 5, in <module>\n    raise SystemExit(main(json.loads(sys.argv[1])))\n                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/tools/vnext_company.py", line 117, in main\n    result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,\n        period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,\n        sec_allowance=args.sec_allowance, fiscal_year_start=args.fiscal_year_start,\n        fiscal_year_end=args.fiscal_year_end, source_root=args.source_root)\n  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/company_local.py", line 166, in run_local\n    return _run_history(company_id=company_id, work_dir=work_dir, output_dir=output_dir,\n        metric_ids=metric_ids, fiscal_year_start=fiscal_year_start,\n        fiscal_year_end=fiscal_year_end, source_root=source_root)\n  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/company_local.py", line 468, in _run_history\n    need(set(selected) <= SAVED_DETERMINISTIC_METRICS,\n    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n         \'LOCAL_HISTORY_MIXED_SAVED_FAMILY_NOT_RECEIVED\')\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need\n    raise ValueError(reason)\nValueError: LOCAL_HISTORY_MIXED_SAVED_FAMILY_NOT_RECEIVED\n')

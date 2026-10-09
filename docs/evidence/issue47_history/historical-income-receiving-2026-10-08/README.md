@@ -105,3 +105,16 @@ Marriott FY2021 B02仍有具体前期适配缺口：当前0001628280-22-002666�
 Enphase FY2021–FY2025已消费固定PR75/5272797e的同一公司CLI，B01/B02/B04/B05二十位置首93.200s，禁止源选择/计算的复跑3.806s调用0、140结果/指针文件不变；另一进程只读0.092s。值/单位/测量窗口及primary原件SHA均与原阅读20位置相同。原FY2025阅读没有单列document_sha256，直接核其已保存原件字节补比较依据，不据路径猜值，不增发接受。没有改PR75代码或新增候选，Ford/Salesforce/Macy’s不重跑；来源已保存，线上发现/补齐仍未交付。[接收记录](enphase-statement-receiving.json)和[实际CSV/出处/普通记录/驱动](enphase-statement-receiving-materials.tar.gz)已Git保存，完整Goal继续。
 
 Lumen FY2021–FY2025进一步消费同一固定PR75/527入口，B01/B02/B04/B05二十位置首105.460s、禁止选源/计算复跑4.153s调用0、140结果/指针文件未变，另一进程CSV/出处只读0.101s。值/单位/窗口/primary原件SHA与原阅读20位无差异；FY2023 B04=-10,298,000,000 USD、B05=-940,000,000 USD及各年负增长保留符号，没有绝对值化或扣成“未披露”。原件阅读直接复用，不给旧阅读增发接受；未改候选代码或重跑前四家公司，也不替代该公司的C02/D02未决。[接收记录](lumen-statement-receiving.json)及[实际结果/CSV/出处/驱动](lumen-statement-receiving-materials.tar.gz)已Git保存，新增真实调用0，未main/在线来源。
+
+
+## 2026-10-09 已选收入原件接口的历史接收
+
+只接公共 PR85/541b 的 `selected_income_source_v1.py`（产品字节与 bad59fab 相同）；现有 `xbrl_namespace_policy.py` 与公共文件逐字节相同，未重复实现。连续且无修订的普通历史 B01/B03 在既有计算之后，通过同一原件读取/观察值核对检查原 primary/XML 的金额、USD、主体、申报及实际期间。明确传历史 `annual_period` 和 `YEAR_OR_DATE_RELEASE`，不准备最新公司、不调用 B06 取源、不生成新 native Run；旧 rules_root=None 原生路径保持。修订和 successor 普通 case 的原具名缺口不被接口自动解除。
+
+[保存原件检查](selected-income-real-probe.json)：Marriott FY2024 B01=25100000000 USD，原观察值在两种原件有支持；Marriott FY2021 两种原件各两收入候选，旧 DEI/FASB 读者实际工作；Paramount FY2025 两种原件各四候选，可见 August7/native August8 的原表冲突仍在。这些来源探针不授 FY2021 或 Paramount 完整指标接受，未重读完整文字。
+
+发现 B01+B03 同一请求在旧分派被 `LOCAL_HISTORY_MIXED_SAVED_FAMILY_NOT_RECEIVED` 拒绝，[失败日志](selected-income-cli.log)保持；将同族条件接到已有 income case factory，未改公共控制器/保存器。[同 CLI 混合请求](selected-income-cli-mixed.json)实际 Marriott FY2024 B01/B03 为 25100000000 USD 与 0.1653386454183266932270916335 ratio，首跑10.556s、禁止factory复跑0.904s、独立读0.209s，保存结果/pointer字节保持。已有两个年度 B01与酒店全帧未重跑。
+
+[36项受影响短例](selected-income-affected.log)0.154s、零skip，含公共来源绑定/单位/namespace及历史读者/工厂接缝；构造短期、缺源与字节变化标为控制。初始 macOS `/var` 夹具别名失败保持，夹具 resolve 后过，未放宽生产路径要求。处理配置登记所消费原件模块、namespace/helper、历史读者及真实解析依赖，未另建 runner。以上仍为 PR52 历史开发分支，尚未 main，不扩大 PR71/PR86 范围；后续收入 slice 接收及在线历史发现/补齐、修订/主体准入和完整业务仍待。新增 SEC/provider/paid=0/0/0。
+
+必要旧入口检查：`mint --check` 仍在既有父代 `normal_source_authority.py` 字节门禁退出（[日志](selected-income-mint.log)），不重新封存祖先或改旧 Run。提交前结构检查只报本主说明与 HEAD 不同（[日志](selected-income-alignment.log)），提交后再核结构。检查器两个副产物已按检查前字节还原。原双指标 CLI 日志在追加 deterministic_router 处理依赖前产生；该追加不改计算，最终短例核其登记，不假称原保存版本已经具有新处理配置。其他不含 B01 的公司事实批次不增这些收入依赖。

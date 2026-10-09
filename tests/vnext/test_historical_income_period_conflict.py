@@ -65,3 +65,74 @@ class HistoricalIncomePeriodConflictTest(TestCase):
             self.assertEqual(['B01'] if metric == 'B03' else [], [r['metric_id'] for r in dependencies])
             self.assertTrue(all(r['value'] is None and r['publication'] == 'WITHHELD' for r in dependencies))
             self.assertEqual({'provider': 0, 'paid': 0, 'sec': 0}, component['calls'])
+
+
+class SelectedHistoricalIncomeConsumerTest(TestCase):
+    def source(self, *, short=False):
+        from tests.vnext.test_selected_income_source_v1 import fixture
+        source, annual = fixture(short=short)
+        source = {**source, 'raw_blob': {'media_type': 'text/html'}}
+        xml = {**source, 'raw_blob': {'media_type': 'application/xml'}}
+        reader = SimpleNamespace(auditor_filing=lambda filing: [source, xml])
+        return reader, annual, source
+
+    def test_selected_reader_and_policy_do_not_prepare_the_current_company(self):
+        from vnext import selected_income_source_v1 as shared
+        from vnext.historical_dei import annual_period
+        from vnext.xbrl_namespace_policy import YEAR_OR_DATE_RELEASE
+        reader, annual, source = self.source()
+        with (patch.object(income, '_prepare_b06', side_effect=AssertionError('No latest preparation')),
+              patch.object(shared, 'native_income_reports', wraps=shared.native_income_reports) as reports,
+              patch.object(income, 'verify_income_observations', return_value=['verified']) as verify):
+            checks = history.verify_selected_historical_income(reader=reader,
+                prepared=annual, concepts=['us-gaap:Revenues'], observations=['observation'])
+        self.assertEqual(checks, ['verified'])
+        self.assertEqual(reports.call_count, 2)
+        for call in reports.call_args_list:
+            self.assertIs(call.kwargs['annual_period_reader'], annual_period)
+            self.assertEqual(call.kwargs['namespace_policy'], YEAR_OR_DATE_RELEASE)
+        self.assertEqual(verify.call_args.args[0]['statement_period'], annual['table_input']['target_period'])
+
+    def test_short_observation_does_not_replace_the_selected_annual_period(self):
+        reader, annual, source = self.source(short=True)
+        observation = {'source_binding': {'entity': annual['entity'],
+            'accession': annual['filing']['accessionNumber'], 'concept': 'us-gaap:Revenues'},
+            'unit': 'USD', 'period_start': '2025-08-08', 'period_end': '2025-12-31',
+            'value': '5000000', 'observation_id': 'constructed'}
+        # This construction is a period control, not a financial conclusion.
+        with self.assertRaisesRegex(income.IncomeInputError, 'SELECTED_OBSERVATION_SCOPE_CHANGED'):
+            history.verify_selected_historical_income(reader=reader, prepared=annual,
+                concepts=['us-gaap:Revenues'], observations=[observation])
+
+    def test_missing_original_and_changed_bytes_are_named_failures(self):
+        reader, annual, source = self.source()
+        with self.assertRaisesRegex(income.IncomeInputError, 'ORIGINAL_SOURCE_SET_AMBIGUOUS'):
+            history.verify_selected_historical_income(reader=SimpleNamespace(auditor_filing=lambda f: [source]),
+                prepared=annual, concepts=['us-gaap:Revenues'], observations=[])
+        source['raw_bytes'] += b'changed'
+        with self.assertRaisesRegex(income.IncomeInputError, 'ORIGINAL_BINDING_CHANGED'):
+            history.verify_selected_historical_income(reader=reader, prepared=annual,
+                concepts=['us-gaap:Revenues'], observations=[])
+
+
+class HistoricalIncomeDispatchTest(TestCase):
+    def test_revenue_and_margin_share_the_existing_income_case_factory(self):
+        import tempfile
+        from vnext import company_local, company_current_records
+        from vnext.historical_saved_case import prepare_historical_income_year_case
+        with tempfile.TemporaryDirectory() as directory:
+            parent = Path(directory).resolve()
+            source, state, outputs = [parent / name for name in ('source', 'state', 'outputs')]
+            source.mkdir()
+            with (patch.object(company_local, 'external', side_effect=lambda value: value),
+                  patch.object(company_current_records, 'run_saved_company', return_value={'ok': True}) as run):
+                result = company_local._run_history(company_id='marriott_international',
+                    work_dir=state, output_dir=outputs, metric_ids=['B01', 'B03'],
+                    fiscal_year_start=2024, fiscal_year_end=2024, source_root=source)
+            self.assertEqual(result, {'ok': True})
+            self.assertIs(run.call_args.kwargs['case_factory'], prepare_historical_income_year_case)
+            self.assertEqual(run.call_args.kwargs['metric_ids'], ['B01', 'B03'])
+            files = run.call_args.kwargs['processing_files']
+            self.assertIn('scripts/vnext/selected_income_source_v1.py', files)
+            self.assertIn('scripts/vnext/historical_dei.py', files)
+            self.assertIn('scripts/vnext/xbrl_namespace_policy.py', files)
