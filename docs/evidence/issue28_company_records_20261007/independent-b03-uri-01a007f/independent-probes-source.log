@@ -1,0 +1,142 @@
+"""Finite review of only the URI/local-name P2 repair; synthetic inputs only."""
+import ast
+from pathlib import Path
+import subprocess
+import sys
+import unittest
+
+ROOT = Path.cwd()
+sys.path.insert(0, str(ROOT / 'scripts'))
+from tests.vnext.test_b03_current_input_scope import original, PERIOD
+from vnext import b03_contract_amortization_scope as contract
+from vnext.ordinary_b03_input_scope import inspect_depreciation_input
+from vnext.deterministic_router import parse_accession_xbrl_source
+from vnext.text_results_v2 import _ReportedFactMetadata
+
+BASE = '44c8b22a6fd7a4ba309f1c0e458355ce274f5cbf'
+STANDARD = [('Depreciation', '7', 'INF'), ('AmortizationOfIntangibleAssets', '13', 'INF')]
+
+def components():
+    return [{'semantic_role': role, 'value': value,
+             'source_binding': {'concept': 'us-gaap:' + concept}}
+            for role, concept, value in [('depreciation', 'Depreciation', '7'),
+                                        ('amortization', 'AmortizationOfIntangibleAssets', '13')]]
+
+def parse(raw):
+    parsed = parse_accession_xbrl_source(raw_bytes=raw)
+    metadata = _ReportedFactMetadata()
+    metadata.feed(raw.decode('utf-8-sig')); metadata.close()
+    assert metadata.ordinal == len(parsed.facts)
+    return parsed, metadata
+
+def check(raw):
+    return inspect_depreciation_input(raw_bytes=raw, entity='195',
+                                     period=PERIOD, observations=components())
+
+def extension(raw, index, concept):
+    raw = raw.replace(b'<body>', b'<body xmlns:issuer="https://example.invalid/company">')
+    needle = ('name="gaap:' + concept + '" contextRef="c' + str(index) + '"').encode()
+    assert raw.count(needle) == 1
+    return raw.replace(needle, ('name="issuer:' + concept + '" contextRef="c' + str(index) + '"').encode())
+
+def assert_originals(test, answer, expected):
+    test.assertEqual(answer['status'], 'KEEP')
+    test.assertEqual(answer['chain_input']['value'], '20')
+    test.assertEqual(len(answer['source_facts']), 2)
+    test.assertEqual({r: v['primary_fact_ordinals'] for r, v in answer['composition_originals'].items()}, expected)
+
+class UriRepairProbes(unittest.TestCase):
+    def test_01_legal_prefix_aliases_and_standard_uri_schemes(self):
+        for prefix in ('gaap', 'us-gaap', 'accounting'):
+            for scheme in ('http', 'https'):
+                with self.subTest(prefix=prefix, scheme=scheme):
+                    raw = original(STANDARD)
+                    raw = raw.replace(b'xmlns:gaap=', ('xmlns:' + prefix + '=').encode())
+                    raw = raw.replace(b'name="gaap:', ('name="' + prefix + ':').encode())
+                    raw = raw.replace(b'http://fasb.org/us-gaap/2025', (scheme + '://fasb.org/us-gaap/2025').encode())
+                    assert_originals(self, check(raw), {'depreciation': [1], 'amortization': [2]})
+        print('PASS: 6 legal URI/prefix combinations keep standard 7+13 and ordinals 1,2')
+
+    def test_02_same_local_extension_equal_or_different_both_roles_and_positions(self):
+        for role_index in (0, 1):
+            concept, selected, precision = STANDARD[role_index]
+            for value in (selected, '999'):
+                for insert_index in (0, 1, 2):
+                    with self.subTest(concept=concept, value=value, insert_index=insert_index):
+                        rows = list(STANDARD)
+                        rows.insert(insert_index, (concept, value, precision))
+                        raw = extension(original(rows), insert_index, concept)
+                        standard_ordinals = [i + 1 for i in range(3) if i != insert_index]
+                        assert_originals(self, check(raw), {'depreciation': [standard_ordinals[0]],
+                                                           'amortization': [standard_ordinals[1]]})
+        print('PASS: 12 equal/different extension cases keep only the 2 legitimate facts')
+
+    def test_03_no_legal_standard_fact_extension_cannot_fill_selected_role(self):
+        for role_index in (0, 1):
+            concept = STANDARD[role_index][0]
+            with self.subTest(concept=concept):
+                raw = extension(original(STANDARD), role_index, concept)
+                with self.assertRaisesRegex(ValueError, 'SELECTED_COMPONENT_NOT_IN_ORIGINAL'):
+                    check(raw)
+        print('PASS: 2 missing-standard cases reject equal-valued extensions')
+
+    def test_04_wrong_standard_context_or_usd_still_rejects_with_valid_extension(self):
+        for role_index in (0, 1):
+            concept, value, precision = STANDARD[role_index]
+            for changes in ({'entity': '196'}, {'start': '2024-01-01'},
+                            {'end': '2024-12-31'}, {'unit': 'GBP'}):
+                with self.subTest(concept=concept, changes=changes):
+                    rows = list(STANDARD)
+                    rows[role_index] = (concept, value, precision, changes)
+                    rows.append((concept, value, precision))
+                    raw = extension(original(rows), 2, concept)
+                    with self.assertRaisesRegex(ValueError, 'SELECTED_COMPONENT_NOT_IN_ORIGINAL'):
+                        check(raw)
+        print('PASS: 8 wrong entity/period/USD cases cannot borrow a valid extension')
+
+    def test_05_conflicting_legitimate_standard_value_still_rejects(self):
+        for role_index in (0, 1):
+            concept, value, precision = STANDARD[role_index]
+            rows = [*STANDARD, (concept, '999', precision), (concept, value, precision)]
+            raw = extension(original(rows), 3, concept)
+            with self.subTest(concept=concept), self.assertRaisesRegex(ValueError, 'SELECTED_COMPONENT_NOT_IN_ORIGINAL'):
+                check(raw)
+        print('PASS: 2 conflicting standard-value cases remain rejected')
+
+    def test_06_nonstandard_uri_lookalikes_and_wrong_local_name_do_not_satisfy(self):
+        for uri in (b'https://example.invalid/us-gaap/2025', b'http://fasb.org/us-gaap/2025/custom',
+                    b'http://fasb.org/us-gaap/2025?company=195'):
+            with self.subTest(uri=uri):
+                raw = original(STANDARD).replace(b'http://fasb.org/us-gaap/2025', uri)
+                with self.assertRaisesRegex(ValueError, 'SELECTED_COMPONENT_NOT_IN_ORIGINAL'):
+                    check(raw)
+        for role_index in (0, 1):
+            concept = STANDARD[role_index][0]
+            raw = original(STANDARD).replace(('name="gaap:' + concept + '"').encode(),
+                                             ('name="gaap:Unselected' + concept + '"').encode())
+            with self.subTest(concept=concept), self.assertRaisesRegex(ValueError, 'SELECTED_COMPONENT_NOT_IN_ORIGINAL'):
+                check(raw)
+        print('PASS: 3 nonstandard URI cases and 2 wrong-local-name cases remain rejected')
+
+    def test_07_previous_p2_reproduces_on_base_and_passes_on_current_helper(self):
+        source = subprocess.run(['git', 'show', BASE + ':scripts/vnext/b03_contract_amortization_scope.py'],
+                                check=True, capture_output=True, text=True).stdout
+        fn = next(node for node in ast.parse(source).body if isinstance(node, ast.FunctionDef)
+                  and node.name == '_selected_original_facts')
+        env = dict(contract.__dict__)
+        exec(compile(ast.Module(body=[fn], type_ignores=[]), '<base-selected-original-facts>', 'exec'), env)
+        for value in ('7', '999'):
+            raw = extension(original([*STANDARD, ('Depreciation', value, 'INF')]), 2, 'Depreciation')
+            parsed, metadata = parse(raw)
+            args = dict(parsed=parsed, metadata=metadata,
+                        roles={o['semantic_role']: o for o in components()}, period=PERIOD, entity='195')
+            with self.subTest(value=value):
+                with self.assertRaisesRegex(ValueError, 'SELECTED_COMPONENT_NAMESPACE_MISMATCH:depreciation'):
+                    env['_selected_original_facts'](**args)
+                answer = contract._selected_original_facts(**args)
+                self.assertEqual(answer['depreciation']['primary_fact_ordinals'], [1])
+                self.assertEqual(answer['amortization']['primary_fact_ordinals'], [2])
+                assert_originals(self, check(raw), {'depreciation': [1], 'amortization': [2]})
+        print('PASS: inherited P2 actually fails on base and passes on head for equal/different values')
+
+unittest.main(verbosity=2)

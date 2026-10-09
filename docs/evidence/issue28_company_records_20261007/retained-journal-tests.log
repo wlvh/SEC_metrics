@@ -1,0 +1,25 @@
+test_archive_coordinate_and_wider_measurement_window_stay_distinct (tests.vnext.test_company_results.CompanyResultsTest.test_archive_coordinate_and_wider_measurement_window_stay_distinct) ... ok
+test_compute_partial_request_preserves_native_D01_and_exports_both (tests.vnext.test_company_results.CompanyResultsTest.test_compute_partial_request_preserves_native_D01_and_exports_both) ... ok
+test_confirmed_defect_keeps_native_but_withholds_company_value (tests.vnext.test_company_results.CompanyResultsTest.test_confirmed_defect_keeps_native_but_withholds_company_value) ... ok
+test_failed_metric_keeps_old_result_without_claiming_current_success (tests.vnext.test_company_results.CompanyResultsTest.test_failed_metric_keeps_old_result_without_claiming_current_success) ... ok
+test_failed_other_historical_period_remains_visible (tests.vnext.test_company_results.CompanyResultsTest.test_failed_other_historical_period_remains_visible) ... ok
+test_historical_two_periods_and_partial_third_request (tests.vnext.test_company_results.CompanyResultsTest.test_historical_two_periods_and_partial_third_request) ... ok
+test_legacy_report_subset_does_not_limit_journal_view (tests.vnext.test_company_results.CompanyResultsTest.test_legacy_report_subset_does_not_limit_journal_view) ... ok
+test_one_replay_failure_does_not_hide_other_metrics (tests.vnext.test_company_results.CompanyResultsTest.test_one_replay_failure_does_not_hide_other_metrics) ... ok
+test_ordinary_prior_year_remains_in_view (tests.vnext.test_company_results.CompanyResultsTest.test_ordinary_prior_year_remains_in_view) ... ok
+test_other_runtime_release_explains_hold_without_releasing_current_result (tests.vnext.test_company_results.CompanyResultsTest.test_other_runtime_release_explains_hold_without_releasing_current_result) ... ok
+test_processing_arguments_cannot_be_silently_ignored (tests.vnext.test_company_results.CompanyResultsTest.test_processing_arguments_cannot_be_silently_ignored) ... ok
+test_processing_result_exposes_original_mode_and_runtime (tests.vnext.test_company_results.CompanyResultsTest.test_processing_result_exposes_original_mode_and_runtime) ... ok
+test_retained_standalone_disconnected_success_pointer_is_rejected (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_disconnected_success_pointer_is_rejected) ... ok
+test_retained_standalone_failed_input_keeps_old_result_as_history (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_failed_input_keeps_old_result_as_history) ... ok
+test_retained_standalone_first_failure_does_not_invent_result (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_first_failure_does_not_invent_result) ... ok
+test_retained_standalone_journal_reads_without_checkpoint_or_replay (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_journal_reads_without_checkpoint_or_replay) ... ok
+test_retained_standalone_wrong_company_still_rejected (tests.vnext.test_company_results.CompanyResultsTest.test_retained_standalone_wrong_company_still_rejected) ... ok
+test_source_switch_does_not_claim_untouched_results_match (tests.vnext.test_company_results.CompanyResultsTest.test_source_switch_does_not_claim_untouched_results_match) ... ok
+test_successful_pointer_cannot_be_changed_to_an_earlier_candidate (tests.vnext.test_company_results.CompanyResultsTest.test_successful_pointer_cannot_be_changed_to_an_earlier_candidate) ... ok
+test_wrong_company_run_rejected (tests.vnext.test_company_results.CompanyResultsTest.test_wrong_company_run_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.177s
+
+OK

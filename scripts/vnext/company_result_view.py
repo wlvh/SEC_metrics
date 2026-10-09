@@ -298,7 +298,55 @@ def build_company_view(*, root, company_id, current, defect_registry=None):
             'production_authorized': False, 'new_business_calls': {'provider': 0, 'paid': 0, 'sec': 0}}
 
 
-def read_company_results(*, state_root, company_id, defects_file=None, runtime_roots=()):
+def is_retained_ordinary_journal(root):
+    root = Path(root)
+    return (root/'configuration.json').is_file() and (root/'current.json').is_file()
+
+
+def _read_retained_ordinary_journal(root, company, registry):
+    """Read old controller references without inventing a source checkpoint."""
+    from .ordinary_update_cycle import _locked, _read
+    with _locked(root):
+        entries = []
+        for candidate in _ordinary_candidates(root, root/'current.json', company):
+            manifest = candidate.pop('manifest')
+            entry = {**candidate, 'company_id': company, 'period': manifest['target_period'],
+                'run_id': manifest['run_id'], 'run_status': manifest['status'],
+                'requirement_id': manifest['requirement_id'],
+                'requirement_closure_hash': manifest['requirement_closure_hash'],
+                'current_input_matches': None, 'current_input_status': 'NOT_RECHECKED',
+                'result_validity': 'NOT_ASSESSED', 'replay_status': 'NOT_REPLAYED',
+                'period_role': 'RUN_ARCHIVE_COORDINATE', 'requested_in_latest_execution': False}
+            if candidate['journal_latest_status'] not in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}:
+                entry['current_input_matches'] = False
+                entry['current_input_status'] = 'MISMATCH_OR_FAILED'
+            entry.update(_measurement_period(entry, manifest))
+            entry['defect_holds'] = _defects(entry, registry or {})
+            entry['confirmed_defects'] = [d['defect_id'] for d in entry['defect_holds']]
+            if entry['defect_holds']:
+                entry['result_validity'] = ('CURRENT_RUNTIME_RELEASE_REQUIRED'
+                    if all(d['reason'] == 'CURRENT_RUNTIME_RELEASE_REQUIRED' for d in entry['defect_holds'])
+                    else 'CONFIRMED_INVALID')
+            entries.append(entry)
+        state = strict_json_file(path=root/'current.json')
+        latest = (_read(root/'attempts'/state['latest_attempt']/'terminal.json')
+                  if state['latest_attempt'] else None)
+        return {'record_type': 'COMPANY_RESULT_VIEW_V2', 'company_id': company,
+            'state_kind': 'RETAINED_ORDINARY_JOURNAL', 'source_checkpoint_id': None,
+            'metrics': entries, 'latest_execution': None, 'latest_journal_terminal': latest,
+            'defect_registry_supplied': registry is not None, 'production_authorized': False,
+            'new_business_calls': {'provider': 0, 'paid': 0, 'sec': 0}}
+
+
+def read_company_results(*, state_root, company_id, defects_file=None, runtime_roots=(), output_root=None):
+    if (Path(state_root)/'company-task.json').is_file():
+        from .company_current_records import read_current_company
+        return read_current_company(state_root=state_root, company_id=company_id,
+                                    defects_file=defects_file, output_root=output_root)
+    need(output_root is None, 'NATIVE_DAILY_OUTPUT_REQUIRES_SAVED_READER_OR_EXPLICIT_EXPORT_ENTRY')
+    if is_retained_ordinary_journal(state_root):
+        registry = strict_json_file(path=Path(defects_file)) if defects_file else None
+        return _read_retained_ordinary_journal(Path(state_root), company_id, registry)
     from .company_handoff import locked_company, recover_import
     with locked_company(state_root) as root:
         current = recover_for_read(root, runtime_roots)

@@ -1290,3 +1290,80 @@ def calculate_text_metric(*, compiled_spec, target, company_traits, observations
             reason_code="TRAIT_NOT_APPLICABLE", structural=True)
     payload = payload_from_observations(compiled_spec=compiled_spec, target=target, observations=observations)
     return build_text_result_and_trace(compiled_spec=compiled_spec, target=target, payload=payload)
+
+
+def _manual_result_trace(
+    *, metric_id: str, company_id: str, period_start: str,
+    period_end: str, scope: Mapping[str, object], spec_closure_hash: str,
+    applicability: str, quality: str, reason_code: str,
+    input_observation_ids: Sequence[str], steps: Sequence[Mapping[str, object]],
+    accession: object, entity: object, unit: object,
+) -> Tuple[Dict[str, object], Dict[str, object]]:
+    """Build a validated null Result and its exact ExecutionTrace.
+
+    Args:
+        metric_id: Result metric identity.
+        company_id: Logical company identity.
+        period_start: Inclusive target start.
+        period_end: Inclusive target end.
+        scope: Canonical result scope.
+        spec_closure_hash: Catalog-bound semantic identity.
+        applicability: APPLICABLE or N_A_STRUCTURAL.
+        quality: NOT_MEANINGFUL or NONE.
+        reason_code: Stable non-PASS reason.
+        input_observation_ids: Exact deterministic observations used.
+        steps: Ordered trace events explaining the null result.
+        accession: Optional source accession paired with entity.
+        entity: Optional source entity paired with accession.
+        unit: Optional canonical unit retained for a null value.
+
+    Returns:
+        Strict MetricResult and ExecutionTrace.
+    """
+    scoped_key = scope_key(scope=scope)
+    contract = {
+        "company_id": company_id,
+        "metric_id": metric_id,
+        "period_start": period_start,
+        "period_end": period_end,
+        "scope_key": scoped_key,
+        "spec_closure_hash": spec_closure_hash,
+        "applicability": applicability,
+        "quality": quality,
+        "publication": "PUBLISHED",
+        "reason_code": reason_code,
+        "value": None,
+        "unit": unit,
+    }
+    trace_body = {
+        "metric_id": metric_id,
+        "calculation_target": {
+            "accession": accession,
+            "company_id": company_id,
+            "entity": entity,
+            "period_end": period_end,
+            "period_start": period_start,
+            "scope": dict(scope),
+            "scope_key": scoped_key,
+        },
+        "input_observation_ids": list(input_observation_ids),
+        "steps": [dict(step) for step in steps],
+        "quality": quality,
+        "result": None,
+        "spec_closure_hash": spec_closure_hash,
+        "execution_semantics_hash": execution_semantics_hash(),
+        "result_contract_hash": metric_result_contract_hash(result=contract),
+    }
+    trace_id = content_hash(value=trace_body)
+    trace = validate_record(
+        record={"record_type": "EXECUTION_TRACE", "trace_id": trace_id, **trace_body}
+    )
+    result_body = {**contract, "trace_id": trace_id}
+    result = validate_record(
+        record={
+            "record_type": "METRIC_RESULT",
+            "result_id": content_hash(value=result_body),
+            **result_body,
+        }
+    )
+    return result, trace

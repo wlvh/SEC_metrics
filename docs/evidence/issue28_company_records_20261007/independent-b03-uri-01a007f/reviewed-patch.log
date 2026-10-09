@@ -1,0 +1,77 @@
+diff --git a/scripts/vnext/b03_contract_amortization_scope.py b/scripts/vnext/b03_contract_amortization_scope.py
+index b091736a..e1b055a1 100644
+--- a/scripts/vnext/b03_contract_amortization_scope.py
++++ b/scripts/vnext/b03_contract_amortization_scope.py
+@@ -23,25 +23,27 @@ def _need(condition, reason):
+     if not condition:
+         raise ValueError(reason)
+ 
+ 
+ def _selected_original_facts(*, parsed, metadata, roles, period, entity):
+     """Recheck the chosen Company Facts components against the annual primary."""
+     checked = {}
+     for role in ('depreciation', 'amortization'):
+         selected = roles[role]
+         values = []
+         for fact in parsed.facts:
+             uri, local_name = metadata.facts[fact['ordinal']]['concept']
+-            if local_name != selected['source_binding']['concept'].split(':', 1)[1]:
++            if (local_name != selected['source_binding']['concept'].split(':', 1)[1]
++                    or not isinstance(uri, str)
++                    or not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri)):
+                 continue
+             context = parsed.contexts[fact['context_ref']]
+             if (context['period_start'] != period['period_start']
+                     or context['period_end'] != period['period_end']
+                     or context['dimensions'] or context['typed_dimension_count']
+                     or str(int(context['entity_identifier'])) != str(int(entity))):
+                 continue
+             _need(local_name == selected['source_binding']['concept'].split(':', 1)[1]
+                   and re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri),
+                   'B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NAMESPACE_MISMATCH:' + role)
+             if metadata.units.get(fact['unit_ref']) != {
+                     'measures': [('http://www.xbrl.org/2003/iso4217', 'USD')],
+diff --git a/tests/vnext/test_b03_current_input_scope.py b/tests/vnext/test_b03_current_input_scope.py
+index 7573d651..0a795f6d 100644
+--- a/tests/vnext/test_b03_current_input_scope.py
++++ b/tests/vnext/test_b03_current_input_scope.py
+@@ -126,24 +126,39 @@ class CurrentDaScopeTest(unittest.TestCase):
+             root=Path(temporary);path=root/'primary.htm'
+             raw=original([('DepreciationDepletionAndAmortization','20','INF')]);path.write_bytes(raw)
+             selected={'semantic_role':'depreciation_and_amortization','value':'20',
+                 'source_binding':{'concept':'us-gaap:DepreciationDepletionAndAmortization','entity':'195','accession':'fixture'}}
+             case={'primary_metric_id':'B03','results':{'B03':{'publication':'PUBLISHED','reason_code':'PASS'}},
+                 'observations':[selected],'target_period':PERIOD,'source_proofs':[{'accession':'fixture','document_name':'primary.htm','request_repo_relative_path':'primary.htm','content_sha256':sha256_bytes(content=raw)}]}
+             self.assertFalse(assess_direct_depreciation_scope(case=case,data_root=root)['blocked'])
+             foreign=original([('DepreciationDepletionAndAmortization','20','INF',{'unit':'GBP'})]);path.write_bytes(foreign)
+             case['source_proofs'][0]['content_sha256']=sha256_bytes(content=foreign)
+             with self.assertRaisesRegex(ValueError,'SELECTED_INLINE_FACT_NOT_FOUND'):
+                 assess_direct_depreciation_scope(case=case,data_root=root)
+ 
++    def test_company_custom_same_local_name_cannot_displace_legitimate_gaap_composition(self):
++        rows=[('Depreciation','7','INF'),('AmortizationOfIntangibleAssets','13','INF')]
++        observations=[{'semantic_role':role,'value':value,'source_binding':{'concept':'us-gaap:'+concept}}
++            for role,concept,value in [('depreciation','Depreciation','7'),('amortization','AmortizationOfIntangibleAssets','13')]]
++        for value in ('7','999'):
++            raw=original([*rows,('Depreciation',value,'INF')])
++            raw=raw.replace(b'<body>',b'<body xmlns:company="https://example.invalid/company">')
++            needle=b'name="gaap:Depreciation" contextRef="c2"'
++            raw=raw.replace(needle,b'name="company:Depreciation" contextRef="c2"')
++            self.assertNotIn(needle,raw)
++            answer=inspect_depreciation_input(raw_bytes=raw,entity='195',period=PERIOD,observations=observations)
++            self.assertEqual(answer['status'],'KEEP')
++            self.assertEqual(answer['chain_input']['value'],'20')
++            self.assertEqual(len(answer['source_facts']),2)
++
+ 
+ class CurrentB03SourceOnlyTest(unittest.TestCase):
+     @classmethod
+     def setUpClass(cls):
+         cls.temp=tempfile.TemporaryDirectory();cls.root=Path(cls.temp.name);cls.sources={};cls.saved={}
+         with shared_xbrl_parses():
+             for company in ('marriott_international','salesforce'):
+                 source=cls.root/company;source.mkdir();cls.sources[company]=source
+                 prepared=prepare_saved_annual_input(repo_root=REPO_ROOT,company_id=company)
+                 paths={'config/company_registry.csv','evidence/requests_log.csv','evidence/requests_log_manifest.json'}
+                 for proof in prepared['source_proofs']:
+                     paths.update((proof['request_repo_relative_path'],proof['request_headers_repo_relative_path']))

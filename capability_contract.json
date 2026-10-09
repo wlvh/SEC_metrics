@@ -14,6 +14,36 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.current_saved_company_run",
+        "type": "capability",
+        "status": "active",
+        "statement": "公司run可显式指定保存来源，以共享程序/来源和独立状态根运行普通结果记录；原始输入与配置未变先比较后复用，日常CSV/results不重放计算或复制整棵来源/程序。局部失败保留旧结果的原期间，精确已知错误清空当前数值，旧native任务不原地迁移；仅保存来源，未完成在线发现/AI输入/39项业务接受。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_company_current_records.py::CurrentCompanyTest",
+        "test_status": "automated_partial",
+        "untested_reason": null,
+        "pending_since": null
+      },
+      {
+        "anchor_id": "CAPABILITY.retained_ordinary_journal_read",
+        "type": "capability",
+        "status": "active",
+        "statement": "\u516c\u53f8results\u53ef\u53ea\u8bfb\u65e7\u72ec\u7acb\u666e\u901a\u66f4\u65b0journal\u4e2d\u7684\u5f52\u6863Run\u5f15\u7528\uff0c\u4e0d\u521b\u5efa\u516c\u53f8checkpoint/trust\u3001\u4e0d\u91cd\u653e\u8ba1\u7b97\u6216\u5199\u56de\u89c6\u56fe\uff1b\u5f53\u524d\u8f93\u5165\u672a\u91cd\u9a8c\u3001\u5931\u8d25\u53ca\u7cbe\u786e\u7f3a\u9677\u4fdd\u7559\uff0c\u4e0d\u8f93\u51fa\u65b0\u666e\u901aCSV\u6216\u6388\u4e88\u5f53\u524d\u4e1a\u52a1\u63a5\u53d7\u3002",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_company_results.py::CompanyResultsTest",
+        "test_status": "automated_partial",
+        "untested_reason": null,
+        "pending_since": null
+      },
+      {
         "anchor_id": "CAPABILITY.company_import_transaction",
         "type": "capability",
         "status": "active",

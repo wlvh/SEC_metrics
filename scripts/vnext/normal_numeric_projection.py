@@ -11,7 +11,7 @@ from datetime import date
 import json
 from pathlib import Path
 
-from . import projector, publication
+from . import projector, csv_output
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
 from .records import validate_record
@@ -208,7 +208,7 @@ def project_normal_numeric_records(*, repo_root: Path, manifest: dict, records: 
     filing_map = _filings(input_binding)
     source_filings = [filing_map.get(o["source_binding"]["accession"]) for o in ordered]
     known = [f for f in source_filings if f]
-    baseline = {field: "" for field in publication.METRIC_FIELDS}
+    baseline = {field: "" for field in csv_output.METRIC_FIELDS}
     baseline.update(company=company["display_name"], cik=company["primary_cik"], metric_id=metric,
         metric_name=spec["name"], unit=projection["unit"], status=result["quality"],
         source_class=projection["source_class"], formula=projection["formula"],
@@ -223,7 +223,7 @@ def project_normal_numeric_records(*, repo_root: Path, manifest: dict, records: 
     else:
         row, evidence, contributors = projector._project_result(result=result, trace=trace, company=company,
             spec=view, baseline_row=baseline, indexes=indexes, fiscal_year=str(annual["fiscal_year"]),
-            metric_fields=publication.METRIC_FIELDS)
+            metric_fields=csv_output.METRIC_FIELDS)
     if result["quality"] == "NOT_MEANINGFUL":
         _nonmeaningful_guard(result, trace, spec, paths[0], policy)
         # The core preserves the null ratio; evidence still shows only the
@@ -251,7 +251,7 @@ def project_normal_numeric_records(*, repo_root: Path, manifest: dict, records: 
                                 "; reason: " + result["reason_code"] + "."])
     if result["quality"] == "NOT_MEANINGFUL":
         row["notes"] += " Debt completeness: NOT_EVALUATED; no debt-to-equity value is asserted."
-    _need(set(row) == set(publication.METRIC_FIELDS) and all(set(e) == set(publication.EVIDENCE_FIELDS) for e in evidence),
+    _need(set(row) == set(csv_output.METRIC_FIELDS) and all(set(e) == set(csv_output.EVIDENCE_FIELDS) for e in evidence),
           "NUMERIC_PUBLIC_ROW_SCHEMA_CHANGED")
     receipt = {"record_type": "NORMAL_NUMERIC_PUBLIC_ROW_RECEIPT", "status": "RECORDS_ONLY_RENDERING",
         "source_validation": "NOT_ASSERTED_BY_PURE_RENDERER", "run_id": manifest["run_id"],
@@ -268,8 +268,8 @@ def project_normal_numeric_records(*, repo_root: Path, manifest: dict, records: 
         "contributing_evidence_count": contributors, "production_authorized": False}
     return {"row": row, "evidence": evidence,
         "receipt": {**receipt, "receipt_id": content_hash(value=receipt)},
-        "files": {"metrics_matrix.csv": publication._csv_bytes(rows=[row], fieldnames=publication.METRIC_FIELDS),
-                  "metric_evidence.csv": publication._csv_bytes(rows=evidence, fieldnames=publication.EVIDENCE_FIELDS)}}
+        "files": {"metrics_matrix.csv": csv_output._csv_bytes(rows=[row], fieldnames=csv_output.METRIC_FIELDS),
+                  "metric_evidence.csv": csv_output._csv_bytes(rows=evidence, fieldnames=csv_output.EVIDENCE_FIELDS)}}
 
 
 def render_normal_numeric_run(*, data_root: Path, run_dir: Path) -> dict:

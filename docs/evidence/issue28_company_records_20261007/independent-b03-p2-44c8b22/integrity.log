@@ -1,0 +1,22 @@
+UTC_START=2026-10-07T00:13:50Z
+RECORD_UTC=2026-10-07T00:18:04.520168+00:00
+HEAD=44c8b22a6fd7a4ba309f1c0e458355ce274f5cbf
+BASE=b9228566e24ec8bd175c3f47a4bfc3a6f044bb51
+ISSUE28_BODY_SHA256=f201b6e461dae58bbb0be655c10b21deb255bbcc1539d9282c10b60b3a1a81fb
+DIFF_SHA256=17dddfa884a7b0bd17c5ee10fd6a5931c1d3bbb0d63fa5f2181d2c7f985bef9f
+HEAD_BYTES_MATCH scripts/vnext/ordinary_current_update.py SHA256=446389705031b3f77454e9e3994c786310535572ac2af97b5c3a36e9d3b6b0d2
+HEAD_BYTES_MATCH scripts/vnext/b03_contract_amortization_scope.py SHA256=5c36f1f02fc2921c3af831b6438ddc0dc06012340358954b1317401876ef7bb7
+HEAD_BYTES_MATCH scripts/vnext/b03_depreciation_scope.py SHA256=573c645a911dd7efe18f42b4b7bf7e82ce4de03ae4e4962b966015576d9b53f4
+HEAD_BYTES_MATCH tests/vnext/test_b03_current_input_scope.py SHA256=1f6c9c2fba7f71f117dfe6f5f6e0d0660765b5382a269c0264304174dadd3e94
+HEAD_BYTES_MATCH docs/evidence/issue28_company_records_20261007/independent-b03-b922856/conclusion.md SHA256=7449536d3f546e418e2f84d19e4b7e3f494b772881034ab1afa71c919eddc542
+HEAD_BYTES_MATCH docs/evidence/issue28_company_records_20261007/independent-b03-b922856/probes.py SHA256=d4e5df7a6f49eb131e0dcaff0e3fa5b3d706fba6b6ea0ea6a816dcd577931980
+TRACKED_DIFF=
+STATUS=?? docs/evidence/issue28_company_records_20261007/independent-b03-p2-44c8b22/
+TEST_SHELL_COLLECTION_NOTE=First poll returned zsh read-only variable status after unittest finished; required-tests.log independently confirms 42 tests OK. No test rerun attributed to that shell collection error.
+UTC_END=2026-10-07T00:19:32Z
+ACTUAL_TOOL_CALLS=40 (15 functions.exec + 21 exec_command + 2 write_stdin + 2 apply_patch)
+ORDINARY_MESSAGES=3 (2 progress + 1 final); QUESTIONS=0
+FINAL_HEAD=44c8b22a6fd7a4ba309f1c0e458355ce274f5cbf
+FINAL_TRACKED_DIFF=empty
+FINAL_PROTECTED_BYTES=all six match HEAD
+CONCLUSION_SHA256=18a2ce4881cdb37a2f09ef9410650828407ff683dcc36e6e0bd541a366585463

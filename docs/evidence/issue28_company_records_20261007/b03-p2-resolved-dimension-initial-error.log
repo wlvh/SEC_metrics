@@ -1,0 +1,37 @@
+======================================================================
+ERROR: setUpClass (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 153, in setUpClass
+    cls.saved[company]=create_saved_result(source_root=source,output_root=cls.root/(company+'-result'),
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 86, in create_saved_result
+    return _save_case(source_root=source_root, output_root=output_root, company_id=company_id,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 115, in _save_case
+    case = factory(source_root)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 85, in prepare
+    return _ordinary_case(source,company_id,metric_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 59, in _ordinary_case
+    original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/normal_run_inputs.py", line 28, in prepare_ordinary_zero_ai_run_input
+    component = resolve_ordinary_zero_ai_metric(repo_root=repo_root,company_id=company_id,metric_id=metric_id,
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/normal_zero_ai_results.py", line 284, in resolve_ordinary_zero_ai_metric
+    existing = assess_current_b03_scope(case={'primary_metric_id':'B03',
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/b03_contract_amortization_scope.py", line 252, in assess_current_b03_scope
+    return _unreconciled_contract_amortization(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/b03_contract_amortization_scope.py", line 229, in _unreconciled_contract_amortization
+    'blocked': False, 'primary_source_sha256': proof['content_sha256'],
+                                               ~~~~~^^^^^^^^^^^^^^^^^^
+KeyError: 'content_sha256'
+
+----------------------------------------------------------------------
+Ran 37 tests in 1.795s
+
+FAILED (errors=1)

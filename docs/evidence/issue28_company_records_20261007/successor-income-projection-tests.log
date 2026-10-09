@@ -1,0 +1,22 @@
+======================================================================
+ERROR: test_short_period_state_has_actual_dates_and_preserves_annual_guard (tests.vnext.test_successor_income_projection.SuccessorIncomeProjectionTest.test_short_period_state_has_actual_dates_and_preserves_annual_guard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_successor_income_projection.py", line 27, in test_short_period_state_has_actual_dates_and_preserves_annual_guard
+    output=self.render();result=self.case['results']['B01']
+           ^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_successor_income_projection.py", line 22, in render
+    return render_ordinary_records(data_root=REPO_ROOT,manifest=self.manifest,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_projection.py", line 125, in render_ordinary_records
+    indexes = projector._record_indexes(runs=[(manifest,records)])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/projector.py", line 1736, in _record_indexes
+    for reference in manifest["source_references"]
+                     ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'source_references'
+
+----------------------------------------------------------------------
+Ran 3 tests in 20.726s
+
+FAILED (errors=1)

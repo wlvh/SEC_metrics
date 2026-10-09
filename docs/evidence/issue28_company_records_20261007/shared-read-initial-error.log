@@ -1,0 +1,18 @@
+======================================================================
+ERROR: test_independent_read_checks_changed_or_missing_shared_material (tests.vnext.test_precalculated_case.PrecalculatedCaseTest.test_independent_read_checks_changed_or_missing_shared_material)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_precalculated_case.py", line 90, in test_independent_read_checks_changed_or_missing_shared_material
+    with self.assertRaises(FileNotFoundError):saved.read_saved_result(output_root=self.root/'one')
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 199, in read_saved_result
+    _need(sha256_file(path=path) == digest, 'SAVED_SHARED_RECORD_CHANGED')
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/canonical.py", line 447, in sha256_file
+    raise CanonicalError(
+vnext.canonical.CanonicalError: Hash input must be a regular file: /private/tmp/tmps3t5zuik/shared/84d7babd0ec557ff95cd9905acbcc5f79096e440080e1a4602e3dbee417675c1.json
+
+----------------------------------------------------------------------
+Ran 64 tests in 10.932s
+
+FAILED (errors=1)
