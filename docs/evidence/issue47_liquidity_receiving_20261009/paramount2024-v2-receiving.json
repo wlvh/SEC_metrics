@@ -1,0 +1,330 @@
+{
+  "status": "VERSIONED_SOURCE_CONSUMER_VALIDATED_NOT_MAIN",
+  "public_commit": "6691ab8fa4fff8043f4cce4079d88aa2ada4aebd",
+  "previous_consumer": "3eb0c244",
+  "scope_preservation": {
+    "source_checks": {
+      "annual_amendment_scope.py": {
+        "matches_pre_receiving": true,
+        "sha256": "bd70d270d9747ac2d8ba72987b77c54c752c450847280174e8e56d2bd2560323"
+      },
+      "instant_balance_amendment.py": {
+        "matches_pre_receiving": true,
+        "sha256": "e0b84318ba14393301caa623c9caa31ea3f301c48ddcf500e06368ec71eb180a"
+      },
+      "annual_amendment_scope_v2.py": {
+        "matches_public_fixed_version": true,
+        "sha256": "0ff94fa705572a832f7aadd979bcc3cda0cc1f2304a11b8bd896da804a1fc72f"
+      },
+      "instant_balance_amendment_v2.py": {
+        "matches_public_fixed_version": true,
+        "sha256": "e7632ddaf623f95f52c4addd61e24e57a1a25837a60591a86e843c3001bf2e9c"
+      },
+      "amendment_note_layout.py": {
+        "matches_public_fixed_version": true,
+        "sha256": "cd5d92770dc865aa39b069be48fa8814fe362557eb0315025438d1f93a93d66f"
+      }
+    },
+    "explicit_scope_exactly_equal_to_3eb": true,
+    "previous_instant_scope_id": "sha256:e75d765f6119199acdc65dcddd9e4c43c294b2a13d33a0eab3cecefdf2077308",
+    "current_instant_scope_id": "sha256:e75d765f6119199acdc65dcddd9e4c43c294b2a13d33a0eab3cecefdf2077308",
+    "current_original_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+    "old_default": {
+      "error_type": "AmendmentScopeError",
+      "reason": "AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED"
+    },
+    "note_blocks": 13,
+    "paragraphs": 3,
+    "block_ranges_preserved": true,
+    "seconds": 4.575821874896064,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "legacy_files_restored_to": "1e538643 pre-receiving bytes, including existing rules_root adapters",
+  "new_import": "instant_balance_amendment_v2.inspect_instant_balance_amendment",
+  "note_layout": "inline-paragraphs-v2",
+  "processing_dependencies": [
+    "instant_balance_amendment_v2.py",
+    "annual_amendment_scope_v2.py",
+    "amendment_note_layout.py",
+    "instant_balance_amendment.py",
+    "annual_amendment_scope.py"
+  ],
+  "company": "paramount_skydance_paramount_global",
+  "year": 2024,
+  "first_new_configuration_seconds": 16.751313583925366,
+  "first_reprocessing_reason": "Actual processing dependency/module path changed; only two FY2024 balances processed",
+  "repeat": {
+    "exit_code": 0,
+    "elapsed_seconds": 0.5822178751695901,
+    "selection_calls": 0,
+    "calculation_calls": 0,
+    "saved_file_count": 100,
+    "saved_files_unchanged": true
+  },
+  "company_preservation": {
+    "rows": [
+      {
+        "year": 2024,
+        "metric": "B08",
+        "same": {
+          "result_id": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true
+        }
+      },
+      {
+        "year": 2024,
+        "metric": "B09",
+        "same": {
+          "result_id": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true
+        }
+      },
+      {
+        "year": 2021,
+        "metric": "B08",
+        "same": {
+          "result_id": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true,
+          "record_root": true
+        }
+      },
+      {
+        "year": 2022,
+        "metric": "B08",
+        "same": {
+          "result_id": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true,
+          "record_root": true
+        }
+      },
+      {
+        "year": 2023,
+        "metric": "B08",
+        "same": {
+          "result_id": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true,
+          "record_root": true
+        }
+      },
+      {
+        "year": 2025,
+        "metric": "B08",
+        "same": {
+          "result_id": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true,
+          "record_root": true
+        }
+      },
+      {
+        "year": 2021,
+        "metric": "B09",
+        "same": {
+          "result_id": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true,
+          "record_root": true
+        }
+      },
+      {
+        "year": 2022,
+        "metric": "B09",
+        "same": {
+          "result_id": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true,
+          "record_root": true
+        }
+      },
+      {
+        "year": 2023,
+        "metric": "B09",
+        "same": {
+          "result_id": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true,
+          "record_root": true
+        }
+      },
+      {
+        "year": 2025,
+        "metric": "B09",
+        "same": {
+          "result_id": true,
+          "value": true,
+          "unit": true,
+          "publication": true,
+          "period_start": true,
+          "period_end": true,
+          "record_root": true
+        }
+      }
+    ],
+    "previous_result_file_count": 76,
+    "previous_result_files_retained_exactly": true,
+    "new_read_seconds": 0.07378912507556379,
+    "scope_equal_to_3eb": true,
+    "current_FY2024": [
+      {
+        "metric_id": "B08",
+        "result_id": "sha256:bfb0504eccf717815f66972f612d80539b38dbee7c65a80b0ef1e7f55c4256f8",
+        "period_start": "2024-12-31",
+        "period_end": "2024-12-31",
+        "fiscal_year": 2024,
+        "value": "1.302253140899179732115045167",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/liquidity-paramount-20261009/state/updates/B08/periods/FY2024/results/a4566de01d7d46108870cc15a3c3871c"
+      },
+      {
+        "metric_id": "B09",
+        "result_id": "sha256:e55a21d6d627caf9b28b9a9e83ba0393591ba9e7f5965d81d17dadc36f456333",
+        "period_start": "2024-12-31",
+        "period_end": "2024-12-31",
+        "fiscal_year": 2024,
+        "value": "2661000000",
+        "unit": "USD",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/liquidity-paramount-20261009/state/updates/B09/periods/FY2024/results/142f7902691041ea9a3188ebb98a7456"
+      }
+    ]
+  },
+  "operands": [
+    {
+      "metric": "B08",
+      "type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "value": "12542000000",
+      "unit": "USD",
+      "locator": {
+        "concept": "AssetsCurrent",
+        "fact_id": "fact:sha256:aadf5f4d248e9b8d30f7548990734293db4044e35e014d36738829aff750ccc8",
+        "period_end": "2024-12-31",
+        "period_start": "2024-12-31"
+      },
+      "attributes": {
+        "accession": "0000813828-25-000005",
+        "deterministic_router_semantic_version": "2",
+        "entity": "813828",
+        "filed": "2025-02-26",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "frame": ""
+      }
+    },
+    {
+      "metric": "B08",
+      "type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "value": "9631000000",
+      "unit": "USD",
+      "locator": {
+        "concept": "LiabilitiesCurrent",
+        "fact_id": "fact:sha256:67a790f1f862cd118107e3bb5f146921dc86b6f464659d090d530ff56f3c81ac",
+        "period_end": "2024-12-31",
+        "period_start": "2024-12-31"
+      },
+      "attributes": {
+        "accession": "0000813828-25-000005",
+        "deterministic_router_semantic_version": "2",
+        "entity": "813828",
+        "filed": "2025-02-26",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "frame": ""
+      }
+    },
+    {
+      "metric": "B09",
+      "type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "value": "2661000000",
+      "unit": "USD",
+      "locator": {
+        "concept": "CashAndCashEquivalentsAtCarryingValue",
+        "fact_id": "fact:sha256:19901189152a82108f3a2d656235b88a5deee0d3510abddbb555cb57218fbb9b",
+        "period_end": "2024-12-31",
+        "period_start": "2024-12-31"
+      },
+      "attributes": {
+        "accession": "0000813828-25-000005",
+        "deterministic_router_semantic_version": "2",
+        "entity": "813828",
+        "filed": "2025-02-26",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "frame": ""
+      }
+    }
+  ],
+  "public_tests": {
+    "count": 17,
+    "seconds": 0.115,
+    "skip": 0
+  },
+  "consumer_tests": {
+    "count": 36,
+    "seconds": 0.107,
+    "skip": 0
+  },
+  "capability_alignment": "PASS against actual PR75 parent",
+  "annual_Aug7_Aug8_conflict": "Preserved; only selected CIK current instantaneous inputs proven",
+  "other_98_coordinates_reprocessed": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_run": false,
+  "new_acceptance": false,
+  "archive": {
+    "members": 31,
+    "bytes": 32418,
+    "sha256": "008648ac22e7194b571e6c232fbbd70d66abb254886d5ba76c6b860833467de3"
+  }
+}
