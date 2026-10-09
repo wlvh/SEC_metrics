@@ -96,7 +96,11 @@ class Capture:
         self.attempted.add(url)
         request={'method':'GET','url':url,'company_id':self.context['company_id'],
                  'refresh_metadata':refresh,'source_log_before_sha256':sha256_file(path=log)}
-        requirement={k:self.context[k] for k in ('requirement_id','requirement_closure_hash')}
+        # The original historical allowance stores requirement_id only. Keep
+        # the continuous ledger's two-field contract on its own path.
+        requirement_fields = (('requirement_id',) if hasattr(self.ledger, 'check_request')
+                              else ('requirement_id', 'requirement_closure_hash'))
+        requirement={k:self.context[k] for k in requirement_fields}
         with self.ledger.locked():
             # A new task directory is not permission to re-fetch a previously
             # captured immutable document. Metadata refresh is an explicit

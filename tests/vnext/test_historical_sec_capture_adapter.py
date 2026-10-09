@@ -68,6 +68,18 @@ class HistoricalSecCaptureAdapterTest(TestCase):
             other.get(self.url)
         self.assertEqual(inspect_existing_historical_sec(self.root)['counts'],[0,0,4])
 
+    def test_original_historical_context_without_closure_hash_can_capture(self):
+        self.context.pop('requirement_closure_hash')
+        binding = (self.root/'binding.json').read_bytes()
+        with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply', return_value=(200, b'{"saved":true}', {}, '')) as transport:
+            self.capture().get(self.url)
+        self.assertEqual(transport.call_count, 1)
+        self.assertEqual((self.root/'binding.json').read_bytes(), binding)
+        intent = json.loads((self.root/'calls/0002/intent.json').read_text())
+        self.assertEqual(intent['requirement_id'], 'issue_47_v1')
+        self.assertNotIn('requirement_closure_hash', intent)
+        self.assertEqual(inspect_existing_historical_sec(self.root)['counts'], [0, 0, 4])
+
     def test_wrong_url_root_refresh_and_limit_refuse_before_transport(self):
         with patch('vnext.recorded_sec_http.RecordedSecHttpClient.reply',side_effect=AssertionError('No transport')):
             with self.assertRaisesRegex(ValueError,'OUTSIDE_BOUNDED_PURPOSE'):self.capture().get(self.url+'x')

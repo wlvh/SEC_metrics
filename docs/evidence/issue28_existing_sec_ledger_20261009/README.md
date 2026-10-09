@@ -72,3 +72,19 @@ Merged-main small tests:21 passed in5.071s, zero skips. A small Draft PR is
 now ready for receiving review; earlier prototype statements describe their
 then-current stage, not the final adapter. No real call was made. Original
 loader/source preflight by the receiver and current remote CI remain pending.
+
+## Original historical context correction
+
+Receiving inspection of20398f3e used the genuine old context without a
+requirement_closure_hash. Capture.get failed before claim/HTTP because the
+shared entry required both continuous fields. The original adapter only uses
+requirement_id. missing-closure-before.log independently reproduces that gap.
+The correction selects only the historical required field for that adapter;
+the continuous ledger still gets its original two fields. No closure hash is
+fabricated and no old binding is changed. missing-closure-after.log:22 tests
+pass in6.117s,zero skips,including real recorded persistence without a closure
+field and both continuous/historical stop/count regressions. Prior17002f37
+limited review remains its historical scope; this new increment is separate.
+Receiver read-only JSON reports counts1771/effective1867/narrow1772 unchanged,
+1547 claims/2531request rows,no Capture constructor/claim/GET. This is receiver
+evidence actually read by author, not an author live test or acquisition.
