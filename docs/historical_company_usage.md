@@ -1,8 +1,8 @@
 # 历史公司使用指南
 
-截至2026-10-09，main `ae8a13c8` 已接收 PR61/58/62/67/71/74/75/76/79/83/86。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及未修订、连续主体的 B01/B02/B04/B05和所选CIK余额的B08/B09。酒店共用计算与四指标历史适配已 main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
+截至2026-10-09，main `1c578c61` 已接收 PR61/58/62/67/71/74/75/76/79/83/86，以及 PR77/78/81/82/84/88 和事件链 PR89/PR90（44719c7e、408e89e2）。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及未修订、连续主体的 B01/B02/B04/B05和所选CIK余额的B08/B09。酒店共用计算与四指标历史适配已 main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
 
-A01/A02等后续历史候选仍在各自 Draft PR；C01/E02–E05的新增普通历史适配仍在原开发分支。PR83 的普通在线接续不等于历史模式已能在线发现与补齐来源；本指南的 `fiscal-years` 仍需已保存来源根。代码合入不表示正式采纳、发布或 active 切换。
+A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C01/E02–E05 的普通历史适配（[PR90](https://github.com/wlvh/SEC_metrics/pull/90)）及其依赖的公共事件源/宽窗接口（[PR89](https://github.com/wlvh/SEC_metrics/pull/89)）已于 2026-10-09 进入 main。PR83 的普通在线接续不等于历史模式已能在线发现与补齐来源；本指南的 `fiscal-years` 仍需已保存来源根。代码合入不表示正式采纳、发布或 active 切换。
 
 ## 取得代码和已保存输入
 
@@ -11,7 +11,7 @@ A01/A02等后续历史候选仍在各自 Draft PR；C01/E02–E05的新增普通
 ```bash
 git fetch origin main
 git worktree add -b review/issue47-hotel-history ../SEC_metrics-history-review \
-  ae8a13c8
+  73ead3b4
 cd ../SEC_metrics-history-review
 python3 tools/vnext_company.py run --help
 ```
@@ -74,6 +74,33 @@ B08流动比率和B09现金储备已随PR76进入main。沿用上节命令，指
 
 原十公司五年100位置的来源、计算与限制验证见[余额主要记录](evidence/issue47_liquidity_receiving_20261009/README.md)，main接收未改计算。结构性不适用保留N_A_STRUCTURAL依据与空值，不当作零或缺源。修订仅经已有共享输入属性核对后用于指定余额指标，未决类别仍扣留；继任主体只取所选CIK期末余额，不拼前身、不据此证明可比完整年度或债务完整性。Paramount FY2024两项明确采用原申报年末余额；收入August7/August8冲突仍另行保留。
 
+## 资本、银行和年度营业利润
+
+main `73ead3b4` 已包含 A01/A02（Tier1、CET1资本比率）、A05/A06（ROA、ROE）、A07（净利润变动）、A08（非利息/净利息收入）、A10（贷款损失准备）和 B07（营业利润率）的历史分派。仍使用上面的 `run --period fiscal-years` / `results`，以 `--metric` 明确选择；例如 JPM 五年资本使用 `--company jpmorgan_chase --fiscal-year-start 2021 --fiscal-year-end 2025 --metric A01 --metric A02`。来源、工作目录和输出参数都保留，不先运行其他公司。
+
+资本与A10按实际年末时点输出；A05/A06用同主体全年净利润和两个相邻年末的平均分母，A07需要自身前期申报，A08与B07保留年度流量窗口。不能把单日期末余额当作全年流量，也不能拿当前重述金额替代原前期。既有[资本验证](evidence/issue47_capital_receiving_20261009/README.md)、[银行验证](evidence/issue47_bank_performance_20261009/README.md)和[年度盈利验证](evidence/issue47_annual_earnings_20261009/README.md)按保存版本复用；其中原“未main”文字是当时记录，本节说明今日接收状态，不改写原记录。
+
+行业不适用、主体不可比和程序未完成分开：JPM B07为 `N_A_STRUCTURAL/null/TRAIT_NOT_APPLICABLE`；Paramount FY2025的B02/B04/B05/B07保留 `NOT_MEANINGFUL/null/ENTITY_CONTINUITY_NOT_COMPARABLE`，不拼接前身或提取金额。这不解决其B01范围及日期冲突。金融修订和继任主体的金额适配仍未完成，按[主体结论记录](evidence/issue47_successor_outcomes_20261009/README.md)解释，不把这些空值改成零。
+
+## 事件模式（C01/E02–E05）
+
+main 已包含该事件分派（PR90，merge commit 408e89e2）以及公共 PR89 的所选事件源和普通宽窗保存接口，不依赖未提交文件。采用同一命令，例如已恢复 Macy’s 来源后：
+
+```bash
+python3 tools/vnext_company.py run \
+  --company macys --period fiscal-years \
+  --fiscal-year-start 2021 --fiscal-year-end 2025 \
+  --metric C01 --metric E02 --metric E03 --metric E04 --metric E05 \
+  --source-root /saved/sec/source-inputs \
+  --work-dir "$HOME/sec-metrics-macys-events/state" \
+  --output-dir "$HOME/sec-metrics-macys-events/runs"
+python3 tools/vnext_company.py results \
+  --company macys --state-root "$HOME/sec-metrics-macys-events/state" \
+  --output-root "$HOME/sec-metrics-macys-events/read-01"
+```
+
+实际事件来源窗口、申报、原header条目和出处都经同一保存/读取出口。C01/E03按现行Item5.02披露计数，不把相同集合解释为已经区分任命与离任事件。Paramount FY2025仍有2025全年年报容器及目录批准的2024-01-01至2025-12-31事件测量宽窗；只对这几个事件指标成立，财务及E01不能借用。验证和具体运行版本见[事件主要记录](evidence/issue47_events_receiving_20261009/README.md)。E01内容确认、在线历史发现和缺件补齐不在此已实现范围，完整交付责任继续。
+
 ## 状态、复跑和局部失败
 
 同一指标按财年各自保存。成功同输入复跑为 `NO_SOURCE_CONTENT_CHANGE`；已经完整检查但因业务原因扣留的同输入复跑为 `PREVIOUS_INPUT_WITHHELD`。两者均不再调用计算工厂，不新增相同结果目录。改变实际相关来源、补齐依赖或处理配置后重新处理；普通异常和未完成记录不被缓存为已完成业务结论。
@@ -92,6 +119,6 @@ B08流动比率和B09现金储备已随PR76进入main。沿用上节命令，指
 
 ## 仍需交付的部分
 
-已入 main 的 PR71/75/76 交付上述保存来源后的酒店、四指标与余额范围计算、复跑、读取和CSV/出处；不包含在线历史发现、缺件补齐、其他历史指标或新模型执行链。其他候选按自身接收状态保留，不据分支结果扩大 main 的可用范围。
+已入main的酒店、四指标、余额、资本、银行和B07交付上述保存来源后的范围计算、复跑、读取和CSV/出处；不包含在线历史发现、缺件补齐、事件候选之外的其他历史指标或新模型执行链。其他候选按自身接收状态保留，不据分支结果扩大 main 的可用范围。
 
 完整历史来源准备仍须把公司、期间、指标贯穿现有来源发现/缺件清单、按具体用途许可获取、同一公司计算和结果出口。年度基础材料已保存不等于附件、图片、前期和所有指标依赖齐备。本项是仍有效的H4/历史交付责任，不因首批范围有限而取消；原十公司×39指标×五年业务目标继续。

@@ -1,6 +1,6 @@
 {
   "base_main": "ae8a13c82b11cc5f64fabf217298bed0257778d7",
-  "public_source_interface": "PR89/4118efdc, product35b9329d; limited source+gap review passed",
+  "public_source_interface": "PR89/8ed718e3; source/renderer bytes remain original reviewed35b/1d",
   "public_files": {
     "scripts/vnext/normal_zero_ai_results.py": "67543d1c08b8c84177ef92382a8ccaacb72dcffaeceaa51bdae18b9d3e2735f3",
     "scripts/vnext/selected_event_source_v1.py": "040be9d0b4c95a22cd98f0f5085935eda3858dbb44ac7561c0e67d0de696ac20"
@@ -132,6 +132,42 @@
     "skips": 0,
     "source_and_wide_public_steps_retained": true,
     "latest_main_capital_bank_income_selectors_retained": true,
-    "remote_execution_pending": true
+    "remote_execution_pending": false,
+    "code_commit": "65471ee1bfb4ace20fee5bcf0e3adaa236fc8f10",
+    "run_id": 37914378589,
+    "job_id": 113766881497,
+    "remote_tests": 9,
+    "remote_seconds": 0.069,
+    "remote_skips": 0,
+    "all_checks_success": 10
+  },
+  "macys_salesforce_fiveyear": {
+    "file": "macys-salesforce-fiveyear.json",
+    "code_commit": "65471ee1bfb4ace20fee5bcf0e3adaa236fc8f10",
+    "positions": 50,
+    "full_header_pool_difference_count": 0,
+    "value_unit_period_difference_count": 0,
+    "calculation_factory_calls_on_repeat": 0,
+    "historical_reading_names_matched_by_actual_dates": true,
+    "raw_source_inputs_not_modified": true
+  },
+  "ex99_current": {
+    "file": "ex99-current-readonly.json",
+    "target_get_consumed": false,
+    "cumulative_sec_count": 1771,
+    "approved_target_maximum": 1772,
+    "retry_count": 0,
+    "migration_owner": "#28 public capture/call records",
+    "ordinary_ledger_schema_compatible": false,
+    "old_binding_modified": false
+  },
+  "ford_fiveyear": {
+    "file": "ford-fiveyear.json",
+    "code_commit": "b764066037cb7b472ae90853822529309ef55589",
+    "positions": 25,
+    "full_header_pool_difference_count": 0,
+    "value_unit_period_difference_count": 0,
+    "factory_calls_on_repeat": 0,
+    "protected_files": 200
   }
 }
