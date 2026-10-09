@@ -14,7 +14,7 @@ Actual original JPM21/SHA7c58 read from verified saved_source,network forbidden:
 public current inspectors pass new DEI boundary,then remain UNRESOLVED. A12's
 original55m annual-average total is found but existing older wording leaves1
 unresolved; A03 remains1unresolved/no measurement selected. Final diagnostic
-JSONL records13.954/4.667-style separate actual timings; exact times infile,not
+JSONL records12.954/4.667-style separate actual timings; exact times infile,not
 an accuracy/speed claim. The historical owner maintains its already-approved
 three limited wording forms; no competing financial checker copied here.
 No new Result/Run or false nondisclosure status is created by these components.
@@ -55,3 +55,23 @@ new small classes; new fast selectors append,runner bodies unchanged.
 No SEC/provider/paid/account/root swap,quota recovery,Ready/merge/adoption/
 deployment/active;original ledger untouched. Shared code ownership#28,history
 case/limited older wording#47. [shared-with-#47].
+
+## Historical annual-reader receiving repair
+
+The c5d4 fast job37959580399/job113918690607 failed in the original historical
+statement source-scope test: historical_dei recursively inspected the newly
+explicit dei_namespace_pattern helper and refused before income-scope checking.
+This is a receiving regression, not a retired governance test. The exact
+11-line historical_dei diff is reused from the history owner's fixed remote
+b0ead0e53382d2fc1e46a90af8cb408525de4456; no competing historical reader, case,
+wording checker or result is imported. Historical annual reads use the explicit
+finite release option, including remaining fiscal-label views. Public default
+YEAR_ONLY remains unchanged.
+
+33 directed tests/0.046 seconds/zero skips passed on the modified working tree,
+including the exact CI failure, real small namespace parsing through the adapter,
+wrong-subject rejection and changed fiscal-label source-byte rejection. This is
+program receiving evidence; the historical owner's actual JPM21 company run is
+separate and still in progress at this observation. Saved original failure and
+repair log are retained here. Prior default/current-source tests are reused,
+not repeated for this thin historical adapter.

@@ -1,0 +1,40 @@
+ERROR: test_companyfacts_amount_must_match_the_selected_original (tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest.test_companyfacts_amount_must_match_the_selected_original)
+2026-10-09T16:30:35.8864439Z ----------------------------------------------------------------------
+2026-10-09T16:30:35.8864984Z Traceback (most recent call last):
+2026-10-09T16:30:35.8870545Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 72, in test_companyfacts_amount_must_match_the_selected_original
+2026-10-09T16:30:35.8871478Z     cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
+2026-10-09T16:30:35.8871962Z     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T16:30:35.8872404Z         company_id=annual['company_id'], metric_id='B01', fiscal_year=2025)
+2026-10-09T16:30:35.8872815Z         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T16:30:35.8873543Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 98, in prepare_historical_statement_year_case
+2026-10-09T16:30:35.8874331Z     return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
+2026-10-09T16:30:35.8875017Z         metric_id=metric_id, fiscal_year=fiscal_year)
+2026-10-09T16:30:35.8876004Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 287, in _prepare_historical_statement_case
+2026-10-09T16:30:35.8876747Z     reports = {kind: native_income_reports(sources[0], source_annual, concepts,
+2026-10-09T16:30:35.8877184Z                      ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T16:30:35.8877836Z                    check_visible_short_period=kind == 'primary',
+2026-10-09T16:30:35.8878176Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T16:30:35.8878599Z                    namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period)
+2026-10-09T16:30:35.8879062Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T16:30:35.8879714Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/selected_income_source_v1.py", line 72, in native_income_reports
+2026-10-09T16:30:35.8880442Z     need(annual_period_reader(raw=raw,cik=annual['entity'],filing=annual['filing'])
+2026-10-09T16:30:35.8881043Z          ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T16:30:35.8881598Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/historical_dei.py", line 491, in view
+2026-10-09T16:30:35.8882117Z     namespace[name] = release_aware(namespace[name])
+2026-10-09T16:30:35.8882437Z                       ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+2026-10-09T16:30:35.8882975Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/historical_dei.py", line 608, in release_aware
+2026-10-09T16:30:35.8883483Z     view = _function_view(obj)
+2026-10-09T16:30:35.8883987Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/historical_dei.py", line 480, in _function_view
+2026-10-09T16:30:35.8884510Z     _refuse_unredirectable(function)
+2026-10-09T16:30:35.8884768Z     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+2026-10-09T16:30:35.8885457Z   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/historical_dei.py", line 471, in _refuse_unredirectable
+2026-10-09T16:30:35.8886150Z     raise HistoricalDeiError("HISTORICAL_DEI_QUESTION_NOT_ASKED_THROUGH_RE:"
+2026-10-09T16:30:35.8886610Z                              + function.__module__ + ":" + function.__qualname__)
+2026-10-09T16:30:35.8887272Z vnext.historical_dei.HistoricalDeiError: HISTORICAL_DEI_QUESTION_NOT_ASKED_THROUGH_RE:vnext.normal_annual_input:dei_namespace_pattern
+2026-10-09T16:30:35.8887789Z 
+2026-10-09T16:30:35.8887942Z ----------------------------------------------------------------------
+2026-10-09T16:30:35.8888277Z Ran 48 tests in 0.500s
+2026-10-09T16:30:35.8888412Z 
+2026-10-09T16:30:35.8888499Z FAILED (errors=1)
+2026-10-09T16:30:35.9272719Z ##[error]Process completed with exit code 1.
+2026-10-09T16:30:35.9464207Z 
