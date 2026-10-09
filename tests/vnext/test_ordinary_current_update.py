@@ -158,6 +158,138 @@ class CompletedWithheldUpdateTest(unittest.TestCase):
 
 
 class CurrentProcessingConfigurationTest(unittest.TestCase):
+    def test_changed_annual_selection_and_saved_input_checks_are_not_cached(self):
+        original=update.sha256_file
+        before=update._configuration(ROOT,'marriott_international','B01')
+        for relative in ('scripts/vnext/normal_annual_input.py','scripts/vnext/saved_source_checks.py'):
+            with self.subTest(dependency=relative):
+                with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                        'changed-used-source-code' if path==ROOT/relative else original(path=path)):
+                    after=update._configuration(ROOT,'marriott_international','B01')
+                self.assertTrue(before!=after,'Changed consumed code must invalidate unchanged-input reuse')
+                self.assertIn(relative,after['processing_files'])
+
+    def test_unused_legacy_source_authority_does_not_invalidate_current_input(self):
+        # Current producers use its ROOT constant. Their actual source checks
+        # run through saved_source_checks, not its historical ancestor gate.
+        original=update.sha256_file
+        before=update._configuration(ROOT,'marriott_international','B01')
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-unused-legacy-authority' if path==ROOT/'scripts/vnext/normal_source_authority.py'
+                else original(path=path)):
+            after=update._configuration(ROOT,'marriott_international','B01')
+        self.assertEqual(before,after)
+        self.assertNotIn('scripts/vnext/normal_source_authority.py',after['processing_files'])
+
+    def test_used_source_dependency_change_reprocesses_once_then_reuses(self):
+        actual_hash=update.sha256_file
+        records={};calls=[]
+        def create(**kw):
+            calls.append(kw);kw['output_root'].mkdir(parents=True)
+            record={'manifest':{'company_id':'marriott_international','metric_id':'B01','source_proofs':[]},
+                'result':{'company_id':'marriott_international','metric_id':'B01','publication':'PUBLISHED',
+                    'period_end':'2025-12-31','result_id':'synthetic-source-dependency-'+str(len(calls))}}
+            records[str(kw['output_root'])]=record;return record
+        with tempfile.TemporaryDirectory() as folder,patch.object(update,'_source_census',return_value=[]), \
+             patch.object(update,'_current_sources',return_value=[]),patch.object(update,'create_saved_result',side_effect=create), \
+             patch.object(update,'read_saved_result',side_effect=lambda **kw:records[str(kw['output_root'])]):
+            args=dict(state_root=Path(folder).resolve()/'state',source_root=ROOT,company_id='marriott_international',metric_id='B01')
+            first=update.run_once(**args)
+            def changed(*,path):
+                return 'changed-source-period-code' if path==ROOT/'scripts/vnext/normal_annual_input.py' else actual_hash(path=path)
+            with patch.object(update,'sha256_file',side_effect=changed):
+                second=update.run_once(**args)
+                with patch.object(update,'create_saved_result',side_effect=AssertionError('No second calculation for same source dependency')):
+                    repeated=update.run_once(**args)
+            self.assertEqual(second['status'],'CANDIDATE_READY')
+            self.assertNotEqual(first['version'],second['version'])
+            self.assertEqual(repeated['status'],'NO_SOURCE_CONTENT_CHANGE')
+            self.assertEqual(repeated['result_id'],second['result_id'])
+            self.assertEqual(len(calls),2)
+            self.assertTrue((args['state_root']/'results'/first['version']).is_dir())
+
+    def test_b02_paired_scope_changes_invalidate_only_its_processing_identity(self):
+        original=update.sha256_file
+        before=update._configuration(ROOT,'pfizer','B02')
+        unrelated=update._configuration(ROOT,'pfizer','B01')
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-paired-measure-rule' if path.name=='paired_measure_v1.py' else original(path=path)):
+            after=update._configuration(ROOT,'pfizer','B02')
+            unchanged=update._configuration(ROOT,'pfizer','B01')
+        self.assertIn('scripts/vnext/paired_measure_v1.py',before['processing_files'])
+        self.assertNotEqual(before,after)
+        self.assertEqual(unrelated,unchanged)
+
+    def test_changed_paired_scope_rechecks_then_reuses_a_withheld_conclusion(self):
+        original=update.sha256_file
+        before=update._configuration(ROOT,'pfizer','B02')
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-paired-measure-rule' if path.name=='paired_measure_v1.py' else original(path=path)):
+            after=update._configuration(ROOT,'pfizer','B02')
+        records={};calls=[]
+        def create(**kw):
+            calls.append(kw);kw['output_root'].mkdir(parents=True)
+            record={'manifest':{'company_id':'pfizer','metric_id':'B02','source_proofs':[]},
+                'result':{'company_id':'pfizer','metric_id':'B02',
+                    'publication':'PUBLISHED' if len(calls)==1 else 'WITHHELD',
+                    'period_end':'2025-12-31','result_id':'synthetic-paired-'+str(len(calls)),
+                    'reason_code':None if len(calls)==1 else 'SYNTHETIC_PAIRED_SCOPE_UNPROVEN'}}
+            records[str(kw['output_root'])]=record;return record
+        with tempfile.TemporaryDirectory() as folder,patch.object(update,'_source_census',return_value=[]), \
+             patch.object(update,'_current_sources',return_value=[]),patch.object(update,'create_saved_result',side_effect=create), \
+             patch.object(update,'read_saved_result',side_effect=lambda **kw:records[str(kw['output_root'])]):
+            args=dict(state_root=Path(folder)/'state',source_root=ROOT,company_id='pfizer',metric_id='B02')
+            with patch.object(update,'_configuration',return_value=before):first=update.run_once(**args)
+            old_success=(args['state_root']/'current-result.json').read_bytes()
+            with patch.object(update,'_configuration',return_value=after):second=update.run_once(**args)
+            with patch.object(update,'_configuration',return_value=after), \
+                 patch.object(update,'create_saved_result',side_effect=AssertionError('No repeated paired-scope calculation')):
+                repeated=update.run_once(**args)
+            self.assertEqual(second['status'],'CANDIDATE_WITHHELD')
+            self.assertNotEqual(first['version'],second['version'])
+            self.assertEqual(repeated['status'],'PREVIOUS_INPUT_WITHHELD')
+            self.assertEqual(repeated['result_id'],second['result_id'])
+            self.assertEqual((args['state_root']/'current-result.json').read_bytes(),old_success)
+            self.assertEqual(len(calls),2)
+
+    def test_consumed_deterministic_graph_is_part_of_processing_identity(self):
+        original=update.sha256_file
+        for metric in ('B02','B04','B05'):
+            before=update._configuration(ROOT,'marriott_international',metric)
+            self.assertIn('scripts/vnext/zero_ai_r2.py',before['processing_files'])
+            def changed(*,path):
+                return 'changed-consumed-formula' if path.name=='zero_ai_r2.py' else original(path=path)
+            with patch.object(update,'sha256_file',side_effect=changed):
+                after=update._configuration(ROOT,'marriott_international',metric)
+            self.assertNotEqual(before,after)
+
+    def test_changed_graph_reprocesses_same_input_instead_of_reusing_old_result(self):
+        original=update.sha256_file
+        before=update._configuration(ROOT,'marriott_international','B04')
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-formula' if path.name=='zero_ai_r2.py' else original(path=path)):
+            after=update._configuration(ROOT,'marriott_international','B04')
+        records={};calls=[]
+        def create(**kw):
+            calls.append(kw);path=kw['output_root'];path.mkdir(parents=True)
+            record={'manifest':{'company_id':'marriott_international','metric_id':'B04','source_proofs':[]},
+                'result':{'company_id':'marriott_international','metric_id':'B04','publication':'PUBLISHED',
+                          'period_end':'2025-12-31','result_id':'synthetic-'+str(len(calls))}}
+            records[str(path)]=record;return record
+        with tempfile.TemporaryDirectory() as folder,patch.object(update,'_source_census',return_value=[]), \
+             patch.object(update,'_current_sources',return_value=[]),patch.object(update,'create_saved_result',side_effect=create), \
+             patch.object(update,'read_saved_result',side_effect=lambda **kw:records[str(kw['output_root'])]):
+            args=dict(state_root=Path(folder)/'state',source_root=ROOT,company_id='marriott_international',metric_id='B04')
+            with patch.object(update,'_configuration',return_value=before):first=update.run_once(**args)
+            with patch.object(update,'_configuration',return_value=after):second=update.run_once(**args)
+            with patch.object(update,'_configuration',return_value=after), \
+                 patch.object(update,'create_saved_result',side_effect=AssertionError('No third calculation')):
+                repeated=update.run_once(**args)
+            self.assertEqual(second['status'],'CANDIDATE_READY')
+            self.assertNotEqual(first['version'],second['version'])
+            self.assertEqual(repeated['status'],'NO_SOURCE_CONTENT_CHANGE')
+            self.assertEqual(len(calls),2)
+
     def test_lodging_only_changes_do_not_change_b01_processing_identity(self):
         original=update.sha256_file
         before=update._configuration(ROOT,'marriott_international','B01')

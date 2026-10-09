@@ -416,6 +416,19 @@
         "test_anchor": "tests/vnext/test_company_local.py::CompanyLocalTest",
         "test_status": "automated_partial_scenario",
         "since": "2026-10-03"
+      },
+      {
+        "anchor_id": "CAPABILITY.inline_amendment_source_layout",
+        "type": "capability",
+        "status": "active",
+        "statement": "显式instant_balance_amendment_v2的inline-paragraphs-v2来源API将空行内排版连接为真实可见段落，保持原始块/字节引用、主体/期间、隐藏与引用限制，区分条件性与已发生财务更正；blocks-v1默认及原对象保持。只产生瞬时余额来源属性检查，不产生公司结果、年度连续性、获取或生产信用。消费者须显式接入并验证自身公司出口。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_instant_amendment_paragraph_api.py::InstantParagraphApiTest.test_quoted_word_fragment_cannot_erase_conditional_review",
+        "test_status": "automated_recorded",
+        "since": "2026-10-09"
       }
     ],
     "capability_boundaries": [

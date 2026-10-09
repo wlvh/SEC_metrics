@@ -46,6 +46,19 @@ PROCESSING_FILES = (
     'config/normal_fiscal_year_labels_v1.json',
     'catalog/deterministic_metrics.json',
 )
+INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
+    'scripts/vnext/selected_income_source_v1.py',
+    'scripts/vnext/xbrl_namespace_policy.py',
+    'scripts/vnext/ordinary_income_input.py',
+    'scripts/vnext/financial_duration.py',
+    'scripts/vnext/financial_structured.py',
+    'scripts/vnext/text_results_v2.py',
+    'scripts/vnext/governance_signals.py',
+    'scripts/vnext/r5_b06_scope.py',
+    'scripts/vnext/deterministic_router.py',
+    'catalog/r6/text_results_v2_policy.json',
+)
+
 
 
 class StatementCaseError(ValueError):
@@ -130,6 +143,32 @@ def prepare_historical_statement_year_case(*, repo_root, company_id, metric_id, 
         result, trace, observations = calculate_metric(compiled_spec=spec,
             target={**target, 'entity': prepared['entity'], 'accession': prepared['filing']['accessionNumber']},
             company_traits=traits, structured_facts=facts, verified_observations=[])
+        # Bind the CompanyFacts observation to this selected filing's originals.
+        # The public reader does no current-year selection or amendment admission.
+        if result['publication'] == 'PUBLISHED' and observations:
+            from .selected_income_source_v1 import native_income_reports
+            from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE
+            from .ordinary_income_input import verify_income_observations
+            originals = reader.auditor_filing(prepared['filing'])
+            by_kind = {kind: [source for source in originals
+                       if source['raw_blob']['media_type'] == media]
+                       for kind, media in [('primary', 'text/html'), ('xml', 'application/xml')]}
+            _need(all(len(sources) == 1 for sources in by_kind.values()),
+                  'HISTORICAL_INCOME_ORIGINAL_SOURCE_SET_AMBIGUOUS')
+            # The annual preparer retains the literal DEI label and separately
+            # resolves the issuer's fiscal label. The source reader checks the
+            # literal original; observations retain the resolved label/dates.
+            source_annual = prepared.get('original_input', prepared)
+            _need(all(source_annual['table_input']['target_period'][key] == period[key]
+                      for key in ('period_start', 'period_end')),
+                  'HISTORICAL_INCOME_ORIGINAL_PERIOD_CHANGED')
+            reports = {kind: native_income_reports(sources[0], source_annual, concepts,
+                           check_visible_short_period=kind == 'primary',
+                           namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period)
+                       for kind, sources in by_kind.items()}
+            checks = verify_income_observations({'annual_input': prepared,
+                'statement_period': period, 'original_reports': reports}, observations)
+            assessment = {'income_observation_checks': checks}
         selected_claims = claims
     elif prior_error:
         result, trace = withheld_metric_result(compiled_spec=spec, target=target,

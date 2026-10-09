@@ -1,0 +1,46 @@
+test_clean_small_complete_filing_can_complete (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_clean_small_complete_filing_can_complete) ... ok
+test_current_correction_plain_and_inline_split_have_same_refusal (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_current_correction_plain_and_inline_split_have_same_refusal) ... 
+  test_current_correction_plain_and_inline_split_have_same_refusal (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_current_correction_plain_and_inline_split_have_same_refusal) (text='<div>We have corrected our <div style="display:inline">financial statements</div>.</div>') ... FAIL
+  test_current_correction_plain_and_inline_split_have_same_refusal (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_current_correction_plain_and_inline_split_have_same_refusal) (text='<div>Our current <div style="display:inline">assets</div> have been restated.</div>') ... FAIL
+test_new_balance_disclosure_cannot_hide_in_inline_words (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_new_balance_disclosure_cannot_hide_in_inline_words) ... FAIL
+
+======================================================================
+FAIL: test_current_correction_plain_and_inline_split_have_same_refusal (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_current_correction_plain_and_inline_split_have_same_refusal) (text='<div>We have corrected our <div style="display:inline">financial statements</div>.</div>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_instant_amendment_paragraph_api.py", line 49, in test_current_correction_plain_and_inline_split_have_same_refusal
+    result=self.inspect(text);self.assertEqual(result['decision'],'WITHHELD')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_PROPERTY_PROVEN' != 'WITHHELD'
+- INPUT_PROPERTY_PROVEN
++ WITHHELD
+
+
+======================================================================
+FAIL: test_current_correction_plain_and_inline_split_have_same_refusal (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_current_correction_plain_and_inline_split_have_same_refusal) (text='<div>Our current <div style="display:inline">assets</div> have been restated.</div>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_instant_amendment_paragraph_api.py", line 49, in test_current_correction_plain_and_inline_split_have_same_refusal
+    result=self.inspect(text);self.assertEqual(result['decision'],'WITHHELD')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_PROPERTY_PROVEN' != 'WITHHELD'
+- INPUT_PROPERTY_PROVEN
++ WITHHELD
+
+
+======================================================================
+FAIL: test_new_balance_disclosure_cannot_hide_in_inline_words (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_new_balance_disclosure_cannot_hide_in_inline_words)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_instant_amendment_paragraph_api.py", line 54, in test_new_balance_disclosure_cannot_hide_in_inline_words
+    self.assertEqual(result['decision'],'WITHHELD')
+AssertionError: 'INPUT_PROPERTY_PROVEN' != 'WITHHELD'
+- INPUT_PROPERTY_PROVEN
++ WITHHELD
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.032s
+
+FAILED (failures=3)
+Expected oldcode3failures confirmed; isolated constructed API fixture, not business credit

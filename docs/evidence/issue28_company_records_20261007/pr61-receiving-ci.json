@@ -1,0 +1,26 @@
+{
+  "head": "5496164a9099c99d9c4ec5aec2040b949794371a",
+  "main_run": 37851373095,
+  "dedicated_run": 37851373068,
+  "reference_run": 37851373088,
+  "all9checks": "SUCCESS",
+  "scope": "Same5f production/tests/workflows; actual newhead CI read, no result acceptance",
+  "fast": {
+    "status": "PASSED",
+    "command_seconds": 109.90497032799999,
+    "jobs": 1,
+    "tests": 271,
+    "test_seconds": 108.212405721,
+    "skip_count": 0
+  },
+  "material": {
+    "status": "PASSED",
+    "command_seconds": 366.867224261,
+    "jobs": 2
+  },
+  "directed": {
+    "tests": 147,
+    "seconds": 172.426,
+    "passed": true
+  }
+}

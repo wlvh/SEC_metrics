@@ -22,7 +22,9 @@ class HistoryCompanyDispatchTest(TestCase):
 
     def test_range_uses_one_public_company_controller_and_existing_case(self):
         from vnext.historical_lodging_results import prepare_historical_lodging_year_case
-        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+        with (patch('vnext.company_current_records.run_saved_company', return_value={}) as shared,
+              patch.object(local, 'prepare_program',
+                  side_effect=AssertionError('Saved history must not install a native program'))):
             self.run_history()
         args = shared.call_args.kwargs
         self.assertEqual([2024, 2025], args['fiscal_years'])
@@ -49,7 +51,7 @@ class HistoryCompanyDispatchTest(TestCase):
         shared.assert_not_called()
 
     def test_statement_pilot_uses_original_per_metric_factories_and_dependencies(self):
-        from vnext.historical_statement_cases import prepare_historical_statement_year_case, PROCESSING_FILES
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case, PROCESSING_FILES, INCOME_PROCESSING_FILES
         with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
             self.run_history(company_id='macys', metric_ids=['B01', 'B02', 'B04', 'B05'],
                              fiscal_year_start=2021, fiscal_year_end=2025)
@@ -57,7 +59,11 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertEqual([2021, 2022, 2023, 2024, 2025], args['fiscal_years'])
         self.assertNotIn('case_factory', args)
         self.assertTrue(all(f is prepare_historical_statement_year_case for f in args['case_factories'].values()))
-        self.assertTrue(all(p == PROCESSING_FILES for p in args['processing_files_by_metric'].values()))
+        self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B01'])
+        for metric in ['B02', 'B04', 'B05']:
+            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+        self.assertIn('scripts/vnext/selected_income_source_v1.py', INCOME_PROCESSING_FILES)
+        self.assertNotIn('scripts/vnext/selected_income_source_v1.py', PROCESSING_FILES)
         self.assertFalse((self.root/'state').exists())
 
     def test_mixed_lodging_keeps_its_previous_factory_and_tuple(self):
@@ -74,14 +80,16 @@ class HistoryCompanyDispatchTest(TestCase):
 
     def test_liquidity_keeps_the_statement_and_lodging_original_factories(self):
         from vnext.historical_liquidity_cases import prepare_historical_liquidity_year_case, PROCESSING_FILES
-        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case, INCOME_PROCESSING_FILES
         from vnext.historical_lodging_results import prepare_historical_lodging_year_case
         with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
-            self.run_history(metric_ids=['B08', 'B09', 'B04', 'B10'])
+            self.run_history(metric_ids=['B08', 'B09', 'B01', 'B04', 'B10'])
         args = shared.call_args.kwargs
         for metric in ['B08', 'B09']:
             self.assertIs(prepare_historical_liquidity_year_case, args['case_factories'][metric])
             self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+        self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B01'])
         self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B04'])
         self.assertIs(prepare_historical_lodging_year_case, args['case_factories']['B10'])
 

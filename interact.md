@@ -69,6 +69,9 @@ Marriott recorded候选沿既有审核链产生；其中Result的 `PUBLISHED` �
 exact-head 激活与独立的一次调用批准，不由此入口授予。
 <!-- capability-anchor: CAPABILITY.saved_annual_input_candidate -->
 
+显式来源API `vnext.instant_balance_amendment_v2.inspect_instant_balance_amendment(..., note_layout='inline-paragraphs-v2')` 在原主体/期间与Part III规则内按可见段落处理行内拆分，保留原始块/字节引用、隐藏文字和引用限制。默认 `blocks-v1` 及历史对象不变；这里只验证瞬时余额输入的来源属性，不生成指标、公司CSV或年度连续性结论。消费者须显式选择并声明amendment_note_layout、annual_amendment_scope_v2、instant_balance_amendment_v2及实际旧帮助函数的处理依赖；公司接入仍需本路线验证。
+<!-- capability-anchor: CAPABILITY.inline_amendment_source_layout -->
+
 开发者可用 `tools/vnext_annual_candidate.py plan` 生成未授权的普通 B10 计划。
 计划给出真实来源、期间、完整请求哈希/大小/估算、代码身份及外部隔离目录；
 它不查询 GitHub、不调用 SEC/provider、不签发许可。执行需要分别批准新
@@ -81,6 +84,10 @@ usage 缺失、矛盾、输入超200000或内容失败均停止，无额外请�
 
 保存来源公司 `run --source-root` 输出普通CSV/出处及逐项状态，计算和读取共享固定来源/程序根，状态另写。输入未变复用结果；当前来源检查失败时，旧值只显示原期间及PREVIOUS_RESULT。确切已知错误清空数值并显示WITHHELD_KNOWN_DEFECT。`results`读取新普通记录不运行更新；旧native任务仍明确要求原trust/runtime。保存来源读取不声称在线发现或业务正式接受。
 <!-- capability-anchor: CAPABILITY.current_saved_company_run -->
+
+显式已选年度的计算调用可传`case_factories`和`processing_files_by_metric`，让不同已支持指标共用同一公司入口。未提供映射时保持原单函数行为；它不开放新指标或真实模型调用，混合历史业务结果仍须实际验证。
+
+B03来源数值标签或未声明的数字写法不受支持时，结果仍显示具名WITHHELD及对应原件事实原因；有效的其它来源事实保留，不把缺值改为0。正常金额、期间、单位和既有公式不变。
 
 旧独立普通更新journal可直接交给 `results --state-root`，读取原Run引用；无需新建公司checkpoint、提供trust或重算。输出标明RETAINED_ORDINARY_JOURNAL、归档期间、NOT_RECHECKED/NOT_ASSESSED；最新输入失败仍显示，精确已知缺陷不清除。该分支不生成新普通CSV或授予当前成功，原native完整审核仍用其原运行版本。
 <!-- capability-anchor: CAPABILITY.retained_ordinary_journal_read -->

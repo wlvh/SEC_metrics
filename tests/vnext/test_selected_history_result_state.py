@@ -16,6 +16,7 @@ update = control.update
 
 class SelectedHistoryResultStateTest(TestCase):
     def setUp(self):
+        self.actual_configuration = update._configuration
         control.CurrentUpdateTest.setUp(self)
         self.factory_calls = []
         self.outcomes = {}
@@ -135,3 +136,35 @@ class SelectedHistoryResultStateTest(TestCase):
         self.assertEqual("PREVIOUS_INPUT_WITHHELD", again["status"])
         self.assertEqual(first["version"], json.loads(pointer.read_text())["version"])
         self.assertEqual(count, len(self.factory_calls))
+
+    def test_actual_selected_year_dependencies_ignore_unused_admission_code(self):
+        """Constructed state control with the actual processing configuration."""
+        actual_hash = update.sha256_file
+        self.outcomes[2025, "B11"] = "WITHHELD"
+        with patch.object(update, "_configuration", side_effect=self.actual_configuration):
+            initial = [self.run_control(2024), self.run_control(2025, "B11")]
+            self.forbid_factory = True
+            def unused_change(*, path):
+                return "constructed-unused-admission-change" if path == ROOT / (
+                    "scripts/vnext/normal_source_authority.py") else actual_hash(path=path)
+            with patch.object(update, "sha256_file", side_effect=unused_change):
+                unchanged = [self.run_control(2024), self.run_control(2025, "B11")]
+            self.assertEqual(["NO_SOURCE_CONTENT_CHANGE", "PREVIOUS_INPUT_WITHHELD"],
+                             [r["status"] for r in unchanged])
+            self.assertEqual([r["version"] for r in initial],
+                             [r["version"] for r in unchanged])
+            self.forbid_factory = False
+            def period_change(*, path):
+                return "constructed-used-period-change" if path == ROOT / (
+                    "scripts/vnext/normal_annual_input.py") else actual_hash(path=path)
+            with patch.object(update, "sha256_file", side_effect=period_change):
+                changed = [self.run_control(2024), self.run_control(2025, "B11")]
+                self.assertEqual(["CANDIDATE_READY", "CANDIDATE_WITHHELD"],
+                                 [r["status"] for r in changed])
+                self.assertTrue(all(a["version"] != b["version"]
+                                    for a, b in zip(initial, changed)))
+                self.forbid_factory = True
+                again = [self.run_control(2024), self.run_control(2025, "B11")]
+                self.assertEqual([r["version"] for r in changed],
+                                 [r["version"] for r in again])
+            self.assertEqual(4, len(self.factory_calls))

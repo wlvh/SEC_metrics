@@ -1,0 +1,15 @@
+{"case": "hidden_gap_oracle", "financial_and_revision_in_same_unit": false, "html": "<div>We have cor<span hidden>formatting draft</span><div style=\"display:inline\">rected</div> our financial statements.</div>", "independent_visible_text": "We have corrected our financial statements.", "scanner_units": ["We have cor", "rected our financial statements."]}
+{"case": "hidden_gap_source_blocks", "raw_hashes_verified": true, "source_blocks_preserved": true}
+{"case": "exact_patch_bytes", "equals_patch": true, "path": "scripts/vnext/amendment_note_layout.py", "sha256": "12469b062941745d2c9b1cc35ccee6bd62216f931152d63334f6cd5033938458"}
+{"case": "exact_patch_bytes", "equals_patch": true, "path": "scripts/vnext/annual_amendment_scope.py", "sha256": "dc9ac0b2e406e41928e9b0e5661dd1e2c6b6ea2a23448e5bee097679094dad8c"}
+{"case": "exact_patch_bytes", "equals_patch": true, "path": "scripts/vnext/instant_balance_amendment.py", "sha256": "23697b773c22246af9220aebe6f0a1c93643e2d180b9f6bce8a95ebefb6bfb5d"}
+{"case": "exact_patch_bytes", "equals_patch": true, "path": "tests/vnext/test_amendment_note_layout.py", "sha256": "86476f06fbc354938b547fb230ab706b579a3c06fba404cfebb8eb83a75d60ff"}
+{"case": "exact_patch_bytes", "equals_patch": true, "path": "tests/vnext/test_instant_amendment_paragraph_api.py", "sha256": "812e55ba071a2879fe43137cde829df2171c2562050dd434719f1c2dc55e0868"}
+{"case": "unchanged_limited_dependency", "equals_baseline": true, "path": "config/annual_amendment_scope_v1.json", "sha256": "ed7c8d776c47b08a5238d41d250fa7d4712994f2df34148383040e2435a93202"}
+{"case": "unchanged_limited_dependency", "equals_baseline": true, "path": "config/instant_balance_amendment_v1.json", "sha256": "50790b4f32651a2d93044d32b58aeace432d6dcde7fa9b42f599dbb05acb0892"}
+{"case": "unchanged_limited_dependency", "equals_baseline": true, "path": "scripts/vnext/text_coverage.py", "sha256": "33fe616774a0ee6da02011dd00526f6cc086b191beab7af4d67ce79c4d84b5ce"}
+{"case": "unchanged_limited_dependency", "equals_baseline": true, "path": "scripts/vnext/fiscal_year_labels.py", "sha256": "b4c2c6d696604f6e313da83c7845bfa6dfe2ffae250de137dcaecf9633b93251"}
+{"case": "prior_evidence_preservation", "equals_head": true, "file_count": 4, "folder": "docs/evidence/issue28_amendment_note_20261009/independent"}
+{"case": "prior_evidence_preservation", "equals_head": true, "file_count": 5, "folder": "docs/evidence/issue28_amendment_note_20261009/independent-p1-fix"}
+{"base_sha": "9a66f77a69fd40a750a8c85111327d0b778e0792", "case": "final_state", "head": "a5467fed3d30927da28cbae45f183bdf481f2346", "original_hashes_unchanged": true, "patch_sha": "5cc8bfcd36a5184dc7dba4982235ffadaff6eb88", "provider_paid_sec": [0, 0, 0], "timestamp_utc": "2026-10-08T21:12:12.971300+00:00"}
+?? docs/evidence/issue28_amendment_note_20261009/independent-word-fix/

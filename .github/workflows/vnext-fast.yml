@@ -33,10 +33,27 @@ jobs:
           PYTHONPATH: scripts:tools
         run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest
 
+      - name: Selected filing income source checks (small state)
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 -m unittest -v tests.vnext.test_selected_income_source_v1
+
       - name: Run fast suite
         env:
           PYTHONDONTWRITEBYTECODE: "1"
         run: python3 tools/run_foundation_ci.py --suite fast --jobs 4
+
+      - name: Verify H1 short business boundaries
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 -m unittest -v tests.vnext.test_legal_review_contract
+      - name: Verify H2 short business boundaries
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 -m unittest -v tests.vnext.test_history_business_boundaries.BankScopeBusinessTest tests.vnext.test_history_business_boundaries.ParamountWindowBusinessTest tests.vnext.test_history_business_boundaries.FiscalDurationCalculationTest
 
   inherited-source-material:
     name: Foundation inherited source material

@@ -1,5 +1,7 @@
 # SEC_metrics 测试与验证流程
 
+当前公司候选采用PR61共享进程/类准备与完整材料分层；`python3 tools/run_foundation_ci.py --suite fast --jobs 1`一次加载选中小测试，失败/导入错误/skip显式输出。原选择器以fast/source-material/retired完整对账；仅已取消的旧祖先防伪模块退休，业务断言保留。PR61原测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`，当前公司候选测量见 `docs/evidence/issue28_company_records_20261007/README.md`，不能拼成同场景提速。
+
 本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。既有Marriott真实SEC首次与重复运行已按其原许可完成；录制测试不转成LIVE信用，业务结果仍分别等待接受。
 已退出的creator journal/伪造sidecar/冻结前缀拒绝不再作为当前来源必过测试；原版本在Git历史保留。原件/header/attempt/申报/最新失败检查见test_saved_source_checks，旧checkpoint导出及UNKNOWN保护仍保留。
 
@@ -8,10 +10,12 @@
 
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 
-公司导入事务与独立信任：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。
+旧固定运行版本的公司导入/独立信任兼容测试：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。
 
-公司事件 census 接缝：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_event_census -v`。该组件测试使用真实独立信任读取和原 header 解析，账本重放为替身；验证窗口／前身 CIK、缺件／额外件／别名、错公司和本地重哈希不能授信。实际材料另验证只读固定树下公司 C01、重复与公司出口，不能以组件测试宣称六事件内容或 OpenShift 验收。
+公司事件 census 接缝：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_event_census -v`。此处保留旧固定版本的组件测试，使用其原独立信任读取和原 header 解析，账本重放为替身；验证窗口／前身 CIK、缺件／额外件／别名、错公司和本地重哈希不能授信。实际材料另验证只读固定树下公司 C01、重复与公司出口，不能以组件测试宣称六事件内容或 OpenShift 验收。
 <!-- capability-anchor: CAPABILITY.company_import_transaction -->
+
+上述独立信任/防伪说明只解释旧任务兼容；新保存来源路径使用当前普通记录测试，不重新要求建立信任登记或封存。
 
 ## 确切年度候选正式采纳接线
 
@@ -215,6 +219,8 @@ provider/paid 执行及实际 usage、真实候选内容检查。SEC 刷新、�
 正式发布及 full acceptance 均不属于本轮。历史冻结源码/响应/收据不为此重签。
 
 ## 保存的年度输入局部回归
+
+显式修订段落路径：`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools python3 -m unittest -v tests.vnext.test_amendment_note_layout tests.vnext.test_instant_amendment_paragraph_api`。17项小输入覆盖完整API的正常/更正/隐藏/引用分支；真实保存原件及旧默认比较见 `docs/evidence/issue28_amendment_note_20261009/README.md`。不联网，不创建公司Result，不代表在线更新或全财务准入。
 
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_input -v`
 验证Marriott FY2023/2024/2025原始submissions/10-K/Company Facts独立准备输入，

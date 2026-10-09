@@ -1,8 +1,20 @@
 # 历史消费者接收：2026-10-08
 
-本轮唯一主验证记录为 [verification.json](verification.json)。能力结构检查通过（6.868秒），检查器两个副产物按检查前字节恢复；这只证明结构对齐。实际 main 仍为 `8588ccbb`；这里是分支交付，尚未入 main，也不是完整五年业务接受。
+本轮唯一主验证记录为 [verification.json](verification.json)。能力结构检查通过（6.868秒），检查器两个副产物按检查前字节恢复；这只证明结构对齐。该检查时main为8588ccbb；当前已核main为f447a374（已接PR61/58）。本页酒店历史范围仍是分支交付，未main，也不是完整五年业务接受。
 
-可取得的组合是 PR67 的公共候选 `adee3036`（运行代码承接8805777d，CI范围及取码承接a4） 加本分支 `task/issue47-history-consumers`。后者只增加现有历史期间选择、酒店 case 适配及同一公司 CLI 分派。公共控制器、保存器、投影、状态恢复和测试运行器全部来自 PR67。PR59 的已选来源共用计算已经包含在 PR67，不需要再次顺序合入 PR59。现有 `historical_dei` 旧命名空间包装作为必要上游依赖保留，没有将删除所有旧包装作为接收前置。
+当前可取得的组合是 PR67 的公共候选 `f7905156f7972b214e71d7f0a9a1172f7ac969cf` 加本分支 `task/issue47-history-consumers`。原adee/c56验证按原版本保留，下方2026-10-09记录核当前组合。后者只增加现有历史期间选择、酒店 case 适配及同一公司 CLI 分派。公共控制器、保存器、投影、状态恢复和测试运行器全部来自 PR67。PR59 的已选来源共用计算已经包含在 PR67，不需要再次顺序合入 PR59。现有 `historical_dei` 旧命名空间包装作为必要上游依赖保留，没有将删除所有旧包装作为接收前置。
+
+## 2026-10-09 首批接收审查入口
+
+[当前组合与自动回归记录](pr71-first-batch-20261009.json)是本主记录的增量；旧日志及结果保持。PR71已在既有 `company-current-records.yml` 加入两个测试文件的精确路径过滤，并新增同一作业内的verbose步骤实际执行两个模块，不修改公共runner、原作业或五分钟时限。本地12项0.140s全部通过。`0d58e55f` 的[pull_request工作流37881312033](https://github.com/wlvh/SEC_metrics/actions/runs/37881312033)已SUCCESS，job113661400662及历史步骤均SUCCESS；[实际日志](pr71-history-ci-0d58e55f-remote.log)列出两模块12项逐例ok、0.845s、零skip。触发范围由精确paths核对，本提交的workflow变化实际触发；没有为测试文件单独触发制造提交。
+
+随后按当前拟接收PR67/29c9接收实际普通处理依赖和B03数值来源修补。历史分派、producer和两个历史测试字节保持，公共controller/writer/reader与当前公共候选一致。84项受影响当期/历史/酒店/状态/公司测试7.486s全部通过，[原日志](pr71-current67-combination-local-20261009.log)。未再跑既有两年B01、全部酒店原文或五年集合。
+
+当前组合直接用PR71已提交原件、headers和日志运行Marriott FY2024/25 B10/B11：[真实首跑及禁止工厂复跑](pr71-current67-real.json)分别19.130/2.465s，四值与本页原数值/单位/实际期间相同；[独立进程读取](pr71-current67-read.json)1.021s，选源/计算/update/业务网络禁止，32个结果和指针不变。不依赖开发者私人来源目录、不拷程序/来源树、不产生新调用。正式命令与输出目录解释在[历史使用指南](../../../historical_company_usage.md)，只读来源，审查输出写新的外部目录。
+
+PR58固定372f4b74与PR62固定09563892分别依赖PR61/86e63816；两份原PR head的实际检查已SUCCESS。机械D02直接执行 `python3 -m unittest tests.vnext.test_legal_review_contract -v`：夹具为12份完整原回答及所引原块，8拒绝/4合同通过、14条真实长引文仍保持。H2直接执行 `python3 -m unittest tests.vnext.test_history_business_boundaries -v`：15短例调用实际业务判断，JPM完整来源既有9.249s核对复用，不重读。两个模块的夹具都随各自PR提交，不需恢复虚拟机。两PR一起接收的selector/CI冲突使用#28固定补丁，现有c318725a组合及[联合验证记录](https://github.com/wlvh/SEC_metrics/blob/c318725aad605b1ba37c6cf9e1be0b19bce4338b/docs/evidence/issue47_h1_h2_combination_20261009/README.md)实际30短例/66导入文件检查通过；不重复建立runner或审查包。
+
+首批接收范围保持：PR71酒店保存来源历史；PR58引用机械分类；PR62业务反例。后续PR75—79/83等不并入。公共默认新任务/在线安装问题由#28按同一保存HTTP输入复现与修复，本方按返回增量验证历史消费者，未审PR83不解除首批阻塞。PR71仅需接收PR67实际公共候选，不再顺序合入已经包含的PR59。修订、主体变化、其他历史指标、在线发现/补齐和D02公司模型链仍未完成；这些限制不取消完整五年责任。技术可审查与合并授权分开，全部保持Draft，没有Ready/合并/正式采纳/部署/active操作。
 
 ## 实际公司入口
 
@@ -38,7 +50,9 @@ Marriott FY2024/FY2025 实际结果为 B10 69.8%/69.3%、B11 128.23/128.8 USD，
 
 当期模式使用同一原公共分派，新增参数不会改变默认期间。已完成两年B01、酒店原文及全帧核对直接复用；未重新联网或重新调模型。
 
-## 三份既有交付与边界
+## 三份既有交付与边界（2026-10-08快照）
+
+下表和 `pr-status.json` 保留当时版本及失败，不是当前head状态。2026-10-09已核PR58/372f4b74和PR62/09563892各13项检查全部SUCCESS，当前依赖及未完成业务见本页首批接收段；后继成功不改写这些前驱失败。
 
 | PR | 本轮审查对象与依赖 | 剩余边界 |
 |---|---|---|
@@ -46,7 +60,7 @@ Marriott FY2024/FY2025 实际结果为 B10 69.8%/69.3%、B11 128.23/128.8 USD，
 | PR59 `9ae16dab` | 已选来源/期间共用读取和 Calculator 成立，PR67已消费其核心 `a0685346`；本方指定年份case实际进入该同一函数。 | 独立旧大CI仍有祖先字节门和旧状态断言失败；本组合受影响消费者通过不等于PR59独立CI全绿，也不要求先删除所有旧包装。 |
 | PR62 `139a6d60` | 15项银行、非自然年、主体/事件和模型材料短例已交公共T1；独立测试增量，无自己的CI平台。 | 主快测、参考及兼容/公司作业成功，材料取消，不能写成所有检查成功；内容正例不等于全部旧答案正确。 |
 
-精确当前 PR 状态保存在 [pr-status.json](pr-status.json)。公共共享测试/CI由#28负责；本方没有重签旧祖先或更改业务失败预期。PR52继续保留全部历史实现、原件、响应和失败，本接收不关闭它。PR69/70输入方法研究在本批暂停扩展；JPM FY2024参考虽已冻结，独立试验尚未启动。8192开发配置不等于非默认 DeepSeek执行通过。
+2026-10-08当时精确 PR 状态保存在 [pr-status.json](pr-status.json)。公共共享测试/CI由#28负责；本方没有重签旧祖先或更改业务失败预期。PR52继续保留全部历史实现、原件、响应和失败，本接收不关闭它。PR69/70输入方法研究在本批暂停扩展；JPM FY2024参考虽已冻结，独立试验尚未启动。8192开发配置不等于非默认 DeepSeek执行通过。
 
 Paramount可见表头起日2025-08-07与原生context2025-08-08冲突必须同时保留。PR67已有公共具名冲突修复；本次历史接收只支持B10/B11，没有接收旧历史B01/B03适配，不会以“日期已确认、仅年度长度不适用”接受该收入来源。未重跑全部Paramount历史。
 
@@ -65,3 +79,11 @@ Paramount可见表头起日2025-08-07与原生context2025-08-08冲突必须同�
 后续已核公共a4运行37676590569最终CANCELLED：历史对象作业全历史取码约385秒，34项测试187.808秒全部通过及scalability/egress/reference检查通过后，达到原10分钟作业截止；取消不改称失败或整体成功。已接公共adee3036最小取码修复：候选depth1，仅显式fetch baseline_manifest声明的旧提交完整对象，再读取其实际active对象。34 selectors、原命令、10分钟期限与业务生产源码保持；本方6项取码范围回归通过，原61项和实际历史消费者结果复用。新的37678715800现已实际核为SUCCESS，七个作业全部通过；详见[新公共CI终态及取码耗时](public-adee-ci-terminal.json)。这里不证明全部旧运行或新在线安装。
 
 后续接收公共c56e6335（原67自身CI全部SUCCESS），形成可取得组合d68b2d4d：公共增量为旧独立ordinary journal的只读引用及CLI识别；同一ordinary controller/writer/reader、历史公司分派和酒店producer与原ac6910逐字节相同。仅对新CLI组合做旧保存Marriott任务的独立读取0.968秒，选源/计算/业务网络禁止，42个结果和指针不变，仍导出FY2024/25的69.8/128.23与69.3/128.8。不重算本记录既有H4、酒店全帧或B01。[组合检查](c56-combination-verification.json)不借作旧journal计算族或新模型接受。
+
+2026-10-09默认入口回修的历史接收：在固定PR71/c432d035上组合公共818dd871，不引PR83、不重做公共成对fresh任务。历史现有范围例新增prepare_program调用即失败断言；[40项消费者短测试](pr71-retained-native-consumer-short.log)6.923s/零skip，保存范围不进原生安装。[完整处理配置比较](pr71-retained-native-processing-compare.json)证明B10/B11各123文件配置逐字段不变；[原两年保存任务复跑](pr71-retained-native-repeat.json)禁止prepare_program/install_retained_local/producer及socket后2.474s，无计算；[独立进程读](pr71-retained-native-cold-read.json)0.960s，四值/单位/实际期间及32结果/pointer字节保持。没有新财报计算、来源树/程序树复制或业务调用。公共默认任务main166.358s/修后165.199s同HTTP/公司/指标的验证由其主记录负责，本方复用其范围，不把耗时相近写成提速。
+
+上述组合已保存3d27f67d；公共限定复核PASS_LIMITED_COMPATIBILITY并发布c850cf21后，本方接收到可取得组合604ae944，公共后继只改复核日志及说明，运行/test/config与818完全相同，消费者结果复用。公共安装静态探针核保留程序树与main/修后完整链相同、配置39/支持38不缩小；新增上层版本说明字段由静态安装验证，未重跑长链该字段，不扩大证据。原在线说明冲突旧句已由公共侧原位纠正。当前组合新CI单独核终态，旧c432的9项成功不移签；不Ready/main/业务采纳，首批不扩新族或PR83。
+
+公共P2/3a98只将实际normal_annual_input及normal_source_authority两文件加入处理配置；历史42相关小例0.342s零skip，完整配置比较见pr71-two-dependencies-configuration.json。旧记录没有跟踪这两模块，下一次检查正确重处理一次，不能沿用旧配置冒称已覆盖。仅对真实Marriott FY2025 B10执行正常检查：一次新处理版本、Result ID/69.3 percent/实际期间保持；同输入禁止factory复跑不计算，其他三个坐标的旧版本/Result ID不变。随后独立results读全状态1.078s、全部结果/pointer文件不变（数量见实际JSON），四值保持；未重算整两年或五年。初驱动错误把只请求FY2025/B10的运行CSV当全状态表，末尾AssertionError保留，已经完成的处理/复跑直接由保存执行报告核对，不重跑；最初两次外部耗时因末尾断言前未保存而不可用，不编造时长。当前证据是[实际接收记录](pr71-two-dependencies-real-final.json)。新增调用0，旧结果/失败/Run不改，前驱429的9项CI成功按其原头保留，新配置组合CI另核。
+
+公共f790精准撤回3a98误加入的normal_source_authority整文件身份：历史选期/DEI/来源适配也只从它取ROOT；当前verify_ordinary_source_proofs实际转到saved_source_checks.verify_saved_inputs，保留saved_source_checks/request_bindings及真正normal_annual_input处理依赖。新增现有历史状态反例使用实际配置、构造成功/稳定扣留：未使用准入代码hash变化不计算、不换版本；真实选期代码变化各重新处理一次后禁factory复用。44相关例0.384s零skip，[配置核对](pr71-precise-period-dependencies.json)。原四个酒店结果只读1.0s以内、未选源/更新/计算/安装/联网，Result ID/值/期间/文件保持，见[读口记录](pr71-withdraw-authority-saved-read.json)；前段3a98重处理是当时已发生记录，不能称本轮又重算。配置迁移本身会让下一次正常检查重处理一次，不把旧配置冒称已覆盖；排除后无关文件后续变化不触发重算。当前main f447仅新增PR61测试基础及PR58机械D02，历史模式/模型链未因此完成。新CI独立核，不移签前驱，调用0。

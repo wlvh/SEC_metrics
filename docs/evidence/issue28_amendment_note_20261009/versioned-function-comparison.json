@@ -1,0 +1,63 @@
+{
+  "base_reviewed": "b2d84a3c4f8770698c43d9cb95fd16c030d33f24",
+  "functions": [
+    {
+      "function": "_note",
+      "old": "annual_amendment_scope",
+      "new": "annual_amendment_scope_v2",
+      "reviewed_semantic_ast_identical": true,
+      "only_default_delegation_added": false
+    },
+    {
+      "function": "inspect_annual_amendment_scope",
+      "old": "annual_amendment_scope",
+      "new": "annual_amendment_scope_v2",
+      "reviewed_semantic_ast_identical": true,
+      "only_default_delegation_added": true
+    },
+    {
+      "function": "_text_units",
+      "old": "instant_balance_amendment",
+      "new": "instant_balance_amendment_v2",
+      "reviewed_semantic_ast_identical": true,
+      "only_default_delegation_added": false
+    },
+    {
+      "function": "_cover_matches",
+      "old": "instant_balance_amendment",
+      "new": "instant_balance_amendment_v2",
+      "reviewed_semantic_ast_identical": true,
+      "only_default_delegation_added": false
+    },
+    {
+      "function": "_part_iii_details",
+      "old": "instant_balance_amendment",
+      "new": "instant_balance_amendment_v2",
+      "reviewed_semantic_ast_identical": true,
+      "only_default_delegation_added": false
+    },
+    {
+      "function": "inspect_instant_balance_amendment",
+      "old": "instant_balance_amendment",
+      "new": "instant_balance_amendment_v2",
+      "reviewed_semantic_ast_identical": true,
+      "only_default_delegation_added": true
+    },
+    {
+      "old_file": "scripts/vnext/annual_amendment_scope.py",
+      "exact_main_bytes": true,
+      "sha256": "19ccf11107319a3bffc809339b6fa4380e0165877b7fa469cfcf042303827d4f"
+    },
+    {
+      "old_file": "scripts/vnext/instant_balance_amendment.py",
+      "exact_main_bytes": true,
+      "sha256": "dfc5b37f2bcf5c9ea22b130df96656542707b2f1195fcda5f9be2d92633abff5"
+    }
+  ],
+  "source_property_exactly_equal_to_saved_report": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,10 @@
+PASS: extra factory ; unchanged existing state/output bytes; COMPANY_CURRENT_METRIC_FACTORIES_INVALID
+PASS: uncallable factory ; unchanged existing state/output bytes; COMPANY_CURRENT_METRIC_FACTORIES_INVALID
+PASS: wrong factory map type ; unchanged existing state/output bytes; COMPANY_CURRENT_METRIC_FACTORIES_INVALID
+PASS: unsupported factory ; unchanged existing state/output bytes; COMPANY_CURRENT_METRIC_FACTORIES_INVALID
+PASS: wrong dependency map type ; unchanged existing state/output bytes; COMPANY_CURRENT_METRIC_PROCESSING_FILES_INVALID
+PASS: wrong dependency value type ; unchanged existing state/output bytes; COMPANY_CURRENT_METRIC_PROCESSING_FILES_INVALID
+PASS: extra dependency key ; unchanged existing state/output bytes; COMPANY_CURRENT_METRIC_PROCESSING_FILES_INVALID
+PASS: original callable and nonempty tuple object identity preserved for each metric/year; D04/E01 never entered controller
+PASS: actual existing controller with nonempty per-metric dependencies; B03 single producer -> B03+B10 -> same B03+B10; counts 1/1 and completed input reused
+All independent edge checks passed. Source/configuration/save/read are synthetic boundaries; no financial result or external call credit.
