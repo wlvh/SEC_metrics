@@ -46,6 +46,39 @@ class SelectedHistoricalFiscalLabelTest(unittest.TestCase):
         raw=annual().replace(b'</body></html>',b'<p>Our fiscal year ends on December 31. References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021.</p><p>References to fiscal 2023, for example, refer to the fiscal year ending December 31, 2021.</p></body></html>')
         with self.assertRaisesRegex(ValueError,'FISCAL_LABEL_UNRESOLVED'):self.resolve(raw=raw)
 
+    def test_conditional_and_hypothetical_examples_cannot_confirm_actual_year(self):
+        examples = [
+            'If the proposed naming convention is approved, References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021.',
+            'The following is a hypothetical example, not our actual naming convention: "References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021."',
+            'If the proposed naming convention is approved, Fiscal years 2022 and 2021 ended on December 31, 2021 and December 31, 2020, respectively, and included 52 weeks.',
+        ]
+        for example in examples:
+            raw=annual().replace(b'</body></html>',('<p>Our fiscal year ends on December 31. '+example+'</p></body></html>').encode())
+            with self.subTest(example=example),self.assertRaisesRegex(ValueError,'EXPLICIT_DEFINITION_UNRESOLVED'):
+                self.resolve(raw=raw)
+
+    def test_quoted_label_words_do_not_make_an_actual_definition_hypothetical(self):
+        raw=annual(EntityRegistrantName='Example Stores').replace(b'</body></html>',b'<p>Unless the context requires otherwise, references to "Example Stores" or the "Company" are references to Example Stores and its subsidiaries. References to "2022" and "2021" are references to the Company\'s fiscal years ended December 31, 2021 and December 31, 2020, respectively.</p></body></html>')
+        r=self.resolve(raw=raw)
+        self.assertEqual(r['selected_fiscal_year'],2022)
+
+    def test_prepared_historical_reader_uses_same_scope_without_changing_retained_scan(self):
+        from vnext import historical_fiscal_labels as labels
+        from vnext.historical_dei import release_aware
+        from vnext import fiscal_year_labels
+        raw=annual().replace(b'</body></html>',b'<p>Our fiscal year ends on December 31. If the proposed naming convention is approved, References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021.</p></body></html>')
+        inspected=release_aware(fiscal_year_labels.inspect_fiscal_year_labels)(
+            primary_bytes=raw,companyfacts_bytes=facts(),expected_primary_sha256=sha256_bytes(content=raw),
+            expected_companyfacts_sha256=sha256_bytes(content=facts()),expected_cik='19617',filing=FILING)
+        self.assertEqual(inspected['source_defined_fiscal_year'],2022)
+        with patch.object(labels,'_frozen_inspection',return_value={'inspection':inspected}), \
+             patch.object(labels,'resolve_repository_file',side_effect=AssertionError('No unnecessary second read')):
+            report=labels.inspect_prepared_fiscal_year_labels(repo_root=None,prepared={})
+        self.assertEqual(report['inspection']['status'],'EXPLICIT_DEFINITION_UNRESOLVED')
+        self.assertIsNone(report['inspection']['source_defined_fiscal_year'])
+        self.assertEqual(report['inspection']['rejected_non_actual_definitions'][0]['reason'],'DEFINITION_CONDITIONAL_NOT_ADOPTED')
+        self.assertEqual(inspected['source_defined_fiscal_year'],2022)
+
     def test_hash_subject_and_same_accession_evidence_are_required(self):
         for change in [{'expected_primary_sha256':'0'*64},{'expected_companyfacts_sha256':'0'*64},{'expected_cik':'1'}]:
             with self.subTest(change=change),self.assertRaises(ValueError):self.resolve(**change)
