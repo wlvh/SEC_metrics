@@ -71,6 +71,23 @@ class DeiReleaseSelectionTest(unittest.TestCase):
         with self.assertRaisesRegex(NormalAnnualInputError, "ANNUAL_DURATION_NOT_IMPLEMENTED"):
             self.evaluate(raw, dei_release=SUCCESSOR)
 
+    def test_historical_annual_and_remaining_views_use_the_explicit_adapter(self):
+        from vnext import historical_dei, normal_annual_input
+        self.assertIs(historical_dei.annual_period,
+                      historical_dei.release_aware(normal_annual_input.annual_period))
+        self.assertEqual(PERIOD, historical_dei.annual_period(
+            raw=annual(), cik="19617", filing=FILING))
+        with self.assertRaisesRegex(NormalAnnualInputError, "DEI_SUBJECT_CONFLICT"):
+            historical_dei.annual_period(raw=annual(), cik="1", filing=FILING)
+
+    def test_historical_fiscal_labels_still_reject_changed_source_bytes(self):
+        from vnext import fiscal_year_labels, historical_dei
+        inspector = historical_dei.release_aware(fiscal_year_labels.inspect_fiscal_year_labels)
+        with self.assertRaisesRegex(ValueError, "FISCAL_LABEL_SOURCE_BYTES_CHANGED"):
+            inspector(primary_bytes=annual(), companyfacts_bytes=b'{}',
+                expected_primary_sha256='wrong', expected_companyfacts_sha256='wrong',
+                expected_cik='19617', filing=FILING)
+
 
 if __name__ == '__main__':
     unittest.main()

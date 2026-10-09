@@ -127,13 +127,8 @@ def select_filing(*, company, submissions):
                                         and f["reportDate"] != latest_end]}
 
 
-def annual_period(*, raw, cik, filing, dei_release="YEAR_ONLY"):
-    """Read annual DEI contexts; an explicit successor accepts older releases.
-
-    The default keeps the saved ordinary contract. YEAR_QUARTER_OR_DATE accepts
-    only SEC DEI URI release suffixes, not arbitrary caller-supplied patterns.
-    Entity, form, fiscal year and complete annual context checks are unchanged.
-    """
+def dei_namespace_pattern(dei_release="YEAR_ONLY"):
+    """One finite DEI release selection shared by annual and issuer checks."""
     patterns = {
         "YEAR_ONLY": r"https?://xbrl\.sec\.gov/dei/\d{4}",
         "YEAR_QUARTER_OR_DATE":
@@ -141,7 +136,12 @@ def annual_period(*, raw, cik, filing, dei_release="YEAR_ONLY"):
     }
     _need(type(dei_release) is str and dei_release in patterns,
           "DEI_RELEASE_SELECTION_INVALID", "IMPLEMENTATION_GAP")
-    namespace_pattern = patterns[dei_release]
+    return patterns[dei_release]
+
+
+def annual_period(*, raw, cik, filing, dei_release="YEAR_ONLY"):
+    """Read original annual contexts; explicit older releases retain checks."""
+    namespace_pattern = dei_namespace_pattern(dei_release)
     parsed = parse_accession_xbrl_source(raw_bytes=raw)
     from .governance_signals import _FactAttributes
     metadata = _FactAttributes()

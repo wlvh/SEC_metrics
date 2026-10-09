@@ -24,9 +24,9 @@ EXTRA_FIELDS = ('company_id', 'result_id', 'record_root', 'source_root',
 # Old E01 item-code counts do not satisfy the adopted content-confirmed M&A
 # definition. Keep them in old records, not the new company's current result.
 CURRENT_METRICS = SAVED_METRIC_IDS - {'E01'}
-# A13 has an existing native Spec/writer but no default current producer.
+# Explicit bank-source cases have existing Specs/writer, no default current producer.
 # A selected-year consumer must explicitly supply its per-metric factory;
-# other unimplemented families remain closed. Verified saved A13 is readable.
+# other unimplemented families remain closed. Verified saved explicit cases are readable.
 
 
 def _need(condition, reason):
