@@ -9,6 +9,19 @@ from vnext import company_local as local
 
 
 class HistoryCompanyDispatchTest(TestCase):
+    def test_risk_headings_use_shared_company_controller_without_replacing_existing_families(self):
+        from vnext.historical_risk_heading_case import prepare_historical_risk_heading_year_case, PROCESSING_FILES
+        from vnext.historical_lodging_results import prepare_historical_lodging_year_case
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(metric_ids=['D01','B10','B04'])
+        args = shared.call_args.kwargs
+        self.assertIs(args['case_factories']['D01'], prepare_historical_risk_heading_year_case)
+        self.assertEqual(args['processing_files_by_metric']['D01'], PROCESSING_FILES)
+        self.assertIs(args['case_factories']['B10'], prepare_historical_lodging_year_case)
+        self.assertIs(args['case_factories']['B04'], prepare_historical_statement_year_case)
+        self.assertEqual(args['fiscal_years'], [2024,2025])
+
     def test_interest_coverage_adds_only_its_current_annual_case(self):
         from vnext.historical_statement_cases import (
             prepare_historical_current_annual_year_case, prepare_historical_statement_year_case,
