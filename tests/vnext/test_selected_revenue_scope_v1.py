@@ -15,7 +15,7 @@ def originals(*, total='58496', product='50914', alliance='7582', year='2025', f
     source, annual = fixture()
     def row(label, concept, value):
         return f'<tr><td>{label}</td><td><ix:nonFraction name="us-gaap:{concept}" contextRef="annual" unitRef="usd" scale="6" decimals="-6">{value}</ix:nonFraction></td></tr>'
-    table = '<table><tr><td>Year Ended December 31,</td><td></td></tr><tr><td>(MILLIONS, EXCEPT PER SHARE DATA)</td><td>'+year+'</td></tr>'
+    table = '<div>Consolidated Statements of Income</div><table><tr><td>Year Ended December 31,</td><td></td></tr><tr><td>(MILLIONS, EXCEPT PER SHARE DATA)</td><td>'+year+'</td></tr>'
     table += row('Product revenues', APPROVED[0].split(':')[1],product)
     table += row('Alliance revenues','RevenueFromCollaborativeArrangementExcludingRevenueFromContractWithCustomer',alliance)
     table += row('Total revenues', 'Revenues',total)
@@ -67,6 +67,34 @@ class SelectedRevenueScopeTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'SELECTED_COMPONENT_NOT_TOTAL'):
             verify_revenue_observations(observations=old[2],scope=self.scope())
         self.assertEqual(source_facts,facts(annual))
+
+    def test_restricted_caption_does_not_become_no_split_success(self):
+        primary,xml,annual=originals()
+        primary['raw_bytes']=primary['raw_bytes'].replace(b'<table>',b'<table><caption>Income statement of Segment Alpha only; excludes all other company operations</caption>')
+        primary['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=primary['raw_bytes'])
+        with self.assertRaisesRegex(ValueError,'STATEMENT_CAPTION_SCOPE_UNRESOLVED'):
+            selected_revenue_scope(primary=primary,xml=xml,annual=annual,approved_concepts=APPROVED)
+
+    def test_explicit_local_exclusion_is_not_overruled_by_same_context(self):
+        primary,xml,annual=originals()
+        primary['raw_bytes']=primary['raw_bytes'].replace(b'</table>',b'<tr><td colspan="2">Total revenues exclude operations of Subsidiary Beta</td></tr></table>')
+        primary['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=primary['raw_bytes'])
+        with self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+            selected_revenue_scope(primary=primary,xml=xml,annual=annual,approved_concepts=APPROVED)
+
+    def test_explicit_scope_after_consolidated_title_is_not_ignored(self):
+        primary,xml,annual=originals()
+        primary['raw_bytes']=primary['raw_bytes'].replace(b'</div><table>',b'</div><p>Only Segment Alpha is included in this statement.</p><table>')
+        primary['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=primary['raw_bytes'])
+        with self.assertRaisesRegex(ValueError,'STATEMENT_INTRODUCTION_SCOPE_UNRESOLVED'):
+            selected_revenue_scope(primary=primary,xml=xml,annual=annual,approved_concepts=APPROVED)
+
+    def test_income_items_alone_do_not_prove_consolidated_statement(self):
+        primary,xml,annual=originals()
+        primary['raw_bytes']=primary['raw_bytes'].replace(b'Consolidated Statements of Income',b'Segment income')
+        primary['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=primary['raw_bytes'])
+        with self.assertRaisesRegex(ValueError,'CONSOLIDATED_STATEMENT_TITLE_UNPROVEN'):
+            selected_revenue_scope(primary=primary,xml=xml,annual=annual,approved_concepts=APPROVED)
 
     def test_source_bound_cells_year_and_primary_xml_retained(self):
         scope=self.scope();self.assertEqual(scope['status'],'REPORTED_COMPONENTS_AND_TOTAL')
