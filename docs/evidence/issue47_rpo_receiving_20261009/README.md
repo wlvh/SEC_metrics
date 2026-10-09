@@ -30,3 +30,5 @@ python3 tools/vnext_company.py results --company salesforce \
 实际已接公共PR97/e53609e7，只有ordinary_public_projection_v1的B12公开说明。旧任务results只读保持原保存CSV文字，未原地改旧版本，不能把这次读口当新说明已覆盖旧数据；见display-old-read.json。随后以原五份已算records/Result/Trace及输入ID，通过现有save_calculated_case纯保存/渲染/读29.413秒，禁止原生金额检查器与Calculator，5结果和Trace/输入ID都相同，旧文件保持，新另存CSV明确RPO!=ARR/cRPO!=ARR/not a churn rate。只补实际期间/身份元数据，不重算原金额。见rendered-saved-summary.json。初保存输入未带原claims导致SELECTED_CLAIM_MISSING，原拒绝保持；补的是保存records里的原claim引用，不是新答案或手工操作数，随后在新目录保存。
 
 公共PR95/0ff6fc9e也作为实际必要普通更新依赖接收：不让未用录制source_session变动触发旧结果复算，当前ordinary_current_update仍由#28实现，本方未重写；其Paramount唯一C01消费者验证在原事件主记录接续，不扩本RPO业务族。两个共享增量未入main前，本候选明确依赖其源码，旧记录/现行新展示版本分开，当前新用户RPO入口仍需受影响最终公司读取验证。
+
+最后在同一公司入口只处理FY2026一个相关配置迁移：首4.233s、禁止factory复.818s、独立读.510s，72400000000 USD/2026-01-31/原Result ID保持，当前CSV明确RPO非ARR/churn；其余四年没有重算，所有旧Result文件保持。见final-cli-display.json/log。共享95+97实际组合43例19.856s零skip，原公共配置/展示反例进入其真实接口，本方不写第二controller；public-combination.log保结果。这里的公司接线验证成立，完整其他公司年度/在线来源与1950目标仍未完成，正式接受/发布权限不增加。
