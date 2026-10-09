@@ -2,7 +2,7 @@
 
 本轮唯一主验证记录为 [verification.json](verification.json)。能力结构检查通过（6.868秒），检查器两个副产物按检查前字节恢复；这只证明结构对齐。实际 main 仍为 `8588ccbb`；这里是分支交付，尚未入 main，也不是完整五年业务接受。
 
-当前可取得的组合是 PR67 的公共候选 `c850cf21841283275998f8abdea01cf77e14d0af` 加本分支 `task/issue47-history-consumers`。原adee/c56验证按原版本保留，下方2026-10-09记录核当前组合。后者只增加现有历史期间选择、酒店 case 适配及同一公司 CLI 分派。公共控制器、保存器、投影、状态恢复和测试运行器全部来自 PR67。PR59 的已选来源共用计算已经包含在 PR67，不需要再次顺序合入 PR59。现有 `historical_dei` 旧命名空间包装作为必要上游依赖保留，没有将删除所有旧包装作为接收前置。
+当前可取得的组合是 PR67 的公共候选 `3a98cee0fa0966ee758931fdd31dbe5a4640669c` 加本分支 `task/issue47-history-consumers`。原adee/c56验证按原版本保留，下方2026-10-09记录核当前组合。后者只增加现有历史期间选择、酒店 case 适配及同一公司 CLI 分派。公共控制器、保存器、投影、状态恢复和测试运行器全部来自 PR67。PR59 的已选来源共用计算已经包含在 PR67，不需要再次顺序合入 PR59。现有 `historical_dei` 旧命名空间包装作为必要上游依赖保留，没有将删除所有旧包装作为接收前置。
 
 ## 2026-10-09 首批接收审查入口
 
@@ -83,3 +83,5 @@ Paramount可见表头起日2025-08-07与原生context2025-08-08冲突必须同�
 2026-10-09默认入口回修的历史接收：在固定PR71/c432d035上组合公共818dd871，不引PR83、不重做公共成对fresh任务。历史现有范围例新增prepare_program调用即失败断言；[40项消费者短测试](pr71-retained-native-consumer-short.log)6.923s/零skip，保存范围不进原生安装。[完整处理配置比较](pr71-retained-native-processing-compare.json)证明B10/B11各123文件配置逐字段不变；[原两年保存任务复跑](pr71-retained-native-repeat.json)禁止prepare_program/install_retained_local/producer及socket后2.474s，无计算；[独立进程读](pr71-retained-native-cold-read.json)0.960s，四值/单位/实际期间及32结果/pointer字节保持。没有新财报计算、来源树/程序树复制或业务调用。公共默认任务main166.358s/修后165.199s同HTTP/公司/指标的验证由其主记录负责，本方复用其范围，不把耗时相近写成提速。
 
 上述组合已保存3d27f67d；公共限定复核PASS_LIMITED_COMPATIBILITY并发布c850cf21后，本方接收到可取得组合604ae944，公共后继只改复核日志及说明，运行/test/config与818完全相同，消费者结果复用。公共安装静态探针核保留程序树与main/修后完整链相同、配置39/支持38不缩小；新增上层版本说明字段由静态安装验证，未重跑长链该字段，不扩大证据。原在线说明冲突旧句已由公共侧原位纠正。当前组合新CI单独核终态，旧c432的9项成功不移签；不Ready/main/业务采纳，首批不扩新族或PR83。
+
+公共P2/3a98只将实际normal_annual_input及normal_source_authority两文件加入处理配置；历史42相关小例0.342s零skip，完整配置比较见pr71-two-dependencies-configuration.json。旧记录没有跟踪这两模块，下一次检查正确重处理一次，不能沿用旧配置冒称已覆盖。仅对真实Marriott FY2025 B10执行正常检查：一次新处理版本、Result ID/69.3 percent/实际期间保持；同输入禁止factory复跑不计算，其他三个坐标的旧版本/Result ID不变。随后独立results读全状态1.078s、全部结果/pointer文件不变（数量见实际JSON），四值保持；未重算整两年或五年。初驱动错误把只请求FY2025/B10的运行CSV当全状态表，末尾AssertionError保留，已经完成的处理/复跑直接由保存执行报告核对，不重跑；最初两次外部耗时因末尾断言前未保存而不可用，不编造时长。当前证据是[实际接收记录](pr71-two-dependencies-real-final.json)。新增调用0，旧结果/失败/Run不改，前驱429的9项CI成功按其原头保留，新配置组合CI另核。
