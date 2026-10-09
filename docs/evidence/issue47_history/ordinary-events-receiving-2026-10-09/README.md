@@ -16,4 +16,6 @@ Macy FY2023的53周窗口2023-01-29→2024-02-03，E03=5 count，实际来源/�
 
 ## 已接公共修补后的正值复跑
 
-2026-10-09核实际加载路径为原历史checkout的ordinary_current_update.py旧副本，而main/3d6030b1的_current_sources已从真实最后GET计算attempt ID并验证body/headers；先前误比了调用段，未比函数实现，现已纠正。只逐字节接所需公共更新文件及正常处理配置，不新写控制器、不删旧GET、不改账本。受影响原FY2025五位置正常版本迁移36.361s；禁止原factory复跑7.538s、独立读0.344s，五值3/0/3/0/0 count与已提交独立阅读两日期基准同，40结果/pointer复跑/读保持。先前部分失败和PREVIOUS_RESULT读口记录按原阶段保留，不改成成功。新案例仍仅原历史分支开发，公共source-only事件API/继任多CIK接缝未到，E01、在线历史来源及完整五年责任继续。
+2026-10-09核实际加载路径为原历史checkout的ordinary_current_update.py旧副本，而main/3d6030b1的_current_sources已从真实最后GET计算attempt ID并验证body/headers；先前误比了调用段，未比函数实现，现已纠正。只逐字节接所需公共更新文件及正常处理配置，不新写控制器、不删旧GET、不改账本。受影响原FY2025五位置正常版本迁移36.361s；禁止原factory复跑7.538s、独立读0.344s，五值3/0/3/0/0 count与已提交独立阅读两日期基准同，74结果/pointer复跑/读保持。先前部分失败和PREVIOUS_RESULT读口记录按原阶段保留，不改成成功。新案例仍仅原历史分支开发，公共source-only事件API/继任多CIK接缝未到，E01、在线历史来源及完整五年责任继续。
+
+接公共更新后的27相关期间/事件/收入小例0.107s零skip，包含原存量期间状态反例；不当作整个旧runtime或五年全业务覆盖。
