@@ -125,6 +125,42 @@ class SelectedEventSourceTest(unittest.TestCase):
         with self.assertRaisesRegex(NormalZeroAiError, 'HISTORY_SNAPSHOT_CONFLICT'):
             self.read(history_validator=check)
 
+    def test_gap_day_block_is_selected_and_validated_using_same_effective_last_day(self):
+        from scripts.vnext.normal_history_catalog import block_last_days, history_block_coherence
+        self.add_issuer('1048286', '0001048286-25-000011', history=True)
+        index_url = submissions_url(cik=1048286)
+        index_row = next(row for row in self.rows if row['source_url'] == index_url)
+        payload = json.loads((self.source / index_row['repo_relative_path']).read_bytes())
+        payload['filings']['files'][0].update(filingFrom='2024-01-01', filingTo='2024-12-31')
+        payload['filings']['recent'] = {'form': ['S-1'], 'reportDate': [''], 'filingDate': ['2025-01-02'],
+            'accessionNumber': ['0000000000-25-000002'], 'primaryDocument': ['other.htm']}
+        shard = payload['filings']['files'][0]
+        block_url = submissions_file_url(file_name=shard['name'])
+        block_row = next(row for row in self.rows if row['source_url'] == block_url)
+        block = json.loads((self.source / block_row['repo_relative_path']).read_bytes())
+        block['filingDate'] = ['2025-01-01', '2024-12-31']
+        block['reportDate'] = ['2025-01-01', '2024-12-31']
+        self.save(block_url, json.dumps(block).encode())
+        self.save(index_url, json.dumps(payload).encode())
+        self.save(hdr_sgml_url(cik=1048286, accession='0001048286-25-000011'),
+                  self.header.read_bytes().replace(b'20250108', b'20250101'), '0001048286-25-000011')
+        checked = []
+        def coherence(*, shard, body, rows, shards, period, last_day):
+            checked.append(last_day)
+            return history_block_coherence(shard=shard, body=body, rows=rows, last_day=last_day)
+        output = self.read(history_last_days=block_last_days, history_validator=coherence)
+        self.assertEqual(checked, ['2025-01-01'])
+        self.assertEqual(len(output['claims']), 1)
+        self.assertEqual(output['filings'][0]['filingDate'], '2025-01-01')
+        self.assertEqual(output['event_window'], PERIOD)
+        def conflict(**context): return {'reason': 'COMPLETE_BLOCK_UNRESOLVED'}
+        with self.assertRaisesRegex(NormalZeroAiError, 'HISTORY_SNAPSHOT_CONFLICT'):
+            self.read(history_last_days=block_last_days, history_validator=conflict)
+        with self.assertRaisesRegex(ValueError, 'HISTORY_LAST_DAYS_INVALID'):
+            self.read(history_last_days=lambda **kwargs: {}, history_validator=coherence)
+        with self.assertRaisesRegex(ValueError, 'HISTORY_VALIDATOR_REQUIRED'):
+            self.read(history_last_days=block_last_days)
+
     def test_missing_header_and_header_date_conflict_remain_failures(self):
         self.add_issuer('1048286', '0001048286-25-000011')
         raw = self.header.read_bytes(); self.header.unlink()

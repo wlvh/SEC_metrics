@@ -19,6 +19,7 @@ with tempfile.TemporaryDirectory() as tmp:
             # The original signature has no validator argument; use its own
             # untouched default, rather than patching its source/body parser.
             assert kwargs.pop('history_validator') is None
+            assert kwargs.pop('history_last_days') is None
             return module._registered_event_sources(**kwargs)
         try:
             with patch('scripts.vnext.selected_event_source_v1._registered_event_sources',original):

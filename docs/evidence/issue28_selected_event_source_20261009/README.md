@@ -96,3 +96,33 @@ rerun. The old failures remain. No competing controller was written here.
 Original business ledger unchanged: 195 claim rows, SHA256
 `6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb`.
 New SEC/provider/paid calls 0/0/0. No merge, Ready, adoption or deployment.
+
+## Gap-day increment after the first limited review
+
+The first review at `820461a0` is NEEDS_FIX, retained in full. Its small
+counterexample shows that a block containing a cross-year gap-day event is
+skipped before the complete-body callback. Empty acquired census can then
+return a smaller source set; a captured header census instead raises the
+existing supplement gap. Neither result creates business credit here.
+
+The explicit successor now also accepts `history_last_days(payload=..., shards=...)`.
+A historical consumer can pass its existing `block_last_days` function. It
+returns every original shard name and effective ISO date; missing names,
+invalid dates or shortening declared coverage are rejected. A complete-body
+validator is required with that strategy. The walk selects blocks using those
+effective ends and passes that exact `last_day` into the body validator.
+The declared shard, full body, issuer and actual task period are preserved.
+No caller changes the yearly window to avoid the problem. Without the new
+strategy the original declared filingTo selection/check remain unchanged.
+This is an explicit program/config dependency, not an arbitrary date answer
+or a new source acquisition permission.
+
+`gap-regression-before.log` records the missing optional interface in the
+first patch (TypeError); the semantic omission itself is the independent
+`history-gap-counterexample.log`. `gap-regression-after.log` contains eight
+passing small tests in 0.097s, including the actual catalog algorithm selecting
+the Jan1 block and sending the same Jan1 boundary to complete-body coherence.
+The conflict, missing-boundary and missing-validator negatives still fail.
+Earlier Marriott material and current event save/CSV/read results are reused:
+their declared ordinary overlap policy and other responsibilities are unchanged.
+The new gap responsibility is not claimed from those old material tests.

@@ -28,7 +28,7 @@ def _need(condition, reason):
 
 
 def read_selected_event_sources(*, data_root, rules_root, prepared, period,
-                                registered_union=False, history_validator=None):
+                                registered_union=False, history_validator=None, history_last_days=None):
     """Read exact SEC event inputs for an already selected issuer/window.
 
     ``registered_union`` must be selected from the approved event scope by the
@@ -40,6 +40,8 @@ def read_selected_event_sources(*, data_root, rules_root, prepared, period,
     source, rules = Path(data_root), Path(rules_root)
     _need(type(registered_union) is bool, 'REGISTRANT_SCOPE_REQUIRED')
     _need(history_validator is None or callable(history_validator), 'HISTORY_VALIDATOR_INVALID')
+    _need(history_last_days is None or callable(history_last_days), 'HISTORY_LAST_DAYS_INVALID')
+    _need(history_last_days is None or callable(history_validator), 'HISTORY_VALIDATOR_REQUIRED')
     company = prepared['company_id']
     source_rows = [row for row in _registry_rows(repo_root=source) if row['company_id'] == company]
     rules_rows = [row for row in _registry_rows(repo_root=rules) if row['company_id'] == company]
@@ -67,11 +69,13 @@ def read_selected_event_sources(*, data_root, rules_root, prepared, period,
     if registered_union:
         claims, manifests, filings, registered_scope = _registered_event_sources(
             repo_root=source, reader=reader, prepared=context, inventory=inventory,
-            period=period, rules_root=rules, history_validator=history_validator)
+            period=period, rules_root=rules, history_validator=history_validator,
+            history_last_days=history_last_days)
     else:
         claims, manifests, filings = _event_sources(
             repo_root=source, reader=reader, prepared=context, inventory=inventory,
-            installed_census_required=False, history_validator=history_validator)
+            installed_census_required=False, history_validator=history_validator,
+            history_last_days=history_last_days)
     proofs = [entry['proof'] for entry in reader.proofs.values()]
     admission = verify_ordinary_source_proofs(data_root=source, proofs=proofs)
     _need(sha256_file(path=ledger) == before, 'LEDGER_CHANGED_DURING_READ')
