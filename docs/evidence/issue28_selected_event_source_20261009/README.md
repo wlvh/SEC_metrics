@@ -126,3 +126,10 @@ The conflict, missing-boundary and missing-validator negatives still fail.
 Earlier Marriott material and current event save/CSV/read results are reused:
 their declared ordinary overlap policy and other responsibilities are unchanged.
 The new gap responsibility is not claimed from those old material tests.
+
+The gap-only followup review at `35b9329d` passed. The original NEEDS_FIX
+remains the prefix of the same conclusion. Cumulative agent tools 47/messages
+3, no original-material rerun. Main `ae8a13c8` was received at `b306f154`; all
+three reviewed source/test files are byte-identical to `35b9329d`. The new
+combined small test terminal is in `main-receiving-small-tests.log`. Neither
+main reception nor the source interface review grants a full company result.
