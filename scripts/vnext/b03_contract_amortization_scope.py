@@ -20,6 +20,63 @@ from .text_results_v2 import _ReportedFactMetadata, _verified_context
 from .xbrl_namespace_policy import YEAR_ONLY, is_fasb_namespace
 
 
+class _RevenueTableIndex(_InlineTableIndex):
+    """Do not give explicitly hidden, empty cells a visible column.
+
+    Original bytes and native fact order stay intact. Nonempty cells, hidden
+    facts and normal spacers retain the inherited treatment.
+    """
+    def __init__(self, raw):
+        super().__init__(raw)
+        self._pending_empty_cell = None
+
+    @staticmethod
+    def _hidden_cell(tag, attrs):
+        style = dict(attrs).get('style', '') or ''
+        return tag in {'td', 'th'} and re.search(
+            r'(?:^|;)\s*display\s*:\s*none\s*(?:!important\s*)?(?:;|$)', style, re.I)
+
+    def _flush_pending(self):
+        if self._pending_empty_cell is not None:
+            tag, attrs = self._pending_empty_cell
+            self._pending_empty_cell = None
+            super().handle_starttag(tag, attrs)
+
+    def handle_starttag(self, tag, attrs):
+        self._flush_pending()
+        if self._hidden_cell(tag, attrs):
+            self._pending_empty_cell = (tag, attrs)
+        else:
+            super().handle_starttag(tag, attrs)
+
+    def handle_data(self, data):
+        if self._pending_empty_cell is not None and not data.strip():
+            return
+        self._flush_pending()
+        super().handle_data(data)
+
+    def handle_entityref(self, name):
+        self._flush_pending()
+        super().handle_entityref(name)
+
+    def handle_charref(self, name):
+        self._flush_pending()
+        super().handle_charref(name)
+
+    def handle_endtag(self, tag):
+        if self._pending_empty_cell is not None and tag == self._pending_empty_cell[0]:
+            self._pending_empty_cell = None
+            return
+        self._flush_pending()
+        super().handle_endtag(tag)
+
+    def handle_startendtag(self, tag, attrs):
+        self._flush_pending()
+        if self._hidden_cell(tag, attrs):
+            return
+        super().handle_startendtag(tag, attrs)
+
+
 def _need(condition, reason):
     if not condition:
         raise ValueError(reason)
@@ -71,10 +128,16 @@ def _visible_revenue_deductions(*, raw, parsed, amounts, period):
     base = consolidated[0]
     product = dimensions(base)['srt:ProductOrServiceAxis']
     segments = []
+    totals = []
     for row in amounts:
         if row is base:
             continue
         resolved = dimensions(row)
+        if (set(resolved) == {'srt:ProductOrServiceAxis', 'srt:ConsolidationItemsAxis'}
+                and resolved['srt:ProductOrServiceAxis'] == product
+                and resolved['srt:ConsolidationItemsAxis'] == 'us-gaap:OperatingSegmentsMember'):
+            totals.append(row)
+            continue
         if (set(resolved) != {'srt:ProductOrServiceAxis',
                 'srt:ConsolidationItemsAxis',
                 'us-gaap:StatementBusinessSegmentsAxis'}
@@ -89,7 +152,14 @@ def _visible_revenue_deductions(*, raw, parsed, amounts, period):
             or sum(Decimal(row['value_usd']) for row in segments) >
                 Decimal(base['value_usd'])):
         return None
-    index = _InlineTableIndex(raw)
+    # An operating-segments total overlaps the individual segments. Verify
+    # that relationship without adding it a second time or treating it as
+    # the consolidated amount (which can differ).
+    if totals and (len(totals) != 1 or not segments
+            or Decimal(totals[0]['value_usd']) !=
+                sum(Decimal(row['value_usd']) for row in segments)):
+        return None
+    index = _RevenueTableIndex(raw)
     index.feed(raw.decode('utf-8-sig'))
     index.close()
     mapped = _fact_cells(index, parsed, {row['ordinal'] for row in amounts})
@@ -142,6 +212,7 @@ def _visible_revenue_deductions(*, raw, parsed, amounts, period):
             return None
         proofs.append({'fact_ordinal': amount['ordinal'],
             'relation_class': ('CONSOLIDATED_REVENUE_DEDUCTION' if amount is base
+                               else 'OPERATING_SEGMENTS_TOTAL_REVENUE_DEDUCTION' if amount in totals
                                else 'OPERATING_SEGMENT_REVENUE_DEDUCTION'),
             'dimensions': amount['dimensions'],
             'table_id': table['table_id'],

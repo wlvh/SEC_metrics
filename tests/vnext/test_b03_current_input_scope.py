@@ -7,6 +7,7 @@ from copy import deepcopy
 from unittest.mock import patch
 import tempfile
 import unittest
+from types import SimpleNamespace
 
 from tests.vnext.common import REPO_ROOT
 from vnext.ordinary_b03_input_scope import inspect_depreciation_input
@@ -279,6 +280,82 @@ class CurrentB03SourceOnlyTest(unittest.TestCase):
         self.assertFalse(scope['blocked'])
         self.assertEqual(scope['status'],'COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED')
         self.assertTrue(any(Decimal(r['value_usd'])==Decimal('135000000') for r in scope['excluded_facts']))
+
+
+
+class ContractAggregateTest(unittest.TestCase):
+    def material(self, aggregate=7, consolidated=8):
+        # Small synthetic labelled tables: the segment total is an overlapping
+        # view, never an additional amount added to the two segments.
+        rows = [('Revenues', ''), ('Gross fee revenues', 20), ('Contract investment amortization', consolidated),
+                ('Net fee revenues', 20-consolidated)]
+        tables = ['<table><tr><th></th><th colspan="2">2025</th></tr>']
+        for label, value in rows:
+            text = ('<ix:nonFraction contextRef="synthetic" scale="6">-'+str(value)+'</ix:nonFraction>') if label.startswith('Contract') else str(value)
+            tables.append('<tr><td>'+label+'</td><td>'+text+'</td><td></td></tr>')
+        tables += ['</table><table><tr><th></th><th colspan="2">2025</th><th colspan="2">2025</th><th colspan="2">2025</th></tr>',
+            '<tr><td>Gross fee revenues</td><td>10</td><td></td><td>10</td><td></td><td>20</td><td></td></tr>',
+            '<tr><td>Contract investment amortization</td>'+''.join('<td><ix:nonFraction contextRef="synthetic" scale="6">-'+str(n)+'</ix:nonFraction></td><td></td>' for n in (5,2,aggregate))+'</tr>',
+            '<tr><td>Net fee revenues</td><td>5</td><td></td><td>8</td><td></td><td>'+str(20-aggregate)+'</td><td></td></tr></table>']
+        raw=('<html><body>'+''.join(tables)+'</body></html>').encode()
+        parsed=SimpleNamespace(facts=[{'ordinal':n,'scale':'6'} for n in range(1,5)])
+        product={'srt:ProductOrServiceAxis':'test:FeeMember'}
+        group={**product,'srt:ConsolidationItemsAxis':'us-gaap:OperatingSegmentsMember'}
+        dimensions=[product,{**group,'us-gaap:StatementBusinessSegmentsAxis':'test:SegmentA'},
+                    {**group,'us-gaap:StatementBusinessSegmentsAxis':'test:SegmentB'},group]
+        amounts=[{'ordinal':i+1,'value_usd':str(n*1000000),'dimensions':d}
+                 for i,(n,d) in enumerate(zip((consolidated,5,2,aggregate),dimensions))]
+        return raw,parsed,amounts
+
+    def check(self, material):
+        from vnext.b03_contract_amortization_scope import _visible_revenue_deductions
+        raw,parsed,amounts=material
+        return _visible_revenue_deductions(raw=raw,parsed=parsed,amounts=amounts,period=PERIOD)
+
+    def test_aggregate_preserves_all_proofs_without_double_counting(self):
+        answer=self.check(self.material())
+        self.assertIsNotNone(answer)
+        self.assertEqual([x['fact_ordinal'] for x in answer],[1,2,3,4])
+        self.assertEqual(answer[-1]['relation_class'],'OPERATING_SEGMENTS_TOTAL_REVENUE_DEDUCTION')
+        self.assertEqual(answer[-1]['displayed_amounts'],['20','-7','13'])
+
+    def test_unreconciled_aggregate_or_unknown_scope_stays_unproved(self):
+        for material in (self.material(aggregate=6),self.material(aggregate=9,consolidated=8)):
+            with self.subTest(amounts=material[2]):self.assertIsNone(self.check(material))
+        raw,parsed,amounts=self.material()
+        amounts[-1]['dimensions']['srt:ConsolidationItemsAxis']='test:OtherScope'
+        self.assertIsNone(self.check((raw,parsed,amounts)))
+
+    def test_duplicate_aggregate_or_segment_does_not_gain_credit(self):
+        raw,parsed,amounts=self.material()
+        self.assertIsNone(self.check((raw,parsed,[*amounts,dict(amounts[-1])])))
+        amounts[2]['dimensions']=dict(amounts[1]['dimensions'])
+        self.assertIsNone(self.check((raw,parsed,amounts)))
+
+    def test_aggregate_still_requires_original_gross_to_net_relation(self):
+        raw,parsed,amounts=self.material()
+        raw=raw.replace(b'<td>13</td>',b'<td>14</td>')
+        self.assertIsNone(self.check((raw,parsed,amounts)))
+
+    def test_hidden_self_closing_empty_cells_do_not_shift_visible_year_columns(self):
+        raw,parsed,amounts=self.material()
+        # Place two invisible empty cells before the total in each body row,
+        # leaving the unchanged year headers and original native facts.
+        for marker in (b'<td>20</td>', b'<td><ix:nonFraction contextRef="synthetic" scale="6">-7', b'<td>13</td>'):
+            raw=raw.replace(marker,b'<td colspan="2" style="display:none"/><td colspan="2" style="DISPLAY: none !important;"/>'+marker)
+        answer=self.check((raw,parsed,amounts))
+        self.assertIsNotNone(answer)
+        self.assertEqual([x['fact_ordinal'] for x in answer],[1,2,3,4])
+        paired=raw.replace(b'style="display:none"/>',b'style="display:none"> </td>')
+        paired=paired.replace(b'style="DISPLAY: none !important;"/>',b'style="DISPLAY: none !important;"></td>')
+        self.assertIsNotNone(self.check((paired,parsed,amounts)))
+
+    def test_visible_spacers_and_nonempty_hidden_cells_are_not_erased(self):
+        raw,parsed,amounts=self.material()
+        marker=b'<td><ix:nonFraction contextRef="synthetic" scale="6">-7'
+        for extra in (b'<td colspan="4"/>', b'<td colspan="4" style="display:none">uncertain layout</td>'):
+            with self.subTest(extra=extra):
+                self.assertIsNone(self.check((raw.replace(marker,extra+marker),parsed,amounts)))
 
 
 if __name__=='__main__':unittest.main()
