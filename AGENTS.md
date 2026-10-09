@@ -195,6 +195,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `scripts/sec_pipeline.py`：阶段调度、解析、计算、富化、repair、验证、审计与报告的单体内核。
 - `scripts/sec_http.py`：集中验证有效 SEC organization/contact email，并负责精确官方 SEC origin、无隐式 redirect、进程内节流、重试、immutable attempt body/header、request ledger、整表 manifest 与 cooperating-process publication lock。
 - `scripts/sec_urls.py`：集中构造 SEC 官方 endpoint。
+- `scripts/securegpt_sdk.py` / `tools/probe_securegpt.py`：仓库唯一接触公司 SecureGPT SDK 的代码（文本消息格式、可选初始化、单次request、回答读取）及内网连通性探针；离线测试只用模拟SDK，真实PASS须在具备公司SDK/认证的目标OpenShift容器另行取得。不是#28 N1 transport，外网DeepSeek路径、调用账本与指标调用点不变。见`docs/securegpt_probe.md`。
 - `scripts/git_workspace.py`：集中清理 Git 重定向环境，并校验 checkout 与 object/ref 存储边界。
 - `scripts/validation_provenance.py`：读取 source policy、校验 SOP 权威引用角色、捕获 source-input tree、发布关键 artifact digest sidecar，并在 postflight 失败时使终态 fail closed。
 - `scripts/00_*.py` 至 `scripts/12_*.py`：薄单阶段 CLI；04/09 只接受`--workspace-dir <absolute-isolated-root>`，11 无参数时只作active read-back、带该参数时构建legacy candidate，其余wrapper保持无参数。candidate全链统一经`sec_pipeline.py --workspace-dir ... <stage>`；legacy stage 11 mutation使旧provenance失配，stage 12负责终态publication，active stage 11只读。
