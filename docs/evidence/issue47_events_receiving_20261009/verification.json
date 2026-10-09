@@ -53,5 +53,31 @@
     "file": "jpm2023-case.json",
     "seconds": 47.869356625014916,
     "C02_proxy_not_read": true
-  }
+  },
+  "marriott_main_consumer": {
+    "file": "marriott-cli.json",
+    "operations": [
+      {
+        "name": "first",
+        "seconds": 34.716465040808544
+      },
+      {
+        "name": "repeat",
+        "seconds": 7.339980083052069
+      },
+      {
+        "name": "read",
+        "seconds": 0.5664693750441074
+      }
+    ],
+    "protected_file_count": 40,
+    "values": {
+      "C01": "3",
+      "E02": "0",
+      "E03": "3",
+      "E04": "0",
+      "E05": "0"
+    }
+  },
+  "wide_save_reproducer": "reproduce_wide_event_save.py --source-root <restored source-inputs> --output-root <new directory>; writes full case.json before save; no network"
 }
