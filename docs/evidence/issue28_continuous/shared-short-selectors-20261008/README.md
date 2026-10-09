@@ -29,3 +29,5 @@ The one-shot joint verifier takes --code-root (a clean main-compatible tree) and
 该后续短测试包不扩大10月9日首批61/67/71/58/62范围；71两个已有历史测试触发/显式执行由#47负责，本方没有为71另写补丁。
 
 PR84/dd8b8909精确新增两现有class（SuccessorComparability3例、StructuralApplicability2例）尚未进入v2和现有显式CI步骤；pr84-small-selectors.patch统一补这五例，保已接PR82 annual/period及原单进程。AST函数/类不变，临时index精确应用/两文件预期SHA核对通过；静态总11class/46method。这里只父级静态验证，不写成46实际执行，接收方在其现有分支跑新步骤及新head CI。该补丁仍在首批67/71之外，无历史财报重跑或业务信用。
+
+接收闭环：#47已在5512ec10原样接收此补丁。父直接读取该固定提交，两公共文件SHA与static摘要精确一致，diff只两公共文件及同一接收证据；实际receiver日志46例0.048s/OK且五个新方法逐项ok，接收摘要零skip。这里是读取对方实际执行日志，不写作父重跑或新业务接受；新head远端仍按实际终态核，不借旧green。
