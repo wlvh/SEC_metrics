@@ -1,0 +1,38 @@
+{
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "failed_observations": [
+    {
+      "metric_id": "C01",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "59da1fad4db044369998999a903ab52f",
+      "error_type": "AssertionError",
+      "reason": "Existing FY2025 C01 must reuse",
+      "previous_result": {
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "C01",
+        "version": "731791393db54caf98fd61a93a63fd4a",
+        "result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a"
+      },
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025,
+      "defect_holds": [],
+      "read_result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/state/updates/C01/periods/FY2025/results/731791393db54caf98fd61a93a63fd4a",
+      "program_version": {
+        "commit": "4f78bccb35083b5b5fcca16125d657a038201e22",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "existing_result_retained": true,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

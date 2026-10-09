@@ -158,6 +158,18 @@ class CompletedWithheldUpdateTest(unittest.TestCase):
 
 
 class CurrentProcessingConfigurationTest(unittest.TestCase):
+    def test_unused_recorded_source_session_does_not_change_current_configuration(self):
+        original = update.sha256_file
+        for metric in ('B01', 'C01', 'B12', 'B10'):
+            with self.subTest(metric=metric):
+                before = update._configuration(ROOT, 'marriott_international', metric)
+                with patch.object(update, 'sha256_file', side_effect=lambda *, path:
+                        'changed-unused-recorded-session' if path == ROOT/'scripts/vnext/ordinary_source_session.py'
+                        else original(path=path)):
+                    after = update._configuration(ROOT, 'marriott_international', metric)
+                self.assertEqual(before, after)
+                self.assertNotIn('scripts/vnext/ordinary_source_session.py', after['processing_files'])
+
     def test_changed_annual_selection_and_saved_input_checks_are_not_cached(self):
         original=update.sha256_file
         before=update._configuration(ROOT,'marriott_international','B01')
@@ -314,6 +326,23 @@ class CurrentProcessingConfigurationTest(unittest.TestCase):
 class SelectedPeriodUpdateTest(unittest.TestCase):
     setUp = CurrentUpdateTest.setUp
 
+    def test_explicit_a13_selected_case_reaches_factory_without_default_expansion(self):
+        calls=[]
+        def factory(**kw):
+            calls.append(kw)
+            raise ValueError('CONSTRUCTED_A13_FACTORY_BOUNDARY_NO_BUSINESS_RESULT')
+        observed=update.run_once(state_root=self.root,source_root=ROOT,
+            company_id='marriott_international',metric_id='A13',fiscal_year=2021,case_factory=factory)
+        self.assertEqual(len(calls),1)
+        self.assertEqual(observed['status'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertEqual(observed['reason'],'CONSTRUCTED_A13_FACTORY_BOUNDARY_NO_BUSINESS_RESULT')
+
+    def test_a13_without_explicit_year_and_other_unsupported_family_stay_closed(self):
+        for metric,extra in [('A13',{}),('D03',{'fiscal_year':2021,'case_factory':self.factory})]:
+            with self.subTest(metric=metric),self.assertRaisesRegex(ValueError,'CURRENT_UPDATE_METRIC_UNSUPPORTED'):
+                update.run_once(state_root=self.root,source_root=ROOT,
+                    company_id='marriott_international',metric_id=metric,**extra)
+
     def factory(self, *,repo_root,company_id,metric_id,fiscal_year):
         self.factory_calls=getattr(self,'factory_calls',0)+1
         return {'target_period':{'fiscal_year':fiscal_year}}
@@ -370,6 +399,20 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
             return 'changed-producer-dependency' if path.name=='normal_run_inputs.py' else original(path=path)
         with patch.object(update,'sha256_file',side_effect=changed):new=self.selected(2024,processing_files=paths)
         self.assertEqual(new['status'],'CANDIDATE_READY');self.assertNotEqual(new['version'],first['version'])
+
+    def test_explicit_recorded_session_dependency_still_reprocesses(self):
+        paths = ['scripts/vnext/ordinary_source_session.py']
+        first = self.selected(2024, processing_files=paths)
+        original = update.sha256_file
+        with patch.object(update, 'sha256_file', side_effect=lambda *, path:
+                'changed-explicit-session' if path == ROOT/paths[0] else original(path=path)):
+            changed = self.selected(2024, processing_files=paths)
+            calls = self.factory_calls
+            repeated = self.selected(2024, processing_files=paths)
+        self.assertEqual(changed['status'], 'CANDIDATE_READY')
+        self.assertNotEqual(first['version'], changed['version'])
+        self.assertEqual(repeated['status'], 'NO_SOURCE_CONTENT_CHANGE')
+        self.assertEqual(self.factory_calls, calls)
 
     def test_processing_dependency_path_error_preserves_previous_result(self):
         self.selected(2024);pointer=self.root/'periods/FY2024/current-result.json';old=pointer.read_bytes()

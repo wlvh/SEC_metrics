@@ -1,0 +1,7 @@
+recovered-after-label-view 0 125.385431290837
+repeat-forbid-factory 0 5.739425083855167
+independent-read 0 0.5715343330521137
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-average-risk-consumers/SEC_metrics/work/average-risk/recover_label_view.py", line 33, in <module>
+    assert by['A03']['fiscal_year']=='2021' and by['A03']['unit']=='ratio' and by['A03']['value']=='1.11',by['A03']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

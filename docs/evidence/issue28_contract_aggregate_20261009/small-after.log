@@ -1,0 +1,39 @@
+test_aggregate_preserves_all_proofs_without_double_counting (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_aggregate_preserves_all_proofs_without_double_counting) ... ERROR
+test_aggregate_still_requires_original_gross_to_net_relation (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_aggregate_still_requires_original_gross_to_net_relation) ... ERROR
+test_duplicate_aggregate_or_segment_does_not_gain_credit (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_duplicate_aggregate_or_segment_does_not_gain_credit) ... ok
+test_unreconciled_aggregate_or_unknown_scope_stays_unproved (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_unreconciled_aggregate_or_unknown_scope_stays_unproved) ... ok
+
+======================================================================
+ERROR: test_aggregate_preserves_all_proofs_without_double_counting (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_aggregate_preserves_all_proofs_without_double_counting)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 316, in test_aggregate_preserves_all_proofs_without_double_counting
+    answer=self.check(self.material())
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 313, in check
+    return _visible_revenue_deductions(raw=raw,parsed=parsed,amounts=amounts,period=PERIOD)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics/scripts/vnext/b03_contract_amortization_scope.py", line 108, in _visible_revenue_deductions
+    mapped = _fact_cells(index, parsed, {row['ordinal'] for row in amounts})
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics/scripts/vnext/financial_structured.py", line 170, in _fact_cells
+    raise FinancialStructuredError("NATIVE_FACT_ORDINAL_INDEX_DIFFERS")
+vnext.financial_structured.FinancialStructuredError: NATIVE_FACT_ORDINAL_INDEX_DIFFERS
+
+======================================================================
+ERROR: test_aggregate_still_requires_original_gross_to_net_relation (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_aggregate_still_requires_original_gross_to_net_relation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 338, in test_aggregate_still_requires_original_gross_to_net_relation
+    self.assertIsNone(self.check((raw,parsed,amounts)))
+                      ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 313, in check
+    return _visible_revenue_deductions(raw=raw,parsed=parsed,amounts=amounts,period=PERIOD)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics/scripts/vnext/b03_contract_amortization_scope.py", line 108, in _visible_revenue_deductions
+    mapped = _fact_cells(index, parsed, {row['ordinal'] for row in amounts})
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics/scripts/vnext/financial_structured.py", line 170, in _fact_cells
+    raise FinancialStructuredError("NATIVE_FACT_ORDINAL_INDEX_DIFFERS")
+vnext.financial_structured.FinancialStructuredError: NATIVE_FACT_ORDINAL_INDEX_DIFFERS
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (errors=2)
+{"allowed_skips": 0, "errors": 2, "failures": 0, "run": 4, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_b03_current_input_scope.ContractAggregateTest"]}
