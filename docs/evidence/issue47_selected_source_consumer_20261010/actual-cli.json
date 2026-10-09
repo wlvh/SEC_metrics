@@ -1,0 +1,289 @@
+{
+  "base_main": "f6ef7886",
+  "public_commit": "0215ec9d",
+  "code_commit": "fdfa3f51eea3861f544b6b62c811320ae2a0df68",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-source-history-q8_3bust",
+  "scenes": [
+    {
+      "company_id": "salesforce",
+      "report_end": "2026-01-31",
+      "seconds": 4.3780717921908945,
+      "exit_code": 0,
+      "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+      "raw_original_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31"
+      },
+      "selection_reporting_cik": "1108524",
+      "requirements": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+          "roles": [
+            "selected_submissions_inventory"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+          "roles": [
+            "target_annual_primary"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/index.json",
+          "roles": [
+            "target_annual_accession_index"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+          "roles": [
+            "target_annual_instance"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+          "roles": [
+            "selected_companyfacts"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+          "roles": [
+            "prior_annual_primary"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/index.json",
+          "roles": [
+            "prior_annual_accession_index"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+          "roles": [
+            "prior_annual_instance"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        }
+      ],
+      "unresolved_dependency_urls": [],
+      "limitations": [],
+      "source_bytes_not_metric_acceptance": true,
+      "output_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-source-history-q8_3bust/salesforce.stdout"
+    },
+    {
+      "company_id": "macys",
+      "report_end": "2024-02-03",
+      "seconds": 4.051607792032883,
+      "exit_code": 0,
+      "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+      "raw_original_period": {
+        "fiscal_year": 2023,
+        "period_start": "2023-01-29",
+        "period_end": "2024-02-03"
+      },
+      "selection_reporting_cik": "794367",
+      "requirements": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0000794367.json",
+          "roles": [
+            "selected_submissions_inventory"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203.htm",
+          "roles": [
+            "target_annual_primary"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/index.json",
+          "roles": [
+            "target_annual_accession_index"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203_htm.xml",
+          "roles": [
+            "target_annual_instance"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+          "roles": [
+            "selected_companyfacts"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+          "roles": [
+            "prior_annual_primary"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/index.json",
+          "roles": [
+            "prior_annual_accession_index"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+          "roles": [
+            "prior_annual_instance"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        }
+      ],
+      "unresolved_dependency_urls": [],
+      "limitations": [],
+      "source_bytes_not_metric_acceptance": true,
+      "output_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-source-history-q8_3bust/macys.stdout"
+    },
+    {
+      "company_id": "marriott_international",
+      "report_end": "2021-12-31",
+      "seconds": 4.587959500029683,
+      "exit_code": 0,
+      "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+      "raw_original_period": {
+        "fiscal_year": 2021,
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31"
+      },
+      "selection_reporting_cik": "1048286",
+      "requirements": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+          "roles": [
+            "selected_submissions_inventory"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+          "roles": [
+            "target_annual_primary"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/index.json",
+          "roles": [
+            "target_annual_accession_index"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231_htm.xml",
+          "roles": [
+            "target_annual_instance"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+          "roles": [
+            "selected_companyfacts"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828021002433/mar-20201231.htm",
+          "roles": [
+            "prior_annual_primary"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828021002433/index.json",
+          "roles": [
+            "prior_annual_accession_index"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828021002433/mar-20201231_htm.xml",
+          "roles": [
+            "prior_annual_instance"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828021006440/mar-20201231.htm",
+          "roles": [
+            "prior_amendment_primary"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828021006440/index.json",
+          "roles": [
+            "prior_amendment_accession_index"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828021006440/mar-20201231_htm.xml",
+          "roles": [
+            "prior_amendment_instance"
+          ],
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "alternative_status": null
+        }
+      ],
+      "unresolved_dependency_urls": [],
+      "limitations": [],
+      "source_bytes_not_metric_acceptance": true,
+      "output_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/selected-source-history-q8_3bust/marriott_international.stdout"
+    }
+  ],
+  "source_log_manifest_registry_hashes_preserved": true,
+  "full_annual_preparation_and_calculator_calls": 0,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

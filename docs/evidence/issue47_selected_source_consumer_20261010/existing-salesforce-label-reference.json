@@ -1,0 +1,57 @@
+{
+  "selected_fiscal_year": 2026,
+  "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+  "original_dei_fiscal_year": 2025,
+  "metadata_conflict_retained": true,
+  "actual_dates_changed": false,
+  "source_inspection": {
+    "primary_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+    "companyfacts_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+    "accession": "0001108524-26-000060",
+    "entity": "1108524",
+    "actual_period": {
+      "period_start": "2025-02-01",
+      "period_end": "2026-01-31"
+    },
+    "dei_fiscal_year": 2025,
+    "source_definitions": [
+      {
+        "kind": "EXPLICIT_EXAMPLE",
+        "block_index": 671,
+        "text": "Our fiscal year ends on January 31. References to fiscal 2026, for example, refer to the fiscal year ending January 31, 2026.",
+        "raw_start_byte": 628886,
+        "raw_end_byte": 629016,
+        "raw_span_sha256": "1f4ff8c4002e87af0acecbec4d02b4cf62cf79a0ae9a58538940887b400ace30",
+        "mapping": [
+          {
+            "fiscal_year": 2026,
+            "period_end": "2026-01-31"
+          }
+        ],
+        "current_period_labels": [
+          2026
+        ]
+      },
+      {
+        "kind": "EXPLICIT_EXAMPLE",
+        "block_index": 1263,
+        "text": "The Company’s fiscal year ends on January 31. References to fiscal 2026, for example, refer to the fiscal year ending January 31, 2026.",
+        "raw_start_byte": 1385861,
+        "raw_end_byte": 1386007,
+        "raw_span_sha256": "5007f6a432848d934f8fe2d948af3eb27215d930616f9c715375f56d0e74d0d1",
+        "mapping": [
+          {
+            "fiscal_year": 2026,
+            "period_end": "2026-01-31"
+          }
+        ],
+        "current_period_labels": [
+          2026
+        ]
+      }
+    ],
+    "status": "SOURCE_LABEL_CONFLICT"
+  },
+  "reference_file": "docs/evidence/issue47_statement_pilot_20261009/main-receiving-salesforce-label-evidence.json",
+  "reference_commit": "2cc9d5865ba069a01b6ba8fc6a1c101322cfef40"
+}
