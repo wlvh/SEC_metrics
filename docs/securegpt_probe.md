@@ -64,8 +64,8 @@ oc get pods -n 你的namespace                                             # 选
 oc get pod <Pod名> -n 你的namespace -o jsonpath='{.spec.containers[*].name}'; echo   # 容器名
 # 找公司 SDK：输出 .../utils/secure_gpt.py 时，SDK_ROOT 填 utils 的上一级目录
 oc exec -n 你的namespace <Pod名> -c <容器名> -- sh -c 'find / -path "*/utils/secure_gpt.py" 2>/dev/null | head -5'
-# 只列环境变量的名字（不显示值），对照第 0 步记下的名字
-oc exec -n 你的namespace <Pod名> -c <容器名> -- sh -c 'env | cut -d= -f1 | sort'
+# 只列环境变量的名字（不读取值，多行的证书或私钥也不会显示），对照第 0 步记下的名字
+oc exec -n 你的namespace <Pod名> -c <容器名> -- python3 -c 'import os; print("\n".join(sorted(os.environ)))'
 ```
 
 `find` 找不到，或第 0 步需要的环境变量名不在列表里，就停下：这个 Pod 还不具备调用条件，需要平台同事提供带公司 SDK、依赖和凭证的镜像或 Secret。纯 CSV 镜像不满足；`pip install thinc` 之类也装不出公司私有代码。
