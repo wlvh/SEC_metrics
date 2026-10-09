@@ -55,3 +55,17 @@ New provider/paid/SEC0/0/0. Existing amounts, traits and Specs are not revised;
 old defaults/Run/Result/source bytes are retained. Public increment shared with
 #47; historical consumers do not need to adopt the new flag. No Ready, merge,
 adoption, deployment, active or complete390/current online claim.
+
+## Limited review and subject-registration repair
+
+323eabf1 independent review found one P2 despite50 passing tests: a temporary
+source registry could label JPM's admitted sources as Macy's while installed
+traits still classified Macy's as retail, saving an incorrect structural N_A.
+The review/real source negative stay NEEDS_FIX; they are not relabelled PASS.
+The repair compares only the selected company's business registration fields
+(CIK, roles/related CIKs, industry and continuity) with installed definitions,
+before source selection/applicability. Cosmetic names and whole registry file
+bytes are not an authority gate. Wrong identity/industry/roles now reject,
+normal source-only registries remain usable. Four mismatch controls and a
+cosmetic positive are included;47 affected small checks pass.304s/zero skips.
+Final repair is for receiving-review confirmation, not parent independent PASS.

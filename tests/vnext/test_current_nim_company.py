@@ -1,5 +1,6 @@
 """Current NIM adapter controls and one real data-only source integration."""
 import hashlib
+import csv
 import shutil
 import tempfile
 from pathlib import Path
@@ -20,6 +21,32 @@ class CurrentNIMContractTest(unittest.TestCase):
                 with self.subTest(mode=mode),self.assertRaisesRegex(ValueError,'RECORD_MODE_INVALID'):
                     financial.resolve_ordinary_financial_metric(repo_root=REPO_ROOT,
                         company_id='jpmorgan_chase',metric_id='A04',ordinary_records=mode)
+
+    def test_registry_subject_roles_and_industry_cannot_mix_with_installed_traits(self):
+        with (REPO_ROOT/'config/company_registry.csv').open(newline='') as stream:
+            reader=csv.DictReader(stream);fields=reader.fieldnames;original=list(reader)
+        for changed in ({'primary_cik':'19617','roles':'primary:19617'},
+                {'industry_profile':'financial'},{'related_ciks':'19617'},
+                {'entity_continuity_status':'successor_predecessor'}):
+            with self.subTest(change=changed),tempfile.TemporaryDirectory() as folder:
+                source=Path(folder);path=source/'config/company_registry.csv';path.parent.mkdir()
+                rows=[dict(r) for r in original];next(r for r in rows if r['company_id']=='macys').update(changed)
+                with path.open('w',newline='') as stream:
+                    writer=csv.DictWriter(stream,fieldnames=fields);writer.writeheader();writer.writerows(rows)
+                with patch.object(financial,'_ordinary_sources',side_effect=AssertionError('No wrong-company source or N_A')):
+                    with self.assertRaisesRegex(ValueError,'COMPANY_REGISTRATION_DIFFERS'):
+                        financial.resolve_ordinary_financial_metric(repo_root=source,
+                            company_id='macys',metric_id='A04',ordinary_records=True)
+
+    def test_cosmetic_registration_name_does_not_require_identical_file_bytes(self):
+        with tempfile.TemporaryDirectory() as folder:
+            source=Path(folder);path=source/'config/company_registry.csv';path.parent.mkdir()
+            with (REPO_ROOT/'config/company_registry.csv').open(newline='') as stream:
+                reader=csv.DictReader(stream);fields=reader.fieldnames;rows=list(reader)
+            next(r for r in rows if r['company_id']=='macys')['display_name']='Macy’s display spelling'
+            with path.open('w',newline='') as stream:
+                writer=csv.DictWriter(stream,fieldnames=fields);writer.writeheader();writer.writerows(rows)
+            financial._current_company_registration(data_root=source,company_id='macys')
 
     def test_current_source_and_interpretation_dependencies_are_tracked(self):
         before=update._configuration(REPO_ROOT,'jpmorgan_chase','A04');original=update.sha256_file

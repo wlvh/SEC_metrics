@@ -57,6 +57,18 @@ def _need(condition, reason, category="SOURCE_INTEGRITY_ERROR"):
         raise FinancialResultError(reason, category)
 
 
+def _current_company_registration(*, data_root, company_id):
+    """Source selection and installed applicability must name the same company."""
+    from .company_registry import _registry_rows
+    selected = [r for r in _registry_rows(repo_root=Path(data_root)) if r['company_id']==company_id]
+    installed = [r for r in _registry_rows(repo_root=ROOT) if r['company_id']==company_id]
+    _need(len(selected)==len(installed)==1,'NORMAL_FINANCIAL_COMPANY_REGISTRATION_MISSING')
+    # Business registration fields, not full file bytes or cosmetic names.
+    fields=('primary_cik','related_ciks','roles','industry_profile','entity_continuity_status')
+    _need(all(selected[0].get(k)==installed[0].get(k) for k in fields),
+          'NORMAL_FINANCIAL_COMPANY_REGISTRATION_DIFFERS')
+
+
 def _installed_rule(*, repo_root, metric_id):
     _need(metric_id in SPEC_PATHS, "FINANCIAL_METRIC_UNSUPPORTED", "IMPLEMENTATION_GAP")
     path = SPEC_PATHS[metric_id]
@@ -212,6 +224,8 @@ def resolve_ordinary_financial_metric(*, repo_root: Path, company_id: str, metri
     default source admission and return encoding remain unchanged.
     """
     _need(type(ordinary_records) is bool, 'NORMAL_FINANCIAL_RECORD_MODE_INVALID')
+    if ordinary_records:
+        _current_company_registration(data_root=repo_root,company_id=company_id)
     path, spec, trait_hashes = _installed_rule(repo_root=ROOT if ordinary_records else repo_root, metric_id=metric_id)
     prepared, admission, source_records, references, bundle = _ordinary_sources(
         repo_root=repo_root,company_id=company_id,ordinary_records=ordinary_records)
