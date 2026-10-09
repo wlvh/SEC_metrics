@@ -1,0 +1,53 @@
+{
+  "tested_parent_sha": "0cd4c3eadb631740f9d2b1da6514c341145f1a37",
+  "uncommitted_difference": [
+    "company_current_records.py",
+    "company_result_view.py",
+    "tools/vnext_company.py",
+    "test_company_current_records.py"
+  ],
+  "read_seconds": 0.0025711669586598873,
+  "subset_update_status": "NO_SOURCE_CONTENT_CHANGE",
+  "view": {
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "marriott_international",
+    "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "metrics": [
+      {
+        "metric_id": "B02",
+        "result_id": "sha256:dff8ee332821e42e593acd7b7c3b80d8c6a629abf9c1266bef7cc32b33178159",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "value": "0.04326693227091633466135458167",
+        "unit": "ratio",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-after-parse-cache-20261007/updates/B02/results/d7e8ab8d8f5b406c8e84f54f07198ac2"
+      },
+      {
+        "metric_id": "B01",
+        "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "value": "26186000000",
+        "unit": "USD",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+        "requested_in_latest_execution": false,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-after-parse-cache-20261007/updates/B01/results/4549e1d440c44d378592b6dfaed696ca"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "calculation_factory": "PATCHED_TO_RAISE",
+  "old_native_recovery": "PATCHED_TO_RAISE"
+}

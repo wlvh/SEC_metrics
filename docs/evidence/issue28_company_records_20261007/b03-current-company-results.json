@@ -1,0 +1,679 @@
+[
+  {
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "marriott_international",
+    "run_id": "20261006T233051Z-f9ddb393",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "B03"
+    ],
+    "metrics": [
+      {
+        "metric_id": "B03",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "9a77d90502694c68b421c69e6a6b4a3c",
+        "version": "80bcbf7794ec4416b4792bb7babc5459",
+        "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott_international-b03-ordinary-scope-state-20261007/updates/B03/results/80bcbf7794ec4416b4792bb7babc5459",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott_international-b03-ordinary-scope-state-20261007/updates/B03/results/80bcbf7794ec4416b4792bb7babc5459",
+        "program_version": {
+          "commit": "4e2f4b2dddabd0ab2847a583e5acf457282c2b95",
+          "has_uncommitted_changes": true
+        },
+        "saved_result": {
+          "applicability": "APPLICABLE",
+          "company_id": "marriott_international",
+          "metric_id": "B03",
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+          "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+          "trace_id": "sha256:3275ed7c3df1da60a68258e4834dcf29b2ae38b4e26f534cdd65d063d85823d0",
+          "unit": "ratio",
+          "value": "0.1756281982738868097456656229"
+        },
+        "input_assessments": {
+          "depreciation_scope": {
+            "chain_input": {
+              "concept": "Depreciation+AmortizationOfIntangibleAssets",
+              "value": "458000000"
+            },
+            "complete_business_scope_proven": false,
+            "composition_originals": {
+              "amortization": {
+                "concept": "us-gaap:AmortizationOfIntangibleAssets",
+                "primary_fact_ordinals": [
+                  925
+                ],
+                "value_usd": "313000000"
+              },
+              "depreciation": {
+                "concept": "us-gaap:Depreciation",
+                "primary_fact_ordinals": [
+                  973
+                ],
+                "value_usd": "145000000"
+              }
+            },
+            "entity": "1048286",
+            "existing_scope_check": {
+              "amount_added_or_result_recomputed": false,
+              "blocked": false,
+              "excluded_facts": [
+                {
+                  "context_ref": "c-13",
+                  "dimensions": {
+                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+                  },
+                  "ordinal": 77,
+                  "value_usd": "135000000"
+                },
+                {
+                  "context_ref": "c-219",
+                  "dimensions": {
+                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                    "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+                  },
+                  "ordinal": 1036,
+                  "value_usd": "83000000"
+                },
+                {
+                  "context_ref": "c-220",
+                  "dimensions": {
+                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                    "us-gaap:StatementBusinessSegmentsAxis": "mar:EMEASegmentMember"
+                  },
+                  "ordinal": 1037,
+                  "value_usd": "19000000"
+                },
+                {
+                  "context_ref": "c-221",
+                  "dimensions": {
+                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                    "us-gaap:StatementBusinessSegmentsAxis": "mar:GreaterChinaMember"
+                  },
+                  "ordinal": 1038,
+                  "value_usd": "1000000"
+                },
+                {
+                  "context_ref": "c-222",
+                  "dimensions": {
+                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                    "us-gaap:StatementBusinessSegmentsAxis": "mar:APECMember"
+                  },
+                  "ordinal": 1039,
+                  "value_usd": "6000000"
+                }
+              ],
+              "primary_source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+              "revenue_deduction_proofs": [
+                {
+                  "deduction_row": 7,
+                  "dimensions": {
+                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+                  },
+                  "displayed_amounts": [
+                    "5438",
+                    "-135",
+                    "5303"
+                  ],
+                  "fact_ordinal": 77,
+                  "gross_row": 6,
+                  "net_row": 8,
+                  "relation_class": "CONSOLIDATED_REVENUE_DEDUCTION",
+                  "reported_labels": [
+                    "Gross fee revenues",
+                    "Contract investment amortization",
+                    "Net fee revenues"
+                  ],
+                  "table_grid_sha256": "sha256:c8fbf64a71dae94dae2972a5ba1e6f30eb3f7a99a66d7ed2fa635833affcb9cb",
+                  "table_id": "table_000026"
+                },
+                {
+                  "deduction_row": 4,
+                  "dimensions": {
+                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                    "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+                  },
+                  "displayed_amounts": [
+                    "3004",
+                    "-83",
+                    "2921"
+                  ],
+                  "fact_ordinal": 1036,
+                  "gross_row": 3,
+                  "net_row": 5,
+                  "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+                  "reported_labels": [
+                    "Gross fee revenues",
+                    "Contract investment amortization",
+                    "Net fee revenues"
+                  ],
+                  "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
+                  "table_id": "table_000053"
+                },
+                {
+                  "deduction_row": 4,
+                  "dimensions": {
+                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                    "us-gaap:StatementBusinessSegmentsAxis": "mar:EMEASegmentMember"
+                  },
+                  "displayed_amounts": [
+                    "640",
+                    "-19",
+                    "621"
+                  ],
+                  "fact_ordinal": 1037,
+                  "gross_row": 3,
+                  "net_row": 5,
+                  "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+                  "reported_labels": [
+                    "Gross fee revenues",
+                    "Contract investment amortization",
+                    "Net fee revenues"
+                  ],
+                  "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
+                  "table_id": "table_000053"
+                },
+                {
+                  "deduction_row": 4,
+                  "dimensions": {
+                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                    "us-gaap:StatementBusinessSegmentsAxis": "mar:GreaterChinaMember"
+                  },
+                  "displayed_amounts": [
+                    "261",
+                    "-1",
+                    "260"
+                  ],
+                  "fact_ordinal": 1038,
+                  "gross_row": 3,
+                  "net_row": 5,
+                  "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+                  "reported_labels": [
+                    "Gross fee revenues",
+                    "Contract investment amortization",
+                    "Net fee revenues"
+                  ],
+                  "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
+                  "table_id": "table_000053"
+                },
+                {
+                  "deduction_row": 4,
+                  "dimensions": {
+                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                    "us-gaap:StatementBusinessSegmentsAxis": "mar:APECMember"
+                  },
+                  "displayed_amounts": [
+                    "376",
+                    "-6",
+                    "370"
+                  ],
+                  "fact_ordinal": 1039,
+                  "gross_row": 3,
+                  "net_row": 5,
+                  "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+                  "reported_labels": [
+                    "Gross fee revenues",
+                    "Contract investment amortization",
+                    "Net fee revenues"
+                  ],
+                  "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
+                  "table_id": "table_000053"
+                }
+              ],
+              "selected_components": {
+                "amortization": "313000000",
+                "depreciation": "145000000"
+              },
+              "selected_original_facts": {
+                "amortization": {
+                  "concept": "us-gaap:AmortizationOfIntangibleAssets",
+                  "primary_fact_ordinals": [
+                    925
+                  ],
+                  "value_usd": "313000000"
+                },
+                "depreciation": {
+                  "concept": "us-gaap:Depreciation",
+                  "primary_fact_ordinals": [
+                    973
+                  ],
+                  "value_usd": "145000000"
+                }
+              },
+              "status": "COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED"
+            },
+            "filing_answer": {
+              "candidates": [],
+              "status": "NO_DIRECT_CANDIDATE",
+              "why": "THE_APPROVED_COMPOSITION_APPLIES"
+            },
+            "period": {
+              "fiscal_year": 2025,
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01"
+            },
+            "primary_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+            "source_facts": [
+              {
+                "concept": "AmortizationOfIntangibleAssets",
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0001048286"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2025-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "fact_ordinal": 925,
+                "unit_ref": "usd",
+                "value": "313000000"
+              },
+              {
+                "concept": "Depreciation",
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0001048286"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2025-12-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "fact_ordinal": 973,
+                "unit_ref": "usd",
+                "value": "145000000"
+              }
+            ],
+            "status": "KEEP",
+            "why": "THE_APPROVED_COMPOSITION_APPLIES"
+          }
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott_international-b03-ordinary-scope-state-20261007",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott_international-b03-ordinary-scope-output-20261007/20261006T233051Z-f9ddb393",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "elapsed_seconds": 2.7872105829883367
+  },
+  {
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "salesforce",
+    "run_id": "20261006T233054Z-c20f5fe2",
+    "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+    "selected_metrics": [
+      "B03"
+    ],
+    "metrics": [
+      {
+        "metric_id": "B03",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "17bf8b89541f4cbc817196c3fd738bbb",
+        "version": "8ecdcfa4b4d6484d99c6989022900545",
+        "result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-b03-ordinary-scope-state-20261007/updates/B03/results/8ecdcfa4b4d6484d99c6989022900545",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "source_observation_errors": [
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml",
+            "status_code": "0",
+            "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>",
+            "content_sha256": "",
+            "document_name": "0001108524-25-000083.hdr.sgml"
+          }
+        ],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-b03-ordinary-scope-state-20261007/updates/B03/results/8ecdcfa4b4d6484d99c6989022900545",
+        "program_version": {
+          "commit": "4e2f4b2dddabd0ab2847a583e5acf457282c2b95",
+          "has_uncommitted_changes": true
+        },
+        "saved_result": {
+          "applicability": "APPLICABLE",
+          "company_id": "salesforce",
+          "metric_id": "B03",
+          "period_end": "2026-01-31",
+          "period_start": "2025-02-01",
+          "publication": "WITHHELD",
+          "quality": "NONE",
+          "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
+          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+          "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+          "trace_id": "sha256:d78b5441838ba5302dd9f281111b10606f52738f1cd1ca52bb91b0664a860a86",
+          "unit": null,
+          "value": null
+        },
+        "input_assessments": {
+          "depreciation_scope": {
+            "chain_input": {
+              "concept": "DepreciationDepletionAndAmortization",
+              "value": "1200000000"
+            },
+            "complete_business_scope_proven": false,
+            "entity": "1108524",
+            "filing_answer": {
+              "candidates": [
+                {
+                  "concept": "DepreciationDepletionAndAmortization",
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "dimensions": [],
+                    "identifiers": [
+                      {
+                        "scheme": "http://www.sec.gov/CIK",
+                        "value": "0001108524"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2025-02-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2026-01-31"
+                      }
+                    ],
+                    "typed_dimension_count": 0
+                  },
+                  "context_ref": "c-1",
+                  "decimals": "-8",
+                  "fact_ordinal": 809,
+                  "unit_ref": "usd",
+                  "value": "1200000000"
+                },
+                {
+                  "concept": "DepreciationAndAmortization",
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "dimensions": [],
+                    "identifiers": [
+                      {
+                        "scheme": "http://www.sec.gov/CIK",
+                        "value": "0001108524"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2025-02-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2026-01-31"
+                      }
+                    ],
+                    "typed_dimension_count": 0
+                  },
+                  "context_ref": "c-1",
+                  "decimals": "-6",
+                  "fact_ordinal": 337,
+                  "unit_ref": "usd",
+                  "value": "3631000000"
+                }
+              ],
+              "composition": [],
+              "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+              "status": "WITHHOLD",
+              "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT"
+            },
+            "period": {
+              "fiscal_year": 2026,
+              "period_end": "2026-01-31",
+              "period_start": "2025-02-01"
+            },
+            "primary_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+            "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+            "rejected_observations": [
+              {
+                "approval_effect_hash": "",
+                "company_id": "salesforce",
+                "metric_id": "B01",
+                "observation_id": "sha256:abe7e36b73f7f0d0f4269680e75b5147fb55e79a1f4019d01bb2591d3f16a9b0",
+                "period_end": "2026-01-31",
+                "period_start": "2025-02-01",
+                "quality": "EXACT",
+                "record_type": "VERIFIED_OBSERVATION",
+                "scope": {
+                  "entity_scope": "registrant",
+                  "period_basis": "source_annual_duration"
+                },
+                "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+                "semantic_role": "revenue",
+                "source_binding": {
+                  "accession": "0001108524-26-000060",
+                  "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "document_name": "CIK0001108524.json",
+                  "duration_days": 365,
+                  "entity": "1108524",
+                  "fact_id": "fact:sha256:b2d081c30eaf3a3ae54645977e90b3b2319ea862047448c822660e532d4eb683",
+                  "filed": "2026-03-02",
+                  "fiscal_period": "FY",
+                  "form": "10-K",
+                  "frame": "CY2025",
+                  "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                  "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
+                  "source_role": "companyfacts"
+                },
+                "unit": "USD",
+                "value": "41525000000"
+              },
+              {
+                "approval_effect_hash": "",
+                "company_id": "salesforce",
+                "metric_id": "B03",
+                "observation_id": "sha256:2eb1734f0ef059ede1e334a26129b615e5e991ae4601ccd5e041d7f21dcfbb69",
+                "period_end": "2026-01-31",
+                "period_start": "2025-02-01",
+                "quality": "EXACT",
+                "record_type": "VERIFIED_OBSERVATION",
+                "scope": {
+                  "entity_scope": "registrant",
+                  "period_basis": "source_annual_duration"
+                },
+                "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+                "semantic_role": "operating_income",
+                "source_binding": {
+                  "accession": "0001108524-26-000060",
+                  "concept": "us-gaap:OperatingIncomeLoss",
+                  "document_name": "CIK0001108524.json",
+                  "duration_days": 365,
+                  "entity": "1108524",
+                  "fact_id": "fact:sha256:9635bbaa2449aa193b5cfab52155dd1d5ef6eed717b1eb6d73a8d4db25dc531c",
+                  "filed": "2026-03-02",
+                  "fiscal_period": "FY",
+                  "form": "10-K",
+                  "frame": "CY2025",
+                  "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                  "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
+                  "source_role": "companyfacts"
+                },
+                "unit": "USD",
+                "value": "8331000000"
+              },
+              {
+                "approval_effect_hash": "",
+                "company_id": "salesforce",
+                "metric_id": "B03",
+                "observation_id": "sha256:62fb59655d47297fc660c1450abaf90ba3d4941c73f89f022337374081ed57fa",
+                "period_end": "2026-01-31",
+                "period_start": "2025-02-01",
+                "quality": "EXACT",
+                "record_type": "VERIFIED_OBSERVATION",
+                "scope": {
+                  "entity_scope": "registrant",
+                  "period_basis": "source_annual_duration"
+                },
+                "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+                "semantic_role": "depreciation_and_amortization",
+                "source_binding": {
+                  "accession": "0001108524-26-000060",
+                  "concept": "us-gaap:DepreciationDepletionAndAmortization",
+                  "document_name": "CIK0001108524.json",
+                  "duration_days": 365,
+                  "entity": "1108524",
+                  "fact_id": "fact:sha256:211afc4f7b48a20db3b308fed6609b768a315525f68e9cf8c0223b41c1b3930e",
+                  "filed": "2026-03-02",
+                  "fiscal_period": "FY",
+                  "form": "10-K",
+                  "frame": "CY2025",
+                  "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                  "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
+                  "source_role": "companyfacts"
+                },
+                "unit": "USD",
+                "value": "1200000000"
+              }
+            ],
+            "source_facts": [
+              {
+                "concept": "DepreciationAndAmortization",
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0001108524"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2025-02-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2026-01-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-6",
+                "fact_ordinal": 337,
+                "unit_ref": "usd",
+                "value": "3631000000"
+              },
+              {
+                "concept": "DepreciationDepletionAndAmortization",
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "dimensions": [],
+                  "identifiers": [
+                    {
+                      "scheme": "http://www.sec.gov/CIK",
+                      "value": "0001108524"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2025-02-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2026-01-31"
+                    }
+                  ],
+                  "typed_dimension_count": 0
+                },
+                "context_ref": "c-1",
+                "decimals": "-8",
+                "fact_ordinal": 809,
+                "unit_ref": "usd",
+                "value": "1200000000"
+              }
+            ],
+            "status": "WITHHOLD",
+            "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT"
+          }
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-native-source-only-20261007",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-b03-ordinary-scope-state-20261007",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-b03-ordinary-scope-output-20261007/20261006T233054Z-c20f5fe2",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "elapsed_seconds": 3.189299166901037
+  }
+]

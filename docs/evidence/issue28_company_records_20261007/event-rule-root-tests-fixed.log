@@ -1,0 +1,15 @@
+======================================================================
+FAIL: test_normal_company_entry_and_reentry_use_saved_source_without_install (tests.vnext.test_event_rule_root.EventRuleRootTest.test_normal_company_entry_and_reentry_use_saved_source_without_install)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_event_rule_root.py", line 70, in test_normal_company_entry_and_reentry_use_saved_source_without_install
+    self.assertEqual(repeat['metrics'][0]['status'],'NO_SOURCE_CONTENT_CHANGE')
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'NO_SOURCE_CONTENT_CHANGE'
+- INPUT_OR_EXECUTION_FAILED
++ NO_SOURCE_CONTENT_CHANGE
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 12.315s
+
+FAILED (failures=1)

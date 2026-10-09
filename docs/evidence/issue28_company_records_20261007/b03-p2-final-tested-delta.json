@@ -1,0 +1,15 @@
+{
+  "tested_base": "9d6253f93648f9d59075aae617a0be9ac5ba95bb",
+  "delta_files": {
+    "scripts/vnext/ordinary_current_update.py": "446389705031b3f77454e9e3994c786310535572ac2af97b5c3a36e9d3b6b0d2",
+    "scripts/vnext/b03_contract_amortization_scope.py": "5c36f1f02fc2921c3af831b6438ddc0dc06012340358954b1317401876ef7bb7",
+    "scripts/vnext/b03_depreciation_scope.py": "573c645a911dd7efe18f42b4b7bf7e82ce4de03ae4e4962b966015576d9b53f4",
+    "tests/vnext/test_b03_current_input_scope.py": "1f6c9c2fba7f71f117dfe6f5f6e0d0660765b5382a269c0264304174dadd3e94"
+  },
+  "tests": {
+    "count": 42,
+    "seconds": 5.388
+  },
+  "reviewed_parent": "b9228566e24ec8bd175c3f47a4bfc3a6f044bb51",
+  "review_scope": "only actual-policy invalidation and namespace/axis/member alias changes"
+}

@@ -1,0 +1,19 @@
+{
+  "status": "NOT_CALLED",
+  "reason_before_fix": "Later extension replaced general FISCAL_EVENT_FILING scope; capture failed to pass the separately approved exact bounded attachment into scope admission. Original broad grant is not restored.",
+  "fix_commit": "22c851e1",
+  "scope_preflight": "8 tests passed, 0.023s; actual capture method reached the patched no-HTTP/no-claim boundary; count 1772 blocks.",
+  "remaining_legacy_blocker": "ISSUE_47_OFFLINE_WIRING_EVIDENCE_CHANGED:scripts/vnext/historical_event_sources.py",
+  "remaining_blocker_observed_with": "verify_offline_wiring on the existing limited known-resume receipt; read-only, no ledger or socket",
+  "ledger_rows": 1547,
+  "conservative_count": 224,
+  "actual_cumulative_sec": 1771,
+  "original_limit": 1867,
+  "specific_attachment_maximum_after": 1772,
+  "retry_count": 0,
+  "new_sec_calls": 0,
+  "new_provider_calls": 0,
+  "ledger_sha256": "a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262",
+  "requested_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+  "no_empty_ledger_or_reforged_snapshot": true
+}

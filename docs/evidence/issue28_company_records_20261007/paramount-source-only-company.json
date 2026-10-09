@@ -1,0 +1,210 @@
+{
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "paramount_skydance_paramount_global",
+  "run_id": "20261007T004554Z-940b7794",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B01",
+    "B02",
+    "B03",
+    "B08"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "9ed5c1283c8d4b329298102ca77ab674",
+      "version": "2723bdc7a1d942008d059e9f8c62ca2a",
+      "result_id": "sha256:c3d535b65ac4d34ba6929e9428371904cd5c568494ce67b1ed2009cec033bc05",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B01/results/2723bdc7a1d942008d059e9f8c62ca2a",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:c3d535b65ac4d34ba6929e9428371904cd5c568494ce67b1ed2009cec033bc05",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B01/results/2723bdc7a1d942008d059e9f8c62ca2a",
+      "program_version": {
+        "commit": "7448fe54a01e3d66491ff52acfb6d2515e108922",
+        "has_uncommitted_changes": true
+      },
+      "actual_result": {
+        "applicability": "APPLICABLE",
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B01",
+        "period_end": "2025-12-31",
+        "period_start": "2025-08-08",
+        "publication": "PUBLISHED",
+        "quality": "NOT_MEANINGFUL",
+        "reason_code": "ANNUAL_DURATION_OUT_OF_RANGE",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:c3d535b65ac4d34ba6929e9428371904cd5c568494ce67b1ed2009cec033bc05",
+        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+        "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+        "trace_id": "sha256:09328935d848986d658ad78a421b2f27bc3bc2f366a6728e0c5ec5095ecf9cf0",
+        "unit": null,
+        "value": null
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-08-08"
+      }
+    },
+    {
+      "metric_id": "B02",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "14d87d49ddc04f279a4d57c474df4113",
+      "version": "69482b5e5be649fa8b83e60ae24e729e",
+      "result_id": "sha256:cbab8165ffac6c5cbe9c4ea0b56a037980e46574a68419bb1916ba8f8a5299ef",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B02/results/69482b5e5be649fa8b83e60ae24e729e",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:cbab8165ffac6c5cbe9c4ea0b56a037980e46574a68419bb1916ba8f8a5299ef",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B02/results/69482b5e5be649fa8b83e60ae24e729e",
+      "program_version": {
+        "commit": "7448fe54a01e3d66491ff52acfb6d2515e108922",
+        "has_uncommitted_changes": true
+      },
+      "actual_result": {
+        "applicability": "APPLICABLE",
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B02",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "NOT_MEANINGFUL",
+        "reason_code": "ENTITY_CONTINUITY_NOT_COMPARABLE",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:cbab8165ffac6c5cbe9c4ea0b56a037980e46574a68419bb1916ba8f8a5299ef",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+        "trace_id": "sha256:f8f9a153a2484094ab6a57e1ee6949c22469f1991e5f186c973786a5a7f3a229",
+        "unit": null,
+        "value": null
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      }
+    },
+    {
+      "metric_id": "B03",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "2e09d59377624c2abf3b6462266075f3",
+      "version": "ba61205a124c48659b4038314ae0bdfb",
+      "result_id": "sha256:1a7fdb5c4509dcba0293ec0eef1a4abc44e55089362f6d6106ed86c2a7c493d7",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B03/results/ba61205a124c48659b4038314ae0bdfb",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:1a7fdb5c4509dcba0293ec0eef1a4abc44e55089362f6d6106ed86c2a7c493d7",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B03/results/ba61205a124c48659b4038314ae0bdfb",
+      "program_version": {
+        "commit": "7448fe54a01e3d66491ff52acfb6d2515e108922",
+        "has_uncommitted_changes": true
+      },
+      "actual_result": {
+        "applicability": "APPLICABLE",
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B03",
+        "period_end": "2025-12-31",
+        "period_start": "2025-08-08",
+        "publication": "PUBLISHED",
+        "quality": "NOT_MEANINGFUL",
+        "reason_code": "ANNUAL_DURATION_OUT_OF_RANGE",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:1a7fdb5c4509dcba0293ec0eef1a4abc44e55089362f6d6106ed86c2a7c493d7",
+        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+        "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+        "trace_id": "sha256:2d70c88a51b922ebbcb8790dd411c402b03894fc95b9354714d88e12ec4ce62d",
+        "unit": null,
+        "value": null
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-08-08"
+      }
+    },
+    {
+      "metric_id": "B08",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "5890a6e06804495089fe770e0f53df50",
+      "version": "740a413a69fe4001992aee2639a0e877",
+      "result_id": "sha256:8a4762a8016e8ceb967b7e6439c151f6d3a1f3e51f92564ed589e319f96e271f",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B08/results/740a413a69fe4001992aee2639a0e877",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:8a4762a8016e8ceb967b7e6439c151f6d3a1f3e51f92564ed589e319f96e271f",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007/updates/B08/results/740a413a69fe4001992aee2639a0e877",
+      "program_version": {
+        "commit": "7448fe54a01e3d66491ff52acfb6d2515e108922",
+        "has_uncommitted_changes": true
+      },
+      "actual_result": {
+        "applicability": "APPLICABLE",
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B08",
+        "period_end": "2025-12-31",
+        "period_start": "2025-12-31",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:8a4762a8016e8ceb967b7e6439c151f6d3a1f3e51f92564ed589e319f96e271f",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+        "trace_id": "sha256:5d9cd867c429bdf96bc9cc7785f23a6779f7067712796e0bb6e905a6c53b5462",
+        "unit": "ratio",
+        "value": "1.256722332295499575431644495"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-12-31"
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-20261007",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-state-20261007",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/paramount-source-only-financial-output-20261007/20261007T004554Z-940b7794",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "elapsed_seconds": 46.85945824999362
+}

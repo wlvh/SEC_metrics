@@ -1,0 +1,295 @@
+{
+  "record_type": "ISSUE47_SIMPLIFICATION_CLOSEOUT",
+  "main_observed": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+  "public_base": "8805777d",
+  "historical_branch_origin": "3ff39361; bounded scope repair22c851e1",
+  "code_combination": "PR67 public candidate plus task/issue47-history-consumers committed increment",
+  "state_tests": {
+    "final_tests": 61,
+    "seconds": 6.398,
+    "initial_public_fixture_failure": "4 alias failures on /var vs /private/var; resolved by public7944, initial and canonical-temp logs preserved",
+    "previous_58_passed": true,
+    "overall_history_state_acceptance_complete": true,
+    "passed": true,
+    "previous_58_seconds": 6.482,
+    "scope": "The receiving case matrix described here, not all five-year business positions"
+  },
+  "prior_results_reused": {
+    "H1": "PR58 15 tests;8 failed and4 contract-pass originals; requests unchanged; not repeated",
+    "H3": "PR59 shared table/calculation tests19 .079s plus old current/history source evidence",
+    "H2": "PR62 15 short examples .005s and saved JPM complete-source exclusion9.249s; not repeated",
+    "unaffected_two_year_B01_and_full_frame_reading": "Not repeated"
+  },
+  "actual_company": {
+    "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-company-production-20261008",
+    "operations": [
+      {
+        "operation": "production-cli-first",
+        "seconds": 16.537885665893555,
+        "status": "FLOW_COMPLETED"
+      },
+      {
+        "operation": "production-cli-repeat",
+        "seconds": 2.34162566694431,
+        "status": "FLOW_COMPLETED"
+      },
+      {
+        "operation": "production-cli-independent-read",
+        "seconds": 0.918714459054172,
+        "status": null
+      },
+      {
+        "operation": "retained-task-independent-read",
+        "seconds": 0.9346000000368804,
+        "status": null
+      }
+    ],
+    "factory_forbidden_on_repeat_and_reads": true,
+    "result_and_pointer_files_unchanged": 32,
+    "old_task_protected_files": 42,
+    "production_case_factory_used": true,
+    "business_outcomes_not_mocked": true,
+    "calls": {
+      "sec": 0,
+      "provider": 0,
+      "paid": 0
+    },
+    "tree_copies": 0
+  },
+  "constructed_state": {
+    "record_type": "HISTORICAL_SHARED_COMPANY_CONSUMER_CLOSEOUT",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+    "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-consumer-closeout-20261008-1",
+    "operations": [
+      {
+        "label": "real-history-first",
+        "seconds": 16.556413542013615,
+        "factory_calls": 4,
+        "status": "FLOW_COMPLETED"
+      },
+      {
+        "label": "real-history-repeat",
+        "seconds": 2.220062542008236,
+        "factory_calls": 0,
+        "status": "FLOW_COMPLETED"
+      },
+      {
+        "label": "constructed-withheld-first",
+        "seconds": 4.455927124945447,
+        "factory_calls": 4,
+        "status": "FLOW_COMPLETED_WITH_LIMITATIONS"
+      },
+      {
+        "label": "constructed-withheld-repeat",
+        "seconds": 2.2684319170657545,
+        "factory_calls": 0,
+        "status": "FLOW_COMPLETED_WITH_LIMITATIONS"
+      },
+      {
+        "label": "read-with-current-withheld",
+        "seconds": 0.8093664168845862,
+        "factory_calls": 0,
+        "status": null
+      }
+    ],
+    "actual_values": [
+      {
+        "metric": "B10",
+        "year": "2024",
+        "value": "69.8"
+      },
+      {
+        "metric": "B11",
+        "year": "2024",
+        "value": "128.23"
+      },
+      {
+        "metric": "B10",
+        "year": "2025",
+        "value": "69.3"
+      },
+      {
+        "metric": "B11",
+        "year": "2025",
+        "value": "128.8"
+      }
+    ],
+    "constructed_withholding_not_financial_conclusion": true,
+    "repeat_success_factory_calls": 0,
+    "repeat_withheld_factory_calls": 0,
+    "repeat_and_read_result_bytes_unchanged": true,
+    "last_success_retained_current_withheld_null": true,
+    "source_tree_copies": 0,
+    "rule_tree_copies": 0,
+    "source_files_unchanged": true,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "ledger_sha256": "a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262",
+    "automatic_historical_source_acquisition": false,
+    "full_five_year_business_acceptance": false
+  },
+  "ex99": {
+    "status": "NOT_CALLED",
+    "reason_before_fix": "Later extension replaced general FISCAL_EVENT_FILING scope; capture failed to pass the separately approved exact bounded attachment into scope admission. Original broad grant is not restored.",
+    "fix_commit": "22c851e1",
+    "scope_preflight": "8 tests passed, 0.023s; actual capture method reached the patched no-HTTP/no-claim boundary; count 1772 blocks.",
+    "remaining_legacy_blocker": "ISSUE_47_OFFLINE_WIRING_EVIDENCE_CHANGED:scripts/vnext/historical_event_sources.py",
+    "remaining_blocker_observed_with": "verify_offline_wiring on the existing limited known-resume receipt; read-only, no ledger or socket",
+    "ledger_rows": 1547,
+    "conservative_count": 224,
+    "actual_cumulative_sec": 1771,
+    "original_limit": 1867,
+    "specific_attachment_maximum_after": 1772,
+    "retry_count": 0,
+    "new_sec_calls": 0,
+    "new_provider_calls": 0,
+    "ledger_sha256": "a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262",
+    "requested_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+    "no_empty_ledger_or_reforged_snapshot": true
+  },
+  "paramount_conflict": {
+    "public_source": "883f04b; included in PR67 candidate",
+    "visible_start": "2025-08-07",
+    "native_context_start": "2025-08-08",
+    "dates_confirmed": false,
+    "historical_receiving_slice_affected": false,
+    "why": "This new slice only dispatches B10/B11; it does not add the old historical B01/B03 income adapter. It cannot accept Paramount income or convert the conflict to annual-length-only rejection. Existing historical income adapter not yet received; no all-Paramount replay."
+  },
+  "main_received": false,
+  "online_historical_discovery_or_fill": false,
+  "amended_lodging_adapter_received": false,
+  "other_historical_families_received": false,
+  "full_five_year_business_accepted": false,
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "capability_alignment": {
+    "exit_code": 0,
+    "seconds": 6.8675871670711786,
+    "protected_outputs_restored": true,
+    "base_ref": "7944bc96",
+    "check": "Capability structural alignment only; not business/full acceptance"
+  },
+  "receiving_code_commit": "c5e7afc2",
+  "remaining_subset_read_defect": {
+    "test": "test_completed_withheld_survives_read_after_another_metric_subset",
+    "actual_value": "100",
+    "expected_value": null,
+    "actual_uses": "last successful pointer after only another metric is executed",
+    "expected_uses": "latest completed check for the same metric/year; WITHHELD even when not requested in latest execution",
+    "status": "RESOLVED_BY_PUBLIC_8805777d",
+    "constructed_control": true,
+    "seconds": 0.049,
+    "public_owner_notified": true,
+    "failure_preserved": true,
+    "received": true
+  },
+  "public_receiving_merge": "a00480df",
+  "saved_source_subset_read": {
+    "public_fix": "8805777d",
+    "seconds": 0.8592867080587894,
+    "constructed_subset_and_withholding_controls": true,
+    "financial_conclusion": false,
+    "same_saved_real_marriott_sources_and_results": true,
+    "selected_latest_subset": [
+      "B11/FY2025"
+    ],
+    "held_coordinate": "B10/FY2024",
+    "held_value": null,
+    "held_publication": "WITHHELD",
+    "held_not_requested_in_latest_execution": true,
+    "source_selection_and_update_forbidden": true,
+    "protected_result_pointer_file_count": 56,
+    "bytes_unchanged": true,
+    "original_latest_execution_restored": true,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "ci_receiving": {
+    "public_commit": "a4a568b1c135cdfd9390126e49e873e66c474bb9",
+    "received_merge_commit": "d22f49dfe945dc467a21ff85424b22dccfca592e",
+    "production_and_test_source_delta": false,
+    "prior_61_and_real_history_validation_reused": true,
+    "retired_current_candidate_jobs": "old complete native creation/install cohorts; original tests/runtime retained and not relabelled PASS",
+    "retained_c04": "26 source/form/CIK/prior/event checks, public actual7.768s, no skip",
+    "diagnosis": "6 old jobs,20 tests/16errors stopped at issue_28_v11 ancestor source byte guard; downstream business not reached",
+    "other_current_checks_retained": "fast, source material, count/stop, recovery/mixed results, old saved-runtime object reading",
+    "public_ci_run": "37676590569",
+    "last_observed_state": "IN_PROGRESS",
+    "public_ci_observed_jobs": {
+      "Foundation inherited source material": "in_progress",
+      "vNext fast suite": "success",
+      "Main foundation audit and historical compatibility": "in_progress",
+      "Company C04 source and subject checks": "success",
+      "Company independent metric updates": "success",
+      "Company source authority, ledger and D04 wiring": "success",
+      "Company update history and interruption recovery": "success"
+    },
+    "public_ci_a4_terminal": "CANCELLED",
+    "public_ci_a4_boundary": "34 selectors187.808s all passed plus scalability/egress/reference checks; full history checkout consumed about385s, job hit unchanged10-minute deadline; not whole-CI success"
+  },
+  "ci_fetch_receiving": {
+    "public_commit": "adee30366a13c0c4ead3f30ec5344db19ebf746f",
+    "merge_commit": "d17e24391c896cce59abcb7d6a0a33d0543dc0a4",
+    "candidate_checkout_depth": 1,
+    "declared_baseline_explicit_full_object_fetch": "requirements/issue_28_v1/baseline_manifest.json repository.commit, depth1, no-tags",
+    "lazy_fetch": false,
+    "selectors_and_job_timeout_unchanged": true,
+    "production_source_changed": false,
+    "local_scope_tests": 6,
+    "public_new_ci": "37678715800",
+    "public_new_ci_terminal_confirmed": true,
+    "prior_61_and_company_source_validation_reused": true,
+    "public_new_ci_terminal": {
+      "run_id": "37678715800",
+      "head_sha": "adee30366a13c0c4ead3f30ec5344db19ebf746f",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": {
+        "Company C04 source and subject checks": "success",
+        "Main foundation audit and historical compatibility": "success",
+        "vNext fast suite": "success",
+        "Company source authority, ledger and D04 wiring": "success",
+        "Company update history and interruption recovery": "success",
+        "Foundation inherited source material": "success",
+        "Company independent metric updates": "success"
+      },
+      "historical_job_seconds": 179.0,
+      "historical_steps_seconds": {
+        "Check out fixed candidate": 14.0,
+        "Fetch the declared historical baseline only": 1.0,
+        "Validate main audit and fixed historical objects": 160.0
+      }
+    }
+  },
+  "public_c56_combination": {
+    "public_base": "c56e63354271d9c674bf18bb56856e420ce334cc",
+    "combination_commit": "d68b2d4dc3d40723e7fa05ad8873eddd0c4e0386",
+    "ordinary_controller_writer_and_historical_producer_bytes_equal_ac6910": {
+      "scripts/vnext/company_current_records.py": true,
+      "scripts/vnext/ordinary_current_update.py": true,
+      "scripts/vnext/ordinary_saved_result.py": true,
+      "scripts/vnext/company_local.py": true,
+      "scripts/vnext/historical_lodging_results.py": true
+    },
+    "existing_ordinary_task_independent_read_seconds": 0.9679025001823902,
+    "protected_file_count": 42,
+    "bytes_unchanged": true,
+    "selection_calculation_and_network_forbidden": true,
+    "new_business_calls": {
+      "sec": 0,
+      "provider": 0,
+      "paid": 0
+    },
+    "scope": "Only changed CLI result dispatch; previously completed H4/H1/H3 and B01 not recalculated"
+  }
+}

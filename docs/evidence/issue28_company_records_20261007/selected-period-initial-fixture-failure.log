@@ -1,0 +1,55 @@
+======================================================================
+ERROR: test_common_company_reader_keeps_other_metric_after_subset_run (tests.vnext.test_company_current_records.CurrentCompanyTest.test_common_company_reader_keeps_other_metric_after_subset_run)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_current_records.py", line 167, in test_common_company_reader_keeps_other_metric_after_subset_run
+    view=read_company_results(state_root=self.work,company_id='marriott_international',defects_file=self.registry)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 304, in read_company_results
+    return read_current_company(state_root=state_root, company_id=company_id,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_current_records.py", line 176, in read_current_company
+    return _read_current_company(root, company_id, defects_file, output_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_current_records.py", line 203, in _read_current_company
+    metric = state['metric_id']
+             ~~~~~^^^^^^^^^^^^^
+KeyError: 'metric_id'
+
+======================================================================
+ERROR: test_common_read_exports_csv_and_honours_supplied_defects_without_update (tests.vnext.test_company_current_records.CurrentCompanyTest.test_common_read_exports_csv_and_honours_supplied_defects_without_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_current_records.py", line 180, in test_common_read_exports_csv_and_honours_supplied_defects_without_update
+    view=read_company_results(state_root=self.work,company_id='marriott_international',
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_result_view.py", line 304, in read_company_results
+    return read_current_company(state_root=state_root, company_id=company_id,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_current_records.py", line 176, in read_current_company
+    return _read_current_company(root, company_id, defects_file, output_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_current_records.py", line 203, in _read_current_company
+    metric = state['metric_id']
+             ~~~~~^^^^^^^^^^^^^
+KeyError: 'metric_id'
+
+======================================================================
+ERROR: test_daily_read_does_not_select_sources_or_run_update (tests.vnext.test_company_current_records.CurrentCompanyTest.test_daily_read_does_not_select_sources_or_run_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_current_records.py", line 130, in test_daily_read_does_not_select_sources_or_run_update
+    view=current.read_current_company(state_root=self.work,company_id='marriott_international')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_current_records.py", line 176, in read_current_company
+    return _read_current_company(root, company_id, defects_file, output_root)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/company_current_records.py", line 203, in _read_current_company
+    metric = state['metric_id']
+             ~~~~~^^^^^^^^^^^^^
+KeyError: 'metric_id'
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.108s
+
+FAILED (errors=3)

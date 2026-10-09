@@ -1,0 +1,19 @@
+test_actual_resolver_retake_uses_real_calculator_once_and_retains_decision (__main__.BoundaryProbes.test_actual_resolver_retake_uses_real_calculator_once_and_retains_decision) ... ok
+test_context_policy_change_changes_scope_but_not_update_configuration (__main__.BoundaryProbes.test_context_policy_change_changes_scope_but_not_update_configuration) ... ok
+test_extracted_financial_helper_ast_is_identical (__main__.BoundaryProbes.test_extracted_financial_helper_ast_is_identical) ... ok
+test_legacy_default_is_opt_in_and_keeps_original_chain (__main__.BoundaryProbes.test_legacy_default_is_opt_in_and_keeps_original_chain) ... ok
+test_retake_without_selected_companyfacts_stops_and_withholds (__main__.BoundaryProbes.test_retake_without_selected_companyfacts_stops_and_withholds) ... ok
+test_two_exact_withdrawals_and_unrelated_identity (__main__.BoundaryProbes.test_two_exact_withdrawals_and_unrelated_identity) ... ok
+test_valid_namespace_alias_composition_is_falsely_rejected (__main__.BoundaryProbes.test_valid_namespace_alias_composition_is_falsely_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.061s
+
+OK
+PASS: actual resolver/calculator retake selects20, ratio0.12, original decision preserved
+CONFIRMED: scope policy changes acceptance but is absent from B03 update configuration
+PASS: extracted helper AST unchanged apart from import relocation/name; legacy alias same callable
+PASS: omitted legacy scope option keeps chain10/ratio0.11
+PASS: failed single retake withholds and clears selected B03 observations
+PASS: both exact old wrong IDs held; unrelated result identity not withdrawn
+CONFIRMED: identical namespace URI with gaap prefix rejects composed input; us-gaap prefix keeps it

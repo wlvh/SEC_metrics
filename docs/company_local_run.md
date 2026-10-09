@@ -1,6 +1,39 @@
-# 本地运行一家公司的当前财年
+# 本地运行一家公司的当前财年或历史财年范围
 
-这是PR55的Draft本地入口。来源与计算仍为独立阶段，`run`只负责顺序调度；没有OpenShift部署、正式发布、active切换或新模型调用。旧分阶段入口及运行树仍可读取旧Run。
+历史范围的正式使用说明见[历史公司使用指南](historical_company_usage.md)。截至2026-10-09，main仍为8588ccbb，历史范围接线属于PR71候选，依赖PR67公共保存来源入口；这里的历史命令不能直接套用到main。首批支持保存来源的B10/B11，不自动发现或补齐历史材料。原PR52和旧任务入口保留。
+
+公司入口已经由PR55/PR56基础及PR57交付到main；代码交付与业务结果接受是不同状态。来源与计算仍为独立阶段，`run`只负责顺序调度；没有OpenShift部署、正式发布、active切换或新模型调用。旧分阶段入口及运行树仍可读取旧Run。
+
+以下 `run --source-root` 属于 PR67 候选，尚未进入 main；main8588没有这个参数。候选的普通记录路径不安装旧Requirement/trust树：
+
+```bash
+python /path/to/SEC_metrics/tools/vnext_company.py run \
+  --company marriott_international --source-root /fixed/company-source \
+  --work-dir /writable/company-state --output-dir /writable/company-output \
+  --metric B01 --metric B02 --metric B10 --metric B11
+python /path/to/SEC_metrics/tools/vnext_company.py results \
+  --company marriott_international --state-root /writable/company-state \
+  --output-root /writable/daily-output
+```
+
+这条路径仅消费已经保存的来源，不进行在线发现、获取或AI调用。程序根/来源根共享读取；B01/B02/B03、CompanyFacts、A01/A02/B12及B10/B11的规则/Spec/trait由程序根提供，来源包不必携带计算catalog或代码。状态及输出分开，B10/B11等来源派生材料在公司共享输入目录只保存一次；状态固定公司和运行时来源位置。每项结果保存自己的记录、出处、程序版本和失败，重复输入先比较后直接读取；来源失败显示本次失败及旧结果的原期间，不冒充新财报成功。同次运行复用相同原件的不可变native解析，仍分别核对主体/期间/单位；正常CSV不重放计算或复制全部来源/程序；`results`经共用公司结果视图只读结果，不检查在线新来源；后一次仅选部分指标时，其余已保存当前结果仍可读，并标明未在该次请求中。旧native任务保留原入口，不原地改格式。公共更新器可由既有历史消费者显式传fiscal_year/case_factory，并各自保存期间指针；本地当期CLI不据此自动展开历史范围。已知错误按确切Result身份扣留，旧E01计数不当作新并购口径结果，缺少AI处理不造答案。
+
+已完成的稳定扣留与成功都能复用未变输入：`completed-check.json`记录最近完成结论，`current-result.json`仅保留最近成功。复用扣留仍为`PREVIOUS_INPUT_WITHHELD`并显示原因，不计算、不新增结果目录；旧成功只能按原期间作为历史读取。来源/相关配置变化重新处理；中断和程序异常不当成稳定结论。
+
+B03还保存只读的`input-assessments.json`，保留原件数量比较及收入减项排除；Marriott按既有4.58亿范围计算，Salesforce具体冲突扣留，不替换成较大的现金流数值。Paramount原文表头Aug7与native contextAug8冲突明确扣留，侧车保留两种日期与定位，不选择日期、年化或拼接前身。
+
+本批实测Marriott B01/B02、B10/B11及银行/非自然年结果见 `docs/evidence/issue28_company_records_20261007/`；程序通过与内容接受分别登记。该路径尚未完成在线发现接续、同批表格/CompanyFacts解析共享、AI输入消费和所有39项业务验收。以下描述的是旧固定版本的在线/native路径；修前29c9的新在线安装受旧字节绑定阻断；当前默认native入口已通过固定main8588过渡兼容回修成对验证，尚未迁移，不把接口保留当作新安装已通过。
+
+旧native任务的只读兼容需要其原固定程序与原来源登记位置，当前入口可明确指定：
+
+```bash
+python /path/to/SEC_metrics/tools/vnext_company.py results \
+  --company jpmorgan_chase --state-root /saved/old-company-state \
+  --runtime-root /saved/original-runtime --trust-root /saved/original-source-trust
+```
+
+这不是重新安装或计算：本批已用现有JPM D01任务实际验证，原Run的manifest/records不变。旧任务的来源/程序/登记位置须取自它自己的保存记录；不能以任意新目录代替，也不将只读成功升级为本期业务接受。旧完整审计导出仍显式使用`export-results`；新普通任务用上面的`run --source-root`和`results --output-root`，修前默认在线新安装未交付的状态已由本页“首批接收回修”更新；新的轻量在线仍是独立后继。
+
 
 在源码目录之外的工作位置执行，固定源码也可用绝对路径指定：
 
@@ -63,3 +96,9 @@ python /path/to/SEC_metrics/tools/vnext_company.py acquire \
 Marriott真实空来源首跑和同目录复跑已完成：累计31次真实SEC GET、27份来源复用，复跑36个原生候选独立冷读通过；39项中D02/D03/D04仍明确限制，不是39项业务验收或正式发布。实际CSV、摘要、来源/运行版本、修复与合并依赖见[真实运行材料](evidence/issue54_company/live-marriott/README.md)；[此前本地接线材料](evidence/issue54_company/local-run/README.md)仍按录制范围保留。
 
 2026-10-04另以新工作目录从空来源重新真实运行（新增29+2次GET，含原31次累计62/120），首跑36候选冷读通过、复跑0新Run、局部重入保留其它行；已配置的旧LIVE D04因本次收到的10-K比原版本多一个script元素（注入方未归因）、原始字节身份不同，严格等价按现行规则被拒并如实保留。见[本轮材料](evidence/issue54_company/live2/README.md)。
+
+## 首批接收回修：默认空任务
+
+PR67修前29c9c9e在normal_source_authority旧绑定处、HTTP前失败；实际main相同回复/公司/B01/B02成功。本轮保持不带source-root的原用户命令与main支持范围，新默认native程序从可取得的固定main8588程序/规则安装，程序内没有SEC原件，真实来源仍需原适用许可；原已存在任务优先保留原program_root。当前轻量source-root生产者不变，没有引入PR83。该保留native路径是过渡兼容，不表示新轻量在线39项或业务接受已经完成。
+
+需要含main8588及旧规则Git对象的代码仓库；审查的HTTP录制使用Python3.12/B01/B02，所有实际子进程运行且网络禁止。准确三入口、只读原件位置、全新目录命令与成对证据见 [主要回修记录](evidence/issue28_company_records_20261007/default-online-review-20261009/README.md)。新轻量记录state-root是work-dir；旧native才使用company-state及原runtime/trust，不混用参数。

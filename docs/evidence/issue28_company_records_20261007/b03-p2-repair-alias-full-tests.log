@@ -1,0 +1,12 @@
+======================================================================
+FAIL: test_contract_revenue_deduction_keeps_relationship_under_legal_prefix_alias (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_contract_revenue_deduction_keeps_relationship_under_legal_prefix_alias)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 216, in test_contract_revenue_deduction_keeps_relationship_under_legal_prefix_alias
+    self.assertFalse(scope['blocked'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 13 tests in 5.203s
+
+FAILED (failures=1)

@@ -8,7 +8,7 @@ this bounded prototype rather than inheriting old answers or periods.
 from pathlib import Path
 
 from sec_urls import accession_document_url, companyfacts_url, hdr_sgml_url, submissions_url, submissions_file_url
-from .annual_update import AnnualUpdateError
+from .annual_sources import AnnualUpdateError
 from .annual_amendment_scope import prepare_saved_amendment_input
 from .batch_workflow import BatchWorkflowError, _structured_concepts
 from .calculator import calculate_metric, withheld_metric_result, calculate_observation_metric
@@ -63,7 +63,7 @@ def _exact_set(prepared, inventory, source, role):
         inventory_bytes=inventory["raw_bytes"])
 
 
-def _event_sources(*, repo_root, reader, prepared, inventory):
+def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_required=True):
     """Discover only the actual annual event window, including history shards."""
     period = prepared["table_input"]["target_period"]
     payload = strict_json_loads(text=inventory["raw_bytes"].decode("utf-8"))
@@ -118,9 +118,10 @@ def _event_sources(*, repo_root, reader, prepared, inventory):
     # development gap, never permission to report a smaller successful count.
     acquired = _acquired_event_filings(repo_root=repo_root, company_id=prepared["company_id"],
         allowed_ciks=[prepared["entity"]], period_start=period["period_start"], period_end=period["period_end"])
-    installed_acquired = _acquired_event_filings(repo_root=ROOT, company_id=prepared["company_id"],
-        allowed_ciks=[prepared["entity"]], period_start=period["period_start"], period_end=period["period_end"])
-    _need(acquired == installed_acquired, "NORMAL_EVENT_ACQUISITION_CENSUS_DIFFERS_FROM_INSTALLED_INPUT", "SOURCE_COVERAGE_CONFLICT")
+    if installed_census_required:
+        installed_acquired = _acquired_event_filings(repo_root=ROOT, company_id=prepared["company_id"],
+            allowed_ciks=[prepared["entity"]], period_start=period["period_start"], period_end=period["period_end"])
+        _need(acquired == installed_acquired, "NORMAL_EVENT_ACQUISITION_CENSUS_DIFFERS_FROM_INSTALLED_INPUT", "SOURCE_COVERAGE_CONFLICT")
     missing = [f for f in acquired if f["accession"] not in seen]
     _need(not missing, "NORMAL_EVENT_ACQUIRED_SUPPLEMENT_NOT_IMPLEMENTED:" + ",".join(f["accession"] for f in missing))
     collection = _event_collection_manifest(company_id=prepared["company_id"], target=period,
@@ -128,10 +129,11 @@ def _event_sources(*, repo_root, reader, prepared, inventory):
     return claims, [s["manifest"] for s in sets] + [collection], filing_rows
 
 
-def _registered_event_sources(*, repo_root, reader, prepared, inventory, period):
+def _registered_event_sources(*, repo_root, reader, prepared, inventory, period, rules_root=None):
     """Rebuild the approved union from each registered CIK's actual sources."""
     from .traits import repository_company_ciks
-    ciks=repository_company_ciks(repo_root=repo_root,company_id=prepared['company_id'])
+    rules=repo_root if rules_root is None else Path(rules_root)
+    ciks=repository_company_ciks(repo_root=rules,company_id=prepared['company_id'])
     all_claims=[];all_manifests=[];all_filings=[];event_sets=[];scopes=[];seen=set()
     for cik in ciks:
         current=reader if cik==prepared['entity'] else _Sources(repo_root,prepared['company_id'],cik)
@@ -140,7 +142,8 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period)
                 role='sec_submissions_inventory',media_type='application/json'))
             # This is a source-discovery context, not a rewritten annual identity.
             context={'company_id':prepared['company_id'],'entity':cik,'table_input':{'target_period':period}}
-            claims,manifests,filings=_event_sources(repo_root=repo_root,reader=current,prepared=context,inventory=current_inventory)
+            claims,manifests,filings=_event_sources(repo_root=repo_root,reader=current,prepared=context,inventory=current_inventory,
+                installed_census_required=rules_root is None)
             accessions={f['accessionNumber'] for f in filings}
             _need(not seen.intersection(accessions),'NORMAL_REGISTERED_EVENT_CIK_ACCESSION_OVERLAP','SOURCE_COVERAGE_CONFLICT')
             seen.update(accessions)
@@ -160,13 +163,14 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period)
         inventory_reference=inventory['source_reference'],event_sets=event_sets,ordered_accessions=sorted(seen))
     all_manifests.append(collection)
     evidence={'registered_ciks':ciks,'window':period,'per_cik_sources':scopes,
-        'event_projection_catalog_sha256':sha256_file(path=repo_root/'catalog/zero_ai_public_projection.json'),
+        'event_projection_catalog_sha256':sha256_file(path=rules/'catalog/zero_ai_public_projection.json'),
         'company_registry_sha256':sha256_file(path=repo_root/'config/company_registry.csv'),
         'financial_cross_entity_combination_authorized':False}
     return all_claims,all_manifests,all_filings,evidence
 
 
-def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str):
+def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None,
+                                   validate_depreciation_scope=False):
     """Derive native records from current saved annual input, without a Run.
 
     No caller fact, period, filing, answer, compiled Spec or source receipt is
@@ -175,8 +179,16 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     """
     _need(metric_id in SUPPORTED_METRICS, "NORMAL_ZERO_AI_METRIC_NOT_IN_PROTOTYPE")
     from .ordinary_income_input import IncomeInputError, prepare_current_income_input, verify_income_observations
-    authority = _authority(repo_root)
-    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
+    rules = repo_root if rules_root is None else Path(rules_root)
+    _need(rules_root is None or metric_id!='E01','NORMAL_ZERO_AI_E01_CONTENT_CONFIRMED_ROUTE_REQUIRED')
+    authority = _authority(rules)
+    if rules_root is not None:
+        from .company_registry import _registry_rows
+        source_row=next(r for r in _registry_rows(repo_root=repo_root) if r['company_id']==company_id)
+        rule_row=next(r for r in _registry_rows(repo_root=rules) if r['company_id']==company_id)
+        _need(source_row==rule_row,'NORMAL_ZERO_AI_SOURCE_SUBJECT_REGISTRY_CHANGED')
+    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id,
+        **({} if rules_root is None else {'ordinary_registered':True}))
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
     period = prepared["table_input"]["target_period"]
     registered_event = metric_id in EVENT_METRICS and prepared["subject_policy"]["mode"] == "SUCCESSOR_REGISTRANT_ONLY"
@@ -184,30 +196,31 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     if registered_event:
         from .public_projection import event_target_period
         from .traits import repository_company_ciks
-        projection_catalog = strict_json_loads(text=(repo_root/"catalog/zero_ai_public_projection.json").read_text())
+        projection_catalog = strict_json_loads(text=(rules/"catalog/zero_ai_public_projection.json").read_text())
         period = event_target_period(target_period=period,continuity_status="successor_predecessor",catalog=projection_catalog)
-        registered_scope = {"registered_ciks":repository_company_ciks(repo_root=repo_root,company_id=company_id),
+        registered_scope = {"registered_ciks":repository_company_ciks(repo_root=rules,company_id=company_id),
             "window":period,"status":"SOURCE_RECONSTRUCTION_PENDING","financial_cross_entity_combination_authorized":False}
     reader = _Sources(repo_root, company_id, prepared["entity"])
     inventory = reader.read(submissions_url(cik=int(prepared["entity"])), role="sec_submissions_inventory", media_type="application/json")
-    reader.primary(prepared["filing"])
+    primary_source = reader.primary(prepared["filing"])
     facts_source = reader.read(companyfacts_url(cik=int(prepared["entity"])), accession=prepared["filing"]["accessionNumber"],
         role="companyfacts", media_type="application/json")
-    traits = repository_company_traits(repo_root=repo_root, company_id=company_id)
+    traits = repository_company_traits(repo_root=rules, company_id=company_id)
     claims, source_sets, observations, filing_rows, selection = [], [], [], [prepared["filing"]], {}
     dependency_specs, dependency_records = {}, []
     amendment_input = None
     income_input = None
     income_observation_checks = []
+    depreciation_scope = None
     if metric_id in {"B01", "B03"}:
         spec_path = B01_SPEC_PATH if metric_id == "B01" else B03_SPEC_PATH
         if metric_id == "B03":
-            dependency_specs["B01"] = compile_spec_file(path=repo_root / B01_SPEC_PATH, dependency_specs={})
+            dependency_specs["B01"] = compile_spec_file(path=rules / B01_SPEC_PATH, dependency_specs={})
         spec_origin = {"spec_path":spec_path}
-        spec = compile_spec_file(path=repo_root / spec_path, dependency_specs=dependency_specs)
+        spec = compile_spec_file(path=rules / spec_path, dependency_specs=dependency_specs)
         scope = {"entity_scope":"registrant", "period_basis":"source_annual_duration"}
     else:
-        catalog = load_event_route_catalog(repo_root=repo_root)
+        catalog = load_event_route_catalog(repo_root=rules)
         spec_path, spec_origin = None, {"catalog_path":"catalog/event_routes.json", "metric_id":metric_id}
         spec = _compiled_event_spec(metric_id=metric_id, route=catalog["routes"][metric_id])
         scope = {"coverage":"fiscal_year_source_set", "fiscal_year":period["fiscal_year"],
@@ -216,7 +229,8 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
         "scope":scope, "scope_key":scope_key(scope=scope)}
     try:
         if metric_id in {"B01","B03"} and prepared["subject_policy"]["mode"] == "SUCCESSOR_REGISTRANT_ONLY":
-            income_input = prepare_current_income_input(repo_root=repo_root,company_id=company_id)
+            income_input = prepare_current_income_input(repo_root=repo_root,company_id=company_id,
+                **({} if rules_root is None else {'rules_root':rules_root}))
             period = income_input["statement_period"]
             target = {**target,"period_start":period["period_start"],"period_end":period["period_end"]}
             amendment_input = {**income_input["amendment_input"],"decision":"INPUT_PROPERTY_PROVEN",
@@ -225,7 +239,8 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
               "NORMAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
         if prepared["amendments"] and income_input is None:
             amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,
-                input_class="ORIGINAL_STATEMENT_VALUES" if metric_id in {"B01","B03"} else "FISCAL_EVENT_WINDOW")
+                input_class="ORIGINAL_STATEMENT_VALUES" if metric_id in {"B01","B03"} else "FISCAL_EVENT_WINDOW",
+                **({} if rules_root is None else {'rules_root':rules_root}))
             _need(amendment_input["prepared_input"] == prepared.get("original_input",prepared),
                   "NORMAL_AMENDMENT_ORIGINAL_INPUT_DIFFERS", "SOURCE_INTEGRITY_ERROR")
             _need(amendment_input["decision"] == "INPUT_PROPERTY_PROVEN", "NORMAL_AMENDMENT_INPUT_SCOPE_UNRESOLVED")
@@ -249,6 +264,41 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
                 reusable.extend(dep_observations)
             result, trace, observations = calculate_metric(compiled_spec=spec,
                 target=execution_target, company_traits=traits, structured_facts=facts, verified_observations=reusable)
+            if metric_id == 'B03' and validate_depreciation_scope and result['publication'] == 'PUBLISHED' and result['value'] is not None:
+                from .ordinary_b03_input_scope import inspect_depreciation_input, DIRECT, WITHHELD_REASON
+                from .b03_contract_amortization_scope import assess_current_b03_scope
+                try:
+                    depreciation_scope = inspect_depreciation_input(raw_bytes=primary_source['raw_bytes'],
+                        entity=prepared['entity'], period=period, observations=observations)
+                    if depreciation_scope['status'] == 'RETAKE':
+                        original_decision = depreciation_scope
+                        disproved = set(DIRECT) - {depreciation_scope['concept']}
+                        eligible = [fact for fact in facts if fact['concept'].split(':')[-1] not in disproved]
+                        result, trace, observations = calculate_metric(compiled_spec=spec,
+                            target=execution_target, company_traits=traits, structured_facts=eligible,
+                            verified_observations=reusable)
+                        depreciation_scope = inspect_depreciation_input(raw_bytes=primary_source['raw_bytes'],
+                            entity=prepared['entity'], period=period, observations=observations)
+                        depreciation_scope['retake_decision'] = original_decision
+                        if depreciation_scope['status'] != 'KEEP':
+                            depreciation_scope.update(status='WITHHOLD', reason_code=WITHHELD_REASON,
+                                why='ONE_APPROVED_RETAKE_DID_NOT_PROVE_PRIMARY_QUANTITY')
+                    if depreciation_scope['status'] == 'KEEP':
+                        existing = assess_current_b03_scope(case={'primary_metric_id':'B03',
+                            'results':{'B03':result}, 'observations':observations, 'target_period':period,
+                            'source_proofs':prepared['source_proofs']}, data_root=repo_root)
+                        depreciation_scope['existing_scope_check'] = existing
+                        if existing['blocked']:
+                            depreciation_scope.update(status='WITHHOLD', reason_code=WITHHELD_REASON,
+                                why=existing['status'])
+                except ValueError as error:
+                    depreciation_scope = {'status':'WITHHOLD','reason_code':WITHHELD_REASON,
+                        'why':str(error),'error_type':type(error).__name__,
+                        'category':'SOURCE_SCOPE_OR_IMPLEMENTATION_UNRESOLVED'}
+                if depreciation_scope['status'] == 'WITHHOLD':
+                    depreciation_scope['rejected_observations'] = observations
+                    result, trace = withheld_metric_result(compiled_spec=spec, target=target, reason_code=WITHHELD_REASON)
+                    observations = []
             if income_input is not None:
                 income_observation_checks = verify_income_observations(income_input,observations)
             selection = {"source_candidate_count":len(facts), "selected_fact_ids":[o["source_binding"]["fact_id"] for o in observations],
@@ -256,9 +306,10 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
         else:
             if registered_event:
                 claims, source_sets, events, registered_scope = _registered_event_sources(
-                    repo_root=repo_root,reader=reader,prepared=prepared,inventory=inventory,period=period)
+                    repo_root=repo_root,reader=reader,prepared=prepared,inventory=inventory,period=period,rules_root=rules_root)
             else:
-                claims, source_sets, events = _event_sources(repo_root=repo_root, reader=reader, prepared=prepared, inventory=inventory)
+                claims, source_sets, events = _event_sources(repo_root=repo_root, reader=reader, prepared=prepared, inventory=inventory,
+                    installed_census_required=rules_root is None)
             filing_rows.extend(events)
             graph = project_event_result(metric_id=metric_id, claims=claims, source_set_manifest=source_sets[-1],
                 inventory_source_reference=inventory["source_reference"], target_period=period, catalog=catalog)
@@ -278,9 +329,16 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     except (NormalZeroAiError, NormalGovernanceInputError, AnnualUpdateError, BatchWorkflowError, SourceError, IncomeInputError) as error:
         reason = str(error)
         category = getattr(error, "category", "SOURCE_ACCESS_FAILED" if reason.startswith("LATEST_SOURCE_REQUEST_FAILED") else "SOURCE_INTEGRITY_ERROR")
-        result, trace = withheld_metric_result(compiled_spec=spec, target=target, reason_code="NORMAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED")
+        reason_code=('ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT'
+                     if reason.startswith('ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT:')
+                     else 'NORMAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED')
+        result, trace = withheld_metric_result(compiled_spec=spec, target=target, reason_code=reason_code)
         observations = []
         selection = {**selection, "reason_code":result["reason_code"], "reason":reason, "category":category}
+        if isinstance(error,IncomeInputError) and error.details is not None:
+            selection['income_period']=error.details
+    if depreciation_scope is not None:
+        selection['depreciation_scope'] = depreciation_scope
     proofs = prepared["source_proofs"] + [entry["proof"] for entry in reader.proofs.values()]
     if amendment_input is not None: proofs.extend(amendment_input["source_proofs"])
     if income_input is not None: proofs.extend(income_input["source_proofs"])

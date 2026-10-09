@@ -1,0 +1,76 @@
+{
+  "record_type": "HISTORICAL_SHARED_COMPANY_CONSUMER_CLOSEOUT",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+  "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-consumer-closeout-20261008-1",
+  "operations": [
+    {
+      "label": "real-history-first",
+      "seconds": 16.556413542013615,
+      "factory_calls": 4,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "label": "real-history-repeat",
+      "seconds": 2.220062542008236,
+      "factory_calls": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "label": "constructed-withheld-first",
+      "seconds": 4.455927124945447,
+      "factory_calls": 4,
+      "status": "FLOW_COMPLETED_WITH_LIMITATIONS"
+    },
+    {
+      "label": "constructed-withheld-repeat",
+      "seconds": 2.2684319170657545,
+      "factory_calls": 0,
+      "status": "FLOW_COMPLETED_WITH_LIMITATIONS"
+    },
+    {
+      "label": "read-with-current-withheld",
+      "seconds": 0.8093664168845862,
+      "factory_calls": 0,
+      "status": null
+    }
+  ],
+  "actual_values": [
+    {
+      "metric": "B10",
+      "year": "2024",
+      "value": "69.8"
+    },
+    {
+      "metric": "B11",
+      "year": "2024",
+      "value": "128.23"
+    },
+    {
+      "metric": "B10",
+      "year": "2025",
+      "value": "69.3"
+    },
+    {
+      "metric": "B11",
+      "year": "2025",
+      "value": "128.8"
+    }
+  ],
+  "constructed_withholding_not_financial_conclusion": true,
+  "repeat_success_factory_calls": 0,
+  "repeat_withheld_factory_calls": 0,
+  "repeat_and_read_result_bytes_unchanged": true,
+  "last_success_retained_current_withheld_null": true,
+  "source_tree_copies": 0,
+  "rule_tree_copies": 0,
+  "source_files_unchanged": true,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "ledger_sha256": "a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262",
+  "automatic_historical_source_acquisition": false,
+  "full_five_year_business_acceptance": false
+}

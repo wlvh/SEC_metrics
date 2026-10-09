@@ -202,24 +202,7 @@ def _governance_resolution(*, data_root, preparation, metric_id):
     return blocked("C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND", failures)
 
 
-def _prepare_b06(*, repo_root, company_id):
-    from .normal_governance_input import _Sources
-    from sec_urls import companyfacts_url, submissions_url
-    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
-    reader = _Sources(repo_root, company_id, prepared["entity"])
-    reader.read(submissions_url(cik=int(prepared["entity"])), role="submissions", media_type="application/json")
-    facts = reader.read(companyfacts_url(cik=int(prepared["entity"])),
-        accession=prepared["filing"]["accessionNumber"], role="companyfacts", media_type="application/json")
-    sources = reader.auditor_filing(prepared["filing"])
-    xml = [s for s in sources if s["raw_blob"]["media_type"] == "application/xml"]
-    primary = [s for s in sources if s["raw_blob"]["media_type"] == "text/html"]
-    if len(xml) != 1 or len(primary) != 1:
-        raise ValueError("B06_NORMAL_ORIGINAL_SOURCE_SET_AMBIGUOUS")
-    body = {"record_type": "NORMAL_B06_INPUT_BINDING", "prepared_annual_input": prepared,
-            "source_proofs": [r["proof"] for r in reader.proofs.values()],
-            "source_sets": reader.file_sets}
-    return {"input_binding": {**body, "input_binding_id": content_hash(value=body)},
-            "records": list(reader.records.values()), "facts": facts, "xml": xml[0], "primary": primary[0]}
+from .normal_governance_input import prepare_saved_original_financial_sources as _prepare_b06
 
 
 def _b06_resolution(*, data_root, preparation):

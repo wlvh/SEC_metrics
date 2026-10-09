@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics/work/check-pr71-two-dependencies.py", line 26, in <module>
+    assert {(x['metric_id'],x['fiscal_year']):x['value'] for x in rows}=={('B10','2024'):'69.8',('B11','2024'):'128.23',('B10','2025'):'69.3',('B11','2025'):'128.8'}
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -67,7 +67,8 @@ def _invoke(program, args, *, report_file, environment=None):
 
 def prepare_program(work):
     """Install once and keep each prior program/Run version for native readback."""
-    from .company_runtime_install import SUCCESSOR_MODULES, install_runtime
+    from .company_runtime_install import SUCCESSOR_MODULES
+    from .company_retained_local import install_retained_local, RETAINED_MAIN
     from .company_handoff import binding
     configuration = work/'local-company.json'
     if configuration.exists():
@@ -77,12 +78,13 @@ def prepare_program(work):
             need(program.parent == work/'programs' and (program/'requirements/issue_54_v4').is_dir(),
                  'LOCAL_FIXED_PROGRAM_MISSING_OR_CHANGED')
             return program
-    paths = ['tools/vnext_company.py', *('scripts/vnext/'+m+'.py' for m in SUCCESSOR_MODULES)]
-    code = content_hash(value={p: binding(ROOT/p) for p in paths})[7:]
+    paths = ['tools/vnext_company.py','scripts/vnext/company_retained_local.py', *('scripts/vnext/'+m+'.py' for m in SUCCESSOR_MODULES)]
+    code = content_hash(value={'retained_main_commit':RETAINED_MAIN,
+                               'entry_files':{p:binding(ROOT/p) for p in paths}})[7:]
     program = work/'programs'/code
     if not program.exists():
         staging = program.with_name('.'+code+'-'+uuid4().hex)
-        install_runtime(output_root=staging, kind='local')
+        install_retained_local(repo_root=ROOT,output_root=staging)
         # Only the newly installed private program is sealed. Captures, trust,
         # update journals and results live in separate writable directories.
         for path in [*staging.rglob('*'), staging]:
@@ -103,7 +105,9 @@ def configure_task(work, company_id, sec_allowance):
     else:
         _atomic_json(configuration, identity)
     program = prepare_program(work)
-    _atomic_json(configuration, {**saved, **identity, 'program_root': str(program)})
+    from .company_retained_local import RETAINED_MAIN
+    compatibility={} if saved.get('program_root') else {'retained_main_commit':RETAINED_MAIN}
+    _atomic_json(configuration, {**saved, **identity, **compatibility, 'program_root': str(program)})
     return program
 
 
@@ -161,9 +165,20 @@ def _export_current(program, work, output, company, key, environment, processing
 
 
 def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
-              metric_ids=None, max_sec_requests=120, sec_allowance=120):
+              metric_ids=None, max_sec_requests=120, sec_allowance=120, source_root=None,
+              fiscal_year_start=None, fiscal_year_end=None):
     """One finite invocation, not a scheduler or authorization to publish."""
-    need(period == 'latest-complete-fy', 'LOCAL_PERIOD_NOT_IMPLEMENTED: use latest-complete-fy; historical periods retain their separate entry')
+    if period == 'fiscal-years':
+        return _run_saved_history(company_id=company_id, source_root=source_root,
+            work_dir=work_dir, output_dir=output_dir, metric_ids=metric_ids,
+            fiscal_year_start=fiscal_year_start, fiscal_year_end=fiscal_year_end)
+    need(period == 'latest-complete-fy', 'LOCAL_PERIOD_NOT_IMPLEMENTED')
+    need(fiscal_year_start is None and fiscal_year_end is None,
+         'LOCAL_HISTORY_ARGUMENTS_REQUIRE_FISCAL_YEARS')
+    if source_root is not None:
+        from .company_current_records import run_saved_company
+        return run_saved_company(company_id=company_id, source_root=source_root,
+            work_dir=work_dir, output_dir=output_dir, metric_ids=metric_ids)
     configured = configured_scope(company_id)
     selected = configured if metric_ids is None else list(metric_ids)
     need(selected and len(selected) == len(set(selected)) and set(selected) <= set(configured),
@@ -196,6 +211,8 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
         try:
             program = configure_task(work, company_id, sec_allowance)
             summary['program_root'] = str(program)
+            retained = strict_json_file(path=work/'local-company.json').get('retained_main_commit')
+            if retained:summary['retained_native_main_commit']=retained
             # A bounded repair may advance preparation while preserving the
             # original acquisition binding and all existing computing Runs.
             preparation = strict_json_file(path=work/'local-company.json').get('preparation_program_root')
@@ -323,3 +340,28 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
         summary['outputs'] = {name: str(output/name) for name in ('metrics_matrix.csv', 'metric_evidence.csv', 'run_summary.json')}
         _atomic_json(output/'run_summary.json', summary)
     return summary
+
+
+def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_ids,
+                       fiscal_year_start, fiscal_year_end):
+    """Select saved issuer years; the shared company controller owns processing.
+
+    Historical acquisition and unsupported families retain their existing
+    entry. No source installation or old native-task mutation occurs here.
+    """
+    need(type(fiscal_year_start) is int and type(fiscal_year_end) is int
+         and 1900 <= fiscal_year_start <= fiscal_year_end <= 9998
+         and fiscal_year_end-fiscal_year_start < 5, 'COMPANY_HISTORY_FISCAL_RANGE_INVALID')
+    need(source_root is not None, 'LOCAL_HISTORY_PREPARED_SOURCE_REQUIRED')
+    from .historical_lodging_results import (SUPPORTED_METRICS,
+        prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES)
+    selected = configured_scope(company_id) if metric_ids is None else list(metric_ids)
+    need(selected and len(selected) == len(set(selected))
+         and set(selected) <= set(SUPPORTED_METRICS),
+         'LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select B10/B11; retained historical families use their original entry')
+    from .company_current_records import run_saved_company
+    return run_saved_company(company_id=company_id, source_root=source_root,
+        work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
+        fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
+        case_factory=prepare_historical_lodging_year_case,
+        processing_files=HISTORICAL_LODGING_PROCESSING_FILES)

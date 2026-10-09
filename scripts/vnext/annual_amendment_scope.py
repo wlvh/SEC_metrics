@@ -252,8 +252,8 @@ def inspect_annual_amendment_scope(*, original, amendment, company_id, cik):
     return {**body,'scope_id':content_hash(value=body)}
 
 
-def prepare_saved_amendment_scopes(*, repo_root: Path, company_id: str):
-    policy_path = resolve_repository_file(repo_root=repo_root, repo_relative_path=POLICY_PATH)
+def prepare_saved_amendment_scopes(*, repo_root: Path, company_id: str, rules_root=None):
+    policy_path = resolve_repository_file(repo_root=repo_root if rules_root is None else Path(rules_root), repo_relative_path=POLICY_PATH)
     _need(policy_path.read_bytes() == (ROOT/POLICY_PATH).read_bytes()
           and strict_json_file(path=policy_path) == POLICY,
           'AMENDMENT_INSTALLED_POLICY_CHANGED')
@@ -277,7 +277,7 @@ def prepare_saved_amendment_scopes(*, repo_root: Path, company_id: str):
             'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
 
 
-def prepare_saved_amendment_input(*, repo_root: Path, company_id: str, input_class: str):
+def prepare_saved_amendment_input(*, repo_root: Path, company_id: str, input_class: str, rules_root=None):
     """Prove a single input property, retaining every original and amendment.
 
     Event-window identity is only a pair of dates. The caller must separately
@@ -285,7 +285,8 @@ def prepare_saved_amendment_input(*, repo_root: Path, company_id: str, input_cla
     This entry does not create a metric result or supply any missing value.
     """
     _need(input_class in POLICY['unchanged_input_classes'], 'AMENDMENT_INPUT_CLASS_UNSUPPORTED')
-    packet = prepare_saved_amendment_scopes(repo_root=repo_root, company_id=company_id)
+    packet = prepare_saved_amendment_scopes(repo_root=repo_root, company_id=company_id,
+        **({} if rules_root is None else {'rules_root':rules_root}))
     failures = [{'scope_id':scope['scope_id'], 'accession':scope['amendment']['filing']['accessionNumber'],
                  'classification':scope['classification'], 'issues':scope['issues']}
                 for scope in packet['scopes'] if input_class not in scope['unchanged_input_classes']]

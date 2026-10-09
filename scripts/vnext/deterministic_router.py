@@ -12,6 +12,8 @@ from __future__ import annotations
 import json
 import re
 import unicodedata
+from contextlib import contextmanager
+from contextvars import ContextVar
 from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal, InvalidOperation
@@ -1122,13 +1124,41 @@ class ParsedAccessionXbrlSource:
         object.__setattr__(self, "_factory", factory)
 
 
+_BATCH_XBRL_PARSES = ContextVar('company_xbrl_parses', default=None)
+
+
+@contextmanager
+def shared_xbrl_parses():
+    """Share immutable exact-byte parses only inside one company operation.
+
+    Source selection, identity, period, unit and claim checks still run for
+    each consumer. No answer, source admission or calculation is cached.
+    A bounded cache is discarded on exit, including failure.
+    """
+    token = _BATCH_XBRL_PARSES.set({})
+    try:
+        yield
+    finally:
+        _BATCH_XBRL_PARSES.reset(token)
+
+
 def parse_accession_xbrl_source(*, raw_bytes: bytes) -> ParsedAccessionXbrlSource:
     """Create one exact SHA/size/content-ID-bound process-local native parse."""
     if type(raw_bytes) is not bytes:
         raise DeterministicRouterError("Parsed XBRL source must be immutable bytes")
+    digest = sha256_bytes(content=raw_bytes)
+    key = (digest, len(raw_bytes))
+    batch = _BATCH_XBRL_PARSES.get()
+    if batch is not None and key in batch:
+        return batch[key]
     contexts, facts = _parse_xbrl_parts(raw_bytes=raw_bytes)
-    return ParsedAccessionXbrlSource(source_sha256=sha256_bytes(content=raw_bytes),
+    parsed = ParsedAccessionXbrlSource(source_sha256=digest,
         source_size=len(raw_bytes), contexts=contexts, facts=facts, factory=_PARSED_XBRL_FACTORY)
+    if batch is not None:
+        if len(batch) >= 16:
+            batch.pop(next(iter(batch)))
+        batch[key] = parsed
+    return parsed
 
 
 def _claims_from_xbrl_parts(*, reference: Mapping, source_set_manifest: Mapping,

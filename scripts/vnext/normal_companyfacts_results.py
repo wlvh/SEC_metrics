@@ -9,7 +9,7 @@ from decimal import DecimalException
 from pathlib import Path
 
 from sec_urls import companyfacts_url, submissions_url, submissions_file_url
-from .annual_update import AnnualUpdateError
+from .annual_sources import AnnualUpdateError
 from .batch_workflow import BatchWorkflowError
 from .calculator import metric_is_applicable, withheld_metric_result
 from .canonical import canonical_json_bytes, content_hash, sha256_file, strict_json_loads
@@ -27,7 +27,7 @@ from .sources import resolve_repository_file, SourceError
 from .traits import repository_company_traits
 from .zero_ai_r2 import (_load_deterministic_catalog, _compiled_deterministic_spec,
     _deterministic_metric_graph, _manual_result_trace, _exact_filing_source_set)
-from .zero_ai_release import ZeroAiReleaseError
+from .deterministic_catalog import ZeroAiReleaseError
 
 
 CATALOG_PATH = "catalog/deterministic_metrics.json"
@@ -92,20 +92,25 @@ def _filing_source(reader, prepared, filing, inventory, concepts):
     return {"reference":source["source_reference"], "manifest":manifest}, claims
 
 
-def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
+def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str, rules_root=None):
     """Resolve all eleven catalog Company Facts metrics from saved originals.
 
     Current-only metrics can succeed when a required prior source for another
     metric is unavailable. No caller period, answer, filing or proof is accepted.
     """
-    authority = _authority(repo_root)
-    catalog = _load_deterministic_catalog(repo_root=repo_root)
+    rules = repo_root if rules_root is None else Path(rules_root)
+    authority = _authority(rules)
+    catalog = _load_deterministic_catalog(repo_root=rules)
     routes = {key:value for key,value in catalog["metrics"].items() if value["adapter_id"] == "companyfacts"}
-    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
+    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id,
+        **({} if rules_root is None else {'ordinary_registered':True}))
     verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
     period = prepared["table_input"]["target_period"]
     registry = next(r for r in _registry_rows(repo_root=repo_root) if r["company_id"] == company_id)
-    traits = repository_company_traits(repo_root=repo_root, company_id=company_id)
+    if rules_root is not None:
+        rule_registry=next(r for r in _registry_rows(repo_root=rules) if r['company_id']==company_id)
+        _need(registry==rule_registry,'NORMAL_COMPANYFACTS_SOURCE_SUBJECT_REGISTRY_CHANGED')
+    traits = repository_company_traits(repo_root=rules, company_id=company_id)
     reader = _Sources(repo_root, company_id, prepared["entity"])
     inventory = reader.read(submissions_url(cik=int(prepared["entity"])), role="sec_submissions_inventory", media_type="application/json")
     reader.primary(prepared["filing"])
@@ -119,11 +124,13 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
     amendment_input = None;instant_amendment_input = None;common_error = None
     subject_error = "NORMAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED" if prepared["subject_policy"]["mode"] != "CONTINUOUS_PRIMARY" else None
     if prepared["amendments"]:
-        amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,input_class="ORIGINAL_STATEMENT_VALUES")
+        amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,input_class="ORIGINAL_STATEMENT_VALUES",
+            **({} if rules_root is None else {'rules_root':rules_root}))
         _need(amendment_input["prepared_input"] == prepared.get("original_input",prepared), "NORMAL_AMENDMENT_ORIGINAL_INPUT_DIFFERS")
         if amendment_input["decision"] != "INPUT_PROPERTY_PROVEN":
             common_error = "NORMAL_COMPANYFACTS_AMENDMENT_INPUT_SCOPE_UNRESOLVED"
-            instant_amendment_input = prepare_instant_balance_amendment_input(repo_root=repo_root,company_id=company_id)
+            instant_amendment_input = prepare_instant_balance_amendment_input(repo_root=repo_root,company_id=company_id,
+                **({} if rules_root is None else {'rules_root':rules_root}))
             _need(instant_amendment_input["prepared_input"] == prepared.get("original_input",prepared),
                   "NORMAL_INSTANT_AMENDMENT_ORIGINAL_INPUT_DIFFERS")
     needs_prior = any(metric_is_applicable(applicability=route["applicability"], traits=traits)
@@ -149,7 +156,7 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
             periods["prior"], filings["prior"] = prior, filing
         except (*_SOURCE_ERRORS, NormalCompanyfactsError) as error:
             prior_error = {"reason":str(error), "error_type":type(error).__name__}
-    context = {"repo_root":repo_root, "deterministic_catalog":catalog,
+    context = {"repo_root":rules, "deterministic_catalog":catalog,
         "role_context":{(company_id,"companyfacts"):{"sources":sources,"claims_by_accession_role":claims_by_role}},
         "target_periods":{company_id:periods},"targets":{company_id:period},"registry":{company_id:registry},
         "filings_by_company":{company_id:{role:({"accession":filing["accessionNumber"]} if filing else None) for role,filing in filings.items()}}}

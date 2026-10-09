@@ -1,0 +1,81 @@
+{
+  "elapsed_seconds": 6.262718125013635,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261006T224256Z-09401cdc",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B10",
+    "B11"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B10",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "78a9d08eec734d1c84d09093a9d0f166",
+      "version": "d0e66f0c42894da2a90eeb87e2b6dd67",
+      "result_id": "sha256:99aa23eb1fa7ca190a86c64b492d7b0e7c43735c7b5ab0b31ee9fda736be4edf",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/readonly-rule-lodging-state-20261007/updates/B10/results/d0e66f0c42894da2a90eeb87e2b6dd67",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:99aa23eb1fa7ca190a86c64b492d7b0e7c43735c7b5ab0b31ee9fda736be4edf",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/readonly-rule-lodging-state-20261007/updates/B10/results/d0e66f0c42894da2a90eeb87e2b6dd67",
+      "program_version": {
+        "commit": "12585e75746b87ea4d43ccdba546af79ce8cf094",
+        "has_uncommitted_changes": true
+      }
+    },
+    {
+      "metric_id": "B11",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "8cf494274c6146b38e15fd8f037fcb89",
+      "version": "e1fb9e94b55149bb8bc8e12b61ac8a86",
+      "result_id": "sha256:ae7ab493bc2adb1bc0546d4ec10b2f9510edf0b4d014f50083eaeb8a9c130ee6",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/readonly-rule-lodging-state-20261007/updates/B11/results/e1fb9e94b55149bb8bc8e12b61ac8a86",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:ae7ab493bc2adb1bc0546d4ec10b2f9510edf0b4d014f50083eaeb8a9c130ee6",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/readonly-rule-lodging-state-20261007/updates/B11/results/e1fb9e94b55149bb8bc8e12b61ac8a86",
+      "program_version": {
+        "commit": "12585e75746b87ea4d43ccdba546af79ce8cf094",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/readonly-rule-lodging-state-20261007",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/readonly-rule-lodging-output-20261007/20261006T224256Z-09401cdc",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "tested_tree": {
+    "base_commit": "12585e75746b87ea4d43ccdba546af79ce8cf094",
+    "uncommitted_source_files": {
+      "scripts/vnext/lodging_table_source.py": "cca0ae67ef8274ace15da9c5752cb2662a2f549370cc4a28a21821641a68c661",
+      "scripts/vnext/normal_lodging_results.py": "071b25368574c8a2afa42ce9ac6d76ee9f2c7d9113b1f01ba299cab304c8577a",
+      "scripts/vnext/ordinary_saved_result.py": "833598c82f488327238721cb394fcffdb5f3369cfe3fc3997dd128fb029b213a",
+      "tests/vnext/test_separate_rule_root.py": "c8bd718d9c3cc115c2811b98fa258e338b9a8eaa9ee140a0de1eaba6d01ffa9a"
+    }
+  }
+}

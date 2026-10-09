@@ -1,0 +1,181 @@
+"""Independent, finite repair checks. Run as Python; only temporary fixtures mutate.
+No provider, SEC, source-code, account, or peer workspace operation.
+"""
+import ast
+from copy import deepcopy
+from decimal import Decimal
+import json
+from pathlib import Path
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+import unittest
+from unittest.mock import patch
+
+ROOT = Path.cwd()
+sys.path.insert(0, str(ROOT / 'scripts'))
+from tests.vnext.test_b03_current_input_scope import original, PERIOD, observation
+from vnext import ordinary_current_update as update
+from vnext import b03_contract_amortization_scope as contract
+from vnext.b03_depreciation_scope import assess_direct_depreciation_scope
+from vnext.ordinary_b03_input_scope import inspect_depreciation_input
+from vnext.deterministic_router import parse_accession_xbrl_source, _numeric_xbrl_value
+from vnext.text_results_v2 import _ReportedFactMetadata
+from vnext.canonical import sha256_bytes
+from vnext.normal_annual_input import prepare_saved_annual_input
+
+BASE = 'b9228566e24ec8bd175c3f47a4bfc3a6f044bb51'
+HEAD = '44c8b22a6fd7a4ba309f1c0e458355ce274f5cbf'
+
+def components():
+    return [{'semantic_role': r, 'value': v, 'source_binding': {'concept': 'us-gaap:' + c}}
+            for r, c, v in [('depreciation', 'Depreciation', '7'),
+                            ('amortization', 'AmortizationOfIntangibleAssets', '13')]]
+
+def meta(raw):
+    m = _ReportedFactMetadata(); m.feed(raw.decode('utf-8-sig')); m.close()
+    return m
+
+def rename(raw, old, new):
+    assert ('xmlns:' + old + '=').encode() in raw
+    return raw.replace(('xmlns:' + old + '=').encode(), ('xmlns:' + new + '=').encode()).replace((old + ':').encode(), (new + ':').encode())
+
+class RepairProbes(unittest.TestCase):
+    def test_01_actual_policy_bytes_alone_change_cache_decision(self):
+        before = update._configuration(ROOT, 'marriott_international', 'B03')
+        self.assertIn('catalog/r6/text_results_v2_policy.json', before['processing_files'])
+        with tempfile.TemporaryDirectory() as temporary:
+            program = Path(temporary) / 'program'; program.mkdir()
+            for relative in before['processing_files']:
+                dest = program / relative; dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / relative, dest)
+            with patch.object(update, 'ROOT', program):
+                same = update._configuration(ROOT, 'marriott_international', 'B03')
+                self.assertEqual(same, before)
+                previous = {'company_id': 'marriott_international', 'metric_id': 'B03',
+                            'version': 'old', 'configuration': same, 'source_census': [], 'result_id': 'old'}
+                saved = {'manifest': {'company_id': 'marriott_international', 'metric_id': 'B03', 'source_proofs': []}, 'result': {'result_id': 'old'}}
+                with patch.object(update, '_recover', return_value=previous), patch.object(update, '_source_census', return_value=[]), patch.object(update, 'read_saved_result', return_value=saved), patch.object(update, 'create_saved_result', side_effect=ValueError('PROBE_CALCULATION_ENTERED')) as factory:
+                    first = update.run_once(state_root=Path(temporary) / 'before', source_root=ROOT, company_id='marriott_international', metric_id='B03')
+                    self.assertEqual(first['status'], 'NO_SOURCE_CONTENT_CHANGE'); factory.assert_not_called()
+                    policy_path = program / 'catalog/r6/text_results_v2_policy.json'
+                    policy = json.loads(policy_path.read_text()); policy['cik_identifier_schemes'] = ['https://www.sec.gov/CIK']
+                    policy_path.write_text(json.dumps(policy))
+                    after = update._configuration(ROOT, 'marriott_international', 'B03')
+                    differences = [k for k in before['processing_files'] if before['processing_files'][k] != after['processing_files'][k]]
+                    self.assertEqual(differences, ['catalog/r6/text_results_v2_policy.json'])
+                    second = update.run_once(state_root=Path(temporary) / 'after', source_root=ROOT, company_id='marriott_international', metric_id='B03')
+                    factory.assert_called_once()
+                    self.assertEqual(second['status'], 'INPUT_OR_EXECUTION_FAILED')
+                    self.assertEqual(second['previous_result'], previous)
+                    print('policy-only real byte delta:', differences, first['status'], '->', second['status'], second['reason'])
+
+    def test_02_composition_prefix_equivalence(self):
+        raw = original([('Depreciation', '7', 'INF'), ('AmortizationOfIntangibleAssets', '13', 'INF')])
+        for prefix in ('gaap', 'us-gaap', 'accounting'):
+            fixture = raw if prefix == 'gaap' else rename(raw, 'gaap', prefix)
+            answer = inspect_depreciation_input(raw_bytes=fixture, entity='195', period=PERIOD, observations=components())
+            self.assertEqual(answer['status'], 'KEEP'); self.assertEqual(answer['chain_input']['value'], '20')
+            print('composition prefix', prefix, answer['status'], answer['chain_input']['value'])
+
+    def test_03_same_local_custom_concept_does_not_invalidate_standard_composition(self):
+        raw = original([('Depreciation', '7', 'INF'), ('AmortizationOfIntangibleAssets', '13', 'INF'), ('Depreciation', '9', 'INF')])
+        raw = rename(raw, 'gaap', 'us-gaap')
+        raw = raw.replace(b'<html ', b'<html xmlns:issuer="http://example.org/taxonomy/2025" ', 1)
+        raw = raw.replace(b'name="us-gaap:Depreciation" contextRef="c2"', b'name="issuer:Depreciation" contextRef="c2"')
+        parsed = parse_accession_xbrl_source(raw_bytes=raw); metadata = meta(raw)
+        old = subprocess.run(['git', 'show', BASE + ':scripts/vnext/b03_contract_amortization_scope.py'], check=True, capture_output=True, text=True).stdout
+        fn = next(n for n in ast.parse(old).body if isinstance(n, ast.FunctionDef) and n.name == '_selected_original_facts')
+        env = dict(contract.__dict__); exec(compile(ast.Module(body=[fn], type_ignores=[]), '<base-selected-original-facts>', 'exec'), env)
+        baseline = env['_selected_original_facts'](parsed=parsed, metadata=metadata, roles={o['semantic_role']: o for o in components()}, period=PERIOD, entity='195')
+        self.assertEqual(baseline['depreciation']['value_usd'], '7')
+        print('base ignores unrelated issuer:Depreciation:', baseline)
+        try:
+            answer = inspect_depreciation_input(raw_bytes=raw, entity='195', period=PERIOD, observations=components())
+        except ValueError as error:
+            print('head rejects equivalent standard composition:', str(error))
+            self.fail('Valid FASB 7+13 plus unrelated issuer:Depreciation raises ' + str(error))
+        self.assertEqual(answer['status'], 'KEEP')
+
+    def test_04_composition_retains_entity_period_unit_and_namespace_guards(self):
+        for changes in ({'entity': '196'}, {'start': '2024-01-01'}, {'unit': 'GBP'}, {'dimension': True}):
+            raw = original([('Depreciation', '7', 'INF', changes), ('AmortizationOfIntangibleAssets', '13', 'INF')])
+            try:
+                answer = inspect_depreciation_input(raw_bytes=raw, entity='195', period=PERIOD, observations=components())
+            except ValueError as error:
+                self.assertIn('SELECTED_COMPONENT_NOT_IN_ORIGINAL', str(error))
+            else:
+                self.assertEqual(answer['status'], 'WITHHOLD')
+        raw = original([('Depreciation', '7', 'INF'), ('AmortizationOfIntangibleAssets', '13', 'INF')]).replace(b'http://fasb.org/us-gaap/2025', b'http://example.org/taxonomy/2025')
+        with self.assertRaises(ValueError):
+            inspect_depreciation_input(raw_bytes=raw, entity='195', period=PERIOD, observations=components())
+
+    def test_05_direct_scope_prefix_equivalence_and_retained_guards(self):
+        raw = original([('DepreciationDepletionAndAmortization', '20', 'INF')])
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary); path = root / 'primary.htm'
+            case = {'primary_metric_id': 'B03', 'results': {'B03': {'publication': 'PUBLISHED', 'reason_code': 'PASS'}},
+                    'observations': [{**observation('DepreciationDepletionAndAmortization', '20'), 'source_binding': {'concept': 'us-gaap:DepreciationDepletionAndAmortization', 'entity': '195', 'accession': 'fixture'}}],
+                    'target_period': PERIOD, 'source_proofs': [{'accession': 'fixture', 'document_name': 'primary.htm', 'request_repo_relative_path': 'primary.htm'}]}
+            for prefix in ('gaap', 'us-gaap', 'accounting'):
+                fixture = raw if prefix == 'gaap' else rename(raw, 'gaap', prefix)
+                path.write_bytes(fixture); case['source_proofs'][0]['content_sha256'] = sha256_bytes(content=fixture)
+                result = assess_direct_depreciation_scope(case=case, data_root=root)
+                self.assertFalse(result['blocked']); self.assertEqual(result['selected_fact_ordinals'], [1])
+            for changes in ({'entity': '196'}, {'end': '2024-12-31'}, {'unit': 'GBP'}, {'dimension': True}):
+                fixture = original([('DepreciationDepletionAndAmortization', '20', 'INF', changes)])
+                path.write_bytes(fixture); case['source_proofs'][0]['content_sha256'] = sha256_bytes(content=fixture)
+                with self.assertRaisesRegex(ValueError, 'SELECTED_INLINE_FACT_NOT_FOUND'):
+                    assess_direct_depreciation_scope(case=case, data_root=root)
+            path.write_bytes(raw); case['source_proofs'][0]['content_sha256'] = '0' * 64
+            with self.assertRaisesRegex(ValueError, 'PRIMARY_BYTES_CHANGED'):
+                assess_direct_depreciation_scope(case=case, data_root=root)
+
+    def test_06_saved_original_concepts_dimensions_members_and_currency_aliases(self):
+        prepared = prepare_saved_annual_input(repo_root=ROOT, company_id='marriott_international')
+        proof = next(p for p in prepared['source_proofs'] if p['document_name'].endswith('.htm'))
+        raw = (ROOT / proof['request_repo_relative_path']).read_bytes(); parsed = parse_accession_xbrl_source(raw_bytes=raw)
+        observations = []
+        for concept, role, expected in [('Depreciation', 'depreciation', '145000000'), ('AmortizationOfIntangibleAssets', 'amortization', '313000000')]:
+            facts = [f for f in parsed.facts if f['qualified_name'] == 'us-gaap:' + concept
+                     and parsed.contexts[f['context_ref']]['period_start'] == PERIOD['period_start']
+                     and parsed.contexts[f['context_ref']]['period_end'] == PERIOD['period_end']
+                     and not parsed.contexts[f['context_ref']]['dimensions']
+                     and int(parsed.contexts[f['context_ref']]['entity_identifier']) == int(prepared['entity'])]
+            values = {str(_numeric_xbrl_value(text=f['text'], scale=f['scale'], sign=f['sign'])) for f in facts}
+            self.assertEqual(values, {expected})
+            observations.append({'metric_id': 'B03', 'semantic_role': role, 'value': expected,
+                'period_start': PERIOD['period_start'], 'period_end': PERIOD['period_end'],
+                'source_binding': {'concept': 'us-gaap:' + concept, 'accession': proof['accession'], 'entity': prepared['entity']}})
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary); path = root / 'primary.htm'
+            case = {'primary_metric_id': 'B03', 'results': {'B03': {'publication': 'PUBLISHED', 'reason_code': 'PASS'}}, 'observations': observations, 'target_period': PERIOD,
+                    'source_proofs': [{**proof, 'document_name': 'primary.htm', 'request_repo_relative_path': 'primary.htm'}]}
+            def assess(fixture):
+                path.write_bytes(fixture); case['source_proofs'][0]['content_sha256'] = sha256_bytes(content=fixture)
+                return contract.assess_current_b03_scope(case=case, data_root=root)
+            baseline = assess(raw); self.assertFalse(baseline['blocked'])
+            fixtures = {'gaap': rename(raw, 'us-gaap', 'accounting'), 'srt': rename(raw, 'srt', 'standard'), 'custom-member': rename(raw, 'mar', 'hotel'), 'currency': rename(raw, 'iso4217', 'money')}
+            combined = raw
+            for old, new in [('us-gaap', 'accounting'), ('srt', 'standard'), ('mar', 'hotel'), ('iso4217', 'money')]:
+                combined = rename(combined, old, new)
+            fixtures['all'] = combined
+            for kind, fixture in fixtures.items():
+                result = assess(fixture); self.assertFalse(result['blocked']); self.assertEqual(result['status'], baseline['status'])
+                self.assertEqual([r['resolved_dimensions'] for r in result['excluded_facts']], [r['resolved_dimensions'] for r in baseline['excluded_facts']])
+                self.assertEqual([r['value_usd'] for r in result['excluded_facts']], [r['value_usd'] for r in baseline['excluded_facts']])
+                self.assertEqual([r['displayed_amounts'] for r in result['revenue_deduction_proofs']], [r['displayed_amounts'] for r in baseline['revenue_deduction_proofs']])
+                print('saved original alias', kind, result['status'], len(result['excluded_facts']), 'facts with same resolved scope and table arithmetic')
+            self.assertTrue(any(Decimal(r['value_usd']) == Decimal('135000000') for r in baseline['excluded_facts']))
+            no_tables = re.sub(rb'<(/?)table\b', rb'<\1div', raw)
+            without_relation = assess(no_tables); self.assertTrue(without_relation['blocked'])
+            self.assertEqual(without_relation['status'], 'COMPOSED_DA_ADDITIONAL_AMORTIZATION_UNRECONCILED')
+            path.write_bytes(raw); case['source_proofs'][0]['content_sha256'] = '0' * 64
+            with self.assertRaisesRegex(ValueError, 'PRIMARY_BYTES_CHANGED'):
+                contract.assess_current_b03_scope(case=case, data_root=root)
+
+if __name__ == '__main__':
+    print('Review patch:', subprocess.run(['git', 'rev-parse', 'HEAD'], check=True, capture_output=True, text=True).stdout.strip())
+    unittest.main(verbosity=2)

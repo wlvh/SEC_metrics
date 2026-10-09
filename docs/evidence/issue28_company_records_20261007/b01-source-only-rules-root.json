@@ -1,0 +1,92 @@
+{
+  "parent_sha": "72394740",
+  "uncommitted_source_delta": [
+    "normal_run_inputs.py",
+    "normal_zero_ai_results.py",
+    "ordinary_saved_result.py"
+  ],
+  "source_files": 9,
+  "catalog_or_computing_config_present": false,
+  "git_present": false,
+  "seconds": 1.4116194169037044,
+  "report": {
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "marriott_international",
+    "run_id": "20261006T214533Z-18d1cf0a",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "B01"
+    ],
+    "metrics": [
+      {
+        "metric_id": "B01",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "e444d4f233fe41e98a5a11d640470b97",
+        "version": "f49fe352a822466a93ebdcac661fb80d",
+        "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b01-separated-rule-state-20261007/updates/B01/results/f49fe352a822466a93ebdcac661fb80d",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b01-separated-rule-state-20261007/updates/B01/results/f49fe352a822466a93ebdcac661fb80d",
+        "program_version": {
+          "commit": "72394740c3140b72119ae4627a6ce1fd5257a29e",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b01-separated-rule-state-20261007",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b01-separated-rule-output-20261007/20261006T214533Z-18d1cf0a",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "rows": [
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B01",
+      "metric_name": "Revenue",
+      "value": "26186000000",
+      "unit": "USD",
+      "status": "OK",
+      "source_class": "STD_XBRL",
+      "formula": "direct",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "fiscal_period": "ANNUAL",
+      "accession": "0001048286-26-000007",
+      "form": "10-K",
+      "filed_date": "2026-02-10",
+      "concept_or_section": "Revenues",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"reason_code\": \"PASS\", \"selected_fact_ids\": [\"fact:sha256:640d9a21651aece0a442d56ed33584b1de816baa0a4cbeb0b717c112ca0c878a\"], \"source_candidate_count\": 3, \"source_reported_periods\": [[\"2023-01-01\", \"2023-12-31\"], [\"2024-01-01\", \"2024-12-31\"], [\"2025-01-01\", \"2025-12-31\"]]}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b\", \"sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "marriott_international",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/b01-separated-rule-state-20261007/updates/B01/results/f49fe352a822466a93ebdcac661fb80d",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
+      "local_metric_status": "CANDIDATE_READY",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  ]
+}
