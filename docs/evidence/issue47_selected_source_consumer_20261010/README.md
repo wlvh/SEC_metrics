@@ -39,3 +39,5 @@ Public407b23d3 repairs malformed metadata handling only: missing/wrong-shaped sa
 ## Combined public CLI receiving
 
 This consumer branch also receives publicPR122/ea7a1aaa by normal cherry-pick over126/407, merging the same tools/vnext_company.py and current guide without conflict. The selected `sources` subcommand and historical-online/year-argument guards coexist. Combined-cli-controls.log executes actual CLI guard methods, small ready/missing/malformed source commands, and existing history dispatcher/state checks in one code tree; no saved original or financial calculation rerun. The public PRs remain separate candidates; this is a concrete combination receipt, not a second CLI or a merge permission.
+
+Public3de509ac only archives the bounded metadata-repair review; no product code changes. The already executed407 controls and original five source consumers are reused, with no additional source preparation/metric run. Combination product122+126 remains available in this branch.
