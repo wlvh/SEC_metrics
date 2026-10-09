@@ -5,6 +5,7 @@ name: Company saved-source records
       - 'scripts/**'
       - 'tools/vnext_company.py'
       - 'tests/vnext/test_company_current_records.py'
+      - 'tests/vnext/test_current_d04_company.py'
       - 'tests/vnext/test_ordinary_current_update.py'
       - 'tests/vnext/test_company_parse_reuse.py'
       - 'tests/vnext/test_precalculated_case.py'
@@ -49,6 +50,10 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state -v
+      - name: Complete D04 company model input gates
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_current_d04_company
       - name: Selected event sources and explicit history validation
         env:
           PYTHONDONTWRITEBYTECODE: '1'

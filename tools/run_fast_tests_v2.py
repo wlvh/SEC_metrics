@@ -196,6 +196,8 @@ FAST_TESTS += ("tests.vnext.test_registered_event_projection",)
 FAST_TESTS += ('tests.vnext.test_historical_event_cases.HistoricalEventCaseTest',)
 FAST_TESTS += ('tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest',)
 FAST_TESTS += ('tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest',)
+FAST_TESTS += ('tests.vnext.test_current_d04_company',)
+FAST_TESTS += ('tests.vnext.test_securegpt_documented_response',)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in
