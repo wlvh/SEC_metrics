@@ -62,3 +62,13 @@ Limited independent review at17002f37 passed, preserving original proof limits.
 44tools/3messages/8m10s. Real1771/1867/1772 state is author read-only evidence,
 not independently operated. Receiver original-loader/actual-source preflight
 and remote CI remain separate gates. No original root was locked or written.
+
+## Receiving main integration
+
+At32d406bb the branch receives main9493ed0e. Only the workflow and selector
+list needed combination; both sides remain. The four reviewed code/test files
+are byte-identical to17002f37, and runner function/class AST matches main.
+Merged-main small tests:21 passed in5.071s, zero skips. A small Draft PR is
+now ready for receiving review; earlier prototype statements describe their
+then-current stage, not the final adapter. No real call was made. Original
+loader/source preflight by the receiver and current remote CI remain pending.
