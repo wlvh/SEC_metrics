@@ -1,0 +1,31 @@
+{
+  "pid": 2812,
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-native-rate-path/SEC_metrics",
+  "command": [
+    "python3.12",
+    "-B",
+    "/Users/lyuhongwang/.codex/worktrees/issue28-native-rate-path/SEC_metrics/tools/vnext_company.py",
+    "run",
+    "--company",
+    "marriott_international",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/output",
+    "--metric",
+    "B01",
+    "--metric",
+    "B02",
+    "--max-sec-requests",
+    "120",
+    "--sec-allowance",
+    "120"
+  ],
+  "new_real_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "note": "Native LIVE branch with external HTTP replay in isolated state; internal LIVE labels have no actual acquisition credit"
+}

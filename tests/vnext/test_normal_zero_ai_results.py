@@ -84,7 +84,7 @@ class OrdinaryZeroAiPrototypeTest(unittest.TestCase):
                     self.assertIsNone(result['value']);counts['not_meaningful']+=1
                 else:
                     self.assertIsNotNone(result['value']);counts['number']+=1
-        self.assertEqual({'number':15,'structural':1,'withheld':3,'not_meaningful':1},counts)
+        self.assertEqual({'number':15,'structural':1,'withheld':4,'not_meaningful':0},counts)
 
     def test_revenue_is_recovered_from_real_same_accession_companyfacts(self):
         case=self.cases[('marriott_international','B01')]
@@ -134,12 +134,11 @@ class OrdinaryZeroAiPrototypeTest(unittest.TestCase):
                 for r in row['source_references']))
         company='paramount_skydance_paramount_global'
         revenue=self.cases[(company,'B01')]
-        self.assertEqual('PUBLISHED',revenue['result']['publication'])
-        self.assertEqual('NOT_MEANINGFUL',revenue['result']['quality'])
-        self.assertEqual('ANNUAL_DURATION_OUT_OF_RANGE',revenue['result']['reason_code'])
+        self.assertEqual('WITHHELD',revenue['result']['publication'])
+        self.assertEqual('ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT',revenue['result']['reason_code'])
         self.assertIsNone(revenue['result']['value'])
-        self.assertEqual(revenue['target_period']['period_start'],'2025-08-08')
-        self.assertTrue(revenue['input_binding']['income_observation_checks'])
+        self.assertIn('2025-08-07',revenue['selection']['reason'])
+        self.assertIn('2025-08-08',revenue['selection']['reason'])
         # The unchanged repository corpus lacks predecessor originals. The
         # event route now reaches that real dependency instead of the blanket
         # financial-continuity guard, without inventing a smaller valid count.

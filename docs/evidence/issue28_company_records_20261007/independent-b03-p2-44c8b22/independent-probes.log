@@ -1,0 +1,43 @@
+test_01_actual_policy_bytes_alone_change_cache_decision (__main__.RepairProbes.test_01_actual_policy_bytes_alone_change_cache_decision) ... ok
+test_02_composition_prefix_equivalence (__main__.RepairProbes.test_02_composition_prefix_equivalence) ... ok
+test_03_same_local_custom_concept_does_not_invalidate_standard_composition (__main__.RepairProbes.test_03_same_local_custom_concept_does_not_invalidate_standard_composition) ... FAIL
+test_04_composition_retains_entity_period_unit_and_namespace_guards (__main__.RepairProbes.test_04_composition_retains_entity_period_unit_and_namespace_guards) ... ok
+test_05_direct_scope_prefix_equivalence_and_retained_guards (__main__.RepairProbes.test_05_direct_scope_prefix_equivalence_and_retained_guards) ... ok
+test_06_saved_original_concepts_dimensions_members_and_currency_aliases (__main__.RepairProbes.test_06_saved_original_concepts_dimensions_members_and_currency_aliases) ... ok
+
+======================================================================
+FAIL: test_03_same_local_custom_concept_does_not_invalidate_standard_composition (__main__.RepairProbes.test_03_same_local_custom_concept_does_not_invalidate_standard_composition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<stdin>", line 96, in test_03_same_local_custom_concept_does_not_invalidate_standard_composition
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_b03_input_scope.py", line 63, in inspect_depreciation_input
+    originals = _selected_original_facts(parsed=parsed,metadata=metadata,
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/b03_contract_amortization_scope.py", line 43, in _selected_original_facts
+    _need(local_name == selected['source_binding']['concept'].split(':', 1)[1]
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/b03_contract_amortization_scope.py", line 24, in _need
+    raise ValueError(reason)
+ValueError: B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NAMESPACE_MISMATCH:depreciation
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<stdin>", line 99, in test_03_same_local_custom_concept_does_not_invalidate_standard_composition
+AssertionError: Valid FASB 7+13 plus unrelated issuer:Depreciation raises B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NAMESPACE_MISMATCH:depreciation
+
+----------------------------------------------------------------------
+Ran 6 tests in 5.860s
+
+FAILED (failures=1)
+Review patch: 44c8b22a6fd7a4ba309f1c0e458355ce274f5cbf
+policy-only real byte delta: ['catalog/r6/text_results_v2_policy.json'] NO_SOURCE_CONTENT_CHANGE -> INPUT_OR_EXECUTION_FAILED PROBE_CALCULATION_ENTERED
+composition prefix gaap KEEP 20
+composition prefix us-gaap KEEP 20
+composition prefix accounting KEEP 20
+base ignores unrelated issuer:Depreciation: {'depreciation': {'concept': 'us-gaap:Depreciation', 'value_usd': '7', 'primary_fact_ordinals': [1]}, 'amortization': {'concept': 'us-gaap:AmortizationOfIntangibleAssets', 'value_usd': '13', 'primary_fact_ordinals': [2]}}
+head rejects equivalent standard composition: B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NAMESPACE_MISMATCH:depreciation
+saved original alias gaap COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED 5 facts with same resolved scope and table arithmetic
+saved original alias srt COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED 5 facts with same resolved scope and table arithmetic
+saved original alias custom-member COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED 5 facts with same resolved scope and table arithmetic
+saved original alias currency COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED 5 facts with same resolved scope and table arithmetic
+saved original alias all COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED 5 facts with same resolved scope and table arithmetic

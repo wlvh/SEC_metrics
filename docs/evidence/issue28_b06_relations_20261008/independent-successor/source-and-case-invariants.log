@@ -1,0 +1,78 @@
+Independent seam probe, run with saved sources and actual successor code.
+- One inherited Ford partial case was prepared; its hash was captured.
+- inherited.prepare_special_debt_case was patched in memory to return that exact case; successor preparation then reopened the actual source files through its public API.
+- The inherited case hash stayed unchanged; all case fields other than the two explicit wrapper containers were equal; nested unchanged fields were also equal.
+- Newly produced case was compared with the JSON saved by the independently executed prescribed persistence script.
+- Exact source URL/accession/SHA/path/data-root/code-root were inspected.
+- Both primary/XML post-preparation byte changes and wrong proof SHA/URL/accession were tested only in memory; originals were never modified.
+Returncode: 0
+{
+  "seconds": 6.9453455419279635,
+  "sources": [
+    {
+      "kind": "primary",
+      "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+      "accession": "0000037996-26-000015",
+      "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+      "data_path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+      "processing_root": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics"
+    },
+    {
+      "kind": "xml",
+      "url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231_htm.xml",
+      "accession": "0000037996-26-000015",
+      "raw_asset_id": "sha256:35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe",
+      "data_path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/35/35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe/f-20251231_htm.xml",
+      "processing_root": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics"
+    }
+  ],
+  "unchanged_case_keys": [
+    "kind",
+    "primary_metric_id",
+    "source_records",
+    "references",
+    "source_proofs",
+    "admission",
+    "spec_paths",
+    "compiled_specs",
+    "target_period",
+    "expected_records",
+    "results",
+    "traces",
+    "observations"
+  ],
+  "old_case_unmutated": true,
+  "saved_case_recomputed_identical": true,
+  "selection_and_input_scope_equal": true,
+  "scope_source_hash_valid": true,
+  "processing_sha_from_code_root": true,
+  "controls": [
+    {
+      "kind": "primary",
+      "mutation": "in-memory only",
+      "rejected": "B06_SPECIAL_SCOPE_ORIGINAL_BINDING_CHANGED"
+    },
+    {
+      "kind": "xml",
+      "mutation": "in-memory only",
+      "rejected": "B06_SPECIAL_SCOPE_ORIGINAL_BINDING_CHANGED"
+    },
+    {
+      "field": "content_sha256",
+      "rejected": "B06_SPECIAL_SCOPE_RELATION_ORIGINAL_PROOF_NOT_UNIQUE:primary"
+    },
+    {
+      "field": "source_url",
+      "rejected": "B06_SPECIAL_SCOPE_RELATION_ORIGINAL_PROOF_NOT_UNIQUE:primary"
+    },
+    {
+      "field": "accession",
+      "rejected": "B06_SPECIAL_SCOPE_RELATION_ORIGINAL_PROOF_NOT_UNIQUE:primary"
+    }
+  ],
+  "B06_result_id": "sha256:3cfdb4866a546c8ff41a65bfa14463e0b1717f54a946d417a245144b14cea07a",
+  "B06_trace_id": "sha256:c2f8c972b7916d87a175cab121c27ee35647ac62a37da5650b16d9ce8ebb6d2a",
+  "B06_publication": "WITHHELD",
+  "B06_value": null
+}
+

@@ -1,0 +1,35 @@
+test_current_caption_cannot_prove_noncurrent_inclusion (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_current_caption_cannot_prove_noncurrent_inclusion) ... FAIL
+test_disagreeing_originals_do_not_choose_a_convenient_amount (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_disagreeing_originals_do_not_choose_a_convenient_amount) ... ok
+test_excluded_caption_cannot_prove_inclusion (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_excluded_caption_cannot_prove_inclusion) ... ok
+test_included_lease_is_not_an_additive_balance (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_included_lease_is_not_an_additive_balance) ... ok
+test_lease_elsewhere_is_not_the_table_component (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_lease_elsewhere_is_not_the_table_component) ... ok
+test_missing_xml_or_excess_component_stays_unresolved (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_missing_xml_or_excess_component_stays_unresolved) ... ok
+test_same_component_repeated_elsewhere_does_not_require_every_copy_in_one_note (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_same_component_repeated_elsewhere_does_not_require_every_copy_in_one_note) ... FAIL
+test_wrong_note_entity_or_period_cannot_supply_relationship (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_wrong_note_entity_or_period_cannot_supply_relationship) ... ok
+
+======================================================================
+FAIL: test_current_caption_cannot_prove_noncurrent_inclusion (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_current_caption_cannot_prove_noncurrent_inclusion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics/tests/vnext/test_industrial_lease_relation.py", line 81, in test_current_caption_cannot_prove_noncurrent_inclusion
+    self.assertEqual('UNRESOLVED', inspect_inclusion(**args)['status'])
+AssertionError: 'UNRESOLVED' != 'REPORTED_INCLUDED'
+- UNRESOLVED
++ REPORTED_INCLUDED
+
+
+======================================================================
+FAIL: test_same_component_repeated_elsewhere_does_not_require_every_copy_in_one_note (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_same_component_repeated_elsewhere_does_not_require_every_copy_in_one_note)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics/tests/vnext/test_industrial_lease_relation.py", line 88, in test_same_component_repeated_elsewhere_does_not_require_every_copy_in_one_note
+    self.assertEqual('REPORTED_INCLUDED', inspect_inclusion(**args)['status'])
+AssertionError: 'REPORTED_INCLUDED' != 'UNRESOLVED'
+- REPORTED_INCLUDED
++ UNRESOLVED
+
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+FAILED (failures=2)

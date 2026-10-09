@@ -1,0 +1,41 @@
+[
+  {
+    "company": "salesforce",
+    "metric": "B12",
+    "source_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-native-source-only-20261007/evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+    "raw_fact": "<ix:nonFraction unitRef=\"usd\" contextRef=\"c-4\" decimals=\"-8\" name=\"us-gaap:RevenueRemainingPerformanceObligation\" scale=\"9\" id=\"f-524\">72.4</ix:nonFraction>",
+    "raw_context": "<xbrli:context id=\"c-4\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0001108524</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2026-01-31</xbrli:instant></xbrli:period></xbrli:context>",
+    "raw_unit": "<xbrli:unit id=\"usd\"><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unit>",
+    "scaled_value": "72400000000.0",
+    "saved_value": "72400000000",
+    "saved_unit": "USD",
+    "fiscal_year": 2026,
+    "method": "direct raw-tag/context/unit extraction and independent Decimal scaling; no metric selector or expected answer supplied"
+  },
+  {
+    "company": "jpmorgan_chase",
+    "metric": "A01",
+    "source_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/jpmorgan_chase-native-source-only-20261007/evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "raw_fact": "<ix:nonFraction unitRef=\"number\" contextRef=\"c-2053\" decimals=\"3\" name=\"us-gaap:TierOneRiskBasedCapitalToRiskWeightedAssets\" scale=\"-2\" id=\"f-7601\">15.5</ix:nonFraction>",
+    "raw_context": "<xbrli:context id=\"c-2053\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0000019617</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:RiskWeightedAssetsCalculationMethodologyAxis\">jpm:BaselIIIStandardizedMember</xbrldi:explicitMember><xbrldi:explicitMember dimension=\"srt:ConsolidatedEntitiesAxis\">srt:ParentCompanyMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>",
+    "raw_unit": "<xbrli:unit id=\"number\"><xbrli:measure>xbrli:pure</xbrli:measure></xbrli:unit>",
+    "scaled_value": "0.155",
+    "saved_value": "0.155",
+    "saved_unit": "ratio",
+    "fiscal_year": 2025,
+    "method": "direct raw-tag/context/unit extraction and independent Decimal scaling; no metric selector or expected answer supplied"
+  },
+  {
+    "company": "jpmorgan_chase",
+    "metric": "A02",
+    "source_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/jpmorgan_chase-native-source-only-20261007/evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "raw_fact": "<ix:nonFraction unitRef=\"number\" contextRef=\"c-2053\" decimals=\"3\" name=\"jpm:CommonEquityTier1CapitaltoRiskWeightedAssets\" scale=\"-2\" id=\"f-7597\">14.6</ix:nonFraction>",
+    "raw_context": "<xbrli:context id=\"c-2053\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0000019617</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension=\"us-gaap:RiskWeightedAssetsCalculationMethodologyAxis\">jpm:BaselIIIStandardizedMember</xbrldi:explicitMember><xbrldi:explicitMember dimension=\"srt:ConsolidatedEntitiesAxis\">srt:ParentCompanyMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>",
+    "raw_unit": "<xbrli:unit id=\"number\"><xbrli:measure>xbrli:pure</xbrli:measure></xbrli:unit>",
+    "scaled_value": "0.146",
+    "saved_value": "0.146",
+    "saved_unit": "ratio",
+    "fiscal_year": 2025,
+    "method": "direct raw-tag/context/unit extraction and independent Decimal scaling; no metric selector or expected answer supplied"
+  }
+]

@@ -1,0 +1,564 @@
+{
+  "58": {
+    "baseRefName": "main",
+    "headRefOid": "f321e5548b743d36a8166c364f193a26e4945222",
+    "isDraft": true,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T14:59:52Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017706",
+        "name": "vNext fast suite",
+        "startedAt": "2026-10-06T14:56:03Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T14:56:16Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077769/job/112336016686",
+        "name": "Generate check and tests",
+        "startedAt": "2026-10-06T14:55:52Z",
+        "status": "COMPLETED",
+        "workflowName": "Metrics reference tables"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:14:14Z",
+        "conclusion": "CANCELLED",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017846",
+        "name": "Foundation inherited source material",
+        "startedAt": "2026-10-06T14:58:57Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T14:59:55Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017016",
+        "name": "Main foundation audit and historical compatibility",
+        "startedAt": "2026-10-06T14:55:52Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:02:25Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017845",
+        "name": "Company source authority, ledger and D04 wiring",
+        "startedAt": "2026-10-06T14:59:55Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:08:06Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017570",
+        "name": "Company acquisition session and C04 update/recovery",
+        "startedAt": "2026-10-06T14:55:53Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:23:05Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017635",
+        "name": "Company C04 source-only install",
+        "startedAt": "2026-10-06T14:55:52Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:09:30Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017847",
+        "name": "Company native Run cold read and recorded source update",
+        "startedAt": "2026-10-06T14:58:59Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:14:57Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017780",
+        "name": "Company saved D04 native Runs",
+        "startedAt": "2026-10-06T14:59:55Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:06:16Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017516",
+        "name": "Company remaining source Runs (marriott_international)",
+        "startedAt": "2026-10-06T14:55:52Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:24:16Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017569",
+        "name": "Company remaining source Runs (jpmorgan_chase)",
+        "startedAt": "2026-10-06T14:55:52Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:09:47Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017689",
+        "name": "Company update history and interruption recovery",
+        "startedAt": "2026-10-06T14:56:19Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:10:25Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37483077741/job/112336017648",
+        "name": "Company independent metric updates",
+        "startedAt": "2026-10-06T14:56:35Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      }
+    ]
+  },
+  "59": {
+    "baseRefName": "main",
+    "headRefOid": "9ae16dab6345e4698ad1c73eb3921f861d229e14",
+    "isDraft": true,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:04:31Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604917/job/112474909109",
+        "name": "Generate check and tests",
+        "startedAt": "2026-10-06T20:04:00Z",
+        "status": "COMPLETED",
+        "workflowName": "Metrics reference tables"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:07:03Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474909329",
+        "name": "vNext fast suite",
+        "startedAt": "2026-10-06T20:04:00Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:09:42Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474909340",
+        "name": "Foundation inherited source material",
+        "startedAt": "2026-10-06T20:04:01Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:09:46Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474909310",
+        "name": "Main foundation audit and historical compatibility",
+        "startedAt": "2026-10-06T20:04:03Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:06:08Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474909221",
+        "name": "Company source authority, ledger and D04 wiring",
+        "startedAt": "2026-10-06T20:04:00Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:05:20Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474909170",
+        "name": "Company acquisition session and C04 update/recovery",
+        "startedAt": "2026-10-06T20:04:37Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:04:43Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474908899",
+        "name": "Company C04 source-only install",
+        "startedAt": "2026-10-06T20:04:00Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:04:25Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474909375",
+        "name": "Company native Run cold read and recorded source update",
+        "startedAt": "2026-10-06T20:04:01Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:04:24Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474909432",
+        "name": "Company saved D04 native Runs",
+        "startedAt": "2026-10-06T20:04:00Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:04:40Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474909541",
+        "name": "Company remaining source Runs (marriott_international)",
+        "startedAt": "2026-10-06T20:04:01Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:05:30Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474909236",
+        "name": "Company remaining source Runs (jpmorgan_chase)",
+        "startedAt": "2026-10-06T20:04:00Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:04:31Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474909409",
+        "name": "Company update history and interruption recovery",
+        "startedAt": "2026-10-06T20:04:00Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T20:04:31Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37523604721/job/112474909243",
+        "name": "Company independent metric updates",
+        "startedAt": "2026-10-06T20:04:00Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      }
+    ]
+  },
+  "62": {
+    "baseRefName": "main",
+    "headRefOid": "139a6d605a4553a454a67a95a45692fdc909c1c5",
+    "isDraft": true,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:06:42Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385313/job/112340546185",
+        "name": "Generate check and tests",
+        "startedAt": "2026-10-06T15:06:18Z",
+        "status": "COMPLETED",
+        "workflowName": "Metrics reference tables"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:18:18Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340548195",
+        "name": "vNext fast suite",
+        "startedAt": "2026-10-06T15:14:59Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:29:34Z",
+        "conclusion": "CANCELLED",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340548145",
+        "name": "Foundation inherited source material",
+        "startedAt": "2026-10-06T15:14:17Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:16:04Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340547915",
+        "name": "Main foundation audit and historical compatibility",
+        "startedAt": "2026-10-06T15:10:27Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:08:20Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340547423",
+        "name": "Company source authority, ledger and D04 wiring",
+        "startedAt": "2026-10-06T15:05:58Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:27:52Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340548042",
+        "name": "Company acquisition session and C04 update/recovery",
+        "startedAt": "2026-10-06T15:15:37Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:34:32Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340547951",
+        "name": "Company C04 source-only install",
+        "startedAt": "2026-10-06T15:09:33Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:24:04Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340548120",
+        "name": "Company native Run cold read and recorded source update",
+        "startedAt": "2026-10-06T15:12:26Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:25:38Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340548033",
+        "name": "Company saved D04 native Runs",
+        "startedAt": "2026-10-06T15:10:52Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:19:17Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340548068",
+        "name": "Company remaining source Runs (marriott_international)",
+        "startedAt": "2026-10-06T15:09:05Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:39:57Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340548081",
+        "name": "Company remaining source Runs (jpmorgan_chase)",
+        "startedAt": "2026-10-06T15:18:02Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:22:28Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340548018",
+        "name": "Company update history and interruption recovery",
+        "startedAt": "2026-10-06T15:09:06Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-06T15:26:56Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37484385327/job/112340548235",
+        "name": "Company independent metric updates",
+        "startedAt": "2026-10-06T15:16:06Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      }
+    ]
+  },
+  "67": {
+    "baseRefName": "main",
+    "headRefOid": "7944bc96e7996e6b7b70253ae3c65e08ae0a1105",
+    "isDraft": true,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951202741",
+        "name": "vNext fast suite",
+        "startedAt": "2026-10-07T18:33:29Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-07T18:36:24Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739242/job/112951204786",
+        "name": "company-current",
+        "startedAt": "2026-10-07T18:33:29Z",
+        "status": "COMPLETED",
+        "workflowName": "Company saved-source records"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-07T18:33:57Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739169/job/112951202033",
+        "name": "Generate check and tests",
+        "startedAt": "2026-10-07T18:33:29Z",
+        "status": "COMPLETED",
+        "workflowName": "Metrics reference tables"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951202653",
+        "name": "Foundation inherited source material",
+        "startedAt": "2026-10-07T18:33:29Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "0001-01-01T00:00:00Z",
+        "conclusion": "",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951202672",
+        "name": "Main foundation audit and historical compatibility",
+        "startedAt": "2026-10-07T18:33:29Z",
+        "status": "IN_PROGRESS",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-07T18:35:19Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951202528",
+        "name": "Company source authority, ledger and D04 wiring",
+        "startedAt": "2026-10-07T18:33:29Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-07T18:34:09Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951202092",
+        "name": "Company acquisition session and C04 update/recovery",
+        "startedAt": "2026-10-07T18:33:29Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-07T18:34:20Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951202895",
+        "name": "Company C04 source-only install",
+        "startedAt": "2026-10-07T18:33:30Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-07T18:33:53Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951202851",
+        "name": "Company native Run cold read and recorded source update",
+        "startedAt": "2026-10-07T18:33:29Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-07T18:34:02Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951203002",
+        "name": "Company saved D04 native Runs",
+        "startedAt": "2026-10-07T18:33:29Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-07T18:34:14Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951202657",
+        "name": "Company remaining source Runs (marriott_international)",
+        "startedAt": "2026-10-07T18:33:31Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-07T18:35:03Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951202649",
+        "name": "Company remaining source Runs (jpmorgan_chase)",
+        "startedAt": "2026-10-07T18:33:30Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-07T18:33:59Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951202761",
+        "name": "Company update history and interruption recovery",
+        "startedAt": "2026-10-07T18:33:30Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-07T18:34:40Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/37667739158/job/112951203006",
+        "name": "Company independent metric updates",
+        "startedAt": "2026-10-07T18:33:30Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      }
+    ]
+  }
+}

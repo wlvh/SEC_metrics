@@ -1,0 +1,92 @@
+test_existing_real_ledger_never_created (tests.vnext.test_company_online.CompanyOnlineTest.test_existing_real_ledger_never_created) ... ok
+test_one_native_http_attempt_uses_existing_count_and_no_retry (tests.vnext.test_company_online.CompanyOnlineTest.test_one_native_http_attempt_uses_existing_count_and_no_retry) ... ok
+test_persistence_interrupt_leaves_counted_pending_no_second_transport (tests.vnext.test_company_online.CompanyOnlineTest.test_persistence_interrupt_leaves_counted_pending_no_second_transport) ... ok
+test_scope_or_limits_cannot_be_changed_by_call_context (tests.vnext.test_company_online.CompanyOnlineTest.test_scope_or_limits_cannot_be_changed_by_call_context) ... ok
+test_unknown_remote_blocks_next_claim_and_is_not_zero (tests.vnext.test_company_online.CompanyOnlineTest.test_unknown_remote_blocks_next_claim_and_is_not_zero) ... ok
+test_unsupported_metric_rejected_before_sources_or_claim (tests.vnext.test_company_online.CompanyOnlineTest.test_unsupported_metric_rejected_before_sources_or_claim) ... ok
+test_changed_period_or_proof_stays_visible_to_strict_checker (tests.vnext.test_company_local.CaptureIdentityTest.test_changed_period_or_proof_stays_visible_to_strict_checker) ... ok
+test_changed_text_reference_or_order_receives_no_projection (tests.vnext.test_company_local.CaptureIdentityTest.test_changed_text_reference_or_order_receives_no_projection) ... ok
+test_only_observation_identity_changes_with_originals_preserved (tests.vnext.test_company_local.CaptureIdentityTest.test_only_observation_identity_changes_with_originals_preserved) ... ok
+test_self_modified_unit_without_valid_identity_is_rejected (tests.vnext.test_company_local.CaptureIdentityTest.test_self_modified_unit_without_valid_identity_is_rejected) ... ok
+test_acquire_and_run_keep_the_same_program_and_allowance (tests.vnext.test_company_local.CompanyLocalTest.test_acquire_and_run_keep_the_same_program_and_allowance) ... ERROR
+test_acquire_only_refreshes_once_and_respects_cap (tests.vnext.test_company_local.CompanyLocalTest.test_acquire_only_refreshes_once_and_respects_cap) ... ok
+test_acquisition_crash_cannot_be_reported_as_complete (tests.vnext.test_company_local.CompanyLocalTest.test_acquisition_crash_cannot_be_reported_as_complete) ... ERROR
+test_acquisition_failure_exports_old_native_result_without_current_success (tests.vnext.test_company_local.CompanyLocalTest.test_acquisition_failure_exports_old_native_result_without_current_success) ... ERROR
+test_forbidden_or_rate_limited_capture_stops_and_remains_stopped (tests.vnext.test_company_local.CompanyLocalTest.test_forbidden_or_rate_limited_capture_stops_and_remains_stopped) ... ok
+test_local_reader_selects_only_the_existing_exact_native_specs (tests.vnext.test_company_local.CompanyLocalTest.test_local_reader_selects_only_the_existing_exact_native_specs) ... ok
+test_non_latest_period_fails_before_any_egress_or_output (tests.vnext.test_company_local.CompanyLocalTest.test_non_latest_period_fails_before_any_egress_or_output) ... ok
+test_ordinary_initial_empty_manifest_hash_does_not_claim_records_are_invalid (tests.vnext.test_company_local.CompanyLocalTest.test_ordinary_initial_empty_manifest_hash_does_not_claim_records_are_invalid) ... ok
+test_relative_alias_rejected_before_resolving (tests.vnext.test_company_local.CompanyLocalTest.test_relative_alias_rejected_before_resolving) ... ok
+test_run_has_one_compute_and_complete_status_scope (tests.vnext.test_company_local.CompanyLocalTest.test_run_has_one_compute_and_complete_status_scope) ... ERROR
+
+======================================================================
+ERROR: test_acquire_and_run_keep_the_same_program_and_allowance (tests.vnext.test_company_local.CompanyLocalTest.test_acquire_and_run_keep_the_same_program_and_allowance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/tests/vnext/test_company_local.py", line 230, in test_acquire_and_run_keep_the_same_program_and_allowance
+    self.assertEqual(local.prepare_program(work), program)
+                     ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_local.py", line 76, in prepare_program
+    program = absolute(saved)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_local.py", line 22, in absolute
+    need(first_symlink_in_path(path=path) is None, 'LOCAL_PATH_ALIAS')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_PATH_ALIAS
+
+======================================================================
+ERROR: test_acquisition_crash_cannot_be_reported_as_complete (tests.vnext.test_company_local.CompanyLocalTest.test_acquisition_crash_cannot_be_reported_as_complete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/tests/vnext/test_company_local.py", line 195, in test_acquisition_crash_cannot_be_reported_as_complete
+    result = local.run_local(company_id='marriott_international', work_dir=self.root/'work',
+                             output_dir=self.root/'output')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_local.py", line 177, in run_local
+    work, outputs = external(absolute(work_dir)), external(absolute(output_dir))
+                             ~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_local.py", line 22, in absolute
+    need(first_symlink_in_path(path=path) is None, 'LOCAL_PATH_ALIAS')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_PATH_ALIAS
+
+======================================================================
+ERROR: test_acquisition_failure_exports_old_native_result_without_current_success (tests.vnext.test_company_local.CompanyLocalTest.test_acquisition_failure_exports_old_native_result_without_current_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/tests/vnext/test_company_local.py", line 254, in test_acquisition_failure_exports_old_native_result_without_current_success
+    result = local.run_local(company_id='marriott_international', work_dir=work,
+        output_dir=self.root/'output', metric_ids=['B01'])
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_local.py", line 177, in run_local
+    work, outputs = external(absolute(work_dir)), external(absolute(output_dir))
+                             ~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_local.py", line 22, in absolute
+    need(first_symlink_in_path(path=path) is None, 'LOCAL_PATH_ALIAS')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_PATH_ALIAS
+
+======================================================================
+ERROR: test_run_has_one_compute_and_complete_status_scope (tests.vnext.test_company_local.CompanyLocalTest.test_run_has_one_compute_and_complete_status_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/tests/vnext/test_company_local.py", line 171, in test_run_has_one_compute_and_complete_status_scope
+    result = local.run_local(company_id='marriott_international', work_dir=work,
+        output_dir=output, metric_ids=['B01', 'D01', 'D03'])
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_local.py", line 177, in run_local
+    work, outputs = external(absolute(work_dir)), external(absolute(output_dir))
+                             ~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_local.py", line 22, in absolute
+    need(first_symlink_in_path(path=path) is None, 'LOCAL_PATH_ALIAS')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: LOCAL_PATH_ALIAS
+
+----------------------------------------------------------------------
+Ran 20 tests in 1.084s
+
+FAILED (errors=4)

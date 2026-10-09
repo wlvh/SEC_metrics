@@ -1,0 +1,117 @@
+{
+  "company": "marriott_international",
+  "metrics": [
+    "C01"
+  ],
+  "first_seconds": 2.5339225828647614,
+  "repeat_seconds": 0.3226746669970453,
+  "independent_read_seconds": 0.0037188329733908176,
+  "before": {
+    "result_files": 6,
+    "result_bytes": 106650,
+    "result_directories": 1
+  },
+  "after_first": {
+    "result_files": 12,
+    "result_bytes": 213300,
+    "result_directories": 2
+  },
+  "after_repeat": {
+    "result_files": 12,
+    "result_bytes": 213300,
+    "result_directories": 2
+  },
+  "first": {
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "marriott_international",
+    "run_id": "20261007T175310Z-9313b8db",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "C01"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C01",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "a7ff2f29b48746c1983d409e294fdd98",
+        "version": "77327e1f53b246c7870846daac3b7b3b",
+        "result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-state-20261008/updates/C01/results/77327e1f53b246c7870846daac3b7b3b",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-state-20261008/updates/C01/results/77327e1f53b246c7870846daac3b7b3b",
+        "program_version": {
+          "commit": "24155225a9cf6c2949e0ee8b1be6395641c86d47",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-source-only-20261008",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-state-20261008",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-output-20261008/20261007T175310Z-9313b8db",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "repeat": {
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "marriott_international",
+    "run_id": "20261007T175313Z-ebe9ce56",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "C01"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C01",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "23324d533b9645e988e21405707c7af3",
+        "version": "77327e1f53b246c7870846daac3b7b3b",
+        "result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-state-20261008/updates/C01/results/77327e1f53b246c7870846daac3b7b3b",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-state-20261008/updates/C01/results/77327e1f53b246c7870846daac3b7b3b",
+        "program_version": {
+          "commit": "24155225a9cf6c2949e0ee8b1be6395641c86d47",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-source-only-20261008",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-state-20261008",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-output-20261008/20261007T175313Z-ebe9ce56",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  }
+}

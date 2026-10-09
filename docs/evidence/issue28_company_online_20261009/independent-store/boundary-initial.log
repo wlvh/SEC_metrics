@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "<stdin>", line 52, in <module>
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_online.py", line 126, in get
+    return saved_source(repo_root=self.source,url=url,accession=accession)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/annual_sources.py", line 43, in saved_source
+    proof, raw = annual_input._saved_source(repo_root=repo_root, rows=rows, url=url, accession=accession)
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/annual_input.py", line 36, in _saved_source
+    binding = request_attempt_binding(
+        repo_root=repo_root, source_url=url,
+        content_sha256=row["content_sha256"], accession=accession,
+        document_name=row["document_name"],
+    )
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/request_bindings.py", line 182, in request_attempt_binding
+    raise BatchWorkflowError(
+        "Exact SEC response has no request-ledger attempt"
+    )
+vnext.request_bindings.BatchWorkflowError: Exact SEC response has no request-ledger attempt

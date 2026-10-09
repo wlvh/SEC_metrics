@@ -1,0 +1,31 @@
+{
+  "base": "adee30366a13c0c4ead3f30ec5344db19ebf746f",
+  "patch": "497e0458ea1e8b279d37150b4b2dad60a7147a48",
+  "execution_head": "6b2b8d925fb357a449b582e9f9b2a96f3d8467ae",
+  "source_and_tests": [
+    {
+      "path": "scripts/vnext/company_result_view.py",
+      "patch_head_worktree_identical": true,
+      "sha256": "3b489cf3311cfaa32b5a02fb32daf837948623044a946c3626225b90ee7c5c9c"
+    },
+    {
+      "path": "tools/vnext_company.py",
+      "patch_head_worktree_identical": true,
+      "sha256": "b1b0309547c8db1915a3be52ce5a25f747c427ec7a7085e87a8389a046ad76d7"
+    },
+    {
+      "path": "tests/vnext/test_company_results.py",
+      "patch_head_worktree_identical": true,
+      "sha256": "6f529adfa80f5e88515e124a0b556162a15588dc0826392345c181adafc1c97b"
+    }
+  ],
+  "reused_helpers_unchanged_ast": [
+    "recover_for_read",
+    "_manifest",
+    "_ordinary_candidates",
+    "_measurement_period",
+    "_defects",
+    "build_company_view"
+  ],
+  "ordinary_update_cycle_unchanged_bytes": true
+}

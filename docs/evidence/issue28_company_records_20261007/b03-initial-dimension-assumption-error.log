@@ -1,0 +1,12 @@
+======================================================================
+FAIL: test_marriott_composition_458m_and_135m_revenue_deduction_excluded (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_marriott_composition_458m_and_135m_revenue_deduction_excluded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 117, in test_marriott_composition_458m_and_135m_revenue_deduction_excluded
+    self.assertTrue(any(row['value_usd']=='135000000' and not row['dimensions'] for row in exclusion['excluded_facts']))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 8 tests in 8.113s
+
+FAILED (failures=1)

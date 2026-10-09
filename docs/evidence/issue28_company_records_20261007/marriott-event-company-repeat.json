@@ -1,0 +1,48 @@
+{
+  "elapsed_seconds": 0.6394179579801857,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261007T164222Z-178af4d3",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "C01"
+  ],
+  "metrics": [
+    {
+      "metric_id": "C01",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "5dd419fcb635440bbf4a40625887f18e",
+      "version": "f2e45238912f469490eb259a2c4914a8",
+      "result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-state-20261008/updates/C01/results/f2e45238912f469490eb259a2c4914a8",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-state-20261008/updates/C01/results/f2e45238912f469490eb259a2c4914a8",
+      "program_version": {
+        "commit": "8f5b732cf021462406a1b0d198a5a9b59d2a2cde",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-source-only-20261008",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-state-20261008",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott-event-output-20261008/20261007T164222Z-178af4d3",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

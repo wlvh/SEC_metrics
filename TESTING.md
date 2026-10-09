@@ -5,19 +5,30 @@
 2026-10-06当前CI快测：`python3 tools/run_foundation_ci.py --suite fast --jobs 1`使用一个进程及unittest类/模块准备，记录每项失败、导入错误与明确跳过；测试stdout/stderr进入报告，不破坏JSON。完整年报的`NormalAnnualInputTest`归材料层（`--suite source-material`），选择器仍全部对账、未删除业务断言。旧runner保持供旧版本诊断，本改动不宣布公司run或所有材料验收完成。主要测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`。
 
 - main 的 PR57 原生版本：下述 company handoff/source-authority/native 检查用于原程序及保留任务；固定依赖按原身份读取。不要用旧快照要求当前新开发文件永远不变。
-- PR67 普通记录候选：快速业务例及保存原件集成验证公司/期间/单位/引用、已知错误、成功/稳定扣留复用、计数、失败隔离、中断恢复和旧读取。实际命令及终态以 [PR67](https://github.com/wlvh/SEC_metrics/pull/67)主要验证记录为准，共用快测准备/材料分层已由PR61进入main；候选独有公司检查仍在PR67。
+- main 已接收的 PR67 普通记录：快速业务例及保存原件集成验证公司/期间/单位/引用、已知错误、成功/稳定扣留复用、计数、失败隔离、中断恢复和旧读取。实际命令及终态以 [PR67](https://github.com/wlvh/SEC_metrics/pull/67)主要验证记录为准，共用快测准备/材料分层已由PR61进入main；公司检查见当前 Company saved-source records 工作流。
 - 已退休的独立信任、防伪批准、祖先字节证明和封存要求不作为新路径必须通过的测试；保留源码供原版本诊断。退出专属测试不允许静默跳过仍适用的业务与普通故障反例。
 - 文档改动核对实际 CLI 参数、链接和能力范围，不默认重跑全部财报。新接线须经过用户入口的真实解析/保存/计算/读取；只替换外部 HTTP 的录制与真实 SEC 验收分开。
 
-本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。Marriott真实首次、同目录复跑及局部重入已在其原适用许可内完成，见 `docs/evidence/issue54_company/live2/README.md`；录制测试不冒充LIVE，新用途仍需核实许可。
+main 已交付的有限在线 B01/B02 接线检查：`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_company_online -v`核原计数、UNKNOWN、落盘中断摘要、前期依赖隔离；正式CLI HTTP边界录制与原件/计算/读取实际链见 `docs/evidence/issue28_company_online_20261009/README.md`，不授真实SEC或业务接受。下述旧原生/独立信任检查只解释保留版本，不恢复为新普通记录前置。
+
+当前 main 采用已接收的 PR61共享进程/类准备与完整材料分层；`python3 tools/run_foundation_ci.py --suite fast --jobs 1`一次加载选中小测试，失败/导入错误/skip显式输出。原选择器以fast/source-material/retired完整对账；仅已取消的旧祖先防伪模块退休，业务断言保留。PR61原测量见 `docs/evidence/issue28_fast_feedback_20261006/README.md`，PR67 实际候选测量见 `docs/evidence/issue28_company_records_20261007/README.md`，不能拼成同场景提速。
+
+本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。既有Marriott真实SEC首次与重复运行已按其原许可完成；录制测试不转成LIVE信用，业务结果仍分别等待接受。
+已退出的creator journal/伪造sidecar/冻结前缀拒绝不再作为当前来源必过测试；原版本在Git历史保留。原件/header/attempt/申报/最新失败检查见test_saved_source_checks，旧checkpoint导出及UNKNOWN保护仍保留。
+
+当前保存来源公司入口定向测试：`python -m unittest tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update -q`。小状态验证共享只读根、局部失败/旧期间、精确已知缺陷扣留、写锁、旧任务不重置及日常读取不更新；真实B01/B02公司CLI另见 `docs/evidence/issue28_company_records_20261007/`。测试没有付费或SEC调用，不把模拟状态例当业务内容验收。
+<!-- capability-anchor: CAPABILITY.current_saved_company_run -->
+
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 
-main/保留原生版本的公司导入事务与独立信任：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。
+旧固定运行版本的公司导入/独立信任兼容测试：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。
 
-main/保留原生版本的公司事件 census 接缝：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_event_census -v`。该组件测试使用真实独立信任读取和原 header 解析，账本重放为替身；验证窗口／前身 CIK、缺件／额外件／别名、错公司和本地重哈希不能授信。实际材料另验证只读固定树下公司 C01、重复与公司出口，不能以组件测试宣称六事件内容或 OpenShift 验收。
+公司事件 census 接缝：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_event_census -v`。此处保留旧固定版本的组件测试，使用其原独立信任读取和原 header 解析，账本重放为替身；验证窗口／前身 CIK、缺件／额外件／别名、错公司和本地重哈希不能授信。实际材料另验证只读固定树下公司 C01、重复与公司出口，不能以组件测试宣称六事件内容或 OpenShift 验收。
 <!-- capability-anchor: CAPABILITY.company_import_transaction -->
 
-## 历史固定版本：确切年度候选正式采纳接线
+上述独立信任/防伪说明只解释旧任务兼容；新保存来源路径使用当前普通记录测试，不重新要求建立信任登记或封存。
+
+## 确切年度候选正式采纳接线
 
 fast白名单共35入口，保留v1发布模块，并加入`tests.vnext.test_annual_publication_authority`。
 短测试覆盖冻结政策解析、pending Requirement、真实评论边界与无本地JSON权限。
@@ -219,6 +230,8 @@ provider/paid 执行及实际 usage、真实候选内容检查。SEC 刷新、�
 正式发布及 full acceptance 均不属于本轮。历史冻结源码/响应/收据不为此重签。
 
 ## 保存的年度输入局部回归
+
+显式修订段落路径：`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools python3 -m unittest -v tests.vnext.test_amendment_note_layout tests.vnext.test_instant_amendment_paragraph_api`。17项小输入覆盖完整API的正常/更正/隐藏/引用分支；真实保存原件及旧默认比较见 `docs/evidence/issue28_amendment_note_20261009/README.md`。不联网，不创建公司Result，不代表在线更新或全财务准入。
 
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_input -v`
 验证Marriott FY2023/2024/2025原始submissions/10-K/Company Facts独立准备输入，
@@ -574,6 +587,8 @@ PR41续验：当前许可为2/2/0，旧关闭阶段1/1/0经原内容身份重验
 分组提示增量：`python3 -m unittest tests.vnext.test_annual_group_prompt -v`进入fast。完整保存材料下可定向运行`AnnualContinuityRehearsalTest.test_prompt_native_candidate_and_saved_snapshot`，使用最新关闭阶段的`CONTINUITY_PRIOR_STAGE_BINDING`；只在HTTP外部边界回放原正确assistant内容，并在既有success-reference文件替换点停止后续发布，验证新任务身份的原生候选和封存snapshot重放。它不替代新provider执行；既有完整发布故障套件未变部分按原证据复用。
 
 ## R5 B06结构化主路径
+
+2026-10-08 来源关系小回归：`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_industrial_lease_relation tests.vnext.test_reported_lease_successor -v`，18项完整小型HTML/XML解析器控制加5项后继原件重开/银行边界，不安装公司或发请求。现有fast workflow单列此命令，旧cohort结果分别报告。保存Ford原件的定向内存派生控制与默认/JSON读写记录见 `docs/evidence/issue28_b06_relations_20261008/README.md`；它们不代替工业权益、债务完整性或公司结果验收，未变长链不重复运行。
 
 短测试：`python3 -m unittest tests.vnext.test_r5_b06 -v`，已列fast白名单。覆盖总额不加adder、同族/跨族、lease-only与noncurrent、冲突和独立债务、零/负权益、单位/时点/主体/来源、工业范围及生产权限拒绝。完整材料：`python3 tools/vnext_r5_b06.py prepare --candidate-root <新外部目录> --output-json <新外部JSON>`，随后同CLI read与重复prepare；OS级禁网和正式根只读，独立记录执行、包与代码身份。原PR41短测试读取冻结提示/模型，同时明确旧执行权限对R5改动失效，不修改历史v8绑定来制造可执行性。
 

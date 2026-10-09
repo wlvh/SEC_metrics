@@ -1,0 +1,18 @@
+test_explicit_period_reader_inspects_exact_bytes_and_must_match_target (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_explicit_period_reader_inspects_exact_bytes_and_must_match_target) ... ok
+test_non_usd_and_fake_namespace_rejected (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_non_usd_and_fake_namespace_rejected) ... ok
+test_release_date_requires_explicit_policy_and_old_default_unchanged (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_release_date_requires_explicit_policy_and_old_default_unchanged) ... ok
+test_selected_original_default_matches_retained_reader_without_current_preparation (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_selected_original_default_matches_retained_reader_without_current_preparation) ... ok
+test_short_visible_period_conflict_and_missing_header_remain_explicit (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_short_visible_period_conflict_and_missing_header_remain_explicit) ... ok
+test_source_byte_company_and_accession_binding_rejected (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_source_byte_company_and_accession_binding_rejected) ... ok
+test_wrong_annual_period_and_dei_subject_rejected (tests.vnext.test_selected_income_source_v1.SelectedIncomeSourceTest.test_wrong_annual_period_and_dei_subject_rejected) ... ok
+test_conflict_and_consistent_short_period (tests.vnext.test_successor_income_projection.VisibleIncomePeriodTest.test_conflict_and_consistent_short_period) ... ok
+test_missing_range_remains_unresolved (tests.vnext.test_successor_income_projection.VisibleIncomePeriodTest.test_missing_range_remains_unresolved) ... ok
+test_other_column_date_cannot_prove_this_fact (tests.vnext.test_successor_income_projection.VisibleIncomePeriodTest.test_other_column_date_cannot_prove_this_fact) ... ok
+test_composition_passes_same_explicit_policy_to_original_component_lookup (tests.vnext.test_xbrl_namespace_policy.NamespacePolicyTest.test_composition_passes_same_explicit_policy_to_original_component_lookup) ... ok
+test_default_year_only_and_explicit_date_release (tests.vnext.test_xbrl_namespace_policy.NamespacePolicyTest.test_default_year_only_and_explicit_date_release) ... ok
+test_direct_scope_requires_explicit_release_policy (tests.vnext.test_xbrl_namespace_policy.NamespacePolicyTest.test_direct_scope_requires_explicit_release_policy) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.020s
+
+OK

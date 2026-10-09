@@ -1,0 +1,2330 @@
+argv: ["git", "diff", "--unified=5", "4e2f4b2dddabd0ab2847a583e5acf457282c2b95", "b9228566e24ec8bd175c3f47a4bfc3a6f044bb51"]
+returncode: 0
+diff --git a/.github/workflows/company-current-records.yml b/.github/workflows/company-current-records.yml
+index 845c597b..6eb64252 100644
+--- a/.github/workflows/company-current-records.yml
++++ b/.github/workflows/company-current-records.yml
+@@ -8,10 +8,11 @@ name: Company saved-source records
+       - 'tests/vnext/test_ordinary_current_update.py'
+       - 'tests/vnext/test_company_parse_reuse.py'
+       - 'tests/vnext/test_precalculated_case.py'
+       - 'tests/vnext/test_saved_source_checks.py'
+       - 'tests/vnext/test_runtime_tools.py'
++      - 'tests/vnext/test_b03_current_input_scope.py'
+       - 'tests/vnext/test_separate_rule_root.py'
+       - 'tests/vnext/test_selected_lodging_calculation.py'
+       - 'tests/vnext/test_selected_lodging_source.py'
+       - 'tests/fixtures/lodging_selected_table.html'
+       - 'config/**'
+@@ -33,6 +34,6 @@ jobs:
+         with:
+           python-version: '3.14'
+       - name: Saved source through calculation, records, CSV and reading
+         env:
+           PYTHONDONTWRITEBYTECODE: '1'
+-        run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools -v
++        run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools tests.vnext.test_b03_current_input_scope -v
+diff --git a/docs/evidence/issue28_company_records_20261007/README.md b/docs/evidence/issue28_company_records_20261007/README.md
+index 47644f64..1eee8e2c 100644
+--- a/docs/evidence/issue28_company_records_20261007/README.md
++++ b/docs/evidence/issue28_company_records_20261007/README.md
+@@ -334,5 +334,19 @@ Receives the narrow9c65bf30 Calculator constructor/re-export change and source i
+ Existing actual company CLI executes MarriottB10/B11 from the same source-only package after this program change, produces CSV/evidence and keeps exact99aa23.../ae7ab4... Result IDs and FY2025. Original program/configuration changes are visible in its new ordinary version; prior records remain. Per-record actual timings are saved in `company-after-light-entry.json`; this run does not prove total calculation latency improved. One observed B10 preparation14.338s/check2.583s is not concealed or compared as the same baseline as earlier case/API timing.
+ 
+ 72 affected tests pass28.574s; exact dedicated CI's97 test command passes53.013s. Initial receive stopped after discovering its new test file did not exist in receiver; the associated test loader failure is retained, then the necessary test file was added and consumers switched. No passed result is attributed to that incomplete command. The source quote checker is now portable from repository evidence plus explicit `--source-root`; all three original numeric/context/unit checks reproduced. Actual source ledger195claims and SHA6023bf...6eb remains unchanged.
+ 
+ PR60R1 dedicated37544113496 SUCCESS but its broad37544113468 FAILURE; final PR67 head remains independently tracked. This is current program/company integration, no new complete-company content acceptance or paid/SEC call.
++
++### B03 current input scope and rule roots (2026-10-07)
++
++The current company branch explicitly passes program rules and requests the bounded depreciation input check. Default omitted source APIs remain legacy-compatible; no historical Spec or Run is signed again. The copied ordinary_da_scope_v1 is byte-identical to #47d7d5938's historical_da_scope_candidate. Adapter differences are mechanical CIK/scheme/namespace/period/USD binding, current Spec re-evaluation after at most one proven retake, and existing #28 narrow/impairment/contract-revenue checks. No new English classifier, no preference for larger amounts and no policy amendment. NO_DIRECT_CANDIDATE still needs the approved composition and original component support.
++
++Actual company run/source-only originals: MarriottFY2025B03=0.1756281982738868097456656229 ratio (17.5628%) from4.141bn operating income plus145m depreciation and313m intangible amortization over26.186bn revenue.135m contract investment amortization is an explicit fee-revenue deduction, including its FeeServiceMember context and gross/deduction/net table relationship; it is excluded, not added. Runtime2.787s. This accepts the already-given owner's bounded treatment, not a general EBITDA business audit.
++
++SalesforceFY2026 now has a named WITHHELD result, B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN:1.2bn fixed-asset subset conflicts with3.631bn statement amount; the latter may include impairment and is not substituted. B01revenue41.525bn remains. Runtime3.189s; one pre-existing unrelated failed eventheader remains visible. Sidecar input-assessments.json (6.4KB/5.9KB) preserves actual source comparisons/exclusions and links input/result/period for ordinary independent reading. Damage and coordinate checks remain; no re-calculation for that read. The null result's ID happens to match #47's intrinsic null Result identity; this own company execution/source/state, not shared acceptance credit.
++
++Two confirmed wrong identities are precisely withdrawn in the existing #28 register: current normal API f07e137... and archived index e13a5d8... .The finite check also inspected current output evidence selecting the1.2bn fact for the same accession/period. Old publication files,Run,wrong ratio and historical fiscal label are untouched; no all-history scan claim, no metric-name-wide withdrawal, no all390 progress inflation. Current statistics/readers consume this register.
++
++Amendment and instant-balance source inputs accept optional program rules; current CompanyFacts/zero-AI callers propagate them. Ordinary income preparation now uses the same original financial-source helper from normal_governance_input, not the unrelated normal_candidates Run/controller import; the legacyB06 alias and source packet shape remain. Actual amended/successor root validation is still a separate remaining check, not established by Marriott's empty amendment positive.
++
++9finite source/precision/retake/entity/period/currency/namespace/context-scheme/source-only/persistence checks pass8.563s.116 affected tests pass70.275s, including default fiscal resolver and old Calculator/Spec tests. Initial failures were wrong test assumptions about the reader's return fields, then the135m fact's dimensions; logs retained and assertions corrected to actual disk API and FeeServiceMember, not by dropping scope. macOS source path test now resolves its expected alias; actual alias test passes14.136s. New numeric/semantic adaptation remains pending limited independent review. No project business calls; old budget and source ledger unchanged.
+diff --git a/docs/evidence/issue28_company_records_20261007/b03-current-company-results.json b/docs/evidence/issue28_company_records_20261007/b03-current-company-results.json
+new file mode 100644
+index 00000000..3f03f2d7
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/b03-current-company-results.json
+@@ -0,0 +1,679 @@
++[
++  {
++    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
++    "company_id": "marriott_international",
++    "run_id": "20261006T233051Z-f9ddb393",
++    "status": "FLOW_COMPLETED",
++    "selected_metrics": [
++      "B03"
++    ],
++    "metrics": [
++      {
++        "metric_id": "B03",
++        "status": "CANDIDATE_READY",
++        "attempt_id": "9a77d90502694c68b421c69e6a6b4a3c",
++        "version": "80bcbf7794ec4416b4792bb7babc5459",
++        "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
++        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott_international-b03-ordinary-scope-state-20261007/updates/B03/results/80bcbf7794ec4416b4792bb7babc5459",
++        "calculation_performed": true,
++        "new_candidate_created": true,
++        "source_observation_errors": [],
++        "new_calls": {
++          "provider": 0,
++          "paid": 0,
++          "sec": 0
++        },
++        "production_authorized": false,
++        "defect_holds": [],
++        "read_result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
++        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott_international-b03-ordinary-scope-state-20261007/updates/B03/results/80bcbf7794ec4416b4792bb7babc5459",
++        "program_version": {
++          "commit": "4e2f4b2dddabd0ab2847a583e5acf457282c2b95",
++          "has_uncommitted_changes": true
++        },
++        "saved_result": {
++          "applicability": "APPLICABLE",
++          "company_id": "marriott_international",
++          "metric_id": "B03",
++          "period_end": "2025-12-31",
++          "period_start": "2025-01-01",
++          "publication": "PUBLISHED",
++          "quality": "EXACT",
++          "reason_code": "PASS",
++          "record_type": "METRIC_RESULT",
++          "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
++          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++          "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
++          "trace_id": "sha256:3275ed7c3df1da60a68258e4834dcf29b2ae38b4e26f534cdd65d063d85823d0",
++          "unit": "ratio",
++          "value": "0.1756281982738868097456656229"
++        },
++        "input_assessments": {
++          "depreciation_scope": {
++            "chain_input": {
++              "concept": "Depreciation+AmortizationOfIntangibleAssets",
++              "value": "458000000"
++            },
++            "complete_business_scope_proven": false,
++            "composition_originals": {
++              "amortization": {
++                "concept": "us-gaap:AmortizationOfIntangibleAssets",
++                "primary_fact_ordinals": [
++                  925
++                ],
++                "value_usd": "313000000"
++              },
++              "depreciation": {
++                "concept": "us-gaap:Depreciation",
++                "primary_fact_ordinals": [
++                  973
++                ],
++                "value_usd": "145000000"
++              }
++            },
++            "entity": "1048286",
++            "existing_scope_check": {
++              "amount_added_or_result_recomputed": false,
++              "blocked": false,
++              "excluded_facts": [
++                {
++                  "context_ref": "c-13",
++                  "dimensions": {
++                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
++                  },
++                  "ordinal": 77,
++                  "value_usd": "135000000"
++                },
++                {
++                  "context_ref": "c-219",
++                  "dimensions": {
++                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
++                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
++                    "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
++                  },
++                  "ordinal": 1036,
++                  "value_usd": "83000000"
++                },
++                {
++                  "context_ref": "c-220",
++                  "dimensions": {
++                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
++                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
++                    "us-gaap:StatementBusinessSegmentsAxis": "mar:EMEASegmentMember"
++                  },
++                  "ordinal": 1037,
++                  "value_usd": "19000000"
++                },
++                {
++                  "context_ref": "c-221",
++                  "dimensions": {
++                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
++                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
++                    "us-gaap:StatementBusinessSegmentsAxis": "mar:GreaterChinaMember"
++                  },
++                  "ordinal": 1038,
++                  "value_usd": "1000000"
++                },
++                {
++                  "context_ref": "c-222",
++                  "dimensions": {
++                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
++                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
++                    "us-gaap:StatementBusinessSegmentsAxis": "mar:APECMember"
++                  },
++                  "ordinal": 1039,
++                  "value_usd": "6000000"
++                }
++              ],
++              "primary_source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
++              "revenue_deduction_proofs": [
++                {
++                  "deduction_row": 7,
++                  "dimensions": {
++                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
++                  },
++                  "displayed_amounts": [
++                    "5438",
++                    "-135",
++                    "5303"
++                  ],
++                  "fact_ordinal": 77,
++                  "gross_row": 6,
++                  "net_row": 8,
++                  "relation_class": "CONSOLIDATED_REVENUE_DEDUCTION",
++                  "reported_labels": [
++                    "Gross fee revenues",
++                    "Contract investment amortization",
++                    "Net fee revenues"
++                  ],
++                  "table_grid_sha256": "sha256:c8fbf64a71dae94dae2972a5ba1e6f30eb3f7a99a66d7ed2fa635833affcb9cb",
++                  "table_id": "table_000026"
++                },
++                {
++                  "deduction_row": 4,
++                  "dimensions": {
++                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
++                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
++                    "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
++                  },
++                  "displayed_amounts": [
++                    "3004",
++                    "-83",
++                    "2921"
++                  ],
++                  "fact_ordinal": 1036,
++                  "gross_row": 3,
++                  "net_row": 5,
++                  "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
++                  "reported_labels": [
++                    "Gross fee revenues",
++                    "Contract investment amortization",
++                    "Net fee revenues"
++                  ],
++                  "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
++                  "table_id": "table_000053"
++                },
++                {
++                  "deduction_row": 4,
++                  "dimensions": {
++                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
++                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
++                    "us-gaap:StatementBusinessSegmentsAxis": "mar:EMEASegmentMember"
++                  },
++                  "displayed_amounts": [
++                    "640",
++                    "-19",
++                    "621"
++                  ],
++                  "fact_ordinal": 1037,
++                  "gross_row": 3,
++                  "net_row": 5,
++                  "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
++                  "reported_labels": [
++                    "Gross fee revenues",
++                    "Contract investment amortization",
++                    "Net fee revenues"
++                  ],
++                  "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
++                  "table_id": "table_000053"
++                },
++                {
++                  "deduction_row": 4,
++                  "dimensions": {
++                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
++                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
++                    "us-gaap:StatementBusinessSegmentsAxis": "mar:GreaterChinaMember"
++                  },
++                  "displayed_amounts": [
++                    "261",
++                    "-1",
++                    "260"
++                  ],
++                  "fact_ordinal": 1038,
++                  "gross_row": 3,
++                  "net_row": 5,
++                  "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
++                  "reported_labels": [
++                    "Gross fee revenues",
++                    "Contract investment amortization",
++                    "Net fee revenues"
++                  ],
++                  "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
++                  "table_id": "table_000053"
++                },
++                {
++                  "deduction_row": 4,
++                  "dimensions": {
++                    "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
++                    "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
++                    "us-gaap:StatementBusinessSegmentsAxis": "mar:APECMember"
++                  },
++                  "displayed_amounts": [
++                    "376",
++                    "-6",
++                    "370"
++                  ],
++                  "fact_ordinal": 1039,
++                  "gross_row": 3,
++                  "net_row": 5,
++                  "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
++                  "reported_labels": [
++                    "Gross fee revenues",
++                    "Contract investment amortization",
++                    "Net fee revenues"
++                  ],
++                  "table_grid_sha256": "sha256:869bf676c45bf21bd7a9b03b92618184c25f49db198b129e765180b4e627f230",
++                  "table_id": "table_000053"
++                }
++              ],
++              "selected_components": {
++                "amortization": "313000000",
++                "depreciation": "145000000"
++              },
++              "selected_original_facts": {
++                "amortization": {
++                  "concept": "us-gaap:AmortizationOfIntangibleAssets",
++                  "primary_fact_ordinals": [
++                    925
++                  ],
++                  "value_usd": "313000000"
++                },
++                "depreciation": {
++                  "concept": "us-gaap:Depreciation",
++                  "primary_fact_ordinals": [
++                    973
++                  ],
++                  "value_usd": "145000000"
++                }
++              },
++              "status": "COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED"
++            },
++            "filing_answer": {
++              "candidates": [],
++              "status": "NO_DIRECT_CANDIDATE",
++              "why": "THE_APPROVED_COMPOSITION_APPLIES"
++            },
++            "period": {
++              "fiscal_year": 2025,
++              "period_end": "2025-12-31",
++              "period_start": "2025-01-01"
++            },
++            "primary_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
++            "source_facts": [
++              {
++                "concept": "AmortizationOfIntangibleAssets",
++                "context_proof": {
++                  "context_ref": "c-1",
++                  "dimensions": [],
++                  "identifiers": [
++                    {
++                      "scheme": "http://www.sec.gov/CIK",
++                      "value": "0001048286"
++                    }
++                  ],
++                  "period_fields": [
++                    {
++                      "kind": "startdate",
++                      "value": "2025-01-01"
++                    },
++                    {
++                      "kind": "enddate",
++                      "value": "2025-12-31"
++                    }
++                  ],
++                  "typed_dimension_count": 0
++                },
++                "context_ref": "c-1",
++                "decimals": "-6",
++                "fact_ordinal": 925,
++                "unit_ref": "usd",
++                "value": "313000000"
++              },
++              {
++                "concept": "Depreciation",
++                "context_proof": {
++                  "context_ref": "c-1",
++                  "dimensions": [],
++                  "identifiers": [
++                    {
++                      "scheme": "http://www.sec.gov/CIK",
++                      "value": "0001048286"
++                    }
++                  ],
++                  "period_fields": [
++                    {
++                      "kind": "startdate",
++                      "value": "2025-01-01"
++                    },
++                    {
++                      "kind": "enddate",
++                      "value": "2025-12-31"
++                    }
++                  ],
++                  "typed_dimension_count": 0
++                },
++                "context_ref": "c-1",
++                "decimals": "-6",
++                "fact_ordinal": 973,
++                "unit_ref": "usd",
++                "value": "145000000"
++              }
++            ],
++            "status": "KEEP",
++            "why": "THE_APPROVED_COMPOSITION_APPLIES"
++          }
++        }
++      }
++    ],
++    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/source-only-b01-no-rules-20261007",
++    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
++    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott_international-b03-ordinary-scope-state-20261007",
++    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/marriott_international-b03-ordinary-scope-output-20261007/20261006T233051Z-f9ddb393",
++    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
++    "calls": {
++      "provider": 0,
++      "paid": 0,
++      "sec": 0
++    },
++    "production_authorized": false,
++    "elapsed_seconds": 2.7872105829883367
++  },
++  {
++    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
++    "company_id": "salesforce",
++    "run_id": "20261006T233054Z-c20f5fe2",
++    "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
++    "selected_metrics": [
++      "B03"
++    ],
++    "metrics": [
++      {
++        "metric_id": "B03",
++        "status": "CANDIDATE_WITHHELD",
++        "attempt_id": "17bf8b89541f4cbc817196c3fd738bbb",
++        "version": "8ecdcfa4b4d6484d99c6989022900545",
++        "result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
++        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-b03-ordinary-scope-state-20261007/updates/B03/results/8ecdcfa4b4d6484d99c6989022900545",
++        "calculation_performed": true,
++        "new_candidate_created": true,
++        "source_observation_errors": [
++          {
++            "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml",
++            "status_code": "0",
++            "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>",
++            "content_sha256": "",
++            "document_name": "0001108524-25-000083.hdr.sgml"
++          }
++        ],
++        "new_calls": {
++          "provider": 0,
++          "paid": 0,
++          "sec": 0
++        },
++        "production_authorized": false,
++        "defect_holds": [],
++        "read_result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
++        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-b03-ordinary-scope-state-20261007/updates/B03/results/8ecdcfa4b4d6484d99c6989022900545",
++        "program_version": {
++          "commit": "4e2f4b2dddabd0ab2847a583e5acf457282c2b95",
++          "has_uncommitted_changes": true
++        },
++        "saved_result": {
++          "applicability": "APPLICABLE",
++          "company_id": "salesforce",
++          "metric_id": "B03",
++          "period_end": "2026-01-31",
++          "period_start": "2025-02-01",
++          "publication": "WITHHELD",
++          "quality": "NONE",
++          "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
++          "record_type": "METRIC_RESULT",
++          "result_id": "sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc",
++          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++          "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
++          "trace_id": "sha256:d78b5441838ba5302dd9f281111b10606f52738f1cd1ca52bb91b0664a860a86",
++          "unit": null,
++          "value": null
++        },
++        "input_assessments": {
++          "depreciation_scope": {
++            "chain_input": {
++              "concept": "DepreciationDepletionAndAmortization",
++              "value": "1200000000"
++            },
++            "complete_business_scope_proven": false,
++            "entity": "1108524",
++            "filing_answer": {
++              "candidates": [
++                {
++                  "concept": "DepreciationDepletionAndAmortization",
++                  "context_proof": {
++                    "context_ref": "c-1",
++                    "dimensions": [],
++                    "identifiers": [
++                      {
++                        "scheme": "http://www.sec.gov/CIK",
++                        "value": "0001108524"
++                      }
++                    ],
++                    "period_fields": [
++                      {
++                        "kind": "startdate",
++                        "value": "2025-02-01"
++                      },
++                      {
++                        "kind": "enddate",
++                        "value": "2026-01-31"
++                      }
++                    ],
++                    "typed_dimension_count": 0
++                  },
++                  "context_ref": "c-1",
++                  "decimals": "-8",
++                  "fact_ordinal": 809,
++                  "unit_ref": "usd",
++                  "value": "1200000000"
++                },
++                {
++                  "concept": "DepreciationAndAmortization",
++                  "context_proof": {
++                    "context_ref": "c-1",
++                    "dimensions": [],
++                    "identifiers": [
++                      {
++                        "scheme": "http://www.sec.gov/CIK",
++                        "value": "0001108524"
++                      }
++                    ],
++                    "period_fields": [
++                      {
++                        "kind": "startdate",
++                        "value": "2025-02-01"
++                      },
++                      {
++                        "kind": "enddate",
++                        "value": "2026-01-31"
++                      }
++                    ],
++                    "typed_dimension_count": 0
++                  },
++                  "context_ref": "c-1",
++                  "decimals": "-6",
++                  "fact_ordinal": 337,
++                  "unit_ref": "usd",
++                  "value": "3631000000"
++                }
++              ],
++              "composition": [],
++              "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
++              "status": "WITHHOLD",
++              "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT"
++            },
++            "period": {
++              "fiscal_year": 2026,
++              "period_end": "2026-01-31",
++              "period_start": "2025-02-01"
++            },
++            "primary_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
++            "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
++            "rejected_observations": [
++              {
++                "approval_effect_hash": "",
++                "company_id": "salesforce",
++                "metric_id": "B01",
++                "observation_id": "sha256:abe7e36b73f7f0d0f4269680e75b5147fb55e79a1f4019d01bb2591d3f16a9b0",
++                "period_end": "2026-01-31",
++                "period_start": "2025-02-01",
++                "quality": "EXACT",
++                "record_type": "VERIFIED_OBSERVATION",
++                "scope": {
++                  "entity_scope": "registrant",
++                  "period_basis": "source_annual_duration"
++                },
++                "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++                "semantic_role": "revenue",
++                "source_binding": {
++                  "accession": "0001108524-26-000060",
++                  "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
++                  "document_name": "CIK0001108524.json",
++                  "duration_days": 365,
++                  "entity": "1108524",
++                  "fact_id": "fact:sha256:b2d081c30eaf3a3ae54645977e90b3b2319ea862047448c822660e532d4eb683",
++                  "filed": "2026-03-02",
++                  "fiscal_period": "FY",
++                  "form": "10-K",
++                  "frame": "CY2025",
++                  "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
++                  "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
++                  "source_role": "companyfacts"
++                },
++                "unit": "USD",
++                "value": "41525000000"
++              },
++              {
++                "approval_effect_hash": "",
++                "company_id": "salesforce",
++                "metric_id": "B03",
++                "observation_id": "sha256:2eb1734f0ef059ede1e334a26129b615e5e991ae4601ccd5e041d7f21dcfbb69",
++                "period_end": "2026-01-31",
++                "period_start": "2025-02-01",
++                "quality": "EXACT",
++                "record_type": "VERIFIED_OBSERVATION",
++                "scope": {
++                  "entity_scope": "registrant",
++                  "period_basis": "source_annual_duration"
++                },
++                "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++                "semantic_role": "operating_income",
++                "source_binding": {
++                  "accession": "0001108524-26-000060",
++                  "concept": "us-gaap:OperatingIncomeLoss",
++                  "document_name": "CIK0001108524.json",
++                  "duration_days": 365,
++                  "entity": "1108524",
++                  "fact_id": "fact:sha256:9635bbaa2449aa193b5cfab52155dd1d5ef6eed717b1eb6d73a8d4db25dc531c",
++                  "filed": "2026-03-02",
++                  "fiscal_period": "FY",
++                  "form": "10-K",
++                  "frame": "CY2025",
++                  "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
++                  "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
++                  "source_role": "companyfacts"
++                },
++                "unit": "USD",
++                "value": "8331000000"
++              },
++              {
++                "approval_effect_hash": "",
++                "company_id": "salesforce",
++                "metric_id": "B03",
++                "observation_id": "sha256:62fb59655d47297fc660c1450abaf90ba3d4941c73f89f022337374081ed57fa",
++                "period_end": "2026-01-31",
++                "period_start": "2025-02-01",
++                "quality": "EXACT",
++                "record_type": "VERIFIED_OBSERVATION",
++                "scope": {
++                  "entity_scope": "registrant",
++                  "period_basis": "source_annual_duration"
++                },
++                "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++                "semantic_role": "depreciation_and_amortization",
++                "source_binding": {
++                  "accession": "0001108524-26-000060",
++                  "concept": "us-gaap:DepreciationDepletionAndAmortization",
++                  "document_name": "CIK0001108524.json",
++                  "duration_days": 365,
++                  "entity": "1108524",
++                  "fact_id": "fact:sha256:211afc4f7b48a20db3b308fed6609b768a315525f68e9cf8c0223b41c1b3930e",
++                  "filed": "2026-03-02",
++                  "fiscal_period": "FY",
++                  "form": "10-K",
++                  "frame": "CY2025",
++                  "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
++                  "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
++                  "source_role": "companyfacts"
++                },
++                "unit": "USD",
++                "value": "1200000000"
++              }
++            ],
++            "source_facts": [
++              {
++                "concept": "DepreciationAndAmortization",
++                "context_proof": {
++                  "context_ref": "c-1",
++                  "dimensions": [],
++                  "identifiers": [
++                    {
++                      "scheme": "http://www.sec.gov/CIK",
++                      "value": "0001108524"
++                    }
++                  ],
++                  "period_fields": [
++                    {
++                      "kind": "startdate",
++                      "value": "2025-02-01"
++                    },
++                    {
++                      "kind": "enddate",
++                      "value": "2026-01-31"
++                    }
++                  ],
++                  "typed_dimension_count": 0
++                },
++                "context_ref": "c-1",
++                "decimals": "-6",
++                "fact_ordinal": 337,
++                "unit_ref": "usd",
++                "value": "3631000000"
++              },
++              {
++                "concept": "DepreciationDepletionAndAmortization",
++                "context_proof": {
++                  "context_ref": "c-1",
++                  "dimensions": [],
++                  "identifiers": [
++                    {
++                      "scheme": "http://www.sec.gov/CIK",
++                      "value": "0001108524"
++                    }
++                  ],
++                  "period_fields": [
++                    {
++                      "kind": "startdate",
++                      "value": "2025-02-01"
++                    },
++                    {
++                      "kind": "enddate",
++                      "value": "2026-01-31"
++                    }
++                  ],
++                  "typed_dimension_count": 0
++                },
++                "context_ref": "c-1",
++                "decimals": "-8",
++                "fact_ordinal": 809,
++                "unit_ref": "usd",
++                "value": "1200000000"
++              }
++            ],
++            "status": "WITHHOLD",
++            "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT"
++          }
++        }
++      }
++    ],
++    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-native-source-only-20261007",
++    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
++    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-b03-ordinary-scope-state-20261007",
++    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/salesforce-b03-ordinary-scope-output-20261007/20261006T233054Z-c20f5fe2",
++    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
++    "calls": {
++      "provider": 0,
++      "paid": 0,
++      "sec": 0
++    },
++    "production_authorized": false,
++    "elapsed_seconds": 3.189299166901037
++  }
++]
+diff --git a/docs/evidence/issue28_company_records_20261007/b03-current-company-run.log b/docs/evidence/issue28_company_records_20261007/b03-current-company-run.log
+new file mode 100644
+index 00000000..9751de23
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/b03-current-company-run.log
+@@ -0,0 +1,2 @@
++marriott_international FLOW_COMPLETED 2.7872105829883367 [('B03', 'CANDIDATE_READY', 'sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a')]
++salesforce FLOW_COMPLETED_WITH_LIMITATIONS 3.189299166901037 [('B03', 'CANDIDATE_WITHHELD', 'sha256:619660f73d8864284af05708ea69ff2e03a2eec47dec5f9c67fe96d9292f09fc')]
+diff --git a/docs/evidence/issue28_company_records_20261007/b03-current-final-regression.log b/docs/evidence/issue28_company_records_20261007/b03-current-final-regression.log
+new file mode 100644
+index 00000000..6bc57310
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/b03-current-final-regression.log
+@@ -0,0 +1,4 @@
++----------------------------------------------------------------------
++Ran 116 tests in 70.275s
++
++OK
+diff --git a/docs/evidence/issue28_company_records_20261007/b03-finite-existing-index-inspection.json b/docs/evidence/issue28_company_records_20261007/b03-finite-existing-index-inspection.json
+new file mode 100644
+index 00000000..313e3aa2
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/b03-finite-existing-index-inspection.json
+@@ -0,0 +1,20 @@
++[
++  {
++    "path": "outputs/publications/publication_115d13fd9698745a013307be1beb060e6f7f94a8cb58512cee021cc9d976eec2/internal/coordinate_index.json",
++    "row": {
++      "applicability": "APPLICABLE",
++      "company_id": "salesforce",
++      "fiscal_year": 2025,
++      "metric_id": "B03",
++      "period_end": "2026-01-31",
++      "period_start": "2025-02-01",
++      "publication": "PUBLISHED",
++      "quality": "EXACT",
++      "result_id": "sha256:e13a5d8c1d2764bbd47392cab62777d7a318aa76e653ecd7277c2270eac41acf",
++      "run_id": "run:cutover:6e9c015ffb9418a7f85175720dbe1aa768a910175fb6be26084a596d9b8acff5",
++      "trace_id": "sha256:d56a324d38d6715c9b3ca66add05c85ad0c71b355e7151f8eb430695daa004d7",
++      "unit": "ratio",
++      "value": "0.2295243829018663455749548465"
++    }
++  }
++]
+diff --git a/docs/evidence/issue28_company_records_20261007/b03-finite-scope-tests.log b/docs/evidence/issue28_company_records_20261007/b03-finite-scope-tests.log
+new file mode 100644
+index 00000000..d5ba9c39
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/b03-finite-scope-tests.log
+@@ -0,0 +1,4 @@
++----------------------------------------------------------------------
++Ran 9 tests in 8.563s
++
++OK
+diff --git a/docs/evidence/issue28_company_records_20261007/b03-initial-dimension-assumption-error.log b/docs/evidence/issue28_company_records_20261007/b03-initial-dimension-assumption-error.log
+new file mode 100644
+index 00000000..5997deda
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/b03-initial-dimension-assumption-error.log
+@@ -0,0 +1,12 @@
++======================================================================
++FAIL: test_marriott_composition_458m_and_135m_revenue_deduction_excluded (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_marriott_composition_458m_and_135m_revenue_deduction_excluded)
++----------------------------------------------------------------------
++Traceback (most recent call last):
++  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 117, in test_marriott_composition_458m_and_135m_revenue_deduction_excluded
++    self.assertTrue(any(row['value_usd']=='135000000' and not row['dimensions'] for row in exclusion['excluded_facts']))
++AssertionError: False is not true
++
++----------------------------------------------------------------------
++Ran 8 tests in 8.113s
++
++FAILED (failures=1)
+diff --git a/docs/evidence/issue28_company_records_20261007/b03-initial-reader-assumption-error.log b/docs/evidence/issue28_company_records_20261007/b03-initial-reader-assumption-error.log
+new file mode 100644
+index 00000000..ffa9dccd
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/b03-initial-reader-assumption-error.log
+@@ -0,0 +1,22 @@
++======================================================================
++ERROR: test_marriott_composition_458m_and_135m_revenue_deduction_excluded (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_marriott_composition_458m_and_135m_revenue_deduction_excluded)
++----------------------------------------------------------------------
++Traceback (most recent call last):
++  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 105, in test_marriott_composition_458m_and_135m_revenue_deduction_excluded
++    saved=self.saved['marriott_international'];records=saved['records']
++                                                       ~~~~~^^^^^^^^^^^
++KeyError: 'records'
++
++======================================================================
++ERROR: test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01 (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01)
++----------------------------------------------------------------------
++Traceback (most recent call last):
++  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 118, in test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01
++    revenues=[r for r in saved['records'] if r['record_type']=='METRIC_RESULT' and r['metric_id']=='B01']
++                         ~~~~~^^^^^^^^^^^
++KeyError: 'records'
++
++----------------------------------------------------------------------
++Ran 8 tests in 9.003s
++
++FAILED (errors=2)
+diff --git a/docs/evidence/issue28_company_records_20261007/b03-pre-guard-original.json b/docs/evidence/issue28_company_records_20261007/b03-pre-guard-original.json
+new file mode 100644
+index 00000000..81f52028
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/b03-pre-guard-original.json
+@@ -0,0 +1,424 @@
++[
++  {
++    "company": "salesforce",
++    "seconds": 3.8092311669606715,
++    "result": {
++      "company_id": "salesforce",
++      "metric_id": "B03",
++      "period_start": "2025-02-01",
++      "period_end": "2026-01-31",
++      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
++      "applicability": "APPLICABLE",
++      "quality": "EXACT",
++      "publication": "PUBLISHED",
++      "reason_code": "PASS",
++      "value": "0.2295243829018663455749548465",
++      "unit": "ratio",
++      "trace_id": "sha256:ae47b010a5ad41aeea64a4a39500ed9c823f0669c4d73c86dfa6b549d802c5ab",
++      "record_type": "METRIC_RESULT",
++      "result_id": "sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120"
++    },
++    "observations": [
++      {
++        "semantic_role": "revenue",
++        "metric_id": "B01",
++        "company_id": "salesforce",
++        "period_start": "2025-02-01",
++        "period_end": "2026-01-31",
++        "scope": {
++          "entity_scope": "registrant",
++          "period_basis": "source_annual_duration"
++        },
++        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++        "value": "41525000000",
++        "unit": "USD",
++        "source_binding": {
++          "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
++          "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
++          "accession": "0001108524-26-000060",
++          "document_name": "CIK0001108524.json",
++          "source_role": "companyfacts",
++          "entity": "1108524",
++          "frame": "CY2025",
++          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
++          "duration_days": 365,
++          "fact_id": "fact:sha256:b2d081c30eaf3a3ae54645977e90b3b2319ea862047448c822660e532d4eb683",
++          "filed": "2026-03-02",
++          "fiscal_period": "FY",
++          "form": "10-K"
++        },
++        "record_type": "VERIFIED_OBSERVATION",
++        "observation_id": "sha256:abe7e36b73f7f0d0f4269680e75b5147fb55e79a1f4019d01bb2591d3f16a9b0",
++        "quality": "EXACT",
++        "approval_effect_hash": ""
++      },
++      {
++        "semantic_role": "operating_income",
++        "metric_id": "B03",
++        "company_id": "salesforce",
++        "period_start": "2025-02-01",
++        "period_end": "2026-01-31",
++        "scope": {
++          "entity_scope": "registrant",
++          "period_basis": "source_annual_duration"
++        },
++        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++        "value": "8331000000",
++        "unit": "USD",
++        "source_binding": {
++          "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
++          "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
++          "accession": "0001108524-26-000060",
++          "document_name": "CIK0001108524.json",
++          "source_role": "companyfacts",
++          "entity": "1108524",
++          "frame": "CY2025",
++          "concept": "us-gaap:OperatingIncomeLoss",
++          "duration_days": 365,
++          "fact_id": "fact:sha256:9635bbaa2449aa193b5cfab52155dd1d5ef6eed717b1eb6d73a8d4db25dc531c",
++          "filed": "2026-03-02",
++          "fiscal_period": "FY",
++          "form": "10-K"
++        },
++        "record_type": "VERIFIED_OBSERVATION",
++        "observation_id": "sha256:2eb1734f0ef059ede1e334a26129b615e5e991ae4601ccd5e041d7f21dcfbb69",
++        "quality": "EXACT",
++        "approval_effect_hash": ""
++      },
++      {
++        "semantic_role": "depreciation_and_amortization",
++        "metric_id": "B03",
++        "company_id": "salesforce",
++        "period_start": "2025-02-01",
++        "period_end": "2026-01-31",
++        "scope": {
++          "entity_scope": "registrant",
++          "period_basis": "source_annual_duration"
++        },
++        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++        "value": "1200000000",
++        "unit": "USD",
++        "source_binding": {
++          "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
++          "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
++          "accession": "0001108524-26-000060",
++          "document_name": "CIK0001108524.json",
++          "source_role": "companyfacts",
++          "entity": "1108524",
++          "frame": "CY2025",
++          "concept": "us-gaap:DepreciationDepletionAndAmortization",
++          "duration_days": 365,
++          "fact_id": "fact:sha256:211afc4f7b48a20db3b308fed6609b768a315525f68e9cf8c0223b41c1b3930e",
++          "filed": "2026-03-02",
++          "fiscal_period": "FY",
++          "form": "10-K"
++        },
++        "record_type": "VERIFIED_OBSERVATION",
++        "observation_id": "sha256:62fb59655d47297fc660c1450abaf90ba3d4941c73f89f022337374081ed57fa",
++        "quality": "EXACT",
++        "approval_effect_hash": ""
++      }
++    ],
++    "selection": {
++      "source_candidate_count": 18,
++      "selected_fact_ids": [
++        "fact:sha256:b2d081c30eaf3a3ae54645977e90b3b2319ea862047448c822660e532d4eb683",
++        "fact:sha256:9635bbaa2449aa193b5cfab52155dd1d5ef6eed717b1eb6d73a8d4db25dc531c",
++        "fact:sha256:211afc4f7b48a20db3b308fed6609b768a315525f68e9cf8c0223b41c1b3930e"
++      ],
++      "source_reported_periods": [
++        [
++          "2023-02-01",
++          "2024-01-31"
++        ],
++        [
++          "2024-02-01",
++          "2025-01-31"
++        ],
++        [
++          "2025-02-01",
++          "2026-01-31"
++        ]
++      ],
++      "reason_code": "PASS"
++    },
++    "period": {
++      "fiscal_year": 2026,
++      "period_start": "2025-02-01",
++      "period_end": "2026-01-31"
++    },
++    "source_proofs": [
++      {
++        "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
++        "accession": "",
++        "document_name": "CIK0001108524.json",
++        "content_sha256": "fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911",
++        "request_body_sha256": "fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911",
++        "request_body_size": 156365,
++        "request_headers_repo_relative_path": "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json.284a53ed4a1b9f7c0e8eac4efe1115117a8d818134de8fa11942412b52606dc6.headers.json",
++        "request_headers_sha256": "284a53ed4a1b9f7c0e8eac4efe1115117a8d818134de8fa11942412b52606dc6",
++        "request_headers_size": 736,
++        "request_locator_kind": "IMMUTABLE_ATTEMPT",
++        "request_repo_relative_path": "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json",
++        "request_attempt_id": "request:attempt:707d67a40b04183d948b0c9918eedef55fccd995a3e9bbfe46bcb588d6bdb745"
++      },
++      {
++        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
++        "accession": "0001108524-26-000060",
++        "document_name": "crm-20260131.htm",
++        "content_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
++        "request_body_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
++        "request_body_size": 2570278,
++        "request_headers_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm.b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb.headers.json",
++        "request_headers_sha256": "b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb",
++        "request_headers_size": 1087,
++        "request_locator_kind": "IMMUTABLE_ATTEMPT",
++        "request_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
++        "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
++      },
++      {
++        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
++        "accession": "0001108524-26-000060",
++        "document_name": "CIK0001108524.json",
++        "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
++        "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
++        "request_body_size": 4664726,
++        "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
++        "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
++        "request_headers_size": 707,
++        "request_locator_kind": "IMMUTABLE_ATTEMPT",
++        "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
++        "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
++      }
++    ]
++  },
++  {
++    "company": "marriott_international",
++    "seconds": 3.150067332899198,
++    "result": {
++      "company_id": "marriott_international",
++      "metric_id": "B03",
++      "period_start": "2025-01-01",
++      "period_end": "2025-12-31",
++      "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++      "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
++      "applicability": "APPLICABLE",
++      "quality": "EXACT",
++      "publication": "PUBLISHED",
++      "reason_code": "PASS",
++      "value": "0.1756281982738868097456656229",
++      "unit": "ratio",
++      "trace_id": "sha256:3275ed7c3df1da60a68258e4834dcf29b2ae38b4e26f534cdd65d063d85823d0",
++      "record_type": "METRIC_RESULT",
++      "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a"
++    },
++    "observations": [
++      {
++        "semantic_role": "revenue",
++        "metric_id": "B01",
++        "company_id": "marriott_international",
++        "period_start": "2025-01-01",
++        "period_end": "2025-12-31",
++        "scope": {
++          "entity_scope": "registrant",
++          "period_basis": "source_annual_duration"
++        },
++        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++        "value": "26186000000",
++        "unit": "USD",
++        "source_binding": {
++          "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
++          "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
++          "accession": "0001048286-26-000007",
++          "document_name": "CIK0001048286.json",
++          "source_role": "companyfacts",
++          "entity": "1048286",
++          "frame": "CY2025",
++          "concept": "us-gaap:Revenues",
++          "duration_days": 365,
++          "fact_id": "fact:sha256:640d9a21651aece0a442d56ed33584b1de816baa0a4cbeb0b717c112ca0c878a",
++          "filed": "2026-02-10",
++          "fiscal_period": "FY",
++          "form": "10-K"
++        },
++        "record_type": "VERIFIED_OBSERVATION",
++        "observation_id": "sha256:0b00e1e61c820d1f378f9b01696effec9ec41479921ba806e4c3a295be84fbfe",
++        "quality": "EXACT",
++        "approval_effect_hash": ""
++      },
++      {
++        "semantic_role": "operating_income",
++        "metric_id": "B03",
++        "company_id": "marriott_international",
++        "period_start": "2025-01-01",
++        "period_end": "2025-12-31",
++        "scope": {
++          "entity_scope": "registrant",
++          "period_basis": "source_annual_duration"
++        },
++        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++        "value": "4141000000",
++        "unit": "USD",
++        "source_binding": {
++          "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
++          "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
++          "accession": "0001048286-26-000007",
++          "document_name": "CIK0001048286.json",
++          "source_role": "companyfacts",
++          "entity": "1048286",
++          "frame": "CY2025",
++          "concept": "us-gaap:OperatingIncomeLoss",
++          "duration_days": 365,
++          "fact_id": "fact:sha256:79f30d07ac38870a6a9e0311fa4c719f86df495b14dcc8305d482bd0fa95c593",
++          "filed": "2026-02-10",
++          "fiscal_period": "FY",
++          "form": "10-K"
++        },
++        "record_type": "VERIFIED_OBSERVATION",
++        "observation_id": "sha256:bec702bc119c0cae7998b709ffda90f6d32c64c546186652c1ad92b8b336f3d0",
++        "quality": "EXACT",
++        "approval_effect_hash": ""
++      },
++      {
++        "semantic_role": "depreciation",
++        "metric_id": "B03",
++        "company_id": "marriott_international",
++        "period_start": "2025-01-01",
++        "period_end": "2025-12-31",
++        "scope": {
++          "entity_scope": "registrant",
++          "period_basis": "source_annual_duration"
++        },
++        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++        "value": "145000000",
++        "unit": "USD",
++        "source_binding": {
++          "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
++          "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
++          "accession": "0001048286-26-000007",
++          "document_name": "CIK0001048286.json",
++          "source_role": "companyfacts",
++          "entity": "1048286",
++          "frame": "CY2025",
++          "concept": "us-gaap:Depreciation",
++          "duration_days": 365,
++          "fact_id": "fact:sha256:7f1dae153dae374c696711307891d4411e2e663aecab0535a60afb94f67ff554",
++          "filed": "2026-02-10",
++          "fiscal_period": "FY",
++          "form": "10-K"
++        },
++        "record_type": "VERIFIED_OBSERVATION",
++        "observation_id": "sha256:81bfe9e4b10558c6eaf3ce670485d06fd4e8bb3fb85c8e47750cfc538442cac2",
++        "quality": "EXACT",
++        "approval_effect_hash": ""
++      },
++      {
++        "semantic_role": "amortization",
++        "metric_id": "B03",
++        "company_id": "marriott_international",
++        "period_start": "2025-01-01",
++        "period_end": "2025-12-31",
++        "scope": {
++          "entity_scope": "registrant",
++          "period_basis": "source_annual_duration"
++        },
++        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
++        "value": "313000000",
++        "unit": "USD",
++        "source_binding": {
++          "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
++          "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
++          "accession": "0001048286-26-000007",
++          "document_name": "CIK0001048286.json",
++          "source_role": "companyfacts",
++          "entity": "1048286",
++          "frame": "CY2025",
++          "concept": "us-gaap:AmortizationOfIntangibleAssets",
++          "duration_days": 365,
++          "fact_id": "fact:sha256:dc2d19d98282f8878b0c781a8e3e0153827301adcc5661a55a943b5999c23b9c",
++          "filed": "2026-02-10",
++          "fiscal_period": "FY",
++          "form": "10-K"
++        },
++        "record_type": "VERIFIED_OBSERVATION",
++        "observation_id": "sha256:796ca10a22a381c9008a9498200ab8ae16c3f45947ec4aaed2ae3ced1630268c",
++        "quality": "EXACT",
++        "approval_effect_hash": ""
++      }
++    ],
++    "selection": {
++      "source_candidate_count": 21,
++      "selected_fact_ids": [
++        "fact:sha256:640d9a21651aece0a442d56ed33584b1de816baa0a4cbeb0b717c112ca0c878a",
++        "fact:sha256:79f30d07ac38870a6a9e0311fa4c719f86df495b14dcc8305d482bd0fa95c593",
++        "fact:sha256:7f1dae153dae374c696711307891d4411e2e663aecab0535a60afb94f67ff554",
++        "fact:sha256:dc2d19d98282f8878b0c781a8e3e0153827301adcc5661a55a943b5999c23b9c"
++      ],
++      "source_reported_periods": [
++        [
++          "2023-01-01",
++          "2023-12-31"
++        ],
++        [
++          "2024-01-01",
++          "2024-12-31"
++        ],
++        [
++          "2025-01-01",
++          "2025-12-31"
++        ]
++      ],
++      "reason_code": "PASS"
++    },
++    "period": {
++      "fiscal_year": 2025,
++      "period_start": "2025-01-01",
++      "period_end": "2025-12-31"
++    },
++    "source_proofs": [
++      {
++        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
++        "accession": "",
++        "document_name": "CIK0001048286.json",
++        "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
++        "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
++        "request_body_size": 147714,
++        "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
++        "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
++        "request_headers_size": 736,
++        "request_locator_kind": "IMMUTABLE_ATTEMPT",
++        "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
++        "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
++      },
++      {
++        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
++        "accession": "0001048286-26-000007",
++        "document_name": "mar-20251231.htm",
++        "content_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
++        "request_body_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
++        "request_body_size": 2048661,
++        "request_headers_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm.d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283.headers.json",
++        "request_headers_sha256": "d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283",
++        "request_headers_size": 1087,
++        "request_locator_kind": "IMMUTABLE_ATTEMPT",
++        "request_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
++        "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
++      },
++      {
++        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
++        "accession": "0001048286-26-000007",
++        "document_name": "CIK0001048286.json",
++        "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
++        "request_body_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
++        "request_body_size": 3269111,
++        "request_headers_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d.headers.json",
++        "request_headers_sha256": "387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d",
++        "request_headers_size": 707,
++        "request_locator_kind": "IMMUTABLE_ATTEMPT",
++        "request_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
++        "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
++      }
++    ]
++  }
++]
+diff --git a/docs/evidence/issue28_company_records_20261007/b03-second-reader-assumption-error.log b/docs/evidence/issue28_company_records_20261007/b03-second-reader-assumption-error.log
+new file mode 100644
+index 00000000..a446bb9c
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/b03-second-reader-assumption-error.log
+@@ -0,0 +1,22 @@
++======================================================================
++ERROR: test_marriott_composition_458m_and_135m_revenue_deduction_excluded (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_marriott_composition_458m_and_135m_revenue_deduction_excluded)
++----------------------------------------------------------------------
++Traceback (most recent call last):
++  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 106, in test_marriott_composition_458m_and_135m_revenue_deduction_excluded
++    saved=self.saved['marriott_international'];records=[json.loads(s) for s in saved['files']['records.jsonl'].decode().splitlines()]
++                                                                               ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
++KeyError: 'records.jsonl'
++
++======================================================================
++ERROR: test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01 (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01)
++----------------------------------------------------------------------
++Traceback (most recent call last):
++  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_b03_current_input_scope.py", line 119, in test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01
++    records=[json.loads(s) for s in saved['files']['records.jsonl'].decode().splitlines()]
++                                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
++KeyError: 'records.jsonl'
++
++----------------------------------------------------------------------
++Ran 8 tests in 8.010s
++
++FAILED (errors=2)
+diff --git a/docs/evidence/issue28_company_records_20261007/b03-source-narrow-subtotal-quote.json b/docs/evidence/issue28_company_records_20261007/b03-source-narrow-subtotal-quote.json
+new file mode 100644
+index 00000000..bf9b384d
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/b03-source-narrow-subtotal-quote.json
+@@ -0,0 +1,6 @@
++{
++  "source_file": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
++  "sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
++  "quote_excerpt": "4.75pt\">Depreciation and amortization of fixed assets totaled $1.2 billion, $1.0 billion and $1.1 billion during fiscal 2026, 2025 and 2024, respectively.Other Balance Sheet AccountsAccounts payable, accrued expenses and other liabilities as of January 31, 2026 included approximately $3.3 billion of accrued compensation as compared to $2.8 billion as of January 31, 2025.6. Leases and Other CommitmentsLeases<div style=\"margin-top:5pt;text",
++  "method": "direct actual primary-text excerpt, no model or peer answer used as original"
++}
+diff --git a/docs/evidence/issue28_company_records_20261007/b03-tested-delta.json b/docs/evidence/issue28_company_records_20261007/b03-tested-delta.json
+new file mode 100644
+index 00000000..e38ccc6f
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/b03-tested-delta.json
+@@ -0,0 +1,32 @@
++{
++  "tested_base": "4e2f4b2dddabd0ab2847a583e5acf457282c2b95",
++  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
++  "source_deltas": {
++    ".github/workflows/company-current-records.yml": "5342993752270b7cb0ec2e04d2962e79cdaf98f19ec8ff2390346bd5872371e9",
++    "docs/evidence/issue28_continuous/known_result_defects.json": "4195ed46ded753b89ef4e0faf790cd3016d4daff284e8b6c9ae7f5e4fef133b2",
++    "scripts/vnext/annual_amendment_scope.py": "bd70d270d9747ac2d8ba72987b77c54c752c450847280174e8e56d2bd2560323",
++    "scripts/vnext/instant_balance_amendment.py": "e0b84318ba14393301caa623c9caa31ea3f301c48ddcf500e06368ec71eb180a",
++    "scripts/vnext/normal_candidates.py": "c30098ed5190882f8db91e5b315c01ab9b8b8cc7a9e7761cf8f362d4630d4fca",
++    "scripts/vnext/normal_companyfacts_results.py": "9b7fb613e75dd981a0a791a741253ce481bd617224c659e21f104450a9edb2f2",
++    "scripts/vnext/normal_governance_input.py": "e6b4e3f2b5e80ac4fa63346e56faab4ab249443de3eb3f37fccf8ee30af3e8d4",
++    "scripts/vnext/normal_run_inputs.py": "7c71a64181a320112725d0f4c0cb5f0f8435a4c37d2e6c3a48496394cc6212a6",
++    "scripts/vnext/normal_zero_ai_results.py": "0d320851e12ee54bf7ea5360015aec75e80daf4e93902dc824ec93450d2d1e86",
++    "scripts/vnext/ordinary_current_update.py": "6c95ffc161f14fd494bf305bad9301c2627a19cffcebbed9cf8d43574fcf956a",
++    "scripts/vnext/ordinary_income_input.py": "7c78e5bb8448fd0783207d0de71a69421e05807936c1273aeb5da653577dbf60",
++    "scripts/vnext/ordinary_saved_result.py": "71c2fc6f71a1d03f002feecf7beb29a905f85949ec93fa206c2987f7449788a1",
++    "tests/vnext/test_separate_rule_root.py": "28d26391cbd42d76246988de6cf06b7595e28a1f5758861e4e39e2b903a688d9",
++    "scripts/vnext/ordinary_da_scope_v1.py": "784000b23e9075d35bd2752300fd60bb36b624dadce44b035eefa8ca9b5f626e",
++    "scripts/vnext/ordinary_b03_input_scope.py": "f6d5ba5b01be13f66f6ec642e198f5c001d7cd7d36753c1ba9aaebf3f756cf9a",
++    "tests/vnext/test_b03_current_input_scope.py": "12f0a611b6bb4ba213cb649db33b49d68fd5aede5427f4f37f6041ec920e0e9a"
++  },
++  "peer_sha": "d7d5938ecd92929baa1feff308ca371a87d5a2bc",
++  "peer_file": "scripts/vnext/historical_da_scope_candidate.py",
++  "consumer_file": "scripts/vnext/ordinary_da_scope_v1.py",
++  "consumer_copy_bytes_equal": true,
++  "tests": {
++    "finite": 9,
++    "finite_seconds": 8.563,
++    "combined": 116,
++    "combined_seconds": 70.275
++  }
++}
+diff --git a/docs/evidence/issue28_company_records_20261007/resolved-root-alias-test.log b/docs/evidence/issue28_company_records_20261007/resolved-root-alias-test.log
+new file mode 100644
+index 00000000..fd788e86
+--- /dev/null
++++ b/docs/evidence/issue28_company_records_20261007/resolved-root-alias-test.log
+@@ -0,0 +1,4 @@
++----------------------------------------------------------------------
++Ran 1 test in 14.136s
++
++OK
+diff --git a/docs/evidence/issue28_continuous/known_result_defects.json b/docs/evidence/issue28_continuous/known_result_defects.json
+index e983ea3c..0e4538d2 100644
+--- a/docs/evidence/issue28_continuous/known_result_defects.json
++++ b/docs/evidence/issue28_continuous/known_result_defects.json
+@@ -1117,10 +1117,55 @@
+       "summary": "Actual installedcompany entry reproduces missingJamesDimon and Stock/Executivecommittee names on the same original. Mechanical source/Run/CSV success is not complete C02. Only this exact result/version is confirmed.",
+       "own_evidence": "docs/evidence/issue28_continuous/company-entry-c02-integration-20261005/first-real-company-path-result.json",
+       "current_credit": "WITHDRAWN_EXACT_COMPANY_RESULT",
+       "repair_state": "C02_SHARED_SELECTION_CORE_OWNER47; ordinary receiving/native developer successor pending full integration",
+       "original_records_preserved": true
++    },
++    {
++      "defect_id": "B03_SALESFORCE_FY2026_CURRENT_SOURCE_FIRST_CONCEPT_SUBTOTAL",
++      "metric_id": "B03",
++      "company_id": "salesforce",
++      "period_end": "2026-01-31",
++      "result_id": "sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120",
++      "repair_state": "EXPLICIT_ORDINARY_SCOPE_ADAPTER_PENDING_FINAL_VALIDATION",
++      "current_credit": "WITHDRAWN_CONFIRMED_FIXED_ASSET_SUBTOTAL_USED_AS_TOTAL",
++      "summary": "The original primary labels 1.2bn as fixed-asset D&A, while the approved B03 requires complete D&A and excludes impairment. The larger 3.631bn cash-flow amount is not automatically substituted.",
++      "peer_origin": {
++        "commit": "d7d5938ecd92929baa1feff308ca371a87d5a2bc",
++        "defect_id": "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL",
++        "register_path": "docs/evidence/issue47_history/known_result_defects.json"
++      },
++      "evidence": [
++        "docs/evidence/issue28_company_records_20261007/b03-pre-guard-original.json",
++        "docs/evidence/issue28_company_records_20261007/b03-finite-existing-index-inspection.json"
++      ],
++      "released": [],
++      "original_record_retained": true,
++      "scope_limit": "Actual current normal API identity and one actual archived index/evidence identity only; no claim of all historical scans or current 390 acceptance."
++    },
++    {
++      "defect_id": "B03_SALESFORCE_FY2026_ARCHIVED_RESULT_FIXED_ASSET_SUBTOTAL",
++      "metric_id": "B03",
++      "company_id": "salesforce",
++      "period_end": "2026-01-31",
++      "result_id": "sha256:e13a5d8c1d2764bbd47392cab62777d7a318aa76e653ecd7277c2270eac41acf",
++      "repair_state": "EXPLICIT_ORDINARY_SCOPE_ADAPTER_PENDING_FINAL_VALIDATION",
++      "current_credit": "WITHDRAWN_CONFIRMED_FIXED_ASSET_SUBTOTAL_USED_AS_TOTAL",
++      "summary": "The original primary labels 1.2bn as fixed-asset D&A, while the approved B03 requires complete D&A and excludes impairment. The larger 3.631bn cash-flow amount is not automatically substituted.",
++      "peer_origin": {
++        "commit": "d7d5938ecd92929baa1feff308ca371a87d5a2bc",
++        "defect_id": "B03_SALESFORCE_2026_CHAIN_TAKES_FIXED_ASSET_DEPRECIATION_AS_TOTAL",
++        "register_path": "docs/evidence/issue47_history/known_result_defects.json"
++      },
++      "evidence": [
++        "docs/evidence/issue28_company_records_20261007/b03-pre-guard-original.json",
++        "docs/evidence/issue28_company_records_20261007/b03-finite-existing-index-inspection.json"
++      ],
++      "released": [],
++      "original_record_retained": true,
++      "scope_limit": "Actual current normal API identity and one actual archived index/evidence identity only; no claim of all historical scans or current 390 acceptance.",
++      "run_id": "run:cutover:6e9c015ffb9418a7f85175720dbe1aa768a910175fb6be26084a596d9b8acff5"
+     }
+   ],
+   "purpose": "Current company read: precise known defects from this Issue; no copied result count or content acceptance summary.",
+   "source_register": "https://github.com/wlvh/SEC_metrics/blob/7a5b328b4df55fdbe2a60878832d2ae9b4076b4b/docs/evidence/issue28_continuous/known_result_defects.json"
+ }
+diff --git a/scripts/vnext/annual_amendment_scope.py b/scripts/vnext/annual_amendment_scope.py
+index b7e9e639..460f6a9c 100644
+--- a/scripts/vnext/annual_amendment_scope.py
++++ b/scripts/vnext/annual_amendment_scope.py
+@@ -250,12 +250,12 @@ def inspect_annual_amendment_scope(*, original, amendment, company_id, cik):
+         'source_acquisition_credit':False,'native_run_created':False,'production_authorized':False}
+     body=exact_json_value(body)
+     return {**body,'scope_id':content_hash(value=body)}
+ 
+ 
+-def prepare_saved_amendment_scopes(*, repo_root: Path, company_id: str):
+-    policy_path = resolve_repository_file(repo_root=repo_root, repo_relative_path=POLICY_PATH)
++def prepare_saved_amendment_scopes(*, repo_root: Path, company_id: str, rules_root=None):
++    policy_path = resolve_repository_file(repo_root=repo_root if rules_root is None else Path(rules_root), repo_relative_path=POLICY_PATH)
+     _need(policy_path.read_bytes() == (ROOT/POLICY_PATH).read_bytes()
+           and strict_json_file(path=policy_path) == POLICY,
+           'AMENDMENT_INSTALLED_POLICY_CHANGED')
+     prepared=prepare_saved_annual_input(repo_root=repo_root,company_id=company_id)
+     proofs=list(prepared['source_proofs']);sources=[];records=[]
+@@ -275,19 +275,20 @@ def prepare_saved_amendment_scopes(*, repo_root: Path, company_id: str):
+     return {'prepared_input':prepared,'source_proofs':proofs,'source_admission':admission,'scopes':scopes,
+             'source_records':records,'policy_sha256':sha256_file(path=policy_path),
+             'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
+ 
+ 
+-def prepare_saved_amendment_input(*, repo_root: Path, company_id: str, input_class: str):
++def prepare_saved_amendment_input(*, repo_root: Path, company_id: str, input_class: str, rules_root=None):
+     """Prove a single input property, retaining every original and amendment.
+ 
+     Event-window identity is only a pair of dates. The caller must separately
+     verify subject continuity, event-source coverage and the metric's semantics.
+     This entry does not create a metric result or supply any missing value.
+     """
+     _need(input_class in POLICY['unchanged_input_classes'], 'AMENDMENT_INPUT_CLASS_UNSUPPORTED')
+-    packet = prepare_saved_amendment_scopes(repo_root=repo_root, company_id=company_id)
++    packet = prepare_saved_amendment_scopes(repo_root=repo_root, company_id=company_id,
++        **({} if rules_root is None else {'rules_root':rules_root}))
+     failures = [{'scope_id':scope['scope_id'], 'accession':scope['amendment']['filing']['accessionNumber'],
+                  'classification':scope['classification'], 'issues':scope['issues']}
+                 for scope in packet['scopes'] if input_class not in scope['unchanged_input_classes']]
+     body = {**packet, 'record_type':'ORDINARY_ANNUAL_AMENDMENT_INPUT', 'schema_version':1,
+             'input_class':input_class, 'decision':'WITHHELD' if failures else 'INPUT_PROPERTY_PROVEN',
+diff --git a/scripts/vnext/instant_balance_amendment.py b/scripts/vnext/instant_balance_amendment.py
+index d7d2b696..272de1e3 100644
+--- a/scripts/vnext/instant_balance_amendment.py
++++ b/scripts/vnext/instant_balance_amendment.py
+@@ -138,15 +138,16 @@ def inspect_instant_balance_amendment(*,original,amendment,company_id,cik):
+         'annual_continuity_proven':False,'debt_completeness_proven':False,'metric_result_created':False,
+         'production_authorized':False})
+     return {**body,'instant_scope_id':content_hash(value=body)}
+ 
+ 
+-def prepare_instant_balance_amendment_input(*,repo_root:Path,company_id:str):
+-    path=resolve_repository_file(repo_root=repo_root,repo_relative_path=POLICY_PATH)
++def prepare_instant_balance_amendment_input(*,repo_root:Path,company_id:str,rules_root=None):
++    path=resolve_repository_file(repo_root=repo_root if rules_root is None else Path(rules_root),repo_relative_path=POLICY_PATH)
+     _need(path.read_bytes()==(ROOT/POLICY_PATH).read_bytes() and strict_json_file(path=path)==POLICY,
+           'INSTANT_AMENDMENT_INSTALLED_POLICY_CHANGED')
+-    packet=prepare_saved_amendment_scopes(repo_root=repo_root,company_id=company_id)
++    packet=prepare_saved_amendment_scopes(repo_root=repo_root,company_id=company_id,
++        **({} if rules_root is None else {'rules_root':rules_root}))
+     blobs={r['raw_asset_id']:r for r in packet['source_records'] if r['record_type']=='RAW_BLOB'}
+     checks=[]
+     for scope in packet['scopes']:
+         arguments={}
+         for role in ('original','amendment'):
+diff --git a/scripts/vnext/normal_candidates.py b/scripts/vnext/normal_candidates.py
+index acd87b77..9f87e88b 100644
+--- a/scripts/vnext/normal_candidates.py
++++ b/scripts/vnext/normal_candidates.py
+@@ -200,28 +200,11 @@ def _governance_resolution(*, data_root, preparation, metric_id):
+             if "SCT_TABLE_NOT_FOUND" not in str(error) and "SCT_TABLE_TITLE" not in str(error):
+                 return blocked("C03_REPORTED_TABLE_UNRESOLVED", failures)
+     return blocked("C03_SUPPORTED_CURRENT_SOURCE_NOT_FOUND", failures)
+ 
+ 
+-def _prepare_b06(*, repo_root, company_id):
+-    from .normal_governance_input import _Sources
+-    from sec_urls import companyfacts_url, submissions_url
+-    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
+-    reader = _Sources(repo_root, company_id, prepared["entity"])
+-    reader.read(submissions_url(cik=int(prepared["entity"])), role="submissions", media_type="application/json")
+-    facts = reader.read(companyfacts_url(cik=int(prepared["entity"])),
+-        accession=prepared["filing"]["accessionNumber"], role="companyfacts", media_type="application/json")
+-    sources = reader.auditor_filing(prepared["filing"])
+-    xml = [s for s in sources if s["raw_blob"]["media_type"] == "application/xml"]
+-    primary = [s for s in sources if s["raw_blob"]["media_type"] == "text/html"]
+-    if len(xml) != 1 or len(primary) != 1:
+-        raise ValueError("B06_NORMAL_ORIGINAL_SOURCE_SET_AMBIGUOUS")
+-    body = {"record_type": "NORMAL_B06_INPUT_BINDING", "prepared_annual_input": prepared,
+-            "source_proofs": [r["proof"] for r in reader.proofs.values()],
+-            "source_sets": reader.file_sets}
+-    return {"input_binding": {**body, "input_binding_id": content_hash(value=body)},
+-            "records": list(reader.records.values()), "facts": facts, "xml": xml[0], "primary": primary[0]}
++from .normal_governance_input import prepare_saved_original_financial_sources as _prepare_b06
+ 
+ 
+ def _b06_resolution(*, data_root, preparation):
+     from . import b06_disclosure_v2 as disclosure
+     from .calculator import withheld_metric_result
+diff --git a/scripts/vnext/normal_companyfacts_results.py b/scripts/vnext/normal_companyfacts_results.py
+index abd479c9..4f799621 100644
+--- a/scripts/vnext/normal_companyfacts_results.py
++++ b/scripts/vnext/normal_companyfacts_results.py
+@@ -122,15 +122,17 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str, r
+     periods, filings = {"current":period, "prior":None}, {"current":prepared["filing"], "prior":None}
+     prior_error = None
+     amendment_input = None;instant_amendment_input = None;common_error = None
+     subject_error = "NORMAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED" if prepared["subject_policy"]["mode"] != "CONTINUOUS_PRIMARY" else None
+     if prepared["amendments"]:
+-        amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,input_class="ORIGINAL_STATEMENT_VALUES")
++        amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,input_class="ORIGINAL_STATEMENT_VALUES",
++            **({} if rules_root is None else {'rules_root':rules_root}))
+         _need(amendment_input["prepared_input"] == prepared.get("original_input",prepared), "NORMAL_AMENDMENT_ORIGINAL_INPUT_DIFFERS")
+         if amendment_input["decision"] != "INPUT_PROPERTY_PROVEN":
+             common_error = "NORMAL_COMPANYFACTS_AMENDMENT_INPUT_SCOPE_UNRESOLVED"
+-            instant_amendment_input = prepare_instant_balance_amendment_input(repo_root=repo_root,company_id=company_id)
++            instant_amendment_input = prepare_instant_balance_amendment_input(repo_root=repo_root,company_id=company_id,
++                **({} if rules_root is None else {'rules_root':rules_root}))
+             _need(instant_amendment_input["prepared_input"] == prepared.get("original_input",prepared),
+                   "NORMAL_INSTANT_AMENDMENT_ORIGINAL_INPUT_DIFFERS")
+     needs_prior = any(metric_is_applicable(applicability=route["applicability"], traits=traits)
+         and any(c["accession_role"] == "prior" for b in route["branches"] for c in b["components"]) for route in routes.values())
+     if needs_prior and not common_error and not subject_error:
+diff --git a/scripts/vnext/normal_governance_input.py b/scripts/vnext/normal_governance_input.py
+index 4d02ce4c..a5bcbfc2 100644
+--- a/scripts/vnext/normal_governance_input.py
++++ b/scripts/vnext/normal_governance_input.py
+@@ -378,5 +378,24 @@ def prepare_saved_governance_input(*, repo_root: Path, company_id: str):
+ def verify_current_governance_preparation(*, repo_root: Path, company_id: str, input_binding):
+     """Re-discover current inputs; historical Run replay instead pins old proofs."""
+     rebuilt = prepare_saved_governance_input(repo_root=repo_root, company_id=company_id)
+     _need(rebuilt["input_binding"] == input_binding, "GOVERNANCE_CURRENT_PREPARATION_CHANGED")
+     return rebuilt
++
++
++def prepare_saved_original_financial_sources(*, repo_root, company_id):
++    from sec_urls import companyfacts_url, submissions_url
++    prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
++    reader = _Sources(repo_root, company_id, prepared["entity"])
++    reader.read(submissions_url(cik=int(prepared["entity"])), role="submissions", media_type="application/json")
++    facts = reader.read(companyfacts_url(cik=int(prepared["entity"])),
++        accession=prepared["filing"]["accessionNumber"], role="companyfacts", media_type="application/json")
++    sources = reader.auditor_filing(prepared["filing"])
++    xml = [s for s in sources if s["raw_blob"]["media_type"] == "application/xml"]
++    primary = [s for s in sources if s["raw_blob"]["media_type"] == "text/html"]
++    if len(xml) != 1 or len(primary) != 1:
++        raise ValueError("B06_NORMAL_ORIGINAL_SOURCE_SET_AMBIGUOUS")
++    body = {"record_type": "NORMAL_B06_INPUT_BINDING", "prepared_annual_input": prepared,
++            "source_proofs": [r["proof"] for r in reader.proofs.values()],
++            "source_sets": reader.file_sets}
++    return {"input_binding": {**body, "input_binding_id": content_hash(value=body)},
++            "records": list(reader.records.values()), "facts": facts, "xml": xml[0], "primary": primary[0]}
+diff --git a/scripts/vnext/normal_run_inputs.py b/scripts/vnext/normal_run_inputs.py
+index 4349f376..7ffa4ce4 100644
+--- a/scripts/vnext/normal_run_inputs.py
++++ b/scripts/vnext/normal_run_inputs.py
+@@ -17,16 +17,18 @@ from .normal_accession_results import resolve_ordinary_accession_metrics
+ def _need(condition, reason):
+     if not condition:
+         raise ValueError(reason)
+ 
+ 
+-def prepare_ordinary_zero_ai_run_input(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None):
++def prepare_ordinary_zero_ai_run_input(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None,
++                                     validate_depreciation_scope=False):
+     specifications = validate_ordinary_spec_files(repo_root=repo_root if rules_root is None else Path(rules_root))
+     _need(metric_id in specifications,"ORDINARY_RUN_METRIC_NOT_IN_ZERO_AI_SET")
+     expected_ids = {metric_id, *specifications[metric_id]["compiled_spec"]["compiled"]["dependencies"]}
+     if metric_id in SUPPORTED_METRICS:
+         component = resolve_ordinary_zero_ai_metric(repo_root=repo_root,company_id=company_id,metric_id=metric_id,
++            **({'validate_depreciation_scope':True} if validate_depreciation_scope else {}),
+             **({} if rules_root is None else {'rules_root':rules_root}))
+         specs = {metric_id:component["compiled_spec"],**component["dependency_specs"]}
+         records = list(component["records"])
+         if metric_id in EVENT_METRICS:
+             records.extend(component["claims"])
+diff --git a/scripts/vnext/normal_zero_ai_results.py b/scripts/vnext/normal_zero_ai_results.py
+index a6c0614f..668d66c6 100644
+--- a/scripts/vnext/normal_zero_ai_results.py
++++ b/scripts/vnext/normal_zero_ai_results.py
+@@ -164,21 +164,22 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period)
+         'company_registry_sha256':sha256_file(path=repo_root/'config/company_registry.csv'),
+         'financial_cross_entity_combination_authorized':False}
+     return all_claims,all_manifests,all_filings,evidence
+ 
+ 
+-def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None):
++def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None,
++                                   validate_depreciation_scope=False):
+     """Derive native records from current saved annual input, without a Run.
+ 
+     No caller fact, period, filing, answer, compiled Spec or source receipt is
+     accepted. Unsupported input returns a source-bound WITHHELD state where an
+     annual coordinate exists; source authenticity/authority errors propagate.
+     """
+     _need(metric_id in SUPPORTED_METRICS, "NORMAL_ZERO_AI_METRIC_NOT_IN_PROTOTYPE")
+     from .ordinary_income_input import IncomeInputError, prepare_current_income_input, verify_income_observations
+     rules = repo_root if rules_root is None else Path(rules_root)
+-    _need(rules_root is None or metric_id=='B01','NORMAL_ZERO_AI_SEPARATE_RULE_ROOT_ROUTE_NOT_READY')
++    _need(rules_root is None or metric_id in {'B01','B03'},'NORMAL_ZERO_AI_SEPARATE_RULE_ROOT_ROUTE_NOT_READY')
+     authority = _authority(rules)
+     if rules_root is not None:
+         from .company_registry import _registry_rows
+         source_row=next(r for r in _registry_rows(repo_root=repo_root) if r['company_id']==company_id)
+         rule_row=next(r for r in _registry_rows(repo_root=rules) if r['company_id']==company_id)
+@@ -196,19 +197,20 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
+         period = event_target_period(target_period=period,continuity_status="successor_predecessor",catalog=projection_catalog)
+         registered_scope = {"registered_ciks":repository_company_ciks(repo_root=repo_root,company_id=company_id),
+             "window":period,"status":"SOURCE_RECONSTRUCTION_PENDING","financial_cross_entity_combination_authorized":False}
+     reader = _Sources(repo_root, company_id, prepared["entity"])
+     inventory = reader.read(submissions_url(cik=int(prepared["entity"])), role="sec_submissions_inventory", media_type="application/json")
+-    reader.primary(prepared["filing"])
++    primary_source = reader.primary(prepared["filing"])
+     facts_source = reader.read(companyfacts_url(cik=int(prepared["entity"])), accession=prepared["filing"]["accessionNumber"],
+         role="companyfacts", media_type="application/json")
+     traits = repository_company_traits(repo_root=rules, company_id=company_id)
+     claims, source_sets, observations, filing_rows, selection = [], [], [], [prepared["filing"]], {}
+     dependency_specs, dependency_records = {}, []
+     amendment_input = None
+     income_input = None
+     income_observation_checks = []
++    depreciation_scope = None
+     if metric_id in {"B01", "B03"}:
+         spec_path = B01_SPEC_PATH if metric_id == "B01" else B03_SPEC_PATH
+         if metric_id == "B03":
+             dependency_specs["B01"] = compile_spec_file(path=rules / B01_SPEC_PATH, dependency_specs={})
+         spec_origin = {"spec_path":spec_path}
+@@ -222,20 +224,22 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
+                  "shared_claim_group_id":catalog["routes"][metric_id]["shared_claim_group_id"]}
+     target = {"company_id":company_id, "period_start":period["period_start"], "period_end":period["period_end"],
+         "scope":scope, "scope_key":scope_key(scope=scope)}
+     try:
+         if metric_id in {"B01","B03"} and prepared["subject_policy"]["mode"] == "SUCCESSOR_REGISTRANT_ONLY":
+-            income_input = prepare_current_income_input(repo_root=repo_root,company_id=company_id)
++            income_input = prepare_current_income_input(repo_root=repo_root,company_id=company_id,
++                **({} if rules_root is None else {'rules_root':rules_root}))
+             period = income_input["statement_period"]
+             target = {**target,"period_start":period["period_start"],"period_end":period["period_end"]}
+             amendment_input = {**income_input["amendment_input"],"decision":"INPUT_PROPERTY_PROVEN",
+                 "input_class":"CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES","current_income_checks":income_input["amendment_checks"]}
+         _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY" or registered_event or income_input is not None,
+               "NORMAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
+         if prepared["amendments"] and income_input is None:
+             amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,
+-                input_class="ORIGINAL_STATEMENT_VALUES" if metric_id in {"B01","B03"} else "FISCAL_EVENT_WINDOW")
++                input_class="ORIGINAL_STATEMENT_VALUES" if metric_id in {"B01","B03"} else "FISCAL_EVENT_WINDOW",
++                **({} if rules_root is None else {'rules_root':rules_root}))
+             _need(amendment_input["prepared_input"] == prepared.get("original_input",prepared),
+                   "NORMAL_AMENDMENT_ORIGINAL_INPUT_DIFFERS", "SOURCE_INTEGRITY_ERROR")
+             _need(amendment_input["decision"] == "INPUT_PROPERTY_PROVEN", "NORMAL_AMENDMENT_INPUT_SCOPE_UNRESOLVED")
+             filing_rows.extend(s["amendment"]["filing"] for s in amendment_input["scopes"])
+         if metric_id in {"B01", "B03"}:
+@@ -255,10 +259,45 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
+                     target=execution_target, company_traits=traits, structured_facts=facts, verified_observations=[])
+                 dependency_records.extend([*dep_observations, dep_trace, dep_result])
+                 reusable.extend(dep_observations)
+             result, trace, observations = calculate_metric(compiled_spec=spec,
+                 target=execution_target, company_traits=traits, structured_facts=facts, verified_observations=reusable)
++            if metric_id == 'B03' and validate_depreciation_scope and result['publication'] == 'PUBLISHED' and result['value'] is not None:
++                from .ordinary_b03_input_scope import inspect_depreciation_input, DIRECT, WITHHELD_REASON
++                from .b03_contract_amortization_scope import assess_current_b03_scope
++                try:
++                    depreciation_scope = inspect_depreciation_input(raw_bytes=primary_source['raw_bytes'],
++                        entity=prepared['entity'], period=period, observations=observations)
++                    if depreciation_scope['status'] == 'RETAKE':
++                        original_decision = depreciation_scope
++                        disproved = set(DIRECT) - {depreciation_scope['concept']}
++                        eligible = [fact for fact in facts if fact['concept'].split(':')[-1] not in disproved]
++                        result, trace, observations = calculate_metric(compiled_spec=spec,
++                            target=execution_target, company_traits=traits, structured_facts=eligible,
++                            verified_observations=reusable)
++                        depreciation_scope = inspect_depreciation_input(raw_bytes=primary_source['raw_bytes'],
++                            entity=prepared['entity'], period=period, observations=observations)
++                        depreciation_scope['retake_decision'] = original_decision
++                        if depreciation_scope['status'] != 'KEEP':
++                            depreciation_scope.update(status='WITHHOLD', reason_code=WITHHELD_REASON,
++                                why='ONE_APPROVED_RETAKE_DID_NOT_PROVE_PRIMARY_QUANTITY')
++                    if depreciation_scope['status'] == 'KEEP':
++                        existing = assess_current_b03_scope(case={'primary_metric_id':'B03',
++                            'results':{'B03':result}, 'observations':observations, 'target_period':period,
++                            'source_proofs':prepared['source_proofs']}, data_root=repo_root)
++                        depreciation_scope['existing_scope_check'] = existing
++                        if existing['blocked']:
++                            depreciation_scope.update(status='WITHHOLD', reason_code=WITHHELD_REASON,
++                                why=existing['status'])
++                except ValueError as error:
++                    depreciation_scope = {'status':'WITHHOLD','reason_code':WITHHELD_REASON,
++                        'why':str(error),'error_type':type(error).__name__,
++                        'category':'SOURCE_SCOPE_OR_IMPLEMENTATION_UNRESOLVED'}
++                if depreciation_scope['status'] == 'WITHHOLD':
++                    depreciation_scope['rejected_observations'] = observations
++                    result, trace = withheld_metric_result(compiled_spec=spec, target=target, reason_code=WITHHELD_REASON)
++                    observations = []
+             if income_input is not None:
+                 income_observation_checks = verify_income_observations(income_input,observations)
+             selection = {"source_candidate_count":len(facts), "selected_fact_ids":[o["source_binding"]["fact_id"] for o in observations],
+                 "source_reported_periods":sorted({(f["period_start"],f["period_end"]) for f in facts}), "reason_code":result["reason_code"]}
+         else:
+@@ -287,10 +326,12 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
+         reason = str(error)
+         category = getattr(error, "category", "SOURCE_ACCESS_FAILED" if reason.startswith("LATEST_SOURCE_REQUEST_FAILED") else "SOURCE_INTEGRITY_ERROR")
+         result, trace = withheld_metric_result(compiled_spec=spec, target=target, reason_code="NORMAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED")
+         observations = []
+         selection = {**selection, "reason_code":result["reason_code"], "reason":reason, "category":category}
++    if depreciation_scope is not None:
++        selection['depreciation_scope'] = depreciation_scope
+     proofs = prepared["source_proofs"] + [entry["proof"] for entry in reader.proofs.values()]
+     if amendment_input is not None: proofs.extend(amendment_input["source_proofs"])
+     if income_input is not None: proofs.extend(income_input["source_proofs"])
+     proofs = list({content_hash(value=p):p for p in proofs}.values())
+     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=proofs)
+diff --git a/scripts/vnext/ordinary_b03_input_scope.py b/scripts/vnext/ordinary_b03_input_scope.py
+new file mode 100644
+index 00000000..03ded7de
+--- /dev/null
++++ b/scripts/vnext/ordinary_b03_input_scope.py
+@@ -0,0 +1,75 @@
++"""Bind the shared D&A comparison to current primary facts and existing checks.
++
++The comparison implementation is the unchanged versioned ordinary copy of
++Issue47 d7d5938's historical_da_scope_candidate. This adapter checks actual
++CIK, namespace, period and units; it does not add a new English classifier or
++change the approved EBITDA formula. A KEEP is a limited input check, not an
++independent certificate that all business scope is complete.
++"""
++from decimal import Decimal
++import re
++
++from .ordinary_da_scope_v1 import DIRECT, COMPOSITION, WITHHELD_REASON, agree, da_scope_answer
++from .deterministic_router import parse_accession_xbrl_source, _numeric_xbrl_value
++from .text_results_v2 import _ReportedFactMetadata, _verified_context
++from .b03_contract_amortization_scope import _selected_original_facts
++from .canonical import sha256_bytes
++
++
++def inspect_depreciation_input(*, raw_bytes, entity, period, observations):
++    parsed = parse_accession_xbrl_source(raw_bytes=raw_bytes)
++    metadata = _ReportedFactMetadata()
++    metadata.feed(raw_bytes.decode('utf-8-sig')); metadata.close()
++    if metadata.ordinal != len(parsed.facts):
++        raise ValueError('B03_SCOPE_NATIVE_STREAM_CHANGED')
++    candidates = []
++    for fact in parsed.facts:
++        info = metadata.facts[fact['ordinal']]
++        uri, concept = info['concept']
++        if concept not in DIRECT + COMPOSITION:
++            continue
++        context = parsed.contexts[fact['context_ref']]
++        if (not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}', uri)
++                or context['period_start'] != period['period_start']
++                or context['period_end'] != period['period_end']
++                or context['dimensions'] or context['typed_dimension_count']
++                or not str(context['entity_identifier']).isdigit()
++                or int(context['entity_identifier']) != int(entity)
++                or metadata.units.get(fact['unit_ref']) != {
++                    'measures': [('http://www.xbrl.org/2003/iso4217', 'USD')],
++                    'divided': False}):
++            continue
++        context_proof = _verified_context(native={**context,'dimensions':dict(context['dimensions'])},metadata=metadata)
++        candidates.append({'concept':concept, 'fact_ordinal':fact['ordinal'],
++            'context_ref':fact['context_ref'], 'unit_ref':fact['unit_ref'],
++            'value':str(_numeric_xbrl_value(text=fact['text'],scale=fact['scale'],sign=fact['sign'])),
++            'decimals':info['attrs'].get('decimals'),'context_proof':context_proof})
++    answer = da_scope_answer(facts=candidates)
++    direct = [o for o in observations if o['semantic_role']=='depreciation_and_amortization']
++    composed = [o for o in observations if o['semantic_role'] in ('depreciation','amortization')]
++    chain = ({'concept':direct[0]['source_binding']['concept'].split(':')[-1],
++              'value':str(direct[0]['value'])} if len(direct)==1 else
++             {'concept':'+'.join(COMPOSITION),
++              'value':str(sum(Decimal(str(o['value'])) for o in composed))} if len(composed)==2 else None)
++    body = {'filing_answer':answer,'chain_input':chain,'primary_sha256':sha256_bytes(content=raw_bytes),
++            'entity':str(entity),'period':dict(period),'source_facts':candidates,
++            'complete_business_scope_proven':False}
++    if answer['status']=='WITHHOLD':
++        return {**body,'status':'WITHHOLD','reason_code':WITHHELD_REASON,'why':answer['why']}
++    if answer['status']=='NO_DIRECT_CANDIDATE':
++        if direct or len(composed)!=2:
++            return {**body,'status':'WITHHOLD','reason_code':WITHHELD_REASON,
++                    'why':'CHAIN_DIRECT_OR_COMPOSITION_NOT_SUPPORTED_BY_PRIMARY'}
++        originals = _selected_original_facts(parsed=parsed,metadata=metadata,
++            roles={o['semantic_role']:o for o in composed},period=period,entity=entity)
++        return {**body,'status':'KEEP','composition_originals':originals,'why':answer['why']}
++    selected = answer['selected']
++    if len(direct)!=1:
++        return {**body,'status':'WITHHOLD','reason_code':WITHHELD_REASON,
++                'why':'CHAIN_COMPOSED_WHILE_PRIMARY_REPORTS_DIRECT_TOTAL'}
++    if chain['concept']!=selected['concept']:
++        return {**body,'status':'RETAKE','concept':selected['concept'],'why':answer['why']}
++    if not agree({'value':chain['value'],'decimals':'INF'},selected):
++        return {**body,'status':'WITHHOLD','reason_code':WITHHELD_REASON,
++                'why':'CHAIN_AMOUNT_DIFFERS_FROM_PRIMARY_AT_REPORTED_PRECISION'}
++    return {**body,'status':'KEEP','why':answer['why']}
+diff --git a/scripts/vnext/ordinary_current_update.py b/scripts/vnext/ordinary_current_update.py
+index 4937edef..09e3a74b 100644
+--- a/scripts/vnext/ordinary_current_update.py
++++ b/scripts/vnext/ordinary_current_update.py
+@@ -46,10 +46,14 @@ def _configuration(source, company, metric):
+         'specs','sources','table_grid','resource_limits','traits','projector',
+         'governance_signals','annual_input','annual_sources','deterministic_catalog',
+         'saved_source_checks','request_bindings','company_registry'))
+     paths.update({'catalog/company_traits.yaml','config/metric_applicability.yaml',
+                   'config/company_registry.csv'})
++    if metric == 'B03':
++        paths.update('scripts/vnext/'+name+'.py' for name in (
++            'ordinary_da_scope_v1','ordinary_b03_input_scope','b03_depreciation_scope',
++            'b03_contract_amortization_scope','financial_structured','text_results_v2'))
+     return {'company_id':company,'metric_id':metric,'source_root':str(source),
+         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
+         'source_registry_sha256':sha256_file(path=source/'config/company_registry.csv'),
+         'provider_enabled':False,'sec_fetch_enabled':False}
+ 
+diff --git a/scripts/vnext/ordinary_da_scope_v1.py b/scripts/vnext/ordinary_da_scope_v1.py
+new file mode 100644
+index 00000000..2fb5729b
+--- /dev/null
++++ b/scripts/vnext/ordinary_da_scope_v1.py
+@@ -0,0 +1,181 @@
++"""Candidate rule: when B03's depreciation and amortization cannot be shown to be the whole of it.
++
++B03's approved Spec takes depreciation and amortization from the first of three
++direct concepts the filing carries (DepreciationDepletionAndAmortization,
++DepreciationAmortizationAndAccretionNet, DepreciationAndAmortization), else
++composes it from Depreciation and AmortizationOfIntangibleAssets. The frozen
++calculator never compares the first direct concept with the others. Salesforce's
++FY2026 10-K tags DepreciationDepletionAndAmortization at $1.2 billion on a note
++sentence about fixed assets and DepreciationAndAmortization at $3,631 million on
++the cash flow statement; the chain took the first, a subtotal the standing rules
++forbid taking as the total. That result is withdrawn as a registered defect.
++
++This module was written as a candidate so it could be tested before it was
++wired, and the name is kept so the evidence that tested it still runs. It is
++now read by the historical B03 route (``historical_zero_ai_results.
++depreciation_scope``) and is a rule file of issue_47_v1. It changes no approved
++meaning: the standing rules already forbid taking a subtotal as the total and
++require limiting a metric precisely when its total cannot be proven, and that
++is all it does - agreeing candidates keep the approved chain's choice. The
++ordinary route (Issue #28) still takes the chain's first concept.
++
++What it says, in the order it is applied:
++
++1. Only facts that could be the definition's quantity are compared: the three
++   direct concepts, for exactly the target annual duration, undimensioned, in a
++   USD unit. A fact for another period, a segment member or another unit is
++   not in conflict with the total, whatever its value.
++2. Two values conflict only beyond their reported precision. Each fact states
++   its own ``decimals``; ``$1.2 billion`` at -8 and ``$1,234 million`` at -6 are
++   the same amount as far as the filing tells us.
++3. If every direct candidate agrees, the first in chain order is taken - the
++   approved selection, unchanged. Nothing in the filing contradicts it.
++4. If they conflict, the filing's own composition is asked: where Depreciation
++   and AmortizationOfIntangibleAssets are both tagged for the same period, the
++   direct candidate equal to their sum is the one proven to cover what the
++   definition's own composition says D&A is, and it is taken - even if it is
++   not first in chain order.
++5. Otherwise the conflict cannot be resolved from the filing, the selected
++   fact cannot be shown to cover the definition, and the result is withheld by
++   name, carrying every candidate with its concept, value and precision.
++
++It never adds anything back and never takes the larger number because it is
++larger: a statement total can carry impairment the definition excludes
++(Salesforce's footnote says its total includes impairment of right-of-use
++assets), so "the bigger one" is not a proof of coverage.
++"""
++import re
++from decimal import Decimal, InvalidOperation
++
++from .deterministic_router import (_XbrlContextParser, _XbrlFactParser, _local_name,
++                                   _numeric_xbrl_value)
++
++DIRECT = ("DepreciationDepletionAndAmortization", "DepreciationAmortizationAndAccretionNet",
++          "DepreciationAndAmortization")
++COMPOSITION = ("Depreciation", "AmortizationOfIntangibleAssets")
++WITHHELD_REASON = "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN"
++_UNIT = re.compile(r"<(?:\w+:)?unit\b[^>]*\bid=\"([^\"]+)\"[^>]*>(.*?)</(?:\w+:)?unit>",
++                   re.S | re.I)
++_MEASURE = re.compile(r"<(?:\w+:)?measure\b[^>]*>\s*([^<\s]+)\s*<", re.I)
++
++
++class _DecimalsFactParser(_XbrlFactParser):
++    """The frozen fact parser, keeping each fact's ``decimals`` beside what it already keeps.
++
++    Everything else is the frozen parser's: the same facts, in the same order,
++    with the same fields. ``decimals`` is added to the fact the frozen code has
++    just opened, so a fact the frozen code would not open is not opened here.
++    """
++
++    def handle_starttag(self, tag, attrs):
++        before = len(self.active)
++        super().handle_starttag(tag, attrs)
++        if len(self.active) > before:
++            attributes = {name.casefold(): value for name, value in attrs}
++            self.active[-1]["decimals"] = attributes.get("decimals")
++
++
++def _usd_units(text):
++    """Unit ids whose single measure is iso4217:USD."""
++    usd = set()
++    for unit_id, body in _UNIT.findall(text):
++        measures = _MEASURE.findall(body)
++        if measures == ["iso4217:USD"]:
++            usd.add(unit_id)
++    return usd
++
++
++def annual_facts(*, raw_bytes, period_start, period_end, concepts):
++    """Every undimensioned USD fact of ``concepts`` for exactly this annual duration."""
++    text = raw_bytes.decode("utf-8")
++    contexts = _XbrlContextParser()
++    contexts.feed(text)
++    contexts.close()
++    contexts = contexts.contexts()
++    parser = _DecimalsFactParser()
++    parser.feed(text)
++    parser.close()
++    usd = _usd_units(text)
++    found = []
++    for fact in parser.facts():
++        local = _local_name(qualified_name=str(fact["qualified_name"]))
++        if local not in concepts or not fact["text"] or not fact["unit_ref"]:
++            continue
++        context = contexts.get(fact["context_ref"])
++        if (context is None or context["dimensions"] or context["typed_dimension_count"]
++                or context["period_start"] != period_start
++                or context["period_end"] != period_end
++                or fact["unit_ref"] not in usd):
++            continue
++        found.append({"concept": local, "fact_ordinal": fact["ordinal"],
++                      "context_ref": fact["context_ref"], "unit_ref": fact["unit_ref"],
++                      "value": _numeric_xbrl_value(text=fact["text"], scale=str(fact["scale"]),
++                                                   sign=str(fact["sign"])),
++                      "decimals": fact["decimals"]})
++    return found
++
++
++def _tolerance(decimals):
++    if decimals is None or str(decimals).upper() == "INF":
++        return Decimal(0)
++    try:
++        return Decimal("0.5") * (Decimal(10) ** (-int(decimals)))
++    except (InvalidOperation, ValueError):
++        return None
++
++
++def agree(first, second):
++    """Whether two facts can be the same amount at the precision each reports."""
++    tolerances = (_tolerance(first["decimals"]), _tolerance(second["decimals"]))
++    if None in tolerances:
++        return False
++    return abs(Decimal(first["value"]) - Decimal(second["value"])) <= sum(tolerances)
++
++
++def _one_value(facts):
++    """A concept's facts collapse to one amount only if they agree with each other."""
++    for fact in facts[1:]:
++        if not agree(facts[0], fact):
++            return None
++    return facts[0]
++
++
++def da_scope_answer(*, facts):
++    """Take, compose or withhold - never add back, never prefer the larger number."""
++    by_concept = {}
++    for fact in facts:
++        by_concept.setdefault(fact["concept"], []).append(fact)
++    direct = []
++    for concept in DIRECT:
++        if concept not in by_concept:
++            continue
++        chosen = _one_value(by_concept[concept])
++        if chosen is None:
++            return {"status": "WITHHOLD", "reason_code": WITHHELD_REASON,
++                    "why": "ONE_CONCEPT_CARRIES_TWO_AMOUNTS:" + concept,
++                    "candidates": by_concept[concept]}
++        direct.append(chosen)
++    if not direct:
++        return {"status": "NO_DIRECT_CANDIDATE", "why": "THE_APPROVED_COMPOSITION_APPLIES",
++                "candidates": []}
++    if all(agree(direct[0], other) for other in direct[1:]):
++        return {"status": "TAKE", "selected": direct[0], "candidates": direct,
++                "why": "EVERY_DIRECT_CANDIDATE_AGREES"}
++    parts = [_one_value(by_concept[concept]) if concept in by_concept else None
++             for concept in COMPOSITION]
++    if None not in parts:
++        total = {"concept": "+".join(COMPOSITION),
++                 "value": str(sum(Decimal(part["value"]) for part in parts)),
++                 # Adding two rounded amounts adds their rounding: the sum is
++                 # only as precise as the coarser of the two, twice over.
++                 "decimals": None}
++        tolerance = sum(_tolerance(part["decimals"]) or Decimal(0) for part in parts)
++        covering = [candidate for candidate in direct
++                    if abs(Decimal(candidate["value"]) - Decimal(total["value"]))
++                    <= tolerance + (_tolerance(candidate["decimals"]) or Decimal(0))]
++        if len(covering) == 1:
++            return {"status": "TAKE", "selected": covering[0], "candidates": direct,
++                    "why": "EQUALS_THE_FILING_S_OWN_COMPOSITION", "composition": parts}
++    return {"status": "WITHHOLD", "reason_code": WITHHELD_REASON,
++            "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT",
++            "candidates": direct, "composition": [part for part in parts if part]}
+diff --git a/scripts/vnext/ordinary_income_input.py b/scripts/vnext/ordinary_income_input.py
+index 8e1d8b07..76f6ef64 100644
+--- a/scripts/vnext/ordinary_income_input.py
++++ b/scripts/vnext/ordinary_income_input.py
+@@ -2,11 +2,11 @@
+ from pathlib import Path
+ import re
+ 
+ from .annual_amendment_scope import prepare_saved_amendment_scopes
+ from .instant_balance_amendment import _part_iii_details, POLICY as AMENDMENT_RULE
+-from .normal_candidates import _prepare_b06
++from .normal_governance_input import prepare_saved_original_financial_sources as _prepare_b06
+ from .normal_annual_input import annual_period
+ from .normal_source_authority import ROOT
+ from .normal_annual_input_v2 import exact_json_value
+ from .ordinary_source_authority import verify_ordinary_source_proofs
+ from .canonical import content_hash, sha256_file, strict_json_file, sha256_bytes
+@@ -76,25 +76,27 @@ def native_income_reports(source,annual,concepts):
+             'context_ref':fact['context_ref'],'context':{**context,'dimensions':dict(context['dimensions'])},
+             'context_proof':proof,'source_reference':ref})
+     return rows
+ 
+ 
+-def prepare_current_income_input(*,repo_root,company_id):
+-    rules=strict_json_file(path=repo_root/POLICY_PATH)
++def prepare_current_income_input(*,repo_root,company_id,rules_root=None):
++    policy_root=repo_root if rules_root is None else Path(rules_root)
++    rules=strict_json_file(path=policy_root/POLICY_PATH)
+     need(rules==strict_json_file(path=ROOT/POLICY_PATH),'INSTALLED_RULES_CHANGED')
+     prepared=_prepare_b06(repo_root=repo_root,company_id=company_id)
+     annual=prepared['input_binding']['prepared_annual_input']
+-    amendments=prepare_saved_amendment_scopes(repo_root=repo_root,company_id=company_id)
++    amendments=prepare_saved_amendment_scopes(repo_root=repo_root,company_id=company_id,
++        **({} if rules_root is None else {'rules_root':rules_root}))
+     blobs={r['raw_asset_id']:r for r in amendments['source_records'] if r['record_type']=='RAW_BLOB'}
+     checks=[]
+     for scope in amendments['scopes']:
+         ref=scope['amendment']['document']['source_reference']
+         raw=(repo_root/blobs[ref['raw_asset_id']]['storage_uri']).read_bytes()
+         checks.append(inspect_income_amendment(scope,raw,rules))
+     from .batch_workflow import _structured_concepts
+-    b01=compile_spec_file(path=repo_root/'catalog/metrics/B01_revenue.md',dependency_specs={})
+-    b03=compile_spec_file(path=repo_root/'catalog/metrics/B03_ebitda_margin.md',dependency_specs={'B01':b01})
++    b01=compile_spec_file(path=policy_root/'catalog/metrics/B01_revenue.md',dependency_specs={})
++    b03=compile_spec_file(path=policy_root/'catalog/metrics/B03_ebitda_margin.md',dependency_specs={'B01':b01})
+     concepts=sorted(set(_structured_concepts(compiled_spec=b01))|set(_structured_concepts(compiled_spec=b03)))
+     reports={kind:native_income_reports(prepared[kind],annual,concepts) for kind in ['primary','xml']}
+     revenue=b01['compiled']['inputs']['revenue']['structured_role']['approved_concepts']
+     selected=None
+     for concept in revenue:
+@@ -117,11 +119,11 @@ def prepare_current_income_input(*,repo_root,company_id):
+         'statement_period':{'fiscal_year':annual['table_input']['target_period']['fiscal_year'],
+                             'period_start':selected['period_start'],'period_end':selected['period_end']},
+         'revenue_period_proof':selected,'original_reports':reports,'amendment_input':amendments,
+         'amendment_checks':checks,'source_proofs':proofs,'source_records':records,
+         'source_admission':verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs),
+-        'policy_sha256':sha256_file(path=repo_root/POLICY_PATH),'financial_cross_entity_combination_authorized':False,
++        'policy_sha256':sha256_file(path=policy_root/POLICY_PATH),'financial_cross_entity_combination_authorized':False,
+         'native_result_created':False,'production_authorized':False})
+     return {**body,'income_input_id':content_hash(value=body)}
+ 
+ 
+ def verify_income_observations(packet,observations):
+diff --git a/scripts/vnext/ordinary_saved_result.py b/scripts/vnext/ordinary_saved_result.py
+index 9b4348c9..2d7ac351 100644
+--- a/scripts/vnext/ordinary_saved_result.py
++++ b/scripts/vnext/ordinary_saved_result.py
+@@ -53,22 +53,25 @@ def _validate_records(records, company_id, metric_id, result_id):
+     return results[0]
+ 
+ 
+ def _ordinary_case(source, company, metric):
+     program = Path(__file__).resolve().parents[2]
+-    separate_rules = metric in {'B01','B02'} or metric not in SUPPORTED_METRICS
++    separate_rules = metric in {'B01','B02','B03'} or metric not in SUPPORTED_METRICS
+     original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,
++        **({'validate_depreciation_scope':True} if metric=='B03' else {}),
+         **({'rules_root':program} if separate_rules else {}))
+     detail = original['component']
+     if 'metrics' in detail:
+         detail = detail['metrics'][metric]
+     return {'primary_metric_id': metric, 'kind': 'STRUCTURED', 'input_binding': original,
+         'compiled_specs': original['compiled_specs'], 'spec_paths': original['spec_paths'],
+         'references': original['source_references'], 'source_proofs': original['source_proofs'],
+         'admission': original['source_admission'], 'target_period': original['target_period'],
+         'expected_records': original['records'], 'results': {metric: original['primary_result']},
+         'rules_root':str(program) if separate_rules else str(source),
++        **({'input_assessments':{'depreciation_scope':detail['selection']['depreciation_scope']}}
++           if metric == 'B03' and detail.get('selection',{}).get('depreciation_scope') is not None else {}),
+         'prepared_annual_input': original['component'].get('prepared_input'),
+         'selection': detail.get('selection', detail.get('inspection'))}
+ 
+ 
+ def create_saved_result(*, source_root, output_root, company_id, metric_id, shared_input_root=None):
+@@ -167,10 +170,15 @@ def _save_case(*, source_root, output_root, company_id, metric_id, factory, calc
+                 persisted.append({'record_type':'ORDINARY_SHARED_DERIVED_ASSET_REFERENCE', 'sha256':digest})
+             if shared:
+                 manifest['shared_records'] = shared
+             files = {**rendered['files'], 'records.jsonl': b''.join(_json(r) for r in persisted),
+                      'receipt.json': _json(rendered['receipt'])}
++            if case.get('input_assessments'):
++                files['input-assessments.json'] = _json({'record_type':'ORDINARY_INPUT_ASSESSMENTS_V1',
++                    'company_id':company_id,'metric_id':metric_id,'input_id':input_id,
++                    'result_id':result['result_id'],'target_period':period,
++                    'assessments':case['input_assessments']})
+             for name, raw in files.items():
+                 write_immutable_bytes(path=output_root/name, content=raw)
+             manifest['files'] = {name: sha256_file(path=output_root/name) for name in files}
+             manifest['timings_seconds'] = {'prepare_and_calculate' if calculation_performed else 'accept_precalculated_case': format(calculated-started, '.6f'),
+                 'check_and_project': format(rows_at-calculated, '.6f'), 'save': format(time.monotonic()-rows_at, '.6f')}
+@@ -186,12 +194,13 @@ def read_saved_result(*, output_root, shared_record_cache=None):
+     """Read saved values and rows, checking ordinary damage without recomputing."""
+     root = Path(output_root)
+     manifest = strict_json_file(path=root/'manifest.json')
+     _need(manifest['record_type'] == 'ORDINARY_SAVED_RESULT_V1'
+           and manifest['status'] == 'CALCULATED', 'SAVED_RESULT_NOT_COMPLETE')
+-    _need(set(manifest['files']) == {'records.jsonl', 'receipt.json',
+-          'metrics_matrix.csv', 'metric_evidence.csv'}, 'SAVED_RESULT_FILES_MISSING')
++    base_files = {'records.jsonl', 'receipt.json','metrics_matrix.csv', 'metric_evidence.csv'}
++    _need(base_files <= set(manifest['files'])
++          and set(manifest['files'])-base_files <= {'input-assessments.json'}, 'SAVED_RESULT_FILES_MISSING')
+     for name, expected in manifest['files'].items():
+         _need(sha256_file(path=root/name) == expected, 'SAVED_RESULT_FILE_CHANGED:'+name)
+     records = []
+     for line in (root/'records.jsonl').read_text().splitlines():
+         record = strict_json_loads(text=line)
+@@ -215,8 +224,16 @@ def read_saved_result(*, output_root, shared_record_cache=None):
+     _need(result['unit'] == manifest['compiled_specs'][manifest['metric_id']]['compiled']['canonical_unit']
+           or result['unit'] is None and result['value'] is None,
+           'SAVED_RESULT_UNIT_CHANGED')
+     _need(all(result[key] == manifest['target_period'][key] for key in ('period_start', 'period_end')),
+           'SAVED_RESULT_PERIOD_CHANGED')
++    assessment = None
++    if 'input-assessments.json' in manifest['files']:
++        assessment = strict_json_file(path=root/'input-assessments.json')
++        _need(assessment['record_type']=='ORDINARY_INPUT_ASSESSMENTS_V1'
++              and all(assessment[k]==manifest[k] for k in
++                      ('company_id','metric_id','input_id','result_id','target_period'))
++              and type(assessment['assessments']) is dict, 'SAVED_INPUT_ASSESSMENT_COORDINATE_CHANGED')
+     return {'manifest': manifest, 'result': result,
+             'files': {name: (root/name).read_bytes() for name in ('metrics_matrix.csv', 'metric_evidence.csv')},
+-            'receipt': strict_json_file(path=root/'receipt.json')}
++            'receipt': strict_json_file(path=root/'receipt.json'),
++            **({} if assessment is None else {'input_assessments':assessment['assessments']})}
+diff --git a/tests/vnext/test_b03_current_input_scope.py b/tests/vnext/test_b03_current_input_scope.py
+new file mode 100644
+index 00000000..b08a74aa
+--- /dev/null
++++ b/tests/vnext/test_b03_current_input_scope.py
+@@ -0,0 +1,151 @@
++"""Finite D&A scope boundaries and actual current source-only result delivery."""
++from decimal import Decimal
++from pathlib import Path
++import shutil
++import json
++import tempfile
++import unittest
++
++from tests.vnext.common import REPO_ROOT
++from vnext.ordinary_b03_input_scope import inspect_depreciation_input
++from vnext.ordinary_saved_result import create_saved_result, read_saved_result
++from vnext.normal_annual_input import prepare_saved_annual_input
++from vnext.deterministic_router import shared_xbrl_parses
++from vnext.annual_amendment_scope import prepare_saved_amendment_scopes
++from vnext.instant_balance_amendment import prepare_instant_balance_amendment_input
++
++PERIOD={'fiscal_year':2025,'period_start':'2025-01-01','period_end':'2025-12-31'}
++
++
++def original(facts):
++    # Small labelled synthetic input; not a registered company or source claim.
++    prefix='''<html xmlns:gaap="http://fasb.org/us-gaap/2025" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:currency="http://www.xbrl.org/2003/iso4217"><body>'''
++    parts=[]
++    for index,item in enumerate(facts):
++        concept,value,decimals,*extra=item;overrides=extra[0] if extra else {}
++        entity=overrides.get('entity','195');start=overrides.get('start','2025-01-01');end=overrides.get('end','2025-12-31')
++        currency=overrides.get('unit','USD');scheme=overrides.get('scheme','http://www.sec.gov/CIK')
++        segment=''
++        if overrides.get('dimension'):
++            segment='<xbrli:segment><xbrldi:explicitMember dimension="gaap:SegmentsAxis">gaap:OtherSegmentMember</xbrldi:explicitMember></xbrli:segment>'
++        parts.append(f'''<xbrli:context id="c{index}"><xbrli:entity><xbrli:identifier scheme="{scheme}">{entity}</xbrli:identifier>{segment}</xbrli:entity><xbrli:period><xbrli:startDate>{start}</xbrli:startDate><xbrli:endDate>{end}</xbrli:endDate></xbrli:period></xbrli:context><xbrli:unit id="u{index}"><xbrli:measure>currency:{currency}</xbrli:measure></xbrli:unit><ix:nonFraction name="gaap:{concept}" contextRef="c{index}" unitRef="u{index}" decimals="{decimals}">{value}</ix:nonFraction>''')
++    return (prefix+''.join(parts)+'</body></html>').encode()
++
++
++def observation(concept,value):
++    return {'semantic_role':'depreciation_and_amortization','value':value,
++            'source_binding':{'concept':'us-gaap:'+concept}}
++
++
++class CurrentDaScopeTest(unittest.TestCase):
++    def check(self,rows,value='1200000000'):
++        return inspect_depreciation_input(raw_bytes=original(rows),entity='195',period=PERIOD,
++            observations=[observation('DepreciationDepletionAndAmortization',value)])
++
++    def test_conflicting_subtotal_is_withheld_and_larger_total_not_automatically_taken(self):
++        answer=self.check([('DepreciationDepletionAndAmortization','1200000000','-8'),
++                           ('DepreciationAndAmortization','3631000000','-6')])
++        self.assertEqual(answer['status'],'WITHHOLD')
++        self.assertEqual(answer['reason_code'],'B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN')
++        self.assertFalse(answer['complete_business_scope_proven'])
++
++    def test_reported_precision_agreement_keeps_chain_not_exact_numeric_equality(self):
++        answer=self.check([('DepreciationDepletionAndAmortization','1200000000','-8'),
++                           ('DepreciationAndAmortization','1234000000','-6')])
++        self.assertEqual(answer['status'],'KEEP')
++        self.assertEqual(answer['chain_input']['value'],'1200000000')
++
++    def test_only_unique_original_composition_can_retake_a_later_direct_candidate(self):
++        answer=self.check([('DepreciationDepletionAndAmortization','10','INF'),
++            ('DepreciationAndAmortization','20','INF'),('Depreciation','7','INF'),
++            ('AmortizationOfIntangibleAssets','13','INF')],value='10')
++        self.assertEqual(answer['status'],'RETAKE');self.assertEqual(answer['concept'],'DepreciationAndAmortization')
++
++    def test_foreign_entity_period_unit_segment_or_namespace_does_not_create_own_total_conflict(self):
++        good=('DepreciationDepletionAndAmortization','1200000000','INF')
++        for changes in ({'entity':'196'},{'start':'2024-01-01'},{'unit':'GBP'},{'dimension':True}):
++            with self.subTest(changes=changes):
++                answer=self.check([good,('DepreciationAndAmortization','3631000000','INF',changes)])
++                self.assertEqual(answer['status'],'KEEP')
++                self.assertEqual(len(answer['source_facts']),1)
++        raw=original([good,('DepreciationAndAmortization','3631000000','INF')])
++        raw=raw.replace(b'name="gaap:DepreciationAndAmortization"',b'name="foreign:DepreciationAndAmortization"')
++        answer=inspect_depreciation_input(raw_bytes=raw,entity='195',period=PERIOD,
++            observations=[observation(good[0],good[1])])
++        self.assertEqual(answer['status'],'KEEP')
++
++    def test_currency_alias_is_resolved_and_foreign_identifier_scheme_is_not_accepted(self):
++        answer=self.check([('DepreciationDepletionAndAmortization','1200000000','INF')])
++        self.assertEqual(answer['status'],'KEEP')
++        self.assertTrue(answer['source_facts'][0]['context_proof'])
++        with self.assertRaises(ValueError):
++            self.check([('DepreciationDepletionAndAmortization','1200000000','INF',{'scheme':'https://example.invalid/company'})])
++
++
++class CurrentB03SourceOnlyTest(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        cls.temp=tempfile.TemporaryDirectory();cls.root=Path(cls.temp.name);cls.sources={};cls.saved={}
++        with shared_xbrl_parses():
++            for company in ('marriott_international','salesforce'):
++                source=cls.root/company;source.mkdir();cls.sources[company]=source
++                prepared=prepare_saved_annual_input(repo_root=REPO_ROOT,company_id=company)
++                paths={'config/company_registry.csv','evidence/requests_log.csv','evidence/requests_log_manifest.json'}
++                for proof in prepared['source_proofs']:
++                    paths.update((proof['request_repo_relative_path'],proof['request_headers_repo_relative_path']))
++                for relative in paths:
++                    target=source/relative;target.parent.mkdir(parents=True,exist_ok=True)
++                    shutil.copyfile(REPO_ROOT/relative,target)
++                cls.saved[company]=create_saved_result(source_root=source,output_root=cls.root/(company+'-result'),
++                    company_id=company,metric_id='B03')
++
++    @classmethod
++    def tearDownClass(cls):cls.temp.cleanup()
++
++    def test_marriott_composition_458m_and_135m_revenue_deduction_excluded(self):
++        saved=self.saved['marriott_international'];records=[json.loads(s) for s in (self.root/'marriott_international-result/records.jsonl').read_text().splitlines()]
++        roles={r['semantic_role']:r for r in records if r['record_type']=='VERIFIED_OBSERVATION' and r['metric_id']=='B03'}
++        self.assertEqual(Decimal(roles['depreciation']['value'])+Decimal(roles['amortization']['value']),Decimal('458000000'))
++        self.assertEqual(saved['result']['value'],'0.1756281982738868097456656229')
++        self.assertEqual(saved['manifest']['target_period']['fiscal_year'],2025)
++        self.assertFalse((self.sources['marriott_international']/'catalog').exists())
++        self.assertEqual(saved['result']['unit'],'ratio')
++        scope=saved['input_assessments']['depreciation_scope']
++        self.assertEqual(scope['status'],'KEEP')
++        exclusion=scope['existing_scope_check']
++        self.assertFalse(exclusion['blocked'])
++        self.assertTrue(any(Decimal(row['value_usd'])==Decimal('135000000') and row['dimensions']=={'srt:ProductOrServiceAxis':'mar:FeeServiceMember'} for row in exclusion['excluded_facts']))
++        self.assertFalse(exclusion['amount_added_or_result_recomputed'])
++
++    def test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01(self):
++        saved=self.saved['salesforce'];self.assertIsNone(saved['result']['value'])
++        self.assertEqual(saved['result']['publication'],'WITHHELD')
++        self.assertEqual(saved['result']['reason_code'],'B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN')
++        self.assertEqual(saved['manifest']['target_period']['fiscal_year'],2026)
++        records=[json.loads(s) for s in (self.root/'salesforce-result/records.jsonl').read_text().splitlines()]
++        revenues=[r for r in records if r['record_type']=='METRIC_RESULT' and r['metric_id']=='B01']
++        self.assertEqual(len(revenues),1);self.assertEqual(revenues[0]['value'],'41525000000')
++        reread=read_saved_result(output_root=self.root/'salesforce-result')
++        self.assertEqual(reread['result']['result_id'],saved['result']['result_id'])
++        scope=reread['input_assessments']['depreciation_scope']
++        self.assertEqual(scope['status'],'WITHHOLD')
++        self.assertEqual({r['value'] for r in scope['source_facts']},{'1200000000','3631000000'})
++
++    def test_amendment_input_uses_program_policy_without_sources_containing_it(self):
++        source=self.sources['marriott_international']
++        packet=prepare_saved_amendment_scopes(repo_root=source,company_id='marriott_international',rules_root=REPO_ROOT)
++        self.assertEqual(packet['scopes'],[])
++        instant=prepare_instant_balance_amendment_input(repo_root=source,company_id='marriott_international',rules_root=REPO_ROOT)
++        self.assertEqual(instant['decision'],'INPUT_PROPERTY_PROVEN')
++        self.assertFalse((source/'config/annual_amendment_scope_v1.json').exists())
++
++    def test_saved_input_assessment_is_read_without_recalculation_and_damage_is_visible(self):
++        path=self.root/'marriott_international-result/input-assessments.json'
++        original=path.read_bytes();path.write_bytes(original+b' ')
++        try:
++            with self.assertRaisesRegex(ValueError,'SAVED_RESULT_FILE_CHANGED:input-assessments.json'):
++                read_saved_result(output_root=path.parent)
++        finally:path.write_bytes(original)
++
++
++if __name__=='__main__':unittest.main()
+diff --git a/tests/vnext/test_separate_rule_root.py b/tests/vnext/test_separate_rule_root.py
+index 387f7985..92fab6ac 100644
+--- a/tests/vnext/test_separate_rule_root.py
++++ b/tests/vnext/test_separate_rule_root.py
+@@ -52,11 +52,11 @@ class SeparateRuleRootTest(unittest.TestCase):
+         self.assertFalse((self.source/'catalog').exists())
+         self.assertEqual({p.name for p in (self.source/'config').iterdir()},{'company_registry.csv'})
+         self.assertFalse((self.source/'scripts').exists())
+         self.assertEqual(self.record['result']['value'],'26186000000')
+         self.assertEqual(self.record['manifest']['rules_root'],str(REPO_ROOT))
+-        self.assertEqual(self.record['manifest']['source_root'],str(self.source))
++        self.assertEqual(self.record['manifest']['source_root'],str(self.source.resolve()))
+ 
+     def test_saved_result_read_retains_value_unit_period_and_source_rows(self):
+         actual=read_saved_result(output_root=self.root/'result')
+         self.assertEqual(actual['result']['unit'],'USD')
+         self.assertEqual((actual['result']['period_start'],actual['result']['period_end']),('2025-01-01','2025-12-31'))

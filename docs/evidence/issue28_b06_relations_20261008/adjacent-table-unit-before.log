@@ -1,0 +1,17 @@
+test_earlier_as_follows_unit_cannot_cross_current_table_introduction (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_earlier_as_follows_unit_cannot_cross_current_table_introduction) ... FAIL
+
+======================================================================
+FAIL: test_earlier_as_follows_unit_cannot_cross_current_table_introduction (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_earlier_as_follows_unit_cannot_cross_current_table_introduction)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics/tests/vnext/test_industrial_lease_relation.py", line 93, in test_earlier_as_follows_unit_cannot_cross_current_table_introduction
+    self.assertEqual('REPORTED_INCLUDED', inspect_inclusion(**args)['status'])
+AssertionError: 'REPORTED_INCLUDED' != 'UNRESOLVED'
+- REPORTED_INCLUDED
++ UNRESOLVED
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)

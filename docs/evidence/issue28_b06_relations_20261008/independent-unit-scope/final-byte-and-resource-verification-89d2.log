@@ -1,0 +1,58 @@
+{
+  "patch": "89d2d64960e895dc52466af5dedd1f71b1ed7cd9",
+  "base": "487b0531d80bb028c2784a5ef5cf4bac42abdfdf",
+  "supplement_start_utc": "2026-10-07T22:57:09+00:00",
+  "end_utc": "2026-10-07T23:01:26.010943+00:00",
+  "original_start_utc": "2026-10-07T22:51:15+00:00",
+  "supplement_elapsed_seconds": 257.010943,
+  "cumulative_elapsed_seconds": 611.010943,
+  "source_hashes": {
+    "scripts/vnext/industrial_lease_relation.py": {
+      "initial": "ebf9d46aad2db899e8b00300bd143d117af066dfdd31d6148199055b610fad4d",
+      "final": "ebf9d46aad2db899e8b00300bd143d117af066dfdd31d6148199055b610fad4d"
+    },
+    "tests/vnext/test_industrial_lease_relation.py": {
+      "initial": "29f8c17b18fd1cdf6eea4862cc7253cf1d7658b7b8cf4e4d82f3e8f00884b578",
+      "final": "29f8c17b18fd1cdf6eea4862cc7253cf1d7658b7b8cf4e4d82f3e8f00884b578"
+    },
+    "docs/evidence/issue28_b06_relations_20261008/verify_table_unit_scope.py": {
+      "initial": "65b2402069e0edf13654ae8ec40b15ae4afe092036c476c2fe1dd9f3d0c946f6",
+      "final": "65b2402069e0edf13654ae8ec40b15ae4afe092036c476c2fe1dd9f3d0c946f6"
+    }
+  },
+  "old_logs_unchanged": {
+    "initial-byte-verification.log": true,
+    "independent-unit-controls.log": true,
+    "saved-currency-control-setup-error.log": true,
+    "saved-introduction-control.log": true,
+    "base-versus-patch-controls.log": true,
+    "unit-tests.log": true,
+    "final-byte-and-resource-verification.log": true,
+    "saved-explicit-currency-control.log": true
+  },
+  "old_conclusion_prefix_sha256": "4f326253269514f7090ee0bc1c3acd09a7fa04ffa6037741afdfc0e004177632",
+  "old_conclusion_prefix_bytes": 6579,
+  "old_conclusion_prefix_identical": true,
+  "tracked_diff": [
+    "docs/evidence/issue28_b06_relations_20261008/independent-unit-scope/conclusion.md"
+  ],
+  "cumulative_tools": {
+    "functions_exec": 13,
+    "exec_command": 22,
+    "clock": 2,
+    "total": 37
+  },
+  "cumulative_messages_including_final": 2,
+  "new_provider_paid_sec_account_calls": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "supplement_logs": [
+    "initial-byte-verification-89d2.log",
+    "unit-tests-89d2.log",
+    "saved-unit-scope-control-89d2.log",
+    "final-byte-and-resource-verification-89d2.log"
+  ]
+}

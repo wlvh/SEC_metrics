@@ -1,0 +1,36 @@
+EXACT HEAD: f1c0088d3a2069ea3ef98272f22349f738e88ef0
+BASELINE: 61adc0e7fb7e63b46d5ff84773ca58b8119f84fa
+COMMAND: PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_company_online -v
+test_claim_is_reported_pending_before_plan_persistence (tests.vnext.test_company_online.CompanyOnlineTest.test_claim_is_reported_pending_before_plan_persistence) ... ok
+test_existing_real_ledger_never_created (tests.vnext.test_company_online.CompanyOnlineTest.test_existing_real_ledger_never_created) ... ok
+test_one_native_http_attempt_uses_existing_count_and_no_retry (tests.vnext.test_company_online.CompanyOnlineTest.test_one_native_http_attempt_uses_existing_count_and_no_retry) ... ok
+test_persistence_interrupt_leaves_counted_pending_no_second_transport (tests.vnext.test_company_online.CompanyOnlineTest.test_persistence_interrupt_leaves_counted_pending_no_second_transport) ... ok
+test_prior_metadata_missing_does_not_prevent_current_sources (tests.vnext.test_company_online.CompanyOnlineTest.test_prior_metadata_missing_does_not_prevent_current_sources) ... ok
+test_scope_or_limits_cannot_be_changed_by_call_context (tests.vnext.test_company_online.CompanyOnlineTest.test_scope_or_limits_cannot_be_changed_by_call_context) ... ok
+test_unknown_remote_blocks_next_claim_and_is_not_zero (tests.vnext.test_company_online.CompanyOnlineTest.test_unknown_remote_blocks_next_claim_and_is_not_zero) ... ok
+test_unsupported_metric_rejected_before_sources_or_claim (tests.vnext.test_company_online.CompanyOnlineTest.test_unsupported_metric_rejected_before_sources_or_claim) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.071s
+
+OK
+EXIT_CODE: 0
+
+INITIAL BOUNDARY HARNESS ATTEMPT: exit 1. PRIOR_AMBIGUOUS and PRIOR_HISTORY_INVALID_JSON assertions passed. SourceSpy erroneously tried to read form from the explicit CIK-only conflict fixture while serving the current directory; KeyError: form at <stdin>:38. This was a fixture failure, before product history handling. Harness below restricts optional history directory lookup to history bodies containing form. No product source or old evidence changed.
+PRIOR_AMBIGUOUS {"limitation": {"error_type": "ValueError", "metric_id": "B02", "reason": "COMPANY_ONLINE_PRIOR_ANNUAL_MISSING_OR_AMBIGUOUS"}, "requests": ["https://data.sec.gov/submissions/CIK0001048286.json", "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/issuer-202512317.htm", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/index.json"], "status": "SOURCES_PARTIAL_FOR_SELECTED_METRICS"}
+PRIOR_HISTORY_INVALID_JSON {"limitation": {"error_type": "CanonicalError", "metric_id": "B02", "reason": "Invalid strict JSON"}, "requests": ["https://data.sec.gov/submissions/CIK0001048286.json", "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/issuer-202512317.htm", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/index.json", "https://data.sec.gov/submissions/CIK0001048286-submissions-001.json"], "status": "SOURCES_PARTIAL_FOR_SELECTED_METRICS"}
+PRIOR_HISTORY_CIK_CONFLICT {"limitation": {"error_type": "ValueError", "metric_id": "B02", "reason": "COMPANY_ONLINE_PRIOR_HISTORY_CIK_CHANGED"}, "requests": ["https://data.sec.gov/submissions/CIK0001048286.json", "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/issuer-202512317.htm", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/index.json", "https://data.sec.gov/submissions/CIK0001048286-submissions-001.json"], "status": "SOURCES_PARTIAL_FOR_SELECTED_METRICS"}
+PRIOR_HISTORY_FETCH_FAILURE {"limitation": {"error_type": "ValueError", "metric_id": "B02", "reason": "FIXTURE_PRIOR_HTTP_FAILED"}, "requests": ["https://data.sec.gov/submissions/CIK0001048286.json", "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/issuer-202512317.htm", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/index.json", "https://data.sec.gov/submissions/CIK0001048286-submissions-001.json"], "status": "SOURCES_PARTIAL_FOR_SELECTED_METRICS"}
+PRIOR_AND_AMENDMENT_POSITIVE {"requests": ["https://data.sec.gov/submissions/CIK0001048286.json", "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/issuer-202512317.htm", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/index.json", "https://data.sec.gov/submissions/CIK0001048286-submissions-001.json", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000005/issuer-202412315.htm", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000005/index.json", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000008/issuer-202412318.htm", "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000008/index.json"], "status": "SOURCES_READY_FOR_SELECTED_METRICS"}
+B01_ONLY_SKIPS_PRIOR_HISTORY {"request_count": 4, "status": "SOURCES_READY_FOR_SELECTED_METRICS"}
+SUCCESSOR_SKIPS_PRIOR_HISTORY {"continuity": "successor_predecessor", "request_count": 4, "status": "SOURCES_READY_FOR_SELECTED_METRICS"}
+CURRENT_DOCUMENT_FAILURE_REMAINS_FAILURE {"reason": "FIXTURE_CURRENT_DOCUMENT_FAILED", "request_count": 3}
+SECOND_PLAN_PENDING_False {"ledger_counts": [0, 0, 2], "status": "SOURCES_PARTIAL", "stopped_channels": ["SEC"], "summary_claims": 2, "summary_persisted": true, "transport_calls": 1, "unknown_capture_ordinal": 2}
+SECOND_PLAN_PENDING_True {"ledger_counts": [0, 0, 2], "status": "FLOW_COMPLETED_WITH_LIMITATIONS", "stopped_channels": ["SEC"], "summary_claims": 2, "summary_persisted": true, "transport_calls": 1, "unknown_capture_ordinal": 2}
+INCREMENTAL_BOUNDARIES_PASS {"cases": 10, "financial_value_acceptance": false, "ledgers": "TEMPORARY_RECORDED_ONLY", "real_sec_provider_calls": 0, "socket_dns": "DENIED"}
+
+FINAL SOURCE CHECK: company_online.py, test_company_online.py and both inherited independent-review files exactly match f1c0088d3a2069ea3ef98272f22349f738e88ef0 Git blobs.
+READ-ONLY LOOKUP NOTE: one rg query referenced a nonexistent company_sec_capture.py and returned 2; corrected dependency locations were read directly. No test/product result inferred from that lookup.
+BOUNDARY HARNESS FINAL EXIT_CODE: 0
+
+REVIEW_METADATA {"baseline": "61adc0e7fb7e63b46d5ff84773ca58b8119f84fa", "conclusion": "APPROVE_WITHIN_P2_INCREMENT", "end_utc": "2026-10-09 03:04:27 UTC", "head": "f1c0088d3a2069ea3ef98272f22349f738e88ef0", "nested_tools": 17, "ordinary_messages_including_final": 3, "outer_exec": 10, "questions": 0, "start_utc": "2026-10-09 02:57:57 UTC", "tool_calls": 27}

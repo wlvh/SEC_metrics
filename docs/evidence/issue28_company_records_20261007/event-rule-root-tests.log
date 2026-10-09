@@ -1,0 +1,25 @@
+======================================================================
+ERROR: setUpClass (tests.vnext.test_event_rule_root.EventRuleRootTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_event_rule_root.py", line 38, in setUpClass
+    cls.records[company]=create_saved_result(source_root=source,output_root=cls.root/(company+'-record'),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 94, in create_saved_result
+    return _save_case(source_root=source_root, output_root=output_root, company_id=company_id,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 123, in _save_case
+    case = factory(source_root)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 93, in prepare
+    return _ordinary_case(source,company_id,metric_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 76, in _ordinary_case
+    'rules_root':str(program) if separate_rules else str(source),
+                                 ^^^^^^^^^^^^^^
+NameError: name 'separate_rules' is not defined
+
+----------------------------------------------------------------------
+Ran 0 tests in 3.546s
+
+FAILED (errors=1)

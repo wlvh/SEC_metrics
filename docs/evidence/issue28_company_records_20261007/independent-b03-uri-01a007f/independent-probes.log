@@ -1,0 +1,19 @@
+test_01_legal_prefix_aliases_and_standard_uri_schemes (__main__.UriRepairProbes.test_01_legal_prefix_aliases_and_standard_uri_schemes) ... ok
+test_02_same_local_extension_equal_or_different_both_roles_and_positions (__main__.UriRepairProbes.test_02_same_local_extension_equal_or_different_both_roles_and_positions) ... ok
+test_03_no_legal_standard_fact_extension_cannot_fill_selected_role (__main__.UriRepairProbes.test_03_no_legal_standard_fact_extension_cannot_fill_selected_role) ... ok
+test_04_wrong_standard_context_or_usd_still_rejects_with_valid_extension (__main__.UriRepairProbes.test_04_wrong_standard_context_or_usd_still_rejects_with_valid_extension) ... ok
+test_05_conflicting_legitimate_standard_value_still_rejects (__main__.UriRepairProbes.test_05_conflicting_legitimate_standard_value_still_rejects) ... ok
+test_06_nonstandard_uri_lookalikes_and_wrong_local_name_do_not_satisfy (__main__.UriRepairProbes.test_06_nonstandard_uri_lookalikes_and_wrong_local_name_do_not_satisfy) ... ok
+test_07_previous_p2_reproduces_on_base_and_passes_on_current_helper (__main__.UriRepairProbes.test_07_previous_p2_reproduces_on_base_and_passes_on_current_helper) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.041s
+
+OK
+PASS: 6 legal URI/prefix combinations keep standard 7+13 and ordinals 1,2
+PASS: 12 equal/different extension cases keep only the 2 legitimate facts
+PASS: 2 missing-standard cases reject equal-valued extensions
+PASS: 8 wrong entity/period/USD cases cannot borrow a valid extension
+PASS: 2 conflicting standard-value cases remain rejected
+PASS: 3 nonstandard URI cases and 2 wrong-local-name cases remain rejected
+PASS: inherited P2 actually fails on base and passes on head for equal/different values

@@ -15,6 +15,49 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.current_saved_company_run",
+        "type": "capability",
+        "status": "active",
+        "statement": "公司run可显式指定保存来源，以共享程序/来源和独立状态根运行普通结果记录；原始输入与配置未变先比较后复用，日常CSV/results不重放计算或复制整棵来源/程序。局部失败保留旧结果的原期间，精确已知错误清空当前数值，旧native任务不原地迁移；仅保存来源，未完成在线发现/AI输入/39项业务接受。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_company_current_records.py::CurrentCompanyTest",
+        "test_status": "automated_partial",
+        "untested_reason": null,
+        "pending_since": null
+      },
+      {
+        "anchor_id": "CAPABILITY.retained_ordinary_journal_read",
+        "type": "capability",
+        "status": "active",
+        "statement": "\u516c\u53f8results\u53ef\u53ea\u8bfb\u65e7\u72ec\u7acb\u666e\u901a\u66f4\u65b0journal\u4e2d\u7684\u5f52\u6863Run\u5f15\u7528\uff0c\u4e0d\u521b\u5efa\u516c\u53f8checkpoint/trust\u3001\u4e0d\u91cd\u653e\u8ba1\u7b97\u6216\u5199\u56de\u89c6\u56fe\uff1b\u5f53\u524d\u8f93\u5165\u672a\u91cd\u9a8c\u3001\u5931\u8d25\u53ca\u7cbe\u786e\u7f3a\u9677\u4fdd\u7559\uff0c\u4e0d\u8f93\u51fa\u65b0\u666e\u901aCSV\u6216\u6388\u4e88\u5f53\u524d\u4e1a\u52a1\u63a5\u53d7\u3002",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_company_results.py::CompanyResultsTest",
+        "test_status": "automated_partial",
+        "untested_reason": null,
+        "pending_since": null
+      },
+      {
+        "anchor_id": "CAPABILITY.depreciation_original_candidates",
+        "type": "capability",
+        "status": "active",
+        "statement": "显式普通D&A源适配只读取已选年度primary/XML原件和明确namespace版本，保留主体/实际期间/USD/维度、金额精度与原文块，配对相同源事实或给具名冲突。维度细分不作为包含或可加证明；不创建MetricResult/Run，不证明完整D&A，不自动解除旧B03扣留。旧普通选择/默认路径保持。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_ordinary_depreciation_sources.py::DepreciationSourcesTest",
+        "test_status": "automated_partial_scenario",
+        "since": "2026-10-08"
+      },
+      {
         "anchor_id": "CAPABILITY.company_import_transaction",
         "type": "capability",
         "status": "active",
@@ -377,7 +420,7 @@
         "anchor_id": "CAPABILITY.local_company_run",
         "type": "capability",
         "status": "active",
-        "statement": "main固定原生版本（8588ccbb / PR57）本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际空源29+2为录制，非真实SEC验收。已有判断按独立输入及原版本认证/来源等价复用，无新模型调用权限。Marriott真实首次、复跑和局部重入已在获准额度内完成（docs/evidence/issue54_company/live2）；不授Merge/部署/发布/active。 PR67候选尚未进入main：run --source-root走普通保存记录；不带该参数的新任务经兼容修复自动安装固定main8588原生程序，Marriott B01/B02同录制HTTP从空目录完整验证，用户不手选Git版本。此代表性验证不证明全部39项业务通过；新的轻量在线后继PR83单独待接收。版本、Git对象及依赖前提见docs/company_local_run.md。",
+        "statement": "保留原生版本的本地run薄编排复用现有发现/capture、公司交接、原生计算及公司冷出口；新固定树从仅登记/规则/空账本开始，不搬入保存财报或#28/#47私人额度。每次摘要和矩阵列配置39项及本次/旧结果身份，缺业务接口与判断不冒充完成；局部更新及来源阶段失败保留可原生读取旧结果。当前仅latest-complete-fy；独立acquire只获取，不重复旧计算。组件明确模拟阶段；实际空源29+2为录制，非真实SEC验收。已有判断按独立输入及原版本认证/来源等价复用，无新模型调用权限。Marriott真实首次、复跑和局部重入已在获准额度内完成（docs/evidence/issue54_company/live2）；不授Merge/部署/发布/active。 main 已接收 PR83 的有限 run/acquire --call-context，接原计数上下文到普通B01/B02计算和CSV；只替换外部HTTP的原件接缝已验证，新轻量在线39项及新AI未接入，不继承原生流程的全部新任务信用。整体状态从run_summary.json读，计算阶段记录单独说明。",
         "audience": [
           "business_user",
           "operator",
@@ -387,6 +430,19 @@
         "test_anchor": "tests/vnext/test_company_local.py::CompanyLocalTest",
         "test_status": "automated_partial_scenario",
         "since": "2026-10-03"
+      },
+      {
+        "anchor_id": "CAPABILITY.inline_amendment_source_layout",
+        "type": "capability",
+        "status": "active",
+        "statement": "显式instant_balance_amendment_v2的inline-paragraphs-v2来源API将空行内排版连接为真实可见段落，保持原始块/字节引用、主体/期间、隐藏与引用限制，区分条件性与已发生财务更正；blocks-v1默认及原对象保持。只产生瞬时余额来源属性检查，不产生公司结果、年度连续性、获取或生产信用。消费者须显式接入并验证自身公司出口。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_instant_amendment_paragraph_api.py::InstantParagraphApiTest.test_quoted_word_fragment_cannot_erase_conditional_review",
+        "test_status": "automated_recorded",
+        "since": "2026-10-09"
       }
     ],
     "capability_boundaries": [

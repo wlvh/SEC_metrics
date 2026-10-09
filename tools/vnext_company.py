@@ -17,15 +17,22 @@ def main(argv=None):
     sub = parser.add_subparsers(dest='command', required=True)
     run = sub.add_parser('run', help='Discover SEC sources, compute and export one configured company')
     run.add_argument('--company', required=True)
-    run.add_argument('--period', default='latest-complete-fy', choices=['latest-complete-fy'])
+    run.add_argument('--period', default='latest-complete-fy', choices=['latest-complete-fy', 'fiscal-years'])
+    run.add_argument('--fiscal-year-start', type=int)
+    run.add_argument('--fiscal-year-end', type=int)
     run.add_argument('--work-dir', required=True, type=Path)
     run.add_argument('--output-dir', required=True, type=Path)
-    run.add_argument('--metric', action='append', help='Debug subset; summary retains all configured statuses')
+    run.add_argument('--metric', action='append', help='Select metrics; online call-context supports B01/B02, retained native summary lists configured statuses')
+    run.add_argument('--source-root', type=Path,
+                     help='Use saved sources and ordinary records; no online discovery, capture or AI calls')
+    run.add_argument('--call-context', type=Path, help='Existing scoped SEC ledger context for the lightweight online B01/B02 path; no new allowance')
     run.add_argument('--max-sec-requests', type=int, default=120, help='Invocation cap, no automatic retries')
     run.add_argument('--sec-allowance', type=int, default=120, help='Fixed cumulative task allowance')
     acquire = sub.add_parser('acquire', help='Only discover/capture sources; never calculate or call AI')
     acquire.add_argument('--company', required=True)
     acquire.add_argument('--work-dir', required=True, type=Path)
+    acquire.add_argument('--call-context', type=Path, help='Existing scoped ledger for ordinary B01/B02 acquisition only')
+    acquire.add_argument('--metric', action='append', help='Online source scope, B01/B02 only')
     acquire.add_argument('--max-sec-requests', type=int, default=120)
     acquire.add_argument('--sec-allowance', type=int, default=120)
     export = sub.add_parser('export', help='Controlled preparation: source-only company export')
@@ -76,18 +83,36 @@ def main(argv=None):
     results.add_argument('--processing-trust-root', type=Path)
     view = sub.add_parser('results', help='Read all native company metric/period references')
     view.add_argument('--state-root', required=True, type=Path)
-    view.add_argument('--trust-root', required=True, type=Path)
+    view.add_argument('--trust-root', type=Path, help='Required only for retained native source histories')
     view.add_argument('--company', required=True)
     view.add_argument('--defects-file', type=Path)
     view.add_argument('--runtime-root', action='append', type=Path, default=[])
+    view.add_argument('--output-root', type=Path, help='Write ordinary daily CSV/evidence without updating inputs')
     args = parser.parse_args(argv)
     start = time.monotonic()
     if args.command == 'run':
-        from vnext.company_local import run_local
-        result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
-            period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
-            sec_allowance=args.sec_allowance)
+        if args.call_context is not None:
+            if args.source_root is not None:
+                parser.error('Choose saved sources or online call context, not both')
+            from vnext.company_online import run_online_company
+            result = run_online_company(company_id=args.company, work_dir=args.work_dir,
+                output_dir=args.output_dir, metric_ids=args.metric,
+                call_context=args.call_context, max_sec_requests=args.max_sec_requests)
+        else:
+            from vnext.company_local import run_local
+            result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
+                period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
+                sec_allowance=args.sec_allowance, source_root=args.source_root,
+                fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end)
+    elif args.command == 'acquire' and args.call_context is not None:
+        from vnext.company_online import run_online_company
+        result = run_online_company(company_id=args.company, work_dir=args.work_dir,
+            output_dir=args.work_dir.parent/(args.work_dir.name+'-unused-output'),
+            call_context=args.call_context,metric_ids=args.metric,
+            max_sec_requests=args.max_sec_requests,calculate=False)
     elif args.command == 'acquire':
+        if args.metric is not None:
+            parser.error('--metric acquisition requires the ordinary call context')
         from vnext.company_local import absolute, configure_task, configured_scope, _invoke
         from vnext.company_handoff import external, locked_company
         if not (0 <= args.max_sec_requests <= 120 and 0 < args.sec_allowance <= 120):
@@ -129,7 +154,14 @@ def main(argv=None):
     elif args.command == 'install-runtime':
         from vnext.company_runtime_install import install_runtime
         result = install_runtime(output_root=args.output_root, kind=args.kind)
+    elif args.command == 'results' and ((args.state_root/'company-task.json').is_file()
+            or ((args.state_root/'configuration.json').is_file() and (args.state_root/'current.json').is_file())):
+        from vnext.company_result_view import read_company_results
+        result = read_company_results(state_root=args.state_root, company_id=args.company,
+                                     defects_file=args.defects_file, output_root=args.output_root)
     else:
+        if args.trust_root is None:
+            parser.error('Retained native state requires --trust-root and its original runtime')
         from vnext.company_source_authority import TRUST_VARIABLE
         os.environ[TRUST_VARIABLE] = str(args.trust_root)
         if getattr(args, 'processing_trust_root', None):
@@ -154,7 +186,8 @@ def main(argv=None):
         elif args.command == 'results':
             from vnext.company_result_view import read_company_results
             result = read_company_results(state_root=args.state_root, company_id=args.company,
-                                         defects_file=args.defects_file, runtime_roots=args.runtime_root)
+                                         defects_file=args.defects_file, runtime_roots=args.runtime_root,
+                                         output_root=args.output_root)
         else:
             from vnext.company_result_export import export_results
             result = export_results(state_root=args.state_root, output_root=args.output_root,

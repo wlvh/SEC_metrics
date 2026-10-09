@@ -1,0 +1,17 @@
+usage: vnext_company.py results [-h] --state-root STATE_ROOT
+                                [--trust-root TRUST_ROOT] --company COMPANY
+                                [--defects-file DEFECTS_FILE]
+                                [--runtime-root RUNTIME_ROOT]
+                                [--output-root OUTPUT_ROOT]
+
+options:
+  -h, --help            show this help message and exit
+  --state-root STATE_ROOT
+  --trust-root TRUST_ROOT
+                        Required only for retained native source histories
+  --company COMPANY
+  --defects-file DEFECTS_FILE
+  --runtime-root RUNTIME_ROOT
+  --output-root OUTPUT_ROOT
+                        Write ordinary daily CSV/evidence without updating
+                        inputs

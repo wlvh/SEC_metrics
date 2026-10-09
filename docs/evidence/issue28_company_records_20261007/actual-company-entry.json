@@ -1,0 +1,268 @@
+{
+  "first": {
+    "elapsed_seconds": 7.07490749983117,
+    "status": "FLOW_COMPLETED",
+    "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "metrics": [
+      {
+        "metric_id": "B01",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "a47c998db13046fdab590936872a5e7e",
+        "version": "ebede64227104bd98d8a3c23ff015887",
+        "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-20261007/updates/B01/results/ebede64227104bd98d8a3c23ff015887",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc"
+      },
+      {
+        "metric_id": "B02",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "aad8838829be4bde88d7d6e2e228cd84",
+        "version": "8cbeb5abf33e47f3950078a16cdd6a84",
+        "result_id": "sha256:dff8ee332821e42e593acd7b7c3b80d8c6a629abf9c1266bef7cc32b33178159",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-20261007/updates/B02/results/8cbeb5abf33e47f3950078a16cdd6a84",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:dff8ee332821e42e593acd7b7c3b80d8c6a629abf9c1266bef7cc32b33178159"
+      }
+    ],
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "repeat": {
+    "elapsed_seconds": 0.682837083004415,
+    "status": "FLOW_COMPLETED",
+    "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "metrics": [
+      {
+        "metric_id": "B01",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "2fc86a1b852349fd99279361450d7708",
+        "version": "ebede64227104bd98d8a3c23ff015887",
+        "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-20261007/updates/B01/results/ebede64227104bd98d8a3c23ff015887",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-20261007/updates/B01/results/ebede64227104bd98d8a3c23ff015887",
+        "program_version": {
+          "commit": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+          "has_uncommitted_changes": true
+        }
+      },
+      {
+        "metric_id": "B02",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "cbe3e39f5f2242e8a8411df8b0ea2366",
+        "version": "8cbeb5abf33e47f3950078a16cdd6a84",
+        "result_id": "sha256:dff8ee332821e42e593acd7b7c3b80d8c6a629abf9c1266bef7cc32b33178159",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-20261007/updates/B02/results/8cbeb5abf33e47f3950078a16cdd6a84",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:dff8ee332821e42e593acd7b7c3b80d8c6a629abf9c1266bef7cc32b33178159",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-20261007/updates/B02/results/8cbeb5abf33e47f3950078a16cdd6a84",
+        "program_version": {
+          "commit": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "read": {
+    "elapsed_seconds": 0.4473573330324143,
+    "status": null,
+    "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "metrics": [
+      {
+        "metric_id": "B01",
+        "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "value": "26186000000",
+        "unit": "USD",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-20261007/updates/B01/results/ebede64227104bd98d8a3c23ff015887"
+      },
+      {
+        "metric_id": "B02",
+        "result_id": "sha256:dff8ee332821e42e593acd7b7c3b80d8c6a629abf9c1266bef7cc32b33178159",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "value": "0.04326693227091633466135458167",
+        "unit": "ratio",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-20261007/updates/B02/results/8cbeb5abf33e47f3950078a16cdd6a84"
+      }
+    ],
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "repeat_calculation_factory_disabled": 0.6233449580613524,
+  "bank_and_noncalendar": [
+    {
+      "company": "jpmorgan_chase",
+      "seconds": 20.3309,
+      "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "7542a7a8b1844d22b44842443f0398ad",
+          "version": "42ad86a5dfb94dcd8b447d61a2fec0c9",
+          "result_id": "sha256:acda5475f270d4888d1c9d38b8e5b869adafc3317e2da05f6c9048c9fcfa5de1",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-jpmorgan_chase-20261007/updates/B01/results/42ad86a5dfb94dcd8b447d61a2fec0c9",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "source_observation_errors": [
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+              "status_code": "0",
+              "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>",
+              "content_sha256": "",
+              "document_name": "0000019617-25-000332.hdr.sgml"
+            }
+          ],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "defect_holds": [],
+          "read_result_id": "sha256:acda5475f270d4888d1c9d38b8e5b869adafc3317e2da05f6c9048c9fcfa5de1",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-jpmorgan_chase-20261007/updates/B01/results/42ad86a5dfb94dcd8b447d61a2fec0c9",
+          "program_version": {
+            "commit": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "rows": [
+        {
+          "metric_id": "B01",
+          "value": "",
+          "unit": "USD",
+          "fiscal_year": "2025",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "status": "N_A_STRUCTURAL",
+          "concept_or_section": "",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED"
+        }
+      ]
+    },
+    {
+      "company": "macys",
+      "seconds": 6.6568,
+      "status": "FLOW_COMPLETED",
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "3bc6a8655c9343fb847621dfb3bd8cca",
+          "version": "257f70eedd0443629275cb23866a9964",
+          "result_id": "sha256:cdd9caf6aa5eb77bf233fa14446adbfeef5e16a606f8a264a8b14063cdf4b1b2",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-macys-20261007/updates/B01/results/257f70eedd0443629275cb23866a9964",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "defect_holds": [],
+          "read_result_id": "sha256:cdd9caf6aa5eb77bf233fa14446adbfeef5e16a606f8a264a8b14063cdf4b1b2",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-current-records-macys-20261007/updates/B01/results/257f70eedd0443629275cb23866a9964",
+          "program_version": {
+            "commit": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "rows": [
+        {
+          "metric_id": "B01",
+          "value": "21764000000",
+          "unit": "USD",
+          "fiscal_year": "2025",
+          "period_start": "2025-02-02",
+          "period_end": "2026-01-31",
+          "status": "OK",
+          "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED"
+        }
+      ]
+    }
+  ],
+  "test_basis": {
+    "parent_sha": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "working_tree_difference": "new company entry plus explicitly received PR60/63/64 dependencies; git diff origin/main",
+    "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+    "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "business_calls": [
+      0,
+      0,
+      0
+    ],
+    "no_company_business_acceptance": true
+  },
+  "independent_original_check": {
+    "source": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+    "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+    "row": "Consolidated revenue, USD millions:26186/25100/23713",
+    "formula": "(26186000000-25100000000)/25100000000",
+    "comparison_status": "Matches saved companyfacts accession/period/unit values and approved growth expression; no new policy"
+  }
+}

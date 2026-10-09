@@ -2,15 +2,27 @@
 
 ## 公司入口的当前交付边界
 
-#28维护公共 runtime/CLI 与当期集成，#47维护历史消费者。main 已有 PR57 原生流程；[PR67](https://github.com/wlvh/SEC_metrics/pull/67)提供普通记录的保存来源候选，尚未合入main；其默认新任务已通过固定main8588原生程序的自动安装兼容修复，新的轻量在线后继在独立PR83。`run` 是否能从空来源运行取决于版本，不能从同名 CLI 推断。版本/命令与限制见 [公司运行](docs/company_local_run.md)。
+#28维护公共 runtime/CLI 与当期集成，#47维护历史消费者。已核 main `ae8a13c8` 包含 PR67 普通记录、PR83 有限在线续接及 PR71/75/76 历史消费者；实际支持范围、输入、调用与旧任务命令见 [公司运行](docs/company_local_run.md)。代码交付、运行成功和业务接受分别判断。
 
-新普通记录路径按 [受信任内部工具决定](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006)简化；下述 native/Requirement/信任/封存章节说明旧固定版本和旧任务，不是新路径必须重建的框架。来源与计算分离、公司/期间、引用、计数、原子写入、必要锁和恢复仍适用。
+新普通记录按 [受信任内部工具决定](https://github.com/wlvh/SEC_metrics/issues/28#trusted-internal-20261006)简化；下述 native/Requirement/信任/封存章节仅说明旧固定版本和旧任务。来源与计算分离、公司/期间、引用、计数、原子写入、必要锁和恢复仍适用。
 
-main 固定原生版本（8588ccbb / PR57）的本地公司 `run` 薄编排见 `docs/company_local_run.md`：固定程序自动安装，独立子进程依次执行现有 SEC 发现/捕获、公司交接/安装、计算和原生冷出口。新任务使用仅登记/规则/空账本的 `issue_54_v4` 固定树；原获取及计算模块只在该新安装树做必要分派，不改旧执行字节、来源历史或额度。来源 journal 移至独立可写 trust，计算仍禁网和拒绝采集现场读取；原 LIVE 判断和其原 SEC 版本由各自运行树独立认证。工作目录固定公司、累积上限和程序版本，重复运行不重置；输出按本次运行保留，失败仍可原生读取旧结果并明确本次状态。
+当前 main 的用户入口有三种明确路径：`run --source-root`只处理保存来源；新增`run --call-context`以原存在且适用的计数上下文，从空来源完成当期B01/B02发现、落盘、普通计算和CSV/证据；无这两个参数的原生安装仍是保留实现，不表示新轻量在线39项已经接通。当前验证只替换外部HTTP，真实调用需核原用途许可。整体在线状态/计数从`run_summary.json`读取，`company-results.json`和`latest-execution.json`描述计算阶段。命令与限制见 `docs/company_local_run.md`。
+
+保留原生版本（不带source-root/call-context）的 `run` 薄编排见 `docs/company_local_run.md`：固定程序自动安装，独立子进程依次执行现有 SEC 发现/捕获、公司交接/安装、计算和原生冷出口。新任务使用仅登记/规则/空账本的 `issue_54_v4` 固定树；原获取及计算模块只在该新安装树做必要分派，不改旧执行字节、来源历史或额度。来源 journal 移至独立可写 trust，计算仍禁网和拒绝采集现场读取；原 LIVE 判断和其原 SEC 版本由各自运行树独立认证。工作目录固定公司、累积上限和程序版本，重复运行不重置；输出按本次运行保留，失败仍可原生读取旧结果并明确本次状态。
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 
 公司交接入口见 `docs/company_compute_boundary.md`。来源准备校验完整获取历史，再携带完整账本元数据和目标公司的依赖原件；计算只读固定程序/规则与独立信任登记，每公司state持有导入及计算共用锁。baseline保持原核心，实际增量/历史使用各自后继固定树，旧Run不重签。
 <!-- capability-anchor: CAPABILITY.company_import_transaction -->
+
+当前保存来源分支由现有公司 `run --source-root` 显式选择：`company_current_records` 调用 `ordinary_current_update`，先比较原始输入与处理配置，再运行既有来源/Calculator并保存小记录。公共save_calculated_case可保存已计算case；B01/B02显式规则根与来源根分开，旧共享准备器未传新参数时保持原行为，manifest分别记录rules_root/source_root。显式年报输入沿原已选主体/期间投影，不重选最新。B10/B11消费既有共用来源/计算，派生网格在独立公司shared-inputs保存一次，各结果仅持普通引用、独立回读校验内容。此格式的旧内联记录仍可读。同次运行用有界、退出即清除的不可变native解析复用，其他来源/期间/单位检查仍执行；程序根和来源根不复制到attempt，写锁、更新意图、完成末写和旧版本恢复保留。日常CSV直接读取保存结果，results --output-root可只出表不更新来源；共用company_result_view识别普通任务后调用记录适配器；`results`不重算、不安装trust或重放native链，读写使用同一公司锁，保留子集执行未请求的已存结果。原始引用与测量期间仍保留，来源失败和已知缺陷分别显示。旧native任务仍用其固定运行时，不被新记录改签。新路径当前仅离线保存来源，不代表在线新财报或39项验收完成。
+<!-- capability-anchor: CAPABILITY.current_saved_company_run -->
+
+显式历史接收可在同一个`run_saved_company`循环分别指定每指标的原计算函数及其依赖文件；默认单函数路径保持。它只透传到原控制器，不合并各指标依赖、不新增计算内核；新混合历史原件验收仍由接收者完成。
+
+B03普通来源比较先通过轻量`reported_monetary_literal`检查数值标签及原始数字写法，再使用已有金额正规化；未证明的来源值保留事实级原因并具名扣留，不用正规化后碰巧相等来确认。新辅助文件计入B03处理配置，B01不受其单独变动影响。
+
+独立旧普通更新目录已有configuration/current journal时，`results --state-root`复用原journal链和manifest引用读取，持原update锁，不需要伪造公司checkpoint或安装trust。返回归档Run/Result引用、原期间、失败及精确缺陷；当前输入明确未重验，不重放、计算或写回公司视图。它不提供新普通CSV、原生完整审核或当前业务接受；后两者仍使用原运行版本及明确审核入口。
+<!-- capability-anchor: CAPABILITY.retained_ordinary_journal_read -->
 
 ### 确切年度候选的正式采纳接线
 
@@ -152,6 +164,9 @@ Run ID、目录和 controller namespace 从计划机械派生；相同批准重�
 <!-- capability-anchor: CAPABILITY.ordinary_annual_b10_candidate -->
 
 ### 保存的年度原始材料输入准备
+
+显式来源API `vnext.instant_balance_amendment_v2.inspect_instant_balance_amendment(..., note_layout='inline-paragraphs-v2')` 在原主体/期间与Part III规则内按可见段落处理行内拆分，保留原始块/字节引用、隐藏文字和引用限制。默认 `blocks-v1` 及历史对象不变；这里只验证瞬时余额输入的来源属性，不生成指标、公司CSV或年度连续性结论。消费者须显式选择并声明amendment_note_layout、annual_amendment_scope_v2、instant_balance_amendment_v2及实际旧帮助函数的处理依赖；公司接入仍需本路线验证。
+<!-- capability-anchor: CAPABILITY.inline_amendment_source_layout -->
 
 `annual_input.prepare_annual_input(repo_root=..., company_id=..., fiscal_year=...)`
 返回 `companyfacts_input`、`table_input` 与原始请求证明。省略年度时取保存的
@@ -768,7 +783,12 @@ R3已在clean committed implementation上形成active successor，previous为R2�
 
 更新器通过PublicationView.native_result与authority_bytes取得结果所有者和覆盖权威，不在调用点猜内部目录；原R3未嵌入的原生内容明确拒绝。annual_continuity把三处进度、固定预算根与每输入计划接到annual_runtime共享执行器；annual_continuity_snapshot只增加新来源/旧起点的重放适配，annual_continuity_publication经既有PublicationPermission和intent/receipt提交明确前驱的隔离版本。旧v1/v2解释不变，不向实际根授连续写入。有限trigger直接调用同一run-once，未安装常驻调度。详见docs/annual_update_continuity.md。
 
+显式D&A原件候选入口 `ordinary_depreciation_sources.inspect_depreciation_sources` 只收已选原件、申报与真实期间及namespace策略。它配对primary/XML的同一主体/期间/维度事实，保留原文；维度细分与包含关系分别处理，完整D&A仍未证明。不改变普通选源/计算默认，也不创建公司结果。
+<!-- capability-anchor: CAPABILITY.depreciation_original_candidates -->
+
 ## R5 B06结构化主路径候选
+
+2026-10-08 独立来源增量：`ordinary_reported_lease_scope` 的显式 `prepare_reported_lease_case` / `inspect_reported_lease_scope` 经 `industrial_lease_relation` 读取包含行自身原生金额、USD、完整QName/上下文、XML对应值及可见表单位，记录融资租赁已含与追加额。旧 `ordinary_special_debt_scope` 保持main原字节与接口；新模块从旧case已验证的确切来源引用重开原件并补关系，不重选财报或改写旧case。该后继未接公司入口，不生成完整B06比值或Run。工业权益与债务完整性仍独立检查；具体实现、正反例与有限引言支持见 `docs/evidence/issue28_b06_relations_20261008/README.md`。以下R5版本/发布机制保留其历史范围，不是这项来源API的新运行前置。
 
 `r5_b06_structured`在声明式primary Spec限定下复用保存来源、原生Observation/Calculator和Run freeze/replay；相同原始输入再次选择并核对结果，拒绝跨概念、范围和时点替换。通用正分母约束保持其他指标旧行为。`r5_b06_publication`是既有Projector/publication持久化和PublicationView的候选适配，完整继承240坐标并加入10个B06结果/阻断，前驱327行保留未选部分，并补齐缺少的JPM B06阻断行，候选328行。新的typed credit仅允许BLOCKED只读包，所有生产动作拒绝；不是第二套发布器。`issue_28_v9`/V10草案保留全部父级义务，旧执行许可不因新代码而恢复。详见docs/r5_b06_structured.md。
 <!-- capability-anchor: CAPABILITY.r5_b06_structured_primary -->

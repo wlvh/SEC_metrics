@@ -1,0 +1,36 @@
+{
+  "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-company-production-20261008",
+  "operations": [
+    {
+      "operation": "production-cli-first",
+      "seconds": 16.537885665893555,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "operation": "production-cli-repeat",
+      "seconds": 2.34162566694431,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "operation": "production-cli-independent-read",
+      "seconds": 0.918714459054172,
+      "status": null
+    },
+    {
+      "operation": "retained-task-independent-read",
+      "seconds": 0.9346000000368804,
+      "status": null
+    }
+  ],
+  "factory_forbidden_on_repeat_and_reads": true,
+  "result_and_pointer_files_unchanged": 32,
+  "old_task_protected_files": 42,
+  "production_case_factory_used": true,
+  "business_outcomes_not_mocked": true,
+  "calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "tree_copies": 0
+}

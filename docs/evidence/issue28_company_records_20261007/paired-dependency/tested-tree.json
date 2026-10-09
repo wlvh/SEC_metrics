@@ -1,0 +1,33 @@
+{
+  "tested_base": "8819dbff4fffeac9b7910224a8aebe7904b6d04f",
+  "tested_uncommitted_files": {
+    "scripts/vnext/ordinary_current_update.py": "0669e76f6128622aa0313f11c8c3e695d29d77d2671161fbf1e687172221852a",
+    "tests/vnext/test_ordinary_current_update.py": "43255d67043cc008adc414ec89b7a9ac1bf0503a00f910cbcd62c0e411d550bf"
+  },
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+  "input_roots": "Existing module fixtures; actual saved sources used by unchanged company-entry tests; no original state/result modified",
+  "source_and_formula_change": false,
+  "old_helper_guard_bytes_unchanged": true,
+  "tests": {
+    "failing_before": {
+      "tests": 2,
+      "failures": 2,
+      "seconds": 0.026
+    },
+    "controller_after": {
+      "tests": 28,
+      "seconds": 0.135
+    },
+    "company_entry_after": {
+      "log": "company-entry.log",
+      "tests": 25,
+      "seconds": 6.401
+    }
+  },
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "independent_semantic_review_scope": "Existing guard and unchanged prior business content evidence reused; no new semantic guard/contract/formula implemented."
+}

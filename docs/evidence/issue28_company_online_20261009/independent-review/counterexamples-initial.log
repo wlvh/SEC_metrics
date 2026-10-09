@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<stdin>", line 35, in <module>
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_online.py", line 162, in run_online_company
+    _need(work!=root and root not in work.parents and work not in root.parents,'WORK_ROOT_OVERLAP')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/scripts/vnext/company_online.py", line 29, in _need
+    raise ValueError('COMPANY_ONLINE_' + reason)
+ValueError: COMPANY_ONLINE_WORK_ROOT_OVERLAP

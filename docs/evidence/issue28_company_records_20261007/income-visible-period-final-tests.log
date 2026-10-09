@@ -1,0 +1,23 @@
+======================================================================
+FAIL: test_real_marriott_values_periods_and_source_links_reach_company_csv (tests.vnext.test_company_current_records.SavedSourceCompanyEntryTest.test_real_marriott_values_periods_and_source_links_reach_company_csv)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_current_records.py", line 272, in test_real_marriott_values_periods_and_source_links_reach_company_csv
+    self.assertEqual(self.report['status'],'FLOW_COMPLETED')
+AssertionError: 'FLOW_COMPLETED_WITH_LIMITATIONS' != 'FLOW_COMPLETED'
+- FLOW_COMPLETED_WITH_LIMITATIONS
++ FLOW_COMPLETED
+
+
+======================================================================
+FAIL: test_real_reentry_never_invokes_calculation_factory (tests.vnext.test_company_current_records.SavedSourceCompanyEntryTest.test_real_reentry_never_invokes_calculation_factory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_current_records.py", line 287, in test_real_reentry_never_invokes_calculation_factory
+    self.assertTrue(all(m['status']=='NO_SOURCE_CONTENT_CHANGE' for m in report['metrics']))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 57 tests in 21.340s
+
+FAILED (failures=2)

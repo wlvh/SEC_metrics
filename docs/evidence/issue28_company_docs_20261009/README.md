@@ -11,3 +11,15 @@ main既有原生run完整流程、PR67保存来源run及保留原生任务读取
 本次验证为未提交树（ccf9＋main f447合并及说明差异）：真实install-runtime --kind local 3.063s成功，仅安装/无HTTP，current-main-install.json保代码根/输出根/时间；不扩大为完整获取或财报接受。5个runner分层/输出测试0.004s通过，CLI参数/相对链接/JSON另核。提交前alignment因工作树尚未提交与HEAD有七项字节差异失败，保留原日志；这是该工具核验提交字节的行为，提交后再核，未修改断言或生成新信任链。旧文档PR的两项30秒快测失败保历史，已合入main的PR61将这些完整原件例归材料层；不删除业务断言、不把旧失败改绿。
 
 提交94dbf48e后的capability alignment实际通过，committed-alignment.log保留原输出。该工具只证明结构/提交字节对应，不证明业务。此时main随后由接收方合PR62前进到dae5c660；本次被测安装树仍明确是f447＋文档，PR相对最新main的共同祖先差异仍仅公共文档/同一证据目录，不删除PR62。并未由本方merge main。
+
+## Current-main reception after public/history delivery
+
+The doc branch receives main ae8a13c8 and resolves six prose/JSON conflicts
+by retaining the current CLI/history implementation facts and the trusted
+internal-tool navigation. PR67/75/76/83 are now delivered code, not pending
+source-only/online prototypes; old task/native/real-run evidence stays historical.
+New source/window candidates are explicitly not main. The actual current
+run/results help output is in main-receiving-*-help.txt. JSON parses and git
+diff --check pass. The precommit document alignment report refers to the old
+HEAD and therefore reports incoming files/document differences; it is kept
+and is not a final new-tree validation. No financial materials rerun.

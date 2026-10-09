@@ -164,10 +164,23 @@ SOURCE_TESTS += ("tests.vnext.test_d03_complete_interpretation.D03CompleteInterp
 SOURCE_TESTS += ("tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_d01_emphasis_material",)
 FAST_TESTS += ("tests.vnext.test_a05_formula_successor",)
+FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest',)
+FAST_TESTS += ('tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks',)
+FAST_TESTS += ('tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest',)
+FAST_TESTS += ('tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest',)
+
 FAST_TESTS += ("tests.vnext.test_legal_review_contract",)
+FAST_TESTS += ("tests.vnext.test_history_business_boundaries.BankScopeBusinessTest",)
+FAST_TESTS += ("tests.vnext.test_history_business_boundaries.ParamountWindowBusinessTest",)
+FAST_TESTS += ("tests.vnext.test_history_business_boundaries.FiscalDurationCalculationTest",)
+FAST_TESTS += ("tests.vnext.test_ordinary_depreciation_sources",)
 SOURCE_TESTS += ("tests.vnext.test_a05_formula_material",)
 SOURCE_TESTS += ("tests.vnext.test_d02_item8_current_material",)
 SOURCE_TESTS += ("tests.vnext.test_ordinary_e01_item_text_input",)
+FAST_TESTS += ("tests.vnext.test_company_retained_local",)
+FAST_TESTS += ("tests.vnext.test_selected_income_source_v1",)
+FAST_TESTS += ("tests.vnext.test_company_online",)
+FAST_TESTS += ("tests.vnext.test_native_rate_path",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

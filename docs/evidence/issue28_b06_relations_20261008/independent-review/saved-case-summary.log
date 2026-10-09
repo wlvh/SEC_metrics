@@ -1,0 +1,75 @@
+{
+  "seconds": 3.0759238339960575,
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-b06-relations/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "record_type": "ORDINARY_B06_SPECIAL_SCOPE_SOURCE_V2",
+  "accession": "0000037996-26-000015",
+  "period_end": "2025-12-31",
+  "reported_subtotal": "21919000000",
+  "limitations": [
+    "INDUSTRIAL_ATTRIBUTABLE_EQUITY_NOT_ESTABLISHED",
+    "INDUSTRIAL_DEBT_SET_COMPLETENESS_NOT_ESTABLISHED"
+  ],
+  "result": {
+    "result_id": "sha256:3cfdb4866a546c8ff41a65bfa14463e0b1717f54a946d417a245144b14cea07a",
+    "publication": "WITHHELD",
+    "value": null
+  },
+  "processing_files": {
+    "scripts/vnext/industrial_lease_relation.py": "4b8d8749ffeaead4ba6e545a90233dc0c4f6c181e2353cb314bba9fc8d0bf7af",
+    "scripts/vnext/ordinary_special_debt_scope.py": "fbbb8f8424faa06823fb72f807234270a5fbdc6a31b9f72dda54f60bfa03a65c"
+  },
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "native_run_created": false
+}
+{
+  "status": "REPORTED_INCLUDED",
+  "additional_debt_amount": "0",
+  "reason": "INCLUSIVE_REPORTED_DEBT_TABLE",
+  "component_total": "890000000",
+  "complete_B06": false
+}
+{
+  "parent_role": "current_debt",
+  "parent_amount": "5550000000",
+  "component_amount": "136000000",
+  "unit": "USD",
+  "table_id": "table_000136",
+  "inclusive_row_index": 10,
+  "inclusive_label": "Other debt (including finance leases) (a)",
+  "parent_ordinal": 2447,
+  "note_attributes": {
+    "contextref": "c-1",
+    "name": "us-gaap:DebtDisclosureTextBlock",
+    "id": "f-2413",
+    "continuedat": "f-2413-1",
+    "escape": "true"
+  }
+}
+total_cell {'origin_row_index': 12, 'origin_column_index': 9, 'rowspan': 1, 'colspan': 2, 'header': False, 'raw_text': '5,550&#160;', 'text': '5,550', 'row_index': 12, 'column_index': 9, 'is_origin': True}
+primary [(2497, 'c-21', '136000000', '-6')]
+xml [(2497, 'c-21', '136000000', '-6')]
+{
+  "parent_role": "noncurrent_debt",
+  "parent_amount": "16369000000",
+  "component_amount": "754000000",
+  "unit": "USD",
+  "table_id": "table_000136",
+  "inclusive_row_index": 17,
+  "inclusive_label": "Other debt (including finance leases) (a)",
+  "parent_ordinal": 2459,
+  "note_attributes": {
+    "contextref": "c-1",
+    "name": "us-gaap:DebtDisclosureTextBlock",
+    "id": "f-2413",
+    "continuedat": "f-2413-1",
+    "escape": "true"
+  }
+}
+total_cell {'origin_row_index': 19, 'origin_column_index': 9, 'rowspan': 1, 'colspan': 2, 'header': False, 'raw_text': '16,369&#160;', 'text': '16,369', 'row_index': 19, 'column_index': 9, 'is_origin': True}
+primary [(2499, 'c-21', '754000000', '-6')]
+xml [(2499, 'c-21', '754000000', '-6')]

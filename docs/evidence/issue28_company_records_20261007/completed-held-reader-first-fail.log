@@ -1,0 +1,13 @@
+======================================================================
+FAIL: test_completed_withheld_survives_a_later_different_metric_request (tests.vnext.test_company_current_records.CurrentCompanyTest.test_completed_withheld_survives_a_later_different_metric_request)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_company_current_records.py", line 179, in test_completed_withheld_survives_a_later_different_metric_request
+    self.assertIsNone(held['value']);self.assertEqual(held['publication'],'WITHHELD')
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 'WITHHELD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=1)

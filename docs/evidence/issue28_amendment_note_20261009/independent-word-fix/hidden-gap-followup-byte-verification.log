@@ -1,0 +1,21 @@
+{"case": "exact_patch_bytes", "equals_patch": true, "path": "scripts/vnext/amendment_note_layout.py", "sha256": "f0961e71727979b0be00fbdc1043e874346815060bf2388af0b67ad0966f482c"}
+{"case": "exact_patch_bytes", "equals_patch": true, "path": "tests/vnext/test_amendment_note_layout.py", "sha256": "ffecc24cb76ada133ba7a5422cdfe538962608053ff63847d84637903c2ad0a3"}
+{"case": "exact_patch_bytes", "equals_patch": true, "path": "tests/vnext/test_instant_amendment_paragraph_api.py", "sha256": "821fa739a7ce806345857cbc1873b1ab79784f85f724d7759c87940f7fc5d344"}
+{"case": "unchanged_limited_dependency", "equals_base": true, "path": "scripts/vnext/annual_amendment_scope.py", "sha256": "dc9ac0b2e406e41928e9b0e5661dd1e2c6b6ea2a23448e5bee097679094dad8c"}
+{"case": "unchanged_limited_dependency", "equals_base": true, "path": "scripts/vnext/instant_balance_amendment.py", "sha256": "23697b773c22246af9220aebe6f0a1c93643e2d180b9f6bce8a95ebefb6bfb5d"}
+{"case": "unchanged_limited_dependency", "equals_base": true, "path": "scripts/vnext/text_coverage.py", "sha256": "33fe616774a0ee6da02011dd00526f6cc086b191beab7af4d67ce79c4d84b5ce"}
+{"case": "unchanged_limited_dependency", "equals_base": true, "path": "scripts/vnext/fiscal_year_labels.py", "sha256": "b4c2c6d696604f6e313da83c7845bfa6dfe2ffae250de137dcaecf9633b93251"}
+{"case": "unchanged_limited_dependency", "equals_base": true, "path": "config/annual_amendment_scope_v1.json", "sha256": "ed7c8d776c47b08a5238d41d250fa7d4712994f2df34148383040e2435a93202"}
+{"case": "unchanged_limited_dependency", "equals_base": true, "path": "config/instant_balance_amendment_v1.json", "sha256": "50790b4f32651a2d93044d32b58aeace432d6dcde7fa9b42f599dbb05acb0892"}
+{"case": "prior_5cc_evidence_unchanged", "equals_patch_snapshot": true, "name": "conclusion.md", "sha256": "f726b4e81f27f8f3944859053f0aa2ef46ffd286544199252b7c23308aa62ce6"}
+{"case": "prior_5cc_evidence_unchanged", "equals_patch_snapshot": true, "name": "unittest.log", "sha256": "a92a067f75fdd87536b9df93321659319090eb61ec3992a4346215a37b5e7e0a"}
+{"case": "prior_5cc_evidence_unchanged", "equals_patch_snapshot": true, "name": "original-api.log", "sha256": "495e7a26adc2b1ce66054af0aab191e011c817cdd8f3e71fec324b3bc2e30105"}
+{"case": "prior_5cc_evidence_unchanged", "equals_patch_snapshot": true, "name": "text-and-compatibility.log", "sha256": "7f0d12ba8a9d17bc57525f0c634bbe5311064a14cdbd8ba5c4596ec5ac1f6115"}
+{"case": "prior_5cc_evidence_unchanged", "equals_patch_snapshot": true, "name": "remaining-api-and-compatibility.log", "sha256": "14c476eb9569c16e3efc703955f38f880968f18632e6ee488f35d73f5d7451bc"}
+{"case": "prior_5cc_evidence_unchanged", "equals_patch_snapshot": true, "name": "hidden-gap-and-byte-verification.log", "sha256": "0949166350d954467c9ba0af645e86113b82b8c34a438ae083285a9b7f14a650"}
+{"case": "prior_evidence_unchanged", "file_count": 4, "folder": "docs/evidence/issue28_amendment_note_20261009/independent"}
+{"case": "prior_evidence_unchanged", "file_count": 5, "folder": "docs/evidence/issue28_amendment_note_20261009/independent-p1-fix"}
+{"base": "a5467fed3d30927da28cbae45f183bdf481f2346", "case": "final_state", "head": "77e3bca3698d03ac006e7bd23abdee54e799864a", "original_hashes_unchanged": true, "patch": "77e3bca3698d03ac006e7bd23abdee54e799864a", "provider_paid_sec": [0, 0, 0], "timestamp": "2026-10-08T21:17:27.621320+00:00"}
+?? docs/evidence/issue28_amendment_note_20261009/independent-word-fix/hidden-gap-followup-api.log
+?? docs/evidence/issue28_amendment_note_20261009/independent-word-fix/hidden-gap-followup-byte-verification.log
+?? docs/evidence/issue28_amendment_note_20261009/independent-word-fix/hidden-gap-followup-unittest.log

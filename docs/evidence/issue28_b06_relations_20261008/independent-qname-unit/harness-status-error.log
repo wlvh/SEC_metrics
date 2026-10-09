@@ -1,0 +1,6 @@
+First real-script attempts completed their Python output; the following shell assignment failed:
+zsh:1: read-only variable: status
+This was a log wrapper error. Both scripts are rerun once with subprocess returncode below.
+{
+  "first_visible_conflict_output": "primary [(2443, 'c-696', '226', {'us-gaap:LongtermDebtTypeAxis': 'us-gaap:NotesPayableOtherPayablesMember', 'us-gaap:StatementBusinessSegmentsAxis': 'f:CompanyExcludingFordCreditMember'})]\nxml [(2443, 'c-696', '226000000', {'us-gaap:LongtermDebtTypeAxis': 'us-gaap:NotesPayableOtherPayablesMember', 'us-gaap:StatementBusinessSegmentsAxis': 'f:CompanyExcludingFordCreditMember'})]\n{\n  \"source_structure\": \"DERIVED_IN_MEMORY_TEST_ONLY\",\n  \"changes_per_original\": 1,\n  \"carrier_own_scale\": 9,\n  \"carrier_usd\": 226000000000,\n  \"current_lease_usd\": 136000000,\n  \"status\": \"UNRESOLVED\",\n  \"addition\": null,\n  \"new_calls\": [\n    0,\n    0,\n    0\n  ]\n}\n"
+}

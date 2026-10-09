@@ -1,0 +1,140 @@
+Limited offline diagnostic; no development, real model/SEC requests, Run creation or long tests.
+HEAD 01efa3d5d0fa486fac395ba4a3c931fc8dc1eb1b
+Issue #28 live-read updated_at observed: 2026-10-07T19:13:21Z; trusted-internal section agrees with supplied body.
+
+LOG docs/evidence/issue28_company_records_20261007/closeout-current-ci-failed.log sha256 7f5f685fe9655746164518918f5bd1436c8600b59dd11462ae6997d484520a6c
+23 [Company saved D04 native Runs] ERROR: test_native_run_recorded_mode_exact_source_and_resigned_input_rejection (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_native_run_recorded_mode_exact_source_and_resigned_input_rejection)
+56 [Company saved D04 native Runs]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_d04_run_material.py", line 128, in test_native_run_recorded_mode_exact_source_and_resigned_input_rejection
+106 [Company saved D04 native Runs] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+109 [Company saved D04 native Runs] ERROR: test_scoped_assertions_complete_run_and_final_public_row (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_scoped_assertions_complete_run_and_final_public_row)
+143 [Company saved D04 native Runs]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_d04_run_material.py", line 67, in test_scoped_assertions_complete_run_and_final_public_row
+192 [Company saved D04 native Runs] Ran 2 tests in 3.675s
+194 [Company saved D04 native Runs] FAILED (errors=2)
+649 [Company C04 source-only install] ERROR: test_authenticated_resume_mock_can_capture_declared_missing_annual (tests.vnext.test_c04_source_only_install.C04MissingAnnualBootstrapFastTest.test_authenticated_resume_mock_can_capture_declared_missing_annual)
+683 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 516, in test_authenticated_resume_mock_can_capture_declared_missing_annual
+685 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 357, in recorded_sec_session
+731 [Company C04 source-only install] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+734 [Company C04 source-only install] ERROR: test_declared_missing_annual_reaches_source_only_capture (tests.vnext.test_c04_source_only_install.C04MissingAnnualBootstrapFastTest.test_declared_missing_annual_reaches_source_only_capture)
+767 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 457, in test_declared_missing_annual_reaches_source_only_capture
+818 [Company C04 source-only install] ERROR: test_failed_processing_copy_preserves_recorded_capture_for_resume (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume)
+851 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 298, in test_failed_processing_copy_preserves_recorded_capture_for_resume
+902 [Company C04 source-only install] ERROR: test_historical_b01_pointer_without_new_attempt_can_resume (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_historical_b01_pointer_without_new_attempt_can_resume)
+935 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 77, in test_historical_b01_pointer_without_new_attempt_can_resume
+986 [Company C04 source-only install] ERROR: test_mixed_old_root_does_not_capture_unproved_source (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_does_not_capture_unproved_source)
+1019 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 373, in test_mixed_old_root_does_not_capture_unproved_source
+1070 [Company C04 source-only install] ERROR: test_mixed_old_root_resumes_current_rule_metric_and_c04 (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04)
+1103 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 206, in test_mixed_old_root_resumes_current_rule_metric_and_c04
+1154 [Company C04 source-only install] ERROR: test_old_processing_files_remain_old_and_unrelated_drift_blocks (tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest.test_old_processing_files_remain_old_and_unrelated_drift_blocks)
+1187 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 26, in test_old_processing_files_remain_old_and_unrelated_drift_blocks
+1238 [Company C04 source-only install] Ran 9 tests in 22.783s
+1240 [Company C04 source-only install] FAILED (errors=7)
+1684 [Company acquisition session and C04 update/recovery] ERROR: test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding (tests.vnext.test_continuous_sec_acquisition.ContinuousSecAcquisitionTest.test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding)
+1717 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_continuous_sec_acquisition.py", line 37, in test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding
+1719 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 357, in recorded_sec_session
+1765 [Company acquisition session and C04 update/recovery] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+1768 [Company acquisition session and C04 update/recovery] ERROR: test_saved_marriott_positive_creates_native_result (tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest.test_saved_marriott_positive_creates_native_result)
+1801 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_update_cycle.py", line 27, in test_saved_marriott_positive_creates_native_result
+1804 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/c04_update_cycle.py", line 83, in run_once
+1806 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/c04_update_cycle.py", line 46, in _configuration
+1842 [Company acquisition session and C04 update/recovery] ERROR: test_one_prior_source_skipped_only_with_exact_ledger_and_history (tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest.test_one_prior_source_skipped_only_with_exact_ledger_and_history)
+1875 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_refresh_resume.py", line 27, in test_one_prior_source_skipped_only_with_exact_ledger_and_history
+1926 [Company acquisition session and C04 update/recovery] ERROR: test_c04_only_keeps_positive_provider_limit_but_mixed_does_not (tests.vnext.test_c04_refresh_resume.C04ResumeBudgetBoundaryTest.test_c04_only_keeps_positive_provider_limit_but_mixed_does_not)
+1959 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_refresh_resume.py", line 86, in test_c04_only_keeps_positive_provider_limit_but_mixed_does_not
+2010 [Company acquisition session and C04 update/recovery] Ran 6 tests in 11.361s
+2012 [Company acquisition session and C04 update/recovery] FAILED (errors=4)
+2050 [Company remaining source Runs (marriott_international)] ERROR: test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review (tests.vnext.test_remaining_source_run_material.RemainingSourceMaterialTest.test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review)
+2083 [Company remaining source Runs (marriott_international)]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 71, in test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review
+2086 [Company remaining source Runs (marriott_international)]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 35, in build
+2089 [Company remaining source Runs (marriott_international)]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/normal_run_v3.py", line 281, in install_normal_inputs
+2121 [Company remaining source Runs (marriott_international)] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+2124 [Company remaining source Runs (marriott_international)] Ran 1 test in 16.441s
+2126 [Company remaining source Runs (marriott_international)] FAILED (errors=1)
+2145 [Company native Run cold read and recorded source update] ERROR: test_real_open_graphs_and_disk_rejections (tests.vnext.test_normal_run_v3_material.OrdinaryIntegratedMaterialTest.test_real_open_graphs_and_disk_rejections)
+2178 [Company native Run cold read and recorded source update]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 42, in test_real_open_graphs_and_disk_rejections
+2210 [Company native Run cold read and recorded source update] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+2213 [Company native Run cold read and recorded source update] Ran 1 test in 3.253s
+2215 [Company native Run cold read and recorded source update] FAILED (errors=1)
+2236 [Company remaining source Runs (jpmorgan_chase)] ERROR: test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review (tests.vnext.test_remaining_source_run_material.RemainingSourceMaterialTest.test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review)
+2269 [Company remaining source Runs (jpmorgan_chase)]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 71, in test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review
+2272 [Company remaining source Runs (jpmorgan_chase)]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 35, in build
+2275 [Company remaining source Runs (jpmorgan_chase)]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/normal_run_v3.py", line 281, in install_normal_inputs
+2307 [Company remaining source Runs (jpmorgan_chase)] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+2310 [Company remaining source Runs (jpmorgan_chase)] Ran 1 test in 58.272s
+2312 [Company remaining source Runs (jpmorgan_chase)] FAILED (errors=1)
+
+LOG /private/tmp/issue28-7944-failed.log sha256 d5a9e7fb4e9bcedcbb9b85e4b81fa0b216e04d72f606dafdde52e78f45112f25
+257 [Company acquisition session and C04 update/recovery] ERROR: test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding (tests.vnext.test_continuous_sec_acquisition.ContinuousSecAcquisitionTest.test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding)
+290 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_continuous_sec_acquisition.py", line 37, in test_recorded_capture_failure_isolation_native_http_and_checkpoint_binding
+292 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 357, in recorded_sec_session
+338 [Company acquisition session and C04 update/recovery] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+341 [Company acquisition session and C04 update/recovery] ERROR: test_saved_marriott_positive_creates_native_result (tests.vnext.test_c04_update_cycle.C04UpdateCycleMaterialTest.test_saved_marriott_positive_creates_native_result)
+374 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_update_cycle.py", line 27, in test_saved_marriott_positive_creates_native_result
+377 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/c04_update_cycle.py", line 83, in run_once
+379 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/c04_update_cycle.py", line 46, in _configuration
+415 [Company acquisition session and C04 update/recovery] ERROR: test_one_prior_source_skipped_only_with_exact_ledger_and_history (tests.vnext.test_c04_refresh_resume.C04RefreshResumeMaterialTest.test_one_prior_source_skipped_only_with_exact_ledger_and_history)
+448 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_refresh_resume.py", line 27, in test_one_prior_source_skipped_only_with_exact_ledger_and_history
+499 [Company acquisition session and C04 update/recovery] ERROR: test_c04_only_keeps_positive_provider_limit_but_mixed_does_not (tests.vnext.test_c04_refresh_resume.C04ResumeBudgetBoundaryTest.test_c04_only_keeps_positive_provider_limit_but_mixed_does_not)
+532 [Company acquisition session and C04 update/recovery]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_refresh_resume.py", line 86, in test_c04_only_keeps_positive_provider_limit_but_mixed_does_not
+583 [Company acquisition session and C04 update/recovery] Ran 6 tests in 13.228s
+585 [Company acquisition session and C04 update/recovery] FAILED (errors=4)
+957 [Company remaining source Runs (jpmorgan_chase)] ERROR: test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review (tests.vnext.test_remaining_source_run_material.RemainingSourceMaterialTest.test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review)
+990 [Company remaining source Runs (jpmorgan_chase)]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 71, in test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review
+993 [Company remaining source Runs (jpmorgan_chase)]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 35, in build
+996 [Company remaining source Runs (jpmorgan_chase)]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/normal_run_v3.py", line 281, in install_normal_inputs
+1028 [Company remaining source Runs (jpmorgan_chase)] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+1031 [Company remaining source Runs (jpmorgan_chase)] Ran 1 test in 67.822s
+1033 [Company remaining source Runs (jpmorgan_chase)] FAILED (errors=1)
+1054 [Company remaining source Runs (marriott_international)] ERROR: test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review (tests.vnext.test_remaining_source_run_material.RemainingSourceMaterialTest.test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review)
+1087 [Company remaining source Runs (marriott_international)]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 71, in test_native_results_preserve_old_meanings_and_reject_bad_graph_or_missing_review
+1090 [Company remaining source Runs (marriott_international)]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_remaining_source_run_material.py", line 35, in build
+1093 [Company remaining source Runs (marriott_international)]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/normal_run_v3.py", line 281, in install_normal_inputs
+1125 [Company remaining source Runs (marriott_international)] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+1128 [Company remaining source Runs (marriott_international)] Ran 1 test in 16.220s
+1130 [Company remaining source Runs (marriott_international)] FAILED (errors=1)
+1243 [Company native Run cold read and recorded source update] ERROR: test_real_open_graphs_and_disk_rejections (tests.vnext.test_normal_run_v3_material.OrdinaryIntegratedMaterialTest.test_real_open_graphs_and_disk_rejections)
+1276 [Company native Run cold read and recorded source update]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 42, in test_real_open_graphs_and_disk_rejections
+1308 [Company native Run cold read and recorded source update] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+1311 [Company native Run cold read and recorded source update] Ran 1 test in 2.333s
+1313 [Company native Run cold read and recorded source update] FAILED (errors=1)
+1340 [Company C04 source-only install] ERROR: test_authenticated_resume_mock_can_capture_declared_missing_annual (tests.vnext.test_c04_source_only_install.C04MissingAnnualBootstrapFastTest.test_authenticated_resume_mock_can_capture_declared_missing_annual)
+1373 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 516, in test_authenticated_resume_mock_can_capture_declared_missing_annual
+1375 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 357, in recorded_sec_session
+1421 [Company C04 source-only install] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+1424 [Company C04 source-only install] ERROR: test_declared_missing_annual_reaches_source_only_capture (tests.vnext.test_c04_source_only_install.C04MissingAnnualBootstrapFastTest.test_declared_missing_annual_reaches_source_only_capture)
+1457 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 457, in test_declared_missing_annual_reaches_source_only_capture
+1508 [Company C04 source-only install] ERROR: test_failed_processing_copy_preserves_recorded_capture_for_resume (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume)
+1541 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 298, in test_failed_processing_copy_preserves_recorded_capture_for_resume
+1592 [Company C04 source-only install] ERROR: test_historical_b01_pointer_without_new_attempt_can_resume (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_historical_b01_pointer_without_new_attempt_can_resume)
+1625 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 77, in test_historical_b01_pointer_without_new_attempt_can_resume
+1676 [Company C04 source-only install] ERROR: test_mixed_old_root_does_not_capture_unproved_source (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_does_not_capture_unproved_source)
+1709 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 373, in test_mixed_old_root_does_not_capture_unproved_source
+1760 [Company C04 source-only install] ERROR: test_mixed_old_root_resumes_current_rule_metric_and_c04 (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04)
+1793 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 206, in test_mixed_old_root_resumes_current_rule_metric_and_c04
+1844 [Company C04 source-only install] ERROR: test_old_processing_files_remain_old_and_unrelated_drift_blocks (tests.vnext.test_c04_source_only_install.C04SourceOnlyInstallTest.test_old_processing_files_remain_old_and_unrelated_drift_blocks)
+1877 [Company C04 source-only install]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 26, in test_old_processing_files_remain_old_and_unrelated_drift_blocks
+1928 [Company C04 source-only install] Ran 9 tests in 23.091s
+1930 [Company C04 source-only install] FAILED (errors=7)
+1955 [Company saved D04 native Runs] ERROR: test_native_run_recorded_mode_exact_source_and_resigned_input_rejection (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_native_run_recorded_mode_exact_source_and_resigned_input_rejection)
+1988 [Company saved D04 native Runs]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_d04_run_material.py", line 128, in test_native_run_recorded_mode_exact_source_and_resigned_input_rejection
+2038 [Company saved D04 native Runs] vnext.requirements.RequirementError: Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py
+2041 [Company saved D04 native Runs] ERROR: test_scoped_assertions_complete_run_and_final_public_row (tests.vnext.test_d04_run_material.D04RunMaterialTest.test_scoped_assertions_complete_run_and_final_public_row)
+2075 [Company saved D04 native Runs]   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_d04_run_material.py", line 67, in test_scoped_assertions_complete_run_and_final_public_row
+2124 [Company saved D04 native Runs] Ran 2 tests in 6.741s
+2126 [Company saved D04 native Runs] FAILED (errors=2)
+
+CURRENT_METRICS ['A01', 'A02', 'A05', 'A06', 'A07', 'A08', 'A10', 'B01', 'B02', 'B03', 'B04', 'B05', 'B07', 'B08', 'B09', 'B10', 'B11', 'B12', 'C01', 'E02', 'E03', 'E04', 'E05']
+saved-current support ('C04',) {'C04': False}
+saved-current support ('D04',) {'D04': False}
+saved-current support ('B06', 'C02', 'D01', 'D02', 'C03', 'C04') {'B06': False, 'C02': False, 'D01': False, 'D02': False, 'C03': False, 'C04': False}
+saved-current support ('A03', 'A04', 'A09', 'A11', 'A12', 'A13') {'A03': False, 'A04': False, 'A09': False, 'A11': False, 'A12': False, 'A13': False}
+
+Retired ancestor exact-code comparison {"actual": {"sha256": "727197a9727ab14e6c0b7593394bff62886caf8edd529f4f13b149b139f72988", "size": 3771}, "engine": "requirement_profile_v12.py", "expected": {"sha256": "657eaec526d1b28edcd28a1e1d7fc9433fad5a96a677da77c2561d0d0383be3e", "size": 3769}, "path": "scripts/vnext/normal_source_authority.py", "requirement_id": "issue_28_v11"}
+snapshot probe issue_28_v13 RequirementError Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py seconds 1.108151
+snapshot probe issue_28_v14 RequirementError Normal candidate rule bytes differ: scripts/vnext/normal_source_authority.py seconds 1.115297
+
+Reused actual old saved-runtime read; NOT rerun:
+command ['/private/tmp/issue28-company-c02-venv-20261006/bin/python', '-B', 'tools/vnext_company.py', 'results', '--company', 'jpmorgan_chase', '--state-root', '/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-main-jpm-d01-task-20261006', '--runtime-root', '/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-main-integrated-runtime-20261006', '--trust-root', '/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-main-source-trust-20261006', '--defects-file', '/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/docs/evidence/issue28_continuous/known_result_defects.json'] exit 0 seconds 0.6365778751205653 stderr 
+view type COMPANY_RESULT_VIEW_V2 metrics 1
+Original manifest/records retained; no new source/model or native Run execution; no fresh content acceptance.
+
+No full material tests, native installation or semantic acceptance were performed by this diagnosis.

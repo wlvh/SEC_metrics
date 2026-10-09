@@ -293,8 +293,16 @@ def _recover(root,state,configuration,verify_candidate=None):
 
 
 def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None,
-             source_identity_root=None,a05_formula=False,d02_category=False):
+             source_identity_root=None,a05_formula=False,d02_category=False,current_records=False):
     """Check one company's current input and keep a durable candidate history."""
+    _need(type(current_records) is bool, 'UPDATE_RECORD_FORMAT_INVALID')
+    if current_records:
+        _need(len(metric_ids)==1 and source_identity_root is None
+              and native_assessment_ledger is None and not a05_formula and not d02_category,
+              'UPDATE_CURRENT_RECORD_SCOPE_UNSUPPORTED')
+        from .ordinary_current_update import run_once as run_current
+        return run_current(state_root=state_root,source_root=source_root,
+                           company_id=company_id,metric_id=metric_ids[0])
     _need(type(d02_category) is bool or d02_category == 'ITEM8_V2',
           'UPDATE_D02_CATEGORY_SCOPE_INVALID')
     _need(d02_category is not True, 'UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')

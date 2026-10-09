@@ -6,7 +6,7 @@
 
 #28负责公共 CLI、运行/结果基础、公共文档及当期集成；[#47](https://github.com/wlvh/SEC_metrics/issues/47#history-simplification-20261006)负责历史能力和消费者，共用核心沿既有负责人维护。协作职责见 [#28 当前共同协作节](https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1)；10月6日决定已替代冲突的 v1.3 工程前置，保留已确定的公司入口责任。
 
-[#54](https://github.com/wlvh/SEC_metrics/issues/54)/[PR57](https://github.com/wlvh/SEC_metrics/pull/57)已交付公司边界，不再是当前队列或待接线责任方。使用版本与输入前提见 [公司运行](docs/company_local_run.md)，获取/计算边界见 [接口说明](docs/company_compute_boundary.md)。main的原生流程、PR67保存来源候选及其默认入口兼容修复分开；PR67已验证自动安装固定main8588的默认新任务，新的轻量在线后继在独立PR83。OpenShift部署另期。
+[#54](https://github.com/wlvh/SEC_metrics/issues/54)/[PR57](https://github.com/wlvh/SEC_metrics/pull/57)已交付公司边界，不再是当前队列或待接线责任方。使用版本与输入前提见 [公司运行](docs/company_local_run.md)，获取/计算边界见 [接口说明](docs/company_compute_boundary.md)。main 已接收 PR67 的保存来源/普通记录、PR83 的有限在线接线及 PR71/75/76 历史消费者；保留原生默认入口自动安装固定 main8588。各入口与业务接受范围分别说明。OpenShift部署另期。
 
 ## 0. 按任务选择阅读路径
 
@@ -17,6 +17,14 @@
 公司 `results` 的版本和参数见 [公司运行](docs/company_local_run.md)。普通记录读取不默认重算；保留原生任务提供创建它的固定程序及来源登记，不用当前文件重签旧 Run。
 
 ### 读取旧已发布批次（历史入口）
+
+当前保存来源普通任务先读 `docs/company_local_run.md`，使用：
+
+```text
+python3 tools/vnext_company.py results --company <公司> --state-root <保存状态> --output-root <日常输出>
+```
+
+该命令只读保存结果，不重新计算或核验新来源；状态与出处仍显示，业务接受另行判断。旧native任务可按自身记录显式提供原runtime/trust位置。以下是已发布旧批次的只读路径，不是新普通任务的默认前置：
 
 ```text
 SOP.md「只读取现有结果」

@@ -1,0 +1,30 @@
+test_03_same_local_custom_concept_does_not_invalidate_standard_composition (__main__.RepairProbes.test_03_same_local_custom_concept_does_not_invalidate_standard_composition) ... FAIL
+
+======================================================================
+FAIL: test_03_same_local_custom_concept_does_not_invalidate_standard_composition (__main__.RepairProbes.test_03_same_local_custom_concept_does_not_invalidate_standard_composition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<equal-amount-probe>", line 96, in test_03_same_local_custom_concept_does_not_invalidate_standard_composition
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/ordinary_b03_input_scope.py", line 63, in inspect_depreciation_input
+    originals = _selected_original_facts(parsed=parsed,metadata=metadata,
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/b03_contract_amortization_scope.py", line 43, in _selected_original_facts
+    _need(local_name == selected['source_binding']['concept'].split(':', 1)[1]
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/scripts/vnext/b03_contract_amortization_scope.py", line 24, in _need
+    raise ValueError(reason)
+ValueError: B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NAMESPACE_MISMATCH:depreciation
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<equal-amount-probe>", line 99, in test_03_same_local_custom_concept_does_not_invalidate_standard_composition
+AssertionError: Valid FASB 7+13 plus unrelated issuer:Depreciation raises B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NAMESPACE_MISMATCH:depreciation
+
+----------------------------------------------------------------------
+Ran 1 test in 0.027s
+
+FAILED (failures=1)
+Independent confirmation: same original probe, issuer:Depreciation amount changed 9 -> 7; it now agrees with selected FASB quantity.
+Review patch: 44c8b22a6fd7a4ba309f1c0e458355ce274f5cbf
+base ignores unrelated issuer:Depreciation: {'depreciation': {'concept': 'us-gaap:Depreciation', 'value_usd': '7', 'primary_fact_ordinals': [1]}, 'amortization': {'concept': 'us-gaap:AmortizationOfIntangibleAssets', 'value_usd': '13', 'primary_fact_ordinals': [2]}}
+head rejects equivalent standard composition: B03_CONTRACT_SCOPE_SELECTED_COMPONENT_NAMESPACE_MISMATCH:depreciation

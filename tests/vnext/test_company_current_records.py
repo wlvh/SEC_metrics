@@ -1,0 +1,451 @@
+"""Small orchestration/retention checks; real-source CLI is separate evidence."""
+import csv
+import fcntl
+import json
+from pathlib import Path
+import tempfile
+import unittest
+from unittest.mock import patch
+
+from tests.vnext.common import REPO_ROOT
+from vnext import company_current_records as current
+from vnext.csv_output import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
+
+
+class CurrentCompanyTest(unittest.TestCase):
+    def setUp(self):
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        self.root = Path(temp.name).resolve()
+        self.source = self.root/'source'; self.source.mkdir()
+        self.work = self.root/'state'; self.outputs = self.root/'output'
+        self.registry = self.root/'defects.json'; self.registry.write_text('{"defects":[]}')
+        self.values = {}; self.updates = []
+        def update(**kw):
+            metric = kw['metric_id']; controller = kw['state_root']; controller.mkdir(parents=True, exist_ok=True)
+            record = controller/'results'/'first'; record.mkdir(parents=True, exist_ok=True)
+            result = {'company_id': 'marriott_international', 'metric_id': metric,
+                      'period_end': '2025-12-31', 'result_id': metric+'-result'}
+            row = {**{f: '' for f in METRIC_FIELDS}, 'company': 'Marriott International',
+                   'metric_id': metric, 'value': '100', 'unit': 'USD', 'status': 'OK',
+                   'period_start': '2025-01-01', 'period_end': '2025-12-31', 'fiscal_year': '2025'}
+            self.values[str(record)] = {'result': result, 'manifest':{'target_period':{'fiscal_year':2025}}, 'files': {
+                'metrics_matrix.csv': _csv_bytes(rows=[row],fieldnames=METRIC_FIELDS),
+                'metric_evidence.csv': _csv_bytes(rows=[],fieldnames=EVIDENCE_FIELDS)}}
+            (controller/'current-result.json').write_text(json.dumps({'version':'first',
+                'company_id':'marriott_international','metric_id':metric,'result_id':metric+'-result'}))
+            self.updates.append(metric)
+            return {'status': 'CANDIDATE_READY', 'result_root': str(record)}
+        for name, kwargs in [('run_once', {'side_effect': update}),
+                             ('read_saved_result', {'side_effect': lambda **k:self.values[str(k['output_root'])]})]:
+            p = patch.object(current,name,**kwargs); p.start(); self.addCleanup(p.stop)
+
+    def run_company(self, metrics=('B01','B02')):
+        return current.run_saved_company(company_id='marriott_international',source_root=self.source,
+            work_dir=self.work,output_dir=self.outputs,metric_ids=metrics,defects_file=self.registry)
+
+    def rows(self, report):
+        with (Path(report['output_root'])/'metrics_matrix.csv').open() as stream:
+            return list(csv.DictReader(stream))
+
+    def test_two_metrics_share_source_and_program_without_installer(self):
+        from vnext.company_runtime_install import install_runtime
+        with patch('vnext.company_runtime_install.install_runtime',side_effect=AssertionError('No installer')):
+            r=self.run_company()
+        self.assertEqual(r['status'],'FLOW_COMPLETED');self.assertEqual(self.updates,['B01','B02'])
+        self.assertEqual(r['calls'],{'provider':0,'paid':0,'sec':0})
+        self.assertFalse((self.work/'programs').exists());self.assertFalse((self.work/'source').exists())
+        self.assertTrue(all(row['source_root']==str(self.source) for row in self.rows(r)))
+
+    def test_existing_local_entry_selects_saved_branch_without_configure_task(self):
+        from vnext.company_local import run_local
+        with patch('vnext.company_local.configure_task',side_effect=AssertionError('No legacy installation')), \
+             patch.object(current,'run_saved_company',return_value={'status':'FLOW_COMPLETED'}) as selected:
+            run_local(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B01'])
+        self.assertEqual(selected.call_args.kwargs['source_root'],self.source)
+
+    def test_source_failure_preserves_old_period_and_other_metric_continues(self):
+        self.run_company()
+        def update(**kw):
+            return {'status':'INPUT_OR_EXECUTION_FAILED','reason':'LATEST_SOURCE_REQUEST_FAILED'} if kw['metric_id']=='B01' else {'status':'NO_SOURCE_CONTENT_CHANGE'}
+        with patch.object(current,'run_once',side_effect=update):r=self.run_company()
+        rows={row['metric_id']:row for row in self.rows(r)}
+        self.assertEqual(r['status'],'FLOW_COMPLETED_WITH_LIMITATIONS')
+        self.assertEqual(rows['B01']['period_role'],'PREVIOUS_RESULT')
+        self.assertEqual(rows['B01']['source_observation_status'],'FAILED_CURRENT_CHECK')
+        self.assertEqual(rows['B01']['period_end'],'2025-12-31')
+        self.assertEqual(rows['B02']['period_role'],'REQUESTED_RESULT')
+
+    def test_known_bad_exact_result_is_removed_from_numeric_csv(self):
+        self.registry.write_text(json.dumps({'defects':[{'defect_id':'test-known-defect',
+            'company_id':'marriott_international','metric_id':'B01','period_end':'2025-12-31',
+            'result_id':'B01-result','released':[]}]}))
+        r=self.run_company(); rows={row['metric_id']:row for row in self.rows(r)}
+        self.assertEqual(rows['B01']['value'],'');self.assertEqual(rows['B01']['status'],'WITHHELD_KNOWN_DEFECT')
+        self.assertEqual(rows['B02']['value'],'100');self.assertEqual(r['status'],'FLOW_COMPLETED_WITH_LIMITATIONS')
+
+    def test_wrong_metric_saved_record_is_not_exported(self):
+        self.run_company()
+        path=self.work/'updates/B01/results/first'
+        self.values[str(path)]['result']['company_id']='wrong-company'
+        with patch.object(current,'run_once',return_value={'status':'NO_SOURCE_CONTENT_CHANGE'}):r=self.run_company(['B01'])
+        self.assertEqual(self.rows(r)[0]['value'],'')
+        self.assertIn('WRONG_SAVED_COORDINATE',r['metrics'][0]['saved_read_error'])
+
+    def test_metric_exception_is_local_not_batch_failure(self):
+        with patch.object(current,'run_once',side_effect=ValueError('broken metric')):
+            r=self.run_company()
+        self.assertEqual(len(r['metrics']),2);self.assertEqual(r['status'],'FLOW_COMPLETED_WITH_LIMITATIONS')
+        self.assertTrue(all(row['period_role']=='REQUESTED_WITHOUT_RESULT' for row in self.rows(r)))
+
+    def test_missing_ai_and_deprecated_e01_do_not_manufacture_results(self):
+        r=self.run_company(['D04','E01'])
+        self.assertEqual(self.updates,[]);self.assertEqual(r['status'],'FLOW_COMPLETED_WITH_LIMITATIONS')
+        self.assertTrue(all(row['value']=='' for row in self.rows(r)))
+
+    def test_source_binding_and_old_task_are_not_reset(self):
+        self.run_company()
+        other=self.root/'other-source';other.mkdir()
+        with self.assertRaisesRegex(ValueError,'TASK_IDENTITY_CHANGED'):
+            current.run_saved_company(company_id='marriott_international',source_root=other,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B01'],defects_file=self.registry)
+        (self.work/'local-company.json').write_text('{}')
+        with self.assertRaisesRegex(ValueError,'OLD_TASK_REQUIRES_ORIGINAL_ENTRY'):self.run_company()
+
+    def test_writable_state_cannot_overlap_source_or_code(self):
+        with self.assertRaisesRegex(ValueError,'ROOTS_OVERLAP'):
+            current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.source/'state',output_dir=self.outputs,metric_ids=['B01'])
+
+    def test_competing_writer_does_not_enter_calculation(self):
+        self.work.mkdir()
+        with (self.work/'company.lock').open('a+b') as lock:
+            fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+            with self.assertRaises(BlockingIOError):self.run_company()
+        self.assertEqual(self.updates,[])
+
+    def test_daily_read_does_not_select_sources_or_run_update(self):
+        self.run_company()
+        with patch.object(current,'run_once',side_effect=AssertionError('No update')):
+            view=current.read_current_company(state_root=self.work,company_id='marriott_international')
+        self.assertEqual(len(view['metrics']),2)
+        self.assertEqual(view['source_freshness'],'NOT_CHECKED_BY_SAVED_READER')
+
+    def test_unrelated_source_discovery_failure_still_shows_limitation(self):
+        self.run_company()
+        with patch.object(current,'run_once',return_value={'status':'NO_SOURCE_CONTENT_CHANGE',
+             'source_observation_errors':[{'source_url':'metadata','status_code':'500'}]}):r=self.run_company()
+        self.assertEqual(r['status'],'FLOW_COMPLETED_WITH_LIMITATIONS')
+        self.assertTrue(all(row['source_observation_status']=='SAVED_SOURCE_CHECKED_WITH_DISCOVERY_ERRORS'
+                            for row in self.rows(r)))
+
+    def test_new_withheld_result_is_shown_instead_of_old_success(self):
+        self.run_company(['B01'])
+        record=self.work/'updates/B01/results/withheld';record.mkdir()
+        old=self.values[str(self.work/'updates/B01/results/first')]
+        row={**{f:'' for f in METRIC_FIELDS},'company':'Marriott International','metric_id':'B01',
+             'status':'WITHHELD','period_start':'2026-01-01','period_end':'2026-12-31','fiscal_year':'2026'}
+        self.values[str(record)]={'result':{**old['result'],'period_end':'2026-12-31','result_id':'new-withheld'},
+            'manifest':{'target_period':{'fiscal_year':2026}},
+            'files':{'metrics_matrix.csv':_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS),
+                     'metric_evidence.csv':old['files']['metric_evidence.csv']}}
+        for status in ('CANDIDATE_WITHHELD','PREVIOUS_INPUT_WITHHELD'):
+            with patch.object(current,'run_once',return_value={'status':status,'result_root':str(record)}):
+                result=self.run_company(['B01'])
+            self.assertEqual(self.rows(result)[0]['period_role'],'REQUESTED_RESULT')
+            self.assertEqual(self.rows(result)[0]['value'],'')
+        self.assertEqual(self.rows(result)[0]['period_role'],'REQUESTED_RESULT')
+        self.assertEqual(self.rows(result)[0]['period_end'],'2026-12-31')
+        self.assertEqual(self.rows(result)[0]['value'],'')
+        self.assertEqual(json.loads((self.work/'updates/B01/current-result.json').read_text())['version'],'first')
+
+    def test_completed_withheld_survives_a_later_different_metric_request(self):
+        self.run_company(['B01'])
+        controller=self.work/'updates/B01';record=controller/'results/held';record.mkdir()
+        old=self.values[str(controller/'results/first')]
+        old['result'].update(value='100',unit='USD',publication='PUBLISHED')
+        row={**{f:'' for f in METRIC_FIELDS},'company':'Marriott International','metric_id':'B01',
+             'status':'WITHHELD','period_start':'2025-01-01','period_end':'2025-12-31','fiscal_year':'2025'}
+        self.values[str(record)]={'result':{**old['result'],'value':None,'publication':'WITHHELD',
+            'result_id':'held-result','reason_code':'CONSTRUCTED_SCOPE_CONFLICT'},
+            'manifest':{'target_period':{'fiscal_year':2025}},
+            'files':{'metrics_matrix.csv':_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS),
+                     'metric_evidence.csv':old['files']['metric_evidence.csv']}}
+        (controller/'completed-check.json').write_text(json.dumps({'company_id':'marriott_international',
+            'metric_id':'B01','status':'CANDIDATE_WITHHELD','version':'held','result_id':'held-result'}))
+        self.run_company(['B02'])
+        view=current.read_current_company(state_root=self.work,company_id='marriott_international')
+        held=next(m for m in view['metrics'] if m['metric_id']=='B01')
+        self.assertIsNone(held['value']);self.assertEqual(held['publication'],'WITHHELD')
+        self.assertEqual(held['result_id'],'held-result');self.assertFalse(held['requested_in_latest_execution'])
+        self.assertEqual(json.loads((controller/'current-result.json').read_text())['version'],'first')
+
+    def test_completed_pointer_cannot_label_a_success_record_as_withheld(self):
+        self.run_company(['B01'])
+        controller=self.work/'updates/B01';old=self.values[str(controller/'results/first')]
+        old['result']['publication']='PUBLISHED'
+        (controller/'completed-check.json').write_text(json.dumps({'company_id':'marriott_international',
+            'metric_id':'B01','status':'CANDIDATE_WITHHELD','version':'first','result_id':'B01-result'}))
+        self.run_company(['B02'])
+        with self.assertRaisesRegex(ValueError,'COMPLETED_PUBLICATION_CHANGED'):
+            current.read_current_company(state_root=self.work,company_id='marriott_international')
+
+    def test_common_company_reader_keeps_other_metric_after_subset_run(self):
+        from vnext.company_result_view import read_company_results
+        self.run_company()
+        for metric in ('B01','B02'):
+            pointer=self.work/'updates'/metric/'current-result.json'
+            pointer.write_text(json.dumps({'version':'first','company_id':'marriott_international',
+                'metric_id':metric,'result_id':metric+'-result'}))
+        self.run_company(['B02'])
+        with patch('vnext.company_result_view.recover_for_read',side_effect=AssertionError('No old trust')):
+            view=read_company_results(state_root=self.work,company_id='marriott_international',defects_file=self.registry)
+        rows={m['metric_id']:m for m in view['metrics']}
+        self.assertEqual(set(rows),{'B01','B02'})
+        self.assertFalse(rows['B01']['requested_in_latest_execution'])
+        self.assertTrue(rows['B02']['requested_in_latest_execution'])
+
+    def test_common_read_exports_csv_and_honours_supplied_defects_without_update(self):
+        from vnext.company_result_view import read_company_results
+        self.run_company()
+        self.registry.write_text(json.dumps({'defects':[{'defect_id':'held','company_id':'marriott_international',
+            'metric_id':'B01','period_end':'2025-12-31','result_id':'B01-result','released':[]}]}))
+        output=self.root/'daily'
+        with patch.object(current,'run_once',side_effect=AssertionError('No update')):
+            view=read_company_results(state_root=self.work,company_id='marriott_international',
+                defects_file=self.registry,output_root=output)
+        rows={r['metric_id']:r for r in self.rows({'output_root':str(output)})}
+        self.assertEqual(rows['B01']['value'],'');self.assertEqual(rows['B02']['value'],'100')
+        self.assertEqual(rows['B01']['status'],'WITHHELD_KNOWN_DEFECT')
+        self.assertEqual(view['source_freshness'],'NOT_CHECKED_BY_SAVED_READER')
+        self.assertTrue((output/'metric_evidence.csv').exists())
+
+    def test_same_metric_two_period_pointers_are_both_visible(self):
+        import copy
+        self.run_company(['B01'])
+        old=self.work/'updates/B01/results/first'
+        record=self.work/'updates/B01/periods/FY2024/results/first';record.mkdir(parents=True)
+        value=copy.deepcopy(self.values[str(old)])
+        value['result'].update(period_end='2024-12-31',result_id='B01-prior')
+        value['manifest']['target_period']['fiscal_year']=2024
+        self.values[str(record)]=value
+        (record.parent.parent/'current-result.json').write_text(json.dumps({'version':'first',
+            'company_id':'marriott_international','metric_id':'B01','result_id':'B01-prior',
+            'requested_fiscal_year':2024}))
+        view=current.read_current_company(state_root=self.work,company_id='marriott_international')
+        self.assertEqual(len(view['metrics']),2)
+        self.assertEqual({v['result_id'] for v in view['metrics']},{'B01-result','B01-prior'})
+
+    def test_range_public_entry_isolates_missing_year_and_exports_actual_success_period(self):
+        def factory(**kwargs):return {'target_period':{'fiscal_year':kwargs['fiscal_year']}}
+        calls=[]
+        def update(**kw):
+            year=kw['fiscal_year'];calls.append((year,kw['metric_id']))
+            if year==2025:return {'status':'INPUT_OR_EXECUTION_FAILED','reason':'selected annual source missing'}
+            controller=kw['state_root']/'periods'/('FY'+str(year));record=controller/'results/one'
+            record.mkdir(parents=True)
+            value={'company_id':'marriott_international','metric_id':'B01','period_start':'2024-01-01',
+                   'period_end':'2024-12-31','result_id':'FY2024-result'}
+            row={**{f:'' for f in METRIC_FIELDS},'company':'Marriott International','metric_id':'B01',
+                 'value':'99','unit':'USD','period_start':'2024-01-01','period_end':'2024-12-31','fiscal_year':'2024','status':'OK'}
+            self.values[str(record)]={'result':value,'manifest':{'target_period':{'fiscal_year':2024}},
+                'files':{'metrics_matrix.csv':_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS),
+                         'metric_evidence.csv':_csv_bytes(rows=[],fieldnames=EVIDENCE_FIELDS)}}
+            (controller/'current-result.json').write_text(json.dumps({'company_id':'marriott_international',
+                'metric_id':'B01','version':'one','result_id':'FY2024-result','requested_fiscal_year':2024}))
+            return {'status':'CANDIDATE_READY','result_root':str(record),'result_id':'FY2024-result'}
+        with patch.object(current,'run_once',side_effect=update):
+            report=current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B01'],defects_file=self.registry,
+                fiscal_years=[2024,2025],case_factory=factory)
+        self.assertEqual(calls,[(2024,'B01'),(2025,'B01')])
+        self.assertEqual(report['status'],'FLOW_COMPLETED_WITH_LIMITATIONS')
+        rows=self.rows(report)
+        self.assertEqual(rows[0]['fiscal_year'],'2024');self.assertEqual(rows[0]['value'],'99')
+        self.assertEqual(rows[1]['fiscal_year'],'2025');self.assertEqual(rows[1]['value'],'')
+        self.assertEqual(rows[1]['period_start'],'')
+        view=current.read_current_company(state_root=self.work,company_id='marriott_international')
+        self.assertEqual(len(view['metrics']),2)
+        missing=next(r for r in view['metrics'] if r['result_validity']=='NO_CURRENT_RESULT')
+        self.assertEqual(missing['fiscal_year'],2025)
+        daily=self.root/'range-daily'
+        current.read_current_company(state_root=self.work,company_id='marriott_international',output_root=daily)
+        failed=next(r for r in self.rows({'output_root':str(daily)}) if r['value']=='')
+        self.assertEqual(failed['fiscal_year'],'2025');self.assertEqual(failed['period_end'],'')
+
+    def test_range_requires_unique_bounded_years_and_existing_factory(self):
+        for years in ([],[2024,2024],list(range(2020,2026))):
+            with self.assertRaisesRegex(ValueError,'FISCAL_YEAR_SCOPE_INVALID'):
+                current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                    work_dir=self.work,output_dir=self.outputs,metric_ids=['B01'],fiscal_years=years,
+                    case_factory=lambda **k:None)
+        with self.assertRaisesRegex(ValueError,'REQUIRE_CASE_FACTORY'):
+            current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B01'],fiscal_years=[2024])
+
+
+class SavedSourceCompanyEntryTest(unittest.TestCase):
+    """One real source/Calculator preparation shared across read/reentry checks."""
+    @classmethod
+    def setUpClass(cls):
+        cls.temp=tempfile.TemporaryDirectory()
+        cls.root=Path(cls.temp.name)
+        cls.work=cls.root/'state';cls.output=cls.root/'output'
+        cls.report=current.run_saved_company(company_id='marriott_international',source_root=REPO_ROOT,
+            work_dir=cls.work,output_dir=cls.output,metric_ids=['B01','B02'])
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.temp.cleanup()
+
+    def test_real_marriott_values_periods_and_source_links_reach_company_csv(self):
+        from decimal import Decimal
+        with (Path(self.report['output_root'])/'metrics_matrix.csv').open() as f:
+            rows={r['metric_id']:r for r in csv.DictReader(f)}
+        self.assertEqual(self.report['status'],'FLOW_COMPLETED')
+        self.assertEqual(Decimal(rows['B01']['value']),Decimal('26186000000'))
+        self.assertEqual(Decimal(rows['B02']['value']),(Decimal('26186000000')-Decimal('25100000000'))/Decimal('25100000000'))
+        self.assertEqual(rows['B01']['unit'],'USD');self.assertEqual(rows['B02']['unit'],'ratio')
+        for row in rows.values():
+            self.assertEqual((row['period_start'],row['period_end'],row['fiscal_year']),
+                             ('2025-01-01','2025-12-31','2025'))
+        with (Path(self.report['output_root'])/'metric_evidence.csv').open() as f:proofs=list(csv.DictReader(f))
+        self.assertTrue(proofs);self.assertTrue(all(p['source_url'].startswith('https://') for p in proofs))
+        self.assertFalse((self.work/'programs').exists());self.assertFalse((self.work/'source').exists())
+
+    def test_real_reentry_never_invokes_calculation_factory(self):
+        with patch('vnext.ordinary_current_update.create_saved_result',side_effect=AssertionError('No calculation')):
+            report=current.run_saved_company(company_id='marriott_international',source_root=REPO_ROOT,
+                work_dir=self.work,output_dir=self.output,metric_ids=['B01','B02'])
+        self.assertTrue(all(m['status']=='NO_SOURCE_CONTENT_CHANGE' for m in report['metrics']))
+
+    def test_real_read_does_not_parse_or_update(self):
+        with patch.object(current,'run_once',side_effect=AssertionError('No update')):
+            view=current.read_current_company(state_root=self.work,company_id='marriott_international')
+        self.assertEqual(len(view['metrics']),2)
+        self.assertEqual(view['source_freshness'],'NOT_CHECKED_BY_SAVED_READER')
+
+
+class MixedSavedBusinessOutcomeTest(unittest.TestCase):
+    """Actual non-calendar sources: stable scope hold cannot erase neighbours."""
+    @classmethod
+    def setUpClass(cls):
+        cls.temp=tempfile.TemporaryDirectory();cls.root=Path(cls.temp.name)
+        cls.work=cls.root/'state';cls.output=cls.root/'output'
+        cls.first=current.run_saved_company(company_id='salesforce',source_root=REPO_ROOT,
+            work_dir=cls.work,output_dir=cls.output,metric_ids=['B01','B03','B12'])
+
+    @classmethod
+    def tearDownClass(cls):cls.temp.cleanup()
+
+    def test_actual_scope_withheld_preserves_two_successful_numeric_results(self):
+        metrics={m['metric_id']:m for m in self.first['metrics']}
+        self.assertEqual([metrics[k]['status'] for k in ('B01','B03','B12')],
+            ['CANDIDATE_READY','CANDIDATE_WITHHELD','CANDIDATE_READY'])
+        view=current.read_current_company(state_root=self.work,company_id='salesforce')
+        rows={m['metric_id']:m for m in view['metrics']}
+        self.assertEqual(rows['B01']['value'],'41525000000')
+        self.assertEqual(rows['B12']['value'],'72400000000')
+        self.assertIsNone(rows['B03']['value'])
+        self.assertEqual(rows['B03']['reason_code'],'B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN')
+        self.assertEqual(rows['B01']['fiscal_year'],2026)
+        self.assertEqual(rows['B01']['period_start'],'2025-02-01')
+        self.assertEqual(rows['B01']['period_end'],'2026-01-31')
+
+    def test_repeated_mixed_inputs_reuse_success_and_hold_without_factory(self):
+        before={k:m['result_id'] for k,m in ((m['metric_id'],m) for m in self.first['metrics'])}
+        with patch('vnext.ordinary_current_update.create_saved_result',side_effect=AssertionError('No repeated mixed calculation')):
+            again=current.run_saved_company(company_id='salesforce',source_root=REPO_ROOT,
+                work_dir=self.work,output_dir=self.output,metric_ids=['B01','B03','B12'])
+        metrics={m['metric_id']:m for m in again['metrics']}
+        self.assertEqual([metrics[k]['status'] for k in ('B01','B03','B12')],
+            ['NO_SOURCE_CONTENT_CHANGE','PREVIOUS_INPUT_WITHHELD','NO_SOURCE_CONTENT_CHANGE'])
+        self.assertEqual({k:m['result_id'] for k,m in metrics.items()},before)
+
+
+class PerMetricProducerTest(unittest.TestCase):
+    setUp=CurrentCompanyTest.setUp
+    def test_each_selected_metric_keeps_its_factory_and_exact_dependencies(self):
+        def income(**kw): return None
+        def lodging(**kw): return None
+        paths={'B03':('income.py',),'B10':('lodging.py',)}
+        factories={'B03':income,'B10':lodging};seen=[]
+        def update(**kw):
+            seen.append(kw)
+            return {'status':'INPUT_OR_EXECUTION_FAILED','reason':'Explicit test boundary: no financial computation'}
+        with patch.object(current,'run_once',side_effect=update):
+            current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B03','B10'],
+                fiscal_years=[2024],case_factories=factories,processing_files_by_metric=paths)
+        self.assertEqual([r['metric_id'] for r in seen],['B03','B10'])
+        for row in seen:
+            self.assertIs(row['case_factory'],factories[row['metric_id']])
+            self.assertEqual(row['processing_files'],paths[row['metric_id']])
+        self.assertEqual(paths,{'B03':('income.py',),'B10':('lodging.py',)})
+
+    def test_single_factory_and_dependency_tuple_are_passed_unchanged(self):
+        def factory(**kw): return None
+        files=('existing.py',);seen=[]
+        def update(**kw):
+            seen.append(kw)
+            return {'status':'INPUT_OR_EXECUTION_FAILED','reason':'Explicit test boundary'}
+        with patch.object(current,'run_once',side_effect=update):
+            current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B03','B10'],
+                fiscal_years=[2024],case_factory=factory,processing_files=files)
+        self.assertTrue(all(r['case_factory'] is factory and r['processing_files'] is files for r in seen))
+
+    def test_bad_or_ambiguous_metric_mapping_is_rejected_before_writes(self):
+        def factory(**kw): return None
+        for extra in [{'case_factories':{'B03':factory}},
+                      {'case_factories':{'B03':factory,'B10':factory},'case_factory':factory},
+                      {'case_factories':{'B03':factory,'B10':factory},
+                       'processing_files_by_metric':{'B03':('x.py',)},'processing_files':('y.py',)},
+                      {'case_factories':{'B03':factory,'B10':factory},
+                       'processing_files_by_metric':{'B01':('unrequested.py',)}}]:
+            with self.subTest(extra=extra),self.assertRaisesRegex(ValueError,'METRIC_.*INVALID'):
+                current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                    work_dir=self.work,output_dir=self.outputs,metric_ids=['B03','B10'],
+                    fiscal_years=[2024],**extra)
+            self.assertFalse(self.work.exists());self.assertFalse(self.outputs.exists())
+
+    def test_adding_another_metric_reuses_completed_input_in_the_actual_controller(self):
+        from vnext import ordinary_current_update as update
+        counts={'B03':0,'B10':0};records={}
+        def income(**kw):
+            counts['B03']+=1;return {'target_period':{'fiscal_year':kw['fiscal_year']}}
+        def lodging(**kw):
+            counts['B10']+=1;return {'target_period':{'fiscal_year':kw['fiscal_year']}}
+        def save(**kw):
+            metric=kw['metric_id'];path=kw['output_root'];path.mkdir(parents=True)
+            result={'company_id':'marriott_international','metric_id':metric,'publication':'PUBLISHED',
+                    'period_start':'2024-01-01','period_end':'2024-12-31','result_id':metric+'-fixture'}
+            row={**{f:'' for f in METRIC_FIELDS},'company':'Marriott International','metric_id':metric,
+                 'value':'1','unit':'USD','status':'OK','period_start':'2024-01-01',
+                 'period_end':'2024-12-31','fiscal_year':'2024'}
+            record={'result':result,'manifest':{'company_id':'marriott_international','metric_id':metric,
+                    'source_proofs':[],'target_period':{'fiscal_year':2024}},'files':{
+                    'metrics_matrix.csv':_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS),
+                    'metric_evidence.csv':_csv_bytes(rows=[],fieldnames=EVIDENCE_FIELDS)}}
+            records[str(path)]=record;return record
+        def read(**kw):return records[str(kw['output_root'])]
+        with patch.object(current,'run_once',update.run_once),patch.object(current,'read_saved_result',side_effect=read), \
+             patch.object(update,'read_saved_result',side_effect=read),patch.object(update,'save_calculated_case',side_effect=save), \
+             patch.object(update,'_configuration',return_value={'fixture_version':'one'}), \
+             patch.object(update,'_source_census',return_value=[]),patch.object(update,'_current_sources',return_value=[]):
+            first=current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B03'],fiscal_years=[2024],case_factory=income)
+            mixed=current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B03','B10'],fiscal_years=[2024],
+                case_factories={'B03':income,'B10':lodging},processing_files_by_metric={'B03':(),'B10':()})
+            again=current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B03','B10'],fiscal_years=[2024],
+                case_factories={'B03':income,'B10':lodging})
+        self.assertEqual(first['status'],'FLOW_COMPLETED');self.assertEqual(mixed['status'],'FLOW_COMPLETED')
+        self.assertEqual(counts,{'B03':1,'B10':1})
+        self.assertEqual([r['status'] for r in mixed['metrics']],['NO_SOURCE_CONTENT_CHANGE','CANDIDATE_READY'])
+        self.assertEqual([r['status'] for r in again['metrics']],['NO_SOURCE_CONTENT_CHANGE','NO_SOURCE_CONTENT_CHANGE'])
+
+
+if __name__=='__main__':unittest.main()

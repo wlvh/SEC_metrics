@@ -1,0 +1,79 @@
+test_hidden_gap_and_self_closing_hidden_element_keep_visible_word (tests.vnext.test_amendment_note_layout.AmendmentNoteLayoutTest.test_hidden_gap_and_self_closing_hidden_element_keep_visible_word) ... 
+  test_hidden_gap_and_self_closing_hidden_element_keep_visible_word (tests.vnext.test_amendment_note_layout.AmendmentNoteLayoutTest.test_hidden_gap_and_self_closing_hidden_element_keep_visible_word) (gap='<span hidden>draft</span>') ... FAIL
+  test_hidden_gap_and_self_closing_hidden_element_keep_visible_word (tests.vnext.test_amendment_note_layout.AmendmentNoteLayoutTest.test_hidden_gap_and_self_closing_hidden_element_keep_visible_word) (gap='<span style="display:none">draft</span>') ... FAIL
+  test_hidden_gap_and_self_closing_hidden_element_keep_visible_word (tests.vnext.test_amendment_note_layout.AmendmentNoteLayoutTest.test_hidden_gap_and_self_closing_hidden_element_keep_visible_word) (gap='<span style="visibility:hidden">draft</span>') ... FAIL
+  test_hidden_gap_and_self_closing_hidden_element_keep_visible_word (tests.vnext.test_amendment_note_layout.AmendmentNoteLayoutTest.test_hidden_gap_and_self_closing_hidden_element_keep_visible_word) (gap='<div hidden><p>draft</p></div>') ... FAIL
+test_hidden_inline_gap_does_not_break_visible_correction (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_hidden_inline_gap_does_not_break_visible_correction) ... 
+  test_hidden_inline_gap_does_not_break_visible_correction (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_hidden_inline_gap_does_not_break_visible_correction) (hidden='hidden') ... FAIL
+  test_hidden_inline_gap_does_not_break_visible_correction (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_hidden_inline_gap_does_not_break_visible_correction) (hidden='style="display:none"') ... FAIL
+  test_hidden_inline_gap_does_not_break_visible_correction (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_hidden_inline_gap_does_not_break_visible_correction) (hidden='style="visibility:hidden"') ... FAIL
+
+======================================================================
+FAIL: test_hidden_gap_and_self_closing_hidden_element_keep_visible_word (tests.vnext.test_amendment_note_layout.AmendmentNoteLayoutTest.test_hidden_gap_and_self_closing_hidden_element_keep_visible_word) (gap='<span hidden>draft</span>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_amendment_note_layout.py", line 119, in test_hidden_gap_and_self_closing_hidden_element_keep_visible_word
+    self.assertEqual(len(groups),1)
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_hidden_gap_and_self_closing_hidden_element_keep_visible_word (tests.vnext.test_amendment_note_layout.AmendmentNoteLayoutTest.test_hidden_gap_and_self_closing_hidden_element_keep_visible_word) (gap='<span style="display:none">draft</span>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_amendment_note_layout.py", line 119, in test_hidden_gap_and_self_closing_hidden_element_keep_visible_word
+    self.assertEqual(len(groups),1)
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_hidden_gap_and_self_closing_hidden_element_keep_visible_word (tests.vnext.test_amendment_note_layout.AmendmentNoteLayoutTest.test_hidden_gap_and_self_closing_hidden_element_keep_visible_word) (gap='<span style="visibility:hidden">draft</span>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_amendment_note_layout.py", line 119, in test_hidden_gap_and_self_closing_hidden_element_keep_visible_word
+    self.assertEqual(len(groups),1)
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_hidden_gap_and_self_closing_hidden_element_keep_visible_word (tests.vnext.test_amendment_note_layout.AmendmentNoteLayoutTest.test_hidden_gap_and_self_closing_hidden_element_keep_visible_word) (gap='<div hidden><p>draft</p></div>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_amendment_note_layout.py", line 119, in test_hidden_gap_and_self_closing_hidden_element_keep_visible_word
+    self.assertEqual(len(groups),1)
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_hidden_inline_gap_does_not_break_visible_correction (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_hidden_inline_gap_does_not_break_visible_correction) (hidden='hidden')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_instant_amendment_paragraph_api.py", line 66, in test_hidden_inline_gap_does_not_break_visible_correction
+    self.assertEqual(result['decision'],'WITHHELD')
+AssertionError: 'INPUT_PROPERTY_PROVEN' != 'WITHHELD'
+- INPUT_PROPERTY_PROVEN
++ WITHHELD
+
+
+======================================================================
+FAIL: test_hidden_inline_gap_does_not_break_visible_correction (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_hidden_inline_gap_does_not_break_visible_correction) (hidden='style="display:none"')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_instant_amendment_paragraph_api.py", line 66, in test_hidden_inline_gap_does_not_break_visible_correction
+    self.assertEqual(result['decision'],'WITHHELD')
+AssertionError: 'INPUT_PROPERTY_PROVEN' != 'WITHHELD'
+- INPUT_PROPERTY_PROVEN
++ WITHHELD
+
+
+======================================================================
+FAIL: test_hidden_inline_gap_does_not_break_visible_correction (tests.vnext.test_instant_amendment_paragraph_api.InstantParagraphApiTest.test_hidden_inline_gap_does_not_break_visible_correction) (hidden='style="visibility:hidden"')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-amendment-note/SEC_metrics/tests/vnext/test_instant_amendment_paragraph_api.py", line 66, in test_hidden_inline_gap_does_not_break_visible_correction
+    self.assertEqual(result['decision'],'WITHHELD')
+AssertionError: 'INPUT_PROPERTY_PROVEN' != 'WITHHELD'
+- INPUT_PROPERTY_PROVEN
++ WITHHELD
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.023s
+
+FAILED (failures=7)

@@ -1,0 +1,116 @@
+{
+  "start_utc": "2026-10-08T10:03:08.236428+00:00",
+  "end_utc": "2026-10-08T10:03:08.270774+00:00",
+  "seconds": 0.03418904193677008,
+  "base": "7ae99dfdca49ead83fdee669d158083c85714233",
+  "patch": "930a3df29df8dbc8cd519044a23aeb682c09f80c",
+  "base_load": "exact git blob compiled in memory only",
+  "fixture": "existing complete primary/XML/native table parsers",
+  "cases": [
+    {
+      "case": "target_prior_as_follows_with_caption",
+      "base_status": "UNRESOLVED",
+      "patch_status": "REPORTED_INCLUDED",
+      "expected_base": "UNRESOLVED",
+      "expected_patch": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "passed": true
+    },
+    {
+      "case": "table_header_binds_same_adjacency",
+      "base_status": "UNRESOLVED",
+      "patch_status": "REPORTED_INCLUDED",
+      "expected_base": "UNRESOLVED",
+      "expected_patch": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "passed": true
+    },
+    {
+      "case": "earlier_foreign_does_not_cross_current_block",
+      "base_status": "UNRESOLVED",
+      "patch_status": "REPORTED_INCLUDED",
+      "expected_base": "UNRESOLVED",
+      "expected_patch": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "passed": true
+    },
+    {
+      "case": "adjacent_multiplier_conflict",
+      "base_status": "UNRESOLVED",
+      "patch_status": "UNRESOLVED",
+      "expected_base": "UNRESOLVED",
+      "expected_patch": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "passed": true
+    },
+    {
+      "case": "adjacent_foreign_currency_conflict",
+      "base_status": "UNRESOLVED",
+      "patch_status": "UNRESOLVED",
+      "expected_base": "UNRESOLVED",
+      "expected_patch": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "passed": true
+    },
+    {
+      "case": "adjacent_standalone_multiplier_conflict",
+      "base_status": "UNRESOLVED",
+      "patch_status": "UNRESOLVED",
+      "expected_base": "UNRESOLVED",
+      "expected_patch": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "passed": true
+    },
+    {
+      "case": "adjacent_standalone_symbol_conflict",
+      "base_status": "UNRESOLVED",
+      "patch_status": "UNRESOLVED",
+      "expected_base": "UNRESOLVED",
+      "expected_patch": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "passed": true
+    },
+    {
+      "case": "caption_native_multiplier_conflict",
+      "base_status": "UNRESOLVED",
+      "patch_status": "UNRESOLVED",
+      "expected_base": "UNRESOLVED",
+      "expected_patch": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "passed": true
+    },
+    {
+      "case": "adjacent_equal_unit",
+      "base_status": "REPORTED_INCLUDED",
+      "patch_status": "REPORTED_INCLUDED",
+      "expected_base": "REPORTED_INCLUDED",
+      "expected_patch": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "passed": true
+    },
+    {
+      "case": "missing_table_unit_legacy_scope_not_repaired",
+      "base_status": "UNRESOLVED",
+      "patch_status": "UNRESOLVED",
+      "expected_base": "UNRESOLVED",
+      "expected_patch": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "passed": true
+    },
+    {
+      "case": "missing_table_unit_adjacent_unit_unchanged",
+      "base_status": "REPORTED_INCLUDED",
+      "patch_status": "REPORTED_INCLUDED",
+      "expected_base": "REPORTED_INCLUDED",
+      "expected_patch": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "passed": true
+    }
+  ],
+  "all_passed": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

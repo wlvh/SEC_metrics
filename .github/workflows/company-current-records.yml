@@ -1,0 +1,48 @@
+name: Company saved-source records
+"on":
+  pull_request:
+    paths:
+      - 'scripts/**'
+      - 'tools/vnext_company.py'
+      - 'tests/vnext/test_company_current_records.py'
+      - 'tests/vnext/test_ordinary_current_update.py'
+      - 'tests/vnext/test_company_parse_reuse.py'
+      - 'tests/vnext/test_precalculated_case.py'
+      - 'tests/vnext/test_saved_source_checks.py'
+      - 'tests/vnext/test_runtime_tools.py'
+      - 'tests/vnext/test_b03_current_input_scope.py'
+      - 'tests/vnext/test_xbrl_namespace_policy.py'
+      - 'tests/vnext/test_successor_income_projection.py'
+      - 'tests/vnext/test_event_rule_root.py'
+      - 'tests/vnext/test_separate_rule_root.py'
+      - 'tests/vnext/test_selected_lodging_calculation.py'
+      - 'tests/vnext/test_selected_lodging_source.py'
+      - 'tests/vnext/test_history_company_dispatch.py'
+      - 'tests/vnext/test_selected_history_result_state.py'
+      - 'tests/fixtures/lodging_selected_table.html'
+      - 'config/**'
+      - 'catalog/**'
+      - 'evidence/**'
+      - 'docs/evidence/issue28_continuous/known_result_defects.json'
+      - '.github/workflows/company-current-records.yml'
+permissions:
+  contents: read
+jobs:
+  company-current:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14'
+      - name: Saved source through calculation, records, CSV and reading
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy tests.vnext.test_successor_income_projection tests.vnext.test_event_rule_root -v
+      - name: Historical dispatch and saved result states
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state -v

@@ -1,0 +1,85 @@
+{
+  "scope": "Additional saved-source B08/B09 company consumers; old business reading reused, not new credit",
+  "companies": {
+    "salesforce": {
+      "first_seconds": 49.009633667068556,
+      "rows": 10,
+      "status": "FLOW_COMPLETED",
+      "value_unit_date_differences": [],
+      "version_note": "Initial continuous-family source receiving; source-scope code changed later only for amendments/successor and exception metadata; targeted affected years validated separately",
+      "repeat_seconds": 2.1858805830124766,
+      "repeat_calculation_calls": 0,
+      "saved_files_unchanged": true
+    },
+    "marriott_international": {
+      "first_seconds": 39.261176832951605,
+      "rows": 10,
+      "status": "FLOW_COMPLETED",
+      "value_unit_date_differences": [],
+      "version_note": "Initial continuous-family source receiving; source-scope code changed later only for amendments/successor and exception metadata; targeted affected years validated separately",
+      "repeat_seconds": 1.933887334074825,
+      "repeat_calculation_calls": 0,
+      "saved_files_unchanged": true
+    },
+    "pfizer": {
+      "first_seconds": 68.32026483397931,
+      "rows": 10,
+      "status": "FLOW_COMPLETED",
+      "value_unit_date_differences": [],
+      "version_note": "Initial continuous-family source receiving; source-scope code changed later only for amendments/successor and exception metadata; targeted affected years validated separately",
+      "repeat_seconds": 1.905114624882117,
+      "repeat_calculation_calls": 0,
+      "saved_files_unchanged": true
+    },
+    "lumen_technologies": {
+      "first_seconds": 52.02479391708039,
+      "rows": 10,
+      "status": "FLOW_COMPLETED",
+      "value_unit_date_differences": [],
+      "version_note": "Initial continuous-family source receiving; source-scope code changed later only for amendments/successor and exception metadata; targeted affected years validated separately"
+    },
+    "enphase_energy": {
+      "first_seconds": 47.55197050003335,
+      "rows": 10,
+      "status": "FLOW_COMPLETED",
+      "value_unit_date_differences": [],
+      "version_note": "Initial continuous-family source receiving; source-scope code changed later only for amendments/successor and exception metadata; targeted affected years validated separately"
+    },
+    "southwest_airlines": {
+      "first_seconds": 47.60193904093467,
+      "rows": 10,
+      "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+      "value_unit_date_differences": [],
+      "version_note": "Initial continuous-family source receiving; source-scope code changed later only for amendments/successor and exception metadata; targeted affected years validated separately"
+    },
+    "bank_remaining": {
+      "years": [
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "seconds": 234.3558755419217,
+      "rows": 8,
+      "status": "N_A_STRUCTURAL",
+      "no_numeric_value_claimed": true
+    },
+    "paramount": {
+      "2021_2023": "Six actual predecessor-CIK balance values, existing reading differences0",
+      "2024": "Two WITHHELD; shared note parser boundary13 versus8; implementation unresolved",
+      "2025": "Two successor-CIK balances and original amendment evidence kept, targeted receiving in amendment-receiving.json"
+    }
+  },
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_run": false,
+  "new_acceptance": false,
+  "archive": {
+    "members": 397,
+    "bytes": 154405,
+    "sha256": "d63a72c5b26694a1ee2978687e192d37ae1615d65a23b1f6d8e092566f53f44c"
+  }
+}

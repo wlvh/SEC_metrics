@@ -1,0 +1,173 @@
+[
+  {
+    "year": 2021,
+    "seconds": 0.5530676669441164,
+    "id": "sha256:e4b1ee44ade45f3786de62444c3236a399b6386e8ce12969959bfbd28c90d8b7",
+    "candidates": [
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2021-01-31",
+          "AmortizationOfIntangibleAssets"
+        ],
+        "value": "165000000",
+        "candidate_id": "sha256:c7c813e0b84c37c360859f4521831cab6a480aa5c4e32da248758b639bd2aad8"
+      },
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2021-01-31",
+          "AmortizationOfIntangibleAssets"
+        ],
+        "value": "62000000",
+        "candidate_id": "sha256:c1c1512b4d549052d5dabdf713a36007a354f462256ad56eaac5112ad9c56a97"
+      },
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2021-01-31",
+          "Depreciation"
+        ],
+        "value": "138000000",
+        "candidate_id": "sha256:b616f3e90912987ab24302a1f4da4fe71c33ba0442e8890e6e66ee8166159e9f"
+      },
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2021-01-31",
+          "Depreciation"
+        ],
+        "value": "49000000",
+        "candidate_id": "sha256:62acf3ad734a3aa617d8218c1aae6ef972282ee0f5a3163c9724c67f775b61dc"
+      }
+    ],
+    "relations": [
+      {
+        "parent_candidate_id": "sha256:c7c813e0b84c37c360859f4521831cab6a480aa5c4e32da248758b639bd2aad8",
+        "child_candidate_id": "sha256:c1c1512b4d549052d5dabdf713a36007a354f462256ad56eaac5112ad9c56a97",
+        "kind": "CONTEXT_SCOPE_SPECIALIZATION",
+        "additive_relationship_established": false,
+        "reported_inclusion_requires_content_check": true
+      },
+      {
+        "parent_candidate_id": "sha256:b616f3e90912987ab24302a1f4da4fe71c33ba0442e8890e6e66ee8166159e9f",
+        "child_candidate_id": "sha256:62acf3ad734a3aa617d8218c1aae6ef972282ee0f5a3163c9724c67f775b61dc",
+        "kind": "CONTEXT_SCOPE_SPECIALIZATION",
+        "additive_relationship_established": false,
+        "reported_inclusion_requires_content_check": true
+      }
+    ],
+    "issues": [],
+    "definition_complete": false
+  },
+  {
+    "year": 2022,
+    "seconds": 0.5111651248298585,
+    "id": "sha256:e37b16ff823f481fdfacccafa156d6146e74a8f7ca6c15aa7961fdc015034a11",
+    "candidates": [
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2022",
+          "AmortizationOfIntangibleAssets"
+        ],
+        "value": "197000000",
+        "candidate_id": "sha256:8ef62413ad21042b635c70a75ded609765ecfffd83f39f4b30e14176b0d33531"
+      },
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2022",
+          "AmortizationOfIntangibleAssets"
+        ],
+        "value": "83000000",
+        "candidate_id": "sha256:49547db025d9e10c7169ebffa45bf360588505e38d08d19bcee1beccf47d1375"
+      },
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2022",
+          "Depreciation"
+        ],
+        "value": "114000000",
+        "candidate_id": "sha256:b97b46d2fa81711408ce91510270ba1fc76cce32f20ad9b12913669bd9b54eb1"
+      },
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2022",
+          "Depreciation"
+        ],
+        "value": "35000000",
+        "candidate_id": "sha256:2ccb5e383e17e8b713249a77b9e62f9223898be5b44611969717480f3864e950"
+      }
+    ],
+    "relations": [
+      {
+        "parent_candidate_id": "sha256:8ef62413ad21042b635c70a75ded609765ecfffd83f39f4b30e14176b0d33531",
+        "child_candidate_id": "sha256:49547db025d9e10c7169ebffa45bf360588505e38d08d19bcee1beccf47d1375",
+        "kind": "CONTEXT_SCOPE_SPECIALIZATION",
+        "additive_relationship_established": false,
+        "reported_inclusion_requires_content_check": true
+      },
+      {
+        "parent_candidate_id": "sha256:b97b46d2fa81711408ce91510270ba1fc76cce32f20ad9b12913669bd9b54eb1",
+        "child_candidate_id": "sha256:2ccb5e383e17e8b713249a77b9e62f9223898be5b44611969717480f3864e950",
+        "kind": "CONTEXT_SCOPE_SPECIALIZATION",
+        "additive_relationship_established": false,
+        "reported_inclusion_requires_content_check": true
+      }
+    ],
+    "issues": [],
+    "definition_complete": false
+  },
+  {
+    "year": 2023,
+    "seconds": 0.49850433389656246,
+    "id": "sha256:c58b38465aaf1fcbafc9b25d3366548716c775a42702df70a5f98b0782cb3a4c",
+    "candidates": [
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2023",
+          "AmortizationOfIntangibleAssets"
+        ],
+        "value": "226000000",
+        "candidate_id": "sha256:babb2419357916dd1fd92bd66f26d4befca773b0cc5b6e228a6a25e99742077b"
+      },
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2023",
+          "AmortizationOfIntangibleAssets"
+        ],
+        "value": "122000000",
+        "candidate_id": "sha256:cd5506e7cf987cc52b02de8ed0cccffa5b8f7d6a3da0e67fded13f7d3f54f06c"
+      },
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2023",
+          "Depreciation"
+        ],
+        "value": "122000000",
+        "candidate_id": "sha256:613f79881819eb89780ec5eb87e2c4ef91fe7a0fbf39c0787009c6c8dcdccab6"
+      },
+      {
+        "concept": [
+          "http://fasb.org/us-gaap/2023",
+          "Depreciation"
+        ],
+        "value": "37000000",
+        "candidate_id": "sha256:4455f9db0512c3aa1f8d83e6db054492ce611d15d496a86d99f88fbe6b0e8400"
+      }
+    ],
+    "relations": [
+      {
+        "parent_candidate_id": "sha256:babb2419357916dd1fd92bd66f26d4befca773b0cc5b6e228a6a25e99742077b",
+        "child_candidate_id": "sha256:cd5506e7cf987cc52b02de8ed0cccffa5b8f7d6a3da0e67fded13f7d3f54f06c",
+        "kind": "CONTEXT_SCOPE_SPECIALIZATION",
+        "additive_relationship_established": false,
+        "reported_inclusion_requires_content_check": true
+      },
+      {
+        "parent_candidate_id": "sha256:613f79881819eb89780ec5eb87e2c4ef91fe7a0fbf39c0787009c6c8dcdccab6",
+        "child_candidate_id": "sha256:4455f9db0512c3aa1f8d83e6db054492ce611d15d496a86d99f88fbe6b0e8400",
+        "kind": "CONTEXT_SCOPE_SPECIALIZATION",
+        "additive_relationship_established": false,
+        "reported_inclusion_requires_content_check": true
+      }
+    ],
+    "issues": [],
+    "definition_complete": false
+  }
+]

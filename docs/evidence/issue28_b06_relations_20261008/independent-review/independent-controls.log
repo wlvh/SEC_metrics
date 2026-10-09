@@ -1,0 +1,42 @@
+{
+  "test": "default_compatibility",
+  "base_sha": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+  "whole_case_equal": true,
+  "explicit_false_equal": true,
+  "case_id": "sha256:7a68af48bbdaf52f1f736c442629b8436c9859cc46e3b5dafc1759971edbe57c"
+}
+invalid_option None B06_SPECIAL_SCOPE_REPORTED_RELATIONS_OPTION_INVALID
+invalid_option 1 B06_SPECIAL_SCOPE_REPORTED_RELATIONS_OPTION_INVALID
+invalid_option 'true' B06_SPECIAL_SCOPE_REPORTED_RELATIONS_OPTION_INVALID
+{
+  "test": "lease_larger_than_inclusive_other_debt_row",
+  "synthetic_only": true,
+  "originals_written": false,
+  "mutations": {
+    "primary": 1,
+    "xml": 1
+  },
+  "synthetic_raw_sha256": {
+    "primary": "8029df9e4d5a345ca32c37dc71d53fcdb5daa55da26cffb2a7af27a6f8435b0d",
+    "xml": "5c10ce8f24000c376584829dbda72c4f1a782fbb7f9fad693d19c73089094d67"
+  },
+  "other_debt_row_2025_million_usd": [
+    "Other debt (including finance leases) (a)",
+    "176",
+    "",
+    "",
+    "226",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  "current_lease_USD": "1000000000",
+  "current_debt_USD": "5550000000",
+  "actual_relation_status": "REPORTED_INCLUDED",
+  "additional_debt_amount": "0",
+  "definition_complete": false,
+  "ratio": null
+}
