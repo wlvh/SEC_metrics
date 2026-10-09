@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_unused_legacy_source_authority_does_not_invalidate_current_input (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_unused_legacy_source_authority_does_not_invalidate_current_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 181, in test_unused_legacy_source_authority_does_not_invalidate_current_input
+    self.assertEqual(before,after)
+AssertionError: {'com[9878 chars]y': '727197a9727ab14e6c0b7593394bff62886caf8ed[3387 chars]alse} != {'com[9878 chars]y': 'changed-unused-legacy-authority', 'script[3354 chars]alse}
+Diff is 16325 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.019s
+
+FAILED (failures=1)

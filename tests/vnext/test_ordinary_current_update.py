@@ -158,16 +158,28 @@ class CompletedWithheldUpdateTest(unittest.TestCase):
 
 
 class CurrentProcessingConfigurationTest(unittest.TestCase):
-    def test_changed_annual_selection_and_source_verifier_are_not_cached(self):
+    def test_changed_annual_selection_and_saved_input_checks_are_not_cached(self):
         original=update.sha256_file
         before=update._configuration(ROOT,'marriott_international','B01')
-        for relative in ('scripts/vnext/normal_annual_input.py','scripts/vnext/normal_source_authority.py'):
+        for relative in ('scripts/vnext/normal_annual_input.py','scripts/vnext/saved_source_checks.py'):
             with self.subTest(dependency=relative):
                 with patch.object(update,'sha256_file',side_effect=lambda *,path:
                         'changed-used-source-code' if path==ROOT/relative else original(path=path)):
                     after=update._configuration(ROOT,'marriott_international','B01')
                 self.assertTrue(before!=after,'Changed consumed code must invalidate unchanged-input reuse')
                 self.assertIn(relative,after['processing_files'])
+
+    def test_unused_legacy_source_authority_does_not_invalidate_current_input(self):
+        # Current producers use its ROOT constant. Their actual source checks
+        # run through saved_source_checks, not its historical ancestor gate.
+        original=update.sha256_file
+        before=update._configuration(ROOT,'marriott_international','B01')
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-unused-legacy-authority' if path==ROOT/'scripts/vnext/normal_source_authority.py'
+                else original(path=path)):
+            after=update._configuration(ROOT,'marriott_international','B01')
+        self.assertEqual(before,after)
+        self.assertNotIn('scripts/vnext/normal_source_authority.py',after['processing_files'])
 
     def test_used_source_dependency_change_reprocesses_once_then_reuses(self):
         actual_hash=update.sha256_file

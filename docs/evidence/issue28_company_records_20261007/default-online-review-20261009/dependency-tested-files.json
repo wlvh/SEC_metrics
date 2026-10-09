@@ -1,0 +1,18 @@
+{
+  "base_commit": "3a98cee0fa0966ee758931fdd31dbe5a4640669c",
+  "tested_tree": "uncommitted changes on base_commit",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics",
+  "source_root": "repository ROOT for real configuration; synthetic isolated source/result records for controller regression",
+  "tests": "python3.12 -B -m unittest tests.vnext.test_ordinary_current_update tests.vnext.test_company_current_records",
+  "result": "56 tests, 7.165 seconds, OK",
+  "files": {
+    "scripts/vnext/ordinary_current_update.py": "4547c6df37ff4a47de7c1589689771c8ab5090e5d596255b27146f6a5b215e54",
+    "tests/vnext/test_ordinary_current_update.py": "ccfc954c133b550c4c75e90baffe5185246f9285338db15d00bdd4d4e33f9511"
+  },
+  "log": "dependency-root-after.log",
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}
