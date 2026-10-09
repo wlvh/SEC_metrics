@@ -7,3 +7,13 @@
 向实际Capture.get请求前路径再做内存预检：不构造Capture/transport，claim/socket调用即失败，原上下文没有requirement_closure_hash，该函数无条件读取该字段而在claim前KeyError。历史claim只用requirement_id；不编造hash或重铸旧包绕过，不报缺新许可。公共#28已收到此具体迁移缺项，修后重做这一受影响预检再决定原获准动作。旧counter和单次机会未消费，原模型35等不动。
 
 所有操作新增SEC/provider/paid/Run/接受0，完整旧计划/响应/slot/失败保留。原许可仍是指定Paramount FY2024附件、最多1GET、retry0、1771→最多1772，UNKNOWN不重试。源只有开发用途，不回填旧Run或复用旧模型额度。代码只在独立接收worktree使用，未修改公共作者树、主分支或实际active。
+
+## 原一次动作已完成
+
+公共后继ca457364已修缺closure历史路径，真实根运输前检查到claim边界而未申领，原上下文不伪造旧哈希。实际执行只用该固定版本、原root/source-inputs、同一指定URL、最多1GET/0重试，不走宽发现。HTTP200，原件18964B/SHA0baae3b3…8e7e8，2.453秒；原计数1771→1772（1548slot+224），2532请求行，旧binding不改、旧claims精确prefix，model0，terminal/receipt全保存。原一次机会永久消费，不再GET；有效总额1867的余额95不授其他用途。原HistoricalCallLedger.snapshot再次.484秒读1772/无block，验证了旧读取，不以小模拟账本代替本次实耗。
+
+原件完整阅读是2024年4月29日新领导层公告：Bakish离任、三人CEO办公室；2019合并为历史背景，履历里九内部业务整合/影视合作不是本期并购公告。按既定内容确认定义，该附件对应未决item的开发参考为非并购，见attachment-development-reference.json。不改旧请求/回答/Run/失败或年度E01结果，不给旧模型包或全年计数信用。现有historical_event_attachments实际读取父原件/精确link和新原件，返回VERIFIED_SAVED_SOURCE/new_acquisition_required=false，见ex99-attachment-consumer.json；下载后必要消费者接点已核，后继完整输入/独立目标模型及全年结果仍待原权限。
+
+ex99-increment.tar.gz是本次最小可取得增量，含原件/headers、当前源CSV/manifest/registry及1548slot审查记录；index逐成员SHA。没有复制完整来源/程序树。解包到新目录后，既有_Sources只读读新附件逐字节同一；restored-source-read.json保实际恢复核对。它是源材料及调用事实备份，不初始化/恢复新的可执行账本或许可。已有旧源版本不能原地覆盖，以免旧结果漂移；后继来源版本须在新目录使用当前源CSV及两原件文件，其余来源依原已提交导出恢复。若当前源CSV已经9cb8adec…9dc，只核缺件，不重复追加或GET。
+
+旧source-only导出仍按旧版本解释；本增量不重签旧export/checkpoint，也不改变正在使用的运行包。初恢复记录器误取item['proof']（实际proof在reader.proofs）失败，修后仅读取已解包目录，不重取材料，原失败保留本地work。

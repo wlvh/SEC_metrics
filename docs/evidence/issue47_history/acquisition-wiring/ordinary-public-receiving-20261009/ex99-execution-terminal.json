@@ -1,0 +1,104 @@
+{
+  "record_type": "ISSUE47_APPROVED_SINGLE_ATTACHMENT_TERMINAL",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+  "accession": "0000813828-24-000018",
+  "company_id": "paramount_skydance_paramount_global",
+  "purpose": "ISSUE47_HISTORICAL_SOURCE_DEPENDENCY",
+  "code_commit": "ca4573647bd6a7e10c71a0159ea1bf697004941f",
+  "counts_before": [
+    0,
+    0,
+    1771
+  ],
+  "effective_total_limits": [
+    0,
+    0,
+    1867
+  ],
+  "purpose_maximum_counts": [
+    0,
+    0,
+    1772
+  ],
+  "automatic_retry_count": 0,
+  "capture_credit": "DEVELOPMENT_SOURCE_ONLY",
+  "production_authorized": false,
+  "status": "CAPTURE_RETURNED",
+  "raw_sha256": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+  "raw_bytes": 18964,
+  "receipt": {
+    "record_type": "ISSUE_47_HISTORICAL_SEC_RECEIPT",
+    "intent_id": "sha256:d229a0fe526e075b0bda095910545dbf2bc6621af65b4df38f1e3d696109308d",
+    "execution_mode": "LIVE",
+    "actual_sec_egress_count": 1,
+    "automatic_retry_count": 0,
+    "status": "SUCCEEDED",
+    "stop_reason": "",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-sec-ledger-resume-20261006/source-inputs",
+    "ledger_row_index": 2531,
+    "ledger_row": {
+      "timestamp_utc": "2026-10-09T11:56:26.581561+00:00",
+      "method": "GET",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+      "status_code": "200",
+      "purpose": "LIVE_ORDINARY_COMPANY",
+      "repo_relative_path": "evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm",
+      "headers_repo_relative_path": "evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm.c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05.headers.json",
+      "content_length": "18964",
+      "content_sha256": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+      "accession": "0000813828-24-000018",
+      "document_name": "ex-99.htm",
+      "user_agent": "axaxl 12@qq.com",
+      "retry_attempt": "0",
+      "error": ""
+    },
+    "company_id": "paramount_skydance_paramount_global",
+    "requirement_id": "issue_47_v1",
+    "production_authorized": false,
+    "ledger_before_sha256": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "ledger_after_sha256": "9cb8adec2194dd5bb84892c858c0fbc60d838702ef376f343476e455deec59dc",
+    "proof": {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+      "accession": "0000813828-24-000018",
+      "document_name": "ex-99.htm",
+      "content_sha256": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+      "request_body_sha256": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+      "request_body_size": 18964,
+      "request_headers_repo_relative_path": "evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm.c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05.headers.json",
+      "request_headers_sha256": "c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05",
+      "request_headers_size": 1658,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm",
+      "request_attempt_id": "request:attempt:a2c364a3736a869f3da7ff03e59063e05a7fc69a388926c883952af60a3d2c04"
+    },
+    "wire": {
+      "body": {
+        "source_path": "evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm",
+        "sha256": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+        "size": 18964
+      },
+      "headers": {
+        "source_path": "evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm.c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05.headers.json",
+        "sha256": "c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05",
+        "size": 1658
+      }
+    },
+    "transport": {
+      "network": "HTTPS"
+    },
+    "receipt_id": "sha256:af8a320da0b890d74f8493ecd833fcc2af829064aa8a010124e7fabdbea58941"
+  },
+  "counts_after": [
+    0,
+    0,
+    1772
+  ],
+  "claim_count_after": 1548,
+  "blocked": [],
+  "source_request_rows_after": 2532,
+  "seconds": 2.453286249889061,
+  "old_binding_unchanged": true,
+  "old_claims_exact_prefix": true,
+  "retry_performed": false,
+  "new_model_calls": 0
+}

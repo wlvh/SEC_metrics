@@ -1,0 +1,41 @@
+{
+  "dependencies": [
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+      "media_type": "text/html",
+      "accession": "0000813828-24-000018",
+      "document_name": "ex-99.htm",
+      "dependency_class": "FISCAL_EVENT_FILING",
+      "source_roles": [
+        "incorporated_EX99"
+      ],
+      "consumers": [
+        "period:2024-12-31",
+        "E01_SUCCESSOR_INCORPORATED_ATTACHMENT"
+      ],
+      "parent_source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/para-20240429.htm",
+      "parent_sha256": "04c3af26f90298c45c7430014fe6b8b4e19e4e7690b3485e52d34f9e1889fbf0",
+      "parent_item_id": "0000813828-24-000018#8.01@2224",
+      "declared_by": "docs/evidence/issue47_history/event-attachment-declarations-v1.json",
+      "primary_cik": "2041610",
+      "registrant_cik": "813828",
+      "saved_status": "VERIFIED_SAVED_SOURCE",
+      "saved_reason": null,
+      "new_acquisition_required": false,
+      "acquisition_kind": null,
+      "source_acquisition_credit": false,
+      "retry_count": 0,
+      "maximum_sec_attempts": 1,
+      "source_contract_scope": "SUCCESSOR_INPUT_ONLY_NO_OLD_REQUEST_OR_RUN_REBINDING"
+    }
+  ],
+  "parent_declared_by_existing_owner_plan": true,
+  "successor_input_only": true,
+  "old_request_body_unchanged": true,
+  "model_or_run_or_acceptance_added": false,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

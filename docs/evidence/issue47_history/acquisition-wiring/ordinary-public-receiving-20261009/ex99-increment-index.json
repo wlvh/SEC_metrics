@@ -1,0 +1,47 @@
+{
+  "record_type": "ISSUE47_SINGLE_APPROVED_ATTACHMENT_INCREMENT",
+  "source_only_restore_not_execution_ledger": true,
+  "previous_source_log_sha256": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+  "source_log_sha256": "9cb8adec2194dd5bb84892c858c0fbc60d838702ef376f343476e455deec59dc",
+  "counts_before": [
+    0,
+    0,
+    1771
+  ],
+  "counts_after": [
+    0,
+    0,
+    1772
+  ],
+  "member_sha256": {
+    "source-inputs/config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "source-inputs/evidence/requests_log.csv": "9cb8adec2194dd5bb84892c858c0fbc60d838702ef376f343476e455deec59dc",
+    "source-inputs/evidence/requests_log_manifest.json": "67d0da38e09ac6c28ec3f5f9690bb94f4519b427ca691d2240f8ea76d62763a2",
+    "source-inputs/evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+    "source-inputs/evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm.c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05.headers.json": "c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05",
+    "calls/1548/intent.json": "69b97ee905d7c037053786b5d6b6d0d37f2299727a89629f392497b409b62be9",
+    "calls/1548/sec-receipt.json": "85f872a99586052ef20145410d440f056ab8a029f5bc39b6a1d8b7375d47a990",
+    "calls/1548/sec-plan.json": "5d371ca09bfba8479a280f83eb064121e573a16b3c258f7e9c2ff15122a88447",
+    "calls/1548/terminal.json": "014d4acf1e2924b3fb8cfced023b51b4f8bc8f7176a178ec3a15c373ad0328c6",
+    "calls/1548/sec-wire/body.bin": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+    "calls/1548/sec-wire/headers.bin": "c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05",
+    "claims-1548.jsonl": "69b97ee905d7c037053786b5d6b6d0d37f2299727a89629f392497b409b62be9"
+  },
+  "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+  "retry_count": 0,
+  "raw_sha256": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+  "source_proof": {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+    "accession": "0000813828-24-000018",
+    "document_name": "ex-99.htm",
+    "content_sha256": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+    "request_body_sha256": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+    "request_body_size": 18964,
+    "request_headers_repo_relative_path": "evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm.c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05.headers.json",
+    "request_headers_sha256": "c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05",
+    "request_headers_size": 1658,
+    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+    "request_repo_relative_path": "evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm",
+    "request_attempt_id": "request:attempt:a2c364a3736a869f3da7ff03e59063e05a7fc69a388926c883952af60a3d2c04"
+  }
+}
