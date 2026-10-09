@@ -27,6 +27,12 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
         run: python3 -m unittest -v tests.vnext.test_company_handoff tests.vnext.test_company_source_authority tests.vnext.test_company_results tests.vnext.test_company_processing tests.vnext.test_company_event_census tests.vnext.test_company_local
 
+      - name: Selected filing income source checks (small state)
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 -m unittest -v tests.vnext.test_selected_income_source_v1
+
       - name: Run fast suite
         env:
           PYTHONDONTWRITEBYTECODE: "1"
