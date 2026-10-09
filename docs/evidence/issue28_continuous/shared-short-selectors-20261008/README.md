@@ -27,3 +27,5 @@ The one-shot joint verifier takes --code-root (a clean main-compatible tree) and
 2026-10-09 已固定PR81/cf78cf3c与PR82/d279dcd0，只补其新增annual4/period4 class进入原runner末尾及现有单进程显式CI命令。原whole dispatch自然13项，不重复逐方法登记；runner函数AST不变。父在隔离的Git精确源码/元数据树实际37例0.051s、41例0.054s均通过（whole命令0.688/0.558s），不写对方工作树、不重跑公司财报。初次元数据树缺known_result_defects导致一个环境错误，补该固定树实际文件后过；不改业务预期。新补丁/日志/固定摘要在本目录，先导源/旧结果不改。
 
 该后续短测试包不扩大10月9日首批61/67/71/58/62范围；71两个已有历史测试触发/显式执行由#47负责，本方没有为71另写补丁。
+
+PR84/dd8b8909精确新增两现有class（SuccessorComparability3例、StructuralApplicability2例）尚未进入v2和现有显式CI步骤；pr84-small-selectors.patch统一补这五例，保已接PR82 annual/period及原单进程。AST函数/类不变，临时index精确应用/两文件预期SHA核对通过；静态总11class/46method。这里只父级静态验证，不写成46实际执行，接收方在其现有分支跑新步骤及新head CI。该补丁仍在首批67/71之外，无历史财报重跑或业务信用。

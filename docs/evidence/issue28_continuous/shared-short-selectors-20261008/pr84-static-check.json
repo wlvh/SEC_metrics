@@ -1,0 +1,23 @@
+{
+  "patch_sha": "dd8b8909eda88cb4ce2241b0b159f300985f73ef",
+  "scope": "existing two short classes only; no PR71/first-batch edits",
+  "new_test_method_counts": {
+    "tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest": 3,
+    "tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest": 2
+  },
+  "all_explicit_class_count": 11,
+  "all_explicit_method_count_static": 46,
+  "runner_functions_unchanged": true,
+  "temporary_index_patch_checked": true,
+  "result_files_sha256": {
+    "tools/run_fast_tests_v2.py": "4e391f7355d34b634edaceb62d013af7d208e108a6f5fed0f526333f5443da68",
+    ".github/workflows/vnext-fast.yml": "b58a82055e545f41e2d335ad5600a651b0797fa58f59daa2c70eedd74c1245f9"
+  },
+  "actual_parent_test_execution": false,
+  "receiver_must_execute": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}
