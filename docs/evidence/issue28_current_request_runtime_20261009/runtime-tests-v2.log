@@ -1,0 +1,53 @@
+test_402_keeps_original_error_and_stops_after_one_http (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_402_keeps_original_error_and_stops_after_one_http) ... ok
+test_exhausted_allowance_and_unapproved_purpose_never_reach_http (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_exhausted_allowance_and_unapproved_purpose_never_reach_http) ... ok
+test_interrupted_claim_is_not_reused_or_automatically_retried (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_interrupted_claim_is_not_reused_or_automatically_retried) ... ok
+test_nondefault_limits_are_actual_object_and_http_configuration_only (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_nondefault_limits_are_actual_object_and_http_configuration_only) ... ok
+test_real_preparation_transport_usage_save_and_restart_read (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_real_preparation_transport_usage_save_and_restart_read) ... ok
+test_same_request_is_not_paid_twice_after_restart (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_same_request_is_not_paid_twice_after_restart) ... ok
+test_source_byte_change_rejects_before_claim (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_source_byte_change_rejects_before_claim) ... ok
+test_timeout_is_unknown_counted_and_stops_without_retry (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_timeout_is_unknown_counted_and_stops_without_retry) ... ok
+test_truncated_response_is_failed_without_relabel_or_retry (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_truncated_response_is_failed_without_relabel_or_retry) ... ok
+test_unknown_usage_is_null_counted_and_stops_without_retry (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_unknown_usage_is_null_counted_and_stops_without_retry) ... ok
+test_written_terminal_gap_reconciles_without_another_http_or_count (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_written_terminal_gap_reconciles_without_another_http_or_count) ... ERROR
+test_402_unknown_usage_and_unknown_outcome_are_permanent_stops (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_402_unknown_usage_and_unknown_outcome_are_permanent_stops) ... ok
+test_changed_bound_native_receipt_is_rejected (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_changed_bound_native_receipt_is_rejected) ... ok
+test_competing_process_cannot_enter_held_directory_lock (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_competing_process_cannot_enter_held_directory_lock) ... ok
+test_crashed_intent_charged_and_only_affected_channel_stopped (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_crashed_intent_charged_and_only_affected_channel_stopped) ... ok
+test_deleted_last_slot_or_deleted_root_cannot_restart_total (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_deleted_last_slot_or_deleted_root_cannot_restart_total) ... ok
+test_raw_request_identity_blocks_redraw_despite_new_plan (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_raw_request_identity_blocks_redraw_despite_new_plan) ... ok
+test_reopen_and_changed_phase_do_not_reset_exhausted_total (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_reopen_and_changed_phase_do_not_reset_exhausted_total) ... ok
+test_test_mode_cannot_be_relabelled_live (tests.vnext.test_continuous_call_ledger.ContinuousCallLedgerTest.test_test_mode_cannot_be_relabelled_live) ... ok
+
+======================================================================
+ERROR: test_written_terminal_gap_reconciles_without_another_http_or_count (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_written_terminal_gap_reconciles_without_another_http_or_count)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/tests/vnext/test_current_request_runtime.py", line 163, in test_written_terminal_gap_reconciles_without_another_http_or_count
+    with self.assertRaisesRegex(OSError,'terminal gap'):self.execute()
+                                                        ^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/tests/vnext/test_current_request_runtime.py", line 78, in execute
+    return calls.execute_feasibility(prepared=prepared or self.prepared,ledger=self.ledger)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 796, in execute_feasibility
+    return _execute_semantic(prepared=prepared, ledger=ledger, recorded_wire=recorded_wire,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 1091, in _execute_semantic
+    execution = control.execute_successor_invocation(repo_root=ROOT,authority=prepared.authority,
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/scripts/vnext/invocation_control.py", line 454, in execute_successor_invocation
+    return execute_invocation(**fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/scripts/vnext/invocation_control.py", line 2966, in execute_invocation
+    return _terminal_and_release(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/scripts/vnext/invocation_control.py", line 1298, in _terminal_and_release
+    _checkpoint_invocation_terminal_phase(phase="AFTER_EXECUTION_SEALED")
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/scripts/vnext/invocation_control.py", line 1312, in _checkpoint_invocation_terminal_phase
+    hook(phase)
+TypeError: CurrentRequestRuntimeTest.test_written_terminal_gap_reconciles_without_another_http_or_count.<locals>.crash() takes 0 positional arguments but 1 was given
+
+----------------------------------------------------------------------
+Ran 19 tests in 37.316s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 19, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_request_runtime", "tests.vnext.test_continuous_call_ledger"]}

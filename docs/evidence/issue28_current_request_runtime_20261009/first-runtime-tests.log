@@ -1,0 +1,23 @@
+test_exhausted_allowance_and_unapproved_purpose_never_reach_http (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_exhausted_allowance_and_unapproved_purpose_never_reach_http) ... ok
+test_interrupted_claim_is_not_reused_or_automatically_retried (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_interrupted_claim_is_not_reused_or_automatically_retried) ... ok
+test_nondefault_limits_are_actual_object_and_http_configuration_only (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_nondefault_limits_are_actual_object_and_http_configuration_only) ... ok
+test_real_preparation_transport_usage_save_and_restart_read (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_real_preparation_transport_usage_save_and_restart_read) ... ERROR
+test_same_request_is_not_paid_twice_after_restart (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_same_request_is_not_paid_twice_after_restart) ... ok
+test_source_byte_change_rejects_before_claim (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_source_byte_change_rejects_before_claim) ... ok
+test_timeout_is_unknown_counted_and_stops_without_retry (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_timeout_is_unknown_counted_and_stops_without_retry) ... ok
+test_unknown_usage_is_null_counted_and_stops_without_retry (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_unknown_usage_is_null_counted_and_stops_without_retry) ... ok
+
+======================================================================
+ERROR: test_real_preparation_transport_usage_save_and_restart_read (tests.vnext.test_current_request_runtime.CurrentRequestRuntimeTest.test_real_preparation_transport_usage_save_and_restart_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/tests/vnext/test_current_request_runtime.py", line 91, in test_real_preparation_transport_usage_save_and_restart_read
+    self.assertTrue(observed['response_check']['all_proposals_supported'])
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'all_proposals_supported'
+
+----------------------------------------------------------------------
+Ran 8 tests in 26.641s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 8, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_request_runtime"]}
