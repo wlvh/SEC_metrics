@@ -5577,6 +5577,25 @@
       "verdict": "CHANGES_REQUESTED_3P2",
       "ordinary_messages": 3,
       "dedup": "list_agents all nonroot completed; register no same patch/module; no independent evidence for this SHA; new controller/HTTP increment needs limited review, not development delegation"
+    },
+    {
+      "task_name": "review_runtimefix_416391c",
+      "purpose": "review",
+      "module": "runtimefix",
+      "base_sha": "ebaf9a3631785c6a9b8bb58e8b394b454c7b46d7",
+      "patch_sha": "416391c934f78672ddbd23fde23f418ac26a5f44",
+      "scope_paths": [
+        "scripts/vnext/continuous_semantic_calls.py:_prepared_transport_policy/select_native_request_variants/_execute_semantic guard order",
+        "scripts/vnext/current_request_configuration.py:transport_policy host reference",
+        "tests/vnext/test_current_request_runtime.py:CurrentVariantLimitsTest"
+      ],
+      "spawned_at": "2026-10-09T16:01:47Z",
+      "ended_at": "2026-10-09T16:06:34Z",
+      "tool_calls": 37,
+      "ordinary_messages": 3,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/docs/evidence/issue28_current_request_runtime_20261009/independent-repair/conclusion.md",
+      "verdict": "PASS_LIMITED_REPAIR",
+      "dedup": "list_agents all nonroot completed; no record/result same416 increment; inherits49tool/3msg ebaf findings without extending oldagent;onlynew3fixes"
     }
   ],
   "ci_capacity_20260922": {
@@ -17380,7 +17399,7 @@
       "PR103": "32e4f8a2 all11SUCCESS; terminal inherited source14:25:37Z read at natural checkpoint"
     },
     "scope_limit": "offline construction/measurement and reporter integration; no new model/business/company credit",
-    "next": "Read CI at natural checkpoint; receive finite DEI release support for actual A13 historical parsing consumer; N1 transport schema pending",
+    "next": "Completed first bounded development batch: request preparation PR103 and parent reporter PR102 both green; current execution successorPR106 green; explicit finance receivingPR107 underway; N1schema pending",
     "next_public_task": {
       "branch": "task/issue28-dei-release",
       "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-dei-release/SEC_metrics",
@@ -17430,7 +17449,7 @@
     "base": "6e51f416b12d2e284be1662482ca7a46a37d1e43",
     "baseline": "Actual socket-denied prepare_requests Enphase D04 fails1.479s at normal_source_authority ancestor bytes before source/claim/HTTP",
     "evidence": "docs/evidence/issue28_current_request_runtime_20261009/baseline-prepare-failure.log",
-    "status": "Implemented;3limited-reviewP2 repaired and targeted checks pass;repair independent verification pending",
+    "status": "Implemented and limited repair review passed;candidate awaiting reception,not model/company completion",
     "PR103_credit": "Offline preview only, not current execution restoration",
     "new_calls": [
       0,
@@ -17445,16 +17464,39 @@
       "select_native_request_variants rebuild drops prepared.limits (independent reviewer offline reproduction)",
       "Provider host literal duplicated in current config loader (CI job113896582670;reuse existing ai_adapter constant)"
     ],
-    "review": "review_currentruntime_ebaf9a3 running;source remains exact patch until conclusion",
+    "review": "416 repair-only PASS37tools/3messages;original49tools3P2 retained",
     "tests": {
       "combined": "55/88.910s zero skip before final early relabel guard",
       "mode_increment": "2/6.990s zero skip",
       "CLI": "29REQUEST_PREPARED/default source and8192 config,0calls"
     },
     "real_claims_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
-    "ci": "416 REST actual7SUCCESS/4IN_PROGRESS; earlier GraphQL observation unavailable, recovered via REST; no all-green claim",
+    "ci": "ab65 latest archive head all11 SUCCESS independently read; product source matches416, oldebaf failures retained",
     "repair_evidence": "docs/evidence/issue28_current_request_runtime_20261009/review-fixes-final.log",
     "repair_tests": "12/0.166s;2HTTP-mode/6.598s;provider-egress PASS",
-    "remaining": "repair-only independent receiving review and newhead CI;scope/190 and complete-company AI acceptance not granted"
+    "remaining": "Candidate reception and actual authorized model/company acceptance; independent 416 repair review is completed, not pending",
+    "archive_sha": "ab65d453a34f9aa7098621e44f9e807d396e648c",
+    "known_increment_defects_status": "All three416 limited repairs independently passed; descriptions retained as original findings"
+  },
+  "average_risk_public_receiving_20261010": {
+    "base": "6e51f416b12d2e284be1662482ca7a46a37d1e43",
+    "pr": "https://github.com/wlvh/SEC_metrics/pull/107",
+    "sha": "80ca9883cd0c444fae883d5dd5e5ffbaf95e1f87",
+    "scope": "Explicit A03/A12 DEI option; selected-year factory gate; disclosed A03 average period projection; normal defaults retained",
+    "source_evidence": "JPM21 savedprimary7c58/inventory77f7 read-only; public inspectors pass DEI then remain unresolved for older wording; no new source or invented fact",
+    "tests": "50 constructed controls0.238s; original current LCR1/13.591s; original VaR control retained; historical adapter33/0.046s zero skips",
+    "historical_adapter_sha": "b0ead0e53382d2fc1e46a90af8cb408525de4456",
+    "received_paths": [
+      "scripts/vnext/historical_dei.py"
+    ],
+    "peer_in_progress": "A03 FY2021/Q4 actual CSV1.11ratio/MDA_OK/QUARTER reported; A12 and repeat/independentread not terminal atthis observation; no complete acceptance claim",
+    "ci": "c5d fast failed historical annual view; exactfailure preserved/fixed;80ca initialoneSUCCESS/nineIN_PROGRESS, finalpending",
+    "evidence": "docs/evidence/issue28_average_risk_dei_20261010/README.md",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "remaining": "Actual same-company mixed save/repeat/independentread; targeted period-hook independent review; current headCI; no general bank/company or businessadoption credit"
   }
 }
