@@ -1,0 +1,8 @@
+{'name': 'first-five-d01', 'seconds': 25.441590250004083, 'exit_code': 0, 'status': 'FLOW_COMPLETED'}
+{'name': 'repeat-forbid-d01-factory', 'seconds': 2.026878041215241, 'exit_code': 0, 'status': 'FLOW_COMPLETED'}
+{'name': 'independent-results', 'seconds': 0.6984674159903079, 'exit_code': 0, 'status': None}
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/d01-consumer/verify_company.py", line 19, in <module>
+    expected=ref[r['period_end']];assert r['value'].split('\n')==expected['reference_headings'];assert r['unit']=='text' and r['status']=='TEXT_QUAL';assert r['accession']==expected['accession'];assert r['result_id']==expected['previous_result_id'],(r['fiscal_year'],r['result_id'],expected['previous_result_id']);comp.append({k:r[k] for k in ['metric_id','fiscal_year','unit','status','period_start','period_end','accession','result_id']})
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

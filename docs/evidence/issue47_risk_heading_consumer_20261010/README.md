@@ -19,3 +19,22 @@ Short controls reuse the actual shared D01 code and constructed local originals,
 No SEC/provider/paid calls, old Run/Result rewrite, acceptance, Ready, merge, deployment or active switch.
 
 Historical dispatch now supplies D01 alongside the existing statement/lodging/financial factories and its exact processing list.31 dispatch/state/source controls/.440s pass; this mock-dispatch control is not actual controller admission. The ordinary explicit-case gate is still a public dependency. Real shared-core constructed counterexample (`shared-running-header-repro.json`) keeps Parts I and II as a risk heading; the already completed old historical correction must be received by the common core before a family-wide positive claim. Original older runs/repairs are not altered. Two initial fixture/native-quality assertion failures are preserved alongside this record.
+
+## Same company CLI — public V3 received
+
+Public PR124 product656a1d3 is received; the historical adapter explicitly selects `RUNNING_HEADER_POLICY` (D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER). The old default/V2 core remains. This is the already formed running-header correction reaching the shared code, not another method trial.
+
+Actual Marriott FY2021–FY2025 same company CLI first25.442s, forbidden-D01-factory repeat2.027s, independent results.698s, all exits0. All211 previous financial/balance files preserve bytes;251 final result/pointer/check files remain identical on repeat/read. Only five new D01 coordinates processed. CSV gives42/37/37/39/38 ordered headings, text/TEXT_QUAL, correct annual dates and original accessions. It does not state risks occurred. Existing-marriott-reference.json is extracted from already committed reading, not a new original study.
+
+The initial driver assumed every old reference and old ID was right and failed after all three commands/file guards passed. No financial run was repeated to fix that assertion. FY2021 has one legitimate correction: old read-batch published/marked MATCH on the partial `If our brands, goodwill`, but its already recorded41-period judgement states ONE_HEADING_ACROSS_THE_GAP and the full sentence. The original span has one unbold comma between bold-italic runs, then resumes to the sentence end. The new shared parser includes that complete risk heading; this corrects the visible clause and creates new2676b024Result. Old f06fed32Result/MATCH/reference are not rewritten. Reference-differences.json retains exact source bytes/SHA and prior judgement pointer.
+
+FY2022 preserves all37 ordered strings, source/current entity/annual date/accession, but native ID changes bd795230→c1ad0b7. The original old Run records are not present in this local restored source root; precise changed identity field remains unproven and is not concealed or forced to old ID. Its new records/candidate/source locators are saved for inspection. FY2023–FY2025 preserve prior text and Result IDs (actual exact IDs in actual-company.json). This difference is a limitation on identity comparison, not evidence that a preserved old ID is a business requirement or that equal text alone proves all source relationships.
+
+User commands from this branch after restoring retained PR52 source-inputs:
+
+```bash
+python tools/vnext_company.py run --company marriott_international --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2025 --metric D01 --source-root SOURCE_INPUTS --work-dir NEW_STATE --output-dir NEW_OUTPUT
+python tools/vnext_company.py results --company marriott_international --state-root NEW_STATE --output-root NEW_READER
+```
+
+State/output are new external paths; existing source root is read-only. The existing company task has other financial/balance results, so independent read also verifies the new family does not erase old items. Main f6 still lacks this D01 ordinary history entry. Source preparation/online discovery and amendment/successor risk scopes remain outside this candidate's delivered range, not cancelled responsibilities.

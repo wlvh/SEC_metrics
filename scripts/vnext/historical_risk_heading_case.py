@@ -85,7 +85,7 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
         'source_references': [primary['source_reference']],
         'raw_blobs': {primary['raw_blob']['raw_asset_id']: primary['raw_blob']},
         'raw_bytes_by_id': {primary['raw_blob']['raw_asset_id']: primary['raw_bytes']},
-        'd01_emphasis_policy': d01_emphasis_results.POLICY}
+        'd01_emphasis_policy': d01_emphasis_results.RUNNING_HEADER_POLICY}
     # The retained namespace view keeps shared D01 algorithms while admitting
     # actual historical SEC/FASB release names. It is not a second selector.
     api = release_aware(d01_emphasis_results)
@@ -106,7 +106,7 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
         *[s['proof'] for s in reader.proofs.values()]]}.values())
     binding = {'record_type': 'HISTORICAL_RISK_HEADING_INPUT', 'metric_id': metric_id,
         'prepared_input': annual, 'period_selection': selection,
-        'source_proofs': proofs, 'd01_emphasis_policy': d01_emphasis_results.POLICY,
+        'source_proofs': proofs, 'd01_emphasis_policy': d01_emphasis_results.RUNNING_HEADER_POLICY,
         'new_provider_execution': False}
     return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id,
         'input_binding': binding, 'compiled_specs': {metric_id: spec},
