@@ -101,6 +101,27 @@ python3 tools/vnext_company.py results \
 
 实际事件来源窗口、申报、原header条目和出处都经同一保存/读取出口。C01/E03按现行Item5.02披露计数，不把相同集合解释为已经区分任命与离任事件。Paramount FY2025仍有2025全年年报容器及目录批准的2024-01-01至2025-12-31事件测量宽窗；只对这几个事件指标成立，财务及E01不能借用。验证和具体运行版本见[事件主要记录](evidence/issue47_events_receiving_20261009/README.md)。E01内容确认、在线历史发现和缺件补齐不在此已实现范围，完整交付责任继续。
 
+## A04/A09/A11：候选分支的金融历史范围
+
+`task/issue47-bank-scope-history-20261010` 在 main `6e51f416` 上包含公共 PR109 的受控 DEI 参数及显式历史工厂接口，尚未进入 main。只接所选 NIM、不良贷款比率和 AUM 的既有共同计算与有限历史措辞，未扩大默认当期指标集合。
+
+```bash
+git fetch origin task/issue47-bank-scope-history-20261010
+git worktree add -b review/issue47-bank-scope ../SEC_metrics-bank-scope-review \
+  origin/task/issue47-bank-scope-history-20261010
+cd ../SEC_metrics-bank-scope-review
+python3 tools/vnext_company.py run --company jpmorgan_chase \
+  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2021 \
+  --metric A04 --metric A09 --metric A11 --source-root /saved/sec/source-inputs \
+  --work-dir /new/bank-scope/state --output-dir /new/bank-scope/runs
+python3 tools/vnext_company.py results --company jpmorgan_chase \
+  --state-root /new/bank-scope/state --output-root /new/bank-scope/read-01
+```
+
+来源使用保留历史分支恢复所得实际 `source-inputs` 根，原件只读，状态/输出写外部新目录。JPM FY2021实际A04=.0164 ratio、全年；A09=.0072 ratio及A11=3,113,000,000,000 USD均为12月31日时点，财年是年度容器。A09仍先做完整原生结构化检查，只有明确歧义且来源集合完整才可使用现有HTML解释；缺源或程序异常不能替代。原申报、原格与单位/期间都由同一CSV/出处读口保存。
+
+同CLI首跑、禁工厂复用及另进程读取已核，见[唯一接收记录](evidence/issue47_bank_scope_receiving_20261010/README.md)。另外四年、修订/继任金额、其他金融族和在线历史取源尚待；候选接线不等于完整业务接受。
+
 ## 状态、复跑和局部失败
 
 同一指标按财年各自保存。成功同输入复跑为 `NO_SOURCE_CONTENT_CHANGE`；已经完整检查但因业务原因扣留的同输入复跑为 `PREVIOUS_INPUT_WITHHELD`。两者均不再调用计算工厂，不新增相同结果目录。改变实际相关来源、补齐依赖或处理配置后重新处理；普通异常和未完成记录不被缓存为已完成业务结论。
