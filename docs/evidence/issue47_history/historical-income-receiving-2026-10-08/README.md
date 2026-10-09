@@ -118,3 +118,5 @@ Lumen FY2021–FY2025进一步消费同一固定PR75/527入口，B01/B02/B04/B05
 [36项受影响短例](selected-income-affected.log)0.154s、零skip，含公共来源绑定/单位/namespace及历史读者/工厂接缝；构造短期、缺源与字节变化标为控制。初始 macOS `/var` 夹具别名失败保持，夹具 resolve 后过，未放宽生产路径要求。处理配置登记所消费原件模块、namespace/helper、历史读者及真实解析依赖，未另建 runner。以上仍为 PR52 历史开发分支，尚未 main，不扩大 PR71/PR86 范围；后续收入 slice 接收及在线历史发现/补齐、修订/主体准入和完整业务仍待。新增 SEC/provider/paid=0/0/0。
 
 必要旧入口检查：`mint --check` 仍在既有父代 `normal_source_authority.py` 字节门禁退出（[日志](selected-income-mint.log)），不重新封存祖先或改旧 Run。提交前结构检查只报本主说明与 HEAD 不同（[日志](selected-income-alignment.log)），提交后再核结构。检查器两个副产物已按检查前字节还原。原双指标 CLI 日志在追加 deterministic_router 处理依赖前产生；该追加不改计算，最终短例核其登记，不假称原保存版本已经具有新处理配置。其他不含 B01 的公司事实批次不增这些收入依赖。
+
+实现 bd6ef6d1 提交后能力结构检查 PASS（[日志](selected-income-postcommit-alignment.log)），两个副产物恢复；只是结构证据，不清除旧 mint 门禁或业务缺口。
