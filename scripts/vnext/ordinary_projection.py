@@ -252,7 +252,7 @@ def render_ordinary_records(*, data_root, manifest, records, case,
     if 'mode' in case['input_binding']:
         receipt['semantic_assessment_mode'] = case['input_binding']['mode']
     if recorded:
-        receipt.update(source_credit="RECORDED_TEST_ONLY",source_checkpoint_id=case["admission"]["checkpoint_id"],
+        receipt.update(source_credit="RECORDED_TEST_ONLY",source_checkpoint_id=case["admission"].get("checkpoint_id"),
                        real_sec_credit=False)
     elif "checkpoint_id" in case["admission"]:
         receipt.update(source_credit=case["admission"]["source_credit"],

@@ -22,14 +22,17 @@ def main(argv=None):
     run.add_argument('--fiscal-year-end', type=int)
     run.add_argument('--work-dir', required=True, type=Path)
     run.add_argument('--output-dir', required=True, type=Path)
-    run.add_argument('--metric', action='append', help='Debug subset; summary retains all configured statuses')
+    run.add_argument('--metric', action='append', help='Select metrics; online call-context supports B01/B02, retained native summary lists configured statuses')
     run.add_argument('--source-root', type=Path,
                      help='Use saved sources and ordinary records; no online discovery, capture or AI calls')
+    run.add_argument('--call-context', type=Path, help='Existing scoped SEC ledger context for the lightweight online B01/B02 path; no new allowance')
     run.add_argument('--max-sec-requests', type=int, default=120, help='Invocation cap, no automatic retries')
     run.add_argument('--sec-allowance', type=int, default=120, help='Fixed cumulative task allowance')
     acquire = sub.add_parser('acquire', help='Only discover/capture sources; never calculate or call AI')
     acquire.add_argument('--company', required=True)
     acquire.add_argument('--work-dir', required=True, type=Path)
+    acquire.add_argument('--call-context', type=Path, help='Existing scoped ledger for ordinary B01/B02 acquisition only')
+    acquire.add_argument('--metric', action='append', help='Online source scope, B01/B02 only')
     acquire.add_argument('--max-sec-requests', type=int, default=120)
     acquire.add_argument('--sec-allowance', type=int, default=120)
     export = sub.add_parser('export', help='Controlled preparation: source-only company export')
@@ -88,12 +91,28 @@ def main(argv=None):
     args = parser.parse_args(argv)
     start = time.monotonic()
     if args.command == 'run':
-        from vnext.company_local import run_local
-        result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
-            period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
-            sec_allowance=args.sec_allowance, source_root=args.source_root,
-            fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end)
+        if args.call_context is not None:
+            if args.source_root is not None:
+                parser.error('Choose saved sources or online call context, not both')
+            from vnext.company_online import run_online_company
+            result = run_online_company(company_id=args.company, work_dir=args.work_dir,
+                output_dir=args.output_dir, metric_ids=args.metric,
+                call_context=args.call_context, max_sec_requests=args.max_sec_requests)
+        else:
+            from vnext.company_local import run_local
+            result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
+                period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
+                sec_allowance=args.sec_allowance, source_root=args.source_root,
+                fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end)
+    elif args.command == 'acquire' and args.call_context is not None:
+        from vnext.company_online import run_online_company
+        result = run_online_company(company_id=args.company, work_dir=args.work_dir,
+            output_dir=args.work_dir.parent/(args.work_dir.name+'-unused-output'),
+            call_context=args.call_context,metric_ids=args.metric,
+            max_sec_requests=args.max_sec_requests,calculate=False)
     elif args.command == 'acquire':
+        if args.metric is not None:
+            parser.error('--metric acquisition requires the ordinary call context')
         from vnext.company_local import absolute, configure_task, configured_scope, _invoke
         from vnext.company_handoff import external, locked_company
         if not (0 <= args.max_sec_requests <= 120 and 0 < args.sec_allowance <= 120):

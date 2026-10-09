@@ -1,0 +1,21 @@
+{
+  "tested_base": "f7905156f7972b214e71d7f0a9a1172f7ac969cf",
+  "tested_tree": "PR83 88b37ea3 plus uncommitted merge of PR67 f790; conflicts limited to documentation and two selector append entries",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics",
+  "real_cli_source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-online-recorded-no-network-20261009/task/sources",
+  "files": {
+    "scripts/vnext/company_local.py": "4d1523cb862ecebd5c1ffe959537999d8fd34aeaaa2ad47cc9ec19cb736c1822",
+    "scripts/vnext/company_retained_local.py": "ecd53233b8c036fb1997498654e69911304a0f4b75dd0ac254ea28ad82ffa324",
+    "scripts/vnext/ordinary_current_update.py": "4547c6df37ff4a47de7c1589689771c8ab5090e5d596255b27146f6a5b215e54",
+    "tools/vnext_company.py": "6fa4b005067847a6f1e1d1247049ae9cafd56530b65f65d9530038628a69c167",
+    "tools/run_fast_tests_v2.py": "774d09800e0178f91ff6f1c3af2d8db756cbe1db90f3bd4a3192b1d13fefe825",
+    "scripts/vnext/company_online.py": "bad70ba70302834c1b4bdc30afb6fe888de96e9974d5c25347cb295345572a6b"
+  },
+  "tests": "69 tests in 9.471s OK; real CLI old recorded task continuation PASS",
+  "factory_observation": "two real calls; metric kw-only instrumentation labels null because original factory uses positional metric; per-metric statuses and CSV checked separately",
+  "new_real_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

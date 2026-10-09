@@ -99,6 +99,26 @@ Marriott真实空来源首跑和同目录复跑已完成：累计31次真实SEC 
 
 ## 首批接收回修：默认空任务
 
-PR67修前29c9c9e在normal_source_authority旧绑定处、HTTP前失败；实际main相同回复/公司/B01/B02成功。本轮保持不带source-root的原用户命令与main支持范围，新默认native程序从可取得的固定main8588程序/规则安装，程序内没有SEC原件，真实来源仍需原适用许可；原已存在任务优先保留原program_root。当前轻量source-root生产者不变，没有引入PR83。该保留native路径是过渡兼容，不表示新轻量在线39项或业务接受已经完成。
+PR67修前29c9c9e在normal_source_authority旧绑定处、HTTP前失败；实际main相同回复/公司/B01/B02成功。本轮保持不带source-root的原用户命令与main支持范围，新默认native程序从可取得的固定main8588程序/规则安装，程序内没有SEC原件，真实来源仍需原适用许可；原已存在任务优先保留原program_root。PR67本批的source-root生产者保持，不将本PR83的轻量在线后继视为PR67前置。该保留native路径是过渡兼容，不表示新轻量在线39项或业务接受已经完成。
 
 需要含main8588及旧规则Git对象的代码仓库；审查的HTTP录制使用Python3.12/B01/B02，所有实际子进程运行且网络禁止。准确三入口、只读原件位置、全新目录命令与成对证据见 [主要回修记录](evidence/issue28_company_records_20261007/default-online-review-20261009/README.md)。新轻量记录state-root是work-dir；旧native才使用company-state及原runtime/trust，不混用参数。
+
+## 轻量在线接续候选：有限指标从空来源完成
+
+这是 PR67 之后的代码候选，尚未进入 main。`run --call-context` 将来源发现/获取与普通记录计算/CSV串接；首批只支持 B01/B02，不调用旧计算，不新建真实额度或恢复失败机会。当前验证替换外部 HTTP 返回，使用真实保存 SEC 原件，发现、落盘、解析、计算、保存和导出均走实际程序；不代表新的真实 SEC 验收或全部39指标完成。
+
+```bash
+python /path/to/online-candidate/tools/vnext_company.py run \
+  --company marriott_international --period latest-complete-fy \
+  --work-dir /data/marriott-task --output-dir /data/marriott-output \
+  --call-context /data/existing-sec-call-context.json \
+  --metric B01 --metric B02 --max-sec-requests 20
+```
+
+调用上下文只说明本次适用的既有账本/用途/公司/指标、原调用上限、原执行模式和运行版本；不能用这个文件给自己新增许可。真实运行须先核原适用授权，本文没有为当前候选授予新用途。原账本的初始化锚点、历史行、停止和计数继续生效，不能通过新任务目录拆分/重置额度；未知远端结果或落盘中断保留占用并停止，不自动重发。`--sec-allowance`不覆盖已有账本上限。
+
+来源保存在任务 `sources`，普通计算状态在 `company-state`，输出在指定输出目录；用户不手工准备 FULL_SOURCE 或选择内部程序树。独立采集用同版 `acquire --company ... --work-dir ... --call-context ... --metric B01 --metric B02 --max-sec-requests 20`；单独计算可用同版保存来源 `run --source-root <任务/sources>` 指向另一个普通状态目录。日常读取用 `results --state-root <任务/company-state> --company ...`，不重放计算。已有原生任务继续原固定入口，不用此候选覆盖旧状态。
+
+同一原账本已保存的不可变原件，不能因为换任务目录就再取一次。调用上下文可固定既有完整 SEC `source_root`，直接复用其原请求行/原件/身份，不能裁账本或拼不同历史；未给原来源位置但账本已有同URL成功记录时，新入口在申领前返回 `ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED`。元数据刷新单独明确计数。该配置是持久运行配置，不是每年手填来源答案；既有来源根必须在代码和状态/输出根之外。
+
+录制上下文必须指定 `recorded_http_root`；该入口只从保存的HTTP原件读取回复，走原客户端的落盘/日志路径，不打开网络。LIVE上下文拒绝这个录制输入字段，使用正常HTTPS及原真实计数。录制模式不是一个可以免费访问SEC的通道；缺少回复不降级到真实网络。
