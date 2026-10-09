@@ -1,0 +1,107 @@
+{
+  "utc": "2026-10-09T12:19:27.712472+00:00",
+  "base": "2bec3464e735bc5cbf928573b1bd1538b06789f3",
+  "patch": "98930711a31d85d1b5406149ef83271cce793543",
+  "checks": {
+    "non_hidden_product_ast_identical": true,
+    "old_test_ast_identical": true,
+    "shared_files_unchanged": {
+      "scripts/vnext/financial_structured.py": true,
+      "scripts/vnext/table_grid.py": true,
+      "tools/run_fast_tests_v2.py": true
+    }
+  },
+  "parent_evidence_only": {
+    "note": "Read existing execution logs and saved JSON only. Did not execute historical reproducer, read historical source-root, or independently rerun full 25/26-test module.",
+    "old_full_module": "25 tests; 5.335s unittest; 5.611737s child; exit0; historical independent review",
+    "parent_fixed_full_module": "26 tests; 5.247s unittest; OK; parent execution log",
+    "parent_saved_original_triples": [
+      {
+        "year": 2021,
+        "amounts": [
+          "75000000",
+          "55000000",
+          "20000000",
+          "75000000"
+        ],
+        "original_proved": false,
+        "patched_proof_count": 4,
+        "proof_ordinals": [
+          67,
+          1058,
+          1059,
+          1060
+        ],
+        "source_sha256": "54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5"
+      },
+      {
+        "year": 2022,
+        "amounts": [
+          "89000000",
+          "60000000",
+          "29000000",
+          "89000000"
+        ],
+        "original_proved": false,
+        "patched_proof_count": 4,
+        "proof_ordinals": [
+          62,
+          1014,
+          1015,
+          1016
+        ],
+        "source_sha256": "c041a0501c788a5cc6bb2e6155e6ea345834e1baca2d6165d6d7af22e1b5e95d"
+      },
+      {
+        "year": 2023,
+        "amounts": [
+          "88000000",
+          "65000000",
+          "22000000",
+          "87000000"
+        ],
+        "original_proved": false,
+        "patched_proof_count": 4,
+        "proof_ordinals": [
+          62,
+          1007,
+          1008,
+          1009
+        ],
+        "source_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17"
+      }
+    ],
+    "sha256": {
+      "independent-review/conclusion.md": "f69ccd57ff798afb0be3435eaabea162fe13ef89bfc1e970d6ecfc8563e9f82a",
+      "independent-review/required-module.log": "9e2d176f4532bda1e6cd3d96f718c4f8509c716fde893e948cbb1e7969bd1b2c",
+      "style-fix-module.log": "5893f142faca6029d924e8ca82f783bc06671de24822a471e56c24aa089591bd",
+      "style-fix-saved.json": "1a1d1bbeb762287381ee60dbc7d7ee1a4567d73e58681b8a1280c086eadbabde",
+      "final-saved.json": "1a1d1bbeb762287381ee60dbc7d7ee1a4567d73e58681b8a1280c086eadbabde"
+    }
+  },
+  "worktree_status": "?? docs/evidence/issue28_contract_aggregate_20261009/style-review/\n",
+  "final_check": {
+    "utc": "2026-10-09T12:21:12.298617+00:00",
+    "head": "98930711a31d85d1b5406149ef83271cce793543",
+    "tracked_diff_empty": true,
+    "untracked_paths": "?? docs/evidence/issue28_contract_aggregate_20261009/style-review/",
+    "tool_calls_including_wrapper": 28,
+    "functions_exec_calls": 9,
+    "exec_command_calls": 17,
+    "clock_curr_time_calls": 2,
+    "ordinary_messages_including_final": 3,
+    "questions": 0,
+    "subagents": 0,
+    "files": [
+      "conclusion.md",
+      "required-class.log",
+      "scope-and-log-inspection.log",
+      "style-boundaries.log"
+    ],
+    "sha256": {
+      "conclusion.md": "e19ca7648437e01e8fe88f07dd86af4316cd7d57e1a94b6a1cf462f5359dfba2",
+      "required-class.log": "1bbaacf0baa003a93f02e4514c2af6979e2b4fcd114ef6939ace73baa39864de",
+      "style-boundaries.log": "69fb861d1e214f0fb28b90bd81c1e9ec0ca5740b50c6b87b9fc167709bfb45cf"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/tools/run_fast_tests_v2.py", line 17, in <module>
+    import run_fast_tests as inherited
+ModuleNotFoundError: No module named 'run_fast_tests'
+SEC retry exhausted for https://data.sec.gov/submissions/CIK0001048286-attachments-001.json; status=429; error=
+Corrected review harness: add tools directory for the CLI module import; prior import error retained above.
+PASS multiple_reserves_sum_without_rewriting_binding
+PASS imported_prefix_403_does_not_clear_new_429_stop
+PASS receipt_interrupt_after_response_keeps_charge
+PASS changed_purpose_is_refused_before_transport
+competing outcomes ['CLAIMED', 'EXISTING_HISTORICAL_SEC_UNRESOLVED_ATTEMPT']
+PASS competing_lock_holders_consume_only_one_opportunity
+{
+  "extra_probes": [
+    "multiple_reserves_sum_without_rewriting_binding",
+    "imported_prefix_403_does_not_clear_new_429_stop",
+    "receipt_interrupt_after_response_keeps_charge",
+    "changed_purpose_is_refused_before_transport",
+    "competing_lock_holders_consume_only_one_opportunity"
+  ],
+  "fast_selector_subprocesses": [
+    {
+      "test": "tests.vnext.test_existing_historical_sec_state",
+      "return_code": 0,
+      "duration_seconds": 0.089,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 5 tests in 0.016s\n\nOK\n",
+      "stdout_tail": ""
+    },
+    {
+      "test": "tests.vnext.test_historical_sec_capture_adapter",
+      "return_code": 0,
+      "duration_seconds": 2.93,
+      "stderr_tail": "SEC retry exhausted for https://data.sec.gov/submissions/CIK0001048286-attachments-001.json; status=403; error=\n----------------------------------------------------------------------\nRan 6 tests in 2.803s\n\nOK\n",
+      "stdout_tail": ""
+    }
+  ]
+}
+SUMMARY: 5 supplemental probes and 2 actual fast-selector subprocesses passed; zero real calls.

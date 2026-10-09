@@ -12,16 +12,25 @@ name: Company saved-source records
       - 'tests/vnext/test_runtime_tools.py'
       - 'tests/vnext/test_b03_current_input_scope.py'
       - 'tests/vnext/test_xbrl_namespace_policy.py'
+      - 'tests/vnext/test_dei_release_selection.py'
+      - 'tests/vnext/test_financial_dei_release.py'
+      - 'tests/vnext/test_reported_average_period.py'
+      - 'tests/vnext/test_bank_scope_dei_release.py'
       - 'tests/vnext/test_successor_income_projection.py'
       - 'tests/vnext/test_event_rule_root.py'
       - 'tests/vnext/test_selected_event_source_v1.py'
       - 'tests/vnext/test_historical_event_cases.py'
       - 'tests/vnext/test_registered_event_projection.py'
       - 'tests/vnext/test_reporting_company_projection.py'
+      - 'tests/vnext/test_existing_historical_sec_state.py'
+      - 'tests/vnext/test_historical_sec_capture_adapter.py'
       - 'tests/vnext/test_separate_rule_root.py'
       - 'tests/vnext/test_selected_lodging_calculation.py'
       - 'tests/vnext/test_selected_lodging_source.py'
+      - 'tests/vnext/test_historical_average_risk_cases.py'
+      - 'tests/vnext/test_historical_bank_scope_cases.py'
       - 'tests/vnext/test_history_company_dispatch.py'
+      - 'tests/vnext/test_historical_geography_cases.py'
       - 'tests/vnext/test_selected_history_result_state.py'
       - 'tests/fixtures/lodging_selected_table.html'
       - 'config/**'
@@ -45,11 +54,11 @@ jobs:
       - name: Saved source through calculation, records, CSV and reading
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy tests.vnext.test_successor_income_projection tests.vnext.test_event_rule_root tests.vnext.test_reporting_company_projection -v
+        run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy tests.vnext.test_dei_release_selection tests.vnext.test_successor_income_projection tests.vnext.test_event_rule_root tests.vnext.test_financial_dei_release tests.vnext.test_reported_average_period tests.vnext.test_bank_scope_dei_release tests.vnext.test_reporting_company_projection -v
       - name: Historical dispatch and saved result states
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state -v
+        run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases -v
       - name: Selected event sources and explicit history validation
         env:
           PYTHONDONTWRITEBYTECODE: '1'
@@ -58,3 +67,7 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 tests/required_unittests.py tests.vnext.test_historical_event_cases.HistoricalEventCaseTest tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest
+      - name: Existing historical SEC count and recorded capture compatibility
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_existing_historical_sec_state tests.vnext.test_historical_sec_capture_adapter tests.vnext.test_company_online

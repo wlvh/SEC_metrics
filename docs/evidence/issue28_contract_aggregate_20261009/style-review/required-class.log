@@ -1,0 +1,33 @@
+{
+  "command": [
+    "python3",
+    "tests/required_unittests.py",
+    "tests.vnext.test_b03_current_input_scope.ContractAggregateTest"
+  ],
+  "cwd": "/Users/lyuhongwang/.codex/worktrees/issue28-contract-aggregate/SEC_metrics",
+  "base": "2bec3464e735bc5cbf928573b1bd1538b06789f3",
+  "patch": "98930711a31d85d1b5406149ef83271cce793543",
+  "head": "98930711a31d85d1b5406149ef83271cce793543",
+  "utc_start": "2026-10-09T12:17:38.245132+00:00",
+  "utc_end": "2026-10-09T12:17:38.500723+00:00",
+  "elapsed_seconds": 0.2554416670463979,
+  "return_code": 0,
+  "artifact_sha256": {
+    "scripts/vnext/b03_contract_amortization_scope.py": "c6f8f3bfead15fb3388d44c417ee3eedda28ea4dbf31a93d5e543a45d8197f74",
+    "tests/vnext/test_b03_current_input_scope.py": "49d7287bc181035162f4cf6825feea68f2378353d8472393b037fdfea2c6bdfc"
+  }
+}
+
+test_aggregate_preserves_all_proofs_without_double_counting (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_aggregate_preserves_all_proofs_without_double_counting) ... ok
+test_aggregate_still_requires_original_gross_to_net_relation (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_aggregate_still_requires_original_gross_to_net_relation) ... ok
+test_conflicting_or_commented_display_does_not_erase_visible_spacer (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_conflicting_or_commented_display_does_not_erase_visible_spacer) ... ok
+test_duplicate_aggregate_or_segment_does_not_gain_credit (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_duplicate_aggregate_or_segment_does_not_gain_credit) ... ok
+test_hidden_self_closing_empty_cells_do_not_shift_visible_year_columns (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_hidden_self_closing_empty_cells_do_not_shift_visible_year_columns) ... ok
+test_unreconciled_aggregate_or_unknown_scope_stays_unproved (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_unreconciled_aggregate_or_unknown_scope_stays_unproved) ... ok
+test_visible_spacers_and_nonempty_hidden_cells_are_not_erased (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_visible_spacers_and_nonempty_hidden_cells_are_not_erased) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.007s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 7, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_b03_current_input_scope.ContractAggregateTest"]}

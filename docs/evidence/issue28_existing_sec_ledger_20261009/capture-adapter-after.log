@@ -1,0 +1,78 @@
+test_additive_limit_and_conservative_count_are_separate_from_binding (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_additive_limit_and_conservative_count_are_separate_from_binding) ... ok
+test_known_failure_is_charged_and_wrong_logged_row_is_rejected (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_known_failure_is_charged_and_wrong_logged_row_is_rejected) ... ok
+test_missing_terminal_is_counted_and_blocks (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_missing_terminal_is_counted_and_blocks) ... ok
+test_unknown_outcome_is_not_free_or_resolved (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_unknown_outcome_is_not_free_or_resolved) ... ok
+test_wrong_intent_binding_or_extension_prefix_is_rejected (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_wrong_intent_binding_or_extension_prefix_is_rejected) ... ok
+test_additive_limit_and_conservative_count_are_separate_from_binding (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_additive_limit_and_conservative_count_are_separate_from_binding) ... ok
+test_known_failure_is_charged_and_wrong_logged_row_is_rejected (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_known_failure_is_charged_and_wrong_logged_row_is_rejected) ... ok
+test_missing_terminal_is_counted_and_blocks (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_missing_terminal_is_counted_and_blocks) ... ok
+test_unknown_outcome_is_not_free_or_resolved (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_unknown_outcome_is_not_free_or_resolved) ... ok
+test_wrong_intent_binding_or_extension_prefix_is_rejected (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_wrong_intent_binding_or_extension_prefix_is_rejected) ... ok
+test_plan_interrupt_consumes_opportunity_without_http_or_fake_terminal (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_plan_interrupt_consumes_opportunity_without_http_or_fake_terminal) ... ERROR
+test_recorded_capture_preserves_prior_rows_and_uses_next_old_format_slot (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_recorded_capture_preserves_prior_rows_and_uses_next_old_format_slot) ... ERROR
+test_wrong_url_root_refresh_and_limit_refuse_before_transport (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_wrong_url_root_refresh_and_limit_refuse_before_transport) ... FAIL
+test_claim_is_reported_pending_before_plan_persistence (tests.vnext.test_company_online.CompanyOnlineTest.test_claim_is_reported_pending_before_plan_persistence) ... ok
+test_existing_real_ledger_never_created (tests.vnext.test_company_online.CompanyOnlineTest.test_existing_real_ledger_never_created) ... ok
+test_new_task_source_directory_does_not_reset_immutable_capture (tests.vnext.test_company_online.CompanyOnlineTest.test_new_task_source_directory_does_not_reset_immutable_capture) ... ok
+test_one_native_http_attempt_uses_existing_count_and_no_retry (tests.vnext.test_company_online.CompanyOnlineTest.test_one_native_http_attempt_uses_existing_count_and_no_retry) ... ok
+test_persistence_interrupt_leaves_counted_pending_no_second_transport (tests.vnext.test_company_online.CompanyOnlineTest.test_persistence_interrupt_leaves_counted_pending_no_second_transport) ... ok
+test_prior_metadata_missing_does_not_prevent_current_sources (tests.vnext.test_company_online.CompanyOnlineTest.test_prior_metadata_missing_does_not_prevent_current_sources) ... ok
+test_recorded_context_without_replies_cannot_use_network (tests.vnext.test_company_online.CompanyOnlineTest.test_recorded_context_without_replies_cannot_use_network) ... ok
+test_scope_or_limits_cannot_be_changed_by_call_context (tests.vnext.test_company_online.CompanyOnlineTest.test_scope_or_limits_cannot_be_changed_by_call_context) ... ok
+test_unknown_remote_blocks_next_claim_and_is_not_zero (tests.vnext.test_company_online.CompanyOnlineTest.test_unknown_remote_blocks_next_claim_and_is_not_zero) ... ok
+test_unsupported_metric_rejected_before_sources_or_claim (tests.vnext.test_company_online.CompanyOnlineTest.test_unsupported_metric_rejected_before_sources_or_claim) ... ok
+
+======================================================================
+ERROR: test_plan_interrupt_consumes_opportunity_without_http_or_fake_terminal (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_plan_interrupt_consumes_opportunity_without_http_or_fake_terminal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/tests/vnext/test_historical_sec_capture_adapter.py", line 58, in test_plan_interrupt_consumes_opportunity_without_http_or_fake_terminal
+    capture=self.capture()
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/tests/vnext/test_historical_sec_capture_adapter.py", line 24, in capture
+    def capture(self):return online.Capture(self.source,self.ledger,self.context,1)
+                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/scripts/vnext/company_online.py", line 55, in __init__
+    _need(self.source.is_dir() and (self.source/'config/company_registry.csv').is_file(),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'EXISTING_LEDGER_SOURCE_REQUIRED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/scripts/vnext/company_online.py", line 29, in _need
+    raise ValueError('COMPANY_ONLINE_' + reason)
+ValueError: COMPANY_ONLINE_EXISTING_LEDGER_SOURCE_REQUIRED
+
+======================================================================
+ERROR: test_recorded_capture_preserves_prior_rows_and_uses_next_old_format_slot (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_recorded_capture_preserves_prior_rows_and_uses_next_old_format_slot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/tests/vnext/test_historical_sec_capture_adapter.py", line 28, in test_recorded_capture_preserves_prior_rows_and_uses_next_old_format_slot
+    capture=self.capture()
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/tests/vnext/test_historical_sec_capture_adapter.py", line 24, in capture
+    def capture(self):return online.Capture(self.source,self.ledger,self.context,1)
+                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/scripts/vnext/company_online.py", line 55, in __init__
+    _need(self.source.is_dir() and (self.source/'config/company_registry.csv').is_file(),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'EXISTING_LEDGER_SOURCE_REQUIRED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/scripts/vnext/company_online.py", line 29, in _need
+    raise ValueError('COMPANY_ONLINE_' + reason)
+ValueError: COMPANY_ONLINE_EXISTING_LEDGER_SOURCE_REQUIRED
+
+======================================================================
+FAIL: test_wrong_url_root_refresh_and_limit_refuse_before_transport (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_wrong_url_root_refresh_and_limit_refuse_before_transport)
+----------------------------------------------------------------------
+ValueError: COMPANY_ONLINE_EXISTING_LEDGER_SOURCE_REQUIRED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/tests/vnext/test_historical_sec_capture_adapter.py", line 49, in test_wrong_url_root_refresh_and_limit_refuse_before_transport
+    with self.assertRaisesRegex(ValueError,'OUTSIDE_BOUNDED_PURPOSE'):self.capture().get(self.url+'x')
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "OUTSIDE_BOUNDED_PURPOSE" does not match "COMPANY_ONLINE_EXISTING_LEDGER_SOURCE_REQUIRED"
+
+----------------------------------------------------------------------
+Ran 23 tests in 2.095s
+
+FAILED (failures=1, errors=2)
+{"allowed_skips": 0, "errors": 2, "failures": 1, "run": 23, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_existing_historical_sec_state", "tests.vnext.test_historical_sec_capture_adapter", "tests.vnext.test_company_online"]}

@@ -43,6 +43,10 @@ def delegation_fields(comment, *, policy):
 
 def load_delegation(*, requirement, online=False):
     policy = requirement['policy']
+    if requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        # Saved user delegation remains historical metadata. Current scope and
+        # opportunities are checked against the original ledger/batch records.
+        return strict_json_file(path=Path(__file__).resolve().parents[2]/policy['delegation_record_path'])
     need(requirement['requirement_id'] == REQUIREMENT_ID, 'CONTINUOUS_REQUIREMENT_REQUIRED')
     if online:
         from .annual_candidate import _github
@@ -72,6 +76,9 @@ def configured_transport_policy(*, requirement, repo_root):
     """Select this successor's bound configuration, never a legacy default."""
     from .ai_adapter import TransportPolicy
     from .provider_runtime import load_provider_runtime_authority
+    if requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        from .current_request_configuration import transport_policy
+        return transport_policy(configuration=requirement, repo_root=repo_root)
     need(requirement['requirement_id'] == REQUIREMENT_ID, 'CONTINUOUS_REQUIREMENT_REQUIRED')
     path = resolve_repository_file(repo_root=repo_root,repo_relative_path='config/provider_model_runtime.json')
     raw = path.read_bytes()
