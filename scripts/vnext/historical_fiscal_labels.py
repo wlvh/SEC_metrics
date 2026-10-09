@@ -182,3 +182,41 @@ def inspect_prepared_fiscal_year_labels(*, repo_root, prepared):
         repo_root=repo_root,
         repo_relative_path=prepared["table_input"]["source_repo_relative_path"]).read_bytes()
     return {**report, "inspection": widen_inspection(inspected=inspected, primary_bytes=primary)}
+
+
+def resolve_selected_fiscal_year_label(*, primary_bytes, companyfacts_bytes,
+                                      expected_primary_sha256, expected_companyfacts_sha256,
+                                      expected_cik, filing):
+    """Resolve one selected original's label, without annual preparation.
+
+    The caller owns source admission and candidate uniqueness. This pure
+    consumer retains the original DEI year and actual dates, reads the same
+    issuer definitions and applies the existing normal-input label rule.
+    It does not discover/fetch sources or grant financial acceptance.
+    """
+    from .historical_dei import release_aware
+    from .normal_annual_input_v2 import _choose_fiscal_year, POLICY_PATH
+    from .normal_source_authority import ROOT
+    from .canonical import sha256_file, strict_json_file
+    inspected = release_aware(_frozen_labels.inspect_fiscal_year_labels)(
+        primary_bytes=primary_bytes, companyfacts_bytes=companyfacts_bytes,
+        expected_primary_sha256=expected_primary_sha256,
+        expected_companyfacts_sha256=expected_companyfacts_sha256,
+        expected_cik=expected_cik, filing=filing)
+    inspected = widen_inspection(inspected=inspected, primary_bytes=primary_bytes)
+    year, basis = _choose_fiscal_year(inspected)
+    body = {"record_type": "SELECTED_HISTORICAL_FISCAL_LABEL",
+            "policy_id": strict_json_file(path=ROOT/POLICY_PATH)["policy_id"],
+            "policy_sha256": sha256_file(path=ROOT/POLICY_PATH),
+            "historical_definition_forms_rule": FORMS_RULE,
+            "selected_fiscal_year": year, "basis": basis,
+            "original_dei_fiscal_year": inspected["dei_fiscal_year"],
+            "actual_period": inspected["actual_period"],
+            "source_inspection_status": inspected["status"],
+            "metadata_conflict_retained": inspected["status"] == "SOURCE_LABEL_CONFLICT",
+            "source_inspection": inspected,
+            "candidate_uniqueness_proven": False,
+            "source_admission_proven": False,
+            "metric_acceptance_proven": False,
+            "calls": {"provider": 0, "paid": 0, "sec": 0}}
+    return {**body, "label_resolution_id": content_hash(value=body)}

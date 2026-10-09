@@ -163,3 +163,20 @@ python3 tools/vnext_company.py sources --company marriott_international \
 该入口按现有保存目录列出这一任务的目标、修订及必要前期年报、目录/XML、Company Facts和选源元数据。`--report-end`是SEC报告期结束日期；原件齐备时显示原件DEI的原始财年标签，不把日期年份当标签；与其他财年文字或机器标签的最终对照仍由既有计算侧选期实现处理，本预检不替代它。文件齐备返回`SAVED_SOURCE_BYTES_AVAILABLE`/exit0；缺件、末次失败或来源身份问题返回具体原因/exit2。只选择B01时不要求未被使用的前期原件；B02需要前期，只有既有完整、来源已核对且日期相邻的原生XML可以满足未保存的前期正文，失败GET不能被替代。
 
 这不是获取或计算，不能证明新鲜度、修订效果、收入范围或结果已被接受。索引未保存时仍有未知XML前沿，计数只是已知URL数，不是获取许可或最终调用预算。当前仅列B01/B02来源依赖，其他指标、历史在线捕获和模型请求仍走各自已交付/待接入路径；不使用一个“来源齐备”状态替代39项业务验收。
+
+### 候选：直接给出发行人财年范围
+
+`task/issue28-fiscal-range-entry` 依赖来源预检PR126及纯标签接口PR127，尚未进入main。对保存来源的B01/B02，用户无需逐年提供report-end：
+
+```sh
+python3 tools/vnext_company.py sources --company macys --source-root SOURCE \
+  --fiscal-year-start 2022 --fiscal-year-end 2023 --metric B01 --metric B02
+python3 tools/vnext_company.py run --company macys --source-root SOURCE \
+  --period fiscal-years --fiscal-year-start 2022 --fiscal-year-end 2023 \
+  --metric B01 --metric B02 --work-dir NEW_STATE --output-dir OUTPUT
+python3 tools/vnext_company.py results --company macys --state-root NEW_STATE --output-root READER
+```
+
+范围发现使用已有保存元数据的“目标边界＋最近前期”窗口，逐一解析窗口内原件标签，保留raw DEI/发行人定义及未读候选，不用结束日期年份代替财年。窗口外旧记录和未加载历史边界明确保留；这不证明任意旧财年不存在。最多沿现有入口处理五个连续发行人财年，其他指标混合调用保留其原工厂。B01/B02单独调用时，范围发现只在更新器确需处理时执行；相同输入读取旧结果，不先完整准备年报。
+
+Macy's两年公司处理链已验证，但FY2023旧B01/B02确切结果发现把Net sales小计当总收入，默认读取及CSV精确扣留。FY2022来源呈列另有信用卡净收入，范围仍待核，不能仅因流程成功授业务信用。新增正确数值仍需共享收入范围修复。本入口不自动获取缺件、不授费用/旧失败机会，也不代替完整39项交付。
