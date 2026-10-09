@@ -46,7 +46,7 @@ curl -fsSL -o scripts/securegpt_sdk.py "$BASE/scripts/securegpt_sdk.py"
 ls -l tools scripts            # 应各有一个 .py 文件
 ```
 
-后面的命令都在这个 `securegpt-probe` 目录里执行。已经有仓库克隆的话，也可以 `git pull` 后在仓库根目录执行，效果相同。
+后面的命令都在这个 `securegpt-probe` 目录里执行。请始终用上面固定版本下载的文件；不要用本地仓库当前分支里的文件代替，那可能是另一版代码。
 
 ### 3.2 找到要填的参数（本机，只读）
 
