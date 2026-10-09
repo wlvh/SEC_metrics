@@ -50,3 +50,5 @@ python3 -m unittest -v tests.vnext.test_historical_geography_cases \
 在同一已提交c1853bf1和同一原状态上只新增FY2022–FY2025四坐标：首94.199/81.299/67.157/40.113s，FY2021工厂被禁止且其旧文件保持。全部五年CLI禁factory复跑9.773s/调用0，无新相同结果目录；独立全状态读.631s，46结果/pointer文件保持。五值分别28971000000/31968000000/34873000000/38233000000/42758000000 USD，各年度实际1月1日至12月31日/CIK19617，全部XBRL_OK，来源和计算0新网络调用。five-year-summary.json/log保完整终态，不以五行状态代替内容核对。
 
 直接复用原历史分支已提交bank-measures-read-full-frame.json：五年度已读原Total international行/Revenue窗口逐项对照，新值、USD、全年日期和primary原件SHA全部相同，five-year-reference-comparison.json保对照/原参考SHA，existing-reference-index.json只是原记录A13子集，不改原阅读或增加接受登记。未重读未变年报，也未重算64小组合/原FY2021。这里证明本候选的JPM五年A13保存来源计算、复用、读取和出处贯通；其他公司、其他金融族、在线来源及完整1950业务目标继续。
+
+真实缺FY2026边界：同一公司任务请求2026，.873s返回INPUT_OR_EXECUTION_FAILED／ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS，空值不借FY2025。随后禁止factory独立读.582s保五年原值/ResultID，并列第六行缺年空状态，46旧结果/pointer文件不变。missing-year.json/log保实际输出，不把该真实来源缺失解释为结构性不适用、零值或新模型失败；未重算任何旧年度。
