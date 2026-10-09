@@ -1,0 +1,38 @@
+{
+  "base": "5b3e6ee72408634f51935b0c90d5800b3a6b7f81",
+  "components": [
+    {
+      "path": "scripts/vnext/historical_geography_cases.py",
+      "from_commit": "62bf7b49",
+      "sha256": "594f2ff50970eabb9ab03022ab50783aa6b1e469c6f8897f37c1405c920dc707",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/vnext/test_historical_geography_cases.py",
+      "from_commit": "62bf7b49",
+      "sha256": "1039a599c2f877d5826fefbf3d3ea075884dcd6efd59990e8092d2186b53c53f",
+      "byte_identical": true
+    },
+    {
+      "path": "scripts/vnext/historical_average_risk_cases.py",
+      "from_commit": "aefcca10",
+      "sha256": "b71df1945c07be213ba5272d62a1faf7f14f1afd9ad3ab520952808e766fde19",
+      "byte_identical": true
+    },
+    {
+      "path": "scripts/vnext/historical_average_risk_wording.py",
+      "from_commit": "aefcca10",
+      "sha256": "216a3202c0783bd87267b0ef9f4a72558c6b195432cbefc5c47809399c0864d7",
+      "byte_identical": true
+    },
+    {
+      "path": "tests/vnext/test_historical_average_risk_cases.py",
+      "from_commit": "aefcca10",
+      "sha256": "3fea26b18575be9b4d453d1082b9e6652b4208c424bf144ff01bf5014e91dcba",
+      "byte_identical": true
+    }
+  ],
+  "shared_core_files_unchanged": true,
+  "only_family_dispatch_combined": true,
+  "new_business_capabilities": false
+}

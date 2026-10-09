@@ -228,3 +228,16 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertIs(prepare_historical_current_annual_year_case, args['case_factories']['B07'])
         self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
         self.assertIs(prepare_historical_bank_year_case, args['case_factories']['A05'])
+
+    def test_six_financial_families_keep_each_declared_factory(self):
+        from vnext.historical_bank_scope_cases import prepare_historical_bank_scope_year_case
+        from vnext.historical_average_risk_cases import prepare_historical_average_risk_year_case
+        from vnext.historical_geography_cases import prepare_historical_geography_year_case
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        with patch('vnext.company_current_records.run_saved_company',return_value={}) as shared:
+            self.run_history(company_id='jpmorgan_chase',metric_ids=['A03','A04','A09','A11','A12','A13','B01'])
+        factories=shared.call_args.kwargs['case_factories']
+        for metric in ['A04','A09','A11']:self.assertIs(prepare_historical_bank_scope_year_case,factories[metric])
+        for metric in ['A03','A12']:self.assertIs(prepare_historical_average_risk_year_case,factories[metric])
+        self.assertIs(prepare_historical_geography_year_case,factories['A13'])
+        self.assertIs(prepare_historical_statement_year_case,factories['B01'])
