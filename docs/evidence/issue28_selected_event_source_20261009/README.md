@@ -43,7 +43,11 @@ retains one RAW_BLOB locator only if all its other fields agree; distinct
 SourceReferences and both exact request proofs remain. Other record or media
 conflicts are still rejected. No row, locator, identity or original file is
 rewritten. `original-union-collision.log` reproduces the original main refusal
-and the fixed two-claim/six-proof outcome on the same small recorded inputs. This is a correctness correction in the shared event helper,
+and the fixed two-claim/six-proof outcome on the same small recorded inputs.
+The first reproduction driver had a signature mismatch, not a product failure;
+its traceback is retained in `original-union-driver-first.log`. The corrected
+`verify_original_union.py` removes only the new optional keyword before invoking
+the untouched original union. This is a correctness correction in the shared event helper,
 not permission to ignore different source bytes or registrants.
 
 ## Executed evidence and limits
