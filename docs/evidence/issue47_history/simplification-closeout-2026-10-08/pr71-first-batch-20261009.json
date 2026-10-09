@@ -1,0 +1,92 @@
+{
+  "historical_parent": "0d58e55f383a310964836e8fd20a3c609684fe90",
+  "public_parent": "29c9c9e2080a1de8c809660ac8fbdfc49072ef12",
+  "source_and_test_inputs": "Committed PR71 source files and test fixtures; no private package",
+  "historical_dispatch_producer_test_bytes_unchanged": {
+    "scripts/vnext/company_local.py": true,
+    "tools/vnext_company.py": true,
+    "scripts/vnext/historical_lodging_results.py": true,
+    "scripts/vnext/normal_period_selection.py": true,
+    "tests/vnext/test_history_company_dispatch.py": true,
+    "tests/vnext/test_selected_history_result_state.py": true
+  },
+  "public_modules_exactly_consumed": {
+    "scripts/vnext/ordinary_current_update.py": true,
+    "scripts/vnext/ordinary_saved_result.py": true,
+    "scripts/vnext/company_current_records.py": true,
+    "scripts/vnext/ordinary_b03_input_scope.py": true,
+    "scripts/vnext/reported_monetary_literal.py": true
+  },
+  "workflow_test_paths_and_explicit_execution": [
+    "test_history_company_dispatch",
+    "test_selected_history_result_state"
+  ],
+  "local_two_modules": {
+    "tests": 12,
+    "seconds": 0.14,
+    "skips": 0,
+    "result": "PASS"
+  },
+  "combination_affected_tests": {
+    "tests": 84,
+    "seconds": 7.486,
+    "skips": 0,
+    "result": "PASS"
+  },
+  "real_company_first_seconds": 19.129837832879275,
+  "real_company_repeat_seconds": 2.4653711670544,
+  "factory_calls_on_repeat": 0,
+  "independent_read_seconds": 1.0209810831584036,
+  "protected_result_and_pointer_files": 32,
+  "result_pointer_bytes_unchanged": true,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "remote_workflow_run_first_patch": 37881312033,
+  "remote_terminal": {
+    "workflow": "Company saved-source records",
+    "event": "pull_request",
+    "head_sha": "0d58e55f383a310964836e8fd20a3c609684fe90",
+    "run_id": 37881312033,
+    "job_id": 113661400662,
+    "workflow_conclusion": "success",
+    "job_conclusion": "success",
+    "step": "Historical dispatch and saved result states",
+    "step_conclusion": "success",
+    "tests": 12,
+    "seconds": 0.845,
+    "skips": 0,
+    "executed_test_names": [
+      "test_cli_passes_period_arguments_to_the_same_company_entry",
+      "test_completed_withheld_survives_read_after_another_metric_subset",
+      "test_current_mode_keeps_the_existing_public_route",
+      "test_invalid_range_rejects_before_source_or_writes",
+      "test_missing_source_is_explicit_and_does_not_acquire",
+      "test_range_uses_one_public_company_controller_and_existing_case",
+      "test_unsupported_family_uses_no_fabricated_historical_case",
+      "test_completed_withheld_recovers_pointer_without_recalculation",
+      "test_current_withheld_replaces_same_year_success_but_retains_old_version",
+      "test_dependency_source_and_processing_changes_reprocess_withheld_once",
+      "test_missing_year_and_one_metric_failure_preserve_other_periods",
+      "test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates"
+    ],
+    "loaded_modules": [
+      "test_history_company_dispatch",
+      "test_selected_history_result_state"
+    ],
+    "trigger_paths": [
+      "tests/vnext/test_history_company_dispatch.py",
+      "tests/vnext/test_selected_history_result_state.py",
+      ".github/workflows/company-current-records.yml"
+    ],
+    "trigger_validation": "Exact path filter plus actual workflow-change pull_request execution; no test-only dummy commit"
+  },
+  "limits": [
+    "First batch hotel B10/B11 saved inputs only",
+    "No online historical source discovery/filling",
+    "Not complete five-year business acceptance",
+    "No merge/Ready/adoption/deployment/active permission"
+  ]
+}

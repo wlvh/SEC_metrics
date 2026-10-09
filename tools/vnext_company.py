@@ -17,7 +17,9 @@ def main(argv=None):
     sub = parser.add_subparsers(dest='command', required=True)
     run = sub.add_parser('run', help='Discover SEC sources, compute and export one configured company')
     run.add_argument('--company', required=True)
-    run.add_argument('--period', default='latest-complete-fy', choices=['latest-complete-fy'])
+    run.add_argument('--period', default='latest-complete-fy', choices=['latest-complete-fy', 'fiscal-years'])
+    run.add_argument('--fiscal-year-start', type=int)
+    run.add_argument('--fiscal-year-end', type=int)
     run.add_argument('--work-dir', required=True, type=Path)
     run.add_argument('--output-dir', required=True, type=Path)
     run.add_argument('--metric', action='append', help='Debug subset; summary retains all configured statuses')
@@ -89,7 +91,8 @@ def main(argv=None):
         from vnext.company_local import run_local
         result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
             period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
-            sec_allowance=args.sec_allowance, source_root=args.source_root)
+            sec_allowance=args.sec_allowance, source_root=args.source_root,
+            fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end)
     elif args.command == 'acquire':
         from vnext.company_local import absolute, configure_task, configured_scope, _invoke
         from vnext.company_handoff import external, locked_company

@@ -1,0 +1,30 @@
+company-current	Historical dispatch and saved result states	﻿2026-10-09T03:55:57.6069867Z ##[group]Run python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state -v
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:57.6070901Z ^[[36;1mpython3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state -v^[[0m
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:57.6111786Z shell: /usr/bin/bash -e {0}
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:57.6112068Z env:
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:57.6112347Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:57.6112768Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:57.6113319Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:57.6113680Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:57.6114049Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:57.6114415Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:57.6114742Z   PYTHONDONTWRITEBYTECODE: 1
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:57.6114983Z ##[endgroup]
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:58.8043051Z test_cli_passes_period_arguments_to_the_same_company_entry (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_cli_passes_period_arguments_to_the_same_company_entry) ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:58.8046245Z test_completed_withheld_survives_read_after_another_metric_subset (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_completed_withheld_survives_read_after_another_metric_subset)
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.4294747Z Constructed history control: a later subset cannot revive old success. ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.4301546Z test_current_mode_keeps_the_existing_public_route (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_current_mode_keeps_the_existing_public_route) ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.4305529Z test_invalid_range_rejects_before_source_or_writes (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_invalid_range_rejects_before_source_or_writes) ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.4310105Z test_missing_source_is_explicit_and_does_not_acquire (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_missing_source_is_explicit_and_does_not_acquire) ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.5728172Z test_range_uses_one_public_company_controller_and_existing_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_range_uses_one_public_company_controller_and_existing_case) ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.5730585Z test_unsupported_family_uses_no_fabricated_historical_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_unsupported_family_uses_no_fabricated_historical_case) ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.5882077Z test_completed_withheld_recovers_pointer_without_recalculation (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_completed_withheld_recovers_pointer_without_recalculation) ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.6005281Z test_current_withheld_replaces_same_year_success_but_retains_old_version (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_current_withheld_replaces_same_year_success_but_retains_old_version) ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.6171622Z test_dependency_source_and_processing_changes_reprocess_withheld_once (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_dependency_source_and_processing_changes_reprocess_withheld_once) ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.6312672Z test_missing_year_and_one_metric_failure_preserve_other_periods (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_missing_year_and_one_metric_failure_preserve_other_periods) ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.6447444Z test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates) ... ok
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.6448413Z 
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.6448597Z ----------------------------------------------------------------------
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.6448932Z Ran 12 tests in 0.845s
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.6449302Z 
+company-current	Historical dispatch and saved result states	2026-10-09T03:55:59.6449386Z OK

@@ -165,9 +165,16 @@ def _export_current(program, work, output, company, key, environment, processing
 
 
 def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
-              metric_ids=None, max_sec_requests=120, sec_allowance=120, source_root=None):
+              metric_ids=None, max_sec_requests=120, sec_allowance=120, source_root=None,
+              fiscal_year_start=None, fiscal_year_end=None):
     """One finite invocation, not a scheduler or authorization to publish."""
-    need(period == 'latest-complete-fy', 'LOCAL_PERIOD_NOT_IMPLEMENTED: use latest-complete-fy; historical periods retain their separate entry')
+    if period == 'fiscal-years':
+        return _run_saved_history(company_id=company_id, source_root=source_root,
+            work_dir=work_dir, output_dir=output_dir, metric_ids=metric_ids,
+            fiscal_year_start=fiscal_year_start, fiscal_year_end=fiscal_year_end)
+    need(period == 'latest-complete-fy', 'LOCAL_PERIOD_NOT_IMPLEMENTED')
+    need(fiscal_year_start is None and fiscal_year_end is None,
+         'LOCAL_HISTORY_ARGUMENTS_REQUIRE_FISCAL_YEARS')
     if source_root is not None:
         from .company_current_records import run_saved_company
         return run_saved_company(company_id=company_id, source_root=source_root,
@@ -333,3 +340,28 @@ def run_local(*, company_id, work_dir, output_dir, period='latest-complete-fy',
         summary['outputs'] = {name: str(output/name) for name in ('metrics_matrix.csv', 'metric_evidence.csv', 'run_summary.json')}
         _atomic_json(output/'run_summary.json', summary)
     return summary
+
+
+def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_ids,
+                       fiscal_year_start, fiscal_year_end):
+    """Select saved issuer years; the shared company controller owns processing.
+
+    Historical acquisition and unsupported families retain their existing
+    entry. No source installation or old native-task mutation occurs here.
+    """
+    need(type(fiscal_year_start) is int and type(fiscal_year_end) is int
+         and 1900 <= fiscal_year_start <= fiscal_year_end <= 9998
+         and fiscal_year_end-fiscal_year_start < 5, 'COMPANY_HISTORY_FISCAL_RANGE_INVALID')
+    need(source_root is not None, 'LOCAL_HISTORY_PREPARED_SOURCE_REQUIRED')
+    from .historical_lodging_results import (SUPPORTED_METRICS,
+        prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES)
+    selected = configured_scope(company_id) if metric_ids is None else list(metric_ids)
+    need(selected and len(selected) == len(set(selected))
+         and set(selected) <= set(SUPPORTED_METRICS),
+         'LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select B10/B11; retained historical families use their original entry')
+    from .company_current_records import run_saved_company
+    return run_saved_company(company_id=company_id, source_root=source_root,
+        work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
+        fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
+        case_factory=prepare_historical_lodging_year_case,
+        processing_files=HISTORICAL_LODGING_PROCESSING_FILES)
