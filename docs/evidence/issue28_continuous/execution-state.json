@@ -5768,6 +5768,30 @@
       },
       "dedup": "prior83e result reused and P2 inherited; new62 source-context implementation not covered. Originalreviewdone at2msg assignedlimit; no identical SHA evidence or activeagent; only newdelta scope reviewed, not originalmodule again",
       "ordinary_messages": 2
+    },
+    {
+      "task_name": "review_proofbatch_08d3e62",
+      "purpose": "review",
+      "module": "source_proof_batch",
+      "scope_paths": [
+        "request_bindings.py",
+        "ordinary_current_update.py:currentproofs/processingconfig",
+        "test_request_binding_batch.py",
+        "test_ordinary_current_update.py:newchecks"
+      ],
+      "patch_sha": "08d3e620239426bd692f2bdb3577c21c352aa2f9",
+      "spawned_at": "2026-10-09T22:14:54.289998+00:00",
+      "ended_at": "2026-10-09T22:17:49.314129+00:00",
+      "tool_calls": 18,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-source-proof-batch/SEC_metrics/docs/evidence/issue28_source_proof_batch_20261010/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_DIFFERENCE",
+      "limits": {
+        "tools": 30,
+        "minutes": 20,
+        "ordinary_messages": 2
+      },
+      "dedup": "no activeagent/evidence/result for this patch/module; distinct source-proof batch correction, not olddev task restart",
+      "ordinary_messages": 1
     }
   ],
   "ci_capacity_20260922": {
@@ -17910,7 +17934,7 @@
   },
   "ordinary_preparation_cost_followup_20261010": {
     "fixed_peer": "da42f474",
-    "evidence": "docs/evidence/issue47_statement_structural_consumer_20261010/README.md",
+    "evidence": "docs/evidence/issue28_source_proof_batch_20261010/README.md",
     "observed_by": "#47 actualCLI tracer, readbyparent not rerun",
     "scenario": "JPM21-25 B01/B02/B04/B05 structural N_A20, existingbankresults protected",
     "timing_seconds": {
@@ -17919,7 +17943,36 @@
       "independent_read": 0.894
     },
     "scope": "reuse existing operation evidence, nextbounded shared/source/preparation cost investigation; no longbatch rerun or competing historicalcontroller",
-    "not_claimed": "speed improvement, new numericresults or whole1950"
+    "not_claimed": "speed improvement, new numericresults or whole1950",
+    "status": "One real44proof operation hotspot measured and source-batch implemented; actual isolatedoldstate/CLI reuse checked, limitedreview running",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-source-proof-batch/SEC_metrics",
+    "branch": "task/issue28-source-proof-batch",
+    "sha": "08d3e620239426bd692f2bdb3577c21c352aa2f9",
+    "source_proof_seconds": {
+      "before": 1.612502,
+      "after": 0.180663875
+    },
+    "actual_update_seconds": {
+      "baseline": 1.708578209,
+      "candidate": 0.219873542
+    },
+    "actual_cli_seconds": 0.279270792,
+    "independent_read_seconds": 0.118423708,
+    "shared_affected": [
+      "request_bindings.validate_request_attempt_binding",
+      "request_bindings.validate_request_attempt_bindings",
+      "ordinary_current_update._current_sources",
+      "ordinary_current_update._same_processing_configuration"
+    ],
+    "remaining": "First-timeannual/tablepreparation costs not solved; selectedannualpreflight/modelhistory/D01 separate; no longbatch replay/no peerstatewrite",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "pr": 123,
+    "review": "08d3e limited PASS;58 independent tests+6 limitedcontrols,18tools/1message; company/performance logs inspected not replayed; finalevidence-onlyheadcodeunchanged",
+    "evidence_sha": "7f43c4c003d4b0f2b4de14442e0b33db256e9fca"
   },
   "online_period_routing_20261010": {
     "branch": "task/issue28-online-period-routing",
@@ -17928,6 +17981,7 @@
     "repro": "eeda8fc1 peer realdispatch; parent5 failureinstances before then35/2.175s allpass/0skip",
     "status": "pushed smallDraft; no new calls",
     "next": "#47 independentCLI guard consumer then latestheadCI; no oldnative source reprocess",
-    "pr": 122
+    "pr": 122,
+    "ci": "ea7a latesteleven remotechecks terminalSUCCESS actuallyread"
   }
 }
