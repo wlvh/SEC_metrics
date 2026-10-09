@@ -1,0 +1,55 @@
+{
+  "tested_tree_commit": "70cd4a7803cf727bf9469616cca889e40a1dead7",
+  "has_uncommitted_product_changes": false,
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "historical_producer_sha": "8102c3829e64e79d831d28f5c9a3c755b8e164e3",
+  "historical_producer_path": "scripts/vnext/historical_event_cases.py",
+  "historical_producer_file_sha256": "cc79c2ba7e1cc3ae502b83640eb785db5114f43e76d7b7e2bb21284187ef16b2",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/wide-event-window-1791537537615074000",
+  "before_reason": "ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED",
+  "result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a",
+  "value": "12",
+  "unit": "count",
+  "measurement_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2024-01-01"
+  },
+  "annual_container": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "direct_header_item_502_accessions": [
+    "0000813828-24-000023",
+    "0000813828-24-000033",
+    "0000813828-24-000034",
+    "0000813828-24-000038",
+    "0000813828-24-000073",
+    "0000813828-24-000075",
+    "0000813828-24-000083",
+    "0000813828-24-000085",
+    "0000813828-24-000087",
+    "0000813828-25-000015",
+    "0001193125-25-175027",
+    "0002041610-25-000021"
+  ],
+  "filing_count": 35,
+  "proof_count": 75,
+  "reused_case_from_first_driver_failure": true,
+  "prepared_case_seconds": null,
+  "save_seconds": 2.9982484171632677,
+  "independent_read_seconds": 0.007769667077809572,
+  "csv_files": [
+    "metrics_matrix.csv",
+    "metric_evidence.csv"
+  ],
+  "request_ledger_unchanged": true,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "credit": "PUBLIC_INTERFACE_INTEGRATION_ONLY_NOT_ISSUE28_BUSINESS_ACCEPTANCE"
+}

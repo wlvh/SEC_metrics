@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/docs/evidence/issue28_event_window_projection_20261009/verify_saved_wide_window.py", line 48, in <module>
+    with patch.object(store,'render_ordinary_records',old.render_ordinary_records):
+         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1510, in __enter__
+    original, local = self.get_original()
+                      ~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1480, in get_original
+    raise AttributeError(
+        "%s does not have the attribute %r" % (target, name)
+    )
+AttributeError: <module 'vnext.ordinary_saved_result' from '/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/scripts/vnext/ordinary_saved_result.py'> does not have the attribute 'render_ordinary_records'
