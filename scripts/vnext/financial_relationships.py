@@ -42,7 +42,11 @@ def _entity_tokens(text):
     return re.findall(r"\w+", text.casefold().replace("&", " and "))
 
 
-def _issuer_identity(*, source_bytes, expected_cik, target_period, structure):
+def _issuer_identity(*, source_bytes, expected_cik, target_period, structure, dei_release="YEAR_ONLY"):
+    from .normal_annual_input import dei_namespace_pattern
+    release_pattern = dei_namespace_pattern(dei_release)
+    if dei_release == "YEAR_ONLY":
+        release_pattern = r"https?://xbrl\.sec\.gov/dei/[0-9]{4}"
     from .deterministic_router import parse_accession_xbrl_source
     from .governance_signals import _FactAttributes
     parsed = parse_accession_xbrl_source(raw_bytes=source_bytes)
@@ -55,7 +59,7 @@ def _issuer_identity(*, source_bytes, expected_cik, target_period, structure):
     for fact in parsed.facts:
         namespace, concept = metadata.facts[fact["ordinal"]]["concept"]
         if (concept.casefold() != "entityregistrantname" or not re.fullmatch(
-                r"https?://xbrl\.sec\.gov/dei/[0-9]{4}", namespace)):
+                release_pattern, namespace)):
             continue
         context = parsed.contexts[fact["context_ref"]]
         if (not str(context["entity_identifier"]).isdigit()
