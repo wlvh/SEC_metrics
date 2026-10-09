@@ -316,6 +316,7 @@ def inspect_inline_financial_claims(
     *, repo_root: Path, source_bytes: bytes, source_reference: dict, source_set_manifest: dict,
     expected_cik: str, target_period: dict, metric_id: str,
     inventory_source_reference=None, inventory_bytes=None,
+    dei_release="YEAR_ONLY",
 ) -> dict:
     """Use native XBRL with physical source witnesses for A13 and A09 routing."""
     if metric_id not in {"A09", "A13"}:
@@ -331,7 +332,8 @@ def inspect_inline_financial_claims(
     source_scope = _source_set(source_reference=source_reference, source_set_manifest=source_set_manifest,
         inventory_source_reference=inventory_source_reference, inventory_bytes=inventory_bytes)
     period = annual_period(raw=source_bytes, cik=expected_cik,
-                           filing={"form": "10-K", "reportDate": target_period["period_end"]})
+                           filing={"form": "10-K", "reportDate": target_period["period_end"]},
+                           dei_release=dei_release)
     if period != target_period:
         raise FinancialStructuredError("SOURCE_FISCAL_PERIOD_DIFFERS")
     parsed = parse_accession_xbrl_source(raw_bytes=source_bytes)
