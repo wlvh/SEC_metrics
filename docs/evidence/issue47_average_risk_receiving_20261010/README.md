@@ -23,3 +23,9 @@ A03原年报容器FY2021是2021-01-01至12-31；实际LCR披露平均测量期20
 ## 取得当前开发版本
 
 `origin/task/issue47-average-risk-history-20261010`已有本方已提交薄适配及35定向例；公共受控DEI与季度保存接口尚待固定提交接入，不能现在运行它来宣称公司计算成立。真实来源恢复沿保留task/sec-history-five-year的restore入口，复用已有恢复根、不再复制整树；来源只读、审查输出用外部新目录。待公共提交后此处给同一可取得代码组合及run/results完整命令。
+
+## 固定公共接收及真实首次失败
+
+公共c5d4deb5固定接入为本树cd0aada7，沿同一DEI/issuer参数、有限A03/A12 gate和原保存/投影。首次真实JPM21两指标29.555s返回选期失败：旧historical_dei.annual_period动态视图拒绝新dei_namespace_pattern，尚未计算金额；first-company-failure.json保原错误和0调用。修的是本方历史annual_period薄包装，直接传共享YEAR_QUARTER_OR_DATE，不改公共源码/财政label判定，不把源冲突当缺披露。52受影响控制0.178s零skip，combined-fixed.log。原状态恢复两未完成坐标，终态继续记录。
+
+第一次包装切换仍未覆盖财政标签内部的原annual引用，第二次47.155s同因失败保留。实际修复再将这个共享annual函数在剩余历史view映射到同一显式adapter，财政标签原文/规则/DEI span检查继续；未扩大共享re行为。新的小复现先证明原函数引用走显式adapter且错source SHA仍拒，53项0.176s零skip，再恢复原两个未完成坐标。没有重启任务/额度或把两个失败改绿。

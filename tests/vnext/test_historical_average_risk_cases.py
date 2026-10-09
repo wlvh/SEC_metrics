@@ -215,3 +215,32 @@ class HistoricalAverageRiskWordingTest(TestCase):
             changed = evaluate(source.replace(old, new))
             self.assertNotEqual('PASSED', changed['status'])
             self.assertIn(reason, changed['reasons'])
+
+class HistoricalExplicitAnnualInterfaceTest(TestCase):
+    def test_history_passes_shared_release_option_without_recursive_view(self):
+        from vnext import historical_dei
+        filing = {'form': '10-K', 'reportDate': '2021-12-31'}
+        with patch.object(historical_dei._frozen_annual, 'annual_period', return_value=ANNUAL) as shared:
+            result = historical_dei.annual_period(raw=b'constructed annual control',
+                cik='19617', filing=filing)
+        self.assertIs(ANNUAL, result)
+        self.assertEqual('YEAR_QUARTER_OR_DATE', shared.call_args.kwargs['dei_release'])
+        self.assertEqual(filing, shared.call_args.kwargs['filing'])
+
+    def test_shared_source_failure_propagates_as_failure(self):
+        from vnext import historical_dei
+        with patch.object(historical_dei._frozen_annual, 'annual_period',
+                          side_effect=ValueError('DEI_CONTEXT_PERIOD_CONFLICT')):
+            with self.assertRaisesRegex(ValueError, 'DEI_CONTEXT_PERIOD_CONFLICT'):
+                historical_dei.annual_period(raw=b'constructed conflicting source', cik='19617',
+                    filing={'form': '10-K', 'reportDate': '2021-12-31'})
+
+    def test_remaining_fiscal_label_view_uses_explicit_annual_adapter(self):
+        from vnext import historical_dei, normal_annual_input, fiscal_year_labels
+        self.assertIs(historical_dei.annual_period,
+                      historical_dei.release_aware(normal_annual_input.annual_period))
+        inspected = historical_dei.release_aware(fiscal_year_labels.inspect_fiscal_year_labels)
+        with self.assertRaisesRegex(ValueError, 'FISCAL_LABEL_SOURCE_BYTES_CHANGED'):
+            inspected(primary_bytes=b'constructed wrong source', companyfacts_bytes=b'{}',
+                expected_primary_sha256='wrong', expected_companyfacts_sha256='wrong',
+                expected_cik='19617', filing={})
