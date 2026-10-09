@@ -1,0 +1,29 @@
+real-first 0 54.06412012502551
+repeat-forbid-factory 0 3.143861999968067
+independent-read 1 0.5513457909692079
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-financial-consumers/SEC_metrics/work/a13-receiving/verify_final_company.py", line 10, in <module>
+    before=protected();repeat=invoke('repeat-forbid-factory',args,True);assert repeat['metrics'][0]['status']=='NO_SOURCE_CONTENT_CHANGE' and not repeat['metrics'][0]['calculation_performed'];assert before==protected();read=invoke('independent-read',['results','--company',company,'--state-root',str(state),'--output-root',str(base/'read')],True);assert before==protected();row=list(csv.DictReader((base/'read/metrics_matrix.csv').open()))[0];assert row['value']=='28971000000' and row['unit']=='USD' and row['period_start']=='2021-01-01' and row['period_end']=='2021-12-31' and row['cik']=='19617' and row['fiscal_year']=='2021';evidence=list(csv.DictReader((base/'read/metric_evidence.csv').open()));assert evidence and all(r['cik']=='19617' for r in evidence);report={'code_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'code_uncommitted_at_execution':bool(subprocess.check_output(['git','status','--porcelain'],text=True).strip()),'state_root':str(state),'output_root':str(base),'operations':operations,'row':row,'evidence_rows':len(evidence),'protected_files':len(before),'protected_unchanged':True,'repeat_factory_calls':0,'new_calls':[0,0,0],'full_five_year_business_acceptance':False,'all_prior_result_files_unchanged':all(hashlib.sha256((state/n).read_bytes()).hexdigest()==d for n,d in old_results.items()),'prior_result_file_count':len(old_results)};Path('work/a13-receiving/company-final.json').write_text(json.dumps(report,indent=2)+'\n');print('company complete',row['value'],flush=True)
+                                                                                                                                                                                                                                ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-financial-consumers/SEC_metrics/work/a13-receiving/verify_final_company.py", line 7, in invoke
+    code+='with patch("socket.socket.connect",side_effect=AssertionError("Offline sources only")):\n raise SystemExit(main(json.loads(sys.argv[1])))';start=time.monotonic();p=subprocess.run([sys.executable,'-c',code,json.dumps(args)],capture_output=True,text=True,env={**os.environ,'PYTHONPATH':'scripts:tools:.','PYTHONDONTWRITEBYTECODE':'1'});(base/(name+'.stdout')).write_text(p.stdout);(base/(name+'.stderr')).write_text(p.stderr);v=json.loads(p.stdout) if p.stdout else {};operations.append({'name':name,'seconds':time.monotonic()-start,'exit_code':p.returncode,'status':v.get('status'),'metrics':v.get('metrics')});print(name,p.returncode,operations[-1]['seconds'],flush=True);assert p.returncode==0,p.stderr;return v
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "<string>", line 7, in <module>
+    raise SystemExit(main(json.loads(sys.argv[1])))
+                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-financial-consumers/SEC_metrics/tools/vnext_company.py", line 160, in main
+    result = read_company_results(state_root=args.state_root, company_id=args.company,
+                                 defects_file=args.defects_file, output_root=args.output_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-financial-consumers/SEC_metrics/scripts/vnext/company_result_view.py", line 344, in read_company_results
+    return read_current_company(state_root=state_root, company_id=company_id,
+                                defects_file=defects_file, output_root=output_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-financial-consumers/SEC_metrics/scripts/vnext/company_current_records.py", line 206, in read_current_company
+    return _read_current_company(root, company_id, defects_file, output_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-financial-consumers/SEC_metrics/scripts/vnext/company_current_records.py", line 312, in _read_current_company
+    _need(not output.exists(), 'COMPANY_CURRENT_EXPORT_OUTPUT_EXISTS')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-financial-consumers/SEC_metrics/scripts/vnext/company_current_records.py", line 34, in _need
+    raise ValueError(reason)
+ValueError: COMPANY_CURRENT_EXPORT_OUTPUT_EXISTS
+

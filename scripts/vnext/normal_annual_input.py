@@ -127,8 +127,21 @@ def select_filing(*, company, submissions):
                                         and f["reportDate"] != latest_end]}
 
 
-def annual_period(*, raw, cik, filing):
-    """Read the actual annual interval and fiscal label from DEI contexts."""
+def dei_namespace_pattern(dei_release="YEAR_ONLY"):
+    """One finite DEI release selection shared by annual and issuer checks."""
+    patterns = {
+        "YEAR_ONLY": r"https?://xbrl\.sec\.gov/dei/\d{4}",
+        "YEAR_QUARTER_OR_DATE":
+            r"https?://xbrl\.sec\.gov/dei/\d{4}(?:q[1-4]|-\d{2}-\d{2})?",
+    }
+    _need(type(dei_release) is str and dei_release in patterns,
+          "DEI_RELEASE_SELECTION_INVALID", "IMPLEMENTATION_GAP")
+    return patterns[dei_release]
+
+
+def annual_period(*, raw, cik, filing, dei_release="YEAR_ONLY"):
+    """Read original annual contexts; explicit older releases retain checks."""
+    namespace_pattern = dei_namespace_pattern(dei_release)
     parsed = parse_accession_xbrl_source(raw_bytes=raw)
     from .governance_signals import _FactAttributes
     metadata = _FactAttributes()
@@ -140,7 +153,7 @@ def annual_period(*, raw, cik, filing):
     def dei(name):
         facts = [f for f in parsed.facts
                  if metadata.facts[f["ordinal"]]["concept"][1].casefold() == name.casefold()
-                 and re.fullmatch(r"https?://xbrl\.sec\.gov/dei/\d{4}",
+                 and re.fullmatch(namespace_pattern,
                                   metadata.facts[f["ordinal"]]["concept"][0])]
         pairs = {(f["text"].strip(), f["context_ref"]) for f in facts}
         _need(len(pairs) == 1, "DEI_MISSING_OR_AMBIGUOUS:" + name)

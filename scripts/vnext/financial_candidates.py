@@ -281,7 +281,7 @@ def inspect_nim_candidate_evidence(
 
 def inspect_lcr_disclosed_fact(
     *, repo_root: Path, source_bytes: bytes, expected_source_sha256: str,
-    expected_cik: str, target_period: dict,
+    expected_cik: str, target_period: dict, dei_release="YEAR_ONLY",
 ) -> dict:
     """Resolve the issuer's actual disclosed average interval, without annualizing.
 
@@ -297,7 +297,8 @@ def inspect_lcr_disclosed_fact(
             or sha256_bytes(content=source_bytes) != expected_source_sha256):
         raise FinancialCandidateError("SOURCE_BYTES_DIFFER")
     if annual_period(raw=source_bytes, cik=expected_cik,
-                     filing={"form": "10-K", "reportDate": target_period["period_end"]}) != target_period:
+                     filing={"form": "10-K", "reportDate": target_period["period_end"]},
+                     dei_release=dei_release) != target_period:
         raise FinancialCandidateError("SOURCE_FILING_PERIOD_DIFFERS")
     tasks = [task for task in inspect_r4_task_catalog(repo_root=repo_root)["contracts"] if task["metric_ids"] == ["A03"]]
     if len(tasks) != 1 or tasks[0]["required_claims"] != {"entity_scope": "firm", "aggregation": "average"}:
@@ -306,7 +307,7 @@ def inspect_lcr_disclosed_fact(
         expected_source_sha256=expected_source_sha256, task_contract_id=tasks[0]["task_contract_id"], target_period=target_period)
     structure = index_source_structure(source_bytes=source_bytes)
     issuer = _issuer_identity(source_bytes=source_bytes, expected_cik=expected_cik,
-                              target_period=target_period, structure=structure)
+                              target_period=target_period, structure=structure, dei_release=dei_release)
     parser = _AllTablesParser()
     parser.feed(source_bytes.decode("utf-8"))
     parser.close()

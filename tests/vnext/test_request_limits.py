@@ -7,8 +7,8 @@ from unittest.mock import patch
 from tests.vnext.common import REPO_ROOT
 from vnext.canonical import canonical_json_bytes
 from vnext.request_limits import RequestLimits,DEFAULT_LIMITS
-from vnext.development_semantic_requests import request_body,usage_error,usage_observation,request_digest
-from vnext.development_request_context import measure_request,measured_groups,with_request_limits
+from vnext.continuous_semantic_calls import request_body,usage_error,usage_observation,request_digest
+from vnext.continuous_request_context import measure_request,measured_groups,with_request_limits
 
 POLICY=SimpleNamespace(model='deepseek-flash')
 REQUEST={'system_prompt':'Return JSON.','text':'hello'}

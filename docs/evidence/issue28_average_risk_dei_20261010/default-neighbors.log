@@ -1,0 +1,13 @@
+test_original_reports_resolve_the_actual_average_interval (unittest.loader._FailedTest.test_original_reports_resolve_the_actual_average_interval) ... ERROR
+test_original_var_separates_annual_average_from_one_day_risk_horizon (tests.vnext.test_financial_balance_scope.FinancialBalanceScopeTest.test_original_var_separates_annual_average_from_one_day_risk_horizon) ... ok
+
+======================================================================
+ERROR: test_original_reports_resolve_the_actual_average_interval (unittest.loader._FailedTest.test_original_reports_resolve_the_actual_average_interval)
+----------------------------------------------------------------------
+AttributeError: type object 'LcrDisclosedFactTest' has no attribute 'test_original_reports_resolve_the_actual_average_interval'
+
+----------------------------------------------------------------------
+Ran 2 tests in 5.044s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_financial_candidates.LcrDisclosedFactTest.test_original_reports_resolve_the_actual_average_interval", "tests.vnext.test_financial_balance_scope.FinancialBalanceScopeTest.test_original_var_separates_annual_average_from_one_day_risk_horizon"]}

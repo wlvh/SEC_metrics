@@ -1,0 +1,296 @@
+{
+  "reference_sha256": "65559571cb7638cc04ec82caa0b8ba2ce329f87d71edc84484ac0e51ea8afe8a",
+  "reference_in_committed_history_branch": "docs/evidence/issue47_history/content-acceptance/bank-measures-read-full-frame.json",
+  "positions": {
+    "jpmorgan-2021": {
+      "document": "evidence/request_attempts/7c/7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478/jpm-20211231.htm",
+      "A13": {
+        "checked_identity": {
+          "bound_from": {
+            "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+            "result_id": "sha256:41b8b0dd5bf7c719f87e5e865a95a3b90a1ba6b5416887333c56701e4f3c7e44",
+            "run_id": "run:historical-period:6d87bc4fd4552ea0ddadb2eee5e74ceb0ab5e47bd10d649a2a93310ce159c664"
+          },
+          "checked_against_the_reading": [
+            "value",
+            "filings_contain_the_filing_the_reading_opened",
+            "window"
+          ],
+          "entities": [
+            "19617"
+          ],
+          "established_by": "RECORDED_AT_READING_TIME",
+          "filings": [
+            "0000019617-22-000272"
+          ],
+          "not_named_by_the_reading": [],
+          "period_end": "2021-12-31",
+          "period_start": "2021-01-01",
+          "scope_key": "sha256:1beed0e0fed6eb64e1a5aacc0c1592cf9c9fd49e62f17e055bea498d8d58bee0",
+          "spec_closure_hash": "sha256:94699b6e1c2c5d8f8e5b048007c5f863416fb4072489b274929dd4ae03716b09",
+          "unit": "USD",
+          "value_kind": null
+        },
+        "published": "28971000000",
+        "read": "28971000000",
+        "reads": [
+          {
+            "figure": "28,971",
+            "row": [
+              "Total international",
+              "28,971",
+              "18,794",
+              "10,177",
+              "7,380",
+              "857,458"
+            ],
+            "table_ordinal": 613,
+            "value": "28971000000",
+            "window": [
+              "2021-01-01",
+              "2021-12-31"
+            ]
+          }
+        ],
+        "verdict": "MATCH",
+        "why_not_read": null,
+        "window": [
+          "2021-01-01",
+          "2021-12-31"
+        ]
+      }
+    },
+    "jpmorgan-2022": {
+      "document": "evidence/request_attempts/ce/ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb/jpm-20221231.htm",
+      "A13": {
+        "checked_identity": {
+          "bound_from": {
+            "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+            "result_id": "sha256:ddec737169bb2d5e2487063a0e09d07974494f3a17c1fd637c2c43c1a43d3cdb",
+            "run_id": "run:historical-period:712fa7f6255ce4c4f0206437fadf132d2b7a7cb340df5bc760441e63335a707d"
+          },
+          "checked_against_the_reading": [
+            "value",
+            "filings_contain_the_filing_the_reading_opened",
+            "window"
+          ],
+          "entities": [
+            "19617"
+          ],
+          "established_by": "RECORDED_AT_READING_TIME",
+          "filings": [
+            "0000019617-23-000231"
+          ],
+          "not_named_by_the_reading": [],
+          "period_end": "2022-12-31",
+          "period_start": "2022-01-01",
+          "scope_key": "sha256:1beed0e0fed6eb64e1a5aacc0c1592cf9c9fd49e62f17e055bea498d8d58bee0",
+          "spec_closure_hash": "sha256:94699b6e1c2c5d8f8e5b048007c5f863416fb4072489b274929dd4ae03716b09",
+          "unit": "USD",
+          "value_kind": null
+        },
+        "published": "31968000000",
+        "read": "31968000000",
+        "reads": [
+          {
+            "figure": "31,968",
+            "row": [
+              "Total international",
+              "31,968",
+              "20,214",
+              "11,754",
+              "8,433",
+              "918,582"
+            ],
+            "table_ordinal": 609,
+            "value": "31968000000",
+            "window": [
+              "2022-01-01",
+              "2022-12-31"
+            ]
+          }
+        ],
+        "verdict": "MATCH",
+        "why_not_read": null,
+        "window": [
+          "2022-01-01",
+          "2022-12-31"
+        ]
+      }
+    },
+    "jpmorgan-2023": {
+      "document": "evidence/request_attempts/8b/8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301/jpm-20231231.htm",
+      "A13": {
+        "checked_identity": {
+          "bound_from": {
+            "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+            "result_id": "sha256:0c55c08053507182782e47a86efebb39bbaab3764e20cbe0ba1e14aff1b49dd0",
+            "run_id": "run:historical-period:68f950ebb3e5d24255a7606541c10c77e0f9775c47191623b128361e88c37ce8"
+          },
+          "checked_against_the_reading": [
+            "value",
+            "filings_contain_the_filing_the_reading_opened",
+            "window"
+          ],
+          "entities": [
+            "19617"
+          ],
+          "established_by": "RECORDED_AT_READING_TIME",
+          "filings": [
+            "0000019617-24-000225"
+          ],
+          "not_named_by_the_reading": [],
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "scope_key": "sha256:1beed0e0fed6eb64e1a5aacc0c1592cf9c9fd49e62f17e055bea498d8d58bee0",
+          "spec_closure_hash": "sha256:94699b6e1c2c5d8f8e5b048007c5f863416fb4072489b274929dd4ae03716b09",
+          "unit": "USD",
+          "value_kind": null
+        },
+        "published": "34873000000",
+        "read": "34873000000",
+        "reads": [
+          {
+            "figure": "34,873",
+            "row": [
+              "Total international",
+              "34,873",
+              "20,468",
+              "14,405",
+              "10,105",
+              "863,926"
+            ],
+            "table_ordinal": 633,
+            "value": "34873000000",
+            "window": [
+              "2023-01-01",
+              "2023-12-31"
+            ]
+          }
+        ],
+        "verdict": "MATCH",
+        "why_not_read": null,
+        "window": [
+          "2023-01-01",
+          "2023-12-31"
+        ]
+      }
+    },
+    "jpmorgan-2024": {
+      "document": "evidence/request_attempts/bd/bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4/jpm-20241231.htm",
+      "A13": {
+        "checked_identity": {
+          "bound_from": {
+            "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+            "result_id": "sha256:490f347f0ef0f3b5835e61770d950ae04fa57479eccb3796f38caa824a0350dc",
+            "run_id": "run:historical-period:340102fb6d11e6d472665df4cf40c517426c114afc065c2ac173f5c601fba02b"
+          },
+          "checked_against_the_reading": [
+            "value",
+            "filings_contain_the_filing_the_reading_opened",
+            "window"
+          ],
+          "entities": [
+            "19617"
+          ],
+          "established_by": "RECORDED_AT_READING_TIME",
+          "filings": [
+            "0000019617-25-000270"
+          ],
+          "not_named_by_the_reading": [],
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01",
+          "scope_key": "sha256:1beed0e0fed6eb64e1a5aacc0c1592cf9c9fd49e62f17e055bea498d8d58bee0",
+          "spec_closure_hash": "sha256:94699b6e1c2c5d8f8e5b048007c5f863416fb4072489b274929dd4ae03716b09",
+          "unit": "USD",
+          "value_kind": null
+        },
+        "published": "38233000000",
+        "read": "38233000000",
+        "reads": [
+          {
+            "figure": "38,233",
+            "row": [
+              "Total international",
+              "38,233",
+              "21,660",
+              "16,573",
+              "11,840",
+              "922,468"
+            ],
+            "table_ordinal": 642,
+            "value": "38233000000",
+            "window": [
+              "2024-01-01",
+              "2024-12-31"
+            ]
+          }
+        ],
+        "verdict": "MATCH",
+        "why_not_read": null,
+        "window": [
+          "2024-01-01",
+          "2024-12-31"
+        ]
+      }
+    },
+    "jpmorgan-2025": {
+      "document": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+      "A13": {
+        "checked_identity": {
+          "bound_from": {
+            "requirement_closure_hash": "sha256:500ddf5f6fd565e878765440080290d63362afc1a345516129e98ab2ac11738e",
+            "result_id": "sha256:72324c5663967e8d8632d86f5ca7eb983c61299c05143d09a9c25fb9bab2976e",
+            "run_id": "run:historical-period:e3aaabf6f5a1ce16bfe49c75ebf9fd87be5c59f26e23aa2551c4c1116e3d3156"
+          },
+          "checked_against_the_reading": [
+            "value",
+            "filings_contain_the_filing_the_reading_opened",
+            "window"
+          ],
+          "entities": [
+            "19617"
+          ],
+          "established_by": "RECORDED_AT_READING_TIME",
+          "filings": [
+            "0001628280-26-008131"
+          ],
+          "not_named_by_the_reading": [],
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "scope_key": "sha256:1beed0e0fed6eb64e1a5aacc0c1592cf9c9fd49e62f17e055bea498d8d58bee0",
+          "spec_closure_hash": "sha256:94699b6e1c2c5d8f8e5b048007c5f863416fb4072489b274929dd4ae03716b09",
+          "unit": "USD",
+          "value_kind": null
+        },
+        "published": "42758000000",
+        "read": "42758000000",
+        "reads": [
+          {
+            "figure": "42,758",
+            "row": [
+              "Total international",
+              "42,758",
+              "25,276",
+              "17,482",
+              "12,475",
+              "1,081,469"
+            ],
+            "table_ordinal": 639,
+            "value": "42758000000",
+            "window": [
+              "2025-01-01",
+              "2025-12-31"
+            ]
+          }
+        ],
+        "verdict": "MATCH",
+        "why_not_read": null,
+        "window": [
+          "2025-01-01",
+          "2025-12-31"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+test_caller_json_cannot_supply_ledger_or_execute_replay_only (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_caller_json_cannot_supply_ledger_or_execute_replay_only) ... ERROR
+
+======================================================================
+ERROR: test_caller_json_cannot_supply_ledger_or_execute_replay_only (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_caller_json_cannot_supply_ledger_or_execute_replay_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/tests/vnext/test_registered_native_update.py", line 115, in test_caller_json_cannot_supply_ledger_or_execute_replay_only
+    _execute_semantic(prepared=SimpleNamespace(request_bytes=b'{}',replay_only=True),
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 910, in _execute_semantic
+    if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+       ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'requirement'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.018s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_caller_json_cannot_supply_ledger_or_execute_replay_only"]}

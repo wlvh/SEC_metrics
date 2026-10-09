@@ -215,3 +215,49 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertIs(prepare_historical_current_annual_year_case, args['case_factories']['B07'])
         self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
         self.assertIs(prepare_historical_bank_year_case, args['case_factories']['A05'])
+
+    def test_geography_keeps_existing_factories_and_declares_its_source_dependencies(self):
+        from vnext.historical_geography_cases import prepare_historical_geography_year_case, PROCESSING_FILES
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        from vnext.historical_capital_cases import prepare_historical_capital_year_case
+        from vnext.historical_lodging_results import prepare_historical_lodging_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(company_id='jpmorgan_chase', metric_ids=['A13', 'A01', 'B01', 'B10'],
+                             fiscal_year_start=2021, fiscal_year_end=2021)
+        args = shared.call_args.kwargs
+        self.assertIs(prepare_historical_geography_year_case, args['case_factories']['A13'])
+        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+        self.assertIs(prepare_historical_lodging_year_case, args['case_factories']['B10'])
+        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['A13'])
+        self.assertIn('scripts/vnext/financial_structured.py', PROCESSING_FILES)
+        self.assertIn('scripts/vnext/normal_annual_input.py', PROCESSING_FILES)
+        self.assertFalse((self.root/'state').exists())
+
+    def test_average_risk_family_preserves_existing_metric_factories(self):
+        from vnext.historical_average_risk_cases import prepare_historical_average_risk_year_case, PROCESSING_FILES
+        from vnext.historical_capital_cases import prepare_historical_capital_year_case
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        from vnext.historical_lodging_results import prepare_historical_lodging_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(company_id='jpmorgan_chase', metric_ids=['A03', 'A12', 'A01', 'B01', 'B10'])
+        args = shared.call_args.kwargs
+        for metric in ('A03', 'A12'):
+            self.assertIs(prepare_historical_average_risk_year_case, args['case_factories'][metric])
+            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+        self.assertIs(prepare_historical_lodging_year_case, args['case_factories']['B10'])
+
+    def test_bank_scope_family_preserves_existing_metric_factories(self):
+        from vnext.historical_bank_scope_cases import prepare_historical_bank_scope_year_case, PROCESSING_FILES
+        from vnext.historical_capital_cases import prepare_historical_capital_year_case
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(company_id='jpmorgan_chase', metric_ids=['A04', 'A09', 'A11', 'A01', 'B01'])
+        args = shared.call_args.kwargs
+        for metric in ('A04', 'A09', 'A11'):
+            self.assertIs(prepare_historical_bank_scope_year_case, args['case_factories'][metric])
+            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])

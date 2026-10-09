@@ -1,19 +1,20 @@
-name: Offline development request preparation
+name: Explicit request limits
 on:
   pull_request:
     paths:
-      - 'scripts/vnext/request_limits.py'
-      - 'scripts/vnext/development_request_context.py'
-      - 'scripts/vnext/development_semantic_requests.py'
-      - 'scripts/vnext/continuous_request_context.py'
-      - 'scripts/vnext/continuous_semantic_calls.py'
-      - 'scripts/vnext/native_unit_index.py'
-      - 'config/tokenizers/**'
-      - 'requirements-continuous-context.txt'
-      - 'tests/vnext/test_request_limits.py'
-      - 'tests/vnext/test_development_request_preparation.py'
-      - 'docs/evidence/issue28_continuous/b13-source-indexing/original68/**'
-      - '.github/workflows/request-limits.yml'
+      - "scripts/**"
+      - "tools/vnext_continuous_semantic.py"
+      - "tests/vnext/test_request_limits.py"
+      - "tests/vnext/test_development_request_limits.py"
+      - "tests/vnext/test_development_request_preparation.py"
+      - "tests/vnext/test_current_request_runtime.py"
+      - "tests/vnext/test_continuous_call_ledger.py"
+      - "config/**"
+      - "catalog/**"
+      - "evidence/**"
+      - "docs/evidence/**"
+      - "requirements-continuous-context.txt"
+      - ".github/workflows/request-limits.yml"
 permissions:
   contents: read
 jobs:
@@ -32,4 +33,4 @@ jobs:
       - env:
           PYTHONDONTWRITEBYTECODE: '1'
           PYTHONPATH: scripts
-        run: python3 tests/required_unittests.py tests.vnext.test_request_limits tests.vnext.test_development_request_preparation
+        run: python3 tests/required_unittests.py tests.vnext.test_request_limits tests.vnext.test_current_request_runtime tests.vnext.test_continuous_call_ledger tests.vnext.test_development_request_limits tests.vnext.test_development_request_preparation

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-financial-consumers/SEC_metrics/work/a13-receiving/verify_actual_case.py", line 8, in <module>
+    case=prepare_historical_geography_year_case(repo_root=source,company_id='jpmorgan_chase',metric_id='A13',fiscal_year=2021)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-financial-consumers/SEC_metrics/scripts/vnext/historical_geography_cases.py", line 94, in prepare_historical_geography_year_case
+    result, trace = calculate_observation_metric(compiled_spec=spec, target=target,
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        company_traits=traits, observation=observation)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-financial-consumers/SEC_metrics/scripts/vnext/calculator.py", line 1164, in calculate_observation_metric
+    raise CalculationError(
+        "Direct calculation target fields are not exact"
+    )
+vnext.calculator.CalculationError: Direct calculation target fields are not exact

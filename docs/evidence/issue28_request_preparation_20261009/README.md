@@ -95,3 +95,22 @@ original default APIs. RequestLimits plus preview does not return a live
 SemanticRequest, approve a use, allocate a slot, or send any packet. PR66's
 old candidate/CI history stays; this successor receives its pure functions
 without taking its old-file binding mismatch into main.
+
+
+## Receiving the actual current request runtime
+
+Actualmain f6ef7886 now contains accepted PR106. The previous PR103 statement
+about retaining the old continuous-module bytes describes its original base,
+not the currently accepted runtime. Receiving conflicts were only test_request_limits
+and its workflow. Current request-object/controller tests stay exactly main;
+the original development-module API limit tests are kept as an explicitly named
+test_development_request_limits module, alongside the original development
+preparation checks. The single existing workflow runs both APIs and the current
+controller/ledger checks. No actual request runtime, allowance or transport
+implementation is changed in this receiving adjustment.
+
+The combined single workflow command executes 46 methods in 78.218s, zero
+failures/errors/skips (main-receiving-combination.log). It covers current limits,
+actual request-runtime controls and ledger, plus development-only API limits
+and preparation. This is the recorded offline command, not a business-provider
+execution. The previously completed development-agent task is not restarted.
