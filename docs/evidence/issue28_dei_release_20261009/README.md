@@ -57,3 +57,25 @@ financial_structured for affected financial routes; optional behavior requires
 explicit caller/config selection, not monkeypatching a shared global.
 No new protocol/Requirement generation, real SEC/provider/paid, production
 adoption, Ready or merge. [shared-with-#47]. New calls0/0/0.
+
+## Necessary company consumer seam, after source parser delivery
+
+The historical owner identified a second existing gate: CURRENT_METRICS derives
+only the22 ordinary Specs/hotel routes, so even a supplied per-metric A13
+factory failed COMPANY_CURRENT_METRIC_FACTORIES_INVALID before processing.
+company-gate-before.log retains that actual failing regression. A finite
+EXPLICIT_CASE_METRICS={A13} now allows only an explicitly supplied selected-year
+A13 factory through the same updater; it does not add a default A13 producer,
+allow other financial/AI families, or change CURRENT_METRICS. Existing supported
+metric mappings still must be complete/callable. Saved A13 uses the same verified
+record reader and is displayed as CONTENT_NOT_ACCEPTED, not adopted.
+
+Three new bounded controls cover actual updater dispatch/exact dependencies,
+default A13 remaining unimplemented/unknown D03 mapping rejected, and saved
+reading without current-scope stripping. company-gate-final.log47 cases0.316s/
+zero skips includes existing current neighbors/history state/dispatch. These
+use small substituted computation/storage controls and are not real A13
+company business completion. Original writer/reader/Calculator unchanged.
+The historical owner receives the actual case and verifies real save/CSV/read.
+No old result rewrite or complete390 claim. This is necessary company integration
+for the same A13 increment, not a new family default or second controller.
