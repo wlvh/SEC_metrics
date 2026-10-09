@@ -5313,6 +5313,24 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fast-feedback/SEC_metrics/docs/evidence/issue28_company_records_20261007/default-online-review-20261009/independent-review/conclusion.md",
       "verdict": "PASS_LIMITED_COMPATIBILITY",
       "message_count": 2
+    },
+    {
+      "task_name": "review_selectedincome_bad59fa",
+      "purpose": "review",
+      "scope_paths": [
+        "scripts/vnext/selected_income_source_v1.py",
+        "scripts/vnext/xbrl_namespace_policy.py",
+        "tests/vnext/test_selected_income_source_v1.py",
+        "tools/run_fast_tests_v2.py",
+        ".github/workflows/vnext-fast.yml"
+      ],
+      "patch_sha": "bad59fab8848789f1cff35355707030c0c82a81d",
+      "spawned_at": "2026-10-09T05:49:23Z",
+      "ended_at": "2026-10-09T05:55:50Z",
+      "tool_calls": 24,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-income/SEC_metrics/docs/evidence/issue28_selected_income_source_20261009/independent-review/结论.md",
+      "verdict": "PASS_LIMITED_SOURCE_API",
+      "ordinary_messages": 3
     }
   ],
   "ci_capacity_20260922": {
@@ -16657,7 +16675,7 @@
     },
     "main_latest_read": "dae5c660e333242bb658706e3c98016c8856220f",
     "docs_base_received": "f447a3747a88edf080b740dca0681ce18b35c3d2",
-    "docs_ci_last_observed": "Some checks SUCCESS; main workflow still IN_PROGRESS/QUEUED, no terminal success",
+    "docs_ci_last_observed": "de64ce26 ALL_13_SUCCESS",
     "docs_install_probe": {
       "seconds": 3.062895624898374,
       "status": "INSTALL_ONLY_SUCCESS_NO_HTTP",
@@ -16765,7 +16783,7 @@
         0
       ]
     },
-    "reception_review": "Claude increment review requested; not inferred from CI"
+    "reception_review": "Claude6074762763: two increments pass within scope; default retained-program transition/full Git objects dependency explicit; no merge authority"
   },
   "shared_short_selectors_20261008_pr84": {
     "peer_sha": "dd8b8909eda88cb4ce2241b0b159f300985f73ef",
@@ -16785,5 +16803,63 @@
     "receiver_log_read": "public-pr84-selectors-actual.log:46 tests/0.048s/OK",
     "receiver_execution_scope": "Read actual peer log and five named methods; not parent rerun or business acceptance",
     "receiver_current_ci": "New head initially queued; old success not inherited"
+  },
+  "selected_income_source_interface_20261009": {
+    "pr": 85,
+    "base": "dae5c660e333242bb658706e3c98016c8856220f",
+    "head": "5989035b23f09aa748d35a772af66fe9d87f993b",
+    "product_sha": "bad59fab8848789f1cff35355707030c0c82a81d",
+    "head_note": "Actual Git/PR head verified; product source unchanged from reviewed bad59fab",
+    "scope_paths": [
+      "scripts/vnext/selected_income_source_v1.py",
+      "scripts/vnext/xbrl_namespace_policy.py"
+    ],
+    "api": "native_income_reports(source,annual,concepts,check_visible_short_period=False,namespace_policy=YEAR_ONLY,annual_period_reader=None)",
+    "default_current_bytes_unchanged": true,
+    "latest_current_preparer_not_imported": true,
+    "result_credit": false,
+    "actual_small_tests": {
+      "count": 7,
+      "seconds": 0.263
+    },
+    "actual_saved_sources": {
+      "companies": [
+        "Marriott FY2024",
+        "Paramount FY2025"
+      ],
+      "primary_xml_rows": [
+        [
+          2,
+          2
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "whole_seconds": 9.197197957895696,
+      "default_old_new_records_equal": true,
+      "paramount_visible_native_conflict_retained": true
+    },
+    "review": {
+      "sha": "bad59fab8848789f1cff35355707030c0c82a81d",
+      "verdict": "PASS_LIMITED_SOURCE_API",
+      "tests": 7,
+      "small_boundaries": 12,
+      "full_material_rerun": false
+    },
+    "consumer_remaining": [
+      "explicit historical annual reader and namespace config binding",
+      "amendment clearance/statement scope/completeness",
+      "actual company result/save/repeat/CSV by consumer"
+    ],
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "record": "docs/evidence/issue28_selected_income_source_20261009/README.md",
+    "peer_notified": true,
+    "ci_last_observed": "Reference/fast/source-authority SUCCESS; remaining IN_PROGRESS, no overall terminal"
   }
 }
