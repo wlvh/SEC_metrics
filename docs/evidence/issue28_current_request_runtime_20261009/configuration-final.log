@@ -1,0 +1,15 @@
+test_real_transport_configuration_change_is_detected (tests.vnext.test_current_request_runtime.CurrentConfigurationTest.test_real_transport_configuration_change_is_detected) ... ok
+test_retired_proof_fields_are_not_current_processing_dependencies (tests.vnext.test_current_request_runtime.CurrentConfigurationTest.test_retired_proof_fields_are_not_current_processing_dependencies) ... ok
+test_default_wire_bytes_and_context_identity_are_preserved (tests.vnext.test_request_limits.RequestLimitsTest.test_default_wire_bytes_and_context_identity_are_preserved) ... ok
+test_digest_records_resource_change_without_inventing_call_permission (tests.vnext.test_request_limits.RequestLimitsTest.test_digest_records_resource_change_without_inventing_call_permission) ... ok
+test_explicit_8192_reaches_wire_measurement_and_usage_validation (tests.vnext.test_request_limits.RequestLimitsTest.test_explicit_8192_reaches_wire_measurement_and_usage_validation) ... ok
+test_grouper_uses_same_limit_without_dropping_units (tests.vnext.test_request_limits.RequestLimitsTest.test_grouper_uses_same_limit_without_dropping_units) ... ok
+test_output_reserve_total_context_payload_and_invalid_types_are_distinct (tests.vnext.test_request_limits.RequestLimitsTest.test_output_reserve_total_context_payload_and_invalid_types_are_distinct) ... ok
+test_saved_envelope_changes_only_output_parameter_and_preserves_source_strings (tests.vnext.test_request_limits.RequestLimitsTest.test_saved_envelope_changes_only_output_parameter_and_preserves_source_strings) ... ok
+test_unknown_usage_cost_and_legacy_check_behavior_stay_explicit (tests.vnext.test_request_limits.RequestLimitsTest.test_unknown_usage_cost_and_legacy_check_behavior_stay_explicit) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.181s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 9, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_request_runtime.CurrentConfigurationTest", "tests.vnext.test_request_limits"]}
