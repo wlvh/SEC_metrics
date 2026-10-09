@@ -1,6 +1,6 @@
 # 历史公司使用指南
 
-截至2026-10-09，main `8588ccbbb1c91d81e0fb1a89dff3575214282549` 已有公司入口，但没有本指南的保存来源历史范围分派。PR71 `task/issue47-history-consumers` 接收 PR67 `29c9c9e2080a1de8c809660ac8fbdfc49072ef12` 后，通过同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口处理历史 B10/B11。它仍是 Draft 分支能力；技术验证不表示已入 main、正式采纳或完整五年业务接受。
+截至2026-10-09，main `f447a3747a88edf080b740dca0681ce18b35c3d2` 已有公司入口及PR61/58的测试基础/机械D02组件，但没有本指南的保存来源历史范围分派；组件合入不等于公司D02模型链完成。PR71 `task/issue47-history-consumers` 接收 PR67 `f7905156f7972b214e71d7f0a9a1172f7ac969cf` 后，通过同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口处理历史 B10/B11。它仍是 Draft 分支能力；技术验证不表示已入 main、正式采纳或完整五年业务接受。
 
 ## 取得代码和已保存输入
 
