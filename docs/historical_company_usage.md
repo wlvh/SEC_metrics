@@ -111,7 +111,7 @@ git worktree add -b review/issue47-bank-scope ../SEC_metrics-bank-scope-review \
   origin/task/issue47-bank-scope-history-20261010
 cd ../SEC_metrics-bank-scope-review
 python3 tools/vnext_company.py run --company jpmorgan_chase \
-  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2021 \
+  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2025 \
   --metric A04 --metric A09 --metric A11 --source-root /saved/sec/source-inputs \
   --work-dir /new/bank-scope/state --output-dir /new/bank-scope/runs
 python3 tools/vnext_company.py results --company jpmorgan_chase \
@@ -120,7 +120,7 @@ python3 tools/vnext_company.py results --company jpmorgan_chase \
 
 来源使用保留历史分支恢复所得实际 `source-inputs` 根，原件只读，状态/输出写外部新目录。JPM FY2021实际A04=.0164 ratio、全年；A09=.0072 ratio及A11=3,113,000,000,000 USD均为12月31日时点，财年是年度容器。A09仍先做完整原生结构化检查，只有明确歧义且来源集合完整才可使用现有HTML解释；缺源或程序异常不能替代。原申报、原格与单位/期间都由同一CSV/出处读口保存。
 
-同CLI首跑、禁工厂复用及另进程读取已核，见[唯一接收记录](evidence/issue47_bank_scope_receiving_20261010/README.md)。另外四年、修订/继任金额、其他金融族和在线历史取源尚待；候选接线不等于完整业务接受。
+同CLI首跑、禁工厂复用及另进程读取已核，见[唯一接收记录](evidence/issue47_bank_scope_receiving_20261010/README.md)。JPM FY2021–FY2025十五坐标已完成同入口处理、全范围复用、独立读取和原参考逐项核对；修订/继任金额、其他金融族和在线历史取源尚待；候选接线不等于完整业务接受。
 
 ## 状态、复跑和局部失败
 
