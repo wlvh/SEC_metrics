@@ -73,6 +73,15 @@ def _statement_scope(raw, index, parsed, table):
     builder = index.tables[table['order']]
     native_rows = {n for n, row in enumerate(builder.rows)
                    if any(index.cell_ordinals.get(id(c)) for c in row)}
+    # A native amount authenticates its number, not every assertion sharing
+    # its row. Direct limitations to operations/subsidiaries/segments remain
+    # unresolved regardless of whether another cell has an XBRL amount.
+    for row in table['rows']:
+        for c in row['cells']:
+            text = c['text'] if c['is_origin'] else ''
+            if (re.search(r'\b(?:excludes?|excluded|excluding|only|limited to)\b', text, re.I)
+                    and re.search(r'\b(?:operations?|subsidiar(?:y|ies)|segments?|businesses)\b', text, re.I)):
+                _need(False, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')
     unknown = []
     for row in table['rows']:
         if row['row_index'] in native_rows:
