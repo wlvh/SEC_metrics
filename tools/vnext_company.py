@@ -20,7 +20,7 @@ def main(argv=None):
     run.add_argument('--period', default='latest-complete-fy', choices=['latest-complete-fy'])
     run.add_argument('--work-dir', required=True, type=Path)
     run.add_argument('--output-dir', required=True, type=Path)
-    run.add_argument('--metric', action='append', help='Debug subset; summary retains all configured statuses')
+    run.add_argument('--metric', action='append', help='Select metrics; online call-context supports B01/B02, retained native summary lists configured statuses')
     run.add_argument('--source-root', type=Path,
                      help='Use saved sources and ordinary records; no online discovery, capture or AI calls')
     run.add_argument('--call-context', type=Path, help='Existing scoped SEC ledger context for the lightweight online B01/B02 path; no new allowance')
