@@ -360,19 +360,23 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
         INCOME_PROCESSING_FILES as income_files)
     from .historical_liquidity_cases import (METRICS as liquidity_metrics,
         prepare_historical_liquidity_year_case, PROCESSING_FILES as liquidity_files)
+    from .historical_capital_cases import (METRICS as capital_metrics,
+        prepare_historical_capital_year_case, PROCESSING_FILES as capital_files)
     selected = configured_scope(company_id) if metric_ids is None else list(metric_ids)
     need(selected and len(selected) == len(set(selected))
-         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics),
+         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics),
          'LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry')
     from .company_current_records import run_saved_company
     if not set(selected) <= set(SUPPORTED_METRICS):
         return run_saved_company(company_id=company_id, source_root=source_root,
             work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
             fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
-            case_factories={m: (prepare_historical_liquidity_year_case if m in liquidity_metrics else
+            case_factories={m: (prepare_historical_capital_year_case if m in capital_metrics else
+                               prepare_historical_liquidity_year_case if m in liquidity_metrics else
                                prepare_historical_lodging_year_case if m in SUPPORTED_METRICS
                                else prepare_historical_statement_year_case) for m in selected},
-            processing_files_by_metric={m: (liquidity_files if m in liquidity_metrics else
+            processing_files_by_metric={m: (capital_files if m in capital_metrics else
+                                            liquidity_files if m in liquidity_metrics else
                                             HISTORICAL_LODGING_PROCESSING_FILES if m in SUPPORTED_METRICS
                                             else income_files if m == 'B01'
                                             else statement_files) for m in selected})
