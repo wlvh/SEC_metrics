@@ -46,21 +46,27 @@ PROCESSING_FILES = (
 )
 
 
-def _need(condition, reason):
+class RiskHeadingCaseError(ValueError):
+    def __init__(self, reason, category='SOURCE_INTEGRITY_ERROR'):
+        super().__init__(reason)
+        self.category = category
+
+
+def _need(condition, reason, category='SOURCE_INTEGRITY_ERROR'):
     if not condition:
-        raise ValueError(reason)
+        raise RiskHeadingCaseError(reason, category)
 
 
 def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_id, fiscal_year):
     """A selected source-heading result, not a free-form risk interpretation."""
-    _need(metric_id in METRICS, 'HISTORICAL_RISK_HEADINGS_METRIC_NOT_SUPPORTED')
+    _need(metric_id in METRICS, 'HISTORICAL_RISK_HEADINGS_METRIC_NOT_SUPPORTED', 'IMPLEMENTATION_GAP')
     source = Path(repo_root)
     selection = resolve_period_selection(repo_root=source, company_id=company_id,
         fiscal_year=fiscal_year, rules_root=ROOT)
     annual = prepare_historical_annual_input(repo_root=source, company_id=company_id,
         period_selection=selection, rules_root=ROOT)
     _need(not annual['amendments'] and annual['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY',
-          'HISTORICAL_RISK_HEADINGS_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED')
+          'HISTORICAL_RISK_HEADINGS_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
     period = annual['table_input']['target_period']
     original = annual.get('original_input', annual)['table_input']['target_period']
     _need(all(original[k] == period[k] for k in ('period_start', 'period_end')),
