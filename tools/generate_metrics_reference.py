@@ -31,7 +31,6 @@ from __future__ import annotations
 import argparse
 import ast
 import csv
-from datetime import date
 import hashlib
 import io
 import json
@@ -162,7 +161,6 @@ DEFINITIONS_CSV_COLUMNS = [
     "name_zh",
     "description_zh",
     "description_en",
-    "owner_scope_decision",
     "method_types",
     "source_mode",
     "reader_family_id",
@@ -1277,38 +1275,6 @@ def _method_block(
     }
 
 
-def _owner_scope_decision(metric_id: str, meta: Mapping[str, Any]) -> Optional[Dict[str, Any]]:
-    decision = meta.get("owner_scope_decision")
-    if decision is None:
-        return None
-    fields = {"status", "content_zh", "decision_date", "recorded_date", "source"}
-    if not isinstance(decision, dict) or set(decision) != fields:
-        raise ReferenceError("{}: owner_scope_decision fields differ".format(metric_id))
-    expected_status = "POLICY_PENDING" if metric_id == "B02" else "DECIDED_TARGET"
-    if decision["status"] != expected_status or not isinstance(decision["content_zh"], str) or not decision["content_zh"].strip():
-        raise ReferenceError("{}: owner_scope_decision status or content differs".format(metric_id))
-    try:
-        recorded = date.fromisoformat(decision["recorded_date"])
-        decided = (date.fromisoformat(decision["decision_date"])
-                   if decision["decision_date"] is not None else None)
-    except (TypeError, ValueError) as error:
-        raise ReferenceError("{}: owner_scope_decision date invalid".format(metric_id)) from error
-    if (decided is None) != (metric_id == "B02") or (decided is not None and decided > recorded):
-        raise ReferenceError("{}: owner_scope_decision decision date conflicts with status".format(metric_id))
-    source = decision["source"]
-    if not isinstance(source, dict) or set(source) != {"commit", "path", "locator", "url"}:
-        raise ReferenceError("{}: owner_scope_decision source fields differ".format(metric_id))
-    expected_path = ("AGENTS.md" if metric_id == "B02" else
-                     "docs/evidence/issue47_history/owner-decisions-2026-09-27/decisions.json")
-    expected_locator = "COLLAB-28-47-v1 §2" if metric_id == "B02" else "decisions." + metric_id
-    commit = source["commit"]
-    if (not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}", commit)
-            or source["path"] != expected_path or source["locator"] != expected_locator
-            or source["url"] != "https://github.com/wlvh/SEC_metrics/blob/{}/{}".format(commit, expected_path)):
-        raise ReferenceError("{}: owner_scope_decision fixed source invalid".format(metric_id))
-    return dict(decision)
-
-
 def build_metric_definitions(
     *,
     selection: Mapping[str, Any],
@@ -1330,8 +1296,6 @@ def build_metric_definitions(
     metric_metadata = metadata["metrics"]
     if sorted(metric_metadata) != sorted(EXPECTED_METRIC_IDS):
         raise ReferenceError("metric_metadata must cover exactly the 39 metric IDs")
-    if {metric_id for metric_id, row in metric_metadata.items() if "owner_scope_decision" in row} != {"B02", "C02", "E01"}:
-        raise ReferenceError("owner_scope_decision must cover exactly B02, C02 and E01")
     status_values = set(metadata["status_vocabulary"]["legacy"]["values"]) | set(metadata["status_vocabulary"]["vnext"]["values"])
     rows_by_metric: Dict[str, List[Dict[str, Any]]] = {}
     for row in sic_map["rows"]:
@@ -1342,7 +1306,6 @@ def build_metric_definitions(
         kind = chosen["definition_source_kind"]
         source = definition_sources[metric_id]
         meta = metric_metadata[metric_id]
-        owner_decision = _owner_scope_decision(metric_id, meta)
         registry_entry = registry["metrics"][metric_id]
         projection_entry = projection["metrics"].get(metric_id)
         for status in meta["expected_statuses"]:
@@ -1417,7 +1380,6 @@ def build_metric_definitions(
             "name_zh": meta["name_zh"],
             "description_zh": meta["description_zh"],
             "description_en": meta["description_en"],
-            "owner_scope_decision": owner_decision,
             "method": method,
             "definition_source": {
                 "kind": kind,
@@ -1719,7 +1681,6 @@ def definition_csv_row(record: Mapping[str, Any]) -> Dict[str, Any]:
         "name_zh": record["name_zh"],
         "description_zh": record["description_zh"],
         "description_en": record["description_en"],
-        "owner_scope_decision": record["owner_scope_decision"],
         "method_types": record["method"]["reference_implementation"]["method_types"],
         "source_mode": record["method"]["registry_target_route"]["source_mode"],
         "reader_family_id": record["method"]["registry_target_route"]["reader_family_id"],
