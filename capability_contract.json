@@ -443,6 +443,20 @@
         "test_anchor": "tests/vnext/test_instant_amendment_paragraph_api.py::InstantParagraphApiTest.test_quoted_word_fragment_cannot_erase_conditional_review",
         "test_status": "automated_recorded",
         "since": "2026-10-09"
+      },
+      {
+        "anchor_id": "CAPABILITY.securegpt_connectivity_probe",
+        "type": "capability",
+        "status": "active",
+        "statement": "tools/probe_securegpt.py经scripts/securegpt_sdk.py在操作者指定的公司运行环境中调用一次SecureGPT(env).request，以随机nonce与整数和的严格JSON检查返回内容可被程序读取；区分初始化失败、请求异常/远端未知、已返回但不可读或内容不符、超时与PASS，无自动重试、无其他provider回退，保存响应可用--text-path离线复查且不再调用。仓库测试只用模拟SDK；目标OpenShift的真实PASS须在具备公司SDK/认证的容器中另行取得。不是#28 N1内网transport，不改变外网DeepSeek路径、调用账本或任何指标调用点。",
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_securegpt_probe.py::ProcessTests",
+        "test_status": "automated_recorded",
+        "since": "2026-10-09"
       }
     ],
     "capability_boundaries": [
