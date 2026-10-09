@@ -13,3 +13,7 @@ source root用原EX99已执行账本的source-inputs，保存材料完整，不�
 52源合同/完整汇总/历史consumer控制.166s零skip，combined.log；旧纯合同函数AST相同，既有未决一项仍全countNone，跨item假引用/错字段/缺答拒。新case构造明确控制：无对应响应和附件缺件均null、旧答不借；successor不能借其他事件宽窗；源异常不叫无候选；只有完整源/正文walk确无候选可沿原Calculator给0。构造0不冒充真实财报结论。
 
 其他年份、模型内容业务、来源缺件与共享模型执行接缝仍待。新SEC/provider/paid0，无新许可/Run/接受/Ready/merge/active。只维护本主要记录，已有96/105/108/110候选接收优先，C04未提交准备停止扩展。
+
+## 原普通writer的真实未决记录
+
+实际接main0b（eaf16e55）及公共102/c3固定reporter源码，不覆盖controller/runner；61源合同/主体/历史控制.162s零skip。原prepared case经同save_calculated_case/read_saved_result纯保存/冷读，null/WITHHELD/CIK813828、FY2024全年，8item IDs及完整原2aa V2请求已进入普通input-assessments。ordinary-reporter-withheld.json给可读CSV和保存位置。此前未接102时直接输出今日CIK2041610，只新增呈现版本、不改原ResultID/源；这就是本批必要公共依赖。公司CLI有限E01门尚待公共方，直接writer成功不代替用户入口已交付，也不在本阶段新建PR称成功。

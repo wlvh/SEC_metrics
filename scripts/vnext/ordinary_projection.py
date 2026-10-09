@@ -25,6 +25,47 @@ def _need(condition, reason):
     if not condition:raise ValueError(reason)
 
 
+def _reporting_company_view(*, data_root, company, annual, calculation_target,
+                            source_references=(), allow_metadata_only=False):
+    """Use the verified filing issuer in rows without changing the registry."""
+    from .traits import repository_company_ciks
+    entity = annual.get('entity')
+    _need(isinstance(entity, str) and entity.isdigit() and int(entity) > 0
+          and str(int(entity)) in {str(int(cik)) for cik in
+              repository_company_ciks(repo_root=data_root, company_id=company['company_id'])},
+          'ORDINARY_PROJECTION_REPORTER_NOT_REGISTERED')
+    target_entity = calculation_target.get('entity')
+    _need(annual.get('company_id') == company['company_id']
+          and calculation_target.get('company_id') == company['company_id']
+          and 'entity' in calculation_target and 'accession' in calculation_target
+          and (target_entity is None or isinstance(target_entity, str)
+               and target_entity.isdigit() and int(target_entity) == int(entity)),
+          'ORDINARY_PROJECTION_TRACE_SUBJECT_CHANGED')
+    # Existing Calculator targets explicitly allow absent issuer/filing facts.
+    # Filled fields must agree; null fields rely on the verified annual input
+    # rather than inventing facts or modifying the original Trace.
+    _need(calculation_target['accession'] is None
+          or calculation_target['accession'] == annual['filing']['accessionNumber'],
+          'ORDINARY_PROJECTION_TRACE_FILING_CHANGED')
+    subject = annual.get('subject_policy', {})
+    _need(subject.get('cross_entity_combination_authorized') is False,
+          'ORDINARY_PROJECTION_REPORTER_SCOPE_NOT_PROVEN')
+    if target_entity is None or calculation_target['accession'] is None:
+        from sec_urls import accession_document_url, submissions_url
+        filing = annual['filing']
+        primary_url = accession_document_url(cik=int(entity),
+            accession=filing['accessionNumber'], document_name=filing['primaryDocument'])
+        primary = any(ref.get('company_id') == company['company_id']
+            and ref.get('accession') == filing['accessionNumber']
+            and ref.get('source_url') == primary_url for ref in source_references)
+        inventory = any(ref.get('company_id') == company['company_id']
+            and ref.get('source_url') == submissions_url(cik=int(entity))
+            for ref in source_references)
+        _need(primary or allow_metadata_only and inventory,
+              'ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN')
+    return {**company, 'primary_cik': str(int(entity))}
+
+
 def _registered_event_period(*, data_root, manifest, annual, case, result):
     """Keep the approved event lookback distinct from the reporting year."""
     if case['primary_metric_id'] not in {'C01', 'E02', 'E03', 'E04', 'E05'}:
@@ -191,6 +232,10 @@ def render_ordinary_records(*, data_root, manifest, records, case,
               'ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED')
     indexes = projector._record_indexes(runs=[(manifest,records)])
     trace = indexes["traces"][result["trace_id"]]
+    company = _reporting_company_view(data_root=data_root, company=company,
+        annual=annual, calculation_target=trace['calculation_target'],
+        source_references=case['references'],
+        allow_metadata_only=result['value'] is None and result.get('text_payload') is None)
     if income_period_proven and result.get('value') is not None:
         checked = {c['observation_id'] for c in case.get('income_observation_checks',[])}
         _need(set(trace['input_observation_ids']) <= checked,
