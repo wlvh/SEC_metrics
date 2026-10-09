@@ -1,0 +1,10 @@
+Fixed main: 4a03f22393182eb642a0472f1480354ff430267c
+Fixed PR66: ddcc61920d608d5ede64458bb02f3f166953f3df
+{"binding_path": "new_rule_files.scripts/vnext/continuous_semantic_calls.py", "candidate_bytes": 67653, "candidate_matches": false, "candidate_sha256": "150ab9a05b5d389202b5f38cb5517e0387b427ea6ed3f5386e798d651819635c", "main_bytes": 67268, "main_matches": true, "main_sha256": "07763ef87cafcbdeb032b3491660adefa6a2103a14612a5e7bbec2a1b2124ce9", "record": {"sha256": "07763ef87cafcbdeb032b3491660adefa6a2103a14612a5e7bbec2a1b2124ce9", "size": 67268}}
+{"binding_path": "execution_authority.files.scripts/vnext/continuous_request_context.py", "candidate_bytes": 9644, "candidate_matches": false, "candidate_sha256": "c1e5157495facf9d2579e8e85703ad16883006d64cf33b5628ef3a2144060f95", "main_bytes": 7266, "main_matches": true, "main_sha256": "e252d1e0fc51b16f4456d9493814e09d48fabfabcbaad9e240f1a10464756fe0", "record": {"sha256": "e252d1e0fc51b16f4456d9493814e09d48fabfabcbaad9e240f1a10464756fe0", "size": 7266}}
+{"binding_path": "execution_authority.files.scripts/vnext/continuous_semantic_calls.py", "candidate_bytes": 67653, "candidate_matches": false, "candidate_sha256": "150ab9a05b5d389202b5f38cb5517e0387b427ea6ed3f5386e798d651819635c", "main_bytes": 67268, "main_matches": true, "main_sha256": "07763ef87cafcbdeb032b3491660adefa6a2103a14612a5e7bbec2a1b2124ce9", "record": {"sha256": "07763ef87cafcbdeb032b3491660adefa6a2103a14612a5e7bbec2a1b2124ce9", "size": 67268}}
+Default complete measurement: identical to fixed main implementation.
+PR66 request_limits.py and seven tests: byte-identical.
+continuous_semantic_calls AST changed functions: request_body, request_digest, usage_error.
+No preparation factory, plan, execution or authority function changed.
+RequestLimits is absent from old V14 semantic/execution file bindings. No bindings modified.
