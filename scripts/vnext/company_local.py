@@ -378,6 +378,15 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
          and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | set(geography_metrics) | set(average_risk_metrics) | set(bank_scope_metrics) | {'B07'},
          'LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry')
     from .company_current_records import run_saved_company
+    if set(selected) <= {'B01','B02'}:
+        from .company_fiscal_range import range_case_factories, PROCESSING_FILES as range_files
+        years=list(range(fiscal_year_start,fiscal_year_end+1))
+        factories=range_case_factories(company_id=company_id,fiscal_years=years,
+            metric_ids=selected,case_factories={m:prepare_historical_statement_year_case for m in selected})
+        return run_saved_company(company_id=company_id,source_root=source_root,
+            work_dir=work_dir,output_dir=output_dir,metric_ids=selected,fiscal_years=years,
+            case_factories=factories,processing_files_by_metric={m:tuple(dict.fromkeys(
+                (*(income_files if m=='B01' else statement_files),*range_files))) for m in selected})
     if not set(selected) <= set(SUPPORTED_METRICS):
         return run_saved_company(company_id=company_id, source_root=source_root,
             work_dir=work_dir, output_dir=output_dir, metric_ids=selected,

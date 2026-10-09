@@ -509,7 +509,7 @@
           "raw_asset_id": "sha256:4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
           "raw_span_sha256": "6392df283a30a0cb1a921df67f8c6a0bacf3e10bf2d222947e4b855fcfb53f8b",
           "text_sha256": "ee66df1754d654edebc4955301d0ee2908517ab853d1a8ec6388e0ac9b5b83e9",
-          "text_start": "The Credit Facility has one principal financial covenant which sets a maximum Consolidated Total Leverage Ratio (“Leverage Ratio”) at the end of each quarter. The maximum Leverage ",
+          "text_start": "The Credit Facility has one principal financial covenant which sets a maximum Consolidated Total Leverage Ratio (\u201cLeverage Ratio\u201d) at the end of each quarter. The maximum Leverage ",
           "why_out_of_scope": "A credit-facility leverage covenant names litigation reserves only as one possible EBITDA add-back."
         }
       ],
@@ -912,7 +912,7 @@
       "source_block": {
         "block_index": 3367,
         "role": "excerpt_31",
-        "text": "The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm’s independent external auditor is in the best interests of JPMorganChase and its shareholders. PwC and its predecessors have acted as our independent registered public accounting firm since 1965. The Board believes the Firm receives significant benefits from the extensive history PwC has with the Firm. These benefits include:",
+        "text": "The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm\u2019s independent external auditor is in the best interests of JPMorganChase and its shareholders. PwC and its predecessors have acted as our independent registered public accounting firm since 1965. The Board believes the Firm receives significant benefits from the extensive history PwC has with the Firm. These benefits include:",
         "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
         "source_accession": "0000019617-26-000096",
         "raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
@@ -955,7 +955,7 @@
       "source_block": {
         "block_index": 3367,
         "role": "excerpt_31",
-        "text": "The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm’s independent external auditor is in the best interests of JPMorganChase and its shareholders. PwC and its predecessors have acted as our independent registered public accounting firm since 1965. The Board believes the Firm receives significant benefits from the extensive history PwC has with the Firm. These benefits include:",
+        "text": "The members of the Audit Committee and the Board believe that continued retention of PwC as the Firm\u2019s independent external auditor is in the best interests of JPMorganChase and its shareholders. PwC and its predecessors have acted as our independent registered public accounting firm since 1965. The Board believes the Firm receives significant benefits from the extensive history PwC has with the Firm. These benefits include:",
         "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
         "source_accession": "0000019617-26-000096",
         "raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
@@ -1004,7 +1004,7 @@
         "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
         "raw_asset_id": "sha256:bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
         "raw_span_sha256": "8f96b7c9f8fb1e3553eb03871933f7dc2f7323b4c35b0016f894f31337c9d580",
-        "text": "Management is responsible for the Firm’s internal control over financial reporting, the financial reporting process and JPMorganChase’s Consolidated Financial Statements. PwC is responsible for performing an independent audit of JPMorganChase’s Consolidated Financial Statements and of the effectiveness of internal control over financial reporting in accordance with auditing standards promulgated by the PCAOB. The Firm’s Internal Audit function, under the direction of the General Auditor, is independent of the Firm’s businesses and the Independent Risk Management function. Internal Audit reports directly to the Audit Committee (and administratively to the Firm’s CEO) and is responsible for preparing an annual audit plan and conducting internal audits intended to independently test and evaluate the Firm’s governance, risk management and internal controls. The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee’s responsibility is to monitor and oversee these processes.",
+        "text": "Management is responsible for the Firm\u2019s internal control over financial reporting, the financial reporting process and JPMorganChase\u2019s Consolidated Financial Statements. PwC is responsible for performing an independent audit of JPMorganChase\u2019s Consolidated Financial Statements and of the effectiveness of internal control over financial reporting in accordance with auditing standards promulgated by the PCAOB. The Firm\u2019s Internal Audit function, under the direction of the General Auditor, is independent of the Firm\u2019s businesses and the Independent Risk Management function. Internal Audit reports directly to the Audit Committee (and administratively to the Firm\u2019s CEO) and is responsible for preparing an annual audit plan and conducting internal audits intended to independently test and evaluate the Firm\u2019s governance, risk management and internal controls. The members of the Audit Committee are not professionally engaged in the practice of accounting or auditing; as noted above, the Audit Committee\u2019s responsibility is to monitor and oversee these processes.",
         "own_scope_reading": "SEPARATE_UNJUDGED_SCOPE_QUESTION",
         "why": "The paragraph assigns management/auditor/Internal Audit responsibilities, then says committee members do not practise accounting and monitor the processes. It appears to describe duties; whether the final negative professional-practice statement is a qualification fact needs contract-based peer alignment. No new defect or acceptance credit is recorded here."
       },
@@ -1221,6 +1221,68 @@
       "repair_state": "CURRENT_READING_HOLD; shared income selection scope repair pending; no old fact replacement",
       "original_records_preserved": true,
       "own_impact": "exact FY2023 result only; current #28 FY2025 selects Revenues62.579bn, not this subtotal, verified separately"
+    },
+    {
+      "defect_id": "MACYS_FY2023_B01_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK",
+      "metric_id": "B01",
+      "company_id": "macys",
+      "period_end": "2024-02-03",
+      "result_id": "sha256:5f17ec97a234f3b8bae22bcaedd2bdb9ff2ace36056c7a52adfbc821ff088731",
+      "current_credit": "WITHDRAWN_CONFIRMED_REVENUE_SUBTOTAL_SCOPE",
+      "repair_state": "SHARED_TOTAL_ADMISSION_NOT_YET_RECEIVED_FOR_THIS_SOURCE",
+      "summary": "Current original consolidated income statement explicitly reports Net sales23092m plus Other revenue774m and Total revenue23866m. This exact candidate uses the Net sales component or growth derived from it. Old facts/results remain; no later comparative values replace prior original.",
+      "source_read": {
+        "path": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm",
+        "sha256": "50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29",
+        "table_order": 38,
+        "reported_current_millions": {
+          "net_sales": 23092,
+          "other_revenue": 774,
+          "total_revenue": 23866
+        },
+        "native_concepts": [
+          "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "m:OtherRevenueNet",
+          "us-gaap:Revenues"
+        ],
+        "source_read_mode": "PARENT_DIRECT_READ_OF_ORIGINAL_INCOME_TABLE_AND_NATIVE_FACTS",
+        "older_comparative_not_used_to_rewrite_prior": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_fiscal_range_entry_20261010/source-income-table-read.json"
+      ],
+      "released": []
+    },
+    {
+      "defect_id": "MACYS_FY2023_B02_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK",
+      "metric_id": "B02",
+      "company_id": "macys",
+      "period_end": "2024-02-03",
+      "result_id": "sha256:db609edd1f286ee1bf61e51126b8084fea1f0817b03847d8010e02cd1b1e81b7",
+      "current_credit": "WITHDRAWN_CONFIRMED_REVENUE_SUBTOTAL_SCOPE",
+      "repair_state": "SHARED_TOTAL_ADMISSION_NOT_YET_RECEIVED_FOR_THIS_SOURCE",
+      "summary": "Current original consolidated income statement explicitly reports Net sales23092m plus Other revenue774m and Total revenue23866m. This exact candidate uses the Net sales component or growth derived from it. Old facts/results remain; no later comparative values replace prior original.",
+      "source_read": {
+        "path": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm",
+        "sha256": "50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29",
+        "table_order": 38,
+        "reported_current_millions": {
+          "net_sales": 23092,
+          "other_revenue": 774,
+          "total_revenue": 23866
+        },
+        "native_concepts": [
+          "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "m:OtherRevenueNet",
+          "us-gaap:Revenues"
+        ],
+        "source_read_mode": "PARENT_DIRECT_READ_OF_ORIGINAL_INCOME_TABLE_AND_NATIVE_FACTS",
+        "older_comparative_not_used_to_rewrite_prior": true
+      },
+      "evidence": [
+        "docs/evidence/issue28_fiscal_range_entry_20261010/source-income-table-read.json"
+      ],
+      "released": []
     }
   ],
   "purpose": "Current company read: precise known defects from this Issue; no copied result count or content acceptance summary.",

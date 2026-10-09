@@ -35,6 +35,14 @@ def main(argv=None):
     acquire.add_argument('--metric', action='append', help='Online source scope, B01/B02 only')
     acquire.add_argument('--max-sec-requests', type=int, default=120)
     acquire.add_argument('--sec-allowance', type=int, default=120)
+    sources = sub.add_parser('sources', help='Read-only selected annual B01/B02 source preflight; no fetching or calculation')
+    sources.add_argument('--company', required=True)
+    sources.add_argument('--source-root', required=True, type=Path)
+    source_period=sources.add_mutually_exclusive_group(required=True)
+    source_period.add_argument('--report-end', help='SEC report end date; never a guessed fiscal-year label')
+    source_period.add_argument('--fiscal-year-start', type=int, help='First issuer fiscal year, resolved from original sources')
+    sources.add_argument('--fiscal-year-end', type=int, help='Last issuer year; at most five consecutive years')
+    sources.add_argument('--metric', required=True, action='append', choices=['B01','B02'])
     export = sub.add_parser('export', help='Controlled preparation: source-only company export')
     export.add_argument('--source-root', required=True, type=Path)
     export.add_argument('--output-root', required=True, type=Path)
@@ -137,6 +145,18 @@ def main(argv=None):
             os.environ[ACQUISITION_TRUST] = str(work/'trust/acquisition')
             session = local_session(root=work/'acquisition', company_id=args.company, allowance=args.sec_allowance)
             result = acquire_only(session=session, company_id=args.company, max_requests=args.max_sec_requests)
+    elif args.command == 'sources':
+        if args.report_end is not None:
+            if args.fiscal_year_end is not None:parser.error('--fiscal-year-end requires --fiscal-year-start')
+            from vnext.selected_source_requirements import discover_selected_annual_requirements
+            result = discover_selected_annual_requirements(repo_root=args.source_root,
+                company_id=args.company, report_end=args.report_end, metric_ids=args.metric)
+        else:
+            if args.fiscal_year_end is None:parser.error('--fiscal-year-start requires --fiscal-year-end')
+            from vnext.company_fiscal_range import discover_fiscal_range
+            result = discover_fiscal_range(repo_root=args.source_root, company_id=args.company,
+                fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end,
+                metric_ids=args.metric)
     elif args.command == 'export':
         from vnext.company_handoff import export_company
         declaration = None
@@ -202,6 +222,9 @@ def main(argv=None):
     if args.command == 'compute':
         return 0 if all(m['status'] in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'}
                         for m in result['metrics']) else 2
+    if args.command == 'sources':
+        return 0 if (result['status']=='SAVED_SOURCE_BYTES_AVAILABLE' or
+            result['status']=='FISCAL_RANGE_RESOLVED' and result['all_source_bytes_available']) else 2
     return 2 if result.get('status') == 'EXPORTED_PARTIAL' else 0
 
 

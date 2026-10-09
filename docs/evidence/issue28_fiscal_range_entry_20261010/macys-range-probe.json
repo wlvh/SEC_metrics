@@ -1,0 +1,1160 @@
+{
+  "record_type": "COMPANY_FISCAL_RANGE_SOURCE_V1",
+  "company_id": "macys",
+  "fiscal_years": [
+    2022,
+    2023
+  ],
+  "metric_ids": [
+    "B01",
+    "B02"
+  ],
+  "candidates": [
+    {
+      "report_end": "2024-02-03",
+      "reporting_cik": "794367",
+      "source_fiscal_year_resolved": true,
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2024-02-03",
+        "filingDate": "2024-03-22",
+        "accessionNumber": "0001628280-24-012734",
+        "primaryDocument": "m-20240203.htm"
+      },
+      "fiscal_year": 2023,
+      "original_dei_fiscal_year": 2023,
+      "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+      "actual_period": {
+        "period_start": "2023-01-29",
+        "period_end": "2024-02-03"
+      },
+      "inspection_id": "sha256:e22e3403047505695056dae0738a6478e600d9a467c5b23aa99417e71a398fde",
+      "label_status": "SOURCE_LABELS_CONSISTENT",
+      "primary_proof": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203.htm",
+        "accession": "0001628280-24-012734",
+        "document_name": "m-20240203.htm",
+        "content_sha256": "50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29",
+        "request_body_sha256": "50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29",
+        "request_body_size": 2198731,
+        "request_headers_repo_relative_path": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm.fe3f8ecfbff490d28f459e024632b850590f974bf0fe6764089a4de649d7bf7d.headers.json",
+        "request_headers_sha256": "fe3f8ecfbff490d28f459e024632b850590f974bf0fe6764089a4de649d7bf7d",
+        "request_headers_size": 1702,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm",
+        "request_attempt_id": "request:attempt:586d8620a6c79d906e9d99c59a9d3fb871491345a78263f11ba086730adfa2e6"
+      },
+      "companyfacts_proof": {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+        "accession": "",
+        "document_name": "CIK0000794367.json",
+        "content_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+        "request_body_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+        "request_body_size": 3756173,
+        "request_headers_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json.e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af.headers.json",
+        "request_headers_sha256": "e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+        "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+      }
+    },
+    {
+      "report_end": "2023-01-28",
+      "reporting_cik": "794367",
+      "source_fiscal_year_resolved": true,
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2023-01-28",
+        "filingDate": "2023-03-24",
+        "accessionNumber": "0001628280-23-009154",
+        "primaryDocument": "m-20230128.htm"
+      },
+      "fiscal_year": 2022,
+      "original_dei_fiscal_year": 2022,
+      "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+      "actual_period": {
+        "period_start": "2022-01-30",
+        "period_end": "2023-01-28"
+      },
+      "inspection_id": "sha256:1a79fb6be35d0df8cff0cad62d52b41467e3e470ef9baab2800c29a8a9ef7a5e",
+      "label_status": "SOURCE_LABELS_CONSISTENT",
+      "primary_proof": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+        "accession": "0001628280-23-009154",
+        "document_name": "m-20230128.htm",
+        "content_sha256": "876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+        "request_body_sha256": "876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+        "request_body_size": 2355897,
+        "request_headers_repo_relative_path": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm.3fc68cb9854574692e0a6ce573afe1073c0a5962e2eb167becf75c44ce10a6c3.headers.json",
+        "request_headers_sha256": "3fc68cb9854574692e0a6ce573afe1073c0a5962e2eb167becf75c44ce10a6c3",
+        "request_headers_size": 1682,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm",
+        "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+      },
+      "companyfacts_proof": {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+        "accession": "",
+        "document_name": "CIK0000794367.json",
+        "content_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+        "request_body_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+        "request_body_size": 3756173,
+        "request_headers_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json.e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af.headers.json",
+        "request_headers_sha256": "e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+        "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+      }
+    },
+    {
+      "report_end": "2022-01-29",
+      "reporting_cik": "794367",
+      "source_fiscal_year_resolved": true,
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2022-01-29",
+        "filingDate": "2022-03-25",
+        "accessionNumber": "0001564590-22-011726",
+        "primaryDocument": "m-10k_20220129.htm"
+      },
+      "fiscal_year": 2021,
+      "original_dei_fiscal_year": 2021,
+      "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+      "actual_period": {
+        "period_start": "2021-01-31",
+        "period_end": "2022-01-29"
+      },
+      "inspection_id": "sha256:382f6507af4abe9f373a2e10739f70f3a94b8a2a5ec241a3411d34ea40865c10",
+      "label_status": "SOURCE_LABELS_CONSISTENT",
+      "primary_proof": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/m-10k_20220129.htm",
+        "accession": "0001564590-22-011726",
+        "document_name": "m-10k_20220129.htm",
+        "content_sha256": "3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388",
+        "request_body_sha256": "3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388",
+        "request_body_size": 6781047,
+        "request_headers_repo_relative_path": "evidence/request_attempts/3c/3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388/m-10k_20220129.htm.510ded298bbe8ba25e86887a745ff83ff564c6a5fdb055b72c88807d06f3385d.headers.json",
+        "request_headers_sha256": "510ded298bbe8ba25e86887a745ff83ff564c6a5fdb055b72c88807d06f3385d",
+        "request_headers_size": 1660,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/3c/3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388/m-10k_20220129.htm",
+        "request_attempt_id": "request:attempt:a518a939070f055c2b484ca1c968aea3d717e05e6c17d580347b59594cf482f6"
+      },
+      "companyfacts_proof": {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+        "accession": "",
+        "document_name": "CIK0000794367.json",
+        "content_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+        "request_body_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+        "request_body_size": 3756173,
+        "request_headers_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json.e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af.headers.json",
+        "request_headers_sha256": "e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+        "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "fiscal_year": 2022,
+      "status": "FISCAL_YEAR_RESOLVED",
+      "limitations": [],
+      "report_end": "2023-01-28",
+      "reporting_cik": "794367",
+      "label": {
+        "report_end": "2023-01-28",
+        "reporting_cik": "794367",
+        "source_fiscal_year_resolved": true,
+        "filing": {
+          "form": "10-K",
+          "reportDate": "2023-01-28",
+          "filingDate": "2023-03-24",
+          "accessionNumber": "0001628280-23-009154",
+          "primaryDocument": "m-20230128.htm"
+        },
+        "fiscal_year": 2022,
+        "original_dei_fiscal_year": 2022,
+        "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+        "actual_period": {
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28"
+        },
+        "inspection_id": "sha256:1a79fb6be35d0df8cff0cad62d52b41467e3e470ef9baab2800c29a8a9ef7a5e",
+        "label_status": "SOURCE_LABELS_CONSISTENT",
+        "primary_proof": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+          "accession": "0001628280-23-009154",
+          "document_name": "m-20230128.htm",
+          "content_sha256": "876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+          "request_body_sha256": "876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+          "request_body_size": 2355897,
+          "request_headers_repo_relative_path": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm.3fc68cb9854574692e0a6ce573afe1073c0a5962e2eb167becf75c44ce10a6c3.headers.json",
+          "request_headers_sha256": "3fc68cb9854574692e0a6ce573afe1073c0a5962e2eb167becf75c44ce10a6c3",
+          "request_headers_size": 1682,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm",
+          "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+        },
+        "companyfacts_proof": {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+          "accession": "",
+          "document_name": "CIK0000794367.json",
+          "content_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+          "request_body_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+          "request_body_size": 3756173,
+          "request_headers_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json.e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af.headers.json",
+          "request_headers_sha256": "e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+          "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+        }
+      },
+      "period_selection": {
+        "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+        "schema_version": 1,
+        "policy_id": "ordinary_period_selection_v1",
+        "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+        "company_id": "macys",
+        "reporting_cik": "794367",
+        "subject_policy": {
+          "mode": "CONTINUOUS_PRIMARY",
+          "selected_cik": "794367",
+          "cross_entity_combination_authorized": false
+        },
+        "target_report_end": "2023-01-28",
+        "requested_fiscal_year": 2022,
+        "current_filing": {
+          "form": "10-K",
+          "reportDate": "2023-01-28",
+          "filingDate": "2023-03-24",
+          "accessionNumber": "0001628280-23-009154",
+          "primaryDocument": "m-20230128.htm"
+        },
+        "current_amendments": [],
+        "prior_report_end": "2022-01-29",
+        "prior_filing": {
+          "form": "10-K",
+          "reportDate": "2022-01-29",
+          "filingDate": "2022-03-25",
+          "accessionNumber": "0001564590-22-011726",
+          "primaryDocument": "m-10k_20220129.htm"
+        },
+        "prior_amendments": [],
+        "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+        "dependency_filing_roles": {
+          "target_primary": "0001628280-23-009154",
+          "target_amendment_primary": [],
+          "prior_annual_primary": "0001564590-22-011726",
+          "prior_amendment_primary": []
+        },
+        "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+        "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+        "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+        "source_set_identity": "sha256:e757b5f0fb1dd2dd099a3e04ab6e4ff864dbc69dec3063a7162838e9925e1fc9",
+        "loaded_inventories": [
+          "CIK0000794367.json"
+        ],
+        "latest_restated_values_used": false,
+        "caller_supplied_selection_trusted": false,
+        "production_authorized": false,
+        "selection_id": "sha256:df107ba6bcf01f3fd4df1f5d96c18c7334a968420ec6acc820c776482dda0ea2"
+      },
+      "source_preflight": {
+        "record_type": "SELECTED_ANNUAL_SOURCE_REQUIREMENTS_V1",
+        "company_id": "macys",
+        "metric_ids": [
+          "B01",
+          "B02"
+        ],
+        "requested_report_end": "2023-01-28",
+        "filing_selection": {
+          "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+          "schema_version": 1,
+          "policy_id": "ordinary_period_selection_v1",
+          "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+          "company_id": "macys",
+          "reporting_cik": "794367",
+          "subject_policy": {
+            "mode": "CONTINUOUS_PRIMARY",
+            "selected_cik": "794367",
+            "cross_entity_combination_authorized": false
+          },
+          "target_report_end": "2023-01-28",
+          "requested_fiscal_year": null,
+          "current_filing": {
+            "form": "10-K",
+            "reportDate": "2023-01-28",
+            "filingDate": "2023-03-24",
+            "accessionNumber": "0001628280-23-009154",
+            "primaryDocument": "m-20230128.htm"
+          },
+          "current_amendments": [],
+          "prior_report_end": "2022-01-29",
+          "prior_filing": {
+            "form": "10-K",
+            "reportDate": "2022-01-29",
+            "filingDate": "2022-03-25",
+            "accessionNumber": "0001564590-22-011726",
+            "primaryDocument": "m-10k_20220129.htm"
+          },
+          "prior_amendments": [],
+          "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+          "dependency_filing_roles": {
+            "target_primary": "0001628280-23-009154",
+            "target_amendment_primary": [],
+            "prior_annual_primary": "0001564590-22-011726",
+            "prior_amendment_primary": []
+          },
+          "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+          "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+          "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+          "source_set_identity": "sha256:e757b5f0fb1dd2dd099a3e04ab6e4ff864dbc69dec3063a7162838e9925e1fc9",
+          "loaded_inventories": [
+            "CIK0000794367.json"
+          ],
+          "latest_restated_values_used": false,
+          "caller_supplied_selection_trusted": false,
+          "production_authorized": false,
+          "selection_id": "sha256:425d317d1d3addb63a1fcce45c531f08344fda701aa437ced09b3afd4b47e4c8"
+        },
+        "original_annual_period": {
+          "fiscal_year": 2022,
+          "period_start": "2022-01-30",
+          "period_end": "2023-01-28"
+        },
+        "annual_period_label_source": "RAW_ORIGINAL_DEI_CONTEXT",
+        "consumer_fiscal_year_resolution_performed": false,
+        "requirements": [
+          {
+            "source_url": "https://data.sec.gov/submissions/CIK0000794367.json",
+            "method": "GET",
+            "roles": [
+              "selected_submissions_inventory"
+            ],
+            "accession": "SUBMISSIONS-794367",
+            "media_type": "application/json",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:c99a8bb01a3d9fa94e53e7d55522ddccb8b96ea2115c922ae430e9858b8e242f",
+              "raw_asset_id": "sha256:75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+              "company_id": "macys",
+              "source_url": "https://data.sec.gov/submissions/CIK0000794367.json",
+              "accession": "SUBMISSIONS-794367",
+              "document_name": "CIK0000794367.json",
+              "source_role": "selected_submissions_inventory",
+              "request_attempt_id": "request:attempt:d3b5914e9e0a6f3568a2da42a67774d198faa3a0a04e220054489d3c045c9529"
+            },
+            "proof": {
+              "source_url": "https://data.sec.gov/submissions/CIK0000794367.json",
+              "accession": "SUBMISSIONS-794367",
+              "document_name": "CIK0000794367.json",
+              "content_sha256": "75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+              "request_body_sha256": "75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+              "request_body_size": 164040,
+              "request_headers_repo_relative_path": "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json.727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361.headers.json",
+              "request_headers_sha256": "727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361",
+              "request_headers_size": 736,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json",
+              "request_attempt_id": "request:attempt:d3b5914e9e0a6f3568a2da42a67774d198faa3a0a04e220054489d3c045c9529"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+            "method": "GET",
+            "roles": [
+              "target_annual_primary"
+            ],
+            "accession": "0001628280-23-009154",
+            "media_type": "text/html",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:d56bedb908c4307749c20ca516b8c96dbe6df4e4a74dad8fa05779fba518739b",
+              "raw_asset_id": "sha256:876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+              "accession": "0001628280-23-009154",
+              "document_name": "m-20230128.htm",
+              "source_role": "target_annual_primary",
+              "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+              "accession": "0001628280-23-009154",
+              "document_name": "m-20230128.htm",
+              "content_sha256": "876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+              "request_body_sha256": "876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+              "request_body_size": 2355897,
+              "request_headers_repo_relative_path": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm.3fc68cb9854574692e0a6ce573afe1073c0a5962e2eb167becf75c44ce10a6c3.headers.json",
+              "request_headers_sha256": "3fc68cb9854574692e0a6ce573afe1073c0a5962e2eb167becf75c44ce10a6c3",
+              "request_headers_size": 1682,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm",
+              "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/index.json",
+            "method": "GET",
+            "roles": [
+              "target_annual_accession_index"
+            ],
+            "accession": "0001628280-23-009154",
+            "media_type": "application/json",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:1f1d536a580b42e237028592655f8da0933d183fa250c3a63e5d998bb321de6c",
+              "raw_asset_id": "sha256:2eb3cdf28c6a3cec3adcf11914132056fb6002e53f33f02f82f6199a3459f7b5",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/index.json",
+              "accession": "0001628280-23-009154",
+              "document_name": "index.json",
+              "source_role": "target_annual_accession_index",
+              "request_attempt_id": "request:attempt:3bd3081889d94d7c7be5702989195a1e2181d31b1c7a5fd966f6415b3bafd8b5"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/index.json",
+              "accession": "0001628280-23-009154",
+              "document_name": "index.json",
+              "content_sha256": "2eb3cdf28c6a3cec3adcf11914132056fb6002e53f33f02f82f6199a3459f7b5",
+              "request_body_sha256": "2eb3cdf28c6a3cec3adcf11914132056fb6002e53f33f02f82f6199a3459f7b5",
+              "request_body_size": 11004,
+              "request_headers_repo_relative_path": "evidence/request_attempts/2e/2eb3cdf28c6a3cec3adcf11914132056fb6002e53f33f02f82f6199a3459f7b5/index.json.c8fb15e05698d79fb1445fabf4f5c67f4940cc75d31100a501ea84a76bb45157.headers.json",
+              "request_headers_sha256": "c8fb15e05698d79fb1445fabf4f5c67f4940cc75d31100a501ea84a76bb45157",
+              "request_headers_size": 1248,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/2e/2eb3cdf28c6a3cec3adcf11914132056fb6002e53f33f02f82f6199a3459f7b5/index.json",
+              "request_attempt_id": "request:attempt:3bd3081889d94d7c7be5702989195a1e2181d31b1c7a5fd966f6415b3bafd8b5"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+            "method": "GET",
+            "roles": [
+              "target_annual_instance"
+            ],
+            "accession": "0001628280-23-009154",
+            "media_type": "application/xml",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:9b9e819a36f188857324c2349296a85c379aaddd274bd2c3b0b51e05751dbac9",
+              "raw_asset_id": "sha256:2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+              "accession": "0001628280-23-009154",
+              "document_name": "m-20230128_htm.xml",
+              "source_role": "target_annual_instance",
+              "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+              "accession": "0001628280-23-009154",
+              "document_name": "m-20230128_htm.xml",
+              "content_sha256": "2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+              "request_body_sha256": "2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+              "request_body_size": 2148307,
+              "request_headers_repo_relative_path": "evidence/request_attempts/2c/2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345/m-20230128_htm.xml.e615986b7a736ce4ce38cca88269b61fef4288d14268f445eff2b63cf5eec4cb.headers.json",
+              "request_headers_sha256": "e615986b7a736ce4ce38cca88269b61fef4288d14268f445eff2b63cf5eec4cb",
+              "request_headers_size": 1723,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/2c/2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345/m-20230128_htm.xml",
+              "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+            }
+          },
+          {
+            "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+            "method": "GET",
+            "roles": [
+              "selected_companyfacts"
+            ],
+            "accession": "",
+            "media_type": "application/json",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:f8c993d8efd3c28338239037c9805eb5d8b9a3cc11884879ea2fe22dbc86f911",
+              "raw_asset_id": "sha256:fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+              "company_id": "macys",
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+              "accession": "SUBMISSIONS-794367",
+              "document_name": "CIK0000794367.json",
+              "source_role": "selected_companyfacts",
+              "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+            },
+            "proof": {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+              "accession": "",
+              "document_name": "CIK0000794367.json",
+              "content_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+              "request_body_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+              "request_body_size": 3756173,
+              "request_headers_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json.e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af.headers.json",
+              "request_headers_sha256": "e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af",
+              "request_headers_size": 707,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+              "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/m-10k_20220129.htm",
+            "method": "GET",
+            "roles": [
+              "prior_annual_primary"
+            ],
+            "accession": "0001564590-22-011726",
+            "media_type": "text/html",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:fdf076ce55c58508db396d874f52824eb4963c5410f6e1da56e5d8a8b463d0cb",
+              "raw_asset_id": "sha256:3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/m-10k_20220129.htm",
+              "accession": "0001564590-22-011726",
+              "document_name": "m-10k_20220129.htm",
+              "source_role": "prior_annual_primary",
+              "request_attempt_id": "request:attempt:a518a939070f055c2b484ca1c968aea3d717e05e6c17d580347b59594cf482f6"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/m-10k_20220129.htm",
+              "accession": "0001564590-22-011726",
+              "document_name": "m-10k_20220129.htm",
+              "content_sha256": "3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388",
+              "request_body_sha256": "3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388",
+              "request_body_size": 6781047,
+              "request_headers_repo_relative_path": "evidence/request_attempts/3c/3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388/m-10k_20220129.htm.510ded298bbe8ba25e86887a745ff83ff564c6a5fdb055b72c88807d06f3385d.headers.json",
+              "request_headers_sha256": "510ded298bbe8ba25e86887a745ff83ff564c6a5fdb055b72c88807d06f3385d",
+              "request_headers_size": 1660,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/3c/3c0ef7be7458818e691c1015b116240c720a554d4d0aef4cde4b6e712641a388/m-10k_20220129.htm",
+              "request_attempt_id": "request:attempt:a518a939070f055c2b484ca1c968aea3d717e05e6c17d580347b59594cf482f6"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/index.json",
+            "method": "GET",
+            "roles": [
+              "prior_annual_accession_index"
+            ],
+            "accession": "0001564590-22-011726",
+            "media_type": "application/json",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:eaa1f8f8555425d23249e0858079855556e8f53c8b747e8f69e54c6336e0046b",
+              "raw_asset_id": "sha256:6e9b722ff993ea0640ec3d925260b82b7bce89772d4579b151583a84b3d245b2",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/index.json",
+              "accession": "0001564590-22-011726",
+              "document_name": "index.json",
+              "source_role": "prior_annual_accession_index",
+              "request_attempt_id": "request:attempt:a64e0b662cbc039f57d6738e0338fa2d554ec3466822ba5489f91d876fdfce74"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/index.json",
+              "accession": "0001564590-22-011726",
+              "document_name": "index.json",
+              "content_sha256": "6e9b722ff993ea0640ec3d925260b82b7bce89772d4579b151583a84b3d245b2",
+              "request_body_sha256": "6e9b722ff993ea0640ec3d925260b82b7bce89772d4579b151583a84b3d245b2",
+              "request_body_size": 10974,
+              "request_headers_repo_relative_path": "evidence/request_attempts/6e/6e9b722ff993ea0640ec3d925260b82b7bce89772d4579b151583a84b3d245b2/index.json.85f6e4394793a7c6e34df2a790c5ede28fa60b2f715f87a861a253b4462ac41b.headers.json",
+              "request_headers_sha256": "85f6e4394793a7c6e34df2a790c5ede28fa60b2f715f87a861a253b4462ac41b",
+              "request_headers_size": 1248,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/6e/6e9b722ff993ea0640ec3d925260b82b7bce89772d4579b151583a84b3d245b2/index.json",
+              "request_attempt_id": "request:attempt:a64e0b662cbc039f57d6738e0338fa2d554ec3466822ba5489f91d876fdfce74"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/m-10k_20220129_htm.xml",
+            "method": "GET",
+            "roles": [
+              "prior_annual_instance"
+            ],
+            "accession": "0001564590-22-011726",
+            "media_type": "application/xml",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:392cd0f1325796f7f76bb9932d3b7ca43eb0cec4f31566acedb921c77475ff38",
+              "raw_asset_id": "sha256:fc0bb236b51be8d3b9ef0331b009ec876fa1ae734ffc399f392cec3ed698ff9a",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/m-10k_20220129_htm.xml",
+              "accession": "0001564590-22-011726",
+              "document_name": "m-10k_20220129_htm.xml",
+              "source_role": "prior_annual_instance",
+              "request_attempt_id": "request:attempt:b9a7b02622d1c830d9dd6ea54d71e87b1721e0990dcfb57926f64bab04b72d41"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000156459022011726/m-10k_20220129_htm.xml",
+              "accession": "0001564590-22-011726",
+              "document_name": "m-10k_20220129_htm.xml",
+              "content_sha256": "fc0bb236b51be8d3b9ef0331b009ec876fa1ae734ffc399f392cec3ed698ff9a",
+              "request_body_sha256": "fc0bb236b51be8d3b9ef0331b009ec876fa1ae734ffc399f392cec3ed698ff9a",
+              "request_body_size": 6838943,
+              "request_headers_repo_relative_path": "evidence/request_attempts/fc/fc0bb236b51be8d3b9ef0331b009ec876fa1ae734ffc399f392cec3ed698ff9a/m-10k_20220129_htm.xml.baaa47cd5246d7ffbec7346b721bde269a03be2be4f748c580848f3e25ee1589.headers.json",
+              "request_headers_sha256": "baaa47cd5246d7ffbec7346b721bde269a03be2be4f748c580848f3e25ee1589",
+              "request_headers_size": 1967,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/fc/fc0bb236b51be8d3b9ef0331b009ec876fa1ae734ffc399f392cec3ed698ff9a/m-10k_20220129_htm.xml",
+              "request_attempt_id": "request:attempt:b9a7b02622d1c830d9dd6ea54d71e87b1721e0990dcfb57926f64bab04b72d41"
+            }
+          }
+        ],
+        "unresolved_dependency_urls": [],
+        "limitations": [],
+        "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+        "complete_known_source_graph": true,
+        "unique_known_get_count": 8,
+        "unknown_instance_frontier": [],
+        "fiscal_year_claimed_from_report_date": false,
+        "current_sec_freshness_proven": false,
+        "amendment_effect_on_metric_verified": false,
+        "metric_acceptance_proven": false,
+        "all_39_source_acceptance_proven": false,
+        "fetch_authorized": false,
+        "metric_executed": false,
+        "production_authorized": false,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "program_sha256": "ee7e05e20bbbcda7aea65107c4203558e1b5b2c092901989697d5fc5d2e75bd7",
+        "requirements_id": "sha256:88e5420fda3a0ca58ce54a29f5fb70f785c176cc698e8c1630420987419f8654"
+      },
+      "source_bytes_available": true
+    },
+    {
+      "fiscal_year": 2023,
+      "status": "FISCAL_YEAR_RESOLVED",
+      "limitations": [],
+      "report_end": "2024-02-03",
+      "reporting_cik": "794367",
+      "label": {
+        "report_end": "2024-02-03",
+        "reporting_cik": "794367",
+        "source_fiscal_year_resolved": true,
+        "filing": {
+          "form": "10-K",
+          "reportDate": "2024-02-03",
+          "filingDate": "2024-03-22",
+          "accessionNumber": "0001628280-24-012734",
+          "primaryDocument": "m-20240203.htm"
+        },
+        "fiscal_year": 2023,
+        "original_dei_fiscal_year": 2023,
+        "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+        "actual_period": {
+          "period_start": "2023-01-29",
+          "period_end": "2024-02-03"
+        },
+        "inspection_id": "sha256:e22e3403047505695056dae0738a6478e600d9a467c5b23aa99417e71a398fde",
+        "label_status": "SOURCE_LABELS_CONSISTENT",
+        "primary_proof": {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203.htm",
+          "accession": "0001628280-24-012734",
+          "document_name": "m-20240203.htm",
+          "content_sha256": "50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29",
+          "request_body_sha256": "50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29",
+          "request_body_size": 2198731,
+          "request_headers_repo_relative_path": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm.fe3f8ecfbff490d28f459e024632b850590f974bf0fe6764089a4de649d7bf7d.headers.json",
+          "request_headers_sha256": "fe3f8ecfbff490d28f459e024632b850590f974bf0fe6764089a4de649d7bf7d",
+          "request_headers_size": 1702,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm",
+          "request_attempt_id": "request:attempt:586d8620a6c79d906e9d99c59a9d3fb871491345a78263f11ba086730adfa2e6"
+        },
+        "companyfacts_proof": {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+          "accession": "",
+          "document_name": "CIK0000794367.json",
+          "content_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+          "request_body_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+          "request_body_size": 3756173,
+          "request_headers_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json.e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af.headers.json",
+          "request_headers_sha256": "e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+          "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+        }
+      },
+      "period_selection": {
+        "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+        "schema_version": 1,
+        "policy_id": "ordinary_period_selection_v1",
+        "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+        "company_id": "macys",
+        "reporting_cik": "794367",
+        "subject_policy": {
+          "mode": "CONTINUOUS_PRIMARY",
+          "selected_cik": "794367",
+          "cross_entity_combination_authorized": false
+        },
+        "target_report_end": "2024-02-03",
+        "requested_fiscal_year": 2023,
+        "current_filing": {
+          "form": "10-K",
+          "reportDate": "2024-02-03",
+          "filingDate": "2024-03-22",
+          "accessionNumber": "0001628280-24-012734",
+          "primaryDocument": "m-20240203.htm"
+        },
+        "current_amendments": [],
+        "prior_report_end": "2023-01-28",
+        "prior_filing": {
+          "form": "10-K",
+          "reportDate": "2023-01-28",
+          "filingDate": "2023-03-24",
+          "accessionNumber": "0001628280-23-009154",
+          "primaryDocument": "m-20230128.htm"
+        },
+        "prior_amendments": [],
+        "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+        "dependency_filing_roles": {
+          "target_primary": "0001628280-24-012734",
+          "target_amendment_primary": [],
+          "prior_annual_primary": "0001628280-23-009154",
+          "prior_amendment_primary": []
+        },
+        "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+        "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+        "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+        "source_set_identity": "sha256:e757b5f0fb1dd2dd099a3e04ab6e4ff864dbc69dec3063a7162838e9925e1fc9",
+        "loaded_inventories": [
+          "CIK0000794367.json"
+        ],
+        "latest_restated_values_used": false,
+        "caller_supplied_selection_trusted": false,
+        "production_authorized": false,
+        "selection_id": "sha256:1f901f4e8f6fbec48b28a952cea682bf48bb712a77bd56180f2d8ebfca578772"
+      },
+      "source_preflight": {
+        "record_type": "SELECTED_ANNUAL_SOURCE_REQUIREMENTS_V1",
+        "company_id": "macys",
+        "metric_ids": [
+          "B01",
+          "B02"
+        ],
+        "requested_report_end": "2024-02-03",
+        "filing_selection": {
+          "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+          "schema_version": 1,
+          "policy_id": "ordinary_period_selection_v1",
+          "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+          "company_id": "macys",
+          "reporting_cik": "794367",
+          "subject_policy": {
+            "mode": "CONTINUOUS_PRIMARY",
+            "selected_cik": "794367",
+            "cross_entity_combination_authorized": false
+          },
+          "target_report_end": "2024-02-03",
+          "requested_fiscal_year": null,
+          "current_filing": {
+            "form": "10-K",
+            "reportDate": "2024-02-03",
+            "filingDate": "2024-03-22",
+            "accessionNumber": "0001628280-24-012734",
+            "primaryDocument": "m-20240203.htm"
+          },
+          "current_amendments": [],
+          "prior_report_end": "2023-01-28",
+          "prior_filing": {
+            "form": "10-K",
+            "reportDate": "2023-01-28",
+            "filingDate": "2023-03-24",
+            "accessionNumber": "0001628280-23-009154",
+            "primaryDocument": "m-20230128.htm"
+          },
+          "prior_amendments": [],
+          "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+          "dependency_filing_roles": {
+            "target_primary": "0001628280-24-012734",
+            "target_amendment_primary": [],
+            "prior_annual_primary": "0001628280-23-009154",
+            "prior_amendment_primary": []
+          },
+          "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+          "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+          "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+          "source_set_identity": "sha256:e757b5f0fb1dd2dd099a3e04ab6e4ff864dbc69dec3063a7162838e9925e1fc9",
+          "loaded_inventories": [
+            "CIK0000794367.json"
+          ],
+          "latest_restated_values_used": false,
+          "caller_supplied_selection_trusted": false,
+          "production_authorized": false,
+          "selection_id": "sha256:97270253f9d1a4ed71afb8fcd771a0433a449879705f6da3aeacceb7e292fcf8"
+        },
+        "original_annual_period": {
+          "fiscal_year": 2023,
+          "period_start": "2023-01-29",
+          "period_end": "2024-02-03"
+        },
+        "annual_period_label_source": "RAW_ORIGINAL_DEI_CONTEXT",
+        "consumer_fiscal_year_resolution_performed": false,
+        "requirements": [
+          {
+            "source_url": "https://data.sec.gov/submissions/CIK0000794367.json",
+            "method": "GET",
+            "roles": [
+              "selected_submissions_inventory"
+            ],
+            "accession": "SUBMISSIONS-794367",
+            "media_type": "application/json",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:c99a8bb01a3d9fa94e53e7d55522ddccb8b96ea2115c922ae430e9858b8e242f",
+              "raw_asset_id": "sha256:75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+              "company_id": "macys",
+              "source_url": "https://data.sec.gov/submissions/CIK0000794367.json",
+              "accession": "SUBMISSIONS-794367",
+              "document_name": "CIK0000794367.json",
+              "source_role": "selected_submissions_inventory",
+              "request_attempt_id": "request:attempt:d3b5914e9e0a6f3568a2da42a67774d198faa3a0a04e220054489d3c045c9529"
+            },
+            "proof": {
+              "source_url": "https://data.sec.gov/submissions/CIK0000794367.json",
+              "accession": "SUBMISSIONS-794367",
+              "document_name": "CIK0000794367.json",
+              "content_sha256": "75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+              "request_body_sha256": "75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+              "request_body_size": 164040,
+              "request_headers_repo_relative_path": "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json.727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361.headers.json",
+              "request_headers_sha256": "727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361",
+              "request_headers_size": 736,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json",
+              "request_attempt_id": "request:attempt:d3b5914e9e0a6f3568a2da42a67774d198faa3a0a04e220054489d3c045c9529"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203.htm",
+            "method": "GET",
+            "roles": [
+              "target_annual_primary"
+            ],
+            "accession": "0001628280-24-012734",
+            "media_type": "text/html",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:939084fe14f45809b7d31cca765edac5cc33360fc78cf4bddea5963826f73c7a",
+              "raw_asset_id": "sha256:50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203.htm",
+              "accession": "0001628280-24-012734",
+              "document_name": "m-20240203.htm",
+              "source_role": "target_annual_primary",
+              "request_attempt_id": "request:attempt:586d8620a6c79d906e9d99c59a9d3fb871491345a78263f11ba086730adfa2e6"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203.htm",
+              "accession": "0001628280-24-012734",
+              "document_name": "m-20240203.htm",
+              "content_sha256": "50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29",
+              "request_body_sha256": "50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29",
+              "request_body_size": 2198731,
+              "request_headers_repo_relative_path": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm.fe3f8ecfbff490d28f459e024632b850590f974bf0fe6764089a4de649d7bf7d.headers.json",
+              "request_headers_sha256": "fe3f8ecfbff490d28f459e024632b850590f974bf0fe6764089a4de649d7bf7d",
+              "request_headers_size": 1702,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/50/50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29/m-20240203.htm",
+              "request_attempt_id": "request:attempt:586d8620a6c79d906e9d99c59a9d3fb871491345a78263f11ba086730adfa2e6"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/index.json",
+            "method": "GET",
+            "roles": [
+              "target_annual_accession_index"
+            ],
+            "accession": "0001628280-24-012734",
+            "media_type": "application/json",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:853811f6af2656739108fbda23e41d7ee01018ae569448ebb3ce4ad991b4e259",
+              "raw_asset_id": "sha256:35b07b546b9d3a30bead300999c34b7c06bfc8cb6c603d154890eff61f58f3e2",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/index.json",
+              "accession": "0001628280-24-012734",
+              "document_name": "index.json",
+              "source_role": "target_annual_accession_index",
+              "request_attempt_id": "request:attempt:a66c56bfd8a0ae1410ba6864e809805d67fb4e904136fd19f8a6e1b594e75226"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/index.json",
+              "accession": "0001628280-24-012734",
+              "document_name": "index.json",
+              "content_sha256": "35b07b546b9d3a30bead300999c34b7c06bfc8cb6c603d154890eff61f58f3e2",
+              "request_body_sha256": "35b07b546b9d3a30bead300999c34b7c06bfc8cb6c603d154890eff61f58f3e2",
+              "request_body_size": 11460,
+              "request_headers_repo_relative_path": "evidence/request_attempts/35/35b07b546b9d3a30bead300999c34b7c06bfc8cb6c603d154890eff61f58f3e2/index.json.0349dfd79226b31479298b187d63a1b246be981598ef04bfc4cedded3a13e282.headers.json",
+              "request_headers_sha256": "0349dfd79226b31479298b187d63a1b246be981598ef04bfc4cedded3a13e282",
+              "request_headers_size": 1248,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/35/35b07b546b9d3a30bead300999c34b7c06bfc8cb6c603d154890eff61f58f3e2/index.json",
+              "request_attempt_id": "request:attempt:a66c56bfd8a0ae1410ba6864e809805d67fb4e904136fd19f8a6e1b594e75226"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203_htm.xml",
+            "method": "GET",
+            "roles": [
+              "target_annual_instance"
+            ],
+            "accession": "0001628280-24-012734",
+            "media_type": "application/xml",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:aba0b92538287b1349700cd4a057667a0991dced5c6a59f6b8e88ec64c36b5ab",
+              "raw_asset_id": "sha256:e900694428a04f1bca1358d52be5e895ad153ac5741a9602634d4ceffafd08b8",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203_htm.xml",
+              "accession": "0001628280-24-012734",
+              "document_name": "m-20240203_htm.xml",
+              "source_role": "target_annual_instance",
+              "request_attempt_id": "request:attempt:43d149a70a1f0a7d72061081f96ef70425903d186bfcaed943d1b5b0560a8335"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828024012734/m-20240203_htm.xml",
+              "accession": "0001628280-24-012734",
+              "document_name": "m-20240203_htm.xml",
+              "content_sha256": "e900694428a04f1bca1358d52be5e895ad153ac5741a9602634d4ceffafd08b8",
+              "request_body_sha256": "e900694428a04f1bca1358d52be5e895ad153ac5741a9602634d4ceffafd08b8",
+              "request_body_size": 2026355,
+              "request_headers_repo_relative_path": "evidence/request_attempts/e9/e900694428a04f1bca1358d52be5e895ad153ac5741a9602634d4ceffafd08b8/m-20240203_htm.xml.400b66b7ee601f296e33738af100be5158728e58a42ccb7f40fda5aa5dd223c6.headers.json",
+              "request_headers_sha256": "400b66b7ee601f296e33738af100be5158728e58a42ccb7f40fda5aa5dd223c6",
+              "request_headers_size": 1703,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/e9/e900694428a04f1bca1358d52be5e895ad153ac5741a9602634d4ceffafd08b8/m-20240203_htm.xml",
+              "request_attempt_id": "request:attempt:43d149a70a1f0a7d72061081f96ef70425903d186bfcaed943d1b5b0560a8335"
+            }
+          },
+          {
+            "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+            "method": "GET",
+            "roles": [
+              "selected_companyfacts"
+            ],
+            "accession": "",
+            "media_type": "application/json",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:f8c993d8efd3c28338239037c9805eb5d8b9a3cc11884879ea2fe22dbc86f911",
+              "raw_asset_id": "sha256:fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+              "company_id": "macys",
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+              "accession": "SUBMISSIONS-794367",
+              "document_name": "CIK0000794367.json",
+              "source_role": "selected_companyfacts",
+              "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+            },
+            "proof": {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+              "accession": "",
+              "document_name": "CIK0000794367.json",
+              "content_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+              "request_body_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+              "request_body_size": 3756173,
+              "request_headers_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json.e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af.headers.json",
+              "request_headers_sha256": "e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af",
+              "request_headers_size": 707,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+              "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+            "method": "GET",
+            "roles": [
+              "prior_annual_primary"
+            ],
+            "accession": "0001628280-23-009154",
+            "media_type": "text/html",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:7a3f00eade097bf9eddaeeaf6972cd4eafd2215cd482b1c14ad169f9a13e2ba9",
+              "raw_asset_id": "sha256:876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+              "accession": "0001628280-23-009154",
+              "document_name": "m-20230128.htm",
+              "source_role": "prior_annual_primary",
+              "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128.htm",
+              "accession": "0001628280-23-009154",
+              "document_name": "m-20230128.htm",
+              "content_sha256": "876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+              "request_body_sha256": "876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf",
+              "request_body_size": 2355897,
+              "request_headers_repo_relative_path": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm.3fc68cb9854574692e0a6ce573afe1073c0a5962e2eb167becf75c44ce10a6c3.headers.json",
+              "request_headers_sha256": "3fc68cb9854574692e0a6ce573afe1073c0a5962e2eb167becf75c44ce10a6c3",
+              "request_headers_size": 1682,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/87/876fb0e901d0c518bce2581d9994fb739305ebfde4427a4f6dc950f3108ca8cf/m-20230128.htm",
+              "request_attempt_id": "request:attempt:537d5aff2c78f5843daaab268235df07bfd38a44feacbd58ac4af4e31af13691"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/index.json",
+            "method": "GET",
+            "roles": [
+              "prior_annual_accession_index"
+            ],
+            "accession": "0001628280-23-009154",
+            "media_type": "application/json",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:74e057a647045f1c94df45e122a73f38f7a8520aba16857c5ae36bbbec65f7f4",
+              "raw_asset_id": "sha256:2eb3cdf28c6a3cec3adcf11914132056fb6002e53f33f02f82f6199a3459f7b5",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/index.json",
+              "accession": "0001628280-23-009154",
+              "document_name": "index.json",
+              "source_role": "prior_annual_accession_index",
+              "request_attempt_id": "request:attempt:3bd3081889d94d7c7be5702989195a1e2181d31b1c7a5fd966f6415b3bafd8b5"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/index.json",
+              "accession": "0001628280-23-009154",
+              "document_name": "index.json",
+              "content_sha256": "2eb3cdf28c6a3cec3adcf11914132056fb6002e53f33f02f82f6199a3459f7b5",
+              "request_body_sha256": "2eb3cdf28c6a3cec3adcf11914132056fb6002e53f33f02f82f6199a3459f7b5",
+              "request_body_size": 11004,
+              "request_headers_repo_relative_path": "evidence/request_attempts/2e/2eb3cdf28c6a3cec3adcf11914132056fb6002e53f33f02f82f6199a3459f7b5/index.json.c8fb15e05698d79fb1445fabf4f5c67f4940cc75d31100a501ea84a76bb45157.headers.json",
+              "request_headers_sha256": "c8fb15e05698d79fb1445fabf4f5c67f4940cc75d31100a501ea84a76bb45157",
+              "request_headers_size": 1248,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/2e/2eb3cdf28c6a3cec3adcf11914132056fb6002e53f33f02f82f6199a3459f7b5/index.json",
+              "request_attempt_id": "request:attempt:3bd3081889d94d7c7be5702989195a1e2181d31b1c7a5fd966f6415b3bafd8b5"
+            }
+          },
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+            "method": "GET",
+            "roles": [
+              "prior_annual_instance"
+            ],
+            "accession": "0001628280-23-009154",
+            "media_type": "application/xml",
+            "refresh_for_new_discovery": false,
+            "saved_status": "VERIFIED_SAVED_SOURCE",
+            "source_acquisition_credit": false,
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:1348c65d280d8f91b6435987578c3a96594000a8c8bc4bdd91f89f4f58a0e9ec",
+              "raw_asset_id": "sha256:2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+              "accession": "0001628280-23-009154",
+              "document_name": "m-20230128_htm.xml",
+              "source_role": "prior_annual_instance",
+              "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+            },
+            "proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828023009154/m-20230128_htm.xml",
+              "accession": "0001628280-23-009154",
+              "document_name": "m-20230128_htm.xml",
+              "content_sha256": "2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+              "request_body_sha256": "2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345",
+              "request_body_size": 2148307,
+              "request_headers_repo_relative_path": "evidence/request_attempts/2c/2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345/m-20230128_htm.xml.e615986b7a736ce4ce38cca88269b61fef4288d14268f445eff2b63cf5eec4cb.headers.json",
+              "request_headers_sha256": "e615986b7a736ce4ce38cca88269b61fef4288d14268f445eff2b63cf5eec4cb",
+              "request_headers_size": 1723,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/2c/2c66961475be31235f4b3804ce946b97819905008476330d30d0e6b44f73c345/m-20230128_htm.xml",
+              "request_attempt_id": "request:attempt:7951ac5dfd6fbcd83b91e6ec3f57aef1c46d694e85ca1de15c617ff05023f15f"
+            }
+          }
+        ],
+        "unresolved_dependency_urls": [],
+        "limitations": [],
+        "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+        "complete_known_source_graph": true,
+        "unique_known_get_count": 8,
+        "unknown_instance_frontier": [],
+        "fiscal_year_claimed_from_report_date": false,
+        "current_sec_freshness_proven": false,
+        "amendment_effect_on_metric_verified": false,
+        "metric_acceptance_proven": false,
+        "all_39_source_acceptance_proven": false,
+        "fetch_authorized": false,
+        "metric_executed": false,
+        "production_authorized": false,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "program_sha256": "ee7e05e20bbbcda7aea65107c4203558e1b5b2c092901989697d5fc5d2e75bd7",
+        "requirements_id": "sha256:13378709d5c67e05e2c4e347d720287200d9312e97c80cffc096e54c427c717f"
+      },
+      "source_bytes_available": true
+    }
+  ],
+  "status": "FISCAL_RANGE_RESOLVED",
+  "all_source_bytes_available": true,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "fetch_authorized": false,
+  "metric_executed": false,
+  "metric_acceptance_proven": false,
+  "production_authorized": false,
+  "range_id": "sha256:8d61254c0ba9e1eaf4188ac504ca89ec67c192fca6706a63a1ce94f017ec509d",
+  "observed_seconds": 8.416612374829128
+}
