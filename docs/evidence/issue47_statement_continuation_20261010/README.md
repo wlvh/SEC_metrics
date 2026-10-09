@@ -47,3 +47,5 @@ SouthwestFY25阻塞已定位为消费者未接已成立公共证明：修订只�
 该修补尚在本短分支，不在main。它将一个具体“来源齐但消费者不支持”缺口变为同公司CLI可用；不证明所有修订、PartIII、PfizerB02冲突或完整1950已解决。本记录以前SouthwestFY25未完段保原时间边界，现本段为后继终态。
 
 公共方提供f79固定tree最小workflow patch已接：只加statement测试路径和原Historical步骤的四个新修订方法，原金融三模块/dispatch/state保持；同实际步骤63例.176s零skip，新四方法实际加载。statement-workflow.json/log。真实FY25公司结果不重跑，新head远端执行另核，不造新runner或无意义触发提交。
+
+后继原件范围核对纠正一个业务判断：PfizerFY2023 B01新结果与原reference同50,914m，仅证明选定事实的数值一致；原table113明确它是Product revenues，另有Alliance7,582m，Total58,496m，因此该位置不再列作完整营业收入正确值。原比较JSON/Result保留，新精确缺陷及原表/native ordinal/重列说明在[后继固定证据](https://github.com/wlvh/SEC_metrics/blob/0dc5de75/docs/evidence/issue47_growth_reference_20261010/README.md)。使用现有optional defect列表独立read已将该一Result扣留，默认公共缺陷登记/收入scope修补待#28，不改共享内核或扩大PR116。Southwest有限链接修订证明及实测不受该发现影响；旧MATCH不能替代业务范围核对。
