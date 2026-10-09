@@ -10,7 +10,7 @@ from pathlib import Path
 from .canonical import content_hash, sha256_bytes, strict_json_file, strict_json_loads
 from .composite_scope import index_source_structure
 from .historical_event_attachments import attachment_dependencies, POLICY_PATH
-from .historical_ma_confirmation import QUOTE_CHARACTERS
+from .historical_ma_confirmation import QUOTE_CHARACTERS, confirmed_count
 from .normal_governance_input import _Sources
 from .normal_source_authority import ROOT
 from .ordinary_source_authority import verify_ordinary_source_proofs
@@ -134,3 +134,23 @@ def validate_incorporated_answer(*, request, raw_output):
         decisions[item] = dict(row)
     _need(set(decisions) == set(supplied), 'UNANSWERED_ITEMS')
     return decisions
+
+
+def summarize_incorporated_answer(*, request, raw_output):
+    """Reuse the existing complete-window rule, without creating a Result.
+
+    One unresolved supplied-source decision withholds the whole count. This
+    only summarizes a mechanically checked answer; semantic support remains
+    a separate source/definition judgement.
+    """
+    decisions = validate_incorporated_answer(request=request, raw_output=raw_output)
+    compatible = {identity: {**row, 'decision':
+        'CANNOT_TELL_FROM_THE_ITEM_TEXT' if row['decision'] == 'CANNOT_TELL_FROM_SUPPLIED_TEXT'
+        else row['decision']} for identity, row in decisions.items()}
+    value, reason, item_ids = confirmed_count(request=request, decisions=compatible)
+    return {'request_id': request['request_id'], 'decisions': decisions,
+            'proposed_count': value,
+            'reason': 'E01_SUPPLIED_SOURCES_UNCONFIRMED' if reason else None,
+            'unresolved_item_ids': item_ids if reason else [],
+            'confirmed_item_ids': [] if reason else item_ids,
+            'semantic_acceptance_proven': False, 'metric_result_created': False}

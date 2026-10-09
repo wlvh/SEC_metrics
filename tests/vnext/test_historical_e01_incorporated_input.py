@@ -111,3 +111,30 @@ class IncorporatedE01InputTest(TestCase):
         legacy, result = self.prepare()
         with self.assertRaisesRegex(original.ConfirmationContractError, 'DECISION_SHAPE'):
             original.validate_answer(request=legacy, raw_output=json.dumps(self.answer(result)))
+
+    def test_one_unresolved_item_withholds_the_complete_window_count(self):
+        _, result = self.prepare(); answer = self.answer(result)
+        answer['item_decisions'][0]['decision'] = 'REPORTS_A_TRANSACTION'
+        answer['item_decisions'][1]['decision'] = 'CANNOT_TELL_FROM_SUPPLIED_TEXT'
+        summary = successor.summarize_incorporated_answer(request=result,
+            raw_output=json.dumps(answer))
+        self.assertIsNone(summary['proposed_count'])
+        self.assertEqual('E01_SUPPLIED_SOURCES_UNCONFIRMED', summary['reason'])
+        self.assertEqual([result['items'][1]['item_id']], summary['unresolved_item_ids'])
+        self.assertFalse(summary['semantic_acceptance_proven'])
+        self.assertFalse(summary['metric_result_created'])
+
+    def test_complete_checked_answer_counts_once_without_semantic_credit(self):
+        _, result = self.prepare(); answer = self.answer(result)
+        answer['item_decisions'][0]['decision'] = 'REPORTS_A_TRANSACTION'
+        summary = successor.summarize_incorporated_answer(request=result,
+            raw_output=json.dumps(answer))
+        self.assertEqual(1, summary['proposed_count'])
+        self.assertEqual([result['items'][0]['item_id']], summary['confirmed_item_ids'])
+        self.assertEqual([], summary['unresolved_item_ids'])
+        self.assertIsNone(summary['reason'])
+        self.assertFalse(summary['semantic_acceptance_proven'])
+        answer['item_decisions'].pop()
+        with self.assertRaisesRegex(ValueError, 'UNANSWERED_ITEMS'):
+            successor.summarize_incorporated_answer(request=result,
+                raw_output=json.dumps(answer))

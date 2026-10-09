@@ -51,3 +51,5 @@ prepared = prepare_incorporated_e01_input(
 ```
 
 原归档成员和新保存文件 SHA/字节数见 `e01-incorporated-real-input.json`。当前交付是可复用的真实完整输入及纯后处理接口，历史公司 E01 默认执行仍为 V1；新目标模型执行为 0，年度结果未创建，没有为旧未决 item 补信用。后续仍需把显式后继规则接到同一公司模型消费者，并在有效用途/调用条件下核对完整年度内容。本次不默认申请或执行下一轮。
+
+后继纯汇总summarize_incorporated_answer先执行新来源引用检查，再将“供应材料不能判断”显式适配到既有confirmed_count的全窗口规则。只要一个未决，proposed_count=None并列准确item，不能报告部分计数；全部回答完整且机械通过才给开发提议数，semantic_acceptance_proven/metric_result_created仍false。两项新增控制覆盖已确认+未决、完整计数和缺答拒绝；与原回归共31项0.013s零skip（e01-incorporated-summary-tests.log）。完整保存请求字节/计量不变、无新模型或年度结果，不把此汇总接到旧V1/旧Run补信用。
