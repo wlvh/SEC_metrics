@@ -497,3 +497,8 @@ The consumed B02 paired_measure_v1.py guard was absent from the actual processin
 Actual merge-tree61→5f had two conflicts: TESTING.md and run_foundation_ci.py. The candidate now explicitly receives fixedPR61 rather than assuming textual mergeability. The runner retains exact5f active/material/retired accounting and stdout capture; TESTING retains current company semantics plus the shared preparation entry. All tracked production/config/catalog/requirements/tools/tests/workflow bytes remain exactly5f. PR61's six historical test-evidence files are received under their original path; no metric family, permission or business result is added. Only short partition/controller tests need local revalidation; unchanged real-source evidence is reused, not rerun.
 
 Exact5496164a post-receiving CI now hasall9checks SUCCESS:271fast108.212s/command109.905s,147directed172.426s,materialcommand366.867s. This is the actual newhead observation, not copied5f results or a speedup ratio. Source/program behavior remains5f; receive61 then this candidate is now conflict-free.
+
+
+## 2026-10-09 首批审查：三入口与默认新任务回修
+
+三入口/材料/正式CLI/成对检查集中见 [default-online-review-20261009](default-online-review-20261009/README.md)。main8588同HTTP空目录166.358s完整完成，旧29c9候选1.837s在安装旧绑定处失败，源码最小兼容回修后165.199s同B01/B02数值/单位/期间/状态完整一致。当前保存来源入口及旧任务读取责任复用，不以PR83解除首批回归。已存在任务不替换原程序；新native默认自动使用main8588的保留固定程序安装，当前记录生产者不变，不扩大费用/业务范围。28相关测试7.371s通过；原失败保留、真实新增0。回修限定复核/新headCI仍需实际终态。旧“默认在线未迁移”段落说明修前状态，不能用旧绿灯覆盖本回修。

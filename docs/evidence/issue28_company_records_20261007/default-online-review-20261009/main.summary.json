@@ -1,0 +1,180 @@
+{
+  "elapsed_seconds": "165.735934",
+  "record_type": "LOCAL_COMPANY_RUN_SUMMARY_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261009T035631Z-79e60a24",
+  "period_request": "latest-complete-fy",
+  "selected_metrics": [
+    "B01",
+    "B02"
+  ],
+  "configured_metrics": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08",
+    "B09",
+    "B10",
+    "B11",
+    "B12",
+    "B13",
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+  ],
+  "configured_metric_count": 39,
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/first-pr-review-20261009/main-output/20261009T035631Z-79e60a24",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "processing": {
+    "saved_d04_configured": false,
+    "new_provider_paid_calls_authorized": false,
+    "new_local_model_entry": null,
+    "pending_owner_interfaces": {
+      "B13": 28,
+      "D03": 28
+    }
+  },
+  "program_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/first-pr-review-20261009/main-fresh/programs/7dfcd3c748e229e44686b13073a4e815fea85c2e832cab67491a0f125b917280",
+  "preparation_program_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/first-pr-review-20261009/main-fresh/programs/7dfcd3c748e229e44686b13073a4e815fea85c2e832cab67491a0f125b917280",
+  "source_status": "SOURCES_READY",
+  "source_execution_mode": "RECORDED_TEST_ONLY",
+  "reused_source_urls": [],
+  "unresolved_source_dependencies": [],
+  "source_discovery": {
+    "company_id": "marriott_international",
+    "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+    "limitations": [],
+    "requirement_count": 29
+  },
+  "actual_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "filing": {
+    "accessionNumber": "0001048286-26-000007",
+    "filingDate": "2026-02-10",
+    "reportDate": "2025-12-31",
+    "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+    "act": "34",
+    "form": "10-K",
+    "fileNumber": "001-13881",
+    "filmNumber": "26614897",
+    "items": "",
+    "core_type": "XBRL",
+    "size": 12393244,
+    "isXBRL": 1,
+    "isInlineXBRL": 1,
+    "isXBRLNumeric": null,
+    "primaryDocument": "mar-20251231.htm",
+    "primaryDocDescription": "10-K"
+  },
+  "native_result_export": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/first-pr-review-20261009/main-fresh/result-exports/20261009T035631Z-79e60a24",
+  "source_checkpoint_id": "sha256:836ef421210d9931dadf6ac3b1c33c522292893ee2ba460f71b4aa30ba42de97",
+  "result_view": [
+    {
+      "metric_id": "B01",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "run_id": "run:ordinary-integrated:4078769ad9e9229493bf394aab8f77a3646238d6b5670ad2aed1872e8552115e",
+      "period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "period_role": "RUN_ARCHIVE_COORDINATE",
+      "measurement_period": {
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "requirement_id": "issue_54_v4",
+      "requirement_closure_hash": "sha256:39e2f84938120cd4f04e88746cd36e67d875ec260196d81195cbfb78af087b35",
+      "source_checkpoint_id": "sha256:836ef421210d9931dadf6ac3b1c33c522292893ee2ba460f71b4aa30ba42de97",
+      "current_input_matches": true,
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED",
+      "replay_status": "PASSED"
+    },
+    {
+      "metric_id": "B02",
+      "result_id": "sha256:a5a0c576eb38fbb732149add020cc585fe16c20e3cc98339d13bedd12d1d26be",
+      "run_id": "run:ordinary-integrated:6578c6239ebbec2ce6a12cc50411bd345402acbc9099adb9355f98e8787b6320",
+      "period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "period_role": "RUN_ARCHIVE_COORDINATE",
+      "measurement_period": {
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "requirement_id": "issue_54_v4",
+      "requirement_closure_hash": "sha256:39e2f84938120cd4f04e88746cd36e67d875ec260196d81195cbfb78af087b35",
+      "source_checkpoint_id": "sha256:836ef421210d9931dadf6ac3b1c33c522292893ee2ba460f71b4aa30ba42de97",
+      "current_input_matches": true,
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED",
+      "replay_status": "PASSED"
+    }
+  ],
+  "flow_completed": true,
+  "status": "FLOW_COMPLETED",
+  "all_configured_business_metrics_completed": false,
+  "stage_statuses": {
+    "acquire": {
+      "returncode": 0,
+      "elapsed_seconds": "116.331014",
+      "status": "SOURCES_READY"
+    },
+    "handoff": {
+      "returncode": 0,
+      "elapsed_seconds": "4.381748",
+      "status": null
+    },
+    "install": {
+      "returncode": 0,
+      "elapsed_seconds": "0.709931",
+      "status": "INSTALLED"
+    },
+    "compute": {
+      "returncode": 0,
+      "elapsed_seconds": "31.357332",
+      "status": null
+    },
+    "export-results": {
+      "returncode": 0,
+      "elapsed_seconds": "10.501183",
+      "status": "EXPORTED"
+    }
+  }
+}
