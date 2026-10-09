@@ -1,0 +1,57 @@
+{
+  "head": "d91489e39240a81d2a11527c2c293a0b307e6f68",
+  "baseline": "f1c0088d3a2069ea3ef98272f22349f738e88ef0",
+  "start_utc": "2026-10-09 03:43:15 UTC",
+  "end_utc": "2026-10-09 03:50:13 UTC",
+  "tool_calls": 30,
+  "functions_exec_calls": 10,
+  "nested_tool_calls": 20,
+  "ordinary_messages_including_final": 3,
+  "questions": 0,
+  "head_blob_verification": [
+    {
+      "path": "scripts/vnext/company_online.py",
+      "head_blob_equal": true,
+      "sha256": "7ee9a146be88d246ae3c74674c98e58cd1cad2fce526af2c2368e1a7bd879903"
+    },
+    {
+      "path": "scripts/vnext/recorded_sec_http.py",
+      "head_blob_equal": true,
+      "sha256": "a9db6ec1478581992410617c64a6de14039df1c9788af7bcf719302eeb6d780b"
+    },
+    {
+      "path": "tests/vnext/test_company_online.py",
+      "head_blob_equal": true,
+      "sha256": "fcca6f2ab4601a545eb9b7b6f3706f05fb5c61b2720bbbb3ca1c7e4c2d5ae985"
+    },
+    {
+      "path": "tools/vnext_company.py",
+      "head_blob_equal": true,
+      "sha256": "6fa4b005067847a6f1e1d1247049ae9cafd56530b65f65d9530038628a69c167"
+    },
+    {
+      "path": "docs/evidence/issue28_company_online_20261009/independent-review/conclusion.md",
+      "head_blob_equal": true,
+      "sha256": "b07b0b8dbf7d402b18a39a7d5e6ee2e0c4d0c73b830ee0c08ff13d9ef270da3a"
+    },
+    {
+      "path": "docs/evidence/issue28_company_online_20261009/independent-p2/conclusion.md",
+      "head_blob_equal": true,
+      "sha256": "c81129556d56b00dc7b9917bad21d6064138f9af311ed19e6a8b0059f2fefd9f"
+    },
+    {
+      "path": "docs/evidence/issue28_company_online_20261009/existing-store-cli.log",
+      "head_blob_equal": true,
+      "sha256": "bc06bea2c92f2ca822d78b72598b2780be130dc4f2949b20e0a5c1179e4d7a71"
+    },
+    {
+      "path": "docs/evidence/issue28_company_online_20261009/recorded-offline-chain.log",
+      "head_blob_equal": true,
+      "sha256": "36e390b5b6da59a724a3757b114aa0702e14231ed8fc5292473175787060814a"
+    }
+  ],
+  "tracked_worktree_clean": true,
+  "index_clean": true,
+  "git_status": "?? docs/evidence/issue28_company_online_20261009/independent-store/\n",
+  "conclusion_written_and_read_back": true
+}

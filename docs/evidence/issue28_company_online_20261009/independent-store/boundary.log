@@ -1,0 +1,23 @@
+{"case": "UNMOCKED_RECORDED_REPLY_AND_STORE_REUSE", "counts": [0, 0, 1], "same_request_attempt_id": true, "source_and_ledger_bytes_unchanged": true, "actual_sec_egress": 0}
+{"case": "NEW_SOURCE_DIRECTORY_REJECTS_DUPLICATE_BEFORE_CLAIM", "reason": "COMPANY_ONLINE_ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED:https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/issuer.htm", "counts": [0, 0, 1]}
+{"case": "METADATA_REFRESH_APPENDS_WITHOUT_RESET", "counts": [0, 0, 3], "original_rows_and_ids_preserved": true, "original_intent_preserved": true}
+{"case": "CONFIGURED_SOURCE_ROOT_REUSED_FROM_NEW_TASK", "status": "SOURCES_READY", "simulated_sec_claims": 0, "source_identity_persisted": true, "original_rows_unchanged": true}
+{"case": "PERSISTED_TASK_SOURCE_CANNOT_CHANGE", "reason": "COMPANY_ONLINE_TASK_IDENTITY_CHANGED", "new_source_not_created": true}
+{"case": "SOURCE_ROOT_OVERLAP_REJECTED", "variant": "code_equal", "reason": "COMPANY_ONLINE_SOURCE_ROOT_OVERLAP", "claims_unchanged": true}
+{"case": "SOURCE_ROOT_OVERLAP_REJECTED", "variant": "code_child", "reason": "COMPANY_ONLINE_SOURCE_ROOT_OVERLAP", "claims_unchanged": true}
+{"case": "SOURCE_ROOT_OVERLAP_REJECTED", "variant": "code_ancestor", "reason": "COMPANY_ONLINE_SOURCE_ROOT_OVERLAP", "claims_unchanged": true}
+{"case": "SOURCE_ROOT_OVERLAP_REJECTED", "variant": "output_equal", "reason": "COMPANY_ONLINE_SOURCE_ROOT_OVERLAP", "claims_unchanged": true}
+{"case": "SOURCE_ROOT_OVERLAP_REJECTED", "variant": "output_child", "reason": "COMPANY_ONLINE_SOURCE_ROOT_OVERLAP", "claims_unchanged": true}
+{"case": "SOURCE_ROOT_OVERLAP_REJECTED", "variant": "output_ancestor", "reason": "COMPANY_ONLINE_SOURCE_ROOT_OVERLAP", "claims_unchanged": true}
+{"case": "SOURCE_ROOT_OVERLAP_REJECTED", "variant": "state_equal", "reason": "COMPANY_ONLINE_SOURCE_STATE_OVERLAP", "claims_unchanged": true}
+{"case": "SOURCE_ROOT_OVERLAP_REJECTED", "variant": "state_child", "reason": "COMPANY_ONLINE_SOURCE_STATE_OVERLAP", "claims_unchanged": true}
+{"case": "LIVE_FIELD_REJECTED_WITHOUT_LIVE_LEDGER", "reason": "COMPANY_ONLINE_RECORDED_INPUT_CANNOT_ENTER_LIVE", "client_constructed": false, "live_ledger_accessed": false}
+{"case": "REPLY_ERROR_NOT_SUCCESS_NO_FALLBACK", "variant": "reply_missing", "status": "SOURCES_PARTIAL", "pending": 1, "simulated_sec_claims": 1, "counts": [0, 0, 1], "reason": "RECORDED_HTTP_REPLY_MISSING:https://data.sec.gov/submissions/CIK0001048286.json"}
+{"case": "REPLY_ERROR_NOT_SUCCESS_NO_FALLBACK", "variant": "reply_bytes_changed", "status": "SOURCES_PARTIAL", "pending": 1, "simulated_sec_claims": 1, "counts": [0, 0, 1], "reason": "RECORDED_HTTP_SOURCE_BYTES_CHANGED"}
+SEC retry exhausted for https://data.sec.gov/submissions/CIK0001048286.json; status=503; error=
+{"case": "LATEST_FAILED_REPLY_NOT_OLD_SUCCESS", "variant": "latest_http503", "status": "SOURCES_PARTIAL", "terminal": "FAILED_TERMINAL", "row_status": "503", "stop": "", "simulated_sec_claims": 1, "counts": [0, 0, 1]}
+{"case": "LATEST_FAILED_REPLY_NOT_OLD_SUCCESS", "variant": "http200_with_error", "status": "SOURCES_PARTIAL", "terminal": "FAILED_TERMINAL", "row_status": "200", "stop": "", "simulated_sec_claims": 1, "counts": [0, 0, 1]}
+{"case": "LATEST_FAILED_REPLY_NOT_OLD_SUCCESS", "variant": "reply_file_missing", "status": "SOURCES_PARTIAL", "terminal": "FAILED_TERMINAL", "row_status": "0", "stop": "UNKNOWN_REMOTE_OUTCOME", "simulated_sec_claims": 1, "counts": [0, 0, 1]}
+{"case": "CLI_HELP_SCOPE", "online_metric_scope": "B01/B02", "exit": 0}
+{"case": "NETWORK_GUARDS", "urlopen_calls": 0, "socket_connect_calls": 0, "dns_calls": 0, "passed": true}
+PASS_LIMITED_STORE_AND_RECORDED_BOUNDARIES

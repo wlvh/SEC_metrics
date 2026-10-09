@@ -27,3 +27,5 @@ f1限定P2增量独审APPROVE_WITHIN_P2_INCREMENT：8短例+10边界，见indepe
 继续定位到一个实际模式边界缺口：早期recorded上下文依赖测试进程替换urlopen，普通CLI未注入回复时仍可能触达真实HTTP并按模拟计数。这不能交付。现明确RecordedSecHttpClient只读取recorded_http_root的原HTTP回复，复用原客户端持久化/日志，完全不打开网络；缺回复不回退HTTPS，LIVE拒绝录制输入字段。10短例通过；原SecHttpClient/CallLedger/默认原生调用未改。新增模式边界和源库复用待限定增量复核，旧两P2结案不扩大。这不是恢复信任/防伪框架，而是防止普通调用模式错误产生未计数网络。
 
 4e09590录制客户端接缝重验仍完整PASS，见recorded-offline-chain.log。这是受影响HTTP模式的必要重验，不重跑未变D04/历史公司/还原包。原独立31/33测试与旧接缝证据保留其范围。
+
+新增d91489e源库/录制模式增量限定独审通过：10例2.060s、20小边界，无网实际reply读取/原生写入/日志，缺件或字节变化不回退；未改旧两P2结论。报告见independent-store/conclusion.md。后继仅归档报告和订正docstring网络边界名称，不声称整个PR、业务/合并/生产批准。首批67默认入口回修不依赖本PR，本候选仍独立后续。

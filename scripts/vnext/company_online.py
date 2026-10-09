@@ -2,7 +2,7 @@
 
 No runtime installation, source trust registry, old calculation or AI transport.
 The call context identifies an existing ledger and already applicable purpose;
-it never creates a real allowance. Tests replace only sec_http.urlopen.
+it never creates a real allowance. Recorded replies replace only the external HTTP boundary; no live fallback.
 """
 from pathlib import Path
 from contextlib import redirect_stdout
