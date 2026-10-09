@@ -76,3 +76,22 @@ parent-binding-preserved.json proves both old modules still match the exact
 old V14 entries. Scope-specific CI installs the existing pinned tokenizer and
 runs both modules; no new platform, real request or retired-proof requirement.
 This is parent work, not part of the child's51tools/3messages result.
+
+Parent joint verification: ab90043d request helpers plus exact abb7abdd reporter
+code/test overlay,51 tests/28.881s/zero skips. The temporary own-worktree overlay
+was byte-checked and restored; its tree description and log are retained. This
+was a two-product working tree, not a claim that one commit contained both.
+Reporter is not a dependency of this offline helper PR. Its own tested
+interface and old nullable-trace correction remain separate.
+
+Use the explicit offline entry after reception:
+
+    from vnext.development_request_context import prepare_development_request
+    from vnext.request_limits import RequestLimits
+    body, count = prepare_development_request(request_dict, limits=RequestLimits(output_tokens=8192))
+
+Old continuous_request_context/continuous_semantic_calls imports keep their
+original default APIs. RequestLimits plus preview does not return a live
+SemanticRequest, approve a use, allocate a slot, or send any packet. PR66's
+old candidate/CI history stays; this successor receives its pure functions
+without taking its old-file binding mismatch into main.
