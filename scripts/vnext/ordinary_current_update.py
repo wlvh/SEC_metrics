@@ -30,6 +30,10 @@ def _write(path, value):
 def _configuration(source, company, metric):
     policy = strict_json_file(path=ROOT/'config/issue28_normal_results_v2.json')
     paths = set(policy['rule_paths']) | set(policy['presentation_paths'])
+    # Ordinary records verify saved inputs directly, without registering a
+    # legacy RecordedSourceSession. Consumers that actually use that session
+    # may still name it explicitly in run_once(processing_files=...).
+    paths.discard('scripts/vnext/ordinary_source_session.py')
     # These files belong solely to the lodging producer. The zero-AI Spec
     # set never prepares a lodging case; unrelated edits must not recalculate
     # B01/B02 or their other supported deterministic neighbours.

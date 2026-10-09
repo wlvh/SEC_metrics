@@ -158,6 +158,18 @@ class CompletedWithheldUpdateTest(unittest.TestCase):
 
 
 class CurrentProcessingConfigurationTest(unittest.TestCase):
+    def test_unused_recorded_source_session_does_not_change_current_configuration(self):
+        original = update.sha256_file
+        for metric in ('B01', 'C01', 'B12', 'B10'):
+            with self.subTest(metric=metric):
+                before = update._configuration(ROOT, 'marriott_international', metric)
+                with patch.object(update, 'sha256_file', side_effect=lambda *, path:
+                        'changed-unused-recorded-session' if path == ROOT/'scripts/vnext/ordinary_source_session.py'
+                        else original(path=path)):
+                    after = update._configuration(ROOT, 'marriott_international', metric)
+                self.assertEqual(before, after)
+                self.assertNotIn('scripts/vnext/ordinary_source_session.py', after['processing_files'])
+
     def test_changed_annual_selection_and_saved_input_checks_are_not_cached(self):
         original=update.sha256_file
         before=update._configuration(ROOT,'marriott_international','B01')
@@ -370,6 +382,20 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
             return 'changed-producer-dependency' if path.name=='normal_run_inputs.py' else original(path=path)
         with patch.object(update,'sha256_file',side_effect=changed):new=self.selected(2024,processing_files=paths)
         self.assertEqual(new['status'],'CANDIDATE_READY');self.assertNotEqual(new['version'],first['version'])
+
+    def test_explicit_recorded_session_dependency_still_reprocesses(self):
+        paths = ['scripts/vnext/ordinary_source_session.py']
+        first = self.selected(2024, processing_files=paths)
+        original = update.sha256_file
+        with patch.object(update, 'sha256_file', side_effect=lambda *, path:
+                'changed-explicit-session' if path == ROOT/paths[0] else original(path=path)):
+            changed = self.selected(2024, processing_files=paths)
+            calls = self.factory_calls
+            repeated = self.selected(2024, processing_files=paths)
+        self.assertEqual(changed['status'], 'CANDIDATE_READY')
+        self.assertNotEqual(first['version'], changed['version'])
+        self.assertEqual(repeated['status'], 'NO_SOURCE_CONTENT_CHANGE')
+        self.assertEqual(self.factory_calls, calls)
 
     def test_processing_dependency_path_error_preserves_previous_result(self):
         self.selected(2024);pointer=self.root/'periods/FY2024/current-result.json';old=pointer.read_bytes()
