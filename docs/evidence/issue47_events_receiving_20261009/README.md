@@ -19,3 +19,11 @@
 JPM FY2023真实分片与E05零计数初次save发现本方聚合records把SOURCE_REFERENCE也按raw_asset_id建key，覆盖RAW_BLOB；原缺绑定失败保留。改为按实际record_type分别索引，冲突只在完全同blob且storage_uri不同情况下保一个locator，其他字段差异拒绝，全部来源引用/proofs保留。新增小控制进入实际consumer，源和引用均保留。实际JPM E05=0/2023全年经过完整来源读取、同一writer保存和read47.869s；没有重读C02原件、原35模型批次或其他年度。宽窗Paramount保存仍被公共投影守卫拒绝，未改annual或把失败变成功。
 
 当前main消费者的同公司CLI真实Marriott FY2025五指标首34.716s、禁原factory复7.340s、独立读0.566s，40文件保持，五值3/0/3/0/0；不是借原091结果给新API盖章。完整宽窗case复现脚本reproduce_wide_event_save.py保存完整输入对象再调用同writer，使用已有恢复source-inputs和新外部目录，禁止网络。原实际失败摘要/栈保留；不要求重新读取未变C02或重跑整个事件集合。
+
+## Marriott五年普通事件消费者
+
+FY2021–FY2025共25位置已通过同公司CLI计算/读取/导出，既有独立阅读的申报日和报告日两基准、值/单位/实际期间逐项零差异。FY2025五项首34.716s/复7.340s/读0.566s；其余四年驱动初次错误引用尚未生成的summary路径（未计算）后修正，又因错误的120秒整批超时终止。两个开发失败保持，不当Source失败或通过。
+
+核实际进程已终、19坐标已保存且E05/FY2023仅intent无terminal。没有从头重跑：公共恢复标INTERRUPTED，只补E05/FY2023 9.159s和FY2024五项35.585s；原result文件保持。完整五年再入38.179s原factory禁止、计算0，独立读0.860s，同期保护文件数以marriott-fiveyear.json为准。E01/继任宽窗未因此通过，未消耗模型/SEC预算或重读原C02材料。
+
+公共接口已经从其实际inventory计算并传相同last_day，因此历史回调直接使用现有完整body coherence检查，删除冗余第二次metadata读取与外部证明map，不新增缓存或walk。34联合小例0.281s过；这一接缝减法后的处理文件变化会使以后正常更新按版本重新处理，不把减法前25保存版本冒称已使用新配置。完整旧记录仍按原身份可读。

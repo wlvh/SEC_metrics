@@ -47,8 +47,6 @@ class HistoricalEventCaseTest(TestCase):
                             ('prepare_historical_annual_input', PREPARED),
                             ('_Sources', reader), ('verify_ordinary_source_proofs', {})]:
             stack.enter_context(patch.object(cases, name, return_value=value))
-        stack.enter_context(patch.object(cases, '_history_check_strategy',
-            return_value=(lambda **kwargs: None, {}, [])))
         stack.enter_context(patch.object(cases, 'read_selected_event_sources', side_effect=error))
         return cases.prepare_historical_event_year_case(repo_root=Path('/constructed'),
             company_id='marriott_international', metric_id='E02', fiscal_year=2024)
@@ -92,17 +90,14 @@ class HistoricalEventHistoryStrategyTest(TestCase):
         shard = {'name': 'CIK0001048286-submissions-001.json',
             'filingFrom': '2020-01-01', 'filingTo': '2020-12-30', 'filingCount': 2}
         payload = {'filings': {'recent': {'filingDate': ['2021-01-01']}, 'files': [shard]}}
-        reader = SimpleNamespace(proofs={'selected': {'proof': {'source_url': 'constructed'}}},
-            read=lambda *args, **kwargs: {'raw_bytes': json.dumps(payload).encode()})
-        with patch.object(cases, '_Sources', return_value=reader),              patch.object(cases, '_history_index', return_value=[shard]):
-            check, last, proofs = cases._history_check_strategy(Path('/constructed'), PREPARED, False)
+        last = cases.block_last_days(payload=payload, shards=[shard])
+        check = cases.check_historical_event_block
         self.assertEqual('2020-12-31', last[shard['name']])
         body = {'filingDate': ['2020-06-01', '2020-12-31']}
         self.assertIsNone(check(shard=shard, body=body, rows=[], shards=[shard], period=PERIOD, last_day='2020-12-31'))
         bad = check(shard=shard, body={'filingDate': ['2020-06-01']}, rows=[], shards=[shard], period=PERIOD, last_day='2020-12-31')
         self.assertIn('FILING_COUNT_DIFFERS_FROM_DECLARED', bad['failed_checks'])
         # Counts include forms that the downstream event list does not retain.
-        self.assertEqual([{'source_url': 'constructed'}], proofs)
 
 
 class HistoricalEventRecordRetentionTest(TestCase):
@@ -120,7 +115,6 @@ class HistoricalEventRecordRetentionTest(TestCase):
             for name, value in [('resolve_period_selection', {}),
                                 ('prepare_historical_annual_input', PREPARED),
                                 ('_Sources', reader), ('_event_amendment_checks', []),
-                                ('_history_check_strategy', (lambda **kwargs: None, {}, [])),
                                 ('read_selected_event_sources', packet),
                                 ('verify_ordinary_source_proofs', {})]:
                 stack.enter_context(patch.object(cases, name, return_value=value))

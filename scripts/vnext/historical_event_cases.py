@@ -59,25 +59,16 @@ def selected_event_window(prepared, *, rules_root=ROOT):
         continuity_status='successor_predecessor', catalog=catalog), True
 
 
-def _history_check_strategy(source, prepared, registered_union):
-    ciks = (repository_company_ciks(repo_root=ROOT, company_id=prepared['company_id'])
-            if registered_union else [prepared['entity']])
-    last_days, proofs, all_shards = {}, [], {}
-    for cik in ciks:
-        reader = _Sources(source, prepared['company_id'], cik)
-        item = reader.read(submissions_url(cik=int(cik)),
-            role='sec_submissions_inventory', media_type='application/json')
-        payload = strict_json_loads(text=item['raw_bytes'].decode('utf-8'))
-        shards = _history_index(payload, cik)
-        all_shards.update({s['name']: shards for s in shards})
-        last_days.update(block_last_days(payload=payload, shards=shards))
-        proofs.extend(entry['proof'] for entry in reader.proofs.values())
-    def validate(*, shard, body, rows, shards, period, last_day):
-        if shards != all_shards[shard['name']] or last_day != last_days[shard['name']]:
-            raise HistoryCatalogError('HISTORICAL_EVENT_METADATA_CHANGED_DURING_READ')
-        return history_block_coherence(shard=shard, body=body, rows=rows,
-                                        last_day=last_days[shard['name']])
-    return validate, last_days, proofs
+def check_historical_event_block(*, shard, body, rows, shards, period, last_day):
+    """Use the public walk's effective end and the complete selected body.
+
+    The consumer supplies block_last_days itself to the public interface; that
+    interface computes the bound from the actual inventory it just read and
+    passes the same bound used for selection. No second metadata read or
+    independent source cache is needed.
+    """
+    return history_block_coherence(shard=shard, body=body, rows=rows,
+                                   last_day=last_day)
 
 
 def _event_amendment_checks(reader, prepared):
@@ -122,14 +113,9 @@ def prepare_historical_event_year_case(*, repo_root, company_id, metric_id, fisc
     packet, amendment_checks = None, []
     try:
         amendment_checks = _event_amendment_checks(reader, prepared)
-        validate, last_days, metadata_proofs = _history_check_strategy(source, prepared, registered_union)
         packet = read_selected_event_sources(data_root=source, rules_root=ROOT,
             prepared=prepared, period=period, registered_union=registered_union,
-            history_validator=validate, history_last_days=block_last_days)
-        for proof in metadata_proofs:
-            matching = [p for p in packet['source_proofs'] if p['source_url'] == proof['source_url']]
-            if not matching or any(p['content_sha256'] != proof['content_sha256'] for p in matching):
-                raise HistoryCatalogError('HISTORICAL_EVENT_METADATA_CHANGED_DURING_READ')
+            history_validator=check_historical_event_block, history_last_days=block_last_days)
         claims, source_sets, filings = packet['claims'], packet['source_set_manifests'], packet['filings']
         for record in packet['source_records']:
             key = (record['raw_asset_id'] if record['record_type'] == 'RAW_BLOB'

@@ -45,7 +45,7 @@
   "public_gap_interface": "35b9329d",
   "latest_combined_tests": {
     "count": 34,
-    "seconds": 0.294,
+    "seconds": 0.281,
     "skips": 0
   },
   "record_retention_fix": "SourceReference and RawBlob share raw_asset_id; consumer now indexes by record type. Original save failure retained.",
@@ -79,5 +79,14 @@
       "E05": "0"
     }
   },
-  "wide_save_reproducer": "reproduce_wide_event_save.py --source-root <restored source-inputs> --output-root <new directory>; writes full case.json before save; no network"
+  "wide_save_reproducer": "reproduce_wide_event_save.py --source-root <restored source-inputs> --output-root <new directory>; writes full case.json before save; no network",
+  "marriott_fiveyear": {
+    "file": "marriott-fiveyear.json",
+    "coordinates": 25,
+    "independent_difference_count": 0,
+    "only_missing_coordinates_completed": 6,
+    "interrupted_intents": 1,
+    "old_versions_unchanged": true
+  },
+  "history_callback_reads": "one public source walk, block_last_days computed from its actual inventory; full body checker; no duplicate metadata preparation"
 }
