@@ -56,3 +56,9 @@ reader cases; the final module uses a module import, so tests are not doubled.
 No old full material/batch rerun, ledger creation, private-root writes, real
 SEC/provider call or account operation. Limited review and receiving consumer
 preflight remain required; no Draft PR or delivery/production claim yet.
+
+Limited independent review at17002f37 passed, preserving original proof limits.
+21tests, exactworkflow21, selector5+6 and five extra small probes passed;
+44tools/3messages/8m10s. Real1771/1867/1772 state is author read-only evidence,
+not independently operated. Receiver original-loader/actual-source preflight
+and remote CI remain separate gates. No original root was locked or written.
