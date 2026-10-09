@@ -1,0 +1,93 @@
+test_approved_wide_window_retains_the_original_annual_period (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_approved_wide_window_retains_the_original_annual_period) ... ERROR
+test_arbitrary_wider_period_or_wrong_label_is_rejected (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_arbitrary_wider_period_or_wrong_label_is_rejected) ... ERROR
+test_financial_and_unreceived_e01_do_not_receive_wide_period_exception (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_financial_and_unreceived_e01_do_not_receive_wide_period_exception) ... ERROR
+test_missing_registrant_or_wrong_inventory_cannot_complete_union (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_missing_registrant_or_wrong_inventory_cannot_complete_union) ... 
+  test_missing_registrant_or_wrong_inventory_cannot_complete_union (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_missing_registrant_or_wrong_inventory_cannot_complete_union) (change='missing') ... ERROR
+  test_missing_registrant_or_wrong_inventory_cannot_complete_union (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_missing_registrant_or_wrong_inventory_cannot_complete_union) (change='inventory') ... ERROR
+  test_missing_registrant_or_wrong_inventory_cannot_complete_union (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_missing_registrant_or_wrong_inventory_cannot_complete_union) (change='source_window') ... ERROR
+  test_missing_registrant_or_wrong_inventory_cannot_complete_union (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_missing_registrant_or_wrong_inventory_cannot_complete_union) (change='manifest') ... ERROR
+test_wrong_registry_catalog_or_financial_combination_is_rejected (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_wrong_registry_catalog_or_financial_combination_is_rejected) ... ERROR
+
+======================================================================
+ERROR: test_approved_wide_window_retains_the_original_annual_period (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_approved_wide_window_retains_the_original_annual_period)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/tests/vnext/test_registered_event_projection.py", line 45, in test_approved_wide_window_retains_the_original_annual_period
+    self.assertTrue(self.proven()); self.assertEqual(self.annual, before)
+                    ~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/tests/vnext/test_registered_event_projection.py", line 40, in proven
+    return projection._registered_event_period(data_root=ROOT, manifest=self.manifest,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_registered_event_period'
+
+======================================================================
+ERROR: test_arbitrary_wider_period_or_wrong_label_is_rejected (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_arbitrary_wider_period_or_wrong_label_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/tests/vnext/test_registered_event_projection.py", line 61, in test_arbitrary_wider_period_or_wrong_label_is_rejected
+    projection._registered_event_period(data_root=ROOT, manifest=self.manifest,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_registered_event_period'
+
+======================================================================
+ERROR: test_financial_and_unreceived_e01_do_not_receive_wide_period_exception (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_financial_and_unreceived_e01_do_not_receive_wide_period_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/tests/vnext/test_registered_event_projection.py", line 53, in test_financial_and_unreceived_e01_do_not_receive_wide_period_exception
+    self.assertFalse(self.proven())
+                     ~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/tests/vnext/test_registered_event_projection.py", line 40, in proven
+    return projection._registered_event_period(data_root=ROOT, manifest=self.manifest,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_registered_event_period'
+
+======================================================================
+ERROR: test_missing_registrant_or_wrong_inventory_cannot_complete_union (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_missing_registrant_or_wrong_inventory_cannot_complete_union) (change='missing')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/tests/vnext/test_registered_event_projection.py", line 72, in test_missing_registrant_or_wrong_inventory_cannot_complete_union
+    projection._registered_event_period(data_root=ROOT, manifest=self.manifest,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_registered_event_period'
+
+======================================================================
+ERROR: test_missing_registrant_or_wrong_inventory_cannot_complete_union (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_missing_registrant_or_wrong_inventory_cannot_complete_union) (change='inventory')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/tests/vnext/test_registered_event_projection.py", line 72, in test_missing_registrant_or_wrong_inventory_cannot_complete_union
+    projection._registered_event_period(data_root=ROOT, manifest=self.manifest,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_registered_event_period'
+
+======================================================================
+ERROR: test_missing_registrant_or_wrong_inventory_cannot_complete_union (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_missing_registrant_or_wrong_inventory_cannot_complete_union) (change='source_window')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/tests/vnext/test_registered_event_projection.py", line 72, in test_missing_registrant_or_wrong_inventory_cannot_complete_union
+    projection._registered_event_period(data_root=ROOT, manifest=self.manifest,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_registered_event_period'
+
+======================================================================
+ERROR: test_missing_registrant_or_wrong_inventory_cannot_complete_union (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_missing_registrant_or_wrong_inventory_cannot_complete_union) (change='manifest')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/tests/vnext/test_registered_event_projection.py", line 72, in test_missing_registrant_or_wrong_inventory_cannot_complete_union
+    projection._registered_event_period(data_root=ROOT, manifest=self.manifest,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_registered_event_period'
+
+======================================================================
+ERROR: test_wrong_registry_catalog_or_financial_combination_is_rejected (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_wrong_registry_catalog_or_financial_combination_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-event-window/SEC_metrics/tests/vnext/test_registered_event_projection.py", line 80, in test_wrong_registry_catalog_or_financial_combination_is_rejected
+    projection._registered_event_period(data_root=ROOT, manifest=self.manifest,
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_registered_event_period'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+FAILED (errors=8)
+{"allowed_skips": 0, "errors": 8, "failures": 0, "run": 5, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_registered_event_projection"]}

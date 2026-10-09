@@ -25,6 +25,69 @@ def _need(condition, reason):
     if not condition:raise ValueError(reason)
 
 
+def _registered_event_period(*, data_root, manifest, annual, case, result):
+    """Keep the approved event lookback distinct from the reporting year."""
+    if case['primary_metric_id'] not in {'C01', 'E02', 'E03', 'E04', 'E05'}:
+        return False
+    binding = case['input_binding']
+    if 'component' in binding:
+        binding = binding['component'].get('input_binding', {})
+    scope = binding.get('registered_event_scope')
+    if scope is None:
+        return False
+    from sec_urls import submissions_url
+    from .public_projection import event_target_period
+    from .traits import repository_company_ciks
+    rules = Path(case.get('rules_root', ROOT))
+    catalog_path = rules / 'catalog/zero_ai_public_projection.json'
+    company = next(row for row in projector._load_registry(repo_root=rules)
+                   if row['company_id'] == manifest['company_id'])
+    _need(annual['company_id'] == company['company_id']
+          and annual['entity'] == company['primary_cik']
+          and annual['subject_policy']['mode'] == 'SUCCESSOR_REGISTRANT_ONLY'
+          and company['entity_continuity_status'] == 'successor_predecessor',
+          'ORDINARY_PROJECTION_EVENT_SCOPE_CHANGED')
+    period = annual['table_input']['target_period']
+    expected = event_target_period(target_period=period,
+        continuity_status=company['entity_continuity_status'], catalog=strict_json_file(path=catalog_path))
+    _need(scope.get('window') == expected
+          and binding.get('event_window', binding.get('target_period')) == expected
+          and manifest['target_period'] in (period, expected)
+          and all(result[key] == expected[key] for key in ('period_start', 'period_end')),
+          'ORDINARY_PROJECTION_EVENT_PERIOD_PROOF_CHANGED')
+    ciks = repository_company_ciks(repo_root=rules, company_id=company['company_id'])
+    _need(scope.get('registered_ciks') == ciks
+          and scope.get('financial_cross_entity_combination_authorized') is False
+          and scope.get('company_registry_sha256') == sha256_file(path=data_root/'config/company_registry.csv')
+          == sha256_file(path=rules/'config/company_registry.csv')
+          and scope.get('event_projection_catalog_sha256') == sha256_file(path=catalog_path),
+          'ORDINARY_PROJECTION_EVENT_SCOPE_CHANGED')
+    per_cik = scope.get('per_cik_sources', [])
+    _need([row.get('cik') for row in per_cik] == ciks, 'ORDINARY_PROJECTION_EVENT_SCOPE_CHANGED')
+    references = {row['source_reference_id']: row for row in case['references']}
+    sets = {row['source_set_manifest_id']: row for row in binding.get('source_set_manifests', [])}
+    window = {key: expected[key] for key in ('period_start', 'period_end')}
+    for row in per_cik:
+        ref = row['inventory_source_reference']
+        selected_sets = [sets.get(key) for key in row.get('source_set_manifest_ids', [])]
+        inventory_prefix = submissions_url(cik=int(row['cik']))[:-5]
+        def same_issuer_inventory(item):
+            if item is None:
+                return False
+            inventory = references.get(item.get('inventory_source_reference_id'))
+            return inventory is not None and inventory['company_id'] == company['company_id'] and (
+                inventory == ref or inventory.get('source_role') == 'sec_submissions_history'
+                and inventory['source_url'].startswith(inventory_prefix + '-submissions-'))
+        _need(row['source_window'] == expected and ref['company_id'] == company['company_id']
+              and ref['source_url'] == submissions_url(cik=int(row['cik']))
+              and references.get(ref['source_reference_id']) == ref
+              and selected_sets and all(item is not None and item['company_id'] == company['company_id']
+                  and item['fiscal_or_date_window'] == window and same_issuer_inventory(item)
+                  for item in selected_sets),
+              'ORDINARY_PROJECTION_EVENT_SCOPE_CHANGED')
+    return True
+
+
 def _claims(case):
     result = {}
     for value in _objects(case["input_binding"]):
@@ -119,10 +182,12 @@ def render_ordinary_records(*, data_root, manifest, records, case,
               and str(int(annual['entity'])) in {str(int(c)) for c in
                   repository_company_ciks(repo_root=data_root, company_id=manifest['company_id'])},
               'ORDINARY_PROJECTION_PREPARED_SUBJECT_CHANGED')
+        event_period_proven = _registered_event_period(
+            data_root=data_root, manifest=manifest, annual=annual, case=case, result=result)
         _need(annual['filing']['reportDate'] == period['period_end']
               and result['period_end'] == period['period_end']
               and (result['period_start'] == period['period_start'] or
-                   result['period_start'] == result['period_end'] or income_period_proven),
+                   result['period_start'] == result['period_end'] or income_period_proven or event_period_proven),
               'ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED')
     indexes = projector._record_indexes(runs=[(manifest,records)])
     trace = indexes["traces"][result["trace_id"]]
