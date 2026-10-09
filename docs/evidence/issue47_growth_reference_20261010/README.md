@@ -23,3 +23,11 @@ PFIZER FY2023实际table_000113列Product revenues50,914m、Alliance revenues7,5
 原件同时明确2021 Meridian的财务结果按终止经营重列所有列示期间，以及2024把原royalty income从Other income转入Total revenues、前期重列；source-block定位保在pfizer-presentation-scope-text.json。FY2021相同concept不能证明同范围，FY2023分量/总量以及FY2024 royalty范围也不能换prior数据凑算。公共配对/收入core修由#28负责，具体材料已直接交回；这不是新取值政策或放宽检查器。
 
 精确缺陷读取已用公共现有--defects-file接口验证，原Pfizer task独立results不算源/不计算：FY2023 B01 value空、WITHHELD_KNOWN_DEFECT/CONFIRMED_INVALID，原ResultID保；其他十四原值和两个B02扣留仍可读，141原结果/pointer文件哈希保持。pfizer2023-known-defect-read.json给输出和精确ID。缺陷清单只是新显示hold，不是替换事实、手工正确值或接受；公共默认登记尚待#28接收，未传此清单的旧读口仍会显示原值，不隐瞒这一边界。
+
+## 不受争议年度阻断的两个同比消费者
+
+原FY2022/FY2025的native current/prior对照已补：2022当前Revenues100.330bn，当前比较栏Revenues81.288bn与原2021CFC81.288bn相等；2025当前Revenues62.579bn，当前比较栏和原2024Revenues均63.627bn。原表2022总收入行100.330/81.288；2025分别Product51.663、Alliance9.266、Royalty1.650，Total62.579，同口径2024总额63.627。pfizer-supported-native-revenue.json与完整选定表证明金额、unit/context/源SHA与全部收入范围，不再仅凭旧MATCH。
+
+现有公司task只新增两个B02缺位：FY22首9.128s、禁止factory复.895s；FY25首6.611s、禁止复.905s；新目录独立read.545s。值分别.2342535183544926680444838106及-.01647099501783833906989171264 ratio，各全年窗口，同来源/独立原件参考。原141结果/pointer文件保持，无邻居重算；现有defect清单使FY23B01仍空、23/24B02仍WITHHELD，21B02未处理不借此接受。
+
+首次驱动误向run传--defects-file（仅results支持），参数解析阶段拒绝、未处理财务或调用；失败日志保，修正只在独立results传入，未改公共CLI。真实两个首跑在原statement消费者f79树执行，当前分支只携后继证据且生产零diff；不把证据分支当另一版本算法或新pipeline。公共同概念重列/完整收入选择及默认缺陷登记继续待接收，材料充足但缺核心支持的路径不取消责任。
