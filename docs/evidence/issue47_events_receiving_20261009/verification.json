@@ -1,0 +1,45 @@
+{
+  "base_main": "ae8a13c82b11cc5f64fabf217298bed0257778d7",
+  "public_source_interface": "820461a0 (e7e54bec product), limited review still running",
+  "public_files": {
+    "scripts/vnext/normal_zero_ai_results.py": "ec72e85c943a2f3aea5d107137460e850a0a38d3f9b131f3406937428f73e6c9",
+    "scripts/vnext/selected_event_source_v1.py": "b3582c491c3c2db6c44788c9d9b3cd3ac6c47cf868041ddc84f8f1e50c88fcb5"
+  },
+  "historical_source_and_window_tests": {
+    "count": 15,
+    "seconds": 0.103,
+    "skips": 0
+  },
+  "consumer_tests": {
+    "count": 25,
+    "seconds": 0.171,
+    "skips": 0
+  },
+  "paramount2025_case": {
+    "file": "paramount2025-case.json",
+    "value": "12",
+    "unit": "count",
+    "registered_ciks": [
+      "2041610",
+      "813828"
+    ],
+    "filings": 35,
+    "proofs": 75,
+    "annual_container": "2025-01-01..2025-12-31",
+    "event_measurement": "2024-01-01..2025-12-31"
+  },
+  "save_blocker": {
+    "file": "paramount2025-save.json",
+    "reason": "ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED",
+    "owner": "#28 public projection",
+    "annual_dates_unchanged": true
+  },
+  "history_boundary_gap": "Only-gap-day block is filtered before validator; public owner is adding explicit last-day strategy. Not fixed by changing window.",
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "old_runs_or_results_changed": false,
+  "business_acceptance_added": false
+}

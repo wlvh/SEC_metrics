@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "<stdin>", line 11, in <module>
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-events/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 107, in save_calculated_case
+    return _save_case(source_root=source_root, output_root=output_root, company_id=company_id,
+        metric_id=metric_id, factory=lambda source: case, calculation_performed=False,
+        shared_input_root=shared_input_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-events/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 159, in _save_case
+    rendered = render_ordinary_records(data_root=source_root, manifest=manifest,
+        records=records, case=case, receipt_status='CALCULATED_SAVED_SOURCE' if calculation_performed else 'SAVED_PRECALCULATED_CASE',
+        source_validation='SOURCE_CALCULATOR_AND_RECORD_CHECKS' if calculation_performed else 'SOURCE_PROOFS_AND_PRECALCULATED_RECORD_CHECKS',
+        prepared_annual_input=case.get('prepared_annual_input') or case['input_binding'].get('prepared_input'))
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-events/SEC_metrics/scripts/vnext/ordinary_projection.py", line 122, in render_ordinary_records
+    _need(annual['filing']['reportDate'] == period['period_end']
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and result['period_end'] == period['period_end']
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and (result['period_start'] == period['period_start'] or
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               result['period_start'] == result['period_end'] or income_period_proven),
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-events/SEC_metrics/scripts/vnext/ordinary_projection.py", line 25, in _need
+    if not condition:raise ValueError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED
+FAILED ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED
