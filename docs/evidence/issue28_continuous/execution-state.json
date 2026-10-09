@@ -17058,5 +17058,43 @@
     "completion_claim": false,
     "resume_control": "USER_OR_SYSTEM_NATIVE_LIFECYCLE",
     "reference": "https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex"
+  },
+  "existing_historical_sec_compatibility_20261009": {
+    "workspace": "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics",
+    "branch": "task/issue28-existing-sec-ledger",
+    "sha": "79fb10c318101362c628c59fa6f47f8acc420124",
+    "status": "READ_ONLY_PROTOTYPE_NOT_CAPTURE_INTERFACE",
+    "fixed_peer_sha": "0918862af42e146ba573de04fcc59a5d2974ce24",
+    "observed_counts": [
+      0,
+      0,
+      1771
+    ],
+    "effective_limits": [
+      0,
+      0,
+      1867
+    ],
+    "claim_count": 1547,
+    "conservative_sec_charge": 224,
+    "request_rows": 2531,
+    "claimed_slots_unresolved": 0,
+    "one_url_maximum": [
+      0,
+      0,
+      1772
+    ],
+    "remaining": [
+      "lock-held claim with old intent/plan schema",
+      "receipt/terminal and old-reader/checkpoint compatibility",
+      "source-log duplicate/stop scope",
+      "full recorded transport and limited review"
+    ],
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "old_roots_untouched": true
   }
 }
