@@ -1,0 +1,50 @@
+{
+  "code_commit": "20398f3e1b7d07b6de36b8a57bfef86c9162b92e",
+  "counts": [
+    0,
+    0,
+    1771
+  ],
+  "limits": [
+    0,
+    0,
+    1867
+  ],
+  "claims": 1547,
+  "reserve": 224,
+  "claims_sha256": "a238db91ca5f112ca7535f3da719999fa4b8dca5cfe6b3c911dc9755aa291262",
+  "bounded_capture": {
+    "company_id": "paramount_skydance_paramount_global",
+    "counts_before": [
+      0,
+      0,
+      1771
+    ],
+    "maximum_additional_sec_calls": 1,
+    "maximum_counts": [
+      0,
+      0,
+      1772
+    ],
+    "owner_scope_path": "docs/evidence/issue47_history/event-attachment-declarations-v1.json",
+    "owner_scope_sha256": "8e2ded702977d928684f1a1abded8c0e4e981737ee1b7a7086acb3a92dab037b",
+    "retry_count": 0,
+    "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+    "wiring_receipt_path": "docs/evidence/issue47_history/acquisition-wiring/limited-known-resume-20261006/offline-wiring-receipt.json"
+  },
+  "blocked": [],
+  "request_rows": 2531,
+  "refusals": [
+    "EXISTING_HISTORICAL_SEC_REQUEST_OUTSIDE_BOUNDED_PURPOSE",
+    "EXISTING_HISTORICAL_SEC_REQUEST_OUTSIDE_BOUNDED_PURPOSE"
+  ],
+  "actual_original_files_unchanged": true,
+  "Capture_constructed": false,
+  "claim_or_GET_called": false,
+  "seconds": 1.4755277500953525,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}
