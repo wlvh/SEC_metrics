@@ -63,3 +63,5 @@ Paramount本次直接接已保存FY2025 C01任务，只新增其余年度/指标
 新增一个历史短反例直接构造完整original/PartIII amended HTML，实际调用共享修订解析器：PartIII只放行事件窗口、不准入财务；改年度起点必须拒绝。它在原HistoricalEventCaseTest类内，既有workflow路径/明确class命令自然执行，不新增selector、runner或历史平台；[10例0.041秒/零skip日志](amendment-consumer-short.log)保实际结果。构造来源不冒充真实财报；真实ParamountFY2024 scope在[paramount2024-amendment-case.json](paramount2024-amendment-case.json)独立列明。
 
 后续从实际main9493ed0e短分支接收，上游已入main代码不重复携带，只有本轮消费者记录/指南/一个构造修订边界方法；30例0.196秒零skip，见main-receiving-amendment-short.log。接收指南冲突保双方已经入main的能力，实际示例改9493ed0e，避免用户检出旧73ead后运行事件参数失败。自有改动stash作为恢复备份保留，不删除用户work或旧分支。新增运行不完整部分依上述真实失败解释，原模型批次/账本/Run不改。
+
+公共PR95/0ff6fc9e已在可取得组合中接收，实际仅Paramount FY2025 C01一位置做正常配置迁移22.144s，随后禁止原factory复4.737s/另进程读.869s，C01=12及批准宽窗保持。24邻居/192文件和旧C01六文件逐字节不变，没有全范围重算；原一次误触发控制失败仍保。见c01-reuse-fixed.json/log。组合代码在task/issue47-rpo-history-20261009的ecb11a24，C01相关源码与公共95同字节，不借RPO业务信用；公共95未入main时仍明确依赖，不在本记录PR93重复带controller源码。此消费者修复成立，完整E01/在线历史来源/其他指标继续。
