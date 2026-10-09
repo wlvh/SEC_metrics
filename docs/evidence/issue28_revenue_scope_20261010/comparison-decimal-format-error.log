@@ -1,0 +1,21 @@
+test_conflicting_comparisons_cannot_choose_the_matching_one (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_conflicting_comparisons_cannot_choose_the_matching_one) ... ok
+test_other_period_unit_or_accession_is_not_a_prior_comparison (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_other_period_unit_or_accession_is_not_a_prior_comparison) ... ok
+test_same_label_matching_or_no_comparison_keeps_existing_behavior (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_same_label_matching_or_no_comparison_keeps_existing_behavior) ... 
+  test_same_label_matching_or_no_comparison_keeps_existing_behavior (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_same_label_matching_or_no_comparison_keeps_existing_behavior) (comparisons=[{'locator': {'concept': 'Revenue', 'period_start': '2020-01-01', 'period_end': '2020-12-31'}, 'attributes': {'accession': 'current'}, 'unit': 'USD', 'value': '40.00'}]) ... FAIL
+test_same_label_prior_comparison_difference_is_not_accepted (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_same_label_prior_comparison_difference_is_not_accepted) ... ok
+test_supported_label_change_requires_the_original_prior_value (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_supported_label_change_requires_the_original_prior_value) ... ok
+
+======================================================================
+FAIL: test_same_label_matching_or_no_comparison_keeps_existing_behavior (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_same_label_matching_or_no_comparison_keeps_existing_behavior) (comparisons=[{'locator': {'concept': 'Revenue', 'period_start': '2020-01-01', 'period_end': '2020-12-31'}, 'attributes': {'accession': 'current'}, 'unit': 'USD', 'value': '40.00'}])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-scope/SEC_metrics/tests/vnext/test_paired_measure_contradiction.py", line 33, in test_same_label_matching_or_no_comparison_keeps_existing_behavior
+    with self.subTest(comparisons=comparisons):self.assertIsNone(self.check(comparisons)[0])
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'reason_code': 'NORMAL_PAIRED_MEASURE_NOT_COMPARABLE', 'current': {'concept': 'Revenue', 'period_start': '2021-01-01', 'period_end': '2021-12-31', 'accession': 'current', 'unit': 'USD', 'value': '80'}, 'prior': {'concept': 'Revenue', 'period_start': '2020-01-01', 'period_end': '2020-12-31', 'accession': 'prior', 'unit': 'USD', 'value': '40'}, 'target_filing_reports_the_prior_year_under_the_current_concept': ['40.00']} is not None
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.000s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 5, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_paired_measure_contradiction"]}

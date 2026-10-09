@@ -1,0 +1,1576 @@
+{
+  "method": "SELECTED_REVENUE_COMPONENT_ADMISSION_V1",
+  "annual_input": {
+    "company_id": "pfizer",
+    "entity": "78003",
+    "filing": {
+      "accessionNumber": "0000078003-24-000009",
+      "form": "10-K",
+      "reportDate": "2023-12-31"
+    },
+    "table_input": {
+      "target_period": {
+        "fiscal_year": 2023,
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31"
+      }
+    }
+  },
+  "approved_concepts": [
+    "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "us-gaap:Revenues",
+    "us-gaap:SalesRevenueNet",
+    "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax"
+  ],
+  "splits": [
+    {
+      "table_id": "table_000113",
+      "source_reference": {
+        "company_id": "pfizer",
+        "accession": "0000078003-24-000009",
+        "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+      },
+      "total": {
+        "concept": "us-gaap:Revenues",
+        "value": "58496000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 103,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      "parts": [
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "50914000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 97,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000078003",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000078003",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "company_id": "pfizer",
+            "accession": "0000078003-24-000009",
+            "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+          }
+        },
+        {
+          "concept": "us-gaap:RevenueFromCollaborativeArrangementExcludingRevenueFromContractWithCustomer",
+          "value": "7582000000",
+          "unit": "USD",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "decimals": "-6",
+          "ordinal": 100,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0000078003",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0000078003",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "company_id": "pfizer",
+            "accession": "0000078003-24-000009",
+            "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+          }
+        }
+      ],
+      "total_cell": {
+        "table_id": "table_000113",
+        "grid_sha256": "sha256:50361d6a4d36197f75685af7ed8d3226caf36c3d2d087b5d346cb3a3ffad65c3",
+        "row_index": 6,
+        "column_index": 15,
+        "origin_row_index": 6,
+        "origin_column_index": 15,
+        "rowspan": 1,
+        "colspan": 2,
+        "raw_text": "58,496&#160;",
+        "text": "58,496"
+      },
+      "part_cells": [
+        {
+          "table_id": "table_000113",
+          "grid_sha256": "sha256:50361d6a4d36197f75685af7ed8d3226caf36c3d2d087b5d346cb3a3ffad65c3",
+          "row_index": 4,
+          "column_index": 16,
+          "origin_row_index": 4,
+          "origin_column_index": 16,
+          "rowspan": 1,
+          "colspan": 1,
+          "raw_text": "50,914&#160;",
+          "text": "50,914"
+        },
+        {
+          "table_id": "table_000113",
+          "grid_sha256": "sha256:50361d6a4d36197f75685af7ed8d3226caf36c3d2d087b5d346cb3a3ffad65c3",
+          "row_index": 5,
+          "column_index": 15,
+          "origin_row_index": 5,
+          "origin_column_index": 15,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "7,582&#160;",
+          "text": "7,582"
+        }
+      ],
+      "labels": {
+        "total": "Total revenues",
+        "parts": [
+          "Product revenues(a)",
+          "Alliance revenues(a)"
+        ]
+      },
+      "year_headers": [
+        {
+          "table_id": "table_000113",
+          "grid_sha256": "sha256:50361d6a4d36197f75685af7ed8d3226caf36c3d2d087b5d346cb3a3ffad65c3",
+          "row_index": 2,
+          "column_index": 15,
+          "origin_row_index": 2,
+          "origin_column_index": 15,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "2023",
+          "text": "2023"
+        }
+      ],
+      "xml_matches": [
+        {
+          "primary_ordinal": 97,
+          "xml_reports": [
+            {
+              "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+              "value": "50914000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 97,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000078003",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000078003",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "company_id": "pfizer",
+                "accession": "0000078003-24-000009",
+                "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+              }
+            }
+          ]
+        },
+        {
+          "primary_ordinal": 100,
+          "xml_reports": [
+            {
+              "concept": "us-gaap:revenuefromcollaborativearrangementexcludingrevenuefromcontractwithcustomer",
+              "value": "7582000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 100,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000078003",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000078003",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "company_id": "pfizer",
+                "accession": "0000078003-24-000009",
+                "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+              }
+            }
+          ]
+        },
+        {
+          "primary_ordinal": 103,
+          "xml_reports": [
+            {
+              "concept": "us-gaap:revenues",
+              "value": "58496000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 103,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000078003",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000078003",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "company_id": "pfizer",
+                "accession": "0000078003-24-000009",
+                "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+              }
+            },
+            {
+              "concept": "us-gaap:revenues",
+              "value": "58496000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 2997,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000078003",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000078003",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "company_id": "pfizer",
+                "accession": "0000078003-24-000009",
+                "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+              }
+            },
+            {
+              "concept": "us-gaap:revenues",
+              "value": "58496000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 3038,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000078003",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000078003",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "company_id": "pfizer",
+                "accession": "0000078003-24-000009",
+                "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+              }
+            },
+            {
+              "concept": "us-gaap:revenues",
+              "value": "58496000000",
+              "unit": "USD",
+              "period_start": "2023-01-01",
+              "period_end": "2023-12-31",
+              "decimals": "-6",
+              "ordinal": 3071,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000078003",
+                "period_end": "2023-12-31",
+                "period_start": "2023-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000078003",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2023-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2023-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "company_id": "pfizer",
+                "accession": "0000078003-24-000009",
+                "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+              }
+            }
+          ]
+        }
+      ],
+      "sum_difference": "0",
+      "rounding_radius": "1500000"
+    }
+  ],
+  "status": "REPORTED_COMPONENTS_AND_TOTAL",
+  "complete_scope_proven": true,
+  "original_reports": {
+    "primary": [
+      {
+        "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "value": "50914000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 97,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      {
+        "concept": "us-gaap:RevenueFromCollaborativeArrangementExcludingRevenueFromContractWithCustomer",
+        "value": "7582000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 100,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      {
+        "concept": "us-gaap:Revenues",
+        "value": "58496000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 103,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      {
+        "concept": "us-gaap:CostOfGoodsAndServicesSold",
+        "value": "24954000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 106,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      {
+        "concept": "us-gaap:ProfitLoss",
+        "value": "2158000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 139,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      {
+        "concept": "us-gaap:NetIncomeLoss",
+        "value": "2119000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 145,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      {
+        "concept": "us-gaap:ProfitLoss",
+        "value": "2158000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 172,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      {
+        "concept": "us-gaap:ProfitLoss",
+        "value": "2158000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 416,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      {
+        "concept": "us-gaap:ProfitLoss",
+        "value": "2158000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 450,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      {
+        "concept": "us-gaap:Revenues",
+        "value": "58496000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 2997,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      {
+        "concept": "us-gaap:Revenues",
+        "value": "58496000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 3038,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      },
+      {
+        "concept": "us-gaap:Revenues",
+        "value": "58496000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 3071,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0"
+        }
+      }
+    ],
+    "xml": [
+      {
+        "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+        "value": "50914000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 97,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      },
+      {
+        "concept": "us-gaap:revenuefromcollaborativearrangementexcludingrevenuefromcontractwithcustomer",
+        "value": "7582000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 100,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      },
+      {
+        "concept": "us-gaap:revenues",
+        "value": "58496000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 103,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      },
+      {
+        "concept": "us-gaap:costofgoodsandservicessold",
+        "value": "24954000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 106,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      },
+      {
+        "concept": "us-gaap:profitloss",
+        "value": "2158000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 139,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      },
+      {
+        "concept": "us-gaap:netincomeloss",
+        "value": "2119000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 145,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      },
+      {
+        "concept": "us-gaap:profitloss",
+        "value": "2158000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 172,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      },
+      {
+        "concept": "us-gaap:profitloss",
+        "value": "2158000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 416,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      },
+      {
+        "concept": "us-gaap:profitloss",
+        "value": "2158000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 450,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      },
+      {
+        "concept": "us-gaap:revenues",
+        "value": "58496000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 2997,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      },
+      {
+        "concept": "us-gaap:revenues",
+        "value": "58496000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 3038,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      },
+      {
+        "concept": "us-gaap:revenues",
+        "value": "58496000000",
+        "unit": "USD",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "decimals": "-6",
+        "ordinal": 3071,
+        "context_ref": "c-1",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000078003",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c-1",
+          "identifiers": [
+            {
+              "value": "0000078003",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2023-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2023-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        },
+        "source_reference": {
+          "company_id": "pfizer",
+          "accession": "0000078003-24-000009",
+          "raw_asset_id": "sha256:6df3a97b0eb241874df90b56e526de28b36234349c6c4cc2e47e1fca5eee4291"
+        }
+      }
+    ]
+  },
+  "scope_id": "sha256:fb80ceb07475179e5a993fdc351e92609b1424efadc61c885ca2792c980c02e3"
+}
