@@ -1,11 +1,23 @@
 # 本地运行一家公司的当前财年
 
-这是PR55的Draft本地入口。来源与计算仍为独立阶段，`run`只负责顺序调度；没有OpenShift部署、正式发布、active切换或新模型调用。旧分阶段入口及运行树仍可读取旧Run。
+## 先选版本与输入
+
+| 版本/入口 | 能做什么 | 前提与限制 |
+|---|---|---|
+| main 既有实现，固定基线 `8588ccbbb1c91d81e0fb1a89dff3575214282549` | `run` 从空任务发现/获取来源，调度原生计算和 CSV/证据出口；`acquire` 独立采集 | 这是 PR57 已交付的原生流程，使用其固定依赖及原任务账本。真实请求仍须适用许可；39项状态不代表39项内容通过。 |
+| [PR67](https://github.com/wlvh/SEC_metrics/pull/67) 保存来源候选 `29c9c9e2080a1de8c809660ac8fbdfc49072ef12` | `run --source-root` 处理已保存来源，普通记录 `results` 日常读取 | 尚未进入 main；新在线安装未接通，不能在这个候选上省略 `--source-root` 后宣称全流程可用。已接入指标和验证见 PR67。 |
+| 已有原生任务 | `results` / 显式审计导出读取原 Run | 使用创建该任务的固定程序、状态、来源登记及依赖；新 CLI 与任意旧程序混用不保证兼容。 |
+
+来源与计算分别运行，`run`只顺序调度。main 原生流程与 PR67 普通记录是过渡版本，不是永久双系统。轻量在线续接由 #28 在保存来源阶段后接入，尚未实现的能力不写成默认可用。代码交付、运行成功、业务接受和正式发布分别判断。
+
+## main 固定原生版本：新任务完整流程
+
+下面命令仅用于上述固定 main 实现及其匹配依赖，不用于 PR67 的新在线安装。Marriott 的既有真实首次、重复运行与局部重入见本页末材料；不是对所有公司/指标的完成保证。
 
 在源码目录之外的工作位置执行，固定源码也可用绝对路径指定：
 
 ```bash
-python /path/to/SEC_metrics/tools/vnext_company.py run \
+python /path/to/main-8588ccbb/SEC_metrics/tools/vnext_company.py run \
   --company marriott_international \
   --period latest-complete-fy \
   --work-dir ./work/sec-metrics \
@@ -41,15 +53,15 @@ outputs/marriott/<run-id>/
 
 ```bash
 python -m pip install --no-deps --require-hashes \
-  -r /path/to/SEC_metrics/requirements-continuous-context.txt
+  -r /path/to/main-8588ccbb/SEC_metrics/requirements-continuous-context.txt
 ```
 
 它只安装本地程序依赖，不调用业务模型。
 
-独立来源阶段：
+独立来源阶段（同一固定 main 版本、同一任务；真实请求需原适用许可）：
 
 ```bash
-python /path/to/SEC_metrics/tools/vnext_company.py acquire \
+python /path/to/main-8588ccbb/SEC_metrics/tools/vnext_company.py acquire \
   --company marriott_international --work-dir ./work/sec-metrics \
   --max-sec-requests 40 --sec-allowance 120
 ```
@@ -63,3 +75,18 @@ python /path/to/SEC_metrics/tools/vnext_company.py acquire \
 Marriott真实空来源首跑和同目录复跑已完成：累计31次真实SEC GET、27份来源复用，复跑36个原生候选独立冷读通过；39项中D02/D03/D04仍明确限制，不是39项业务验收或正式发布。实际CSV、摘要、来源/运行版本、修复与合并依赖见[真实运行材料](evidence/issue54_company/live-marriott/README.md)；[此前本地接线材料](evidence/issue54_company/local-run/README.md)仍按录制范围保留。
 
 2026-10-04另以新工作目录从空来源重新真实运行（新增29+2次GET，含原31次累计62/120），首跑36候选冷读通过、复跑0新Run、局部重入保留其它行；已配置的旧LIVE D04因本次收到的10-K比原版本多一个script元素（注入方未归因）、原始字节身份不同，严格等价按现行规则被拒并如实保留。见[本轮材料](evidence/issue54_company/live2/README.md)。
+
+## PR67 候选：已保存来源及普通记录读取
+
+以下命令须使用 PR67 对应源码；main 基线 CLI 没有 `run --source-root` 参数。来源必须为已合法保存的完整输入，缺件、来源失败和已知错误继续显示，不复活旧成功。
+
+```bash
+python /path/to/pr67/SEC_metrics/tools/vnext_company.py run \
+  --company marriott_international --period latest-complete-fy \
+  --source-root /data/saved-source --work-dir /data/company-task \
+  --output-dir /data/output --metric B01 --metric B02
+python /path/to/pr67/SEC_metrics/tools/vnext_company.py results \
+  --state-root /data/company-task --company marriott_international
+```
+
+此候选不默认重放/复制整套状态来日常出表；成功和稳定扣留均可复用已完成检查，扣留仍显示原原因。新在线采集、未接入族与新模型执行不在该候选交付范围。保留原生任务的 `results` 仍需匹配原版 `--runtime-root` 与 `--trust-root`，不能套用普通记录无 trust 的示例。

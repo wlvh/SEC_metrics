@@ -1,14 +1,21 @@
 # SEC_metrics 测试与验证流程
 
-本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。真实SEC首次＋重复运行尚待许可，不把录制准入换成LIVE。
+## 按实际运行版本选检查
+
+- main 的 PR57 原生版本：下述 company handoff/source-authority/native 检查用于原程序及保留任务；固定依赖按原身份读取。不要用旧快照要求当前新开发文件永远不变。
+- PR67 普通记录候选：快速业务例及保存原件集成验证公司/期间/单位/引用、已知错误、成功/稳定扣留复用、计数、失败隔离、中断恢复和旧读取。实际命令及终态以 [PR67](https://github.com/wlvh/SEC_metrics/pull/67)主要验证记录为准，候选快测改动尚未进入 main。
+- 已退休的独立信任、防伪批准、祖先字节证明和封存要求不作为新路径必须通过的测试；保留源码供原版本诊断。退出专属测试不允许静默跳过仍适用的业务与普通故障反例。
+- 文档改动核对实际 CLI 参数、链接和能力范围，不默认重跑全部财报。新接线须经过用户入口的真实解析/保存/计算/读取；只替换外部 HTTP 的录制与真实 SEC 验收分开。
+
+本地公司薄编排：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_local -v`，6项明确模拟阶段，覆盖只获取/请求上限、一次计算、39项状态、相对别名、阶段失败不冒充成功及旧原生结果保留。加入当前fast清单；不是实网获取或财报内容验收。新 `issue_54_v4` 实际空来源录制捕获、绑定header/错公司/模式负例、UID1000只读程序和Marriott B01+D01首次/另进程复用，见 `docs/evidence/issue54_company/local-run/README.md`。Marriott真实首次、同目录复跑及局部重入已在其原适用许可内完成，见 `docs/evidence/issue54_company/live2/README.md`；录制测试不冒充LIVE，新用途仍需核实许可。
 <!-- capability-anchor: CAPABILITY.local_company_run -->
 
-公司导入事务与独立信任：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。
+main/保留原生版本的公司导入事务与独立信任：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_handoff tests.vnext.test_company_source_authority -v`。事务层使用认证包替身；信任层检查实际文件、重哈希自证、跨公司与别名。真实来源另由 `tools/verify_company_bound_run.py` 对指定固定运行树下实际Run绑定的原件/headers注错。普通OPEN重放与FROZEN冷读分开；本轮材料索引在 `docs/evidence/issue54_company/`，不替代业务或OpenShift验收。
 
-公司事件 census 接缝：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_event_census -v`。该组件测试使用真实独立信任读取和原 header 解析，账本重放为替身；验证窗口／前身 CIK、缺件／额外件／别名、错公司和本地重哈希不能授信。实际材料另验证只读固定树下公司 C01、重复与公司出口，不能以组件测试宣称六事件内容或 OpenShift 验收。
+main/保留原生版本的公司事件 census 接缝：`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_company_event_census -v`。该组件测试使用真实独立信任读取和原 header 解析，账本重放为替身；验证窗口／前身 CIK、缺件／额外件／别名、错公司和本地重哈希不能授信。实际材料另验证只读固定树下公司 C01、重复与公司出口，不能以组件测试宣称六事件内容或 OpenShift 验收。
 <!-- capability-anchor: CAPABILITY.company_import_transaction -->
 
-## 确切年度候选正式采纳接线
+## 历史固定版本：确切年度候选正式采纳接线
 
 fast白名单共35入口，保留v1发布模块，并加入`tests.vnext.test_annual_publication_authority`。
 短测试覆盖冻结政策解析、pending Requirement、真实评论边界与无本地JSON权限。
@@ -35,7 +42,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_annual_publicatio
 
 <!-- capability-anchor: CAPABILITY.annual_candidate_formal_adoption -->
 
-## 普通年度候选完整发布链隔离验收
+## 历史固定版本：普通年度候选完整发布链隔离验收
 
 `tools/run_fast_tests.py` 的白名单入口包括
 `tests.vnext.test_annual_publication` 整个模块（4项短边界测试）。GitHub fast CI
