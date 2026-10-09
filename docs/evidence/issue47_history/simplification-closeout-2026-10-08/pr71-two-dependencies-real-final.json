@@ -1,0 +1,211 @@
+{
+  "public_commit": "3a98cee0",
+  "selected_coordinate": "Marriott FY2025 B10",
+  "saved_execution_reports": [
+    {
+      "calls": {
+        "paid": 0,
+        "provider": 0,
+        "sec": 0
+      },
+      "company_id": "marriott_international",
+      "metrics": [
+        {
+          "attempt_id": "09853515430d4fb4804cdab8f884ad14",
+          "calculation_performed": true,
+          "defect_holds": [],
+          "metric_id": "B10",
+          "new_calls": {
+            "paid": 0,
+            "provider": 0,
+            "sec": 0
+          },
+          "new_candidate_created": true,
+          "production_authorized": false,
+          "program_version": {
+            "commit": "4292702549c6a6444305726f34e0d18b33e8d47f",
+            "has_uncommitted_changes": true
+          },
+          "read_result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state/updates/B10/periods/FY2025/results/6a64350db8ea417f9db660d962f29e52",
+          "requested_fiscal_year": 2025,
+          "result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119",
+          "result_reason_code": "PASS",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state/updates/B10/periods/FY2025/results/6a64350db8ea417f9db660d962f29e52",
+          "source_observation_errors": [],
+          "status": "CANDIDATE_READY",
+          "version": "6a64350db8ea417f9db660d962f29e52"
+        }
+      ],
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/two-dependencies-receiving/20261009T045652Z-6cd2629f",
+      "production_authorized": false,
+      "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state",
+      "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+      "run_id": "20261009T045652Z-6cd2629f",
+      "selected_fiscal_years": [
+        2025
+      ],
+      "selected_metrics": [
+        "B10"
+      ],
+      "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics",
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "calls": {
+        "paid": 0,
+        "provider": 0,
+        "sec": 0
+      },
+      "company_id": "marriott_international",
+      "metrics": [
+        {
+          "attempt_id": "a7971a95eb094b3497d345a0c86f19cc",
+          "calculation_performed": false,
+          "defect_holds": [],
+          "metric_id": "B10",
+          "new_calls": {
+            "paid": 0,
+            "provider": 0,
+            "sec": 0
+          },
+          "new_candidate_created": false,
+          "production_authorized": false,
+          "program_version": {
+            "commit": "4292702549c6a6444305726f34e0d18b33e8d47f",
+            "has_uncommitted_changes": true
+          },
+          "raw_input_unchanged": true,
+          "read_result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state/updates/B10/periods/FY2025/results/6a64350db8ea417f9db660d962f29e52",
+          "requested_fiscal_year": 2025,
+          "result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119",
+          "result_reason_code": "PASS",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state/updates/B10/periods/FY2025/results/6a64350db8ea417f9db660d962f29e52",
+          "source_observation_errors": [],
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "version": "6a64350db8ea417f9db660d962f29e52"
+        }
+      ],
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/two-dependencies-receiving/20261009T045657Z-b2659b96",
+      "production_authorized": false,
+      "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state",
+      "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+      "run_id": "20261009T045657Z-b2659b96",
+      "selected_fiscal_years": [
+        2025
+      ],
+      "selected_metrics": [
+        "B10"
+      ],
+      "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics",
+      "status": "FLOW_COMPLETED"
+    }
+  ],
+  "initial_driver_error": "Run subset CSV has one selected coordinate; the driver incorrectly expected four; failure retained, no recalculation",
+  "first_report_calculation_performed": true,
+  "repeat_report_calculation_performed": false,
+  "repeat_forbidden_factory_assertion_passed_before_late_CSV_failure": true,
+  "old_result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119",
+  "new_result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119",
+  "old_version": "da2d27278b8444f39aea957d1d01aaf6",
+  "new_version": "6a64350db8ea417f9db660d962f29e52",
+  "other_three_versions_and_result_ids_unchanged": true,
+  "other_three_old_configuration_not_claimed_current": true,
+  "independent_read_seconds": 1.077866334002465,
+  "independent_read": {
+    "elapsed_seconds": 0.850613959133625,
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "marriott_international",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/issue47-history-consumers/SEC_metrics",
+    "metrics": [
+      {
+        "metric_id": "B10",
+        "result_id": "sha256:aa6ba37d3be16202c3bb9d69e67a3759832c8ecc5e986d0e0a5e42e9fc19d119",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": "0.693",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state/updates/B10/periods/FY2025/results/6a64350db8ea417f9db660d962f29e52"
+      },
+      {
+        "metric_id": "B10",
+        "result_id": "sha256:badff04d957477e02ef59acc4a6c0fba1c33a8c55a76542463355485caa6c09d",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "fiscal_year": 2024,
+        "value": "0.698",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+        "requested_in_latest_execution": false,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state/updates/B10/periods/FY2024/results/efbd75c4ece742edbfd2b52bbbafcd49"
+      },
+      {
+        "metric_id": "B11",
+        "result_id": "sha256:92ece36375fcbde6b729f2424652dca4eb6a1f332bb235e9bd49f7f47b505b31",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "fiscal_year": 2024,
+        "value": "128.23",
+        "unit": "USD",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+        "requested_in_latest_execution": false,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state/updates/B11/periods/FY2024/results/46b5a41e5c6d4b56904bc0f441d9650b"
+      },
+      {
+        "metric_id": "B11",
+        "result_id": "sha256:a5e7be84a5c4f67ec4fce97e29fcf61d6532ac6befee6d250607fc58524fde19",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": "128.8",
+        "unit": "USD",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+        "requested_in_latest_execution": false,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/state/updates/B11/periods/FY2025/results/a14132020a434162a30f5b3e0a89ddfd"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr71-first-batch-20261009/two-dependencies-independent"
+  },
+  "protected_files_unchanged": 38,
+  "first_and_repeat_outer_elapsed_unavailable": "Driver did not save timing before its late assertion; no invented timing",
+  "calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

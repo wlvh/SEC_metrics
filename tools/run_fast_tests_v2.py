@@ -167,9 +167,14 @@ FAST_TESTS += ("tests.vnext.test_a05_formula_successor",)
 FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest',)
 FAST_TESTS += ('tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks',)
 FAST_TESTS += ('tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest',)
+FAST_TESTS += ("tests.vnext.test_legal_review_contract",)
+FAST_TESTS += ("tests.vnext.test_history_business_boundaries.BankScopeBusinessTest",)
+FAST_TESTS += ("tests.vnext.test_history_business_boundaries.ParamountWindowBusinessTest",)
+FAST_TESTS += ("tests.vnext.test_history_business_boundaries.FiscalDurationCalculationTest",)
 SOURCE_TESTS += ("tests.vnext.test_a05_formula_material",)
 SOURCE_TESTS += ("tests.vnext.test_d02_item8_current_material",)
 SOURCE_TESTS += ("tests.vnext.test_ordinary_e01_item_text_input",)
+FAST_TESTS += ("tests.vnext.test_company_retained_local",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

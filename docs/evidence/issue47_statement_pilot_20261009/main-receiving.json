@@ -1,0 +1,75 @@
+{
+  "main": "e2d6784c9a464a04b793d3487e6e9868a37614b3",
+  "prior_head": "5272797e0bc79ddb007fc021d8243f2ad46cf7d7",
+  "public_selector_sha256": "860fc1329fb2f25625583267f65e32395403bac3eec438935850bcaab7565352",
+  "public_runner_functions_unchanged": true,
+  "selector_tests": {
+    "count": 46,
+    "seconds": 0.038,
+    "skips": 0
+  },
+  "history_consumer_tests": {
+    "count": 51,
+    "seconds": 7.083,
+    "skips": 0
+  },
+  "new_income_tests": {
+    "count": 29,
+    "seconds": 0.183,
+    "skips": 0
+  },
+  "prior_record_restore": {
+    "count": 60,
+    "seconds": 0.043947292026132345,
+    "recomputed": false
+  },
+  "new_income_samples": [
+    {
+      "company_id": "ford_motor_company",
+      "fiscal_year": 2021,
+      "value": "136341000000",
+      "unit": "USD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "result_id": "sha256:4981dd5610b6a08960236d3294c8dbce8fbbd553608518fa5fa55c01fa7ca4ea",
+      "seconds": 9.153235415928066,
+      "original_checks": 1
+    },
+    {
+      "company_id": "salesforce",
+      "fiscal_year": 2022,
+      "value": "26492000000",
+      "unit": "USD",
+      "period_start": "2021-02-01",
+      "period_end": "2022-01-31",
+      "result_id": "sha256:7161a6a19b9e4134ab69be8863bf049d57bbe863b135e07d214f0f6256dfa3e3",
+      "seconds": 6.510710875038058,
+      "original_checks": 1
+    },
+    {
+      "company_id": "macys",
+      "fiscal_year": 2023,
+      "value": "23092000000",
+      "unit": "USD",
+      "period_start": "2023-01-29",
+      "period_end": "2024-02-03",
+      "result_id": "sha256:5f17ec97a234f3b8bae22bcaedd2bdb9ff2ace36056c7a52adfbc821ff088731",
+      "seconds": 5.681416665902361,
+      "original_checks": 1
+    }
+  ],
+  "public_module_received_from": "PR74 5a0352d1 original per-metric mapping; main merge preserves later public fixes",
+  "public_interface_owner_review": "#28 follow-up pending; not a permission for merge",
+  "unreceived": [
+    "B03",
+    "amendment handling",
+    "successor income scope",
+    "online historical discovery and acquisition",
+    "AI families"
+  ],
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}
