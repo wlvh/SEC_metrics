@@ -1,0 +1,54 @@
+{
+  "stage": "ACTUAL_COMPANY_CLI",
+  "base_main": "f6ef7886",
+  "public_product": "656a1d3c",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-performance-jpm-20261009/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/jpm-d01-company-u90t89i3",
+  "operations": [
+    {
+      "name": "first-jpm-2021-d01",
+      "seconds": 55.514302499825135,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "repeat-forbid-d01-factory",
+      "seconds": 3.267502750037238,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "independent-results",
+      "seconds": 0.8644809168763459,
+      "exit_code": 0,
+      "status": null
+    }
+  ],
+  "selected_result": {
+    "metric_id": "D01",
+    "fiscal_year": "2021",
+    "status": "TEXT_QUAL",
+    "unit": "text",
+    "period_start": "2021-01-01",
+    "period_end": "2021-12-31",
+    "accession": "0000019617-22-000272",
+    "result_id": "sha256:c9032f773006fa63b0f4573926e1f5e8abf7d6a526368c9cfedf26913266b78d"
+  },
+  "heading_count": 59,
+  "ordered_text_matches_previously_read_corrected_original": true,
+  "page_header_not_exported": true,
+  "old_files": 380,
+  "all_files": 388,
+  "old_files_preserved": true,
+  "repeat_factory_calls": 0,
+  "old_result_id": "sha256:1427fc46486ff10a26fef93d1f12eac1bd67d8abb432762c66001457ca28d88a",
+  "exact_native_id_unchanged": false,
+  "identity_difference_not_yet_proven": true,
+  "driver_failure": "All CLI/value/source/status and file guards passed; final assumption of old native ID was wrong. Existing output rechecked without rerun.",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
