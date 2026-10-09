@@ -9,6 +9,7 @@ sys.path.insert(0,str(ROOT/'scripts'))
 from vnext.canonical import canonical_json_bytes,strict_json_loads
 from vnext.continuous_semantic_calls import prepare_requests,build_plan,execute_feasibility,execute_capacity_assessment,execute_d04_assessment,select_native_request_variants
 from vnext.continuous_call_ledger import live_ledger
+from vnext.request_limits import RequestLimits
 
 
 def main(argv=None):
@@ -24,8 +25,14 @@ def main(argv=None):
     parser.add_argument('--complete-response-contract',action='store_true',help='Use the explicit complete-unit response contract for new native D04 tasks')
     parser.add_argument('--indexed-unit-responses',action='store_true',help='Use strict unit indices while retaining exact currently valid native success receipts')
     parser.add_argument('--request-id')
+    parser.add_argument('--output-tokens',type=int,default=4096,
+                        help='Request configuration; nondefault live use requires specific permission')
+    parser.add_argument('--max-context-tokens',type=int,default=200000)
+    parser.add_argument('--max-payload-bytes',type=int,default=8388608)
     parser.add_argument('--output',type=Path,required=True)
     args=parser.parse_args(argv)
+    limits=RequestLimits(output_tokens=args.output_tokens,max_context_tokens=args.max_context_tokens,
+                         max_payload_bytes=args.max_payload_bytes)
     output=args.output.resolve()
     if output==ROOT or ROOT in output.parents or output.exists():
         parser.error('Output must be a new file outside the source checkout')
@@ -33,7 +40,7 @@ def main(argv=None):
         parser.error('Verify requires --metric D03 and one --prior-call ordinal')
     requests=prepare_requests(company_id=args.company,metric_id=args.metric,prior_call_ordinal=args.prior_call,
                               control_id=args.control_id,native=args.native,reference_context=args.reference_context,
-                              complete_response_contract=args.complete_response_contract)
+                              complete_response_contract=args.complete_response_contract,limits=limits)
     retained = []
     if args.indexed_unit_responses:
         if not (args.metric == 'B13' or (args.native and args.complete_response_contract)):

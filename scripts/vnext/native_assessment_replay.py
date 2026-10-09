@@ -133,6 +133,9 @@ def _captured_policy_view(*, root, prepared, plan):
 
 
 def replay_native_response(*, prepared, path):
+    if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        request = strict_json_loads(text=prepared.request_bytes.decode())
+        return _replay_native_response(prepared=prepared,path=path,request=request)
     """Verify saved origin and current meaning, without opening a model socket."""
     request = strict_json_loads(text=prepared.request_bytes.decode())
     if request.get('metric_id') == 'D03':
@@ -158,7 +161,8 @@ def _replay_native_response(*, prepared, path, request):
              'NATIVE_ORIGINAL_EVIDENCE_CHANGED')
     intent = strict_json_file(path=path / 'intent.json')
     need(intent['intent_id'] == terminal['intent_id'] and intent['channel'] == 'PROVIDER'
-         and intent['requirement_id'] == REQUIREMENT_ID
+         and intent['requirement_id'] == (prepared.requirement['requirement_id']
+             if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1' else REQUIREMENT_ID)
          and intent['intent_id'] == content_hash(value={k:v for k,v in intent.items() if k != 'intent_id'}),
          'NATIVE_ORIGINAL_INTENT_CHANGED')
     _, current_plan = build_plan(prepared,
@@ -173,6 +177,8 @@ def _replay_native_response(*, prepared, path, request):
         with control._successor_plan_context(repo_root=ROOT, authority=prepared.authority):
             success = control.load_successful_response(workspace_dir=path, plan=plan)
     else:
+        need(prepared.requirement.get('record_type') != 'CURRENT_REQUEST_CONFIGURATION_V1',
+             'CURRENT_NATIVE_REPLAY_CONFIGURATION_CHANGED_USE_SAVED_VERSION')
         with _original_runtime(path) as root:
             view = _captured_policy_view(root=root, prepared=prepared, plan=plan)
             # The identical current D-36 policy supplies nullable-observation
