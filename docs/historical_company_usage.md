@@ -1,6 +1,6 @@
 # 历史公司使用指南
 
-截至2026-10-09，main `4a03f223` 已包含 PR61/58/62/67/71/74/75/76/79/83/86、PR77/78/81/82/84/88，以及事件接收提交 `44719c7e` / `408e89e2`。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及未修订、连续主体的 B01/B02/B04/B05和所选CIK余额的B08/B09。酒店共用计算与四指标历史适配已 main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
+截至2026-10-10，main `f6ef7886` 已包含 PR61/58/62/67/71/74/75/76/79/83/86、PR77/78/81/82/84/88，以及事件接收提交 `44719c7e` / `408e89e2`。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及未修订、连续主体的 B01/B02/B04/B05和所选CIK余额的B08/B09。酒店共用计算与四指标历史适配已 main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
 
 A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C01/E02–E05普通历史适配及公共事件源/宽窗接口已在main；[PR90](https://github.com/wlvh/SEC_metrics/pull/90)和[PR89](https://github.com/wlvh/SEC_metrics/pull/89)已由接收方合入；后续消费者记录继续按本记录的执行版本解释，不改旧运行记录。PR83 的普通在线接续不等于历史模式已能在线发现与补齐来源；本指南的 `fiscal-years` 仍需已保存来源根。代码合入不表示正式采纳、发布或 active 切换。
 
@@ -11,7 +11,7 @@ A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C0
 ```bash
 git fetch origin main
 git worktree add -b review/issue47-hotel-history ../SEC_metrics-history-review \
-  4a03f223
+  f6ef7886
 cd ../SEC_metrics-history-review
 python3 tools/vnext_company.py run --help
 ```
@@ -101,9 +101,9 @@ python3 tools/vnext_company.py results \
 
 实际事件来源窗口、申报、原header条目和出处都经同一保存/读取出口。C01/E03按现行Item5.02披露计数，不把相同集合解释为已经区分任命与离任事件。Paramount FY2025仍有2025全年年报容器及目录批准的2024-01-01至2025-12-31事件测量宽窗；只对这几个事件指标成立，财务及E01不能借用。验证和具体运行版本见[事件主要记录](evidence/issue47_events_receiving_20261009/README.md)。E01内容确认、在线历史发现和缺件补齐不在此已实现范围，完整交付责任继续。
 
-## A13 国际净收入：候选分支的有限接收
+## A13 国际净收入：已入main的有限接收
 
-审查此能力需明确检出该候选，前面的 main 酒店命令不会取得 A13 适配。使用已有仓库的新目录，例如：
+PR105及公共PR104已由接收方合入上述main；使用前面的main检出即可运行A13。以下保留候选检出方法供读取原验证版本，不是新运行前置：
 
 ```bash
 git fetch origin task/issue47-geography-history-20261009
@@ -114,7 +114,7 @@ cd ../SEC_metrics-a13-review
 
 分支已包含其需要的公共 PR104 接缝；无需另外复制未提交文件。来源恢复需在保留历史分支执行上节命令，随后把返回的实际 `source-inputs` 根传入此候选。若分支名或目录已占用，选择新名字，不能覆盖现有任务。
 
-`task/issue47-geography-history-20261009` 在实际 main `6e51f416` 上消费公共 PR104 的显式旧标记版本解析及 A13 公司更新接缝。该分支尚未入 main；当前已实际验证 JPMorgan FY2021–FY2025 的选源、共用检查和计算、同公司首跑／复用、独立 CSV 与出处读取。A13 为源表披露的全年国际净收入金额，使用原表国际合计、收入定义、USD 单位和实际全年窗口。
+`task/issue47-geography-history-20261009` 在实际 main `6e51f416` 上消费公共 PR104 的显式旧标记版本解析及 A13 公司更新接缝。该分支已随PR105进入上述main；当前已实际验证 JPMorgan FY2021–FY2025 的选源、共用检查和计算、同公司首跑／复用、独立 CSV 与出处读取。A13 为源表披露的全年国际净收入金额，使用原表国际合计、收入定义、USD 单位和实际全年窗口。
 
 ```bash
 python3 tools/vnext_company.py run --company jpmorgan_chase \
@@ -125,29 +125,51 @@ python3 tools/vnext_company.py results --company jpmorgan_chase \
 ```
 
 来源使用上面的已提交 SEC 导出恢复根；所有状态和输出写新外部目录。实测五年结果依次为 28,971,000,000、31,968,000,000、34,873,000,000、38,233,000,000、42,758,000,000 USD，各年实际1月1日至12月31日、CIK 19617。修订、接续主体及未决范围分别保留具名限制；其他金融指标、当期 A13 默认入口、其他公司与完整五年业务还待接续。主要记录见 [A13 历史消费者验证](evidence/issue47_geography_receiving_20261009/README.md)。公共接缝允许的是明确传入的历史 A13 工厂，没有默认打开 39 项计算或自动取得来源。
-## A03/A12：候选分支的历史测量期
-`task/issue47-average-risk-history-20261010` 在 main `6e51f416` 上消费公共 PR107 的受控旧 DEI 版本、显式历史工厂及季度保存接口，尚未进入 main。本候选只添加 A03/A12 和三项既有历史措辞适配，不要求先运行其他公司，也不复制公共控制器/保存器。
-git fetch origin task/issue47-average-risk-history-20261010
-git worktree add -b review/issue47-average-risk ../SEC_metrics-average-risk-review \
-  origin/task/issue47-average-risk-history-20261010
-cd ../SEC_metrics-average-risk-review
+## A03/A12：已入main的历史测量期
+`task/issue47-average-risk-history-20261010` 在 main `6e51f416` 上消费公共 PR107 的受控旧 DEI 版本、显式历史工厂及季度保存接口，已随PR107/108进入上述main。本批只添加 A03/A12 和三项既有历史措辞适配，不要求先运行其他公司，也不复制公共控制器/保存器。
+
+```bash
+python3 tools/vnext_company.py run --company jpmorgan_chase \
   --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2025 \
   --metric A03 --metric A12 --source-root /saved/sec/source-inputs \
   --work-dir /new/average-risk/state --output-dir /new/average-risk/runs
+python3 tools/vnext_company.py results --company jpmorgan_chase \
   --state-root /new/average-risk/state --output-root /new/average-risk/read-01
+```
+
 来源仍用上节保留历史分支恢复的实际 `source-inputs` 根；原件只读，目录名称已占用时另选。JPM FY2021 已实测 A03=1.11 ratio（111%），实际2021-10-01至12-31；FY2021是年报分组，不能把该季度平均值年化。A12=55,000,000 USD，是全年平均VaR；95%/一日为风险口径，不是一日测量窗口。同一CLI计算、禁工厂复用、独立读取及原格出处已贯通，见[唯一接收记录](evidence/issue47_average_risk_receiving_20261010/README.md)。JPM FY2021–FY2025十坐标已完成同入口计算、全范围禁工厂复用、独立读取和原参考对照；修订/继任金额处理、其他金融族及在线历史取源仍待；默认当期指标集合没有因此扩大。
-## A04/A09/A11：候选分支的金融历史范围
-`task/issue47-bank-scope-history-20261010` 在 main `6e51f416` 上包含公共 PR109 的受控 DEI 参数及显式历史工厂接口，尚未进入 main。只接所选 NIM、不良贷款比率和 AUM 的既有共同计算与有限历史措辞，未扩大默认当期指标集合。
-git fetch origin task/issue47-bank-scope-history-20261010
-git worktree add -b review/issue47-bank-scope ../SEC_metrics-bank-scope-review \
-  origin/task/issue47-bank-scope-history-20261010
-cd ../SEC_metrics-bank-scope-review
+## A04/A09/A11：已入main的金融历史范围
+`task/issue47-bank-scope-history-20261010` 在 main `6e51f416` 上包含公共 PR109 的受控 DEI 参数及显式历史工厂接口，已随PR109/110进入上述main。只接所选 NIM、不良贷款比率和 AUM 的既有共同计算与有限历史措辞，未扩大默认当期指标集合。
+
+```bash
+python3 tools/vnext_company.py run --company jpmorgan_chase \
+  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2025 \
   --metric A04 --metric A09 --metric A11 --source-root /saved/sec/source-inputs \
   --work-dir /new/bank-scope/state --output-dir /new/bank-scope/runs
+python3 tools/vnext_company.py results --company jpmorgan_chase \
   --state-root /new/bank-scope/state --output-root /new/bank-scope/read-01
+```
+
 来源使用保留历史分支恢复所得实际 `source-inputs` 根，原件只读，状态/输出写外部新目录。JPM FY2021实际A04=.0164 ratio、全年；A09=.0072 ratio及A11=3,113,000,000,000 USD均为12月31日时点，财年是年度容器。A09仍先做完整原生结构化检查，只有明确歧义且来源集合完整才可使用现有HTML解释；缺源或程序异常不能替代。原申报、原格与单位/期间都由同一CSV/出处读口保存。
-同CLI首跑、禁工厂复用及另进程读取已核，见[唯一接收记录](evidence/issue47_bank_scope_receiving_20261010/README.md)。JPM FY2021–FY2025十五坐标已完成同入口处理、全范围复用、独立读取和原参考逐项核对；修订/继任金额、其他金融族和在线历史取源尚待；候选接线不等于完整业务接受。
+同CLI首跑、禁工厂复用及另进程读取已核，见[唯一接收记录](evidence/issue47_bank_scope_receiving_20261010/README.md)。JPM FY2021–FY2025十五坐标已完成同入口处理、全范围复用、独立读取和原参考逐项核对；修订/继任金额、其他金融族和在线历史取源尚待；同入口接线不等于完整业务接受。
 已核的主干输出限制：Paramount FY2021–FY2024所选原件和Trace报送人为813828，但当前公共CSV仍使用今日登记CIK2041610；旧结果读取保留原字节，不能把该列作为当期申报主体结论。公共主体修复仍在接收中，新版本须核同一年度CSV与证据身份，不能手改旧记录。其2025事件宽窗不据此获得拼接财务主体的许可。见[原RPO消费者主要记录](https://github.com/wlvh/SEC_metrics/blob/e4eff843/docs/evidence/issue47_rpo_receiving_20261009/README.md)；PR96是B12候选，尚未进入上述main，完整年度E01仍未交付。
+
+## 同一main的六指标组合
+
+公共PR104/107/109和历史PR105/108/110已在main f6ef7886中，使用本指南的main检出、已保存source-inputs和外部state即可同次选择六个指标；不需要分别检出三个候选或先运行其他公司。
+
+```bash
+python3 tools/vnext_company.py run --company jpmorgan_chase --period fiscal-years \
+  --fiscal-year-start 2021 --fiscal-year-end 2025 \
+  --metric A03 --metric A04 --metric A09 --metric A11 --metric A12 --metric A13 \
+  --source-root /saved/sec/source-inputs --work-dir /new/jpm/state --output-dir /new/jpm/runs
+python3 tools/vnext_company.py results --company jpmorgan_chase \
+  --state-root /new/jpm/state --output-root /new/jpm/read-01
+```
+
+各候选原30个五年结果已由干净main独立读回，值/单位/期间/ResultID及285旧结果文件保持；main分派/状态/三族59小例通过，三个业务模块和测试路径也保留。已有任务读取无需重算。跨版本重复run的具体处理指纹问题已由公共PR115固定bfa0c35b提供有限修补，尚未入main。现有组合分支已消费：原scope任务FY2021混选A03/A04/A13两次禁止factory复跑均零计算，独立读取保18旧值/日期；只允许已核的未使用session/controller剔除及B12说明变化，不手改旧配置。原独立average任务有额外实际解析和writer变更，不能套用该兼容结论；其他来源、规则及公共组合变化继续按实际影响处理。候选原版本的复用结果保持其范围；[同一主要组合记录](https://github.com/wlvh/SEC_metrics/blob/task/issue47-financial-combination-20261010/docs/evidence/issue47_financial_combination_20261010/README.md)给实际版本和边界。
+
+main本批已支持27个历史指标分派，仍要求保存来源；B12候选PR96及公共主体修复PR102尚未main。E01完整内容、在线历史来源发现/补齐、修订与主体变化的未成熟金额路径及完整1950业务责任继续。
 
 ## 状态、复跑和局部失败
 
