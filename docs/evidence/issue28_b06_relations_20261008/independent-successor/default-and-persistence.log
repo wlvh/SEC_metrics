@@ -1,0 +1,23 @@
+Command: PYTHONDONTWRITEBYTECODE=1 /private/tmp/issue28-company-c02-venv-20261006/bin/python docs/evidence/issue28_b06_relations_20261008/verify_default_and_persistence.py --source-root /Users/lyuhongwang/Developer/SEC_metrics
+Returncode: 0
+Initial exec yielded session 55504 after 1.001609791 seconds; final poll completed successfully.
+{
+  "baseline_sha": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+  "seconds": 11.749576958129182,
+  "default_case_identical_to_main": true,
+  "default_case_id": "sha256:7a68af48bbdaf52f1f736c442629b8436c9859cc46e3b5dafc1759971edbe57c",
+  "selected_case_id": "sha256:99e1ab5cfa317ba1ab9b93f52f703478f9a6b7365d28404fe2133f84d3bd0d45",
+  "saved_read_identical": true,
+  "saved_bytes": 2396080,
+  "record_type": "ORDINARY_B06_SPECIAL_SCOPE_SOURCE_V2",
+  "lease_additional_amount": "0",
+  "B06_publication": "WITHHELD",
+  "B06_value": null,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "native_run_created": false
+}
+

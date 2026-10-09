@@ -1,0 +1,782 @@
+{
+  "record_type": "ORDINARY_DEPRECIATION_SOURCE_CANDIDATES",
+  "company_id": "marriott_international",
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2021-12-31",
+    "filingDate": "2022-02-15",
+    "accessionNumber": "0001628280-22-002666",
+    "primaryDocument": "mar-20211231.htm"
+  },
+  "entity": "1048286",
+  "period": {
+    "fiscal_year": 2021,
+    "period_start": "2021-01-01",
+    "period_end": "2021-12-31"
+  },
+  "namespace_policy": {
+    "concept_namespaces": [
+      "http://fasb.org/us-gaap/2021-01-31"
+    ],
+    "dei_namespaces": [
+      "http://xbrl.sec.gov/dei/2021q4"
+    ]
+  },
+  "candidates": [
+    {
+      "concept": [
+        "http://fasb.org/us-gaap/2021-01-31",
+        "AmortizationOfIntangibleAssets"
+      ],
+      "value": "165000000",
+      "unit": "USD",
+      "context_proof": {
+        "context_ref": "i0bba544382824d16b852f57036bcc95e_D20210101-20211231",
+        "identifiers": [
+          {
+            "value": "0001048286",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2021-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2021-12-31"
+          }
+        ],
+        "dimensions": [
+          {
+            "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+            "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+            "dimension_qname": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "FiniteLivedIntangibleAssetsByMajorClassAxis"
+            ],
+            "member_qname": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "ContractBasedIntangibleAssetsMember"
+            ]
+          }
+        ],
+        "typed_dimension_count": 0
+      },
+      "source_reports": {
+        "primary": [
+          {
+            "ordinal": 925,
+            "concept": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "AmortizationOfIntangibleAssets"
+            ],
+            "value": "165000000",
+            "decimals": "-6",
+            "unit": "USD",
+            "reported_scale": "6",
+            "context_proof": {
+              "context_ref": "i0bba544382824d16b852f57036bcc95e_D20210101-20211231",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2021-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2021-12-31"
+                }
+              ],
+              "dimensions": [
+                {
+                  "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+                  "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+                  "dimension_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "FiniteLivedIntangibleAssetsByMajorClassAxis"
+                  ],
+                  "member_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "ContractBasedIntangibleAssetsMember"
+                  ]
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0",
+              "raw_asset_id": "sha256:54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+              "company_id": "marriott_international",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+              "accession": "0001628280-22-002666",
+              "document_name": "mar-20211231.htm",
+              "source_role": "target_primary",
+              "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+            }
+          }
+        ],
+        "xml": [
+          {
+            "ordinal": 925,
+            "concept": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "AmortizationOfIntangibleAssets"
+            ],
+            "value": "165000000",
+            "decimals": "-6",
+            "unit": "USD",
+            "reported_scale": "0",
+            "context_proof": {
+              "context_ref": "i0bba544382824d16b852f57036bcc95e_D20210101-20211231",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2021-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2021-12-31"
+                }
+              ],
+              "dimensions": [
+                {
+                  "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+                  "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+                  "dimension_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "FiniteLivedIntangibleAssetsByMajorClassAxis"
+                  ],
+                  "member_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "ContractBasedIntangibleAssetsMember"
+                  ]
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:2b6e7dfd15eb65385b0da240d48ab60c9b0f3e45b47c1259d93fcd12fa887cf9",
+              "raw_asset_id": "sha256:abf783d13925617bea760f5b83f17af9aece94f440a21fe158d02d156d19bd2b",
+              "company_id": "marriott_international",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231_htm.xml",
+              "accession": "0001628280-22-002666",
+              "document_name": "mar-20211231_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:b6adc5726bdca15f11851a87c5ebb16fe2d084d93757770d0a7ccb5aab5e9aa1"
+            }
+          }
+        ]
+      },
+      "visible_blocks": [
+        {
+          "start_byte": 2069167,
+          "end_byte": 2075459,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "margin-top:9pt;text-indent:22.5pt"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "ix:continuation:25",
+            "div:2"
+          ],
+          "visible_text": "For contracts acquired in business combinations and other intangible assets, we recorded amortization expense of $165 million in 2021, $97 million in 2020, and $105 million in 2019 (of which $62 million in 2021 and none in 2020 and 2019 was included in the “Reimbursed expenses” caption of our Income Statements). For these assets, we estimate that our aggregate amortization expense will be $163 million in 2022, $147 million in 2023, $134 million in 2024, $122 million in 2025, and $110 million in 2026.",
+          "span_sha256": "231f332cba492c60f3ec6b21729aafb6ef0b259117e9e2d05f5a97ea6d6678e8"
+        }
+      ],
+      "full_da_role_established": false,
+      "candidate_id": "sha256:c7c813e0b84c37c360859f4521831cab6a480aa5c4e32da248758b639bd2aad8"
+    },
+    {
+      "concept": [
+        "http://fasb.org/us-gaap/2021-01-31",
+        "AmortizationOfIntangibleAssets"
+      ],
+      "value": "62000000",
+      "unit": "USD",
+      "context_proof": {
+        "context_ref": "iff354faf5ff949f2924ec813098b975f_D20210101-20211231",
+        "identifiers": [
+          {
+            "value": "0001048286",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2021-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2021-12-31"
+          }
+        ],
+        "dimensions": [
+          {
+            "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+            "member_raw": "mar:ReimbursedExpensesMember",
+            "dimension_qname": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "IncomeStatementLocationAxis"
+            ],
+            "member_qname": [
+              "http://www.marriott.com/20211231",
+              "ReimbursedExpensesMember"
+            ]
+          },
+          {
+            "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+            "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+            "dimension_qname": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "FiniteLivedIntangibleAssetsByMajorClassAxis"
+            ],
+            "member_qname": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "ContractBasedIntangibleAssetsMember"
+            ]
+          }
+        ],
+        "typed_dimension_count": 0
+      },
+      "source_reports": {
+        "primary": [
+          {
+            "ordinal": 928,
+            "concept": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "AmortizationOfIntangibleAssets"
+            ],
+            "value": "62000000",
+            "decimals": "-6",
+            "unit": "USD",
+            "reported_scale": "6",
+            "context_proof": {
+              "context_ref": "iff354faf5ff949f2924ec813098b975f_D20210101-20211231",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2021-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2021-12-31"
+                }
+              ],
+              "dimensions": [
+                {
+                  "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+                  "member_raw": "mar:ReimbursedExpensesMember",
+                  "dimension_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "IncomeStatementLocationAxis"
+                  ],
+                  "member_qname": [
+                    "http://www.marriott.com/20211231",
+                    "ReimbursedExpensesMember"
+                  ]
+                },
+                {
+                  "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+                  "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+                  "dimension_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "FiniteLivedIntangibleAssetsByMajorClassAxis"
+                  ],
+                  "member_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "ContractBasedIntangibleAssetsMember"
+                  ]
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0",
+              "raw_asset_id": "sha256:54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+              "company_id": "marriott_international",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+              "accession": "0001628280-22-002666",
+              "document_name": "mar-20211231.htm",
+              "source_role": "target_primary",
+              "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+            }
+          }
+        ],
+        "xml": [
+          {
+            "ordinal": 928,
+            "concept": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "AmortizationOfIntangibleAssets"
+            ],
+            "value": "62000000",
+            "decimals": "-6",
+            "unit": "USD",
+            "reported_scale": "0",
+            "context_proof": {
+              "context_ref": "iff354faf5ff949f2924ec813098b975f_D20210101-20211231",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2021-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2021-12-31"
+                }
+              ],
+              "dimensions": [
+                {
+                  "dimension_raw": "us-gaap:FiniteLivedIntangibleAssetsByMajorClassAxis",
+                  "member_raw": "us-gaap:ContractBasedIntangibleAssetsMember",
+                  "dimension_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "FiniteLivedIntangibleAssetsByMajorClassAxis"
+                  ],
+                  "member_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "ContractBasedIntangibleAssetsMember"
+                  ]
+                },
+                {
+                  "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+                  "member_raw": "mar:ReimbursedExpensesMember",
+                  "dimension_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "IncomeStatementLocationAxis"
+                  ],
+                  "member_qname": [
+                    "http://www.marriott.com/20211231",
+                    "ReimbursedExpensesMember"
+                  ]
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:2b6e7dfd15eb65385b0da240d48ab60c9b0f3e45b47c1259d93fcd12fa887cf9",
+              "raw_asset_id": "sha256:abf783d13925617bea760f5b83f17af9aece94f440a21fe158d02d156d19bd2b",
+              "company_id": "marriott_international",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231_htm.xml",
+              "accession": "0001628280-22-002666",
+              "document_name": "mar-20211231_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:b6adc5726bdca15f11851a87c5ebb16fe2d084d93757770d0a7ccb5aab5e9aa1"
+            }
+          }
+        ]
+      },
+      "visible_blocks": [
+        {
+          "start_byte": 2069167,
+          "end_byte": 2075459,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "margin-top:9pt;text-indent:22.5pt"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "ix:continuation:25",
+            "div:2"
+          ],
+          "visible_text": "For contracts acquired in business combinations and other intangible assets, we recorded amortization expense of $165 million in 2021, $97 million in 2020, and $105 million in 2019 (of which $62 million in 2021 and none in 2020 and 2019 was included in the “Reimbursed expenses” caption of our Income Statements). For these assets, we estimate that our aggregate amortization expense will be $163 million in 2022, $147 million in 2023, $134 million in 2024, $122 million in 2025, and $110 million in 2026.",
+          "span_sha256": "231f332cba492c60f3ec6b21729aafb6ef0b259117e9e2d05f5a97ea6d6678e8"
+        }
+      ],
+      "full_da_role_established": false,
+      "candidate_id": "sha256:c1c1512b4d549052d5dabdf713a36007a354f462256ad56eaac5112ad9c56a97"
+    },
+    {
+      "concept": [
+        "http://fasb.org/us-gaap/2021-01-31",
+        "Depreciation"
+      ],
+      "value": "138000000",
+      "unit": "USD",
+      "context_proof": {
+        "context_ref": "icca842ba47474dceb98fbc4534480e17_D20210101-20211231",
+        "identifiers": [
+          {
+            "value": "0001048286",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2021-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2021-12-31"
+          }
+        ],
+        "dimensions": [],
+        "typed_dimension_count": 0
+      },
+      "source_reports": {
+        "primary": [
+          {
+            "ordinal": 964,
+            "concept": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "Depreciation"
+            ],
+            "value": "138000000",
+            "decimals": "-6",
+            "unit": "USD",
+            "reported_scale": "6",
+            "context_proof": {
+              "context_ref": "icca842ba47474dceb98fbc4534480e17_D20210101-20211231",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2021-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2021-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0",
+              "raw_asset_id": "sha256:54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+              "company_id": "marriott_international",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+              "accession": "0001628280-22-002666",
+              "document_name": "mar-20211231.htm",
+              "source_role": "target_primary",
+              "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+            }
+          }
+        ],
+        "xml": [
+          {
+            "ordinal": 964,
+            "concept": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "Depreciation"
+            ],
+            "value": "138000000",
+            "decimals": "-6",
+            "unit": "USD",
+            "reported_scale": "0",
+            "context_proof": {
+              "context_ref": "icca842ba47474dceb98fbc4534480e17_D20210101-20211231",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2021-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2021-12-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:2b6e7dfd15eb65385b0da240d48ab60c9b0f3e45b47c1259d93fcd12fa887cf9",
+              "raw_asset_id": "sha256:abf783d13925617bea760f5b83f17af9aece94f440a21fe158d02d156d19bd2b",
+              "company_id": "marriott_international",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231_htm.xml",
+              "accession": "0001628280-22-002666",
+              "document_name": "mar-20211231_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:b6adc5726bdca15f11851a87c5ebb16fe2d084d93757770d0a7ccb5aab5e9aa1"
+            }
+          }
+        ]
+      },
+      "visible_blocks": [
+        {
+          "start_byte": 2116059,
+          "end_byte": 2122486,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "margin-top:9pt;text-indent:22.5pt"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:666"
+          ],
+          "visible_text": "We record property and equipment at cost, including interest and real estate taxes we incur during development and construction. We capitalize the cost of improvements that extend the useful life of property and equipment when we incur them. These capitalized costs may include structural costs, equipment, fixtures, floor, and wall coverings. We expense all repair and maintenance costs when we incur them. We compute depreciation using the straight-line method over the estimated useful lives of the assets (generally three to 40 years), and we amortize leasehold improvements over the shorter of the asset life or lease term. Our gross depreciation expense totaled $138 million in 2021, $322 million in 2020, and $346 million in 2019 (of which $49 million in 2021, $109 million in 2020, and $121 million in 2019 was included in the “Reimbursed expenses” caption of our Income Statements). Fixed assets attributed to operations located outside the U.S. were $623 million at year-end 2021 and $679 million at year-end 2020. Our gross depreciation expense included impairment charges for property and equipment, including ",
+          "span_sha256": "48e0006fefee0ba5e43e1cc9abc7677f48a858d289324b63f767361fea2878c2"
+        }
+      ],
+      "full_da_role_established": false,
+      "candidate_id": "sha256:b616f3e90912987ab24302a1f4da4fe71c33ba0442e8890e6e66ee8166159e9f"
+    },
+    {
+      "concept": [
+        "http://fasb.org/us-gaap/2021-01-31",
+        "Depreciation"
+      ],
+      "value": "49000000",
+      "unit": "USD",
+      "context_proof": {
+        "context_ref": "i979089d25b5e40e19ddab18a3605efc4_D20210101-20211231",
+        "identifiers": [
+          {
+            "value": "0001048286",
+            "scheme": "http://www.sec.gov/CIK"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2021-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2021-12-31"
+          }
+        ],
+        "dimensions": [
+          {
+            "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+            "member_raw": "mar:ReimbursedCostsMember",
+            "dimension_qname": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "IncomeStatementLocationAxis"
+            ],
+            "member_qname": [
+              "http://www.marriott.com/20211231",
+              "ReimbursedCostsMember"
+            ]
+          }
+        ],
+        "typed_dimension_count": 0
+      },
+      "source_reports": {
+        "primary": [
+          {
+            "ordinal": 967,
+            "concept": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "Depreciation"
+            ],
+            "value": "49000000",
+            "decimals": "-6",
+            "unit": "USD",
+            "reported_scale": "6",
+            "context_proof": {
+              "context_ref": "i979089d25b5e40e19ddab18a3605efc4_D20210101-20211231",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2021-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2021-12-31"
+                }
+              ],
+              "dimensions": [
+                {
+                  "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+                  "member_raw": "mar:ReimbursedCostsMember",
+                  "dimension_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "IncomeStatementLocationAxis"
+                  ],
+                  "member_qname": [
+                    "http://www.marriott.com/20211231",
+                    "ReimbursedCostsMember"
+                  ]
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:d0c992921c09a5397ceb543f3ceadb77c0de62273773b81ceec4836d559e37b0",
+              "raw_asset_id": "sha256:54effe78b84966cd0793dcb23b8db4ad30b0614ea3d42074f3ece89adebe8bf5",
+              "company_id": "marriott_international",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231.htm",
+              "accession": "0001628280-22-002666",
+              "document_name": "mar-20211231.htm",
+              "source_role": "target_primary",
+              "request_attempt_id": "request:attempt:36f896c0fded2624677e9814f876621965fe1f061b3e483c1e706c578c541637"
+            }
+          }
+        ],
+        "xml": [
+          {
+            "ordinal": 967,
+            "concept": [
+              "http://fasb.org/us-gaap/2021-01-31",
+              "Depreciation"
+            ],
+            "value": "49000000",
+            "decimals": "-6",
+            "unit": "USD",
+            "reported_scale": "0",
+            "context_proof": {
+              "context_ref": "i979089d25b5e40e19ddab18a3605efc4_D20210101-20211231",
+              "identifiers": [
+                {
+                  "value": "0001048286",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2021-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2021-12-31"
+                }
+              ],
+              "dimensions": [
+                {
+                  "dimension_raw": "us-gaap:IncomeStatementLocationAxis",
+                  "member_raw": "mar:ReimbursedCostsMember",
+                  "dimension_qname": [
+                    "http://fasb.org/us-gaap/2021-01-31",
+                    "IncomeStatementLocationAxis"
+                  ],
+                  "member_qname": [
+                    "http://www.marriott.com/20211231",
+                    "ReimbursedCostsMember"
+                  ]
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:2b6e7dfd15eb65385b0da240d48ab60c9b0f3e45b47c1259d93fcd12fa887cf9",
+              "raw_asset_id": "sha256:abf783d13925617bea760f5b83f17af9aece94f440a21fe158d02d156d19bd2b",
+              "company_id": "marriott_international",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828022002666/mar-20211231_htm.xml",
+              "accession": "0001628280-22-002666",
+              "document_name": "mar-20211231_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:b6adc5726bdca15f11851a87c5ebb16fe2d084d93757770d0a7ccb5aab5e9aa1"
+            }
+          }
+        ]
+      },
+      "visible_blocks": [
+        {
+          "start_byte": 2116059,
+          "end_byte": 2122486,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "margin-top:9pt;text-indent:22.5pt"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:666"
+          ],
+          "visible_text": "We record property and equipment at cost, including interest and real estate taxes we incur during development and construction. We capitalize the cost of improvements that extend the useful life of property and equipment when we incur them. These capitalized costs may include structural costs, equipment, fixtures, floor, and wall coverings. We expense all repair and maintenance costs when we incur them. We compute depreciation using the straight-line method over the estimated useful lives of the assets (generally three to 40 years), and we amortize leasehold improvements over the shorter of the asset life or lease term. Our gross depreciation expense totaled $138 million in 2021, $322 million in 2020, and $346 million in 2019 (of which $49 million in 2021, $109 million in 2020, and $121 million in 2019 was included in the “Reimbursed expenses” caption of our Income Statements). Fixed assets attributed to operations located outside the U.S. were $623 million at year-end 2021 and $679 million at year-end 2020. Our gross depreciation expense included impairment charges for property and equipment, including ",
+          "span_sha256": "48e0006fefee0ba5e43e1cc9abc7677f48a858d289324b63f767361fea2878c2"
+        }
+      ],
+      "full_da_role_established": false,
+      "candidate_id": "sha256:62acf3ad734a3aa617d8218c1aae6ef972282ee0f5a3163c9724c67f775b61dc"
+    }
+  ],
+  "scope_relations": [
+    {
+      "parent_candidate_id": "sha256:c7c813e0b84c37c360859f4521831cab6a480aa5c4e32da248758b639bd2aad8",
+      "child_candidate_id": "sha256:c1c1512b4d549052d5dabdf713a36007a354f462256ad56eaac5112ad9c56a97",
+      "kind": "CONTEXT_SCOPE_SPECIALIZATION",
+      "additive_relationship_established": false,
+      "reported_inclusion_requires_content_check": true
+    },
+    {
+      "parent_candidate_id": "sha256:b616f3e90912987ab24302a1f4da4fe71c33ba0442e8890e6e66ee8166159e9f",
+      "child_candidate_id": "sha256:62acf3ad734a3aa617d8218c1aae6ef972282ee0f5a3163c9724c67f775b61dc",
+      "kind": "CONTEXT_SCOPE_SPECIALIZATION",
+      "additive_relationship_established": false,
+      "reported_inclusion_requires_content_check": true
+    }
+  ],
+  "issues": [],
+  "remaining_scope": [
+    "FULL_APPROVED_DA_COVERAGE_NOT_ESTABLISHED",
+    "REPORTED_INCLUSION_AND_IMPAIRMENT_REQUIRE_CONTENT_CHECK"
+  ],
+  "metric_result_created": false,
+  "definition_complete": false,
+  "source_candidates_id": "sha256:e4b1ee44ade45f3786de62444c3236a399b6386e8ce12969959bfbd28c90d8b7"
+}

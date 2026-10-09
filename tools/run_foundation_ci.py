@@ -57,6 +57,44 @@ def run_fast_suite(selected):
             'diagnostics': stream.getvalue()}
 
 
+def run_fast_suite(selected):
+    """Use unittest's class/module fixtures once; keep each failure observable."""
+    # Direct script invocation starts with tools/, whereas `python -m unittest`
+    # starts with the repository root. In-process loading needs that same root.
+    if str(inherited.REPO_ROOT) not in sys.path:
+        sys.path.insert(0, str(inherited.REPO_ROOT))
+    suite = unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(s) for s in selected)
+    stream = io.StringIO(); start = time.monotonic()
+    with redirect_stdout(stream), redirect_stderr(stream):
+        result = unittest.TextTestRunner(stream=stream, verbosity=1).run(suite)
+    return {'return_code': 0 if result.wasSuccessful() else 1,
+            'duration_seconds': time.monotonic()-start,
+            'test_count': result.testsRun,
+            'failures': [{'test': str(t), 'traceback': error} for t,error in result.failures],
+            'errors': [{'test': str(t), 'traceback': error} for t,error in result.errors],
+            'skips': [{'test': str(t), 'reason': reason} for t,reason in result.skipped],
+            'diagnostics': stream.getvalue()}
+
+
+def run_fast_suite(selected):
+    """Use unittest's class/module fixtures once; keep each failure observable."""
+    # Direct script invocation starts with tools/, whereas `python -m unittest`
+    # starts with the repository root. In-process loading needs that same root.
+    if str(inherited.REPO_ROOT) not in sys.path:
+        sys.path.insert(0, str(inherited.REPO_ROOT))
+    suite = unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromName(s) for s in selected)
+    stream = io.StringIO(); start = time.monotonic()
+    with redirect_stdout(stream), redirect_stderr(stream):
+        result = unittest.TextTestRunner(stream=stream, verbosity=1).run(suite)
+    return {'return_code': 0 if result.wasSuccessful() else 1,
+            'duration_seconds': time.monotonic()-start,
+            'test_count': result.testsRun,
+            'failures': [{'test': str(t), 'traceback': error} for t,error in result.failures],
+            'errors': [{'test': str(t), 'traceback': error} for t,error in result.errors],
+            'skips': [{'test': str(t), 'reason': reason} for t,reason in result.skipped],
+            'diagnostics': stream.getvalue()}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--suite', choices=('fast','source-material'), required=True)

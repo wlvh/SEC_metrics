@@ -1,0 +1,725 @@
+{
+  "elapsed_seconds": "159.077807",
+  "record_type": "LOCAL_COMPANY_RUN_SUMMARY_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261009T064349Z-e6255268",
+  "period_request": "latest-complete-fy",
+  "selected_metrics": [
+    "B01",
+    "B02"
+  ],
+  "configured_metrics": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08",
+    "B09",
+    "B10",
+    "B11",
+    "B12",
+    "B13",
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+  ],
+  "configured_metric_count": 39,
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/output/20261009T064349Z-e6255268",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 29
+  },
+  "production_authorized": false,
+  "stages": {
+    "acquire": {
+      "returncode": 0,
+      "elapsed_seconds": "111.053095",
+      "command": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/programs/5fa4c04f7e4408eb7fa5b91ace5de8891b701da8ac25082027e32264cde538f4/tools/vnext_company.py",
+        "acquire",
+        "--company",
+        "marriott_international",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task",
+        "--max-sec-requests",
+        "120",
+        "--sec-allowance",
+        "120"
+      ],
+      "status": "SOURCES_READY",
+      "report_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/output/20261009T064349Z-e6255268/stages/acquire.json"
+    },
+    "handoff": {
+      "returncode": 0,
+      "elapsed_seconds": "4.140903",
+      "command": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/programs/5fa4c04f7e4408eb7fa5b91ace5de8891b701da8ac25082027e32264cde538f4/tools/vnext_company.py",
+        "export",
+        "--source-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/acquisition/source-inputs",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/handoffs/20261009T064349Z-e6255268",
+        "--trust-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/trust/company",
+        "--company",
+        "marriott_international",
+        "--metric",
+        "B01",
+        "--metric",
+        "B02"
+      ],
+      "status": null,
+      "report_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/output/20261009T064349Z-e6255268/stages/handoff.json"
+    },
+    "install": {
+      "returncode": 0,
+      "elapsed_seconds": "0.681622",
+      "command": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/programs/5fa4c04f7e4408eb7fa5b91ace5de8891b701da8ac25082027e32264cde538f4/tools/vnext_company.py",
+        "install",
+        "--package-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/handoffs/20261009T064349Z-e6255268",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/company-state",
+        "--trust-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/trust/company",
+        "--company",
+        "marriott_international"
+      ],
+      "status": "INSTALLED",
+      "report_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/output/20261009T064349Z-e6255268/stages/install.json"
+    },
+    "compute": {
+      "returncode": 0,
+      "elapsed_seconds": "30.168959",
+      "command": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/programs/5fa4c04f7e4408eb7fa5b91ace5de8891b701da8ac25082027e32264cde538f4/tools/vnext_company.py",
+        "compute",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/company-state",
+        "--trust-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/trust/company",
+        "--company",
+        "marriott_international",
+        "--metric",
+        "B01",
+        "--metric",
+        "B02"
+      ],
+      "status": null,
+      "report_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/output/20261009T064349Z-e6255268/stages/compute.json"
+    },
+    "export-results": {
+      "returncode": 0,
+      "elapsed_seconds": "9.882322",
+      "command": [
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/programs/5fa4c04f7e4408eb7fa5b91ace5de8891b701da8ac25082027e32264cde538f4/tools/vnext_company.py",
+        "export-results",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/company-state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/result-exports/20261009T064349Z-e6255268",
+        "--trust-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/trust/company",
+        "--company",
+        "marriott_international",
+        "--runtime-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/programs/5fa4c04f7e4408eb7fa5b91ace5de8891b701da8ac25082027e32264cde538f4"
+      ],
+      "status": "EXPORTED",
+      "report_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/output/20261009T064349Z-e6255268/stages/export-results.json"
+    }
+  },
+  "processing": {
+    "saved_d04_configured": false,
+    "new_provider_paid_calls_authorized": false,
+    "new_local_model_entry": null,
+    "pending_owner_interfaces": {
+      "B13": 28,
+      "D03": 28
+    }
+  },
+  "program_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/programs/5fa4c04f7e4408eb7fa5b91ace5de8891b701da8ac25082027e32264cde538f4",
+  "retained_native_main_commit": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+  "preparation_program_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/programs/5fa4c04f7e4408eb7fa5b91ace5de8891b701da8ac25082027e32264cde538f4",
+  "source_status": "SOURCES_READY",
+  "source_execution_mode": "LIVE",
+  "new_downloads": [
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "roles": [
+        "sec_submissions_inventory"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:366aea47101064a9ea94514053cccbf21628d8a38144f052a5310aeb63744614",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+      "roles": [
+        "current_annual_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:17da59568cbc3fa1c220b338274aee0844134d8482e5dc8b98798262e028c3d1",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "roles": [
+        "companyfacts"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:d41536233929c2efe0938c774058edce3918020c461c59e87fbe0725519c17d8",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/index.json",
+      "roles": [
+        "annual_accession_index"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:e60b53ee61b52d27ea3fc6af0629f953b9ccaddc6ca8d11f34562231b0797823",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231_htm.xml",
+      "roles": [
+        "annual_accession_instance"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:355f2d457238ceba92bba0ec64172fbd1900672c287ac9ad5373cbd83f50bf40",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+      "roles": [
+        "prior_annual_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:bb425cdbfa9e77ac099d8315047d7a8f0a0ec7d6e1f9cf6e165f56131b80480c",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/index.json",
+      "roles": [
+        "annual_accession_index"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:a7a15ea8f52801515c1198d0d20d9ae8d42326fdd4e41a6d47aa63795baa6a02",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml",
+      "roles": [
+        "annual_accession_instance"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:1b5c199bf9d1a32508e8e582de372a7b69df99a9d75032e6bd9892c8c8f7f1b2",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000114036126011590/ny20062722x771_def14a.htm",
+      "roles": [
+        "proxy_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:aa39ad49e6d34cce2dc03b5d3028aadabc93bcc63fd48f8665e5bc939d469094",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/d890503d8k.htm",
+      "roles": [
+        "fiscal_event_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:5827c9ef2ba92bbf66f2b9bffc567eabce06a9e87397257b898defd3de794096",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+      "roles": [
+        "fiscal_event_header"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:6d32d7ac26e30252bec090af83b7eb1d70b0316fe27ee2499a0b81f9b4fa88ba",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/mar-20250211.htm",
+      "roles": [
+        "fiscal_event_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:c0cbdeab0d0ab195e6806fee36b9303e9fd795864e6b618d22cf8a062f833f6d",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/0001628280-25-004772.hdr.sgml",
+      "roles": [
+        "fiscal_event_header"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:c0541860a4b274a2dc16c049a08c2d66250f56048e3d2d7a61486e1b6fb6cea5",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/d927802d8k.htm",
+      "roles": [
+        "fiscal_event_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:cb1a3f53688415e7338654259673578ec9cb2c02af2bac03639adc1a57bbe4fa",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/0001193125-25-036732.hdr.sgml",
+      "roles": [
+        "fiscal_event_header"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:92a0e437ce6c485566ee4500ae57b5a65f9124b01ce5b1e0749c1f4865a8e7be",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/mar-20250506.htm",
+      "roles": [
+        "fiscal_event_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:12e7abfadc481552afee348b119d4c1ea1df0bb666c94ddb540288f5c0dfc5d0",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/0001628280-25-022390.hdr.sgml",
+      "roles": [
+        "fiscal_event_header"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:11bf3f1224ec924a429df3b1883388518f1cacef03c692f9fcba78283e186c6a",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/d888404d8k.htm",
+      "roles": [
+        "fiscal_event_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:b6f41156c2eb484c5d7c236f79ba4db84f1d8e74c4b97874ca7c956442b93446",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/0001193125-25-118853.hdr.sgml",
+      "roles": [
+        "fiscal_event_header"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:98091727fe3e88c8ea2efb902f51a1353911950ae55843349e0d9ecbe3d42128",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/d935320d8ka.htm",
+      "roles": [
+        "fiscal_event_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:3e65b2e4e8750993685587f980e0222e71f9c262a34f293fa5754ce3f90dfa6e",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/0001193125-25-118861.hdr.sgml",
+      "roles": [
+        "fiscal_event_header"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:f02b04add24f2d1a77de4fcc9d6bcdf248286dda2b9d275cc59fcb7160aca288",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/d858138d8k.htm",
+      "roles": [
+        "fiscal_event_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:cccd4faf1d3bd5745671758fb8cc0ea8a06e5fe388a24c5c7d438d9380115673",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+      "roles": [
+        "fiscal_event_header"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:5ad314508a346c37daaf1b627f25101f053924fa547734c6d9a5444b84d43222",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/mar-20250805.htm",
+      "roles": [
+        "fiscal_event_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:cf6134a59747b7a0ae15c52def3bf4d6fb720cf60bbcbebe7741fa2b5e9ac876",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/0001628280-25-037592.hdr.sgml",
+      "roles": [
+        "fiscal_event_header"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:f5a284f327d216f269168048e151055b989cf5f2c11a514a6ee26863acf319af",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/d52476d8k.htm",
+      "roles": [
+        "fiscal_event_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:43f4f7b05a4ca38235e972126336c49814d3ccfea1cdde7de4455aa009a71e3f",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/0001193125-25-184082.hdr.sgml",
+      "roles": [
+        "fiscal_event_header"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:e52bb3d54ccc154011a7563f643c92f6932110808ccd790b15d48e2176082674",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/mar-20251104.htm",
+      "roles": [
+        "fiscal_event_primary"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:698d9a03e8fdf729aa72041581618e38707ee78bc91815d92888776b573c8c2c",
+      "execution_mode": "LIVE"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/0001048286-25-000011.hdr.sgml",
+      "roles": [
+        "fiscal_event_header"
+      ],
+      "status": "SUCCEEDED",
+      "receipt_id": "sha256:b2db8afd84e75074186ff798990d2a4dd8e7e06a25ba4dd63fd3f7e87c3b0467",
+      "execution_mode": "LIVE"
+    }
+  ],
+  "reused_source_urls": [],
+  "unresolved_source_dependencies": [],
+  "source_discovery": {
+    "company_id": "marriott_international",
+    "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+    "limitations": [],
+    "requirement_count": 29
+  },
+  "actual_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "filing": {
+    "accessionNumber": "0001048286-26-000007",
+    "filingDate": "2026-02-10",
+    "reportDate": "2025-12-31",
+    "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+    "act": "34",
+    "form": "10-K",
+    "fileNumber": "001-13881",
+    "filmNumber": "26614897",
+    "items": "",
+    "core_type": "XBRL",
+    "size": 12393244,
+    "isXBRL": 1,
+    "isInlineXBRL": 1,
+    "isXBRLNumeric": null,
+    "primaryDocument": "mar-20251231.htm",
+    "primaryDocDescription": "10-K"
+  },
+  "native_result_export": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/task/result-exports/20261009T064349Z-e6255268",
+  "source_checkpoint_id": "sha256:5d1097b53b064fe77c8edee71bd7f0448a2bd9456657a143eb9cc24feec28799",
+  "result_view": [
+    {
+      "metric_id": "B01",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "run_id": "run:ordinary-integrated:08b487b8385b11e64ee6c1dab296988d3e69a5f0ceb1e91a249c4059752e1b4c",
+      "period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "period_role": "RUN_ARCHIVE_COORDINATE",
+      "measurement_period": {
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "requirement_id": "issue_54_v4",
+      "requirement_closure_hash": "sha256:10eb2fe8f2455d62f09010149afa1f14e45242d3537fef7fa2c506c5f75430b2",
+      "source_checkpoint_id": "sha256:5d1097b53b064fe77c8edee71bd7f0448a2bd9456657a143eb9cc24feec28799",
+      "current_input_matches": true,
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED",
+      "replay_status": "PASSED"
+    },
+    {
+      "metric_id": "B02",
+      "result_id": "sha256:1c69ffc278b38e71f6d4969777154cbc96bf37fc5f3cce14046f23beded805cb",
+      "run_id": "run:ordinary-integrated:93eb47f3f12edd709f169446ee264f609f560f6e254f352384664ccd2c29355f",
+      "period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "period_role": "RUN_ARCHIVE_COORDINATE",
+      "measurement_period": {
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "requirement_id": "issue_54_v4",
+      "requirement_closure_hash": "sha256:10eb2fe8f2455d62f09010149afa1f14e45242d3537fef7fa2c506c5f75430b2",
+      "source_checkpoint_id": "sha256:5d1097b53b064fe77c8edee71bd7f0448a2bd9456657a143eb9cc24feec28799",
+      "current_input_matches": true,
+      "result_validity": "REPLAY_VERIFIED_CONTENT_NOT_ACCEPTED",
+      "replay_status": "PASSED"
+    }
+  ],
+  "metrics": [
+    {
+      "metric_id": "A01",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A02",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A03",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A04",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A05",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A06",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A07",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A08",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A09",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A10",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A11",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A12",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "A13",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "B01",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "abc21ee22228476684f4a41d85141be9",
+      "latest_attempt": "abc21ee22228476684f4a41d85141be9",
+      "successful_attempt": "abc21ee22228476684f4a41d85141be9",
+      "new_candidate_created": true
+    },
+    {
+      "metric_id": "B02",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "1a160f9848e14f7498242b50949305c2",
+      "latest_attempt": "1a160f9848e14f7498242b50949305c2",
+      "successful_attempt": "1a160f9848e14f7498242b50949305c2",
+      "new_candidate_created": true
+    },
+    {
+      "metric_id": "B03",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "B04",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "B05",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "B06",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "B07",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "B08",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "B09",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "B10",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "B11",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "B12",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "B13",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "C01",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "C02",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "C03",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "C04",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "D01",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "D02",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "D03",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "D04",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "E01",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "E02",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "E03",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "E04",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "E05",
+      "status": "NOT_REQUESTED",
+      "business_metric_completed": false
+    }
+  ],
+  "flow_completed": true,
+  "status": "FLOW_COMPLETED",
+  "all_configured_business_metrics_completed": false,
+  "outputs": {
+    "metrics_matrix.csv": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/output/20261009T064349Z-e6255268/metrics_matrix.csv",
+    "metric_evidence.csv": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/output/20261009T064349Z-e6255268/metric_evidence.csv",
+    "run_summary.json": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/native-rate-live-branch-20261009/output/20261009T064349Z-e6255268/run_summary.json"
+  }
+}

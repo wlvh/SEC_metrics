@@ -1,0 +1,437 @@
+{
+  "source_kind": "SYNTHETIC_REAL_PARSER_CONTROL_ONLY",
+  "cases": [
+    {
+      "name": "ordinary_usd",
+      "introduction": "<p>The carrying amounts are as follows (in dollars).</p>",
+      "caption": "",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "complete_B06": false,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "accepted_visible_units": [
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1655,
+              "span_sha256": "5a93d1bb401859d8d1662b87490719cda8f468404ede1867ef209bc7f98b00a2"
+            }
+          }
+        ],
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1655,
+              "span_sha256": "5a93d1bb401859d8d1662b87490719cda8f468404ede1867ef209bc7f98b00a2"
+            }
+          }
+        ]
+      ],
+      "matches_expected": true
+    },
+    {
+      "name": "foreign_business_before",
+      "introduction": "<p>Euro-denominated debt is translated into U.S. dollars for presentation.</p><p>The carrying amounts are as follows (in dollars).</p>",
+      "caption": "",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "complete_B06": false,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "accepted_visible_units": [
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1733,
+              "span_sha256": "7cdf25f3585f4613732f207f69c9a572e2d213276b93798e2a9f67ddaae3ba94"
+            }
+          }
+        ],
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1733,
+              "span_sha256": "7cdf25f3585f4613732f207f69c9a572e2d213276b93798e2a9f67ddaae3ba94"
+            }
+          }
+        ]
+      ],
+      "matches_expected": true
+    },
+    {
+      "name": "foreign_business_after",
+      "introduction": "<p>The carrying amounts are as follows (in dollars).</p><p>Euro-denominated debt is translated into U.S. dollars for presentation.</p>",
+      "caption": "",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "complete_B06": false,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "accepted_visible_units": [
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1733,
+              "span_sha256": "e61eda9c36babb235b4b74896117ecabec3eefa656f788148d8313370be3eff4"
+            }
+          }
+        ],
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1733,
+              "span_sha256": "e61eda9c36babb235b4b74896117ecabec3eefa656f788148d8313370be3eff4"
+            }
+          }
+        ]
+      ],
+      "matches_expected": true
+    },
+    {
+      "name": "prior_issuance_units",
+      "introduction": "<p>An earlier issuance was reported (in millions).</p><p>The following table reports the carrying amounts.</p>",
+      "caption": "<caption>Carrying amounts (in dollars)</caption>",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "complete_B06": false,
+      "selected_introduction": "",
+      "accepted_visible_units": [
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "table_id": "table_000001"
+            }
+          }
+        ],
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "table_id": "table_000001"
+            }
+          }
+        ]
+      ],
+      "matches_expected": true
+    },
+    {
+      "name": "explicit_euros_intro",
+      "introduction": "<p>The carrying amounts are as follows (in euros).</p>",
+      "caption": "",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "complete_B06": null,
+      "selected_introduction": "The carrying amounts are as follows (in euros).",
+      "matches_expected": true
+    },
+    {
+      "name": "explicit_millions_euros_intro",
+      "introduction": "<p>The carrying amounts are as follows (in millions of euros).</p>",
+      "caption": "",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "complete_B06": null,
+      "selected_introduction": "The carrying amounts are as follows (in millions of euros).",
+      "matches_expected": true
+    },
+    {
+      "name": "explicit_eur_caption",
+      "introduction": "<p>The carrying amounts are as follows (in dollars).</p>",
+      "caption": "<caption>Amounts (in EUR)</caption>",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "complete_B06": null,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "matches_expected": true
+    },
+    {
+      "name": "explicit_gbp_caption",
+      "introduction": "<p>The carrying amounts are as follows (in dollars).</p>",
+      "caption": "<caption>Amounts (in GBP)</caption>",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "complete_B06": null,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "matches_expected": true
+    },
+    {
+      "name": "explicit_jpy_caption",
+      "introduction": "<p>The carrying amounts are as follows (in dollars).</p>",
+      "caption": "<caption>Amounts (in JPY)</caption>",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "complete_B06": null,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "matches_expected": true
+    },
+    {
+      "name": "conflicting_scale",
+      "introduction": "<p>The carrying amounts are as follows (in dollars).</p>",
+      "caption": "<caption>Amounts (in millions)</caption>",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "complete_B06": null,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "matches_expected": true
+    },
+    {
+      "name": "standalone_usd",
+      "introduction": "<p>(in USD)</p>",
+      "caption": "",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "complete_B06": false,
+      "selected_introduction": "(in USD)",
+      "accepted_visible_units": [
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1614,
+              "span_sha256": "2150b04c8bd7c8b6fa4ceca522fc3fbbdeba9efd94675808e240928c9fdd5b5b"
+            }
+          }
+        ],
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1614,
+              "span_sha256": "2150b04c8bd7c8b6fa4ceca522fc3fbbdeba9efd94675808e240928c9fdd5b5b"
+            }
+          }
+        ]
+      ],
+      "matches_expected": true
+    },
+    {
+      "name": "standalone_euros",
+      "introduction": "<p>(in euros)</p>",
+      "caption": "",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "complete_B06": null,
+      "selected_introduction": "(in euros)",
+      "matches_expected": true
+    },
+    {
+      "name": "same_div_usd",
+      "introduction": "<div>The carrying amounts are as follows (in dollars).",
+      "caption": "",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "complete_B06": false,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "accepted_visible_units": [
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1653,
+              "span_sha256": "c880122bffbb28b80d1cfa93b52fa4c424b525d3c12dbee6131f641a7efcbb16"
+            }
+          }
+        ],
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1653,
+              "span_sha256": "c880122bffbb28b80d1cfa93b52fa4c424b525d3c12dbee6131f641a7efcbb16"
+            }
+          }
+        ]
+      ],
+      "matches_expected": true
+    },
+    {
+      "name": "no_declaration",
+      "introduction": "<p>The following table reports the carrying amounts.</p>",
+      "caption": "",
+      "expected": "UNRESOLVED",
+      "actual": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "complete_B06": null,
+      "selected_introduction": "",
+      "matches_expected": true
+    },
+    {
+      "name": "foreign_symbol_euro_caption",
+      "introduction": "<p>The carrying amounts are as follows (in dollars).</p>",
+      "caption": "<caption>Amounts (in €)</caption>",
+      "expected": "UNRESOLVED",
+      "actual": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "complete_B06": false,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "accepted_visible_units": [
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1655,
+              "span_sha256": "5a93d1bb401859d8d1662b87490719cda8f468404ede1867ef209bc7f98b00a2"
+            }
+          }
+        ],
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1655,
+              "span_sha256": "5a93d1bb401859d8d1662b87490719cda8f468404ede1867ef209bc7f98b00a2"
+            }
+          }
+        ]
+      ],
+      "matches_expected": false
+    },
+    {
+      "name": "foreign_symbol_pound_caption",
+      "introduction": "<p>The carrying amounts are as follows (in dollars).</p>",
+      "caption": "<caption>Amounts (in £)</caption>",
+      "expected": "UNRESOLVED",
+      "actual": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "complete_B06": false,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "accepted_visible_units": [
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1655,
+              "span_sha256": "5a93d1bb401859d8d1662b87490719cda8f468404ede1867ef209bc7f98b00a2"
+            }
+          }
+        ],
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1655,
+              "span_sha256": "5a93d1bb401859d8d1662b87490719cda8f468404ede1867ef209bc7f98b00a2"
+            }
+          }
+        ]
+      ],
+      "matches_expected": false
+    },
+    {
+      "name": "foreign_symbol_yen_caption",
+      "introduction": "<p>The carrying amounts are as follows (in dollars).</p>",
+      "caption": "<caption>Amounts (in ¥)</caption>",
+      "expected": "UNRESOLVED",
+      "actual": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "complete_B06": false,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "accepted_visible_units": [
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1655,
+              "span_sha256": "5a93d1bb401859d8d1662b87490719cda8f468404ede1867ef209bc7f98b00a2"
+            }
+          }
+        ],
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1655,
+              "span_sha256": "5a93d1bb401859d8d1662b87490719cda8f468404ede1867ef209bc7f98b00a2"
+            }
+          }
+        ]
+      ],
+      "matches_expected": false
+    },
+    {
+      "name": "explicit_caption_euro_unit_marker",
+      "introduction": "<p>The carrying amounts are as follows (in dollars).</p>",
+      "caption": "<caption>Amounts (€)</caption>",
+      "expected": "UNRESOLVED",
+      "actual": "REPORTED_INCLUDED",
+      "additional_debt_amount": "0",
+      "complete_B06": false,
+      "selected_introduction": "The carrying amounts are as follows (in dollars).",
+      "accepted_visible_units": [
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1655,
+              "span_sha256": "5a93d1bb401859d8d1662b87490719cda8f468404ede1867ef209bc7f98b00a2"
+            }
+          }
+        ],
+        [
+          {
+            "factor": "1",
+            "proof": {
+              "start_byte": 0,
+              "end_byte": 1655,
+              "span_sha256": "5a93d1bb401859d8d1662b87490719cda8f468404ede1867ef209bc7f98b00a2"
+            }
+          }
+        ]
+      ],
+      "matches_expected": false
+    },
+    {
+      "name": "prior_as_follows_issuance",
+      "introduction": "<p>The prior issuance amounts were as follows (in millions).</p><p>The following table reports the carrying amounts.</p>",
+      "caption": "<caption>Carrying amounts (in dollars)</caption>",
+      "expected": "REPORTED_INCLUDED",
+      "actual": "UNRESOLVED",
+      "additional_debt_amount": null,
+      "complete_B06": null,
+      "selected_introduction": "The prior issuance amounts were as follows (in millions).",
+      "matches_expected": false
+    }
+  ],
+  "count": 19,
+  "mismatches": 5,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}

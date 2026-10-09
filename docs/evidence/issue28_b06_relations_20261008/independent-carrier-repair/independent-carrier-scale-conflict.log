@@ -1,0 +1,22 @@
+carrier_native primary {"fact": "{'tag': 'ix:nonfraction', 'qualified_name': 'us-gaap:OtherLoansPayableCurrent', 'context_ref': 'c-696', 'unit_ref': 'usd', 'scale': '3', 'sign': '', 'ordinal': 2443, 'text': '226'}", "value_usd": "226000", "unit": {"measures": [["http://www.xbrl.org/2003/iso4217", "USD"]], "divided": false}, "context": "{'context_ref': 'c-696', 'dimensions': mappingproxy({'us-gaap:LongtermDebtTypeAxis': 'us-gaap:NotesPayableOtherPayablesMember', 'us-gaap:StatementBusinessSegmentsAxis': 'f:CompanyExcludingFordCreditMember'}), 'entity_identifier': '0000037996', 'period_end': '2025-12-31', 'period_start': '2025-12-31', 'typed_dimension_count': 0}", "raw_sha256": "39f67f73b89b635a4599ecde018f01e86b0d8dd80dc9589e6b77f64f70b96054"}
+carrier_native xml {"fact": "{'tag': 'us-gaap:otherloanspayablecurrent', 'qualified_name': 'us-gaap:otherloanspayablecurrent', 'context_ref': 'c-696', 'unit_ref': 'usd', 'scale': '0', 'sign': '', 'ordinal': 2443, 'text': '226000'}", "value_usd": "226000", "unit": {"measures": [["http://www.xbrl.org/2003/iso4217", "USD"]], "divided": false}, "context": "{'context_ref': 'c-696', 'dimensions': mappingproxy({'us-gaap:LongtermDebtTypeAxis': 'us-gaap:NotesPayableOtherPayablesMember', 'us-gaap:StatementBusinessSegmentsAxis': 'f:CompanyExcludingFordCreditMember'}), 'entity_identifier': '0000037996', 'period_end': '2025-12-31', 'period_start': '2025-12-31', 'typed_dimension_count': 0}", "raw_sha256": "b7585ce58557980bf94c662d60134f7f49637490a191741fa499ba23dbe8ae22"}
+{
+  "test_only": "DERIVED_IN_MEMORY_NEVER_ACQUIRED_CREDIT",
+  "changed_facts_per_original": 1,
+  "primary_change": "only carrier inline scale 6 to 3; visible 226 unchanged",
+  "xml_change": "same carrier value 226000000 to 226000",
+  "both_originals_carrier_usd": "226000",
+  "component_usd": "136000000",
+  "current_parent_usd": "5550000000",
+  "reported_inclusive_usd": "226000000",
+  "borrowed_parent_scale": "6",
+  "status": "REPORTED_INCLUDED",
+  "additional": "0",
+  "definition_complete": false,
+  "ratio": null,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

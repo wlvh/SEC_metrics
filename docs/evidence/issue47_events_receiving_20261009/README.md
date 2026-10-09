@@ -35,3 +35,5 @@ FY2021–FY2025共25位置已通过同公司CLI计算/读取/导出，既有独�
 随后实际同一公司CLI的Paramount FY2025 C01宽窗首20.675s，禁止原factory复4.909s、独立读0.561s，保护文件数以paramount-wide-cli.json为准且保持；原年报annual容器2025全年未改。31投影/历史/状态/分派小例0.186s过，范围不变。原PREPARED_PERIOD_CHANGED阶段、case摘要与失败堆栈保留，公共限定来源审阅旧NEEDS_FIX和修后PASS各按原对象解释，不移签为本次完整业务信用。五年/十公司其他事件接收、在线历史发现及完整39指标目标仍未完成。
 
 公共source+宽窗投影已并入同一Draft PR89/b82111a5；本方接其真实祖先/代码而不增加共享PR链，三公共生产文件与该head逐字节相同，正常/宽窗实际source/保存/CSV证据复用未变源码；新增组合小例见public89-combination.log。公共限定source/gap与宽窗投影各自修后PASS，原NEEDS_FIX保留，技术结论不授本方business接受或用户merge许可。
+
+接实际main/6d09（65/87/72/73）后业务源码自动合并无冲突，唯一公共selector冲突只保已有source/wide/native-rate三项、函数AST同main，未新增历史class或改runner；新增历史短class的公共补丁仍待返回。结合小例见latest-main-small-tests.log；未受影响的五年财报/事件记录复用，不因本次上游或日志新增重算。

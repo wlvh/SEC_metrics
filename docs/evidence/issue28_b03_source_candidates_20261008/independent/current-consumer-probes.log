@@ -1,0 +1,109 @@
+[
+  {
+    "name": "supported_plain_138.5",
+    "passed": true,
+    "expected_status": "KEEP",
+    "actual_status": "KEEP",
+    "source_values": [
+      "138.5"
+    ],
+    "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+    "numeric_issues": []
+  },
+  {
+    "name": "supported_plain_.5",
+    "passed": true,
+    "expected_status": "KEEP",
+    "actual_status": "KEEP",
+    "source_values": [
+      "0.5"
+    ],
+    "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+    "numeric_issues": []
+  },
+  {
+    "name": "supported_plain_+138",
+    "passed": true,
+    "expected_status": "KEEP",
+    "actual_status": "KEEP",
+    "source_values": [
+      "138"
+    ],
+    "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+    "numeric_issues": []
+  },
+  {
+    "name": "supported_plain_-138",
+    "passed": true,
+    "expected_status": "KEEP",
+    "actual_status": "KEEP",
+    "source_values": [
+      "-138"
+    ],
+    "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+    "numeric_issues": []
+  },
+  {
+    "name": "supported_inline_scale_sign",
+    "passed": true,
+    "expected_status": "KEEP",
+    "actual_status": "KEEP",
+    "source_values": [
+      "-1380"
+    ],
+    "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+    "numeric_issues": []
+  },
+  {
+    "name": "supported_fixed_zero",
+    "passed": true,
+    "expected_status": "KEEP",
+    "actual_status": "KEEP",
+    "source_values": [
+      "0"
+    ],
+    "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+    "numeric_issues": []
+  },
+  {
+    "name": "unsupported_transform_namespace",
+    "passed": true,
+    "expected_status": "WITHHOLD",
+    "actual_status": "WITHHOLD",
+    "source_values": [],
+    "why": "SOURCE_NUMERIC_VALUES_UNRESOLVED",
+    "numeric_issues": [
+      "REPORTED_MONETARY_NUMERIC_VALUE_NOT_SUPPORTED:C03_UNSUPPORTED_TRANSFORM_NAMESPACE"
+    ]
+  },
+  {
+    "name": "other_entity_invalid_literal_does_not_taint_current_scope",
+    "passed": true,
+    "expected_status": "KEEP",
+    "actual_status": "KEEP",
+    "source_values": [
+      "138"
+    ],
+    "why": "EVERY_DIRECT_CANDIDATE_AGREES",
+    "numeric_issues": []
+  },
+  {
+    "name": "own_scope_invalid_literal_withholds_but_preserves_valid_evidence",
+    "passed": true,
+    "expected_status": "WITHHOLD",
+    "actual_status": "WITHHOLD",
+    "source_values": [
+      "138"
+    ],
+    "why": "SOURCE_NUMERIC_VALUES_UNRESOLVED",
+    "numeric_issues": [
+      "REPORTED_MONETARY_NUMERIC_LEXICAL_FORM_NOT_SUPPORTED"
+    ]
+  },
+  {
+    "name": "extracted_helper_xml_decimal_branch",
+    "passed": true,
+    "value": "138.5",
+    "new_current_xml_route_claimed": false
+  }
+]

@@ -1,0 +1,366 @@
+﻿2026-10-08T13:27:34.1860837Z Current runner version: '2.337.0'
+2026-10-08T13:27:34.1886164Z ##[group]Runner Image Provisioner
+2026-10-08T13:27:34.1887109Z Hosted Compute Agent
+2026-10-08T13:27:34.1887706Z Version: 20260901.588
+2026-10-08T13:27:34.1888363Z Commit: f88ec8081b781fac6c440065ac7ff9e710ce3d0b
+2026-10-08T13:27:34.1889165Z Build Date: 2026-09-01T19:56:44Z
+2026-10-08T13:27:34.1889861Z Worker ID: {526fa501-5e36-4675-a8f7-990e4c4e2e9f}
+2026-10-08T13:27:34.1890616Z Azure Region: eastus
+2026-10-08T13:27:34.1891204Z ##[endgroup]
+2026-10-08T13:27:34.1892707Z ##[group]Operating System
+2026-10-08T13:27:34.1893469Z Ubuntu
+2026-10-08T13:27:34.1894076Z 24.04.5
+2026-10-08T13:27:34.1894631Z LTS
+2026-10-08T13:27:34.1895514Z ##[endgroup]
+2026-10-08T13:27:34.1896171Z ##[group]Runner Image
+2026-10-08T13:27:34.1896858Z Image: ubuntu-24.04
+2026-10-08T13:27:34.1897434Z Version: 20260927.320.1
+2026-10-08T13:27:34.1898751Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260927.320/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-08T13:27:34.1900356Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260927.320
+2026-10-08T13:27:34.1901445Z ##[endgroup]
+2026-10-08T13:27:34.1902579Z ##[group]GITHUB_TOKEN Permissions
+2026-10-08T13:27:34.1904767Z Contents: read
+2026-10-08T13:27:34.1905778Z Metadata: read
+2026-10-08T13:27:34.1906460Z ##[endgroup]
+2026-10-08T13:27:34.1908530Z Secret source: Actions
+2026-10-08T13:27:34.1909617Z Cache mode: write
+2026-10-08T13:27:34.1910333Z Prepare workflow directory
+2026-10-08T13:27:34.2233979Z Prepare all required actions
+2026-10-08T13:27:34.2282453Z Getting action download info
+2026-10-08T13:27:34.4498602Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-10-08T13:27:34.5964609Z Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+2026-10-08T13:27:34.7731853Z Complete job name: vNext fast suite
+2026-10-08T13:27:34.8506874Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+2026-10-08T13:27:34.8508027Z with:
+2026-10-08T13:27:34.8508485Z   persist-credentials: false
+2026-10-08T13:27:34.8509016Z   repository: wlvh/SEC_metrics
+2026-10-08T13:27:34.8512836Z   token: ***
+2026-10-08T13:27:34.8513284Z   ssh-strict: true
+2026-10-08T13:27:34.8513727Z   ssh-user: git
+2026-10-08T13:27:34.8514150Z   clean: true
+2026-10-08T13:27:34.8514609Z   sparse-checkout-cone-mode: true
+2026-10-08T13:27:34.8515355Z   fetch-depth: 1
+2026-10-08T13:27:34.8515802Z   fetch-tags: false
+2026-10-08T13:27:34.8516260Z   show-progress: true
+2026-10-08T13:27:34.8516716Z   lfs: false
+2026-10-08T13:27:34.8517129Z   submodules: false
+2026-10-08T13:27:34.8517592Z   set-safe-directory: true
+2026-10-08T13:27:34.8518338Z ##[endgroup]
+2026-10-08T13:27:34.9534286Z Syncing repository: wlvh/SEC_metrics
+2026-10-08T13:27:34.9537206Z ##[group]Getting Git version info
+2026-10-08T13:27:34.9538498Z Working directory is '/home/runner/work/SEC_metrics/SEC_metrics'
+2026-10-08T13:27:34.9540222Z [command]/usr/bin/git version
+2026-10-08T13:27:34.9624103Z git version 2.55.0
+2026-10-08T13:27:34.9654808Z ##[endgroup]
+2026-10-08T13:27:34.9671898Z Temporarily overriding HOME='/home/runner/work/_temp/ce9b174d-ab7a-4223-8a76-0243c74c9a94' before making global git config changes
+2026-10-08T13:27:34.9678363Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-08T13:27:34.9679570Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-08T13:27:34.9738087Z Deleting the contents of '/home/runner/work/SEC_metrics/SEC_metrics'
+2026-10-08T13:27:34.9742973Z ##[group]Initializing the repository
+2026-10-08T13:27:34.9748264Z [command]/usr/bin/git init /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-08T13:27:34.9868162Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-08T13:27:34.9869535Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-08T13:27:34.9870894Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-08T13:27:34.9871903Z hint: call:
+2026-10-08T13:27:34.9872817Z hint:
+2026-10-08T13:27:34.9873900Z hint: 	git config --global init.defaultBranch <name>
+2026-10-08T13:27:34.9875328Z hint:
+2026-10-08T13:27:34.9876516Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-08T13:27:34.9878478Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-08T13:27:34.9880116Z hint:
+2026-10-08T13:27:34.9881134Z hint: 	git branch -m <name>
+2026-10-08T13:27:34.9882171Z hint:
+2026-10-08T13:27:34.9883337Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-08T13:27:34.9885643Z Initialized empty Git repository in /home/runner/work/SEC_metrics/SEC_metrics/.git/
+2026-10-08T13:27:34.9889945Z [command]/usr/bin/git remote add origin https://github.com/wlvh/SEC_metrics
+2026-10-08T13:27:34.9942729Z ##[endgroup]
+2026-10-08T13:27:34.9944070Z ##[group]Disabling automatic garbage collection
+2026-10-08T13:27:34.9947632Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-08T13:27:34.9983560Z ##[endgroup]
+2026-10-08T13:27:34.9984944Z ##[group]Setting up auth
+2026-10-08T13:27:34.9986298Z Removing SSH command configuration
+2026-10-08T13:27:34.9992244Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-08T13:27:35.0034131Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-08T13:27:35.0400952Z Removing HTTP extra header
+2026-10-08T13:27:35.0408788Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-08T13:27:35.0446271Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-08T13:27:35.0664288Z Removing includeIf entries pointing to credentials config files
+2026-10-08T13:27:35.0670556Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-08T13:27:35.0706497Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-08T13:27:35.0932622Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-08T13:27:35.0975526Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:35.1012816Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:35.1052512Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:35.1096110Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:35.1126731Z ##[endgroup]
+2026-10-08T13:27:35.1127558Z ##[group]Fetching the repository
+2026-10-08T13:27:35.1134781Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +f0b0f9a3855868480d1cfdea23cc0b3819beb866:refs/remotes/pull/72/merge
+2026-10-08T13:27:45.0700214Z From https://github.com/wlvh/SEC_metrics
+2026-10-08T13:27:45.0701239Z  * [new ref]         f0b0f9a3855868480d1cfdea23cc0b3819beb866 -> pull/72/merge
+2026-10-08T13:27:45.0706807Z ##[endgroup]
+2026-10-08T13:27:45.0707960Z ##[group]Determining the checkout info
+2026-10-08T13:27:45.0709284Z ##[endgroup]
+2026-10-08T13:27:45.0714230Z [command]/usr/bin/git sparse-checkout disable
+2026-10-08T13:27:45.0768307Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-08T13:27:45.0799854Z ##[group]Checking out the ref
+2026-10-08T13:27:45.0804412Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/72/merge
+2026-10-08T13:27:46.0945966Z Updating files:  58% (4534/7686)
+2026-10-08T13:27:46.1429826Z Updating files:  59% (4535/7686)
+2026-10-08T13:27:46.1850315Z Updating files:  60% (4612/7686)
+2026-10-08T13:27:46.2565893Z Updating files:  61% (4689/7686)
+2026-10-08T13:27:46.2967732Z Updating files:  62% (4766/7686)
+2026-10-08T13:27:46.3202938Z Updating files:  63% (4843/7686)
+2026-10-08T13:27:46.3415972Z Updating files:  64% (4920/7686)
+2026-10-08T13:27:46.5589395Z Updating files:  65% (4996/7686)
+2026-10-08T13:27:46.5626327Z Updating files:  66% (5073/7686)
+2026-10-08T13:27:46.5769933Z Updating files:  67% (5150/7686)
+2026-10-08T13:27:46.5874906Z Updating files:  68% (5227/7686)
+2026-10-08T13:27:46.5999052Z Updating files:  69% (5304/7686)
+2026-10-08T13:27:46.6121476Z Updating files:  70% (5381/7686)
+2026-10-08T13:27:46.6202135Z Updating files:  71% (5458/7686)
+2026-10-08T13:27:46.6360490Z Updating files:  72% (5534/7686)
+2026-10-08T13:27:46.6520294Z Updating files:  73% (5611/7686)
+2026-10-08T13:27:46.6632681Z Updating files:  74% (5688/7686)
+2026-10-08T13:27:46.6714869Z Updating files:  75% (5765/7686)
+2026-10-08T13:27:46.7011781Z Updating files:  76% (5842/7686)
+2026-10-08T13:27:46.7196666Z Updating files:  77% (5919/7686)
+2026-10-08T13:27:46.7413438Z Updating files:  78% (5996/7686)
+2026-10-08T13:27:46.7485154Z Updating files:  79% (6072/7686)
+2026-10-08T13:27:46.7713906Z Updating files:  80% (6149/7686)
+2026-10-08T13:27:46.7897407Z Updating files:  81% (6226/7686)
+2026-10-08T13:27:46.8102513Z Updating files:  82% (6303/7686)
+2026-10-08T13:27:46.8159416Z Updating files:  83% (6380/7686)
+2026-10-08T13:27:46.8208140Z Updating files:  84% (6457/7686)
+2026-10-08T13:27:46.8253284Z Updating files:  85% (6534/7686)
+2026-10-08T13:27:46.8308793Z Updating files:  86% (6610/7686)
+2026-10-08T13:27:46.8554736Z Updating files:  87% (6687/7686)
+2026-10-08T13:27:46.8771560Z Updating files:  88% (6764/7686)
+2026-10-08T13:27:46.8874744Z Updating files:  89% (6841/7686)
+2026-10-08T13:27:46.8951343Z Updating files:  90% (6918/7686)
+2026-10-08T13:27:46.9052843Z Updating files:  91% (6995/7686)
+2026-10-08T13:27:46.9134523Z Updating files:  92% (7072/7686)
+2026-10-08T13:27:46.9231166Z Updating files:  93% (7148/7686)
+2026-10-08T13:27:46.9368167Z Updating files:  94% (7225/7686)
+2026-10-08T13:27:46.9445778Z Updating files:  95% (7302/7686)
+2026-10-08T13:27:46.9521666Z Updating files:  96% (7379/7686)
+2026-10-08T13:27:46.9605171Z Updating files:  97% (7456/7686)
+2026-10-08T13:27:46.9673680Z Updating files:  98% (7533/7686)
+2026-10-08T13:27:46.9740509Z Updating files:  99% (7610/7686)
+2026-10-08T13:27:46.9741275Z Updating files: 100% (7686/7686)
+2026-10-08T13:27:46.9741929Z Updating files: 100% (7686/7686), done.
+2026-10-08T13:27:46.9855759Z Note: switching to 'refs/remotes/pull/72/merge'.
+2026-10-08T13:27:46.9860968Z 
+2026-10-08T13:27:46.9861461Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-08T13:27:46.9862495Z changes and commit them, and you can discard any commits you make in this
+2026-10-08T13:27:46.9863365Z state without impacting any branches by switching back to a branch.
+2026-10-08T13:27:46.9863805Z 
+2026-10-08T13:27:46.9864136Z If you want to create a new branch to retain commits you create, you may
+2026-10-08T13:27:46.9864856Z do so (now or later) by using -c with the switch command. Example:
+2026-10-08T13:27:46.9865543Z 
+2026-10-08T13:27:46.9865738Z   git switch -c <new-branch-name>
+2026-10-08T13:27:46.9866075Z 
+2026-10-08T13:27:46.9866244Z Or undo this operation with:
+2026-10-08T13:27:46.9866545Z 
+2026-10-08T13:27:46.9866692Z   git switch -
+2026-10-08T13:27:46.9866903Z 
+2026-10-08T13:27:46.9867594Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-08T13:27:46.9868128Z 
+2026-10-08T13:27:46.9868732Z HEAD is now at f0b0f9a Merge 41bb544fc9800ed4e686f49b41338efa9e36cf0e into 8588ccbbb1c91d81e0fb1a89dff3575214282549
+2026-10-08T13:27:46.9929392Z ##[endgroup]
+2026-10-08T13:27:46.9982063Z [command]/usr/bin/git log -1 --format=%H
+2026-10-08T13:27:47.0014315Z f0b0f9a3855868480d1cfdea23cc0b3819beb866
+2026-10-08T13:27:47.0026059Z ##[group]Removing auth
+2026-10-08T13:27:47.0026563Z Removing SSH command configuration
+2026-10-08T13:27:47.0031106Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-08T13:27:47.0067815Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-08T13:27:47.0327046Z Removing HTTP extra header
+2026-10-08T13:27:47.0332001Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-08T13:27:47.0368529Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-08T13:27:47.0604718Z Removing includeIf entries pointing to credentials config files
+2026-10-08T13:27:47.0609556Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-08T13:27:47.0638075Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+2026-10-08T13:27:47.0638961Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+2026-10-08T13:27:47.0639461Z includeif.gitdir:/github/workspace/.git.path
+2026-10-08T13:27:47.0639857Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-08T13:27:47.0648652Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+2026-10-08T13:27:47.0676660Z /home/runner/work/_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:47.0690560Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:47.0737561Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+2026-10-08T13:27:47.0772933Z /home/runner/work/_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:47.0785442Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:47.0829060Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-08T13:27:47.0853762Z /github/runner_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:47.0878318Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:47.0920609Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-08T13:27:47.0949058Z /github/runner_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:47.0959759Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config
+2026-10-08T13:27:47.0999458Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-08T13:27:47.1231362Z Removing credentials config '/home/runner/work/_temp/git-credentials-6da6f981-5c81-4fea-91da-f1ef00157e71.config'
+2026-10-08T13:27:47.1241714Z ##[endgroup]
+2026-10-08T13:27:47.1505667Z ##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+2026-10-08T13:27:47.1506089Z with:
+2026-10-08T13:27:47.1506295Z   python-version: 3.14
+2026-10-08T13:27:47.1506528Z   check-latest: false
+2026-10-08T13:27:47.1509069Z   token: ***
+2026-10-08T13:27:47.1509288Z   update-environment: true
+2026-10-08T13:27:47.1509530Z   allow-prereleases: false
+2026-10-08T13:27:47.1509760Z   freethreaded: false
+2026-10-08T13:27:47.1509977Z ##[endgroup]
+2026-10-08T13:27:47.2814409Z ##[group]Installed versions
+2026-10-08T13:27:47.2902571Z Successfully set up CPython (3.14.7)
+2026-10-08T13:27:47.2903395Z ##[endgroup]
+2026-10-08T13:27:47.3065518Z ##[group]Run python3 -m unittest -v tests.vnext.test_company_handoff tests.vnext.test_company_source_authority tests.vnext.test_company_results tests.vnext.test_company_processing tests.vnext.test_company_event_census tests.vnext.test_company_local
+2026-10-08T13:27:47.3067329Z python3 -m unittest -v tests.vnext.test_company_handoff tests.vnext.test_company_source_authority tests.vnext.test_company_results tests.vnext.test_company_processing tests.vnext.test_company_event_census tests.vnext.test_company_local
+2026-10-08T13:27:47.3366585Z shell: /usr/bin/bash -e {0}
+2026-10-08T13:27:47.3366888Z env:
+2026-10-08T13:27:47.3367173Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:47.3367660Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+2026-10-08T13:27:47.3368122Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:47.3368511Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:47.3368958Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:47.3369362Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+2026-10-08T13:27:47.3369717Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-08T13:27:47.3369959Z ##[endgroup]
+2026-10-08T13:27:50.3547522Z test_declared_event_saved_paths_preserve_original_body_and_header_locators (tests.vnext.test_company_handoff.CompanyImportTest.test_declared_event_saved_paths_preserve_original_body_and_header_locators) ... ok
+2026-10-08T13:27:50.3951206Z test_first_install_interruption_never_exposes_uncommitted_source (tests.vnext.test_company_handoff.CompanyImportTest.test_first_install_interruption_never_exposes_uncommitted_source) ... ok
+2026-10-08T13:27:50.4380291Z test_import_and_compute_lock_blocks_another_process (tests.vnext.test_company_handoff.CompanyImportTest.test_import_and_compute_lock_blocks_another_process) ... ok
+2026-10-08T13:27:50.4990018Z test_interruptions_keep_previous_result_and_source_then_allow_retry (tests.vnext.test_company_handoff.CompanyImportTest.test_interruptions_keep_previous_result_and_source_then_allow_retry) ... ok
+2026-10-08T13:27:50.5096553Z test_nonprefix_history_cannot_replace_committed_source (tests.vnext.test_company_handoff.CompanyImportTest.test_nonprefix_history_cannot_replace_committed_source) ... ok
+2026-10-08T13:27:50.5322809Z test_nonroot_readonly_packages_install_update_and_recover (tests.vnext.test_company_handoff.CompanyImportTest.test_nonroot_readonly_packages_install_update_and_recover) ... ok
+2026-10-08T13:27:50.5362472Z test_symlink_paths_and_unowned_sources_are_refused (tests.vnext.test_company_handoff.CompanyImportTest.test_symlink_paths_and_unowned_sources_are_refused) ... ok
+2026-10-08T13:27:50.5453913Z test_wrong_company_cannot_replace_committed_source (tests.vnext.test_company_handoff.CompanyImportTest.test_wrong_company_cannot_replace_committed_source) ... ok
+2026-10-08T13:27:50.5916983Z test_saved_native_assessment_is_not_collected_as_a_rule (tests.vnext.test_company_handoff.SourceOnlyRulesTest.test_saved_native_assessment_is_not_collected_as_a_rule) ... ok
+2026-10-08T13:27:50.5934918Z test_alias_to_trusted_record_is_refused (tests.vnext.test_company_source_authority.CompanyTrustTest.test_alias_to_trusted_record_is_refused) ... ok
+2026-10-08T13:27:50.5953384Z test_cross_company_is_refused_before_source_discovery (tests.vnext.test_company_source_authority.CompanyTrustTest.test_cross_company_is_refused_before_source_discovery) ... ok
+2026-10-08T13:27:50.5971098Z test_exact_independent_record_is_accepted (tests.vnext.test_company_source_authority.CompanyTrustTest.test_exact_independent_record_is_accepted) ... ok
+2026-10-08T13:27:50.6007593Z test_historical_census_uses_existing_verifier_after_independent_trust_check (tests.vnext.test_company_source_authority.CompanyTrustTest.test_historical_census_uses_existing_verifier_after_independent_trust_check) ... ok
+2026-10-08T13:27:50.6027323Z test_matching_id_with_changed_content_is_refused (tests.vnext.test_company_source_authority.CompanyTrustTest.test_matching_id_with_changed_content_is_refused) ... ok
+2026-10-08T13:27:50.6053160Z test_memo_trust_dependency_must_be_an_explicit_nonalias_root (tests.vnext.test_company_source_authority.CompanyTrustTest.test_memo_trust_dependency_must_be_an_explicit_nonalias_root) ... ok
+2026-10-08T13:27:50.6076321Z test_package_cannot_supply_its_own_trust_directory (tests.vnext.test_company_source_authority.CompanyTrustTest.test_package_cannot_supply_its_own_trust_directory) ... ok
+2026-10-08T13:27:50.6096294Z test_rehashing_package_does_not_install_new_authority (tests.vnext.test_company_source_authority.CompanyTrustTest.test_rehashing_package_does_not_install_new_authority) ... ok
+2026-10-08T13:27:50.6365615Z test_archive_coordinate_and_wider_measurement_window_stay_distinct (tests.vnext.test_company_results.CompanyResultsTest.test_archive_coordinate_and_wider_measurement_window_stay_distinct) ... ok
+2026-10-08T13:27:50.7640789Z test_compute_partial_request_preserves_native_D01_and_exports_both (tests.vnext.test_company_results.CompanyResultsTest.test_compute_partial_request_preserves_native_D01_and_exports_both) ... ok
+2026-10-08T13:27:50.7756694Z test_confirmed_defect_keeps_native_but_withholds_company_value (tests.vnext.test_company_results.CompanyResultsTest.test_confirmed_defect_keeps_native_but_withholds_company_value) ... ok
+2026-10-08T13:27:50.7973769Z test_failed_metric_keeps_old_result_without_claiming_current_success (tests.vnext.test_company_results.CompanyResultsTest.test_failed_metric_keeps_old_result_without_claiming_current_success) ... ok
+2026-10-08T13:27:50.8059170Z test_failed_other_historical_period_remains_visible (tests.vnext.test_company_results.CompanyResultsTest.test_failed_other_historical_period_remains_visible) ... ok
+2026-10-08T13:27:50.8297812Z test_historical_two_periods_and_partial_third_request (tests.vnext.test_company_results.CompanyResultsTest.test_historical_two_periods_and_partial_third_request) ... ok
+2026-10-08T13:27:50.8407553Z test_legacy_report_subset_does_not_limit_journal_view (tests.vnext.test_company_results.CompanyResultsTest.test_legacy_report_subset_does_not_limit_journal_view) ... ok
+2026-10-08T13:27:50.8568144Z test_one_replay_failure_does_not_hide_other_metrics (tests.vnext.test_company_results.CompanyResultsTest.test_one_replay_failure_does_not_hide_other_metrics) ... ok
+2026-10-08T13:27:50.8688679Z test_ordinary_prior_year_remains_in_view (tests.vnext.test_company_results.CompanyResultsTest.test_ordinary_prior_year_remains_in_view) ... ok
+2026-10-08T13:27:50.8851995Z test_other_runtime_release_explains_hold_without_releasing_current_result (tests.vnext.test_company_results.CompanyResultsTest.test_other_runtime_release_explains_hold_without_releasing_current_result) ... ok
+2026-10-08T13:27:50.8867226Z test_processing_arguments_cannot_be_silently_ignored (tests.vnext.test_company_results.CompanyResultsTest.test_processing_arguments_cannot_be_silently_ignored) ... ok
+2026-10-08T13:27:50.9009329Z test_processing_result_exposes_original_mode_and_runtime (tests.vnext.test_company_results.CompanyResultsTest.test_processing_result_exposes_original_mode_and_runtime) ... ok
+2026-10-08T13:27:50.9175677Z test_source_switch_does_not_claim_untouched_results_match (tests.vnext.test_company_results.CompanyResultsTest.test_source_switch_does_not_claim_untouched_results_match) ... ok
+2026-10-08T13:27:50.9258179Z test_successful_pointer_cannot_be_changed_to_an_earlier_candidate (tests.vnext.test_company_results.CompanyResultsTest.test_successful_pointer_cannot_be_changed_to_an_earlier_candidate) ... ok
+2026-10-08T13:27:50.9329609Z test_wrong_company_run_rejected (tests.vnext.test_company_results.CompanyResultsTest.test_wrong_company_run_rejected) ... ok
+2026-10-08T13:27:50.9353722Z test_acquired_input_requires_actual_original_company_version (tests.vnext.test_company_processing.AcquiredProcessingBoundaryTest.test_acquired_input_requires_actual_original_company_version) ... ok
+2026-10-08T13:27:50.9384791Z test_cold_export_rebuilds_equivalence_instead_of_trusting_saved_json (tests.vnext.test_company_processing.AcquiredProcessingBoundaryTest.test_cold_export_rebuilds_equivalence_instead_of_trusting_saved_json) ... ok
+2026-10-08T13:27:50.9444398Z test_equivalence_precedes_original_runtime_and_keeps_both_versions (tests.vnext.test_company_processing.AcquiredProcessingBoundaryTest.test_equivalence_precedes_original_runtime_and_keeps_both_versions) ... ok
+2026-10-08T13:27:50.9469348Z test_receipt_cannot_nominate_an_unprovided_source_runtime (tests.vnext.test_company_processing.AcquiredProcessingBoundaryTest.test_receipt_cannot_nominate_an_unprovided_source_runtime) ... ok
+2026-10-08T13:27:50.9495563Z test_repeat_uses_current_fixed_runtime_without_resigning_original_proof (tests.vnext.test_company_processing.AcquiredProcessingBoundaryTest.test_repeat_uses_current_fixed_runtime_without_resigning_original_proof) ... ok
+2026-10-08T13:27:50.9546621Z test_substantive_mismatch_does_not_generate_native_run (tests.vnext.test_company_processing.AcquiredProcessingBoundaryTest.test_substantive_mismatch_does_not_generate_native_run) ... ok
+2026-10-08T13:27:50.9578033Z test_changed_original_response_record_rejected (tests.vnext.test_company_processing.SavedProcessingTrustTest.test_changed_original_response_record_rejected) ... ok
+2026-10-08T13:27:50.9610930Z test_changed_runtime_rejected (tests.vnext.test_company_processing.SavedProcessingTrustTest.test_changed_runtime_rejected) ... ok
+2026-10-08T13:27:50.9642725Z test_exact_trusted_inputs_pass_without_business_calls (tests.vnext.test_company_processing.SavedProcessingTrustTest.test_exact_trusted_inputs_pass_without_business_calls) ... ok
+2026-10-08T13:27:50.9672252Z test_nested_input_alias_rejected (tests.vnext.test_company_processing.SavedProcessingTrustTest.test_nested_input_alias_rejected) ... ok
+2026-10-08T13:27:50.9701942Z test_sec_or_result_hidden_in_processing_packet_rejected (tests.vnext.test_company_processing.SavedProcessingTrustTest.test_sec_or_result_hidden_in_processing_packet_rejected) ... ok
+2026-10-08T13:27:50.9729845Z test_self_rehash_cannot_enroll_or_promote_processing (tests.vnext.test_company_processing.SavedProcessingTrustTest.test_self_rehash_cannot_enroll_or_promote_processing) ... ok
+2026-10-08T13:27:50.9753657Z test_worker_cwd_is_external_work_not_development_checkout (tests.vnext.test_company_processing.SavedProcessingTrustTest.test_worker_cwd_is_external_work_not_development_checkout) ... ok
+2026-10-08T13:27:50.9779215Z test_wrong_company_rejected (tests.vnext.test_company_processing.SavedProcessingTrustTest.test_wrong_company_rejected) ... ok
+2026-10-08T13:27:50.9879168Z test_alias_to_header_is_refused (tests.vnext.test_company_event_census.CompanyEventCensusTest.test_alias_to_header_is_refused) ... ok
+2026-10-08T13:27:50.9915553Z test_another_company_is_refused (tests.vnext.test_company_event_census.CompanyEventCensusTest.test_another_company_is_refused) ... ok
+2026-10-08T13:27:51.0030714Z test_extra_header_cannot_become_an_installed_census (tests.vnext.test_company_event_census.CompanyEventCensusTest.test_extra_header_cannot_become_an_installed_census) ... ok
+2026-10-08T13:27:51.0127418Z test_missing_declared_header_is_refused (tests.vnext.test_company_event_census.CompanyEventCensusTest.test_missing_declared_header_is_refused) ... ok
+2026-10-08T13:27:51.0326843Z test_original_window_form_and_predecessor_parsing_is_retained (tests.vnext.test_company_event_census.CompanyEventCensusTest.test_original_window_form_and_predecessor_parsing_is_retained) ... ok
+2026-10-08T13:27:51.0368716Z test_rehashed_header_manifest_does_not_enroll_itself (tests.vnext.test_company_event_census.CompanyEventCensusTest.test_rehashed_header_manifest_does_not_enroll_itself) ... ok
+2026-10-08T13:27:51.0465281Z test_unauthorized_cik_is_refused (tests.vnext.test_company_event_census.CompanyEventCensusTest.test_unauthorized_cik_is_refused) ... ok
+2026-10-08T13:27:51.0558240Z test_changed_period_or_proof_stays_visible_to_strict_checker (tests.vnext.test_company_local.CaptureIdentityTest.test_changed_period_or_proof_stays_visible_to_strict_checker) ... ok
+2026-10-08T13:27:51.0581938Z test_changed_text_reference_or_order_receives_no_projection (tests.vnext.test_company_local.CaptureIdentityTest.test_changed_text_reference_or_order_receives_no_projection) ... ok
+2026-10-08T13:27:51.0590527Z test_only_observation_identity_changes_with_originals_preserved (tests.vnext.test_company_local.CaptureIdentityTest.test_only_observation_identity_changes_with_originals_preserved) ... ok
+2026-10-08T13:27:51.0598735Z test_self_modified_unit_without_valid_identity_is_rejected (tests.vnext.test_company_local.CaptureIdentityTest.test_self_modified_unit_without_valid_identity_is_rejected) ... ok
+2026-10-08T13:27:51.0680050Z test_acquire_and_run_keep_the_same_program_and_allowance (tests.vnext.test_company_local.CompanyLocalTest.test_acquire_and_run_keep_the_same_program_and_allowance) ... ok
+2026-10-08T13:27:51.0714069Z test_acquire_only_refreshes_once_and_respects_cap (tests.vnext.test_company_local.CompanyLocalTest.test_acquire_only_refreshes_once_and_respects_cap) ... ok
+2026-10-08T13:27:51.0952502Z test_acquisition_crash_cannot_be_reported_as_complete (tests.vnext.test_company_local.CompanyLocalTest.test_acquisition_crash_cannot_be_reported_as_complete) ... ok
+2026-10-08T13:27:51.1028652Z test_acquisition_failure_exports_old_native_result_without_current_success (tests.vnext.test_company_local.CompanyLocalTest.test_acquisition_failure_exports_old_native_result_without_current_success) ... ok
+2026-10-08T13:27:51.1204194Z test_forbidden_or_rate_limited_capture_stops_and_remains_stopped (tests.vnext.test_company_local.CompanyLocalTest.test_forbidden_or_rate_limited_capture_stops_and_remains_stopped) ... ok
+2026-10-08T13:27:51.1206811Z test_local_reader_selects_only_the_existing_exact_native_specs (tests.vnext.test_company_local.CompanyLocalTest.test_local_reader_selects_only_the_existing_exact_native_specs) ... ok
+2026-10-08T13:27:51.1211889Z test_non_latest_period_fails_before_any_egress_or_output (tests.vnext.test_company_local.CompanyLocalTest.test_non_latest_period_fails_before_any_egress_or_output) ... ok
+2026-10-08T13:27:51.1214659Z test_ordinary_initial_empty_manifest_hash_does_not_claim_records_are_invalid (tests.vnext.test_company_local.CompanyLocalTest.test_ordinary_initial_empty_manifest_hash_does_not_claim_records_are_invalid) ... ok
+2026-10-08T13:27:51.1220312Z test_relative_alias_rejected_before_resolving (tests.vnext.test_company_local.CompanyLocalTest.test_relative_alias_rejected_before_resolving) ... ok
+2026-10-08T13:27:51.1310420Z test_run_has_one_compute_and_complete_status_scope (tests.vnext.test_company_local.CompanyLocalTest.test_run_has_one_compute_and_complete_status_scope) ... ok
+2026-10-08T13:27:51.1311481Z 
+2026-10-08T13:27:51.1311760Z ----------------------------------------------------------------------
+2026-10-08T13:27:51.1312289Z Ran 67 tests in 0.779s
+2026-10-08T13:27:51.1312502Z 
+2026-10-08T13:27:51.1312623Z OK
+2026-10-08T13:27:51.1749834Z ##[group]Run python3 -m unittest -v tests.vnext.test_industrial_lease_relation tests.vnext.test_reported_lease_successor
+2026-10-08T13:27:51.1750709Z python3 -m unittest -v tests.vnext.test_industrial_lease_relation tests.vnext.test_reported_lease_successor
+2026-10-08T13:27:51.1819297Z shell: /usr/bin/bash -e {0}
+2026-10-08T13:27:51.1819551Z env:
+2026-10-08T13:27:51.1819821Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:51.1820273Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+2026-10-08T13:27:51.1820887Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:51.1821268Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:51.1821642Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:51.1822019Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+2026-10-08T13:27:51.1822351Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-08T13:27:51.1822629Z   PYTHONPATH: scripts
+2026-10-08T13:27:51.1822846Z ##[endgroup]
+2026-10-08T13:27:52.2286920Z test_caption_of_current_segment_cannot_prove_noncurrent (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_caption_of_current_segment_cannot_prove_noncurrent) ... ok
+2026-10-08T13:27:52.2357828Z test_containing_row_smaller_than_lease_even_below_parent_total (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_containing_row_smaller_than_lease_even_below_parent_total) ... ok
+2026-10-08T13:27:52.2560827Z test_currency_period_or_subject_change_does_not_bind (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_currency_period_or_subject_change_does_not_bind) ... ok
+2026-10-08T13:27:52.2706136Z test_debt_note_subject_or_period_must_match (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_debt_note_subject_or_period_must_match) ... ok
+2026-10-08T13:27:52.2787947Z test_direct_own_amount_and_scale_support_inclusion (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_direct_own_amount_and_scale_support_inclusion) ... ok
+2026-10-08T13:27:52.2872810Z test_earlier_as_follows_unit_cannot_cross_current_table_introduction (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_earlier_as_follows_unit_cannot_cross_current_table_introduction) ... ok
+2026-10-08T13:27:52.2937167Z test_excluding_caption_is_not_inclusion (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_excluding_caption_is_not_inclusion) ... ok
+2026-10-08T13:27:52.3574106Z test_explicit_foreign_currency_symbols_cannot_be_ignored (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_explicit_foreign_currency_symbols_cannot_be_ignored) ... ok
+2026-10-08T13:27:52.3792896Z test_explicit_foreign_or_conflicting_table_units_remain_unresolved (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_explicit_foreign_or_conflicting_table_units_remain_unresolved) ... ok
+2026-10-08T13:27:52.4039735Z test_foreign_business_currency_does_not_change_reporting_unit (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_foreign_business_currency_does_not_change_reporting_unit) ... ok
+2026-10-08T13:27:52.4113524Z test_lease_outside_debt_note_cannot_supply_relationship (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_lease_outside_debt_note_cannot_supply_relationship) ... ok
+2026-10-08T13:27:52.4178059Z test_missing_peer_is_not_zero (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_missing_peer_is_not_zero) ... ok
+2026-10-08T13:27:52.4394392Z test_own_carrier_scale_not_parent_scale (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_own_carrier_scale_not_parent_scale) ... ok
+2026-10-08T13:27:52.4479882Z test_previous_paragraph_unit_does_not_override_table_caption (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_previous_paragraph_unit_does_not_override_table_caption) ... ok
+2026-10-08T13:27:52.4580772Z test_same_member_qname_with_different_prefix_is_preserved (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_same_member_qname_with_different_prefix_is_preserved) ... ok
+2026-10-08T13:27:52.4666375Z test_same_member_text_with_wrong_namespace_is_not_same_scope (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_same_member_text_with_wrong_namespace_is_not_same_scope) ... ok
+2026-10-08T13:27:52.4749887Z test_same_value_disclosed_elsewhere_does_not_erase_note_support (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_same_value_disclosed_elsewhere_does_not_erase_note_support) ... ok
+2026-10-08T13:27:52.4819906Z test_xml_carrier_amount_conflict_cannot_be_ignored (tests.vnext.test_industrial_lease_relation.IndustrialLeaseRelationTest.test_xml_carrier_amount_conflict_cannot_be_ignored) ... ok
+2026-10-08T13:27:52.4823630Z test_bank_relation_does_not_create_a_lease_inclusion_or_ratio (tests.vnext.test_reported_lease_successor.ReportedLeaseSuccessorTest.test_bank_relation_does_not_create_a_lease_inclusion_or_ratio) ... ok
+2026-10-08T13:27:52.4838233Z test_body_change_after_inherited_check_is_rejected (tests.vnext.test_reported_lease_successor.ReportedLeaseSuccessorTest.test_body_change_after_inherited_check_is_rejected) ... ok
+2026-10-08T13:27:52.4844572Z test_duplicate_same_original_proofs_are_not_a_second_source (tests.vnext.test_reported_lease_successor.ReportedLeaseSuccessorTest.test_duplicate_same_original_proofs_are_not_a_second_source) ... ok
+2026-10-08T13:27:52.4850138Z test_two_distinct_original_paths_remain_ambiguous (tests.vnext.test_reported_lease_successor.ReportedLeaseSuccessorTest.test_two_distinct_original_paths_remain_ambiguous) ... ok
+2026-10-08T13:27:52.4857952Z test_wrong_url_or_accession_cannot_supply_the_original (tests.vnext.test_reported_lease_successor.ReportedLeaseSuccessorTest.test_wrong_url_or_accession_cannot_supply_the_original) ... ok
+2026-10-08T13:27:52.4859105Z 
+2026-10-08T13:27:52.4859306Z ----------------------------------------------------------------------
+2026-10-08T13:27:52.4859659Z Ran 23 tests in 0.268s
+2026-10-08T13:27:52.4859805Z 
+2026-10-08T13:27:52.4859883Z OK
+2026-10-08T13:27:52.5196032Z ##[group]Run python3 tools/run_foundation_ci.py --suite fast --jobs 4
+2026-10-08T13:27:52.5196588Z python3 tools/run_foundation_ci.py --suite fast --jobs 4
+2026-10-08T13:27:52.5260206Z shell: /usr/bin/bash -e {0}
+2026-10-08T13:27:52.5260462Z env:
+2026-10-08T13:27:52.5260740Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:52.5261210Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+2026-10-08T13:27:52.5261658Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:52.5262048Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:52.5262430Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+2026-10-08T13:27:52.5262812Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+2026-10-08T13:27:52.5263150Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-08T13:27:52.5263390Z ##[endgroup]
+2026-10-08T13:31:05.0799799Z {"duration_seconds": 192.46676821599993, "jobs": 4, "status": "FAILED", "suite": "fast", "tests": [{"duration_seconds": 0.933, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 0.009s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_run_authority"}, {"duration_seconds": 2.129, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 0.158s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest"}, {"duration_seconds": 18.488, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 16.482s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_text_input_v2"}, {"duration_seconds": 7.117, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 6.531s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_candidate_authority"}, {"duration_seconds": 1.702, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 0.060s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_candidate_semantics"}, {"duration_seconds": 1.064, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 22 tests in 0.438s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_governance_signals"}, {"duration_seconds": 1.041, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 14 tests in 0.400s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_governance_compensation_table"}, {"duration_seconds": 1.844, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 0.003s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest"}, {"duration_seconds": 2.104, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.303s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_actual_legacy_attempt_is_pinned_without_inventing_id"}, {"duration_seconds": 1.833, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.034s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_later_failed_get_never_falls_back_to_success"}, {"duration_seconds": 6.75, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 4.933s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_preparation_reads_original_proofs_without_derived_inventories"}, {"duration_seconds": 1.85, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_imported_registry_cannot_relabel_a_different_subject"}, {"duration_seconds": 1.952, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 0.034s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.AuditorV2InputTest"}, {"duration_seconds": 3.924, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.404s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_source_authority"}, {"duration_seconds": 2.553, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.081s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_replay.ReplayTest.test_validate_and_freeze_replays_run_before_pass"}, {"duration_seconds": 0.692, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 13 tests in 0.106s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_text_coverage"}, {"duration_seconds": 30.045, "return_code": 124, "stderr_tail": "\nFAST_TEST_TIMEOUT_SECONDS=30\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_invalid_source_fiscal_label_and_cik_are_integrity_failures"}, {"duration_seconds": 16.16, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 14.380s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_saved_noncalendar_inputs_use_dei_fiscal_label"}, {"duration_seconds": 9.471, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 7.649s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_amendment_keeps_original_and_does_not_claim_current_success"}, {"duration_seconds": 1.831, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.004s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_latest_period_cannot_fall_back_when_only_amendment_is_present"}, {"duration_seconds": 1.81, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.012s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_ambiguous_columns_dates_and_relevant_shards_are_not_no_change"}, {"duration_seconds": 4.965, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 3.077s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_period_rechecks_entity_and_does_not_promote_quarter_to_year"}, {"duration_seconds": 7.588, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 5.763s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_00"}, {"duration_seconds": 10.18, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 8.314s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_01"}, {"duration_seconds": 13.924, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 12.132s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_02"}, {"duration_seconds": 14.528, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 12.752s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_03"}, {"duration_seconds": 30.042, "return_code": 124, "stderr_tail": "\nFAST_TEST_TIMEOUT_SECONDS=30\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_04"}, {"duration_seconds": 9.265, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 7.422s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_05"}, {"duration_seconds": 11.19, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 9.430s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_06"}, {"duration_seconds": 8.29, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 6.459s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_07"}, {"duration_seconds": 11.905, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 10.069s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_08"}, {"duration_seconds": 9.314, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 7.547s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_09"}, {"duration_seconds": 9.308, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 7.516s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_unknown_subject_policy_isolated_without_using_predecessor"}, {"duration_seconds": 1.77, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.004s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_later_source_failure_is_not_relabelled_as_old_success"}, {"duration_seconds": 26.392, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 24.615s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_development_modes_rebuild_real_source_relations"}, {"duration_seconds": 10.938, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 9.065s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_same_arithmetic_but_explicit_lease_exclusion_rejects_at_relation"}, {"duration_seconds": 16.316, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 14.537s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_selected_model_cannot_grant_inclusion_or_nonoverlap"}, {"duration_seconds": 10.163, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 8.315s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_outside_calculation_allowlist_cannot_disappear"}, {"duration_seconds": 6.595, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 4.741s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_approval_fields_and_duplicate_formula_not_part_of_proposal"}, {"duration_seconds": 17.133, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 15.328s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_asset_payment_wrong_year_and_entity_do_not_become_liability"}, {"duration_seconds": 10.141, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 8.339s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_missing_primary_or_note_is_not_zero"}, {"duration_seconds": 3.941, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.082s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_forged_matching_ledger_has_no_admission"}, {"duration_seconds": 19.194, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 17.338s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_reverse_subject_exclusion_and_inclusion_are_conflicts"}, {"duration_seconds": 16.694, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 14.899s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_tax_loan_and_credit_facility_remain_unresolved"}, {"duration_seconds": 10.286, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 8.503s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_added_balance_sheet_financing_row_cannot_inherit_coverage"}, {"duration_seconds": 10.267, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 8.457s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_primary_only_sign_conflict_is_not_whitespace"}, {"duration_seconds": 18.189, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 16.342s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_dynamic_amounts_are_reread_with_new_test_identity"}, {"duration_seconds": 1.357, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 9 tests in 0.036s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r5_b06.B06PrimaryTest"}, {"duration_seconds": 8.766, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 8.077s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r5_b06_followup"}, {"duration_seconds": 25.831, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 24.826s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r5_b06_scope"}, {"duration_seconds": 11.771, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 9.938s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_publication_authority"}, {"duration_seconds": 6.349, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 4.900s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_publication"}, {"duration_seconds": 9.055, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 14 tests in 7.188s\n\nOK\n", "stdout_tail": "SEC retry exhausted for https://data.sec.gov/submissions/CIK0001048286.json; status=500; error=HTTP Error 500: SIMULATED_HTTP_FAILURE\n", "test": "tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest"}, {"duration_seconds": 24.559, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 3 tests in 22.678s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_continuity.AnnualModelConfigurationTest"}, {"duration_seconds": 1.857, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 0.003s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_continuity.AnnualContinuationPermissionTest"}, {"duration_seconds": 23.257, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 21.401s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_prompt_changes_only_instruction_and_its_task_identities"}, {"duration_seconds": 23.296, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 21.439s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_no_requirement_and_other_task_retain_original_prompt"}, {"duration_seconds": 15.423, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 13.507s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_prompt_file_tamper_is_rejected_without_rewriting_repository"}, {"duration_seconds": 1.878, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_stage_three_counts_two_closed_attempts_before_new_slots"}, {"duration_seconds": 6.499, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 4.707s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_update.AnnualUpdateTest.test_candidate_leading_publication_survives_discovery_failure"}, {"duration_seconds": 6.566, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 4.758s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_update.AnnualUpdateTest.test_publication_progress_is_explicit_and_run_specific"}, {"duration_seconds": 9.506, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 7.670s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_repair.AnnualLabelRegressionTest.test_policy_selects_new_requirement_only"}, {"duration_seconds": 1.198, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 3 tests in 0.035s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_release_gate.R4ReleaseAggregateGateTest"}, {"duration_seconds": 1.8, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 0.416s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_publication_boundaries"}, {"duration_seconds": 1.176, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.050s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_projection.R4ProjectionBoundaryTest.test_complete_grid_rejects_missing_duplicate_extra_and_false_applicability"}, {"duration_seconds": 4.283, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 2.240s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_successor_invocation_control"}, {"duration_seconds": 3.393, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 2.023s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_live_scoped_reader.LiveScopedEnvelopeTest"}, {"duration_seconds": 2.113, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 0.856s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_live_authority.R4LiveAuthorityShapeTest"}, {"duration_seconds": 2.145, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 0.905s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_live_authority.R4ExecutionPrefixTest"}, {"duration_seconds": 1.494, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 5 tests in 0.299s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_live_plan.R4DraftPlanRiskTest"}, {"duration_seconds": 2.189, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.142s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_issue28_v2.Issue28V2FastTest.test_real_five_file_revision_has_exact_parent_and_no_activation"}, {"duration_seconds": 2.974, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.926s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_source_scope.SourceScopeTest.test_complete_native_candidate_and_evidence_are_bound"}, {"duration_seconds": 3.042, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.973s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_scoped_reader.ScopedReaderTest.test_all_four_zero_call_classes_cannot_prepare_requests"}, {"duration_seconds": 2.712, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.398s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_offline_execution_session.OfflineExecutionSessionTest.test_unknown_is_terminal_and_cannot_be_retried"}, {"duration_seconds": 2.06, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_cutover_qualification.CutoverQualificationTest.test_layout_terminal_requires_approval_publish_and_validation"}, {"duration_seconds": 1.548, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.023s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_deepseek_chat_envelope_is_json_and_tool_free"}, {"duration_seconds": 0.635, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.075s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_review_binding.ReviewBindingTest.test_optional_system_decision_is_auditable"}, {"duration_seconds": 1.118, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_legacy_projector.LegacyProjectorTest.test_legacy_inventory_binds_frozen_commit_and_source_blobs"}, {"duration_seconds": 2.667, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.064s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke"}, {"duration_seconds": 2.615, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.194s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_issue15_authority.Issue15AuthorityTest.test_reusable_producer_scopes_match_exact_base_call_graph"}, {"duration_seconds": 3.215, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.577s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest.test_registry_covers_exact_39_without_migration_state"}, {"duration_seconds": 1.179, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.015s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_deterministic_router.DeterministicRouterTest.test_e01_matched_event_key_set_has_exact_legacy_parity"}, {"duration_seconds": 17.424, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 25 tests in 15.572s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_invocation_control"}, {"duration_seconds": 1.036, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_current_packet_persists_no_credit_and_zero_current_egress"}, {"duration_seconds": 0.665, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 3 tests in 0.111s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_stage_c_financial_materialization"}, {"duration_seconds": 0.981, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_stage_c_a_packet.TableStageCAPacketTest.test_packet_sections_preserve_stage_c_a_claim_boundaries"}, {"duration_seconds": 1.059, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_historical_stage_c_b_packet_remains_content_addressed"}, {"duration_seconds": 10.658, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 9.310s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_occupancy_request_has_no_current_credit"}, {"duration_seconds": 2.13, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.743s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_context_measurement.TableContextMeasurementTerminalTest.test_revpar_terminal_is_consumed_exact_and_non_credit"}, {"duration_seconds": 27.287, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 25.431s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_context_qualification_guard.TableContextQualificationGuardTest.test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two"}, {"duration_seconds": 15.82, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 14.497s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_revpar_request_has_no_current_credit"}, {"duration_seconds": 1.023, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.003s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_current_packet_persists_sibling_and_financial_blockers"}, {"duration_seconds": 1.658, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.056s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_zero_ai_release.ZeroAiReleaseFastTest.test_r2_predecessor_bundle_fast_smoke"}, {"duration_seconds": 1.924, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_r4_plan_uses_fast_runner_without_full_discovery"}], "total_inherited": 119}
+2026-10-08T13:31:05.0893103Z ##[error]Process completed with exit code 1.
+2026-10-08T13:31:05.1059407Z Post job cleanup.
+2026-10-08T13:31:05.1942109Z [command]/usr/bin/git version
+2026-10-08T13:31:05.1988726Z git version 2.55.0
+2026-10-08T13:31:05.2035913Z Temporarily overriding HOME='/home/runner/work/_temp/4f79d698-74ff-4e61-8c77-d183e23b2298' before making global git config changes
+2026-10-08T13:31:05.2037306Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-08T13:31:05.2043544Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-08T13:31:05.2077289Z Removing SSH command configuration
+2026-10-08T13:31:05.2084580Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-08T13:31:05.2126097Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-08T13:31:05.2389586Z Removing HTTP extra header
+2026-10-08T13:31:05.2406080Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-08T13:31:05.2441423Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-08T13:31:05.2703440Z Removing includeIf entries pointing to credentials config files
+2026-10-08T13:31:05.2712466Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-08T13:31:05.2751367Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-08T13:31:05.3203763Z Cleaning up orphan processes
