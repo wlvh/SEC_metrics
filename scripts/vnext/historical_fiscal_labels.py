@@ -187,8 +187,24 @@ def require_actual_definition_scope(inspected):
     """
     definitions, rejected = [], []
     for item in inspected["source_definitions"]:
-        reason = ("DEFINITION_CONDITIONAL_NOT_ADOPTED" if _CONDITIONAL_DEFINITION.search(item["text"])
-                  else "DEFINITION_HYPOTHETICAL_NOT_ACTUAL" if _HYPOTHETICAL_DEFINITION.search(item["text"])
+        pattern = {"EXPLICIT_EXAMPLE":_frozen_labels._SINGLE,
+                   "EXPLICIT_ORDERED_YEARS":_ordered_pattern(),
+                   "EXPLICIT_REFERENCE_YEARS":_frozen_labels._REFERENCES}[item["kind"]]
+        contexts = []
+        for match in pattern.finditer(item["text"]):
+            if item["kind"] == "EXPLICIT_EXAMPLE":
+                mapping = [{"fiscal_year":int(match["label"]),"period_end":_frozen_labels._iso_end(match["end"])}]
+            else:
+                mapping = [{"fiscal_year":int(year),"period_end":_frozen_labels._iso_end(end)}
+                           for year,end in zip(re.findall(r"[0-9]{4}",match["labels"]),
+                                               re.findall(_frozen_labels._DATE,match["ends"],re.I))]
+            if mapping == item["mapping"]:
+                prefix = item["text"][:match.start()]
+                # The immediately governing sentence, not another sentence in
+                # the same HTML paragraph, supplies conditional/example scope.
+                contexts.append(re.split(r"[.!?]",prefix)[-1])
+        reason = ("DEFINITION_CONDITIONAL_NOT_ADOPTED" if any(_CONDITIONAL_DEFINITION.search(c) for c in contexts)
+                  else "DEFINITION_HYPOTHETICAL_NOT_ACTUAL" if any(_HYPOTHETICAL_DEFINITION.search(c) for c in contexts)
                   else None)
         if reason:
             rejected.append({**item, "reason": reason})
