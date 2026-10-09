@@ -70,11 +70,27 @@ def _configuration(source, company, metric):
         'provider_enabled':False,'sec_fetch_enabled':False}
 
 
+def _same_processing_configuration(previous, current):
+    """Source checking/control versions are recorded, not extraction inputs.
+
+    These two modules do not select, interpret or calculate a metric. Their
+    source checks run again before every reuse. Producer/parser/Spec/prompt,
+    registry and actual source differences remain part of the comparison.
+    """
+    checking = {'scripts/vnext/ordinary_current_update.py',
+                'scripts/vnext/request_bindings.py'}
+    def business(config):
+        return {**config,'processing_files':{path:digest for path,digest in config.get('processing_files',{}).items()
+                                            if path not in checking}}
+    return business(previous)==business(current)
+
+
 def _current_sources(source, proofs):
     from sec_http import request_log_attempt_id
-    from .request_bindings import validate_request_attempt_binding
+    from .request_bindings import validate_request_attempt_bindings
+    log_digest = sha256_file(path=source/'evidence/requests_log.csv')
     latest = {row['source_url']:(i,row) for i,row in enumerate(_rows(source)) if row['method']=='GET'}
-    rows = []
+    rows, requests = [], []
     for old in proofs:
         current=latest.get(old['source_url'])
         _need(current is not None,'CURRENT_UPDATE_SOURCE_MISSING:'+old['source_url'])
@@ -83,11 +99,12 @@ def _current_sources(source, proofs):
         # Pin the actual latest row. Repeated identical legacy GETs are valid,
         # but the convenience selector deliberately cannot disambiguate them.
         # This verifier still checks that row's exact body and header bytes.
-        validate_request_attempt_binding(repo_root=source,source_url=old['source_url'],
-            accession=old['accession'],document_name=row['document_name'],content_sha256=row['content_sha256'],
-            request_attempt_id=request_log_attempt_id(row_index=index,row=row),require_immutable=False)
+        requests.append(dict(source_url=old['source_url'],accession=old['accession'],
+            document_name=row['document_name'],content_sha256=row['content_sha256'],
+            request_attempt_id=request_log_attempt_id(row_index=index,row=row),require_immutable=False))
         rows.append({'source_url':old['source_url'],'accession':old['accession'],
                      'document_name':row['document_name'],'content_sha256':row['content_sha256']})
+    validate_request_attempt_bindings(repo_root=source,requests=requests,expected_log_sha256=log_digest)
     return rows
 
 
@@ -223,7 +240,7 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                 current = _current_sources(source,saved['manifest']['source_proofs'])
                 old = [{k:p[k] for k in ('source_url','accession','document_name','content_sha256')}
                        for p in saved['manifest']['source_proofs']]
-                if configuration==comparison['configuration'] and census==comparison.get('source_census') and current==old:
+                if _same_processing_configuration(comparison['configuration'],configuration) and census==comparison.get('source_census') and current==old:
                     status=('PREVIOUS_INPUT_WITHHELD' if saved['result']['publication']=='WITHHELD'
                             else 'NO_SOURCE_CONTENT_CHANGE')
                     report = {'status':status,'attempt_id':identity,
@@ -231,6 +248,8 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         'result_root':str(root/'results'/comparison['version']),
                         'result_reason_code':saved['result'].get('reason_code'),
                         'raw_input_unchanged':True,'calculation_performed':False,'new_candidate_created':False,
+                        'source_check_versions':{path:configuration.get('processing_files',{}).get(path)
+                            for path in ('scripts/vnext/ordinary_current_update.py','scripts/vnext/request_bindings.py')},
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
                     if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
