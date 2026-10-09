@@ -16659,7 +16659,7 @@
   "first_pr_review_20261009": {
     "main_sha": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
     "pr61_sha": "86e63816d00e2f241f626c59f58041d04d9064cd",
-    "pr67_head": "c850cf21841283275998f8abdea01cf77e14d0af",
+    "pr67_head": "f7905156f7972b214e71d7f0a9a1172f7ac969cf",
     "product_sha": "818dd8711b87dccedc727986070746d48f0b003f",
     "default_entry_pair": {
       "main_seconds": 166.35841491702013,
@@ -16680,17 +16680,55 @@
     "review": "PASS_LIMITED_COMPATIBILITY",
     "support_count": 38,
     "configured_count": 39,
-    "record": "https://github.com/wlvh/SEC_metrics/blob/c850cf21841283275998f8abdea01cf77e14d0af/docs/evidence/issue28_company_records_20261007/default-online-review-20261009/README.md",
+    "record": "https://github.com/wlvh/SEC_metrics/blob/f7905156f7972b214e71d7f0a9a1172f7ac969cf/docs/evidence/issue28_company_records_20261007/default-online-review-20261009/README.md",
     "pr67_comment": "https://github.com/wlvh/SEC_metrics/pull/67#issuecomment-6074324998",
     "pr61_comment": "https://github.com/wlvh/SEC_metrics/pull/61#issuecomment-6074362818",
     "pr71_workflow_owner": "issue47_codex",
-    "new_head_ci_last_observed": "SUCCESS_ALL_9",
+    "new_head_ci_last_observed": "QUEUED_ALL_9",
     "pr83_first_batch_included": false,
     "merge_authorized": false,
-    "ci_runs": [
+    "ci_runs": [],
+    "main_latest_read": "f447a3747a88edf080b740dca0681ce18b35c3d2",
+    "main_received_prs": {
+      "61": "b57d31be0e0a91ffb40ddbb0d70db45a6c1b8aa2",
+      "58": "f447a3747a88edf080b740dca0681ce18b35c3d2"
+    },
+    "prior_c850_ci_runs": [
       37884358188,
       37884358198,
       37884358187
-    ]
+    ],
+    "prior_c850_ci_terminal": "SUCCESS_ALL_9",
+    "merge_tree_against_main": "NO_TEXT_CONFLICT; not business validation",
+    "pr67_increment_comment": "https://github.com/wlvh/SEC_metrics/pull/67#issuecomment-6074630259",
+    "update_dependency_repair": {
+      "introduced": "3a98cee0fa0966ee758931fdd31dbe5a4640669c",
+      "corrected": "f7905156f7972b214e71d7f0a9a1172f7ac969cf",
+      "new_consumed_dependency": "scripts/vnext/normal_annual_input.py",
+      "existing_consumed_checks": [
+        "scripts/vnext/saved_source_checks.py",
+        "scripts/vnext/request_bindings.py"
+      ],
+      "excluded_unexecuted_legacy_authority": "normal_source_authority.py only supplies ROOT to current producers",
+      "regression": "real configuration + synthetic small records: used period-code identity change processes once; repeat calculation factory forbidden; old result directory retained",
+      "tests": 56,
+      "seconds": 7.165,
+      "scope": "No new financial result, model call, recursive permission binding or PR83 dependency",
+      "review": "Submitted to Claude reception incremental review; prior compatibility review not extended"
+    },
+    "ledger_unchanged": {
+      "sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+      "rows": 195,
+      "provider_paid_sec": [
+        143,
+        143,
+        52
+      ],
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    }
   }
 }
