@@ -14,7 +14,7 @@ from urllib.parse import urlsplit
 from .annual_sources import _rows
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
-from .ordinary_saved_result import METRIC_IDS, SAVED_METRIC_IDS, create_saved_result, read_saved_result, save_calculated_case
+from .ordinary_saved_result import METRIC_IDS, SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS, create_saved_result, read_saved_result, save_calculated_case
 from .traits import repository_company_ciks
 
 
@@ -188,7 +188,8 @@ def _recover_completed_check(root):
 def run_once(*, state_root, source_root, company_id, metric_id, shared_input_root=None,
              fiscal_year=None, case_factory=None, processing_files=()):
     """One current deterministic update; identical raw input never calculates."""
-    _need(metric_id in SAVED_METRIC_IDS,'CURRENT_UPDATE_METRIC_UNSUPPORTED')
+    _need(metric_id in SAVED_METRIC_IDS or metric_id in EXPLICIT_CASE_METRICS
+          and fiscal_year is not None and callable(case_factory),'CURRENT_UPDATE_METRIC_UNSUPPORTED')
     _need(fiscal_year is None or type(fiscal_year) is int and 1900<=fiscal_year<=9998,
           'CURRENT_UPDATE_REQUESTED_FISCAL_YEAR_INVALID')
     _need(fiscal_year is None or callable(case_factory), 'CURRENT_UPDATE_SELECTED_PERIOD_REQUIRES_CASE_FACTORY')

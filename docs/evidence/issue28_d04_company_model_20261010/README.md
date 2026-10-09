@@ -114,3 +114,16 @@ controller/gate tests pass in .385s, zero skips. Independent quotation helper
 control establishes actual consumption; parent verifies the final one-line
 repair, which remains for receiving-review confirmation. Neither old review
 is relabelled PASS. There is no third same-scope agent or long-chain rerun.
+
+At receiving, actualmain advanced to f6ef7886 with accepted finance APIs and
+consumers. PR112 had three adjacent combination conflicts: saved metric sets,
+workflow's historical modules and appended fast selectors. They now retain
+main's six explicit finance metrics/all three historical modules/selectors
+alongside D04/SDK additions. No provider/source implementation was redesigned.
+125 affected controls pass in 7.069s, zero skips. A new independent-process
+formal results call on the staged merged tree forbids network, update and D04
+processing, reads the original ordinary company state, and preserves all six
+result files. main-combined-independent-read.json records exact code/state and
+read time; this does not pretend to repeat paid calls or full company input
+acceptance on the new configuration. Head a480 had no registered new CI run at
+the natural observation; d8c's success remains only that head's terminal.

@@ -1,0 +1,26 @@
+test_explicit_a13_factory_reaches_same_update_boundary (tests.vnext.test_company_current_records.PerMetricProducerTest.test_explicit_a13_factory_reaches_same_update_boundary) ... ERROR
+
+======================================================================
+ERROR: test_explicit_a13_factory_reaches_same_update_boundary (tests.vnext.test_company_current_records.PerMetricProducerTest.test_explicit_a13_factory_reaches_same_update_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-release/SEC_metrics/tests/vnext/test_company_current_records.py", line 376, in test_explicit_a13_factory_reaches_same_update_boundary
+    report=current.run_saved_company(company_id='marriott_international',source_root=self.source,
+        work_dir=self.work,output_dir=self.outputs,metric_ids=['A13'],fiscal_years=[2021],
+        case_factories={'A13':factory},processing_files_by_metric={'A13':('explicit-a13.py',)})
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-release/SEC_metrics/scripts/vnext/company_current_records.py", line 83, in run_saved_company
+    _need(case_factories is None or type(case_factories) is dict
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and case_factory is None and set(case_factories) == set(selected) & CURRENT_METRICS
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and all(callable(f) for f in case_factories.values()), 'COMPANY_CURRENT_METRIC_FACTORIES_INVALID')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-release/SEC_metrics/scripts/vnext/company_current_records.py", line 31, in _need
+    raise ValueError(reason)
+ValueError: COMPANY_CURRENT_METRIC_FACTORIES_INVALID
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_company_current_records.PerMetricProducerTest.test_explicit_a13_factory_reaches_same_update_boundary"]}

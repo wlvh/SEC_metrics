@@ -8,6 +8,8 @@
 
 [当前组合与自动回归记录](pr71-first-batch-20261009.json)是本主记录的增量；旧日志及结果保持。PR71已在既有 `company-current-records.yml` 加入两个测试文件的精确路径过滤，并新增同一作业内的verbose步骤实际执行两个模块，不修改公共runner、原作业或五分钟时限。本地12项0.140s全部通过。`0d58e55f` 的[pull_request工作流37881312033](https://github.com/wlvh/SEC_metrics/actions/runs/37881312033)已SUCCESS，job113661400662及历史步骤均SUCCESS；[实际日志](pr71-history-ci-0d58e55f-remote.log)列出两模块12项逐例ok、0.845s、零skip。触发范围由精确paths核对，本提交的workflow变化实际触发；没有为测试文件单独触发制造提交。
 
+最终PR71 head `d68a501f` 的远端工作流37887492839/job113680656414也已SUCCESS；本次读取实际verbose日志确认两模块13项逐例ok、1.053秒、零skip，新增真实配置依赖反例和子集状态控制均已执行。见[最终接收日志](pr71-d68a501f-final-history-ci.log)。两个测试文件仍各自在该head的paths中；本轮只核记录，不重复提交工作流或重算两年B01/酒店。该head已由接收方随e2d6784c进入main，技术终态与本方合并权限分开。
+
 随后按当前拟接收PR67/29c9接收实际普通处理依赖和B03数值来源修补。历史分派、producer和两个历史测试字节保持，公共controller/writer/reader与当前公共候选一致。84项受影响当期/历史/酒店/状态/公司测试7.486s全部通过，[原日志](pr71-current67-combination-local-20261009.log)。未再跑既有两年B01、全部酒店原文或五年集合。
 
 当前组合直接用PR71已提交原件、headers和日志运行Marriott FY2024/25 B10/B11：[真实首跑及禁止工厂复跑](pr71-current67-real.json)分别19.130/2.465s，四值与本页原数值/单位/实际期间相同；[独立进程读取](pr71-current67-read.json)1.021s，选源/计算/update/业务网络禁止，32个结果和指针不变。不依赖开发者私人来源目录、不拷程序/来源树、不产生新调用。正式命令与输出目录解释在[历史使用指南](../../../historical_company_usage.md)，只读来源，审查输出写新的外部目录。

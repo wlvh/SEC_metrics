@@ -1,0 +1,349 @@
+{
+  "code_commit": "5b5bb73fba6150d08d1a158e83c0431adbd9a99b",
+  "operations": [
+    {
+      "name": "first",
+      "seconds": 14.80142258410342,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED",
+      "metrics": [
+        {
+          "metric_id": "A04",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "3f690d9ef6c646a8bc3bace9d5f1f584",
+          "version": "a164efc6baf040e687105cd42cfc0ac4",
+          "result_id": "sha256:338fe318d2a9186f7f651c0867fd79ba3e1e936680db765768da25e9a297c56c",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A04/periods/FY2023/results/a164efc6baf040e687105cd42cfc0ac4",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2023,
+          "defect_holds": [],
+          "read_result_id": "sha256:338fe318d2a9186f7f651c0867fd79ba3e1e936680db765768da25e9a297c56c",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A04/periods/FY2023/results/a164efc6baf040e687105cd42cfc0ac4",
+          "program_version": {
+            "commit": "5b5bb73fba6150d08d1a158e83c0431adbd9a99b",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "metric_id": "A09",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "db24be4df1c2414ea1619d63aaad7c38",
+          "version": "661bebae602c40e5bc1fc59f6353e60c",
+          "result_id": "sha256:420e4c083713a915dcfe596058168b16a527da3a3bb3bdb72da627bab66a470a",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A09/periods/FY2023/results/661bebae602c40e5bc1fc59f6353e60c",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2023,
+          "defect_holds": [],
+          "read_result_id": "sha256:420e4c083713a915dcfe596058168b16a527da3a3bb3bdb72da627bab66a470a",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A09/periods/FY2023/results/661bebae602c40e5bc1fc59f6353e60c",
+          "program_version": {
+            "commit": "5b5bb73fba6150d08d1a158e83c0431adbd9a99b",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "metric_id": "A11",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "bea4dafc255c47dbab92e1e393781420",
+          "version": "0bd5ccfc18874c02a0c9ce694fdaf32b",
+          "result_id": "sha256:66fc632743f904212a587c29d37c60fc95addd967930f01341b5566ac64ea100",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A11/periods/FY2023/results/0bd5ccfc18874c02a0c9ce694fdaf32b",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2023,
+          "defect_holds": [],
+          "read_result_id": "sha256:66fc632743f904212a587c29d37c60fc95addd967930f01341b5566ac64ea100",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A11/periods/FY2023/results/0bd5ccfc18874c02a0c9ce694fdaf32b",
+          "program_version": {
+            "commit": "5b5bb73fba6150d08d1a158e83c0431adbd9a99b",
+            "has_uncommitted_changes": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "repeat",
+      "seconds": 1.444714582990855,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED",
+      "metrics": [
+        {
+          "metric_id": "A04",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "ad3ae2a5d82e4f539081cf2774df4566",
+          "version": "a164efc6baf040e687105cd42cfc0ac4",
+          "result_id": "sha256:338fe318d2a9186f7f651c0867fd79ba3e1e936680db765768da25e9a297c56c",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A04/periods/FY2023/results/a164efc6baf040e687105cd42cfc0ac4",
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2023,
+          "defect_holds": [],
+          "read_result_id": "sha256:338fe318d2a9186f7f651c0867fd79ba3e1e936680db765768da25e9a297c56c",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A04/periods/FY2023/results/a164efc6baf040e687105cd42cfc0ac4",
+          "program_version": {
+            "commit": "5b5bb73fba6150d08d1a158e83c0431adbd9a99b",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "metric_id": "A09",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "efb26c4fc4834c94ab75f68d136fb342",
+          "version": "661bebae602c40e5bc1fc59f6353e60c",
+          "result_id": "sha256:420e4c083713a915dcfe596058168b16a527da3a3bb3bdb72da627bab66a470a",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A09/periods/FY2023/results/661bebae602c40e5bc1fc59f6353e60c",
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2023,
+          "defect_holds": [],
+          "read_result_id": "sha256:420e4c083713a915dcfe596058168b16a527da3a3bb3bdb72da627bab66a470a",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A09/periods/FY2023/results/661bebae602c40e5bc1fc59f6353e60c",
+          "program_version": {
+            "commit": "5b5bb73fba6150d08d1a158e83c0431adbd9a99b",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "metric_id": "A11",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "9cdd360bb2c04e9fb2e9bb089f29b767",
+          "version": "0bd5ccfc18874c02a0c9ce694fdaf32b",
+          "result_id": "sha256:66fc632743f904212a587c29d37c60fc95addd967930f01341b5566ac64ea100",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A11/periods/FY2023/results/0bd5ccfc18874c02a0c9ce694fdaf32b",
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2023,
+          "defect_holds": [],
+          "read_result_id": "sha256:66fc632743f904212a587c29d37c60fc95addd967930f01341b5566ac64ea100",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A11/periods/FY2023/results/0bd5ccfc18874c02a0c9ce694fdaf32b",
+          "program_version": {
+            "commit": "5b5bb73fba6150d08d1a158e83c0431adbd9a99b",
+            "has_uncommitted_changes": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "read",
+      "seconds": 0.5497170831076801,
+      "exit_code": 0,
+      "status": null,
+      "metrics": [
+        {
+          "metric_id": "A04",
+          "result_id": "sha256:338fe318d2a9186f7f651c0867fd79ba3e1e936680db765768da25e9a297c56c",
+          "period_start": "2023-01-29",
+          "period_end": "2024-02-03",
+          "fiscal_year": 2023,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NONE",
+          "reason_code": "TRAIT_NOT_APPLICABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A04/periods/FY2023/results/a164efc6baf040e687105cd42cfc0ac4"
+        },
+        {
+          "metric_id": "A09",
+          "result_id": "sha256:420e4c083713a915dcfe596058168b16a527da3a3bb3bdb72da627bab66a470a",
+          "period_start": "2023-01-29",
+          "period_end": "2024-02-03",
+          "fiscal_year": 2023,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NONE",
+          "reason_code": "TRAIT_NOT_APPLICABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A09/periods/FY2023/results/661bebae602c40e5bc1fc59f6353e60c"
+        },
+        {
+          "metric_id": "A11",
+          "result_id": "sha256:66fc632743f904212a587c29d37c60fc95addd967930f01341b5566ac64ea100",
+          "period_start": "2023-01-29",
+          "period_end": "2024-02-03",
+          "fiscal_year": 2023,
+          "value": null,
+          "unit": null,
+          "publication": "PUBLISHED",
+          "quality": "NONE",
+          "reason_code": "TRAIT_NOT_APPLICABLE",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A11/periods/FY2023/results/0bd5ccfc18874c02a0c9ce694fdaf32b"
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "company": "Macy's",
+      "cik": "794367",
+      "metric_id": "A04",
+      "metric_name": "Net interest margin",
+      "value": "",
+      "unit": "ratio",
+      "status": "N_A_STRUCTURAL",
+      "source_class": "NOT_AVAILABLE",
+      "formula": "source-disclosed managed net interest margin",
+      "period_start": "2023-01-29",
+      "period_end": "2024-02-03",
+      "fiscal_year": "2023",
+      "fiscal_period": "STRUCTURAL",
+      "accession": "",
+      "form": "",
+      "filed_date": "",
+      "concept_or_section": "",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2024-02-03\", \"period_start\": \"2023-01-29\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"basis\": \"managed_basis\"}, \"selection\": {\"source_fact\": null}, \"source_reference_ids\": [\"sha256:bda4fee952c97c0a8f9ff51423551e575d045b61ac6b079ddc6c9267eb6249a6\", \"sha256:d96b6b700eede53248bc2246f5bcb3e5b8bef0b1e0643076c96589ff9a0b46c5\"]}",
+      "confidence": "",
+      "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+      "company_id": "macys",
+      "result_id": "sha256:338fe318d2a9186f7f651c0867fd79ba3e1e936680db765768da25e9a297c56c",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A04/periods/FY2023/results/a164efc6baf040e687105cd42cfc0ac4",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "company": "Macy's",
+      "cik": "794367",
+      "metric_id": "A09",
+      "metric_name": "Non-performing loan ratio",
+      "value": "",
+      "unit": "ratio",
+      "status": "N_A_STRUCTURAL",
+      "source_class": "NOT_AVAILABLE",
+      "formula": "source-verified firmwide nonperforming loan ratio",
+      "period_start": "2023-01-29",
+      "period_end": "2024-02-03",
+      "fiscal_year": "2023",
+      "fiscal_period": "STRUCTURAL",
+      "accession": "",
+      "form": "",
+      "filed_date": "",
+      "concept_or_section": "",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2024-02-03\", \"period_start\": \"2023-01-29\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"loan_population\": \"firmwide\"}, \"selection\": {\"source_fact\": null}, \"source_reference_ids\": [\"sha256:bda4fee952c97c0a8f9ff51423551e575d045b61ac6b079ddc6c9267eb6249a6\", \"sha256:d96b6b700eede53248bc2246f5bcb3e5b8bef0b1e0643076c96589ff9a0b46c5\"]}",
+      "confidence": "",
+      "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+      "company_id": "macys",
+      "result_id": "sha256:420e4c083713a915dcfe596058168b16a527da3a3bb3bdb72da627bab66a470a",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A09/periods/FY2023/results/661bebae602c40e5bc1fc59f6353e60c",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "company": "Macy's",
+      "cik": "794367",
+      "metric_id": "A11",
+      "metric_name": "Assets under management",
+      "value": "",
+      "unit": "USD",
+      "status": "N_A_STRUCTURAL",
+      "source_class": "NOT_AVAILABLE",
+      "formula": "source-reported complete AUM balance",
+      "period_start": "2023-01-29",
+      "period_end": "2024-02-03",
+      "fiscal_year": "2023",
+      "fiscal_period": "STRUCTURAL",
+      "accession": "",
+      "form": "",
+      "filed_date": "",
+      "concept_or_section": "",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2024-02-03\", \"period_start\": \"2023-01-29\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"asset_scope\": \"total_assets_under_management\"}, \"selection\": {\"source_fact\": null}, \"source_reference_ids\": [\"sha256:bda4fee952c97c0a8f9ff51423551e575d045b61ac6b079ddc6c9267eb6249a6\", \"sha256:d96b6b700eede53248bc2246f5bcb3e5b8bef0b1e0643076c96589ff9a0b46c5\"]}",
+      "confidence": "",
+      "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+      "company_id": "macys",
+      "result_id": "sha256:66fc632743f904212a587c29d37c60fc95addd967930f01341b5566ac64ea100",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state/updates/A11/periods/FY2023/results/0bd5ccfc18874c02a0c9ce694fdaf32b",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-na-kfmlbzu8",
+  "protected_files": 27,
+  "protected_unchanged": true,
+  "amount_inspector_calls": 0,
+  "repeat_factory_calls": 0,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
