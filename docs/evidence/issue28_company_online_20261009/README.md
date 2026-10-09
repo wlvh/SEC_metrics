@@ -29,3 +29,8 @@ f1限定P2增量独审APPROVE_WITHIN_P2_INCREMENT：8短例+10边界，见indepe
 4e09590录制客户端接缝重验仍完整PASS，见recorded-offline-chain.log。这是受影响HTTP模式的必要重验，不重跑未变D04/历史公司/还原包。原独立31/33测试与旧接缝证据保留其范围。
 
 新增d91489e源库/录制模式增量限定独审通过：10例2.060s、20小边界，无网实际reply读取/原生写入/日志，缺件或字节变化不回退；未改旧两P2结论。报告见independent-store/conclusion.md。后继仅归档报告和订正docstring网络边界名称，不声称整个PR、业务/合并/生产批准。首批67默认入口回修不依赖本PR，本候选仍独立后续。
+
+
+本轮接收公共基线f7905156（PR67两项接收前修复），仅company_local/retained_local/ordinary_current_update与对应测试按原字节进入。合并冲突限company_local_run说明和fast尾部两selector：保默认固定main兼容及本PR显式call-context两条入口，两小模块各登记一次，runner函数不改。在线transport/CLI与88b37已审字节相同，旧限定结论只复用未变范围。69相关测试9.471s通过。
+
+实际旧recorded开发任务在不替换HTTP/解析/计算/保存的CLI下接续：RecordedSecHttpClient直接消费声明的保存原件，socket/DNS禁网；旧配置没有normal_annual_input身份，现首次检查实际工厂2次、新版本且B01/B02值/单位/FY2025保持；禁factory同输入复跑NO_SOURCE_CONTENT_CHANGE，旧两个版本的12文件SHA不变。首次与复跑/独立读时间见received-current-base-cli.log；日志原counter按kw取metric标签为null（原factory用位置参数），len(calls)=2是直接观察，不把null解释为没有计算。CSV逐指标正确性另有显式断言。此开发状态追加录制元数据申领；原真实账本不动、无真实HTTP/provider/paid，不升级财报内容或39项信用。测试树/代码根/来源根和源文件SHA见received-tested-tree.json，提交后匹配。未变首次空来源及503/前期缺件证据沿原范围复用；不重跑默认165s长链。
