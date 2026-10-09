@@ -114,3 +114,14 @@ class CompanyOnlineTest(unittest.TestCase):
             else:
                 self.assertEqual(result['metric_limitations'],[])
                 self.assertEqual(result['status'],'SOURCES_READY_FOR_SELECTED_METRICS')
+
+
+    def test_new_task_source_directory_does_not_reset_immutable_capture(self):
+        with patch('sec_http.urlopen',side_effect=lambda **kw:Response(b'{}')) as transport:
+            self.capture.get(self.url)
+            other=online.Capture(self.root/'different-task-source',self.ledger,self.context,5)
+            with self.assertRaisesRegex(ValueError,'ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED'):
+                other.get(self.url)
+        self.assertEqual(transport.call_count,1)
+        with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,1])
+        self.assertIsNone(other.pending)

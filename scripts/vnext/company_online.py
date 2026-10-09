@@ -80,6 +80,16 @@ class Capture:
                  'refresh_metadata':refresh,'source_log_before_sha256':sha256_file(path=log)}
         requirement={k:self.context[k] for k in ('requirement_id','requirement_closure_hash')}
         with self.ledger.locked():
+            # A new task directory is not permission to re-fetch a previously
+            # captured immutable document. Metadata refresh is an explicit
+            # separate operation; otherwise require reuse of the saved source.
+            if not refresh:
+                for previous in self.ledger.snapshot()['rows']:
+                    if previous['channel']!='SEC' or previous['status']!='SUCCEEDED':continue
+                    receipt=self.ledger.root/'calls'/('%04d'%previous['ordinal'])/'sec-receipt.json'
+                    saved=strict_json_file(path=receipt)
+                    if saved.get('ledger_row',{}).get('source_url')==url:
+                        raise ValueError('COMPANY_ONLINE_ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED:'+url)
             slot,intent=self.ledger.claim(channel='SEC',request_digest=content_hash(value=request),
                 requirement=requirement,plan_id=content_hash(value=request),purpose=self.context['purpose'])
             self.pending = intent['ordinal']
@@ -171,12 +181,18 @@ def run_online_company(*, company_id, work_dir, output_dir, call_context, metric
     _need(not(work/'local-company.json').exists(),'OLD_TASK_REQUIRES_ORIGINAL_ENTRY')
     with (work/'online.lock').open('a+b') as lock:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        source=absolute(context.get('source_root',work/'sources'))
+        # Runtime configuration may point to the existing complete SEC store.
+        # Read its original rows/IDs in place; do not slice or re-number history.
+        for protected in (ROOT.resolve(),outputs):
+            _need(source!=protected and protected not in source.parents and source not in protected.parents,'SOURCE_ROOT_OVERLAP')
+        _need(source==work/'sources' or (source!=work and source not in work.parents and work not in source.parents),'SOURCE_STATE_OVERLAP')
         config=work/'online-company.json'
-        identity={'company_id':company_id,'source_root':str(work/'sources'),
+        identity={'company_id':company_id,'source_root':str(source),
                   'ledger_root':str(ledger.root),'binding_id':ledger.binding['binding_id']}
         if config.exists():_need(strict_json_file(path=config)==identity,'TASK_IDENTITY_CHANGED')
         else:_atomic_json(config,identity)
-        capture=Capture(work/'sources',ledger,context,max_sec_requests)
+        capture=Capture(source,ledger,context,max_sec_requests)
         try: discovery=acquire_financial(capture,next(r for r in _registry_rows(repo_root=ROOT) if r['company_id']==company_id),metrics)
         except Exception as error:
             discovery={'status':'SOURCE_DISCOVERY_FAILED','error_type':type(error).__name__,'reason':str(error)}

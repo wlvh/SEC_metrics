@@ -21,3 +21,5 @@
 精确f1c0088提交的最终HTTP边界链实际PASS（fixed-sha-program-chain.log）：首跑9.164s、禁工厂复跑1.102s、消费数值变化4.073s、503失败1.054s、显式恢复4.093s、禁网禁计算读取0.00841s、前期文件404时局部完成6.675s。原件/来源读取及计算原实现未mock。此前全链日志中的最后AssertionError是测试把程序正确的CANDIDATE_WITHHELD误写为异常；存储检查已确认原真实处理，原日志未改。后续修正测试断言后f1实际完整执行通过，B02具名NORMAL_COMPANYFACTS_ROUTE_UNRESOLVED及404出处保留，不改程序标准来迁就预期。
 
 f1限定P2增量独审APPROVE_WITHIN_P2_INCREMENT：8短例+10边界，见independent-p2/conclusion.md；前次61adc独审REQUEST_CHANGES及两个反例保持。不是全PR/所有公司内容批准。后继仅归档该报告及日志，产品源码/测试仍精确f1，不重新重跑未变材料。
+
+追加防意外重复获取的有限检查：原账本已成功捕获同一不可变URL时，换task/source目录不会重新申领，返回ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED；元数据刷新仍显式计数。9短例2.067s通过。运行配置可指定原完整source_root，不复制/裁剪/重编号账本。实际CLI新公司状态复用原recorded来源库，仅2个元数据HTTP、0不可变原件GET，原请求行保留为18行，B01/B02完成；日志见existing-store-cli.log，未消费旧Result作为答案。这个新增源库接缝及重复目录保护尚需限定增量复核，不能继承f1两个P2的限定结案为其独审。

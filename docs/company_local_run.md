@@ -110,3 +110,5 @@ python /path/to/online-candidate/tools/vnext_company.py run \
 调用上下文只说明本次适用的既有账本/用途/公司/指标、原调用上限、原执行模式和运行版本；不能用这个文件给自己新增许可。真实运行须先核原适用授权，本文没有为当前候选授予新用途。原账本的初始化锚点、历史行、停止和计数继续生效，不能通过新任务目录拆分/重置额度；未知远端结果或落盘中断保留占用并停止，不自动重发。`--sec-allowance`不覆盖已有账本上限。
 
 来源保存在任务 `sources`，普通计算状态在 `company-state`，输出在指定输出目录；用户不手工准备 FULL_SOURCE 或选择内部程序树。独立采集用同版 `acquire --company ... --work-dir ... --call-context ... --metric B01 --metric B02 --max-sec-requests 20`；单独计算可用同版保存来源 `run --source-root <任务/sources>` 指向另一个普通状态目录。日常读取用 `results --state-root <任务/company-state> --company ...`，不重放计算。已有原生任务继续原固定入口，不用此候选覆盖旧状态。
+
+同一原账本已保存的不可变原件，不能因为换任务目录就再取一次。调用上下文可固定既有完整 SEC `source_root`，直接复用其原请求行/原件/身份，不能裁账本或拼不同历史；未给原来源位置但账本已有同URL成功记录时，新入口在申领前返回 `ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED`。元数据刷新单独明确计数。该配置是持久运行配置，不是每年手填来源答案；既有来源根必须在代码和状态/输出根之外。
