@@ -40,3 +40,5 @@ python3 tools/vnext_company.py results --company salesforce \
 逐行再核报送主体发现真实公共投影缺口：Param21–24 Source/Trace实体813828正确，CSV.cik却取今日registry2041610。原ordinary_projection验证prepared.entity属于登记集合后，baseline/_project_result仍用registry.primary_cik，未用已核报送人。此前已核的旧Param21事件CSV五项也出现该错误（values/窗口/源池相符不解除这一问题）。此前消费者核对遗漏CSV的CIK列，现补核并纠正交付范围，不修改旧Result/CSV或借旧接受记录盖章。准确代表源/trace/row见predecessor-cik-mismatch.json，旧事件行见predecessor-affected-old-event-rows.json。公共#28按共享renderer职责处理，本方不写第二版本；修后仅核实际受影响渲染/新读口，45结构结论及50B12完整导出接受目前未证明。
 
 上游main4a03f223只修本指南此前误写的B04/B07名称：B04为净利润，B05为自由现金流，B07为利息保障倍数。该文档增量已接本候选06f02369，原计算/真实数值不因名称修正重跑。原错误及修复版本在Git保留，不把模块名当指标业务定义。
+
+公共身份修复用的单个真实预计算case已保存为paramount2021-b12-precalculated.json.gz（gzip JSON，30796B；原JSON SHAcc9c10babf53e428ba93a4c9158bb39c46cda29a6379b876467db199f6f8ebb4）。只从原保存records/Result/Trace及输入ID重组，源金额检查器禁用，期间/报送身份用既有选期/DEI读取器核，旧Result文件未改；不是重算全批或新审查包。prepared.entity/trace.entity/源813828，原CSV2041610差异可经现有save_calculated_case→CSV→read真实重现。来源仍用原PR52恢复data_root，不给这个case新增许可/Run/接受。
