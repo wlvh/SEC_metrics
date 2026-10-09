@@ -1,8 +1,8 @@
 # 历史公司使用指南
 
-截至2026-10-09，main `1c578c61` 已接收 PR61/58/62/67/71/74/75/76/79/83/86，以及 PR77/78/81/82/84/88 和事件链 PR89/PR90（44719c7e、408e89e2）。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及未修订、连续主体的 B01/B02/B04/B05和所选CIK余额的B08/B09。酒店共用计算与四指标历史适配已 main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
+截至2026-10-09，main `4a03f223` 已包含 PR61/58/62/67/71/74/75/76/79/83/86、PR77/78/81/82/84/88，以及事件接收提交 `44719c7e` / `408e89e2`。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及未修订、连续主体的 B01/B02/B04/B05和所选CIK余额的B08/B09。酒店共用计算与四指标历史适配已 main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
 
-A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C01/E02–E05 的普通历史适配（[PR90](https://github.com/wlvh/SEC_metrics/pull/90)）及其依赖的公共事件源/宽窗接口（[PR89](https://github.com/wlvh/SEC_metrics/pull/89)）已于 2026-10-09 进入 main。PR83 的普通在线接续不等于历史模式已能在线发现与补齐来源；本指南的 `fiscal-years` 仍需已保存来源根。代码合入不表示正式采纳、发布或 active 切换。
+A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C01/E02–E05普通历史适配及公共事件源/宽窗接口已在main；[PR90](https://github.com/wlvh/SEC_metrics/pull/90)和[PR89](https://github.com/wlvh/SEC_metrics/pull/89)已由接收方合入；后续消费者记录继续按本记录的执行版本解释，不改旧运行记录。PR83 的普通在线接续不等于历史模式已能在线发现与补齐来源；本指南的 `fiscal-years` 仍需已保存来源根。代码合入不表示正式采纳、发布或 active 切换。
 
 ## 取得代码和已保存输入
 
@@ -11,7 +11,7 @@ A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C0
 ```bash
 git fetch origin main
 git worktree add -b review/issue47-hotel-history ../SEC_metrics-history-review \
-  73ead3b4
+  4a03f223
 cd ../SEC_metrics-history-review
 python3 tools/vnext_company.py run --help
 ```
@@ -82,9 +82,9 @@ main `73ead3b4` 已包含 A01/A02（Tier1、CET1资本比率）、A05/A06（ROA�
 
 行业不适用、主体不可比和程序未完成分开：JPM B07为 `N_A_STRUCTURAL/null/TRAIT_NOT_APPLICABLE`；Paramount FY2025的B02/B04/B05/B07保留 `NOT_MEANINGFUL/null/ENTITY_CONTINUITY_NOT_COMPARABLE`，不拼接前身或提取金额。这不解决其B01范围及日期冲突。金融修订和继任主体的金额适配仍未完成，按[主体结论记录](evidence/issue47_successor_outcomes_20261009/README.md)解释，不把这些空值改成零。
 
-## 事件模式（C01/E02–E05）
+## 已保存来源的历史事件模式
 
-main 已包含该事件分派（PR90，merge commit 408e89e2）以及公共 PR89 的所选事件源和普通宽窗保存接口，不依赖未提交文件。采用同一命令，例如已恢复 Macy’s 来源后：
+main `4a03f223` 已包含所选事件源、历史分派和普通宽窗保存接口，处理文件与本方已验证的 `65471ee1` / `b7640660` / `da873af8` 相同。后续公司验证记录沿本主要记录的接收分支可取得，原件仍从PR52恢复；无需两个会话未提交的文件。采用同一命令，例如已恢复Macy’s来源后：
 
 ```bash
 python3 tools/vnext_company.py run \
@@ -147,6 +147,7 @@ cd ../SEC_metrics-bank-scope-review
   --state-root /new/bank-scope/state --output-root /new/bank-scope/read-01
 来源使用保留历史分支恢复所得实际 `source-inputs` 根，原件只读，状态/输出写外部新目录。JPM FY2021实际A04=.0164 ratio、全年；A09=.0072 ratio及A11=3,113,000,000,000 USD均为12月31日时点，财年是年度容器。A09仍先做完整原生结构化检查，只有明确歧义且来源集合完整才可使用现有HTML解释；缺源或程序异常不能替代。原申报、原格与单位/期间都由同一CSV/出处读口保存。
 同CLI首跑、禁工厂复用及另进程读取已核，见[唯一接收记录](evidence/issue47_bank_scope_receiving_20261010/README.md)。JPM FY2021–FY2025十五坐标已完成同入口处理、全范围复用、独立读取和原参考逐项核对；修订/继任金额、其他金融族和在线历史取源尚待；候选接线不等于完整业务接受。
+已核的主干输出限制：Paramount FY2021–FY2024所选原件和Trace报送人为813828，但当前公共CSV仍使用今日登记CIK2041610；旧结果读取保留原字节，不能把该列作为当期申报主体结论。公共主体修复仍在接收中，新版本须核同一年度CSV与证据身份，不能手改旧记录。其2025事件宽窗不据此获得拼接财务主体的许可。见[原RPO消费者主要记录](https://github.com/wlvh/SEC_metrics/blob/e4eff843/docs/evidence/issue47_rpo_receiving_20261009/README.md)；PR96是B12候选，尚未进入上述main，完整年度E01仍未交付。
 
 ## 状态、复跑和局部失败
 
@@ -166,6 +167,6 @@ cd ../SEC_metrics-bank-scope-review
 
 ## 仍需交付的部分
 
-已入main的酒店、四指标、余额、资本、银行和B07交付上述保存来源后的范围计算、复跑、读取和CSV/出处；不包含在线历史发现、缺件补齐、事件候选之外的其他历史指标或新模型执行链。其他候选按自身接收状态保留，不据分支结果扩大 main 的可用范围。
+已入main的酒店、四指标、余额、资本、银行和B07交付上述保存来源后的范围计算、复跑、读取和CSV/出处；不包含在线历史发现、缺件补齐、所述已接事件族之外的其他历史指标或新模型执行链。其他候选按自身接收状态保留，不据分支结果扩大 main 的可用范围。事件实现已入main只解除接线候选边界，尚未验证的公司/年度、E01及完整五年业务继续。
 
 完整历史来源准备仍须把公司、期间、指标贯穿现有来源发现/缺件清单、按具体用途许可获取、同一公司计算和结果出口。年度基础材料已保存不等于附件、图片、前期和所有指标依赖齐备。本项是仍有效的H4/历史交付责任，不因首批范围有限而取消；原十公司×39指标×五年业务目标继续。

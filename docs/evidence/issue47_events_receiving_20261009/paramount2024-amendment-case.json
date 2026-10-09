@@ -1,0 +1,151 @@
+{
+  "seconds": 18.550298125017434,
+  "target": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "result": {
+    "company_id": "paramount_skydance_paramount_global",
+    "metric_id": "C01",
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31",
+    "scope_key": "sha256:75613bafa50d9681b0b3d3adf10dfd519cc6caa24f4079f0a802488ca3dd54ac",
+    "spec_closure_hash": "sha256:87a93dec6cb267aa2a6549a8ce060757267b9db8680662970f4959a040990ced",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "9",
+    "unit": "count",
+    "trace_id": "sha256:82aad5cb563d9ad1b1631ce05e3e9ff9cde211ed5b87771f8edb458f24abdcaf",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:96cf1530552397d0ce197dbe6ac34358f284ee56c7bef77f628a5987bf16d8b7"
+  },
+  "selection": {
+    "reason_code": "PASS",
+    "matched_verified_claim_ids": [
+      "sha256:7e1b308841f03c35c0eec2fbfee782b7cd91f76aa73f673d84003b6926423a96",
+      "sha256:11449db83a4b26be1c0fd255e346b0d94de8298c79c6f8f6e0d54a8c52a173a2",
+      "sha256:a88700ed2cd5cd0ee2087babf093dfe79b79ae195746e5b64ed38b7cfaaf4e81",
+      "sha256:e1f50f91c05e505b249aa0eff6f0388e9f55c073dd0a7c83f5da9e1a01158c72",
+      "sha256:9baaea4311e3c954d45ae333093f44aa33a59433d6d1815838b0be1dc0d07755",
+      "sha256:beeb2ee5965ee27a6cfb70a2d4beea5c31c0a669d7b581194367a47a17c60fd8",
+      "sha256:01a3ea9d861b38fd8c484e1479d8f090ae48be95ef8b2b856d777e5747bcce08",
+      "sha256:11af77dc61b0550eb243c55295f6da2128b8e14572f137088d868c6b32fc0984",
+      "sha256:4c518b15df3fdf0d78c8aa8809770f54f1932898b4afdd51f34a6348cdd39916"
+    ],
+    "source_event_accessions": [
+      "0000813828-24-000009",
+      "0000813828-24-000018",
+      "0000813828-24-000023",
+      "0000813828-24-000028",
+      "0000813828-24-000033",
+      "0000813828-24-000034",
+      "0000813828-24-000038",
+      "0000813828-24-000042",
+      "0000813828-24-000063",
+      "0000813828-24-000069",
+      "0000813828-24-000073",
+      "0000813828-24-000075",
+      "0000813828-24-000081",
+      "0000813828-24-000083",
+      "0000813828-24-000085",
+      "0000813828-24-000087",
+      "0001193125-24-050664",
+      "0001193125-24-122356",
+      "0001193125-24-177535",
+      "0001193125-24-196053",
+      "0001193125-24-196972",
+      "0001193125-24-253719"
+    ]
+  },
+  "amendment_checks": [
+    {
+      "record_type": "HISTORICAL_AMENDMENT_SCOPE_SUMMARY",
+      "schema_version": 1,
+      "classification": "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS",
+      "fiscal_window_unchanged": true,
+      "unchanged_input_classes": [
+        "FISCAL_EVENT_WINDOW"
+      ],
+      "issues": [],
+      "policy_hash": "sha256:0aff3223e553748783b58ecde0366f0f51cfb5b8e9d95a6a065aad6ade219d49",
+      "note_layout": "inline-paragraphs-v2",
+      "not_covered_metric_ids": [
+        "B06",
+        "B13",
+        "C02",
+        "C03",
+        "C04",
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "source_acquisition_credit": false,
+      "native_run_created": false,
+      "production_authorized": false,
+      "referenced_complete_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+      "original_statement_admission_requires_further_review": true,
+      "original": {
+        "filing": {
+          "form": "10-K",
+          "reportDate": "2024-12-31",
+          "filingDate": "2025-02-26",
+          "accessionNumber": "0000813828-25-000005",
+          "primaryDocument": "para-20241231.htm"
+        },
+        "source_reference": {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+          "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+          "company_id": "paramount_skydance_paramount_global",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+          "accession": "0000813828-25-000005",
+          "document_name": "para-20241231.htm",
+          "source_role": "target_primary",
+          "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+        },
+        "raw_sha256": "5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+        "period": {
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31"
+        }
+      },
+      "amendment": {
+        "filing": {
+          "form": "10-K/A",
+          "reportDate": "2024-12-31",
+          "filingDate": "2025-04-25",
+          "accessionNumber": "0001193125-25-096776",
+          "primaryDocument": "d886907d10ka.htm"
+        },
+        "source_reference": {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:abfc5dda276a9f731c9c7551acd16e4a4bb40f846784178b8c06f999cf6c74e7",
+          "raw_asset_id": "sha256:ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+          "company_id": "paramount_skydance_paramount_global",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000119312525096776/d886907d10ka.htm",
+          "accession": "0001193125-25-096776",
+          "document_name": "d886907d10ka.htm",
+          "source_role": "target_primary",
+          "request_attempt_id": "request:attempt:6b270f8c914232d0bfc5fd978e7f19dc4e249956218b93c68bb067e43735a206"
+        },
+        "raw_sha256": "ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+        "period": {
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31"
+        }
+      }
+    }
+  ],
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "case_only_not_company_delivery": true,
+  "complete_source_objects_omitted_from_summary": true,
+  "reconstruction": "Use committed PR52 source-inputs and main9493ed0e prepare_historical_event_year_case(company_id=paramount_skydance_paramount_global, metric_id=C01, fiscal_year=2024); no network."
+}
