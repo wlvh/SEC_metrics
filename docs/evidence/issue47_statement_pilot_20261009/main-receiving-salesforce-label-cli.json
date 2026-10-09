@@ -1,0 +1,114 @@
+{
+  "task_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr75-salesforce-label-1791530061003371000",
+  "first": {
+    "elapsed_seconds": 4.368118708953261,
+    "metrics": [
+      {
+        "metric_id": "B01",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "84868c63565243bbbc7b61c36a032e05",
+        "version": "4643abfd8c3f49f7b08218ea55a92abe",
+        "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr75-salesforce-label-1791530061003371000/state/updates/B01/periods/FY2026/results/4643abfd8c3f49f7b08218ea55a92abe",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2026,
+        "defect_holds": [],
+        "read_result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr75-salesforce-label-1791530061003371000/state/updates/B01/periods/FY2026/results/4643abfd8c3f49f7b08218ea55a92abe",
+        "program_version": {
+          "commit": "7a07dba9c498994e6ea0f9913fd319230519f7c0",
+          "has_uncommitted_changes": true
+        }
+      }
+    ]
+  },
+  "repeat": {
+    "elapsed_seconds": 0.3994974170345813,
+    "metrics": [
+      {
+        "metric_id": "B01",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "f652d7e980034904b8c93ccee34875f6",
+        "version": "4643abfd8c3f49f7b08218ea55a92abe",
+        "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr75-salesforce-label-1791530061003371000/state/updates/B01/periods/FY2026/results/4643abfd8c3f49f7b08218ea55a92abe",
+        "result_reason_code": "PASS",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2026,
+        "defect_holds": [],
+        "read_result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr75-salesforce-label-1791530061003371000/state/updates/B01/periods/FY2026/results/4643abfd8c3f49f7b08218ea55a92abe",
+        "program_version": {
+          "commit": "7a07dba9c498994e6ea0f9913fd319230519f7c0",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "factory_call_forbidden_with_function_identity_preserved": true
+  },
+  "read": {
+    "seconds": 0.3479667080100626,
+    "rows": [
+      {
+        "company": "Salesforce",
+        "cik": "1108524",
+        "metric_id": "B01",
+        "metric_name": "Revenue",
+        "value": "41525000000",
+        "unit": "USD",
+        "status": "OK",
+        "source_class": "STD_XBRL",
+        "formula": "direct",
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "fiscal_year": "2026",
+        "fiscal_period": "ANNUAL",
+        "accession": "0001108524-26-000060",
+        "form": "10-K",
+        "filed_date": "2026-03-02",
+        "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2026, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:abe7e36b73f7f0d0f4269680e75b5147fb55e79a1f4019d01bb2591d3f16a9b0\", \"original_reports\": {\"primary\": [{\"concept\": \"us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001108524\", \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001108524\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2025-02-01\"}, {\"kind\": \"enddate\", \"value\": \"2026-01-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 158, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\", \"source_reference\": {\"accession\": \"0001108524-26-000060\", \"company_id\": \"salesforce\", \"document_name\": \"crm-20260131.htm\", \"raw_asset_id\": \"sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7\", \"source_reference_id\": \"sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm\"}, \"unit\": \"USD\", \"value\": \"41525000000\"}, {\"concept\": \"us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001108524\", \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001108524\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2025-02-01\"}, {\"kind\": \"enddate\", \"value\": \"2026-01-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 515, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\", \"source_reference\": {\"accession\": \"0001108524-26-000060\", \"company_id\": \"salesforce\", \"document_name\": \"crm-20260131.htm\", \"raw_asset_id\": \"sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7\", \"source_reference_id\": \"sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm\"}, \"unit\": \"USD\", \"value\": \"41525000000\"}], \"xml\": [{\"concept\": \"us-gaap:revenuefromcontractwithcustomerexcludingassessedtax\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001108524\", \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001108524\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2025-02-01\"}, {\"kind\": \"enddate\", \"value\": \"2026-01-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 158, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\", \"source_reference\": {\"accession\": \"0001108524-26-000060\", \"company_id\": \"salesforce\", \"document_name\": \"crm-20260131_htm.xml\", \"raw_asset_id\": \"sha256:ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3\", \"source_reference_id\": \"sha256:49f22a0447f7bbc7e9d2fa79e64642550f424d82bd3442741fd292341a84e4d3\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml\"}, \"unit\": \"USD\", \"value\": \"41525000000\"}, {\"concept\": \"us-gaap:revenuefromcontractwithcustomerexcludingassessedtax\", \"context\": {\"context_ref\": \"c-1\", \"dimensions\": {}, \"entity_identifier\": \"0001108524\", \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"c-1\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001108524\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2025-02-01\"}, {\"kind\": \"enddate\", \"value\": \"2026-01-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"c-1\", \"decimals\": \"-6\", \"ordinal\": 515, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\", \"source_reference\": {\"accession\": \"0001108524-26-000060\", \"company_id\": \"salesforce\", \"document_name\": \"crm-20260131_htm.xml\", \"raw_asset_id\": \"sha256:ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3\", \"source_reference_id\": \"sha256:49f22a0447f7bbc7e9d2fa79e64642550f424d82bd3442741fd292341a84e4d3\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml\"}, \"unit\": \"USD\", \"value\": \"41525000000\"}]}}]}, \"source_reference_ids\": [\"sha256:fe3bf7cdab815fd58dc64b19aec533b5aa58e43211b3afe820441d2c9a6706f1\", \"sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c\", \"sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f\", \"sha256:77ca4d087014e5be9daf65b86a9ab73e2ddd5b3a9bea5b1e0855117434ef7536\", \"sha256:49f22a0447f7bbc7e9d2fa79e64642550f424d82bd3442741fd292341a84e4d3\"]}",
+        "confidence": "",
+        "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS. Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding.",
+        "company_id": "salesforce",
+        "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr75-salesforce-label-1791530061003371000/state/updates/B01/periods/FY2026/results/4643abfd8c3f49f7b08218ea55a92abe",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      }
+    ],
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pr75-salesforce-label-1791530061003371000/read-final",
+    "factory_call_forbidden": true
+  },
+  "protected_file_count": 9,
+  "read_files_unchanged": true,
+  "timings_scope": "first/repeat CLI internal elapsed; final read external wall. Failed development recorder after initial read kept separately; no new financial computation for completion.",
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}
