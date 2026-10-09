@@ -31,3 +31,11 @@ PFIZER FY2023实际table_000113列Product revenues50,914m、Alliance revenues7,5
 现有公司task只新增两个B02缺位：FY22首9.128s、禁止factory复.895s；FY25首6.611s、禁止复.905s；新目录独立read.545s。值分别.2342535183544926680444838106及-.01647099501783833906989171264 ratio，各全年窗口，同来源/独立原件参考。原141结果/pointer文件保持，无邻居重算；现有defect清单使FY23B01仍空、23/24B02仍WITHHELD，21B02未处理不借此接受。
 
 首次驱动误向run传--defects-file（仅results支持），参数解析阶段拒绝、未处理财务或调用；失败日志保，修正只在独立results传入，未改公共CLI。真实两个首跑在原statement消费者f79树执行，当前分支只携后继证据且生产零diff；不把证据分支当另一版本算法或新pipeline。公共同概念重列/完整收入选择及默认缺陷登记继续待接收，材料充足但缺核心支持的路径不取消责任。
+
+## 公共PR118的真实历史接收
+
+固定b962b6c9接为f5476491，只消费共用paired防护和exact默认缺陷登记，不另造检查器或取值策略。同concept在目标申报存在同期间/单位比较数且显式矛盾时具名不可比；没有比较时保原同标签行为，变标签仍须原prior同值，Decimal等量不同文本不误拒。原current/prior金额不替换。28公共paired/原银行/statement控制.045s零skip；表明既有财务族受影响检查保留，不全重跑财报。
+
+原Pfizer task只补唯一FY21 B02，首10.057s/exit2/WITHHELD，assessment保原2020金额41.908bn及目标2021比较41.651bn、NORMAL_PAIRED_MEASURE_NOT_COMPARABLE。禁factory复.939s/PREVIOUS_INPUT_WITHHELD/calculationfalse，另一进程默认results.578s/exit0，165结果/pointer文件保持；FY22/25已保存数值未重算，23/24扣留保持。默认read现在不传额外defects即可扣住FY23B01 exactResult，oldRun/旧MATCH/事实值原字节保，先前“optional才hold”段按其当时版本解释。pfizer-b02-2021-company.json/log。
+
+源框架此前年度独立原件已有足够证据，不因此做新AI/网络或注册旧运行信用。驱动在纯材料分支缺旧reference路径时于财务开始前报错，直接从固定f79 Gitblob读工作材料恢复，不重做SEC源restore。公共118尚未入main，此处是明确组合验证；正确FY23 B01总范围选择仍待公共income修，不以显示hold取消其修复责任。
