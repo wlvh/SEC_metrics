@@ -42,3 +42,5 @@ python3 -m unittest -v tests.vnext.test_historical_geography_cases \
 ```
 
 原件只读，状态/输出在代码和来源目录之外；results输出目录必须新。年度缺件与金融完整五年、其他公司年度、online历史发现/补齐及其余指标仍未验证，责任继续。全部本批新SEC/provider/paid=0，无原调用额度重启或旧回答改写；有限公开组件接收与完整业务关闭标准分别说明。
+
+公共作者已提供仅本候选使用的最小CI patch：现有company-current workflow增加本5短例文件的paths，并在原historical步骤显式追加模块。三个模块本地26项.162s/零skip，workflow-short.log；无公共runner/策略变更，也不为路径触发另造提交。正式历史指南已标为候选、只JPM21实测，不改main能力声明。新远端head作业/具体方法执行另核，不能借公共104的绿灯。
