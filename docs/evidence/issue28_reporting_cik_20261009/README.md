@@ -65,3 +65,33 @@ Case material is available from fixed peer e4eff843 at
 docs/evidence/issue47_rpo_receiving_20261009/paramount2021-b12-precalculated.json.gz;
 actual source/state/output locations are in actual-test-paths.json. This is
 processing/test material, never a hidden mandatory answer in a source package.
+
+## Original nullable-Trace contract: P1 correction
+
+The original79ff47b limited review is REQUEST_CHANGES/P1 and stays historical.
+It found native structural, withheld and hotel targets that intentionally
+store entity=None/accession=None. Filled fields still must agree with the
+registered annual identity; explicit nulls now require a matching saved
+primary reference. Metadata-only null outcomes may use the matching issuer
+inventory, but a number/text assertion cannot. Missing fields, foreign
+registered-source URLs, conflicting issuer/filing and combined/unproved scope
+are rejected. This keeps the existing Calculator contract without changing
+old Trace/Result. No separate source/approval framework is introduced.
+
+nullable-real-before-after.json independently reproduces79ff failing on real
+current MarriottB12; the corrected renderer preserves N_A_STRUCTURAL/null
+and1048286. Current source tests also save/read actual hotelB10/B11 numbers
+and Salesforce72.4bn/asof2026-1-31 with native null targets. A constructed
+WITHHELD control uses the original native factory and keeps its reason; it is
+not registered as a real business outcome. The nine pure reporter tests remain
+fast; the three actual source cases are explicitly source-material selectors.
+nullable-combined-tests.log:37tests/28.041s/zero skips. The earlier misplaced
+test assertion in nullable-small.log was moved back into its scope test; no
+production guard was removed to satisfy it. Changed code is still uncommitted
+in those logs; the actual commit is recorded through Git below.
+
+The nullable correction is not yet independently reviewed. The one user-
+authorized development agent is working in a separate request-preparation
+worktree and cannot touch these reporter files; parent/receiver validation
+does not masquerade as independent review. The original review's63tools/
+3messages remain capped. No new business request or original state write.
