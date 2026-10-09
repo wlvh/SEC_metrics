@@ -1,0 +1,17 @@
+{
+  "run_id": 37194640595,
+  "head": "df84865dd64260b7dd6307b852b058f3305a307e",
+  "overall": "failure",
+  "actual_failed_test": [
+    {
+      "duration_seconds": 31.266,
+      "return_code": 1,
+      "stderr_tail": "======================================================================\nFAIL: test_current_exact_reviewed_sources_only_have_no_business_literals (tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_ordinary_scalability_audit.py\", line 25, in test_current_exact_reviewed_sources_only_have_no_business_literals\n    self.assertEqual([], rows)\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^\nAssertionError: Lists differ: [] != [{'file': 'scripts/vnext/c02_table_model_p[225 chars]a.'}]\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n{'file': 'scripts/vnext/c02_table_model_processing.py', 'line': '171', 'literal': '2026-09-13', 'type': 'fixed_fiscal_date', 'allowed': '0', 'reason': 'fixed fiscal date appears in production Python', 'replacement_plan': 'Use selected target/prior reportDate metadata.'}\n\n- []\n+ [{'allowed': '0',\n+   'file': 'scripts/vnext/c02_table_model_processing.py',\n+   'line': '171',\n+   'literal': '2026-09-13',\n+   'reason': 'fixed fiscal date appears in production Python',\n+   'replacement_plan': 'Use selected target/prior reportDate metadata.',\n+   'type': 'fixed_fiscal_date'}]\n\n----------------------------------------------------------------------\nRan 1 test in 30.493s\n\nFAILED (failures=1)\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals",
+      "timeout_seconds": 240
+    }
+  ],
+  "root_cause": "Source-only audit treated protected fixed original ledger directory date as fiscal date; no C02 extraction/assertion failure or timeout in this run.",
+  "fix": "Use existing config budget_root in guard. No audit exemption or weaker fiscal/identity checks."
+}

@@ -1,0 +1,3098 @@
+{
+  "reason_code": "PASS",
+  "source_semantics_passed": true,
+  "classification": "VERIFIED_SOURCE_FACT",
+  "source_fact": {
+    "record_type": "LCR_SOURCE_DISCLOSED_PERIOD_FACT",
+    "schema_version": 1,
+    "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "task_contract_hash": "sha256:8253310e06742bea09b90269b8c6a20bae699c6455c18d671f177606b115d4a0",
+    "discovery": {
+      "record_type": "FINANCIAL_SOURCE_CANDIDATE_DISCOVERY",
+      "schema_version": 1,
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "source_size": 12927325,
+      "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+      "task_catalog_id": "sha256:c5017b9c29f5e0055e4eaf040d69a34203961836759dfc1f9ead1d3e16d2bfc1",
+      "task_contract_hash": "sha256:8253310e06742bea09b90269b8c6a20bae699c6455c18d671f177606b115d4a0",
+      "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+      "spec_closure_hash": "sha256:7763849a520073bc419094126dba415374ccdba885b4d9d0b5b1e60135983b39",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "search_terms": [
+        "liquidity coverage ratio",
+        "lcr"
+      ],
+      "search_scope": "ALL_SOURCE_TABLE_ROWS_LITERAL_LEADS_ONLY",
+      "source_table_count": 679,
+      "materialized_matching_tables": 2,
+      "matched_row_census": [
+        {
+          "label": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 28,
+            "column_index": 0,
+            "origin_row_index": 28,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+            "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+          },
+          "name_terms": [
+            "liquidity coverage ratio",
+            "lcr"
+          ],
+          "scope_terms": {
+            "entity_scope": [
+              "Firm"
+            ],
+            "aggregation": [
+              "average"
+            ]
+          }
+        },
+        {
+          "label": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 29,
+            "column_index": 0,
+            "origin_row_index": 29,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nJPMorgan Chase Bank, N.A. LCR (average)(b)",
+            "text": "JPMorgan Chase Bank, N.A. LCR (average)(b)"
+          },
+          "name_terms": [
+            "lcr"
+          ],
+          "scope_terms": {
+            "entity_scope": [],
+            "aggregation": [
+              "average"
+            ]
+          }
+        },
+        {
+          "label": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 9,
+            "column_index": 0,
+            "origin_row_index": 9,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "LCR",
+            "text": "LCR"
+          },
+          "name_terms": [
+            "lcr"
+          ],
+          "scope_terms": {
+            "entity_scope": [],
+            "aggregation": []
+          }
+        },
+        {
+          "label": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 12,
+            "column_index": 0,
+            "origin_row_index": 12,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "LCR",
+            "text": "LCR"
+          },
+          "name_terms": [
+            "lcr"
+          ],
+          "scope_terms": {
+            "entity_scope": [],
+            "aggregation": []
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 28,
+            "column_index": 6,
+            "origin_row_index": 28,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "111&#160;",
+            "text": "111"
+          },
+          "measurement_row": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 28,
+            "column_index": 0,
+            "origin_row_index": 28,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+            "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "liquidity coverage ratio",
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [
+              "Firm"
+            ],
+            "aggregation": [
+              "average"
+            ]
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000065",
+              "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+              "row_index": 2,
+              "column_index": 6,
+              "origin_row_index": 2,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2025",
+              "text": "2025"
+            }
+          ],
+          "source_unit": "percent",
+          "unit_evidence": [],
+          "duration_component": {
+            "record_type": "FINANCIAL_MEASUREMENT_DURATION_COMPONENT",
+            "schema_version": 1,
+            "revision": "SOURCE_MEASUREMENT_DURATION_V1",
+            "status": "REJECTED",
+            "reasons": [
+              "CLAIMED_MEASUREMENT_PERIOD_DIFFERS"
+            ],
+            "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "source_size": 12927325,
+            "arguments": {
+              "expected_source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+              "table_id": "table_000065",
+              "row_index": 28,
+              "column_index": 6,
+              "measurement_aliases": [
+                "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+              ],
+              "required_row_terms": [
+                "Firm",
+                "average"
+              ],
+              "reported_unit": "percent",
+              "claimed_period_start": "2025-01-01",
+              "claimed_period_end": "2025-12-31"
+            },
+            "selected_cell": {
+              "table_id": "table_000065",
+              "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+              "row_index": 28,
+              "column_index": 6,
+              "origin_row_index": 28,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "111&#160;",
+              "text": "111"
+            },
+            "measurement_row": {
+              "table_id": "table_000065",
+              "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+              "row_index": 28,
+              "column_index": 0,
+              "origin_row_index": 28,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+              "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+            },
+            "table_source_span": {
+              "table_order": 64,
+              "start_byte": 1958647,
+              "end_byte": 2035711,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:236",
+                "table:1"
+              ],
+              "span_sha256": "0eced8701f257621f697ced7567c4600917e0ca1c70088d8f0e0058d64a2d1e3"
+            },
+            "column_period_evidence": [
+              {
+                "table_id": "table_000065",
+                "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+                "row_index": 2,
+                "column_index": 6,
+                "origin_row_index": 2,
+                "origin_column_index": 6,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ],
+            "linked_footnotes": [
+              {
+                "start_byte": 2036337,
+                "end_byte": 2036814,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "padding-left:13.5pt;text-indent:-13.5pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:238"
+                ],
+                "visible_text": "(b)For the years ended December 31, 2025, 2024 and 2023, the percentage represents average ratios for the three months ended December 31, 2025, 2024 and 2023.",
+                "span_sha256": "280294995e9fecd0a5732eaa06b07c63b696b0889b3d88573270a6613bed1874"
+              }
+            ],
+            "annual_header_evidence": [],
+            "unit_evidence_cells": [],
+            "unit_evidence_footnote_spans": [
+              {
+                "start_byte": 2036337,
+                "end_byte": 2036814,
+                "span_sha256": "280294995e9fecd0a5732eaa06b07c63b696b0889b3d88573270a6613bed1874"
+              }
+            ],
+            "measurement_period": {
+              "period_start": "2025-10-01",
+              "period_end": "2025-12-31",
+              "duration_months": 3
+            },
+            "duration_basis": "ROW_LINKED_FOOTNOTE",
+            "qualification_credit": "NONE_COMPONENT_ONLY",
+            "publication_credit": "NONE",
+            "duration_receipt_id": "sha256:6b6b64531ce10afdd2a7a0c45edbc82b2756d3f0789fe784d0389b19da6721b0"
+          },
+          "unresolved_obligations": [
+            "DISCLOSED_PERIOD_DIFFERS_FROM_REQUEST"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:a8f3d03894ee17ee2313a85fb88557c9916c10bb7f7cf2b9ad9b840d4b24530e"
+        },
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 28,
+            "column_index": 12,
+            "origin_row_index": 28,
+            "origin_column_index": 12,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "113&#160;",
+            "text": "113"
+          },
+          "measurement_row": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 28,
+            "column_index": 0,
+            "origin_row_index": 28,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+            "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "liquidity coverage ratio",
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [
+              "Firm"
+            ],
+            "aggregation": [
+              "average"
+            ]
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000065",
+              "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+              "row_index": 2,
+              "column_index": 12,
+              "origin_row_index": 2,
+              "origin_column_index": 12,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2024",
+              "text": "2024"
+            }
+          ],
+          "source_unit": null,
+          "unit_evidence": [],
+          "duration_component": null,
+          "unresolved_obligations": [
+            "DIFFERENT_COLUMN_PERIOD",
+            "SOURCE_UNIT_NOT_PROVEN"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:4514c46b272cec16feebdc1fdcf7fef958056b1d056fddc03bec9993801f9d65"
+        },
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 28,
+            "column_index": 18,
+            "origin_row_index": 28,
+            "origin_column_index": 18,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "113&#160;",
+            "text": "113"
+          },
+          "measurement_row": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 28,
+            "column_index": 0,
+            "origin_row_index": 28,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+            "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "liquidity coverage ratio",
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [
+              "Firm"
+            ],
+            "aggregation": [
+              "average"
+            ]
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000065",
+              "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+              "row_index": 2,
+              "column_index": 18,
+              "origin_row_index": 2,
+              "origin_column_index": 18,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2023",
+              "text": "2023"
+            }
+          ],
+          "source_unit": null,
+          "unit_evidence": [],
+          "duration_component": null,
+          "unresolved_obligations": [
+            "DIFFERENT_COLUMN_PERIOD",
+            "SOURCE_UNIT_NOT_PROVEN"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:bf8ff8e5bdd5f7def90008e3d4348a91be6ae9d2476e6e9baa43a4ceb438cfc1"
+        },
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 29,
+            "column_index": 6,
+            "origin_row_index": 29,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "115&#160;",
+            "text": "115"
+          },
+          "measurement_row": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 29,
+            "column_index": 0,
+            "origin_row_index": 29,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nJPMorgan Chase Bank, N.A. LCR (average)(b)",
+            "text": "JPMorgan Chase Bank, N.A. LCR (average)(b)"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [],
+            "aggregation": [
+              "average"
+            ]
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000065",
+              "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+              "row_index": 2,
+              "column_index": 6,
+              "origin_row_index": 2,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2025",
+              "text": "2025"
+            }
+          ],
+          "source_unit": "percent",
+          "unit_evidence": [],
+          "duration_component": {
+            "record_type": "FINANCIAL_MEASUREMENT_DURATION_COMPONENT",
+            "schema_version": 1,
+            "revision": "SOURCE_MEASUREMENT_DURATION_V1",
+            "status": "REJECTED",
+            "reasons": [
+              "CLAIMED_MEASUREMENT_PERIOD_DIFFERS"
+            ],
+            "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "source_size": 12927325,
+            "arguments": {
+              "expected_source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+              "table_id": "table_000065",
+              "row_index": 29,
+              "column_index": 6,
+              "measurement_aliases": [
+                "JPMorgan Chase Bank, N.A. LCR (average)(b)"
+              ],
+              "required_row_terms": [
+                "average"
+              ],
+              "reported_unit": "percent",
+              "claimed_period_start": "2025-01-01",
+              "claimed_period_end": "2025-12-31"
+            },
+            "selected_cell": {
+              "table_id": "table_000065",
+              "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+              "row_index": 29,
+              "column_index": 6,
+              "origin_row_index": 29,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "115&#160;",
+              "text": "115"
+            },
+            "measurement_row": {
+              "table_id": "table_000065",
+              "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+              "row_index": 29,
+              "column_index": 0,
+              "origin_row_index": 29,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nJPMorgan Chase Bank, N.A. LCR (average)(b)",
+              "text": "JPMorgan Chase Bank, N.A. LCR (average)(b)"
+            },
+            "table_source_span": {
+              "table_order": 64,
+              "start_byte": 1958647,
+              "end_byte": 2035711,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:236",
+                "table:1"
+              ],
+              "span_sha256": "0eced8701f257621f697ced7567c4600917e0ca1c70088d8f0e0058d64a2d1e3"
+            },
+            "column_period_evidence": [
+              {
+                "table_id": "table_000065",
+                "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+                "row_index": 2,
+                "column_index": 6,
+                "origin_row_index": 2,
+                "origin_column_index": 6,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ],
+            "linked_footnotes": [
+              {
+                "start_byte": 2036337,
+                "end_byte": 2036814,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "padding-left:13.5pt;text-indent:-13.5pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:238"
+                ],
+                "visible_text": "(b)For the years ended December 31, 2025, 2024 and 2023, the percentage represents average ratios for the three months ended December 31, 2025, 2024 and 2023.",
+                "span_sha256": "280294995e9fecd0a5732eaa06b07c63b696b0889b3d88573270a6613bed1874"
+              }
+            ],
+            "annual_header_evidence": [],
+            "unit_evidence_cells": [],
+            "unit_evidence_footnote_spans": [
+              {
+                "start_byte": 2036337,
+                "end_byte": 2036814,
+                "span_sha256": "280294995e9fecd0a5732eaa06b07c63b696b0889b3d88573270a6613bed1874"
+              }
+            ],
+            "measurement_period": {
+              "period_start": "2025-10-01",
+              "period_end": "2025-12-31",
+              "duration_months": 3
+            },
+            "duration_basis": "ROW_LINKED_FOOTNOTE",
+            "qualification_credit": "NONE_COMPONENT_ONLY",
+            "publication_credit": "NONE",
+            "duration_receipt_id": "sha256:7116a0a0f8e08829752b79da90dfd1eb3ef0fdbb14ecc157721cf6a6a5749b8d"
+          },
+          "unresolved_obligations": [
+            "REQUIRED_SCOPE_NOT_PROVEN_IN_ROW",
+            "DISCLOSED_PERIOD_DIFFERS_FROM_REQUEST"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:1d76b15b62b546d688eed77acef47861d847bf9548d93b99a252743921b85603"
+        },
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 29,
+            "column_index": 12,
+            "origin_row_index": 29,
+            "origin_column_index": 12,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "124&#160;",
+            "text": "124"
+          },
+          "measurement_row": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 29,
+            "column_index": 0,
+            "origin_row_index": 29,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nJPMorgan Chase Bank, N.A. LCR (average)(b)",
+            "text": "JPMorgan Chase Bank, N.A. LCR (average)(b)"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [],
+            "aggregation": [
+              "average"
+            ]
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000065",
+              "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+              "row_index": 2,
+              "column_index": 12,
+              "origin_row_index": 2,
+              "origin_column_index": 12,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2024",
+              "text": "2024"
+            }
+          ],
+          "source_unit": null,
+          "unit_evidence": [],
+          "duration_component": null,
+          "unresolved_obligations": [
+            "REQUIRED_SCOPE_NOT_PROVEN_IN_ROW",
+            "DIFFERENT_COLUMN_PERIOD",
+            "SOURCE_UNIT_NOT_PROVEN"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:9c40f7f676094fd215e51a3eceab3fd712542edc1ae52593c5b2e510df7c545f"
+        },
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 29,
+            "column_index": 18,
+            "origin_row_index": 29,
+            "origin_column_index": 18,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "129&#160;",
+            "text": "129"
+          },
+          "measurement_row": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 29,
+            "column_index": 0,
+            "origin_row_index": 29,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nJPMorgan Chase Bank, N.A. LCR (average)(b)",
+            "text": "JPMorgan Chase Bank, N.A. LCR (average)(b)"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [],
+            "aggregation": [
+              "average"
+            ]
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000065",
+              "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+              "row_index": 2,
+              "column_index": 18,
+              "origin_row_index": 2,
+              "origin_column_index": 18,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2023",
+              "text": "2023"
+            }
+          ],
+          "source_unit": null,
+          "unit_evidence": [],
+          "duration_component": null,
+          "unresolved_obligations": [
+            "REQUIRED_SCOPE_NOT_PROVEN_IN_ROW",
+            "DIFFERENT_COLUMN_PERIOD",
+            "SOURCE_UNIT_NOT_PROVEN"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:85b1b597fbb5ac005c5929c2f239d61f37fe0219ea5d5ea02a661c7ffa154f92"
+        },
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 9,
+            "column_index": 3,
+            "origin_row_index": 9,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "111&#160;",
+            "text": "111"
+          },
+          "measurement_row": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 9,
+            "column_index": 0,
+            "origin_row_index": 9,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "LCR",
+            "text": "LCR"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [],
+            "aggregation": []
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "December 31, 2025",
+              "text": "December 31, 2025"
+            }
+          ],
+          "source_unit": "percent",
+          "unit_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 9,
+              "column_index": 5,
+              "origin_row_index": 9,
+              "origin_column_index": 5,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "%",
+              "text": "%"
+            }
+          ],
+          "duration_component": {
+            "record_type": "FINANCIAL_MEASUREMENT_DURATION_COMPONENT",
+            "schema_version": 1,
+            "revision": "SOURCE_MEASUREMENT_DURATION_V1",
+            "status": "REJECTED",
+            "reasons": [
+              "CLAIMED_MEASUREMENT_PERIOD_DIFFERS"
+            ],
+            "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "source_size": 12927325,
+            "arguments": {
+              "expected_source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+              "table_id": "table_000199",
+              "row_index": 9,
+              "column_index": 3,
+              "measurement_aliases": [
+                "LCR"
+              ],
+              "required_row_terms": [],
+              "reported_unit": "percent",
+              "claimed_period_start": "2025-01-01",
+              "claimed_period_end": "2025-12-31"
+            },
+            "selected_cell": {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 9,
+              "column_index": 3,
+              "origin_row_index": 9,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "111&#160;",
+              "text": "111"
+            },
+            "measurement_row": {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 9,
+              "column_index": 0,
+              "origin_row_index": 9,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "LCR",
+              "text": "LCR"
+            },
+            "table_source_span": {
+              "table_order": 198,
+              "start_byte": 3644608,
+              "end_byte": 3662981,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:539",
+                "div:3",
+                "div:2",
+                "table:1"
+              ],
+              "span_sha256": "967fbec6cc9af753e534683e315b4f359ec2e093d153fb204578b374efd146dd"
+            },
+            "column_period_evidence": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 2,
+                "column_index": 3,
+                "origin_row_index": 2,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "December 31, 2025",
+                "text": "December 31, 2025"
+              }
+            ],
+            "linked_footnotes": [],
+            "annual_header_evidence": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 1,
+                "column_index": 3,
+                "origin_row_index": 1,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 9,
+                "raw_text": "Three months ended",
+                "text": "Three months ended"
+              }
+            ],
+            "unit_evidence_cells": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 9,
+                "column_index": 5,
+                "origin_row_index": 9,
+                "origin_column_index": 5,
+                "rowspan": 1,
+                "colspan": 1,
+                "raw_text": "%",
+                "text": "%"
+              }
+            ],
+            "unit_evidence_footnote_spans": [],
+            "measurement_period": {
+              "period_start": "2025-10-01",
+              "period_end": "2025-12-31",
+              "duration_months": 3
+            },
+            "duration_basis": "EXPLICIT_MONTHS_HEADER_AND_FULL_COLUMN_DATE",
+            "qualification_credit": "NONE_COMPONENT_ONLY",
+            "publication_credit": "NONE",
+            "duration_receipt_id": "sha256:3641187a803629419a0f88de3a359a3af014eef56837a9d7d0c230e12e78cf9d"
+          },
+          "unresolved_obligations": [
+            "REQUIRED_SCOPE_NOT_PROVEN_IN_ROW",
+            "DISCLOSED_PERIOD_DIFFERS_FROM_REQUEST"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:f6b855fb9ca3ba8c146f7d469f2f76356c95a1dcebaaa4f05cd9c2203875f359"
+        },
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 9,
+            "column_index": 6,
+            "origin_row_index": 9,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "110&#160;",
+            "text": "110"
+          },
+          "measurement_row": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 9,
+            "column_index": 0,
+            "origin_row_index": 9,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "LCR",
+            "text": "LCR"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [],
+            "aggregation": []
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 2,
+              "column_index": 6,
+              "origin_row_index": 2,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "September 30, 2025",
+              "text": "September 30, 2025"
+            }
+          ],
+          "source_unit": "percent",
+          "unit_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 9,
+              "column_index": 8,
+              "origin_row_index": 9,
+              "origin_column_index": 8,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "%",
+              "text": "%"
+            }
+          ],
+          "duration_component": {
+            "record_type": "FINANCIAL_MEASUREMENT_DURATION_COMPONENT",
+            "schema_version": 1,
+            "revision": "SOURCE_MEASUREMENT_DURATION_V1",
+            "status": "REJECTED",
+            "reasons": [
+              "CLAIMED_MEASUREMENT_PERIOD_DIFFERS"
+            ],
+            "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "source_size": 12927325,
+            "arguments": {
+              "expected_source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+              "table_id": "table_000199",
+              "row_index": 9,
+              "column_index": 6,
+              "measurement_aliases": [
+                "LCR"
+              ],
+              "required_row_terms": [],
+              "reported_unit": "percent",
+              "claimed_period_start": "2025-01-01",
+              "claimed_period_end": "2025-12-31"
+            },
+            "selected_cell": {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 9,
+              "column_index": 6,
+              "origin_row_index": 9,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "110&#160;",
+              "text": "110"
+            },
+            "measurement_row": {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 9,
+              "column_index": 0,
+              "origin_row_index": 9,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "LCR",
+              "text": "LCR"
+            },
+            "table_source_span": {
+              "table_order": 198,
+              "start_byte": 3644608,
+              "end_byte": 3662981,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:539",
+                "div:3",
+                "div:2",
+                "table:1"
+              ],
+              "span_sha256": "967fbec6cc9af753e534683e315b4f359ec2e093d153fb204578b374efd146dd"
+            },
+            "column_period_evidence": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 2,
+                "column_index": 6,
+                "origin_row_index": 2,
+                "origin_column_index": 6,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "September 30, 2025",
+                "text": "September 30, 2025"
+              }
+            ],
+            "linked_footnotes": [],
+            "annual_header_evidence": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 1,
+                "column_index": 3,
+                "origin_row_index": 1,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 9,
+                "raw_text": "Three months ended",
+                "text": "Three months ended"
+              }
+            ],
+            "unit_evidence_cells": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 9,
+                "column_index": 8,
+                "origin_row_index": 9,
+                "origin_column_index": 8,
+                "rowspan": 1,
+                "colspan": 1,
+                "raw_text": "%",
+                "text": "%"
+              }
+            ],
+            "unit_evidence_footnote_spans": [],
+            "measurement_period": {
+              "period_start": "2025-07-01",
+              "period_end": "2025-09-30",
+              "duration_months": 3
+            },
+            "duration_basis": "EXPLICIT_MONTHS_HEADER_AND_FULL_COLUMN_DATE",
+            "qualification_credit": "NONE_COMPONENT_ONLY",
+            "publication_credit": "NONE",
+            "duration_receipt_id": "sha256:e486c9414063370951e3286aa708b732efe396dae3c3e8afc12cc355f986051a"
+          },
+          "unresolved_obligations": [
+            "REQUIRED_SCOPE_NOT_PROVEN_IN_ROW",
+            "DISCLOSED_PERIOD_DIFFERS_FROM_REQUEST"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:e6c1a11e2f7f2cacf8c92423c6f758f5991d478afa58cdd6379b79f8e0607659"
+        },
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 9,
+            "column_index": 9,
+            "origin_row_index": 9,
+            "origin_column_index": 9,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "113&#160;",
+            "text": "113"
+          },
+          "measurement_row": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 9,
+            "column_index": 0,
+            "origin_row_index": 9,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "LCR",
+            "text": "LCR"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [],
+            "aggregation": []
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 2,
+              "column_index": 9,
+              "origin_row_index": 2,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "December 31, 2024",
+              "text": "December 31, 2024"
+            }
+          ],
+          "source_unit": "percent",
+          "unit_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 9,
+              "column_index": 11,
+              "origin_row_index": 9,
+              "origin_column_index": 11,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "%",
+              "text": "%"
+            }
+          ],
+          "duration_component": null,
+          "unresolved_obligations": [
+            "REQUIRED_SCOPE_NOT_PROVEN_IN_ROW",
+            "DIFFERENT_COLUMN_PERIOD"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:0ddf39f555284da5acc4fff203b26c72ae72889ea4b5d83762442b7be70d0fee"
+        },
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 12,
+            "column_index": 3,
+            "origin_row_index": 12,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "115&#160;",
+            "text": "115"
+          },
+          "measurement_row": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 12,
+            "column_index": 0,
+            "origin_row_index": 12,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "LCR",
+            "text": "LCR"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [],
+            "aggregation": []
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "December 31, 2025",
+              "text": "December 31, 2025"
+            }
+          ],
+          "source_unit": "percent",
+          "unit_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 12,
+              "column_index": 5,
+              "origin_row_index": 12,
+              "origin_column_index": 5,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "%",
+              "text": "%"
+            }
+          ],
+          "duration_component": {
+            "record_type": "FINANCIAL_MEASUREMENT_DURATION_COMPONENT",
+            "schema_version": 1,
+            "revision": "SOURCE_MEASUREMENT_DURATION_V1",
+            "status": "REJECTED",
+            "reasons": [
+              "CLAIMED_MEASUREMENT_PERIOD_DIFFERS"
+            ],
+            "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "source_size": 12927325,
+            "arguments": {
+              "expected_source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+              "table_id": "table_000199",
+              "row_index": 12,
+              "column_index": 3,
+              "measurement_aliases": [
+                "LCR"
+              ],
+              "required_row_terms": [],
+              "reported_unit": "percent",
+              "claimed_period_start": "2025-01-01",
+              "claimed_period_end": "2025-12-31"
+            },
+            "selected_cell": {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 12,
+              "column_index": 3,
+              "origin_row_index": 12,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "115&#160;",
+              "text": "115"
+            },
+            "measurement_row": {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 12,
+              "column_index": 0,
+              "origin_row_index": 12,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "LCR",
+              "text": "LCR"
+            },
+            "table_source_span": {
+              "table_order": 198,
+              "start_byte": 3644608,
+              "end_byte": 3662981,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:539",
+                "div:3",
+                "div:2",
+                "table:1"
+              ],
+              "span_sha256": "967fbec6cc9af753e534683e315b4f359ec2e093d153fb204578b374efd146dd"
+            },
+            "column_period_evidence": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 2,
+                "column_index": 3,
+                "origin_row_index": 2,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "December 31, 2025",
+                "text": "December 31, 2025"
+              }
+            ],
+            "linked_footnotes": [],
+            "annual_header_evidence": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 1,
+                "column_index": 3,
+                "origin_row_index": 1,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 9,
+                "raw_text": "Three months ended",
+                "text": "Three months ended"
+              }
+            ],
+            "unit_evidence_cells": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 12,
+                "column_index": 5,
+                "origin_row_index": 12,
+                "origin_column_index": 5,
+                "rowspan": 1,
+                "colspan": 1,
+                "raw_text": "%",
+                "text": "%"
+              }
+            ],
+            "unit_evidence_footnote_spans": [],
+            "measurement_period": {
+              "period_start": "2025-10-01",
+              "period_end": "2025-12-31",
+              "duration_months": 3
+            },
+            "duration_basis": "EXPLICIT_MONTHS_HEADER_AND_FULL_COLUMN_DATE",
+            "qualification_credit": "NONE_COMPONENT_ONLY",
+            "publication_credit": "NONE",
+            "duration_receipt_id": "sha256:f7c9cee6d505133684938c1b6c4ce5f4e75a562131c559d3db2bb909342f61bf"
+          },
+          "unresolved_obligations": [
+            "REQUIRED_SCOPE_NOT_PROVEN_IN_ROW",
+            "DISCLOSED_PERIOD_DIFFERS_FROM_REQUEST"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:a4b25df8a23348dc418703462e3b4bcea1672e34794e8fb4ff60ca6611250b12"
+        },
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 12,
+            "column_index": 6,
+            "origin_row_index": 12,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "117&#160;",
+            "text": "117"
+          },
+          "measurement_row": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 12,
+            "column_index": 0,
+            "origin_row_index": 12,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "LCR",
+            "text": "LCR"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [],
+            "aggregation": []
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 2,
+              "column_index": 6,
+              "origin_row_index": 2,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "September 30, 2025",
+              "text": "September 30, 2025"
+            }
+          ],
+          "source_unit": "percent",
+          "unit_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 12,
+              "column_index": 8,
+              "origin_row_index": 12,
+              "origin_column_index": 8,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "%",
+              "text": "%"
+            }
+          ],
+          "duration_component": {
+            "record_type": "FINANCIAL_MEASUREMENT_DURATION_COMPONENT",
+            "schema_version": 1,
+            "revision": "SOURCE_MEASUREMENT_DURATION_V1",
+            "status": "REJECTED",
+            "reasons": [
+              "CLAIMED_MEASUREMENT_PERIOD_DIFFERS"
+            ],
+            "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "source_size": 12927325,
+            "arguments": {
+              "expected_source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+              "table_id": "table_000199",
+              "row_index": 12,
+              "column_index": 6,
+              "measurement_aliases": [
+                "LCR"
+              ],
+              "required_row_terms": [],
+              "reported_unit": "percent",
+              "claimed_period_start": "2025-01-01",
+              "claimed_period_end": "2025-12-31"
+            },
+            "selected_cell": {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 12,
+              "column_index": 6,
+              "origin_row_index": 12,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "117&#160;",
+              "text": "117"
+            },
+            "measurement_row": {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 12,
+              "column_index": 0,
+              "origin_row_index": 12,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "LCR",
+              "text": "LCR"
+            },
+            "table_source_span": {
+              "table_order": 198,
+              "start_byte": 3644608,
+              "end_byte": 3662981,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:539",
+                "div:3",
+                "div:2",
+                "table:1"
+              ],
+              "span_sha256": "967fbec6cc9af753e534683e315b4f359ec2e093d153fb204578b374efd146dd"
+            },
+            "column_period_evidence": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 2,
+                "column_index": 6,
+                "origin_row_index": 2,
+                "origin_column_index": 6,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "September 30, 2025",
+                "text": "September 30, 2025"
+              }
+            ],
+            "linked_footnotes": [],
+            "annual_header_evidence": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 1,
+                "column_index": 3,
+                "origin_row_index": 1,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 9,
+                "raw_text": "Three months ended",
+                "text": "Three months ended"
+              }
+            ],
+            "unit_evidence_cells": [
+              {
+                "table_id": "table_000199",
+                "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+                "row_index": 12,
+                "column_index": 8,
+                "origin_row_index": 12,
+                "origin_column_index": 8,
+                "rowspan": 1,
+                "colspan": 1,
+                "raw_text": "%",
+                "text": "%"
+              }
+            ],
+            "unit_evidence_footnote_spans": [],
+            "measurement_period": {
+              "period_start": "2025-07-01",
+              "period_end": "2025-09-30",
+              "duration_months": 3
+            },
+            "duration_basis": "EXPLICIT_MONTHS_HEADER_AND_FULL_COLUMN_DATE",
+            "qualification_credit": "NONE_COMPONENT_ONLY",
+            "publication_credit": "NONE",
+            "duration_receipt_id": "sha256:1e1ec0fcff834d2f5160b415348dd4da1bbec3c3d0a711728951a576eebc9559"
+          },
+          "unresolved_obligations": [
+            "REQUIRED_SCOPE_NOT_PROVEN_IN_ROW",
+            "DISCLOSED_PERIOD_DIFFERS_FROM_REQUEST"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:943e701b741dee1ccaa5becf2f37813d8e09434dccdbc6ee0efcccf6596228bf"
+        },
+        {
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "metric_id": "A03",
+          "spec_semantic_hash": "sha256:115ab30262319e155b90b5fab32911d675a7dfaa647b4be5956e0c9dc5521e04",
+          "locator": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 12,
+            "column_index": 9,
+            "origin_row_index": 12,
+            "origin_column_index": 9,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "124&#160;",
+            "text": "124"
+          },
+          "measurement_row": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 12,
+            "column_index": 0,
+            "origin_row_index": 12,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "LCR",
+            "text": "LCR"
+          },
+          "match_kind": "METRIC_NAME_OR_ROLE",
+          "matched_name_terms": [
+            "lcr"
+          ],
+          "matched_scope_terms": {
+            "entity_scope": [],
+            "aggregation": []
+          },
+          "column_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 2,
+              "column_index": 9,
+              "origin_row_index": 2,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "December 31, 2024",
+              "text": "December 31, 2024"
+            }
+          ],
+          "source_unit": "percent",
+          "unit_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 12,
+              "column_index": 11,
+              "origin_row_index": 12,
+              "origin_column_index": 11,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "%",
+              "text": "%"
+            }
+          ],
+          "duration_component": null,
+          "unresolved_obligations": [
+            "REQUIRED_SCOPE_NOT_PROVEN_IN_ROW",
+            "DIFFERENT_COLUMN_PERIOD"
+          ],
+          "native_evidence_status": "NOT_EVALUATED",
+          "auto_execution_eligible": false,
+          "candidate_id": "sha256:eb9a31447baf0cc9a5ac59897210e652d58d0f1030394c8cddbbcd36e8001309"
+        }
+      ],
+      "unresolved_candidate_set": [
+        "sha256:a8f3d03894ee17ee2313a85fb88557c9916c10bb7f7cf2b9ad9b840d4b24530e",
+        "sha256:1d76b15b62b546d688eed77acef47861d847bf9548d93b99a252743921b85603",
+        "sha256:f6b855fb9ca3ba8c146f7d469f2f76356c95a1dcebaaa4f05cd9c2203875f359",
+        "sha256:e6c1a11e2f7f2cacf8c92423c6f758f5991d478afa58cdd6379b79f8e0607659",
+        "sha256:a4b25df8a23348dc418703462e3b4bcea1672e34794e8fb4ff60ca6611250b12",
+        "sha256:943e701b741dee1ccaa5becf2f37813d8e09434dccdbc6ee0efcccf6596228bf"
+      ],
+      "semantic_completeness": "NOT_PROVEN_BY_LITERAL_SEARCH",
+      "status": "CANDIDATES_DISCOVERED",
+      "execution": "NOT_EXECUTED",
+      "qualification_credit": "NONE_COMPONENT_ONLY",
+      "publication_credit": "NONE",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "discovery_id": "sha256:4512852a759a0b4da3710fd014413f7f2b9c5ec979a5c0630f9a74f6278e4e01"
+    },
+    "issuer_identity": {
+      "registrant_name": "JPMorgan Chase & Co",
+      "native_name_facts": [
+        {
+          "name": "JPMorgan Chase & Co",
+          "ordinal": 67,
+          "qualified_name": "dei:EntityRegistrantName",
+          "context_ref": "c-1",
+          "entity_cik": "19617",
+          "namespace": "http://xbrl.sec.gov/dei/2025"
+        }
+      ],
+      "normalization": "EXACT_TOKENS_CASE_PUNCTUATION_AND_AMPERSAND_ONLY",
+      "source_defined_aliases": [
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5237066,
+            "end_byte": 5238225,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:932",
+              "div:1",
+              "div:4"
+            ],
+            "visible_text": "We have audited the accompanying consolidated balance sheets of JPMorgan Chase & Co. and its subsidiaries (the “Firm”) as of December 31, 2025 and 2024, and the related consolidated statements of income, comprehensive income, changes in stockholders’ equity and cash flows for each of the three years in the period ended December 31, 2025, including the related notes (collectively referred to as the “consolidated financial statements”). We also have audited the Firm’s internal control over financial reporting as of December 31, 2025, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+            "span_sha256": "b30f1bb75f06fb6f9e6a9634b00094f0fe8bae4f8a836ca53bed45c4fe86627a"
+          },
+          "entity_scope": "REGISTRANT_AND_SUBSIDIARIES"
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        }
+      ],
+      "source_consolidated_aliases": [
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5237066,
+            "end_byte": 5238225,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:932",
+              "div:1",
+              "div:4"
+            ],
+            "visible_text": "We have audited the accompanying consolidated balance sheets of JPMorgan Chase & Co. and its subsidiaries (the “Firm”) as of December 31, 2025 and 2024, and the related consolidated statements of income, comprehensive income, changes in stockholders’ equity and cash flows for each of the three years in the period ended December 31, 2025, including the related notes (collectively referred to as the “consolidated financial statements”). We also have audited the Firm’s internal control over financial reporting as of December 31, 2025, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+            "span_sha256": "b30f1bb75f06fb6f9e6a9634b00094f0fe8bae4f8a836ca53bed45c4fe86627a"
+          },
+          "entity_scope": "REGISTRANT_AND_SUBSIDIARIES"
+        }
+      ],
+      "source_legal_name_aliases": [
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "name": "Parent Company",
+          "definition": {
+            "start_byte": 1444075,
+            "end_byte": 1444994,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:99",
+              "div:3",
+              "div:2"
+            ],
+            "visible_text": "Federal Reserve rules require JPMorgan Chase & Co. (the “Parent Company”) to maintain minimum levels of unsecured external long-term debt and other loss-absorbing capacity with specific terms (“eligible LTD”) to recapitalize JPMorganChase’s operating subsidiaries if the Parent Company were to enter into a resolution either in a bankruptcy proceeding under Chapter 11 of the U.S. Bankruptcy Code, or in a receivership administered by the FDIC under Title II of the Dodd-Frank Act (“Title II”). If the Parent Company were to enter into a resolution, holders of eligible LTD, other unsecured creditors and holders of equity securities of the Parent Company will absorb the losses of the Parent Company and its subsidiaries.",
+            "span_sha256": "036349a59fb9b792f414b6d367ca9b7a5fc013dba4b410b770efb290c6247fe1"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        },
+        {
+          "name": "Parent Company",
+          "definition": {
+            "start_byte": 11602172,
+            "end_byte": 11603741,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1384",
+              "ix:continuation:1",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "Restrictions imposed by U.S. federal law prohibit JPMorgan Chase Bank, N.A., and its subsidiaries, from lending to JPMorgan Chase & Co. (“Parent Company”) and certain of its affiliates unless the loans are secured in specified amounts. Such secured loans provided by any banking subsidiary to the Parent Company or to any particular affiliate, together with certain other transactions with such affiliate (collectively referred to as “covered transactions”), must be made on terms and conditions that are consistent with safe and sound banking practices. In addition, unless collateralized with cash or US Government debt obligations, covered transactions are generally limited to 10% of the banking subsidiary’s total capital, as determined by the risk-based capital guidelines; the aggregate amount of covered transactions between any banking subsidiary and all of its affiliates is limited to 20% of the banking subsidiary’s total capital.",
+            "span_sha256": "8051876e48fac9e646ea9b0dc28d4fb8d8fa71126558a8774e9271976b61c945"
+          }
+        }
+      ],
+      "source_defined_other_entities": [
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "JPMorgan Chase Bank, National Association",
+          "alias": "JPMorgan Chase Bank, N.A.",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 1283602,
+            "end_byte": 1284570,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:3"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "2274adbd5b31e9aed4bbcaf547581978992eabde19bdd6f17c5543a47b4fc8bc"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "J.P. Morgan Securities LLC",
+          "alias": "J.P. Morgan Securities",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 1283602,
+            "end_byte": 1284570,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:3"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "2274adbd5b31e9aed4bbcaf547581978992eabde19bdd6f17c5543a47b4fc8bc"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "JPMorgan Chase Bank, National Association",
+          "alias": "JPMorgan Chase Bank, N.A.",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 2063453,
+            "end_byte": 2064395,
+            "tag": "div",
+            "attributes": [],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:263",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "97388f5f588db903c025b2fff0e180757fd090b8e8698c06110f1290cf293af1"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "J.P. Morgan Securities LLC",
+          "alias": "J.P. Morgan Securities",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 2063453,
+            "end_byte": 2064395,
+            "tag": "div",
+            "attributes": [],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:263",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "97388f5f588db903c025b2fff0e180757fd090b8e8698c06110f1290cf293af1"
+          }
+        }
+      ]
+    },
+    "target_filing_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "status": "SINGLE_SOURCE_SEMANTIC_FACT",
+    "value": "1.11",
+    "unit": "ratio",
+    "measurement_period": {
+      "period_start": "2025-10-01",
+      "period_end": "2025-12-31",
+      "duration_months": 3
+    },
+    "selected": [
+      {
+        "candidate_id": "sha256:a8f3d03894ee17ee2313a85fb88557c9916c10bb7f7cf2b9ad9b840d4b24530e",
+        "locator": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 28,
+          "column_index": 6,
+          "origin_row_index": 28,
+          "origin_column_index": 6,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "111&#160;",
+          "text": "111"
+        },
+        "label": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 28,
+          "column_index": 0,
+          "origin_row_index": 28,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+          "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+        },
+        "disposition": "SOURCE_WITNESSED_FIRM_AVERAGE_LCR",
+        "value": "1.11",
+        "scope": {
+          "entity_scope": "firm",
+          "aggregation": "average"
+        },
+        "entity_evidence": {
+          "basis": "SOURCE_DEFINED_REGISTRANT_ALIAS",
+          "alias_definitions": [
+            {
+              "alias": "Firm",
+              "definition": {
+                "start_byte": 1282663,
+                "end_byte": 1283602,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:4pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:45",
+                  "div:1",
+                  "div:2"
+                ],
+                "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+                "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+              }
+            },
+            {
+              "alias": "Firm",
+              "definition": {
+                "start_byte": 2040911,
+                "end_byte": 2041882,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:4pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:248"
+                ],
+                "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+                "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+              }
+            },
+            {
+              "alias": "Firm",
+              "definition": {
+                "start_byte": 5229880,
+                "end_byte": 5230790,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:6pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:928",
+                  "div:1",
+                  "div:1"
+                ],
+                "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+                "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+              }
+            },
+            {
+              "alias": "Firm",
+              "definition": {
+                "start_byte": 5237066,
+                "end_byte": 5238225,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:4pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:932",
+                  "div:1",
+                  "div:4"
+                ],
+                "visible_text": "We have audited the accompanying consolidated balance sheets of JPMorgan Chase & Co. and its subsidiaries (the “Firm”) as of December 31, 2025 and 2024, and the related consolidated statements of income, comprehensive income, changes in stockholders’ equity and cash flows for each of the three years in the period ended December 31, 2025, including the related notes (collectively referred to as the “consolidated financial statements”). We also have audited the Firm’s internal control over financial reporting as of December 31, 2025, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+                "span_sha256": "b30f1bb75f06fb6f9e6a9634b00094f0fe8bae4f8a836ca53bed45c4fe86627a"
+              },
+              "entity_scope": "REGISTRANT_AND_SUBSIDIARIES"
+            },
+            {
+              "alias": "Firm",
+              "definition": {
+                "start_byte": 5579756,
+                "end_byte": 5580397,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:6pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "ix:continuation:2",
+                  "div:1",
+                  "div:1",
+                  "div:1"
+                ],
+                "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+                "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+              }
+            }
+          ]
+        },
+        "reporting_declarations": {
+          "status": "NO_ASSOCIATED_REPORTING_CONTRADICTION",
+          "conflicts": [],
+          "associated_qualifying_statements": []
+        },
+        "aggregation_evidence": {
+          "row_label": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 28,
+            "column_index": 0,
+            "origin_row_index": 28,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+            "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+          },
+          "table_introduction": null
+        },
+        "duration_evidence": {
+          "record_type": "FINANCIAL_MEASUREMENT_DURATION_COMPONENT",
+          "schema_version": 1,
+          "revision": "SOURCE_MEASUREMENT_DURATION_V1",
+          "status": "REJECTED",
+          "reasons": [
+            "CLAIMED_MEASUREMENT_PERIOD_DIFFERS"
+          ],
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "source_size": 12927325,
+          "arguments": {
+            "expected_source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "table_id": "table_000065",
+            "row_index": 28,
+            "column_index": 6,
+            "measurement_aliases": [
+              "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+            ],
+            "required_row_terms": [
+              "Firm",
+              "average"
+            ],
+            "reported_unit": "percent",
+            "claimed_period_start": "2025-01-01",
+            "claimed_period_end": "2025-12-31"
+          },
+          "selected_cell": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 28,
+            "column_index": 6,
+            "origin_row_index": 28,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "111&#160;",
+            "text": "111"
+          },
+          "measurement_row": {
+            "table_id": "table_000065",
+            "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+            "row_index": 28,
+            "column_index": 0,
+            "origin_row_index": 28,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+            "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+          },
+          "table_source_span": {
+            "table_order": 64,
+            "start_byte": 1958647,
+            "end_byte": 2035711,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:236",
+              "table:1"
+            ],
+            "span_sha256": "0eced8701f257621f697ced7567c4600917e0ca1c70088d8f0e0058d64a2d1e3"
+          },
+          "column_period_evidence": [
+            {
+              "table_id": "table_000065",
+              "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+              "row_index": 2,
+              "column_index": 6,
+              "origin_row_index": 2,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2025",
+              "text": "2025"
+            }
+          ],
+          "linked_footnotes": [
+            {
+              "start_byte": 2036337,
+              "end_byte": 2036814,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "padding-left:13.5pt;text-indent:-13.5pt"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:238"
+              ],
+              "visible_text": "(b)For the years ended December 31, 2025, 2024 and 2023, the percentage represents average ratios for the three months ended December 31, 2025, 2024 and 2023.",
+              "span_sha256": "280294995e9fecd0a5732eaa06b07c63b696b0889b3d88573270a6613bed1874"
+            }
+          ],
+          "annual_header_evidence": [],
+          "unit_evidence_cells": [],
+          "unit_evidence_footnote_spans": [
+            {
+              "start_byte": 2036337,
+              "end_byte": 2036814,
+              "span_sha256": "280294995e9fecd0a5732eaa06b07c63b696b0889b3d88573270a6613bed1874"
+            }
+          ],
+          "measurement_period": {
+            "period_start": "2025-10-01",
+            "period_end": "2025-12-31",
+            "duration_months": 3
+          },
+          "duration_basis": "ROW_LINKED_FOOTNOTE",
+          "qualification_credit": "NONE_COMPONENT_ONLY",
+          "publication_credit": "NONE",
+          "duration_receipt_id": "sha256:6b6b64531ce10afdd2a7a0c45edbc82b2756d3f0789fe784d0389b19da6721b0"
+        },
+        "measurement_period": {
+          "period_start": "2025-10-01",
+          "period_end": "2025-12-31",
+          "duration_months": 3
+        }
+      },
+      {
+        "candidate_id": "sha256:f6b855fb9ca3ba8c146f7d469f2f76356c95a1dcebaaa4f05cd9c2203875f359",
+        "locator": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 9,
+          "column_index": 3,
+          "origin_row_index": 9,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "111&#160;",
+          "text": "111"
+        },
+        "label": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 9,
+          "column_index": 0,
+          "origin_row_index": 9,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "LCR",
+          "text": "LCR"
+        },
+        "disposition": "SOURCE_WITNESSED_FIRM_AVERAGE_LCR",
+        "value": "1.11",
+        "scope": {
+          "entity_scope": "firm",
+          "aggregation": "average"
+        },
+        "entity_evidence": {
+          "basis": "EXACT_NATIVE_REGISTRANT_NAME",
+          "group_heading": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 3,
+            "column_index": 0,
+            "origin_row_index": 3,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nJPMorgan Chase &amp; Co.:",
+            "text": "JPMorgan Chase & Co.:"
+          }
+        },
+        "reporting_declarations": {
+          "status": "NO_ASSOCIATED_REPORTING_CONTRADICTION",
+          "conflicts": [],
+          "associated_qualifying_statements": []
+        },
+        "aggregation_evidence": {
+          "row_label": null,
+          "table_introduction": {
+            "start_byte": 3644204,
+            "end_byte": 3644603,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:539",
+              "div:3",
+              "div:1"
+            ],
+            "visible_text": "The following table summarizes the Firm and JPMorgan Chase Bank, N.A.’s average LCR for the three months ended December 31, 2025, September 30, 2025 and December 31, 2024 based on the Firm’s interpretation of the LCR framework.",
+            "span_sha256": "fff59c885c435a0de7f2caaf81b83efef52991f05d3045dd2a6a3b64a5430682"
+          }
+        },
+        "duration_evidence": {
+          "record_type": "FINANCIAL_MEASUREMENT_DURATION_COMPONENT",
+          "schema_version": 1,
+          "revision": "SOURCE_MEASUREMENT_DURATION_V1",
+          "status": "REJECTED",
+          "reasons": [
+            "CLAIMED_MEASUREMENT_PERIOD_DIFFERS"
+          ],
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "source_size": 12927325,
+          "arguments": {
+            "expected_source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "table_id": "table_000199",
+            "row_index": 9,
+            "column_index": 3,
+            "measurement_aliases": [
+              "LCR"
+            ],
+            "required_row_terms": [],
+            "reported_unit": "percent",
+            "claimed_period_start": "2025-01-01",
+            "claimed_period_end": "2025-12-31"
+          },
+          "selected_cell": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 9,
+            "column_index": 3,
+            "origin_row_index": 9,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "111&#160;",
+            "text": "111"
+          },
+          "measurement_row": {
+            "table_id": "table_000199",
+            "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+            "row_index": 9,
+            "column_index": 0,
+            "origin_row_index": 9,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "LCR",
+            "text": "LCR"
+          },
+          "table_source_span": {
+            "table_order": 198,
+            "start_byte": 3644608,
+            "end_byte": 3662981,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:539",
+              "div:3",
+              "div:2",
+              "table:1"
+            ],
+            "span_sha256": "967fbec6cc9af753e534683e315b4f359ec2e093d153fb204578b374efd146dd"
+          },
+          "column_period_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "December 31, 2025",
+              "text": "December 31, 2025"
+            }
+          ],
+          "linked_footnotes": [],
+          "annual_header_evidence": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 1,
+              "column_index": 3,
+              "origin_row_index": 1,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 9,
+              "raw_text": "Three months ended",
+              "text": "Three months ended"
+            }
+          ],
+          "unit_evidence_cells": [
+            {
+              "table_id": "table_000199",
+              "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+              "row_index": 9,
+              "column_index": 5,
+              "origin_row_index": 9,
+              "origin_column_index": 5,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "%",
+              "text": "%"
+            }
+          ],
+          "unit_evidence_footnote_spans": [],
+          "measurement_period": {
+            "period_start": "2025-10-01",
+            "period_end": "2025-12-31",
+            "duration_months": 3
+          },
+          "duration_basis": "EXPLICIT_MONTHS_HEADER_AND_FULL_COLUMN_DATE",
+          "qualification_credit": "NONE_COMPONENT_ONLY",
+          "publication_credit": "NONE",
+          "duration_receipt_id": "sha256:3641187a803629419a0f88de3a359a3af014eef56837a9d7d0c230e12e78cf9d"
+        },
+        "measurement_period": {
+          "period_start": "2025-10-01",
+          "period_end": "2025-12-31",
+          "duration_months": 3
+        }
+      }
+    ],
+    "candidate_census": [
+      {
+        "candidate_id": "sha256:a8f3d03894ee17ee2313a85fb88557c9916c10bb7f7cf2b9ad9b840d4b24530e",
+        "locator": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 28,
+          "column_index": 6,
+          "origin_row_index": 28,
+          "origin_column_index": 6,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "111&#160;",
+          "text": "111"
+        },
+        "label": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 28,
+          "column_index": 0,
+          "origin_row_index": 28,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+          "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+        },
+        "disposition": "SOURCE_WITNESSED_FIRM_AVERAGE_LCR"
+      },
+      {
+        "candidate_id": "sha256:4514c46b272cec16feebdc1fdcf7fef958056b1d056fddc03bec9993801f9d65",
+        "locator": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 28,
+          "column_index": 12,
+          "origin_row_index": 28,
+          "origin_column_index": 12,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "113&#160;",
+          "text": "113"
+        },
+        "label": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 28,
+          "column_index": 0,
+          "origin_row_index": 28,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+          "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+        },
+        "disposition": "DIFFERENT_SOURCE_MEASUREMENT_END"
+      },
+      {
+        "candidate_id": "sha256:bf8ff8e5bdd5f7def90008e3d4348a91be6ae9d2476e6e9baa43a4ceb438cfc1",
+        "locator": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 28,
+          "column_index": 18,
+          "origin_row_index": 28,
+          "origin_column_index": 18,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "113&#160;",
+          "text": "113"
+        },
+        "label": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 28,
+          "column_index": 0,
+          "origin_row_index": 28,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nFirm Liquidity coverage ratio (&#8220;LCR&#8221;) (average)(b)",
+          "text": "Firm Liquidity coverage ratio (“LCR”) (average)(b)"
+        },
+        "disposition": "DIFFERENT_SOURCE_MEASUREMENT_END"
+      },
+      {
+        "candidate_id": "sha256:1d76b15b62b546d688eed77acef47861d847bf9548d93b99a252743921b85603",
+        "locator": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 29,
+          "column_index": 6,
+          "origin_row_index": 29,
+          "origin_column_index": 6,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "115&#160;",
+          "text": "115"
+        },
+        "label": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 29,
+          "column_index": 0,
+          "origin_row_index": 29,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nJPMorgan Chase Bank, N.A. LCR (average)(b)",
+          "text": "JPMorgan Chase Bank, N.A. LCR (average)(b)"
+        },
+        "disposition": "OTHER_EXPLICIT_NAMED_ENTITY",
+        "entity_heading": null,
+        "distinct_entity_definition": {
+          "owner": "JPMorganChase",
+          "legal_name": "JPMorgan Chase Bank, National Association",
+          "alias": "JPMorgan Chase Bank, N.A.",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 1283602,
+            "end_byte": 1284570,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:3"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "2274adbd5b31e9aed4bbcaf547581978992eabde19bdd6f17c5543a47b4fc8bc"
+          }
+        }
+      },
+      {
+        "candidate_id": "sha256:9c40f7f676094fd215e51a3eceab3fd712542edc1ae52593c5b2e510df7c545f",
+        "locator": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 29,
+          "column_index": 12,
+          "origin_row_index": 29,
+          "origin_column_index": 12,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "124&#160;",
+          "text": "124"
+        },
+        "label": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 29,
+          "column_index": 0,
+          "origin_row_index": 29,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nJPMorgan Chase Bank, N.A. LCR (average)(b)",
+          "text": "JPMorgan Chase Bank, N.A. LCR (average)(b)"
+        },
+        "disposition": "DIFFERENT_SOURCE_MEASUREMENT_END"
+      },
+      {
+        "candidate_id": "sha256:85b1b597fbb5ac005c5929c2f239d61f37fe0219ea5d5ea02a661c7ffa154f92",
+        "locator": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 29,
+          "column_index": 18,
+          "origin_row_index": 29,
+          "origin_column_index": 18,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "129&#160;",
+          "text": "129"
+        },
+        "label": {
+          "table_id": "table_000065",
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_index": 29,
+          "column_index": 0,
+          "origin_row_index": 29,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nJPMorgan Chase Bank, N.A. LCR (average)(b)",
+          "text": "JPMorgan Chase Bank, N.A. LCR (average)(b)"
+        },
+        "disposition": "DIFFERENT_SOURCE_MEASUREMENT_END"
+      },
+      {
+        "candidate_id": "sha256:f6b855fb9ca3ba8c146f7d469f2f76356c95a1dcebaaa4f05cd9c2203875f359",
+        "locator": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 9,
+          "column_index": 3,
+          "origin_row_index": 9,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "111&#160;",
+          "text": "111"
+        },
+        "label": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 9,
+          "column_index": 0,
+          "origin_row_index": 9,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "LCR",
+          "text": "LCR"
+        },
+        "disposition": "SOURCE_WITNESSED_FIRM_AVERAGE_LCR"
+      },
+      {
+        "candidate_id": "sha256:e6c1a11e2f7f2cacf8c92423c6f758f5991d478afa58cdd6379b79f8e0607659",
+        "locator": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 9,
+          "column_index": 6,
+          "origin_row_index": 9,
+          "origin_column_index": 6,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "110&#160;",
+          "text": "110"
+        },
+        "label": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 9,
+          "column_index": 0,
+          "origin_row_index": 9,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "LCR",
+          "text": "LCR"
+        },
+        "disposition": "DIFFERENT_SOURCE_MEASUREMENT_END"
+      },
+      {
+        "candidate_id": "sha256:0ddf39f555284da5acc4fff203b26c72ae72889ea4b5d83762442b7be70d0fee",
+        "locator": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 9,
+          "column_index": 9,
+          "origin_row_index": 9,
+          "origin_column_index": 9,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "113&#160;",
+          "text": "113"
+        },
+        "label": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 9,
+          "column_index": 0,
+          "origin_row_index": 9,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "LCR",
+          "text": "LCR"
+        },
+        "disposition": "DIFFERENT_SOURCE_MEASUREMENT_END"
+      },
+      {
+        "candidate_id": "sha256:a4b25df8a23348dc418703462e3b4bcea1672e34794e8fb4ff60ca6611250b12",
+        "locator": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 12,
+          "column_index": 3,
+          "origin_row_index": 12,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "115&#160;",
+          "text": "115"
+        },
+        "label": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 12,
+          "column_index": 0,
+          "origin_row_index": 12,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "LCR",
+          "text": "LCR"
+        },
+        "disposition": "OTHER_EXPLICIT_NAMED_ENTITY",
+        "entity_heading": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 11,
+          "column_index": 0,
+          "origin_row_index": 11,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 12,
+          "raw_text": "\nJPMorgan Chase Bank, N.A.:",
+          "text": "JPMorgan Chase Bank, N.A.:"
+        },
+        "distinct_entity_definition": {
+          "owner": "JPMorganChase",
+          "legal_name": "JPMorgan Chase Bank, National Association",
+          "alias": "JPMorgan Chase Bank, N.A.",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 1283602,
+            "end_byte": 1284570,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:3"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "2274adbd5b31e9aed4bbcaf547581978992eabde19bdd6f17c5543a47b4fc8bc"
+          }
+        }
+      },
+      {
+        "candidate_id": "sha256:943e701b741dee1ccaa5becf2f37813d8e09434dccdbc6ee0efcccf6596228bf",
+        "locator": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 12,
+          "column_index": 6,
+          "origin_row_index": 12,
+          "origin_column_index": 6,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "117&#160;",
+          "text": "117"
+        },
+        "label": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 12,
+          "column_index": 0,
+          "origin_row_index": 12,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "LCR",
+          "text": "LCR"
+        },
+        "disposition": "DIFFERENT_SOURCE_MEASUREMENT_END"
+      },
+      {
+        "candidate_id": "sha256:eb9a31447baf0cc9a5ac59897210e652d58d0f1030394c8cddbbcd36e8001309",
+        "locator": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 12,
+          "column_index": 9,
+          "origin_row_index": 12,
+          "origin_column_index": 9,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "124&#160;",
+          "text": "124"
+        },
+        "label": {
+          "table_id": "table_000199",
+          "grid_sha256": "sha256:1342a96356144faab124712f8c873f06bed48f893d142077f971307f9b2dba74",
+          "row_index": 12,
+          "column_index": 0,
+          "origin_row_index": 12,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "LCR",
+          "text": "LCR"
+        },
+        "disposition": "DIFFERENT_SOURCE_MEASUREMENT_END"
+      }
+    ],
+    "unresolved": [],
+    "ordinary_result_rule_status": "EXPLICIT_DISCLOSED_PERIOD_RULE_REQUIRED",
+    "annual_average_claimed": false,
+    "historical_citi_exception_reused": false,
+    "native_evidence_status": "NOT_EVALUATED",
+    "qualification_credit": "NONE_COMPONENT_ONLY",
+    "publication_credit": "NONE",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "component_id": "sha256:71d7cf0731f0fea41c20e9b241a47f7c7a29cf79c0e128c10fcca69f61e4de01"
+  }
+}

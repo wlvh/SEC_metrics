@@ -1,0 +1,19 @@
+F
+======================================================================
+FAIL: test_stale_acquisition_rules_do_not_block_current_saved_source_cases (tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest.test_stale_acquisition_rules_do_not_block_current_saved_source_cases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_ordinary_processing_source.py", line 75, in test_stale_acquisition_rules_do_not_block_current_saved_source_cases
+    self.assertEqual('CANDIDATE_READY', outcomes['B01']['status'],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     outcomes['B01'])
+                     ^^^^^^^^^^^^^^^^
+AssertionError: 'CANDIDATE_READY' != 'EXECUTION_FAILED'
+- CANDIDATE_READY
++ EXECUTION_FAILED
+ : {'metric_id': 'B01', 'status': 'EXECUTION_FAILED', 'attempt_id': 'abb007af57614748a3125f1af593d9b6', 'latest_attempt': 'abb007af57614748a3125f1af593d9b6', 'successful_attempt': None, 'previous_successful_attempt': None, 'last_verified_candidate': None, 'new_candidate_created': False, 'terminal': {'record_type': 'ORDINARY_UPDATE_TERMINAL', 'attempt_id': 'abb007af57614748a3125f1af593d9b6', 'configuration_id': 'sha256:d1bbd3ffb492278bda3069b62f4e6002bf61f0ce4e04f585b7065081074713c0', 'intent_id': 'sha256:1750d00e79319026e4043c0b0e536eaec035d7a2839367002c99d44a28f1f656', 'status': 'EXECUTION_FAILED', 'completed_at': '2026-09-27T13:06:41.587866+00:00', 'input': {'company_id': 'salesforce', 'metric_ids': ['B01'], 'requirement_closure_hash': 'sha256:bcdbd50d5a5aa0c23edc5ee5cd61d7f39a2d846570b23fccba565b2e3d5abfe0', 'targets': {'B01': {'fiscal_year': 2026, 'period_start': '2025-02-01', 'period_end': '2026-01-31'}}, 'specs': {'B01': {'B01': 'sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8'}}, 'source_contents': [{'source_url': 'https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json', 'accession': '0001108524-26-000060', 'document_name': 'CIK0001108524.json', 'sha256': '07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82'}, {'source_url': 'https://data.sec.gov/submissions/CIK0001108524.json', 'accession': '', 'document_name': 'CIK0001108524.json', 'sha256': 'fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911'}, {'source_url': 'https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm', 'accession': '0001108524-26-000060', 'document_name': 'crm-20260131.htm', 'sha256': 'd606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25'}], 'content_id': 'sha256:1cef9fe94b67917882334308a4543134565cbd90d609ddaaca75a11c0f31a1d5'}, 'metrics': {}, 'error': {'error_type': 'AssertionError', 'reason': 'SUBPROCESS_FORBIDDEN'}, 'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'record_id': 'sha256:5ccf7ce96819020e07963c15f46dd2916cf14d8cd6789570c57c8564a1fc90bc'}, 'calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}
+
+----------------------------------------------------------------------
+Ran 1 test in 21.786s
+
+FAILED (failures=1)

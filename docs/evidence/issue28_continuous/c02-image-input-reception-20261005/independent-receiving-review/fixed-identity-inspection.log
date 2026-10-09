@@ -1,0 +1,66 @@
+{
+  "verdict": "PASS_FIXED_BYTES_AND_PRIOR_SOURCE_IDENTITIES",
+  "base": "9099e273a78e0719775698f1c3829f8f70444193",
+  "reviewed_commit": "9ac5a02da789ad81b6c94af90477935854e0c4df",
+  "provider_commit": "e6b2bb8e2575b665a8e02290935953e632216f2f",
+  "helper_sha256": "a1ecc8f1d4785869e55cc8c28b7833a1bad69ccf0fb73513e4d66a4b69361837",
+  "reviewed_files": {
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/README.md": "5dde642ff86d29ef96140e0c928cea4116c062ba2c9daf01921e747f850889ee",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/actual-context-measurement.json": "4ece394df6b4c0d4953b359b9ce410dc03a1447f642e7c034535bdc91321e856",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/actual-metadata.json": "205924047e21931ed73a026392ab833f6f0772c3a131a7d9cfd79dcc3b2c4d5e",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/actual-receiving-check.json": "d5ed4170d6e1057e4e325df0c7a7bc4b1c3c493e2832abc553a3dc6e4197b5bf",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/check_actual.py": "dcc77ea2ed1dae26a7835834f5761d2009ff4674ec3b9234f98de66394120720",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/initial-check-failure.log": "63132b7c9791f92f52dcc9129de1a8c7a1f91d9e1681bc159c3cddb726eacaed",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/prepare_image_markup.py": "a1ecc8f1d4785869e55cc8c28b7833a1bad69ccf0fb73513e4d66a4b69361837",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/receiving-check.log": "8a8beafb8046a3fc74a063d564fad1d56720db308dc17dd64a04be1ec9a8310e",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/receiving-provenance.json": "791d936d29517a14890bff90cf427bf146607105d147b5479b8e55e8bc4fd6e7"
+  },
+  "whole_commit_changed_paths": [
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/README.md",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/actual-context-measurement.json",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/actual-metadata.json",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/actual-receiving-check.json",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/check_actual.py",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/initial-check-failure.log",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/prepare_image_markup.py",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/receiving-check.log",
+    "docs/evidence/issue28_continuous/c02-image-input-reception-20261005/receiving-provenance.json",
+    "docs/evidence/issue28_continuous/execution-state.json"
+  ],
+  "own_raw_source_equals_saved_source_asset": true,
+  "old_artifact_digests_match": true,
+  "original_request_sha256": "5397bcbfae90ffef4ead2f10ed27df8113d9250ea6f8f2668f17cb85951e9b1e",
+  "new_request_sha256": "18abb36b70d36cb95052d564f7c3fd7e0373f46ccb612df934841c5926b48f6b",
+  "ordinary_binding_id": "sha256:41d151d6be449e17fa8b082788e8114b1a693cae15eaa24657d5dccdbc6fb517",
+  "prior_frozen_digests": {
+    "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/reference-before-blind.json": "ad80d69b6dc7b3f404b315854b682b5cffe8157b9694680414a32307a787c92f",
+    "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/independent-input/response.log": "12e209aa081ebdfc2e52fb8759c36427d2ad65efc537c20b13044eb9908499e9",
+    "docs/evidence/issue28_continuous/c02-table-model-input-trial-20261004/member-legend-source-check.json": "f610d59b780370ddbea1ebee32f14f765e6a7af1717449ce27de3bca3335aa77",
+    "scripts/vnext/c02_table_model_processing.py": "05806a450132628fc195f25ce18c3161b1193519e99ef285ed82329b79cbbd35",
+    "scripts/vnext/c02_table_development_input.py": "7bfa8b914101400c83147bcc3290b20421585406b68411589f8508721789e2a7"
+  },
+  "initial_artifact_digests": {
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-input-reception-20261004/raw-source.html": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-input-reception-20261004/input-binding.json": "fccd8fc30a2994660d0051c50e74f7f3d86d9c44b716b2c2dd3b5e350677be1a",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-input-reception-20261004/view.json": "dbbd0bb8758994af7f531787615bdf8e33246ecd4837bab0113386dd260cad3e",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-input-reception-20261004/metadata.json": "5ace0c1fc601e3fa438bd88025aa9e3e00a66f81c9892f9bf1ca233e7477ed68",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-input-reception-20261004/source-reference.json": "0039de30740ba91edb49f5b813e7156e9e2c4cd8a8d45b0a5ddc0af692844393",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-input-reception-20261004/document.json": "101b81afa63ef576d193cb1a1669a52f9a111742f577ac8c230ec9866dd8c13e",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-input-reception-20261004/raw-blob.json": "378990471d928becc9dca398f43385b6e7c506cda4df589dec67a1ecc1535f22",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-input-reception-20261004/context-measurement.json": "03b38ebf24e86d3686c6409188aeea8e32abeddea2af613aba6fa3b6cfd79d3b",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-input-reception-20261004/request-body.json": "5397bcbfae90ffef4ead2f10ed27df8113d9250ea6f8f2668f17cb85951e9b1e",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-input-reception-20261004/table-grid.json": "5baaaaf1bcd2ed2175bb0db9650e2735a4f8d17fff0c9824cbc88c5dcb4a007b",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-image-input-reception-20261005/metadata.json": "205924047e21931ed73a026392ab833f6f0772c3a131a7d9cfd79dcc3b2c4d5e",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-image-input-reception-20261005/all-original-image-markup.json": "8a3741a3db5fe592c4e8bd304a1ce7d32339d32e532855e68519f8440ca58d76",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-image-input-reception-20261005/context-measurement.json": "4ece394df6b4c0d4953b359b9ce410dc03a1447f642e7c034535bdc91321e856",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-image-input-reception-20261005/request-body.json": "18abb36b70d36cb95052d564f7c3fd7e0373f46ccb612df934841c5926b48f6b"
+  },
+  "initial_git_status": " M docs/evidence/issue28_continuous/execution-state.json\n",
+  "limits": {
+    "new_model_answers": 0,
+    "provider_requests": 0,
+    "SEC_requests": 0,
+    "ledger_reads_or_writes": 0,
+    "peer_worktree_reads_or_writes": 0
+  }
+}

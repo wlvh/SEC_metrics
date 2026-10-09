@@ -1,0 +1,40 @@
+{
+  "source_main_commit": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+  "own_base_commit": "e8f8b7e4",
+  "received_new_paths": [
+    "docs/company_compute_boundary.md",
+    "docs/company_local_run.md",
+    "scripts/vnext/company_compute.py",
+    "scripts/vnext/company_event_census.py",
+    "scripts/vnext/company_handoff.py",
+    "scripts/vnext/company_historical_compute.py",
+    "scripts/vnext/company_local.py",
+    "scripts/vnext/company_local_acquisition.py",
+    "scripts/vnext/company_processing.py",
+    "scripts/vnext/company_processing_read.py",
+    "scripts/vnext/company_requirement.py",
+    "scripts/vnext/company_result_export.py",
+    "scripts/vnext/company_result_read.py",
+    "scripts/vnext/company_result_view.py",
+    "scripts/vnext/company_runtime_install.py",
+    "scripts/vnext/company_source_authority.py",
+    "scripts/vnext/company_worker_guard.py",
+    "tests/required_unittests.py",
+    "tests/vnext/test_company_event_census.py",
+    "tests/vnext/test_company_handoff.py",
+    "tests/vnext/test_company_local.py",
+    "tests/vnext/test_company_processing.py",
+    "tests/vnext/test_company_results.py",
+    "tests/vnext/test_company_source_authority.py",
+    "tools/verify_company_bound_run.py",
+    "tools/vnext_company.py"
+  ],
+  "old_shared_runtime_rules_or_saved_evidence_overwritten": false,
+  "integration_strategy": "Receive supported main company interfaces/dependencies directly; fullmain merge preflight showed25conflicts including newer runtime/rule/binding/evidence files, so those are not mechanically rolled back. Adapt own affected entry after actual installation tests.",
+  "rule": "COLLAB-28-47-v1.3 items1/8 andIssue28section5.0/6",
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,17 @@
+START_UTC 2026-10-04T12:07:49.690772+00:00
+COMMAND PYTHONPATH=scripts:docs/evidence/issue28_continuous/current-390-d01-integration-20261003 /private/tmp/issue28-tokenizers-venv/bin/python -m unittest discover -s docs/evidence/issue28_continuous/b03-marriott-390-receiving-20261004 -p test_receiving_view.py -v
+test_actual_reader_cross_checks_uri_repair_and_cold_run (test_receiving_view.MarriottB03ReceivingViewTest.test_actual_reader_cross_checks_uri_repair_and_cold_run) ... ok
+test_actual_reader_default_and_shared_compatibility_are_preserved (test_receiving_view.MarriottB03ReceivingViewTest.test_actual_reader_default_and_shared_compatibility_are_preserved) ... ok
+test_actual_reader_requires_complete_source_proof_set (test_receiving_view.MarriottB03ReceivingViewTest.test_actual_reader_requires_complete_source_proof_set) ... ok
+test_old_run_does_not_inherit_repair_or_receipt (test_receiving_view.MarriottB03ReceivingViewTest.test_old_run_does_not_inherit_repair_or_receipt) ... ok
+test_other_company_or_failed_receipt_does_not_clear_coordinate (test_receiving_view.MarriottB03ReceivingViewTest.test_other_company_or_failed_receipt_does_not_clear_coordinate) ... ok
+test_same_result_receives_actual_later_run_with_limited_source_credit (test_receiving_view.MarriottB03ReceivingViewTest.test_same_result_receives_actual_later_run_with_limited_source_credit) ... ok
+test_wrong_value_period_or_unapproved_da_amount_refused (test_receiving_view.MarriottB03ReceivingViewTest.test_wrong_value_period_or_unapproved_da_amount_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.181s
+
+OK
+EXIT_CODE 0
+SECONDS 0.314
+END_UTC 2026-10-04T12:07:50.004501+00:00

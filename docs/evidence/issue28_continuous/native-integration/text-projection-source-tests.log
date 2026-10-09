@@ -1,0 +1,14 @@
+E..............
+======================================================================
+ERROR: test_no_git_import_rechecks_bytes_and_rejects_caller_baseline (tests.vnext.test_normal_source_authority.NormalSourceAuthorityTest.test_no_git_import_rechecks_bytes_and_rejects_caller_baseline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_source_authority.py", line 50, in test_no_git_import_rechecks_bytes_and_rejects_caller_baseline
+    changed[0]['request_row_index'] += 1
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'request_row_index'
+
+----------------------------------------------------------------------
+Ran 15 tests in 6.592s
+
+FAILED (errors=1)

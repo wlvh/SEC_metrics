@@ -1,0 +1,1358 @@
+{
+  "reason_code": "PASS",
+  "source_semantics_passed": true,
+  "classification": "VERIFIED_SOURCE_FACT",
+  "source_fact": {
+    "record_type": "TOTAL_VAR_SCOPE_COMPONENT",
+    "schema_version": 1,
+    "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "source_entity_cik": "19617",
+    "task_contract_hash": "sha256:786bf9100da152300221ea80029f9070ad2f307ad0db635d8da91a5111d6d212",
+    "target_filing_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "status": "TOTAL_VAR_SCOPE_PROVEN",
+    "totals": [
+      {
+        "value": {
+          "locator": {
+            "table_id": "table_000280",
+            "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+            "row_index": 20,
+            "column_index": 4,
+            "origin_row_index": 20,
+            "origin_column_index": 4,
+            "rowspan": 1,
+            "colspan": 1,
+            "raw_text": "40&#160;",
+            "text": "40"
+          },
+          "header_evidence": [
+            {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 18,
+              "raw_text": "2025",
+              "text": "2025"
+            }
+          ],
+          "canonical_value": "40000000",
+          "canonical_unit": "USD",
+          "amount_scale": {
+            "unit": "USD",
+            "factor": "1000000",
+            "source_cells": [
+              {
+                "table_id": "table_000280",
+                "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                "row_index": 3,
+                "column_index": 0,
+                "origin_row_index": 3,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "(in millions)",
+                "text": "(in millions)"
+              }
+            ]
+          }
+        },
+        "total_label": {
+          "table_id": "table_000280",
+          "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+          "row_index": 20,
+          "column_index": 0,
+          "origin_row_index": 20,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Total VaR",
+          "text": "Total VaR"
+        },
+        "statistical_window": {
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "statistic": "AVERAGE",
+          "source_header": {
+            "table_id": "table_000280",
+            "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+            "row_index": 2,
+            "column_index": 0,
+            "origin_row_index": 2,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "As of or for the year ended December 31,",
+            "text": "As of or for the year ended December 31,"
+          }
+        },
+        "risk_horizon": {
+          "named_measure": "Risk Management VaR",
+          "holding_period_days": 1,
+          "confidence_percent": "95",
+          "section_heading": {
+            "start_byte": 4829572,
+            "end_byte": 4829709,
+            "tag": "div",
+            "attributes": [],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:798"
+            ],
+            "visible_text": "Value-at-risk",
+            "span_sha256": "595ecfd7b8bd81b026c9992631658bd50222f1f0d4f7e908a09b973293be95c2"
+          },
+          "table_association": {
+            "start_byte": 4838138,
+            "end_byte": 4838514,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:802"
+            ],
+            "visible_text": "The table below shows the results of the Firm’s Risk Management VaR measure using a 95% confidence level. VaR can vary significantly as positions change, market volatility fluctuates, and diversification benefits change.",
+            "span_sha256": "fa56012a59b035c4a48377af79396fba0d8f4d56d1486f4683d1dd496582de8f"
+          },
+          "selected_definition": {
+            "measure": "Risk Management VaR",
+            "holding_period_text": "one-day",
+            "confidence_percent": "95",
+            "source_block": {
+              "start_byte": 4830948,
+              "end_byte": 4831596,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "margin-bottom:4pt"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:799",
+                "div:1",
+                "div:3"
+              ],
+              "visible_text": "The Firm’s Risk Management VaR is calculated assuming a one-day holding period and an expected tail-loss methodology which approximates a 95% confidence level. Risk Management VaR provides a consistent framework to measure risk profiles and levels of diversification across product types and is used for aggregating risks and monitoring limits across businesses. VaR results are reported as appropriate to various groups including senior management, the Board Risk Committee and regulators.  ",
+              "span_sha256": "d44a35a5d9ec45cd73fde374c3a52e90a12ed329d92dbbe9b6ecc53b3afe56c9"
+            }
+          },
+          "scope_span_census": [
+            {
+              "source_block": {
+                "start_byte": 4830948,
+                "end_byte": 4831596,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:4pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:799",
+                  "div:1",
+                  "div:3"
+                ],
+                "visible_text": "The Firm’s Risk Management VaR is calculated assuming a one-day holding period and an expected tail-loss methodology which approximates a 95% confidence level. Risk Management VaR provides a consistent framework to measure risk profiles and levels of diversification across product types and is used for aggregating risks and monitoring limits across businesses. VaR results are reported as appropriate to various groups including senior management, the Board Risk Committee and regulators.  ",
+                "span_sha256": "d44a35a5d9ec45cd73fde374c3a52e90a12ed329d92dbbe9b6ecc53b3afe56c9"
+              },
+              "disposition": "TARGET_NAMED_DEFINITION"
+            },
+            {
+              "source_block": {
+                "start_byte": 4835274,
+                "end_byte": 4836343,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:4pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:799",
+                  "div:3",
+                  "div:4"
+                ],
+                "visible_text": "The Firm calculates separately a daily aggregated VaR in accordance with regulatory rules (“Regulatory VaR”), which is used to derive the Firm’s regulatory VaR-based capital requirements under Basel III capital rules. This Regulatory VaR model framework currently assumes a ten business-day holding period and an expected tail-loss methodology which approximates a 99% confidence level. Regulatory VaR is applied to “covered” positions as defined by Basel III capital rules, which may be different than the positions included in the Firm’s Risk Management VaR. For example, credit derivative hedges of accrual loans are included in the Firm’s Risk Management VaR, while Regulatory VaR excludes these credit derivative hedges. In addition, in contrast to the Firm’s Risk Management VaR, Regulatory VaR currently excludes the diversification benefit for certain VaR models.",
+                "span_sha256": "e408ba37dde2885e34081ee79421f7d0b5ea7a118fb163593b4021330cc62cc2"
+              },
+              "disposition": "DIFFERENT_NAMED_REGULATORY_VAR"
+            },
+            {
+              "source_block": {
+                "start_byte": 4838138,
+                "end_byte": 4838514,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:6pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:802"
+                ],
+                "visible_text": "The table below shows the results of the Firm’s Risk Management VaR measure using a 95% confidence level. VaR can vary significantly as positions change, market volatility fluctuates, and diversification benefits change.",
+                "span_sha256": "fa56012a59b035c4a48377af79396fba0d8f4d56d1486f4683d1dd496582de8f"
+              },
+              "disposition": "TARGET_TABLE_CONFIDENCE_ASSOCIATION"
+            }
+          ],
+          "firmwide_aggregation_evidence": {
+            "start_byte": 4831596,
+            "end_byte": 4832547,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:799",
+              "div:1",
+              "div:4"
+            ],
+            "visible_text": "Underlying the overall VaR model framework are individual VaR models that simulate historical market returns for individual risk factors and/or product types. To capture material market risks as part of the Firm’s risk management framework, comprehensive VaR model calculations are performed daily for businesses whose activities give rise to market risk. These VaR models are granular and incorporate numerous risk factors and inputs to simulate daily changes in market values over the historical period; inputs are selected based on the risk profile of each portfolio, as sensitivities and historical time series used to generate daily market values may be different across product types or risk management systems. The VaR model results across all portfolios are aggregated at the Firm level.",
+            "span_sha256": "914384f0690e386b3baf7bbd513f0d8ad96762eb3fb166fb9bb3ed15b576ccec"
+          },
+          "other_named_measure_definitions": [
+            {
+              "measure": "Regulatory VaR",
+              "holding_period_text": "ten business-day",
+              "confidence_percent": "99",
+              "source_block": {
+                "start_byte": 4835274,
+                "end_byte": 4836343,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "margin-bottom:4pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:799",
+                  "div:3",
+                  "div:4"
+                ],
+                "visible_text": "The Firm calculates separately a daily aggregated VaR in accordance with regulatory rules (“Regulatory VaR”), which is used to derive the Firm’s regulatory VaR-based capital requirements under Basel III capital rules. This Regulatory VaR model framework currently assumes a ten business-day holding period and an expected tail-loss methodology which approximates a 99% confidence level. Regulatory VaR is applied to “covered” positions as defined by Basel III capital rules, which may be different than the positions included in the Firm’s Risk Management VaR. For example, credit derivative hedges of accrual loans are included in the Firm’s Risk Management VaR, while Regulatory VaR excludes these credit derivative hedges. In addition, in contrast to the Firm’s Risk Management VaR, Regulatory VaR currently excludes the diversification benefit for certain VaR models.",
+                "span_sha256": "e408ba37dde2885e34081ee79421f7d0b5ea7a118fb163593b4021330cc62cc2"
+              }
+            }
+          ],
+          "holding_period_is_not_statistical_window": true
+        },
+        "components": [
+          {
+            "label": {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 13,
+              "column_index": 0,
+              "origin_row_index": 13,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nCIB VaR",
+              "text": "CIB VaR"
+            },
+            "value": {
+              "locator": {
+                "table_id": "table_000280",
+                "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                "row_index": 13,
+                "column_index": 3,
+                "origin_row_index": 13,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 2,
+                "raw_text": "37&#160;",
+                "text": "37"
+              },
+              "header_evidence": [
+                {
+                  "table_id": "table_000280",
+                  "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                  "row_index": 2,
+                  "column_index": 3,
+                  "origin_row_index": 2,
+                  "origin_column_index": 3,
+                  "rowspan": 1,
+                  "colspan": 18,
+                  "raw_text": "2025",
+                  "text": "2025"
+                }
+              ],
+              "canonical_value": "37000000",
+              "canonical_unit": "USD",
+              "amount_scale": {
+                "unit": "USD",
+                "factor": "1000000",
+                "source_cells": [
+                  {
+                    "table_id": "table_000280",
+                    "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                    "row_index": 3,
+                    "column_index": 0,
+                    "origin_row_index": 3,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "raw_text": "(in millions)",
+                    "text": "(in millions)"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "label": {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 18,
+              "column_index": 0,
+              "origin_row_index": 18,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Other VaR",
+              "text": "Other VaR"
+            },
+            "value": {
+              "locator": {
+                "table_id": "table_000280",
+                "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                "row_index": 18,
+                "column_index": 3,
+                "origin_row_index": 18,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 2,
+                "raw_text": "12&#160;",
+                "text": "12"
+              },
+              "header_evidence": [
+                {
+                  "table_id": "table_000280",
+                  "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                  "row_index": 2,
+                  "column_index": 3,
+                  "origin_row_index": 2,
+                  "origin_column_index": 3,
+                  "rowspan": 1,
+                  "colspan": 18,
+                  "raw_text": "2025",
+                  "text": "2025"
+                }
+              ],
+              "canonical_value": "12000000",
+              "canonical_unit": "USD",
+              "amount_scale": {
+                "unit": "USD",
+                "factor": "1000000",
+                "source_cells": [
+                  {
+                    "table_id": "table_000280",
+                    "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                    "row_index": 3,
+                    "column_index": 0,
+                    "origin_row_index": 3,
+                    "origin_column_index": 0,
+                    "rowspan": 1,
+                    "colspan": 3,
+                    "raw_text": "(in millions)",
+                    "text": "(in millions)"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "offset": {
+          "locator": {
+            "table_id": "table_000280",
+            "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+            "row_index": 19,
+            "column_index": 3,
+            "origin_row_index": 19,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "(9)",
+            "text": "(9)"
+          },
+          "header_evidence": [
+            {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 2,
+              "column_index": 3,
+              "origin_row_index": 2,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 18,
+              "raw_text": "2025",
+              "text": "2025"
+            }
+          ],
+          "canonical_value": "-9000000",
+          "canonical_unit": "USD",
+          "amount_scale": {
+            "unit": "USD",
+            "factor": "1000000",
+            "source_cells": [
+              {
+                "table_id": "table_000280",
+                "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                "row_index": 3,
+                "column_index": 0,
+                "origin_row_index": 3,
+                "origin_column_index": 0,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "(in millions)",
+                "text": "(in millions)"
+              }
+            ]
+          }
+        },
+        "reporting_declarations": {
+          "status": "NO_ASSOCIATED_REPORTING_CONTRADICTION",
+          "conflicts": [],
+          "associated_qualifying_statements": []
+        },
+        "offset_label": {
+          "table_id": "table_000280",
+          "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+          "row_index": 19,
+          "column_index": 0,
+          "origin_row_index": 19,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nDiversification benefit to CIB and other VaR(a)",
+          "text": "Diversification benefit to CIB and other VaR(a)"
+        },
+        "trading_components_excluded": [
+          {
+            "label": {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 9,
+              "column_index": 0,
+              "origin_row_index": 9,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "\nDiversification benefit to CIB trading VaR (a)",
+              "text": "Diversification benefit to CIB trading VaR (a)"
+            },
+            "reason": "NAMED_TRADING_COMPONENT_NOT_TOTAL_VAR"
+          },
+          {
+            "label": {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 10,
+              "column_index": 0,
+              "origin_row_index": 10,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "CIB trading VaR",
+              "text": "CIB trading VaR"
+            },
+            "reason": "NAMED_TRADING_COMPONENT_NOT_TOTAL_VAR"
+          }
+        ],
+        "reconciliation": "REPORTED_COMPONENTS_PLUS_REPORTED_DIVERSIFICATION_OFFSET"
+      }
+    ],
+    "unresolved": [],
+    "same_named_total_census": [
+      {
+        "label": {
+          "table_id": "table_000280",
+          "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+          "row_index": 1,
+          "column_index": 0,
+          "origin_row_index": 1,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 30,
+          "raw_text": "Total VaR",
+          "text": "Total VaR"
+        },
+        "numeric_period_census": [],
+        "disposition": "TABLE_TITLE_WITH_LATER_NAMED_NUMERIC_TOTAL"
+      },
+      {
+        "label": {
+          "table_id": "table_000280",
+          "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+          "row_index": 20,
+          "column_index": 0,
+          "origin_row_index": 20,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Total VaR",
+          "text": "Total VaR"
+        },
+        "numeric_period_census": [
+          {
+            "locator": {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 20,
+              "column_index": 4,
+              "origin_row_index": 20,
+              "origin_column_index": 4,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "40&#160;",
+              "text": "40"
+            },
+            "column_year": 2025,
+            "column_reason": null,
+            "column_headers": [
+              {
+                "table_id": "table_000280",
+                "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                "row_index": 2,
+                "column_index": 3,
+                "origin_row_index": 2,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 18,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ]
+          },
+          {
+            "locator": {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 20,
+              "column_index": 10,
+              "origin_row_index": 20,
+              "origin_column_index": 10,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "25&#160;",
+              "text": "25"
+            },
+            "column_year": 2025,
+            "column_reason": null,
+            "column_headers": [
+              {
+                "table_id": "table_000280",
+                "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                "row_index": 2,
+                "column_index": 3,
+                "origin_row_index": 2,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 18,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ]
+          },
+          {
+            "locator": {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 20,
+              "column_index": 16,
+              "origin_row_index": 20,
+              "origin_column_index": 16,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "136&#160;",
+              "text": "136"
+            },
+            "column_year": 2025,
+            "column_reason": null,
+            "column_headers": [
+              {
+                "table_id": "table_000280",
+                "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                "row_index": 2,
+                "column_index": 3,
+                "origin_row_index": 2,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 18,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ]
+          },
+          {
+            "locator": {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 20,
+              "column_index": 25,
+              "origin_row_index": 20,
+              "origin_column_index": 25,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "47&#160;",
+              "text": "47"
+            },
+            "column_year": 2024,
+            "column_reason": null,
+            "column_headers": [
+              {
+                "table_id": "table_000280",
+                "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                "row_index": 2,
+                "column_index": 24,
+                "origin_row_index": 2,
+                "origin_column_index": 24,
+                "rowspan": 1,
+                "colspan": 18,
+                "raw_text": "2024",
+                "text": "2024"
+              }
+            ]
+          },
+          {
+            "locator": {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 20,
+              "column_index": 31,
+              "origin_row_index": 20,
+              "origin_column_index": 31,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "30&#160;",
+              "text": "30"
+            },
+            "column_year": 2024,
+            "column_reason": null,
+            "column_headers": [
+              {
+                "table_id": "table_000280",
+                "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                "row_index": 2,
+                "column_index": 24,
+                "origin_row_index": 2,
+                "origin_column_index": 24,
+                "rowspan": 1,
+                "colspan": 18,
+                "raw_text": "2024",
+                "text": "2024"
+              }
+            ]
+          },
+          {
+            "locator": {
+              "table_id": "table_000280",
+              "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+              "row_index": 20,
+              "column_index": 37,
+              "origin_row_index": 20,
+              "origin_column_index": 37,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "91&#160;",
+              "text": "91"
+            },
+            "column_year": 2024,
+            "column_reason": null,
+            "column_headers": [
+              {
+                "table_id": "table_000280",
+                "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+                "row_index": 2,
+                "column_index": 24,
+                "origin_row_index": 2,
+                "origin_column_index": 24,
+                "rowspan": 1,
+                "colspan": 18,
+                "raw_text": "2024",
+                "text": "2024"
+              }
+            ]
+          }
+        ],
+        "disposition": "CURRENT_AVERAGE_REQUIRES_TOTAL_SCOPE_PROOF"
+      },
+      {
+        "label": {
+          "table_id": "table_000281",
+          "grid_sha256": "sha256:1842f772199b0533ceb4dd40adf5e578259dd94b3d39be18c053394502165119",
+          "row_index": 6,
+          "column_index": 0,
+          "origin_row_index": 6,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Total VaR",
+          "text": "Total VaR"
+        },
+        "numeric_period_census": [
+          {
+            "locator": {
+              "table_id": "table_000281",
+              "grid_sha256": "sha256:1842f772199b0533ceb4dd40adf5e578259dd94b3d39be18c053394502165119",
+              "row_index": 6,
+              "column_index": 3,
+              "origin_row_index": 6,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(1)",
+              "text": "(1)"
+            },
+            "column_year": 2025,
+            "column_reason": null,
+            "column_headers": [
+              {
+                "table_id": "table_000281",
+                "grid_sha256": "sha256:1842f772199b0533ceb4dd40adf5e578259dd94b3d39be18c053394502165119",
+                "row_index": 2,
+                "column_index": 3,
+                "origin_row_index": 2,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "December 31, 2025",
+                "text": "December 31, 2025"
+              }
+            ]
+          },
+          {
+            "locator": {
+              "table_id": "table_000281",
+              "grid_sha256": "sha256:1842f772199b0533ceb4dd40adf5e578259dd94b3d39be18c053394502165119",
+              "row_index": 6,
+              "column_index": 9,
+              "origin_row_index": 6,
+              "origin_column_index": 9,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "(2)",
+              "text": "(2)"
+            },
+            "column_year": 2024,
+            "column_reason": null,
+            "column_headers": [
+              {
+                "table_id": "table_000281",
+                "grid_sha256": "sha256:1842f772199b0533ceb4dd40adf5e578259dd94b3d39be18c053394502165119",
+                "row_index": 2,
+                "column_index": 9,
+                "origin_row_index": 2,
+                "origin_column_index": 9,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "December 31, 2024",
+                "text": "December 31, 2024"
+              }
+            ]
+          }
+        ],
+        "disposition": "COUNTERFACTUAL_REDUCTION_AMOUNT_NOT_REPORTED_TOTAL",
+        "scope_headers": [
+          {
+            "table_id": "table_000281",
+            "grid_sha256": "sha256:1842f772199b0533ceb4dd40adf5e578259dd94b3d39be18c053394502165119",
+            "row_index": 1,
+            "column_index": 3,
+            "origin_row_index": 1,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 9,
+            "raw_text": "\nAmounts by which reported average VaR would have been lower for the years ended:",
+            "text": "Amounts by which reported average VaR would have been lower for the years ended:"
+          }
+        ]
+      }
+    ],
+    "whole_issuer_scope_status": "SOURCE_WITNESSED_FIRMWIDE_VAR",
+    "issuer_identity": {
+      "registrant_name": "JPMorgan Chase & Co",
+      "native_name_facts": [
+        {
+          "name": "JPMorgan Chase & Co",
+          "ordinal": 67,
+          "qualified_name": "dei:EntityRegistrantName",
+          "context_ref": "c-1",
+          "entity_cik": "19617",
+          "namespace": "http://xbrl.sec.gov/dei/2025"
+        }
+      ],
+      "normalization": "EXACT_TOKENS_CASE_PUNCTUATION_AND_AMPERSAND_ONLY",
+      "source_defined_aliases": [
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5237066,
+            "end_byte": 5238225,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:932",
+              "div:1",
+              "div:4"
+            ],
+            "visible_text": "We have audited the accompanying consolidated balance sheets of JPMorgan Chase & Co. and its subsidiaries (the “Firm”) as of December 31, 2025 and 2024, and the related consolidated statements of income, comprehensive income, changes in stockholders’ equity and cash flows for each of the three years in the period ended December 31, 2025, including the related notes (collectively referred to as the “consolidated financial statements”). We also have audited the Firm’s internal control over financial reporting as of December 31, 2025, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+            "span_sha256": "b30f1bb75f06fb6f9e6a9634b00094f0fe8bae4f8a836ca53bed45c4fe86627a"
+          },
+          "entity_scope": "REGISTRANT_AND_SUBSIDIARIES"
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        }
+      ],
+      "source_consolidated_aliases": [
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5237066,
+            "end_byte": 5238225,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:932",
+              "div:1",
+              "div:4"
+            ],
+            "visible_text": "We have audited the accompanying consolidated balance sheets of JPMorgan Chase & Co. and its subsidiaries (the “Firm”) as of December 31, 2025 and 2024, and the related consolidated statements of income, comprehensive income, changes in stockholders’ equity and cash flows for each of the three years in the period ended December 31, 2025, including the related notes (collectively referred to as the “consolidated financial statements”). We also have audited the Firm’s internal control over financial reporting as of December 31, 2025, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+            "span_sha256": "b30f1bb75f06fb6f9e6a9634b00094f0fe8bae4f8a836ca53bed45c4fe86627a"
+          },
+          "entity_scope": "REGISTRANT_AND_SUBSIDIARIES"
+        }
+      ],
+      "source_legal_name_aliases": [
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "name": "Parent Company",
+          "definition": {
+            "start_byte": 1444075,
+            "end_byte": 1444994,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:99",
+              "div:3",
+              "div:2"
+            ],
+            "visible_text": "Federal Reserve rules require JPMorgan Chase & Co. (the “Parent Company”) to maintain minimum levels of unsecured external long-term debt and other loss-absorbing capacity with specific terms (“eligible LTD”) to recapitalize JPMorganChase’s operating subsidiaries if the Parent Company were to enter into a resolution either in a bankruptcy proceeding under Chapter 11 of the U.S. Bankruptcy Code, or in a receivership administered by the FDIC under Title II of the Dodd-Frank Act (“Title II”). If the Parent Company were to enter into a resolution, holders of eligible LTD, other unsecured creditors and holders of equity securities of the Parent Company will absorb the losses of the Parent Company and its subsidiaries.",
+            "span_sha256": "036349a59fb9b792f414b6d367ca9b7a5fc013dba4b410b770efb290c6247fe1"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        },
+        {
+          "name": "Parent Company",
+          "definition": {
+            "start_byte": 11602172,
+            "end_byte": 11603741,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1384",
+              "ix:continuation:1",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "Restrictions imposed by U.S. federal law prohibit JPMorgan Chase Bank, N.A., and its subsidiaries, from lending to JPMorgan Chase & Co. (“Parent Company”) and certain of its affiliates unless the loans are secured in specified amounts. Such secured loans provided by any banking subsidiary to the Parent Company or to any particular affiliate, together with certain other transactions with such affiliate (collectively referred to as “covered transactions”), must be made on terms and conditions that are consistent with safe and sound banking practices. In addition, unless collateralized with cash or US Government debt obligations, covered transactions are generally limited to 10% of the banking subsidiary’s total capital, as determined by the risk-based capital guidelines; the aggregate amount of covered transactions between any banking subsidiary and all of its affiliates is limited to 20% of the banking subsidiary’s total capital.",
+            "span_sha256": "8051876e48fac9e646ea9b0dc28d4fb8d8fa71126558a8774e9271976b61c945"
+          }
+        }
+      ],
+      "source_defined_other_entities": [
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "JPMorgan Chase Bank, National Association",
+          "alias": "JPMorgan Chase Bank, N.A.",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 1283602,
+            "end_byte": 1284570,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:3"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "2274adbd5b31e9aed4bbcaf547581978992eabde19bdd6f17c5543a47b4fc8bc"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "J.P. Morgan Securities LLC",
+          "alias": "J.P. Morgan Securities",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 1283602,
+            "end_byte": 1284570,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:3"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "2274adbd5b31e9aed4bbcaf547581978992eabde19bdd6f17c5543a47b4fc8bc"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "JPMorgan Chase Bank, National Association",
+          "alias": "JPMorgan Chase Bank, N.A.",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 2063453,
+            "end_byte": 2064395,
+            "tag": "div",
+            "attributes": [],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:263",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "97388f5f588db903c025b2fff0e180757fd090b8e8698c06110f1290cf293af1"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "J.P. Morgan Securities LLC",
+          "alias": "J.P. Morgan Securities",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 2063453,
+            "end_byte": 2064395,
+            "tag": "div",
+            "attributes": [],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:263",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "97388f5f588db903c025b2fff0e180757fd090b8e8698c06110f1290cf293af1"
+          }
+        }
+      ]
+    },
+    "consolidated_issuer_definitions": [
+      {
+        "alias": "Firm",
+        "definition": {
+          "start_byte": 5237066,
+          "end_byte": 5238225,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "margin-bottom:4pt"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:932",
+            "div:1",
+            "div:4"
+          ],
+          "visible_text": "We have audited the accompanying consolidated balance sheets of JPMorgan Chase & Co. and its subsidiaries (the “Firm”) as of December 31, 2025 and 2024, and the related consolidated statements of income, comprehensive income, changes in stockholders’ equity and cash flows for each of the three years in the period ended December 31, 2025, including the related notes (collectively referred to as the “consolidated financial statements”). We also have audited the Firm’s internal control over financial reporting as of December 31, 2025, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+          "span_sha256": "b30f1bb75f06fb6f9e6a9634b00094f0fe8bae4f8a836ca53bed45c4fe86627a"
+        },
+        "entity_scope": "REGISTRANT_AND_SUBSIDIARIES"
+      }
+    ],
+    "semantic_status": "SINGLE_SOURCE_SEMANTIC_FACT",
+    "native_evidence_status": "NOT_EVALUATED",
+    "qualification_credit": "NONE_COMPONENT_ONLY",
+    "publication_credit": "NONE",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "component_id": "sha256:b1f276707312c82caf7d787d1b53e422114c5a7b57d13f6c679fa231d537e48d"
+  }
+}

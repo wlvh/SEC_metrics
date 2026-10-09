@@ -1,0 +1,119 @@
+{
+  "implementation_commit": "180a05e816a6f2b4014f403768458506d56c96c9",
+  "requirement_closure": "sha256:b275dc81a817283d60593d58fbe31ca7668222e0d1a7f779b4339d65947dcf67",
+  "python_version": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+  "v12_execution_and_snapshot_drift_from_commit": [],
+  "tests": {
+    "count": 2,
+    "status": "PASS",
+    "seconds": 45.556
+  },
+  "real_calls": {
+    "provider": 0,
+    "paid": 0,
+    "SEC": 0
+  },
+  "cases": {
+    "marriott_d01": {
+      "outcome": {
+        "case": "marriott_d01",
+        "company_id": "marriott_international",
+        "metric_id": "D01",
+        "commit": "5376a06596eb753a879929363b6130bee18a42da",
+        "status": "PASSED_FROZEN_AND_COLD_READ",
+        "stage": "COMPLETE",
+        "new_calls": [
+          0,
+          0,
+          0
+        ],
+        "parent_pid": 94230,
+        "cold_command": "/opt/homebrew/opt/python@3.14/bin/python3.14 /Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_native_material.py --cold-read /private/tmp/sec_metrics_issue28_continuous/pr43-review/native-material-180a05e/marriott_d01/data /private/tmp/sec_metrics_issue28_continuous/pr43-review/native-material-180a05e/marriott_d01/run /private/tmp/sec_metrics_issue28_continuous/pr43-review/native-material-180a05e/marriott_d01/before-freeze.json /private/tmp/sec_metrics_issue28_continuous/pr43-review/native-material-180a05e/marriott_d01/cold-read.json",
+        "cold_cwd": "/private/tmp/sec_metrics_issue28_continuous/pr43-review/native-material-180a05e/marriott_d01",
+        "cold_returncode": 0,
+        "cold_pid": 94247,
+        "run_id": "run:normal-saved:0c9e57e53239508bd69512b6f1fe21fa24ea16284f4115ec235d2e0628945f3c",
+        "validation_status": "PASSED",
+        "source_references": 3,
+        "record_graph_hash": "sha256:065e70b46796c257fdf0d071ba69aaa5ab1d16a63def913f4511d05c1948b498",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        },
+        "review_count": 1,
+        "protected_state_unchanged": true,
+        "data_root_has_git": false
+      },
+      "manifest_status": "FROZEN",
+      "result_id": "sha256:6077181e489edc0859d6420a2fea7d1d6384daab5f391fdfc4ee7597008b7762",
+      "value_kind": "TEXT_V1",
+      "value": {
+        "items": 34,
+        "characters": 4774
+      },
+      "unit": "text",
+      "result_quality": "EXACT",
+      "result_publication": "PUBLISHED",
+      "records_file_hash": "ba7fdf120467927b7f35783d1691612c7cdd147ad1baed28cf54bc1085fc1b47",
+      "review_decisions_file_hash": "b549c8d72a7ad902fa6d751cfb0344b60ab6b5e74ed08f7344437fee38822972",
+      "validation_file_hash": "6246427b6c7e8c5efc000105f3c49c076f761214d19104031545dbd778cd3c70",
+      "content_manifest_hash": "sha256:3b3ae7b888da411534b416375b22e360c0fdad2431c9fea5bbe8a0f66b6ab41c",
+      "audit_manifest_hash": "sha256:23286f17d3701b1143061f8934b14e17a16e25dd9bc886af11489a89d5b280d9",
+      "data_files": 461,
+      "review_types": [
+        "SYSTEM"
+      ],
+      "cold_load_return_status": "PASS_FROZEN_COLD_REPLAY",
+      "cold_blocked_events": []
+    },
+    "paramount_c03": {
+      "outcome": {
+        "case": "paramount_c03",
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "C03",
+        "commit": "5376a06596eb753a879929363b6130bee18a42da",
+        "status": "PASSED_FROZEN_AND_COLD_READ",
+        "stage": "COMPLETE",
+        "new_calls": [
+          0,
+          0,
+          0
+        ],
+        "parent_pid": 94230,
+        "cold_command": "/opt/homebrew/opt/python@3.14/bin/python3.14 /Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_native_material.py --cold-read /private/tmp/sec_metrics_issue28_continuous/pr43-review/native-material-180a05e/paramount_c03/data /private/tmp/sec_metrics_issue28_continuous/pr43-review/native-material-180a05e/paramount_c03/run /private/tmp/sec_metrics_issue28_continuous/pr43-review/native-material-180a05e/paramount_c03/before-freeze.json /private/tmp/sec_metrics_issue28_continuous/pr43-review/native-material-180a05e/paramount_c03/cold-read.json",
+        "cold_cwd": "/private/tmp/sec_metrics_issue28_continuous/pr43-review/native-material-180a05e/paramount_c03",
+        "cold_returncode": 0,
+        "cold_pid": 94284,
+        "run_id": "run:normal-saved:ce1b48fa08a5b2aa8df626667a8cf114a275fad06701050e1abf6fa223548226",
+        "validation_status": "PASSED",
+        "source_references": 16,
+        "record_graph_hash": "sha256:88119117a785e4c118650f024501155f26a3dfcd32b1b54da6a77fd95a881151",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-08-07",
+          "period_end": "2025-12-31"
+        },
+        "review_count": 0,
+        "protected_state_unchanged": true,
+        "data_root_has_git": false
+      },
+      "manifest_status": "FROZEN",
+      "result_id": "sha256:a3a5fa1b790731fd5382472a3ae307b5e1ba55b9a38d2bbd91e781b6cd7695e3",
+      "value_kind": "NUMERIC",
+      "value": "63211569",
+      "unit": "USD",
+      "result_quality": "EXACT",
+      "result_publication": "PUBLISHED",
+      "records_file_hash": "4b81813aae7ff2c01cce3214e9d3a7291e01e7f5a47c6ff56baff04965fceb4a",
+      "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "validation_file_hash": "8532c5d920a7428c26d96db2a4ec7dc6984a40b57fd71bf1cc460ba40f2b2c3c",
+      "content_manifest_hash": "sha256:e02549c4dcfcec042a09f7ebc497f08385dc96dee6f7a047e560d9da3eccb013",
+      "audit_manifest_hash": "sha256:82c0ad1d6bc0a516e04eadfec465bcceee3e29a5af3e73900d8e04ab72cdab5d",
+      "data_files": 487,
+      "review_types": [],
+      "cold_load_return_status": "PASS_FROZEN_COLD_REPLAY",
+      "cold_blocked_events": []
+    }
+  }
+}

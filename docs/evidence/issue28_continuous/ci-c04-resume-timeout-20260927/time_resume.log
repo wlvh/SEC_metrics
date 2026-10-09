@@ -1,0 +1,6 @@
+.
+----------------------------------------------------------------------
+Ran 1 test in 119.135s
+
+OK
+{"branches": [{"branch": 1, "calls": {"paid": 0, "provider": 0, "sec": 0}, "resume": false, "seconds": 65.738, "status": "UPDATES_INCOMPLETE"}, {"branch": 2, "raised": "ValueError", "reason": "ORDINARY_REFRESH_RESUME_SEC_SOURCE_CHANGED", "resume": true, "seconds": 0.122}, {"branch": 3, "raised": "ValueError", "reason": "ORDINARY_REFRESH_RESUME_DEFERRED_SET_CHANGED", "resume": true, "seconds": 4.635}, {"branch": 4, "calls": {"paid": 0, "provider": 0, "sec": 0}, "resume": true, "seconds": 45.358, "status": "UPDATES_READY"}, {"branch": 5, "raised": "ValueError", "reason": "ORDINARY_REFRESH_RESUME_PREDECESSOR_INVALID", "resume": true, "seconds": 0.044}], "elapsed_seconds": 119.135, "new_real_calls": [0, 0, 0], "source_material_substitution": false, "status": "PASS", "test_cases": 1}

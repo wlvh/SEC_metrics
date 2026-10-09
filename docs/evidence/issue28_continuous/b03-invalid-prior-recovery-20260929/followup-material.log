@@ -1,0 +1,24 @@
+test_conflicted_b03_stops_while_independent_b01_completes (tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest.test_conflicted_b03_stops_while_independent_b01_completes) ... ERROR
+test_mixed_old_root_resumes_current_rule_metric_and_c04 (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04) ... ok
+
+======================================================================
+ERROR: test_conflicted_b03_stops_while_independent_b01_completes (tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest.test_conflicted_b03_stops_while_independent_b01_completes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b03_depreciation_scope_update.py", line 61, in test_conflicted_b03_stops_while_independent_b01_completes
+    b03_configuration = successor.inherited._config(
+        b03_root, ROOT, 'salesforce', ['B03'], 'LIVE')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 78, in _config
+    configured=_read(path)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 40, in _read
+    _need(first_symlink_in_path(path=path) is None,'UPDATE_STATE_PATH_ALIAS')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_update_cycle.py", line 26, in _need
+    if not condition:raise OrdinaryUpdateError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.ordinary_update_cycle.OrdinaryUpdateError: UPDATE_STATE_PATH_ALIAS
+
+----------------------------------------------------------------------
+Ran 2 tests in 238.193s
+
+FAILED (errors=1)

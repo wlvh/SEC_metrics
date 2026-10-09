@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-native-input-check-20261003/complete_set.py", line 95, in <module>
+    value = read_complete()
+            ^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-native-input-check-20261003/complete_set.py", line 28, in read_complete
+    old = module('d03_existing_checker', HERE/'postprocess.py')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-native-input-check-20261003/complete_set.py", line 23, in module
+    spec.loader.exec_module(obj)
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d03-native-input-check-20261003/postprocess.py", line 10, in <module>
+    from sec_http import write_immutable_bytes
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/sec_http.py", line 31, in <module>
+    from http.client import HTTPException
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/client.py", line 1450, in <module>
+    import ssl
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/ssl.py", line 943, in <module>
+    class SSLSocket(socket):
+TypeError: function() argument 'code' must be code, not str

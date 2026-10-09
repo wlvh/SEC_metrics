@@ -1,0 +1,1583 @@
+{
+  "stage_runtime_sha256": {
+    "scripts/vnext/normal_source_requirements.py": "4714b0e3fe9e5c73df68614698902414c291cf10265b9cdeee8f13e3c920ade9",
+    "scripts/vnext/ordinary_refresh_cycle.py": "af494223a37a825c515b51a8b2dbaf84c834bfc7a03b1fa3c95f16049da46ed6"
+  },
+  "rows": [
+    {
+      "company_id": "southwest_airlines",
+      "requirement": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm",
+        "method": "GET",
+        "roles": [
+          "prior_annual_primary"
+        ],
+        "accession": "0000092380-25-000024",
+        "media_type": "text/html",
+        "refresh_for_new_discovery": false,
+        "saved_status": "MISSING_SAVED_SOURCE",
+        "source_acquisition_credit": false,
+        "alternative_dependency": {
+          "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+          "satisfied_roles": [
+            "prior_annual_primary"
+          ],
+          "prior_period": {
+            "fiscal_year": 2024,
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "file_set": {
+            "filing": {
+              "accessionNumber": "0000092380-25-000024",
+              "filingDate": "2025-02-07",
+              "reportDate": "2024-12-31",
+              "acceptanceDateTime": "2025-02-07T21:00:58.000Z",
+              "act": "34",
+              "form": "10-K",
+              "fileNumber": "001-07259",
+              "filmNumber": "25601561",
+              "items": "",
+              "core_type": "XBRL",
+              "size": 31844564,
+              "isXBRL": 1,
+              "isInlineXBRL": 1,
+              "isXBRLNumeric": null,
+              "primaryDocument": "luv-20241231.htm",
+              "primaryDocDescription": "FORM 10-K",
+              "metadata_origin": {
+                "inventory_name": "CIK0000092380.json",
+                "row_index": 139
+              }
+            },
+            "index_source_reference_id": "sha256:89d4843b612e07387537deb711f9680b0b89805ff96b83bfc320379e617153ea",
+            "expected_xml_documents": [
+              "luv-20241231_htm.xml"
+            ],
+            "primary_saved": false,
+            "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+            "source_reference_ids": [
+              "sha256:79915f85cd1a081991261cc7feb22f8d5b04f45c60d7397e1d01e767086787e0"
+            ]
+          },
+          "source_references": [
+            {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:79915f85cd1a081991261cc7feb22f8d5b04f45c60d7397e1d01e767086787e0",
+              "raw_asset_id": "sha256:7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+              "company_id": "southwest_airlines",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231_htm.xml",
+              "accession": "0000092380-25-000024",
+              "document_name": "luv-20241231_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:19cddc7945e6aad0ec53642a4a3192760539b129581c8486d401231ba8aaac07"
+            }
+          ],
+          "auditor_facts": [
+            {
+              "source_reference_id": "sha256:79915f85cd1a081991261cc7feb22f8d5b04f45c60d7397e1d01e767086787e0",
+              "raw_asset_id": "sha256:7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+              "accession": "0000092380-25-000024",
+              "name": "Ernst & Young LLP",
+              "canonical_name": "ernstyoungllp",
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31",
+              "entity_identifier": "0000092380",
+              "locator": {
+                "qualified_name": "dei:auditorname",
+                "context_ref": "c-1",
+                "ordinal": 1541
+              }
+            }
+          ],
+          "auditor_fact_status": "FOUND",
+          "source_acquisition_credit": false,
+          "metric_executed": false,
+          "all_39_metric_source_acceptance_proven": false
+        }
+      },
+      "declared_requirements": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm",
+          "method": "GET",
+          "roles": [
+            "prior_annual_primary"
+          ],
+          "accession": "0000092380-25-000024",
+          "media_type": "text/html",
+          "refresh_for_new_discovery": false,
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "alternative_dependency": {
+            "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+            "satisfied_roles": [
+              "prior_annual_primary"
+            ],
+            "prior_period": {
+              "fiscal_year": 2024,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            "file_set": {
+              "filing": {
+                "accessionNumber": "0000092380-25-000024",
+                "filingDate": "2025-02-07",
+                "reportDate": "2024-12-31",
+                "acceptanceDateTime": "2025-02-07T21:00:58.000Z",
+                "act": "34",
+                "form": "10-K",
+                "fileNumber": "001-07259",
+                "filmNumber": "25601561",
+                "items": "",
+                "core_type": "XBRL",
+                "size": 31844564,
+                "isXBRL": 1,
+                "isInlineXBRL": 1,
+                "isXBRLNumeric": null,
+                "primaryDocument": "luv-20241231.htm",
+                "primaryDocDescription": "FORM 10-K",
+                "metadata_origin": {
+                  "inventory_name": "CIK0000092380.json",
+                  "row_index": 139
+                }
+              },
+              "index_source_reference_id": "sha256:89d4843b612e07387537deb711f9680b0b89805ff96b83bfc320379e617153ea",
+              "expected_xml_documents": [
+                "luv-20241231_htm.xml"
+              ],
+              "primary_saved": false,
+              "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+              "source_reference_ids": [
+                "sha256:79915f85cd1a081991261cc7feb22f8d5b04f45c60d7397e1d01e767086787e0"
+              ]
+            },
+            "source_references": [
+              {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:79915f85cd1a081991261cc7feb22f8d5b04f45c60d7397e1d01e767086787e0",
+                "raw_asset_id": "sha256:7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+                "company_id": "southwest_airlines",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231_htm.xml",
+                "accession": "0000092380-25-000024",
+                "document_name": "luv-20241231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:19cddc7945e6aad0ec53642a4a3192760539b129581c8486d401231ba8aaac07"
+              }
+            ],
+            "auditor_facts": [
+              {
+                "source_reference_id": "sha256:79915f85cd1a081991261cc7feb22f8d5b04f45c60d7397e1d01e767086787e0",
+                "raw_asset_id": "sha256:7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+                "accession": "0000092380-25-000024",
+                "name": "Ernst & Young LLP",
+                "canonical_name": "ernstyoungllp",
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+                "entity_identifier": "0000092380",
+                "locator": {
+                  "qualified_name": "dei:auditorname",
+                  "context_ref": "c-1",
+                  "ordinal": 1541
+                }
+              }
+            ],
+            "auditor_fact_status": "FOUND",
+            "source_acquisition_credit": false,
+            "metric_executed": false,
+            "all_39_metric_source_acceptance_proven": false
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/index.json",
+          "method": "GET",
+          "roles": [
+            "annual_accession_index"
+          ],
+          "accession": "0000092380-25-000024",
+          "media_type": "application/json",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:954ee6a25c97c7954cc404a3e0cebd4c62a5a9b39cd31ad9ed4330e70535faa2",
+            "raw_asset_id": "sha256:fa44d297070adcb02376bd98d47fbede0ddb1f51df3dfe5d1c0d0d2bf18ab888",
+            "company_id": "southwest_airlines",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/index.json",
+            "accession": "0000092380-25-000024",
+            "document_name": "index.json",
+            "source_role": "annual_accession_index",
+            "request_attempt_id": "request:attempt:7137c41485ea09753336398cd1b1ecbcdf0a78e1c20880d1337825b0ed6a4f26"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/index.json",
+            "accession": "0000092380-25-000024",
+            "document_name": "index.json",
+            "content_sha256": "fa44d297070adcb02376bd98d47fbede0ddb1f51df3dfe5d1c0d0d2bf18ab888",
+            "request_body_sha256": "fa44d297070adcb02376bd98d47fbede0ddb1f51df3dfe5d1c0d0d2bf18ab888",
+            "request_body_size": 18350,
+            "request_headers_repo_relative_path": "evidence/accession_materials/southwest_airlines_92380_000009238025000024/index.json.headers.json",
+            "request_headers_sha256": "0ca72b327817f1859173aa59f1d0120737de776709d9d8ec8180eeab563119d3",
+            "request_headers_size": 661,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/southwest_airlines_92380_000009238025000024/index.json",
+            "request_attempt_id": "request:attempt:7137c41485ea09753336398cd1b1ecbcdf0a78e1c20880d1337825b0ed6a4f26"
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231_htm.xml",
+          "method": "GET",
+          "roles": [
+            "annual_accession_instance"
+          ],
+          "accession": "0000092380-25-000024",
+          "media_type": "application/xml",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:af6219aa440f6a8979e99293afb2f6ac94a9c2c9ff0d97443d60eb5b20362e45",
+            "raw_asset_id": "sha256:7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+            "company_id": "southwest_airlines",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231_htm.xml",
+            "accession": "0000092380-25-000024",
+            "document_name": "luv-20241231_htm.xml",
+            "source_role": "annual_accession_instance",
+            "request_attempt_id": "request:attempt:19cddc7945e6aad0ec53642a4a3192760539b129581c8486d401231ba8aaac07"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231_htm.xml",
+            "accession": "0000092380-25-000024",
+            "document_name": "luv-20241231_htm.xml",
+            "content_sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+            "request_body_sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+            "request_body_size": 2611659,
+            "request_headers_repo_relative_path": "evidence/accession_materials/southwest_airlines_92380_000009238025000024/luv-20241231_htm.xml.headers.json",
+            "request_headers_sha256": "8b06c99393fb6df9ad39698509f9278c22a67488885cc9a23498404caf5cada0",
+            "request_headers_size": 1125,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/southwest_airlines_92380_000009238025000024/luv-20241231_htm.xml",
+            "request_attempt_id": "request:attempt:19cddc7945e6aad0ec53642a4a3192760539b129581c8486d401231ba8aaac07"
+          }
+        }
+      ]
+    },
+    {
+      "company_id": "ford_motor_company",
+      "requirement": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
+        "method": "GET",
+        "roles": [
+          "prior_annual_primary"
+        ],
+        "accession": "0000037996-25-000013",
+        "media_type": "text/html",
+        "refresh_for_new_discovery": false,
+        "saved_status": "MISSING_SAVED_SOURCE",
+        "source_acquisition_credit": false,
+        "alternative_dependency": {
+          "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+          "satisfied_roles": [
+            "prior_annual_primary"
+          ],
+          "prior_period": {
+            "fiscal_year": 2024,
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "file_set": {
+            "filing": {
+              "accessionNumber": "0000037996-25-000013",
+              "filingDate": "2025-02-06",
+              "reportDate": "2024-12-31",
+              "acceptanceDateTime": "2025-02-05T20:44:08.000Z",
+              "act": "34",
+              "form": "10-K",
+              "fileNumber": "001-03950",
+              "filmNumber": "25595116",
+              "items": "",
+              "core_type": "XBRL",
+              "size": 28278163,
+              "isXBRL": 1,
+              "isInlineXBRL": 1,
+              "isXBRLNumeric": null,
+              "primaryDocument": "f-20241231.htm",
+              "primaryDocDescription": "10-K",
+              "metadata_origin": {
+                "inventory_name": "CIK0000037996.json",
+                "row_index": 212
+              }
+            },
+            "index_source_reference_id": "sha256:6cb34e28992fb667197d2f2d555be904528a3773e6aad7cf2a65788a8cb817bf",
+            "expected_xml_documents": [
+              "f-20241231_htm.xml"
+            ],
+            "primary_saved": false,
+            "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+            "source_reference_ids": [
+              "sha256:2d1363bd16d0d2df34370d9e66b499721afa98485322f29c869135fb50ac4782"
+            ]
+          },
+          "source_references": [
+            {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:2d1363bd16d0d2df34370d9e66b499721afa98485322f29c869135fb50ac4782",
+              "raw_asset_id": "sha256:cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6",
+              "company_id": "ford_motor_company",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231_htm.xml",
+              "accession": "0000037996-25-000013",
+              "document_name": "f-20241231_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:8adf179e4c333b747fbff9f6a0f3ac90d4e010c2cb9512f1345fc19e0e324000"
+            }
+          ],
+          "auditor_facts": [
+            {
+              "source_reference_id": "sha256:2d1363bd16d0d2df34370d9e66b499721afa98485322f29c869135fb50ac4782",
+              "raw_asset_id": "sha256:cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6",
+              "accession": "0000037996-25-000013",
+              "name": "PricewaterhouseCoopers LLP",
+              "canonical_name": "pricewaterhousecoopersllp",
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31",
+              "entity_identifier": "0000037996",
+              "locator": {
+                "qualified_name": "dei:auditorname",
+                "context_ref": "c-1",
+                "ordinal": 115
+              }
+            }
+          ],
+          "auditor_fact_status": "FOUND",
+          "source_acquisition_credit": false,
+          "metric_executed": false,
+          "all_39_metric_source_acceptance_proven": false
+        }
+      },
+      "declared_requirements": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
+          "method": "GET",
+          "roles": [
+            "prior_annual_primary"
+          ],
+          "accession": "0000037996-25-000013",
+          "media_type": "text/html",
+          "refresh_for_new_discovery": false,
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "alternative_dependency": {
+            "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+            "satisfied_roles": [
+              "prior_annual_primary"
+            ],
+            "prior_period": {
+              "fiscal_year": 2024,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            "file_set": {
+              "filing": {
+                "accessionNumber": "0000037996-25-000013",
+                "filingDate": "2025-02-06",
+                "reportDate": "2024-12-31",
+                "acceptanceDateTime": "2025-02-05T20:44:08.000Z",
+                "act": "34",
+                "form": "10-K",
+                "fileNumber": "001-03950",
+                "filmNumber": "25595116",
+                "items": "",
+                "core_type": "XBRL",
+                "size": 28278163,
+                "isXBRL": 1,
+                "isInlineXBRL": 1,
+                "isXBRLNumeric": null,
+                "primaryDocument": "f-20241231.htm",
+                "primaryDocDescription": "10-K",
+                "metadata_origin": {
+                  "inventory_name": "CIK0000037996.json",
+                  "row_index": 212
+                }
+              },
+              "index_source_reference_id": "sha256:6cb34e28992fb667197d2f2d555be904528a3773e6aad7cf2a65788a8cb817bf",
+              "expected_xml_documents": [
+                "f-20241231_htm.xml"
+              ],
+              "primary_saved": false,
+              "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+              "source_reference_ids": [
+                "sha256:2d1363bd16d0d2df34370d9e66b499721afa98485322f29c869135fb50ac4782"
+              ]
+            },
+            "source_references": [
+              {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:2d1363bd16d0d2df34370d9e66b499721afa98485322f29c869135fb50ac4782",
+                "raw_asset_id": "sha256:cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6",
+                "company_id": "ford_motor_company",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231_htm.xml",
+                "accession": "0000037996-25-000013",
+                "document_name": "f-20241231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:8adf179e4c333b747fbff9f6a0f3ac90d4e010c2cb9512f1345fc19e0e324000"
+              }
+            ],
+            "auditor_facts": [
+              {
+                "source_reference_id": "sha256:2d1363bd16d0d2df34370d9e66b499721afa98485322f29c869135fb50ac4782",
+                "raw_asset_id": "sha256:cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6",
+                "accession": "0000037996-25-000013",
+                "name": "PricewaterhouseCoopers LLP",
+                "canonical_name": "pricewaterhousecoopersllp",
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+                "entity_identifier": "0000037996",
+                "locator": {
+                  "qualified_name": "dei:auditorname",
+                  "context_ref": "c-1",
+                  "ordinal": 115
+                }
+              }
+            ],
+            "auditor_fact_status": "FOUND",
+            "source_acquisition_credit": false,
+            "metric_executed": false,
+            "all_39_metric_source_acceptance_proven": false
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/index.json",
+          "method": "GET",
+          "roles": [
+            "annual_accession_index"
+          ],
+          "accession": "0000037996-25-000013",
+          "media_type": "application/json",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:1772f5a8f70770c0e8fba9473fb0e99a36d49bda69ac33f72893ae6b9a7476a4",
+            "raw_asset_id": "sha256:8ef6698613925a46bd4130a4771801adc3bda92073d3c8b1a45c80214876d2fd",
+            "company_id": "ford_motor_company",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/index.json",
+            "accession": "0000037996-25-000013",
+            "document_name": "index.json",
+            "source_role": "annual_accession_index",
+            "request_attempt_id": "request:attempt:ad9e1e729643f464beeb6db765c2bf72ab2ca8eddedd883d18626e494e37927f"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/index.json",
+            "accession": "0000037996-25-000013",
+            "document_name": "index.json",
+            "content_sha256": "8ef6698613925a46bd4130a4771801adc3bda92073d3c8b1a45c80214876d2fd",
+            "request_body_sha256": "8ef6698613925a46bd4130a4771801adc3bda92073d3c8b1a45c80214876d2fd",
+            "request_body_size": 14093,
+            "request_headers_repo_relative_path": "evidence/accession_materials/ford_motor_company_37996_000003799625000013/index.json.headers.json",
+            "request_headers_sha256": "433c774dd11ec1cc9387344f639d45fb3b59ee87c11181a991870fca3b91ffb2",
+            "request_headers_size": 661,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/ford_motor_company_37996_000003799625000013/index.json",
+            "request_attempt_id": "request:attempt:ad9e1e729643f464beeb6db765c2bf72ab2ca8eddedd883d18626e494e37927f"
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231_htm.xml",
+          "method": "GET",
+          "roles": [
+            "annual_accession_instance"
+          ],
+          "accession": "0000037996-25-000013",
+          "media_type": "application/xml",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:c22b2c02d29e49ca9e2a6ea696aacef51b6ec8a06c282ebfd6ed8bb3ed172f3b",
+            "raw_asset_id": "sha256:cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6",
+            "company_id": "ford_motor_company",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231_htm.xml",
+            "accession": "0000037996-25-000013",
+            "document_name": "f-20241231_htm.xml",
+            "source_role": "annual_accession_instance",
+            "request_attempt_id": "request:attempt:8adf179e4c333b747fbff9f6a0f3ac90d4e010c2cb9512f1345fc19e0e324000"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231_htm.xml",
+            "accession": "0000037996-25-000013",
+            "document_name": "f-20241231_htm.xml",
+            "content_sha256": "cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6",
+            "request_body_sha256": "cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6",
+            "request_body_size": 5755643,
+            "request_headers_repo_relative_path": "evidence/accession_materials/ford_motor_company_37996_000003799625000013/f-20241231_htm.xml.headers.json",
+            "request_headers_sha256": "6ac1cf9730c9cf8a7773d957513f5ff04393240a3a3619093157a122928e6eee",
+            "request_headers_size": 1123,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/ford_motor_company_37996_000003799625000013/f-20241231_htm.xml",
+            "request_attempt_id": "request:attempt:8adf179e4c333b747fbff9f6a0f3ac90d4e010c2cb9512f1345fc19e0e324000"
+          }
+        }
+      ]
+    },
+    {
+      "company_id": "pfizer",
+      "requirement": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231.htm",
+        "method": "GET",
+        "roles": [
+          "prior_annual_primary"
+        ],
+        "accession": "0000078003-25-000054",
+        "media_type": "text/html",
+        "refresh_for_new_discovery": false,
+        "saved_status": "MISSING_SAVED_SOURCE",
+        "source_acquisition_credit": false,
+        "alternative_dependency": {
+          "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+          "satisfied_roles": [
+            "prior_annual_primary"
+          ],
+          "prior_period": {
+            "fiscal_year": 2024,
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "file_set": {
+            "filing": {
+              "accessionNumber": "0000078003-25-000054",
+              "filingDate": "2025-02-27",
+              "reportDate": "2024-12-31",
+              "acceptanceDateTime": "2025-02-27T21:27:18.000Z",
+              "act": "34",
+              "form": "10-K",
+              "fileNumber": "001-03619",
+              "filmNumber": "25679434",
+              "items": "",
+              "core_type": "XBRL",
+              "size": 31254060,
+              "isXBRL": 1,
+              "isInlineXBRL": 1,
+              "isXBRLNumeric": null,
+              "primaryDocument": "pfe-20241231.htm",
+              "primaryDocDescription": "10-K",
+              "metadata_origin": {
+                "inventory_name": "CIK0000078003.json",
+                "row_index": 208
+              }
+            },
+            "index_source_reference_id": "sha256:6e77a1216fa0077a5588e8d754d473377908e1fae6ad52afd043130208c40d4a",
+            "expected_xml_documents": [
+              "pfe-20241231_htm.xml"
+            ],
+            "primary_saved": false,
+            "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+            "source_reference_ids": [
+              "sha256:e61710102b9c56e789d167993c5cb720fbbad84bae3266e1860d77eeba161568"
+            ]
+          },
+          "source_references": [
+            {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:e61710102b9c56e789d167993c5cb720fbbad84bae3266e1860d77eeba161568",
+              "raw_asset_id": "sha256:956a5bc3d6c58202ed529c1ba90c6b6f896f7f036e143d855ecf076b83a4f290",
+              "company_id": "pfizer",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231_htm.xml",
+              "accession": "0000078003-25-000054",
+              "document_name": "pfe-20241231_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:882918e19e768baee7e588ae2e54ba6385f65d59d7d4f1d65c29d64a4b24788b"
+            }
+          ],
+          "auditor_facts": [
+            {
+              "source_reference_id": "sha256:e61710102b9c56e789d167993c5cb720fbbad84bae3266e1860d77eeba161568",
+              "raw_asset_id": "sha256:956a5bc3d6c58202ed529c1ba90c6b6f896f7f036e143d855ecf076b83a4f290",
+              "accession": "0000078003-25-000054",
+              "name": "KPMG LLP",
+              "canonical_name": "kpmgllp",
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31",
+              "entity_identifier": "0000078003",
+              "locator": {
+                "qualified_name": "dei:auditorname",
+                "context_ref": "c-1",
+                "ordinal": 3234
+              }
+            }
+          ],
+          "auditor_fact_status": "FOUND",
+          "source_acquisition_credit": false,
+          "metric_executed": false,
+          "all_39_metric_source_acceptance_proven": false
+        }
+      },
+      "declared_requirements": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231.htm",
+          "method": "GET",
+          "roles": [
+            "prior_annual_primary"
+          ],
+          "accession": "0000078003-25-000054",
+          "media_type": "text/html",
+          "refresh_for_new_discovery": false,
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "alternative_dependency": {
+            "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+            "satisfied_roles": [
+              "prior_annual_primary"
+            ],
+            "prior_period": {
+              "fiscal_year": 2024,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            "file_set": {
+              "filing": {
+                "accessionNumber": "0000078003-25-000054",
+                "filingDate": "2025-02-27",
+                "reportDate": "2024-12-31",
+                "acceptanceDateTime": "2025-02-27T21:27:18.000Z",
+                "act": "34",
+                "form": "10-K",
+                "fileNumber": "001-03619",
+                "filmNumber": "25679434",
+                "items": "",
+                "core_type": "XBRL",
+                "size": 31254060,
+                "isXBRL": 1,
+                "isInlineXBRL": 1,
+                "isXBRLNumeric": null,
+                "primaryDocument": "pfe-20241231.htm",
+                "primaryDocDescription": "10-K",
+                "metadata_origin": {
+                  "inventory_name": "CIK0000078003.json",
+                  "row_index": 208
+                }
+              },
+              "index_source_reference_id": "sha256:6e77a1216fa0077a5588e8d754d473377908e1fae6ad52afd043130208c40d4a",
+              "expected_xml_documents": [
+                "pfe-20241231_htm.xml"
+              ],
+              "primary_saved": false,
+              "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+              "source_reference_ids": [
+                "sha256:e61710102b9c56e789d167993c5cb720fbbad84bae3266e1860d77eeba161568"
+              ]
+            },
+            "source_references": [
+              {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:e61710102b9c56e789d167993c5cb720fbbad84bae3266e1860d77eeba161568",
+                "raw_asset_id": "sha256:956a5bc3d6c58202ed529c1ba90c6b6f896f7f036e143d855ecf076b83a4f290",
+                "company_id": "pfizer",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231_htm.xml",
+                "accession": "0000078003-25-000054",
+                "document_name": "pfe-20241231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:882918e19e768baee7e588ae2e54ba6385f65d59d7d4f1d65c29d64a4b24788b"
+              }
+            ],
+            "auditor_facts": [
+              {
+                "source_reference_id": "sha256:e61710102b9c56e789d167993c5cb720fbbad84bae3266e1860d77eeba161568",
+                "raw_asset_id": "sha256:956a5bc3d6c58202ed529c1ba90c6b6f896f7f036e143d855ecf076b83a4f290",
+                "accession": "0000078003-25-000054",
+                "name": "KPMG LLP",
+                "canonical_name": "kpmgllp",
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+                "entity_identifier": "0000078003",
+                "locator": {
+                  "qualified_name": "dei:auditorname",
+                  "context_ref": "c-1",
+                  "ordinal": 3234
+                }
+              }
+            ],
+            "auditor_fact_status": "FOUND",
+            "source_acquisition_credit": false,
+            "metric_executed": false,
+            "all_39_metric_source_acceptance_proven": false
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/index.json",
+          "method": "GET",
+          "roles": [
+            "annual_accession_index"
+          ],
+          "accession": "0000078003-25-000054",
+          "media_type": "application/json",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:83bdb413c6410e0dfbb241838d4add4614c93b82aadaba3c0df6c7d57554932a",
+            "raw_asset_id": "sha256:88913296c867ae2685505fc7cf91ab34c3050bac218d99d835318a8067e9a915",
+            "company_id": "pfizer",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/index.json",
+            "accession": "0000078003-25-000054",
+            "document_name": "index.json",
+            "source_role": "annual_accession_index",
+            "request_attempt_id": "request:attempt:5516d760486fd8f9c3fab9083923ad089ecdee3d3fceb944de00ad732ae79a3e"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/index.json",
+            "accession": "0000078003-25-000054",
+            "document_name": "index.json",
+            "content_sha256": "88913296c867ae2685505fc7cf91ab34c3050bac218d99d835318a8067e9a915",
+            "request_body_sha256": "88913296c867ae2685505fc7cf91ab34c3050bac218d99d835318a8067e9a915",
+            "request_body_size": 16853,
+            "request_headers_repo_relative_path": "evidence/accession_materials/pfizer_78003_000007800325000054/index.json.headers.json",
+            "request_headers_sha256": "cbe2a015e807e0d8bce23a4c7455fda3bd8b36872dea406f63d082e185d42d7c",
+            "request_headers_size": 661,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/pfizer_78003_000007800325000054/index.json",
+            "request_attempt_id": "request:attempt:5516d760486fd8f9c3fab9083923ad089ecdee3d3fceb944de00ad732ae79a3e"
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231_htm.xml",
+          "method": "GET",
+          "roles": [
+            "annual_accession_instance"
+          ],
+          "accession": "0000078003-25-000054",
+          "media_type": "application/xml",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:99f637ff105598d8c43dc0a0141ce3c23566e05c02344e1336bb2a2849eb9433",
+            "raw_asset_id": "sha256:956a5bc3d6c58202ed529c1ba90c6b6f896f7f036e143d855ecf076b83a4f290",
+            "company_id": "pfizer",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231_htm.xml",
+            "accession": "0000078003-25-000054",
+            "document_name": "pfe-20241231_htm.xml",
+            "source_role": "annual_accession_instance",
+            "request_attempt_id": "request:attempt:882918e19e768baee7e588ae2e54ba6385f65d59d7d4f1d65c29d64a4b24788b"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231_htm.xml",
+            "accession": "0000078003-25-000054",
+            "document_name": "pfe-20241231_htm.xml",
+            "content_sha256": "956a5bc3d6c58202ed529c1ba90c6b6f896f7f036e143d855ecf076b83a4f290",
+            "request_body_sha256": "956a5bc3d6c58202ed529c1ba90c6b6f896f7f036e143d855ecf076b83a4f290",
+            "request_body_size": 6662183,
+            "request_headers_repo_relative_path": "evidence/accession_materials/pfizer_78003_000007800325000054/pfe-20241231_htm.xml.headers.json",
+            "request_headers_sha256": "360ee69f44a41b5b0acc8ffc44241466d91556fb9d4a91c00683e2d824c3f334",
+            "request_headers_size": 1125,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/pfizer_78003_000007800325000054/pfe-20241231_htm.xml",
+            "request_attempt_id": "request:attempt:882918e19e768baee7e588ae2e54ba6385f65d59d7d4f1d65c29d64a4b24788b"
+          }
+        }
+      ]
+    },
+    {
+      "company_id": "lumen_technologies",
+      "requirement": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm",
+        "method": "GET",
+        "roles": [
+          "prior_annual_primary"
+        ],
+        "accession": "0000018926-25-000010",
+        "media_type": "text/html",
+        "refresh_for_new_discovery": false,
+        "saved_status": "MISSING_SAVED_SOURCE",
+        "source_acquisition_credit": false,
+        "alternative_dependency": {
+          "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+          "satisfied_roles": [
+            "prior_annual_primary"
+          ],
+          "prior_period": {
+            "fiscal_year": 2024,
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "file_set": {
+            "filing": {
+              "accessionNumber": "0000018926-25-000010",
+              "filingDate": "2025-02-20",
+              "reportDate": "2024-12-31",
+              "acceptanceDateTime": "2025-02-20T21:17:27.000Z",
+              "act": "34",
+              "form": "10-K",
+              "fileNumber": "001-07784",
+              "filmNumber": "25645638",
+              "items": "",
+              "core_type": "XBRL",
+              "size": 22348984,
+              "isXBRL": 1,
+              "isInlineXBRL": 1,
+              "isXBRLNumeric": null,
+              "primaryDocument": "lumn-20241231.htm",
+              "primaryDocDescription": "10-K",
+              "metadata_origin": {
+                "inventory_name": "CIK0000018926.json",
+                "row_index": 132
+              }
+            },
+            "index_source_reference_id": "sha256:dc8a0705b882e3088c531d325991ad89b6f99e42832af7c497b7a8cd8a7ca676",
+            "expected_xml_documents": [
+              "lumn-20241231_htm.xml"
+            ],
+            "primary_saved": false,
+            "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+            "source_reference_ids": [
+              "sha256:df1734bc1e2c78ba48ee1e6f67c45e727000cde3274acc77daa71fc43b2cffe8"
+            ]
+          },
+          "source_references": [
+            {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:df1734bc1e2c78ba48ee1e6f67c45e727000cde3274acc77daa71fc43b2cffe8",
+              "raw_asset_id": "sha256:87a1cf13c5e67a5372a4cdb83d1466fd293cf32f0ec78d500839c417b1e75261",
+              "company_id": "lumen_technologies",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231_htm.xml",
+              "accession": "0000018926-25-000010",
+              "document_name": "lumn-20241231_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:8144260952ca9e3870e6f0e66d7e0038aafe054c83a4105b6bba213f7c68ad3b"
+            }
+          ],
+          "auditor_facts": [
+            {
+              "source_reference_id": "sha256:df1734bc1e2c78ba48ee1e6f67c45e727000cde3274acc77daa71fc43b2cffe8",
+              "raw_asset_id": "sha256:87a1cf13c5e67a5372a4cdb83d1466fd293cf32f0ec78d500839c417b1e75261",
+              "accession": "0000018926-25-000010",
+              "name": "KPMG LLP",
+              "canonical_name": "kpmgllp",
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31",
+              "entity_identifier": "0000018926",
+              "locator": {
+                "qualified_name": "dei:auditorname",
+                "context_ref": "c-1",
+                "ordinal": 65
+              }
+            }
+          ],
+          "auditor_fact_status": "FOUND",
+          "source_acquisition_credit": false,
+          "metric_executed": false,
+          "all_39_metric_source_acceptance_proven": false
+        }
+      },
+      "declared_requirements": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm",
+          "method": "GET",
+          "roles": [
+            "prior_annual_primary"
+          ],
+          "accession": "0000018926-25-000010",
+          "media_type": "text/html",
+          "refresh_for_new_discovery": false,
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "alternative_dependency": {
+            "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+            "satisfied_roles": [
+              "prior_annual_primary"
+            ],
+            "prior_period": {
+              "fiscal_year": 2024,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            "file_set": {
+              "filing": {
+                "accessionNumber": "0000018926-25-000010",
+                "filingDate": "2025-02-20",
+                "reportDate": "2024-12-31",
+                "acceptanceDateTime": "2025-02-20T21:17:27.000Z",
+                "act": "34",
+                "form": "10-K",
+                "fileNumber": "001-07784",
+                "filmNumber": "25645638",
+                "items": "",
+                "core_type": "XBRL",
+                "size": 22348984,
+                "isXBRL": 1,
+                "isInlineXBRL": 1,
+                "isXBRLNumeric": null,
+                "primaryDocument": "lumn-20241231.htm",
+                "primaryDocDescription": "10-K",
+                "metadata_origin": {
+                  "inventory_name": "CIK0000018926.json",
+                  "row_index": 132
+                }
+              },
+              "index_source_reference_id": "sha256:dc8a0705b882e3088c531d325991ad89b6f99e42832af7c497b7a8cd8a7ca676",
+              "expected_xml_documents": [
+                "lumn-20241231_htm.xml"
+              ],
+              "primary_saved": false,
+              "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+              "source_reference_ids": [
+                "sha256:df1734bc1e2c78ba48ee1e6f67c45e727000cde3274acc77daa71fc43b2cffe8"
+              ]
+            },
+            "source_references": [
+              {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:df1734bc1e2c78ba48ee1e6f67c45e727000cde3274acc77daa71fc43b2cffe8",
+                "raw_asset_id": "sha256:87a1cf13c5e67a5372a4cdb83d1466fd293cf32f0ec78d500839c417b1e75261",
+                "company_id": "lumen_technologies",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231_htm.xml",
+                "accession": "0000018926-25-000010",
+                "document_name": "lumn-20241231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:8144260952ca9e3870e6f0e66d7e0038aafe054c83a4105b6bba213f7c68ad3b"
+              }
+            ],
+            "auditor_facts": [
+              {
+                "source_reference_id": "sha256:df1734bc1e2c78ba48ee1e6f67c45e727000cde3274acc77daa71fc43b2cffe8",
+                "raw_asset_id": "sha256:87a1cf13c5e67a5372a4cdb83d1466fd293cf32f0ec78d500839c417b1e75261",
+                "accession": "0000018926-25-000010",
+                "name": "KPMG LLP",
+                "canonical_name": "kpmgllp",
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+                "entity_identifier": "0000018926",
+                "locator": {
+                  "qualified_name": "dei:auditorname",
+                  "context_ref": "c-1",
+                  "ordinal": 65
+                }
+              }
+            ],
+            "auditor_fact_status": "FOUND",
+            "source_acquisition_credit": false,
+            "metric_executed": false,
+            "all_39_metric_source_acceptance_proven": false
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/index.json",
+          "method": "GET",
+          "roles": [
+            "annual_accession_index"
+          ],
+          "accession": "0000018926-25-000010",
+          "media_type": "application/json",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:588f9298945c477cbb68ee43777e8a022ee4ce5bb8b7cd4e9177d540a73819b9",
+            "raw_asset_id": "sha256:8c9062942ed83e8744af2b373e97e4bde28131c7aad4d01695e29ff81bd35d92",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/index.json",
+            "accession": "0000018926-25-000010",
+            "document_name": "index.json",
+            "source_role": "annual_accession_index",
+            "request_attempt_id": "request:attempt:9d061ccfd1b5f4570127ca20d303748a7afdcdb1264bfc9f8e279827e152f4c9"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/index.json",
+            "accession": "0000018926-25-000010",
+            "document_name": "index.json",
+            "content_sha256": "8c9062942ed83e8744af2b373e97e4bde28131c7aad4d01695e29ff81bd35d92",
+            "request_body_sha256": "8c9062942ed83e8744af2b373e97e4bde28131c7aad4d01695e29ff81bd35d92",
+            "request_body_size": 17861,
+            "request_headers_repo_relative_path": "evidence/accession_materials/lumen_technologies_18926_000001892625000010/index.json.headers.json",
+            "request_headers_sha256": "235e9f1482f4f7d84c136f4e86e878643a32dd8d771e6649950886b2c18729fc",
+            "request_headers_size": 661,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/lumen_technologies_18926_000001892625000010/index.json",
+            "request_attempt_id": "request:attempt:9d061ccfd1b5f4570127ca20d303748a7afdcdb1264bfc9f8e279827e152f4c9"
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231_htm.xml",
+          "method": "GET",
+          "roles": [
+            "annual_accession_instance"
+          ],
+          "accession": "0000018926-25-000010",
+          "media_type": "application/xml",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:e3f73d03ca4a9e44da625ae2c0784da6d65aa4d0c95c7375737dd83d6aba813f",
+            "raw_asset_id": "sha256:87a1cf13c5e67a5372a4cdb83d1466fd293cf32f0ec78d500839c417b1e75261",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231_htm.xml",
+            "accession": "0000018926-25-000010",
+            "document_name": "lumn-20241231_htm.xml",
+            "source_role": "annual_accession_instance",
+            "request_attempt_id": "request:attempt:8144260952ca9e3870e6f0e66d7e0038aafe054c83a4105b6bba213f7c68ad3b"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231_htm.xml",
+            "accession": "0000018926-25-000010",
+            "document_name": "lumn-20241231_htm.xml",
+            "content_sha256": "87a1cf13c5e67a5372a4cdb83d1466fd293cf32f0ec78d500839c417b1e75261",
+            "request_body_sha256": "87a1cf13c5e67a5372a4cdb83d1466fd293cf32f0ec78d500839c417b1e75261",
+            "request_body_size": 3982561,
+            "request_headers_repo_relative_path": "evidence/accession_materials/lumen_technologies_18926_000001892625000010/lumn-20241231_htm.xml.headers.json",
+            "request_headers_sha256": "a847fb222ea4546a023f80f7bd8c685a6f9620af3a4f080cd78b841ace25723c",
+            "request_headers_size": 1146,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/lumen_technologies_18926_000001892625000010/lumn-20241231_htm.xml",
+            "request_attempt_id": "request:attempt:8144260952ca9e3870e6f0e66d7e0038aafe054c83a4105b6bba213f7c68ad3b"
+          }
+        }
+      ]
+    },
+    {
+      "company_id": "macys",
+      "requirement": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm",
+        "method": "GET",
+        "roles": [
+          "prior_annual_primary"
+        ],
+        "accession": "0001628280-25-014315",
+        "media_type": "text/html",
+        "refresh_for_new_discovery": false,
+        "saved_status": "MISSING_SAVED_SOURCE",
+        "source_acquisition_credit": false,
+        "alternative_dependency": {
+          "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+          "satisfied_roles": [
+            "prior_annual_primary"
+          ],
+          "prior_period": {
+            "fiscal_year": 2024,
+            "period_start": "2024-02-04",
+            "period_end": "2025-02-01"
+          },
+          "file_set": {
+            "filing": {
+              "accessionNumber": "0001628280-25-014315",
+              "filingDate": "2025-03-21",
+              "reportDate": "2025-02-01",
+              "acceptanceDateTime": "2025-03-21T20:05:35.000Z",
+              "act": "34",
+              "form": "10-K",
+              "fileNumber": "001-13536",
+              "filmNumber": "25760473",
+              "items": "",
+              "core_type": "XBRL",
+              "size": 12598551,
+              "isXBRL": 1,
+              "isInlineXBRL": 1,
+              "isXBRLNumeric": null,
+              "primaryDocument": "m-20250201.htm",
+              "primaryDocDescription": "10-K",
+              "metadata_origin": {
+                "inventory_name": "CIK0000794367.json",
+                "row_index": 185
+              }
+            },
+            "index_source_reference_id": "sha256:6393bfb0a284316edbd33165f544ad3d29be52575fb826801733bc442dbd8b9e",
+            "expected_xml_documents": [
+              "m-20250201_htm.xml"
+            ],
+            "primary_saved": false,
+            "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+            "source_reference_ids": [
+              "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00"
+            ]
+          },
+          "source_references": [
+            {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00",
+              "raw_asset_id": "sha256:5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e",
+              "company_id": "macys",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201_htm.xml",
+              "accession": "0001628280-25-014315",
+              "document_name": "m-20250201_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:5239c978e928ce4e3c96b0c74865248cd2ed1e9a20f8532e1085c209be6741f9"
+            }
+          ],
+          "auditor_facts": [
+            {
+              "source_reference_id": "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00",
+              "raw_asset_id": "sha256:5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e",
+              "accession": "0001628280-25-014315",
+              "name": "KPMG, LLP",
+              "canonical_name": "kpmgllp",
+              "period_start": "2024-02-04",
+              "period_end": "2025-02-01",
+              "entity_identifier": "0000794367",
+              "locator": {
+                "qualified_name": "dei:auditorname",
+                "context_ref": "c-1",
+                "ordinal": 57
+              }
+            }
+          ],
+          "auditor_fact_status": "FOUND",
+          "source_acquisition_credit": false,
+          "metric_executed": false,
+          "all_39_metric_source_acceptance_proven": false
+        }
+      },
+      "declared_requirements": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm",
+          "method": "GET",
+          "roles": [
+            "prior_annual_primary"
+          ],
+          "accession": "0001628280-25-014315",
+          "media_type": "text/html",
+          "refresh_for_new_discovery": false,
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "alternative_dependency": {
+            "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+            "satisfied_roles": [
+              "prior_annual_primary"
+            ],
+            "prior_period": {
+              "fiscal_year": 2024,
+              "period_start": "2024-02-04",
+              "period_end": "2025-02-01"
+            },
+            "file_set": {
+              "filing": {
+                "accessionNumber": "0001628280-25-014315",
+                "filingDate": "2025-03-21",
+                "reportDate": "2025-02-01",
+                "acceptanceDateTime": "2025-03-21T20:05:35.000Z",
+                "act": "34",
+                "form": "10-K",
+                "fileNumber": "001-13536",
+                "filmNumber": "25760473",
+                "items": "",
+                "core_type": "XBRL",
+                "size": 12598551,
+                "isXBRL": 1,
+                "isInlineXBRL": 1,
+                "isXBRLNumeric": null,
+                "primaryDocument": "m-20250201.htm",
+                "primaryDocDescription": "10-K",
+                "metadata_origin": {
+                  "inventory_name": "CIK0000794367.json",
+                  "row_index": 185
+                }
+              },
+              "index_source_reference_id": "sha256:6393bfb0a284316edbd33165f544ad3d29be52575fb826801733bc442dbd8b9e",
+              "expected_xml_documents": [
+                "m-20250201_htm.xml"
+              ],
+              "primary_saved": false,
+              "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+              "source_reference_ids": [
+                "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00"
+              ]
+            },
+            "source_references": [
+              {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00",
+                "raw_asset_id": "sha256:5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e",
+                "company_id": "macys",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201_htm.xml",
+                "accession": "0001628280-25-014315",
+                "document_name": "m-20250201_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:5239c978e928ce4e3c96b0c74865248cd2ed1e9a20f8532e1085c209be6741f9"
+              }
+            ],
+            "auditor_facts": [
+              {
+                "source_reference_id": "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00",
+                "raw_asset_id": "sha256:5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e",
+                "accession": "0001628280-25-014315",
+                "name": "KPMG, LLP",
+                "canonical_name": "kpmgllp",
+                "period_start": "2024-02-04",
+                "period_end": "2025-02-01",
+                "entity_identifier": "0000794367",
+                "locator": {
+                  "qualified_name": "dei:auditorname",
+                  "context_ref": "c-1",
+                  "ordinal": 57
+                }
+              }
+            ],
+            "auditor_fact_status": "FOUND",
+            "source_acquisition_credit": false,
+            "metric_executed": false,
+            "all_39_metric_source_acceptance_proven": false
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/index.json",
+          "method": "GET",
+          "roles": [
+            "annual_accession_index"
+          ],
+          "accession": "0001628280-25-014315",
+          "media_type": "application/json",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:e37b02774af96c0a7b29bf614b7fb56607ac4475c759bbc8a471614bf8b8840b",
+            "raw_asset_id": "sha256:52bed0ed379a833be0b80e437081846202c2a0f8c8e014b17237263ba06158fe",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/index.json",
+            "accession": "0001628280-25-014315",
+            "document_name": "index.json",
+            "source_role": "annual_accession_index",
+            "request_attempt_id": "request:attempt:4c03bfef5307e74aa3274f0b72befac06785b59e38888a36fe9bbdbd55b9befd"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/index.json",
+            "accession": "0001628280-25-014315",
+            "document_name": "index.json",
+            "content_sha256": "52bed0ed379a833be0b80e437081846202c2a0f8c8e014b17237263ba06158fe",
+            "request_body_sha256": "52bed0ed379a833be0b80e437081846202c2a0f8c8e014b17237263ba06158fe",
+            "request_body_size": 11731,
+            "request_headers_repo_relative_path": "evidence/accession_materials/macy_s_794367_000162828025014315/index.json.headers.json",
+            "request_headers_sha256": "c20bd5ce1b86831afc2e45398fb637cc992757cb5de30779179ba93279815e13",
+            "request_headers_size": 662,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/macy_s_794367_000162828025014315/index.json",
+            "request_attempt_id": "request:attempt:4c03bfef5307e74aa3274f0b72befac06785b59e38888a36fe9bbdbd55b9befd"
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201_htm.xml",
+          "method": "GET",
+          "roles": [
+            "annual_accession_instance"
+          ],
+          "accession": "0001628280-25-014315",
+          "media_type": "application/xml",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:f519cc2b54e97b1219df660b558086fac18118599fea8df0165cd23110411be7",
+            "raw_asset_id": "sha256:5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e",
+            "company_id": "macys",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201_htm.xml",
+            "accession": "0001628280-25-014315",
+            "document_name": "m-20250201_htm.xml",
+            "source_role": "annual_accession_instance",
+            "request_attempt_id": "request:attempt:5239c978e928ce4e3c96b0c74865248cd2ed1e9a20f8532e1085c209be6741f9"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201_htm.xml",
+            "accession": "0001628280-25-014315",
+            "document_name": "m-20250201_htm.xml",
+            "content_sha256": "5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e",
+            "request_body_sha256": "5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e",
+            "request_body_size": 2004486,
+            "request_headers_repo_relative_path": "evidence/accession_materials/macy_s_794367_000162828025014315/m-20250201_htm.xml.headers.json",
+            "request_headers_sha256": "9d7ed8c9d17bce06196c0f4218c33ee2f7d85d48428529def5a0d7dcb7ba6106",
+            "request_headers_size": 1144,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/macy_s_794367_000162828025014315/m-20250201_htm.xml",
+            "request_attempt_id": "request:attempt:5239c978e928ce4e3c96b0c74865248cd2ed1e9a20f8532e1085c209be6741f9"
+          }
+        }
+      ]
+    },
+    {
+      "company_id": "enphase_energy",
+      "requirement": {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+        "method": "GET",
+        "roles": [
+          "prior_annual_primary"
+        ],
+        "accession": "0001463101-25-000024",
+        "media_type": "text/html",
+        "refresh_for_new_discovery": false,
+        "saved_status": "MISSING_SAVED_SOURCE",
+        "source_acquisition_credit": false,
+        "alternative_dependency": {
+          "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+          "satisfied_roles": [
+            "prior_annual_primary"
+          ],
+          "prior_period": {
+            "fiscal_year": 2024,
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "file_set": {
+            "filing": {
+              "accessionNumber": "0001463101-25-000024",
+              "filingDate": "2025-02-10",
+              "reportDate": "2024-12-31",
+              "acceptanceDateTime": "2025-02-08T00:06:51.000Z",
+              "act": "34",
+              "form": "10-K",
+              "fileNumber": "001-35480",
+              "filmNumber": "25603246",
+              "items": "",
+              "core_type": "XBRL",
+              "size": 16979073,
+              "isXBRL": 1,
+              "isInlineXBRL": 1,
+              "isXBRLNumeric": null,
+              "primaryDocument": "enph-20241231.htm",
+              "primaryDocDescription": "FORM 10-K FY 2024",
+              "metadata_origin": {
+                "inventory_name": "CIK0001463101.json",
+                "row_index": 99
+              }
+            },
+            "index_source_reference_id": "sha256:6acc94ab8ef9ac2500724c34232c37a1b412b0e3490a91709c49ebface27f86b",
+            "expected_xml_documents": [
+              "enph-20241231_htm.xml"
+            ],
+            "primary_saved": false,
+            "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+            "source_reference_ids": [
+              "sha256:e0a5f2f5392d027cc7a82e8dfc7075cf4f09f3efe94b8f8ed432694bba59d82e"
+            ]
+          },
+          "source_references": [
+            {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:e0a5f2f5392d027cc7a82e8dfc7075cf4f09f3efe94b8f8ed432694bba59d82e",
+              "raw_asset_id": "sha256:48b84800d21a642a655e50eae7a21e410ce0fe22a34619c11b73f54183657ca4",
+              "company_id": "enphase_energy",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231_htm.xml",
+              "accession": "0001463101-25-000024",
+              "document_name": "enph-20241231_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:3367f514820b17be3fa0a867c8957bff4be762eb4b4b39906fd891b8a38f652d"
+            }
+          ],
+          "auditor_facts": [
+            {
+              "source_reference_id": "sha256:e0a5f2f5392d027cc7a82e8dfc7075cf4f09f3efe94b8f8ed432694bba59d82e",
+              "raw_asset_id": "sha256:48b84800d21a642a655e50eae7a21e410ce0fe22a34619c11b73f54183657ca4",
+              "accession": "0001463101-25-000024",
+              "name": "DELOITTE & TOUCHE LLP",
+              "canonical_name": "deloittetouchellp",
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31",
+              "entity_identifier": "0001463101",
+              "locator": {
+                "qualified_name": "dei:auditorname",
+                "context_ref": "c-1",
+                "ordinal": 81
+              }
+            }
+          ],
+          "auditor_fact_status": "FOUND",
+          "source_acquisition_credit": false,
+          "metric_executed": false,
+          "all_39_metric_source_acceptance_proven": false
+        }
+      },
+      "declared_requirements": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+          "method": "GET",
+          "roles": [
+            "prior_annual_primary"
+          ],
+          "accession": "0001463101-25-000024",
+          "media_type": "text/html",
+          "refresh_for_new_discovery": false,
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "alternative_dependency": {
+            "status": "VERIFIED_PRIOR_NATIVE_INSTANCE",
+            "satisfied_roles": [
+              "prior_annual_primary"
+            ],
+            "prior_period": {
+              "fiscal_year": 2024,
+              "period_start": "2024-01-01",
+              "period_end": "2024-12-31"
+            },
+            "file_set": {
+              "filing": {
+                "accessionNumber": "0001463101-25-000024",
+                "filingDate": "2025-02-10",
+                "reportDate": "2024-12-31",
+                "acceptanceDateTime": "2025-02-08T00:06:51.000Z",
+                "act": "34",
+                "form": "10-K",
+                "fileNumber": "001-35480",
+                "filmNumber": "25603246",
+                "items": "",
+                "core_type": "XBRL",
+                "size": 16979073,
+                "isXBRL": 1,
+                "isInlineXBRL": 1,
+                "isXBRLNumeric": null,
+                "primaryDocument": "enph-20241231.htm",
+                "primaryDocDescription": "FORM 10-K FY 2024",
+                "metadata_origin": {
+                  "inventory_name": "CIK0001463101.json",
+                  "row_index": 99
+                }
+              },
+              "index_source_reference_id": "sha256:6acc94ab8ef9ac2500724c34232c37a1b412b0e3490a91709c49ebface27f86b",
+              "expected_xml_documents": [
+                "enph-20241231_htm.xml"
+              ],
+              "primary_saved": false,
+              "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+              "source_reference_ids": [
+                "sha256:e0a5f2f5392d027cc7a82e8dfc7075cf4f09f3efe94b8f8ed432694bba59d82e"
+              ]
+            },
+            "source_references": [
+              {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:e0a5f2f5392d027cc7a82e8dfc7075cf4f09f3efe94b8f8ed432694bba59d82e",
+                "raw_asset_id": "sha256:48b84800d21a642a655e50eae7a21e410ce0fe22a34619c11b73f54183657ca4",
+                "company_id": "enphase_energy",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231_htm.xml",
+                "accession": "0001463101-25-000024",
+                "document_name": "enph-20241231_htm.xml",
+                "source_role": "auditor_facts",
+                "request_attempt_id": "request:attempt:3367f514820b17be3fa0a867c8957bff4be762eb4b4b39906fd891b8a38f652d"
+              }
+            ],
+            "auditor_facts": [
+              {
+                "source_reference_id": "sha256:e0a5f2f5392d027cc7a82e8dfc7075cf4f09f3efe94b8f8ed432694bba59d82e",
+                "raw_asset_id": "sha256:48b84800d21a642a655e50eae7a21e410ce0fe22a34619c11b73f54183657ca4",
+                "accession": "0001463101-25-000024",
+                "name": "DELOITTE & TOUCHE LLP",
+                "canonical_name": "deloittetouchellp",
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+                "entity_identifier": "0001463101",
+                "locator": {
+                  "qualified_name": "dei:auditorname",
+                  "context_ref": "c-1",
+                  "ordinal": 81
+                }
+              }
+            ],
+            "auditor_fact_status": "FOUND",
+            "source_acquisition_credit": false,
+            "metric_executed": false,
+            "all_39_metric_source_acceptance_proven": false
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/index.json",
+          "method": "GET",
+          "roles": [
+            "annual_accession_index"
+          ],
+          "accession": "0001463101-25-000024",
+          "media_type": "application/json",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:32c51605322fcd2f001020f4255ce25c73bb3612cb974ddcda3d5803748c03cd",
+            "raw_asset_id": "sha256:a0da64b72e8bba49af27f0effe8e2f20e563b33e0104c6b0d8d42c114d8247c9",
+            "company_id": "enphase_energy",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/index.json",
+            "accession": "0001463101-25-000024",
+            "document_name": "index.json",
+            "source_role": "annual_accession_index",
+            "request_attempt_id": "request:attempt:762099fd763e44cdf0d2918f89745639e88bb7ae216ce3826306aaad6b04f66a"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/index.json",
+            "accession": "0001463101-25-000024",
+            "document_name": "index.json",
+            "content_sha256": "a0da64b72e8bba49af27f0effe8e2f20e563b33e0104c6b0d8d42c114d8247c9",
+            "request_body_sha256": "a0da64b72e8bba49af27f0effe8e2f20e563b33e0104c6b0d8d42c114d8247c9",
+            "request_body_size": 14235,
+            "request_headers_repo_relative_path": "evidence/accession_materials/enphase_energy_1463101_000146310125000024/index.json.headers.json",
+            "request_headers_sha256": "e605f88f32b0284f200d8bc6303fb88f9799b1e96534b61bbb27eeb1b816f87a",
+            "request_headers_size": 663,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/enphase_energy_1463101_000146310125000024/index.json",
+            "request_attempt_id": "request:attempt:762099fd763e44cdf0d2918f89745639e88bb7ae216ce3826306aaad6b04f66a"
+          }
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231_htm.xml",
+          "method": "GET",
+          "roles": [
+            "annual_accession_instance"
+          ],
+          "accession": "0001463101-25-000024",
+          "media_type": "application/xml",
+          "refresh_for_new_discovery": false,
+          "saved_status": "VERIFIED_SAVED_SOURCE",
+          "source_acquisition_credit": false,
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:706bab4f75f9b7aa3da7aa565f714d50764c358f0625137644692f6e64c3c877",
+            "raw_asset_id": "sha256:48b84800d21a642a655e50eae7a21e410ce0fe22a34619c11b73f54183657ca4",
+            "company_id": "enphase_energy",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231_htm.xml",
+            "accession": "0001463101-25-000024",
+            "document_name": "enph-20241231_htm.xml",
+            "source_role": "annual_accession_instance",
+            "request_attempt_id": "request:attempt:3367f514820b17be3fa0a867c8957bff4be762eb4b4b39906fd891b8a38f652d"
+          },
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231_htm.xml",
+            "accession": "0001463101-25-000024",
+            "document_name": "enph-20241231_htm.xml",
+            "content_sha256": "48b84800d21a642a655e50eae7a21e410ce0fe22a34619c11b73f54183657ca4",
+            "request_body_sha256": "48b84800d21a642a655e50eae7a21e410ce0fe22a34619c11b73f54183657ca4",
+            "request_body_size": 2780335,
+            "request_headers_repo_relative_path": "evidence/accession_materials/enphase_energy_1463101_000146310125000024/enph-20241231_htm.xml.headers.json",
+            "request_headers_sha256": "75f6f1731078c2dac2d6aa71dd80834f2a59e0ccd4b61f184e68f219d0d38535",
+            "request_headers_size": 1148,
+            "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+            "request_repo_relative_path": "evidence/accession_materials/enphase_energy_1463101_000146310125000024/enph-20241231_htm.xml",
+            "request_attempt_id": "request:attempt:3367f514820b17be3fa0a867c8957bff4be762eb4b4b39906fd891b8a38f652d"
+          }
+        }
+      ]
+    }
+  ],
+  "source_snapshot_before": {
+    "evidence/requests_log.csv": "8e6cd10897df0217b892e99c0febb24f6e9eaf24d663e2c44c1ca2366f90c9e3",
+    "evidence/requests_log_manifest.json": "779d2df19b95cc86e051f2f31cdea76cd77afb4f6fe4eef3ae920ea54d18edfd",
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "config/ordinary_public_projection_v1.json": "56d4191d1813e8ad27a0649eda8b956e3a28d89ac52830eeff8f429b97b51141"
+  },
+  "source_snapshot_after": {
+    "evidence/requests_log.csv": "8e6cd10897df0217b892e99c0febb24f6e9eaf24d663e2c44c1ca2366f90c9e3",
+    "evidence/requests_log_manifest.json": "779d2df19b95cc86e051f2f31cdea76cd77afb4f6fe4eef3ae920ea54d18edfd",
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "config/ordinary_public_projection_v1.json": "56d4191d1813e8ad27a0649eda8b956e3a28d89ac52830eeff8f429b97b51141"
+  },
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "network_forbidden": true,
+  "seconds": 14.337183083058335,
+  "runtime_patch_applied": false,
+  "all_39_acceptance": false
+}

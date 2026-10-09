@@ -1,0 +1,30 @@
+{
+  "case": "marriott_d01",
+  "company_id": "marriott_international",
+  "metric_id": "D01",
+  "commit": "887c97d09937aff801e21a4e2430315f3364da33",
+  "status": "PASSED_FROZEN_AND_COLD_READ",
+  "stage": "COMPLETE",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "parent_pid": 6719,
+  "cold_command": "/opt/homebrew/opt/python@3.14/bin/python3.14 /Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_native_material.py --cold-read /private/tmp/sec_metrics_issue28_continuous/v13-frozen-material-b171/marriott_d01/data /private/tmp/sec_metrics_issue28_continuous/v13-frozen-material-b171/marriott_d01/run /private/tmp/sec_metrics_issue28_continuous/v13-frozen-material-b171/marriott_d01/before-freeze.json /private/tmp/sec_metrics_issue28_continuous/v13-frozen-material-b171/marriott_d01/cold-read.json",
+  "cold_cwd": "/private/tmp/sec_metrics_issue28_continuous/v13-frozen-material-b171/marriott_d01",
+  "cold_returncode": 0,
+  "cold_pid": 6751,
+  "run_id": "run:normal-current:b9a36befb1d6cbefe1af905d2a8e09f519d1b3a4dca314317751ee4b9ce2e3b3",
+  "validation_status": "PASSED",
+  "source_references": 3,
+  "record_graph_hash": "sha256:065e70b46796c257fdf0d071ba69aaa5ab1d16a63def913f4511d05c1948b498",
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "review_count": 1,
+  "protected_state_unchanged": true,
+  "data_root_has_git": false
+}

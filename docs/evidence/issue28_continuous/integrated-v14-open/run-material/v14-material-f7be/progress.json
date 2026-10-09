@@ -1,0 +1,136 @@
+[
+  {
+    "case": "positive-B03",
+    "expected": "PASS",
+    "details": {
+      "run_id": "run:ordinary-integrated:6bd0c600e054caac3c43475417eae7505d38e232494691826628dea35c7299b6",
+      "metric_ids": [
+        "B01",
+        "B03"
+      ],
+      "status": "OPEN",
+      "review_count": 0
+    },
+    "passed": true,
+    "outcome": "ACCEPTED",
+    "seconds": 12.297
+  },
+  {
+    "case": "positive-B12",
+    "expected": "PASS",
+    "details": {
+      "run_id": "run:ordinary-integrated:4abf2f75839aae918aef333f56a76292ca3e6c7f0a6c15ce948db967da742add",
+      "metric_ids": [
+        "B12"
+      ],
+      "status": "OPEN",
+      "review_count": 0
+    },
+    "passed": true,
+    "outcome": "ACCEPTED",
+    "seconds": 13.651
+  },
+  {
+    "case": "positive-D01",
+    "expected": "PASS",
+    "details": {
+      "run_id": "run:ordinary-integrated:61c2e11fef8486319cd858c584726a4c8cadd21ec15fcbb5e753d6a1f9cbf14f",
+      "metric_ids": [
+        "D01"
+      ],
+      "status": "OPEN",
+      "review_count": 1
+    },
+    "passed": true,
+    "outcome": "ACCEPTED",
+    "seconds": 21.8
+  },
+  {
+    "case": "missing-dependency-spec",
+    "expected": "REJECT",
+    "passed": false,
+    "outcome": "FAILED",
+    "error_type": "RunStoreError",
+    "reason": "Run Spec closure cannot be compiled",
+    "stage": "REPLAY",
+    "seconds": 0.003
+  },
+  {
+    "case": "extra-unrequested-spec",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "ValueError",
+    "reason": "ORDINARY_INTEGRATED_SOURCE_SPEC_OR_PERIOD_CHANGED",
+    "stage": "REPLAY",
+    "seconds": 3.248
+  },
+  {
+    "case": "missing-source-reference",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "ValueError",
+    "reason": "ORDINARY_INTEGRATED_SOURCE_SPEC_OR_PERIOD_CHANGED",
+    "stage": "REPLAY",
+    "seconds": 3.247
+  },
+  {
+    "case": "changed-fiscal-label",
+    "expected": "REJECT",
+    "passed": false,
+    "outcome": "FAILED",
+    "error_type": "RunStoreError",
+    "reason": "Run manifest record is invalid",
+    "stage": "REPLAY",
+    "seconds": 0.002
+  },
+  {
+    "case": "missing-dependency-result",
+    "expected": "REJECT",
+    "details": null,
+    "passed": false,
+    "outcome": "ACCEPTED",
+    "seconds": 3.253
+  },
+  {
+    "case": "self-consistent-false-revenue",
+    "expected": "REJECT",
+    "passed": false,
+    "outcome": "FAILED",
+    "error_type": "RunStoreError",
+    "reason": "Integrated ordinary result differs from full source replay",
+    "stage": "REPLAY",
+    "seconds": 5.315
+  },
+  {
+    "case": "missing-text-review",
+    "expected": "REJECT",
+    "passed": false,
+    "outcome": "FAILED",
+    "error_type": "RunStoreError",
+    "reason": "Review unit has no effective decision",
+    "stage": "REPLAY",
+    "seconds": 0.007
+  },
+  {
+    "case": "rehashed-input-primary-change",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "ValueError",
+    "reason": "ORDINARY_INTEGRATED_INPUT_BINDING_CHANGED",
+    "stage": "REPLAY",
+    "seconds": 3.293
+  },
+  {
+    "case": "draft-freeze-rejection",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "ValueError",
+    "reason": "ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED",
+    "stage": "SETUP",
+    "seconds": 0.001
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "record_type": "ISSUE28_CURRENT_390_ONE_COORDINATE_SCOPE_DELTA",
+  "parent_index": "docs/evidence/issue28_continuous/d04-remaining-20260922/current-390.json",
+  "preceding_distinct_coordinate_delta": "docs/evidence/issue28_continuous/b03-current-scope-20260928/delta.json",
+  "coordinate_key": "ford_motor_company:B03",
+  "historical_result_id_retained": "sha256:1829d73dac66a195a590ab84ea1f1d1800a77fae60d828b6f37d5cbeec2abd30",
+  "historical_value_retained": "0.0363384899635280108080975292",
+  "historical_publication_record_retained": true,
+  "current_business_credit": "REVOKED_PENDING_IMPAIRMENT_FREE_DEPRECIATION_SCOPE",
+  "source_scope": {
+    "status": "SELECTED_DEPRECIATION_INCLUDES_IMPAIRMENT",
+    "blocked": true,
+    "primary_source_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+    "impairment_inclusion_proof": {
+      "selected_fact": {
+        "ordinal": 3180,
+        "concept": "us-gaap:DepreciationDepletionAndAmortization",
+        "value": "15974000000",
+        "context_ref": "c-1"
+      },
+      "table_id": "table_000148",
+      "table_grid_sha256": "sha256:e5f4240976efe7db5e27d1af68da9e8d6646c599fbfca24f7b6dfb414f0d5ab9",
+      "selected_visible_total": "15,974",
+      "visible_component_sum": "15974",
+      "included_component": {
+        "visible_value": "8,235",
+        "column_index": 28,
+        "marker": "g"
+      },
+      "footnote": {
+        "text": "(g)Includes $8.1 billion of depreciation related to the Model e asset impairment (see Note 13).",
+        "start_byte": 5176658,
+        "end_byte": 5177247,
+        "span_sha256": "ec9bc58141f6e006e6bf928207bc6c5741a525c88b6152d210b2e1ccf35ae1f0"
+      }
+    }
+  },
+  "approximate_8_1_billion_subtraction_used": false,
+  "new_complete_coordinate_count": 0,
+  "other_389_revalidated": false,
+  "all390_acceptance": false,
+  "production_authorized": false,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}

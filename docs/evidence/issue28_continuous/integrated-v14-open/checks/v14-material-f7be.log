@@ -1,0 +1,15 @@
+test_real_open_graphs_and_disk_rejections (tests.vnext.test_normal_run_v3_material.OrdinaryIntegratedMaterialTest.test_real_open_graphs_and_disk_rejections) ... FAIL
+
+======================================================================
+FAIL: test_real_open_graphs_and_disk_rejections (tests.vnext.test_normal_run_v3_material.OrdinaryIntegratedMaterialTest.test_real_open_graphs_and_disk_rejections)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 69, in test_real_open_graphs_and_disk_rejections
+    self.assertTrue(all(r['passed'] for r in self.rows),str([r for r in self.rows if not r['passed']]))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : [{'case': 'missing-dependency-spec', 'expected': 'REJECT', 'passed': False, 'outcome': 'FAILED', 'error_type': 'RunStoreError', 'reason': 'Run Spec closure cannot be compiled', 'stage': 'REPLAY', 'seconds': 0.003}, {'case': 'changed-fiscal-label', 'expected': 'REJECT', 'passed': False, 'outcome': 'FAILED', 'error_type': 'RunStoreError', 'reason': 'Run manifest record is invalid', 'stage': 'REPLAY', 'seconds': 0.002}, {'case': 'missing-dependency-result', 'expected': 'REJECT', 'details': None, 'passed': False, 'outcome': 'ACCEPTED', 'seconds': 3.253}, {'case': 'self-consistent-false-revenue', 'expected': 'REJECT', 'passed': False, 'outcome': 'FAILED', 'error_type': 'RunStoreError', 'reason': 'Integrated ordinary result differs from full source replay', 'stage': 'REPLAY', 'seconds': 5.315}, {'case': 'missing-text-review', 'expected': 'REJECT', 'passed': False, 'outcome': 'FAILED', 'error_type': 'RunStoreError', 'reason': 'Review unit has no effective decision', 'stage': 'REPLAY', 'seconds': 0.007}]
+
+----------------------------------------------------------------------
+Ran 1 test in 66.121s
+
+FAILED (failures=1)

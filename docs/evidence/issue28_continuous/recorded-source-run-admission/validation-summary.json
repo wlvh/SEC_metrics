@@ -1,0 +1,280 @@
+{
+  "status": "LOCAL_VERIFICATION_PASSED_INDEPENDENT_REVIEW_PENDING",
+  "requirement_closure_hash": "sha256:1fe95dd34bfbd00cc2f1c5179caefd2743f42f6e8d4c6795e2686c3cc4cf6d76",
+  "execution_files": 346,
+  "source_admission_tests_default": {
+    "count": 6,
+    "seconds": 6.289
+  },
+  "source_admission_and_session_python39": {
+    "count": 15,
+    "seconds": 18.348
+  },
+  "native": {
+    "status": "PASS",
+    "native_runs": 5,
+    "metric_results": 6,
+    "source_responses": 3,
+    "checkpoint_id": "sha256:bf2fff074f238917f2a2979da145ec4a8fea4209fb2b4d07f0288242980f34fb",
+    "results": {
+      "B03": {
+        "company_id": "marriott_international",
+        "metric_id": "B03",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+        "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.1756281982738868097456656229",
+        "unit": "ratio",
+        "trace_id": "sha256:3275ed7c3df1da60a68258e4834dcf29b2ae38b4e26f534cdd65d063d85823d0",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a"
+      },
+      "B08": {
+        "company_id": "marriott_international",
+        "metric_id": "B08",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.4267682781614670159561800429",
+        "unit": "ratio",
+        "trace_id": "sha256:3ee848421828290e8d6b7bf5ae36aa9cc19d6b93b05b61ac5c59e8a52a262886",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:3f9fcb65e5fdfe86465d36526f459b63f15bff7615d5abca133819b1a71f717c"
+      },
+      "B09": {
+        "company_id": "marriott_international",
+        "metric_id": "B09",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+        "spec_closure_hash": "sha256:25be3c461b082e4b74950c85e39b093568b807aa22c500370579f697f9381b3f",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "358000000",
+        "unit": "USD",
+        "trace_id": "sha256:3162084302886076688585b009a81894067dd06fe1e43311f3f0c2113f811672",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:f3b6e4bde905863e917538292d8ebe35ad85f52a8177b792bed3cc2f59dbab48"
+      },
+      "B10": {
+        "company_id": "marriott_international",
+        "metric_id": "B10",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.693",
+        "unit": "ratio",
+        "trace_id": "sha256:d53bd76dbcb1f642310c4681d17dd84d1303ea7bfab934da8e9f8e095256ff77",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:a3bc9fadc055f1a4b4d01f3ccd6a7075ab9344760bd7cf86367836808936030d"
+      },
+      "B11": {
+        "company_id": "marriott_international",
+        "metric_id": "B11",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:6f9cab9c1c477f4210dadf7fa4f018ffeb7f67588be5f6811cf50bd6092e94bc",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "128.8",
+        "unit": "USD",
+        "trace_id": "sha256:94e0d8689dbef352d96bc35223b28918f42ef138194dcf49b1fa95c07d35aa54",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:49fdd3dfac8e00e2ebb09f076b9fd8bce0de5ef1a1d8328e819c7d40668be7e0"
+      }
+    },
+    "attacks": 5,
+    "seconds": 145.8858737499686,
+    "source_credit": "RECORDED_TEST_ONLY",
+    "real_sec_credit": false,
+    "source_content_changed": false,
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "cold": {
+    "ordinary-source-cold-b03-third.json": {
+      "status": "PASS",
+      "run_id": "run:ordinary-integrated:e7ef07f7f3046560a6cd4256697376df71218b193303f64f9736e087ab2585a8",
+      "run_status": "OPEN",
+      "record_count": 14,
+      "decision_count": 0,
+      "runtime_root": "/private/tmp/sec_metrics_issue28_continuous/ordinary-source-material-third/candidate-data",
+      "git_directory_present": false,
+      "results": [
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "marriott_international",
+          "metric_id": "B01",
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+          "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+          "trace_id": "sha256:1828a144f4508a873f104fe50753aa9b95b42ef3026adce3b4f106c2bbd9625f",
+          "unit": "USD",
+          "value": "26186000000"
+        },
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "marriott_international",
+          "metric_id": "B03",
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+          "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+          "trace_id": "sha256:3275ed7c3df1da60a68258e4834dcf29b2ae38b4e26f534cdd65d063d85823d0",
+          "unit": "ratio",
+          "value": "0.1756281982738868097456656229"
+        }
+      ],
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    },
+    "ordinary-source-cold-b10-third.json": {
+      "status": "PASS",
+      "run_id": "run:ordinary-integrated:3f90dd6f7486b1e53c2ebc1ed365b2deb248d2c547672fb19a1888a39a980955",
+      "run_status": "OPEN",
+      "record_count": 10,
+      "decision_count": 0,
+      "runtime_root": "/private/tmp/sec_metrics_issue28_continuous/ordinary-source-material-third/candidate-data",
+      "git_directory_present": false,
+      "results": [
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "marriott_international",
+          "metric_id": "B10",
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:a3bc9fadc055f1a4b4d01f3ccd6a7075ab9344760bd7cf86367836808936030d",
+          "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+          "spec_closure_hash": "sha256:1e61acee56a83be8e1fc83b80c8ed3c5f53cc147376a0761280a64fa5a4ac817",
+          "trace_id": "sha256:d53bd76dbcb1f642310c4681d17dd84d1303ea7bfab934da8e9f8e095256ff77",
+          "unit": "ratio",
+          "value": "0.693"
+        }
+      ],
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    },
+    "ordinary-source-cold-b03-39-third.json": {
+      "status": "PASS",
+      "run_id": "run:ordinary-integrated:e7ef07f7f3046560a6cd4256697376df71218b193303f64f9736e087ab2585a8",
+      "run_status": "OPEN",
+      "record_count": 14,
+      "decision_count": 0,
+      "runtime_root": "/private/tmp/sec_metrics_issue28_continuous/ordinary-source-material-third/candidate-data",
+      "git_directory_present": false,
+      "results": [
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "marriott_international",
+          "metric_id": "B01",
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+          "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+          "trace_id": "sha256:1828a144f4508a873f104fe50753aa9b95b42ef3026adce3b4f106c2bbd9625f",
+          "unit": "USD",
+          "value": "26186000000"
+        },
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "marriott_international",
+          "metric_id": "B03",
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:3043aa63cbf7616f9866fb93b8f69200a2246a33dfec8f1d09502a34af39a72a",
+          "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+          "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+          "trace_id": "sha256:3275ed7c3df1da60a68258e4834dcf29b2ae38b4e26f534cdd65d063d85823d0",
+          "unit": "ratio",
+          "value": "0.1756281982738868097456656229"
+        }
+      ],
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  },
+  "baseline_regression": {
+    "scenarios": 15,
+    "seconds": 104.202,
+    "all_passed": true
+  },
+  "full_source_suite": {
+    "status": "PASSED",
+    "selectors": 45,
+    "seconds": 445.31
+  },
+  "fast_suite": {
+    "status": "PASSED",
+    "selectors": 97,
+    "seconds": 78.924
+  },
+  "source_credit": "RECORDED_TEST_ONLY",
+  "real_sec_credit": false,
+  "source_content_changed": false,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

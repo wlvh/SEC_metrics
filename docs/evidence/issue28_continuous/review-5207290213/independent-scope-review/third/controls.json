@@ -1,0 +1,192 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "statement": "If financing fails and there is substantial doubt about our ability to continue as a going concern, we sell the asset.",
+      "expected": "CONDITIONAL",
+      "results": [
+        {
+          "kind": "DOUBT_DISCLOSED",
+          "timing": "CURRENT_REPORT",
+          "observation": {
+            "accepted": false,
+            "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+          }
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "timing": "CONDITIONAL",
+          "observation": {
+            "accepted": true,
+            "unresolved": [],
+            "current_target_findings": []
+          }
+        }
+      ]
+    },
+    {
+      "statement": "If financing fails, cash is insufficient and these conditions raise substantial doubt about our ability to continue as a going concern.",
+      "expected": "CONDITIONAL",
+      "results": [
+        {
+          "kind": "DOUBT_DISCLOSED",
+          "timing": "CURRENT_REPORT",
+          "observation": {
+            "accepted": false,
+            "error": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+          }
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "timing": "CONDITIONAL",
+          "observation": {
+            "accepted": true,
+            "unresolved": [],
+            "current_target_findings": []
+          }
+        }
+      ]
+    },
+    {
+      "statement": "In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern.",
+      "expected": "UNRESOLVED",
+      "results": [
+        {
+          "kind": "DOUBT_DISCLOSED",
+          "timing": "CURRENT_REPORT",
+          "observation": {
+            "accepted": true,
+            "unresolved": [
+              {
+                "unit_id": "sha256:021807e839506a3c52ee836ff259c594b1e5032c1dc30ee35de42c294f5e8f74",
+                "source_index": 7,
+                "reason": "D04_SOURCE_RELATION_IMPLEMENTATION_UNSUPPORTED",
+                "statement_text": "In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern."
+              }
+            ],
+            "current_target_findings": [
+              {
+                "evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern."
+                  }
+                ],
+                "kind": "DOUBT_DISCLOSED",
+                "reason": "Recorded classification for the supplied source statement.",
+                "subject": "TARGET_REGISTRANT",
+                "timing": "CURRENT_REPORT",
+                "unit_id": "sha256:021807e839506a3c52ee836ff259c594b1e5032c1dc30ee35de42c294f5e8f74",
+                "resolved_evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern.",
+                    "start_character": 0,
+                    "end_character": 128
+                  }
+                ]
+              }
+            ],
+            "native_acceptance_error": "D04_SOURCE_ASSESSMENT_UNRESOLVED"
+          }
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "timing": "CONDITIONAL",
+          "observation": {
+            "accepted": true,
+            "unresolved": [
+              {
+                "unit_id": "sha256:021807e839506a3c52ee836ff259c594b1e5032c1dc30ee35de42c294f5e8f74",
+                "source_index": 7,
+                "reason": "D04_SOURCE_RELATION_IMPLEMENTATION_UNSUPPORTED",
+                "statement_text": "In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern."
+              }
+            ],
+            "current_target_findings": [],
+            "native_acceptance_error": "D04_SOURCE_ASSESSMENT_UNRESOLVED"
+          }
+        }
+      ]
+    },
+    {
+      "statement": "If financing fails, cash is insufficient; there is substantial doubt about our ability to continue as a going concern.",
+      "expected": "UNRESOLVED",
+      "results": [
+        {
+          "kind": "DOUBT_DISCLOSED",
+          "timing": "CURRENT_REPORT",
+          "observation": {
+            "accepted": true,
+            "unresolved": [
+              {
+                "unit_id": "sha256:9bc01211f47b013c03acbff997bb3de5682d865f1a3549c2d48b259f08ea17b1",
+                "source_index": 7,
+                "reason": "D04_SOURCE_RELATION_IMPLEMENTATION_UNSUPPORTED",
+                "statement_text": "there is substantial doubt about our ability to continue as a going concern."
+              }
+            ],
+            "current_target_findings": [
+              {
+                "evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "If financing fails, cash is insufficient; there is substantial doubt about our ability to continue as a going concern."
+                  }
+                ],
+                "kind": "DOUBT_DISCLOSED",
+                "reason": "Recorded classification for the supplied source statement.",
+                "subject": "TARGET_REGISTRANT",
+                "timing": "CURRENT_REPORT",
+                "unit_id": "sha256:9bc01211f47b013c03acbff997bb3de5682d865f1a3549c2d48b259f08ea17b1",
+                "resolved_evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "If financing fails, cash is insufficient; there is substantial doubt about our ability to continue as a going concern.",
+                    "start_character": 0,
+                    "end_character": 118
+                  }
+                ]
+              }
+            ],
+            "native_acceptance_error": "D04_SOURCE_ASSESSMENT_UNRESOLVED"
+          }
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "timing": "CONDITIONAL",
+          "observation": {
+            "accepted": true,
+            "unresolved": [
+              {
+                "unit_id": "sha256:9bc01211f47b013c03acbff997bb3de5682d865f1a3549c2d48b259f08ea17b1",
+                "source_index": 7,
+                "reason": "D04_SOURCE_RELATION_IMPLEMENTATION_UNSUPPORTED",
+                "statement_text": "there is substantial doubt about our ability to continue as a going concern."
+              }
+            ],
+            "current_target_findings": [],
+            "native_acceptance_error": "D04_SOURCE_ASSESSMENT_UNRESOLVED"
+          }
+        }
+      ]
+    }
+  ],
+  "function_sha256": {
+    "_assertion_clauses": "d3072159422cde14dad764981bc961b22fbddfce8b425e48c54f3ca316274d5a",
+    "_assertion_scope": "bf8885df05b557924a0c29211c4315473f7e5af5c718dedacb3d9412c06e9fa4",
+    "_assessment_time_prefix": "9d5abe1cb32b5bfd32001675dd573aa2c50a2409dccc67d22a33c63fcb460998",
+    "source_statement_relations": "e45e856face02be3749d4df6a04870b66fe3dfe2778712302eea4d31ce52c495",
+    "check_source_classifications": "0fcd40e229f1e8829dae0fdfbc7cab759fbdf25722ba9ec7e896ad7cca0edb7e"
+  },
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "full_disk_Run_executed": false
+}

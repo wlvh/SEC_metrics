@@ -1,0 +1,19 @@
+test_actual_source_factory_existing_opener_and_controller_offline (tests.vnext.test_continuous_semantic_calls.ContinuousSemanticCallsTest.test_actual_source_factory_existing_opener_and_controller_offline) ... {"status": "OFFLINE_WIRING_PASS", "requirement_id": "issue_28_v14", "closure": "sha256:0ea86a9bd869733ea96066202d54ed45ece5affd596a20e16ee7c20b33ada618", "request_bytes": 36920, "estimated_context_tokens": 15336, "source_request_count": 29, "selected_request_count": 1, "source_unit_coverage_preserved": true, "model": "deepseek-flash", "maximum_context_tokens": 200000, "retry_count": 0, "real_request_factory_to_controller_verified": true, "mocked_official_opener_invocations": 1, "network_disabled": true, "legacy_default_forbidden": true, "calls": {"provider": 0, "paid": 0, "sec": 0}, "semantic_correctness_verified": false, "native_result_created": false, "production_authorized": false, "native_mock_path": "/private/tmp/sec_metrics_issue28_continuous/wiring-5207290213/recorded-ledger/calls/0001"}
+ok
+test_actual_factory_native_acceptance_and_omitted_unit_failure (tests.vnext.test_d04_native_wiring.D04NativeAssessmentMaterialTest.test_actual_factory_native_acceptance_and_omitted_unit_failure) ... ok
+test_original_plan_survives_consumer_change_and_rebinding_is_rejected (tests.vnext.test_native_assessment_replay.NativeAssessmentReplayMaterialTest.test_original_plan_survives_consumer_change_and_rebinding_is_rejected) ... ERROR
+
+======================================================================
+ERROR: test_original_plan_survives_consumer_change_and_rebinding_is_rejected (tests.vnext.test_native_assessment_replay.NativeAssessmentReplayMaterialTest.test_original_plan_survives_consumer_change_and_rebinding_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_native_assessment_replay.py", line 43, in test_original_plan_survives_consumer_change_and_rebinding_is_rejected
+    prepared = next(p for p in prepare_requests(company_id='enphase_energy', metric_id='B13')
+                    if strict_json_loads(text=p.request_bytes.decode())['request_id'] == request['request_id'])
+StopIteration
+
+----------------------------------------------------------------------
+Ran 3 tests in 37.857s
+
+FAILED (errors=1)
+{'status': 'OFFLINE_NATIVE_REQUEST_ACCEPTANCE_PASS', 'network_disabled': True, 'actual_factory_and_opener_verified': True, 'required_native_evidence_verified': True, 'missing_unit_rejected': True, 'request_count': 27, 'selected_request_bytes': 70662, 'estimated_context_tokens': 31262, 'closure': 'sha256:0ea86a9bd869733ea96066202d54ed45ece5affd596a20e16ee7c20b33ada618', 'real_calls': [0, 0, 0], 'complete_d04_result': False}

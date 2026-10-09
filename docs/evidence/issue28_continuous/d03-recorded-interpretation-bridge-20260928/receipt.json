@@ -1,0 +1,83 @@
+{
+  "record_type": "D03_RECORDED_COMPLETE_INTERPRETATION_V1",
+  "record_id": "sha256:598ab808a7027b26456a1dd568cf5fbe8e420462d7365f80ff7c6eff87c6c9b6",
+  "recorded_packet_id": "sha256:198ade1a29070ec2737f8372618415e1e1da6b5155b507ea748d5f5550029162",
+  "company_id": "marriott_international",
+  "source_id": "sha256:bf4aa118cc3af2d82723e4ffdb84a51d2969b2366e63b054b7033ea7a1a866ab",
+  "prepared_input_id": "sha256:b90d41fb1bedb503166cc93194133b59b58af8073a0198d7a36e1d42faa15550",
+  "request_mapping": [
+    {
+      "group_index": 0,
+      "original_request_id": "sha256:a7935b58bfe9baf10c2fe7d722ade6a2a44f40997c126c13cdc618f8aa9d5506",
+      "effective_request_id": "sha256:a7935b58bfe9baf10c2fe7d722ade6a2a44f40997c126c13cdc618f8aa9d5506",
+      "source_anchor_successor": false
+    },
+    {
+      "group_index": 1,
+      "original_request_id": "sha256:7ddca7ec41669e0986c77248751f8b67ac615e04f75f36835f06468a8c79606a",
+      "effective_request_id": "sha256:7ddca7ec41669e0986c77248751f8b67ac615e04f75f36835f06468a8c79606a",
+      "source_anchor_successor": false
+    },
+    {
+      "group_index": 2,
+      "original_request_id": "sha256:f9519b03527128ed4c19b07a85a9cd93b21bb9906066cb3b556e4c27888199a0",
+      "effective_request_id": "sha256:f9519b03527128ed4c19b07a85a9cd93b21bb9906066cb3b556e4c27888199a0",
+      "source_anchor_successor": false
+    },
+    {
+      "group_index": 3,
+      "original_request_id": "sha256:534e7a2f86b6057543b42c79d4d0e0af358074b13977635cc56b23b856de777a",
+      "effective_request_id": "sha256:534e7a2f86b6057543b42c79d4d0e0af358074b13977635cc56b23b856de777a",
+      "source_anchor_successor": false
+    },
+    {
+      "group_index": 4,
+      "original_request_id": "sha256:0be80495d04bd8b3095c057861c24bf169f96fcd9bfa6b03253e8401b015fa09",
+      "effective_request_id": "sha256:0be80495d04bd8b3095c057861c24bf169f96fcd9bfa6b03253e8401b015fa09",
+      "source_anchor_successor": false
+    }
+  ],
+  "interpretation_proposal_id": "sha256:468132247b366698aaceb37da43041d38c335988dcc5c49c4098f684d6a0b0b1",
+  "group_count": 5,
+  "unresolved_group_indices": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "proposed_branch": "UNRESOLVED_REQUIRES_REVIEW",
+  "provider_execution_identity_verified": false,
+  "native_result_or_run_created": false,
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "recorded_packet_file_sha256": "2e2cd7dc8e978c46a1ff5d1e04483d9539cff87938a2b2d78d97beaf50448d4c",
+  "wrong_packet_id_rejected": "D03_RECORDED_SET_IDENTITY_OR_CREDIT_CHANGED",
+  "real_ledger_counts_before_after": [
+    [
+      143,
+      143,
+      52
+    ],
+    [
+      143,
+      143,
+      52
+    ]
+  ],
+  "real_ledger_rows_before_after": [
+    195,
+    195
+  ],
+  "packet_root": "/private/tmp/issue28-d03-complete-recorded-20260927",
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "seconds": 37.45
+}

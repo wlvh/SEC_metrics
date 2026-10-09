@@ -1,0 +1,42 @@
+Review target: 2cffa8e99a724e1f4015c6c0c17b1d7e24846aa2
+Parent: 3fa513864d9f50ea5aef8e33f41ffdb4b0831b4d
+Date: 2026-09-29
+Mode: read-only source and bounded local verification; only this review directory written
+
+git rev-parse HEAD: 2cffa8e99a724e1f4015c6c0c17b1d7e24846aa2
+git rev-parse HEAD^: 3fa513864d9f50ea5aef8e33f41ffdb4b0831b4d
+git diff --check parent target: exit 0
+Initial and final pre-write git status showed an existing modification to docs/evidence/issue28_continuous/execution-state.json; reviewer did not alter it.
+
+PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_b03_exact_impairment_relation -q
+Ran 1 test in 10.736s; OK; exit 0.
+PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_b03_depreciation_scope_update.B03HistoricalRecoveryVerifierTest -q
+Ran 2 tests in 0.003s; OK; exit 0.
+
+Independent source read of the saved Ford 10-K SHA-256 3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9:
+  table_000148, fact ordinal 3180: D&A 15,974 million USD, context c-1.
+  adjacent footnote (g): includes approximately 8.1 billion of Model e impairment-related depreciation.
+  table_000079, fact ordinal 306: depreciation and tooling amortization 7,834 million USD, context c-1.
+  table_000079, fact ordinal 310: row label says including depreciation of $8,140; inline amount 8,140 million USD, context c-1.
+  15,974 = 7,834 + 8,140.
+Direct default preparation retained old Ford result ID 1829d73d…; explicit successor preparation yielded 06d93be4… and -0.007128858795196163766173431518.
+
+Independent negative probe (TemporaryDirectory outside repository):
+  source bytes occurrence count of b'including depreciation of $<ix:nonFraction': 1
+  replaced with b'not including depreciation of $<ix:nonFraction'; recomputed only the modified primary source proof SHA; no numeric fact/context/segment footnote change.
+  prove_exact_impairment_relation returned ACCEPTED_CONTRADICTORY_SOURCE, amount 8140000000, proof ID sha256:a7ed745b889dba4ed2c4107e9512a9f7ed9d1d1070b62782175b00806d44720c.
+  This is a reproduced false acceptance, not a claim about the unchanged Ford filing.
+
+Read-only authority validation:
+  issue_28_v13 closure sha256:eb4ffdd488321a13733be3e05ba2f3a039e7f4b7b16d8149118e46ee7468593f PASS
+  issue_28_v14 closure sha256:b2f0480c0c631b1ffb64b03c397497e0fc8ffeff357ebdcab4c49debb87e8912 PASS
+  V14 validate_semantic_rule_bindings PASS; validate_wiring_receipt PASS.
+  AST comparison parent vs target: prepare_case, _binding, install_normal_inputs, _install_case_inputs, create_normal_run, _create_case_run SAME; replay_case CHANGED.
+
+Submitted evidence read, not rerun:
+  private.exit=0; cold.exit=0; native.exit=0; fast.exit=0; fast.log status PASSED with 142 selectors.
+  affected.exit=1 and native-v14.exit nonzero are historical failed attempts; last-followup.exit=0.
+  The V14-only experiment is superseded by final V13/V14 binding; no V14 native Run credit.
+  Original external-material long test was skipped by its own explicit-root condition.
+
+No real calls, no #47/PR52 write, no commit/push, no production action.

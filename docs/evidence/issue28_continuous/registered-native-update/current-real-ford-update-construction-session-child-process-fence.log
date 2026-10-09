@@ -1,0 +1,23 @@
+{
+  "status": "UPDATES_INCOMPLETE",
+  "metric_status": "EXECUTION_FAILED",
+  "counts_before": [
+    59,
+    59,
+    49
+  ],
+  "counts_after": [
+    59,
+    59,
+    49
+  ],
+  "events": [
+    "subprocess.Popen"
+  ],
+  "seconds": 550.0538494170178
+}
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/current-real-native-update-construction-session.py", line 23, in <module>
+    assert result['status']=='UPDATES_READY' and before==after and not events, result['metrics'][0].get('terminal',{}).get('error')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'error_type': 'RuntimeError', 'reason': 'UNEXPECTED_CHILD_PROCESS'}

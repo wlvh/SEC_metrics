@@ -1,0 +1,33 @@
+test_current_jpm_source_alias_and_proposal_conflict (tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest.test_current_jpm_source_alias_and_proposal_conflict) ... 
+  test_current_jpm_source_alias_and_proposal_conflict (tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest.test_current_jpm_source_alias_and_proposal_conflict) (mutation='other_entity') ... FAIL
+
+======================================================================
+FAIL: test_current_jpm_source_alias_and_proposal_conflict (tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest.test_current_jpm_source_alias_and_proposal_conflict) (mutation='other_entity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r6_regulatory_semantics.py", line 205, in validate_response
+    checked=_validate_source_response(request=request,raw_response=canonical_json_bytes(value=resolved),policy=policy)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r6_semantic_review.py", line 111, in _validate_source_response
+    _need(finding['subject']=='TARGET_REGISTRANT' and finding['timing']=='CURRENT_REPORT','D04_CURRENT_TARGET_CATEGORY_CONFLICT')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r6_semantic_review.py", line 26, in _need
+    if not condition:raise SemanticReviewError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.r6_semantic_review.SemanticReviewError: D04_CURRENT_TARGET_CATEGORY_CONFLICT
+
+The above exception was the direct cause of the following exception:
+
+ValueError: D03_CURRENT_TARGET_CATEGORY_CONFLICT
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_regulatory_statement_facts.py", line 135, in test_current_jpm_source_alias_and_proposal_conflict
+    with self.subTest(mutation=mutation), self.assertRaisesRegex(ValueError, 'AGGREGATE_FACT_CLASSIFICATION_CONFLICT'):
+                                          ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "AGGREGATE_FACT_CLASSIFICATION_CONFLICT" does not match "D03_CURRENT_TARGET_CATEGORY_CONFLICT"
+
+----------------------------------------------------------------------
+Ran 1 test in 133.809s
+
+FAILED (failures=1)

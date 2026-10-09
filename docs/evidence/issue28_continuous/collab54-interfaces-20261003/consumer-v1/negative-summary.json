@@ -1,0 +1,31 @@
+{
+  "status": "PASS_ACTUAL_C04_REJECTED_IMPORT_RECOVERY",
+  "steps": [
+    {
+      "name": "wrong-company-import",
+      "exit": 1,
+      "seconds": 0.434
+    },
+    {
+      "name": "c04-after-rejected-import",
+      "exit": 0,
+      "seconds": 12.344
+    }
+  ],
+  "source_pointer_and_original_run_files_unchanged": true,
+  "checked_file_count": 1003,
+  "same_successful_attempt": "97ccc2634ddd46589d99b913dd623915",
+  "latest_import_failed_separate_from_current_committed_source": {
+    "committed_source_unchanged": true,
+    "company_id": "marriott_international",
+    "error": "COMPANY_SOURCE_WRONG_COMPANY",
+    "package_root": "/private/tmp/issue28-company-consumer-20261003/package-enphase_energy",
+    "status": "FAILED"
+  },
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "whole_business_or_cluster_acceptance": false
+}

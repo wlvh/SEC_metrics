@@ -1,0 +1,135 @@
+INPUT_PROPERTY_PROVEN
+[
+  {
+    "record_type": "INSTANT_BALANCE_AMENDMENT_SCOPE",
+    "company_id": "paramount_skydance_paramount_global",
+    "input_class": "ORIGINAL_CURRENT_INSTANT_BALANCES",
+    "metric_ids": [
+      "B08",
+      "B09"
+    ],
+    "decision": "INPUT_PROPERTY_PROVEN",
+    "original_scope_id": "sha256:745f92495cb8f16ef1dc58f177b5a85196af17c42b5b9d19cda0b2f085ec1b2a",
+    "original_accession": "0002041610-26-000011",
+    "amendment_accession": "0001140361-26-016758",
+    "details": {
+      "note_identity": {
+        "registrant": "Paramount Skydance Corporation",
+        "number": "1",
+        "end": "December 31, 2025",
+        "filed": "February 25, 2026",
+        "aliases": "“Paramount,” the “Company,” “we,” “us” and “our”",
+        "scope_name": "Paramount Skydance Corporation"
+      },
+      "correction_cover": {
+        "text": "If securities are registered pursuant to Section 12(b) of the Act, indicate by check mark whether the financial statements of the registrant included in the filing reflect the correction of an error to previously issued financial statements. ☐",
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "block_index": 48,
+        "raw_start_byte": 25247,
+        "raw_end_byte": 25672,
+        "raw_span_sha256": "951504861e567882fce2aa4b7febcf5280cd7387e0e96b86370499348a9c1a2b"
+      },
+      "restatement_cover": {
+        "text": "Indicate by check mark whether any of those error corrections are restatements that required a recovery analysis of incentive-based compensation received by any of the registrant’s executive officers during the relevant recovery period pursuant to §240.10D-1(b). ☐",
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "block_index": 49,
+        "raw_start_byte": 25864,
+        "raw_end_byte": 26153,
+        "raw_span_sha256": "68b7a179c7b532f71d638055fff25db628a5fa223f6a9c9a6fe1d1bb172fe9d2"
+      },
+      "native_correction_flag": {
+        "fact": {
+          "tag": "ix:nonnumeric",
+          "qualified_name": "dei:DocumentFinStmtErrorCorrectionFlag",
+          "context_ref": "c20250101to20251231",
+          "unit_ref": "",
+          "scale": "0",
+          "sign": "",
+          "ordinal": 31,
+          "text": "☐"
+        },
+        "namespace": "http://xbrl.sec.gov/dei/2025",
+        "native_context": {
+          "context_ref": "c20250101to20251231",
+          "dimensions": {},
+          "entity_identifier": "0002041610",
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "typed_dimension_count": 0
+        },
+        "context_proof": {
+          "context_ref": "c20250101to20251231",
+          "identifiers": [
+            {
+              "value": "0002041610",
+              "scheme": "http://www.sec.gov/CIK"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2025-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2025-12-31"
+            }
+          ],
+          "dimensions": [],
+          "typed_dimension_count": 0
+        }
+      },
+      "no_new_statements_declaration": {
+        "text": "No financial statements or supplemental data are filed with this Amendment. See Index to Financial Statements and Supplemental Data of the Initial Form 10-K.",
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "block_index": 1565,
+        "raw_start_byte": 763275,
+        "raw_end_byte": 763432,
+        "raw_span_sha256": "a134efa7db047b379d6a3ad29c1a6fa1f4d410728f28f6fb5147ce70c575796d"
+      },
+      "conditional_compensation_references": [
+        {
+          "block": {
+            "text": "In addition, pursuant to their respective Current NEO Agreements, (i) any incentive-based compensation provided to the executives is subject to recovery by Paramount in the event of a restatement of the financial statements of Paramount or applicable business unit on which the calculation or determination of the incentive-based compensation was based; and (ii) the executives are subject to certain non-competition, non-solicitation, non-interference, confidentiality, non-disclosure and other restrictive covenants.",
+            "linked": false,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "block_index": 808,
+            "raw_start_byte": 390128,
+            "raw_end_byte": 390662,
+            "raw_span_sha256": "9fbc739d46b7cbc377f98a1dfefd6900a2fe6b9f03d0454f6f3e2c8a756cdfee"
+          },
+          "conditional_clause": "in the event of a restatement of the financial statements of Paramount or applicable business unit on which the calculation or determination of the incentive-based compensation was based"
+        },
+        {
+          "block": {
+            "text": "In addition, pursuant to the Warren Agreement, (i) any incentive-based compensation provided to him is subject to recovery by Paramount in the event of a restatement of the financial statements of Paramount or applicable business unit on which the calculation or determination of the incentive-based compensation was based; and (ii) Mr. Warren is subject to certain non-solicitation, non-interference, confidentiality, non-disclosure and other restrictive covenants.",
+            "linked": false,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "block_index": 816,
+            "raw_start_byte": 394995,
+            "raw_end_byte": 395477,
+            "raw_span_sha256": "66239068f92fd0eb7bf5b8d5a1c1c8dd4891c1d116313c486979354efe059742"
+          },
+          "conditional_clause": "in the event of a restatement of the financial statements of Paramount or applicable business unit on which the calculation or determination of the incentive-based compensation was based"
+        }
+      ],
+      "unresolved_correction_blocks": []
+    },
+    "issues": [],
+    "policy_sha256": "f92526dea7216c1871be10862dbdc6d8d21e409d126efd7928cbcc0dfc49eb8d",
+    "source_acquisition_credit": false,
+    "annual_continuity_proven": false,
+    "debt_completeness_proven": false,
+    "metric_result_created": false,
+    "production_authorized": false,
+    "instant_scope_id": "sha256:97c0b0a3b1f0077770c40c96fc540d29058116c28575efcd163c88629c01dace"
+  }
+]

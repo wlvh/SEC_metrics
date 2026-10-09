@@ -1,0 +1,65 @@
+{
+  "kind": "PARENT_FUNCTION_SCOPE_PROBE_NOT_INDEPENDENT_REVIEW_OR_MATERIAL_ACCEPTANCE",
+  "peer_commit": "3db230ee86d460874ebb1789e6de3e103ba1a65a",
+  "source_sha256": "8f5ec707967cf111d05a672065dcfe8f6f74afe1eaf3266b64ef2a568d44df85",
+  "actual_borrowed_dependencies": [
+    "current own vnext.canonical for terms read",
+    "current own text_business_candidates import; not called by statement_labels"
+  ],
+  "peer_terms_git_blob": "e15d8f96f725d17c23d958983c6db432c26dca3a",
+  "cases": [
+    {
+      "case": "short_surnames_members",
+      "text": "The members of the Audit Committee are Jack Ma and John Wu.",
+      "expected_composition_fact": true,
+      "own_suspended_v4_labels": [],
+      "peer_fixed48_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT"
+      ],
+      "matches_required_fact_presence": true
+    },
+    {
+      "case": "outside_named_auditor_duty",
+      "text": "The members of the Audit Committee are responsible for reviewing reports from Alice Smith, the external auditor.",
+      "expected_composition_fact": false,
+      "own_suspended_v4_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT"
+      ],
+      "peer_fixed48_labels": [],
+      "matches_required_fact_presence": true
+    },
+    {
+      "case": "members_independence",
+      "text": "The members of the Audit Committee are independent.",
+      "expected_composition_fact": true,
+      "own_suspended_v4_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT",
+        "COMMITTEE_MEMBER_QUALIFICATION"
+      ],
+      "peer_fixed48_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT",
+        "COMMITTEE_MEMBER_QUALIFICATION"
+      ],
+      "matches_required_fact_presence": true
+    },
+    {
+      "case": "status_inside_duty",
+      "text": "The members of the Audit Committee are responsible for recommending independent directors.",
+      "expected_composition_fact": false,
+      "own_suspended_v4_labels": [
+        "COMMITTEE_COMPOSITION_STATEMENT",
+        "COMMITTEE_MEMBER_QUALIFICATION"
+      ],
+      "peer_fixed48_labels": [
+        "COMMITTEE_MEMBER_QUALIFICATION"
+      ],
+      "matches_required_fact_presence": false
+    }
+  ],
+  "disposition": "Fix48 resolves two supplied member-clause examples, retained acknowledged qualification-duty residue; no production import or v4 gate release; no actual current source exposure established",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

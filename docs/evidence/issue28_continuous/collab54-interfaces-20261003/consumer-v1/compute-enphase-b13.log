@@ -1,0 +1,39 @@
+{
+  "elapsed_seconds": 0.8701614169403911,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "enphase_energy",
+  "source_checkpoint_id": "sha256:ba8c76534165227be491def9cbab9d6794468869bffded224b9d0f0c1a885ab6",
+  "source_root": "/private/tmp/issue28-company-consumer-20261003/state-enphase_energy/source",
+  "metric_ids": [
+    "B13",
+    "D04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B13",
+      "status": "AI_PROCESSING_INPUT_REQUIRED",
+      "reason": "SEC originals are installed; an independently registered existing assessment or a future authorized AI entry is required.",
+      "business_metric_completed": false
+    },
+    {
+      "metric_id": "D04",
+      "status": "AI_PROCESSING_INPUT_REQUIRED",
+      "reason": "SEC originals are installed; an independently registered existing assessment or a future authorized AI entry is required.",
+      "business_metric_completed": false
+    }
+  ],
+  "compute_seconds": "0.117008",
+  "source_installation": {
+    "checkpoint_id": "sha256:ba8c76534165227be491def9cbab9d6794468869bffded224b9d0f0c1a885ab6",
+    "company_id": "enphase_energy",
+    "package_root": "/private/tmp/issue28-company-consumer-20261003/package-enphase-b13",
+    "source_root": "/private/tmp/issue28-company-consumer-20261003/state-enphase_energy/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

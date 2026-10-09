@@ -1,0 +1,106 @@
+{
+  "record_type": "PARENT_ORIGINAL_REFERENCE_BEFORE_NEW_MAPPED_INPUT_BLIND_TRIAL",
+  "created_at": "2026-10-04T16:04:08.489035+00:00",
+  "company": "marriott_international",
+  "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+  "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+  "request_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-task-mapping-20261004/marriott/requests/ca828c0551be54d246736f90bf325cc8133d5473adc286029913d858cb344496.json",
+  "request_sha256": "ca828c0551be54d246736f90bf325cc8133d5473adc286029913d858cb344496",
+  "mapped_task_index": 5,
+  "owned_original_items": 69,
+  "parent_reading": {
+    "all_owned_items_read": true,
+    "original_decoded_parent_packet": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-mapped-task-input-trial-20261004/parent-original/owned-items.txt",
+    "characters": 57079,
+    "scope": "All69 owned original wrappers/root texts; cited original block1201/raw span verified. Full1965 visible context is supplied to the blind task but not claimed independently semantically read in this new reference."
+  },
+  "source_assertions": [
+    {
+      "id": "R1",
+      "assertion": "The IRS examined the registrant federal tax returns; as of year-end2025 all issues for tax years through2022 were settled. This is expressly limited resolution, not universal closure.",
+      "evidence": [
+        [
+          12,
+          "NATIVE_SUPPLEMENT",
+          2
+        ],
+        [
+          2,
+          "VISIBLE_BLOCK",
+          1201
+        ]
+      ],
+      "status": "RESOLVED_AS_REPORTED_FOR_STATED_TAX_YEARS",
+      "event_date_basis": "year-end2025 is settlement status cutoff, not audit start; tax years are tax periods."
+    },
+    {
+      "id": "R2",
+      "assertion": "The registrant2023 and2024 tax-year audits are currently ongoing as reported. No commencement or receipt event date is stated.",
+      "evidence": [
+        [
+          12,
+          "NATIVE_SUPPLEMENT",
+          2
+        ],
+        [
+          2,
+          "VISIBLE_BLOCK",
+          1201
+        ]
+      ],
+      "status": "ONGOING_AS_REPORTED",
+      "event_dates_expected": [],
+      "reported_context_times": [
+        "tax years2023 and2024"
+      ],
+      "subject_scope": "Registrant tax returns; filing explicitly also discusses subsidiary returns, but do not invent a separate investigated subsidiary/target."
+    },
+    {
+      "id": "R3",
+      "assertion": "Various foreign, state and local income-tax returns are under examination by the applicable taxing authorities. Names of jurisdictions, dates and authority bodies are not supplied for these examinations.",
+      "evidence": [
+        [
+          12,
+          "NATIVE_SUPPLEMENT",
+          2
+        ],
+        [
+          2,
+          "VISIBLE_BLOCK",
+          1201
+        ]
+      ],
+      "status": "UNDER_EXAMINATION_AS_REPORTED",
+      "event_dates_expected": []
+    }
+  ],
+  "original_literal_block": {
+    "block_index": 1201,
+    "html_quotation_context": false,
+    "raw_end_byte": 1349711,
+    "raw_span_sha256": "d47f5f9f9e99268d04f2b4cc41ce619acc6807312688ea8fd6c780cd8921f6b6",
+    "raw_start_byte": 1349267,
+    "text": "We file income tax returns, including returns for our subsidiaries, in various jurisdictions around the world. The U.S. Internal Revenue Service has examined our federal income tax returns, and as of year-end 2025, we have settled all issues for tax years through 2022. Our 2023 and 2024 tax year audits are currently ongoing. Various foreign, state, and local income tax returns are also under examination by the applicable taxing authorities."
+  },
+  "original_raw_span_utf8": "We file income tax returns, including returns for our subsidiaries, in various jurisdictions around the world. The U.S. Internal Revenue Service has examined our federal income tax returns, and as of year-end 2025, we have settled all issues for tax years through 2022. Our 2023 and 2024 tax year audits are currently ongoing. Various foreign, state, and local income tax returns are also under examination by the applicable taxing authorities.",
+  "negative_and_uncertainty_checks": [
+    "No SEC/DOJ/FDA enforcement, wrongdoing, fraud investigation or named case is proven by the tax passage. Preserve the narrower tax-examination wording.",
+    "Do not turn annualXBRL2025 context or2023/2024 tax years into investigation event dates.",
+    "EPS, RSU awards and deferred-tax totals among other owned items are financial/compensation disclosures, not governmental investigation findings.",
+    "Full visible context is shared, not owned by task5. Findings from risk-factor/general-regulation/private-litigation context alone must not become task-owned results.",
+    "Government investigation/enforcement relevance of routine tax examinations is not affirmatively proven merely by government actor+audit. Existing v5 warns against every administrative matter. Preserve relevance uncertainty; this reference does not approve a new business scope."
+  ],
+  "comparison_policy": "Compare original subject/status/time/scope/evidence and uncertainty. Wording and number of consolidated findings need not match. Source-supported facts are not automatically accepted D03 classifications. Reference can be corrected by original evidence.",
+  "old_context_trial_reopened": false,
+  "new_method": "Complete up-front literal chains with atomic responsibility and shared full visible context; not another old eight-location response.",
+  "initial_context_max": 1,
+  "substantive_fix_context_max": 1,
+  "initial_context_consumed": false,
+  "fix_context_consumed": false,
+  "not_holdout_material": true,
+  "no_new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

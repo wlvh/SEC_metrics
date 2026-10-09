@@ -1,0 +1,71 @@
+{
+  "record_type": "ISSUE28_ORDINARY_BINDING_REPAIR_UNCOMMITTED_TEST_IDENTITY",
+  "git_head_at_test": "2c2aa8de5d070c598141237f45de82ee92b998a3",
+  "source_code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "normal_test_data_roots": [
+    "/tmp/issue28-ordinary-binding-20260925-enphase-b06",
+    "/tmp/issue28-ordinary-update-20260925",
+    "/tmp/issue28-ordinary-update-company-20260925",
+    "/tmp/issue28-normal-v14-material-20260925"
+  ],
+  "recorded_sec_test_root": "/tmp/issue28-sec-acquisition-20260925",
+  "original_fixed_call_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+  "working_tree_modified_paths": [
+    "docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json",
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json",
+    "requirements/issue_28_v13/baseline_manifest.json",
+    "requirements/issue_28_v14/baseline_manifest.json",
+    "requirements/issue_28_v14/transfer_manifest.json",
+    "scripts/vnext/requirement_profile_v15.py",
+    "tests/vnext/test_continuous_call_policy.py"
+  ],
+  "changed_input_file_bindings": {
+    "requirements/issue_28_v13/baseline_manifest.json": {
+      "sha256": "5e182a0e36097486553138e1d38706d1a25aab10a1150a8265a72e868dd1cacf",
+      "size": 71473
+    },
+    "requirements/issue_28_v14/baseline_manifest.json": {
+      "sha256": "654fdb9757f12bccb0bfab21d92ed6fa493ed2004ace164ec9689e7330fa3ded",
+      "size": 86764
+    },
+    "requirements/issue_28_v14/transfer_manifest.json": {
+      "sha256": "6ab598825762ea362337bbabca7d9a68da69fe25923d28010c922c6e790cdc09",
+      "size": 520
+    },
+    "scripts/vnext/requirement_profile_v15.py": {
+      "sha256": "5adb695ef9edc46dcc1aa592feaaf5c011b58e78e872c54d4cb6835ee39199af",
+      "size": 7259
+    },
+    "tests/vnext/test_continuous_call_policy.py": {
+      "sha256": "b39050844a61693f20a4aedec07c9bed83d45214a9f81e6dbfcaeb005b169dbe",
+      "size": 4244
+    },
+    "docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json": {
+      "sha256": "f62aaf9f183ddd8177b070fb873975910b21a4b2e0317f427c8e21c4d9213a64",
+      "size": 6262
+    },
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json": {
+      "sha256": "c526847c2d5aa6ae0782d9a60f8bb5f31b28378edb675013758132b1ebbc104c",
+      "size": 1984
+    }
+  },
+  "v13_closure": "sha256:ecaef2291efd6eae67f5c1625ee794514c5d05988a4f9348208219ae4601ea01",
+  "v14_closure": "sha256:1f110dbc1f68506673772a991e18a5d3c5bcbe996360d8c5fb36687ce48bc504",
+  "tested_results": {
+    "authority_directed": "8_PASS",
+    "enphase_b06_positive": "OPEN_CANDIDATE_EXACT_VALUE_1.107959077222837051285943352",
+    "update_history": "PASS_359.613_SECONDS",
+    "update_independent": "PASS_367.714_SECONDS",
+    "ordinary_native_material": "PASS_15_OF_15_CASES_101.656_SECONDS",
+    "provider_wiring": "22_PASS",
+    "sec_recorded_native_cold": "PASS_90.211_SECONDS",
+    "old_190_no_call_selection": "REUSED_ORIGINAL_ORDINAL_190"
+  },
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "tests_on_committed_head": false
+}

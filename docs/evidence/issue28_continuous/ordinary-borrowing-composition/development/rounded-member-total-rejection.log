@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 247, in prepare_saved_combined_borrowings
+    proof = inspect_combined_borrowings(primary=preparation['primary'],xml=preparation['xml'],prepared=prepared)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 223, in inspect_combined_borrowings
+    _need(left == right,'COMBINED_BORROWING_RECONCILIATION_FAILED:'+name)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_combined_borrowings.py", line 37, in _need
+    raise CombinedBorrowingError(reason)
+vnext.b06_combined_borrowings.CombinedBorrowingError: COMBINED_BORROWING_RECONCILIATION_FAILED:LONG_MATURITY_MEMBERS

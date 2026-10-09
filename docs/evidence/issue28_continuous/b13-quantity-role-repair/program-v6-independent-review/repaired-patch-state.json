@@ -1,0 +1,64 @@
+{
+  "patch": "/tmp/sec_metrics_issue28_continuous/b13-program-v6.patch",
+  "sha256": "4e9428ce69b4ab8298e35ac98116fa68bbc549afe20d3336fed2a7ba8b704b34",
+  "files": {
+    "catalog/r5/capacity_semantic_review_v6.json": {
+      "before_sha256": null,
+      "after_sha256": "a55426230f82c5e3c5879de90d773d4f5ce0cd1a1af13b92a7835dfd9072bae4"
+    },
+    "scripts/vnext/capacity_assessment_input.py": {
+      "before_sha256": "e0200ea49cd1fb9aa402e7adc2b716801410a38f8e080700611e4c7ee4b5ff88",
+      "after_sha256": "0622ca69e90572eeaa903655c3c69ed4bea4789506d11260714222a3f5a8f311"
+    },
+    "scripts/vnext/capacity_native_assessment.py": {
+      "before_sha256": "78e46168951158715662e3d8c5017eda2ba252bc2a289d4371e4ddeca895dd02",
+      "after_sha256": "eedd303d525fc697eaefdbe9269ecc6c7a0fd5500d2eb13cde8fbfe4e9571bcb"
+    },
+    "scripts/vnext/capacity_program_roles.py": {
+      "before_sha256": null,
+      "after_sha256": "e9262bd42ec2681f4dd4ced556f914afa9b87d06155c2e2c1ef5c323622e1b53"
+    },
+    "scripts/vnext/capacity_quantity_roles.py": {
+      "before_sha256": "89d39134b5e106394fff4fa394e4897a7e42220b391d48260143954e04de7491",
+      "after_sha256": "f14d7c443b2cd4880d68953743c6711b2c3aa6a07b14d208c6189eec347c92b1"
+    },
+    "scripts/vnext/capacity_run.py": {
+      "before_sha256": "54940133b84fae7678512809988c26d65961682b0b9f91cac3cfa8e9c4d974b2",
+      "after_sha256": "6dcb933812761c9d3011a6be8d0f1c3d743ac3ea2bb39fdce51a5d27525145cc"
+    },
+    "scripts/vnext/capacity_semantic_review.py": {
+      "before_sha256": "1433a6d671eba6b63b975e37c7bcab80258b440d10cd649189b83972a40e1a37",
+      "after_sha256": "a94493bfbd9fa28ed1c174816fc810aaacce4f19896e63dc4fa98d8898fd42bd"
+    },
+    "scripts/vnext/capacity_text_results.py": {
+      "before_sha256": "6e21fb8310ec96d3082c9b29ef7b2fcbf17f9571dacd82abba8967a5ce418124",
+      "after_sha256": "a22f93f9e54486f33fddb58265ee39d41bbb008a839f45b67c60c9f149015789"
+    },
+    "scripts/vnext/capacity_update_input.py": {
+      "before_sha256": "bd6d8fc3649c20e3b3ed4de7484c7bd420a0625fd449a265b67294814684f23e",
+      "after_sha256": "b7ee429b97f79c44ccd8f12531b560ae11c416f5e5dfadaf9fdfbb526eb0b3d4"
+    },
+    "scripts/vnext/continuous_semantic_calls.py": {
+      "before_sha256": "ae11b3dcafa258c02a41062675f287b691843266d3da63d9c687540b433e1998",
+      "after_sha256": "4cdb42642c6c8b0c329f1401cb2623997821f55683462958a8552e0bccb247aa"
+    },
+    "scripts/vnext/normal_run_v3.py": {
+      "before_sha256": "013130078f78de8dc07c9d97f2026daf6d5c15a422908311f282220772472149",
+      "after_sha256": "51009c96b1c0c3ebd55359574c29b0760ad0cfbb032b0201346d2940408195c4"
+    },
+    "scripts/vnext/ordinary_update_cycle.py": {
+      "before_sha256": "acec3d39f29e1ef48ee2aeb499317fe585b93a10fbf1c09f14836c71d2476fdd",
+      "after_sha256": "8e18c8d9a85af40b3bb32ff0e285dc036e9599b740f886329a90b2fce564161e"
+    },
+    "tests/vnext/test_capacity_program_roles.py": {
+      "before_sha256": null,
+      "after_sha256": "21ed59758e1ac5ced86d6e8564886ce00cb3f1cb9df924ce31457f469121db52"
+    },
+    "tests/vnext/test_capacity_program_run_material.py": {
+      "before_sha256": null,
+      "after_sha256": "15ee5c3012abd45991b125965bd53db80e629081d1619ecd1a44a432aa854de1"
+    }
+  },
+  "main_runtime_modified": false,
+  "requires_ability_patch": "463c91ee2f45cea5f25d0a43f1623ce72b5c0067f292c3638ac2999d5b9767ca"
+}

@@ -1,0 +1,15 @@
+test_actual_current_balances_and_rejected_changed_computation_or_missing_amendment (tests.vnext.test_instant_balance_run_material.InstantBalanceNativeMaterialTest.test_actual_current_balances_and_rejected_changed_computation_or_missing_amendment) ... ERROR
+
+======================================================================
+ERROR: test_actual_current_balances_and_rejected_changed_computation_or_missing_amendment (tests.vnext.test_instant_balance_run_material.InstantBalanceNativeMaterialTest.test_actual_current_balances_and_rejected_changed_computation_or_missing_amendment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_instant_balance_run_material.py", line 36, in test_actual_current_balances_and_rejected_changed_computation_or_missing_amendment
+    self.assertEqual('2041610',result['entity'])
+                               ~~~~~~^^^^^^^^^^
+KeyError: 'entity'
+
+----------------------------------------------------------------------
+Ran 1 test in 14.100s
+
+FAILED (errors=1)

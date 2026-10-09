@@ -69,9 +69,17 @@ def compute_company(*, state_root, company_id, metric_ids, report_end=None, fisc
                         metric_ids=metric_ids, report_end=report_end, fiscal_year=fiscal_year)
             else:
                 from .ordinary_d02_category_update_v2 import run_company
+                legacy_ordinary = [m for m in ordinary if m != 'D01']
                 result = (run_company(state_root=root/('updates/native-v1' if native else 'updates'), source_root=source,
-                                 company_id=company_id, metric_ids=ordinary)
-                      if ordinary else {'company_id': company_id, 'metrics': []})
+                                 company_id=company_id, metric_ids=legacy_ordinary)
+                      if legacy_ordinary else {'company_id': company_id, 'metrics': []})
+                if 'D01' in ordinary:
+                    # The current company consumer explicitly selects the
+                    # already delivered successor. Its dedicated journal
+                    # preserves old D01 and all other metric defaults.
+                    from .ordinary_d01_header_update_v3 import run_company as run_d01
+                    result['metrics'].extend(run_d01(state_root=root/'updates', source_root=source,
+                        company_id=company_id, metric_ids=['D01'])['metrics'])
             results = {row['metric_id']: row for row in result['metrics']}
             for metric in ([] if historical else metric_ids):
                 if metric in {'B13', 'D04'} and metric not in ordinary:

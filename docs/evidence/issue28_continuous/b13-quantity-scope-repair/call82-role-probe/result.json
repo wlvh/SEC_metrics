@@ -1,0 +1,59 @@
+{
+  "original_terminal_status": "FAILED_TERMINAL",
+  "original_request_id": "sha256:0a07bcb209c9dd40c9e2bcab04325cf94f12f7af0da57f0ec663d1d5afd36d3e",
+  "original_target_finding": {
+    "kind": "ACTUAL_PRODUCTION",
+    "subject": "TARGET_REGISTRANT",
+    "timing": "CURRENT_REPORT",
+    "evidence": [
+      {
+        "kind": "VISIBLE_BLOCK",
+        "source_index": 883
+      }
+    ],
+    "reason": "Enphase Energy reported that during the year ended December 31, 2025 it sold approximately 6.4 million microinverter units and shipped 706.1 MWh of IQ Batteries, compared to approximately 6.5 million microinverter units and 521 MWh of IQ Batteries shipped in the year ended December 31, 2024. These are sales/shipment quantities, not production quantities."
+  },
+  "variants": [
+    {
+      "variant": "ORIGINAL",
+      "accepted": false,
+      "error_type": "ValueError",
+      "reason": "B13_CALCULATION_LIMIT_CONTRADICTS_FINDING"
+    },
+    {
+      "variant": "SYNTHETIC_REMOVE_CONTRADICTING_LIMIT_KEEP_WRONG_PRODUCTION_LABEL",
+      "accepted": false,
+      "error_type": "ValueError",
+      "reason": "B13_SALES_ONLY_SOURCE_IS_NOT_ACTUAL_PRODUCTION"
+    },
+    {
+      "variant": "SYNTHETIC_OTHER_CONTEXT_ORIGINAL_REFERENCES_AND_LIMITS",
+      "accepted": true,
+      "unresolved": [],
+      "finding_kinds": [
+        "CAPACITY_QUALITATIVE",
+        "AVAILABLE_CAPACITY",
+        "CAPACITY_QUALITATIVE",
+        "OTHER_CONTEXT",
+        "CAPACITY_QUALITATIVE"
+      ]
+    }
+  ],
+  "original_files_sha256": {
+    "semantic-request.json": "7c55d69b996ef705d0279737be70a8f411ced562528fa5e8d2fa4232ff1ec65d",
+    "source.json": "5f495774cb47cfcc3af7c4915a97362f6584b1ec372a4375adea8f0c3094e7aa",
+    "wire/assistant-output.bin": "f43cae37508d00d011a813f32addbaa74462fbbe3903d0ca9ecda4b9ffe6f72f",
+    "wire/journal.json": "d0aa42f181778f3c36c3425636d8af98d03f6fe433d4c11ef0d0bbb1408433d1",
+    "intent.json": "596b9b1441151c0fa02bbbda04010916f24b9f6e9c8e405f25ba6f9821e58d94",
+    "terminal.json": "0f826707e8d0eeff08178c54fcc00bf5a57ab396352f74790a39a4e4ede161f2"
+  },
+  "original_files_unchanged": true,
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "changed_response_variants_are_synthetic": true,
+  "native_Run_or_result_created": false,
+  "usable_result_credit": false
+}

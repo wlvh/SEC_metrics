@@ -1,0 +1,25 @@
+{
+  "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
+  "requirement_id": "issue_28_v14",
+  "execution_authority_hash": "sha256:e0fa2f0647779244ac4a31c46f83f23a47999f902a707e94f255256749d97504",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "network_disabled": true,
+  "legacy_default_forbidden": true,
+  "real_request_factory_to_controller_verified": true,
+  "count_control_tests_passed": true,
+  "evidence": {
+    "docs/evidence/issue28_continuous/review-5207290213/reference-factory-parent-binding.log": "2ebc57a0b6362391aed292e747ce5982dbb768716016694a67d0958273a1062a",
+    "docs/evidence/issue28_continuous/review-5207290213/context-ledger-tests.log": "947d81676958ac6e4d060ed93f6a5e00913fba2c0ebaebd9d1b168509b3fcced",
+    "docs/evidence/issue28_continuous/review-5207290213/native-scope-final.log": "cf8db63597ac360a10842002afece305af34a9d85fb8d1f1af454a8a56fba06e",
+    "docs/evidence/issue28_continuous/review-5207290213/d04-reference-native.log": "c418dfb5369b89f148c88a936a80d565a2c0aaef35c6004cfb276e6dd7e16a25",
+    "docs/evidence/issue28_continuous/review-5207290213/d04-reference-cold.log": "077f9470f4cf4d38692c0a74c65eb1a34b171bf93b5cc09a9263f108df6f593c",
+    "docs/evidence/issue28_continuous/review-5207290213/original-identity-current.log": "7af9663785392b459eb995ef15425c09d2f00a25fc04db30962f904a22ab1e41",
+    "docs/evidence/issue28_continuous/review-5207290213/fast-current.log": "d100dace0ba3099eff6dd4993a0e20e00232a2c8faa7c489f4b6681644cdd13c"
+  },
+  "evidence_scope": "Current c6c35dcd factory/opener/WB-3 bound check; full native source/content and cold checks retain their original earlier draft identity and unchanged runtime semantics. No whole-issue or production credit."
+}

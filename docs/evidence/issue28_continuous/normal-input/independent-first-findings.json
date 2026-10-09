@@ -1,0 +1,16 @@
+{
+  "method": "TEST_ONLY in-memory source mutation; no saved source changed",
+  "changed_fields": [
+    "DEI.DocumentFiscalYearFocus"
+  ],
+  "malformed_dei_year": {
+    "fiscal_year": 0,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "malformed_source_cik": {
+    "error_type": "ValueError",
+    "message": "invalid literal for int() with base 10: 'not-a-number'",
+    "category": null
+  }
+}

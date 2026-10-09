@@ -1,0 +1,36 @@
+You receive the complete visible source blocks of one Enphase Energy, Inc.
+DEF 14A filed on 2026-04-01, accession 0001463101-26-000026. It is associated
+with the FY2025 annual reporting container, not a measurement of the board at
+2025-12-31. Source blocks have stable [B<number>] labels in document order.
+
+Extract the registrant's board composition facts: total board size; independent
+directors and their number; existing committees; their members and chairs;
+the board chair and lead independent director; actual independence and member
+qualification determinations about board or committee members; dated membership
+changes. Attribute qualifications to the filing's actual assessment, not an
+independently verified credential; a career biography alone is not a new
+determination. Do not count the slate
+for one director class as the whole board. Keep a stated date/year distinct
+from the filing date and never invent a year-end measurement date. Another
+organisation's board, duties, general policy, hypothetical qualifications, pay,
+auditor services and equity-plan mechanics are not composition facts.
+
+Scan the complete supplied source, including later reports and tables. For
+each distinct fact return a concise statement, supporting source block ids,
+and the actual stated time or CURRENT_IN_FILING when no exact date is given.
+Context may be shared by several facts. Do not infer a membership from a table
+whose column association has been lost. Preserve a genuine unresolved relation.
+Include the source blocks needed to establish each member's identity, role and
+time, including adjacent name/heading blocks when a card splits these apart.
+Keep existing membership/tenure or a proposed nominee in board_membership;
+membership_change is reserved for a change the source says actually occurred.
+Combine repeated evidence for the same fact; do not output every irrelevant
+block or classify all background. Source presence alone does not prove absence.
+
+Return exactly one JSON object:
+{"facts":[{"kind":"board_size|board_membership|board_independence|board_leadership|committee_structure|committee_membership|committee_independence|member_qualification|membership_change","statement":"...","source_blocks":[0],"stated_time":"..."}],"unresolved":[{"source_blocks":[0],"reason":"..."}]}
+
+Maximum 64 facts, complete JSON within 4096 output tokens. If this limit or
+source/context uncertainty prevents complete extraction, preserve the specific
+unresolved limitation; do not silently drop necessary facts or claim absence.
+This is a development experiment, not a LIVE assessment or native result.

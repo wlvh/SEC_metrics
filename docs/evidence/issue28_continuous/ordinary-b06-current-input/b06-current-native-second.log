@@ -1,0 +1,47 @@
+test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved (tests.vnext.test_b06_current_input_material.CurrentDebtInputMaterialTest.test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved) ... ERROR
+
+======================================================================
+ERROR: test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved (tests.vnext.test_b06_current_input_material.CurrentDebtInputMaterialTest.test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1399, in _verify_repository_bindings
+    load_raw_blob_bytes(
+    ~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root, raw_blob=dict(raw_blob),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/sources.py", line 264, in load_raw_blob_bytes
+    path = resolve_repository_file(
+        repo_root=repo_root, repo_relative_path=str(raw_blob["storage_uri"]),
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/sources.py", line 141, in resolve_repository_file
+    raise SourceError(
+        "Source path is not a regular file: {}".format(current)
+    )
+vnext.sources.SourceError: Source path is not a regular file: /private/tmp/sec_metrics_issue28_continuous/b06-current-native-second/missing-amendment/data/evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_current_input_material.py", line 49, in test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved
+    run_store._mechanically_replay_open_run(run_dir=changed_run,repo_root=changed_data,require_complete_results=True)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3417, in _mechanically_replay_open_run
+    _verify_repository_bindings(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1404, in _verify_repository_bindings
+    raise RunStoreError("Run RawBlob bytes changed") from error
+vnext.run_store.RunStoreError: Run RawBlob bytes changed
+
+----------------------------------------------------------------------
+Ran 1 test in 147.845s
+
+FAILED (errors=1)

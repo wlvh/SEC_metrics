@@ -1,0 +1,25 @@
+test_two_native_types_complete_version_and_resigned_row_rejection (tests.vnext.test_ordinary_release_preparation_material.OrdinaryReleasePreparationMaterialTest.test_two_native_types_complete_version_and_resigned_row_rejection) ... ERROR
+
+======================================================================
+ERROR: test_two_native_types_complete_version_and_resigned_row_rejection (tests.vnext.test_ordinary_release_preparation_material.OrdinaryReleasePreparationMaterialTest.test_two_native_types_complete_version_and_resigned_row_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_ordinary_release_preparation_material.py", line 87, in test_two_native_types_complete_version_and_resigned_row_rejection
+    release.verify(preparation_root=package)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_release_preparation.py", line 169, in verify
+    composition, files = _compose(root, saved['inputs'])
+                         ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_release_preparation.py", line 72, in _compose
+    native, records, _ = _mechanically_replay_open_run(run_dir=run, repo_root=data, require_complete_results=True)
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3467, in _mechanically_replay_open_run
+    records = _read_jsonl(path=paths["records"])
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 196, in _read_jsonl
+    raise RunStoreError("Run JSONL contains an empty record")
+vnext.run_store.RunStoreError: Run JSONL contains an empty record
+
+----------------------------------------------------------------------
+Ran 1 test in 450.062s
+
+FAILED (errors=1)

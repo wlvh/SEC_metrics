@@ -1,0 +1,34 @@
+{
+  "record_type": "EXECUTOR_CONTENT_AUDIT",
+  "call_ordinal": 68,
+  "original_native_status": "SUCCEEDED",
+  "original_records_unchanged": true,
+  "content_verdict": "REJECTED",
+  "native_acceptance_is_not_semantic_correctness": true,
+  "false_classifications": [
+    {
+      "source_kind": "NATIVE_FACT",
+      "source_index": 449,
+      "assigned": "CAPACITY_QUALITATIVE",
+      "source_meaning": "Manufacturing production tax credit policy; no production capacity or utilization assertion."
+    },
+    {
+      "source_kind": "NATIVE_FACT",
+      "source_indices": [
+        450,
+        451
+      ],
+      "assigned": "MONETARY_CREDIT_CAPACITY",
+      "source_meaning": "Income tax payable benefits, not borrowing facility headroom."
+    }
+  ],
+  "b13_real_calls_paused": true,
+  "no_unchanged_redraw": true,
+  "counts": [
+    33,
+    33,
+    35
+  ],
+  "full_b13_acceptance": false,
+  "other_authorized_offline_work_continues": true
+}

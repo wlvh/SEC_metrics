@@ -1,0 +1,223 @@
+{
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:ed98ed04b39b84f625fc730b878ccb1a71b4199180025ea543e5ca72c21dfda9",
+    "raw_asset_id": "sha256:41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+    "company_id": "pfizer",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231_htm.xml",
+    "accession": "0000078003-26-000026",
+    "document_name": "pfe-20251231_htm.xml",
+    "source_role": "auditor_facts",
+    "request_attempt_id": "request:attempt:a4278a6155d79ae3f8b99378f4b525be88acbf387adcaf0aa261e2ee4b52f01f"
+  },
+  "raw_blob": {
+    "byte_length": 6704619,
+    "media_type": "application/xml",
+    "raw_asset_id": "sha256:41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+    "record_type": "RAW_BLOB",
+    "storage_uri": "evidence/request_attempts/41/41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09/pfe-20251231_htm.xml"
+  },
+  "notes": [
+    {
+      "ordinal": 1367,
+      "concept": "us-gaap:financialinstrumentsdisclosuretextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 22090,
+      "tables": 11
+    },
+    {
+      "ordinal": 1712,
+      "concept": "pfe:debtsecuritiestradingandequitysecuritiesfvnitabletextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 1019,
+      "tables": 1
+    },
+    {
+      "ordinal": 1724,
+      "concept": "us-gaap:scheduleofshorttermdebttextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 689,
+      "tables": 1
+    },
+    {
+      "ordinal": 1740,
+      "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 2931,
+      "tables": 2
+    },
+    {
+      "ordinal": 1856,
+      "concept": "us-gaap:scheduleofderivativeinstrumentsgainlossinstatementoffinancialperformancetextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 2390,
+      "tables": 1
+    },
+    {
+      "ordinal": 1899,
+      "concept": "us-gaap:scheduleoffairvaluehedginginstrumentsstatementsoffinancialperformanceandfinancialpositionlocationtabletextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 707,
+      "tables": 1
+    },
+    {
+      "ordinal": 1900,
+      "concept": "us-gaap:scheduleofcashflowhedginginstrumentsstatementsoffinancialperformanceandfinancialpositionlocationtabletextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 707,
+      "tables": 1
+    },
+    {
+      "ordinal": 1911,
+      "concept": "us-gaap:additionalfinancialinformationdisclosuretextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 2093,
+      "tables": 2
+    },
+    {
+      "ordinal": 1928,
+      "concept": "us-gaap:supplierfinanceprogramtabletextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 363,
+      "tables": 1
+    },
+    {
+      "ordinal": 2860,
+      "concept": "us-gaap:lesseeoperatingleasestextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 3496,
+      "tables": 5
+    },
+    {
+      "ordinal": 2861,
+      "concept": "us-gaap:lesseeleasespolicytextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 1835,
+      "tables": 0
+    },
+    {
+      "ordinal": 2869,
+      "concept": "pfe:leaseassetsandliabilitieslesseetabletextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 352,
+      "tables": 1
+    },
+    {
+      "ordinal": 2876,
+      "concept": "us-gaap:leasecosttabletextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 690,
+      "tables": 3
+    },
+    {
+      "ordinal": 2899,
+      "concept": "us-gaap:lesseeoperatingleaseliabilitymaturitytabletextblock",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000078003",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "text_length": 609,
+      "tables": 1
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

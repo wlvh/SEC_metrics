@@ -1,0 +1,150 @@
+{
+  "record_type": "ISSUE28_390_LEGACY_PRODUCT_SCOPE_FINITE_COMPARISON",
+  "tested_base_head": "8dec94686fd4479228f7c262baa6eae782890e0b",
+  "test_tree_contains_uncommitted_view_and_register_changes": true,
+  "coordinate_count": 390,
+  "changed_exact_legacy_coordinates": [
+    {
+      "company_id": "marriott_international",
+      "metric_id": "C02",
+      "result_id": "sha256:d2b64d11d63776aa2213330104a8878cdc1b30967d1834877d134a4b3b0f28d5"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "E01",
+      "result_id": "sha256:1870c574ee0054b417f735a1d89c87e8eb18b9dedcc98a0ea9214ba2f76cbc66"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "C02",
+      "result_id": "sha256:523ed88921723af1320ea7b2e438d68f502114417b0fe5c06190d932d95676d0"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "E01",
+      "result_id": "sha256:476829da253cedc01e18608c87c3d98eb952e48f3180d2b0254e96c2f73ffff9"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "C02",
+      "result_id": "sha256:b699482cc4246b4ba2a69c6670eb0063763307c418a9d5076069f3e7027974d8"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "E01",
+      "result_id": "sha256:ad429204f625d04682026883564e86d95e1e1fbd00d137677b1d2da279dd721c"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "C02",
+      "result_id": "sha256:cd35101fa8013371da3dff7f8f0d9c46d55bf32954417d399cbd90d3dddd9108"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "E01",
+      "result_id": "sha256:277086505f0eac3cc0367f60ed7341785fb1fc7600ba5bbb952f0130e9fab0d1"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "C02",
+      "result_id": "sha256:5f6ec648144fa842c833b3a46cb390d9d5e46f67854083bb5ace3c0adf708400"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "E01",
+      "result_id": "sha256:c2cba910bc6e389a3476ecc964d994ec83834dfb12d7283b4d3f7014394994e9"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "C02",
+      "result_id": "sha256:6d2608aed318b6113f7de35984cefaab059bcc38b949b2c6a7c6b9eda3e2ac5a"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "E01",
+      "result_id": "sha256:996f71fb0b405f11673b4d451fd209d241a7b5a47a56556b573bf4f71dfdc6f6"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "C02",
+      "result_id": "sha256:293febe4934ac3ff3789aba6b57fb1ca27bfb2d580560fcdffa79b06dd0b5a45"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "E01",
+      "result_id": "sha256:21824ee7aae2ebbaa80673d394e62e897e18e66566c728d4c1c558692d56a037"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "C02",
+      "result_id": "sha256:ec1db68a0ccb02d9cc4f9753dc3d6b1f8f01175223c7b8cb0b5c0b3cdb3c3c7d"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "E01",
+      "result_id": "sha256:ba457ef857aa34408be5d12097ac734c0f44baf3ceaf20a9498a2af969c3c111"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "C02",
+      "result_id": "sha256:b37865b74f2ae8157b09041026c5ad72c88efb5950d04c1c073d79e6e2f8cfd0"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "E01",
+      "result_id": "sha256:4b6893b85bfa206f399e049bb6aca1419ff07208693ffb631536050c3ed4ca46"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "C02",
+      "result_id": "sha256:405e208e4ef48ef4dea3e462ef419aeb60fcfb0c78c8b4ab9310a94d4937764c"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "E01",
+      "result_id": "sha256:d2ecc051ffc5278ea7a2b2e9c6f10ad3365474425863c15b06e6177696168879"
+    }
+  ],
+  "unchanged_other_rows": 370,
+  "selected_known_defect_coordinate_count_unchanged": 17,
+  "selected_product_scope_pending_count": 20,
+  "selected_nondefect_product_scope_pending_count": 8,
+  "known_defects_array_unchanged": true,
+  "parent_index_sha256": "d480b0da463ac83d5b7a02fa9b1a89943f65ee1829e7cf31e43050fe0f78661f",
+  "collaboration_block_sha256": "ae6304ea99ccd58c589fe5d20d98b2cb658d971e5ca6e5203c025e34fb107529",
+  "owner_goal_reference": "https://github.com/wlvh/SEC_metrics/issues/28#collab-28-47-v1",
+  "legacy_spec_file_sha256": {
+    "catalog/ordinary_zero_ai/E01.md": "2a2664da6b34735685526e494c06f529001a9861785805d159737b332ff0f312",
+    "catalog/r6/C02_board_disclosures_v1.md": "63527ad5f6615215c936e55487e2ab751f98bbf3e9f76354404ae1c9ea0f9d2d"
+  },
+  "new_result_run_or_business_credit": false,
+  "product_scope_not_content_defect": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "all390_accepted": false,
+  "actual_V13_V14_binding_lookup": {
+    "13": {
+      "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py": {
+        "execution_bound": false,
+        "rule_bound": false
+      },
+      "docs/evidence/issue28_continuous/known_result_defects.json": {
+        "execution_bound": false,
+        "rule_bound": false
+      }
+    },
+    "14": {
+      "docs/evidence/issue28_continuous/current-390-d01-integration-20261003/current_view.py": {
+        "execution_bound": false,
+        "rule_bound": false
+      },
+      "docs/evidence/issue28_continuous/known_result_defects.json": {
+        "execution_bound": false,
+        "rule_bound": false
+      }
+    }
+  }
+}

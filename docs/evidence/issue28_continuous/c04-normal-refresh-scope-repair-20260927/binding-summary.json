@@ -1,0 +1,44 @@
+{
+  "record_type": "C04_REFRESH_SCOPE_REPAIR_BINDING",
+  "reviewed_base_sha": "b2f7ed4148f4d26a8d7f63ae9ec860ef54d86172",
+  "requirement_closure_hash": "sha256:56c6e144817f1eb16a9328d9778f38b1010a107db7f9b6c0176bfa8f7475dd93",
+  "execution_authority_hash": "sha256:abace88990ff9257469d020c52a93e46b857ae7699c9d3fa3300d95ab5cf8207",
+  "ordinary_parent_closure_hash": "sha256:a573ed50d6a5e09e3477de53e5a8f83b01a600220379fdc8d73aba19bb32b3a2",
+  "bound_files": {
+    "scripts/vnext/ordinary_refresh_cycle.py": {
+      "sha256": "42a6439afc46229c95e703523ff726aa0edc2e598b940cfc0a8cb43bd0ba9817",
+      "size": 17638
+    },
+    "tools/vnext_ordinary_refresh.py": {
+      "sha256": "36135b83402015d4a48c104f69c74b47d7c5608ad54b0c17985996b0004ced0e",
+      "size": 2532
+    }
+  },
+  "receipt_before_sha256": {
+    "provider": "f51f48d05614d3e09885341551058f900e2d787cad558ec4b8c1be39cbf0fc57",
+    "sec": "0251e18eeb3962ba78ed77c12f97be385ccb7dab5285dfd8af7658f37ac5ffc7",
+    "refresh": "7065790e6c7cf1c21c016a8b848b676d674bd3119f02757a5fa0cba4a460194e"
+  },
+  "receipt_after_sha256": {
+    "provider": "f0b71365c23b992f12fcd9743ca825fead9353fd07ce5414d249dcca758e6d92",
+    "sec": "515a6bd15f37282debef1b0338acc44531a8228cf0c54dd317247db62b542a09",
+    "refresh": "c4596c5636a2080adb2359729f50eeb1bee8cc2a1855c2793d87429ae5deb160"
+  },
+  "mixed_stale_source_calls_authorized": 0,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "receipt_prior_repair_sha256": {
+    "provider": "c5974eddfc4d66a88ebf9a4d90bf3448b969c18b3505c225c8c55de717731350",
+    "sec": "19340af7d13bf2c192dd4de4b3b02ac47aeff356196ba22b9692e9f48a6836aa",
+    "refresh": "c58c060aaf1165396986f9e5d9bc4575746de858e25cf2f5d1d3a76e9391e200"
+  },
+  "final_logs_sha256": {
+    "boundary-final.log": "e5c1c3dab983141f5fd96c986d1cf0e03bc3c32db257d7a76fdbeedf92dd31d9",
+    "source-scope-final.log": "da946caa07921a342d2021e7ca1a73965d5dbaea8aa9bbefca96c046337f5d6b",
+    "c04-two-version-final.log": "b75763decf7c4b26ea3eb6319120f335f4cf4c06b3ee836a107c79a129bc5672"
+  },
+  "marriott_c04_source_map_log_sha256": "3b87f12ec97c81b6c244e7d4474724839a1aec4efc91628bffd06ef55c70af6f"
+}

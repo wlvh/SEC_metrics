@@ -1,0 +1,50 @@
+{
+  "category_definitions": {
+    "CONDITIONAL_OR_BOILERPLATE": "Only hypothetical exposure to investigation, generic enforcement powers or possible consequences. A paragraph mixing actual processes and possible consequences needs separate findings for the actual facts.",
+    "CURRENT_REGULATORY_ACTION": "Explicit present involvement in a governmental investigation/enforcement process or expressly current response to the authority. The source must establish the actor/action/subject relationship and current status. A historical receipt or a recent filing does not establish that.",
+    "HISTORICAL_STATEMENT": "A quoted historical statement without an assertion of present status. A historical receipt of process should instead use REPORTED_REGULATORY_PROCESS with HISTORICAL timing.",
+    "NO_ACTION_DECLARATION": "An explicit negative statement about a defined government investigation/process, with the source scope retained. Do not infer general absence from a miss or from resolution of one matter.",
+    "OTHER_ENTITY": "The source establishes that the relevant investigation/action concerns another entity. Do not infer the target from a business relationship, participation, or producing documents.",
+    "OTHER_MEANING": "A required candidate is a heading, generic category, scientific/internal/audit use, or an administrative/remediation matter without an established investigation link. Retain it as context without creating an investigation fact.",
+    "PRIVATE_OR_INTERNAL_ACTION": "Private litigation or internal reviews, distinguished from government investigation. A relator can continue privately even where a government has declined intervention.",
+    "REPORTED_REGULATORY_PROCESS": "A source-reported receipt or procedural step linked by the source to a government investigation or enforcement matter. Retain recipient and dates; do not infer investigated target or ongoing status. A navigation heading is not an action. Standalone environmental remediation/administrative agreements without a stated investigation link remain context, not proof of D03 investigation.",
+    "RESOLVED_OR_PARTLY_RESOLVED": "Expressly disclosed settlement, closure, decision not to intervene, or partial resolution. State exactly what changed and when. Government non-intervention and a private relator continuing are distinct facts; neither proves all investigations closed.",
+    "UNRESOLVED": "The relevant actor, investigated subject, status or linked cross-reference is genuinely not established. Retain that uncertainty rather than guessing a count/current status."
+  },
+  "company_id": "marriott_international",
+  "context_only_unit_ids": [
+    "sha256:c602ecc69500ffb50c421970157577cb6e31c757c5bbb45f15ae8dc5e7fc7fc1"
+  ],
+  "responsibility_unit_ids": [
+    "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9",
+    "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666"
+  ],
+  "source_extent": "FIRST_OWNER_SCAN_RELATED_CONTEXT_NOT_GUARANTEED",
+  "source_filing": {
+    "acceptanceDateTime": "2026-02-10T18:35:55.000Z",
+    "accessionNumber": "0001048286-26-000007",
+    "act": "34",
+    "core_type": "XBRL",
+    "fileNumber": "001-13881",
+    "filingDate": "2026-02-10",
+    "filmNumber": "26614897",
+    "form": "10-K",
+    "isInlineXBRL": 1,
+    "isXBRL": 1,
+    "isXBRLNumeric": null,
+    "items": "",
+    "primaryDocDescription": "10-K",
+    "primaryDocument": "mar-20251231.htm",
+    "reportDate": "2025-12-31",
+    "size": 12393244
+  },
+  "source_id": "sha256:f49af1b29cbc3c0a86e7ee6c51b4f8ea6f39c6b3abfa82b09b86f96531e7a8e8",
+  "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+  "source_unit_count": 17,
+  "stage": "SCAN",
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "record_type": "ISSUE28_B13_189_V4_COUNTERFACTUAL_OFFLINE_SHAPE_CHECK",
+  "status": "PASS_SYNTHETIC_VALID_SUBJECT_SHAPE_AND_THREE_NEGATIVES",
+  "source": "ORIGINAL189_TRUNCATED_PREFIX_WITH_SYNTHETIC_COMPLETION",
+  "new_v4_request_digest_not_authorized_by_this_check": true,
+  "original_189_upgraded": false,
+  "positive_complete_response_required_rows": 4,
+  "original_prefix_B1022_subject_unresolved": true,
+  "synthetic_positive_B1022_subject_changed_to_target": true,
+  "positive_unresolved_count": 0,
+  "negative_rejections": {
+    "nonrequired_monetary": "B13_V4_NONREQUIRED_BACKGROUND_FINDING",
+    "required_missing": "B13_KNOWN_SOURCE_CANDIDATE_NOT_ASSESSED",
+    "unit_missing": "B13_REFERENCE_RESPONSE_CENSUS_CHANGED"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "real_model_accuracy_proven": false
+}

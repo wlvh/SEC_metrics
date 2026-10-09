@@ -1,0 +1,17 @@
+.F.......
+======================================================================
+FAIL: test_current_long_balance_label_must_name_actual_period (tests.vnext.test_b06_combined_borrowings.CombinedBorrowingsTest.test_current_long_balance_label_must_name_actual_period)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_combined_borrowings.py", line 67, in test_current_long_balance_label_must_name_actual_period
+    self.change(args,'primary',lambda raw:raw.replace('2025—$'.encode(),'2024—$'.encode(),1))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_combined_borrowings.py", line 29, in change
+    self.assertTrue(raw != item['raw_bytes'], 'Mutation did not alter the source')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : Mutation did not alter the source
+
+----------------------------------------------------------------------
+Ran 9 tests in 20.078s
+
+FAILED (failures=1)

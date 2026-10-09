@@ -1,0 +1,50 @@
+{
+  "default_sha256": "165fa4b99dfdc94765e53fa1d9a4e2b21c58287100dafc3f419904679032f59c",
+  "predecessor_sha256": "165fa4b99dfdc94765e53fa1d9a4e2b21c58287100dafc3f419904679032f59c",
+  "optional_sha256": "0e1c100d15cbadb1f690357919b82ab34141ab8ca447595177a105dbb1753ec8",
+  "selected_jpm_row": {
+    "company_id": "jpmorgan_chase",
+    "metric_id": "D01",
+    "result_category": "TEXT_RESULT",
+    "quality": "EXACT",
+    "applicability": "APPLICABLE",
+    "unit": "text",
+    "reason_code": "PASS",
+    "source_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "source_period_basis": "BOUND_NATIVE_RESULT_AND_RECORDED_TARGET_PERIOD",
+    "implementation_identity": {
+      "run_id": "run:ordinary-integrated:557e26f5cc3e1ffe4ee5d79947a2911de78929852384ab69b4807e831e5e6ec1",
+      "result_id": "sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89",
+      "spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+      "requirement_closure_hash": "sha256:d31a37a420b5a1e16b9d41de794388d283290a15636d83f27cf74863659f227a",
+      "semantic_execution_root": "/private/tmp/issue28-d01-running-header-v3-20261003-final/jpmorgan_chase/metrics/D01-header-v3/attempts/bb9e9ce65d9f4fdfa3547b885fcae875/data"
+    },
+    "evidence_type": "SAVED_SCOPE_CONTENT_AND_EXACT_INSTALLED_MECHANICAL_COPY_VALIDATED",
+    "source_credit": "SAVED_ORIGINAL_SEC_SOURCE_NO_NEW_ACQUISITION",
+    "selected_evidence": {
+      "path": "docs/evidence/issue28_continuous/d01-jpm-content-20261003/independent-original/conclusion.md",
+      "selector": "jpmorgan_chase/D01",
+      "mechanical_receipt_path": "docs/evidence/issue28_continuous/d01-jpm-content-20261003/mechanical-summary.json"
+    },
+    "evidence_history": [
+      {
+        "path": "docs/evidence/issue28_continuous/completed-v14-batch-340/summary.json",
+        "selector": "jpmorgan_chase/D01"
+      }
+    ],
+    "run_status": "OPEN",
+    "public_row_status": "CANDIDATE_ROW_PREPARED",
+    "historical_native_record_retained": true,
+    "new_real_result_this_review": false,
+    "current_head_full_revalidated": false,
+    "formal_adoption_or_active_credit": false,
+    "real_disclosure_limitation_established": false,
+    "remaining_responsibility": "Saved-scope heading content and exact-copy mechanical validation only; original Run remains OPEN. No full new-input/whole390/production acceptance.",
+    "selected_result_validation_scope": "SAVED_SCOPE_CONTENT_AND_MECHANICAL_RECEIPT_VALIDATED"
+  },
+  "UTC": "2026-10-03T09:01:35.618100+00:00"
+}

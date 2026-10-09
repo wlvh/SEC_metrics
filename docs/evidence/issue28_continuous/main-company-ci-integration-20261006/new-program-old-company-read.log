@@ -1,0 +1,123 @@
+{
+  "elapsed_seconds": 0.6843611660879105,
+  "record_type": "COMPANY_RESULT_VIEW_V2",
+  "company_id": "jpmorgan_chase",
+  "source_checkpoint_id": "sha256:3953c4128d272a0ce5f0d369d673a4ad6cae5d74aef94edefc266b7c5bbf3964",
+  "metrics": [
+    {
+      "metric_id": "C02",
+      "attempt_id": "bae4f5b1dd7d46ecb1dcd7fb0184b6bf",
+      "rows_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-state-current-20261006/updates/metrics/C02/attempts/bae4f5b1dd7d46ecb1dcd7fb0184b6bf/rows",
+      "journal": "updates/metrics/C02",
+      "result_id": "sha256:6d1a5055b0482e991081bd1f7db5387f77b4976a0828a6633f745c57ab722851",
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "journal_latest_status": "CANDIDATE_READY",
+      "journal_latest_error": null,
+      "row_layout": "ordinary",
+      "company_id": "jpmorgan_chase",
+      "period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "run_id": "run:ordinary-integrated:b92605d4483d71511b17c2d679dc68149657d9f2ae18d47e2e1a7ab37b023f69",
+      "run_status": "OPEN",
+      "requirement_id": "issue_54_v1",
+      "requirement_closure_hash": "sha256:4931983d1429a31af8bb9ab113478bb6a368e6c7748066f89934f01081df7eed",
+      "runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-protocol-current-20261006",
+      "source_checkpoint_id": "sha256:3953c4128d272a0ce5f0d369d673a4ad6cae5d74aef94edefc266b7c5bbf3964",
+      "last_checked_source_checkpoint_id": "sha256:3953c4128d272a0ce5f0d369d673a4ad6cae5d74aef94edefc266b7c5bbf3964",
+      "current_source_checkpoint_id": "sha256:3953c4128d272a0ce5f0d369d673a4ad6cae5d74aef94edefc266b7c5bbf3964",
+      "current_input_matches": true,
+      "current_input_status": "MATCHED",
+      "latest_attempt_status": "CANDIDATE_READY",
+      "latest_request_status": "REVIEW_REQUIRED",
+      "result_validity": "CONFIRMED_INVALID",
+      "replay_status": "NOT_REPLAYED",
+      "requested_in_latest_execution": true,
+      "period_role": "RUN_ARCHIVE_COORDINATE",
+      "measurement_period": null,
+      "measurement_period_status": "NOT_AVAILABLE",
+      "defect_holds": [
+        {
+          "defect_id": "C02_JPMORGAN_COMPANY_ENTRY_2025_OWNER_AND_COMMITTEE_OMISSION_6d1a5055",
+          "reason": "REGISTERED_DEFECT_UNRELEASED",
+          "releases_in_other_runtimes": []
+        }
+      ],
+      "confirmed_defects": [
+        "C02_JPMORGAN_COMPANY_ENTRY_2025_OWNER_AND_COMMITTEE_OMISSION_6d1a5055"
+      ],
+      "view_key": "sha256:ccb7225eca97ed8a2f2a442ac0be54429f2e4374aea73d60c0de5e617c9988c5"
+    }
+  ],
+  "latest_execution": {
+    "company_id": "jpmorgan_chase",
+    "execution_id": "23b843a664c243969e7aa849d59285af",
+    "metric_ids": [
+      "C02"
+    ],
+    "metrics": [
+      {
+        "business_metric_completed": false,
+        "development_review_id": "sha256:1b8c304b0e99347ce90cd972912c0ecb641c1e7856b8ed35cdd93c5db10cf5a5",
+        "metric_id": "C02",
+        "status": "REVIEW_REQUIRED"
+      }
+    ],
+    "new_business_calls": {
+      "paid": 0,
+      "provider": 0,
+      "sec": 0
+    },
+    "period_request": {
+      "fiscal_year": null,
+      "report_end": "2025-12-31"
+    },
+    "production_authorized": false,
+    "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+    "recorded_at": "2026-10-06T08:24:22.276690+00:00",
+    "runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-review-runtime-20261006",
+    "source_checkpoint_id": "sha256:3953c4128d272a0ce5f0d369d673a4ad6cae5d74aef94edefc266b7c5bbf3964",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-state-current-20261006/source"
+  },
+  "defect_registry_supplied": true,
+  "production_authorized": false,
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "development_reviews": [
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "C02",
+      "development_review_id": "sha256:1b8c304b0e99347ce90cd972912c0ecb641c1e7856b8ed35cdd93c5db10cf5a5",
+      "work_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-state-current-20261006/development/C02/6f45bae13a2fd5815ce254c411a542f4604a7d814235a4c2d9d3437dd0b32f67",
+      "runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-review-runtime-20261006",
+      "source_checkpoint_id": "sha256:3953c4128d272a0ce5f0d369d673a4ad6cae5d74aef94edefc266b7c5bbf3964",
+      "requirement_id": "issue_54_v1",
+      "requirement_closure_hash": "sha256:0c4082ece4791d600ff30a75d25e71883ac1d2baa3c49ecd9ad3d41771e60532",
+      "candidate_hash": "sha256:d1298823a7fd72322d56596103fd8df23cb512d85a2003fe92aeceecc6a693db",
+      "review_unit_hash": "sha256:b7d17001edbc72211e33d5aebeb94eeb3a00ebd8d9afc036e0f2b7aa10821aac",
+      "original_candidate_hash": "sha256:d1298823a7fd72322d56596103fd8df23cb512d85a2003fe92aeceecc6a693db",
+      "period": {
+        "accession": "0001628280-26-008131",
+        "company_id": "jpmorgan_chase",
+        "entity": "19617",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "scope": {
+          "board_as_of": "not_inferred",
+          "disclosure_basis": "source_filing_text",
+          "entity_scope": "registrant",
+          "period_basis": "annual_grouping_only"
+        },
+        "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934"
+      },
+      "latest_attempt_status": "REVIEW_REQUIRED",
+      "result_validity": "DEVELOPMENT_PENDING_NOT_REPLAYED",
+      "business_metric_completed": false
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/run_saved_native.py", line 113, in <module>
+    run(args.source_root.resolve(), args.output_root.resolve(),
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        Path(__file__).resolve().parent)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/paramount-c04-native-four-forms-20260926/run_saved_native.py", line 100, in run
+    assert checked.returncode == 0, checked.stdout + checked.stderr
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "<string>", line 12, in <module>
+    result=render_ordinary_run(data_root=base/'data',run_dir=base/'run')
+  File "/private/tmp/issue28-c04-four-form-20260926-01/data/scripts/vnext/ordinary_projection.py", line 58, in render_ordinary_run
+    manifest,records,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/issue28-c04-four-form-20260926-01/data/scripts/vnext/run_store.py", line 3485, in _mechanically_replay_open_run
+    _validate_record_graph(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/private/tmp/issue28-c04-four-form-20260926-01/data/scripts/vnext/run_store.py", line 2155, in _validate_record_graph
+    ordinary_case = validate_normal_run_authority(repo_root=repo_root,manifest=manifest,
+        records=records,compiled_specs=compiled_specs)
+  File "/private/tmp/issue28-c04-four-form-20260926-01/data/scripts/vnext/normal_run_v3.py", line 400, in validate_normal_run_authority
+    case = replay_case(data_root=repo_root,manifest=manifest)
+  File "/private/tmp/issue28-c04-four-form-20260926-01/data/scripts/vnext/normal_run_v3.py", line 382, in replay_case
+    case = prepare_case(data_root=data_root,company_id=manifest["company_id"],
+        metric_id=metric_id,
+        **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}))
+  File "/private/tmp/issue28-c04-four-form-20260926-01/data/scripts/vnext/normal_run_v3.py", line 110, in prepare_case
+    from .c04_registration_successor import prepare_c04_registration_case
+  File "/private/tmp/issue28-c04-four-form-20260926-01/data/scripts/vnext/c04_registration_successor.py", line 20, in <module>
+    from .normal_source_requirements import _discovery_filings
+ModuleNotFoundError: No module named 'vnext.normal_source_requirements'
+

@@ -1,0 +1,43 @@
+         14804440 function calls (11284212 primitive calls) in 9.983 seconds
+
+   Ordered by: cumulative time
+   List reduced from 142 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    9.983    9.983 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py:123(source_requests)
+        1    0.000    0.000    9.983    9.983 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/d04_native_assessment.py:301(requests_from_source)
+        1    0.000    0.000    9.378    9.378 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py:111(measured_groups)
+       62    0.002    0.000    9.378    0.151 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py:122(fits)
+       62    0.148    0.002    7.639    0.123 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py:86(measure_request)
+       62    7.304    0.118    7.304    0.118 {method 'encode' of 'tokenizers.Tokenizer' objects}
+       73    0.001    0.000    1.983    0.027 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/d04_native_assessment.py:318(request_for_group)
+       73    0.009    0.000    1.173    0.016 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py:98(_shared_units)
+      198    0.003    0.000    1.076    0.005 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py:402(canonical_json_bytes)
+      136    0.003    0.000    1.013    0.007 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py:453(content_hash)
+705883/198    0.412    0.000    0.899    0.005 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py:326(_canonicalize)
+1763975/497    0.198    0.000    0.542    0.001 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/copy.py:110(deepcopy)
+106052/702    0.140    0.000    0.541    0.001 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/copy.py:198(_deepcopy_dict)
+       73    0.004    0.000    0.520    0.007 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py:128(_restore_units)
+87873/1519    0.079    0.000    0.503    0.000 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/copy.py:172(_deepcopy_list)
+5452412/5208826    0.256    0.000    0.340    0.000 {built-in method builtins.isinstance}
+       73    0.007    0.000    0.335    0.005 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py:35(_share_xml_styles)
+628015/13344    0.183    0.000    0.268    0.000 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py:23(_xml_values)
+   713080    0.120    0.000    0.233    0.000 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py:114(_validate_unicode)
+      322    0.001    0.000    0.227    0.001 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py:185(dumps)
+      322    0.000    0.000    0.226    0.001 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py:185(encode)
+      322    0.225    0.001    0.225    0.001 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py:207(iterencode)
+    13198    0.101    0.000    0.149    0.000 {method 'sub' of 're.Pattern' objects}
+       62    0.000    0.000    0.142    0.002 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py:76(request_body)
+       73    0.000    0.000    0.100    0.001 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/collections/__init__.py:605(__init__)
+       73    0.000    0.000    0.100    0.001 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/collections/__init__.py:682(update)
+       73    0.010    0.000    0.100    0.001 {built-in method _collections._count_elements}
+   121793    0.019    0.000    0.095    0.000 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/typing.py:1295(__instancecheck__)
+   108018    0.083    0.000    0.090    0.000 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/capacity_semantic_review.py:38(<genexpr>)
+       62    0.003    0.000    0.086    0.001 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py:32(render_prompt)
+   713402    0.084    0.000    0.084    0.000 {method 'encode' of 'str' objects}
+       62    0.000    0.000    0.077    0.001 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py:72(_json)
+   121793    0.027    0.000    0.076    0.000 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/typing.py:1591(__subclasscheck__)
+       62    0.024    0.000    0.070    0.001 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_request_context.py:63(_load_tokenizer)
+      395    0.000    0.000    0.065    0.000 /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py:422(sha256_bytes)
+
+

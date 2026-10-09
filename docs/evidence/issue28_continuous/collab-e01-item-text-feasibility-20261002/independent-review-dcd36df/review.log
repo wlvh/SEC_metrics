@@ -1,0 +1,29 @@
+Patch: dcd36df3daf1194b4e74a6fc81779d3dcf07bdb5
+Scope: E01 source-only reader/adapter, V13/V14 bindings, current source tests and bounded evidence.
+
+git show --stat --oneline dcd36df
+  53 files; production change limited to two E01 modules, rule path inventory, mutable V13/V14 identities, test selector and evidence.
+
+PYTHONPATH=scripts /private/tmp/issue28-tokenizers-venv/bin/python -m unittest tests.vnext.test_ordinary_e01_item_text_input
+  Ran 3 tests in 25.875s: OK.
+
+load_requirement_snapshot + validate_execution_authority for issue_28_v13 and issue_28_v14; validate_wiring_receipt(issue_28_v14)
+  V13 sha256:8a667e941f234dd623138d8bdce46668f9f947c045bafda62b8a47f203f12b6b
+  V14 sha256:71f7e0969a0f315e8826bba6a2778418f9cacc465b9f766c0a6dac0e49f96e6f
+  Wiring PASS.
+
+Independent temporary Pfizer install, then append bytes to one bound primary RawBlob and verify_current_e01_item_text:
+  TAMPER_REJECTED BatchWorkflowError Request-ledger locator bytes differ from observation.
+
+Historical-package compatibility probe:
+  Old Marriott FY2025 B01 package path remains present.
+  Its own installed normal_run_v3._policy(old_data_root): 36 metric IDs, PASS.
+  Current tree normal_run_v3._policy(old_data_root): ORDINARY_INTEGRATED_INSTALLED_POLICY_CHANGED, expected cross-version protection; not a full historical Run replay.
+
+Evidence inspected:
+  collab-e01-item-text-feasibility-20261002/README.md, installed.json, installed-cold-one.py,
+  binding-after-install.json, current-source preparation evidence and status diff.
+  Final installed evidence states three installed cold reads, 0/3/14 candidate counts,
+  no Result/Run, no new business calls. Long-chain evidence not independently rerun.
+
+No review-blocking source-only defect found. Remaining semantic and coverage boundaries are in conclusion.md.

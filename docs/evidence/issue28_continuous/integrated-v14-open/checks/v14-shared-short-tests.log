@@ -1,0 +1,25 @@
+EE................
+======================================================================
+ERROR: test_records (unittest.loader._FailedTest.test_records)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_records
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 141, in loadTestsFromName
+    module = __import__(module_name)
+ModuleNotFoundError: No module named 'tests.vnext.test_records'
+
+
+======================================================================
+ERROR: test_specs (unittest.loader._FailedTest.test_specs)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_specs
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 141, in loadTestsFromName
+    module = __import__(module_name)
+ModuleNotFoundError: No module named 'tests.vnext.test_specs'
+
+
+----------------------------------------------------------------------
+Ran 18 tests in 1.433s
+
+FAILED (errors=2)

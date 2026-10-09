@@ -93,11 +93,15 @@ class CompanyResultsTest(unittest.TestCase):
         with patch.object(company_compute,'locked_company',locked), \
              patch.object(company_compute,'recover_import',return_value=self.current), \
              patch.object(company_compute,'require_company',return_value={'checkpoint_id':'source-v1','metric_ids':['B01','D01']}), \
-             patch('scripts.vnext.ordinary_d02_category_update_v2.run_company',side_effect=run):
+             patch('scripts.vnext.ordinary_d02_category_update_v2.run_company',side_effect=run) as other_metrics, \
+             patch('scripts.vnext.ordinary_d01_header_update_v3.run_company',side_effect=run) as d01:
             company_compute.compute_company(state_root=self.root,company_id='test_company',metric_ids=['B01','D01'])
             _, first, _ = self.exported('first-export')
             self.assertEqual({'B01','D01'}, {r['metric_id'] for r in first})
             report = company_compute.compute_company(state_root=self.root,company_id='test_company',metric_ids=['B01'])
+            d01.assert_called_once()
+            self.assertEqual(d01.call_args.kwargs['metric_ids'], ['D01'])
+            self.assertTrue(all('D01' not in call.kwargs['metric_ids'] for call in other_metrics.call_args_list))
         self.assertEqual(['B01'], [m['metric_id'] for m in report['metrics']])
         self.assertEqual({'B01','D01'}, {m['metric_id'] for m in self.view()['metrics']})
         result, rows, output = self.exported()

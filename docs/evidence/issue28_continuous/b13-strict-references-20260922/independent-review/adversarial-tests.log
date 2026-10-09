@@ -1,0 +1,11 @@
+Independent small-source reproduction: units= 3
+source unit VISIBLE_TEXT sha256:c9b5aebe763b64ffc68942bf77e73d05dd1558c07cf0facb2f96833b9beb32c1 indexes [0]
+source unit NATIVE_SUPPLEMENTS sha256:554c6b2f11b2b26bc21d2fb42d6a69e30b905f7d4c477ffc91c4017d4dbecc2d indexes [0]
+source unit NATIVE_SUPPLEMENTS sha256:b2cc0eb8f86c218b4c3bbd3753375d72dae6bb716ff6619ec6a982e442319690 indexes [0]
+OLD nested request native build_acceptance: PASS
+NEW flat upgrade_request: REJECTED B13_REFERENCE_AMBIGUOUS_SOURCE
+Original 109 independently revalidated: rejected B13_REFERENCE_OUTSIDE_SUPPLIED_SOURCE
+Original 109 byte hashes unchanged: {"/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0109/semantic-request.json": "9d223f44c17b8800181b32fb44f87b9658632c934f48a668247ab55ad6715778", "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0109/source.json": "4e0dde89514a0722f92804849148d75115a14b65a3c5a1b29d38afeda8d6e597", "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0109/terminal.json": "64ec0ee4f66ccc4fa5c7ec53a5c96c31b6162eb6cf61e1fca3895ca4729f0631", "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0109/wire/assistant-output.bin": "4f603a4ac871aa89d0246bd5316a9dbcba9cc326b6762e54cc8b78dd481ec211"}
+Original 109 full saved source supplement unit census: 12
+Original supplement unit source_index=0 ownerships: 12
+No sockets or invocation executors used; added provider/paid/SEC = 0/0/0.

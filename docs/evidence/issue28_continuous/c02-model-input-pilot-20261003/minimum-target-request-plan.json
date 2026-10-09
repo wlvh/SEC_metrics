@@ -1,0 +1,71 @@
+{
+  "status": "PREPARATION_NOT_AUTHORIZATION_OR_READY_TO_CALL",
+  "metric": "C02",
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "endpoint_api": "chat_completions",
+  "requests": [
+    {
+      "company_id": "enphase_energy",
+      "filing": {
+        "form": "DEF 14A",
+        "filingDate": "2026-04-01",
+        "accessionNumber": "0001463101-26-000026",
+        "primaryDocument": "enph-20260401.htm"
+      },
+      "source_sha256": "7bb995ddb80c61a4b25239852efa0a5673d225e17c6125e7005f8ad72e1c6a84",
+      "source_reference_id": "sha256:e7248d616e7f84933a971d82e9d3c240526dee81d3f9abe856501f0a87ea2c53",
+      "input_sha256": "3fb17ff46af9c5d95a46d927a76a61eadcd7cebc02da267df14dd72a1e835062",
+      "request_body_sha256": "4ec3827cab6b905dc2c34ca60c5871d3f62abeefbdb813d305382160484386eb",
+      "request_body_file": "/private/tmp/issue28-c02-blind-source-pilot2-20261003/request-body.json",
+      "input_tokens_reference": 88916,
+      "output_tokens_max": 4096,
+      "initial_requests_max": 1,
+      "repair_or_repeat_requests_authorized": 0
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "filing": {
+        "form": "10-K/A",
+        "filingDate": "2026-04-24",
+        "accessionNumber": "0001140361-26-016758",
+        "primaryDocument": "ef20071103_10ka.htm"
+      },
+      "source_sha256": "10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0",
+      "source_reference_id": "sha256:9bf93630dc255ffbd6dc9d2e8166df2601d7a44facf152648086c2115550bc3e",
+      "input_sha256": "6aefce937c315e6df0f485e7394df6502f6ea87fc3a2f3732657726bd00e6f8a",
+      "request_body_sha256": "0a33f968fa0b98ace346cd3ffd55cc162f633cdb441a1ead76a763ae152d9c3b",
+      "request_body_file": "/private/tmp/issue28-c02-paramount-blind-fixed-task-20261003/request-body.json",
+      "input_tokens_reference": 39886,
+      "output_tokens_max": 4096,
+      "initial_requests_max": 1,
+      "repair_or_repeat_requests_authorized": 0
+    }
+  ],
+  "provider_paid_max": [
+    2,
+    2
+  ],
+  "SEC_max": 0,
+  "automatic_retries": 0,
+  "extra_probe_or_supplement_calls": 0,
+  "current_general_balance_is_not_authority": true,
+  "permissions_missing": [
+    "Explicit C02 new-purpose approval bound to these two complete source/request identities and original cumulative ledger",
+    "Verified minimal native mapping and approved execution binding/controller/wiring before any egress"
+  ],
+  "acceptance": [
+    "Complete JSON within4096 and at most64 facts; no discarded necessary facts",
+    "Source-backed fact/entity/role/status/time matches independently read originals, including current versus year-end and predecessor distinctions",
+    "No policy/hypothetical/other-entity/adviser promoted into actual composition",
+    "Required members and actual qualification determinations not lost; genuine ambiguity remains explicit",
+    "Original source quotations and semantic response retained separately, no manual yearly correction dependency",
+    "Native result/reading acceptance requires its own approved contract and preserved old Run identities"
+  ],
+  "failure_stop": "No unapproved repeat. Preserve response/counters; stop affected plan on truncation, source/usage UNKNOWN,402 or semantic failure; unrelated authorized engineering continues.",
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

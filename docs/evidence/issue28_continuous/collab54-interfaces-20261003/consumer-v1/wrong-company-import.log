@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/private/tmp/issue28-company-consumer-20261003/guarded-cli.py", line 15, in <module>
+    runpy.run_path(str(root/'tools/vnext_company.py'),run_name='__main__')
+  File "<frozen runpy>", line 287, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "/private/tmp/issue28-company-consumer-20261003/runtime/tools/vnext_company.py", line 86, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/private/tmp/issue28-company-consumer-20261003/runtime/tools/vnext_company.py", line 66, in main
+    result = install_company(package_root=args.package_root, state_root=args.state_root,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/issue28-company-consumer-20261003/runtime/scripts/vnext/company_handoff.py", line 278, in install_company
+    result = _install_locked(package, root, company_id, fault)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/issue28-company-consumer-20261003/runtime/scripts/vnext/company_handoff.py", line 292, in _install_locked
+    incoming = check_package(package_root=package, company_id=company_id)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/issue28-company-consumer-20261003/runtime/scripts/vnext/company_handoff.py", line 211, in check_package
+    admission = require_company(source_root=package, company_id=company_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/issue28-company-consumer-20261003/runtime/scripts/vnext/company_source_authority.py", line 146, in require_company
+    need(checkpoint['company_id'] == company_id, 'COMPANY_SOURCE_WRONG_COMPANY')
+  File "/private/tmp/issue28-company-consumer-20261003/runtime/scripts/vnext/company_source_authority.py", line 23, in need
+    raise ValueError(reason)
+ValueError: COMPANY_SOURCE_WRONG_COMPANY

@@ -1,0 +1,349 @@
+{
+  "record_type": "ORDINARY_SAVED_UPDATE_CHECK",
+  "companies": [
+    {
+      "company_id": "jpmorgan_chase",
+      "status": "UPDATES_READY",
+      "metrics": [
+        {
+          "metric_id": "C02",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "105a1185270b4bb6bf1d151a38f8fe6a",
+          "latest_attempt": "105a1185270b4bb6bf1d151a38f8fe6a",
+          "successful_attempt": "105a1185270b4bb6bf1d151a38f8fe6a",
+          "previous_successful_attempt": null,
+          "last_verified_candidate": {
+            "attempt_id": "105a1185270b4bb6bf1d151a38f8fe6a",
+            "targets": {
+              "C02": {
+                "fiscal_year": 2025,
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31"
+              }
+            },
+            "current_input_matches": true,
+            "results": {
+              "C02": {
+                "applicability": "APPLICABLE",
+                "company_id": "jpmorgan_chase",
+                "metric_id": "C02",
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01",
+                "publication": "PUBLISHED",
+                "quality": "EXACT",
+                "reason_code": "PASS",
+                "record_type": "METRIC_RESULT",
+                "result_id": "sha256:bc85895a9c396f66da4d0f915003b0c3d779f47827c377ba0c4439cf0c189ec7",
+                "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934",
+                "spec_closure_hash": "sha256:071450563f1a9931ac32353e0d9c61a686c6963bcae4ccd41c11e8e5dc171ab2",
+                "text_payload": {
+                  "approval_effect_hash": "sha256:3b79189c135cb3cc7cf6d24d0865fc15e05cd5f84d815c82c75c4ff3aaa97271",
+                  "candidate_hash": "sha256:77e4d431021105926959dec4bd30dc67e3709a19af6c67c018a166ff5b352fd8",
+                  "content_kind": "SOURCE_EXCERPTS",
+                  "coverage_hashes": [
+                    "sha256:ec46131161856c1959fe7c7d8d7aebc780c5253220971d63fa7ec4769f424965"
+                  ],
+                  "items": [
+                    {
+                      "observation_id": "sha256:0e2bbb5896097eadc8d4ffa4bf23a5b788377931d8746c7e49f9f6f4637f5466",
+                      "order": 0,
+                      "role": "excerpt_0",
+                      "text": "We are proud of the Board’s strong culture—one that values independence, constructive interaction with management, and diversity of thought. Our independent directors meet separately at every regular Board meeting, allowing for candid discussion and effective oversight. Our directors bring a wide range of qualifications, backgrounds, perspectives, and tenure, and we regularly review and refresh committee assignments to best leverage these strengths. Earlier this year, we made several committee changes based on these factors: Ginni Rometty now serves as Chair of the Corporate Governance & Nominating Committee (\"CGNC\"), Alex Gorsky and Michele Buck have joined CGNC, and Brad Smith and Alicia Boler Davis have joined the Public Responsibility Committee."
+                    },
+                    {
+                      "observation_id": "sha256:eaf2827bce9f77aa272719b58fa6c4bc794335a2405f823294e50d01ffa579f4",
+                      "order": 1,
+                      "role": "excerpt_1",
+                      "text": "The Board of Directors has nominated the 11 individuals listed below. All are independent other than our CEO. If elected at the annual meeting, all nominees are expected to serve until next year’s annual meeting."
+                    },
+                    {
+                      "observation_id": "sha256:a17f015d6405f37c0c8bb102cbee36a5abaf2b12694db36ac5047bbc81495c9e",
+                      "order": 2,
+                      "role": "excerpt_2",
+                      "text": "Chairman and Chief Executive Officer of JPMorgan Chase & Co."
+                    },
+                    {
+                      "observation_id": "sha256:acbff82e20f4b9188540cee49d3476cb45a07232decf86aa50090283d952fcfb",
+                      "order": 3,
+                      "role": "excerpt_3",
+                      "text": "All of our nominees possess: independent perspective, integrity, judgment, strong work ethic, strength of conviction, collaborative approach to engagement, inquisitiveness and willingness to appropriately challenge management"
+                    },
+                    {
+                      "observation_id": "sha256:047d324e8b17d3b63b982140e659b7cd4ceadae92c235ec943711e955241b79a",
+                      "order": 4,
+                      "role": "excerpt_4",
+                      "text": "Stephen B. Burke"
+                    },
+                    {
+                      "observation_id": "sha256:3a204e32de052152369414ecf2b6005d8cbf80fdfc6ea7d4aef65a424ed7fd0d",
+                      "order": 5,
+                      "role": "excerpt_5",
+                      "text": "Committees:\nCompensation & Management Development Committee (Chair)\nCorporate Governance & Nominating Committee"
+                    },
+                    {
+                      "observation_id": "sha256:594149864939a5b56daec423eff973b5cebc2066f1c2047aa179b202d647db47",
+                      "order": 6,
+                      "role": "excerpt_6",
+                      "text": "Linda B. Bammann"
+                    },
+                    {
+                      "observation_id": "sha256:8ba1a8c5be1924bb491a2e432c7d15c1301296ba9143c106b7809d45949a26f3",
+                      "order": 7,
+                      "role": "excerpt_7",
+                      "text": "Committees:\nRisk Committee (Chair)\nCompensation & Management Development Committee"
+                    },
+                    {
+                      "observation_id": "sha256:5597ed2e71b05996b8a603b4637e786d93d48e59c34cf1f19683eba551365516",
+                      "order": 8,
+                      "role": "excerpt_8",
+                      "text": "Michele G. Buck"
+                    },
+                    {
+                      "observation_id": "sha256:8ddf638b2835029c0e1333813f01eae77b85a528f74b40611eb37af1c2a1f24b",
+                      "order": 9,
+                      "role": "excerpt_9",
+                      "text": "Committees:\nAudit Committee\nCorporate Governance & Nominating Committee"
+                    },
+                    {
+                      "observation_id": "sha256:557ad6c03dd96f9cd178ab5a9db104d4b7e74b63d1ac40c4dd2434dce1f77535",
+                      "order": 10,
+                      "role": "excerpt_10",
+                      "text": "Alicia Boler Davis"
+                    },
+                    {
+                      "observation_id": "sha256:1e3225288adba4567bef0ea80e45b1f1ff2059413c816216e3a2fc1302c6011e",
+                      "order": 11,
+                      "role": "excerpt_11",
+                      "text": "Committees:\nPublic Responsibility Committee\nRisk Committee"
+                    },
+                    {
+                      "observation_id": "sha256:fb266174f263c77ac846a4db9b9f63c470ad258bebae95f0496ffe62ae562a81",
+                      "order": 12,
+                      "role": "excerpt_12",
+                      "text": "Chairman and Chief Executive Officer of JPMorgan Chase & Co."
+                    },
+                    {
+                      "observation_id": "sha256:deb7087daac4640eb346d2fb48ed826e50d26368a6c3dffb483b9add63982df4",
+                      "order": 13,
+                      "role": "excerpt_13",
+                      "text": "Alex Gorsky"
+                    },
+                    {
+                      "observation_id": "sha256:a2122bcc3dfe2d3a901c1a528f368cdf053cff336a55eea5bc4f5f3d9ab76937",
+                      "order": 14,
+                      "role": "excerpt_14",
+                      "text": "Committees:\nAudit Committee\nCorporate Governance & Nominating Committee"
+                    },
+                    {
+                      "observation_id": "sha256:8fe4ce9f50b4d36c15f465b46396ed69ec8a970e6cf9df16e65e9379379095b9",
+                      "order": 15,
+                      "role": "excerpt_15",
+                      "text": "Mellody Hobson"
+                    },
+                    {
+                      "observation_id": "sha256:e167f55a2d09ac4db5da241c0fe1d0866a260554dd952328f51f5737b3d49bea",
+                      "order": 16,
+                      "role": "excerpt_16",
+                      "text": "Committees:\nPublic Responsibility Committee (Chair)\nRisk Committee"
+                    },
+                    {
+                      "observation_id": "sha256:3747381bc797e9e6e4fc4631dda9e3dbd3d8a86ad3f2f872e17545e22b22db15",
+                      "order": 17,
+                      "role": "excerpt_17",
+                      "text": "Phebe N. Novakovic"
+                    },
+                    {
+                      "observation_id": "sha256:5d458dc1a062e929cdc3bee7e5d07f77d1bbe2a823b3dd1c26a18c3fcafedc00",
+                      "order": 18,
+                      "role": "excerpt_18",
+                      "text": "Committees:\nAudit Committee\nPublic Responsibility Committee"
+                    },
+                    {
+                      "observation_id": "sha256:c941863219c0ad09f0d5dd8bf2621fec57bbc7fabb641b9eecb71072ff6fcc0d",
+                      "order": 19,
+                      "role": "excerpt_19",
+                      "text": "Virginia M. Rometty"
+                    },
+                    {
+                      "observation_id": "sha256:6488ff1965130c1675a708f8f46be849bd464bb9310eb7828a6fe5498d72b736",
+                      "order": 20,
+                      "role": "excerpt_20",
+                      "text": "Committees:\nCorporate Governance & Nominating Committee (Chair)\nCompensation & Management Development Committee"
+                    },
+                    {
+                      "observation_id": "sha256:e3cb65676ec0f4bfecaa7324954d9b5159bdb31be4805ea5b39185ea9657ba87",
+                      "order": 21,
+                      "role": "excerpt_21",
+                      "text": "Brad D. Smith"
+                    },
+                    {
+                      "observation_id": "sha256:34beb7aa36b6510695f142b4dad6b262c54d11bcdd2ae3d948675da422f9a40f",
+                      "order": 22,
+                      "role": "excerpt_22",
+                      "text": "Committees:\nPublic Responsibility Committee\nRisk Committee"
+                    },
+                    {
+                      "observation_id": "sha256:8102d0a9a38cceebc6cb21c072d810550c33f268220a81cdf2aebfbea1802af7",
+                      "order": 23,
+                      "role": "excerpt_23",
+                      "text": "Mark A. Weinberger"
+                    },
+                    {
+                      "observation_id": "sha256:b66bb80155bbf41d2459e3f5a2970425bb0b71dc8c29afb0624ac0a191f24cd2",
+                      "order": 24,
+                      "role": "excerpt_24",
+                      "text": "Committees:\nAudit Committee (Chair)"
+                    },
+                    {
+                      "observation_id": "sha256:00e18a4d64e365e01f1146de51bfeb42011217ae4521accef8a710ef4129ccd7",
+                      "order": 25,
+                      "role": "excerpt_25",
+                      "text": "The Board, having reviewed the relevant relationships between the Firm and each non-management director, determined, in accordance with the NYSE’s listing standards and the Firm’s independence standards, that each non-management director (Linda B. Bammann, Michele G. Buck, Stephen B. Burke, Alicia Boler Davis, Alex Gorsky, Mellody Hobson, Phebe N. Novakovic, Virginia M. Rometty, Brad D. Smith, and Mark A. Weinberger) had only immaterial relationships with JPMorganChase and accordingly is independent. Todd A. Combs, who resigned from the Board in December 2025, had only immaterial relationships with JPMorganChase while a member of the Board and accordingly, was an independent director during the term of his service. In 2026, Mr. Combs was hired by the Firm and additional information is provided on page 35.\nAll directors who served on the Audit and Compensation & Management Development Committees of the Board were also determined to meet the additional independence and qualitative criteria of the NYSE listing standards applicable to directors serving on those committees. For more information about the committees of the Board, see pages 23-26."
+                    },
+                    {
+                      "observation_id": "sha256:7c3348cf3beeb0503b51c4fc5be8e8a8be950cc867a69dcc3a22e72743a644fb",
+                      "order": 26,
+                      "role": "excerpt_26",
+                      "text": "The Board’s leadership structure is designed to promote Board effectiveness and to appropriately allocate authority and responsibility between the Board and management. Based on consideration of the factors described on page 22, our Board has determined that combining the roles of Chair and CEO is the most effective leadership structure for the Board at this time. The Board believes the present structure provides the Firm and the Board with strong leadership, appropriate independent oversight of management, continuity of experience that complements ongoing Board refreshment, and the ability to clearly communicate the Firm’s business and strategy to shareholders, clients, employees, regulators and the public.\nAs required by the Firm’s Governance Principles, when the role of the Chair is combined with that of the CEO, the independent directors appoint a Lead Independent Director. Our Lead Independent Director provides effective independent oversight, including by facilitating independent oversight of management, promoting open dialogue among the independent directors during and in between Board meetings, leading executive sessions at each regular Board meeting without the presence of the CEO, and focusing on the Board’s priorities and processes.\nIn March 2026, the independent directors conducted their annual review of the Board’s leadership structure. This review was conducted first by the Governance Committee, which considered the factors on page 22, the Firm’s governance practices, which include executive sessions of independent directors as part of each regularly scheduled Board meeting and the directors’ frequent and open interactions with senior management, and the effectiveness of the Lead Independent Director role. Following its review, the Governance Committee recommended that the Board continue its current leadership structure and that Stephen B. Burke be re-appointed as Lead Independent Director. The independent directors of the Board then conducted their own review, again taking into account the factors on page 22, the Governance Committee’s recommendation and Mr. Burke’s strong performance in the Lead Independent Director role over the course of the prior year, and determined to maintain the current leadership structure with Mr. Burke serving as Lead Independent Director."
+                    },
+                    {
+                      "observation_id": "sha256:6f7de5230558b2d957698b2d8e49ff79a30e94b24eb9fa75bf99b66c86825e2c",
+                      "order": 27,
+                      "role": "excerpt_27",
+                      "text": "The Board has two additional standing committees:"
+                    },
+                    {
+                      "observation_id": "sha256:fd91ad96116050aaaf3397f181f40db8ff1e1d39b4d929190cf90d2a77b5aaf3",
+                      "order": 28,
+                      "role": "excerpt_28",
+                      "text": "4Mr. Combs resigned from the Board in December 2025.\nStock ownership: no sales, no hedging, no pledging\nAs stated in the Governance Principles, each director retains all shares of the Firm’s common stock he or she purchased on the open market or received pursuant to his or her service as a Board member for as long as he or she serves on our Board absent any exceptions discussed by the Governance Committee. In addition, shares held personally by a director may not be held in margin accounts or otherwise pledged as collateral, nor may the economic risk of such shares be hedged. Further information on the Firm’s “Anti-hedging/anti-pledging provisions” can be found on page 50."
+                    },
+                    {
+                      "observation_id": "sha256:ea0b772205e30646b58909f3db2f2567551353acb670d97d6804cdc5f7f2e18a",
+                      "order": 29,
+                      "role": "excerpt_29",
+                      "text": "The Audit Committee of the Board of Directors of JPMorganChase is comprised of four non-management directors. The Board has determined that each member of our committee has no material relationship with the Firm under the Board’s director independence standards and that each member is independent under the listing standards of the NYSE, where the Firm’s securities are listed, and under the SEC’s standards relating to the independence of audit committees. The Board has also determined that each member is financially literate and is an audit committee financial expert as defined by the SEC."
+                    },
+                    {
+                      "observation_id": "sha256:ea5e0e21b29681a0bd15fad318c30b840f699a2c5a7f351b1e578e7885374812",
+                      "order": 30,
+                      "role": "excerpt_30",
+                      "text": "Audit Committee\nMark A. Weinberger (Chair)\nMichele Buck\nAlex Gorsky\nPhebe N. Novakovic"
+                    },
+                    {
+                      "observation_id": "sha256:cc4a9d2c95209bf170e191a8f68ed2e764e39f2d99f6ce83dc374251e47872de",
+                      "order": 31,
+                      "role": "excerpt_31",
+                      "text": "The Board also considers the performance and effectiveness of our Lead Independent Director, Stephen B. Burke, who is empowered to serve as a strong independent leader and an effective independent oversight. Mr. Burke is independent under New York Stock Exchange rules and the Board’s independence standards which are described in the Firm’s Corporate Governance Principles (see p. 18 of this proxy statement for further information). Mr. Burke facilitates the Board’s independent oversight of management, including by promoting open dialogue among independent directors during Board meetings, at executive sessions without the CEO, and in between Board meetings. The Board meets separately from Mr. Dimon at every regularly scheduled meeting and provides direct feedback to him afterward. The Board hears directly from line of business CEOs and the COO at Board meetings and has unfettered access to and direct relationships with senior management. A simple majority of the Board can remove the CEO at any time, for any reason. The CEO has no contract and serves at the"
+                    }
+                  ],
+                  "renderer": "ORDERED_NEWLINE_V1",
+                  "review_unit_hash": "sha256:2e9a9459d03b4c1462b4a69b2a8c995af6067ce8cbeeb5adca2324a9c5626442",
+                  "version": "TEXT_V1"
+                },
+                "trace_id": "sha256:ec35f7956aa30830eb67ce7907ef2335947c69893239d585571007c289bcd809",
+                "unit": "text",
+                "value": "We are proud of the Board’s strong culture—one that values independence, constructive interaction with management, and diversity of thought. Our independent directors meet separately at every regular Board meeting, allowing for candid discussion and effective oversight. Our directors bring a wide range of qualifications, backgrounds, perspectives, and tenure, and we regularly review and refresh committee assignments to best leverage these strengths. Earlier this year, we made several committee changes based on these factors: Ginni Rometty now serves as Chair of the Corporate Governance & Nominating Committee (\"CGNC\"), Alex Gorsky and Michele Buck have joined CGNC, and Brad Smith and Alicia Boler Davis have joined the Public Responsibility Committee.\nThe Board of Directors has nominated the 11 individuals listed below. All are independent other than our CEO. If elected at the annual meeting, all nominees are expected to serve until next year’s annual meeting.\nChairman and Chief Executive Officer of JPMorgan Chase & Co.\nAll of our nominees possess: independent perspective, integrity, judgment, strong work ethic, strength of conviction, collaborative approach to engagement, inquisitiveness and willingness to appropriately challenge management\nStephen B. Burke\nCommittees:\nCompensation & Management Development Committee (Chair)\nCorporate Governance & Nominating Committee\nLinda B. Bammann\nCommittees:\nRisk Committee (Chair)\nCompensation & Management Development Committee\nMichele G. Buck\nCommittees:\nAudit Committee\nCorporate Governance & Nominating Committee\nAlicia Boler Davis\nCommittees:\nPublic Responsibility Committee\nRisk Committee\nChairman and Chief Executive Officer of JPMorgan Chase & Co.\nAlex Gorsky\nCommittees:\nAudit Committee\nCorporate Governance & Nominating Committee\nMellody Hobson\nCommittees:\nPublic Responsibility Committee (Chair)\nRisk Committee\nPhebe N. Novakovic\nCommittees:\nAudit Committee\nPublic Responsibility Committee\nVirginia M. Rometty\nCommittees:\nCorporate Governance & Nominating Committee (Chair)\nCompensation & Management Development Committee\nBrad D. Smith\nCommittees:\nPublic Responsibility Committee\nRisk Committee\nMark A. Weinberger\nCommittees:\nAudit Committee (Chair)\nThe Board, having reviewed the relevant relationships between the Firm and each non-management director, determined, in accordance with the NYSE’s listing standards and the Firm’s independence standards, that each non-management director (Linda B. Bammann, Michele G. Buck, Stephen B. Burke, Alicia Boler Davis, Alex Gorsky, Mellody Hobson, Phebe N. Novakovic, Virginia M. Rometty, Brad D. Smith, and Mark A. Weinberger) had only immaterial relationships with JPMorganChase and accordingly is independent. Todd A. Combs, who resigned from the Board in December 2025, had only immaterial relationships with JPMorganChase while a member of the Board and accordingly, was an independent director during the term of his service. In 2026, Mr. Combs was hired by the Firm and additional information is provided on page 35.\nAll directors who served on the Audit and Compensation & Management Development Committees of the Board were also determined to meet the additional independence and qualitative criteria of the NYSE listing standards applicable to directors serving on those committees. For more information about the committees of the Board, see pages 23-26.\nThe Board’s leadership structure is designed to promote Board effectiveness and to appropriately allocate authority and responsibility between the Board and management. Based on consideration of the factors described on page 22, our Board has determined that combining the roles of Chair and CEO is the most effective leadership structure for the Board at this time. The Board believes the present structure provides the Firm and the Board with strong leadership, appropriate independent oversight of management, continuity of experience that complements ongoing Board refreshment, and the ability to clearly communicate the Firm’s business and strategy to shareholders, clients, employees, regulators and the public.\nAs required by the Firm’s Governance Principles, when the role of the Chair is combined with that of the CEO, the independent directors appoint a Lead Independent Director. Our Lead Independent Director provides effective independent oversight, including by facilitating independent oversight of management, promoting open dialogue among the independent directors during and in between Board meetings, leading executive sessions at each regular Board meeting without the presence of the CEO, and focusing on the Board’s priorities and processes.\nIn March 2026, the independent directors conducted their annual review of the Board’s leadership structure. This review was conducted first by the Governance Committee, which considered the factors on page 22, the Firm’s governance practices, which include executive sessions of independent directors as part of each regularly scheduled Board meeting and the directors’ frequent and open interactions with senior management, and the effectiveness of the Lead Independent Director role. Following its review, the Governance Committee recommended that the Board continue its current leadership structure and that Stephen B. Burke be re-appointed as Lead Independent Director. The independent directors of the Board then conducted their own review, again taking into account the factors on page 22, the Governance Committee’s recommendation and Mr. Burke’s strong performance in the Lead Independent Director role over the course of the prior year, and determined to maintain the current leadership structure with Mr. Burke serving as Lead Independent Director.\nThe Board has two additional standing committees:\n4Mr. Combs resigned from the Board in December 2025.\nStock ownership: no sales, no hedging, no pledging\nAs stated in the Governance Principles, each director retains all shares of the Firm’s common stock he or she purchased on the open market or received pursuant to his or her service as a Board member for as long as he or she serves on our Board absent any exceptions discussed by the Governance Committee. In addition, shares held personally by a director may not be held in margin accounts or otherwise pledged as collateral, nor may the economic risk of such shares be hedged. Further information on the Firm’s “Anti-hedging/anti-pledging provisions” can be found on page 50.\nThe Audit Committee of the Board of Directors of JPMorganChase is comprised of four non-management directors. The Board has determined that each member of our committee has no material relationship with the Firm under the Board’s director independence standards and that each member is independent under the listing standards of the NYSE, where the Firm’s securities are listed, and under the SEC’s standards relating to the independence of audit committees. The Board has also determined that each member is financially literate and is an audit committee financial expert as defined by the SEC.\nAudit Committee\nMark A. Weinberger (Chair)\nMichele Buck\nAlex Gorsky\nPhebe N. Novakovic\nThe Board also considers the performance and effectiveness of our Lead Independent Director, Stephen B. Burke, who is empowered to serve as a strong independent leader and an effective independent oversight. Mr. Burke is independent under New York Stock Exchange rules and the Board’s independence standards which are described in the Firm’s Corporate Governance Principles (see p. 18 of this proxy statement for further information). Mr. Burke facilitates the Board’s independent oversight of management, including by promoting open dialogue among independent directors during Board meetings, at executive sessions without the CEO, and in between Board meetings. The Board meets separately from Mr. Dimon at every regularly scheduled meeting and provides direct feedback to him afterward. The Board hears directly from line of business CEOs and the COO at Board meetings and has unfettered access to and direct relationships with senior management. A simple majority of the Board can remove the CEO at any time, for any reason. The CEO has no contract and serves at the",
+                "value_kind": "TEXT_V1"
+              }
+            },
+            "rows_root": "/private/tmp/issue28-c02-auditor-current-20261002/state/jpmorgan_chase/metrics/C02-composition-member-v4/attempts/105a1185270b4bb6bf1d151a38f8fe6a/rows"
+          },
+          "new_candidate_created": true,
+          "terminal": {
+            "record_type": "ORDINARY_UPDATE_TERMINAL",
+            "attempt_id": "105a1185270b4bb6bf1d151a38f8fe6a",
+            "configuration_id": "sha256:bcd2680bbf4c3f2ab66ebdf82db41179adeb7c1036df8e80376a0e4deb249bb7",
+            "intent_id": "sha256:6031438ea573bc24b6faef7e10f1d48be1f107a675c38262adaf54c019f2dc26",
+            "status": "CANDIDATE_READY",
+            "completed_at": "2026-10-02T16:50:13.241557+00:00",
+            "input": {
+              "company_id": "jpmorgan_chase",
+              "metric_ids": [
+                "C02"
+              ],
+              "requirement_closure_hash": "sha256:1b2fe50b46574602c4a4422f80ab3306bd4a0ce40024c955b64654e58aa0104f",
+              "targets": {
+                "C02": {
+                  "fiscal_year": 2025,
+                  "period_start": "2025-01-01",
+                  "period_end": "2025-12-31"
+                }
+              },
+              "specs": {
+                "C02": {
+                  "C02": "sha256:071450563f1a9931ac32353e0d9c61a686c6963bcae4ccd41c11e8e5dc171ab2"
+                }
+              },
+              "source_contents": [
+                {
+                  "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+                  "accession": "0001628280-26-008131",
+                  "document_name": "CIK0000019617.json",
+                  "sha256": "e5a944643b89e809740d810ff200af40e7479e481359cebc062e1869862c9568"
+                },
+                {
+                  "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+                  "accession": "",
+                  "document_name": "CIK0000019617.json",
+                  "sha256": "9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71"
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961726000096/jpm-20260402.htm",
+                  "accession": "0000019617-26-000096",
+                  "document_name": "jpm-20260402.htm",
+                  "sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476"
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+                  "accession": "0001628280-26-008131",
+                  "document_name": "jpm-20251231.htm",
+                  "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+                }
+              ],
+              "c02_selection_policy": "COMPOSITION_GROUPED_V4",
+              "content_id": "sha256:8e1afa34687ea0edf2889593d5212fb0f84d8511a880b3eb1b2d2c3488ed302f"
+            },
+            "metrics": {
+              "C02": {
+                "result_id": "sha256:bc85895a9c396f66da4d0f915003b0c3d779f47827c377ba0c4439cf0c189ec7",
+                "publication": "PUBLISHED",
+                "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+                "files": {
+                  "metrics_matrix.csv": "f3e48cf79134482cc70db05afc70a53bd9bf69a2b60374b42703b5f4e06e52dd",
+                  "metric_evidence.csv": "84416a89f4570e6ea6ef9edf49cd3cc2de50a8bcb44af94aa8435964a028e82a"
+                }
+              }
+            },
+            "error": null,
+            "calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "record_id": "sha256:e7bc855807d52ff50467e5858b7d2773f13dcfd589b622696ab1b2ad96b3c58f"
+          },
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false
+        }
+      ],
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

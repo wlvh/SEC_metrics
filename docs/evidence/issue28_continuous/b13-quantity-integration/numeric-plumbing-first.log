@@ -1,0 +1,37 @@
+test_numeric_run_replays_sources_and_rejects_resigned_false_ratio (tests.vnext.test_capacity_numeric_run.CapacityNumericRunTest.test_numeric_run_replays_sources_and_rejects_resigned_false_ratio) ... ERROR
+
+======================================================================
+ERROR: test_numeric_run_replays_sources_and_rejects_resigned_false_ratio (tests.vnext.test_capacity_numeric_run.CapacityNumericRunTest.test_numeric_run_replays_sources_and_rejects_resigned_false_ratio)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_numeric_run.py", line 55, in test_numeric_run_replays_sources_and_rejects_resigned_false_ratio
+    rendered = render_ordinary_run(data_root=data, run_dir=run)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_projection.py", line 98, in render_ordinary_run
+    row,evidence,_ = projector._project_result(result=result,trace=trace,company=company,spec=view,baseline_row=baseline,
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        indexes=indexes,fiscal_year=str(period["fiscal_year"]),metric_fields=publication.METRIC_FIELDS)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/projector.py", line 2253, in _project_result
+    _evidence_row(
+    ~~~~~~~~~~~~~^
+        observation=observation,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        fiscal_year=fiscal_year,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/projector.py", line 2052, in _evidence_row
+    context = _context_text(
+        style=evidence_style,
+    ...<2 lines>...
+        constant=constant_context,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/projector.py", line 1984, in _context_text
+    raise ProjectionError("Text context requires a text Observation")
+vnext.projector.ProjectionError: Text context requires a text Observation
+
+----------------------------------------------------------------------
+Ran 1 test in 19.336s
+
+FAILED (errors=1)

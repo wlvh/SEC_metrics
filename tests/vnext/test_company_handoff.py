@@ -178,3 +178,25 @@ class SourceOnlyRulesTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class C02ConsumerDependenciesTest(unittest.TestCase):
+    def test_actual_consumer_proofs_fill_discovery_gap_without_mutating_inputs(self):
+        urls={'https://www.sec.gov/a'}; paths={'evidence/a'}
+        proof={'source_url':'https://www.sec.gov/proxy','request_repo_relative_path':'evidence/proxy.html',
+               'request_headers_repo_relative_path':'evidence/proxy.headers.json'}
+        with patch('scripts.vnext.normal_text_input_v2.prepare_normal_business_text_input',
+                   return_value={'source_proofs':[proof]}) as prepared:
+            got_urls,got_paths=handoff.c02_consumer_dependencies(Path('/source'),'test_company',['C02'],urls,paths)
+        self.assertIn(proof['source_url'],got_urls)
+        self.assertIn(proof['request_repo_relative_path'],got_paths)
+        self.assertIn(proof['request_headers_repo_relative_path'],got_paths)
+        self.assertEqual(urls,{'https://www.sec.gov/a'})
+        self.assertEqual(paths,{'evidence/a'})
+        prepared.assert_called_once()
+
+    def test_unrelated_metric_does_not_prepare_c02_or_include_answers(self):
+        with patch('scripts.vnext.normal_text_input_v2.prepare_normal_business_text_input') as prepared:
+            urls,paths=handoff.c02_consumer_dependencies(Path('/source'),'test_company',['B01'],{'u'},{'p'})
+        prepared.assert_not_called()
+        self.assertEqual((urls,paths),({'u'},{'p'}))

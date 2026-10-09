@@ -1,0 +1,203 @@
+{
+  "record_type": "D03_LITERAL_LOGICAL_SOURCE_RESOURCE_PREFLIGHT",
+  "source_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-complete-six-responses-20261004/source.json",
+  "source_sha256": "5c4aae9c6a1f671d348b0e41c3eefb526a3710a4c9d463f77f7e39d54f909b5b",
+  "source_unit_count": 17,
+  "original_native_fact_count": 1229,
+  "literal_started_chains": 27,
+  "complete_chains": 27,
+  "unresolved_chains": [],
+  "packet_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/d03-logical-continuation-preflight-20261004/all-started-chains.json",
+  "packet_sha256": "cde003d55b88d4cd7f67a3a5d245fe03f034f88009c01c9f15c7cbfb7d3d0f4b",
+  "physical_segments_all_started_chains": 72,
+  "four_anchor_physical_segments": 33,
+  "samples": [
+    {
+      "sample": "389",
+      "physical_segments": 1,
+      "measurement": {
+        "request_sha256": "36ee4b31e5469cba2ce8cf57878e7f9337d22caa3e0074c5544fbdd4fea2070f",
+        "request_bytes": 169024,
+        "rendered_prompt_sha256": "9cef618e90f1d6aa027efa867f93d81861eb5d48ab25fd73a17648ebb83fc824",
+        "rendered_prompt_bytes": 161841,
+        "input_tokens": 49803,
+        "output_reserve_tokens": 4096,
+        "context_tokens": 53899,
+        "maximum_context_tokens": 200000,
+        "maximum_payload_bytes": 8388608,
+        "fits": true,
+        "fallback_reason": null,
+        "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+        "estimator_id": "continuous_bounded_chat_context",
+        "estimator_version": "deepseek-v41-two-message-json-chat-1",
+        "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+        "identity": {
+          "provider": "deepseek",
+          "model": "deepseek-flash",
+          "api": "chat_completions",
+          "format_version": "deepseek-v41-two-message-json-chat-1",
+          "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+          "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+          "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+          "tokenizer_engine": "tokenizers",
+          "tokenizer_engine_version": "0.22.2",
+          "method": "PINNED_REFERENCE_CHAT_FORMAT",
+          "output_reserve": 4096
+        }
+      }
+    },
+    {
+      "sample": "394",
+      "physical_segments": 27,
+      "measurement": {
+        "request_sha256": "ec82ca22be43e46188a1863404e6dfbd60baf936616b5203d7e706b139f49da6",
+        "request_bytes": 273007,
+        "rendered_prompt_sha256": "1d8f691c22e16ec2979c32f551b8e42d969c1a4e1e83ea03160432f8a88d95ec",
+        "rendered_prompt_bytes": 260624,
+        "input_tokens": 79676,
+        "output_reserve_tokens": 4096,
+        "context_tokens": 83772,
+        "maximum_context_tokens": 200000,
+        "maximum_payload_bytes": 8388608,
+        "fits": true,
+        "fallback_reason": null,
+        "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+        "estimator_id": "continuous_bounded_chat_context",
+        "estimator_version": "deepseek-v41-two-message-json-chat-1",
+        "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+        "identity": {
+          "provider": "deepseek",
+          "model": "deepseek-flash",
+          "api": "chat_completions",
+          "format_version": "deepseek-v41-two-message-json-chat-1",
+          "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+          "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+          "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+          "tokenizer_engine": "tokenizers",
+          "tokenizer_engine_version": "0.22.2",
+          "method": "PINNED_REFERENCE_CHAT_FORMAT",
+          "output_reserve": 4096
+        }
+      }
+    },
+    {
+      "sample": "418",
+      "physical_segments": 2,
+      "measurement": {
+        "request_sha256": "29cac9d1a58b10a5f2a2044e2cb594780ec0dd44dc6efe10b7222b3a2ca8cfb0",
+        "request_bytes": 167947,
+        "rendered_prompt_sha256": "65af02bc3140b9da364d4fb64af35f3fa9297a59882d2e94f2d09315f9f62592",
+        "rendered_prompt_bytes": 160754,
+        "input_tokens": 49508,
+        "output_reserve_tokens": 4096,
+        "context_tokens": 53604,
+        "maximum_context_tokens": 200000,
+        "maximum_payload_bytes": 8388608,
+        "fits": true,
+        "fallback_reason": null,
+        "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+        "estimator_id": "continuous_bounded_chat_context",
+        "estimator_version": "deepseek-v41-two-message-json-chat-1",
+        "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+        "identity": {
+          "provider": "deepseek",
+          "model": "deepseek-flash",
+          "api": "chat_completions",
+          "format_version": "deepseek-v41-two-message-json-chat-1",
+          "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+          "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+          "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+          "tokenizer_engine": "tokenizers",
+          "tokenizer_engine_version": "0.22.2",
+          "method": "PINNED_REFERENCE_CHAT_FORMAT",
+          "output_reserve": 4096
+        }
+      }
+    },
+    {
+      "sample": "507",
+      "physical_segments": 3,
+      "measurement": {
+        "request_sha256": "da7f464ceb944558ed5f1f45c95a9f49053e5382db310f5f7a20e61001418170",
+        "request_bytes": 304973,
+        "rendered_prompt_sha256": "61b513478a64b52831b8921b66e67f094c132767b4c2944442fb511f09064eef",
+        "rendered_prompt_bytes": 288658,
+        "input_tokens": 91088,
+        "output_reserve_tokens": 4096,
+        "context_tokens": 95184,
+        "maximum_context_tokens": 200000,
+        "maximum_payload_bytes": 8388608,
+        "fits": true,
+        "fallback_reason": null,
+        "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+        "estimator_id": "continuous_bounded_chat_context",
+        "estimator_version": "deepseek-v41-two-message-json-chat-1",
+        "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+        "identity": {
+          "provider": "deepseek",
+          "model": "deepseek-flash",
+          "api": "chat_completions",
+          "format_version": "deepseek-v41-two-message-json-chat-1",
+          "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+          "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+          "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+          "tokenizer_engine": "tokenizers",
+          "tokenizer_engine_version": "0.22.2",
+          "method": "PINNED_REFERENCE_CHAT_FORMAT",
+          "output_reserve": 4096
+        }
+      }
+    },
+    {
+      "sample": "four-original-anchors",
+      "physical_segments": 33,
+      "measurement": {
+        "request_sha256": "cb5d4be35658a3d096a7918019d21f2fdc62efd3136531779bd6ed4450361a88",
+        "request_bytes": 440432,
+        "rendered_prompt_sha256": "718fc5b1f94b16000b9f64d667c81adacd97135f42410f27c440df33eb815e9e",
+        "rendered_prompt_bytes": 417287,
+        "input_tokens": 130536,
+        "output_reserve_tokens": 4096,
+        "context_tokens": 134632,
+        "maximum_context_tokens": 200000,
+        "maximum_payload_bytes": 8388608,
+        "fits": true,
+        "fallback_reason": null,
+        "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+        "estimator_id": "continuous_bounded_chat_context",
+        "estimator_version": "deepseek-v41-two-message-json-chat-1",
+        "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+        "identity": {
+          "provider": "deepseek",
+          "model": "deepseek-flash",
+          "api": "chat_completions",
+          "format_version": "deepseek-v41-two-message-json-chat-1",
+          "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+          "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+          "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+          "tokenizer_engine": "tokenizers",
+          "tokenizer_engine_version": "0.22.2",
+          "method": "PINNED_REFERENCE_CHAT_FORMAT",
+          "output_reserve": 4096
+        }
+      }
+    }
+  ],
+  "seconds": 0.771,
+  "scope": "Complete literal chains from preserved source, not semantic answers. Measured envelopes own only four selected anchors, with existing identity context. Not all17 units/1229 facts, no company plan or complete production response protocol.",
+  "old_eight_location_contract_changed": false,
+  "new_model_answer": false,
+  "native_or_company_credit": false,
+  "live_permission": false,
+  "business_calls": [
+    0,
+    0,
+    0
+  ],
+  "tested_checkout_sha": "058c80b198cde14a05077c9e448048f895a117c8",
+  "necessary_uncommitted_files": {
+    "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/logical_source.py": "b339c74a5d9cd11c574ddd87803b5368d1496c447e6ae8073559c487c14f9cb0",
+    "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/measure_preflight.py": "1dfe1a7336823230c7ec2d60ea0981f63ff934f55a3621575868ef01ce40adf7",
+    "docs/evidence/issue28_continuous/d03-logical-continuation-preflight-20261004/test_logical_source.py": "240865bd4fa1928e328e9463ce2a5f3da392a86ad7115c34b66037e15a6691c9"
+  }
+}

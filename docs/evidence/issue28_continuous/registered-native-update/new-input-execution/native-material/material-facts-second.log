@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/native-refresh-execution/complete_material_facts.py", line 13, in <module>
+    session=recorded_sec_session(root=root/'ledger',response=json.dumps(facts).encode());r=session.capture(company_id='enphase_energy',url=p['source_url'],refresh_metadata=True);assert r['status']=='SUCCEEDED';(root/'companyfacts-capture.json').write_text(json.dumps(r,indent=2)+'\n');print('SYNTHETIC_SAME_ACCESSION_FACTS_ADMITTED',flush=True)
+                                                                                           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 121, in capture
+    discovery=discover_saved_source_requirements(repo_root=self.data_root,company_id=company_id)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_source_requirements.py", line 263, in discover_saved_source_requirements
+    prepared=prepare_saved_annual_input(repo_root=repo_root,company_id=company_id)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_annual_input_v2.py", line 60, in prepare_saved_annual_input
+    report = fiscal_year_labels._inspect_prepared_input(repo_root=repo_root,prepared=original)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 251, in _inspect_prepared_input
+    inspected=inspect_fiscal_year_labels(primary_bytes=primary,companyfacts_bytes=facts,
+        expected_primary_sha256=sha256_bytes(content=primary),expected_companyfacts_sha256=sha256_bytes(content=facts),
+        expected_cik=prepared["entity"],filing=prepared["filing"])
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 208, in inspect_fiscal_year_labels
+    _need(bool(cf_rows),"FISCAL_LABEL_SAME_ACCESSION_COMPANYFACTS_MISSING")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 37, in _need
+    raise FiscalYearLabelError(reason)
+vnext.fiscal_year_labels.FiscalYearLabelError: FISCAL_LABEL_SAME_ACCESSION_COMPANYFACTS_MISSING

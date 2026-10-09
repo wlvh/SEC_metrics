@@ -1,0 +1,30 @@
+{
+  "command": [
+    "/tmp/sec_metrics_issue28_continuous/ordinary-companyfacts-material.py",
+    "--repo",
+    "/Users/lyuhongwang/Developer/SEC_metrics",
+    "--output",
+    "/tmp/sec_metrics_issue28_continuous/ordinary-companyfacts-material-final"
+  ],
+  "before": {
+    "scripts/vnext/normal_companyfacts_results.py": "732f4cdb0054921e637767d006363a8ac039f2e7a07afef24df7ed12285ca095",
+    "tests/vnext/test_normal_companyfacts_results.py": "30ed61d71de95aded662fbb583d90ce3ab4d588074ef8b15476447772f9a5baa",
+    "catalog/deterministic_metrics.json": "09e93627ce4125debfe00872f9e11dc351658b140bbaa13dfeef81b6ac3b2a3c",
+    "evidence/requests_log.csv": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+    "evidence/requests_log_manifest.json": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+  },
+  "after": {
+    "scripts/vnext/normal_companyfacts_results.py": "732f4cdb0054921e637767d006363a8ac039f2e7a07afef24df7ed12285ca095",
+    "tests/vnext/test_normal_companyfacts_results.py": "30ed61d71de95aded662fbb583d90ce3ab4d588074ef8b15476447772f9a5baa",
+    "catalog/deterministic_metrics.json": "09e93627ce4125debfe00872f9e11dc351658b140bbaa13dfeef81b6ac3b2a3c",
+    "evidence/requests_log.csv": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+    "evidence/requests_log_manifest.json": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+  },
+  "unchanged": true,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "native_runs_created": false
+}

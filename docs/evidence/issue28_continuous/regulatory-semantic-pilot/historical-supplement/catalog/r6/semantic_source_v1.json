@@ -1,0 +1,21 @@
+{
+  "record_type": "R6_SEMANTIC_SOURCE_POLICY",
+  "schema_version": 1,
+  "policy_id": "r6_semantic_source_v1",
+  "metric_ids": ["D04"],
+  "max_unit_payload_bytes": 150000,
+  "max_single_object_payload_bytes": 300000,
+  "native_object_names": [
+    ["http://www.xbrl.org/2003/instance", "context"],
+    ["http://www.xbrl.org/2003/instance", "unit"],
+    ["http://www.xbrl.org/2013/inlineXBRL", "continuation"],
+    ["http://www.xbrl.org/2013/inlineXBRL", "footnote"],
+    ["http://www.xbrl.org/2013/inlineXBRL", "relationship"],
+    ["http://www.xbrl.org/2008/inlineXBRL", "continuation"],
+    ["http://www.xbrl.org/2008/inlineXBRL", "footnote"],
+    ["http://www.xbrl.org/2003/linkbase", "footnotelink"]
+  ],
+  "provider_enabled": false,
+  "semantic_verdict_authorized": false,
+  "production_authorized": false
+}

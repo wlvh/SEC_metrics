@@ -104,6 +104,22 @@ def event_saved_paths(requirements, rows, company_id, ciks, source_root=None):
     return aliases
 
 
+def c02_consumer_dependencies(source, company_id, metrics, urls, paths):
+    """Carry authenticated current consumer locators, not model processing."""
+    urls, paths = set(urls), set(paths)
+    if 'C02' not in metrics:
+        return urls, paths
+    from .normal_text_input_v2 import prepare_normal_business_text_input
+    prepared = prepare_normal_business_text_input(
+        repo_root=source, company_id=company_id, metric_id='C02')
+    for proof in prepared.get('source_proofs', []):
+        urls.add(proof['source_url'])
+        paths.update(proof[field] for field in
+            ('request_repo_relative_path', 'request_headers_repo_relative_path')
+            if proof.get(field))
+    return urls, paths
+
+
 def export_company(*, source_root, output_root, trust_root, company_id,
                    metric_ids=None, declared_frame=None):
     """Verify the full original history, export sources and install trust.
@@ -148,6 +164,7 @@ def export_company(*, source_root, output_root, trust_root, company_id,
     rows = parse_request_log_rows(text=(source/'evidence/requests_log.csv').read_text())
     paths = {'config/company_registry.csv', 'evidence/requests_log.csv',
              'evidence/requests_log_manifest.json'}
+    urls, paths = c02_consumer_dependencies(source, company_id, metrics, urls, paths)
     for row in rows:
         if row['source_url'] in urls:
             paths.update(row[field] for field in ('repo_relative_path', 'headers_repo_relative_path')

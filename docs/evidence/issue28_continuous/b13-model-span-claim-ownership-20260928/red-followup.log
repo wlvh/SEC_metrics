@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_model_span_reviewed_assertion_and_subject_counterexamples (tests.vnext.test_capacity_two_stage.CapacityTwoStageTest.test_model_span_reviewed_assertion_and_subject_counterexamples)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_capacity_two_stage.py", line 238, in test_model_span_reviewed_assertion_and_subject_counterexamples
+    self.assertIn('B13_MODEL_SPAN_MULTI_CAPACITY_ASSERTION:' + ref,
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                  unresolved)
+                  ^^^^^^^^^^^
+AssertionError: 'B13_MODEL_SPAN_MULTI_CAPACITY_ASSERTION:B0' not found in ['B13_MODEL_SPAN_VALIDATION_SUSPENDED']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.235s
+
+FAILED (failures=1)

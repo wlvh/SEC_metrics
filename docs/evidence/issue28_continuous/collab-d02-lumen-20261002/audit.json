@@ -1,0 +1,38 @@
+{
+  "record_type": "ISSUE28_D02_LUMEN_2025_EXACT_RESULT_DEFECT_AUDIT",
+  "status": "CONFIRMED_OUT_OF_SCOPE_LEGAL_COUNSEL_COST_POLICY_IN_D02_RESULT",
+  "company_id": "lumen_technologies",
+  "metric_id": "D02",
+  "period_start": "2025-01-01",
+  "period_end": "2025-12-31",
+  "result_id": "sha256:7e2d21f01d5b0cd93ab46b619d5979e2d6cd8efc119cfd2469980ed42edc436f",
+  "run_id": "run:ordinary-integrated:82b8dbb8f776fe917453dae851c61199c3ca8dfa413f51eff406436164b0343e",
+  "private_result_quality": "EXACT",
+  "historical_index_same_result_id": true,
+  "candidate_selected_count": 15,
+  "source_block": 1670,
+  "source_section_id": "ITEM_8",
+  "candidate_role": "excerpt_1",
+  "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+  "source_accession": "0000018926-26-000014",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm",
+  "source_raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+  "source_byte_length": 3689841,
+  "source_raw_span_sha256": "0529c216c5067e4e579acce330b12aa1ad378ff5be111f4ef6867176c71ca0c8",
+  "selected_text_sha256": "0529c216c5067e4e579acce330b12aa1ad378ff5be111f4ef6867176c71ca0c8",
+  "selected_text": "In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on finance, regulatory, litigation, and other matters. Subject to certain exceptions, we expense these costs as the related services are received.",
+  "reason": "This is an accounting policy for external legal counsel costs in several advisory areas, not a proceeding, claim, litigation event or accrued litigation amount.",
+  "peer_lead": {
+    "fixed_commit": "1f3f446c1d3eb299b95c03ec967a4a5224523353",
+    "defect_id": "D02_LUMEN_2025_KEYWORD_PROXY_ADMITS_LEGAL_FEE_POLICY",
+    "not_peer_acceptance_credit": true
+  },
+  "old_run_and_result_preserved": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "original_ledger_and_source_log_unchanged": true,
+  "scope_limit": "One exact Result and one confirmed wrong excerpt; not a full D02 content audit or a finding about every company."
+}

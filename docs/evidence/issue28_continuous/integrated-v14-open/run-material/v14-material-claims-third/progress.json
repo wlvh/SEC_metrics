@@ -1,0 +1,173 @@
+[
+  {
+    "case": "positive-B03",
+    "expected": "PASS",
+    "details": {
+      "run_id": "run:ordinary-integrated:f3744d10fc984970e47d57266f4662e3eaa9b483d66d289c759f494342581a58",
+      "metric_ids": [
+        "B01",
+        "B03"
+      ],
+      "status": "OPEN",
+      "review_count": 0
+    },
+    "passed": true,
+    "outcome": "ACCEPTED",
+    "seconds": 12.985
+  },
+  {
+    "case": "positive-B12",
+    "expected": "PASS",
+    "details": {
+      "run_id": "run:ordinary-integrated:997aaa798dee9b3745bda891b4303ac2cb7a4223bdc6650d08ef3f07f9bda750",
+      "metric_ids": [
+        "B12"
+      ],
+      "status": "OPEN",
+      "review_count": 0
+    },
+    "passed": true,
+    "outcome": "ACCEPTED",
+    "seconds": 14.396
+  },
+  {
+    "case": "positive-D01",
+    "expected": "PASS",
+    "details": {
+      "run_id": "run:ordinary-integrated:b26e72ea4ab7bbe11a37951b9295e1b79ecfbb4e8153e60700a1dd6bb936f6c7",
+      "metric_ids": [
+        "D01"
+      ],
+      "status": "OPEN",
+      "review_count": 1
+    },
+    "passed": true,
+    "outcome": "ACCEPTED",
+    "seconds": 22.827
+  },
+  {
+    "case": "positive-B08",
+    "expected": "PASS",
+    "details": {
+      "run_id": "run:ordinary-integrated:30d3681f22bd78ab9ee7154a507ff86e75f2011710dc3d8346d0f1b21c72125d",
+      "metric_ids": [
+        "B08"
+      ],
+      "status": "OPEN",
+      "review_count": 0
+    },
+    "passed": true,
+    "outcome": "ACCEPTED",
+    "seconds": 15.396
+  },
+  {
+    "case": "positive-E03",
+    "expected": "PASS",
+    "passed": false,
+    "outcome": "FAILED",
+    "error_type": "RunStoreError",
+    "reason": "Observation SourceReference field differs: source_role",
+    "stage": "SETUP",
+    "seconds": 12.405
+  },
+  {
+    "case": "missing-dependency-spec",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "RunStoreError",
+    "reason": "Run Spec closure cannot be compiled",
+    "stage": "REPLAY",
+    "seconds": 0.011
+  },
+  {
+    "case": "extra-unrequested-spec",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "ValueError",
+    "reason": "ORDINARY_INTEGRATED_SOURCE_SPEC_OR_PERIOD_CHANGED",
+    "stage": "REPLAY",
+    "seconds": 3.451
+  },
+  {
+    "case": "missing-source-reference",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "ValueError",
+    "reason": "ORDINARY_INTEGRATED_SOURCE_SPEC_OR_PERIOD_CHANGED",
+    "stage": "REPLAY",
+    "seconds": 3.463
+  },
+  {
+    "case": "changed-fiscal-label",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "ValueError",
+    "reason": "ORDINARY_INTEGRATED_SOURCE_SPEC_OR_PERIOD_CHANGED",
+    "stage": "REPLAY",
+    "seconds": 3.712
+  },
+  {
+    "case": "missing-dependency-result",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "ValueError",
+    "reason": "ORDINARY_INTEGRATED_COMPLETE_COMPUTATION_GRAPH_CHANGED",
+    "stage": "REPLAY",
+    "seconds": 3.454
+  },
+  {
+    "case": "missing-event-claim",
+    "expected": "REJECT",
+    "passed": false,
+    "outcome": "FAILED",
+    "error_type": "KeyError",
+    "reason": "'E03'",
+    "stage": "SETUP",
+    "seconds": 0.01
+  },
+  {
+    "case": "self-consistent-false-revenue",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "ValueError",
+    "reason": "ORDINARY_INTEGRATED_COMPLETE_COMPUTATION_GRAPH_CHANGED",
+    "stage": "REPLAY",
+    "seconds": 5.723
+  },
+  {
+    "case": "missing-text-review",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "RunStoreError",
+    "reason": "Review unit has no effective decision",
+    "stage": "REPLAY",
+    "seconds": 0.018
+  },
+  {
+    "case": "rehashed-input-primary-change",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "ValueError",
+    "reason": "ORDINARY_INTEGRATED_INPUT_BINDING_CHANGED",
+    "stage": "REPLAY",
+    "seconds": 3.513
+  },
+  {
+    "case": "draft-freeze-rejection",
+    "expected": "REJECT",
+    "passed": true,
+    "outcome": "REJECTED",
+    "error_type": "ValueError",
+    "reason": "ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED",
+    "stage": "SETUP",
+    "seconds": 0.009
+  }
+]

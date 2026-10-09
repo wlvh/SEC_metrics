@@ -1,0 +1,53 @@
+{
+  "ordinal": 112,
+  "original_finish_reason": "length",
+  "actual_output_tokens": 4096,
+  "configured_output_limit": 4096,
+  "complete_response": false,
+  "complete_objects_in_truncated_prefix": 58,
+  "prefix_outside_supplied_references": [
+    {
+      "complete_prefix_finding_index": 2,
+      "evidence": {
+        "kind": "VISIBLE_BLOCK",
+        "source_index": 449
+      }
+    }
+  ],
+  "supplied_units": [
+    {
+      "unit_index": 0,
+      "kind": "VISIBLE_BLOCK",
+      "count": 498,
+      "minimum_index": 1884,
+      "maximum_index": 2381
+    },
+    {
+      "unit_index": 1,
+      "kind": "VISIBLE_BLOCK",
+      "count": 327,
+      "minimum_index": 2382,
+      "maximum_index": 2708
+    },
+    {
+      "unit_index": 2,
+      "kind": "NATIVE_FACT",
+      "count": 236,
+      "minimum_index": 1,
+      "maximum_index": 236
+    },
+    {
+      "unit_index": 3,
+      "kind": "NATIVE_FACT",
+      "count": 215,
+      "minimum_index": 237,
+      "maximum_index": 451
+    }
+  ],
+  "interpretation": "Diagnostic of complete objects inside an incomplete response only. Does not repair, normalize, accept or reuse failed112; truncation and any separate reference defects remain.",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

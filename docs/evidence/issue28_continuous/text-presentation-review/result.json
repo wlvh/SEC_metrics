@@ -1,0 +1,78 @@
+{
+  "record_type": "INDEPENDENT_TEXT_PROJECTION_READONLY_REVIEW",
+  "files": {
+    "scripts/vnext/normal_text_projection_v2.py": "c4875f9de43a5d38b81f544f960e7fd61ad2c609490cf72ee66eee79ee1806db",
+    "config/normal_text_projection_v2.json": "c2a76da8d700ad83310cdfb98f0380a0f2ce7ec14fbaed73745784cbafe45d74",
+    "tools/vnext_normal_candidate.py": "a451bf2084ecc68103437135d95e7eb33860ff1914624429567b3054395ebcc4"
+  },
+  "checks": [
+    {
+      "case": "marriott_international-C02",
+      "kind": "PURE_RENDERING_ONLY",
+      "form": "DEF 14A",
+      "filed_date": "2026-03-27",
+      "annual_grouping_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "raw_byte_evidence_count": 29,
+      "open_frozen_entry": "REJECTED"
+    },
+    {
+      "case": "paramount_skydance_paramount_global-C02",
+      "kind": "PURE_RENDERING_ONLY",
+      "form": "10-K/A",
+      "filed_date": "2026-04-24",
+      "annual_grouping_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "raw_byte_evidence_count": 12,
+      "open_frozen_entry": "REJECTED"
+    },
+    {
+      "case": "jpmorgan_chase-D02",
+      "kind": "PURE_RENDERING_ONLY",
+      "form": "10-K",
+      "filed_date": "2026-02-13",
+      "annual_grouping_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "raw_byte_evidence_count": 34,
+      "open_frozen_entry": "REJECTED"
+    },
+    {
+      "case": "salesforce-C04",
+      "kind": "PURE_RENDERING_ONLY",
+      "status": "WITHHELD",
+      "reason": "NORMAL_INPUT_SOURCE_ACCESS_FAILED",
+      "source_count": 23
+    },
+    {
+      "case": "marriott_international-C02",
+      "kind": "TEST_ONLY_MOCKED_CLI_DISPATCH_NO_RUN",
+      "exit_code": 0,
+      "selection_none_allowed": true,
+      "row_written": true
+    },
+    {
+      "case": "salesforce-C04",
+      "kind": "TEST_ONLY_MOCKED_CLI_DISPATCH_NO_RUN",
+      "exit_code": 2,
+      "selection_none_allowed": false,
+      "row_written": true
+    }
+  ],
+  "repo_files_changed": false,
+  "installed_or_frozen_runs_created": false,
+  "current_v13_source_replay_credit": false,
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}

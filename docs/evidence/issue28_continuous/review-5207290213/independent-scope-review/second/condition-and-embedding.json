@@ -1,0 +1,176 @@
+{
+  "function_sha256": {
+    "_assertion_clauses": "b2d8e8bb1fcf1bf9e4662927f03534f535921a202d38caf929420c495ae83a1f",
+    "_assertion_scope": "bf8885df05b557924a0c29211c4315473f7e5af5c718dedacb3d9412c06e9fa4",
+    "_assessment_time_prefix": "62c8254f00b1820534d1b689791bdd8e834c94ce428c2e462d9c7f22459b8842",
+    "source_statement_relations": "e45e856face02be3749d4df6a04870b66fe3dfe2778712302eea4d31ce52c495"
+  },
+  "cases": [
+    {
+      "statement": "If financing fails and there is substantial doubt about our ability to continue as a going concern, we sell the asset.",
+      "labels": [
+        {
+          "kind": "DOUBT_DISCLOSED",
+          "timing": "CURRENT_REPORT",
+          "observation": {
+            "accepted": true,
+            "unresolved": [],
+            "current_target_findings": [
+              {
+                "evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "If financing fails and there is substantial doubt about our ability to continue as a going concern, we sell the asset."
+                  }
+                ],
+                "kind": "DOUBT_DISCLOSED",
+                "reason": "Recorded classification for the supplied source statement.",
+                "subject": "TARGET_REGISTRANT",
+                "timing": "CURRENT_REPORT",
+                "unit_id": "sha256:c5a8e9f00237ef2625365db668d3a0a3de0181a41edb346597af0a9bf10fdabd",
+                "resolved_evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "If financing fails and there is substantial doubt about our ability to continue as a going concern, we sell the asset.",
+                    "start_character": 0,
+                    "end_character": 118
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "timing": "CONDITIONAL",
+          "observation": {
+            "accepted": false,
+            "reason": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+          }
+        },
+        {
+          "kind": "HISTORICAL_STATEMENT",
+          "timing": "HISTORICAL",
+          "observation": {
+            "accepted": false,
+            "reason": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+          }
+        }
+      ]
+    },
+    {
+      "statement": "If financing fails, cash is insufficient and these conditions raise substantial doubt about our ability to continue as a going concern.",
+      "labels": [
+        {
+          "kind": "DOUBT_DISCLOSED",
+          "timing": "CURRENT_REPORT",
+          "observation": {
+            "accepted": false,
+            "reason": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+          }
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "timing": "CONDITIONAL",
+          "observation": {
+            "accepted": true,
+            "unresolved": [],
+            "current_target_findings": []
+          }
+        },
+        {
+          "kind": "HISTORICAL_STATEMENT",
+          "timing": "HISTORICAL",
+          "observation": {
+            "accepted": false,
+            "reason": "D04_SOURCE_FACT_CLASSIFICATION_CONFLICT"
+          }
+        }
+      ]
+    },
+    {
+      "statement": "In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern.",
+      "labels": [
+        {
+          "kind": "DOUBT_DISCLOSED",
+          "timing": "CURRENT_REPORT",
+          "observation": {
+            "accepted": true,
+            "unresolved": [
+              {
+                "unit_id": "sha256:021807e839506a3c52ee836ff259c594b1e5032c1dc30ee35de42c294f5e8f74",
+                "source_index": 7,
+                "reason": "D04_SOURCE_RELATION_IMPLEMENTATION_UNSUPPORTED",
+                "statement_text": "In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern."
+              }
+            ],
+            "current_target_findings": [
+              {
+                "evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern."
+                  }
+                ],
+                "kind": "DOUBT_DISCLOSED",
+                "reason": "Recorded classification for the supplied source statement.",
+                "subject": "TARGET_REGISTRANT",
+                "timing": "CURRENT_REPORT",
+                "unit_id": "sha256:021807e839506a3c52ee836ff259c594b1e5032c1dc30ee35de42c294f5e8f74",
+                "resolved_evidence": [
+                  {
+                    "kind": "VISIBLE_BLOCK",
+                    "source_index": 7,
+                    "text": "In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern.",
+                    "start_character": 0,
+                    "end_character": 128
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "kind": "CONDITIONAL_OR_BOILERPLATE",
+          "timing": "CONDITIONAL",
+          "observation": {
+            "accepted": true,
+            "unresolved": [
+              {
+                "unit_id": "sha256:021807e839506a3c52ee836ff259c594b1e5032c1dc30ee35de42c294f5e8f74",
+                "source_index": 7,
+                "reason": "D04_SOURCE_RELATION_IMPLEMENTATION_UNSUPPORTED",
+                "statement_text": "In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern."
+              }
+            ],
+            "current_target_findings": []
+          }
+        },
+        {
+          "kind": "HISTORICAL_STATEMENT",
+          "timing": "HISTORICAL",
+          "observation": {
+            "accepted": true,
+            "unresolved": [
+              {
+                "unit_id": "sha256:021807e839506a3c52ee836ff259c594b1e5032c1dc30ee35de42c294f5e8f74",
+                "source_index": 7,
+                "reason": "D04_SOURCE_RELATION_IMPLEMENTATION_UNSUPPORTED",
+                "statement_text": "In 2024 management concluded that these conditions now raise substantial doubt about our ability to continue as a going concern."
+              }
+            ],
+            "current_target_findings": []
+          }
+        }
+      ]
+    }
+  ],
+  "real_calls": [
+    0,
+    0,
+    0
+  ]
+}

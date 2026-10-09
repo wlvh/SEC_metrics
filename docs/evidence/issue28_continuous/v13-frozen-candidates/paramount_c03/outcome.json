@@ -1,0 +1,30 @@
+{
+  "case": "paramount_c03",
+  "company_id": "paramount_skydance_paramount_global",
+  "metric_id": "C03",
+  "commit": "887c97d09937aff801e21a4e2430315f3364da33",
+  "status": "PASSED_FROZEN_AND_COLD_READ",
+  "stage": "COMPLETE",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "parent_pid": 6719,
+  "cold_command": "/opt/homebrew/opt/python@3.14/bin/python3.14 /Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_native_material.py --cold-read /private/tmp/sec_metrics_issue28_continuous/v13-frozen-material-b171/paramount_c03/data /private/tmp/sec_metrics_issue28_continuous/v13-frozen-material-b171/paramount_c03/run /private/tmp/sec_metrics_issue28_continuous/v13-frozen-material-b171/paramount_c03/before-freeze.json /private/tmp/sec_metrics_issue28_continuous/v13-frozen-material-b171/paramount_c03/cold-read.json",
+  "cold_cwd": "/private/tmp/sec_metrics_issue28_continuous/v13-frozen-material-b171/paramount_c03",
+  "cold_returncode": 0,
+  "cold_pid": 6808,
+  "run_id": "run:normal-current:1f73d8315f51363eaf29fd4fcd10f0f8dd5be10f54fe2aaccaeaef4c238e4999",
+  "validation_status": "PASSED",
+  "source_references": 16,
+  "record_graph_hash": "sha256:88119117a785e4c118650f024501155f26a3dfcd32b1b54da6a77fd95a881151",
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-08-07",
+    "period_end": "2025-12-31"
+  },
+  "review_count": 0,
+  "protected_state_unchanged": true,
+  "data_root_has_git": false
+}

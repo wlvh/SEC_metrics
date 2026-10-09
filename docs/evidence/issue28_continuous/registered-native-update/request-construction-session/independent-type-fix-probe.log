@@ -1,0 +1,18 @@
+test_actual_rule_file_change_latches_failed_even_after_restore (__main__.RequestConstructionScopeTest.test_actual_rule_file_change_latches_failed_even_after_restore) ... ok
+test_dictionary_order_preserved_for_deterministic_constructor_input (__main__.RequestConstructionScopeTest.test_dictionary_order_preserved_for_deterministic_constructor_input) ... ok
+test_existing_non_plain_json_types_use_original_constructor_without_cache (__main__.RequestConstructionScopeTest.test_existing_non_plain_json_types_use_original_constructor_without_cache) ... ok
+test_format_limit_and_tokenizer_state_changes_reject_cached_output (__main__.RequestConstructionScopeTest.test_format_limit_and_tokenizer_state_changes_reject_cached_output) ... ok
+test_full_input_raw_unicode_and_changed_source_id_do_not_share_entries (__main__.RequestConstructionScopeTest.test_full_input_raw_unicode_and_changed_source_id_do_not_share_entries) ... ok
+test_input_mutation_with_stale_identity_is_not_a_cache_hit (__main__.RequestConstructionScopeTest.test_input_mutation_with_stale_identity_is_not_a_cache_hit) ... ok
+test_integer_key_cannot_hit_a_valid_string_key_entry (__main__.RequestConstructionScopeTest.test_integer_key_cannot_hit_a_valid_string_key_entry) ... ok
+test_nested_different_authority_rejects_and_size_bound_does_not_change_output (__main__.RequestConstructionScopeTest.test_nested_different_authority_rejects_and_size_bound_does_not_change_output) ... ok
+test_non_plain_output_retains_original_types_and_is_not_cached (__main__.RequestConstructionScopeTest.test_non_plain_output_retains_original_types_and_is_not_cached) ... ok
+test_returned_nested_objects_cannot_mutate_stored_bytes (__main__.RequestConstructionScopeTest.test_returned_nested_objects_cannot_mutate_stored_bytes) ... ok
+test_source_authenticity_check_runs_again_with_warm_construction (__main__.RequestConstructionScopeTest.test_source_authenticity_check_runs_again_with_warm_construction) ... ok
+test_tokenizer_object_state_cannot_silently_change_between_hits (__main__.RequestConstructionScopeTest.test_tokenizer_object_state_cannot_silently_change_between_hits) ... ok
+test_tuple_and_container_subclasses_do_not_use_plain_json_entries (__main__.RequestConstructionScopeTest.test_tuple_and_container_subclasses_do_not_use_plain_json_entries) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 7.025s
+
+OK

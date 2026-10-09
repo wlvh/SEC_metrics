@@ -1,0 +1,68 @@
+{
+  "record_type": "B13_ORIGINAL_SOURCE_INSPECTION_NOT_ACCEPTANCE",
+  "head": "989c564137c0e7569555694b4ab473c4864b8e7d",
+  "source_archive_sha256": "c5e921978fc0ea572310365ead46cf78edca11aa60ed807e404c2c11766cbc90",
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "companies": {
+    "enphase_energy": {
+      "period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "units_by_kind": {
+        "VISIBLE_TEXT": 7,
+        "NATIVE_FACTS": 10,
+        "NATIVE_SUPPLEMENTS": 12
+      },
+      "complete_visible_block_count": 2709,
+      "all_units_equal_archived_originals": true,
+      "quantity_reader_actual_result": {
+        "status": "IMPLEMENTATION_OR_SOURCE_RELATION_NOT_ESTABLISHED",
+        "reason": "B13_QUANTITY_RELATION_NOT_UNIQUE_OR_UNSUPPORTED:ACTUAL_PRODUCTION",
+        "disclosure_absence_credit": false
+      }
+    },
+    "ford_motor_company": {
+      "period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "units_by_kind": {
+        "VISIBLE_TEXT": 10,
+        "NATIVE_FACTS": 20,
+        "NATIVE_SUPPLEMENTS": 22
+      },
+      "complete_visible_block_count": 4176,
+      "all_units_equal_archived_originals": true,
+      "quantity_reader_actual_result": {
+        "status": "IMPLEMENTATION_OR_SOURCE_RELATION_NOT_ESTABLISHED",
+        "reason": "B13_QUANTITY_RELATION_NOT_UNIQUE_OR_UNSUPPORTED:ACTUAL_PRODUCTION",
+        "disclosure_absence_credit": false
+      }
+    }
+  },
+  "native_result_created": false,
+  "complete_semantic_coverage_verified": false,
+  "numeric_pair_absence_established": false,
+  "original68": {
+    "historical_terminal": "SUCCEEDED",
+    "current_content_rejection": "B13_TAX_CREDIT_IS_NOT_PRODUCTION_OR_BORROWING_CAPACITY",
+    "all_original_files_unchanged": true,
+    "original_sha256": {
+      "intent.json": "6108989fcc7057b17281911978db5cfdb24c7cd85e5c9a2c7f294f11feab4204",
+      "capacity-assessment.json": "c93b15198376a8b80bd77a60fec94cdca33fabe6167622732fa1620a1ba6a8f8",
+      "semantic-request.json": "6c545dd17f569cb9c7ab3d39f554e09bbbf86a8c3484798a1dabe0d147eb0747",
+      "execution-rules.json": "c28d315f980c97d4b2a0a69df1be6c1b4653cfaa91933a2ac6f9fc11891c4b98",
+      "terminal.json": "e4554d8e07155f45d5159d613f9877311a452750a548c57bb3c7ba69c79a1e7c",
+      "wire/assistant-output.bin": "0be96bf4393eb0bc75ba7131268e116cfaf6a4416f583c2caa53c71aff4b9b78",
+      "wire/journal.json": "7362a9cad71a532d6bb8b52abbdfd3e7e3124dd7f0fdd7054283b5ab654746e6"
+    },
+    "usable_result_credit": false
+  }
+}

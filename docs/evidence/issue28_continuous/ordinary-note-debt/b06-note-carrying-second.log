@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_note_carrying.py", line 193, in inspect_note_carrying
+    xnotes,xrelated,xreports,xinventory = _source(xml,prepared,'xml')
+                                          ~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_note_carrying.py", line 114, in _source
+    _need(disposition not in {'UNRESOLVED','NON_USD_OR_NONMONETARY_REQUIRES_REVIEW'},
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'UNRESOLVED_FINANCING_FACT:'+local)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_note_carrying.py", line 36, in _need
+    raise NoteCarryingError('NOTE_CARRYING_'+reason)
+vnext.b06_note_carrying.NoteCarryingError: NOTE_CARRYING_UNRESOLVED_FINANCING_FACT:financingreceivableincludinginterestcurrent

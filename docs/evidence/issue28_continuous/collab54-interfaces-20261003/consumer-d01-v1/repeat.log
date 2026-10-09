@@ -1,0 +1,379 @@
+{
+  "elapsed_seconds": 9.063265125034377,
+  "record_type": "COMPANY_COMPUTATION_REFERENCES_V1",
+  "company_id": "marriott_international",
+  "source_checkpoint_id": "sha256:c1e71552bf0c2b4aebff851bbd9065da143c0643a439eca660b7412811da7ede",
+  "source_root": "/private/tmp/issue28-company-consumer-20261003/state-marriott-d01/source",
+  "metric_ids": [
+    "D01"
+  ],
+  "period_request": {
+    "report_end": null,
+    "fiscal_year": null
+  },
+  "metrics": [
+    {
+      "metric_id": "D01",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "81df2fefdd90448dbc73a543ff0b34ca",
+      "latest_attempt": "81df2fefdd90448dbc73a543ff0b34ca",
+      "successful_attempt": "2c5dc1f926e44949b4021ac19415cb18",
+      "previous_successful_attempt": "2c5dc1f926e44949b4021ac19415cb18",
+      "last_verified_candidate": {
+        "attempt_id": "2c5dc1f926e44949b4021ac19415cb18",
+        "targets": {
+          "D01": {
+            "fiscal_year": 2025,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01"
+          }
+        },
+        "current_input_matches": true,
+        "results": {
+          "D01": {
+            "applicability": "APPLICABLE",
+            "company_id": "marriott_international",
+            "metric_id": "D01",
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "publication": "PUBLISHED",
+            "quality": "EXACT",
+            "reason_code": "PASS",
+            "record_type": "METRIC_RESULT",
+            "result_id": "sha256:99c76e50d0fb19cd6116a80350a6f1ca38924b5731e812695484d28381b348f8",
+            "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+            "spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+            "text_payload": {
+              "approval_effect_hash": "sha256:0319df09e3a1e777550a3e0bcddc2b6c417cf087f0008ee48aaf667f0abb7020",
+              "candidate_hash": "sha256:5e41cbfad234ed939d4c4792a7f35a427728ad406259a1dae05517acc4922662",
+              "content_kind": "SOURCE_EXCERPTS",
+              "coverage_hashes": [
+                "sha256:8c5141d3695725dbde923fa7c98bdf56dbc521b728b8aa51b341652017aa74ce"
+              ],
+              "items": [
+                {
+                  "observation_id": "sha256:656812077ec6ee8b6afaec75181590a998176242e7bec5fb32a9dfb4b1437c9e",
+                  "order": 0,
+                  "role": "excerpt_0",
+                  "text": "Risks Relating to Our Industry"
+                },
+                {
+                  "observation_id": "sha256:afad4d110708a194be2fa5c949e3815ed614a774e583e6365a09db8159fc71c2",
+                  "order": 1,
+                  "role": "excerpt_1",
+                  "text": "Our industry is highly competitive, which may impact our ability to compete successfully for guests"
+                },
+                {
+                  "observation_id": "sha256:6e8d915a935d348adfa62b8875a8e99d53e38bd06765cbd59ab80631b622bd50",
+                  "order": 2,
+                  "role": "excerpt_2",
+                  "text": "Economic and other global, national, and regional conditions and events have in the past materially impacted, and could in the future materially impact, our business, operations, financial results, and growth"
+                },
+                {
+                  "observation_id": "sha256:32e1897de76b00dde92a1f9c58fada2fa58ee9b03a061d2505e630d0e98b76b5",
+                  "order": 3,
+                  "role": "excerpt_3",
+                  "text": "Risks Relating to Our Business"
+                },
+                {
+                  "observation_id": "sha256:30845c8a3ba6e2067e33aa499a2319276c935a6a8397346f862efb9cd323928b",
+                  "order": 4,
+                  "role": "excerpt_4",
+                  "text": "Operational Risks"
+                },
+                {
+                  "observation_id": "sha256:d36952902c6dfa82d5512227499af5ed7c82c7bca03036a0f4e6aff23c3fdec4",
+                  "order": 5,
+                  "role": "excerpt_5",
+                  "text": "Premature termination of our agreements with hotel owners could materially hurt our financial performance"
+                },
+                {
+                  "observation_id": "sha256:6c613e55f3803893280eb5b009fef6a6ff7b87f1ff0f7720915ad04b398f2438",
+                  "order": 6,
+                  "role": "excerpt_6",
+                  "text": "Disagreements with hotel owners and other counterparties could materially impact our business, operations, financial results, and growth."
+                },
+                {
+                  "observation_id": "sha256:2363397a2f48ea2fab591a65b835b6bc787585cfa0fea00bb77970167457e4a2",
+                  "order": 7,
+                  "role": "excerpt_7",
+                  "text": "Changes in the way hotel rooms are booked could adversely impact our business"
+                },
+                {
+                  "observation_id": "sha256:7874a85b90d53bf3a1b786629340d9c1d0a732fd3c9744d735248543f8a863e6",
+                  "order": 8,
+                  "role": "excerpt_8",
+                  "text": "Our growth strategy depends upon attracting hotel owners to our platform, and future arrangements with these third parties may be less favorable to us, depending on the terms offered by our competitors"
+                },
+                {
+                  "observation_id": "sha256:d1401eddb22ad02606f5abf2c2954859c6f80002bf70196e20982d03647c7c1e",
+                  "order": 9,
+                  "role": "excerpt_9",
+                  "text": "The effects of, or our failure to comply with, applicable laws, regulations, and government policies may disrupt our business, lower our revenues, increase our costs, reduce our profits, limit our growth, or damage our reputation."
+                },
+                {
+                  "observation_id": "sha256:8b7909bed7f2a8a01cac230e84c1a263b8b5f8d122f92458f7db55d20ce62411",
+                  "order": 10,
+                  "role": "excerpt_10",
+                  "text": "Third-party claims that we infringe the intellectual property rights of others or our failure to defend our own intellectual property rights could materially adversely affect our business."
+                },
+                {
+                  "observation_id": "sha256:d54455a5143c53f652f13dbaccaba0352f797d6dbfc84ba2901874243e8544c6",
+                  "order": 11,
+                  "role": "excerpt_11",
+                  "text": "If our brands, goodwill, or other intangible assets become impaired, we may be required to record significant non-cash charges to earnings."
+                },
+                {
+                  "observation_id": "sha256:ccada730022f800abfe66d06a20c3c20534b59ee9635484db5b5565770c56ae9",
+                  "order": 12,
+                  "role": "excerpt_12",
+                  "text": "Our business depends on the quality and reputation of our Company and our brands, and any deterioration could adversely impact our market share, reputation, business, financial condition, or results of operations"
+                },
+                {
+                  "observation_id": "sha256:3f0479776bb06886106d8fafaa17fa06cadcc64e2cf4882b2ed1b0d9189c28ba",
+                  "order": 13,
+                  "role": "excerpt_13",
+                  "text": "Actions by our hotel owners or others could materially adversely affect our image and reputation"
+                },
+                {
+                  "observation_id": "sha256:2153391abcffa5650c10eaf80303be068e919e3771e764c13aea0724781643f9",
+                  "order": 14,
+                  "role": "excerpt_14",
+                  "text": "Collective bargaining activity and strikes could materially disrupt hotel operations, increase labor costs, and interfere with the ability of our management to focus on executing our business strategies"
+                },
+                {
+                  "observation_id": "sha256:077e84002fc3d5fed15e0db712d418d97f2c096c8064c702265e01bf0692948e",
+                  "order": 15,
+                  "role": "excerpt_15",
+                  "text": "Our business could suffer if we or the hotels in our system cannot attract and retain associates or as the result of the loss of the services of our senior executives"
+                },
+                {
+                  "observation_id": "sha256:2568d4939b8de5ff5231b3fab6000c478c15cfeb46823c7b998bf0f64c3e8e08",
+                  "order": 16,
+                  "role": "excerpt_16",
+                  "text": "Extreme weather, natural disasters, climate change, and sustainability-related concerns have impacted our business in the past and could in the future have a material adverse effect on our business and results of operations."
+                },
+                {
+                  "observation_id": "sha256:7bbd37b128457ae726579cc536a579688833c98bce466a4321028f8d720623d3",
+                  "order": 17,
+                  "role": "excerpt_17",
+                  "text": "Insurance may not cover damage to, or losses involving, hotels in our system or other aspects of our business, and the cost of such insurance could increase"
+                },
+                {
+                  "observation_id": "sha256:03326989dd23ff7f6ce40ce7fb4a1e18b626abf1b4548aaf06db37e52039ddc1",
+                  "order": 18,
+                  "role": "excerpt_18",
+                  "text": "Our Loyalty Program plays a significant role in our business, and unfavorable developments affecting the program could adversely affect our business and results of operations."
+                },
+                {
+                  "observation_id": "sha256:73e49a4a26df4fbf62b446078f02b0d25740240c34a9475ded3502f23a3e9910",
+                  "order": 19,
+                  "role": "excerpt_19",
+                  "text": "Exchange rate fluctuations could result in significant foreign currency gains and losses and affect our business results"
+                },
+                {
+                  "observation_id": "sha256:81f686e7dc1c529b687a0081dcf898f89d8a53c8ba15b1817b5e414c2f813736",
+                  "order": 20,
+                  "role": "excerpt_20",
+                  "text": "Development and Financing Risks"
+                },
+                {
+                  "observation_id": "sha256:0b8e6a86670dc3dc7ab674852fc72f3ed9c66954ec96e5c30d95032bb4d3479a",
+                  "order": 21,
+                  "role": "excerpt_21",
+                  "text": "Our hotel owners depend on capital to buy, develop, and improve hotels, and they may be unable to access capital when necessary"
+                },
+                {
+                  "observation_id": "sha256:09384d23836345b115f9fc1aa26fda2516d6e855d44da4d8de7a931e0d7c2da0",
+                  "order": 22,
+                  "role": "excerpt_22",
+                  "text": "Our ability to grow our system is subject to the range of risks associated with real estate investments"
+                },
+                {
+                  "observation_id": "sha256:d143c1ec975907a106ffdf2b6cd7ee702822562c01b3aff5e9dab2b1154cf019",
+                  "order": 23,
+                  "role": "excerpt_23",
+                  "text": "Our owned properties and other real estate investments subject us to numerous risks"
+                },
+                {
+                  "observation_id": "sha256:32401511f277853a4413d08a11aecebc098f7b6c27e32db2a586bec42fbc46ef",
+                  "order": 24,
+                  "role": "excerpt_24",
+                  "text": "Risks associated with development and sale of residential properties associated with our lodging properties or brands may reduce our profits"
+                },
+                {
+                  "observation_id": "sha256:3d5f1bdb392f532d92ace8927e7593ff47b4a75fbb4a166cb17475e4b88a2d8a",
+                  "order": 25,
+                  "role": "excerpt_25",
+                  "text": "More hotel projects in our development pipeline may be cancelled or delayed in opening, which could adversely affect our growth prospects"
+                },
+                {
+                  "observation_id": "sha256:e5cfac2aabf7a5cafa31e62d659e1d5aaf4e0288656b8b4853e53667042a7afb",
+                  "order": 26,
+                  "role": "excerpt_26",
+                  "text": "Losses on loans or guarantees that we have made to third parties impact our profits"
+                },
+                {
+                  "observation_id": "sha256:4e6ab9701c609f81e262977ff549e76ac7abcaa569eba098da896aaa6156b190",
+                  "order": 27,
+                  "role": "excerpt_27",
+                  "text": "If hotel owners cannot repay or refinance mortgage loans secured by their properties, default under property leases, or experience other financial difficulties, our revenues and profits could materially decrease and our business could be significantly harmed"
+                },
+                {
+                  "observation_id": "sha256:26daaa1420ff0383629f3c4b1d72110f436dc8b09eca0939302d1baab7eac94a",
+                  "order": 28,
+                  "role": "excerpt_28",
+                  "text": "Technology, Information Protection, and Privacy Risks"
+                },
+                {
+                  "observation_id": "sha256:29da20765156033d741716a38642defaf62c4840d765495a650b70df101e72ab",
+                  "order": 29,
+                  "role": "excerpt_29",
+                  "text": "Disruption in the functioning of our reservation, Loyalty Program, or other core operational systems, or our use of certain new technologies, could adversely affect our business"
+                },
+                {
+                  "observation_id": "sha256:c186c44dc446887b764ff0ba895288576c912a72b112b5c352f2dd7584231a8b",
+                  "order": 30,
+                  "role": "excerpt_30",
+                  "text": "A failure to keep pace with developments in technology could impair our operations or competitive position"
+                },
+                {
+                  "observation_id": "sha256:9ef8a4dc5c6af02e176a30c29bafebc236de457e63c1e3790ed5b5261bb421d7",
+                  "order": 31,
+                  "role": "excerpt_31",
+                  "text": "We are exposed to risks and costs associated with protecting the integrity and security of data"
+                },
+                {
+                  "observation_id": "sha256:5c3a835ea637fef1345708d82ba8f29aae4b0d40667d4e5190138c7b1587dfd7",
+                  "order": 32,
+                  "role": "excerpt_32",
+                  "text": "The Data Security Incident, and other information security incidents, could have numerous adverse effects on our business"
+                },
+                {
+                  "observation_id": "sha256:3269bfb87d8a801065f6cbaba2210ce52cd20053bd497d110ec5d3b54f2b5289",
+                  "order": 33,
+                  "role": "excerpt_33",
+                  "text": "Additional cybersecurity incidents could have adverse effects on our business."
+                },
+                {
+                  "observation_id": "sha256:4dc2fd9d8b75993fd37744b16e07cc0cec4595e5bb3c948f71b55d20745897db",
+                  "order": 34,
+                  "role": "excerpt_34",
+                  "text": "Changes in privacy and data security laws could increase our operating costs and increase our exposure to payment obligations and litigation."
+                },
+                {
+                  "observation_id": "sha256:b4a0664ed81b6bb403b8ef9a11af093c150fd861d0dbf01190d31f8f6ce7648e",
+                  "order": 35,
+                  "role": "excerpt_35",
+                  "text": "General Risk Factors"
+                },
+                {
+                  "observation_id": "sha256:cc2cfc05da1aee30ad369632c45a6be644e9658a04d4baa43e49ad17d1742827",
+                  "order": 36,
+                  "role": "excerpt_36",
+                  "text": "Delaware law and our governing corporate documents contain, and our Board of Directors could implement, anti-takeover provisions that could deter takeover attempts."
+                },
+                {
+                  "observation_id": "sha256:ca3c6968eda5df464f772c412ef58a0bc0c86ce5a3907a6252a6a8656380091e",
+                  "order": 37,
+                  "role": "excerpt_37",
+                  "text": "Changes in tax law, interpretations of existing tax law, or agreements or disputes with tax authorities could increase our tax costs."
+                }
+              ],
+              "renderer": "ORDERED_NEWLINE_V1",
+              "review_unit_hash": "sha256:1a05fe4146a61ffb26aefe4a5c99cbd9a43f96d11a4642df072aefd3da3e1894",
+              "version": "TEXT_V1"
+            },
+            "trace_id": "sha256:5ea3e3736405aef57ccea266036178cc258c781ddaf91a419d33d62ed595f412",
+            "unit": "text",
+            "value": "Risks Relating to Our Industry\nOur industry is highly competitive, which may impact our ability to compete successfully for guests\nEconomic and other global, national, and regional conditions and events have in the past materially impacted, and could in the future materially impact, our business, operations, financial results, and growth\nRisks Relating to Our Business\nOperational Risks\nPremature termination of our agreements with hotel owners could materially hurt our financial performance\nDisagreements with hotel owners and other counterparties could materially impact our business, operations, financial results, and growth.\nChanges in the way hotel rooms are booked could adversely impact our business\nOur growth strategy depends upon attracting hotel owners to our platform, and future arrangements with these third parties may be less favorable to us, depending on the terms offered by our competitors\nThe effects of, or our failure to comply with, applicable laws, regulations, and government policies may disrupt our business, lower our revenues, increase our costs, reduce our profits, limit our growth, or damage our reputation.\nThird-party claims that we infringe the intellectual property rights of others or our failure to defend our own intellectual property rights could materially adversely affect our business.\nIf our brands, goodwill, or other intangible assets become impaired, we may be required to record significant non-cash charges to earnings.\nOur business depends on the quality and reputation of our Company and our brands, and any deterioration could adversely impact our market share, reputation, business, financial condition, or results of operations\nActions by our hotel owners or others could materially adversely affect our image and reputation\nCollective bargaining activity and strikes could materially disrupt hotel operations, increase labor costs, and interfere with the ability of our management to focus on executing our business strategies\nOur business could suffer if we or the hotels in our system cannot attract and retain associates or as the result of the loss of the services of our senior executives\nExtreme weather, natural disasters, climate change, and sustainability-related concerns have impacted our business in the past and could in the future have a material adverse effect on our business and results of operations.\nInsurance may not cover damage to, or losses involving, hotels in our system or other aspects of our business, and the cost of such insurance could increase\nOur Loyalty Program plays a significant role in our business, and unfavorable developments affecting the program could adversely affect our business and results of operations.\nExchange rate fluctuations could result in significant foreign currency gains and losses and affect our business results\nDevelopment and Financing Risks\nOur hotel owners depend on capital to buy, develop, and improve hotels, and they may be unable to access capital when necessary\nOur ability to grow our system is subject to the range of risks associated with real estate investments\nOur owned properties and other real estate investments subject us to numerous risks\nRisks associated with development and sale of residential properties associated with our lodging properties or brands may reduce our profits\nMore hotel projects in our development pipeline may be cancelled or delayed in opening, which could adversely affect our growth prospects\nLosses on loans or guarantees that we have made to third parties impact our profits\nIf hotel owners cannot repay or refinance mortgage loans secured by their properties, default under property leases, or experience other financial difficulties, our revenues and profits could materially decrease and our business could be significantly harmed\nTechnology, Information Protection, and Privacy Risks\nDisruption in the functioning of our reservation, Loyalty Program, or other core operational systems, or our use of certain new technologies, could adversely affect our business\nA failure to keep pace with developments in technology could impair our operations or competitive position\nWe are exposed to risks and costs associated with protecting the integrity and security of data\nThe Data Security Incident, and other information security incidents, could have numerous adverse effects on our business\nAdditional cybersecurity incidents could have adverse effects on our business.\nChanges in privacy and data security laws could increase our operating costs and increase our exposure to payment obligations and litigation.\nGeneral Risk Factors\nDelaware law and our governing corporate documents contain, and our Board of Directors could implement, anti-takeover provisions that could deter takeover attempts.\nChanges in tax law, interpretations of existing tax law, or agreements or disputes with tax authorities could increase our tax costs.",
+            "value_kind": "TEXT_V1"
+          }
+        },
+        "rows_root": "/private/tmp/issue28-company-consumer-20261003/state-marriott-d01/updates/metrics/D01/attempts/2c5dc1f926e44949b4021ac19415cb18/rows"
+      },
+      "new_candidate_created": false,
+      "terminal": {
+        "record_type": "ORDINARY_UPDATE_TERMINAL",
+        "attempt_id": "81df2fefdd90448dbc73a543ff0b34ca",
+        "configuration_id": "sha256:082005b77e1c640a8be07e502574ca05b977a8c2c46710c014de36eb303f7863",
+        "intent_id": "sha256:b182f251e71221dc7a701c3b6f7048a073f9580225d62b8f9accc94091aa8786",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "completed_at": "2026-10-02T23:22:07.633381+00:00",
+        "input": {
+          "company_id": "marriott_international",
+          "metric_ids": [
+            "D01"
+          ],
+          "requirement_closure_hash": "sha256:3ff69e00ee10536557e9ae38b262dbb99d3b16c630061758353ddf748e66ecaa",
+          "targets": {
+            "D01": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            }
+          },
+          "specs": {
+            "D01": {
+              "D01": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400"
+            }
+          },
+          "source_contents": [
+            {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+              "accession": "0001048286-26-000007",
+              "document_name": "CIK0001048286.json",
+              "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a"
+            },
+            {
+              "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+              "accession": "",
+              "document_name": "CIK0001048286.json",
+              "sha256": "76cd1c3621618173eebcc404ed4d01a0d744971d1d7f0f9b6e4962ed1bafa161"
+            },
+            {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+              "accession": "0001048286-26-000007",
+              "document_name": "mar-20251231.htm",
+              "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+            }
+          ],
+          "d01_emphasis_policy": "D01_EMPHASIS_SOURCE_V2",
+          "content_id": "sha256:59978e8ab4077ce5d974bb161199a82e7258b0fbaa274c85fb4907e23c196ee3"
+        },
+        "metrics": {},
+        "error": null,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "record_id": "sha256:61c0648ea413fb761b45e59310eac9e58d3678ef3a9592f68bc29f0c0831a28a"
+      },
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "compute_seconds": "8.599150",
+  "source_installation": {
+    "checkpoint_id": "sha256:c1e71552bf0c2b4aebff851bbd9065da143c0643a439eca660b7412811da7ede",
+    "company_id": "marriott_international",
+    "package_root": "/private/tmp/issue28-company-consumer-20261003/package-marriott-d01",
+    "source_root": "/private/tmp/issue28-company-consumer-20261003/state-marriott-d01/source",
+    "status": "INSTALLED"
+  },
+  "new_business_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "runtime_root": "/private/tmp/issue28-company-consumer-20261003/runtime-8a-d01",
+  "execution_id": "fddc6151f1da49199d992f4a59927dc8",
+  "recorded_at": "2026-10-02T23:22:07.720849+00:00"
+}

@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "run_id": "run:ordinary-integrated:d36ce22b7b0d28b2a4de068ec361dfa39ddb17c7d61f26f852292d3f5c9dc44e",
+  "run_status": "OPEN",
+  "record_count": 15,
+  "decision_count": 0,
+  "runtime_root": "/private/tmp/sec_metrics_issue28_continuous/v14-note-debt-native-final/data/enphase_energy",
+  "git_directory_present": false,
+  "results": [
+    {
+      "applicability": "APPLICABLE",
+      "company_id": "enphase_energy",
+      "metric_id": "B06",
+      "period_end": "2025-12-31",
+      "period_start": "2025-12-31",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:b5e3dda8141eccbe21f34abcf04b61c251e6aaebd5667938e1537659d86a10c6",
+      "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+      "spec_closure_hash": "sha256:8e568947e7f6165e525e24f67f2fb5f892efa7ca054378dd98e8ff54648abdbf",
+      "trace_id": "sha256:3d7a481a7879343e76d3c5d52915d5a8a9d5d7fb5d9902871a30293b0ccf97b8",
+      "unit": "ratio",
+      "value": "1.107959077222837051285943352"
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

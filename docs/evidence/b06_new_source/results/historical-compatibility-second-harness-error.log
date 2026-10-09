@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/tmp/b06-check-compat.py", line 12, in <module>
+    b=root/'docs/evidence'/name/'candidate';m=verify_publication_bundle(bundle_dir=b);v=PublicationView(publication_id=m['publication_id'],bundle_dir=b,manifest=m);r=v.native_result(company_id='southwest_airlines',metric_id='B06');out.append({'kind':name,'publication_id':v.publication_id,'status':'VERIFIED_READ_ONLY','result':r['result']})
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4673, in verify_publication_bundle
+    raise PublicationError("Publication directory identity differs")
+vnext.publication.PublicationError: Publication directory identity differs

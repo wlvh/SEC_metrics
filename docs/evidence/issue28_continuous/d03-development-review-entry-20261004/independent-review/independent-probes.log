@@ -1,0 +1,315 @@
+{
+  "seconds": 0.341,
+  "network_subprocess_forbidden": true,
+  "probe_count": 46,
+  "rejected": 36,
+  "controls_passed": 8,
+  "observations": 2,
+  "probes": [
+    {
+      "name": "valid_save_repeat_cli_read",
+      "outcome": "PASSED",
+      "pending_only": true,
+      "immutable_identical": true,
+      "file_count": 7
+    },
+    {
+      "name": "interrupted_write_1",
+      "outcome": "REJECTED",
+      "error_type": "OSError",
+      "reason": "LOCAL_INTERRUPT",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "partial_cli_read_1",
+      "outcome": "REJECTED",
+      "error_type": "FileNotFoundError",
+      "reason": "[Errno 2] No such file or directory: '/private/tmp/d03-cli-independent-6h0u2_oh/2/pending/records.jsonl'",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "exact_resume_after_write_1",
+      "outcome": "PASSED",
+      "preserved_files": 0
+    },
+    {
+      "name": "interrupted_write_2",
+      "outcome": "REJECTED",
+      "error_type": "OSError",
+      "reason": "LOCAL_INTERRUPT",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "partial_cli_read_2",
+      "outcome": "REJECTED",
+      "error_type": "FileNotFoundError",
+      "reason": "[Errno 2] No such file or directory: '/private/tmp/d03-cli-independent-6h0u2_oh/3/pending/records.jsonl'",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "exact_resume_after_write_2",
+      "outcome": "PASSED",
+      "preserved_files": 1
+    },
+    {
+      "name": "interrupted_write_3",
+      "outcome": "REJECTED",
+      "error_type": "OSError",
+      "reason": "LOCAL_INTERRUPT",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "partial_cli_read_3",
+      "outcome": "REJECTED",
+      "error_type": "FileNotFoundError",
+      "reason": "[Errno 2] No such file or directory: '/private/tmp/d03-cli-independent-6h0u2_oh/4/pending/records.jsonl'",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "exact_resume_after_write_3",
+      "outcome": "PASSED",
+      "preserved_files": 2
+    },
+    {
+      "name": "interrupted_write_4",
+      "outcome": "REJECTED",
+      "error_type": "OSError",
+      "reason": "LOCAL_INTERRUPT",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "partial_cli_read_4",
+      "outcome": "REJECTED",
+      "error_type": "FileNotFoundError",
+      "reason": "[Errno 2] No such file or directory: '/private/tmp/d03-cli-independent-6h0u2_oh/5/pending/records.jsonl'",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "exact_resume_after_write_4",
+      "outcome": "PASSED",
+      "preserved_files": 3
+    },
+    {
+      "name": "interrupted_write_5",
+      "outcome": "REJECTED",
+      "error_type": "OSError",
+      "reason": "LOCAL_INTERRUPT",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "partial_cli_read_5",
+      "outcome": "REJECTED",
+      "error_type": "FileNotFoundError",
+      "reason": "[Errno 2] No such file or directory: '/private/tmp/d03-cli-independent-6h0u2_oh/6/pending/records.jsonl'",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "exact_resume_after_write_5",
+      "outcome": "PASSED",
+      "preserved_files": 4
+    },
+    {
+      "name": "interrupted_write_6",
+      "outcome": "REJECTED",
+      "error_type": "OSError",
+      "reason": "LOCAL_INTERRUPT",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "partial_cli_read_6",
+      "outcome": "REJECTED",
+      "error_type": "FileNotFoundError",
+      "reason": "[Errno 2] No such file or directory: '/private/tmp/d03-cli-independent-6h0u2_oh/7/pending/records.jsonl'",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "exact_resume_after_write_6",
+      "outcome": "PASSED",
+      "preserved_files": 5
+    },
+    {
+      "name": "interrupted_write_7",
+      "outcome": "REJECTED",
+      "error_type": "OSError",
+      "reason": "LOCAL_INTERRUPT",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "partial_cli_read_7",
+      "outcome": "REJECTED",
+      "error_type": "FileNotFoundError",
+      "reason": "[Errno 2] No such file or directory: '/private/tmp/d03-cli-independent-6h0u2_oh/8/pending/records.jsonl'",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "exact_resume_after_write_7",
+      "outcome": "PASSED",
+      "preserved_files": 6
+    },
+    {
+      "name": "unknown_manifest_key",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_DEVELOPMENT_INPUT_MANIFEST_INVALID",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "wrong_source_digest",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_MODEL_AUTHENTICATED_SOURCE_CHANGED",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "empty_requests",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_DEVELOPMENT_INPUT_MANIFEST_INVALID",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "invalid_row_keys",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_DEVELOPMENT_INPUT_ROW_INVALID",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "duplicate_manifest_key",
+      "outcome": "REJECTED",
+      "error_type": "CanonicalError",
+      "reason": "Duplicate JSON key: company_id",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "changed_request_bytes",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_MODEL_EXTERNAL_WIRE_CHANGED",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "changed_response_bytes",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_MODEL_EXTERNAL_WIRE_CHANGED",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "re_signed_manifest_cannot_replace_package",
+      "outcome": "REJECTED",
+      "error_type": "RuntimeError",
+      "reason": "Immutable request artifact changed: /private/tmp/d03-cli-independent-6h0u2_oh/16/pending/development-input.json",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "late_wire_conflict",
+      "outcome": "REJECTED",
+      "error_type": "RuntimeError",
+      "reason": "Immutable request artifact changed: /private/tmp/d03-cli-independent-6h0u2_oh/17/pending/wires/0/response.bin",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "late_records_conflict",
+      "outcome": "REJECTED",
+      "error_type": "RuntimeError",
+      "reason": "Immutable request artifact changed: /private/tmp/d03-cli-independent-6h0u2_oh/18/pending/records.jsonl",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "wrong_candidate_cli_read",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_MODEL_EXPECTED_NATIVE_IDENTITIES_CHANGED",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "wrong_review_unit_cli_read",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_MODEL_EXPECTED_NATIVE_IDENTITIES_CHANGED",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "inner_file_alias_read",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_DEVELOPMENT_OUTPUT_ALIAS_FORBIDDEN",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "inner_file_alias_save",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_DEVELOPMENT_OUTPUT_ALIAS_FORBIDDEN",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "inner_directory_alias_read",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_DEVELOPMENT_OUTPUT_ALIAS_FORBIDDEN",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "inner_directory_alias_save",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_DEVELOPMENT_OUTPUT_ALIAS_FORBIDDEN",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "extra_alias_read",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_DEVELOPMENT_OUTPUT_ALIAS_FORBIDDEN",
+      "bytes_unchanged": true
+    },
+    {
+      "name": "relative_root",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_RECORDED_PACKET_ROOT_ALIAS_OR_RELATIVE",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "root_alias",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_RECORDED_PACKET_ROOT_ALIAS_OR_RELATIVE",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "code_root",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_RECORDED_PACKET_OUTSIDE_CODE_AND_PUBLICATION_REQUIRED",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "live_ledger_root",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_RECORDED_PACKET_LIVE_LEDGER_FORBIDDEN",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "active_publication_root",
+      "outcome": "REJECTED",
+      "error_type": "ValueError",
+      "reason": "D03_RECORDED_PACKET_OUTSIDE_CODE_AND_PUBLICATION_REQUIRED",
+      "bytes_unchanged": false
+    },
+    {
+      "name": "saved_manifest_is_non_authoritative_provenance",
+      "outcome": "OBSERVED_READ_ACCEPTED",
+      "native_identity_unchanged": true,
+      "company_and_source_rebuilt_from_native_inputs": true
+    },
+    {
+      "name": "absent_saved_manifest_is_ignored_on_native_read",
+      "outcome": "OBSERVED_READ_ACCEPTED",
+      "native_identity_unchanged": true
+    }
+  ]
+}

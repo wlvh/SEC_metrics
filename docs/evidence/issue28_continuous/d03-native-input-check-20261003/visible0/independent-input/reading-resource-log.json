@@ -1,0 +1,226 @@
+{
+  "task": "D03 visible responsibility request 0 independent input check",
+  "fixed_code_sha": "02f4fbc0d2687bec7dc427cefa2a4187784e973f",
+  "started_at_utc": "2026-10-03T16:30:13.218811+00:00",
+  "inputs": [
+    {
+      "path": "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/0/input.json",
+      "sha256": "6c6e78b8e78f683201c8f5d69e589ae86ab10f81b7156866b5f2a374f47f90e1",
+      "bytes": 366441
+    },
+    {
+      "path": "/private/tmp/issue28-d03-complete-context-plan-20261003-checked/0/request-body.json",
+      "sha256": "c74e22c1dbe6f7e25249b7048c4d53b8490dd22fd1c51417f4f9f8308c848acc",
+      "bytes": 316132
+    }
+  ],
+  "system_task_read": true,
+  "request_user_equals_input": true,
+  "visible_row_count": 1965,
+  "visible_unit_bounds": [
+    {
+      "unit_id": "sha256:c602ecc69500ffb50c421970157577cb6e31c757c5bbb45f15ae8dc5e7fc7fc1",
+      "start_row": 0,
+      "end_row_exclusive": 408
+    },
+    {
+      "unit_id": "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+      "start_row": 408,
+      "end_row_exclusive": 802
+    },
+    {
+      "unit_id": "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+      "start_row": 802,
+      "end_row_exclusive": 1255
+    },
+    {
+      "unit_id": "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+      "start_row": 1255,
+      "end_row_exclusive": 1753
+    },
+    {
+      "unit_id": "sha256:26eb8d47590552f5545a76e257dd0a54f4ed161142810120aa07bdd528675c7e",
+      "start_row": 1753,
+      "end_row_exclusive": 1965
+    }
+  ],
+  "responsibility_unit_ids": [
+    "sha256:c602ecc69500ffb50c421970157577cb6e31c757c5bbb45f15ae8dc5e7fc7fc1",
+    "sha256:0b7d5050acebf57cf6a05ac75c5728bf05e4f1e357d694150ecf4527f989acfc",
+    "sha256:8e212b892ba6fb1608d3248532e622160f3e2349e2b477dd0b8f82372ad6da1c",
+    "sha256:99502d9018e934545c8936a7b69c62e3bea7a4d8112359818b309b54b95fcd58",
+    "sha256:26eb8d47590552f5545a76e257dd0a54f4ed161142810120aa07bdd528675c7e"
+  ],
+  "native_units_count": 0,
+  "shared_source_dictionaries_keys": [],
+  "reads": [
+    {
+      "start_row": 0,
+      "end_row_exclusive": 200,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:31:27.713980+00:00",
+      "rows_json_sha256": "c4d4ed4c89d7d76d870adce7976f932d350c6f2571c26020fa63b70d19d87f47"
+    },
+    {
+      "start_row": 200,
+      "end_row_exclusive": 360,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:31:43.731459+00:00",
+      "rows_json_sha256": "c1c953bfd24691727a0eef9fd9784459d33131e5d3e65b3a0fa1006e88e39b17"
+    },
+    {
+      "start_row": 360,
+      "end_row_exclusive": 450,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:31:57.044027+00:00",
+      "rows_json_sha256": "9f8fec22723e9a82af361c5182b0003bb9343a3100cf6f7db13c68035eb204c2",
+      "tool_output_truncated": true,
+      "actually_observed_complete_subranges": [
+        [
+          360,
+          390
+        ],
+        [
+          424,
+          450
+        ]
+      ]
+    },
+    {
+      "start_row": 390,
+      "end_row_exclusive": 424,
+      "emitted_full_text": true,
+      "recovers_previous_tool_output_truncation": true,
+      "timestamp_utc": "2026-10-03T16:32:17.216714+00:00",
+      "rows_json_sha256": "4b6e7668791be24fbab65fea64f0c2c905bb2929703b4c0aa606609b4c205cc3"
+    },
+    {
+      "start_row": 450,
+      "end_row_exclusive": 600,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:32:34.624639+00:00",
+      "rows_json_sha256": "e61054092beea7d888e58c61f5b991435acd9ef64dc8a23f045caad3af366dde"
+    },
+    {
+      "start_row": 600,
+      "end_row_exclusive": 802,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:32:54.907841+00:00",
+      "rows_json_sha256": "54f9354c65b6e0ac1689b8869ae3aea064be54ce0dc5fd4250c98cf21a64c8f2"
+    },
+    {
+      "start_row": 802,
+      "end_row_exclusive": 1000,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:33:09.887961+00:00",
+      "rows_json_sha256": "ea8fa50a4d1c670d94b43804943a835c90f75ff1799330ff5a85113638559923"
+    },
+    {
+      "start_row": 1000,
+      "end_row_exclusive": 1080,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:33:27.760203+00:00",
+      "rows_json_sha256": "fddd29348a8dff513f0d32fc55a5b8e1740ea731e88551c8d77e1404e5a41209"
+    },
+    {
+      "start_row": 1080,
+      "end_row_exclusive": 1170,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:33:42.983186+00:00",
+      "rows_json_sha256": "788e0caac3d359798530eff138b1f629cd671faaf6991a5fec385582c8c69d1f"
+    },
+    {
+      "start_row": 1170,
+      "end_row_exclusive": 1330,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:33:55.984234+00:00",
+      "rows_json_sha256": "5f0baac9504d3473cb68aff5e3f1e65f3b0e46d9e825585321c4845825bf02b0"
+    },
+    {
+      "start_row": 1330,
+      "end_row_exclusive": 1510,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:34:59.777786+00:00",
+      "rows_json_sha256": "fe92bed0c085027ecea3c1390a5e5bc58836759a15d05d319d9d3911c8972216"
+    },
+    {
+      "start_row": 1510,
+      "end_row_exclusive": 1700,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:35:14.803914+00:00",
+      "rows_json_sha256": "3a74d894723daed738cdbd96f635ebb4dbd2054b965a7468fed250f2956235ae"
+    },
+    {
+      "start_row": 1700,
+      "end_row_exclusive": 1840,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:35:38.560013+00:00",
+      "rows_json_sha256": "d1b52ba1dcc60b0380031d5dc65543528468220efe549f4883a3f5d73aa96dbe"
+    },
+    {
+      "start_row": 1840,
+      "end_row_exclusive": 1965,
+      "emitted_full_text": true,
+      "timestamp_utc": "2026-10-03T16:36:13.709110+00:00",
+      "rows_json_sha256": "bcdc87917f99c17c273f425e663c80987d3f215a60277901756c9ccd861c14fa"
+    }
+  ],
+  "initial_oversized_request_dump_truncated": true,
+  "completion_credit": "development model input check only; no target-provider, human, company or production credit",
+  "prohibited_actions_taken": false,
+  "ended_at_utc": "2026-10-03T16:40:46.036780+00:00",
+  "elapsed_seconds": 632.817969,
+  "actual_full_read_observed_rows": 1965,
+  "unread_rows": [],
+  "visible_original_indexes_used": true,
+  "all_html_quotation_context_false": true,
+  "dictionary_check": "native_units=[]; shared_source_dictionaries={}; no native decoding required",
+  "boundary_check": "five contiguous nonoverlapping half-open row intervals cover all 1965 rows; source_index values preserved, unique 0..1964",
+  "response_writes": 1,
+  "response_sha256": "4e5aef5388f6ad64f1e41224015a6a3f083c10c31cccdaea17c4d7ea1fb01c55",
+  "response_bytes": 11173,
+  "response_findings": 12,
+  "category_counts": {
+    "CONDITIONAL_OR_BOILERPLATE": 3,
+    "REPORTED_REGULATORY_PROCESS": 2,
+    "RESOLVED_OR_PARTLY_RESOLVED": 2,
+    "UNRESOLVED": 2,
+    "PRIVATE_OR_INTERNAL_ACTION": 2,
+    "OTHER_MEANING": 1
+  },
+  "scope_current_involvement": "UNRESOLVED",
+  "tool_calls_conservative_including_final_verification": 36,
+  "tool_count_method": "18 functions.exec calls plus 18 nested exec_command calls; last call reserved for read-only local verification",
+  "ordinary_messages_including_final": 2,
+  "max_allowed_tools": 80,
+  "max_allowed_minutes": 90,
+  "external_model_calls": 0,
+  "SEC_calls": 0,
+  "account_operations": 0,
+  "candidate_review_run_created": 0,
+  "commits_pushes_spawns": 0,
+  "target_provider_token_usage": "unavailable: no target-provider invocation; request max_tokens=4096 retained and compact developer response used",
+  "unverified": "Original host byte spans and source blob digest are not available in the unique input. Supplied source_id is retained but not independently authenticated.",
+  "final_verification": {
+    "JSON_exact_schema_fields": true,
+    "all_categories_fixed": true,
+    "responsibility_ids_exact_once": true,
+    "all_references_original_unit_and_source_index": true,
+    "reference_count": 24,
+    "input_and_request_bytes_unchanged": true,
+    "response_write_once_and_digest_unchanged": true,
+    "all_1965_rows_observed_including_truncation_recovery": true,
+    "findings_not_case_count": true,
+    "event_date_precision_manual_checked": [
+      "2024-Q4 resolutions from 438",
+      "2025-Q2 EPA letter from 453",
+      "2025-06-03 private appellate reversal from 1313"
+    ],
+    "no_incident_date_borrowed_for_action": true
+  },
+  "final_verified_at_utc": "2026-10-03T16:42:00.782636+00:00",
+  "final_elapsed_seconds": 707.563825,
+  "actual_tool_calls_conservative": 36,
+  "local_tiktoken_module_available": false,
+  "exact_target_token_count_verified": false
+}

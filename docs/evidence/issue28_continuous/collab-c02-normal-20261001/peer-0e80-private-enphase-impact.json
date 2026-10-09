@@ -1,0 +1,88 @@
+{
+  "record_type": "ISSUE28_C02_CROSS_ROUTE_CONTENT_IMPACT",
+  "as_of_peer_commit": "0e80eb60b4ebc570abf788b8a371c22759973cd3",
+  "peer_register_git_blob": "1a603f40d56b3d37ef34795e36a55744eef5c8c8",
+  "peer_defect_id": "C02_ENPHASE_2025_UNIFIED_ADJUDICATION_DISAGREES",
+  "peer_adjudication_path": "docs/evidence/issue47_history/c02-composition-facts/adjudication.json",
+  "own_company_id": "enphase_energy",
+  "metric_id": "C02",
+  "period_end": "2025-12-31",
+  "private_results": [
+    {
+      "result_id": "sha256:8a9fab5b04b11802d95164b892411b57338b6a29c7820dae94d3649161ca6f71",
+      "run_id": "run:ordinary-integrated:63440d6f4b106e2ac984a1c5fe805c50edaf964400bd08ce5c0616f6219f0521",
+      "records_path": "/private/tmp/issue28-c02-normal-update-enphase-877-20261001/metrics/C02/attempts/7e227d5829a64faa905910ad74beb27f/runs/C02/records.jsonl",
+      "selected_count": 54,
+      "spec_file_sha256": "10c07c09590c3f6c9cff49d8028ebdeeb48a0ec42df8bc06027b8f5565f68193"
+    },
+    {
+      "result_id": "sha256:bd68e504687528f156abac52d89a088e4b033d08a7177e5f487d8d72cabf3ed2",
+      "run_id": "run:ordinary-integrated:7dbe846173aea142abd1faf30773355b0449c86961e86eb16936e21cca5f8190",
+      "records_path": "/private/tmp/issue28-c02-normal-update-enphase-docfix-20261001/metrics/C02/attempts/851fe81a11414003a1e977eee19fb56f/runs/C02/records.jsonl",
+      "selected_count": 54,
+      "spec_file_sha256": "db00ae4a448a254c8d80044e956ac9783102a64744abcb896a4dac5ac17e1915"
+    }
+  ],
+  "affected_excerpts": [
+    {
+      "block_index": 57,
+      "text": "1.To elect our three nominees for director named in the accompanying proxy statement to the Board of Directors, to hold office until the 2029 Annual Meeting of Stockholders.",
+      "text_sha256": "sha256:7e4815746cd9606c36de06738eb945ff7f405cb161e6e44f5098b2abbcee02ce",
+      "raw_span_sha256": "179b51fea842ea3ddc21d45f45a286d6d0331f447c83148dd38a7b5ed1c1bed0",
+      "source_reference_id": "sha256:e7248d616e7f84933a971d82e9d3c240526dee81d3f9abe856501f0a87ea2c53",
+      "peer_rule": "CLASSIFIED_SLATE_COUNT",
+      "peer_decision": "NOT"
+    },
+    {
+      "block_index": 210,
+      "text": "Our Board of Directors (the “Board”) has nominated three directors to serve for three-year terms until 2029. The nominees and members have a broad and diverse set of skills, perspectives and experiences that are integral to our success. We believe in a classified board structure to promote boardroom continuity and institutional knowledge, as well as helping to drive execution of long-term strategy.",
+      "text_sha256": "sha256:04902520848149fc07e86a43042f797d7530ef47bd94de86db8b6abac45ec204",
+      "raw_span_sha256": "1f2588c01bd6b13b2eaaaa03b6c8fc5aa47366ff310387a24c6b259305ca74ee",
+      "source_reference_id": "sha256:e7248d616e7f84933a971d82e9d3c240526dee81d3f9abe856501f0a87ea2c53",
+      "peer_rule": "CLASSIFIED_SLATE_COUNT",
+      "peer_decision": "NOT"
+    },
+    {
+      "block_index": 212,
+      "text": "Class II Nominees for Election (Until 2029 Annual Meeting of Stockholders)",
+      "text_sha256": "sha256:84c41411bac1bf0ab36a18313a485eaecbbffb701dd69de6b3a45193159cffe2",
+      "raw_span_sha256": "84c41411bac1bf0ab36a18313a485eaecbbffb701dd69de6b3a45193159cffe2",
+      "source_reference_id": "sha256:e7248d616e7f84933a971d82e9d3c240526dee81d3f9abe856501f0a87ea2c53",
+      "peer_rule": "DIRECTOR_GROUP_HEADING",
+      "peer_decision": "NOT"
+    },
+    {
+      "block_index": 232,
+      "text": "Continuing Class III Directors (Until 2027 Annual Meeting of Stockholders)",
+      "text_sha256": "sha256:c40419fde2455d34258a29afc37f04754df68739fef51a219d1d0459cecd5f7d",
+      "raw_span_sha256": "c40419fde2455d34258a29afc37f04754df68739fef51a219d1d0459cecd5f7d",
+      "source_reference_id": "sha256:e7248d616e7f84933a971d82e9d3c240526dee81d3f9abe856501f0a87ea2c53",
+      "peer_rule": "DIRECTOR_GROUP_HEADING",
+      "peer_decision": "NOT"
+    },
+    {
+      "block_index": 243,
+      "text": "Continuing Class I Directors (Until 2028 Annual Meeting of Stockholders)",
+      "text_sha256": "sha256:3c6e129b9ce6687fa4488d961018da08f29c8affc1c8250f0e3d5ec0a2f28363",
+      "raw_span_sha256": "3c6e129b9ce6687fa4488d961018da08f29c8affc1c8250f0e3d5ec0a2f28363",
+      "source_reference_id": "sha256:e7248d616e7f84933a971d82e9d3c240526dee81d3f9abe856501f0a87ea2c53",
+      "peer_rule": "DIRECTOR_GROUP_HEADING",
+      "peer_decision": "NOT"
+    },
+    {
+      "block_index": 2338,
+      "text": "•Election of our three nominees as Class II directors to serve until the 2029 Annual Meeting of Stockholders or until their successors have been elected and qualified;",
+      "text_sha256": "sha256:9f33f85e9e1b8218d5fe2ff258e67404be8bb92993c87d6c3d723547430b89b7",
+      "raw_span_sha256": "cebe40f4c8eaffb7be611ddee93c9836cfd5a2c6b70dc773f458b1b6e2d204b3",
+      "source_reference_id": "sha256:e7248d616e7f84933a971d82e9d3c240526dee81d3f9abe856501f0a87ea2c53",
+      "peer_rule": "CLASSIFIED_SLATE_COUNT",
+      "peer_decision": "NOT"
+    }
+  ],
+  "own_assessment": "The six exact source blocks match the peer adjudication hashes. They describe future election/class terms or headings, not a standalone current board-size, membership, committee, chair or qualification fact under the adopted composition target. Both 54-excerpt private Results retain PUBLISHED/EXACT native history but receive no current business credit. Other 48 excerpts are not independently certified by this bounded check.",
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

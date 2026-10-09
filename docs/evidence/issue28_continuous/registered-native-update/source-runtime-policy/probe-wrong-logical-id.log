@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/native-source-runtime-policy/probe.py", line 16, in <module>
+    prepared=prepare_requests(company_id=company,metric_id=metric,native=metric=='D04',reference_context=True,
+     complete_response_contract=metric=='D04',source_root=fixed,source_ledger=ledger)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 287, in prepare_requests
+    source = prepare_d04_semantic_source(repo_root=data_root,company_id=company_id,ordinary_registered=data_root!=ROOT)
+  File "/tmp/sec_metrics_issue28_continuous/native-source-runtime-policy/after/scripts/vnext/r6_semantic_source.py", line 184, in prepare_d04_semantic_source
+    source=prepare_ordinary_going_concern_source(repo_root=repo_root,company_id=company_id,ordinary_registered=ordinary_registered)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/going_concern_source.py", line 331, in prepare_ordinary_going_concern_source
+    prepared = prepare_saved_annual_input(repo_root=root, company_id=company_id)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_annual_input.py", line 193, in prepare_saved_annual_input
+    _need(len(companies) == 1, "COMPANY_NOT_UNIQUE", "IMPLEMENTATION_GAP")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_annual_input.py", line 30, in _need
+    raise NormalAnnualInputError(reason, category)
+vnext.normal_annual_input.NormalAnnualInputError: COMPANY_NOT_UNIQUE

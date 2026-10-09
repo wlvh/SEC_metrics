@@ -1,0 +1,43 @@
+{
+  "status": "READ_ONLY_PREAUTHORIZATION_CHECK_NOT_RESUMPTION",
+  "original171": {
+    "intent_id": "sha256:f59a9cd42107df8b87255913bbe7b918d2ac2570f60dd95164e87293f416c24e",
+    "terminal_id": "sha256:75ce98d202ea52a333a96d79559233377dd4b53dc1fa2bda36a8cf2c55d0fbb0",
+    "request_digest": "8b2e98f390cfdf63e32a4a5c43411d3f9efd53289d2a11c70e1e757dcc1f6391",
+    "terminal_status": "FAILED_TERMINAL",
+    "stop_reason": "HTTP_402",
+    "counts": [
+      1,
+      1,
+      0
+    ],
+    "wire_error_class": "HTTP_402",
+    "assistant_output_exists": false
+  },
+  "recovery110": {
+    "original_ordinal": 110,
+    "consumed_at": 111,
+    "authorization_id": "sha256:80f95dc90166c4d5dccde20ba8ea13a8eaf246a4db4391bd2e67b3386280510b",
+    "reusable_for171": false
+  },
+  "old114_offline_response_under_current_validator": {
+    "findings": 1,
+    "unresolved": 0,
+    "current_target_findings": 0,
+    "old_terminal_changed": false,
+    "fresh_success_credit": false
+  },
+  "ledger": {
+    "slots": 171,
+    "provider_paid": 122,
+    "sec": 49,
+    "remaining_provider_paid": 118,
+    "remaining_sec": 31
+  },
+  "account_operation": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

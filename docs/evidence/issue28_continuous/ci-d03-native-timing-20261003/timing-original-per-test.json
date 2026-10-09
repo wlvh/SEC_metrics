@@ -1,0 +1,210 @@
+{
+  "status": "PASS",
+  "wall_seconds": 79.097,
+  "tests": 3,
+  "events": [
+    {
+      "label": "source_rebuild",
+      "seconds": 3.171
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.409
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 9.577
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.412
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 4.067
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.401
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.353
+    },
+    {
+      "label": "source_rebuild",
+      "seconds": 2.561
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.421
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 8.957
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.43
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.339
+    },
+    {
+      "label": "collection",
+      "seconds": 13.578
+    },
+    {
+      "label": "source_rebuild",
+      "seconds": 2.575
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.452
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 9.05
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.449
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.356
+    },
+    {
+      "label": "collection",
+      "seconds": 13.653
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 0.068
+    },
+    {
+      "label": "source_rebuild",
+      "seconds": 2.571
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.476
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 9.104
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 0.004
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 0.004
+    },
+    {
+      "label": "collection",
+      "seconds": 0.0
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.454
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 4.132
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.469
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.447
+    },
+    {
+      "label": "source_rebuild",
+      "seconds": 2.614
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.466
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 9.19
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.467
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.391
+    },
+    {
+      "label": "collection",
+      "seconds": 13.897
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.481
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 4.074
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 0.067
+    }
+  ],
+  "by_label": {
+    "source_rebuild": {
+      "count": 5,
+      "inclusive_seconds": 13.491999999999997
+    },
+    "request_grouping": {
+      "count": 13,
+      "inclusive_seconds": 31.787
+    },
+    "prepare_factory": {
+      "count": 5,
+      "inclusive_seconds": 45.878
+    },
+    "recorded_execute": {
+      "count": 5,
+      "inclusive_seconds": 12.280999999999999
+    },
+    "independent_native_replay": {
+      "count": 7,
+      "inclusive_seconds": 17.021
+    },
+    "collection": {
+      "count": 4,
+      "inclusive_seconds": 41.128
+    }
+  },
+  "per_test_seconds": [
+    {
+      "test": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_anchor_candidate_changes_business_digest",
+      "seconds": 0.001
+    },
+    {
+      "test": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result",
+      "seconds": 44.317
+    },
+    {
+      "test": "tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_is_retained_without_company_credit",
+      "seconds": 34.779
+    }
+  ],
+  "inclusive_times_overlap": true,
+  "source": "EXACT_CURRENT_SAVED_MARRIOTT_ORIGINAL",
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "scope": "SOURCE_CONTINUATION_ID_AND_EXACT_RAW_SPANS_NOT_EVENT_IDENTITY",
+  "source_raw_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+  "native_fact_ordinal": 418,
+  "native_fact_source_request_owner": 1,
+  "native_fact_attributes": {
+    "contextref": "c-1",
+    "continuedat": "f-408-1",
+    "escape": "true",
+    "id": "f-408",
+    "name": "us-gaap:IncomeTaxPolicyTextBlock"
+  },
+  "continuation_chain": [
+    {
+      "unit_id": "sha256:c8f38993e4ae474d4a0b261497638a5cc3adf551270689cef192022c19a58736",
+      "object_index": 24,
+      "location": "nested",
+      "id": "f-408-1",
+      "continuedat": "f-408-2",
+      "raw_xml_sha256": "526b5b72fcf48350c933768c9037822352ca7adbd1e4f9a5e70ec408ce811190",
+      "request_owner": 3
+    },
+    {
+      "unit_id": "sha256:4af0523b4e303de27c96f37785073b9f027b973ede4855205d487cea14f7087b",
+      "object_index": 3,
+      "location": "nested",
+      "id": "f-408-2",
+      "continuedat": null,
+      "raw_xml_sha256": "7c8f607e986d1e9866d707e06128bffd93b533f9bac6f6235548fa2c46afd568",
+      "request_owner": 4
+    }
+  ],
+  "links_beyond_this_input_responsibility": true,
+  "full_visible_context_supplies_reading_of_continuation": true,
+  "semantic_merge_or_matters_count_proven": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

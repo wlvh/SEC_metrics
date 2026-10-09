@@ -1,0 +1,36 @@
+{
+  "ordinal": 110,
+  "terminal_status": "FAILED_TERMINAL",
+  "stop_reason": "HTTP_402",
+  "native_candidate_evidence_created": false,
+  "native_result_created": false,
+  "counts": [
+    1,
+    1,
+    0
+  ],
+  "cumulative_provider_paid_sec": [
+    61,
+    61,
+    49
+  ],
+  "remaining_provider_paid_sec": [
+    179,
+    179,
+    31
+  ],
+  "unknown_usage_is_zero": false,
+  "usage": {
+    "actual_cost": null,
+    "cache_hit_input_tokens": null,
+    "cache_miss_input_tokens": null,
+    "input_tokens": null,
+    "output_tokens": null
+  },
+  "original_call_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0110",
+  "source_sha256": "4e0dde89514a0722f92804849148d75115a14b65a3c5a1b29d38afeda8d6e597",
+  "source_and_execution_archive_location": "Original fixed ledger only; this failure evidence subset is not a portable complete Run package",
+  "automatic_retry_executed": false,
+  "provider_channel_stopped": true,
+  "new_complete_B13_coordinates": 0
+}

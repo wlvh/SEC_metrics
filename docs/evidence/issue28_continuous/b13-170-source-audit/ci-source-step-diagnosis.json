@@ -1,0 +1,68 @@
+{
+  "run_id": 35756140686,
+  "head": "26d9d947a37cf622c5fc6781b6b8cb36931a395e",
+  "job": "vNext saved-source material",
+  "job_id": 106842270027,
+  "status": "PASSED",
+  "source_selectors": 67,
+  "measured_suite_seconds": 1757.358,
+  "job_started": "2026-09-22T16:45:59Z",
+  "job_completed": "2026-09-22T17:16:03Z",
+  "jobs": 2,
+  "slowest_cases": [
+    {
+      "duration_seconds": 255.984,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 254.826s\n\nOK\n",
+      "stdout_tail": "SEC retry exhausted for https://data.sec.gov/submissions/CIK0000019617.json; status=503; error=HTTP Error 503: RECORDED\n{\"status\": \"OFFLINE_SEC_CAPTURE_PASS\", \"calls\": [0, 0, 0], \"recorded_count_simulation\": [0, 0, 3], \"actual_http_path_verified\": true, \"retryable_http_zero_retry_verified\": true, \"checkpoint_import_and_failure_isolation_verified\": true, \"test_checkpoint_cannot_be_relabelled_live\": true, \"source_root\": \"/tmp/tmpbuallz19/ledger/source-inputs\", \"native_selected_source_and_cold_preview_verified\": true, \"checkpoint_id\": \"sha256:0423a5bdf24ea7738b8e79f9b1811d2b4a864b6c3f51968603d141a7c41476db\", \"original_provider_fields_unchanged\": true, \"real_sec_credit\": false, \"production_authorized\": false}\n",
+      "test": "tests.vnext.test_continuous_sec_acquisition",
+      "timeout_seconds": 480
+    },
+    {
+      "duration_seconds": 218.971,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 217.561s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_normal_zero_ai_results",
+      "timeout_seconds": 240
+    },
+    {
+      "duration_seconds": 190.011,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 188.683s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_normal_companyfacts_results",
+      "timeout_seconds": 240
+    },
+    {
+      "duration_seconds": 141.821,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 17 tests in 140.436s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_bond_leases",
+      "timeout_seconds": 240
+    },
+    {
+      "duration_seconds": 132.051,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 130.638s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_b06_inclusive_table",
+      "timeout_seconds": 240
+    },
+    {
+      "duration_seconds": 132.005,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 130.726s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_normal_accession_results",
+      "timeout_seconds": 240
+    }
+  ],
+  "diagnosis": "Previous35m timeout stopped this aggregate step before it emitted final per-case JSON; current exact run completed. No individual failed test inferred from prior cancellation; no timeout increase or rerun.",
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

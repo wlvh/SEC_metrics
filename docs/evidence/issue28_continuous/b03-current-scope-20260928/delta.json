@@ -1,0 +1,39 @@
+{
+  "record_type": "ISSUE28_CURRENT_390_ONE_COORDINATE_SCOPE_DELTA",
+  "parent_index": "docs/evidence/issue28_continuous/d04-remaining-20260922/current-390.json",
+  "coordinate_key": "salesforce:B03",
+  "historical_result_id_retained": "sha256:f07e137e0919271b8ea3b5d7a4742de5088d4d0a7481b33b93ff5f8498528120",
+  "historical_value_retained": "0.2295243829018663455749548465",
+  "historical_publication_record_retained": true,
+  "current_business_credit": "REVOKED_PENDING_DEPRECIATION_SCOPE_RESOLUTION",
+  "source_scope": {
+    "status": "NARROW_SELECTED_AND_COMPETING_SCOPE",
+    "blocked": true,
+    "primary_source_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+    "selected_fact": {
+      "ordinal": 809,
+      "concept": "us-gaap:DepreciationDepletionAndAmortization",
+      "value": "1200000000",
+      "context_ref": "c-1"
+    },
+    "selected_label": "ent, gross 6,823 6,918 Less accumulated depreciation and amortization ( 3,703 ) ( 3,682 ) Property and equipment, net $ 3,120 $ 3,236 Depreciation and amortization of fixed assets totaled $",
+    "competing_facts": [
+      {
+        "ordinal": 337,
+        "concept": "us-gaap:DepreciationAndAmortization",
+        "value": "3631000000",
+        "context_ref": "c-1",
+        "label": ", 2026 2025 2024 Operating activities: Net income $ 7,457 $ 6,197 $ 4,136 Adjustments to reconcile net income to net cash provided by operating activities: Depreciation and amortization (1)"
+      }
+    ]
+  },
+  "new_complete_coordinate_count": 0,
+  "other_389_revalidated": false,
+  "all390_acceptance": false,
+  "production_authorized": false,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}

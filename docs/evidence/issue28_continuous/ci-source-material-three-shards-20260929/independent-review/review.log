@@ -1,0 +1,12 @@
+2026-09-28T19:20:01Z precise_patch=1d458a4696c894ca809dbca9c53c39f8e5949fc2 parent_scope_only=true
+git_diff_workflow: matrix [0,1] -> [0,1,2]; --shard-count 2 -> 3; aggregate step label only.
+git_diff_runner: empty; runner_diff_exit=0.
+workflow_gate: needs=source_material_parts; if=always(); test SHARDS_RESULT=success; jobs=2; timeout-minutes=35 unchanged.
+schedule.py: PASS_EXACT_88_SOURCE_SELECTORS_ON_THREE_SHARDS; counts=30,29,29; prior_known=82; untimed=2,2,2; known_seconds=1668.386,1404.762,1614.901.
+actual_runner_cli_--list: all three lists exactly match distribution.json in order; no duplicate/missing selector.
+gh_run_36433946153_jobs_108966905276_108966905256: result PASSED 41+41; per-selector elapsed map equals all 82 entries in previous-success-timings.json; job wall 820.608s and 1599.478s; actual checkout 30s and 25s.
+gh_job_109077198596: cancelled; job 18:36:02-19:11:17Z; checkout 18:36:03-18:41:59Z; test 18:42:01-19:11:15Z. Raw job log has no final duration_seconds JSON; one error line 'The operation was canceled.'
+gh_run_36454551078_job_109037439531: full source JSON nonzero B03CurrentUpdateMaterialTest rc124 240.018/240s and B03SouthwestUpdateMaterialTest rc124 240.107/240s.
+limits: no long material tests, no CI trigger, no provider/SEC calls, no #47/PR52 access, no commit or push.
+verdict=PASS_LIMITED; new-head all-shard CI outcome pending.
+tool_calls=19 nested calls including this evidence update (15 wrapper calls; 34 if both layers counted); below 80. ordinary_messages=2 including final report.

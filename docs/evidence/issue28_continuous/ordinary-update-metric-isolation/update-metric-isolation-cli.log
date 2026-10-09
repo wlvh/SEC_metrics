@@ -1,0 +1,333 @@
+PASS cli two verified successes and one unchanged withheld; no new Runs
+{
+  "record_type": "ORDINARY_SAVED_UPDATE_CHECK",
+  "companies": [
+    {
+      "company_id": "pfizer",
+      "status": "UPDATES_PARTIAL",
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "e2b4cc68444e44eda67d09c60feba6b2",
+          "latest_attempt": "e2b4cc68444e44eda67d09c60feba6b2",
+          "successful_attempt": "340d3c5540b3456ebc511fea96d36720",
+          "previous_successful_attempt": "340d3c5540b3456ebc511fea96d36720",
+          "last_verified_candidate": {
+            "attempt_id": "340d3c5540b3456ebc511fea96d36720",
+            "targets": {
+              "B01": {
+                "fiscal_year": 2025,
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01"
+              }
+            },
+            "current_input_matches": true,
+            "results": {
+              "B01": {
+                "applicability": "APPLICABLE",
+                "company_id": "pfizer",
+                "metric_id": "B01",
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01",
+                "publication": "PUBLISHED",
+                "quality": "EXACT",
+                "reason_code": "PASS",
+                "record_type": "METRIC_RESULT",
+                "result_id": "sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf",
+                "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+                "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+                "trace_id": "sha256:2403c1f1aea4c693f78eefda728a27dd095109282ddd5ca7ae4e9cc21bcff435",
+                "unit": "USD",
+                "value": "62579000000"
+              }
+            },
+            "rows_root": "/private/tmp/sec_metrics_issue28_continuous/update-metric-isolation-cli-state/pfizer/metrics/B01/attempts/340d3c5540b3456ebc511fea96d36720/rows"
+          },
+          "new_candidate_created": false,
+          "terminal": {
+            "record_type": "ORDINARY_UPDATE_TERMINAL",
+            "attempt_id": "e2b4cc68444e44eda67d09c60feba6b2",
+            "configuration_id": "sha256:0ed09e17a169b1d8fb5347811f3e42149463ee30c5a470360a63e57a3b77955d",
+            "intent_id": "sha256:22de59f2a1c7f9d862611527450a49c1f1284c9b017faceec8037f99b2415a88",
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "completed_at": "2026-09-13T02:31:39.113742+00:00",
+            "input": {
+              "company_id": "pfizer",
+              "metric_ids": [
+                "B01"
+              ],
+              "requirement_closure_hash": "sha256:c117d27e5be203d9353ec4e659839cbce4591c3b299d4464d413dbce536add97",
+              "targets": {
+                "B01": {
+                  "fiscal_year": 2025,
+                  "period_start": "2025-01-01",
+                  "period_end": "2025-12-31"
+                }
+              },
+              "specs": {
+                "B01": {
+                  "B01": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8"
+                }
+              },
+              "source_contents": [
+                {
+                  "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+                  "accession": "0000078003-26-000026",
+                  "document_name": "CIK0000078003.json",
+                  "sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566"
+                },
+                {
+                  "source_url": "https://data.sec.gov/submissions/CIK0000078003.json",
+                  "accession": "",
+                  "document_name": "CIK0000078003.json",
+                  "sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+                  "accession": "0000078003-26-000026",
+                  "document_name": "pfe-20251231.htm",
+                  "sha256": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab"
+                }
+              ],
+              "content_id": "sha256:8747eeed0e6655c3b7820b6b5776e2b240a6fe87c1edbc83ed02e7b69e6e9304"
+            },
+            "metrics": {},
+            "error": null,
+            "calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "record_id": "sha256:d35509b4b462e7548ccc12e5f7b3a978dc47d883690fd8ab9f4e2a592b219e77"
+          },
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false
+        },
+        {
+          "metric_id": "B06",
+          "status": "PREVIOUS_INPUT_WITHHELD",
+          "attempt_id": "3712c1fe08434895b9ba09f7657c80ac",
+          "latest_attempt": "3712c1fe08434895b9ba09f7657c80ac",
+          "successful_attempt": null,
+          "previous_successful_attempt": null,
+          "last_verified_candidate": null,
+          "new_candidate_created": false,
+          "terminal": {
+            "record_type": "ORDINARY_UPDATE_TERMINAL",
+            "attempt_id": "3712c1fe08434895b9ba09f7657c80ac",
+            "configuration_id": "sha256:f41ea34d1e79ab62d6b75e0bd7c6cfe020b17de60364ad14711c94570b4fe37a",
+            "intent_id": "sha256:3cf8606e8c1e757af684a8faab5d81e7ec7bebd0d975a2e4cf44bfa1be69aaa3",
+            "status": "PREVIOUS_INPUT_WITHHELD",
+            "completed_at": "2026-09-13T02:31:55.191456+00:00",
+            "input": {
+              "company_id": "pfizer",
+              "metric_ids": [
+                "B06"
+              ],
+              "requirement_closure_hash": "sha256:c117d27e5be203d9353ec4e659839cbce4591c3b299d4464d413dbce536add97",
+              "targets": {
+                "B06": {
+                  "fiscal_year": 2025,
+                  "period_start": "2025-12-31",
+                  "period_end": "2025-12-31"
+                }
+              },
+              "specs": {
+                "B06": {
+                  "B06": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1"
+                }
+              },
+              "source_contents": [
+                {
+                  "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+                  "accession": "0000078003-26-000026",
+                  "document_name": "CIK0000078003.json",
+                  "sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566"
+                },
+                {
+                  "source_url": "https://data.sec.gov/submissions/CIK0000078003.json",
+                  "accession": "",
+                  "document_name": "CIK0000078003.json",
+                  "sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/index.json",
+                  "accession": "0000078003-26-000026",
+                  "document_name": "index.json",
+                  "sha256": "946e83a293156652d0f9e1ef8c1b305983345ab3486c67ae5a166bc2d4a4898e"
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+                  "accession": "0000078003-26-000026",
+                  "document_name": "pfe-20251231.htm",
+                  "sha256": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab"
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231_htm.xml",
+                  "accession": "0000078003-26-000026",
+                  "document_name": "pfe-20251231_htm.xml",
+                  "sha256": "41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09"
+                }
+              ],
+              "content_id": "sha256:14e09595e95a06f78f41715795c6789562d2a3a6b7e7c3a916a84ec59c939168"
+            },
+            "metrics": {},
+            "error": null,
+            "calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "record_id": "sha256:f5400c1a001e7d169fa366661ee072e649415a0ce4761af37c273bd27a475eea"
+          },
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false
+        },
+        {
+          "metric_id": "B08",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "f47f0cbcc4c843558fe27a024ad73363",
+          "latest_attempt": "f47f0cbcc4c843558fe27a024ad73363",
+          "successful_attempt": "54e2b83cb239445d89710b44b54fef0a",
+          "previous_successful_attempt": "54e2b83cb239445d89710b44b54fef0a",
+          "last_verified_candidate": {
+            "attempt_id": "54e2b83cb239445d89710b44b54fef0a",
+            "targets": {
+              "B08": {
+                "fiscal_year": 2025,
+                "period_end": "2025-12-31",
+                "period_start": "2025-12-31"
+              }
+            },
+            "current_input_matches": true,
+            "results": {
+              "B08": {
+                "applicability": "APPLICABLE",
+                "company_id": "pfizer",
+                "metric_id": "B08",
+                "period_end": "2025-12-31",
+                "period_start": "2025-12-31",
+                "publication": "PUBLISHED",
+                "quality": "EXACT",
+                "reason_code": "PASS",
+                "record_type": "METRIC_RESULT",
+                "result_id": "sha256:ec8e2ace97044b2c7da314c3d98abbd9dd38d0a8eea3fedba47c8d66538f99d9",
+                "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+                "spec_closure_hash": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6",
+                "trace_id": "sha256:e14ff4874c9c54e12b4c578cc404eb8c04d742e91fcdf55ce7cd5e12b9c13174",
+                "unit": "ratio",
+                "value": "1.159906986805104910231451438"
+              }
+            },
+            "rows_root": "/private/tmp/sec_metrics_issue28_continuous/update-metric-isolation-cli-state/pfizer/metrics/B08/attempts/54e2b83cb239445d89710b44b54fef0a/rows"
+          },
+          "new_candidate_created": false,
+          "terminal": {
+            "record_type": "ORDINARY_UPDATE_TERMINAL",
+            "attempt_id": "f47f0cbcc4c843558fe27a024ad73363",
+            "configuration_id": "sha256:f505ab1d872194de909da4d3fe529f8f4d71bbe6d35acb8c9a7d2133da844c22",
+            "intent_id": "sha256:866acc5fdb5718f00709184500e657880aafda557f328ed69d624e0aa2bca605",
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "completed_at": "2026-09-13T02:32:15.340725+00:00",
+            "input": {
+              "company_id": "pfizer",
+              "metric_ids": [
+                "B08"
+              ],
+              "requirement_closure_hash": "sha256:c117d27e5be203d9353ec4e659839cbce4591c3b299d4464d413dbce536add97",
+              "targets": {
+                "B08": {
+                  "fiscal_year": 2025,
+                  "period_start": "2025-12-31",
+                  "period_end": "2025-12-31"
+                }
+              },
+              "specs": {
+                "B08": {
+                  "B08": "sha256:5c803b9c8f773c348d4279249eeb56b603221e55938f39cba7801b3d77a517b6"
+                }
+              },
+              "source_contents": [
+                {
+                  "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+                  "accession": "0000078003-25-000054",
+                  "document_name": "CIK0000078003.json",
+                  "sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566"
+                },
+                {
+                  "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+                  "accession": "0000078003-26-000026",
+                  "document_name": "CIK0000078003.json",
+                  "sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566"
+                },
+                {
+                  "source_url": "https://data.sec.gov/submissions/CIK0000078003.json",
+                  "accession": "",
+                  "document_name": "CIK0000078003.json",
+                  "sha256": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331"
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/index.json",
+                  "accession": "0000078003-25-000054",
+                  "document_name": "index.json",
+                  "sha256": "88913296c867ae2685505fc7cf91ab34c3050bac218d99d835318a8067e9a915"
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231_htm.xml",
+                  "accession": "0000078003-25-000054",
+                  "document_name": "pfe-20241231_htm.xml",
+                  "sha256": "956a5bc3d6c58202ed529c1ba90c6b6f896f7f036e143d855ecf076b83a4f290"
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+                  "accession": "0000078003-26-000026",
+                  "document_name": "pfe-20251231.htm",
+                  "sha256": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab"
+                }
+              ],
+              "content_id": "sha256:c71fd95e563b197f88160ed57c39a4058f03bee7627e57b3b7e75ba0cda6b9d9"
+            },
+            "metrics": {},
+            "error": null,
+            "calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "record_id": "sha256:d9c2c5fa3136f6a20eeef58be98c35aaae4a511dffe2c3561b42c4b949b8e7e8"
+          },
+          "calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false
+        }
+      ],
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

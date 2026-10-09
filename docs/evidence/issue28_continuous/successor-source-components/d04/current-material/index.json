@@ -1,0 +1,689 @@
+[
+  {
+    "company_id": "marriott_international",
+    "status": "PASS",
+    "packet_id": "sha256:0a5d615e1f3e6e33bcb5ebf94dfe06d4b701b7845186d39e0769726b19c43a8f",
+    "saved_packet_sha256": "ae96631a46b5d3811f6b859d7b7fea466bdc32dda719a4247cb06b6f99832692",
+    "cold_command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/cold_read.py",
+      "/Users/lyuhongwang/Developer/SEC_metrics",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/marriott_international.json",
+      "marriott_international"
+    ],
+    "cold_exit_code": 0,
+    "documents": [
+      {
+        "accession": "0001048286-26-000007",
+        "form": "10-K",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-02-10",
+        "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "source_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+        "native_facts": 0,
+        "language_candidates": 0,
+        "audit_reports": [
+          {
+            "kind": "INTERNAL_CONTROL",
+            "identity_status": "NOT_A_FINANCIAL_STATEMENT_AUDIT_OPENING",
+            "subject": null,
+            "date": null,
+            "opening_start_byte": 861336
+          },
+          {
+            "kind": "FINANCIAL_STATEMENTS",
+            "identity_status": "TARGET_NAME_AND_CURRENT_BALANCE_SHEET_DATE_MATCHED",
+            "subject": "Marriott International, Inc. (the Company)",
+            "date": "December 31, 2025",
+            "opening_start_byte": 869731
+          }
+        ],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 1965,
+          "visible_character_count": 271428,
+          "source_payload_bytes": 291503,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 5,
+        "oversized_units": 0,
+        "document_state": "COMPLETE_LOCAL_DOCUMENT",
+        "document_reasons": []
+      }
+    ],
+    "elapsed_seconds": 2.46
+  },
+  {
+    "company_id": "southwest_airlines",
+    "status": "PASS",
+    "packet_id": "sha256:9a43635960c5e924e31c1aca837eed27a28b6e307d1d6338a151e19f899f3a99",
+    "saved_packet_sha256": "1ec376f42053ee0e0f355f5d68511fdabccca28dba4c941ac62205da0798c50c",
+    "cold_command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/cold_read.py",
+      "/Users/lyuhongwang/Developer/SEC_metrics",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/southwest_airlines.json",
+      "southwest_airlines"
+    ],
+    "cold_exit_code": 0,
+    "documents": [
+      {
+        "accession": "0000092380-26-000004",
+        "form": "10-K",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-02-05",
+        "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+        "source_path": "evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm",
+        "native_facts": 0,
+        "language_candidates": 0,
+        "audit_reports": [
+          {
+            "kind": "FINANCIAL_STATEMENTS",
+            "identity_status": "TARGET_NAME_AND_CURRENT_BALANCE_SHEET_DATE_MATCHED",
+            "subject": "Southwest Airlines Co. (the Company)",
+            "date": "December 31, 2025",
+            "opening_start_byte": 2671261
+          },
+          {
+            "kind": "INTERNAL_CONTROL",
+            "identity_status": "NOT_A_FINANCIAL_STATEMENT_AUDIT_OPENING",
+            "subject": null,
+            "date": null,
+            "opening_start_byte": 2684754
+          }
+        ],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 2535,
+          "visible_character_count": 536271,
+          "source_payload_bytes": 563592,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 9,
+        "oversized_units": 0,
+        "document_state": "COMPLETE_LOCAL_DOCUMENT",
+        "document_reasons": []
+      },
+      {
+        "accession": "0000092380-26-000006",
+        "form": "10-K/A",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-02-06",
+        "raw_asset_id": "sha256:17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279",
+        "source_path": "evidence/request_attempts/17/17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279/luv-20251231.htm",
+        "native_facts": 0,
+        "language_candidates": 0,
+        "audit_reports": [],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 169,
+          "visible_character_count": 23676,
+          "source_payload_bytes": 25176,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 1,
+        "oversized_units": 0,
+        "document_state": "INCOMPLETE",
+        "document_reasons": [
+          "TEXT_AMENDMENT_SOURCE_SET_REQUIRED"
+        ]
+      }
+    ],
+    "elapsed_seconds": 3.419
+  },
+  {
+    "company_id": "ford_motor_company",
+    "status": "PASS",
+    "packet_id": "sha256:0c9797ad1a1da21b874b16258c0fb702e69a9eed32f3931819743edbf4c1114b",
+    "saved_packet_sha256": "1698ea2491dcd4ffe134f97fe5b955d9e9298b12360f427e478fc2adea699f38",
+    "cold_command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/cold_read.py",
+      "/Users/lyuhongwang/Developer/SEC_metrics",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/ford_motor_company.json",
+      "ford_motor_company"
+    ],
+    "cold_exit_code": 0,
+    "documents": [
+      {
+        "accession": "0000037996-26-000015",
+        "form": "10-K",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-02-11",
+        "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+        "source_path": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+        "native_facts": 0,
+        "language_candidates": 2,
+        "audit_reports": [
+          {
+            "kind": "FINANCIAL_STATEMENTS",
+            "identity_status": "TARGET_NAME_AND_CURRENT_BALANCE_SHEET_DATE_MATCHED",
+            "subject": "Ford Motor Company and its subsidiaries (the “Company”)",
+            "date": "December 31, 2025",
+            "opening_start_byte": 2405184
+          }
+        ],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 4176,
+          "visible_character_count": 630830,
+          "source_payload_bytes": 674750,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 11,
+        "oversized_units": 0,
+        "document_state": "COMPLETE_LOCAL_DOCUMENT",
+        "document_reasons": []
+      }
+    ],
+    "elapsed_seconds": 5.42
+  },
+  {
+    "company_id": "pfizer",
+    "status": "PASS",
+    "packet_id": "sha256:7fbb13d515d508924f00d6c95e8808eeefe8b2941be69d7ee48c75273fd53332",
+    "saved_packet_sha256": "e699323c48e9e2b1ea2f1f46275c2eff37366f2cacfe7a2fa48d9e8d640a8b07",
+    "cold_command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/cold_read.py",
+      "/Users/lyuhongwang/Developer/SEC_metrics",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/pfizer.json",
+      "pfizer"
+    ],
+    "cold_exit_code": 0,
+    "documents": [
+      {
+        "accession": "0000078003-26-000026",
+        "form": "10-K",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-02-26",
+        "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+        "source_path": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+        "native_facts": 0,
+        "language_candidates": 1,
+        "audit_reports": [
+          {
+            "kind": "FINANCIAL_STATEMENTS",
+            "identity_status": "TARGET_NAME_AND_CURRENT_BALANCE_SHEET_DATE_MATCHED",
+            "subject": "Pfizer Inc. and Subsidiary Companies (the Company)",
+            "date": "December 31, 2025",
+            "opening_start_byte": 2015238
+          },
+          {
+            "kind": "INTERNAL_CONTROL",
+            "identity_status": "NOT_A_FINANCIAL_STATEMENT_AUDIT_OPENING",
+            "subject": null,
+            "date": null,
+            "opening_start_byte": 5048327
+          }
+        ],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 4507,
+          "visible_character_count": 629666,
+          "source_payload_bytes": 676788,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 11,
+        "oversized_units": 0,
+        "document_state": "COMPLETE_LOCAL_DOCUMENT",
+        "document_reasons": []
+      }
+    ],
+    "elapsed_seconds": 5.559
+  },
+  {
+    "company_id": "jpmorgan_chase",
+    "status": "PASS",
+    "packet_id": "sha256:2e2cc2cdd11b18a737b988ca4309dcfce86fa63e8965f283b2ff508068cfc974",
+    "saved_packet_sha256": "111844ff05ec2f481b03a122f492dc1785beca27527b3a096e1d0b3f9edf3755",
+    "cold_command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/cold_read.py",
+      "/Users/lyuhongwang/Developer/SEC_metrics",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/jpmorgan_chase.json",
+      "jpmorgan_chase"
+    ],
+    "cold_exit_code": 0,
+    "documents": [
+      {
+        "accession": "0001628280-26-008131",
+        "form": "10-K",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-02-13",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "source_path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+        "native_facts": 0,
+        "language_candidates": 0,
+        "audit_reports": [
+          {
+            "kind": "FINANCIAL_STATEMENTS",
+            "identity_status": "TARGET_NAME_AND_CURRENT_BALANCE_SHEET_DATE_MATCHED",
+            "subject": "JPMorgan Chase & Co. and its subsidiaries (the “Firm”)",
+            "date": "December 31, 2025",
+            "opening_start_byte": 5237205
+          }
+        ],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 11146,
+          "visible_character_count": 1153348,
+          "source_payload_bytes": 1273478,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 20,
+        "oversized_units": 0,
+        "document_state": "COMPLETE_LOCAL_DOCUMENT",
+        "document_reasons": []
+      }
+    ],
+    "elapsed_seconds": 13.428
+  },
+  {
+    "company_id": "salesforce",
+    "status": "PASS",
+    "packet_id": "sha256:3fffbf974343efc14708ea6bd5e5efa4fa3cae7f8c6cc74430ba553db42a436d",
+    "saved_packet_sha256": "39886b5d9f42757af5b8cc3001cdf619fd684b46ecc8754dd0146e697d6856d3",
+    "cold_command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/cold_read.py",
+      "/Users/lyuhongwang/Developer/SEC_metrics",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/salesforce.json",
+      "salesforce"
+    ],
+    "cold_exit_code": 0,
+    "documents": [
+      {
+        "accession": "0001108524-26-000060",
+        "form": "10-K",
+        "reportDate": "2026-01-31",
+        "filingDate": "2026-03-02",
+        "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+        "source_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+        "native_facts": 0,
+        "language_candidates": 0,
+        "audit_reports": [
+          {
+            "kind": "FINANCIAL_STATEMENTS",
+            "identity_status": "TARGET_NAME_AND_CURRENT_BALANCE_SHEET_DATE_MATCHED",
+            "subject": "Salesforce, Inc. (the Company)",
+            "date": "January 31, 2026",
+            "opening_start_byte": 1004177
+          },
+          {
+            "kind": "INTERNAL_CONTROL",
+            "identity_status": "NOT_A_FINANCIAL_STATEMENT_AUDIT_OPENING",
+            "subject": null,
+            "date": null,
+            "opening_start_byte": 1020502
+          }
+        ],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 2392,
+          "visible_character_count": 403488,
+          "source_payload_bytes": 427903,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 7,
+        "oversized_units": 0,
+        "document_state": "COMPLETE_LOCAL_DOCUMENT",
+        "document_reasons": []
+      }
+    ],
+    "elapsed_seconds": 2.967
+  },
+  {
+    "company_id": "lumen_technologies",
+    "status": "PASS",
+    "packet_id": "sha256:0662f6af94da30d8c1501c31ef69af2065aa2800ca5a818cb628ae43c8939de8",
+    "saved_packet_sha256": "99a4ff55efceca27ec3d9467c6033fb332dd8025cfff1395eb15820b1e2e396e",
+    "cold_command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/cold_read.py",
+      "/Users/lyuhongwang/Developer/SEC_metrics",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/lumen_technologies.json",
+      "lumen_technologies"
+    ],
+    "cold_exit_code": 0,
+    "documents": [
+      {
+        "accession": "0000018926-26-000014",
+        "form": "10-K",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-02-20",
+        "raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+        "source_path": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm",
+        "native_facts": 0,
+        "language_candidates": 0,
+        "audit_reports": [
+          {
+            "kind": "FINANCIAL_STATEMENTS",
+            "identity_status": "TARGET_NAME_AND_CURRENT_BALANCE_SHEET_DATE_MATCHED",
+            "subject": "Lumen Technologies, Inc. and subsidiaries (the Company)",
+            "date": "December 31, 2025",
+            "opening_start_byte": 1191188
+          },
+          {
+            "kind": "INTERNAL_CONTROL",
+            "identity_status": "NOT_A_FINANCIAL_STATEMENT_AUDIT_OPENING",
+            "subject": null,
+            "date": null,
+            "opening_start_byte": 1205334
+          }
+        ],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 4488,
+          "visible_character_count": 474832,
+          "source_payload_bytes": 521332,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 8,
+        "oversized_units": 0,
+        "document_state": "COMPLETE_LOCAL_DOCUMENT",
+        "document_reasons": []
+      }
+    ],
+    "elapsed_seconds": 4.207
+  },
+  {
+    "company_id": "macys",
+    "status": "PASS",
+    "packet_id": "sha256:c001fd852d4289bee654f73c27d1c8967fbdeecbb5a5f9eda7f2a30ec654767d",
+    "saved_packet_sha256": "0ec54726bb3a18899aea443dcc727bb50190a2a5a9434929db6c4947dd30f97f",
+    "cold_command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/cold_read.py",
+      "/Users/lyuhongwang/Developer/SEC_metrics",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/macys.json",
+      "macys"
+    ],
+    "cold_exit_code": 0,
+    "documents": [
+      {
+        "accession": "0001628280-26-021721",
+        "form": "10-K",
+        "reportDate": "2026-01-31",
+        "filingDate": "2026-03-27",
+        "raw_asset_id": "sha256:47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+        "source_path": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+        "native_facts": 0,
+        "language_candidates": 0,
+        "audit_reports": [
+          {
+            "kind": "FINANCIAL_STATEMENTS",
+            "identity_status": "TARGET_NAME_AND_CURRENT_BALANCE_SHEET_DATE_MATCHED",
+            "subject": "Macy's, Inc. and subsidiaries (the Company)",
+            "date": "January 31, 2026",
+            "opening_start_byte": 726878
+          }
+        ],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 2165,
+          "visible_character_count": 290303,
+          "source_payload_bytes": 312003,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 5,
+        "oversized_units": 0,
+        "document_state": "COMPLETE_LOCAL_DOCUMENT",
+        "document_reasons": []
+      }
+    ],
+    "elapsed_seconds": 2.631
+  },
+  {
+    "company_id": "paramount_skydance_paramount_global",
+    "status": "PASS",
+    "packet_id": "sha256:ad4c583f2d1c44b940da75e83dbc5da72162fd712a2e2aeffa9120cca0f33198",
+    "saved_packet_sha256": "010ef1d8f7b3ec0488397df8366231e547ef9f3a76f6b45bebe34ab529348040",
+    "cold_command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/cold_read.py",
+      "/Users/lyuhongwang/Developer/SEC_metrics",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/paramount_skydance_paramount_global.json",
+      "paramount_skydance_paramount_global"
+    ],
+    "cold_exit_code": 0,
+    "documents": [
+      {
+        "accession": "0002041610-26-000011",
+        "form": "10-K",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-02-25",
+        "raw_asset_id": "sha256:4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+        "source_path": "evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm",
+        "native_facts": 0,
+        "language_candidates": 1,
+        "audit_reports": [
+          {
+            "kind": "FINANCIAL_STATEMENTS",
+            "identity_status": "TARGET_NAME_AND_CURRENT_BALANCE_SHEET_DATE_MATCHED",
+            "subject": "Paramount Skydance Corporation and its subsidiaries (Successor) (the \"Company\")",
+            "date": "December 31, 2025",
+            "opening_start_byte": 1657516
+          },
+          {
+            "kind": "FINANCIAL_STATEMENTS",
+            "identity_status": "OTHER_OR_UNRESOLVED_SUBJECT_OR_PERIOD",
+            "subject": "Paramount Global and its subsidiaries (Predecessor) (the “Company”)",
+            "date": "December 31, 2024",
+            "opening_start_byte": 1683293
+          }
+        ],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 3592,
+          "visible_character_count": 506057,
+          "source_payload_bytes": 544173,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 9,
+        "oversized_units": 0,
+        "document_state": "COMPLETE_LOCAL_DOCUMENT",
+        "document_reasons": []
+      },
+      {
+        "accession": "0001140361-26-016758",
+        "form": "10-K/A",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-04-24",
+        "raw_asset_id": "sha256:10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0",
+        "source_path": "evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm",
+        "native_facts": 0,
+        "language_candidates": 0,
+        "audit_reports": [],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 1596,
+          "visible_character_count": 157538,
+          "source_payload_bytes": 173815,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 3,
+        "oversized_units": 0,
+        "document_state": "INCOMPLETE",
+        "document_reasons": [
+          "TEXT_AMENDMENT_SOURCE_SET_REQUIRED"
+        ]
+      }
+    ],
+    "elapsed_seconds": 5.718
+  },
+  {
+    "company_id": "enphase_energy",
+    "status": "PASS",
+    "packet_id": "sha256:d12b1c0a9cb95ba8b88073a3e73d73b97a700bc43c56c65df98e3b99cabc87e6",
+    "saved_packet_sha256": "46ebcaaccf9503a76c8f67e58344b0589769610cb70518c1eba61ddaae7bd82f",
+    "cold_command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/cold_read.py",
+      "/Users/lyuhongwang/Developer/SEC_metrics",
+      "/private/tmp/sec_metrics_issue28_continuous/d04-root-catalog-material/enphase_energy.json",
+      "enphase_energy"
+    ],
+    "cold_exit_code": 0,
+    "documents": [
+      {
+        "accession": "0001463101-26-000013",
+        "form": "10-K",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-02-17",
+        "raw_asset_id": "sha256:7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+        "source_path": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+        "native_facts": 0,
+        "language_candidates": 1,
+        "audit_reports": [
+          {
+            "kind": "FINANCIAL_STATEMENTS",
+            "identity_status": "TARGET_NAME_AND_CURRENT_BALANCE_SHEET_DATE_MATCHED",
+            "subject": "Enphase Energy, Inc. and subsidiaries (the \"Company\")",
+            "date": "December 31, 2025",
+            "opening_start_byte": 1038915
+          },
+          {
+            "kind": "INTERNAL_CONTROL",
+            "identity_status": "NOT_A_FINANCIAL_STATEMENT_AUDIT_OPENING",
+            "subject": null,
+            "date": null,
+            "opening_start_byte": 1055407
+          }
+        ],
+        "input_coverage": {
+          "scope": "ALL_VISIBLE_BLOCKS_OF_THIS_SAVED_DOCUMENT",
+          "visible_block_count": 2709,
+          "visible_character_count": 454845,
+          "source_payload_bytes": 483352,
+          "all_visible_blocks_supplied": true,
+          "excluded_markup": [
+            "head",
+            "script",
+            "style",
+            "ix:header",
+            "ix:hidden"
+          ],
+          "native_fact_stream_inspected_separately": true,
+          "semantic_coverage_complete": false,
+          "provider_tokens_measured": false
+        },
+        "input_units": 8,
+        "oversized_units": 0,
+        "document_state": "COMPLETE_LOCAL_DOCUMENT",
+        "document_reasons": []
+      }
+    ],
+    "elapsed_seconds": 3.278
+  }
+]

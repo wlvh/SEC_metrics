@@ -1,0 +1,231 @@
+{
+  "accession": "0000037996-26-000015",
+  "company_id": "ford_motor_company",
+  "consolidated_equity_not_industrial_denominator": true,
+  "current_case": {
+    "classification": "SOURCE_REBUILT_SPECIAL_SCOPE_LIMITATION",
+    "limitations": [
+      "INDUSTRIAL_ATTRIBUTABLE_EQUITY_NOT_ESTABLISHED"
+    ],
+    "reported_debt_subtotal": "21919000000",
+    "result_publication": "WITHHELD",
+    "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+    "result_value": null
+  },
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "period_end": "2025-12-31",
+  "record_type": "ISSUE28_B06_FORD_SAVED_SOURCE_EQUITY_SCOPE_CENSUS",
+  "result_or_run_created": false,
+  "same_scope_equity_fact_found": false,
+  "scope_limit": "Only the admitted saved FY2025 annual primary and accession XML were searched; this does not prove absence in other filings or establish a B06 ratio.",
+  "source_admission_checkpoint_id": "sha256:1cc31c90e839e246c6ad82eb7eb7a6c9fa1de8247a6626cdd3866d3d8b6cf178",
+  "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+  "sources": {
+    "primary": {
+      "consolidated_equity_like_facts": [
+        {
+          "concept": "us-gaap:EquityMethodInvestments",
+          "ordinal": 232
+        },
+        {
+          "concept": "us-gaap:StockholdersEquity",
+          "ordinal": 282
+        },
+        {
+          "concept": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+          "ordinal": 286
+        },
+        {
+          "concept": "us-gaap:LiabilitiesAndStockholdersEquity",
+          "ordinal": 288
+        },
+        {
+          "concept": "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+          "ordinal": 519
+        },
+        {
+          "concept": "us-gaap:EquitySecuritiesWithoutReadilyDeterminableFairValueAmount",
+          "ordinal": 551
+        },
+        {
+          "concept": "us-gaap:EquityMethodInvestments",
+          "ordinal": 1634
+        }
+      ],
+      "industrial_concept_counts": {
+        "AssetsOfDisposalGroupIncludingDiscontinuedOperation": 1,
+        "AvailableForSaleDebtSecuritiesAccumulatedGrossUnrealizedGainBeforeTax": 6,
+        "AvailableForSaleDebtSecuritiesAccumulatedGrossUnrealizedLossBeforeTax": 6,
+        "AvailableForSaleDebtSecuritiesAmortizedCostBasis": 6,
+        "AvailableForSaleSecuritiesDebtMaturitiesAfterOneThroughFiveYearsFairValue": 6,
+        "AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue": 6,
+        "AvailableForSaleSecuritiesDebtSecurities": 6,
+        "CapitalizedContractCostNet": 1,
+        "CashAndCashEquivalentsFairValueDisclosure": 7,
+        "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsDisposalGroupIncludingDiscontinuedOperations": 1,
+        "ConvertibleDebtCurrent": 1,
+        "ConvertibleDebtFairValueDisclosures": 1,
+        "CreditFacilityGuaranteeByThirdPartyAmount": 1,
+        "DebtAndCapitalLeaseObligations": 3,
+        "DebtCovenantMinimumLiquidityAmount": 1,
+        "DebtCurrent": 1,
+        "DebtInstrumentFaceAmount": 25,
+        "DebtInstrumentFairValue": 1,
+        "DebtInstrumentInterestRateEffectivePercentage": 1,
+        "DebtInstrumentInterestRateStatedPercentage": 24,
+        "DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNet": 3,
+        "DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNetCurrent": 1,
+        "DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNetNoncurrent": 1,
+        "DebtLongtermAndShorttermCombinedAmount": 1,
+        "DebtSecuritiesAvailableForSaleFairValueMaturityAllocatedAndSingleMaturityDateAfterYear5": 6,
+        "DisposalGroupIncludingDiscontinuedOperationCashAndCashEquivalents": 1,
+        "FinanceLeaseLiabilityCurrent": 1,
+        "FinanceLeaseLiabilityNoncurrent": 1,
+        "InterestPayableCurrentAndNoncurrent": 1,
+        "InterestPaymentDueAfterYearFive": 1,
+        "InterestPaymentDueInYearFive": 1,
+        "InterestPaymentDueInYearFour": 1,
+        "InterestPaymentDueInYearOne": 1,
+        "InterestPaymentDueInYearThree": 1,
+        "InterestPaymentDueInYearTwo": 1,
+        "InvestmentsFairValueDisclosure": 7,
+        "LiabilitiesOfDisposalGroupIncludingDiscontinuedOperation": 1,
+        "LineOfCreditFacilityMaximumBorrowingCapacity": 10,
+        "LongTermDebtAndCapitalLeaseObligations": 1,
+        "LongTermDebtCurrent": 1,
+        "LongTermDebtMaturitiesRepaymentsOfPrincipalAfterYearFive": 3,
+        "LongTermDebtMaturitiesRepaymentsOfPrincipalInNextTwelveMonths": 3,
+        "LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFive": 3,
+        "LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFour": 3,
+        "LongTermDebtMaturitiesRepaymentsOfPrincipalInYearThree": 3,
+        "LongTermDebtMaturitiesRepaymentsOfPrincipalInYearTwo": 3,
+        "LongTermDebtNoncurrent": 1,
+        "MediumTermNotesNoncurrentCumulative": 1,
+        "MediumtermNotesNoncurrent": 1,
+        "OtherLoansPayableCurrent": 2,
+        "OtherLoansPayableLongTerm": 2,
+        "PropertySubjectToOrAvailableForOperatingLeaseNet": 1,
+        "RestrictedCash": 1,
+        "RestructuringReserve": 1,
+        "RevenueRemainingPerformanceObligation": 4,
+        "RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionPeriod1": 7,
+        "ShortTermBorrowings": 1,
+        "ShorttermDebtFairValue": 1,
+        "UnsecuredDebtCurrent": 1,
+        "UnsecuredLongTermDebt": 1
+      },
+      "industrial_dimension": {
+        "us-gaap:StatementBusinessSegmentsAxis": "f:CompanyExcludingFordCreditMember"
+      },
+      "industrial_equity_like_facts": [],
+      "raw_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+      "raw_size": 5281502,
+      "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2"
+    },
+    "xml": {
+      "consolidated_equity_like_facts": [
+        {
+          "concept": "us-gaap:equitymethodinvestments",
+          "ordinal": 232
+        },
+        {
+          "concept": "us-gaap:stockholdersequity",
+          "ordinal": 282
+        },
+        {
+          "concept": "us-gaap:stockholdersequityincludingportionattributabletononcontrollinginterest",
+          "ordinal": 286
+        },
+        {
+          "concept": "us-gaap:liabilitiesandstockholdersequity",
+          "ordinal": 288
+        },
+        {
+          "concept": "us-gaap:stockholdersequityincludingportionattributabletononcontrollinginterest",
+          "ordinal": 519
+        },
+        {
+          "concept": "us-gaap:equitysecuritieswithoutreadilydeterminablefairvalueamount",
+          "ordinal": 551
+        },
+        {
+          "concept": "us-gaap:equitymethodinvestments",
+          "ordinal": 1634
+        }
+      ],
+      "industrial_concept_counts": {
+        "assetsofdisposalgroupincludingdiscontinuedoperation": 1,
+        "availableforsaledebtsecuritiesaccumulatedgrossunrealizedgainbeforetax": 6,
+        "availableforsaledebtsecuritiesaccumulatedgrossunrealizedlossbeforetax": 6,
+        "availableforsaledebtsecuritiesamortizedcostbasis": 6,
+        "availableforsalesecuritiesdebtmaturitiesafteronethroughfiveyearsfairvalue": 6,
+        "availableforsalesecuritiesdebtmaturitieswithinoneyearfairvalue": 6,
+        "availableforsalesecuritiesdebtsecurities": 6,
+        "capitalizedcontractcostnet": 1,
+        "cashandcashequivalentsfairvaluedisclosure": 7,
+        "cashcashequivalentsrestrictedcashandrestrictedcashequivalentsdisposalgroupincludingdiscontinuedoperations": 1,
+        "convertibledebtcurrent": 1,
+        "convertibledebtfairvaluedisclosures": 1,
+        "creditfacilityguaranteebythirdpartyamount": 1,
+        "debtandcapitalleaseobligations": 3,
+        "debtcovenantminimumliquidityamount": 1,
+        "debtcurrent": 1,
+        "debtinstrumentfaceamount": 25,
+        "debtinstrumentfairvalue": 1,
+        "debtinstrumentinterestrateeffectivepercentage": 1,
+        "debtinstrumentinterestratestatedpercentage": 24,
+        "debtinstrumentunamortizeddiscountpremiumanddebtissuancecostsnet": 3,
+        "debtinstrumentunamortizeddiscountpremiumanddebtissuancecostsnetcurrent": 1,
+        "debtinstrumentunamortizeddiscountpremiumanddebtissuancecostsnetnoncurrent": 1,
+        "debtlongtermandshorttermcombinedamount": 1,
+        "debtsecuritiesavailableforsalefairvaluematurityallocatedandsinglematuritydateafteryear5": 6,
+        "disposalgroupincludingdiscontinuedoperationcashandcashequivalents": 1,
+        "financeleaseliabilitycurrent": 1,
+        "financeleaseliabilitynoncurrent": 1,
+        "interestpayablecurrentandnoncurrent": 1,
+        "interestpaymentdueafteryearfive": 1,
+        "interestpaymentdueinyearfive": 1,
+        "interestpaymentdueinyearfour": 1,
+        "interestpaymentdueinyearone": 1,
+        "interestpaymentdueinyearthree": 1,
+        "interestpaymentdueinyeartwo": 1,
+        "investmentsfairvaluedisclosure": 7,
+        "liabilitiesofdisposalgroupincludingdiscontinuedoperation": 1,
+        "lineofcreditfacilitymaximumborrowingcapacity": 10,
+        "longtermdebtandcapitalleaseobligations": 1,
+        "longtermdebtcurrent": 1,
+        "longtermdebtmaturitiesrepaymentsofprincipalafteryearfive": 3,
+        "longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths": 3,
+        "longtermdebtmaturitiesrepaymentsofprincipalinyearfive": 3,
+        "longtermdebtmaturitiesrepaymentsofprincipalinyearfour": 3,
+        "longtermdebtmaturitiesrepaymentsofprincipalinyearthree": 3,
+        "longtermdebtmaturitiesrepaymentsofprincipalinyeartwo": 3,
+        "longtermdebtnoncurrent": 1,
+        "mediumtermnotesnoncurrent": 1,
+        "mediumtermnotesnoncurrentcumulative": 1,
+        "otherloanspayablecurrent": 2,
+        "otherloanspayablelongterm": 2,
+        "propertysubjecttooravailableforoperatingleasenet": 1,
+        "restrictedcash": 1,
+        "restructuringreserve": 1,
+        "revenueremainingperformanceobligation": 4,
+        "revenueremainingperformanceobligationexpectedtimingofsatisfactionperiod1": 7,
+        "shorttermborrowings": 1,
+        "shorttermdebtfairvalue": 1,
+        "unsecureddebtcurrent": 1,
+        "unsecuredlongtermdebt": 1
+      },
+      "industrial_dimension": {
+        "us-gaap:StatementBusinessSegmentsAxis": "f:CompanyExcludingFordCreditMember"
+      },
+      "industrial_equity_like_facts": [],
+      "raw_sha256": "35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe",
+      "raw_size": 5591122,
+      "source_reference_id": "sha256:a65d4c625e97b1e84b5874bdf447f84206f1d17e70be5daff9b7ff6642d6b47c"
+    }
+  }
+}

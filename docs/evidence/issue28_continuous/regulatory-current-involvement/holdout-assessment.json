@@ -1,0 +1,46 @@
+{
+  "assessor": "Codex executor original-source inspection; not independent review",
+  "slot": 46,
+  "source_reference_and_date_check": "PASS",
+  "aggregate_current_involvement": "FAIL",
+  "source_indices": [
+    339,
+    340
+  ],
+  "observed": [
+    {
+      "date_to_action_relationship_semantically_verified": false,
+      "event_dates": [],
+      "evidence": [
+        {
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 339,
+          "text": "JPMorganChase is named as a defendant or is otherwise involved in many civil and governmental legal proceedings, including class actions, derivative actions and other litigation or disputes with third parties, as well as investigations and enforcement actions by U.S. and non-U.S. governmental authorities, including criminal proceedings. Actions currently"
+        }
+      ],
+      "kind": "CONDITIONAL_OR_BOILERPLATE",
+      "reason": "States JPMorganChase is named as defendant or otherwise involved in many civil and governmental legal proceedings, including investigations and enforcement actions by U.S. and non-U.S. authorities; this is a generic risk disclosure of possible/actual involvement without identifying a specific process, so it is conditional/boilerplate rather than a specific reported regulatory process.",
+      "reported_status": "CONDITIONAL",
+      "resolved_date_evidence": [],
+      "resolved_evidence": [
+        {
+          "end_character": 356,
+          "kind": "VISIBLE_BLOCK",
+          "source_index": 339,
+          "start_character": 0,
+          "text": "JPMorganChase is named as a defendant or is otherwise involved in many civil and governmental legal proceedings, including class actions, derivative actions and other litigation or disputes with third parties, as well as investigations and enforcement actions by U.S. and non-U.S. governmental authorities, including criminal proceedings. Actions currently"
+        }
+      ],
+      "subject": "TARGET_REGISTRANT",
+      "timing": "CONDITIONAL",
+      "timing_origin": "HOST_COMPATIBILITY_FIELD_FROM_REPORTED_STATUS",
+      "unit_id": "sha256:1971e8a899820d01201d720beb553bf0478a49fb9ac3e7476cfcec07d774bf40"
+    }
+  ],
+  "unchanged_observation": "The v6 prompt explicitly removes any named-case requirement; provider still calls an affirmative aggregate disclosure conditional for lack of a specific process.",
+  "overlapping_context_classification": "REPAIRED",
+  "core_route_status": "NOT_QUALIFIED_FOR_GENERAL_D03_ACCEPTANCE",
+  "next": "Pause repeated first-pass prompts on this statement; retain actual evidence for scoped independent review and investigate reuse of the existing source-reported-fact route. Continue independent D04/B13 work.",
+  "full_acceptance": false,
+  "production_authorized": false
+}

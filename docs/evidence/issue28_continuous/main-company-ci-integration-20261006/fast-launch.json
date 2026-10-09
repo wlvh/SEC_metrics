@@ -1,0 +1,14 @@
+{
+  "pid": 38128,
+  "argv": [
+    "/private/tmp/issue28-company-c02-venv-20261006/bin/python",
+    "-B",
+    "tools/run_fast_tests_v2.py",
+    "--suite",
+    "fast",
+    "--jobs",
+    "2"
+  ],
+  "done": "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/main-company-ci-integration-20261006/affected-fast-suite.done.json",
+  "reason": "Merged main publication dependency and changed ordinary/continuous runtime closure require one affected fast pass; no long source suite rerun"
+}

@@ -1,0 +1,41 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1019, in load_run_bound_specs
+    return compile_spec_files(paths=paths)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 923, in compile_spec_files
+    raise SpecError(
+    ...<3 lines>...
+    )
+vnext.specs.SpecError: Compiled dependency specs are missing: B01
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 74, in check
+    row['details']=action();row['passed']=not reject;row['outcome']='ACCEPTED'
+                   ~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 60, in <lambda>
+    self.check(name,lambda m=metric,n=name,f=mutate:self.attack(m,n,f),reject=True)
+                                                    ~~~~~~~~~~~^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 106, in attack
+    self.replay(data,run)
+    ~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 84, in replay
+    manifest,records,decisions=run_store._mechanically_replay_open_run(run_dir=run,repo_root=data,require_complete_results=True)
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3413, in _mechanically_replay_open_run
+    _verify_repository_bindings(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1308, in _verify_repository_bindings
+    compiled_by_id = load_run_bound_specs(
+        repo_root=repo_root, manifest=manifest,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 1021, in load_run_bound_specs
+    raise RunStoreError("Run Spec closure cannot be compiled") from error
+vnext.run_store.RunStoreError: Run Spec closure cannot be compiled

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<stdin>", line 40, in <module>
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/html/parser.py", line 111, in feed
+    self.goahead(0)
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/html/parser.py", line 171, in goahead
+    k = self.parse_starttag(i)
+        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/html/parser.py", line 338, in parse_starttag
+    self.handle_starttag(tag, attrs)
+  File "<stdin>", line 33, in handle_starttag
+TypeError: 'int' object is not callable

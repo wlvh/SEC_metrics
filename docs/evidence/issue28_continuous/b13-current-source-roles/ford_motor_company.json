@@ -1,0 +1,4529 @@
+{
+  "company_id": "ford_motor_company",
+  "semantic_source_id": "sha256:aa3a7cc42946bbc5ed7d1cca1b77eea39c7792b37c3a94b72807fe0fb89efcc3",
+  "prepared_annual_input_id": null,
+  "period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "documents": [
+    {
+      "document_id": "sha256:cf486bd77edf58e86d6642743a8c0471495ffb331812ecf152f5e27bf81ca3b8",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2",
+        "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+        "company_id": "ford_motor_company",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231.htm",
+        "accession": "0000037996-26-000015",
+        "document_name": "f-20251231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:f48f8c4bd2da27d84a15410bacc45567b52c7d580d8658b036550fa4a6c414af"
+      },
+      "raw_blob": {
+        "record_type": "RAW_BLOB",
+        "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+        "byte_length": 5281502,
+        "media_type": "text/html",
+        "storage_uri": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm"
+      },
+      "filing": {
+        "accessionNumber": "0000037996-26-000015",
+        "filingDate": "2026-02-11",
+        "reportDate": "2025-12-31",
+        "acceptanceDateTime": "2026-02-10T19:08:37.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-03950",
+        "filmNumber": "26617787",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 26968570,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "f-20251231.htm",
+        "primaryDocDescription": "10-K"
+      },
+      "registrant_name_binding": {
+        "dei_facts": [
+          {
+            "namespace": "http://xbrl.sec.gov/dei/2025",
+            "fact": {
+              "tag": "ix:nonnumeric",
+              "qualified_name": "dei:EntityRegistrantName",
+              "context_ref": "c-1",
+              "unit_ref": "",
+              "scale": "0",
+              "sign": "",
+              "ordinal": 60,
+              "text": "Ford Motor Co"
+            },
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000037996",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "typed_dimension_count": 0
+            }
+          }
+        ],
+        "invalid_dei_contexts": [],
+        "cover_name": {
+          "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2",
+          "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+          "document_id": "sha256:cf486bd77edf58e86d6642743a8c0471495ffb331812ecf152f5e27bf81ca3b8",
+          "section_id": "ANNUAL_COVER",
+          "labels": [
+            "EXPLICIT_REGISTRANT_CHARTER_NAME"
+          ],
+          "block_index": 10,
+          "text": "Ford Motor Company",
+          "raw_start_byte": 609699,
+          "raw_end_byte": 609733,
+          "raw_span_sha256": "60051850ccbbfb09394fa0e7d68fab0265029c2c0a3dab80b5d55ba01330c72f"
+        },
+        "cover_caption": {
+          "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2",
+          "raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+          "document_id": "sha256:cf486bd77edf58e86d6642743a8c0471495ffb331812ecf152f5e27bf81ca3b8",
+          "section_id": "ANNUAL_COVER",
+          "labels": [
+            "EXACT_NAME_OF_REGISTRANT_LABEL"
+          ],
+          "block_index": 11,
+          "text": "(Exact name of Registrant as specified in its charter)",
+          "raw_start_byte": 609902,
+          "raw_end_byte": 609956,
+          "raw_span_sha256": "4804058708dc6d0aa6f3ead4ab77d5d388191428b63c5ddd5df3a96fca112fab"
+        },
+        "relation": {
+          "relation": "SAME_SUBSTANTIVE_WORDS_AND_TERMINAL_LEGAL_FORM",
+          "removed_dei_terminal_marker": null,
+          "marker_jurisdiction_meaning_asserted": false,
+          "terminal_legal_form": "company"
+        },
+        "accepted_source_names": [
+          "Ford Motor Co",
+          "Ford Motor Company"
+        ],
+        "status": "SAME_SOURCE_COVER_AND_CURRENT_DEI_NAME_BOUND"
+      },
+      "visible_block_count": 4176,
+      "native_coverage": {
+        "fact_count": 3323,
+        "source_object_count": 1050,
+        "supplement_count": 162,
+        "encoded_outer_supplement_count": 82,
+        "duplicate_nested_xml_bytes_removed": 577724,
+        "native_fact_stream_sha256": "d5e06924230716e10b7e73893c4fa97d0b5b21a7ea379bb61f5dc0a2b5821fce",
+        "native_contexts_and_units_retained": true,
+        "native_roundtrip_verified": true
+      },
+      "language_candidate_block_indices": [
+        450,
+        1278
+      ],
+      "native_candidate_ordinals": [],
+      "source_unit_ids": [
+        "sha256:a812d302d7534b37ca66c15abf1c23de5756336853b2dba30585721e7760d53e",
+        "sha256:0d720a5afbb6becc6ec98c5e5bee3b4d95484adfe444d42283b02e0106908169",
+        "sha256:57248e0b7c39b48d6d05244eda04d198a40215446f831d2dd583d98ce1abde89",
+        "sha256:4be5c9027c73c6c8672ea47ce03eab1c130c8de09af3267a2830d8b5acb4de67",
+        "sha256:0d5cd7a5f968c771354a7f7585312ef439d7e817b6f152db7031a1de4015a014",
+        "sha256:b27d6d307ee950d7f2e0e7f01e30693fad427f02d0cdd20a7a93c880fe93789c",
+        "sha256:80314603ac65f9097ed2aab43c8e5f137d1da7eb78e0b9ad50fac7cfa5868161",
+        "sha256:6b47a699ebbd86faf52c3f4087a99205851f8ce89ae33eefed9ae56242611761",
+        "sha256:26d1041dbf150cf4abdeaace0d978ba05ffc663c10e9cc12579a76d9426aaea4",
+        "sha256:3ffb391a8f2d9f3265ffc8f3811e2d3a562dae63af508ecf8b612a5ff440a3af",
+        "sha256:873a80beffc27f00abf7889d9fd5cd44be771a3b66d31b1b216f9e68d0039db2",
+        "sha256:3f7e370a234e85b8a65a0fb8679653f35e4d3f968393ae63c859426ddd3ffd5b",
+        "sha256:ad740a7cbb339a7be96ce4e00e0d95553c3fc65e22bf6c5aa6b4eb5adedc80c3",
+        "sha256:9d52a8b602952c1ce006c8feee66716ff513e0df16ffb88130b331e4af3103c2",
+        "sha256:271d538f2c0de0f38b0b7db07313eb2d421721a4765c8be2436089b92d51ac78",
+        "sha256:72751e701f908fcc37250dba204e1c1c285bd9b1c67ff99955dbe158971d0781",
+        "sha256:decc15e2fd5539050ba4fbf29c9a32161d0c2bc52cd6774b0f94b158d40d0500",
+        "sha256:acbc587ad076e0510356ef95823d1251df509dac4e34eca61edc8bd40ee79b3e",
+        "sha256:fcec585732350ddc15ceec1c9dd7cf6ab6e9ef1688984510b3b5bde4e43d6907",
+        "sha256:42e7393c16af21b903048b1cb33120e6f64cf99764507ec8b352c861e0c44042",
+        "sha256:a28afdecd9e606241cb27bcf39f19687bbbb4bc99338f10ab30fd4ead53eb835",
+        "sha256:58cf1fb47cc524a861e06c736dd02d2042dd07644eb23aa782b0328aa872d882",
+        "sha256:0822bd92c88fb5986c0b5858fb0e99f9a980df7bc4fcc04905aa0ed3f73e7afe",
+        "sha256:d3f5402b651fa6541b591891d5d1d0ebe48c6a52b77976c454b20e3c5b5da6b8",
+        "sha256:f1bfd043a35a70fb592b2ccf068ab192909f2b2333148d8b292d82ffc87140a0",
+        "sha256:28e42d64ab1d9e46a65b1790eb81654597042a42a1adaca0e1749fe04ecb6127",
+        "sha256:c3d95418697dae554f1339e68f7c7f3afb341fb00022e448b273e74cc082884b",
+        "sha256:7f8ee3e4b403a7cb681778c76b9139e97e1aac7d4a43a5db33de37469d20ac1a",
+        "sha256:4a0cd2a9954017854a92cec3bdc90aee7c974333165321da21733fd5b01ef0a0",
+        "sha256:d34e5b49ffe840c5b4e2066648edb02d71419ba39aaa08e66b6e682ebe985c44",
+        "sha256:80ffdd26b878149f34007bf8fef055ac752e67955da7756d62e1adbf1d8ea35b",
+        "sha256:8f9d78b25b7b1211e2b44894b5682239e1a4c118369e1263f26883903018dc61",
+        "sha256:a8683d68984a3f579694894e894abd0d507dc2e72a0a08cbb1519fd7adf57fea",
+        "sha256:ecd34d6a6bf9fb59c9e10b9db21e0d8603989940483aab0aba562b447154188a",
+        "sha256:d3cede88ed618367d38d276238172a1fe76c4ea9c221faec23812127e0f1e16b",
+        "sha256:b3dacf70351d92a2188ff0513af78fc194677b877f19480234ec3908696d0968",
+        "sha256:8b36ccf4098871e9944c4b99eb9f1a85ff1e4140921fd40b92ee66a6e6134e86",
+        "sha256:b8bcd216d3c6e6cc0c259c7771a6bcdc7798e34cac8aff5242fb81ec17948e09",
+        "sha256:16ac883dc549ae918130fb3f740a763bb63d5c1a7084f99f6bb12d45d7595744",
+        "sha256:9e5034d9af0444443be8d139d59e1bc1552408ab1cff91f55dc6d67d4524f57d",
+        "sha256:ce06c4a6089ee936d2501d54ffbb4c346b2abe6433e5e833f48c2c64ab339450",
+        "sha256:91e864f8ab31ae72a41bfd0ebe07a366512b94a272423d4ad99bcdf64f06beea",
+        "sha256:4cec99ee83cfbdebe0eb5f7d8b19520453911c8f0c860c3453b08164416150c1",
+        "sha256:1be068f9ae17c19e96437121a75d3d6dcb6fea98012945c4f2982b0ea8e987c1",
+        "sha256:3de94e906d6077b2aa270105fa3176ebba15c4e355e7c88737616eae292e457d",
+        "sha256:a4bc5d15e783aaf4b742a28eb0253b6129e5c1e5d1722dab785bf6fa7d6023b9",
+        "sha256:fd2d2932006a33e180150f2f6d32b9095b2bb2c6fde0cc911ff10f03fcebb84e",
+        "sha256:7b318b501a7f4a49a42b47c815d3b2ed9b8d0d05f31cafab3b1f5981a664e477",
+        "sha256:7ee7f8e254a2571ecc86ad4e11856cc91a5ad63841c7f078f4d62bc8e12dad60",
+        "sha256:49786a93d8dde201eee64cc3db4092329c8607c97e41566548cd4ac524c3cdf5",
+        "sha256:37836d78cf6dea767edeb4801251596907522c25b6957e6ee162d79c288990cc",
+        "sha256:3bcbfeb76673c57b5c52aff6d679e0edb94913ebc0f14973f99333dd5b505a52"
+      ]
+    }
+  ],
+  "all_units_equal_archived_originals": true,
+  "units_by_kind": {
+    "VISIBLE_TEXT": 10,
+    "NATIVE_FACTS": 20,
+    "NATIVE_SUPPLEMENTS": 22
+  },
+  "complete_visible_block_count": 4176,
+  "source_anchor_blocks": [
+    {
+      "block_index": 539,
+      "text": "We and the entities that we consolidated as of December 31, 2025 use over 409 operations facilities globally, including testing and prototype, across 27 countries, and 42 manufacturing and assembly plants, which includes plants that are operated by us or our consolidated joint venture that support our Ford Blue, Ford Model e, and Ford Pro segments.",
+      "raw_start_byte": 1048756,
+      "raw_end_byte": 1049108,
+      "raw_span_sha256": "6351f2bf1e3ea355646f281708b7c45cdf513963a59749c1c086a64c0d57ec35",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 543,
+      "text": "•AutoAlliance (Thailand) Co., Ltd. (“AAT”) — a 50/50 joint venture between Ford and Mazda that owns and operates a manufacturing plant in Rayong, Thailand. AAT produces Ford and Mazda products for domestic and export sales.",
+      "raw_start_byte": 1051154,
+      "raw_end_byte": 1051668,
+      "raw_span_sha256": "d41588fe30f4214ec0178165e52d2acbecfaee5cc09129119948eb9c5ca6e5aa",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 545,
+      "text": "•Changan Ford Automobile Corporation, Ltd. (“CAF”) — a 50/50 joint venture between Ford and Chongqing Changan Automobile Co., Ltd. (“Changan”). CAF operates four assembly plants, an engine plant, and a transmission plant in China where it produces and distributes a variety of Ford and Lincoln brand passenger vehicle models.",
+      "raw_start_byte": 1053153,
+      "raw_end_byte": 1053782,
+      "raw_span_sha256": "0aca380675f0335b8fd4828458e0cd043cc61136bd48f5ad88bab79f4c6dcda8",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 546,
+      "text": "•Ford Otomotiv Sanayi Anonim Sirketi (“Ford Otosan”) — a joint venture in Türkiye among Ford (41%), the Koc Group of Türkiye (41%), and public investors (18%) that is the sole supplier to us of the Transit, Transit Custom, and Transit Courier commercial vehicles and the Puma for Europe and the sole distributor of Ford vehicles in Türkiye. Ford Otosan also manufactures Ford heavy trucks for global distribution, except for markets in the Americas, China, and Taiwan. The joint venture owns three plants, a parts distribution depot, and a research and development center in Türkiye, and a combined vehicle and engine plant in Romania.",
+      "raw_start_byte": 1053980,
+      "raw_end_byte": 1054928,
+      "raw_span_sha256": "a6b681880775e983b64d41249f8910a6d1780cb5151af2ee7026b0ff813a8728",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 550,
+      "text": "The facilities described above are, in the opinion of management, suitable and adequate for the manufacture and assembly of our and our joint ventures’ products.",
+      "raw_start_byte": 1056759,
+      "raw_end_byte": 1056926,
+      "raw_span_sha256": "6e7c5a84465a00a16824a3cfa6c6458121e599c4bdd82fa2749c8aea2acd2a0a",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 674,
+      "text": "In December 2025, we announced our decision to rationalize our EV manufacturing capacity and product roadmap, including cancelling three previously planned EVs and ending production of the current generation F-150 Lightning EV. As a result of the challenges facing the EV market and the decisions we made in response to those challenges, we recorded the following charges as special items: an $8.4 billion pre-tax non-cash impairment charge, including goodwill, for our Model e long-lived assets; $1.1 billion of non-cash asset write-downs related to the EV program cancellations described above; and $1.2 billion of other charges to be paid in cash (primarily related to contractual commitments related to those programs). We may incur additional expenses and cash expenditures of up to about $4 billion related to these actions and will recognize those charges in the quarter they are incurred as a special item.",
+      "raw_start_byte": 1138690,
+      "raw_end_byte": 1139607,
+      "raw_span_sha256": "07a61b9bf6c98bd46c393586928c2f50aac1c6e4dd190e101d98b12cb396f8ef",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 785,
+      "text": "(a)Includes Ford and Lincoln brand and JMC brand vehicles produced and sold in China by our unconsolidated affiliates (about 438,000 units in 2024 and 375,000 units in 2025).",
+      "raw_start_byte": 1247084,
+      "raw_end_byte": 1247391,
+      "raw_span_sha256": "e1d7a3475ca6e71b6d2a89fffe79ee9372a65e051b62f80db37c686c0ce156fb",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 827,
+      "text": "(a)Includes Ford brand vehicles produced and sold by our unconsolidated affiliate Ford Otosan in Türkiye (about 91,000 units in 2024 and 98,000 units in 2025).",
+      "raw_start_byte": 1280089,
+      "raw_end_byte": 1280391,
+      "raw_span_sha256": "2cf84322c6b1ceb9cbae2a507a476ae6f4d668b28346c88bb460785bbf61b9c6",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 2547,
+      "text": "The Inflation Reduction Act of 2022 incentivizes companies to engage in a wide range of activities primarily focused on clean energy investments and domestic manufacturing. We are eligible for production credits related to advanced manufacturing of certain battery components. These credits are recognized when an eligible component is produced in the United States and sold to a third party. We recognized $105 million and $53 million as a reduction to Cost of sales during the years ended December 31, 2024 and 2025, respectively, related to production tax credits.",
+      "raw_start_byte": 2889363,
+      "raw_end_byte": 2890549,
+      "raw_span_sha256": "b61487dc1840279554ee3b583901f480bf072a77323b91bac91deeedca863710",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 3178,
+      "text": "The challenges facing the electric vehicle (“EV”) market that have led to lower-than-anticipated adoption rates have, in turn, led us to conclude, in the fourth quarter of 2025, that a path to long-term profitability for our EV business was not possible without taking strategic actions. Accordingly, in December 2025, we made the decision to rationalize our EV manufacturing capacity and product roadmap by cancelling three previously planned EVs and ending production of the current generation F-150 Lightning EV.",
+      "raw_start_byte": 3782800,
+      "raw_end_byte": 3783531,
+      "raw_span_sha256": "5ef30dc783f41d78bbdd6e025b176fb55e8ee5eb7f4b32eacec80bb81e19ac84",
+      "html_quotation_context": false
+    },
+    {
+      "block_index": 3762,
+      "text": "At December 31, 2025, Ford Credit’s committed capacity totaled $45.1 billion, compared with $44.6 billion at December 31, 2024. Ford Credit’s committed capacity is primarily comprised of commitments from banks and bank-sponsored asset-backed commercial paper conduits and committed unsecured credit facilities with financial institutions.",
+      "raw_start_byte": 4712517,
+      "raw_end_byte": 4713239,
+      "raw_span_sha256": "bd89d8f613b0d56928db82c957a5fc4acd66a2ecc2e89b1daf499d7129c3e0fc",
+      "html_quotation_context": false
+    }
+  ],
+  "all_declared_quantity_units_and_facts": {
+    "number": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"number\"><xbrli:measure>xbrli:pure</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:420e7b9a902cf48a0887c16dff856f22eacb67ab93de23f0eece41232b65c881"
+      },
+      "concepts": {
+        "http://fasb.org/us-gaap/2025|SharebasedCompensationArrangementBySharebasedPaymentAwardAwardVestingRightsPercentage": [
+          15,
+          16,
+          17
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentInterestRateStatedPercentage": [
+          38,
+          39,
+          40,
+          41,
+          42,
+          2434,
+          2435,
+          2460,
+          2461,
+          2468,
+          2469,
+          2490,
+          2491,
+          2580,
+          2585,
+          2594,
+          2597,
+          2600,
+          2603,
+          2606,
+          2609,
+          2612,
+          2615,
+          2618,
+          2621,
+          2624,
+          2627,
+          2630,
+          2633,
+          2636,
+          2639,
+          2645
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentConvertibleConversionRatio1": [
+          43
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardPercentageOfOutstandingStockMaximum": [
+          733
+        ],
+        "http://www.ford.com/20251231|PercentOfShareBasedAwardAvailableForGrantLimitOnIncrease": [
+          734
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardFairValueAssumptionsExpectedVolatilityRate": [
+          760,
+          761,
+          762,
+          763,
+          764,
+          765
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardFairValueAssumptionsRiskFreeInterestRate": [
+          766,
+          767,
+          768
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationAtFederalStatutoryIncomeTaxRate": [
+          831,
+          832,
+          857
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationForeignIncomeTaxRateDifferential": [
+          833,
+          834,
+          885
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationStateAndLocalIncomeTaxes": [
+          835,
+          836,
+          871
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationTaxCredits": [
+          837,
+          838
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationNondeductibleExpenseRestructuringCharges": [
+          839,
+          840
+        ],
+        "http://www.ford.com/20251231|EffectiveIncomeTaxRateReconciliationForeignOperationsTaxedInUnitedStates": [
+          841,
+          842
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationPriorYearIncomeTaxes": [
+          843,
+          844
+        ],
+        "http://www.ford.com/20251231|EffectiveIncomeTaxRateReconciliationExportIncentivesPercent": [
+          845,
+          846
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationChangeInEnactedTaxRate": [
+          847,
+          848,
+          877
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationChangeInDeferredTaxAssetsValuationAllowance": [
+          849,
+          850,
+          865,
+          873,
+          881
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationOtherAdjustments": [
+          851,
+          852,
+          869,
+          875,
+          879,
+          883,
+          887,
+          889
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateContinuingOperations": [
+          853,
+          854,
+          893
+        ],
+        "http://www.ford.com/20251231|EffectiveIncomeTaxRateReconciliationFlowThroughOperationsPercent": [
+          859
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationCrossBorderOtherPercent": [
+          861
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationTaxCreditsResearch": [
+          863
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationNondeductibleExpense": [
+          867
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationTaxContingencies": [
+          891
+        ],
+        "http://www.ford.com/20251231|StockVotingPowerPercentage": [
+          967,
+          968
+        ],
+        "http://www.ford.com/20251231|WholesaleLoansPercentageForDealerFinancing": [
+          1193
+        ],
+        "http://www.ford.com/20251231|DefinitionOfProbable": [
+          1197
+        ],
+        "http://www.ford.com/20251231|FinancingReceivablePercentOfConsumerFinanceReceivables": [
+          1276,
+          1284,
+          1292,
+          1300,
+          1308,
+          1323,
+          1331,
+          1339,
+          1347,
+          1355
+        ],
+        "http://www.ford.com/20251231|FinancingReceivablePercentOfDealerFinanceReceivables": [
+          1373,
+          1383,
+          1393,
+          1403,
+          1413,
+          1433,
+          1443,
+          1453,
+          1463,
+          1473
+        ],
+        "http://fasb.org/us-gaap/2025|EquityMethodInvestmentOwnershipPercentage": [
+          1609,
+          1612,
+          1615,
+          1618,
+          1621,
+          1624,
+          1627,
+          1630,
+          2985,
+          2988
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanAssumptionsUsedCalculatingBenefitObligationDiscountRate": [
+          1728,
+          1729,
+          1730,
+          1731,
+          1732,
+          1733
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanAssumptionsUsedCalculatingBenefitObligationRateOfCompensationIncrease": [
+          1734,
+          1735,
+          1736,
+          1737,
+          1738,
+          1739
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanAssumptionsUsedCalculatingNetPeriodicBenefitCostDiscountRate": [
+          1740,
+          1741,
+          1742,
+          1743,
+          1744,
+          1745
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanAssumptionsUsedCalculatingNetPeriodicBenefitCostWeightedAverageInterestCreditingRate": [
+          1746,
+          1747,
+          1748,
+          1749,
+          1750,
+          1751
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanAssumptionsUsedCalculatingNetPeriodicBenefitCostExpectedLongTermReturnOnAssets": [
+          1752,
+          1753,
+          1754,
+          1755,
+          1756,
+          1757
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanAssumptionsUsedCalculatingNetPeriodicBenefitCostRateOfCompensationIncrease": [
+          1758,
+          1759,
+          1760,
+          1761,
+          1762,
+          1763
+        ],
+        "http://www.ford.com/20251231|DefinedBenefitPlanPercentOfEmployerAndRelatedPartySecuritiesIncludedInPlanAssetsMaximum": [
+          2049
+        ],
+        "http://www.ford.com/20251231|DefinedBenefitPlanAssumptionsUsedCalculatingBenefitObligationExpectedLongTermReturnOnAssetsRate": [
+          2050,
+          2051,
+          2052,
+          2053
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseWeightedAverageDiscountRatePercent": [
+          2423,
+          2424,
+          2425
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseWeightedAverageDiscountRatePercent": [
+          2426,
+          2427,
+          2428
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentRedemptionPricePercentage": [
+          2649
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentInterestRateEffectivePercentage": [
+          2653
+        ],
+        "http://www.ford.com/20251231|DisposalGroupIncludingDiscontinuedOperationEquityInterestSold": [
+          2857,
+          2861
+        ]
+      }
+    },
+    "plant": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"plant\"><xbrli:measure>f:plant</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:420e7b9a902cf48a0887c16dff856f22eacb67ab93de23f0eece41232b65c881"
+      },
+      "concepts": {
+        "http://www.ford.com/20251231|NumberOfElectricVehicleBatteryPlants": [
+          53,
+          2986,
+          2993
+        ]
+      }
+    },
+    "usd": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"usd\"><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:420e7b9a902cf48a0887c16dff856f22eacb67ab93de23f0eece41232b65c881"
+      },
+      "concepts": {
+        "http://xbrl.sec.gov/dei/2025|EntityPublicFloat": [
+          91
+        ],
+        "http://fasb.org/us-gaap/2025|RevenueFromContractWithCustomerExcludingAssessedTax": [
+          118,
+          119,
+          120,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126,
+          610,
+          611,
+          612,
+          613,
+          614,
+          615,
+          616,
+          617,
+          618,
+          619,
+          620,
+          621,
+          622,
+          623,
+          624,
+          625,
+          626,
+          627,
+          628,
+          629,
+          630,
+          631,
+          632,
+          633,
+          634,
+          635,
+          636,
+          637,
+          638,
+          639,
+          640,
+          641,
+          642,
+          643,
+          644,
+          645,
+          646,
+          647,
+          648,
+          649,
+          650,
+          651,
+          652,
+          653,
+          654,
+          655,
+          656,
+          657,
+          658,
+          659,
+          660,
+          661,
+          662,
+          663,
+          664,
+          665,
+          666,
+          667,
+          668,
+          669,
+          670,
+          671,
+          672,
+          673,
+          674,
+          675,
+          676,
+          677,
+          678,
+          679,
+          680,
+          681,
+          1666,
+          1667,
+          1668,
+          3022,
+          3023,
+          3024,
+          3025,
+          3026,
+          3027,
+          3028,
+          3029,
+          3030,
+          3031,
+          3032,
+          3033,
+          3034,
+          3035,
+          3036,
+          3037,
+          3038,
+          3083,
+          3084,
+          3085,
+          3086,
+          3087,
+          3088,
+          3089,
+          3090,
+          3091,
+          3092,
+          3093,
+          3094,
+          3095,
+          3096,
+          3097,
+          3098,
+          3099,
+          3144,
+          3145,
+          3146,
+          3147,
+          3148,
+          3149,
+          3150,
+          3151,
+          3152,
+          3153,
+          3154,
+          3155,
+          3156,
+          3157,
+          3158,
+          3159,
+          3160,
+          3215,
+          3217,
+          3219,
+          3221,
+          3223,
+          3225,
+          3227,
+          3229,
+          3231,
+          3233,
+          3235,
+          3237,
+          3239,
+          3241,
+          3243,
+          3245,
+          3247,
+          3249
+        ],
+        "http://fasb.org/us-gaap/2025|CostOfGoodsAndServicesSold": [
+          127,
+          128,
+          129
+        ],
+        "http://fasb.org/us-gaap/2025|SellingGeneralAndAdministrativeExpense": [
+          130,
+          131,
+          132
+        ],
+        "http://fasb.org/us-gaap/2025|OtherCostAndExpenseOperating": [
+          133,
+          134,
+          135
+        ],
+        "http://fasb.org/us-gaap/2025|CostsAndExpenses": [
+          136,
+          137,
+          138
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingIncomeLoss": [
+          139,
+          140,
+          141
+        ],
+        "http://fasb.org/us-gaap/2025|InterestExpenseNonoperating": [
+          142,
+          143,
+          144,
+          3050,
+          3111,
+          3172
+        ],
+        "http://fasb.org/us-gaap/2025|NonoperatingIncomeExpense": [
+          145,
+          146,
+          147,
+          728,
+          729,
+          730
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeLossFromEquityMethodInvestments": [
+          148,
+          149,
+          150,
+          1635,
+          3065,
+          3066,
+          3067,
+          3068,
+          3069,
+          3070,
+          3126,
+          3127,
+          3128,
+          3129,
+          3130,
+          3131,
+          3187,
+          3188,
+          3189,
+          3190,
+          3191,
+          3192
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest": [
+          151,
+          152,
+          153,
+          800,
+          801,
+          802,
+          1657,
+          1658,
+          1659,
+          3052,
+          3113,
+          3174
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxExpenseBenefit": [
+          154,
+          155,
+          156,
+          827,
+          828,
+          829,
+          892
+        ],
+        "http://fasb.org/us-gaap/2025|ProfitLoss": [
+          157,
+          158,
+          159,
+          178,
+          179,
+          180,
+          301,
+          302,
+          303,
+          427,
+          428,
+          429,
+          430,
+          463,
+          464,
+          465,
+          466,
+          497,
+          498,
+          499,
+          500,
+          1660,
+          1661,
+          1662
+        ],
+        "http://fasb.org/us-gaap/2025|NetIncomeLossAttributableToNoncontrollingInterest": [
+          160,
+          161,
+          162,
+          1663,
+          1664,
+          1665
+        ],
+        "http://fasb.org/us-gaap/2025|NetIncomeLossAvailableToCommonStockholdersBasic": [
+          163,
+          164,
+          165,
+          974,
+          975,
+          976
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossForeignCurrencyTransactionAndTranslationAdjustmentNetOfTax": [
+          181,
+          182,
+          183
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossAvailableForSaleSecuritiesAdjustmentNetOfTax": [
+          184,
+          185,
+          186
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossCashFlowHedgeGainLossAfterReclassificationAndTax": [
+          187,
+          188,
+          189
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossPensionAndOtherPostretirementBenefitPlansAdjustmentNetOfTax": [
+          190,
+          191,
+          192
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossNetOfTax": [
+          193,
+          194,
+          195,
+          431,
+          432,
+          433,
+          434,
+          467,
+          468,
+          469,
+          470,
+          501,
+          502,
+          503,
+          504,
+          2882,
+          2883,
+          2884,
+          2909,
+          2910,
+          2911,
+          2936,
+          2937,
+          2938,
+          2963,
+          2964,
+          2965,
+          2966,
+          2967,
+          2968,
+          2975,
+          2976,
+          2977
+        ],
+        "http://fasb.org/us-gaap/2025|ComprehensiveIncomeNetOfTaxIncludingPortionAttributableToNoncontrollingInterest": [
+          196,
+          197,
+          198
+        ],
+        "http://fasb.org/us-gaap/2025|ComprehensiveIncomeNetOfTaxAttributableToNoncontrollingInterest": [
+          199,
+          200,
+          201
+        ],
+        "http://fasb.org/us-gaap/2025|ComprehensiveIncomeNetOfTax": [
+          202,
+          203,
+          204
+        ],
+        "http://fasb.org/us-gaap/2025|CashAndCashEquivalentsAtCarryingValue": [
+          205,
+          206,
+          289,
+          290,
+          1184,
+          1185,
+          2697,
+          2698
+        ],
+        "http://fasb.org/us-gaap/2025|MarketableSecuritiesCurrent": [
+          207,
+          208
+        ],
+        "http://fasb.org/us-gaap/2025|AllowanceForNotesAndLoansReceivableCurrent": [
+          209,
+          210
+        ],
+        "http://fasb.org/us-gaap/2025|NotesAndLoansReceivableNetCurrent": [
+          211,
+          212,
+          1222,
+          1223
+        ],
+        "http://fasb.org/us-gaap/2025|AllowanceForDoubtfulAccountsReceivableCurrent": [
+          213,
+          214
+        ],
+        "http://fasb.org/us-gaap/2025|AccountsReceivableNetCurrent": [
+          215,
+          216
+        ],
+        "http://fasb.org/us-gaap/2025|InventoryNet": [
+          217,
+          218,
+          1530,
+          1531
+        ],
+        "http://fasb.org/us-gaap/2025|OtherAssetsCurrent": [
+          219,
+          220
+        ],
+        "http://fasb.org/us-gaap/2025|AssetsCurrent": [
+          221,
+          222,
+          1640,
+          1641
+        ],
+        "http://fasb.org/us-gaap/2025|AllowanceForNotesAndLoansReceivableNoncurrent": [
+          223,
+          224
+        ],
+        "http://fasb.org/us-gaap/2025|NotesAndLoansReceivableNetNoncurrent": [
+          225,
+          226,
+          1224,
+          1225
+        ],
+        "http://www.ford.com/20251231|NetInvestmentInOperatingLeasesNoncurrent": [
+          227,
+          228
+        ],
+        "http://fasb.org/us-gaap/2025|PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetAfterAccumulatedDepreciationAndAmortization": [
+          229,
+          230,
+          1581,
+          1582,
+          1583,
+          1584,
+          1585,
+          1586
+        ],
+        "http://fasb.org/us-gaap/2025|EquityMethodInvestments": [
+          231,
+          232,
+          1607,
+          1608,
+          1610,
+          1611,
+          1613,
+          1614,
+          1616,
+          1617,
+          1619,
+          1620,
+          1622,
+          1623,
+          1625,
+          1626,
+          1628,
+          1629,
+          1631,
+          1632,
+          1633,
+          1634,
+          2995
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredIncomeTaxAssetsNet": [
+          233,
+          234
+        ],
+        "http://fasb.org/us-gaap/2025|OtherAssetsNoncurrent": [
+          235,
+          236
+        ],
+        "http://fasb.org/us-gaap/2025|Assets": [
+          237,
+          238,
+          1644,
+          1645,
+          3077,
+          3078,
+          3079,
+          3080,
+          3081,
+          3082,
+          3138,
+          3139,
+          3140,
+          3141,
+          3142,
+          3143,
+          3199,
+          3200,
+          3201,
+          3202,
+          3203,
+          3204
+        ],
+        "http://fasb.org/us-gaap/2025|AccountsPayableAndAccruedLiabilitiesCurrent": [
+          239,
+          240,
+          1677,
+          1678
+        ],
+        "http://fasb.org/us-gaap/2025|OtherLiabilitiesCurrent": [
+          241,
+          242,
+          1697,
+          1698
+        ],
+        "http://fasb.org/us-gaap/2025|DebtCurrent": [
+          243,
+          244,
+          245,
+          246,
+          2478,
+          2479
+        ],
+        "http://fasb.org/us-gaap/2025|LiabilitiesCurrent": [
+          247,
+          248,
+          1646,
+          1647
+        ],
+        "http://fasb.org/us-gaap/2025|OtherLiabilitiesNoncurrent": [
+          249,
+          250,
+          1713,
+          1714
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtAndCapitalLeaseObligations": [
+          251,
+          252,
+          253,
+          254,
+          2480,
+          2481,
+          2482,
+          2483
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredIncomeTaxLiabilitiesNet": [
+          255,
+          256
+        ],
+        "http://fasb.org/us-gaap/2025|Liabilities": [
+          257,
+          258,
+          1650,
+          1651
+        ],
+        "http://fasb.org/us-gaap/2025|CommonStockValue": [
+          264,
+          265,
+          271,
+          272
+        ],
+        "http://fasb.org/us-gaap/2025|AdditionalPaidInCapitalCommonStock": [
+          273,
+          274
+        ],
+        "http://fasb.org/us-gaap/2025|RetainedEarningsAccumulatedDeficit": [
+          275,
+          276
+        ],
+        "http://fasb.org/us-gaap/2025|AccumulatedOtherComprehensiveIncomeLossNetOfTax": [
+          277,
+          278
+        ],
+        "http://fasb.org/us-gaap/2025|TreasuryStockValue": [
+          279,
+          280
+        ],
+        "http://fasb.org/us-gaap/2025|StockholdersEquity": [
+          281,
+          282
+        ],
+        "http://fasb.org/us-gaap/2025|MinorityInterest": [
+          283,
+          284,
+          1652,
+          1653
+        ],
+        "http://fasb.org/us-gaap/2025|StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest": [
+          285,
+          286,
+          419,
+          420,
+          421,
+          422,
+          423,
+          424,
+          425,
+          426,
+          447,
+          448,
+          449,
+          450,
+          451,
+          452,
+          453,
+          454,
+          455,
+          456,
+          457,
+          458,
+          459,
+          460,
+          461,
+          462,
+          481,
+          482,
+          483,
+          484,
+          485,
+          486,
+          487,
+          488,
+          489,
+          490,
+          491,
+          492,
+          493,
+          494,
+          495,
+          496,
+          512,
+          513,
+          514,
+          515,
+          516,
+          517,
+          518,
+          519,
+          2867,
+          2868,
+          2869,
+          2885,
+          2886,
+          2887,
+          2888,
+          2889,
+          2890,
+          2912,
+          2913,
+          2914,
+          2915,
+          2916,
+          2917,
+          2939,
+          2940,
+          2941,
+          2942,
+          2943,
+          2944,
+          2969,
+          2970,
+          2971,
+          2972,
+          2973,
+          2974
+        ],
+        "http://fasb.org/us-gaap/2025|LiabilitiesAndStockholdersEquity": [
+          287,
+          288
+        ],
+        "http://fasb.org/us-gaap/2025|NotesReceivableNet": [
+          291,
+          292,
+          1220,
+          1221,
+          1226,
+          1227,
+          2699,
+          2700
+        ],
+        "http://www.ford.com/20251231|NetInvestmentInOperatingLease": [
+          293,
+          294
+        ],
+        "http://fasb.org/us-gaap/2025|OtherAssets": [
+          295,
+          296
+        ],
+        "http://fasb.org/us-gaap/2025|OtherLiabilities": [
+          297,
+          298
+        ],
+        "http://fasb.org/us-gaap/2025|DebtAndCapitalLeaseObligations": [
+          299,
+          300,
+          2522,
+          2530,
+          2538,
+          2553,
+          2561,
+          2569,
+          2703,
+          2704
+        ],
+        "http://fasb.org/us-gaap/2025|Depreciation": [
+          304,
+          305,
+          306
+        ],
+        "http://fasb.org/us-gaap/2025|InvestmentIncomeNetAmortizationOfDiscountAndPremium": [
+          307,
+          308,
+          309
+        ],
+        "http://fasb.org/us-gaap/2025|ProductionRelatedImpairmentsOrCharges": [
+          310,
+          582,
+          1600,
+          1601,
+          3207,
+          3212
+        ],
+        "http://fasb.org/us-gaap/2025|AssetImpairmentCharges": [
+          311,
+          312,
+          313
+        ],
+        "http://fasb.org/us-gaap/2025|ProvisionForLoanLeaseAndOtherLosses": [
+          314,
+          315,
+          316
+        ],
+        "http://fasb.org/us-gaap/2025|PensionAndOtherPostretirementBenefitsExpenseReversalOfExpenseNoncash": [
+          317,
+          318,
+          319
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeLossFromEquityMethodInvestmentsNetOfDividendsOrDistributions": [
+          320,
+          321,
+          322
+        ],
+        "http://fasb.org/us-gaap/2025|ForeignCurrencyTransactionGainLossUnrealized": [
+          323,
+          324,
+          325
+        ],
+        "http://fasb.org/us-gaap/2025|GainLossOnInvestments": [
+          326,
+          327,
+          328,
+          716,
+          717,
+          718
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensation": [
+          329,
+          330,
+          331
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredIncomeTaxesAndTaxCredits": [
+          332,
+          333,
+          334
+        ],
+        "http://fasb.org/us-gaap/2025|IncreaseDecreaseInFinanceReceivables": [
+          335,
+          336,
+          337
+        ],
+        "http://fasb.org/us-gaap/2025|IncreaseDecreaseInAccountsReceivableAndOtherOperatingAssets": [
+          338,
+          339,
+          340
+        ],
+        "http://fasb.org/us-gaap/2025|IncreaseDecreaseInInventories": [
+          341,
+          342,
+          343
+        ],
+        "http://fasb.org/us-gaap/2025|IncreaseDecreaseInAccountsPayableAndOtherOperatingLiabilities": [
+          344,
+          345,
+          346
+        ],
+        "http://fasb.org/us-gaap/2025|OtherOperatingActivitiesCashFlowStatement": [
+          347,
+          348,
+          349
+        ],
+        "http://fasb.org/us-gaap/2025|NetCashProvidedByUsedInOperatingActivities": [
+          350,
+          351,
+          352
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsToAcquireProductiveAssets": [
+          353,
+          354,
+          355
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsToAcquireLoansAndLeasesHeldForInvestment": [
+          356,
+          357,
+          358
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromCollectionOfFinanceReceivables": [
+          359,
+          360,
+          361
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsToAcquireMarketableSecurities": [
+          362,
+          363,
+          364
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromSaleAndMaturityOfMarketableSecurities": [
+          365,
+          366,
+          367
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsForProceedsFromDerivativeInstrumentInvestingActivities": [
+          368,
+          369,
+          370
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsToAcquireEquityMethodInvestments": [
+          371,
+          372,
+          373
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromEquityMethodInvestmentDividendsOrDistributionsReturnOfCapital": [
+          374,
+          375,
+          376,
+          2989,
+          2990
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsForProceedsFromOtherInvestingActivities": [
+          377,
+          378,
+          379
+        ],
+        "http://fasb.org/us-gaap/2025|NetCashProvidedByUsedInInvestingActivities": [
+          380,
+          381,
+          382
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsOfDividendsCommonStock": [
+          383,
+          384,
+          385
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsForRepurchaseOfCommonStock": [
+          386,
+          387,
+          388
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromRepaymentsOfShortTermDebt": [
+          389,
+          390,
+          391
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromIssuanceOfLongTermDebt": [
+          392,
+          393,
+          394
+        ],
+        "http://fasb.org/us-gaap/2025|RepaymentsOfLongTermDebt": [
+          395,
+          396,
+          397
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromPaymentsForOtherFinancingActivities": [
+          398,
+          399,
+          400
+        ],
+        "http://fasb.org/us-gaap/2025|NetCashProvidedByUsedInFinancingActivities": [
+          401,
+          402,
+          403
+        ],
+        "http://fasb.org/us-gaap/2025|EffectOfExchangeRateOnCashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsIncludingDisposalGroupAndDiscontinuedOperations": [
+          404,
+          405,
+          406
+        ],
+        "http://fasb.org/us-gaap/2025|CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsPeriodIncreaseDecreaseIncludingExchangeRateEffect": [
+          407,
+          408,
+          409,
+          413,
+          414,
+          415
+        ],
+        "http://fasb.org/us-gaap/2025|CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents": [
+          410,
+          411,
+          412,
+          416,
+          417,
+          418,
+          1190,
+          1191
+        ],
+        "http://fasb.org/us-gaap/2025|StockIssuedDuringPeriodValueShareBasedCompensation": [
+          435,
+          436,
+          437,
+          471,
+          472,
+          473,
+          505,
+          506,
+          507
+        ],
+        "http://www.ford.com/20251231|EmployeeStockOwnershipPlanLoanTreasuryStockAndOther": [
+          438,
+          439,
+          440,
+          441,
+          442,
+          474,
+          475,
+          476
+        ],
+        "http://fasb.org/us-gaap/2025|Dividends": [
+          443,
+          444,
+          445,
+          446,
+          477,
+          478,
+          479,
+          480,
+          508,
+          509,
+          510,
+          511
+        ],
+        "http://www.ford.com/20251231|RelatedPartyTransactionFinanceReceivablesNet": [
+          534,
+          535
+        ],
+        "http://www.ford.com/20251231|RelatedPartyTransactionUnearnedInterestSupplementsAndResidualSupportFromTransactionsWithRelatedParty": [
+          536,
+          537
+        ],
+        "http://www.ford.com/20251231|WholesaleAutoReceivableFromDealersAndLoansAndLeasesReceivableOther": [
+          538,
+          539
+        ],
+        "http://fasb.org/us-gaap/2025|ForeignCurrencyTransactionGainLossBeforeTax": [
+          545,
+          544,
+          543
+        ],
+        "http://fasb.org/us-gaap/2025|EquitySecuritiesWithoutReadilyDeterminableFairValueAmount": [
+          550,
+          551
+        ],
+        "http://fasb.org/us-gaap/2025|EquitySecuritiesWithoutReadilyDeterminableFairValueUpwardPriceAdjustmentAnnualAmount": [
+          552
+        ],
+        "http://www.ford.com/20251231|TradeNotesAndOtherReceivablesAfterAllowanceForCreditLoss": [
+          555,
+          556
+        ],
+        "http://www.ford.com/20251231|TradeNotesAndOtherReceivablesAllowanceForCreditLoss": [
+          557,
+          558
+        ],
+        "http://fasb.org/us-gaap/2025|SupplierFinanceProgramObligationCurrent": [
+          561,
+          562,
+          567,
+          568
+        ],
+        "http://fasb.org/us-gaap/2025|SupplierFinanceProgramObligationIncrease": [
+          563,
+          564
+        ],
+        "http://fasb.org/us-gaap/2025|SupplierFinanceProgramObligationDecreaseSettlement": [
+          565,
+          566
+        ],
+        "http://fasb.org/us-gaap/2025|FiniteLivedIntangibleAssetsNet": [
+          572,
+          573
+        ],
+        "http://fasb.org/us-gaap/2025|Goodwill": [
+          574,
+          575
+        ],
+        "http://fasb.org/us-gaap/2025|ImpairmentOfIntangibleAssetsIndefinitelivedExcludingGoodwill": [
+          578,
+          577,
+          576
+        ],
+        "http://fasb.org/us-gaap/2025|GoodwillImpairmentLoss": [
+          579,
+          1603,
+          3209
+        ],
+        "http://www.ford.com/20251231|RelatedPartyTransactionEarnedInterestSupplementsAndResidualSupportRevenueFromTransactionsWithRelatedParty": [
+          586,
+          587,
+          588
+        ],
+        "http://www.ford.com/20251231|AmountOfReductionInDepreciationExpenseOnPropertySubjectToOrHeldForLease": [
+          589,
+          590,
+          591
+        ],
+        "http://fasb.org/us-gaap/2025|GovernmentAssistanceAmountCumulativeCurrent": [
+          594
+        ],
+        "http://fasb.org/us-gaap/2025|GovernmentAssistanceExpense": [
+          595,
+          596
+        ],
+        "http://fasb.org/us-gaap/2025|ResearchAndDevelopmentExpense": [
+          600,
+          601,
+          602
+        ],
+        "http://fasb.org/us-gaap/2025|AdvertisingExpense": [
+          603,
+          604,
+          605
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerPerformanceObligationSatisfiedInPreviousPeriod": [
+          686,
+          687,
+          688
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerLiability": [
+          691,
+          692
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerLiabilityRevenueRecognized": [
+          693,
+          694
+        ],
+        "http://fasb.org/us-gaap/2025|RevenueRemainingPerformanceObligation": [
+          695,
+          696,
+          697,
+          698
+        ],
+        "http://fasb.org/us-gaap/2025|CapitalizedContractCostNet": [
+          699,
+          700
+        ],
+        "http://fasb.org/us-gaap/2025|CapitalizedContractCostAmortization": [
+          701,
+          702,
+          703
+        ],
+        "http://fasb.org/us-gaap/2025|NetPeriodicDefinedBenefitsExpenseReversalOfExpenseExcludingServiceCostComponent": [
+          707,
+          708,
+          709
+        ],
+        "http://fasb.org/us-gaap/2025|InvestmentIncomeInterest": [
+          710,
+          711,
+          712,
+          3059,
+          3060,
+          3061,
+          3062,
+          3063,
+          3064,
+          3120,
+          3121,
+          3122,
+          3123,
+          3124,
+          3125,
+          3181,
+          3182,
+          3183,
+          3184,
+          3185,
+          3186
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsInterestOnIncomeTaxesExpense": [
+          713,
+          714,
+          715,
+          961,
+          962,
+          963
+        ],
+        "http://www.ford.com/20251231|GainsLossesOnChangesInInvestmentsInAffiliates": [
+          719,
+          720,
+          721
+        ],
+        "http://fasb.org/us-gaap/2025|RoyaltyIncomeNonoperating": [
+          722,
+          723,
+          724,
+          1672,
+          1673,
+          1674
+        ],
+        "http://fasb.org/us-gaap/2025|OtherNonoperatingIncomeExpense": [
+          725,
+          726,
+          727
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodTotalFairValue": [
+          742,
+          743,
+          744
+        ],
+        "http://fasb.org/us-gaap/2025|AllocatedShareBasedCompensationExpenseNetOfTax": [
+          745,
+          746,
+          747
+        ],
+        "http://fasb.org/us-gaap/2025|EmployeeServiceShareBasedCompensationTaxBenefitFromCompensationExpense": [
+          748,
+          749,
+          750
+        ],
+        "http://fasb.org/us-gaap/2025|EmployeeServiceShareBasedCompensationNonvestedAwardsTotalCompensationCostNotYetRecognized": [
+          751
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromStockOptionsExercised": [
+          785
+        ],
+        "http://fasb.org/us-gaap/2025|StockIssuedDuringPeriodValueStockOptionsExercised": [
+          786
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsExercisesInPeriodTotalIntrinsicValue": [
+          787
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeLossFromContinuingOperationsBeforeIncomeTaxesDomestic": [
+          794,
+          795,
+          796
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeLossFromContinuingOperationsBeforeIncomeTaxesForeign": [
+          797,
+          798,
+          799
+        ],
+        "http://fasb.org/us-gaap/2025|CurrentFederalTaxExpenseBenefit": [
+          803,
+          804,
+          805
+        ],
+        "http://fasb.org/us-gaap/2025|CurrentForeignTaxExpenseBenefit": [
+          806,
+          807,
+          808
+        ],
+        "http://fasb.org/us-gaap/2025|CurrentStateAndLocalTaxExpenseBenefit": [
+          809,
+          810,
+          811
+        ],
+        "http://fasb.org/us-gaap/2025|CurrentIncomeTaxExpenseBenefit": [
+          812,
+          813,
+          814
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredFederalIncomeTaxExpenseBenefit": [
+          815,
+          816,
+          817
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredForeignIncomeTaxExpenseBenefit": [
+          818,
+          819,
+          820
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredStateAndLocalIncomeTaxExpenseBenefit": [
+          821,
+          822,
+          823
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredIncomeTaxExpenseBenefit": [
+          824,
+          825,
+          826
+        ],
+        "http://www.ford.com/20251231|ChangeInDeferredTaxNotRecognizedUndistributedEarningsOfForeignSubsidiariesDueToRestructuring": [
+          855
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationIncomeTaxExpenseBenefitAtFederalStatutoryIncomeTaxRate": [
+          856
+        ],
+        "http://www.ford.com/20251231|EffectiveIncomeTaxRateReconciliationFlowThroughOperations": [
+          858
+        ],
+        "http://fasb.org/us-gaap/2025|EffectiveIncomeTaxRateReconciliationCrossBorderOtherAmount": [
+          860
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationTaxCreditsResearch": [
+          862
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationChangeInDeferredTaxAssetsValuationAllowance": [
+          864,
+          872,
+          880
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationNondeductibleExpense": [
+          866
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationOtherAdjustments": [
+          868,
+          874,
+          878,
+          882,
+          886,
+          888
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationStateAndLocalIncomeTaxes": [
+          870
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationChangeInEnactedTaxRate": [
+          876
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationForeignIncomeTaxRateDifferential": [
+          884
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxReconciliationTaxContingencies": [
+          890
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxesPaidNet": [
+          894,
+          895,
+          901
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxPaidFederalAfterRefundReceived": [
+          897
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxPaidStateAndLocalAfterRefundReceived": [
+          898
+        ],
+        "http://fasb.org/us-gaap/2025|IncomeTaxPaidForeignAfterRefundReceived": [
+          899,
+          900
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsOperatingLossCarryforwards": [
+          903,
+          904,
+          938
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsTaxCreditCarryforwards": [
+          905,
+          906
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsInProcessResearchAndDevelopment": [
+          907,
+          908
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsTaxDeferredExpenseReservesAndAccrualsWarrantyReserves": [
+          909,
+          910
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsTaxDeferredExpenseCompensationAndBenefitsEmployeeBenefits": [
+          911,
+          912
+        ],
+        "http://www.ford.com/20251231|DeferredTaxAssetsForeignOther": [
+          913,
+          914
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsOther": [
+          915,
+          916
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsGross": [
+          917,
+          918
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsValuationAllowance": [
+          919,
+          920
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsNet": [
+          921,
+          922
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxLiabilitiesLeasingArrangements": [
+          923,
+          924
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxLiabilitiesPropertyPlantAndEquipment": [
+          925,
+          926
+        ],
+        "http://www.ford.com/20251231|DeferredTaxLiabilitiesFlowThroughOperations": [
+          927,
+          928
+        ],
+        "http://www.ford.com/20251231|DeferredTaxLiabilitiesOtherForeign": [
+          929,
+          930
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxLiabilitiesOther": [
+          931,
+          932
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredIncomeTaxLiabilities": [
+          933,
+          934
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsLiabilitiesNet": [
+          935,
+          936
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLossCarryforwards": [
+          937
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredTaxAssetsOperatingLossCarryforwardsNotSubjectToExpiration": [
+          939
+        ],
+        "http://fasb.org/us-gaap/2025|TaxCreditCarryforwardAmount": [
+          940
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefits": [
+          943,
+          944,
+          957,
+          958
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsIncreasesResultingFromPriorPeriodTaxPositions": [
+          945,
+          946
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsIncreasesResultingFromCurrentPeriodTaxPositions": [
+          947,
+          948
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsDecreasesResultingFromPriorPeriodTaxPositions": [
+          949,
+          950
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsDecreasesResultingFromSettlementsWithTaxingAuthorities": [
+          951,
+          952
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsReductionsResultingFromLapseOfApplicableStatuteOfLimitations": [
+          953,
+          954
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsDecreasesResultingFromForeignCurrencyTranslation": [
+          955
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsIncreasesResultingFromForeignCurrencyTranslation": [
+          956
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecognizedTaxBenefitsThatWouldImpactEffectiveTaxRate": [
+          959,
+          960
+        ],
+        "http://www.ford.com/20251231|UnrecognizedTaxBenefitsInterestOnIncomeTaxesReceivable": [
+          964,
+          965
+        ],
+        "http://fasb.org/us-gaap/2025|CashAndCashEquivalentsFairValueDisclosure": [
+          989,
+          990,
+          991,
+          992,
+          993,
+          994,
+          995,
+          996,
+          997,
+          998,
+          999,
+          1000,
+          1001,
+          1002,
+          1003,
+          1004,
+          1005,
+          1006,
+          1007,
+          1008,
+          1009,
+          1037,
+          1038,
+          1039,
+          1040,
+          1041,
+          1042,
+          1043,
+          1044,
+          1045,
+          1046,
+          1047,
+          1048,
+          1049,
+          1050,
+          1051,
+          1052,
+          1053,
+          1054,
+          1055,
+          1056,
+          1057
+        ],
+        "http://fasb.org/us-gaap/2025|InvestmentsFairValueDisclosure": [
+          1010,
+          1011,
+          1012,
+          1013,
+          1014,
+          1015,
+          1016,
+          1017,
+          1018,
+          1019,
+          1020,
+          1021,
+          1022,
+          1023,
+          1024,
+          1025,
+          1026,
+          1027,
+          1028,
+          1029,
+          1030,
+          1058,
+          1059,
+          1060,
+          1061,
+          1062,
+          1063,
+          1064,
+          1065,
+          1066,
+          1067,
+          1068,
+          1069,
+          1070,
+          1071,
+          1072,
+          1073,
+          1074,
+          1075,
+          1076,
+          1077,
+          1078
+        ],
+        "http://fasb.org/us-gaap/2025|RestrictedCash": [
+          1031,
+          1032,
+          1033,
+          1079,
+          1080,
+          1081,
+          1186,
+          1187
+        ],
+        "http://fasb.org/us-gaap/2025|CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsDisposalGroupIncludingDiscontinuedOperations": [
+          1034,
+          1035,
+          1036,
+          1082,
+          1083,
+          1084,
+          1188,
+          1189
+        ],
+        "http://fasb.org/us-gaap/2025|AvailableForSaleDebtSecuritiesAmortizedCostBasis": [
+          1086,
+          1093,
+          1100,
+          1107,
+          1114,
+          1121,
+          1128,
+          1135,
+          1142,
+          1149,
+          1156,
+          1163
+        ],
+        "http://fasb.org/us-gaap/2025|AvailableForSaleDebtSecuritiesAccumulatedGrossUnrealizedGainBeforeTax": [
+          1087,
+          1094,
+          1101,
+          1108,
+          1115,
+          1122,
+          1129,
+          1136,
+          1143,
+          1150,
+          1157,
+          1164
+        ],
+        "http://fasb.org/us-gaap/2025|AvailableForSaleDebtSecuritiesAccumulatedGrossUnrealizedLossBeforeTax": [
+          1088,
+          1095,
+          1102,
+          1109,
+          1116,
+          1123,
+          1130,
+          1137,
+          1144,
+          1151,
+          1158,
+          1165
+        ],
+        "http://fasb.org/us-gaap/2025|AvailableForSaleSecuritiesDebtSecurities": [
+          1089,
+          1096,
+          1103,
+          1110,
+          1117,
+          1124,
+          1131,
+          1138,
+          1145,
+          1152,
+          1159,
+          1166
+        ],
+        "http://fasb.org/us-gaap/2025|AvailableForSaleSecuritiesDebtMaturitiesWithinOneYearFairValue": [
+          1090,
+          1097,
+          1104,
+          1111,
+          1118,
+          1125,
+          1132,
+          1139,
+          1146,
+          1153,
+          1160,
+          1167
+        ],
+        "http://fasb.org/us-gaap/2025|AvailableForSaleSecuritiesDebtMaturitiesAfterOneThroughFiveYearsFairValue": [
+          1091,
+          1098,
+          1105,
+          1112,
+          1119,
+          1126,
+          1133,
+          1140,
+          1147,
+          1154,
+          1161,
+          1168
+        ],
+        "http://www.ford.com/20251231|DebtSecuritiesAvailableForSaleFairValueMaturityAllocatedAndSingleMaturityDateAfterYear5": [
+          1092,
+          1099,
+          1106,
+          1113,
+          1120,
+          1127,
+          1134,
+          1141,
+          1148,
+          1155,
+          1162,
+          1169
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromSaleOfAvailableForSaleSecuritiesDebt": [
+          1170,
+          1171,
+          1172
+        ],
+        "http://fasb.org/us-gaap/2025|DebtSecuritiesAvailableForSaleRealizedGain": [
+          1173,
+          1174,
+          1175
+        ],
+        "http://fasb.org/us-gaap/2025|DebtSecuritiesAvailableForSaleRealizedLoss": [
+          1176,
+          1177,
+          1178
+        ],
+        "http://fasb.org/us-gaap/2025|DebtSecuritiesAvailableForSaleAllowanceForCreditLossPeriodIncreaseDecrease": [
+          1182,
+          1181,
+          1180
+        ],
+        "http://www.ford.com/20251231|FinanceReceivableBeforeUnearnedInterestSupplements": [
+          1200,
+          1201,
+          1204,
+          1205
+        ],
+        "http://fasb.org/us-gaap/2025|SalesTypeAndDirectFinancingLeasesLeaseReceivable": [
+          1202,
+          1203,
+          1254,
+          1255
+        ],
+        "http://www.ford.com/20251231|RelatedPartyTransactionUnearnedInterestSupplementsFromTransactionsWithRelatedParty": [
+          1206,
+          1207,
+          1256,
+          1257
+        ],
+        "http://fasb.org/us-gaap/2025|NotesReceivableGross": [
+          1208,
+          1209,
+          1210,
+          1211,
+          1212,
+          1213,
+          1214,
+          1215,
+          1216,
+          1217,
+          1275,
+          1283,
+          1291,
+          1299,
+          1307,
+          1322,
+          1330,
+          1338,
+          1346,
+          1354,
+          1370,
+          1372,
+          1380,
+          1382,
+          1390,
+          1392,
+          1400,
+          1402,
+          1410,
+          1412,
+          1423,
+          1430,
+          1432,
+          1440,
+          1442,
+          1450,
+          1452,
+          1460,
+          1462,
+          1470,
+          1472,
+          1483
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableAllowanceForCreditLosses": [
+          1218,
+          1219,
+          1258,
+          1259,
+          1487,
+          1488,
+          1489,
+          1502,
+          1503,
+          1504,
+          1505,
+          1506,
+          1507,
+          1520,
+          1521,
+          1522
+        ],
+        "http://www.ford.com/20251231|FinanceReceivablesNetSubjectToFairValue": [
+          1228,
+          1229
+        ],
+        "http://fasb.org/us-gaap/2025|LoansReceivableFairValueDisclosure": [
+          1230,
+          1231
+        ],
+        "http://fasb.org/us-gaap/2025|SalesTypeLeaseLeaseIncome": [
+          1234,
+          1235,
+          1236
+        ],
+        "http://fasb.org/us-gaap/2025|SalesTypeAndDirectFinancingLeasesLeaseReceivablePaymentsToBeReceivedNextTwelveMonths": [
+          1238
+        ],
+        "http://fasb.org/us-gaap/2025|SalesTypeAndDirectFinancingLeasesLeaseReceivablePaymentsToBeReceivedTwoYears": [
+          1239
+        ],
+        "http://fasb.org/us-gaap/2025|SalesTypeAndDirectFinancingLeasesLeaseReceivablePaymentsToBeReceivedThreeYears": [
+          1240
+        ],
+        "http://fasb.org/us-gaap/2025|SalesTypeAndDirectFinancingLeasesLeaseReceivablePaymentsToBeReceivedFourYears": [
+          1241
+        ],
+        "http://fasb.org/us-gaap/2025|SalesTypeAndDirectFinancingLeasesLeaseReceivablePaymentsToBeReceivedFiveYears": [
+          1242
+        ],
+        "http://fasb.org/us-gaap/2025|SalesTypeAndDirectFinancingLeasesLeaseReceivablePaymentsToBeReceivedThereafter": [
+          1243
+        ],
+        "http://fasb.org/us-gaap/2025|SalesTypeAndDirectFinancingLeasesLeaseReceivablePaymentsToBeReceived": [
+          1244
+        ],
+        "http://fasb.org/us-gaap/2025|SalesTypeAndDirectFinancingLeasesLeaseReceivableUndiscountedExcessAmount": [
+          1245
+        ],
+        "http://www.ford.com/20251231|SalesTypeAndDirectFinancingLeaseNetInvestmentInLease": [
+          1246,
+          1260,
+          1261
+        ],
+        "http://www.ford.com/20251231|SalesTypeAndDirectFinancingLeaseGross": [
+          1248,
+          1249
+        ],
+        "http://fasb.org/us-gaap/2025|SalesTypeLeaseUnguaranteedResidualAsset": [
+          1250,
+          1251
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredCostsLeasingGross": [
+          1252,
+          1253
+        ],
+        "http://www.ford.com/20251231|UncollectedInterestReceivableExcludedFromFinanceReceivable": [
+          1262,
+          1263
+        ],
+        "http://fasb.org/us-gaap/2025|SecuritizedAssetsAndAnyOtherFinancialAssetsManagedTogetherPrincipalAmountOutstanding": [
+          1264,
+          1265,
+          1266,
+          1267
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableOriginatedFiveOrMoreYearsBeforeLatestFiscalYear": [
+          1269,
+          1277,
+          1285,
+          1293,
+          1301,
+          1316,
+          1324,
+          1332,
+          1340,
+          1348,
+          1364,
+          1374,
+          1384,
+          1394,
+          1404,
+          1424,
+          1434,
+          1444,
+          1454,
+          1464
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableOriginatedFourYearsBeforeLatestFiscalYear": [
+          1270,
+          1278,
+          1286,
+          1294,
+          1302,
+          1317,
+          1325,
+          1333,
+          1341,
+          1349,
+          1365,
+          1375,
+          1385,
+          1395,
+          1405,
+          1425,
+          1435,
+          1445,
+          1455,
+          1465
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableOriginatedThreeYearsBeforeLatestFiscalYear": [
+          1271,
+          1279,
+          1287,
+          1295,
+          1303,
+          1318,
+          1326,
+          1334,
+          1342,
+          1350,
+          1366,
+          1376,
+          1386,
+          1396,
+          1406,
+          1426,
+          1436,
+          1446,
+          1456,
+          1466
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableOriginatedTwoYearsBeforeLatestFiscalYear": [
+          1272,
+          1280,
+          1288,
+          1296,
+          1304,
+          1319,
+          1327,
+          1335,
+          1343,
+          1351,
+          1367,
+          1377,
+          1387,
+          1397,
+          1407,
+          1427,
+          1437,
+          1447,
+          1457,
+          1467
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableOriginatedInFiscalYearBeforeLatestFiscalYear": [
+          1273,
+          1281,
+          1289,
+          1297,
+          1305,
+          1320,
+          1328,
+          1336,
+          1344,
+          1352,
+          1368,
+          1378,
+          1388,
+          1398,
+          1408,
+          1428,
+          1438,
+          1448,
+          1458,
+          1468
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableOriginatedInCurrentFiscalYear": [
+          1274,
+          1282,
+          1290,
+          1298,
+          1306,
+          1321,
+          1329,
+          1337,
+          1345,
+          1353,
+          1369,
+          1379,
+          1389,
+          1399,
+          1409,
+          1429,
+          1439,
+          1449,
+          1459,
+          1469
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableOriginatedMoreThanFiveYearsBeforeCurrentFiscalYearWriteoff": [
+          1309,
+          1356,
+          1414,
+          1474
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableYearFiveOriginatedFourYearsBeforeCurrentFiscalYearWriteoff": [
+          1310,
+          1357,
+          1415,
+          1475
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableYearFourOriginatedThreeYearsBeforeCurrentFiscalYearWriteoff": [
+          1311,
+          1358,
+          1416,
+          1476
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableYearThreeOriginatedTwoYearsBeforeCurrentFiscalYearWriteoff": [
+          1312,
+          1359,
+          1417,
+          1477
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableYearTwoOriginatedFiscalYearBeforeCurrentFiscalYearWriteoff": [
+          1313,
+          1360,
+          1418,
+          1478
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableYearOneOriginatedCurrentFiscalYearWriteoff": [
+          1314,
+          1361,
+          1419,
+          1479
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableAllowanceForCreditLossesWriteOffs": [
+          1315,
+          1362,
+          1420,
+          1422,
+          1480,
+          1482,
+          1490,
+          1491,
+          1492,
+          1508,
+          1509,
+          1510
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableRevolving": [
+          1371,
+          1381,
+          1391,
+          1401,
+          1411,
+          1431,
+          1441,
+          1451,
+          1461,
+          1471
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableRevolvingWriteoff": [
+          1421,
+          1481
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingReceivableAllowanceForCreditLossesRecovery": [
+          1493,
+          1494,
+          1495,
+          1511,
+          1512,
+          1513
+        ],
+        "http://fasb.org/us-gaap/2025|ProvisionForLoanLossesExpensed": [
+          1496,
+          1497,
+          1498,
+          1514,
+          1515,
+          1516
+        ],
+        "http://www.ford.com/20251231|FinancingReceivableAllowanceForCreditLossesOther": [
+          1499,
+          1500,
+          1501,
+          1517,
+          1518,
+          1519
+        ],
+        "http://fasb.org/us-gaap/2025|InventoryWorkInProcessAndRawMaterialsNetOfReserves": [
+          1526,
+          1527
+        ],
+        "http://fasb.org/us-gaap/2025|InventoryFinishedGoodsNetOfReserves": [
+          1528,
+          1529
+        ],
+        "http://fasb.org/us-gaap/2025|PropertySubjectToOrAvailableForOperatingLeaseNet": [
+          1535,
+          1536,
+          1541,
+          1542,
+          1543,
+          1544,
+          1545,
+          1546,
+          2701,
+          2702
+        ],
+        "http://fasb.org/us-gaap/2025|PropertySubjectToOrAvailableForOperatingLeaseGross": [
+          1537,
+          1538
+        ],
+        "http://fasb.org/us-gaap/2025|PropertySubjectToOrAvailableForOperatingLeaseAccumulatedDepreciation": [
+          1539,
+          1540
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeasesIncomeStatementDepreciationExpenseOnPropertySubjectToOrHeldForLease": [
+          1548,
+          1549,
+          1550
+        ],
+        "http://fasb.org/us-gaap/2025|LessorOperatingLeasePaymentsToBeReceivedNextTwelveMonths": [
+          1552
+        ],
+        "http://fasb.org/us-gaap/2025|LessorOperatingLeasePaymentsToBeReceivedTwoYears": [
+          1553
+        ],
+        "http://fasb.org/us-gaap/2025|LessorOperatingLeasePaymentsToBeReceivedThreeYears": [
+          1554
+        ],
+        "http://fasb.org/us-gaap/2025|LessorOperatingLeasePaymentsToBeReceivedFourYears": [
+          1555
+        ],
+        "http://fasb.org/us-gaap/2025|LessorOperatingLeasePaymentsToBeReceivedFiveYears": [
+          1556
+        ],
+        "http://fasb.org/us-gaap/2025|LessorOperatingLeasePaymentsToBeReceived": [
+          1557
+        ],
+        "http://fasb.org/us-gaap/2025|PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetBeforeAccumulatedDepreciationAndAmortization": [
+          1567,
+          1568,
+          1569,
+          1570,
+          1571,
+          1572,
+          1573,
+          1574,
+          1575,
+          1576,
+          1577,
+          1578
+        ],
+        "http://fasb.org/us-gaap/2025|PropertyPlantAndEquipmentAndFinanceLeaseRightOfUseAssetAccumulatedDepreciationAndAmortization": [
+          1579,
+          1580
+        ],
+        "http://fasb.org/us-gaap/2025|OtherDepreciationAndAmortization": [
+          1587,
+          1588,
+          1589
+        ],
+        "http://fasb.org/us-gaap/2025|AdjustmentForAmortization": [
+          1590,
+          1591,
+          1592
+        ],
+        "http://www.ford.com/20251231|DepreciationDepletionAndAmortizationIncludingImpairment": [
+          1593,
+          1594,
+          1595
+        ],
+        "http://fasb.org/us-gaap/2025|CostOfPropertyRepairsAndMaintenance": [
+          1596,
+          1597,
+          1598
+        ],
+        "http://www.ford.com/20251231|SupplierAndOtherContractCancellationExpenses": [
+          1602,
+          3206,
+          3210
+        ],
+        "http://fasb.org/us-gaap/2025|ImpairmentOfLongLivedAssetsHeldForUse": [
+          1636
+        ],
+        "http://fasb.org/us-gaap/2025|EquityMethodInvestmentDividendsOrDistributions": [
+          1637,
+          1638,
+          1639
+        ],
+        "http://fasb.org/us-gaap/2025|AssetsNoncurrent": [
+          1642,
+          1643
+        ],
+        "http://fasb.org/us-gaap/2025|LiabilitiesNoncurrent": [
+          1648,
+          1649
+        ],
+        "http://fasb.org/us-gaap/2025|Revenues": [
+          1654,
+          1655,
+          1656
+        ],
+        "http://fasb.org/us-gaap/2025|RelatedPartyTransactionPurchasesFromRelatedParty": [
+          1669,
+          1670,
+          1671
+        ],
+        "http://fasb.org/us-gaap/2025|AccountsReceivableNet": [
+          1675,
+          1676
+        ],
+        "http://www.ford.com/20251231|DealerAndDealersCustomerAllowancesAndClaims": [
+          1681,
+          1682
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerLiabilityCurrent": [
+          1683,
+          1684
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredCompensationLiabilityCurrent": [
+          1685,
+          1686
+        ],
+        "http://fasb.org/us-gaap/2025|InterestPayableCurrent": [
+          1687,
+          1688
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseLiabilityCurrent": [
+          1689,
+          1690,
+          2344,
+          2345
+        ],
+        "http://www.ford.com/20251231|OtherPostretirementDefinedBenefitPlanLiabilitiesCurrent": [
+          1691,
+          1692
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPensionPlanLiabilitiesCurrent": [
+          1693,
+          1694
+        ],
+        "http://fasb.org/us-gaap/2025|OtherSundryLiabilitiesCurrent": [
+          1695,
+          1696
+        ],
+        "http://www.ford.com/20251231|DealerAndDealersCustomerAllowancesAndClaimsNoncurrent": [
+          1699,
+          1700
+        ],
+        "http://fasb.org/us-gaap/2025|ContractWithCustomerLiabilityNoncurrent": [
+          1701,
+          1702
+        ],
+        "http://fasb.org/us-gaap/2025|OtherPostretirementDefinedBenefitPlanLiabilitiesNoncurrent": [
+          1703,
+          1704
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPensionPlanLiabilitiesNoncurrent": [
+          1705,
+          1706
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseLiabilityNoncurrent": [
+          1707,
+          1708,
+          2346,
+          2347
+        ],
+        "http://fasb.org/us-gaap/2025|DeferredCompensationLiabilityClassifiedNoncurrent": [
+          1709,
+          1710
+        ],
+        "http://fasb.org/us-gaap/2025|OtherSundryLiabilitiesNoncurrent": [
+          1711,
+          1712
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeLiabilitiesCurrent": [
+          1715,
+          1716,
+          2818,
+          2820
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeLiabilitiesNoncurrent": [
+          1717,
+          1718,
+          2822,
+          2824
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedContributionPlanCostRecognized": [
+          1721,
+          1722,
+          1723,
+          1724,
+          1725,
+          1726
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanServiceCost": [
+          1765,
+          1766,
+          1767,
+          1768,
+          1769,
+          1770,
+          1771,
+          1772,
+          1773,
+          1852,
+          1853,
+          1854,
+          1855,
+          1856,
+          1857
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanInterestCost": [
+          1774,
+          1775,
+          1776,
+          1777,
+          1778,
+          1779,
+          1780,
+          1781,
+          1782,
+          1858,
+          1859,
+          1860,
+          1861,
+          1862,
+          1863
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanExpectedReturnOnPlanAssets": [
+          1783,
+          1784,
+          1785,
+          1786,
+          1787,
+          1788,
+          1789,
+          1790,
+          1791
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanAmortizationOfPriorServiceCostCredit": [
+          1792,
+          1793,
+          1794,
+          1795,
+          1796,
+          1797,
+          1798,
+          1799,
+          1800
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanActuarialGainLossImmediateRecognitionAsComponentInNetPeriodicBenefitCostCredit": [
+          1801,
+          1802,
+          1803,
+          1804,
+          1805,
+          1806,
+          1807,
+          1808,
+          1809
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanOtherCosts": [
+          1810,
+          1811,
+          1812,
+          1813,
+          1814,
+          1815,
+          1816,
+          1817,
+          1818
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanRecognizedNetGainLossDueToSettlementsAndCurtailments1": [
+          1819,
+          1820,
+          1821,
+          1822,
+          1823,
+          1824,
+          1825,
+          1826,
+          1827,
+          1841
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanNetPeriodicBenefitCost": [
+          1828,
+          1829,
+          1830,
+          1831,
+          1832,
+          1833,
+          1834,
+          1835,
+          1836
+        ],
+        "http://www.ford.com/20251231|DefinedBenefitPlanNetPeriodicBenefitCostCreditGainLossDueToSettlementCurtailmentAndOther": [
+          1837,
+          1840,
+          1843
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanRecognizedNetGainLossDueToSettlements1": [
+          1838
+        ],
+        "http://www.ford.com/20251231|DefinedBenefitPlanNetPeriodicBenefitCostCreditGainLossDueToCurtailmentsAndOther": [
+          1839,
+          1842,
+          1844
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanBenefitObligation": [
+          1846,
+          1847,
+          1848,
+          1849,
+          1850,
+          1851,
+          1912,
+          1913,
+          1914,
+          1915,
+          1916,
+          1917,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanPlanAmendments": [
+          1864,
+          1865,
+          1866,
+          1867,
+          1868,
+          1869
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanSpecialTerminationBenefits": [
+          1870,
+          1871,
+          1872,
+          1873,
+          1874,
+          1875
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanCurtailments": [
+          1876,
+          1877,
+          1878,
+          1879,
+          1880,
+          1881
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanSettlementsBenefitObligation": [
+          1882,
+          1883,
+          1884,
+          1885,
+          1886,
+          1887
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanBenefitObligationContributionsByPlanParticipant": [
+          1888,
+          1889,
+          1890,
+          1891,
+          1892,
+          1893
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanBenefitObligationBenefitsPaid": [
+          1894,
+          1895,
+          1896,
+          1897,
+          1898,
+          1899
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanForeignCurrencyExchangeRateChangesBenefitObligation": [
+          1900,
+          1901,
+          1902,
+          1903,
+          1904,
+          1905
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanActuarialGainLoss": [
+          1906,
+          1907,
+          1908,
+          1909,
+          1910,
+          1911
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanFairValueOfPlanAssets": [
+          1918,
+          1919,
+          1920,
+          1921,
+          1922,
+          1923,
+          1966,
+          1967,
+          1968,
+          1969,
+          1970,
+          1971,
+          2055,
+          2056,
+          2057,
+          2058,
+          2059,
+          2060,
+          2061,
+          2062,
+          2063,
+          2064,
+          2065,
+          2066,
+          2067,
+          2068,
+          2069,
+          2070,
+          2071,
+          2072,
+          2073,
+          2074,
+          2075,
+          2076,
+          2077,
+          2078,
+          2079,
+          2080,
+          2081,
+          2082,
+          2083,
+          2084,
+          2085,
+          2086,
+          2087,
+          2088,
+          2089,
+          2090,
+          2091,
+          2092,
+          2093,
+          2094,
+          2095,
+          2096,
+          2097,
+          2098,
+          2099,
+          2100,
+          2101,
+          2102,
+          2103,
+          2104,
+          2105,
+          2106,
+          2107,
+          2108,
+          2109,
+          2110,
+          2111,
+          2112,
+          2113,
+          2114,
+          2115,
+          2116,
+          2117,
+          2118,
+          2119,
+          2120,
+          2121,
+          2122,
+          2123,
+          2124,
+          2125,
+          2126,
+          2127,
+          2128,
+          2129,
+          2130,
+          2131,
+          2132,
+          2133,
+          2134,
+          2135,
+          2136,
+          2137,
+          2138,
+          2139,
+          2140,
+          2141,
+          2142,
+          2143,
+          2144,
+          2145,
+          2146,
+          2147,
+          2148,
+          2149,
+          2150,
+          2151,
+          2152,
+          2153,
+          2154,
+          2155,
+          2156,
+          2157,
+          2158,
+          2159,
+          2160,
+          2161,
+          2162,
+          2163,
+          2164,
+          2165,
+          2166,
+          2167,
+          2168,
+          2169,
+          2170,
+          2171,
+          2172,
+          2173,
+          2174,
+          2175,
+          2176,
+          2177,
+          2178,
+          2181,
+          2182,
+          2183,
+          2184,
+          2185,
+          2186,
+          2187,
+          2188,
+          2189,
+          2190,
+          2191,
+          2192,
+          2193,
+          2194,
+          2195,
+          2196,
+          2197,
+          2198,
+          2199,
+          2200,
+          2201,
+          2202,
+          2203,
+          2204,
+          2205,
+          2206,
+          2207,
+          2208,
+          2209,
+          2210,
+          2211,
+          2212,
+          2213,
+          2214,
+          2215,
+          2216,
+          2217,
+          2218,
+          2219,
+          2220,
+          2221,
+          2222,
+          2223,
+          2224,
+          2225,
+          2226,
+          2227,
+          2228,
+          2229,
+          2230,
+          2231,
+          2232,
+          2233,
+          2234,
+          2235,
+          2236,
+          2237,
+          2238,
+          2239,
+          2240,
+          2241,
+          2242,
+          2243,
+          2244,
+          2245,
+          2246,
+          2247,
+          2248,
+          2249,
+          2250,
+          2251,
+          2252,
+          2253,
+          2254,
+          2255,
+          2256,
+          2257,
+          2258,
+          2259,
+          2260,
+          2261,
+          2262,
+          2263,
+          2264,
+          2265,
+          2266,
+          2267,
+          2268,
+          2269,
+          2270,
+          2271,
+          2272,
+          2273,
+          2274,
+          2275,
+          2276,
+          2277,
+          2278,
+          2279,
+          2280,
+          2281,
+          2282,
+          2283,
+          2284,
+          2285,
+          2286,
+          2287,
+          2288,
+          2289,
+          2290,
+          2291,
+          2292,
+          2293,
+          2294,
+          2295,
+          2296,
+          2297,
+          2298,
+          2299,
+          2300,
+          2301,
+          2302,
+          2303,
+          2304,
+          2307,
+          2309,
+          2314,
+          2315,
+          2320,
+          2321,
+          2326,
+          2327,
+          2332,
+          2333,
+          2334
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanActualReturnOnPlanAssets": [
+          1924,
+          1925,
+          1926,
+          1927,
+          1928,
+          1929
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanContributionsByEmployer": [
+          1930,
+          1931,
+          1932,
+          1933,
+          1934,
+          1935
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanPlanAssetsContributionsByPlanParticipant": [
+          1936,
+          1937,
+          1938,
+          1939,
+          1940,
+          1941
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanPlanAssetsBenefitsPaid": [
+          1942,
+          1943,
+          1944,
+          1945,
+          1946,
+          1947
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanSettlementsPlanAssets": [
+          1948,
+          1949,
+          1950,
+          1951,
+          1952,
+          1953
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanPlanAssetsForeignCurrencyTranslationGainLoss": [
+          1954,
+          1955,
+          1956,
+          1957,
+          1958,
+          1959
+        ],
+        "http://www.ford.com/20251231|DefinedBenefitPlanOtherIncreaseDecreasePlanAssets": [
+          1960,
+          1961,
+          1962,
+          1963,
+          1964,
+          1965
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanFundedStatusOfPlan": [
+          1972,
+          1973,
+          1974,
+          1975,
+          1976,
+          1977
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanAssetsForPlanBenefitsNoncurrent": [
+          1978,
+          1979,
+          1980,
+          1981,
+          1982,
+          1983
+        ],
+        "http://fasb.org/us-gaap/2025|PensionAndOtherPostretirementDefinedBenefitPlansLiabilitiesCurrentAndNoncurrent": [
+          1984,
+          1985,
+          1986,
+          1987,
+          1988,
+          1989
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanAmountsRecognizedInBalanceSheet": [
+          1990,
+          1991,
+          1992,
+          1993,
+          1994,
+          1995
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanAccumulatedOtherComprehensiveIncomeNetPriorServiceCostCreditBeforeTax": [
+          1996,
+          1997,
+          1998,
+          1999,
+          2000,
+          2001
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanPensionPlansWithAccumulatedBenefitObligationsInExcessOfPlanAssetsAggregateAccumulatedBenefitObligation": [
+          2002,
+          2003,
+          2004,
+          2005
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanPensionPlansWithAccumulatedBenefitObligationsInExcessOfPlanAssetsAggregateFairValueOfPlanAssets": [
+          2006,
+          2007,
+          2008,
+          2009
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanAccumulatedBenefitObligation": [
+          2010,
+          2011,
+          2012,
+          2013
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanPensionPlansWithAccumulatedBenefitObligationsInExcessOfPlanAssetsAggregateProjectedBenefitObligation": [
+          2014,
+          2015,
+          2016,
+          2017
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanPensionPlanWithProjectedBenefitObligationInExcessOfPlanAssetsPlanAssets": [
+          2018,
+          2019,
+          2020,
+          2021
+        ],
+        "http://fasb.org/us-gaap/2025|PensionContributions": [
+          2026,
+          2027
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanExpectedFutureEmployerContributionsNextFiscalYear": [
+          2028,
+          2029
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanExpectedFutureBenefitPaymentsNextTwelveMonths": [
+          2031,
+          2032,
+          2033
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanExpectedFutureBenefitPaymentsYearTwo": [
+          2034,
+          2035,
+          2036
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanExpectedFutureBenefitPaymentsYearThree": [
+          2037,
+          2038,
+          2039
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanExpectedFutureBenefitPaymentsYearFour": [
+          2040,
+          2041,
+          2042
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanExpectedFutureBenefitPaymentsYearFive": [
+          2043,
+          2044,
+          2045
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanExpectedFutureBenefitPaymentsFiveFiscalYearsThereafter": [
+          2046,
+          2047,
+          2048
+        ],
+        "http://www.ford.com/20251231|DefinedBenefitPlanPlanAssetsInvestmentWithinPlanAssetCategory": [
+          2179,
+          2180,
+          2305,
+          2306
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanActualReturnOnPlanAssetsStillHeld": [
+          2310,
+          2316,
+          2322,
+          2328
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanActualReturnOnPlanAssetsSoldDuringPeriod": [
+          2311,
+          2317,
+          2323,
+          2329
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanPurchasesSalesAndSettlements": [
+          2312,
+          2318,
+          2324,
+          2330
+        ],
+        "http://fasb.org/us-gaap/2025|DefinedBenefitPlanTransfersBetweenMeasurementLevels": [
+          2313,
+          2319,
+          2325,
+          2331
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseRightOfUseAsset": [
+          2342,
+          2343
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseLiability": [
+          2348,
+          2349,
+          2379
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseRightOfUseAssetBeforeAccumulatedAmortization": [
+          2350,
+          2351
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseRightOfUseAssetAccumulatedAmortization": [
+          2352,
+          2353
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseRightOfUseAsset": [
+          2354,
+          2355
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseLiabilityCurrent": [
+          2356,
+          2357,
+          2496,
+          2497
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseLiabilityNoncurrent": [
+          2358,
+          2359,
+          2498,
+          2499
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseLiability": [
+          2360,
+          2361,
+          2380
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDueNextTwelveMonths": [
+          2363
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseLiabilityPaymentsDueNextTwelveMonths": [
+          2364
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDueYearTwo": [
+          2365
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseLiabilityPaymentsDueYearTwo": [
+          2366
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDueYearThree": [
+          2367
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseLiabilityPaymentsDueYearThree": [
+          2368
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDueYearFour": [
+          2369
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseLiabilityPaymentsDueYearFour": [
+          2370
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDueYearFive": [
+          2371
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseLiabilityPaymentsDueYearFive": [
+          2372
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDueAfterYearFive": [
+          2373
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseLiabilityPaymentsDueAfterYearFive": [
+          2374
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityPaymentsDue": [
+          2375
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseLiabilityPaymentsDue": [
+          2376
+        ],
+        "http://fasb.org/us-gaap/2025|LesseeOperatingLeaseLiabilityUndiscountedExcessAmount": [
+          2377
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseLiabilityUndiscountedExcessAmount": [
+          2378
+        ],
+        "http://fasb.org/us-gaap/2025|UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount": [
+          2381
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeasePayments": [
+          2382,
+          2383,
+          2384
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseInterestPaymentOnLiability": [
+          2385,
+          2386,
+          2387
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeasePrincipalPayments": [
+          2388,
+          2389,
+          2390
+        ],
+        "http://fasb.org/us-gaap/2025|RightOfUseAssetObtainedInExchangeForOperatingLeaseLiability": [
+          2391,
+          2392,
+          2393
+        ],
+        "http://fasb.org/us-gaap/2025|RightOfUseAssetObtainedInExchangeForFinanceLeaseLiability": [
+          2394,
+          2395,
+          2396
+        ],
+        "http://fasb.org/us-gaap/2025|OperatingLeaseCost": [
+          2398,
+          2399,
+          2400
+        ],
+        "http://fasb.org/us-gaap/2025|VariableLeaseCost": [
+          2401,
+          2402,
+          2403
+        ],
+        "http://fasb.org/us-gaap/2025|SubleaseIncome": [
+          2404,
+          2405,
+          2406
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseRightOfUseAssetAmortization": [
+          2407,
+          2408,
+          2409
+        ],
+        "http://fasb.org/us-gaap/2025|FinanceLeaseInterestExpense": [
+          2410,
+          2411,
+          2412
+        ],
+        "http://fasb.org/us-gaap/2025|LeaseCost": [
+          2413,
+          2414,
+          2415
+        ],
+        "http://fasb.org/us-gaap/2025|ShortTermBorrowings": [
+          2432,
+          2433,
+          2466,
+          2467
+        ],
+        "http://fasb.org/us-gaap/2025|OtherLoansPayableCurrent": [
+          2436,
+          2437,
+          2442,
+          2443
+        ],
+        "http://fasb.org/us-gaap/2025|UnsecuredDebtCurrent": [
+          2438,
+          2439
+        ],
+        "http://fasb.org/us-gaap/2025|ConvertibleDebtCurrent": [
+          2440,
+          2441
+        ],
+        "http://www.ford.com/20251231|DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNetCurrent": [
+          2444,
+          2445,
+          2474,
+          2475
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtCurrent": [
+          2446,
+          2447
+        ],
+        "http://fasb.org/us-gaap/2025|UnsecuredLongTermDebt": [
+          2448,
+          2449
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentFaceAmount": [
+          2450,
+          2451,
+          2578,
+          2579,
+          2581,
+          2582,
+          2583,
+          2584,
+          2586,
+          2587,
+          2588,
+          2589,
+          2590,
+          2591,
+          2592,
+          2593,
+          2595,
+          2596,
+          2598,
+          2599,
+          2601,
+          2602,
+          2604,
+          2605,
+          2607,
+          2608,
+          2610,
+          2611,
+          2613,
+          2614,
+          2616,
+          2617,
+          2619,
+          2620,
+          2622,
+          2623,
+          2625,
+          2626,
+          2628,
+          2629,
+          2631,
+          2632,
+          2634,
+          2635,
+          2637,
+          2638,
+          2640,
+          2641,
+          2642,
+          2643,
+          2644,
+          2646
+        ],
+        "http://fasb.org/us-gaap/2025|OtherLoansPayableLongTerm": [
+          2452,
+          2453,
+          2454,
+          2455
+        ],
+        "http://www.ford.com/20251231|DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNetNoncurrent": [
+          2456,
+          2457,
+          2484,
+          2485
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtNoncurrent": [
+          2458,
+          2459,
+          2488,
+          2489
+        ],
+        "http://fasb.org/us-gaap/2025|DebtLongtermAndShorttermCombinedAmount": [
+          2462,
+          2463,
+          2492,
+          2493
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentFairValue": [
+          2464,
+          2465,
+          2494,
+          2495
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtAndCapitalLeaseObligationsCurrent": [
+          2470,
+          2471,
+          2472,
+          2473
+        ],
+        "http://www.ford.com/20251231|AdjustmentFairValueHedgingInstrumentsUnsecuredDebtCurrent": [
+          2476,
+          2477
+        ],
+        "http://www.ford.com/20251231|AdjustmentFairValueHedgingInstrumentsUnsecuredDebtNoncurrent": [
+          2486,
+          2487
+        ],
+        "http://fasb.org/us-gaap/2025|ShorttermDebtFairValue": [
+          2500,
+          2501,
+          2502,
+          2503
+        ],
+        "http://www.ford.com/20251231|AdjustmentFairValueHedgingInstrumentsUnsecuredDebtDiscontinuedHedgingRelationships": [
+          2504,
+          2505
+        ],
+        "http://www.ford.com/20251231|DebtCarryingValueFairValue": [
+          2506,
+          2507
+        ],
+        "http://fasb.org/us-gaap/2025|InterestPaidNet": [
+          2508,
+          2509,
+          2510,
+          2511,
+          2512,
+          2513
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtMaturitiesRepaymentsOfPrincipalInNextTwelveMonths": [
+          2515,
+          2523,
+          2531,
+          2546,
+          2554,
+          2562
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtMaturitiesRepaymentsOfPrincipalInYearTwo": [
+          2516,
+          2524,
+          2532,
+          2547,
+          2555,
+          2563
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtMaturitiesRepaymentsOfPrincipalInYearThree": [
+          2517,
+          2525,
+          2533,
+          2548,
+          2556,
+          2564
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFour": [
+          2518,
+          2526,
+          2534,
+          2549,
+          2557,
+          2565
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtMaturitiesRepaymentsOfPrincipalInYearFive": [
+          2519,
+          2527,
+          2535,
+          2550,
+          2558,
+          2566
+        ],
+        "http://fasb.org/us-gaap/2025|LongTermDebtMaturitiesRepaymentsOfPrincipalAfterYearFive": [
+          2520,
+          2528,
+          2536,
+          2551,
+          2559,
+          2567
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNet": [
+          2521,
+          2529,
+          2537,
+          2552,
+          2560,
+          2568
+        ],
+        "http://www.ford.com/20251231|InterestPaymentDueInYearOne": [
+          2539,
+          2570
+        ],
+        "http://www.ford.com/20251231|InterestPaymentDueInYearTwo": [
+          2540,
+          2571
+        ],
+        "http://www.ford.com/20251231|InterestPaymentDueInYearThree": [
+          2541,
+          2572
+        ],
+        "http://www.ford.com/20251231|InterestPaymentDueInYearFour": [
+          2542,
+          2573
+        ],
+        "http://www.ford.com/20251231|InterestPaymentDueInYearFive": [
+          2543,
+          2574
+        ],
+        "http://www.ford.com/20251231|InterestPaymentDueAfterYearFive": [
+          2544,
+          2575
+        ],
+        "http://fasb.org/us-gaap/2025|InterestPayableCurrentAndNoncurrent": [
+          2545,
+          2576
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromConvertibleDebt": [
+          2647
+        ],
+        "http://fasb.org/us-gaap/2025|AmortizationOfFinancingCosts": [
+          2652,
+          2651,
+          2650
+        ],
+        "http://fasb.org/us-gaap/2025|ConvertibleDebtFairValueDisclosures": [
+          2654,
+          2655
+        ],
+        "http://fasb.org/us-gaap/2025|LineOfCreditFacilityMaximumBorrowingCapacity": [
+          2665,
+          2666,
+          2667,
+          2668,
+          2670,
+          2671,
+          2674,
+          2675,
+          2676,
+          2678,
+          2679,
+          2705,
+          2706
+        ],
+        "http://fasb.org/us-gaap/2025|ProceedsFromLinesOfCredit": [
+          2672
+        ],
+        "http://www.ford.com/20251231|DebtCovenantMinimumLiquidityAmount": [
+          2681
+        ],
+        "http://fasb.org/us-gaap/2025|SecuredDebt": [
+          2685
+        ],
+        "http://www.ford.com/20251231|CashBalanceToSupportWholesaleSecuritizationProgram": [
+          2687,
+          2686
+        ],
+        "http://www.ford.com/20251231|CashContributionCollateralToSupportWholesaleSecuritizationProgram": [
+          2689,
+          2688
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeGainLossOnDerivativeNet": [
+          2690,
+          2691,
+          2692,
+          2735,
+          2736,
+          2737,
+          2738,
+          2739,
+          2740,
+          2741,
+          2742,
+          2743,
+          2744,
+          2745,
+          2746,
+          2747,
+          2748,
+          2749,
+          2756,
+          2757,
+          2758,
+          2759,
+          2760,
+          2761
+        ],
+        "http://fasb.org/us-gaap/2025|FinancingInterestExpense": [
+          2693,
+          2694,
+          2695
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossCashFlowHedgeGainLossReclassificationAfterTax": [
+          2711,
+          2712,
+          2713,
+          2714,
+          2715,
+          2716
+        ],
+        "http://fasb.org/us-gaap/2025|GainLossFromComponentsExcludedFromAssessmentOfFairValueHedgeEffectivenessNet": [
+          2717,
+          2718,
+          2719,
+          2726,
+          2727,
+          2728
+        ],
+        "http://fasb.org/us-gaap/2025|ChangeInUnrealizedGainLossOnFairValueHedgingInstruments1": [
+          2720,
+          2721,
+          2722,
+          2729,
+          2730,
+          2731
+        ],
+        "http://fasb.org/us-gaap/2025|ChangeInUnrealizedGainLossOnHedgedItemInFairValueHedge1": [
+          2723,
+          2724,
+          2725,
+          2732,
+          2733,
+          2734
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossCashFlowHedgeGainLossBeforeReclassificationAndTax": [
+          2750,
+          2751,
+          2752,
+          2753,
+          2754,
+          2755
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeNotionalAmount": [
+          2763,
+          2766,
+          2769,
+          2772,
+          2775,
+          2778,
+          2781,
+          2784,
+          2787,
+          2790,
+          2793,
+          2796,
+          2799,
+          2802,
+          2805,
+          2808,
+          2811,
+          2814
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeFairValueOfDerivativeAsset": [
+          2764,
+          2767,
+          2770,
+          2773,
+          2776,
+          2779,
+          2782,
+          2785,
+          2788,
+          2791,
+          2794,
+          2797,
+          2800,
+          2803,
+          2806,
+          2809,
+          2812,
+          2815
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeFairValueOfDerivativeLiability": [
+          2765,
+          2768,
+          2771,
+          2774,
+          2777,
+          2780,
+          2783,
+          2786,
+          2789,
+          2792,
+          2795,
+          2798,
+          2801,
+          2804,
+          2807,
+          2810,
+          2813,
+          2816
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeAssetsCurrent": [
+          2817,
+          2819
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeAssetsNoncurrent": [
+          2821,
+          2823
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeAssets": [
+          2825,
+          2827
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeLiabilities": [
+          2826,
+          2828
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeCollateralObligationToReturnCash": [
+          2829,
+          2830
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeCollateralRightToReclaimCash": [
+          2831,
+          2832
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeAssetNotOffsetPolicyElectionDeduction": [
+          2834,
+          2835
+        ],
+        "http://fasb.org/us-gaap/2025|DerivativeLiabilityNotOffsetPolicyElectionDeduction": [
+          2833,
+          2836
+        ],
+        "http://fasb.org/us-gaap/2025|RestructuringReserve": [
+          2840,
+          2841,
+          2848,
+          2849
+        ],
+        "http://fasb.org/us-gaap/2025|RestructuringReserveAccrualAdjustment1": [
+          2842,
+          2843
+        ],
+        "http://fasb.org/us-gaap/2025|PaymentsForRestructuring": [
+          2844,
+          2845
+        ],
+        "http://fasb.org/us-gaap/2025|RestructuringReserveTranslationAndOtherAdjustment": [
+          2846,
+          2847
+        ],
+        "http://fasb.org/us-gaap/2025|RestructuringCharges": [
+          2850,
+          2851
+        ],
+        "http://www.ford.com/20251231|RestructuringIncurredCostStatementOfIncomeOrComprehensiveIncomeExtensibleEnumerationNotDisclosedFlag": [
+          2852,
+          2853
+        ],
+        "http://fasb.org/us-gaap/2025|RestructuringAndRelatedCostExpectedCost1": [
+          2854,
+          2855
+        ],
+        "http://fasb.org/us-gaap/2025|AssetsOfDisposalGroupIncludingDiscontinuedOperation": [
+          2858,
+          2862
+        ],
+        "http://fasb.org/us-gaap/2025|DisposalGroupIncludingDiscontinuedOperationCashAndCashEquivalents": [
+          2859,
+          2863
+        ],
+        "http://fasb.org/us-gaap/2025|LiabilitiesOfDisposalGroupIncludingDiscontinuedOperation": [
+          2860,
+          2864
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossBeforeReclassificationsBeforeTax": [
+          2870,
+          2871,
+          2872,
+          2891,
+          2892,
+          2893,
+          2918,
+          2919,
+          2920,
+          2945,
+          2946,
+          2947
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossBeforeReclassificationsTax": [
+          2873,
+          2874,
+          2875,
+          2894,
+          2895,
+          2896,
+          2921,
+          2922,
+          2923,
+          2948,
+          2949,
+          2950
+        ],
+        "http://fasb.org/us-gaap/2025|OtherComprehensiveIncomeLossBeforeReclassificationsNetOfTax": [
+          2876,
+          2877,
+          2878,
+          2897,
+          2898,
+          2899,
+          2924,
+          2925,
+          2926,
+          2951,
+          2952,
+          2953
+        ],
+        "http://fasb.org/us-gaap/2025|ReclassificationFromAccumulatedOtherComprehensiveIncomeCurrentPeriodNetOfTax": [
+          2879,
+          2880,
+          2881,
+          2906,
+          2907,
+          2908,
+          2933,
+          2934,
+          2935,
+          2960,
+          2961,
+          2962
+        ],
+        "http://fasb.org/us-gaap/2025|ReclassificationFromAccumulatedOtherComprehensiveIncomeCurrentPeriodBeforeTax": [
+          2900,
+          2901,
+          2902,
+          2927,
+          2928,
+          2929,
+          2954,
+          2955,
+          2956
+        ],
+        "http://fasb.org/us-gaap/2025|ReclassificationFromAociCurrentPeriodTax": [
+          2903,
+          2904,
+          2905,
+          2930,
+          2931,
+          2932,
+          2957,
+          2958,
+          2959
+        ],
+        "http://fasb.org/us-gaap/2025|CashFlowHedgeGainLossToBeReclassifiedWithinTwelveMonths": [
+          2978
+        ],
+        "http://fasb.org/us-gaap/2025|VariableInterestEntityEntityMaximumLossExposureAmount": [
+          2981,
+          2982
+        ],
+        "http://fasb.org/us-gaap/2025|GuaranteeObligationsMaximumExposure": [
+          2984,
+          2983,
+          2998,
+          2999
+        ],
+        "http://www.ford.com/20251231|LineOfCreditFacilityEnteredIntoByEquityMethodInvestee": [
+          2987
+        ],
+        "http://fasb.org/us-gaap/2025|InvestmentsInAffiliatesSubsidiariesAssociatesAndJointVentures": [
+          2991
+        ],
+        "http://www.ford.com/20251231|EquityMethodInvestmentCommittedCapitalAmount": [
+          2992
+        ],
+        "http://fasb.org/us-gaap/2025|EquityMethodInvestmentOtherThanTemporaryImpairment": [
+          2994,
+          3211,
+          3213
+        ],
+        "http://fasb.org/us-gaap/2025|GuaranteeObligationsCurrentCarryingValue": [
+          3000,
+          3001
+        ],
+        "http://fasb.org/us-gaap/2025|LossContingencyEstimateOfPossibleLoss": [
+          3003,
+          3017
+        ],
+        "http://fasb.org/us-gaap/2025|ProductWarrantyAccrual": [
+          3005,
+          3006,
+          3015,
+          3016
+        ],
+        "http://fasb.org/us-gaap/2025|ProductWarrantyAccrualPayments": [
+          3007,
+          3008
+        ],
+        "http://fasb.org/us-gaap/2025|ProductWarrantyAccrualWarrantiesIssued": [
+          3009,
+          3010
+        ],
+        "http://fasb.org/us-gaap/2025|ProductWarrantyAccrualPreexistingIncreaseDecrease": [
+          3011,
+          3012
+        ],
+        "http://fasb.org/us-gaap/2025|StandardAndExtendedProductWarrantyAccrualForeignCurrencyTranslationGainLoss": [
+          3013,
+          3014
+        ],
+        "http://fasb.org/us-gaap/2025|SegmentReportingOtherItemAmount": [
+          3039,
+          3040,
+          3041,
+          3042,
+          3048,
+          3100,
+          3101,
+          3102,
+          3103,
+          3109,
+          3161,
+          3162,
+          3163,
+          3164,
+          3170
+        ],
+        "http://www.ford.com/20251231|EarningsBeforeInterestAndTax": [
+          3043,
+          3044,
+          3045,
+          3046,
+          3047,
+          3104,
+          3105,
+          3106,
+          3107,
+          3108,
+          3165,
+          3166,
+          3167,
+          3168,
+          3169
+        ],
+        "http://fasb.org/us-gaap/2025|InterestExpenseOperating": [
+          3049,
+          3110,
+          3171
+        ],
+        "http://www.ford.com/20251231|SpecialItemsExpense": [
+          3051,
+          3112,
+          3173
+        ],
+        "http://fasb.org/us-gaap/2025|DepreciationDepletionAndAmortization": [
+          3053,
+          3054,
+          3055,
+          3056,
+          3057,
+          3058,
+          3114,
+          3115,
+          3116,
+          3117,
+          3118,
+          3119,
+          3175,
+          3176,
+          3177,
+          3178,
+          3179,
+          3180
+        ],
+        "http://fasb.org/us-gaap/2025|SegmentExpenditureAdditionToLongLivedAssets": [
+          3071,
+          3072,
+          3073,
+          3074,
+          3075,
+          3076,
+          3132,
+          3133,
+          3134,
+          3135,
+          3136,
+          3137,
+          3193,
+          3194,
+          3195,
+          3196,
+          3197,
+          3198
+        ],
+        "http://fasb.org/us-gaap/2025|OtherAssetImpairmentCharges": [
+          3205
+        ],
+        "http://www.ford.com/20251231|ProductionRelatedImpairmentsOrChargesIncludingGoodwill": [
+          3208
+        ],
+        "http://fasb.org/us-gaap/2025|NoncurrentAssets": [
+          3216,
+          3218,
+          3220,
+          3222,
+          3224,
+          3226,
+          3228,
+          3230,
+          3232,
+          3234,
+          3236,
+          3238,
+          3240,
+          3242,
+          3244,
+          3246,
+          3248,
+          3250
+        ],
+        "http://fasb.org/us-gaap/2025|ValuationAllowancesAndReservesBalance": [
+          3252,
+          3255,
+          3256,
+          3259,
+          3260,
+          3263,
+          3264,
+          3267,
+          3268,
+          3271,
+          3272,
+          3275,
+          3276,
+          3279,
+          3280,
+          3283,
+          3284,
+          3287,
+          3288,
+          3291,
+          3292,
+          3295,
+          3296,
+          3299,
+          3300,
+          3303,
+          3304,
+          3307,
+          3308,
+          3311,
+          3312,
+          3315,
+          3316,
+          3319,
+          3320,
+          3323
+        ],
+        "http://fasb.org/us-gaap/2025|ValuationAllowancesAndReservesChargedToCostAndExpense": [
+          3253,
+          3257,
+          3261,
+          3265,
+          3269,
+          3273,
+          3277,
+          3281,
+          3285,
+          3289,
+          3293,
+          3297,
+          3301,
+          3305,
+          3309,
+          3313,
+          3317,
+          3321
+        ],
+        "http://fasb.org/us-gaap/2025|ValuationAllowancesAndReservesDeductions": [
+          3254,
+          3258,
+          3262,
+          3266,
+          3270,
+          3274,
+          3278,
+          3282,
+          3286,
+          3290,
+          3294,
+          3298,
+          3302,
+          3306,
+          3310,
+          3314,
+          3318,
+          3322
+        ]
+      }
+    },
+    "shares": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"shares\"><xbrli:measure>xbrli:shares</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:420e7b9a902cf48a0887c16dff856f22eacb67ab93de23f0eece41232b65c881"
+      },
+      "concepts": {
+        "http://xbrl.sec.gov/dei/2025|EntityCommonStockSharesOutstanding": [
+          92,
+          93
+        ],
+        "http://fasb.org/us-gaap/2025|WeightedAverageNumberOfSharesOutstandingBasic": [
+          172,
+          173,
+          174,
+          977,
+          978,
+          979
+        ],
+        "http://fasb.org/us-gaap/2025|WeightedAverageNumberOfDilutedSharesOutstanding": [
+          175,
+          176,
+          177,
+          983,
+          984,
+          985
+        ],
+        "http://fasb.org/us-gaap/2025|CommonStockSharesIssued": [
+          261,
+          268
+        ],
+        "http://fasb.org/us-gaap/2025|CommonStockSharesAuthorized": [
+          263,
+          262,
+          270,
+          269
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedNumber": [
+          773,
+          781
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriod": [
+          775
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriod": [
+          777
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsForfeitedInPeriod": [
+          779
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardNonOptionEquityInstrumentsOutstandingNumber": [
+          783
+        ],
+        "http://fasb.org/us-gaap/2025|StockIssuedDuringPeriodSharesStockOptionsExercised": [
+          784
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsOutstandingNumber": [
+          788,
+          789
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardOptionsGrantsInPeriodGross": [
+          790
+        ],
+        "http://fasb.org/us-gaap/2025|WeightedAverageNumberDilutedSharesOutstandingAdjustment": [
+          980,
+          981,
+          982
+        ],
+        "http://fasb.org/us-gaap/2025|AntidilutiveSecuritiesExcludedFromComputationOfEarningsPerShareAmount": [
+          986
+        ]
+      }
+    },
+    "usdPerShare": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"usdPerShare\"><xbrli:divide><xbrli:unitNumerator><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unitNumerator><xbrli:unitDenominator><xbrli:measure>xbrli:shares</xbrli:measure></xbrli:unitDenominator></xbrli:divide></xbrli:unit>",
+        "namespace_environment_id": "sha256:420e7b9a902cf48a0887c16dff856f22eacb67ab93de23f0eece41232b65c881"
+      },
+      "concepts": {
+        "http://fasb.org/us-gaap/2025|EarningsPerShareBasic": [
+          166,
+          167,
+          168
+        ],
+        "http://fasb.org/us-gaap/2025|EarningsPerShareDiluted": [
+          169,
+          170,
+          171
+        ],
+        "http://fasb.org/us-gaap/2025|CommonStockParOrStatedValuePerShare": [
+          260,
+          259,
+          267,
+          266
+        ],
+        "http://fasb.org/us-gaap/2025|CommonStockDividendsPerShareDeclared": [
+          520,
+          521,
+          522,
+          525,
+          524,
+          523,
+          526,
+          527,
+          528,
+          529
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsGrantsInPeriodWeightedAverageGrantDateFairValue": [
+          738,
+          739,
+          740,
+          776
+        ],
+        "http://www.ford.com/20251231|GrantDateFairValue": [
+          754,
+          755,
+          756
+        ],
+        "http://fasb.org/us-gaap/2025|SharePrice": [
+          757,
+          758,
+          759
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsNonvestedWeightedAverageGrantDateFairValue": [
+          774,
+          782
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsVestedInPeriodWeightedAverageGrantDateFairValue": [
+          778
+        ],
+        "http://fasb.org/us-gaap/2025|ShareBasedCompensationArrangementByShareBasedPaymentAwardEquityInstrumentsOtherThanOptionsForfeituresWeightedAverageGrantDateFairValue": [
+          780
+        ],
+        "http://www.ford.com/20251231|FirstLiquidationRightAmountAvailableForDistributionPerShare": [
+          969
+        ],
+        "http://www.ford.com/20251231|SecondLiquidationRightAmountAvailableForDistributionPerShare": [
+          970
+        ],
+        "http://www.ford.com/20251231|ThirdLiquidationRightAmountAvailableForDistributionPerShare": [
+          971
+        ],
+        "http://fasb.org/us-gaap/2025|DebtInstrumentConvertibleConversionPrice1": [
+          2648
+        ],
+        "http://www.ford.com/20251231|ImpactOfConvertibleSecuritiesOnDilutedEarningsPerShare": [
+          2657,
+          2656
+        ]
+      }
+    },
+    "electric_vehicle": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"electric_vehicle\"><xbrli:measure>f:electric_vehicle</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:420e7b9a902cf48a0887c16dff856f22eacb67ab93de23f0eece41232b65c881"
+      },
+      "concepts": {
+        "http://www.ford.com/20251231|NumberOfPreviouslyPlannedElectricVehiclesCanceled": [
+          1599
+        ]
+      }
+    },
+    "gbp": {
+      "definition": {
+        "raw_xml": "<xbrli:unit id=\"gbp\"><xbrli:measure>iso4217:GBP</xbrli:measure></xbrli:unit>",
+        "namespace_environment_id": "sha256:420e7b9a902cf48a0887c16dff856f22eacb67ab93de23f0eece41232b65c881"
+      },
+      "concepts": {
+        "http://fasb.org/us-gaap/2025|MediumtermNotesNoncurrent": [
+          2658,
+          2659
+        ],
+        "http://www.ford.com/20251231|CreditFacilityGuaranteeByThirdPartyAmount": [
+          2660,
+          2661
+        ],
+        "http://www.ford.com/20251231|MediumTermNotesNoncurrentCumulative": [
+          2662
+        ]
+      }
+    }
+  },
+  "quantity_reader_actual_result": {
+    "status": "IMPLEMENTATION_OR_SOURCE_RELATION_NOT_ESTABLISHED",
+    "reason": "B13_QUANTITY_RELATION_NOT_UNIQUE_OR_UNSUPPORTED:ACTUAL_PRODUCTION",
+    "disclosure_absence_credit": false
+  },
+  "production_authorized": false,
+  "native_result_created": false
+}

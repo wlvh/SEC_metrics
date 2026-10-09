@@ -75,7 +75,9 @@
     "C02": [
       "catalog/r6/C02_board_disclosures_v1.md",
       "catalog/r6/C02_board_disclosures_v2.md",
-      "catalog/r6/C02_board_disclosures_v3.md"
+      "catalog/r6/C02_board_disclosures_v3.md",
+      "catalog/r6/C02_board_disclosures_v4.md",
+      "catalog/r6/C02_board_disclosures_v5.md"
     ],
     "C03": [
       "catalog/r5/C03_peo_total_compensation.md",
@@ -207,6 +209,7 @@
     "catalog/r6/C02_board_composition_terms_v1.json",
     "catalog/r6/C02_board_disclosures_v2.md",
     "catalog/r6/C02_board_disclosures_v3.md",
+    "catalog/r6/C02_board_disclosures_v4.md",
     "catalog/r6/D02_item8_category_28_v1.json",
     "catalog/r6/D02_item8_category_28_v2.json",
     "config/annual_amendment_scope_v1.json",
@@ -232,6 +235,7 @@
     "scripts/vnext/b06_financing_inventory.py",
     "scripts/vnext/b06_inclusive_table.py",
     "scripts/vnext/b06_note_carrying.py",
+    "scripts/vnext/c02_board_composition_28_v3.py",
     "scripts/vnext/c02_composition_text_results.py",
     "scripts/vnext/c02_grouped_source.py",
     "scripts/vnext/d01_emphasis_results.py",
@@ -256,6 +260,7 @@
     "scripts/vnext/normal_run_specs.py",
     "scripts/vnext/normal_run_v3.py",
     "scripts/vnext/normal_zero_ai_results.py",
+    "scripts/vnext/ordinary_c02_auditor_update_v3.py",
     "scripts/vnext/ordinary_d02_category_update_v2.py",
     "scripts/vnext/ordinary_d02_item8_v1.py",
     "scripts/vnext/ordinary_d02_item8_v2.py",
@@ -269,10 +274,18 @@
     "scripts/vnext/ordinary_special_debt_scope.py",
     "scripts/vnext/ordinary_text_input.py",
     "scripts/vnext/ordinary_update_cycle.py",
-    "scripts/vnext/ordinary_scalability_audit.py",
-    "config/ordinary_scalability_exemptions_v1.json",
-    "config/main_scalability_exemptions_v1.json",
-    "tools/check_main_scalability.py"
+    "scripts/vnext/e01_header_document_guard_28_v1.py",
+    "scripts/vnext/ordinary_e01_item_text_input_v2.py",
+    "catalog/r6/C02_board_disclosures_v5.md",
+    "scripts/vnext/c02_board_composition_28_v4.py",
+    "scripts/vnext/ordinary_c02_member_update_v4.py",
+    "scripts/vnext/e01_item_text_28_v2.py",
+    "scripts/vnext/e01_header_document_guard_28_v2.py",
+    "scripts/vnext/ordinary_e01_item_text_input_v3.py",
+    "scripts/vnext/d01_running_header_28_v1.py",
+    "scripts/vnext/d01_emphasis_results_v3.py",
+    "scripts/vnext/ordinary_d01_header_update_v3.py",
+    "config/main_scalability_exemptions_v1.json"
   ],
   "freeze_enabled": false,
   "declared_issue_metric_count": 39,

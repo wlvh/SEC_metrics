@@ -1,0 +1,70 @@
+{
+  "status": "PASS_SHORT_GATE_CONTROLS_ONLY",
+  "utc": "2026-10-02T17:55:50.351672+00:00",
+  "checks": [
+    {
+      "path": "scripts/vnext/normal_run_v3.py",
+      "parent_AST_equals_current_after_only_gate_removal": true,
+      "new_gate_count": 2,
+      "all_other_functions_including_prepare_install_replay_unchanged": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_update_cycle.py",
+      "parent_AST_equals_current_after_only_gate_removal": true,
+      "new_gate_count": 1,
+      "all_other_functions_including_prepare_install_replay_unchanged": true
+    },
+    {
+      "path": "tests/vnext/test_c02_member_successor.py",
+      "sole_added_test_method_verified": true
+    },
+    {
+      "control": "default_False_and_old_v2_v3_writer_paths_reach_unchanged_next_step",
+      "PASS": true,
+      "mocked_before_any_write": true
+    },
+    {
+      "control": "explicit_v4_offline_preparation_and_installation_still_reachable",
+      "PASS": true,
+      "actual_material_prepare_or_install_executed": false
+    },
+    {
+      "control": "current_v4_wrapper_reentry_saved_state",
+      "PASS": true,
+      "outcome": {
+        "company_id": "jpmorgan_chase",
+        "status": "UPDATES_INCOMPLETE",
+        "metrics": [
+          {
+            "metric_id": "C02",
+            "status": "UPDATE_BLOCKED",
+            "error_type": "OrdinaryUpdateError",
+            "reason": "UPDATE_C02_MEMBER_RULE_VALIDATION_SUSPENDED",
+            "last_verified_candidate": null,
+            "calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false
+          }
+        ],
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      },
+      "file_count": 680,
+      "whole_state_hash_map_unchanged": true,
+      "lock_and_writers_unreachable": true,
+      "long_replay_executed": false
+    }
+  ],
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "company_id": "marriott_international",
+  "metric_id": "C04",
+  "run_path": "runs/marriott_international/C04",
+  "data_path": "data/marriott_international",
+  "status": "FROZEN_CANDIDATE",
+  "run_id": "run:normal-current:4524412b7d7d5c035d59a42fc92036e5d9407bd5b1dc1ed9a076ffd69df78c34",
+  "run_status": "FROZEN",
+  "result": {
+    "company_id": "marriott_international",
+    "metric_id": "C04",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+    "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "0",
+    "unit": "flag",
+    "trace_id": "sha256:ffa0e106843bcd32c03253ba35f8f1a1a43a470a98e0cc410d81258420ec4082",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:77dc141eaf548783ca940471db8e3ce15cbab1a2431ebf06722df6d35d3d01c8"
+  },
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "public_row_status": "CANDIDATE_ROW_PREPARED",
+  "production_authorized": false,
+  "selection_path": "selections/marriott_international-C04.json",
+  "selection_hash": "sha256:52d0bd431f216ba28018b5f5710403a0d427cc0810cf803070f4e8539e1378d9",
+  "selection_summary": {
+    "reason_code": "PASS"
+  }
+}

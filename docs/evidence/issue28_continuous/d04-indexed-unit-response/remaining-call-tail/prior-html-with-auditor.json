@@ -1,0 +1,473 @@
+{
+  "rows": [
+    {
+      "company_id": "southwest_airlines",
+      "missing_html_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm",
+      "classification": "OPTIONAL_PRIOR_HTML_WITH_VERIFIED_NATIVE_INSTANCE_ALTERNATIVE",
+      "existing_route": "normal_governance_input._Sources.auditor_filing; normal_companyfacts_results prior-period fallback",
+      "source_period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31"
+      },
+      "filing": {
+        "accessionNumber": "0000092380-25-000024",
+        "filingDate": "2025-02-07",
+        "reportDate": "2024-12-31",
+        "acceptanceDateTime": "2025-02-07T21:00:58.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-07259",
+        "filmNumber": "25601561",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 31844564,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "luv-20241231.htm",
+        "primaryDocDescription": "FORM 10-K",
+        "metadata_origin": {
+          "inventory_name": "CIK0000092380.json",
+          "row_index": 139
+        }
+      },
+      "prior_auditor_fact_status": "FOUND",
+      "prior_auditor_fact_count": 1,
+      "verified_native_sources": [
+        {
+          "source_reference_id": "sha256:79915f85cd1a081991261cc7feb22f8d5b04f45c60d7397e1d01e767086787e0",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231_htm.xml",
+          "raw_sha256": "7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509"
+        }
+      ],
+      "file_set": {
+        "filing": {
+          "accessionNumber": "0000092380-25-000024",
+          "filingDate": "2025-02-07",
+          "reportDate": "2024-12-31",
+          "acceptanceDateTime": "2025-02-07T21:00:58.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-07259",
+          "filmNumber": "25601561",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 31844564,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "luv-20241231.htm",
+          "primaryDocDescription": "FORM 10-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000092380.json",
+            "row_index": 139
+          }
+        },
+        "index_source_reference_id": "sha256:89d4843b612e07387537deb711f9680b0b89805ff96b83bfc320379e617153ea",
+        "expected_xml_documents": [
+          "luv-20241231_htm.xml"
+        ],
+        "primary_saved": false,
+        "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+        "source_reference_ids": [
+          "sha256:79915f85cd1a081991261cc7feb22f8d5b04f45c60d7397e1d01e767086787e0"
+        ]
+      },
+      "scope": "Native accession identity/annual period, actual prior auditor DEI facts and optional-HTML branch; not a new metric Run",
+      "new_sec_calls_required_for_this_alternative": 0
+    },
+    {
+      "company_id": "ford_motor_company",
+      "missing_html_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
+      "classification": "OPTIONAL_PRIOR_HTML_WITH_VERIFIED_NATIVE_INSTANCE_ALTERNATIVE",
+      "existing_route": "normal_governance_input._Sources.auditor_filing; normal_companyfacts_results prior-period fallback",
+      "source_period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31"
+      },
+      "filing": {
+        "accessionNumber": "0000037996-25-000013",
+        "filingDate": "2025-02-06",
+        "reportDate": "2024-12-31",
+        "acceptanceDateTime": "2025-02-05T20:44:08.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-03950",
+        "filmNumber": "25595116",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 28278163,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "f-20241231.htm",
+        "primaryDocDescription": "10-K",
+        "metadata_origin": {
+          "inventory_name": "CIK0000037996.json",
+          "row_index": 212
+        }
+      },
+      "prior_auditor_fact_status": "FOUND",
+      "prior_auditor_fact_count": 1,
+      "verified_native_sources": [
+        {
+          "source_reference_id": "sha256:2d1363bd16d0d2df34370d9e66b499721afa98485322f29c869135fb50ac4782",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231_htm.xml",
+          "raw_sha256": "cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6"
+        }
+      ],
+      "file_set": {
+        "filing": {
+          "accessionNumber": "0000037996-25-000013",
+          "filingDate": "2025-02-06",
+          "reportDate": "2024-12-31",
+          "acceptanceDateTime": "2025-02-05T20:44:08.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-03950",
+          "filmNumber": "25595116",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 28278163,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "f-20241231.htm",
+          "primaryDocDescription": "10-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000037996.json",
+            "row_index": 212
+          }
+        },
+        "index_source_reference_id": "sha256:6cb34e28992fb667197d2f2d555be904528a3773e6aad7cf2a65788a8cb817bf",
+        "expected_xml_documents": [
+          "f-20241231_htm.xml"
+        ],
+        "primary_saved": false,
+        "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+        "source_reference_ids": [
+          "sha256:2d1363bd16d0d2df34370d9e66b499721afa98485322f29c869135fb50ac4782"
+        ]
+      },
+      "scope": "Native accession identity/annual period, actual prior auditor DEI facts and optional-HTML branch; not a new metric Run",
+      "new_sec_calls_required_for_this_alternative": 0
+    },
+    {
+      "company_id": "pfizer",
+      "missing_html_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231.htm",
+      "classification": "OPTIONAL_PRIOR_HTML_WITH_VERIFIED_NATIVE_INSTANCE_ALTERNATIVE",
+      "existing_route": "normal_governance_input._Sources.auditor_filing; normal_companyfacts_results prior-period fallback",
+      "source_period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31"
+      },
+      "filing": {
+        "accessionNumber": "0000078003-25-000054",
+        "filingDate": "2025-02-27",
+        "reportDate": "2024-12-31",
+        "acceptanceDateTime": "2025-02-27T21:27:18.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-03619",
+        "filmNumber": "25679434",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 31254060,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "pfe-20241231.htm",
+        "primaryDocDescription": "10-K",
+        "metadata_origin": {
+          "inventory_name": "CIK0000078003.json",
+          "row_index": 208
+        }
+      },
+      "prior_auditor_fact_status": "FOUND",
+      "prior_auditor_fact_count": 1,
+      "verified_native_sources": [
+        {
+          "source_reference_id": "sha256:e61710102b9c56e789d167993c5cb720fbbad84bae3266e1860d77eeba161568",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231_htm.xml",
+          "raw_sha256": "956a5bc3d6c58202ed529c1ba90c6b6f896f7f036e143d855ecf076b83a4f290"
+        }
+      ],
+      "file_set": {
+        "filing": {
+          "accessionNumber": "0000078003-25-000054",
+          "filingDate": "2025-02-27",
+          "reportDate": "2024-12-31",
+          "acceptanceDateTime": "2025-02-27T21:27:18.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-03619",
+          "filmNumber": "25679434",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 31254060,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "pfe-20241231.htm",
+          "primaryDocDescription": "10-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000078003.json",
+            "row_index": 208
+          }
+        },
+        "index_source_reference_id": "sha256:6e77a1216fa0077a5588e8d754d473377908e1fae6ad52afd043130208c40d4a",
+        "expected_xml_documents": [
+          "pfe-20241231_htm.xml"
+        ],
+        "primary_saved": false,
+        "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+        "source_reference_ids": [
+          "sha256:e61710102b9c56e789d167993c5cb720fbbad84bae3266e1860d77eeba161568"
+        ]
+      },
+      "scope": "Native accession identity/annual period, actual prior auditor DEI facts and optional-HTML branch; not a new metric Run",
+      "new_sec_calls_required_for_this_alternative": 0
+    },
+    {
+      "company_id": "lumen_technologies",
+      "missing_html_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm",
+      "classification": "OPTIONAL_PRIOR_HTML_WITH_VERIFIED_NATIVE_INSTANCE_ALTERNATIVE",
+      "existing_route": "normal_governance_input._Sources.auditor_filing; normal_companyfacts_results prior-period fallback",
+      "source_period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31"
+      },
+      "filing": {
+        "accessionNumber": "0000018926-25-000010",
+        "filingDate": "2025-02-20",
+        "reportDate": "2024-12-31",
+        "acceptanceDateTime": "2025-02-20T21:17:27.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-07784",
+        "filmNumber": "25645638",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 22348984,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "lumn-20241231.htm",
+        "primaryDocDescription": "10-K",
+        "metadata_origin": {
+          "inventory_name": "CIK0000018926.json",
+          "row_index": 132
+        }
+      },
+      "prior_auditor_fact_status": "FOUND",
+      "prior_auditor_fact_count": 1,
+      "verified_native_sources": [
+        {
+          "source_reference_id": "sha256:df1734bc1e2c78ba48ee1e6f67c45e727000cde3274acc77daa71fc43b2cffe8",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231_htm.xml",
+          "raw_sha256": "87a1cf13c5e67a5372a4cdb83d1466fd293cf32f0ec78d500839c417b1e75261"
+        }
+      ],
+      "file_set": {
+        "filing": {
+          "accessionNumber": "0000018926-25-000010",
+          "filingDate": "2025-02-20",
+          "reportDate": "2024-12-31",
+          "acceptanceDateTime": "2025-02-20T21:17:27.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-07784",
+          "filmNumber": "25645638",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 22348984,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "lumn-20241231.htm",
+          "primaryDocDescription": "10-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000018926.json",
+            "row_index": 132
+          }
+        },
+        "index_source_reference_id": "sha256:dc8a0705b882e3088c531d325991ad89b6f99e42832af7c497b7a8cd8a7ca676",
+        "expected_xml_documents": [
+          "lumn-20241231_htm.xml"
+        ],
+        "primary_saved": false,
+        "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+        "source_reference_ids": [
+          "sha256:df1734bc1e2c78ba48ee1e6f67c45e727000cde3274acc77daa71fc43b2cffe8"
+        ]
+      },
+      "scope": "Native accession identity/annual period, actual prior auditor DEI facts and optional-HTML branch; not a new metric Run",
+      "new_sec_calls_required_for_this_alternative": 0
+    },
+    {
+      "company_id": "macys",
+      "missing_html_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm",
+      "classification": "OPTIONAL_PRIOR_HTML_WITH_VERIFIED_NATIVE_INSTANCE_ALTERNATIVE",
+      "existing_route": "normal_governance_input._Sources.auditor_filing; normal_companyfacts_results prior-period fallback",
+      "source_period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-02-04",
+        "period_end": "2025-02-01"
+      },
+      "filing": {
+        "accessionNumber": "0001628280-25-014315",
+        "filingDate": "2025-03-21",
+        "reportDate": "2025-02-01",
+        "acceptanceDateTime": "2025-03-21T20:05:35.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-13536",
+        "filmNumber": "25760473",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 12598551,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "m-20250201.htm",
+        "primaryDocDescription": "10-K",
+        "metadata_origin": {
+          "inventory_name": "CIK0000794367.json",
+          "row_index": 185
+        }
+      },
+      "prior_auditor_fact_status": "FOUND",
+      "prior_auditor_fact_count": 1,
+      "verified_native_sources": [
+        {
+          "source_reference_id": "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201_htm.xml",
+          "raw_sha256": "5f4fd4779a9840f3d614289bb43894d916c26dc3953712aa2da4b8d9bc8f4f5e"
+        }
+      ],
+      "file_set": {
+        "filing": {
+          "accessionNumber": "0001628280-25-014315",
+          "filingDate": "2025-03-21",
+          "reportDate": "2025-02-01",
+          "acceptanceDateTime": "2025-03-21T20:05:35.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-13536",
+          "filmNumber": "25760473",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 12598551,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "m-20250201.htm",
+          "primaryDocDescription": "10-K",
+          "metadata_origin": {
+            "inventory_name": "CIK0000794367.json",
+            "row_index": 185
+          }
+        },
+        "index_source_reference_id": "sha256:6393bfb0a284316edbd33165f544ad3d29be52575fb826801733bc442dbd8b9e",
+        "expected_xml_documents": [
+          "m-20250201_htm.xml"
+        ],
+        "primary_saved": false,
+        "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+        "source_reference_ids": [
+          "sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00"
+        ]
+      },
+      "scope": "Native accession identity/annual period, actual prior auditor DEI facts and optional-HTML branch; not a new metric Run",
+      "new_sec_calls_required_for_this_alternative": 0
+    },
+    {
+      "company_id": "enphase_energy",
+      "missing_html_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+      "classification": "OPTIONAL_PRIOR_HTML_WITH_VERIFIED_NATIVE_INSTANCE_ALTERNATIVE",
+      "existing_route": "normal_governance_input._Sources.auditor_filing; normal_companyfacts_results prior-period fallback",
+      "source_period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31"
+      },
+      "filing": {
+        "accessionNumber": "0001463101-25-000024",
+        "filingDate": "2025-02-10",
+        "reportDate": "2024-12-31",
+        "acceptanceDateTime": "2025-02-08T00:06:51.000Z",
+        "act": "34",
+        "form": "10-K",
+        "fileNumber": "001-35480",
+        "filmNumber": "25603246",
+        "items": "",
+        "core_type": "XBRL",
+        "size": 16979073,
+        "isXBRL": 1,
+        "isInlineXBRL": 1,
+        "isXBRLNumeric": null,
+        "primaryDocument": "enph-20241231.htm",
+        "primaryDocDescription": "FORM 10-K FY 2024",
+        "metadata_origin": {
+          "inventory_name": "CIK0001463101.json",
+          "row_index": 99
+        }
+      },
+      "prior_auditor_fact_status": "FOUND",
+      "prior_auditor_fact_count": 1,
+      "verified_native_sources": [
+        {
+          "source_reference_id": "sha256:e0a5f2f5392d027cc7a82e8dfc7075cf4f09f3efe94b8f8ed432694bba59d82e",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231_htm.xml",
+          "raw_sha256": "48b84800d21a642a655e50eae7a21e410ce0fe22a34619c11b73f54183657ca4"
+        }
+      ],
+      "file_set": {
+        "filing": {
+          "accessionNumber": "0001463101-25-000024",
+          "filingDate": "2025-02-10",
+          "reportDate": "2024-12-31",
+          "acceptanceDateTime": "2025-02-08T00:06:51.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-35480",
+          "filmNumber": "25603246",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 16979073,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "enph-20241231.htm",
+          "primaryDocDescription": "FORM 10-K FY 2024",
+          "metadata_origin": {
+            "inventory_name": "CIK0001463101.json",
+            "row_index": 99
+          }
+        },
+        "index_source_reference_id": "sha256:6acc94ab8ef9ac2500724c34232c37a1b412b0e3490a91709c49ebface27f86b",
+        "expected_xml_documents": [
+          "enph-20241231_htm.xml"
+        ],
+        "primary_saved": false,
+        "missing_primary_treatment": "AUDITOR_INSTANCE_ROUTE_DOES_NOT_REQUIRE_UNSAVED_HTML",
+        "source_reference_ids": [
+          "sha256:e0a5f2f5392d027cc7a82e8dfc7075cf4f09f3efe94b8f8ed432694bba59d82e"
+        ]
+      },
+      "scope": "Native accession identity/annual period, actual prior auditor DEI facts and optional-HTML branch; not a new metric Run",
+      "new_sec_calls_required_for_this_alternative": 0
+    }
+  ],
+  "source_snapshot_unchanged": true,
+  "no_network": true,
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}

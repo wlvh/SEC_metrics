@@ -106,6 +106,11 @@ def verify_deterministic_text_candidate(*, candidate, **source_arguments):
 def build_text_evidence(*, compiled_spec, target, candidate, source_references,
                         raw_blobs, raw_bytes_by_id, d01_emphasis_policy=None):
     """Check every selected exact excerpt and required section using raw bytes."""
+    if d01_emphasis_policy == 'D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER':
+        from .d01_emphasis_results_v3 import build_text_evidence as successor
+        return successor(compiled_spec=compiled_spec, target=target, candidate=candidate,
+            source_references=source_references, raw_blobs=raw_blobs,
+            raw_bytes_by_id=raw_bytes_by_id, d01_emphasis_policy=d01_emphasis_policy)
     if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy):
         return frozen.build_text_evidence(
             compiled_spec=compiled_spec, target=target, candidate=candidate,
@@ -248,6 +253,13 @@ def reviewed_text_observations(*, compiled_spec, target, candidate, evidence_che
 def replay_text_result(*, compiled_spec, target, company_traits, candidate, evidence_check,
                        review_unit, review_decisions, source_references, raw_blobs,
                        raw_bytes_by_id, d01_emphasis_policy=None):
+    if d01_emphasis_policy == 'D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER':
+        from .d01_emphasis_results_v3 import replay_text_result as successor
+        return successor(compiled_spec=compiled_spec, target=target, company_traits=company_traits,
+            candidate=candidate, evidence_check=evidence_check, review_unit=review_unit,
+            review_decisions=review_decisions, source_references=source_references,
+            raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id,
+            d01_emphasis_policy=d01_emphasis_policy)
     """Single raw-source-to-result replay hook for OPEN and FROZEN Run graphs."""
     if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy):
         return frozen.replay_text_result(

@@ -1,0 +1,196 @@
+{
+  "status": "PASS",
+  "wall_seconds": 86.555,
+  "tests": 3,
+  "events": [
+    {
+      "label": "source_rebuild",
+      "seconds": 3.494
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.706
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 10.583
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.704
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 4.515
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.729
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.787
+    },
+    {
+      "label": "source_rebuild",
+      "seconds": 2.758
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.717
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 9.798
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.711
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.708
+    },
+    {
+      "label": "collection",
+      "seconds": 14.888
+    },
+    {
+      "label": "source_rebuild",
+      "seconds": 2.787
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.709
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 9.827
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.725
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.729
+    },
+    {
+      "label": "collection",
+      "seconds": 14.899
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 0.075
+    },
+    {
+      "label": "source_rebuild",
+      "seconds": 2.771
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.731
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 9.813
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 0.004
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 0.004
+    },
+    {
+      "label": "collection",
+      "seconds": 0.0
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.715
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 4.54
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.746
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.812
+    },
+    {
+      "label": "source_rebuild",
+      "seconds": 2.769
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.762
+    },
+    {
+      "label": "prepare_factory",
+      "seconds": 9.875
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.731
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 3.74
+    },
+    {
+      "label": "collection",
+      "seconds": 15.001
+    },
+    {
+      "label": "request_grouping",
+      "seconds": 2.744
+    },
+    {
+      "label": "recorded_execute",
+      "seconds": 4.479
+    },
+    {
+      "label": "independent_native_replay",
+      "seconds": 0.076
+    }
+  ],
+  "by_label": {
+    "source_rebuild": {
+      "count": 5,
+      "inclusive_seconds": 14.579000000000002
+    },
+    "request_grouping": {
+      "count": 13,
+      "inclusive_seconds": 35.43
+    },
+    "prepare_factory": {
+      "count": 5,
+      "inclusive_seconds": 49.896
+    },
+    "recorded_execute": {
+      "count": 5,
+      "inclusive_seconds": 13.541999999999998
+    },
+    "independent_native_replay": {
+      "count": 7,
+      "inclusive_seconds": 18.927
+    },
+    "collection": {
+      "count": 4,
+      "inclusive_seconds": 44.788
+    }
+  },
+  "inclusive_times_overlap": true,
+  "source": "EXACT_CURRENT_SAVED_MARRIOTT_ORIGINAL",
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,67 @@
+You receive all visible blocks and all HTML table text/header grids of JPMorgan Chase & Co., DEF 14A filed 2026-04-06, accession 0000019617-26-000096. The associated annual reporting interval is 2025-01-01 through 2025-12-31, not a board measurement at the interval end.
+
+Extract the registrant's board composition facts: total board size; independent
+directors and their number; existing committees; their members and chairs;
+the board chair and lead independent director; actual independence and member
+qualification determinations about board or committee members; dated membership
+changes. Attribute qualifications to the filing's actual assessment, not an
+independently verified credential; a career biography alone is not a new
+determination. Do not count the slate
+for one director class as the whole board. Keep a stated date/year distinct
+from the filing date and never invent a year-end measurement date. Another
+organisation's board, duties, general policy, hypothetical qualifications, pay,
+auditor services and equity-plan mechanics are not composition facts.
+
+Scan the complete supplied source, including later reports and tables. For
+each distinct fact return a concise statement, supporting source block ids,
+and the actual stated time or CURRENT_IN_FILING when no exact date is given.
+Context may be shared by several facts. Do not infer a membership from a table
+whose column association has been lost. Preserve a genuine unresolved relation.
+Include the source blocks needed to establish each member's identity, role and
+time, including adjacent name/heading blocks when a card splits these apart.
+Keep existing membership/tenure or a proposed nominee in board_membership;
+membership_change is reserved for a change the source says actually occurred.
+Combine repeated evidence for the same fact; do not output every irrelevant
+block or classify all background. Source presence alone does not prove absence.
+
+Return exactly one JSON object:
+{"facts":[{"kind":"board_size|board_membership|board_independence|board_leadership|committee_structure|committee_membership|committee_independence|member_qualification|membership_change","statement":"...","source_blocks":[0],"stated_time":"..."}],"unresolved":[{"source_blocks":[0],"reason":"..."}]}
+
+Maximum 64 facts, complete JSON within 4096 output tokens. If this limit or
+source/context uncertainty prevents complete extraction, preserve the specific
+unresolved limitation; do not silently drop necessary facts or claim absence.
+This is a development experiment, not a LIVE assessment or native result.
+
+Source representation (zero-based indices): strings is a shared text dictionary.
+strings[0:block_count] are exactly the original visible blocks B0..B<block_count-1>.
+Entries after block_count are extra cell/caption strings, never new source blocks.
+Every HTML table appears in source order, including tables unrelated to this task.
+Table i is its source table id; s=[row_count,column_count]; c indexes its caption.
+geometry[g]=[rowspan,colspan,header]; each table's g is its default geometry index.
+Each x cell is [row,column,string_index] using that default, or
+[row,column,string_index,g] with an explicit geometry override. A cell's text and
+header apply to every coordinate its span covers. All other coordinates are blank
+and unheaded. Blank cells' original HTML spans, entity spelling, styles and images
+are not rendered here; source images have not been interpreted. Table strings use
+the existing parser's decoded whitespace-normalized text, not exact raw HTML.
+Use this layout to interpret the supplied block text. Output source_blocks using
+the original B indices, never dictionary indices or table coordinates. Dictionary
+reuse is a spelling reference, not an assertion that two sources are one fact.
+If a relation cannot be supported by the supplied blocks and layout, retain it
+as unresolved. The extraction task and output contract above still apply.
+
+Additional image_source_markup contains every original HTML img node,
+including nodes outside table cells. This is parsed source metadata, not pixels.
+image_source_markup.strings is a separate dictionary from the original text strings.
+Each occurrence is [raw_start_byte,raw_end_byte,enclosing_table_id,cell,attributes].
+cell is null or [table_id,row,column,rowspan,colspan] of the actual containing
+cell's origin in the same full supplied grid. attributes is a list of
+[name_string_index,value_string_index] pairs, decoded with the image dictionary.
+All parsed attribute names/values and every node/location are retained. Original
+tag bytes, quoting and spelling remain in the raw source at the given byte span;
+they are not reproduced in this parsed representation. Repeated src/alt/style
+are literal references, not business conclusions. An explicit source legend and
+its actual layout may support interpretation of a repeated symbol. No image
+pixels were supplied/read; generic filenames/alt text or blank grid cells cannot
+prove qualification, nonmembership or zero. Keep other image meanings unresolved.
+The original task and output/time/entity requirements still apply.

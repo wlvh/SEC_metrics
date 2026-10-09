@@ -1,0 +1,71 @@
+{
+  "status": "UNCHANGED_FIXED_PUBLICATION_AND_EXIT_BOUNDARIES_EVIDENCE_REUSED",
+  "publisher_implementation_matches": [
+    {
+      "path": "scripts/vnext/ordinary_isolated_publication.py",
+      "current_equals_rehearsal": true
+    },
+    {
+      "path": "scripts/vnext/ordinary_release_preparation.py",
+      "current_equals_rehearsal": true
+    },
+    {
+      "path": "scripts/vnext/publication.py",
+      "current_equals_rehearsal": true
+    },
+    {
+      "path": "scripts/vnext/records.py",
+      "current_equals_rehearsal": true
+    },
+    {
+      "path": "scripts/vnext/publication_results.py",
+      "current_equals_rehearsal": true
+    }
+  ],
+  "private_full_chain_stages": [
+    "CURRENT_NATIVE_RUN_STARTED",
+    "CURRENT_NATIVE_RUN_COMPLETE",
+    "PREPARE_COMPLETE",
+    "STAGE_COMPLETE",
+    "PUBLISHED_READ_BACK",
+    "SELECTED_INHERITED_NATIVE_AND_AUTHORITY_READ",
+    "ROLLBACK_READ_BACK",
+    "RESTORE_READ_BACK",
+    "POST_POINTER_FAULT_INJECTED",
+    "FAULT_RECOVERY_READ_BACK",
+    "MIRROR_REPAIR_READ_BACK"
+  ],
+  "private_evidence_type": "SYNTHETIC_FY2026_SOURCE_RECORDED_PROVIDER_ORIGINAL_SUCCESS_REUSED_NO_REAL_COMPANY_RESULT_CREDIT",
+  "verified_restore_files": 6865,
+  "legacy_pipeline_sha256": "f62bd3dba3a140002d0d4e74912876ff5972d785a4a029f80d5a75dfbb89b438",
+  "legacy_inventory_sha256": "78d2732a19ac838b00cb878e085bad2976b1dc16f2632438cf38276e64a442a1",
+  "previously_verified_semantic_exports": 116,
+  "previously_verified_metric_write_boundaries": 78,
+  "shared_inventory_entries_retained": 20,
+  "active": {
+    "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+    "bundle_manifest_sha256": "ce8b2c3fe7ac9b94ed721287c23948503a87b59e3b471bd285cc569a2d2336ec",
+    "previous_publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+    "committed_at_utc": "2026-09-10T02:40:14.049524+00:00"
+  },
+  "production_files_before": {
+    "outputs/active_publication.json": "25203f7dd72f02974323a87df26a37561d69e0017667f6e265275477bb98497d",
+    "outputs/metrics_matrix.csv": "c0aa1c7dcf1e7fc3f9b14703af915a07b9a1d940b0d8b9130b2ee2cef37efa62",
+    "outputs/metric_evidence.csv": "eb6527b97203fa69fb3809be06360e18e73373eae97d4bf9faeb65f69f961e59"
+  },
+  "new_provider_paid_SEC_calls": [
+    0,
+    0,
+    0
+  ],
+  "reran_large_material": false,
+  "repacked_archive": false,
+  "formal_retirement": false,
+  "remaining": [
+    "Full current390 native successor coverage",
+    "Independent whole production graph validation with old semantics unavailable",
+    "Actual successor publication-bound retirement declaration",
+    "Separate production authorization and corresponding deployed entry switch"
+  ],
+  "limits": "Reuses exact five publisher modules, exact pipeline/inventory and same adopted version. It does not prove new B13/D04 live results or all390 transitive legacy independence."
+}

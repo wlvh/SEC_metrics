@@ -1,0 +1,52 @@
+{
+  "mode": "read-only hash inspection; no runtime/material/native/cold re-execution",
+  "missing_git_objects": [],
+  "closures_and_files": [
+    {
+      "git_sha": "978e28e9b9b1d7a43d5b2ba83687900a417be4e8",
+      "version": 13,
+      "closure": "sha256:313038b01c1572ec22814de504667ae599b27ce3a59cb4911f4adada7f6e6433",
+      "execution_authority_hash": "sha256:d4cc041c5d7bb4227b85a05244d9503672ef1fb8ed927d29f4a5bca2bdc4982e",
+      "rules": 98,
+      "execution_files": 394,
+      "bound_file_mismatches": [],
+      "parent_snapshot_binding_mismatches": []
+    },
+    {
+      "git_sha": "978e28e9b9b1d7a43d5b2ba83687900a417be4e8",
+      "version": 14,
+      "closure": "sha256:2e6d7d5b1043723e602c112d3b9b43da638d37979652d3e65b4ccfefe28651d3",
+      "execution_authority_hash": "sha256:0ce2449e717db6dec400758f36af8290fa8974d5f854c3c07db06427880e8e4a",
+      "rules": 61,
+      "execution_files": 498,
+      "bound_file_mismatches": [],
+      "parent_snapshot_binding_mismatches": []
+    },
+    {
+      "git_sha": "ee289953812c197734b543bf5282fe1e44142931",
+      "version": 13,
+      "closure": "sha256:1b2fe50b46574602c4a4422f80ab3306bd4a0ce40024c955b64654e58aa0104f",
+      "execution_authority_hash": "sha256:a9092becfbf8c5b07de68bfe06e6b4780da30411a206489bb108d44a00fbdb60",
+      "rules": 101,
+      "execution_files": 397,
+      "bound_file_mismatches": [],
+      "installed_snapshot_mismatches": [],
+      "installed_execution_mismatches": [],
+      "parent_snapshot_binding_mismatches": []
+    },
+    {
+      "git_sha": "ee289953812c197734b543bf5282fe1e44142931",
+      "version": 14,
+      "closure": "sha256:3117ac9bf6311c70f0648c2501e47a7438e625aaa2771c5ca92507a92caeec2f",
+      "execution_authority_hash": "sha256:23418c162b900e10c056aedbaaccb24cbee6d96f1b1d7c96839e2451a7a42517",
+      "rules": 61,
+      "execution_files": 501,
+      "bound_file_mismatches": [],
+      "installed_snapshot_mismatches": [],
+      "parent_snapshot_binding_mismatches": []
+    }
+  ],
+  "v14_complete_execution_in_C02_install_not_asserted": true,
+  "canonical_framing": "UTF-8 compact JSON plus one LF; independent standard-library reproduction",
+  "before_after_closure_and_execution_identity_match": true
+}

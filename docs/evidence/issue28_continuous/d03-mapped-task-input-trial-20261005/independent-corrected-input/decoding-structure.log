@@ -1,0 +1,246 @@
+{
+  "request_envelope": {
+    "max_tokens": 4096,
+    "model": "deepseek-flash",
+    "response_format": {
+      "type": "json_object"
+    },
+    "stream": false,
+    "temperature": 0,
+    "thinking": {
+      "type": "disabled"
+    }
+  },
+  "input_sha256": "48adcf767a8d6f63208a79e4ad015f4653a30bc3bde3ae3d7125256a7da54c69",
+  "decoded_at_utc": "2026-10-05T11:56:56.943022+00:00",
+  "views": [
+    {
+      "unit_position": 7,
+      "kind": "NATIVE_FACTS",
+      "original_indices": [
+        449,
+        450,
+        451,
+        452,
+        453,
+        454,
+        455,
+        456,
+        457,
+        458,
+        459,
+        460,
+        461,
+        462,
+        463,
+        464,
+        465,
+        466,
+        467,
+        468,
+        469,
+        470,
+        471,
+        472,
+        473,
+        474,
+        475,
+        476,
+        477,
+        478,
+        479,
+        480,
+        481,
+        482,
+        483,
+        484,
+        485,
+        486,
+        487,
+        488,
+        489,
+        490,
+        491,
+        492,
+        493,
+        494,
+        495,
+        496,
+        497,
+        498,
+        499,
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507,
+        509,
+        510,
+        511,
+        512,
+        513
+      ],
+      "dictionary_context_only": false
+    },
+    {
+      "unit_position": 12,
+      "kind": "NATIVE_SUPPLEMENTS",
+      "original_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "dictionary_context_only": false
+    },
+    {
+      "unit_position": 13,
+      "kind": "NATIVE_SUPPLEMENTS",
+      "original_indices": [
+        0
+      ],
+      "dictionary_context_only": false
+    },
+    {
+      "unit_position": 8,
+      "kind": "NATIVE_FACTS",
+      "original_indices": [],
+      "dictionary_context_only": true
+    }
+  ],
+  "raw_roots": [
+    {
+      "reference": [
+        12,
+        "NATIVE_SUPPLEMENT",
+        0
+      ],
+      "root_id": "f-444-1",
+      "root_characters": 12305,
+      "parsed_elements": 220,
+      "text_characters": 781,
+      "context_refs": [
+        "c-1",
+        "c-22",
+        "c-23"
+      ],
+      "unit_refs": [
+        "shares",
+        "usd",
+        "usdPerShare"
+      ],
+      "style_refs_resolved": 131,
+      "restored_xml_sha256": "6a0065559436dec185ecadfc9ff1ebfb19e1b610c74fe6294e46ed5b6c39f053"
+    },
+    {
+      "reference": [
+        12,
+        "NATIVE_SUPPLEMENT",
+        1
+      ],
+      "root_id": "f-470-1",
+      "root_characters": 14027,
+      "parsed_elements": 208,
+      "text_characters": 1635,
+      "context_refs": [
+        "c-1",
+        "c-24",
+        "c-81",
+        "c-82",
+        "c-83",
+        "c-84",
+        "c-85"
+      ],
+      "unit_refs": [
+        "shares",
+        "usd",
+        "usdPerShare"
+      ],
+      "style_refs_resolved": 111,
+      "restored_xml_sha256": "daf6228d05c494e2f6ad20b0f5599a32ad5811acd75e873a43471d08d98e9de8"
+    },
+    {
+      "reference": [
+        12,
+        "NATIVE_SUPPLEMENT",
+        2
+      ],
+      "root_id": "f-497-1",
+      "root_characters": 27148,
+      "parsed_elements": 460,
+      "text_characters": 2478,
+      "context_refs": [
+        "c-1",
+        "c-22",
+        "c-23",
+        "c-24",
+        "c-25",
+        "c-37",
+        "c-38"
+      ],
+      "unit_refs": [
+        "usd"
+      ],
+      "style_refs_resolved": 252,
+      "restored_xml_sha256": "27176c053522ab2cdcb501221b59f7e10c210730bd87d7d5db9f6071274663ab"
+    },
+    {
+      "reference": [
+        12,
+        "NATIVE_SUPPLEMENT",
+        3
+      ],
+      "root_id": "f-497-2",
+      "root_characters": 19289,
+      "parsed_elements": 300,
+      "text_characters": 2689,
+      "context_refs": [
+        "c-1",
+        "c-22",
+        "c-24",
+        "c-25"
+      ],
+      "unit_refs": [
+        "usd"
+      ],
+      "style_refs_resolved": 170,
+      "restored_xml_sha256": "9c3f078ed7331027c5ac51d7344a533790b913459f84e81e4799fbfacb597503"
+    },
+    {
+      "reference": [
+        13,
+        "NATIVE_SUPPLEMENT",
+        0
+      ],
+      "root_id": "f-497-3",
+      "root_characters": 26590,
+      "parsed_elements": 456,
+      "text_characters": 1868,
+      "context_refs": [
+        "c-1",
+        "c-22",
+        "c-23",
+        "c-86",
+        "c-87",
+        "c-88",
+        "c-89"
+      ],
+      "unit_refs": [
+        "number",
+        "usd"
+      ],
+      "style_refs_resolved": 236,
+      "restored_xml_sha256": "a38de62d5628d82359c6a93b8bb896dde2be58a9eacb4f3a4a3e69d17fa0f74c"
+    }
+  ],
+  "missing_dictionary_keys": [],
+  "shared_dictionary_counts": {
+    "contexts": 20,
+    "namespace_environments": 1,
+    "units": 6,
+    "xml_style_attributes": 59
+  }
+}

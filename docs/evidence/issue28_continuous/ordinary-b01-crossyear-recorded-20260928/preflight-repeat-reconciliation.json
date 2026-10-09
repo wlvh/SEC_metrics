@@ -1,0 +1,38 @@
+{
+  "record_type": "ISSUE28_B01_RECORDED_CROSS_YEAR_REPEAT_RECONCILIATION",
+  "status": "PASS",
+  "original_test_exit": 1,
+  "original_test_wrong_assumption": "whole current.json pointer is unchanged",
+  "before_pointer": {
+    "configuration_id": "sha256:63ca28ddd57afb0b7a20d7ef4c15dbd812d41bd55137e17f0b735fb190bb906a",
+    "latest_attempt": "c9e271b6090a4943b4a34068ba0033ac",
+    "successful_attempt": "c9e271b6090a4943b4a34068ba0033ac"
+  },
+  "after_pointer": {
+    "configuration_id": "sha256:63ca28ddd57afb0b7a20d7ef4c15dbd812d41bd55137e17f0b735fb190bb906a",
+    "latest_attempt": "b3c4af629dc04b4eb708d2c55db0fc91",
+    "successful_attempt": "c9e271b6090a4943b4a34068ba0033ac"
+  },
+  "repeat_terminal_status": "NO_SOURCE_CONTENT_CHANGE",
+  "successful_attempt_unchanged": true,
+  "latest_attempt_advanced": true,
+  "old_success_package_unchanged": true,
+  "new_success_package_unchanged": true,
+  "recorded_ledger_counts_unchanged": [
+    [
+      0,
+      0,
+      2
+    ],
+    [
+      0,
+      0,
+      2
+    ]
+  ],
+  "real_calls": [
+    0,
+    0,
+    0
+  ]
+}

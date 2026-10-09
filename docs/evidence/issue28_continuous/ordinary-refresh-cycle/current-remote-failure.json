@@ -1,0 +1,447 @@
+{
+  "record_type": "ORDINARY_BOUNDED_REFRESH_AND_UPDATE",
+  "schema_version": 1,
+  "status": "UPDATES_INCOMPLETE",
+  "execution_mode": "RECORDED_TEST_ONLY",
+  "max_sec_requests": 2,
+  "captures": [
+    {
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+      "result": {
+        "status": "SUCCEEDED",
+        "receipt": {
+          "record_type": "CONTINUOUS_SEC_RECEIPT",
+          "intent_id": "sha256:a02a61bd89a2c9b4d3ef6793e253db7698892936b9d7d45181e3594073fe65e3",
+          "execution_mode": "RECORDED_TEST_ONLY",
+          "actual_sec_egress_count": 0,
+          "automatic_retry_count": 0,
+          "status": "SUCCEEDED",
+          "stop_reason": "",
+          "ledger_before_sha256": "8d57fbf542eb97c416217464d50f06f8873e6913d12809d323acd8b50c3c2243",
+          "ledger_after_sha256": "3ae15a69ba0ad572f240e8e439d26dd81beccd29116928a1a7b57db7d81efe47",
+          "ledger_row_index": 992,
+          "ledger_row": {
+            "timestamp_utc": "2026-09-15T09:59:03.604814+00:00",
+            "method": "GET",
+            "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+            "status_code": "200",
+            "purpose": "ISSUE28_RECORDED_SOURCE_TEST",
+            "repo_relative_path": "evidence/request_attempts/b8/b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10/CIK0000019617.json",
+            "headers_repo_relative_path": "evidence/request_attempts/b8/b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10/CIK0000019617.json.6ea7c447d98015b84fb7e2079ce15c18b15139e3fc47d6137fb2e2f46a3636b4.headers.json",
+            "content_length": "4608297",
+            "content_sha256": "b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10",
+            "accession": "",
+            "document_name": "CIK0000019617.json",
+            "user_agent": "axaxl 12@qq.com",
+            "retry_attempt": "0",
+            "error": ""
+          },
+          "proof": {
+            "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+            "accession": "",
+            "document_name": "CIK0000019617.json",
+            "content_sha256": "b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10",
+            "request_body_sha256": "b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10",
+            "request_body_size": 4608297,
+            "request_headers_repo_relative_path": "evidence/request_attempts/b8/b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10/CIK0000019617.json.6ea7c447d98015b84fb7e2079ce15c18b15139e3fc47d6137fb2e2f46a3636b4.headers.json",
+            "request_headers_sha256": "6ea7c447d98015b84fb7e2079ce15c18b15139e3fc47d6137fb2e2f46a3636b4",
+            "request_headers_size": 310,
+            "request_locator_kind": "IMMUTABLE_ATTEMPT",
+            "request_repo_relative_path": "evidence/request_attempts/b8/b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10/CIK0000019617.json",
+            "request_attempt_id": "request:attempt:89a7213d814f6b6e0abac9c7272327e8e93a3b98febc419d1a2eacf80676f913"
+          },
+          "wire": {
+            "body": {
+              "source_path": "evidence/request_attempts/b8/b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10/CIK0000019617.json",
+              "sha256": "b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10",
+              "size": 4608297
+            },
+            "headers": {
+              "source_path": "evidence/request_attempts/b8/b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10/CIK0000019617.json.6ea7c447d98015b84fb7e2079ce15c18b15139e3fc47d6137fb2e2f46a3636b4.headers.json",
+              "sha256": "6ea7c447d98015b84fb7e2079ce15c18b15139e3fc47d6137fb2e2f46a3636b4",
+              "size": 310
+            }
+          },
+          "company_id": "jpmorgan_chase",
+          "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+          "production_authorized": false,
+          "receipt_id": "sha256:36ab757f50dd62122fa879ff6b4d3f9ba2bc110fbf32132dfc9548ba4244226b"
+        },
+        "terminal": {
+          "record_type": "CONTINUOUS_CALL_TERMINAL",
+          "intent_id": "sha256:a02a61bd89a2c9b4d3ef6793e253db7698892936b9d7d45181e3594073fe65e3",
+          "status": "SUCCEEDED",
+          "stop_reason": "",
+          "counts": [
+            0,
+            0,
+            1
+          ],
+          "counts_kind": "RECORDED_TEST_SIMULATION",
+          "sec_receipt_id": "sha256:36ab757f50dd62122fa879ff6b4d3f9ba2bc110fbf32132dfc9548ba4244226b",
+          "evidence": {
+            "intent.json": "9504ceaa22c09e4ca399df1d09d7f444327a457256d55c6ef1240fdb9295b727",
+            "execution-rules.tar.gz": "425913f87e5dd62cee98181a7207ea14551d56d025fad6cc27e635f18303c042",
+            "execution-rules.json": "3545c866b127e5cd554dfbcd7b61e6a441e25917302d6239409c5243dcd7c27b",
+            "sec-receipt.json": "e4c3f073a73bea3820c29be0c1fbacfe2ea127f71f69cac4f265d2bb7b7eec6b",
+            "sec-plan.json": "67e0db0ebf7db454d8fc369bfae5d1dd72bfcaec387774b9ee3ea344ff741704",
+            "sec-wire/body.bin": "b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10",
+            "sec-wire/headers.bin": "6ea7c447d98015b84fb7e2079ce15c18b15139e3fc47d6137fb2e2f46a3636b4"
+          },
+          "terminal_id": "sha256:5ed48114f71704826433f581bf6769e8182599d49f53666f6b4f791da83d5688"
+        },
+        "checkpoint_id": "sha256:381ca3f9ad3ed1b1d458fe0bd8b733672c23072fc10ac9f8c8bebf01aebb3ba3",
+        "calls": [
+          0,
+          0,
+          0
+        ],
+        "production_authorized": false
+      }
+    },
+    {
+      "company_id": "pfizer",
+      "source_url": "https://data.sec.gov/submissions/CIK0000078003.json",
+      "result": {
+        "status": "FAILED_TERMINAL",
+        "receipt": {
+          "record_type": "CONTINUOUS_SEC_RECEIPT",
+          "intent_id": "sha256:a1e021e7b794a67626dfaf095c2ad1cfd2faec97396d0992252865e289613967",
+          "execution_mode": "RECORDED_TEST_ONLY",
+          "actual_sec_egress_count": 0,
+          "automatic_retry_count": 0,
+          "status": "FAILED_TERMINAL",
+          "stop_reason": "",
+          "ledger_before_sha256": "3ae15a69ba0ad572f240e8e439d26dd81beccd29116928a1a7b57db7d81efe47",
+          "ledger_after_sha256": "193cd85abb5f12e9eb12d49921731eca86f843ac3696aa404fbd5490ef7c41a3",
+          "ledger_row_index": 993,
+          "ledger_row": {
+            "timestamp_utc": "2026-09-15T09:59:32.621547+00:00",
+            "method": "GET",
+            "source_url": "https://data.sec.gov/submissions/CIK0000078003.json",
+            "status_code": "503",
+            "purpose": "ISSUE28_RECORDED_SOURCE_TEST",
+            "repo_relative_path": "evidence/request_attempts/5b/5b39b3136eb13c521b8e6eba914b74e5bd51849962201c0c7974ab8a5da048e2/CIK0000078003.json",
+            "headers_repo_relative_path": "evidence/request_attempts/5b/5b39b3136eb13c521b8e6eba914b74e5bd51849962201c0c7974ab8a5da048e2/CIK0000078003.json.a91bb5e5447634e69738cb1de3941bb430fc35444e86504581d124f805e8a002.headers.json",
+            "content_length": "28",
+            "content_sha256": "5b39b3136eb13c521b8e6eba914b74e5bd51849962201c0c7974ab8a5da048e2",
+            "accession": "",
+            "document_name": "CIK0000078003.json",
+            "user_agent": "axaxl 12@qq.com",
+            "retry_attempt": "0",
+            "error": "RECORDED_HTTP_FAILURE"
+          },
+          "proof": null,
+          "wire": {
+            "body": {
+              "source_path": "evidence/request_attempts/5b/5b39b3136eb13c521b8e6eba914b74e5bd51849962201c0c7974ab8a5da048e2/CIK0000078003.json",
+              "sha256": "5b39b3136eb13c521b8e6eba914b74e5bd51849962201c0c7974ab8a5da048e2",
+              "size": 28
+            },
+            "headers": {
+              "source_path": "evidence/request_attempts/5b/5b39b3136eb13c521b8e6eba914b74e5bd51849962201c0c7974ab8a5da048e2/CIK0000078003.json.a91bb5e5447634e69738cb1de3941bb430fc35444e86504581d124f805e8a002.headers.json",
+              "sha256": "a91bb5e5447634e69738cb1de3941bb430fc35444e86504581d124f805e8a002",
+              "size": 305
+            }
+          },
+          "company_id": "pfizer",
+          "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+          "production_authorized": false,
+          "receipt_id": "sha256:1e13639ddad6a4146a6d69aa3e690f1df69c451548a53adae8847fde3b43f30b"
+        },
+        "terminal": {
+          "record_type": "CONTINUOUS_CALL_TERMINAL",
+          "intent_id": "sha256:a1e021e7b794a67626dfaf095c2ad1cfd2faec97396d0992252865e289613967",
+          "status": "FAILED_TERMINAL",
+          "stop_reason": "",
+          "counts": [
+            0,
+            0,
+            1
+          ],
+          "counts_kind": "RECORDED_TEST_SIMULATION",
+          "sec_receipt_id": "sha256:1e13639ddad6a4146a6d69aa3e690f1df69c451548a53adae8847fde3b43f30b",
+          "evidence": {
+            "intent.json": "1e73d22c68d229feb33f9ae06c1960633d4e5dc78605953751858e8e4271dc92",
+            "execution-rules.tar.gz": "758239100bee2d76e9aad952ad84a928bad719642d11bd437051fe7b5cf877f7",
+            "execution-rules.json": "3545c866b127e5cd554dfbcd7b61e6a441e25917302d6239409c5243dcd7c27b",
+            "sec-receipt.json": "e9f0df1f32116cfcffacdd2be33dd438d7af60b3fd046a0cbb4fb67ee679d2fb",
+            "sec-plan.json": "df49a92ee972e79ad7cd8e9960dae2e92f0ea7ad2b3cb8dca3021234427e2156",
+            "sec-wire/body.bin": "5b39b3136eb13c521b8e6eba914b74e5bd51849962201c0c7974ab8a5da048e2",
+            "sec-wire/headers.bin": "a91bb5e5447634e69738cb1de3941bb430fc35444e86504581d124f805e8a002"
+          },
+          "terminal_id": "sha256:63d6916dc679732f9a277ef8967f0b265fb4478fd7a3a4c723e76523715fdd4e"
+        },
+        "checkpoint_id": "sha256:7750c8397a343c09c4f93e4e70a638f80362fa8b4f02e09314b1d9ad4ea1d116",
+        "calls": [
+          0,
+          0,
+          0
+        ],
+        "production_authorized": false
+      }
+    }
+  ],
+  "companies": [
+    {
+      "company_id": "jpmorgan_chase",
+      "status": "REFRESHED_UPDATES_INCOMPLETE",
+      "source_refresh": {
+        "status": "REFRESH_INCOMPLETE",
+        "requirements_id": "sha256:52f4d679d9333186efb502e6cdd4f5d1fa27406158541061015b6dd22b9d8d05",
+        "source_discovery_status": "METADATA_REFRESH_REQUIRED",
+        "deferred_source_urls": [
+          "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+          "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json",
+          "https://data.sec.gov/submissions/CIK0000019617-submissions-002.json",
+          "https://data.sec.gov/submissions/CIK0000019617-submissions-003.json",
+          "https://data.sec.gov/submissions/CIK0000019617-submissions-004.json",
+          "https://data.sec.gov/submissions/CIK0000019617-submissions-005.json",
+          "https://data.sec.gov/submissions/CIK0000019617-submissions-006.json",
+          "https://data.sec.gov/submissions/CIK0000019617-submissions-007.json",
+          "https://data.sec.gov/submissions/CIK0000019617-submissions-008.json"
+        ],
+        "failed_source_urls_not_retried": [],
+        "limitations": [],
+        "all_39_metric_source_acceptance_proven": false
+      },
+      "updates": {
+        "company_id": "jpmorgan_chase",
+        "status": "UPDATES_READY",
+        "metrics": [
+          {
+            "metric_id": "B01",
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "attempt_id": "ba2f93a493fe4dff941a367e2f74ab5b",
+            "latest_attempt": "ba2f93a493fe4dff941a367e2f74ab5b",
+            "successful_attempt": "161d75ee8b304b429f8f4b867f6ecb7d",
+            "previous_successful_attempt": "161d75ee8b304b429f8f4b867f6ecb7d",
+            "last_verified_candidate": {
+              "attempt_id": "161d75ee8b304b429f8f4b867f6ecb7d",
+              "targets": {
+                "B01": {
+                  "fiscal_year": 2025,
+                  "period_end": "2025-12-31",
+                  "period_start": "2025-01-01"
+                }
+              },
+              "current_input_matches": true,
+              "results": {
+                "B01": {
+                  "applicability": "N_A_STRUCTURAL",
+                  "company_id": "jpmorgan_chase",
+                  "metric_id": "B01",
+                  "period_end": "2025-12-31",
+                  "period_start": "2025-01-01",
+                  "publication": "PUBLISHED",
+                  "quality": "NONE",
+                  "reason_code": "TRAIT_NOT_APPLICABLE",
+                  "record_type": "METRIC_RESULT",
+                  "result_id": "sha256:acda5475f270d4888d1c9d38b8e5b869adafc3317e2da05f6c9048c9fcfa5de1",
+                  "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+                  "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+                  "trace_id": "sha256:a0a128d34591e190d9cef42b9085dc05b365254b49d1e3e01d1c3f739873c9bd",
+                  "unit": null,
+                  "value": null
+                }
+              },
+              "rows_root": "/private/tmp/sec_metrics_issue28_ordinary_refresh_20260915/state-current/jpmorgan_chase/metrics/B01/attempts/161d75ee8b304b429f8f4b867f6ecb7d/rows"
+            },
+            "new_candidate_created": false,
+            "terminal": {
+              "record_type": "ORDINARY_UPDATE_TERMINAL",
+              "attempt_id": "ba2f93a493fe4dff941a367e2f74ab5b",
+              "configuration_id": "sha256:82cb7914d75ac99a18fe5c4039742e3a51943fbf0108a46adc68d6addbb87103",
+              "intent_id": "sha256:037f370638e34fe4b5bf001139b25b77b5593b24558298a064ea19e7a346a1fc",
+              "status": "NO_SOURCE_CONTENT_CHANGE",
+              "completed_at": "2026-09-15T10:00:11.415361+00:00",
+              "input": {
+                "company_id": "jpmorgan_chase",
+                "metric_ids": [
+                  "B01"
+                ],
+                "requirement_closure_hash": "sha256:e2f4ac3dd7fcca1183267d7747971fcfb570ac69dabfd0da6de2c62c74d79241",
+                "targets": {
+                  "B01": {
+                    "fiscal_year": 2025,
+                    "period_start": "2025-01-01",
+                    "period_end": "2025-12-31"
+                  }
+                },
+                "specs": {
+                  "B01": {
+                    "B01": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8"
+                  }
+                },
+                "source_contents": [
+                  {
+                    "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+                    "accession": "0001628280-26-008131",
+                    "document_name": "CIK0000019617.json",
+                    "sha256": "e5a944643b89e809740d810ff200af40e7479e481359cebc062e1869862c9568"
+                  },
+                  {
+                    "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+                    "accession": "",
+                    "document_name": "CIK0000019617.json",
+                    "sha256": "b84e49bedf485f2e47eb83ee4dc0795f9425db06c8c0408e96bffe3774cbcf10"
+                  },
+                  {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+                    "accession": "0001628280-26-008131",
+                    "document_name": "jpm-20251231.htm",
+                    "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+                  }
+                ],
+                "content_id": "sha256:d600a297e457b2ba48960687d8dbd04ffe627ad5151de571b26e0b802781efe7"
+              },
+              "metrics": {},
+              "error": null,
+              "calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "production_authorized": false,
+              "record_id": "sha256:790a0a6211bee1ef8c647d0d2335b6affe7ad7eb2cde9a86e192ed0f1edc1f8a"
+            },
+            "calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false
+          }
+        ],
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      },
+      "acquisition_errors": []
+    },
+    {
+      "company_id": "pfizer",
+      "status": "REFRESHED_UPDATES_INCOMPLETE",
+      "source_refresh": {
+        "status": "REFRESH_INCOMPLETE",
+        "requirements_id": "sha256:f39769b364bc449142f26cb71235e8d4c642fea6cbd3f7affa97e0c4a442387a",
+        "source_discovery_status": "METADATA_REFRESH_REQUIRED",
+        "deferred_source_urls": [
+          "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json"
+        ],
+        "failed_source_urls_not_retried": [
+          "https://data.sec.gov/submissions/CIK0000078003.json"
+        ],
+        "limitations": [],
+        "all_39_metric_source_acceptance_proven": false
+      },
+      "updates": {
+        "company_id": "pfizer",
+        "status": "UPDATES_INCOMPLETE",
+        "metrics": [
+          {
+            "metric_id": "B01",
+            "status": "INPUT_FAILED",
+            "attempt_id": "c6d5014b765b403f827b22dc3c616b39",
+            "latest_attempt": "c6d5014b765b403f827b22dc3c616b39",
+            "successful_attempt": "a43442fa78fc477cbc4de63df138a920",
+            "previous_successful_attempt": "a43442fa78fc477cbc4de63df138a920",
+            "last_verified_candidate": {
+              "attempt_id": "a43442fa78fc477cbc4de63df138a920",
+              "targets": {
+                "B01": {
+                  "fiscal_year": 2025,
+                  "period_end": "2025-12-31",
+                  "period_start": "2025-01-01"
+                }
+              },
+              "current_input_matches": false,
+              "results": {
+                "B01": {
+                  "applicability": "APPLICABLE",
+                  "company_id": "pfizer",
+                  "metric_id": "B01",
+                  "period_end": "2025-12-31",
+                  "period_start": "2025-01-01",
+                  "publication": "PUBLISHED",
+                  "quality": "EXACT",
+                  "reason_code": "PASS",
+                  "record_type": "METRIC_RESULT",
+                  "result_id": "sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf",
+                  "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+                  "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+                  "trace_id": "sha256:2403c1f1aea4c693f78eefda728a27dd095109282ddd5ca7ae4e9cc21bcff435",
+                  "unit": "USD",
+                  "value": "62579000000"
+                }
+              },
+              "rows_root": "/private/tmp/sec_metrics_issue28_ordinary_refresh_20260915/state-current/pfizer/metrics/B01/attempts/a43442fa78fc477cbc4de63df138a920/rows"
+            },
+            "new_candidate_created": false,
+            "terminal": {
+              "record_type": "ORDINARY_UPDATE_TERMINAL",
+              "attempt_id": "c6d5014b765b403f827b22dc3c616b39",
+              "configuration_id": "sha256:eb25f7dd0f64f027bc561970f8d579e757f235de9d806a65f8076f3f1865710d",
+              "intent_id": "sha256:8680a65a0e0e22c7afbb2eb92b82a359a04829d599359f0c9ee7369a567e7a60",
+              "status": "INPUT_FAILED",
+              "completed_at": "2026-09-15T10:00:29.602876+00:00",
+              "input": null,
+              "metrics": {},
+              "error": {
+                "error_type": "AnnualUpdateError",
+                "reason": "LATEST_SOURCE_REQUEST_FAILED: https://data.sec.gov/submissions/CIK0000078003.json"
+              },
+              "calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "production_authorized": false,
+              "record_id": "sha256:baa7335670f3bc3537f3f6a4dd051c44cac1580379b09438968018659eb9a345"
+            },
+            "calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false
+          }
+        ],
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      },
+      "acquisition_errors": []
+    }
+  ],
+  "ledger_counts_before": [
+    0,
+    0,
+    8
+  ],
+  "ledger_counts_after": [
+    0,
+    0,
+    10
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "normal_provider_update_routes_not_wired": [
+    "B13",
+    "D03",
+    "D04"
+  ],
+  "all390_acceptance": false,
+  "production_authorized": false,
+  "resident_schedule_enabled": false
+}

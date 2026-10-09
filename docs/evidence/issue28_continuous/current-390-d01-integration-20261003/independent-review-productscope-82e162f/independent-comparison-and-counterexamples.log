@@ -1,0 +1,21 @@
+Exact parent/current normal-loader comparison: PASS; 390 same coordinates; 20 exact legacy identities changed; 370 rows identical.
+Register defects array: unchanged from 8dec9468.
+20 legacy limits: 10 companies x C02/E01; every period, Result, Spec and historical value matched frozen parent.
+17 known-defect coordinates preserved; 12 overlap legacy limits; 8 acceptance gaps have no confirmed content defect.
+Comparison artifact identity list, parent SHA, old-Spec file SHA and full collaboration-block SHA: PASS.
+entry metric_id: REFUSED CURRENT_PRODUCT_SCOPE_LIMIT_IDENTITY_CHANGED
+entry result_id: REFUSED CURRENT_PRODUCT_SCOPE_LIMIT_SET_CHANGED
+entry legacy_spec_path: REFUSED CURRENT_PRODUCT_SCOPE_LIMIT_IDENTITY_CHANGED
+entry status: REFUSED CURRENT_PRODUCT_SCOPE_LIMIT_IDENTITY_CHANGED
+entry source_period.fiscal_year: REFUSED CURRENT_PRODUCT_SCOPE_LIMIT_IDENTITY_CHANGED
+entry source_period.period_start: REFUSED CURRENT_PRODUCT_SCOPE_LIMIT_IDENTITY_CHANGED
+entry source_period.period_end: REFUSED CURRENT_PRODUCT_SCOPE_LIMIT_IDENTITY_CHANGED
+duplicate replaces one exact identity: REFUSED CURRENT_PRODUCT_SCOPE_LIMIT_SET_CHANGED
+extra forged limit: REFUSED CURRENT_PRODUCT_SCOPE_LIMIT_SET_CHANGED
+drop complete C02 set: REFUSED CURRENT_PRODUCT_SCOPE_LIMIT_SET_CHANGED
+string false is not authority false: REFUSED CURRENT_PRODUCT_SCOPE_AUTHORITY_CHANGED
+reordered complete exact-identity limits: ACCEPTED with identical view
+selected legacy source_period: REFUSED CURRENT_PRODUCT_SCOPE_SELECTED_IDENTITY_CHANGED
+selected legacy spec_closure_hash: REFUSED CURRENT_PRODUCT_SCOPE_SELECTED_IDENTITY_CHANGED
+different Pfizer E01 successor identity: skips old exact limit/defect, retains only prior bounded scope, receives no current-product acceptance; register/parent unchanged
+Independent finite adversarial/positive examples: 15 PASS. Existing 19 tests are regression only.

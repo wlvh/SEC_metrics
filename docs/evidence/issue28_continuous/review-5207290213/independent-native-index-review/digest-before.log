@@ -1,0 +1,20 @@
+test_actual_source_prompt_and_output_contract_changes_remain_distinct (tests.vnext.test_native_unit_index.IndexedSemanticIdentityTest.test_actual_source_prompt_and_output_contract_changes_remain_distinct) ... ok
+test_base_and_indexed_output_contracts_have_distinct_execution_semantics (tests.vnext.test_native_unit_index.IndexedSemanticIdentityTest.test_base_and_indexed_output_contracts_have_distinct_execution_semantics) ... ok
+test_mechanical_source_identity_cannot_authorize_indexed_redraw (tests.vnext.test_native_unit_index.IndexedSemanticIdentityTest.test_mechanical_source_identity_cannot_authorize_indexed_redraw) ... FAIL
+
+======================================================================
+FAIL: test_mechanical_source_identity_cannot_authorize_indexed_redraw (tests.vnext.test_native_unit_index.IndexedSemanticIdentityTest.test_mechanical_source_identity_cannot_authorize_indexed_redraw)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_native_unit_index.py", line 39, in test_mechanical_source_identity_cannot_authorize_indexed_redraw
+    self.assertEqual(request_digest(left, self.policy), request_digest(right, self.policy))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '03c0a6abc0cc4e1993b20b7226774c5e365c6fef3201147c5a8d03faa14cd745' != '4d64b02bf9e0a8d2a9595ad0012eadb555fa883e365a21e2aeaaf984327e4d2f'
+- 03c0a6abc0cc4e1993b20b7226774c5e365c6fef3201147c5a8d03faa14cd745
++ 4d64b02bf9e0a8d2a9595ad0012eadb555fa883e365a21e2aeaaf984327e4d2f
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.022s
+
+FAILED (failures=1)

@@ -32,13 +32,20 @@ def _current_structured_preparation(*,data_root,company_id,metric_id):
 
 def prepare_current_source_case(*, data_root, company_id, metric_id,
                                 c02_composition=False, c02_grouped=False,
-                                d01_emphasis=False, d02_category=False):
+                                d01_emphasis=False, d02_category=False,
+                                c02_auditor_revision=False, c02_member_revision=False):
     """Pure discovery and source reconstruction; no caller-owned business facts."""
     _need(type(c02_composition) is bool and (not c02_composition or metric_id == "C02"),
           "NORMAL_C02_COMPOSITION_WRONG_METRIC")
     _need(type(c02_grouped) is bool and (not c02_grouped or (c02_composition and metric_id == "C02")),
           "NORMAL_C02_GROUPED_SCOPE_INVALID")
-    _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == "D01"),
+    _need(type(c02_auditor_revision) is bool and (not c02_auditor_revision or
+          (c02_composition and c02_grouped and metric_id == 'C02')),
+          'NORMAL_C02_AUDITOR_REVISION_SCOPE_INVALID')
+    _need(type(c02_member_revision) is bool and (not c02_member_revision or
+          (c02_auditor_revision and c02_composition and c02_grouped and metric_id == 'C02')),
+          'NORMAL_C02_MEMBER_REVISION_SCOPE_INVALID')
+    _need((type(d01_emphasis) is bool or d01_emphasis == "RUNNING_HEADER_V3") and (not d01_emphasis or metric_id == "D01"),
           "NORMAL_D01_EMPHASIS_SCOPE_INVALID")
     _need((type(d02_category) is bool or d02_category == 'ITEM8_V2')
           and (not d02_category or metric_id == "D02"),
@@ -62,12 +69,17 @@ def prepare_current_source_case(*, data_root, company_id, metric_id,
                 "target": prepared["text_arguments"]["target"], "text_arguments": prepared["text_arguments"],
                 "spec_path": TEXT_PATHS[metric_id]}
         if c02_composition:
-            selection_policy = "COMPOSITION_GROUPED_V2" if c02_grouped else "COMPOSITION_FACTS_V1"
+            selection_policy = ('COMPOSITION_GROUPED_V4' if c02_member_revision
+                                else 'COMPOSITION_GROUPED_V3' if c02_auditor_revision
+                                else 'COMPOSITION_GROUPED_V2' if c02_grouped
+                                else 'COMPOSITION_FACTS_V1')
             case["input_binding"] = {"c02_selection_policy": selection_policy,
                                      "source_input_binding": prepared["input_binding"]}
             case["text_arguments"] = {**case["text_arguments"],
                                       "c02_selection_policy": selection_policy}
-            case["spec_path"] = ("catalog/r6/C02_board_disclosures_v3.md" if c02_grouped
+            case["spec_path"] = ("catalog/r6/C02_board_disclosures_v5.md" if c02_member_revision
+                                 else "catalog/r6/C02_board_disclosures_v4.md" if c02_auditor_revision
+                                 else "catalog/r6/C02_board_disclosures_v3.md" if c02_grouped
                                  else "catalog/r6/C02_board_disclosures_v2.md")
         if d02_category:
             if d02_category is True:
@@ -95,7 +107,10 @@ def prepare_current_source_case(*, data_root, company_id, metric_id,
                 "references": references, "source_proofs": prepared["source_proofs"], "admission": admission,
                 "target_period": period, "target": target, "text_arguments": args, "spec_path": TEXT_PATHS[metric_id]}
         if d01_emphasis:
-            from .d01_emphasis_results import POLICY
+            if d01_emphasis == "RUNNING_HEADER_V3":
+                from .d01_emphasis_results_v3 import POLICY
+            else:
+                from .d01_emphasis_results import POLICY
             case["input_binding"] = {"d01_emphasis_policy": POLICY,
                                      "source_input_binding": prepared}
             case["text_arguments"] = {**args, "d01_emphasis_policy": POLICY}

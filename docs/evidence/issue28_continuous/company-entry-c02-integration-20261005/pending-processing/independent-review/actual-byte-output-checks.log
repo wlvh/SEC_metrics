@@ -1,0 +1,10 @@
+2026-10-06 10:33:23.142992+00:00
+8 tested source hashes match reviewed HEAD
+/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-review-boundary-closed-20261006: 430 authority files and 1 rule files match; no SEC-original directory
+/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-review-runtime-final-20261006: 430 authority files and 1 rule files match; no SEC-original directory
+Boundary runtime imports/read/export entry bytes exactly match reviewed commit
+Separate trust exactly authenticates processing id; unchanged six bytes in packet/input/pending
+Stable source and immutable version have identical bytes; separate source trust matches
+Actual boundary export: 1 REVIEW_REQUIRED empty row; 50 fact + 3 unresolved evidence; unchanged full packet; 6 proposal records, no Result/Run/decision/attempt
+Actual mixed export: empty CONFIRMED_INVALID old Result + empty DEVELOPMENT_PENDING_NO_RESULT; 34 native + 53 development evidence; native tree byte-identical
+Saved original old-program source resume is ALREADY_INSTALLED; no replay of old computation

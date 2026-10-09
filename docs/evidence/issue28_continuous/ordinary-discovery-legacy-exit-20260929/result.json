@@ -1,0 +1,165 @@
+{
+  "record_type": "ISSUE28_NORMAL_SOURCE_DISCOVERY_LEGACY_DISABLED",
+  "tested_product_head": "76ebe42ea28eedaac640c70d127475296361d1f3",
+  "company_count": 10,
+  "companies": [
+    {
+      "company_id": "marriott_international",
+      "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+      "requirement_count": 29,
+      "metadata_refresh_urls": [
+        "https://data.sec.gov/submissions/CIK0001048286.json",
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+      ],
+      "not_directly_saved": []
+    },
+    {
+      "company_id": "southwest_airlines",
+      "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+      "requirement_count": 46,
+      "metadata_refresh_urls": [
+        "https://data.sec.gov/submissions/CIK0000092380.json",
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json"
+      ],
+      "not_directly_saved": []
+    },
+    {
+      "company_id": "ford_motor_company",
+      "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+      "requirement_count": 43,
+      "metadata_refresh_urls": [
+        "https://data.sec.gov/submissions/CIK0000037996.json",
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json"
+      ],
+      "not_directly_saved": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "roles": [
+            "prior_annual_primary"
+          ]
+        }
+      ]
+    },
+    {
+      "company_id": "pfizer",
+      "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+      "requirement_count": 27,
+      "metadata_refresh_urls": [
+        "https://data.sec.gov/submissions/CIK0000078003.json",
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json"
+      ],
+      "not_directly_saved": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231.htm",
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "roles": [
+            "prior_annual_primary"
+          ]
+        }
+      ]
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+      "requirement_count": 63,
+      "metadata_refresh_urls": [
+        "https://data.sec.gov/submissions/CIK0000019617.json",
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+        "https://data.sec.gov/submissions/CIK0000019617-submissions-001.json",
+        "https://data.sec.gov/submissions/CIK0000019617-submissions-002.json",
+        "https://data.sec.gov/submissions/CIK0000019617-submissions-003.json",
+        "https://data.sec.gov/submissions/CIK0000019617-submissions-004.json",
+        "https://data.sec.gov/submissions/CIK0000019617-submissions-005.json",
+        "https://data.sec.gov/submissions/CIK0000019617-submissions-006.json",
+        "https://data.sec.gov/submissions/CIK0000019617-submissions-007.json",
+        "https://data.sec.gov/submissions/CIK0000019617-submissions-008.json"
+      ],
+      "not_directly_saved": []
+    },
+    {
+      "company_id": "salesforce",
+      "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+      "requirement_count": 31,
+      "metadata_refresh_urls": [
+        "https://data.sec.gov/submissions/CIK0001108524.json",
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json"
+      ],
+      "not_directly_saved": []
+    },
+    {
+      "company_id": "lumen_technologies",
+      "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+      "requirement_count": 47,
+      "metadata_refresh_urls": [
+        "https://data.sec.gov/submissions/CIK0000018926.json",
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json"
+      ],
+      "not_directly_saved": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm",
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "roles": [
+            "prior_annual_primary"
+          ]
+        }
+      ]
+    },
+    {
+      "company_id": "macys",
+      "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+      "requirement_count": 35,
+      "metadata_refresh_urls": [
+        "https://data.sec.gov/submissions/CIK0000794367.json",
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json"
+      ],
+      "not_directly_saved": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm",
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "roles": [
+            "prior_annual_primary"
+          ]
+        }
+      ]
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+      "requirement_count": 83,
+      "metadata_refresh_urls": [
+        "https://data.sec.gov/submissions/CIK0002041610.json",
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0002041610.json",
+        "https://data.sec.gov/submissions/CIK0000813828.json"
+      ],
+      "not_directly_saved": []
+    },
+    {
+      "company_id": "enphase_energy",
+      "status": "SAVED_SOURCE_DEPENDENCIES_AVAILABLE",
+      "requirement_count": 21,
+      "metadata_refresh_urls": [
+        "https://data.sec.gov/submissions/CIK0001463101.json",
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0001463101.json"
+      ],
+      "not_directly_saved": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310125000024/enph-20241231.htm",
+          "saved_status": "MISSING_SAVED_SOURCE",
+          "roles": [
+            "prior_annual_primary"
+          ]
+        }
+      ]
+    }
+  ],
+  "old_semantic_exports_disabled": 116,
+  "original_claims_source_and_active_unchanged": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "all39_metric_result_acceptance": false,
+  "new_fiscal_year_online_update_proven": false
+}

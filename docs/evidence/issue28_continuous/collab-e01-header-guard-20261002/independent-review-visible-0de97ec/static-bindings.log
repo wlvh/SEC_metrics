@@ -1,0 +1,187 @@
+{
+  "checked_utc": "2026-10-02T15:39:04.272916+00:00",
+  "patch_sha": "0de97ec9e280e578c809320c6c18c65381070f99",
+  "parent_sha": "df0f455ffcff35836cd70d8ea3bd9a9c2706f743",
+  "status": "PASS_STATIC_RELEVANT_BINDINGS",
+  "guard_identity": {
+    "sha256": "54502a58b3ef5775197fa114eb454234307067212bb81217214a45816b5042f7",
+    "size": 4073
+  },
+  "source_bindings": [
+    {
+      "requirement": "issue_28_v13",
+      "path": "scripts/vnext/e01_header_document_guard_28_v1.py",
+      "identity": {
+        "sha256": "54502a58b3ef5775197fa114eb454234307067212bb81217214a45816b5042f7",
+        "size": 4073
+      },
+      "binding_matches": true
+    },
+    {
+      "requirement": "issue_28_v13",
+      "path": "scripts/vnext/e01_item_text_28_v1.py",
+      "identity": {
+        "sha256": "6d55c88f53278ce2d6a5027965e7e787a306292d7978880cd1b66ff41d9001c7",
+        "size": 11833
+      },
+      "binding_matches": true
+    },
+    {
+      "requirement": "issue_28_v13",
+      "path": "scripts/vnext/ordinary_e01_item_text_input_v2.py",
+      "identity": {
+        "sha256": "0d43c01f117160631a7dc5ce237474fea52cf2243b4bdae4257bfdb443e49c4e",
+        "size": 11269
+      },
+      "binding_matches": true
+    },
+    {
+      "requirement": "issue_28_v13",
+      "path": "scripts/vnext/deterministic_router.py",
+      "identity": {
+        "sha256": "4b2867c017f1f770e1a61b8c435114c69eb0c793298d17147a11615698d9aa7c",
+        "size": 73472
+      },
+      "binding_matches": true
+    },
+    {
+      "requirement": "issue_28_v13",
+      "path": "scripts/vnext/canonical.py",
+      "identity": {
+        "sha256": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+        "size": 17626
+      },
+      "binding_matches": true
+    },
+    {
+      "requirement": "issue_28_v14",
+      "path": "scripts/vnext/e01_header_document_guard_28_v1.py",
+      "identity": {
+        "sha256": "54502a58b3ef5775197fa114eb454234307067212bb81217214a45816b5042f7",
+        "size": 4073
+      },
+      "binding_matches": true
+    },
+    {
+      "requirement": "issue_28_v14",
+      "path": "scripts/vnext/e01_item_text_28_v1.py",
+      "identity": {
+        "sha256": "6d55c88f53278ce2d6a5027965e7e787a306292d7978880cd1b66ff41d9001c7",
+        "size": 11833
+      },
+      "binding_matches": true
+    },
+    {
+      "requirement": "issue_28_v14",
+      "path": "scripts/vnext/ordinary_e01_item_text_input_v2.py",
+      "identity": {
+        "sha256": "0d43c01f117160631a7dc5ce237474fea52cf2243b4bdae4257bfdb443e49c4e",
+        "size": 11269
+      },
+      "binding_matches": true
+    },
+    {
+      "requirement": "issue_28_v14",
+      "path": "scripts/vnext/deterministic_router.py",
+      "identity": {
+        "sha256": "4b2867c017f1f770e1a61b8c435114c69eb0c793298d17147a11615698d9aa7c",
+        "size": 73472
+      },
+      "binding_matches": true
+    },
+    {
+      "requirement": "issue_28_v14",
+      "path": "scripts/vnext/canonical.py",
+      "identity": {
+        "sha256": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+        "size": 17626
+      },
+      "binding_matches": true
+    }
+  ],
+  "v13_changed_leaf_fields": [
+    "execution_authority.files.scripts/vnext/e01_header_document_guard_28_v1.py.sha256",
+    "execution_authority.files.scripts/vnext/e01_header_document_guard_28_v1.py.size",
+    "new_rule_files.scripts/vnext/e01_header_document_guard_28_v1.py.sha256",
+    "new_rule_files.scripts/vnext/e01_header_document_guard_28_v1.py.size"
+  ],
+  "v14_changed_leaf_fields": [
+    "execution_authority.files.scripts/vnext/e01_header_document_guard_28_v1.py.sha256",
+    "execution_authority.files.scripts/vnext/e01_header_document_guard_28_v1.py.size",
+    "parent.requirement_closure_hash",
+    "parent.snapshot_files.baseline_manifest.json.sha256"
+  ],
+  "v14_parent_five_file_bindings": [
+    {
+      "path": "decision_register.json",
+      "binding_matches": true
+    },
+    {
+      "path": "baseline_manifest.json",
+      "binding_matches": true
+    },
+    {
+      "path": "invariant_profile.json",
+      "binding_matches": true
+    },
+    {
+      "path": "CONTRACT.md",
+      "binding_matches": true
+    },
+    {
+      "path": "transfer_manifest.json",
+      "binding_matches": true
+    }
+  ],
+  "v14_transfer_changed_fields": [
+    "parent_requirement_closure_hash"
+  ],
+  "v14_execution_authority_recomputed": "sha256:0ce2449e717db6dec400758f36af8290fa8974d5f854c3c07db06427880e8e4a",
+  "three_receipts": [
+    {
+      "path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json",
+      "execution_authority_hash": "sha256:0ce2449e717db6dec400758f36af8290fa8974d5f854c3c07db06427880e8e4a",
+      "changed_fields": [
+        "execution_authority_hash",
+        "requirement_closure_hash"
+      ],
+      "only_identity_fields_changed": true
+    },
+    {
+      "path": "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json",
+      "execution_authority_hash": "sha256:0ce2449e717db6dec400758f36af8290fa8974d5f854c3c07db06427880e8e4a",
+      "changed_fields": [
+        "execution_authority_hash"
+      ],
+      "only_identity_fields_changed": true
+    },
+    {
+      "path": "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json",
+      "execution_authority_hash": "sha256:0ce2449e717db6dec400758f36af8290fa8974d5f854c3c07db06427880e8e4a",
+      "changed_fields": [
+        "execution_authority_hash"
+      ],
+      "only_identity_fields_changed": true
+    }
+  ],
+  "source_provenance_identity_matches": true,
+  "installed_record_fields_and_bytes_match": [
+    {
+      "company": "enphase_energy",
+      "input_id": "sha256:89360173d0171932d596bf7d24129c546cd2b030425dd4fedc17484fb872aa51",
+      "checks": 6,
+      "candidate_count": 0,
+      "three_installed_modules_equal_patch": true
+    },
+    {
+      "company": "pfizer",
+      "input_id": "sha256:44436b9332d46d0009938d81b84af164e90c45b3398f14aadec82672e8ecbe61",
+      "checks": 9,
+      "candidate_count": 3,
+      "three_installed_modules_equal_patch": true
+    }
+  ],
+  "requirement_full_closure_reauthentication": false,
+  "closure_scope": "V13/V14 total closures read from frozen patch binding records; relevant parent references and execution authority independently checked, not full Requirement loader replay",
+  "material_install_cold_execution": "NOT_RERUN"
+}

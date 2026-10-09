@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/native-refresh-execution/run_material.py", line 10, in <module>
+    from vnext.ordinary_update_cycle import run_company,read_current
+ImportError: cannot import name 'read_current' from 'vnext.ordinary_update_cycle' (/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_update_cycle.py)

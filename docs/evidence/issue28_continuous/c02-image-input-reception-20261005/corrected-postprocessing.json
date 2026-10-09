@@ -1,0 +1,26 @@
+{
+  "record_type": "EXISTING_C02_RESPONSE_PARSER_CORRECTED_INPUT_READOUT",
+  "tested_code_commit": "9ac5a02da789ad81b6c94af90477935854e0c4df",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "source_sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+  "actual_request_sha256": "18abb36b70d36cb95052d564f7c3fd7e0373f46ccb612df934841c5926b48f6b",
+  "response_sha256": "bf81745842cd3a53948b5c5bc44db1e9713d6e3193d34d0e4ad9ab22a540a3b2",
+  "response_parser": "scripts/vnext/c02_model_processing.py:_response",
+  "parser_status": "PASS",
+  "facts": 50,
+  "unresolved": 3,
+  "output_reference_tokens": 3207,
+  "within4096": true,
+  "actual_hosted_usage": null,
+  "cited_original_block_count": 185,
+  "all_actual_citation_raw_spans_match": true,
+  "native_mapper_status": "REFUSES_CHANGED_ACTUAL_WIRE; explicit successor save/read not yet implemented",
+  "semantic_approval": false,
+  "new_native_result_run_or_provider_attempt": false,
+  "raw_response_changed": false,
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

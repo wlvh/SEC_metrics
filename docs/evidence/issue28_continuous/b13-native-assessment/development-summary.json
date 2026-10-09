@@ -1,0 +1,36 @@
+{
+  "record_type": "B13_NATIVE_DEVELOPMENT_CHECKPOINT",
+  "status": "ACTIVE_CONTINUATION_NOT_COMPLETE",
+  "baseline_head": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
+  "native_run": "RECORDED_OPEN_AND_PUBLIC_ROW_VERIFIED",
+  "native_seconds": 158.619,
+  "cold_python39": "PASS_NO_NETWORK",
+  "old_v14_native_regression_seconds": 106.457,
+  "jpm_statement_regression_seconds": 21.593,
+  "fast": {
+    "status": "PASSED",
+    "selectors": 106,
+    "seconds": 81.175
+  },
+  "actual_new_calls": [
+    0,
+    0,
+    0
+  ],
+  "full_b13_real_acceptance": false,
+  "full390": false,
+  "independent_module_review": "PENDING",
+  "next": [
+    "Commit verified B13 native increment in the same Draft PR43",
+    "Use approved private runtime and current wiring for a bounded real B13 semantic check",
+    "Continue B13 complete source results, D04 native integration and remaining Issue goals"
+  ],
+  "historical_ci": {
+    "head": "6e5a85bf96d9086d51fbddeb0ab38f446d3fc19e",
+    "run": 34837885217,
+    "result": "9_SUCCESS_1_SOURCE_TIMEOUT_FAILURE",
+    "failed_selector": "tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest",
+    "timeout_seconds": 240
+  },
+  "production_permissions": false
+}

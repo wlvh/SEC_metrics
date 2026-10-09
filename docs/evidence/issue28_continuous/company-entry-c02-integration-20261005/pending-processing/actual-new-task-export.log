@@ -1,0 +1,42 @@
+{
+  "elapsed_seconds": 0.3669944170396775,
+  "status": "EXPORTED_PARTIAL",
+  "company_id": "jpmorgan_chase",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-review-new-output-20261006",
+  "native_candidates": [],
+  "failed_candidates": [
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "C02",
+      "development_review_id": "sha256:a12ad90e3db83b2a94e3bda921ea224cec0d7ac3d945b2ada1308ba16891a878",
+      "work_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-review-new-task-20261006/development/C02/47376c710ced9e927634568940aa38e1f02af83a67adcf3e37eb788bd8826f8d",
+      "runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/company-c02-review-runtime-v2-20261006",
+      "source_checkpoint_id": "sha256:3953c4128d272a0ce5f0d369d673a4ad6cae5d74aef94edefc266b7c5bbf3964",
+      "requirement_id": "issue_54_v1",
+      "requirement_closure_hash": "sha256:eb948d6f46e61f82b5f673875aa0cb71cb9235debc2ec26071e97f0f94e5b054",
+      "candidate_hash": "sha256:d1298823a7fd72322d56596103fd8df23cb512d85a2003fe92aeceecc6a693db",
+      "review_unit_hash": "sha256:b7d17001edbc72211e33d5aebeb94eeb3a00ebd8d9afc036e0f2b7aa10821aac",
+      "original_candidate_hash": "sha256:d1298823a7fd72322d56596103fd8df23cb512d85a2003fe92aeceecc6a693db",
+      "period": {
+        "accession": "0001628280-26-008131",
+        "company_id": "jpmorgan_chase",
+        "entity": "19617",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "scope": {
+          "board_as_of": "not_inferred",
+          "disclosure_basis": "source_filing_text",
+          "entity_scope": "registrant",
+          "period_basis": "annual_grouping_only"
+        },
+        "scope_key": "sha256:25381677521dd0d6dc9f314469a59ec076e28ff97a8e540c54b8dd1d894e0934"
+      },
+      "latest_attempt_status": "REVIEW_REQUIRED",
+      "result_validity": "DEVELOPMENT_REPLAY_FAILED",
+      "business_metric_completed": false,
+      "replay_status": "FAILED",
+      "reason": "COMPANY_HANDOFF_PROGRAM_PATH_OVERLAP"
+    }
+  ],
+  "bytes": 6978
+}

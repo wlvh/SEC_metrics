@@ -1,0 +1,20 @@
+{
+  "issue": 28,
+  "observed_state": "closed",
+  "observed_state_reason": "completed",
+  "closed_at": "2026-10-05T04:06:04Z",
+  "closed_event": {
+    "id": 32476067871,
+    "actor": "wlvh",
+    "created_at": "2026-10-05T04:06:05Z",
+    "commit_id": "a9506758096517c2ab665d292f00dfa4f0b5f9ea"
+  },
+  "corresponding_pr": 56,
+  "pr_merged_at": "2026-10-05T04:06:02Z",
+  "merge_message": "Fixed foundation code only; does not accept all39 #28 business results, close #28, or authorize deployment, publication or active changes.",
+  "observed_objective_state": "Issue body retains unfinished390/B13/D03/C02 and production responsibilities; no complete business acceptance evidence inPR56",
+  "conclusion": "TRACKING_CLOSED_IN_ERROR_NOT_ISSUE28_COMPLETION",
+  "mechanism_inference": "Negated sentence contains literal closing keyword close#28; closure event binds this merge commit. Likely automatic keyword closure, backend parsing not independently inspected.",
+  "issue_state_or_closure_history_modified": false,
+  "rule": "COLLAB-28-47-v1.3"
+}

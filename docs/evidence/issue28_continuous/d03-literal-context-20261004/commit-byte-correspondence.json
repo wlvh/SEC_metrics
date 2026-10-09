@@ -1,0 +1,33 @@
+{
+  "actual_product_commit": "97f8380db30fc954587aec2cddcd8f103ffa16e0",
+  "tests_executed_before_commit": true,
+  "verified_after_commit": true,
+  "checks": [
+    {
+      "path": "scripts/vnext/d03_context_requests.py",
+      "sha256": "38feef0857c92fa1ba3d7ee7b7bf94017cf4fc7a6c9ac64951659e925a1d8654",
+      "git_commit_and_worktree_match_measured_file": true
+    },
+    {
+      "path": "tests/vnext/test_d03_context_requests.py",
+      "sha256": "e6885dc4e9e772112b1f77221d0a987e39fc73b35bdbb2e301a488e9d7845fe1",
+      "git_commit_and_worktree_match_measured_file": true
+    },
+    {
+      "path": "tools/run_fast_tests_v2.py",
+      "sha256": "9a8f9246fef4598ffe1f67937ee95cbd1c6ef683215cc3322b8c16f260e7e858",
+      "git_commit_and_worktree_match_measured_file": true
+    },
+    {
+      "path": "scripts/vnext/d03_model_processing.py",
+      "sha256": "72fa2fb42c145f2a0a2c85106ebc8f7d9db5a23350183afd21d57c0240187ee1",
+      "git_commit_and_worktree_match_measured_file": true
+    },
+    {
+      "path": "tools/vnext_d03_model_review.py",
+      "sha256": "dfb5f86a81aff5edc9ee3363f5c085167cbfccf0dbc7b5386aebcff58b026d58",
+      "git_commit_and_worktree_match_measured_file": true
+    }
+  ],
+  "evidence_only_final_commit_does_not_change_these_product_bytes": true
+}

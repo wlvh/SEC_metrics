@@ -1,0 +1,21 @@
+--- a/tools/run_fast_tests_v2.py
++++ b/tools/run_fast_tests_v2.py
+@@ -167,6 +167,7 @@
+ FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest',)
+ FAST_TESTS += ('tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks',)
+ FAST_TESTS += ('tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest',)
++FAST_TESTS += ('tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest',)
+ SOURCE_TESTS += ("tests.vnext.test_a05_formula_material",)
+ SOURCE_TESTS += ("tests.vnext.test_d02_item8_current_material",)
+ SOURCE_TESTS += ("tests.vnext.test_ordinary_e01_item_text_input",)
+--- a/.github/workflows/vnext-fast.yml
++++ b/.github/workflows/vnext-fast.yml
+@@ -31,7 +31,7 @@
+         env:
+           PYTHONDONTWRITEBYTECODE: "1"
+           PYTHONPATH: scripts:tools
+-        run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest
++        run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest
+
+       - name: Run fast suite
+         env:

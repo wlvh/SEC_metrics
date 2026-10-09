@@ -1,0 +1,15 @@
+SOURCE 0001628280-26-008131 path evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm bytes 12927325 sha256 4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23 source_ref sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff
+ UNIT usd=iso4217:USD
+ FACT us-gaap:NetIncomeLoss c-1 period [('startDate', '2025-01-01'), ('endDate', '2025-12-31')] count 6 ids ['f-221', 'f-242', 'f-465', 'f-7056', 'f-7911', 'f-8175'] lexical 57,048 scale=6 USD value 57048000000
+ FIRST_VISIBLE_ROW Net income $ 57,048 $ 58,471 $ 49,552
+ FACT us-gaap:Assets c-30 period [('instant', '2025-12-31')] count 3 ids ['f-315', 'f-7912', 'f-8187'] lexical 4,424,900 scale=6 USD value 4424900000000
+ FIRST_VISIBLE_ROW Total assets 4,424,900 4,002,814 3,875,393
+ FACT us-gaap:Assets c-31 period [('instant', '2024-12-31')] count 3 ids ['f-316', 'f-7942', 'f-8188'] lexical 4,002,814 scale=6 USD value 4002814000000
+ FIRST_VISIBLE_ROW Total assets 4,424,900 4,002,814 3,875,393
+SOURCE 0000019617-25-000270 path evidence/request_attempts/f6/f62bd288f3c4492140db19629acf7b9a8de9da72caf895b724a4229dc5b72d96/0012.body bytes 12849180 sha256 f62bd288f3c4492140db19629acf7b9a8de9da72caf895b724a4229dc5b72d96 source_ref sha256:ee34c0ce40daa590e9746be4b5f55c944a34d13da3a499474c546c364dc67ea3
+ UNIT usd=iso4217:USD
+ FACT us-gaap:Assets c-26 period [('instant', '2024-12-31')] count 3 ids ['f-284', 'f-7752', 'f-8030'] lexical 4,002,814 scale=6 USD value 4002814000000
+ FIRST_VISIBLE_ROW Total assets 4,002,814 3,875,393 3,665,743
+PRELIMINARY_CHECK_STOPPED_AT_PRECISION_34_COMPARISON 0.01353819078340816975991354239121071
+STORED_28_DIGIT_RESULT 0.01353819078340816975991354239
+Recorded 28-digit precision comparison and claim assertions passed separately in formula-and-presentation.log; this was an audit script precision issue, not a changed source value.

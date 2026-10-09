@@ -1,0 +1,27 @@
+{
+  "record_type": "D03_RECORDED_RESPONSE_STORE_OFFLINE_EVIDENCE",
+  "status": "PASS_RAW_RESPONSE_BYTES_PERSISTED_AND_INDEPENDENT_COLD_REPLAY",
+  "packet_root": "/private/tmp/issue28-d03-recorded-packet-20260927-02",
+  "packet_id": "sha256:4bac51a935deadda11f456ba39f6976647fe2d5cd05fe194f89fbc7ef7ce02d6",
+  "packet_file_count": 6,
+  "raw_response_sha256": "dca9c0862586d7048d9f9b3b67d0e0bd25c4eb866461cddb9354a9e3542098ca",
+  "raw_response_size": 1350,
+  "module_sha256": "89e46c2bf900ff14935969a784efeac6786cea4a88ce89e1659b51c54eac0785",
+  "test_source": "JPMORGAN_SAVED_REAL_SOURCE_SYNTHETIC_RECORDED_RESPONSE",
+  "test_results": [
+    "2_PASS_116_887_SECONDS",
+    "COLD_READ_PASS_NETWORK_SUBPROCESS_FORBIDDEN"
+  ],
+  "raw_u037e_preserved": true,
+  "unresolved_count": 2,
+  "provider_execution_credit": "RECORDED_TEST_ONLY",
+  "native_result_created": false,
+  "real_ledger_last_slot": 194,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "tested_tree": "UNCOMMITTED_WORKTREE_AT_TEST_TIME_MODULE_SHA_PINNED"
+}

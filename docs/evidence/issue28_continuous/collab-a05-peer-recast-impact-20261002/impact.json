@@ -1,0 +1,59 @@
+{
+  "record_type": "ISSUE28_A05_CURRENT_JPM_PEER_RECAST_IMPACT",
+  "peer_fixed_commit": "94cbc3e7e6af372d0ad8349585241fdbd2d0ed4e",
+  "peer_register_git_blob": "7f4413f2b9076ecfaa2c4c7815cd2ed138fe73b6",
+  "peer_guard_git_blob": "3ff21a217218b8095c80bd781624901f496690c8",
+  "company_id": "jpmorgan_chase",
+  "period_end": "2025-12-31",
+  "current_result_id": "sha256:f8f2a182897cd8ab4dd3f0ad16c399fc8ba259cc4c1706ff4db59e76ffd68639",
+  "current_value": "0.01353819078340816975991354239",
+  "current_reason_code": "PASS",
+  "archive_record_sha256": "c396593f39942acc40d6f7c632e51b10b4abb1854a4f0af40f3c7b79fbbd5033",
+  "companyfacts_raw_asset_id": "sha256:e5a944643b89e809740d810ff200af40e7479e481359cebc062e1869862c9568",
+  "selected_claims": [
+    {
+      "concept": "NetIncomeLoss",
+      "value": "57048000000",
+      "accession": "0001628280-26-008131",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    {
+      "concept": "Assets",
+      "value": "4424900000000",
+      "accession": "0001628280-26-008131",
+      "period_start": "2025-12-31",
+      "period_end": "2025-12-31"
+    },
+    {
+      "concept": "Assets",
+      "value": "4002814000000",
+      "accession": "0000019617-25-000270",
+      "period_start": "2024-12-31",
+      "period_end": "2024-12-31"
+    }
+  ],
+  "target_filing_prior_assets": "4002814000000",
+  "accessions": {
+    "current": "0001628280-26-008131",
+    "prior": "0000019617-25-000270"
+  },
+  "peer_guard_problem": null,
+  "peer_bridge_count": 0,
+  "current_cumulative_source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "current_resolver_prior_error": null,
+  "current_resolver_a05_result_id": "sha256:b4af4d3bb42610f98df83d72080b168a4ed4cf25baa9e9a692b6bf5b72e6b9d7",
+  "current_resolver_a05_value": "0.01353819078340816975991354239",
+  "current_resolver_a06_reason": "PASS",
+  "current_resolver_peer_guard_problem": null,
+  "current_resolver_peer_bridge_count": 0,
+  "current_and_archive_result_id_same": false,
+  "ledger_and_source_log_unchanged": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "peer_result_credit_not_copied": true,
+  "scope_limit": "One archived JPM FY2025 A05 native Run and independently rebuilt current cumulative #28 source graph; old repository source root conflict is not current cumulative root, peer FY2021 Result not imported."
+}

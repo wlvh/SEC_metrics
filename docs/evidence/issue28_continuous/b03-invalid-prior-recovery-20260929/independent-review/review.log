@@ -1,0 +1,14 @@
+test_only_source_scope_conflict_can_retain_a_historical_terminal (tests.vnext.test_b03_depreciation_scope_update.B03HistoricalRecoveryVerifierTest.test_only_source_scope_conflict_can_retain_a_historical_terminal) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+READ_ONLY_V14_BINDING_PASS sha256:377018aa27b4b50450f2a3f567bc0b619f253ef0b71137f8a4ccec45f93a3cdf
+EXACT_HEAD_PARENT_V13_DEFAULT_V14_RECEIPTS_PASS e1a668f116bb1fef087d4ba992462fcf57fb8443 a984001f892586f208dbe2d659195726e5334b5a sha256:760c06c503fa2a7821f199d60f926456b2d77d17fe083e9c999fd2d25daac96b
+HISTORICAL_FALLBACK_ROW_TAMPER_REJECTED
+READ_ONLY_MATERIAL_LOG 1/1 155.370s; READ_ONLY_FAST_LOG 141/141 107.492s exit=0
+STATIC_FINDING_P2_B03_POSTCHECK: ordinary_b03_scope_update.py:159 clears prior conflict before processing-source check at 162-164; a failure at 165-168 leaves old pointer but returns last_verified_candidate at 187-194.
+STATIC_FINDING_P2_C04_RESUME: test_b03_depreciation_scope_update.py:52-57 proves old pointer != None and current candidate == None; ordinary_refresh_cycle.py:380-381 rejects that shape in mixed-stale resume.
+EXACT_DIFF_WHITESPACE_CHECK_PASS
+REVIEW_VERDICT CHANGES_REQUIRED; no long test rerun, no real call, no publication.

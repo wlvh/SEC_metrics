@@ -1,0 +1,40 @@
+{
+  "reviewed_unit_ids": [
+    "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9",
+    "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666"
+  ],
+  "findings": [
+    {
+      "kind": "UNRESOLVED",
+      "subject": "Marriott International, Inc. and its consolidated subsidiaries",
+      "event_dates": [],
+      "reported_context_times": ["2025-01-01/2025-12-31", "2026-02-10 filing"],
+      "status": "UNRESOLVED",
+      "evidence": [{"unit_id": "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666", "kind": "NATIVE_FACT", "source_index": 442}],
+      "description": "The Company states that it is subject to various legal proceedings and claims with uncertain outcomes. The accompanying text describes legal-contingency accrual and periodic revision. It identifies no governmental actor, investigation or enforcement matter, investigated subject, or event date; government versus private involvement is unresolved."
+    },
+    {
+      "kind": "OTHER_MEANING",
+      "subject": "Marriott International, Inc. and its consolidated subsidiaries",
+      "event_dates": ["2023", "2024", "2025"],
+      "reported_context_times": ["2023-2025 fiscal-year roll-forward", "2026-02-10 filing"],
+      "status": "HISTORICAL_TAX_ACCOUNTING_CONTEXT",
+      "evidence": [{"unit_id": "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666", "kind": "NATIVE_FACT", "source_index": 546}],
+      "description": "The tax-benefit roll-forward reports decreases attributable to settlements with taxing authorities of $9 million in 2023 and $2 million in 2024; the $106 million decrease in 2025 is attributed to lapse of the statute of limitations. No investigation/enforcement link is stated, and these accounting changes do not establish closure of a D03 matter or present governmental involvement."
+    }
+  ],
+  "scope_current_involvement": "UNRESOLVED",
+  "unresolved": [
+    "Fact 442 reports actual legal proceedings and claims but does not establish their actors, specific subjects or governmental character; no current government investigation conclusion can be drawn from that statement.",
+    "Original continuation text is missing for responsibility facts 389, 391, 394, 395, 418, 428, 445, 446, 454, 480 and 507. Their literal continuedat targets are f-379-1, f-381-1, f-384-1, f-385-1, f-408-1, f-418-1, f-435-1, f-436-1, f-444-1, f-470-1 and f-497-1 respectively. Four initial locations are requested below; other continuation content remains unassessed. No inferred continuation or footnote graph was followed.",
+    "The requested basis/significant-policy and tax continuations are needed to finish assessment of the incomplete responsibility disclosures, including whether further original context explains the unspecified proceedings or tax-authority relationship. Their contents and forward-chain length are unknown.",
+    "These are two responsibility units from a source reported to contain 17 units. The additional visible-text unit is context only. Neither a lack of an identified government action here nor the stated settlements establishes whole-company absence or closure of all investigations."
+  ],
+  "scan_complete": false,
+  "context_requests": [
+    {"anchor": {"unit_id": "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9", "kind": "NATIVE_FACT", "source_index": 389}, "target": {"kind": "XML_ELEMENT_ID", "element_id": "f-379-1"}},
+    {"anchor": {"unit_id": "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9", "kind": "NATIVE_FACT", "source_index": 394}, "target": {"kind": "XML_ELEMENT_ID", "element_id": "f-384-1"}},
+    {"anchor": {"unit_id": "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9", "kind": "NATIVE_FACT", "source_index": 418}, "target": {"kind": "XML_ELEMENT_ID", "element_id": "f-408-1"}},
+    {"anchor": {"unit_id": "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666", "kind": "NATIVE_FACT", "source_index": 507}, "target": {"kind": "XML_ELEMENT_ID", "element_id": "f-497-1"}}
+  ]
+}

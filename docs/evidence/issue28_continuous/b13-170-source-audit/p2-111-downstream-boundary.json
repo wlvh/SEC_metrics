@@ -1,0 +1,63 @@
+{
+  "record_type": "B13_111_BOUNDED_DOWNSTREAM_REFERENCE_AUDIT",
+  "scope": "Original111 terminal/assessment, archived current390 index, three ordinary-update summaries, Enphase registered-native-update lifecycle; not a scan of every historical artifact.",
+  "original_111": {
+    "terminal_status": "SUCCEEDED",
+    "candidate_evidence_created": true,
+    "native_result_created": false,
+    "history_mutated": false,
+    "references": [
+      {
+        "path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0111/terminal.json",
+        "sha256": "a492f617abad1065707cb339f82e062837681a553b699caf61294081195d4cb0"
+      },
+      {
+        "path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0111/capacity-assessment.json",
+        "sha256": "6dff5d4dd5c31dfd6b693c33422c8df59858ee9ab2c9a38c90df34158ee5e6b5"
+      }
+    ]
+  },
+  "current_390": {
+    "coordinate": "enphase_energy:B13",
+    "category": "VALIDATION_OR_IMPLEMENTATION_PENDING",
+    "value": null,
+    "reason_code": "B13_REAL_RESPONSE_REJECTED_NO_COMPLETE_COORDINATE",
+    "evidence_history_count": 0,
+    "selected_archive_reads_with_call_111": 0,
+    "reference": {
+      "path": "docs/evidence/issue28_continuous/d04-remaining-20260922/current-390.json",
+      "sha256": "d480b0da463ac83d5b7a02fa9b1a89943f65ee1829e7cf31e43050fe0f78661f"
+    }
+  },
+  "ordinary_update": {
+    "inspected_summaries": [
+      {
+        "path": "docs/evidence/issue28_continuous/ordinary-update-cycle/native-summary.json",
+        "sha256": "72beb7aaec7b75788cf2619ec110cdbac8a37011616547193c4e292bc3344608"
+      },
+      {
+        "path": "docs/evidence/issue28_continuous/ordinary-update-metric-isolation/native-summary.json",
+        "sha256": "9912dd4a4c7002897d6208e056ef97939f7e9cdf964fe5c0fe53131f863f33c3"
+      },
+      {
+        "path": "docs/evidence/issue28_continuous/ordinary-update-terminal-identities/native-summary.json",
+        "sha256": "99b9ed62717ea2826525ffd4aba44190bb4bbfa54e009184e4028e14fbecc581"
+      }
+    ],
+    "b13_or_call_111_references_in_these_summaries": 0,
+    "enphase_registered_native_update": {
+      "metric": "D04",
+      "mode": "RECORDED_TEST_ONLY",
+      "reference": {
+        "path": "docs/evidence/issue28_continuous/registered-native-update/lifecycle-result.json",
+        "sha256": "4dea6d601f526b817dc3902a9340c5c0dc4598645b7e6e7283089679d104fbe7"
+      }
+    }
+  },
+  "conclusion": "No inspected current B13 company result, current390 row, or archived normal-update summary consumes111 as current complete-result credit. Current reuse selection fails on semantic replay; no general all-history claim.",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

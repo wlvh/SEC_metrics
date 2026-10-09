@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_batch33.py", line 81, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_batch33.py", line 56, in main
+    path, outcome = execute(prepared=prepared_group, ledger=ledger)
+                    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 673, in execute_d04_assessment
+    return _execute_semantic(prepared=prepared, ledger=ledger, recorded_wire=recorded_wire,
+                             native_assessment=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 748, in _execute_semantic
+    need(bool(os.environ.get(api_key_environment_name(policy=policy),'').strip()),
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'DEEPSEEK_API_KEY_REQUIRED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_policy.py", line 15, in need
+    raise ValueError(reason)
+ValueError: DEEPSEEK_API_KEY_REQUIRED

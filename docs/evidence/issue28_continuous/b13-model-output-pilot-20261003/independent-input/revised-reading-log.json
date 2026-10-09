@@ -1,0 +1,102 @@
+{
+  "fixed_patch_sha": "706ca43cc5ad0b9af7e449fbbd892c6008c37369",
+  "same_context_revision": true,
+  "new_independent_holdout": false,
+  "input_values_equal_first_round": true,
+  "source_files": {
+    "input.json": {
+      "bytes": 993179,
+      "sha256": "4e8ad21792171e869d031a9091ff54a1217e311d67a8c6425dca3cc95384d52b"
+    },
+    "measurement.json": {
+      "bytes": 1309,
+      "sha256": "d5fbcf714d2d3b5e186314103f09c3d767879b2709f2824d1f487fa0de5ae435"
+    },
+    "prompt.txt": {
+      "bytes": 3714,
+      "sha256": "bdcc31fceeb0fab0460493b83eb8bdbbbcbfbaade51397599193afaa5e9ab88a"
+    },
+    "request-body.json": {
+      "bytes": 766781,
+      "sha256": "f4cd9e262737fa74e502cd38313014addff1492903f331f8ff98795fcc30e845"
+    }
+  },
+  "complete_reads": [
+    "prompt.txt",
+    "measurement.json"
+  ],
+  "tool_calls_conservative_cumulative": 72,
+  "ordinary_messages_cumulative_so_far": 2,
+  "first_response_sha256": "cd8744af2a1d7e1c180f6cae1e29cbd984e6128cb949475f2773688d9a856de2",
+  "first_response_reference_tokens_reported_by_parent": 3002,
+  "first_response_token_count_is_provider_usage": false,
+  "targeted_quote_rechecks_after_complete_first_read": [
+    146,
+    168,
+    170,
+    190,
+    281,
+    282,
+    306,
+    307,
+    308,
+    378,
+    391,
+    398,
+    410,
+    419,
+    420,
+    421,
+    422,
+    423,
+    430,
+    431,
+    434,
+    435,
+    443,
+    449,
+    452,
+    453,
+    454,
+    455,
+    515,
+    557,
+    595,
+    596,
+    641,
+    643,
+    655,
+    691,
+    694,
+    695,
+    737,
+    809,
+    818,
+    819,
+    822,
+    834,
+    883,
+    1022,
+    1398,
+    1560
+  ],
+  "revised_answer_generated_once": true,
+  "parent_measurement_question_only": true,
+  "ordinary_messages_total_including_final": 3,
+  "completion_utc": "2026-10-03T10:35:38.703416+00:00",
+  "logged_elapsed_seconds_cumulative": 1899.911472,
+  "reference_token_measurement": {
+    "source": "Parent returned only mechanical fixed-reference-tokenizer measurement for the unchanged response bytes; no semantic feedback",
+    "first_response_reference_tokens": 3002,
+    "revised_response_reference_tokens": 4900,
+    "output_limit": 4096,
+    "revised_excess_tokens": 804,
+    "output_budget_gate_passed": false,
+    "provider_usage": false,
+    "actual_codex_tokens": "UNAVAILABLE",
+    "same_context_revision": true,
+    "new_independent_holdout": false
+  },
+  "method_batch_closed_no_third_answer": true,
+  "raw_responses_preserved": true
+}

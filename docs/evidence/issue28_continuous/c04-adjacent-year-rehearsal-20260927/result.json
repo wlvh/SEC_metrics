@@ -1,0 +1,71 @@
+{
+  "kind": "RECORDED_DERIVED_PRIOR_METADATA_REHEARSAL",
+  "current_original_source_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+  "current_original_source_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+  "derived_prior_submissions_sha256": "5b542458aa0fa1c759eb2ff6d40b9f03520521103253ebbfaab7c5c132a2b8aa",
+  "removed_from_prior_metadata": [
+    99,
+    "2026-02-10",
+    "0001048286-26-000007"
+  ],
+  "retained_in_prior_metadata": [
+    216,
+    "2025-02-11",
+    "0001628280-25-004818"
+  ],
+  "steps": [
+    "INPUT_FAILED",
+    "CANDIDATE_READY",
+    "NO_SOURCE_CONTENT_CHANGE"
+  ],
+  "first_candidate": null,
+  "second_candidate": {
+    "attempt_id": "e1438a9868994cf38c5ee9d2a1a0d195",
+    "targets": {
+      "C04": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      }
+    },
+    "current_input_matches": true,
+    "results": {
+      "C04": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "C04",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:5afe8f96689a0004601b3c7b9feea1af1db207143375369b436d345dde05f6e8",
+        "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+        "spec_closure_hash": "sha256:4b51670c1ee0f073675a78f33284c7ec1d72941492d399dd552548ddcfa774f6",
+        "trace_id": "sha256:af231dac349a19b18c80f6d102143917d66c5da2e7fd2c262f353fc671ea0c58",
+        "unit": "flag",
+        "value": "0"
+      }
+    },
+    "rows_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-c04-adjacent-25245mgy/state/marriott_international/metrics/C04-registration-v3/attempts/e1438a9868994cf38c5ee9d2a1a0d195/rows"
+  },
+  "current_pointer": {
+    "configuration_id": "sha256:9d496a2d89bc67770a9d43a42da09b0454cfd9f18e7caefbca837ce878c696c4",
+    "latest_attempt": "80b6acaa285349809f6cc186d07eae75",
+    "successful_attempt": "e1438a9868994cf38c5ee9d2a1a0d195"
+  },
+  "recorded_ledger_counts": [
+    0,
+    0,
+    2
+  ],
+  "network_enabled": false,
+  "real_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "actual_historical_submissions_response_used": false,
+  "authentic_online_cross_year_update_proven": false
+}

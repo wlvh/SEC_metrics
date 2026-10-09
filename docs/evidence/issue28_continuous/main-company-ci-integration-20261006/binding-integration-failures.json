@@ -1,0 +1,7 @@
+{
+  "actual_transient_failures": [
+    "Normal successor rule set differs after adding new_rule without ordinary policy declaration",
+    "Successor execution authority bytes differ: config/issue28_normal_results_v2.json before continuous parent-policy binding sync"
+  ],
+  "resolution": "Declare ordinary dependency in rule_paths and embedded decision; retain continuous own call policy/rule set; bind inherited ordinary policy bytes in continuous authority. Original strict checks retained."
+}

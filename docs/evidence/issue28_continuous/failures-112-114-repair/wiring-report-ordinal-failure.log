@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/failures-112-114-repair/final_wiring.py", line 45, in <module>
+    path,outcome=execute(prepared=obj,ledger=ledger,recorded_wire=wire);assert outcome['terminal']['status']=='SUCCEEDED',str(outcome);outcomes.append({'metric':metric,'ordinal':outcome['terminal']['ordinal'],'request_id':request['request_id']})
+                                                                                                                                                                                  ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'ordinal'

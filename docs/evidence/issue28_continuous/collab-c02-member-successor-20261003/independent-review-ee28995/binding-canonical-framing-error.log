@@ -1,0 +1,51 @@
+Reviewer initially omitted the canonical serialization trailing LF. These initial semantic hashes are invalid; bound-file hash checks had no mismatch. Correct framing follows canonical.py:419. No runtime defect or authority mutation.
+{
+  "mode": "read-only hash inspection; no runtime/material/native/cold re-execution",
+  "missing_git_objects": [],
+  "closures_and_files": [
+    {
+      "git_sha": "978e28e9b9b1d7a43d5b2ba83687900a417be4e8",
+      "version": 13,
+      "closure": "sha256:7e1ff3a5686de6916f1503db9c7bd9a15190692786a2248316b54b0b17a042ef",
+      "execution_authority_hash": "sha256:059ce322a2dc166d994305f49d37c1669238f1c3e8ef56801e5c42ab2a9d8ef0",
+      "rules": 98,
+      "execution_files": 394,
+      "bound_file_mismatches": [],
+      "parent_snapshot_binding_mismatches": []
+    },
+    {
+      "git_sha": "978e28e9b9b1d7a43d5b2ba83687900a417be4e8",
+      "version": 14,
+      "closure": "sha256:f60c44d34e4534517a7c23209480489774ca16cbb8a53f24387eacfc22015ff7",
+      "execution_authority_hash": "sha256:3ba6f8cdfa1abf431284af63c80ad4a325c6a40d747700e6f0cd2b8a352fa8d8",
+      "rules": 61,
+      "execution_files": 498,
+      "bound_file_mismatches": [],
+      "parent_snapshot_binding_mismatches": []
+    },
+    {
+      "git_sha": "ee289953812c197734b543bf5282fe1e44142931",
+      "version": 13,
+      "closure": "sha256:7dcd62f0628006a2488ebdb726995e077ce5f970641574937e321a34bf05e961",
+      "execution_authority_hash": "sha256:327578af29470b4e079e9e97886fc016c40baa71c0640c304c34950b4a0007f5",
+      "rules": 101,
+      "execution_files": 397,
+      "bound_file_mismatches": [],
+      "installed_snapshot_mismatches": [],
+      "installed_execution_mismatches": [],
+      "parent_snapshot_binding_mismatches": []
+    },
+    {
+      "git_sha": "ee289953812c197734b543bf5282fe1e44142931",
+      "version": 14,
+      "closure": "sha256:bbb4b095e0a5ba9c0593e5ab9be6f6c965f76ce6953833d6aeeb5b0d230ced1d",
+      "execution_authority_hash": "sha256:3fd61f851fcd11bc2173f45ded9609de4e972a9d317eebf48f18f41ba799cca7",
+      "rules": 61,
+      "execution_files": 501,
+      "bound_file_mismatches": [],
+      "installed_snapshot_mismatches": [],
+      "parent_snapshot_binding_mismatches": []
+    }
+  ],
+  "v14_complete_execution_in_C02_install_not_asserted": true
+}

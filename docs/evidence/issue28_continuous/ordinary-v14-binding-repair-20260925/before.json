@@ -1,0 +1,32 @@
+{
+  "record_type": "ISSUE28_ORDINARY_BINDING_REPAIR_BEFORE",
+  "fixed_git_head": "2c2aa8de5d070c598141237f45de82ee92b998a3",
+  "ci_run": 36016700987,
+  "ci_overall": "FAILURE",
+  "ordinary_root_cause_jobs": [
+    107690968984,
+    107690969121,
+    107690969130,
+    107690969303
+  ],
+  "update_status_jobs_to_recheck": [
+    107690969050,
+    107690969291
+  ],
+  "other_failed_jobs_not_assumed_same_cause": [
+    107690969426,
+    107690969443
+  ],
+  "cancelled_saved_source_job": 107690969253,
+  "v13_execution_ledger_binding": {
+    "sha256": "735accb3497190165e8b64f44f9819a4cfd4cd8c7fbf085c4a4f5d87a386691b",
+    "size": 16070
+  },
+  "actual_ledger_sha256": "50ff87a44129798805ecdcf203cefaabb3e8876997fa84f3e5a3c7bfd5170750",
+  "actual_ledger_size": 21018,
+  "v14_baseline_parent": "sha256:1711224d7715d81b066e304f5ba14f7b1501a96ec7b47095c25b5dedf76108f1",
+  "v14_transfer_parent": "sha256:047e4d4061740281e125ae8fde7ddf3277e0d00bf250b574c040c48bcf8f1bf8",
+  "at_8346_baseline_and_transfer_parent_both": "sha256:047e4d4061740281e125ae8fde7ddf3277e0d00bf250b574c040c48bcf8f1bf8",
+  "changed_at_7804842_only_baseline_parent": true,
+  "old_snapshots_rewritten": false
+}

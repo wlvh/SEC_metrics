@@ -1,0 +1,14 @@
+UTC 2026-10-06T04:33:40.401058+00:00
+saved report and terminal exactly retained fbbe22641c414be08f3e2fa96e155116 status=INPUT_FAILED
+saved report and terminal exactly retained 921cb9d513084d5f9836dce737234e74 status=CANDIDATE_READY
+CANDIDATE_RESULT sha256:6d1a5055b0482e991081bd1f7db5387f77b4976a0828a6633f745c57ab722851
+retained result matches execution; manifest {"run_id": "run:ordinary-integrated:b92605d4483d71511b17c2d679dc68149657d9f2ae18d47e2e1a7ab37b023f69", "requirement_id": "issue_54_v1", "requirement_closure_hash": "sha256:4931983d1429a31af8bb9ab113478bb6a368e6c7748066f89934f01081df7eed", "state": null}
+held native copy equals original runs/C02/manifest.json sha256=7e902516fb2f3195f809c0e9556ade06901fa3656a1f369af94de955d7872d04
+held native copy equals original runs/C02/records.jsonl sha256=6fd025826b5611eff03c1309fd29b65e58e1c28f9bc80223d714be2fc7bd1e5e
+held native copy equals original rows/C02/metrics_matrix.csv sha256=63ba1663f9443db534903e8b0b5705dd0d540916ee59c2c31590bc658772baa0
+held native copy equals original rows/C02/metric_evidence.csv sha256=73c6ef8075b42da4e6c02099ac5de4572c180ae0ee5fe42f36f50c1b8c1ceece
+exact register={"company_id": "jpmorgan_chase", "current_credit": "WITHDRAWN_EXACT_COMPANY_RESULT", "defect_id": "C02_JPMORGAN_COMPANY_ENTRY_2025_OWNER_AND_COMMITTEE_OMISSION_6d1a5055", "metric_id": "C02", "original_records_preserved": true, "own_evidence": "docs/evidence/issue28_continuous/company-entry-c02-integration-20261005/first-real-company-path-result.json", "period_end": "2025-12-31", "repair_state": "C02_SHARED_SELECTION_CORE_OWNER47; ordinary receiving/native developer successor pending full integration", "requirement_closure_hash": "sha256:4931983d1429a31af8bb9ab113478bb6a368e6c7748066f89934f01081df7eed", "result_id": "sha256:6d1a5055b0482e991081bd1f7db5387f77b4976a0828a6633f745c57ab722851", "run_id": "run:ordinary-integrated:b92605d4483d71511b17c2d679dc68149657d9f2ae18d47e2e1a7ab37b023f69", "source_blocks": [766, 767, 1244, 1245], "source_sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476", "summary": "Actual installedcompany entry reproduces missingJamesDimon and Stock/Executivecommittee names on the same original. Mechanical source/Run/CSV success is not complete C02. Only this exact result/version is confirmed."}
+metrics_matrix.csv rows=1 all exact ID/closure and CONFIRMED_INVALID
+metric_evidence.csv rows=34 all exact ID/closure and CONFIRMED_INVALID
+original native matrix retains nonempty TEXT_QUAL, unmodified exported native copy
+native selected item count=34

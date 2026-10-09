@@ -1,0 +1,38 @@
+{
+  "status": "PASS_INSTALLED_D01_V3_INDEPENDENT_COLD_READ",
+  "seconds": 53.467,
+  "receipt": {
+    "record_type": "ORDINARY_INTEGRATED_ROW_RECEIPT",
+    "status": "VERIFIED_OPEN_PREVIEW",
+    "run_id": "run:ordinary-integrated:557e26f5cc3e1ffe4ee5d79947a2911de78929852384ab69b4807e831e5e6ec1",
+    "run_status": "OPEN",
+    "result_id": "sha256:f8da54962750aa727051d66ba699bae53afbf21e2ce19a51abd023666f683f89",
+    "primary_metric_id": "D01",
+    "source_required_metric_ids": [
+      "D01"
+    ],
+    "presentation_policy_sha256": "f88cb1224a778237e2ce237a5e1c68827b228d3595cc9cf628a8e1c035937bbd",
+    "renderer_sha256": "fa9643e8ca2b662578efa176d7c2ab3a0a0790c6fd49c8a48da81c5051a4dd53",
+    "row_hash": "sha256:5ef13ba2ed44b992c68363e30bda6a40b77b64d995415ac52925a13ceec81f00",
+    "evidence_hash": "sha256:3e6ad6a88163bf8abfb061d39a93c06c3babd0dbea4be83ae5def55c1f9233bb",
+    "evidence_count": 56,
+    "source_validation": "FULL_NATIVE_RUN_REPLAY",
+    "production_authorized": false,
+    "source_credit": "VERIFIED_SEC_ACQUISITION",
+    "source_checkpoint_id": "sha256:1cc31c90e839e246c6ad82eb7eb7a6c9fa1de8247a6626cdd3866d3d8b6cf178",
+    "real_sec_credit": true,
+    "selected_new_request_attempt_ids": [
+      "request:attempt:c6dbfec98b82aa1ccf6b35fe7fedb537022086ee3ca6e86e90623654f6c45cf4",
+      "request:attempt:aeaf4ca3a2ab252131b0c8710cd2ef54343571a02424ee08b95a2374ab52f694"
+    ],
+    "receipt_id": "sha256:8a8527f078236fd1c69d8b5323fa7995d50c7e915d77becb2bb10cc9fc784e1e"
+  },
+  "original_source_checkout_forbidden": true,
+  "row_files_equal": true,
+  "attempt_bytes_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

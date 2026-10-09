@@ -1,0 +1,90 @@
+{
+  "record_type": "ISSUE28_C02_PEER4D_PRECOMMIT_TEST_TREE",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "base_commit_at_test": "137ecb24e15ab8f6e7da9beed58ff5c448cb70aa",
+  "worktree_uncommitted": true,
+  "fixed_peer_sha": "4d0b2b9d4718e36ec84ed87588863f98ba5e4bb9",
+  "files": {
+    "scripts/vnext/historical_board_composition_v2.py": {
+      "sha256": "73ec30fff3642eba9023c894119e10cbfebe63235e9d80bad0adbb106d37ba6b",
+      "git_blob": "cf7c0ac689d53b653f93286720323d76f0bed568"
+    },
+    "scripts/vnext/c02_composition_text_results.py": {
+      "sha256": "8ab64935ff69f3d1c71cf31c4a35f5aecfaac636f7adf71aedf214577b90b4e4",
+      "git_blob": "374ee2696f58930e441fec3c40e3430cb950c4c6"
+    },
+    "config/issue28_normal_results_v2.json": {
+      "sha256": "878c89379b52cb78038c6c1b30a9a8f93f01ddfeb6f8412eaa98af00ab9cd5f5",
+      "git_blob": "1d1de0bb50886e4debe9f11c846787f25b92ceef"
+    },
+    "tests/vnext/test_normal_c02_composition.py": {
+      "sha256": "1991b5727cb18c83aeea451ced84428aace24c39e2f938c8fbf19f0a1ff11fe8",
+      "git_blob": "5bbb95925ccfc24dd77624a0fa1349e75b39fe6c"
+    },
+    "requirements/issue_28_v13/decision_register.json": {
+      "sha256": "147b35fa5c34d441be1804f546e4428e51284eb0786bcb2bd315cbc00fdcc2c9",
+      "git_blob": "41d26a8c1c0294aa106140df691f515d62151eb1"
+    },
+    "requirements/issue_28_v13/baseline_manifest.json": {
+      "sha256": "e468560b8b2588c189ba95841b33f9d2250d65345c4e57efc09e3a8753ef06d1",
+      "git_blob": "92bac48d54b27f32e8ce464138475e03fbe0eb3d"
+    },
+    "requirements/issue_28_v14/baseline_manifest.json": {
+      "sha256": "b538537401f4eb70693762dea53f4b5455b94e2b16e54f794e248d572f54d447",
+      "git_blob": "4694ba1002db4aec9d17ddaab81abe0f6e29bf4b"
+    },
+    "requirements/issue_28_v14/transfer_manifest.json": {
+      "sha256": "4f7969c4e08fb696616f7a7acbca80b847c8a3ae7c45f17ff44c650968889aea",
+      "git_blob": "8613e619f679e2d650b46f13bafcc79bbe5a4403"
+    },
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/provider-wiring-v6-suspended.json": {
+      "sha256": "00e8ec46f009745302353bdc30a2ae86dd2b47d9b4755833b6575943327a5c98",
+      "git_blob": "652746be3a3f3766f47f8271604ea19ae0206c28"
+    },
+    "docs/evidence/issue28_continuous/b13-two-stage-offline-20260925/sec-wiring-v6-suspended.json": {
+      "sha256": "4a5f5f75fc2477e41bcb95172df6e4baa75025d8ac3894b7ec940da0084e2384",
+      "git_blob": "667fe1a34e70617198f21384a93f160b1473a725"
+    },
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring.json": {
+      "sha256": "99a3beedcbf6acae6770df28c6b2a40321b1727d33e752374de1fda01bd3cb34",
+      "git_blob": "00512709c90f0d8be53fdaa95d13ad96641ef6c0"
+    }
+  },
+  "current_v13_requirement_closure": "sha256:fe9daf95ff41a5e195a99a43171eb0f239c1f89ff480a348c07d2c64c5d305d9",
+  "current_v14_requirement_closure": "sha256:662f21af954006bf189b718ddfe392166e597cdfc78b46c4c5cf7d4359c7adc3",
+  "current_v14_execution_authority": "sha256:014bf555c70892e42aea1df22094ae7a609339e00f705696d8c0844fc204aa25",
+  "directed_tests": 11,
+  "fast_suite": {
+    "status": "PASSED",
+    "selectors": 144,
+    "duration_seconds": 63.545
+  },
+  "ten_company_candidate_evidence": {
+    "pass": 10,
+    "business_content_acceptance": false
+  },
+  "private_native_updates": {
+    "paramount": {
+      "result_id": "sha256:a80d4f4c541387dfaca82ce624c61c2130807a1be910c08e3bf60d55b769b818",
+      "run_id": "run:ordinary-integrated:39bef01913109baae8629489b37a097a802be8c3189748f7bf0fa87d597972d6",
+      "selected_original_source_blocks": 63,
+      "grouped_excerpt_count": 10,
+      "cold_read": "PUBLISHED/EXACT",
+      "business_content_acceptance": false
+    },
+    "salesforce": {
+      "result_id": "sha256:559663d28fdc519f4becdbf54e64e7ce737d5c98d6a73c4ac1faa09b72158c41",
+      "run_id": "run:ordinary-integrated:d781a0d086b0429765f2636aae4d68422d319cdf0abee6357176160f318d644c",
+      "selected_original_source_blocks": 64,
+      "grouped_excerpt_count": 36,
+      "cold_read": "PUBLISHED/EXACT",
+      "business_content_acceptance": false
+    }
+  },
+  "known_source_check": "docs/evidence/issue28_continuous/collab-c02-normal-20261001/peer4d-known-source-check.json",
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

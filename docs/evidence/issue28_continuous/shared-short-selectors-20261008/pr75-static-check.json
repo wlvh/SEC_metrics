@@ -1,0 +1,22 @@
+{
+  "fixed_receiver_sha": "46c30d29712c7db05a4550417fa5f9bccc3c97f7",
+  "patch_sha256": "8f226a48af7e96f3a7de45c51608be5cda4119638e2aa100611049d110620e9b",
+  "changed_paths": [
+    "tools/run_fast_tests_v2.py",
+    ".github/workflows/vnext-fast.yml"
+  ],
+  "selector_counts_by_static_source": {
+    "tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest": 2,
+    "tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks": 5,
+    "tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest": 9
+  },
+  "runner_function_AST_unchanged": true,
+  "cached_apply_check": "PASS",
+  "actual_consumer_tests_run_by_parent": false,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "reason": "Inherited foundation runner chooses its inherited fast set; explicit single-process step makes the new short classes execute in actual CI. Only append selectors, no runner function/test assertion changes."
+}

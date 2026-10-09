@@ -1,0 +1,17 @@
+# D03 reference-kind input correction: one SCAN
+
+Verdict: **SCAN_INCOMPLETE_NEEDS_CONTEXT**. This is one development-model reading of the supplied input. It is not a DeepSeek execution, semantic approval, or company completion.
+
+Only the delegated request file was read. Its SHA256 is `db4cb7c9c71e94e5f757cf3663d725585cd65298fd476a2d6089b48c2af05370`; preparation commit `f05e5b692985a2b805ec928a83c57fc5e2e21be5` is the supplied identity and was not independently read from Git. The input retains `max_tokens=4096`.
+
+The full internal system instruction and user metadata/category definitions were read. Both responsibility units were decoded in their supplied `row_layout.source_order` and all 412 native facts were read: unit 1 has 200 facts (original ordinals 229-428 with supplied nonnumeric ordering near its end); unit 2 has 212 facts (original ordinals 429-641 with the supplied gaps and nested fact ordering). All 408 blocks of the additional visible-text unit were read as context only. Shared context/unit/namespace dictionaries were inspected; a display gap at c-50 through c-56 was reread completely. Repeated fact attributes and expanded concept namespaces were checked structurally while displaying decoded rows. No semantic regular-expression extraction was built.
+
+Fact 442 states legal proceedings and claims but does not identify a governmental actor or investigation link. Fact 546 reports tax-authority settlement-related accounting decreases in 2023/2024 and a statute-of-limitations lapse in 2025; those facts do not prove a D03 investigation or its resolution. The response preserves that distinction and uses original `NATIVE_FACT` references throughout.
+
+All supplied responsibility rows were read, but eleven literal continuation targets are not supplied. Four exact initial context requests are retained in the raw response. No missing continuation, original Source, repository code, previous answer, parent reference, or correction conclusion was accessed. No context was fetched in this SCAN. Additional continuation content and its forward-chain size remain unknown, so `scan_complete=false` and `scope_current_involvement=UNRESOLVED`.
+
+The first raw displays exceeded tool output limits; their truncated portions were not treated as read. Segmented decoded views completed the supplied rows. The diagnostic metadata command also raised `KeyError: units`; it was corrected to the actual `source_units` key. These were display/decode corrections, not extra semantic model samples or response revisions.
+
+`response.log` was written once in exclusive-create mode. No rewriting, relabeling, deduplication, trimming, or post-save editing of that JSON is permitted. The diagnostic log records its exact SHA256, size and reading ranges.
+
+Resource record: 17 wrapper calls plus 17 nested shell calls through the save (conservative count 34), followed by one wrapper and one nested read-only verification (planned final conservative count 36, under 80). Two ordinary messages precede the final message (planned total 3). No precise total elapsed timer was separately instrumented; commands returned immediately, and no long waits were used. No provider or SEC call, account operation, commit/push, spawn, tar, other worktree, Issue #47/PR #52 action, or write outside this directory occurred. The 4096 output target was not changed; this local development response has no provider-reported output-token measurement.

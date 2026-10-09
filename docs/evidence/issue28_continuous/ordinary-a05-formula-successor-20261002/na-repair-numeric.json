@@ -1,0 +1,32 @@
+{
+  "record_type": "ISSUE28_A05_FORMULA_NA_REPAIR_NUMERIC_PRIVATE_UPDATE",
+  "tested_head_before_commit": "4a898335ed7a858b81ed041d926c9da56399fca7",
+  "changed_code_file_sha256": {
+    "scripts/vnext/normal_run_v3.py": "819c79e402c87d7df27c20bf8ae9f9f76021618db77314161cb5ad945ccfc0f5",
+    "scripts/vnext/ordinary_projection.py": "fa9643e8ca2b662578efa176d7c2ab3a0a0790c6fd49c8a48da81c5051a4dd53",
+    "scripts/vnext/ordinary_update_cycle.py": "a5cd2cf248b01a1d501fefc1a1f76a949a9dcee4044b9a362f310c355c6ced15",
+    "scripts/vnext/ordinary_a05_formula_update.py": "5ee5feef1da58c5393763b36f38668f3071acba9b1fad0187d39bb71d269d3cd",
+    "tools/vnext_normal_update.py": "6915f2d768dd59f1ed02f26ddb5ce89610a7318900dc6ec248e9517bea1d59a0"
+  },
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "processing_root": "/private/tmp/issue28-a05-formula-na-repair-20261002/sources/0f619501f8b0936dcd429212ce5cc51d04755ae11cf5484bd943a0403935b7e3",
+  "source_snapshot_id": "sha256:0f619501f8b0936dcd429212ce5cc51d04755ae11cf5484bd943a0403935b7e3",
+  "requirement_closure_hash": "sha256:aba2bdaa12b780c469adbd0a73cc71c5c26f9da6c86959de7f4643cc1c976eb4",
+  "elapsed_seconds": 114.022,
+  "status": "CANDIDATE_READY",
+  "attempt_id": "4c05e9c031d64687b29c5322555b7c1b",
+  "result_id": "sha256:b4af4d3bb42610f98df83d72080b168a4ed4cf25baa9e9a692b6bf5b72e6b9d7",
+  "value": "0.01353819078340816975991354239",
+  "formula": "Selected net income / ((current period-end total assets + prior period-end total assets) / 2)",
+  "public_row_sha256": "e882ad8749250f422191bf2323a899e124af1084d92e7a1bb7e3f9fb3ab3a9d3",
+  "old_numeric_result_id_same": true,
+  "legacy_exports_disabled": 116,
+  "protected_ledger_source_log_active_unchanged": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "current_390_credit": false,
+  "production_authorized": false
+}

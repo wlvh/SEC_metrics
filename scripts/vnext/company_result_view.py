@@ -284,6 +284,8 @@ def build_company_view(*, root, company_id, current, defect_registry=None):
                     'latest_attempt_status': outcome['status'], 'reason': outcome.get('reason'),
                     'source_checkpoint_id': report['source_checkpoint_id'], 'run_id': None,
                     'result_validity': 'NO_RESULT', 'current_input_matches': False}
+                if outcome.get('development_review_id'):
+                    pending[(outcome['metric_id'], str(report.get('period_request')))]['development_review_id'] = outcome['development_review_id']
     existing = list(entries)
     for value in pending.values():
         requested = value.get('period_request') or {}
@@ -291,11 +293,33 @@ def build_company_view(*, root, company_id, current, defect_registry=None):
             (not requested.get('report_end') or e['period']['period_end'] == requested['report_end']) and
             (not requested.get('fiscal_year') or e['period']['fiscal_year'] == requested['fiscal_year']) for e in existing)
         if not matched: entries.append(value)
-    return {'record_type': 'COMPANY_RESULT_VIEW_V2', 'company_id': company_id,
+    view = {'record_type': 'COMPANY_RESULT_VIEW_V2', 'company_id': company_id,
             'source_checkpoint_id': current['checkpoint_id'], 'metrics': entries,
             'latest_execution': reports[-1] if reports else None,
             'defect_registry_supplied': defect_registry is not None,
             'production_authorized': False, 'new_business_calls': {'provider': 0, 'paid': 0, 'sec': 0}}
+    reviews = []
+    for path in sorted((root/'development/C02').glob('*/receipt.json')):
+        need(not path.is_symlink(), 'COMPANY_C02_REVIEW_RECEIPT_ALIAS')
+        receipt = strict_json_file(path=path)
+        need(receipt.get('company_id') == company_id and receipt.get('metric_id') == 'C02'
+             and receipt.get('review_id') == content_hash(value={k: v for k, v in receipt.items() if k != 'review_id'}),
+             'COMPANY_C02_REVIEW_RECEIPT_CHANGED')
+        reviews.append({'company_id': company_id, 'metric_id': 'C02',
+            'development_review_id': receipt['review_id'], 'work_root': str(path.parent),
+            'runtime_root': receipt['runtime_root'], 'source_checkpoint_id': receipt['source_checkpoint_id'],
+            'requirement_id': receipt['requirement_id'], 'requirement_closure_hash': receipt['requirement_closure_hash'],
+            'candidate_hash': receipt['candidate_hash'], 'review_unit_hash': receipt['review_unit_hash'],
+            'original_candidate_hash': receipt['original_candidate_hash'],
+            'period': receipt['target'], 'latest_attempt_status': 'REVIEW_REQUIRED',
+            'result_validity': 'DEVELOPMENT_PENDING_NOT_REPLAYED', 'business_metric_completed': False})
+    if reviews:
+        ids = {r['development_review_id'] for r in reviews}
+        # The explicit, replayable pending row replaces its generic no-Run
+        # status row, never a historical native Result or a missing receipt.
+        view['metrics'] = [e for e in view['metrics'] if e.get('development_review_id') not in ids]
+        view['development_reviews'] = reviews
+    return view
 
 
 def read_company_results(*, state_root, company_id, defects_file=None, runtime_roots=()):

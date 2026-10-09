@@ -41,7 +41,7 @@ def main(argv=None):
                                   for p in target.parents):
             parser.error("output exists or belongs to a publication workspace")
     if args.process:
-        from vnext.ordinary_d02_category_update_v2 import run_company as run_ordinary_company
+        from vnext.ordinary_d01_header_update_v3 import run_company as run_ordinary_company
         from vnext.normal_annual_input import _registry_rows
         from vnext.normal_run_v3 import _policy, update_metric_ids
         companies=[c['company_id'] for c in _registry_rows(repo_root=ROOT)]

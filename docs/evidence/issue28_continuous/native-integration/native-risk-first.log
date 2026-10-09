@@ -1,0 +1,27 @@
+install
+{'record_type': 'VERIFIED_NORMAL_SAVED_INPUTS', 'trusted_baseline_commit': '10854a976a021005bdbb54a32afb9900bdb53270', 'source_manifest_sha256': '6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716', 'request_attempt_ids': ['request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085', 'request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1', 'request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321'], 'source_credit': 'PREEXISTING_SAVED_ACQUISITIONS_ONLY', 'new_business_calls': {'provider': 0, 'paid': 0, 'sec': 0}}
+create
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_candidates.py", line 149, in create_risk_heading_run
+    manifest, stored, _ = _finish_run(data_root=data_root, run_dir=run_dir, freeze=freeze)
+                          ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_candidates.py", line 83, in _finish_run
+    return _mechanically_replay_open_run(run_dir=run_dir, repo_root=data_root,
+                                        require_complete_results=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3357, in _mechanically_replay_open_run
+    _validate_record_graph(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2549, in _validate_record_graph
+    _, _, expected_observations, _ = text_review_replay(review_unit)
+                                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2311, in text_review_replay
+    raise RunStoreError("Text Evidence differs from original bytes")
+vnext.run_store.RunStoreError: Text Evidence differs from original bytes

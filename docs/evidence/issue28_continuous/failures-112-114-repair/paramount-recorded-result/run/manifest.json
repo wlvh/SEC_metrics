@@ -1,0 +1,83 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "OPEN",
+  "records_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "a1124fc7e47c1da1759962a5707c9b760f2c1f7cb8d929160d6904bda8b80ad3",
+  "content_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "audit_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "run_id": "run:ordinary-integrated:cbd5eaea11301ba2641bbe0c8a301eab3ff46b657cb4daad6964737afdefee96",
+  "company_id": "paramount_skydance_paramount_global",
+  "company_traits": [
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:ca0329884451e51380468f4ffee24a484a67e6571f3a5691acb4794319770a99",
+      "raw_asset_id": "sha256:4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+      "company_id": "paramount_skydance_paramount_global",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm",
+      "accession": "0002041610-26-000011",
+      "document_name": "psky-20251231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:99822f51d1d96ec0fe592a78064a03098f2a1d3cb31d5f5be0d783abeb5f50bd"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:2d5810dda4f3b5b9814d047eb13eba5ab112aae33c56dcc3d3eeed04873c2c16",
+      "raw_asset_id": "sha256:10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0",
+      "company_id": "paramount_skydance_paramount_global",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+      "accession": "0001140361-26-016758",
+      "document_name": "ef20071103_10ka.htm",
+      "source_role": "annual_amendment",
+      "request_attempt_id": "request:attempt:ca0adc7cd7b53d67089bb2d81793745e5f78f0f6c7100ac896f4600dd2d0ea71"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:bc7dfc164ab41e0fcb23c47b4f741d4cad5ef012cc3d2f380847bc470689b947",
+      "raw_asset_id": "sha256:322c91378d5446587fa712417a24557a507ea0fb3b3590e1e90b4516560ad103",
+      "company_id": "paramount_skydance_paramount_global",
+      "source_url": "https://data.sec.gov/submissions/CIK0002041610.json",
+      "accession": "SUBMISSIONS-2041610",
+      "document_name": "CIK0002041610.json",
+      "source_role": "supporting_input",
+      "request_attempt_id": "request:attempt:98d4ba07a2daed1c2e2730244ad274f701e586a0f8dd2b3fd68429250b3b75fb"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:ef6215ded6e8be1838ab3f0c6484bcf81f11bd488934c659bf6bf9fc6df3c48d",
+      "raw_asset_id": "sha256:19dd254e15903395dc75f8ab9e58822d2737275f9fc93a869a68f5b5fcec52bf",
+      "company_id": "paramount_skydance_paramount_global",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0002041610.json",
+      "accession": "0002041610-26-000011",
+      "document_name": "CIK0002041610.json",
+      "source_role": "supporting_input",
+      "request_attempt_id": "request:attempt:e6e256328eb75c4b1db4eafde1643cfd8f432ced9c0d0338747d01c9eb54bd9e"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r6/D04_going_concern_assessment_v1.md": "b0d4e25d4af8b49ca99efda0f04abd127258b12f0a2d0110c33fccb66faeed7f"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "a5107f8530d1aa145c28628e76e83ae727801baac1c74e161f200512ec0dfcaf",
+    "contract_sha256": "8f7f0365e7b8db15323bee994fa070759b2b819ee4402ff0e1217e4e20b0d9b2",
+    "decision_register_sha256": "229a634e1986396e1599b6a8abd4ddd2d048f16a9e7708c08f761e7ac7f5edce",
+    "invariant_profile_sha256": "4d0537c352c05ccdc1449285c8bc130c4362683a74a29440783cabf0df79169d",
+    "transfer_manifest_sha256": "970630546c6bb95f3ced795aaac2c81533fb10c1467fbd5386049bf85278c5cd",
+    "parent_requirement_closure_hash": "sha256:1711224d7715d81b066e304f5ba14f7b1501a96ec7b47095c25b5dedf76108f1",
+    "validator_sha256": "794923cf5838664dfe0a7dafc91bab4d022ce59edebc6545535857ff2d4e8b4a"
+  },
+  "requirement_closure_hash": "sha256:563e17853bf2d57a62aec236283e573c7cf1deab720031bd739379fc1df399ed",
+  "requirement_id": "issue_28_v14",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

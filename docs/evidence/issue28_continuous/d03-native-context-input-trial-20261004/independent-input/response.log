@@ -1,0 +1,47 @@
+{
+  "reviewed_unit_ids": [
+    "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9",
+    "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666"
+  ],
+  "findings": [
+    {
+      "kind": "UNRESOLVED",
+      "subject": "Marriott International, Inc. and consolidated subsidiaries",
+      "event_dates": [],
+      "reported_context_times": ["FY2025", "filed 2026-02-10"],
+      "status": "UNRESOLVED",
+      "evidence": [{"unit_id": "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666", "kind": "NATIVE_FACTS", "source_index": 442}],
+      "description": "The Company states it is subject to various legal proceedings and claims with uncertain outcomes. No particular matter, authority, investigated target or event date is identified; neither government involvement nor exclusively private litigation is established. The accompanying accrual/review policy supplies no such link."
+    },
+    {
+      "kind": "OTHER_MEANING",
+      "subject": "Marriott consolidated tax benefits; unspecified taxing authorities",
+      "event_dates": [],
+      "reported_context_times": ["FY2023", "FY2024", "FY2025 roll-forward"],
+      "status": "HISTORICAL",
+      "evidence": [{"unit_id": "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666", "kind": "NATIVE_FACTS", "source_index": 546}],
+      "description": "The unrecognized-tax-benefit table reports decreases attributable to settlements with taxing authorities of $9 million in 2023 and $2 million in 2024; the 2025 $106 million decrease is attributed to lapse of limitations. No investigation or enforcement link, case identity, precise event date or present status is given. These accounting changes do not establish resolution of a government investigation."
+    },
+    {
+      "kind": "OTHER_MEANING",
+      "subject": "Marriott income-tax disclosure",
+      "event_dates": [],
+      "reported_context_times": ["FY2025"],
+      "status": "CONTEXT_ONLY",
+      "evidence": [{"unit_id": "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666", "kind": "NATIVE_FACTS", "source_index": 507}],
+      "description": "INCOME TAXES is a heading, not a government action. Its explicit continuedat f-497-1 is absent from this input, so the heading cannot establish the content or current status of the full tax disclosure."
+    }
+  ],
+  "scope_current_involvement": "UNRESOLVED",
+  "unresolved": [
+    "Tax disclosure continuation f-497-1 (source index 507) and tax-policy continuation f-408-1 (418) are missing. Their original text and literal forward continuations are needed to assess any authority-process link or current status; no content is inferred.",
+    "The generic legal-proceedings statement at 442 gives no exact locator to particular matters. Its authority, matters, counterparties and government/private distinction remain unresolved; no invented location or case count is supplied.",
+    "Other responsibility facts also have absent continuedat targets: 389/f-379-1, 391/f-381-1, 394/f-384-1, 395/f-385-1, 428/f-418-1, 445/f-435-1, 446/f-436-1, 454/f-444-1 and 480/f-470-1. Their supplied accounting text/headers are not investigation facts, but their unsupplied continuations were not assessed. The two tax locations are prioritized within the bounded context round; remaining missing content is not silently treated as reviewed.",
+    "The identity/background unit is context only. These two responsibility units are not a whole-company coverage set, and neither a missing investigation mention nor the filing date proves absence or ongoing involvement."
+  ],
+  "scan_complete": false,
+  "context_requests": [
+    {"anchor": {"unit_id": "sha256:c54e0429db2d3eb364dbd0c69e432e81c9941e495ab069f713fee32ec16b7666", "kind": "NATIVE_FACTS", "source_index": 507}, "target": {"kind": "XML_ELEMENT_ID", "element_id": "f-497-1"}},
+    {"anchor": {"unit_id": "sha256:3345ce064f9231ae17b6b0133c01f16d4bc21ed1866bd7c9e1bf22fa7760d5b9", "kind": "NATIVE_FACTS", "source_index": 418}, "target": {"kind": "XML_ELEMENT_ID", "element_id": "f-408-1"}}
+  ]
+}

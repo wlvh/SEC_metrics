@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/invocation_control.py", line 1109, in _exclusive_write_bytes
+    descriptor = os.open(path, flags, 0o600)
+FileExistsError: [Errno 17] File exists: '/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs/config/issue28_normal_results_v2.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_ordinary_refresh.py", line 39, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_ordinary_refresh.py", line 30, in main
+    result = refresh_and_process(session=live_sec_session(), state_root=args.state_root,
+        company_ids=args.company, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
+        max_provider_requests=args.max_provider_requests, c04_successor=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_refresh_cycle.py", line 110, in refresh_and_process
+    initialize_source_inputs(root=session.data_root, requirement=session.requirement)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 74, in initialize_source_inputs
+    _exclusive_write_bytes(path=root/relative,content=raw)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/invocation_control.py", line 1112, in _exclusive_write_bytes
+    raise InvocationControlError("Immutable receipt bytes differ")
+vnext.invocation_control.InvocationControlError: Immutable receipt bytes differ

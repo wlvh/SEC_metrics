@@ -1,0 +1,13 @@
+--- a/scripts/vnext/ordinary_isolated_publication.py
++++ b/scripts/vnext/ordinary_isolated_publication.py
+@@ -350,7 +350,9 @@
+ def guard_mirror_repair(*, publication_root):
+     root, selected = _edge()
+     need(publication_root == root, 'ORDINARY_PUBLICATION_MIRROR_ROOT_CHANGED')
+-    view = pub.PublicationView.open(publication_root=root)
++    # recover_publication_mirrors already holds this root's exclusive lock.
++    view = pub.PublicationView._open_paths(
++        publications_dir=root / 'outputs/publications', pointer_path=root / 'outputs/active_publication.json')
+     need(view.publication_id in {selected['publication_id'], selected['previous_publication_id']},
+          'ORDINARY_PUBLICATION_MIRROR_EDGE_CHANGED')
+ 

@@ -1,0 +1,27 @@
+UTC_START: 2026-10-04T15:50:00.028069+00:00
+PASS actual3259 owners,16 wires,exact restored native payloads/dictionaries/wrappers/rawXML,descriptors,visible context,relation fixed points and chain paths
+PASS shared context without duplicated ownership: 36 occurrences
+PASS actual five fact-footnote endpoint sets
+PASS actual27 complete chains and72 retained physical segments
+PASS actual source bytes untouched
+PASS saved Marriott200000 limit,4096 reserve,max149722
+PASS saved JPM473727 stop with zero executable requests; not retokenized
+PASS bool position: D03_MAPPING_OWNER_REFERENCE_SHAPE
+PASS bool index: D03_MAPPING_OWNER_REFERENCE_SHAPE
+PASS float position: D03_MAPPING_OWNER_REFERENCE_SHAPE
+PASS unit-kind alias: D03_MAPPING_OWNER_SET_CHANGED
+PASS duplicate owner: D03_MAPPING_OWNER_SET_CHANGED
+PASS missing owner: D03_MAPPING_OWNER_SET_CHANGED
+PASS mapping refs mutation: D03_MAPPING_MAPPING_CHANGED
+PASS mapping items mutation: D03_MAPPING_MAPPING_CHANGED
+PASS mapping units mutation: D03_MAPPING_MAPPING_CHANGED
+PASS mapping chains mutation: D03_MAPPING_MAPPING_CHANGED
+PASS mapping root_owner mutation: D03_MAPPING_MAPPING_CHANGED
+PASS mapping relations mutation: D03_MAPPING_MAPPING_CHANGED
+PASS native source mutation against pinned digest: D03_CONTEXT_SOURCE_CHANGED
+PASS partial view output mutation leaves original source unchanged
+PASS indivisible native resource stop retains all responsibilities without truncation
+PASS explicit full-context native resource stop reason
+ASSERTION_GROUPS: 23
+NO_NETWORK_SUBPROCESS_MODEL_OR_JPM_RETOKENIZATION: true
+UTC_END: 2026-10-04T15:50:00.577771+00:00

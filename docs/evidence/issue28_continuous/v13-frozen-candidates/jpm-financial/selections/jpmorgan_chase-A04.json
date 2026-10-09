@@ -1,0 +1,1506 @@
+{
+  "reason_code": "PASS",
+  "source_semantics_passed": true,
+  "classification": "VERIFIED_SOURCE_FACT",
+  "source_fact": {
+    "record_type": "NIM_SOURCE_RELATIONSHIP_COMPONENT",
+    "schema_version": 1,
+    "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "source_size": 12927325,
+    "source_entity_cik": "19617",
+    "source_fiscal_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "task_contract_hash": "sha256:7f313b727f7ebcb9f5aacd3f2bcbbcc50a7000c612ae5cd16c5ecfe1e6487b3d",
+    "metric_id": "A04",
+    "status": "RELATIONSHIP_PROVEN",
+    "relations": [
+      {
+        "mechanism": "SAME_TABLE_NAMED_ROLES_WITH_REPORTED_FTE_BRIDGE",
+        "rate_locator": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 10,
+          "column_index": 3,
+          "origin_row_index": 10,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "2.50&#160;",
+          "text": "2.50"
+        },
+        "role_labels": {
+          "net_yield": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 10,
+            "column_index": 0,
+            "origin_row_index": 10,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nNet yield on average interest-earning assets &#8211; managed basis",
+            "text": "Net yield on average interest-earning assets – managed basis"
+          },
+          "managed_numerator": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 4,
+            "column_index": 0,
+            "origin_row_index": 4,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "Net interest income &#8211; managed basis",
+            "text": "Net interest income – managed basis"
+          },
+          "denominator": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 7,
+            "column_index": 0,
+            "origin_row_index": 7,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nAverage interest-earning assets(a)",
+            "text": "Average interest-earning assets(a)"
+          },
+          "fte_adjustment": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 3,
+            "column_index": 0,
+            "origin_row_index": 3,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "Fully taxable-equivalent adjustments",
+            "text": "Fully taxable-equivalent adjustments"
+          },
+          "reported_numerator": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 2,
+            "column_index": 0,
+            "origin_row_index": 2,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nNet interest income &#8211; reported(a)",
+            "text": "Net interest income – reported(a)"
+          }
+        },
+        "source_roles": {
+          "net_yield": {
+            "locator": {
+              "table_id": "table_000100",
+              "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+              "row_index": 10,
+              "column_index": 3,
+              "origin_row_index": 10,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "2.50&#160;",
+              "text": "2.50"
+            },
+            "header_evidence": [
+              {
+                "table_id": "table_000100",
+                "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+                "row_index": 1,
+                "column_index": 3,
+                "origin_row_index": 1,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ],
+            "canonical_value": "0.025",
+            "canonical_unit": "ratio",
+            "amount_scale": null
+          },
+          "managed_numerator": {
+            "locator": {
+              "table_id": "table_000100",
+              "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+              "row_index": 4,
+              "column_index": 4,
+              "origin_row_index": 4,
+              "origin_column_index": 4,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "95,868&#160;",
+              "text": "95,868"
+            },
+            "header_evidence": [
+              {
+                "table_id": "table_000100",
+                "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+                "row_index": 1,
+                "column_index": 3,
+                "origin_row_index": 1,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ],
+            "canonical_value": "95868000000",
+            "canonical_unit": "USD",
+            "amount_scale": {
+              "unit": "USD",
+              "factor": "1000000",
+              "source_cells": [
+                {
+                  "table_id": "table_000100",
+                  "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+                  "row_index": 1,
+                  "column_index": 0,
+                  "origin_row_index": 1,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3,
+                  "raw_text": "Year ended December 31, \n(in millions, except rates)",
+                  "text": "Year ended December 31, (in millions, except rates)"
+                }
+              ]
+            }
+          },
+          "denominator": {
+            "locator": {
+              "table_id": "table_000100",
+              "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+              "row_index": 7,
+              "column_index": 4,
+              "origin_row_index": 7,
+              "origin_column_index": 4,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "3,834,359&#160;",
+              "text": "3,834,359"
+            },
+            "header_evidence": [
+              {
+                "table_id": "table_000100",
+                "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+                "row_index": 1,
+                "column_index": 3,
+                "origin_row_index": 1,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ],
+            "canonical_value": "3834359000000",
+            "canonical_unit": "USD",
+            "amount_scale": {
+              "unit": "USD",
+              "factor": "1000000",
+              "source_cells": [
+                {
+                  "table_id": "table_000100",
+                  "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+                  "row_index": 1,
+                  "column_index": 0,
+                  "origin_row_index": 1,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3,
+                  "raw_text": "Year ended December 31, \n(in millions, except rates)",
+                  "text": "Year ended December 31, (in millions, except rates)"
+                }
+              ]
+            }
+          },
+          "fte_adjustment": {
+            "locator": {
+              "table_id": "table_000100",
+              "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+              "row_index": 3,
+              "column_index": 3,
+              "origin_row_index": 3,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "425&#160;",
+              "text": "425"
+            },
+            "header_evidence": [
+              {
+                "table_id": "table_000100",
+                "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+                "row_index": 1,
+                "column_index": 3,
+                "origin_row_index": 1,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ],
+            "canonical_value": "425000000",
+            "canonical_unit": "USD",
+            "amount_scale": {
+              "unit": "USD",
+              "factor": "1000000",
+              "source_cells": [
+                {
+                  "table_id": "table_000100",
+                  "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+                  "row_index": 1,
+                  "column_index": 0,
+                  "origin_row_index": 1,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3,
+                  "raw_text": "Year ended December 31, \n(in millions, except rates)",
+                  "text": "Year ended December 31, (in millions, except rates)"
+                }
+              ]
+            }
+          },
+          "reported_numerator": {
+            "locator": {
+              "table_id": "table_000100",
+              "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+              "row_index": 2,
+              "column_index": 4,
+              "origin_row_index": 2,
+              "origin_column_index": 4,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "95,443&#160;",
+              "text": "95,443"
+            },
+            "header_evidence": [
+              {
+                "table_id": "table_000100",
+                "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+                "row_index": 1,
+                "column_index": 3,
+                "origin_row_index": 1,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ],
+            "canonical_value": "95443000000",
+            "canonical_unit": "USD",
+            "amount_scale": {
+              "unit": "USD",
+              "factor": "1000000",
+              "source_cells": [
+                {
+                  "table_id": "table_000100",
+                  "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+                  "row_index": 1,
+                  "column_index": 0,
+                  "origin_row_index": 1,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3,
+                  "raw_text": "Year ended December 31, \n(in millions, except rates)",
+                  "text": "Year ended December 31, (in millions, except rates)"
+                }
+              ]
+            }
+          }
+        },
+        "rate_check": {
+          "disclosed_ratio": "0.025",
+          "computed_ratio_for_validation_only": "0.02500235371805300442655473835",
+          "source_display_decimal_places": 2,
+          "canonical_rounding_quantum": "0.0001",
+          "rounding": "ROUND_HALF_EVEN",
+          "consistent": true,
+          "result_value_remains_source_disclosed": true
+        },
+        "duration_evidence": {
+          "record_type": "FINANCIAL_MEASUREMENT_DURATION_COMPONENT",
+          "schema_version": 1,
+          "revision": "SOURCE_MEASUREMENT_DURATION_V1",
+          "status": "PASSED",
+          "reasons": [],
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "source_size": 12927325,
+          "arguments": {
+            "expected_source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "table_id": "table_000100",
+            "row_index": 10,
+            "column_index": 3,
+            "measurement_aliases": [
+              "Net yield on average interest-earning assets – managed basis"
+            ],
+            "required_row_terms": [
+              "managed basis"
+            ],
+            "reported_unit": "percent",
+            "claimed_period_start": "2025-01-01",
+            "claimed_period_end": "2025-12-31"
+          },
+          "selected_cell": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 10,
+            "column_index": 3,
+            "origin_row_index": 10,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 2,
+            "raw_text": "2.50&#160;",
+            "text": "2.50"
+          },
+          "measurement_row": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 10,
+            "column_index": 0,
+            "origin_row_index": 10,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nNet yield on average interest-earning assets &#8211; managed basis",
+            "text": "Net yield on average interest-earning assets – managed basis"
+          },
+          "table_source_span": {
+            "table_order": 99,
+            "start_byte": 2393028,
+            "end_byte": 2415451,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:326",
+              "div:1",
+              "div:3",
+              "table:1"
+            ],
+            "span_sha256": "c2d6d95d58f798f102a59932fafd4ac8ac54bc7aef95dd75c1c67bc6e582b672"
+          },
+          "column_period_evidence": [
+            {
+              "table_id": "table_000100",
+              "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+              "row_index": 1,
+              "column_index": 3,
+              "origin_row_index": 1,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "2025",
+              "text": "2025"
+            }
+          ],
+          "linked_footnotes": [],
+          "annual_header_evidence": [
+            {
+              "table_id": "table_000100",
+              "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+              "row_index": 1,
+              "column_index": 0,
+              "origin_row_index": 1,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Year ended December 31, \n(in millions, except rates)",
+              "text": "Year ended December 31, (in millions, except rates)"
+            }
+          ],
+          "unit_evidence_cells": [
+            {
+              "table_id": "table_000100",
+              "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+              "row_index": 10,
+              "column_index": 5,
+              "origin_row_index": 10,
+              "origin_column_index": 5,
+              "rowspan": 1,
+              "colspan": 1,
+              "raw_text": "%",
+              "text": "%"
+            }
+          ],
+          "unit_evidence_footnote_spans": [],
+          "measurement_period": {
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31",
+            "duration_months": 12
+          },
+          "duration_basis": "EXPLICIT_ANNUAL_TABLE_HEADER",
+          "qualification_credit": "NONE_COMPONENT_ONLY",
+          "publication_credit": "NONE",
+          "duration_receipt_id": "sha256:379eea9af679b1f046c86a4bb32af9883c398d949f190a0eaa855147b48b3b1e"
+        },
+        "basis": "managed_basis",
+        "subject_binding": {
+          "kind": "SAME_UNQUALIFIED_ORIGINAL_TABLE_ROWS",
+          "table_id": "table_000100"
+        },
+        "reporting_declarations": {
+          "status": "NO_ASSOCIATED_REPORTING_CONTRADICTION",
+          "conflicts": [],
+          "associated_qualifying_statements": []
+        }
+      }
+    ],
+    "rejected_candidates": [],
+    "named_role_census": [
+      {
+        "role": "fte_adjustment",
+        "label": {
+          "table_id": "table_000098",
+          "grid_sha256": "sha256:061c51e8e706592dc6d04db272f6a959c2bd61b6ad60ceccf357d8821a7814e6",
+          "row_index": 2,
+          "column_index": 9,
+          "origin_row_index": 2,
+          "origin_column_index": 9,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nFully taxable-equivalent adjustments(a)",
+          "text": "Fully taxable-equivalent adjustments(a)"
+        }
+      },
+      {
+        "role": "fte_adjustment",
+        "label": {
+          "table_id": "table_000098",
+          "grid_sha256": "sha256:061c51e8e706592dc6d04db272f6a959c2bd61b6ad60ceccf357d8821a7814e6",
+          "row_index": 2,
+          "column_index": 27,
+          "origin_row_index": 2,
+          "origin_column_index": 27,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nFully taxable-equivalent adjustments(a)",
+          "text": "Fully taxable-equivalent adjustments(a)"
+        }
+      },
+      {
+        "role": "fte_adjustment",
+        "label": {
+          "table_id": "table_000098",
+          "grid_sha256": "sha256:061c51e8e706592dc6d04db272f6a959c2bd61b6ad60ceccf357d8821a7814e6",
+          "row_index": 2,
+          "column_index": 42,
+          "origin_row_index": 2,
+          "origin_column_index": 42,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nFully taxable-equivalent adjustments(a)",
+          "text": "Fully taxable-equivalent adjustments(a)"
+        }
+      },
+      {
+        "role": "reported_numerator",
+        "label": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 2,
+          "column_index": 0,
+          "origin_row_index": 2,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nNet interest income &#8211; reported(a)",
+          "text": "Net interest income – reported(a)"
+        }
+      },
+      {
+        "role": "fte_adjustment",
+        "label": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 3,
+          "column_index": 0,
+          "origin_row_index": 3,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Fully taxable-equivalent adjustments",
+          "text": "Fully taxable-equivalent adjustments"
+        }
+      },
+      {
+        "role": "managed_numerator",
+        "label": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 4,
+          "column_index": 0,
+          "origin_row_index": 4,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Net interest income &#8211; managed basis",
+          "text": "Net interest income – managed basis"
+        }
+      },
+      {
+        "role": "denominator",
+        "label": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 7,
+          "column_index": 0,
+          "origin_row_index": 7,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nAverage interest-earning assets(a)",
+          "text": "Average interest-earning assets(a)"
+        }
+      },
+      {
+        "role": "net_yield",
+        "label": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 10,
+          "column_index": 0,
+          "origin_row_index": 10,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nNet yield on average interest-earning assets &#8211; managed basis",
+          "text": "Net yield on average interest-earning assets – managed basis"
+        }
+      },
+      {
+        "role": "fte_adjustment",
+        "label": {
+          "table_id": "table_000101",
+          "grid_sha256": "sha256:9263b71a72c44d3172b29ee334457602c875efbf4ca466e48b894dc607f2cd03",
+          "row_index": 2,
+          "column_index": 0,
+          "origin_row_index": 2,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nFully taxable-equivalent adjustments",
+          "text": "Fully taxable-equivalent adjustments"
+        }
+      },
+      {
+        "role": "total_earning_assets",
+        "label": {
+          "table_id": "table_000659",
+          "grid_sha256": "sha256:390951b7037780090b8b847e00f8ec2d8d562514e41d70f76676577d25e533a1",
+          "row_index": 14,
+          "column_index": 0,
+          "origin_row_index": 14,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Total interest-earning assets",
+          "text": "Total interest-earning assets"
+        }
+      },
+      {
+        "role": "total_earning_assets",
+        "label": {
+          "table_id": "table_000663",
+          "grid_sha256": "sha256:53dd45bb4f047c934fd98811c94d629c7a5a7a33657d087d9df4d2c227a873c9",
+          "row_index": 24,
+          "column_index": 0,
+          "origin_row_index": 24,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Total interest-earning assets",
+          "text": "Total interest-earning assets"
+        }
+      }
+    ],
+    "same_named_rate_census": [
+      {
+        "label": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 10,
+          "column_index": 0,
+          "origin_row_index": 10,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nNet yield on average interest-earning assets &#8211; managed basis",
+          "text": "Net yield on average interest-earning assets – managed basis"
+        },
+        "locator": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 10,
+          "column_index": 3,
+          "origin_row_index": 10,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "2.50&#160;",
+          "text": "2.50"
+        },
+        "column_headers": [
+          {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 1,
+            "column_index": 3,
+            "origin_row_index": 1,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "2025",
+            "text": "2025"
+          }
+        ],
+        "disposition": "SOURCE_NAMED_NIM_RELATIONSHIP"
+      },
+      {
+        "label": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 10,
+          "column_index": 0,
+          "origin_row_index": 10,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nNet yield on average interest-earning assets &#8211; managed basis",
+          "text": "Net yield on average interest-earning assets – managed basis"
+        },
+        "locator": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 10,
+          "column_index": 6,
+          "origin_row_index": 10,
+          "origin_column_index": 6,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "2.63&#160;",
+          "text": "2.63"
+        },
+        "column_headers": [
+          {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 1,
+            "column_index": 6,
+            "origin_row_index": 1,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "2024",
+            "text": "2024"
+          }
+        ],
+        "disposition": "DIFFERENT_SOURCE_YEAR"
+      },
+      {
+        "label": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 10,
+          "column_index": 0,
+          "origin_row_index": 10,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nNet yield on average interest-earning assets &#8211; managed basis",
+          "text": "Net yield on average interest-earning assets – managed basis"
+        },
+        "locator": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 10,
+          "column_index": 12,
+          "origin_row_index": 10,
+          "origin_column_index": 12,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "2.70&#160;",
+          "text": "2.70"
+        },
+        "column_headers": [
+          {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 1,
+            "column_index": 12,
+            "origin_row_index": 1,
+            "origin_column_index": 12,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "2023",
+            "text": "2023"
+          }
+        ],
+        "disposition": "DIFFERENT_SOURCE_YEAR"
+      },
+      {
+        "label": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 12,
+          "column_index": 0,
+          "origin_row_index": 12,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nNet yield on average interest-earning assets excluding Markets",
+          "text": "Net yield on average interest-earning assets excluding Markets"
+        },
+        "locator": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 12,
+          "column_index": 3,
+          "origin_row_index": 12,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "3.75&#160;",
+          "text": "3.75"
+        },
+        "column_headers": [
+          {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 1,
+            "column_index": 3,
+            "origin_row_index": 1,
+            "origin_column_index": 3,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "2025",
+            "text": "2025"
+          }
+        ],
+        "disposition": "EXPLICIT_MARKETS_EXCLUDED_MEASURE"
+      },
+      {
+        "label": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 12,
+          "column_index": 0,
+          "origin_row_index": 12,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nNet yield on average interest-earning assets excluding Markets",
+          "text": "Net yield on average interest-earning assets excluding Markets"
+        },
+        "locator": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 12,
+          "column_index": 6,
+          "origin_row_index": 12,
+          "origin_column_index": 6,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "3.84&#160;",
+          "text": "3.84"
+        },
+        "column_headers": [
+          {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 1,
+            "column_index": 6,
+            "origin_row_index": 1,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "2024",
+            "text": "2024"
+          }
+        ],
+        "disposition": "DIFFERENT_SOURCE_YEAR"
+      },
+      {
+        "label": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 12,
+          "column_index": 0,
+          "origin_row_index": 12,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "\nNet yield on average interest-earning assets excluding Markets",
+          "text": "Net yield on average interest-earning assets excluding Markets"
+        },
+        "locator": {
+          "table_id": "table_000100",
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_index": 12,
+          "column_index": 12,
+          "origin_row_index": 12,
+          "origin_column_index": 12,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "3.85&#160;",
+          "text": "3.85"
+        },
+        "column_headers": [
+          {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 1,
+            "column_index": 12,
+            "origin_row_index": 1,
+            "origin_column_index": 12,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "2023",
+            "text": "2023"
+          }
+        ],
+        "disposition": "DIFFERENT_SOURCE_YEAR"
+      }
+    ],
+    "whole_issuer_scope_status": "SOURCE_WITNESSED_WHOLE_ISSUER",
+    "issuer_identity": {
+      "registrant_name": "JPMorgan Chase & Co",
+      "native_name_facts": [
+        {
+          "name": "JPMorgan Chase & Co",
+          "ordinal": 67,
+          "qualified_name": "dei:EntityRegistrantName",
+          "context_ref": "c-1",
+          "entity_cik": "19617",
+          "namespace": "http://xbrl.sec.gov/dei/2025"
+        }
+      ],
+      "normalization": "EXACT_TOKENS_CASE_PUNCTUATION_AND_AMPERSAND_ONLY",
+      "source_defined_aliases": [
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5237066,
+            "end_byte": 5238225,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:932",
+              "div:1",
+              "div:4"
+            ],
+            "visible_text": "We have audited the accompanying consolidated balance sheets of JPMorgan Chase & Co. and its subsidiaries (the “Firm”) as of December 31, 2025 and 2024, and the related consolidated statements of income, comprehensive income, changes in stockholders’ equity and cash flows for each of the three years in the period ended December 31, 2025, including the related notes (collectively referred to as the “consolidated financial statements”). We also have audited the Firm’s internal control over financial reporting as of December 31, 2025, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+            "span_sha256": "b30f1bb75f06fb6f9e6a9634b00094f0fe8bae4f8a836ca53bed45c4fe86627a"
+          },
+          "entity_scope": "REGISTRANT_AND_SUBSIDIARIES"
+        },
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        }
+      ],
+      "source_consolidated_aliases": [
+        {
+          "alias": "Firm",
+          "definition": {
+            "start_byte": 5237066,
+            "end_byte": 5238225,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:932",
+              "div:1",
+              "div:4"
+            ],
+            "visible_text": "We have audited the accompanying consolidated balance sheets of JPMorgan Chase & Co. and its subsidiaries (the “Firm”) as of December 31, 2025 and 2024, and the related consolidated statements of income, comprehensive income, changes in stockholders’ equity and cash flows for each of the three years in the period ended December 31, 2025, including the related notes (collectively referred to as the “consolidated financial statements”). We also have audited the Firm’s internal control over financial reporting as of December 31, 2025, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+            "span_sha256": "b30f1bb75f06fb6f9e6a9634b00094f0fe8bae4f8a836ca53bed45c4fe86627a"
+          },
+          "entity_scope": "REGISTRANT_AND_SUBSIDIARIES"
+        }
+      ],
+      "source_legal_name_aliases": [
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 1282663,
+            "end_byte": 1283602,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+            "span_sha256": "ae5028db86909092a0529dd591624124f07ad6c444181ae75a4eb8475d8340b2"
+          }
+        },
+        {
+          "name": "Parent Company",
+          "definition": {
+            "start_byte": 1444075,
+            "end_byte": 1444994,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:99",
+              "div:3",
+              "div:2"
+            ],
+            "visible_text": "Federal Reserve rules require JPMorgan Chase & Co. (the “Parent Company”) to maintain minimum levels of unsecured external long-term debt and other loss-absorbing capacity with specific terms (“eligible LTD”) to recapitalize JPMorganChase’s operating subsidiaries if the Parent Company were to enter into a resolution either in a bankruptcy proceeding under Chapter 11 of the U.S. Bankruptcy Code, or in a receivership administered by the FDIC under Title II of the Dodd-Frank Act (“Title II”). If the Parent Company were to enter into a resolution, holders of eligible LTD, other unsecured creditors and holders of equity securities of the Parent Company will absorb the losses of the Parent Company and its subsidiaries.",
+            "span_sha256": "036349a59fb9b792f414b6d367ca9b7a5fc013dba4b410b770efb290c6247fe1"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 2040911,
+            "end_byte": 2041882,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:248"
+            ],
+            "visible_text": "The following table and graph compare the five-year cumulative total return for JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) common stock with the cumulative return of the S&P 500 Index, the KBW Bank Index and the S&P Financials Index. The S&P 500 Index is a commonly referenced equity benchmark in the United States of America (“U.S.”), consisting of leading companies from different economic sectors. The KBW Bank Index seeks to reflect the performance of banks and thrifts that are publicly traded in the U.S. and is composed of leading national money center and regional banks and thrifts. The S&P Financials Index is an index of financial companies, all of which are components of the S&P 500. The Firm is a component of all three industry indices.",
+            "span_sha256": "2cd6a197d781d76d20af9ac54a250a85a96380dadbb3595539fa65f9a2be7784"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 5229880,
+            "end_byte": 5230790,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:928",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "Management of JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”) is responsible for establishing and maintaining adequate internal control over financial reporting. Internal control over financial reporting is a process designed by, or under the supervision of, the Firm’s principal executive and principal financial officers, or persons performing similar functions, and effected by JPMorganChase’s Board of Directors, management and other personnel, to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with accounting principles generally accepted in the United States of America (“U.S. GAAP”).",
+            "span_sha256": "3c570379f6a8ceaf7afd4210664351d562e397d19932a8ba6b64d05c99632d2e"
+          }
+        },
+        {
+          "name": "JPMorganChase",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        },
+        {
+          "name": "Firm",
+          "definition": {
+            "start_byte": 5579756,
+            "end_byte": 5580397,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:6pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:2",
+              "div:1",
+              "div:1",
+              "div:1"
+            ],
+            "visible_text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the U.S., with operations worldwide. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Refer to Note 32 for further discussion of the Firm's reportable business segments.",
+            "span_sha256": "65fcb011d34c65a0fff6fc92ee45b331ffff0c22450b420eb4dad028c3de821c"
+          }
+        },
+        {
+          "name": "Parent Company",
+          "definition": {
+            "start_byte": 11602172,
+            "end_byte": 11603741,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1384",
+              "ix:continuation:1",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "Restrictions imposed by U.S. federal law prohibit JPMorgan Chase Bank, N.A., and its subsidiaries, from lending to JPMorgan Chase & Co. (“Parent Company”) and certain of its affiliates unless the loans are secured in specified amounts. Such secured loans provided by any banking subsidiary to the Parent Company or to any particular affiliate, together with certain other transactions with such affiliate (collectively referred to as “covered transactions”), must be made on terms and conditions that are consistent with safe and sound banking practices. In addition, unless collateralized with cash or US Government debt obligations, covered transactions are generally limited to 10% of the banking subsidiary’s total capital, as determined by the risk-based capital guidelines; the aggregate amount of covered transactions between any banking subsidiary and all of its affiliates is limited to 20% of the banking subsidiary’s total capital.",
+            "span_sha256": "8051876e48fac9e646ea9b0dc28d4fb8d8fa71126558a8774e9271976b61c945"
+          }
+        }
+      ],
+      "source_defined_other_entities": [
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "JPMorgan Chase Bank, National Association",
+          "alias": "JPMorgan Chase Bank, N.A.",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 1283602,
+            "end_byte": 1284570,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:3"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "2274adbd5b31e9aed4bbcaf547581978992eabde19bdd6f17c5543a47b4fc8bc"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "J.P. Morgan Securities LLC",
+          "alias": "J.P. Morgan Securities",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 1283602,
+            "end_byte": 1284570,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "margin-bottom:4pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:45",
+              "div:1",
+              "div:3"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "2274adbd5b31e9aed4bbcaf547581978992eabde19bdd6f17c5543a47b4fc8bc"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "JPMorgan Chase Bank, National Association",
+          "alias": "JPMorgan Chase Bank, N.A.",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 2063453,
+            "end_byte": 2064395,
+            "tag": "div",
+            "attributes": [],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:263",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "97388f5f588db903c025b2fff0e180757fd090b8e8698c06110f1290cf293af1"
+          }
+        },
+        {
+          "owner": "JPMorganChase",
+          "legal_name": "J.P. Morgan Securities LLC",
+          "alias": "J.P. Morgan Securities",
+          "relationship": "EXPLICIT_SUBSIDIARY_OF_REGISTRANT",
+          "definition": {
+            "start_byte": 2063453,
+            "end_byte": 2064395,
+            "tag": "div",
+            "attributes": [],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:263",
+              "div:1",
+              "div:2"
+            ],
+            "visible_text": "JPMorganChase’s principal bank subsidiary is JPMorgan Chase Bank, National Association (“JPMorgan Chase Bank, N.A.”), a national banking association with U.S. branches in 48 states and Washington, D.C. JPMorganChase’s principal non-bank subsidiary is J.P. Morgan Securities LLC (“J.P. Morgan Securities”), a U.S. broker-dealer. The bank and non-bank subsidiaries of JPMorganChase operate nationally as well as through overseas branches and subsidiaries, representative offices and subsidiary foreign banks. The Firm’s principal operating subsidiaries outside the U.S. are J.P. Morgan Securities plc and J.P. Morgan SE (“JPMSE”), which are subsidiaries of JPMorgan Chase Bank, N.A. and are based in the United Kingdom (“U.K.”) and Germany, respectively.",
+            "span_sha256": "97388f5f588db903c025b2fff0e180757fd090b8e8698c06110f1290cf293af1"
+          }
+        }
+      ]
+    },
+    "whole_issuer_scope_evidence": [
+      {
+        "basis": "SOURCE_FIRM_MANAGED_BASELINE_WITH_EXPLICIT_MARKETS_EXCLUSION_BRIDGE",
+        "issuer_definitions": [
+          {
+            "alias": "Firm",
+            "definition": {
+              "start_byte": 5237066,
+              "end_byte": 5238225,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "margin-bottom:4pt"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:932",
+                "div:1",
+                "div:4"
+              ],
+              "visible_text": "We have audited the accompanying consolidated balance sheets of JPMorgan Chase & Co. and its subsidiaries (the “Firm”) as of December 31, 2025 and 2024, and the related consolidated statements of income, comprehensive income, changes in stockholders’ equity and cash flows for each of the three years in the period ended December 31, 2025, including the related notes (collectively referred to as the “consolidated financial statements”). We also have audited the Firm’s internal control over financial reporting as of December 31, 2025, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+              "span_sha256": "b30f1bb75f06fb6f9e6a9634b00094f0fe8bae4f8a836ca53bed45c4fe86627a"
+            },
+            "entity_scope": "REGISTRANT_AND_SUBSIDIARIES"
+          }
+        ],
+        "table_introduction": {
+          "start_byte": 2392027,
+          "end_byte": 2393000,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "margin-bottom:4pt"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:326",
+            "div:1",
+            "div:2"
+          ],
+          "visible_text": "In addition to reviewing net interest income, net yield, and noninterest revenue on a managed basis, management also reviews these metrics excluding Markets, as shown below. Markets consists of CIB’s Fixed Income Markets and Equity Markets. These metrics, which exclude Markets, are non-GAAP financial measures. Management reviews these metrics to assess the performance of the Firm’s lending, investing (including asset-liability management) and deposit-raising activities, apart from any volatility associated with Markets activities. In addition, management also assesses Markets business performance on a total revenue basis as offsets may occur across revenue lines. Management believes that these measures provide investors and analysts with alternative measures to analyze the revenue trends of the Firm.",
+          "span_sha256": "a1af3882934019643e9c6b0079cd3d718f4aadc9398a43f118c0c3ae99919fbb"
+        },
+        "included_baseline_labels": {
+          "net_yield": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 10,
+            "column_index": 0,
+            "origin_row_index": 10,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nNet yield on average interest-earning assets &#8211; managed basis",
+            "text": "Net yield on average interest-earning assets – managed basis"
+          },
+          "managed_numerator": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 4,
+            "column_index": 0,
+            "origin_row_index": 4,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "Net interest income &#8211; managed basis",
+            "text": "Net interest income – managed basis"
+          },
+          "denominator": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 7,
+            "column_index": 0,
+            "origin_row_index": 7,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nAverage interest-earning assets(a)",
+            "text": "Average interest-earning assets(a)"
+          },
+          "fte_adjustment": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 3,
+            "column_index": 0,
+            "origin_row_index": 3,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "Fully taxable-equivalent adjustments",
+            "text": "Fully taxable-equivalent adjustments"
+          },
+          "reported_numerator": {
+            "table_id": "table_000100",
+            "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+            "row_index": 2,
+            "column_index": 0,
+            "origin_row_index": 2,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nNet interest income &#8211; reported(a)",
+            "text": "Net interest income – reported(a)"
+          }
+        },
+        "selected_measure_excludes_markets": false
+      }
+    ],
+    "semantic_status": "SINGLE_SOURCE_SEMANTIC_FACT",
+    "native_evidence_status": "NOT_EVALUATED",
+    "qualification_credit": "NONE_COMPONENT_ONLY",
+    "publication_credit": "NONE",
+    "result_value_policy": "RETAIN_DISCLOSED_RATE_NOT_COMPUTED_PROXY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "relationship_id": "sha256:fc7ca261ca205b799cc213dcd49ff51ac48d67b1ca58e55d58976635c55390b3"
+  }
+}

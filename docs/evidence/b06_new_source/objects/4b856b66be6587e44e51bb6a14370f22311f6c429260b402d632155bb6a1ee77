@@ -1,0 +1,84 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "OPEN",
+  "records_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "e8102c21e3e39597a2deef91770b37ee5c30ec4937d6ed79fbecfc7de4f8d606",
+  "content_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "audit_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "run_id": "run:b06-new-source:36d7cec5585c8db0b83340869ff81504ebd0acd4ec8fffdd84749f1ae9911639",
+  "company_id": "salesforce",
+  "company_traits": [
+    "non_financial",
+    "subscription_or_contract_revenue"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-31",
+    "period_end": "2025-01-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:ad049fd93335b193f2c04b27273e3814d282938154c03ba347e8a2db2a6b89b6",
+      "raw_asset_id": "sha256:fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911",
+      "company_id": "salesforce",
+      "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+      "accession": "0001108524-25-000006",
+      "document_name": "CIK0001108524.json",
+      "source_role": "submissions",
+      "request_attempt_id": "request:attempt:707d67a40b04183d948b0c9918eedef55fccd995a3e9bbfe46bcb588d6bdb745"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:68ca5e0cd1f19ca89a10d8934347e947d3eb9145d95096f59da7ed5e83f543e3",
+      "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+      "company_id": "salesforce",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+      "accession": "0001108524-25-000006",
+      "document_name": "CIK0001108524.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:243106faf22c28869b94204499d7ef1935afb54c6e0e70edef79b07d305bbe25",
+      "raw_asset_id": "sha256:519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+      "company_id": "salesforce",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+      "accession": "0001108524-25-000006",
+      "document_name": "crm-20250131_htm.xml",
+      "source_role": "accession_xbrl",
+      "request_attempt_id": "request:attempt:15b61e4f79a4684e2230b203e86c7acc16218be5688e4585e35e6aa1d7171a61"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:9d280b0752bfe948dc8992eddc83c0e461d7f173d555eec7091358cfa2ac6847",
+      "raw_asset_id": "sha256:4b181008a668650f4722d04347eb71ffa058ccc62a2e44f7b992d2b5261f9eaf",
+      "company_id": "salesforce",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+      "accession": "0001108524-25-000006",
+      "document_name": "crm-20250131.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:843be74d90c13f5aa513ca53b1391dd39d0e1b40f134ff01b64f8279b43dba10"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r5/B06_new_source.md": "438f575268edf57b1769f20825b107c778c0867e04a5274a604b298133fcce88"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "d0e927ddf3ca465b91c7fa3d91b5733820007e2f083c5dcd62d5ebe32cb5d1a6",
+    "contract_sha256": "b459ed0b46d710cab2d506222f9b7fabb09143dd889329a3600d579236138651",
+    "decision_register_sha256": "c9480633a7c47d9b6cdd423b7781c3a172ca4661e5544b0c2b976040f692b422",
+    "invariant_profile_sha256": "f42485a4edb1b8abc3a9fbd8c4548427678c51fef1bf0877b10fc7a12e0e365a",
+    "transfer_manifest_sha256": "f31f97c7a1685af911dfe6b598ae5c2091c086f4aeea46e1618d8fe470b67fd5",
+    "parent_requirement_closure_hash": "sha256:80fe12c1e1a09c6c6d805bf15db7d072c1f9f71ba39f43cb93a9a7bfbef3d25f",
+    "validator_sha256": "f44b44439a7dafb9bd919ccdcf1ac589881304f1039860e5e20cb6d8ed517f2c"
+  },
+  "requirement_closure_hash": "sha256:e5bc06b556e2d177d9df063ebae40131e3aa5be86af52401dfa38be656dac41d",
+  "requirement_id": "issue_28_v10",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

@@ -26,7 +26,6 @@ FAST_TESTS = tuple(selector for original in inherited.FAST_TESTS
     "tests.vnext.test_regulatory_investigation_candidates",
     "tests.vnext.test_going_concern_source",
     "tests.vnext.test_fiscal_year_labels",
-    "tests.vnext.test_main_scalability_audit",
 )
 ALL_PREVIOUS_SELECTORS = FAST_TESTS
 # These selectors parse complete saved filings, often with several independent
@@ -42,7 +41,6 @@ SOURCE_PREFIXES = (
     "tests.vnext.test_text_results",
     "tests.vnext.test_going_concern_source",
     "tests.vnext.test_fiscal_year_labels",
-    "tests.vnext.test_main_scalability_audit",
 )
 SOURCE_TESTS = tuple(s for s in FAST_TESTS if any(s == p or s.startswith(p) for p in SOURCE_PREFIXES)) + (
     "tests.vnext.test_normal_companyfacts_results",
@@ -70,7 +68,6 @@ SOURCE_TESTS = tuple(s for s in FAST_TESTS if any(s == p or s.startswith(p) for 
 FAST_TESTS = tuple(s for s in FAST_TESTS if s not in SOURCE_TESTS)
 FAST_TESTS += ("tests.vnext.test_ordinary_source_session",)
 FAST_TESTS += ("tests.vnext.test_ordinary_source_authority",)
-FAST_TESTS += ("tests.vnext.test_company_local",)
 FAST_TESTS += ("tests.vnext.test_continuous_call_ledger",)
 FAST_TESTS += ("tests.vnext.test_continuous_call_policy",)
 FAST_TESTS += ("tests.vnext.test_capacity_utilization_source.CapacityComparisonTest",)
@@ -148,7 +145,12 @@ SOURCE_TESTS += ("tests.vnext.test_d03_recorded_response_set.D03RecordedResponse
 SOURCE_TESTS += ("tests.vnext.test_ordinary_processing_source.OrdinaryProcessingSourceTest",)
 SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_mixed_old_root_resumes_current_rule_metric_and_c04",)
 SOURCE_TESTS += ("tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_failed_processing_copy_preserves_recorded_capture_for_resume",)
-SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest",)
+# The full class exceeded the 240-second material case limit on 9a6dea27.
+# Keep every original test/guard and the same limit, but schedule its three
+# independent methods as separate material units. No runner body changes.
+SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_saved_source_recorded_candidate_replays_but_is_not_company_result",)
+SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_unresolved_recorded_group_is_retained_without_company_credit",)
+SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeAssessmentTest.test_anchor_candidate_changes_business_digest",)
 SOURCE_TESTS += ("tests.vnext.test_d03_native_assessment.D03NativeCollectionMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_ordinary_scalability_audit.OrdinaryScalabilityAuditTest.test_current_exact_reviewed_sources_only_have_no_business_literals",)
 SOURCE_TESTS += ("tests.vnext.test_b03_depreciation_scope_update.B03CurrentUpdateMaterialTest",)
@@ -167,6 +169,24 @@ FAST_TESTS += ("tests.vnext.test_a05_formula_successor",)
 SOURCE_TESTS += ("tests.vnext.test_a05_formula_material",)
 SOURCE_TESTS += ("tests.vnext.test_d02_item8_current_material",)
 SOURCE_TESTS += ("tests.vnext.test_ordinary_e01_item_text_input",)
+FAST_TESTS += ("tests.vnext.test_c02_auditor_successor.C02AuditorScopeFastTest",)
+SOURCE_TESTS += ("tests.vnext.test_c02_auditor_successor.C02AuditorScopeMaterialTest",)
+FAST_TESTS += ("tests.vnext.test_e01_header_document_guard.E01HeaderDocumentGuardFastTest",)
+SOURCE_TESTS += ("tests.vnext.test_e01_header_document_guard.E01HeaderDocumentGuardMaterialTest",)
+FAST_TESTS += ("tests.vnext.test_c02_member_successor.C02MemberScopeFastTest",)
+SOURCE_TESTS += ("tests.vnext.test_c02_member_successor.C02MemberScopeMaterialTest",)
+FAST_TESTS += ("tests.vnext.test_e01_layout_successor.E01LayoutSuccessorFastTest",)
+SOURCE_TESTS += ("tests.vnext.test_e01_layout_successor.E01LayoutSuccessorMaterialTest",)
+FAST_TESTS += ("tests.vnext.test_d01_running_header",)
+FAST_TESTS += ("tests.vnext.test_c02_model_processing",)
+FAST_TESTS += ("tests.vnext.test_c02_model_review_view",)
+FAST_TESTS += ("tests.vnext.test_d03_model_processing",)
+FAST_TESTS += ("tests.vnext.test_d03_model_review_cli",)
+FAST_TESTS += ("tests.vnext.test_d03_context_requests",)
+FAST_TESTS += ("tests.vnext.test_c02_table_development_input",)
+FAST_TESTS += ("tests.vnext.test_c02_table_model_processing",)
+FAST_TESTS += ("tests.vnext.test_c02_image_model_processing",)
+FAST_TESTS += ("tests.vnext.test_company_c02_development",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

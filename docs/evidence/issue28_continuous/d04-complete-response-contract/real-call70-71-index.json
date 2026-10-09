@@ -1,0 +1,241 @@
+{
+  "record_type": "REAL_D04_ORIGINAL_CALL_EVIDENCE_INDEX",
+  "calls": [
+    {
+      "ordinal": 70,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:77a7d67057a27769f42a148ffb103fc4eff5abe423cf4edc3e571e686ce98775",
+      "response_request_id": "sha256:77a7d67057a27769f42a148ffb103fc4eff5abe423cf4edc3e571e686ce98775",
+      "response_contract_version": "D04_COMPLETE_UNITS_V1",
+      "status": "SUCCEEDED",
+      "terminal_id": "sha256:fb5f7de9b9c1c511220fe27d014a350442b75347b5df36035fd98f017e2eeea3",
+      "execution_receipt_id": "sha256:e896aa340850b47a23ef0b6513995982297dd97cc7b4eb0128fd133256e863bd",
+      "requirement_closure_hash": "sha256:c4bfed2c3b3e76ea2c9005c3f01747913a2a8f815e4d2069b083d81d0c5c43fa",
+      "native_candidate_evidence_created": true,
+      "native_result_created": false,
+      "semantic_correctness_verified": false,
+      "acceptance_scope": "ONE_REQUEST_SOURCE_ASSESSMENT_NOT_COMPLETE_METRIC",
+      "expected_unit_count": 5,
+      "returned_unit_count": 5,
+      "unit_id_differences": [],
+      "response_check_error": null,
+      "stop_reason": "",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "files": {
+        "d04-assessment.json": {
+          "sha256": "26173f9eea5472dbedd6204e257383830e034dae04d22f54cbfaa2c098299360",
+          "size": 8996
+        },
+        "execution-rules.json": {
+          "sha256": "f8ed80b2fb2c5823fde171803a4d19fec7cc9ab94549d52e22c925eda9f737d0",
+          "size": 66381
+        },
+        "execution-rules.tar.gz": {
+          "sha256": "2fe2e0449f3f0a5db7917afe815da97c95673755d7f2f1e3a1936c52e192d7c8",
+          "size": 4401695
+        },
+        "intent.json": {
+          "sha256": "9e6654cd0fea9cc8319faacc6ecdd2da53c6376f78c727ea805614f7cf096f29",
+          "size": 714
+        },
+        "invocation_control/acceptances/f3988392f2080b1fe9f32c77480588cdd5884846d6c2748e4285d4827e3e1edf/receipt.json": {
+          "sha256": "e0fd859fa6a9f4b163b8056ee0d539375ce98a5100218214939f2d1e79998041",
+          "size": 15880
+        },
+        "invocation_control/attempts/94e2ad353a9fef60a372cb7fcbd448f479bede6528cc69f8b23786c32a4b2992/01_885b9da635bf52e849d8471edd6b269c6c1c0f8108381e8f29e3ac2489061791.json": {
+          "sha256": "d87fac3e4dbbeab103a28b8af2e1a997efe15e6bfef219a813f0668a0c464339",
+          "size": 1149
+        },
+        "invocation_control/egress/94e2ad353a9fef60a372cb7fcbd448f479bede6528cc69f8b23786c32a4b2992/01.json": {
+          "sha256": "b4e47719cdc7276dc2cd4f34409c037ab28d3d183b319ddc11e97b97c70b07c2",
+          "size": 713
+        },
+        "invocation_control/executions/94e2ad353a9fef60a372cb7fcbd448f479bede6528cc69f8b23786c32a4b2992.json": {
+          "sha256": "ce41a12630b611c4e58168cfb3e112a07924ffb8a113b59e282c1f45b209beff",
+          "size": 1973
+        },
+        "invocation_control/plans/c35f1646598bfce142123f94bd07ad09e80cb004ad9a3db447dd29265cf5d2e0.json": {
+          "sha256": "141f17c16b4792abd666cc219aa735fbdc844091f8956e9cb350b654919322f5",
+          "size": 3089
+        },
+        "invocation_control/requests/f3988392f2080b1fe9f32c77480588cdd5884846d6c2748e4285d4827e3e1edf.bin": {
+          "sha256": "72d414ead275aa7d0ba5504d70b7b2e0533a7466a265b5b4f835e7f5298897f5",
+          "size": 619377
+        },
+        "invocation_control/reservation_archive/f3988392f2080b1fe9f32c77480588cdd5884846d6c2748e4285d4827e3e1edf/94e2ad353a9fef60a372cb7fcbd448f479bede6528cc69f8b23786c32a4b2992.json": {
+          "sha256": "2f5394c050de1ef4759419172dbc33d03c2a290f1ccb115c98b86729e434ee84",
+          "size": 484
+        },
+        "invocation_control/responses/f3988392f2080b1fe9f32c77480588cdd5884846d6c2748e4285d4827e3e1edf/receipt.json": {
+          "sha256": "83ba8f5c45188445aa3efb2e6cfafd1d3a4e9f6a00360d9988f662dcae85bb84",
+          "size": 1308
+        },
+        "invocation_control/responses/f3988392f2080b1fe9f32c77480588cdd5884846d6c2748e4285d4827e3e1edf/response.bin": {
+          "sha256": "6772d154c7ce0f4196e9ae2b25b33cda40d34d9bfbeeade612f077c5e22c0970",
+          "size": 1614
+        },
+        "semantic-request.json": {
+          "sha256": "89191bc5dbdeae19b8b042821745213e9490713d2ef813f976f2d8faa7316662",
+          "size": 607261
+        },
+        "source.json": {
+          "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+          "size": 7142869
+        },
+        "terminal.json": {
+          "sha256": "92c428cbecb09d8d3714c6c0119c97cfaeb99c305bff8aa25b9fd37191789008",
+          "size": 2807
+        },
+        "wire/assistant-output.bin": {
+          "sha256": "6772d154c7ce0f4196e9ae2b25b33cda40d34d9bfbeeade612f077c5e22c0970",
+          "size": 1614
+        },
+        "wire/journal.json": {
+          "sha256": "3903fc19bf9f3dc69ecbff2cb6577388960d704761172760d36066ad8bdde2de",
+          "size": 975
+        },
+        "wire/raw-response.bin": {
+          "sha256": "3d26713416088239ef52e3acb9d8ee87eae3c0f6db292299a40452f7bf0853c9",
+          "size": 2188
+        }
+      },
+      "complete_company_metric": false,
+      "production_authorized": false
+    },
+    {
+      "ordinal": 71,
+      "company_id": "ford_motor_company",
+      "metric_id": "D04",
+      "request_id": "sha256:cd327064f63d440e30c9c8dbbf7e3e77b07320f710ad7b78f81819b26325a05a",
+      "response_request_id": "sha256:cd327064f63d440e30c9c8dbbf7e3e77b07320f710ad7b78f81819b26325a05a",
+      "response_contract_version": "D04_COMPLETE_UNITS_V1",
+      "status": "FAILED_TERMINAL",
+      "terminal_id": "sha256:3e9504b347ccec492770e2cfd71373e41b2aa1328d27361307b13e1aca38579a",
+      "execution_receipt_id": "sha256:7f74faf063c9dc7c929907bd6750708d7ed88dee60433074be5ef856c75b28b4",
+      "requirement_closure_hash": "sha256:c4bfed2c3b3e76ea2c9005c3f01747913a2a8f815e4d2069b083d81d0c5c43fa",
+      "native_candidate_evidence_created": false,
+      "native_result_created": false,
+      "semantic_correctness_verified": false,
+      "acceptance_scope": "ONE_REQUEST_SOURCE_ASSESSMENT_NOT_COMPLETE_METRIC",
+      "expected_unit_count": 4,
+      "returned_unit_count": 4,
+      "unit_id_differences": [
+        {
+          "unit_index": 0,
+          "expected": "sha256:b27d6d307ee950d7f2e0e7f01e30693fad427f02d0cdd20a7a93c880fe93789c",
+          "returned": "sha256:b27d6d307ee950d7f2e0e7f01e30693fad42702d0cdd20a7a93c880fe93789c",
+          "expected_length": 71,
+          "returned_length": 70,
+          "single_character_deletions_matching_exact_return": [
+            {
+              "character_offset": 44,
+              "deleted_character": "f"
+            }
+          ]
+        }
+      ],
+      "response_check_error": "D04_RESPONSE_UNIT_CENSUS_ORDER_CHANGED",
+      "stop_reason": "",
+      "counts": [
+        1,
+        1,
+        0
+      ],
+      "files": {
+        "d04-assessment.json": {
+          "sha256": "78bd044fb6b124ff7a7612708b96aa9091ab9ba5f330ec84a9b26b8f2f069fb7",
+          "size": 2668
+        },
+        "execution-rules.json": {
+          "sha256": "f8ed80b2fb2c5823fde171803a4d19fec7cc9ab94549d52e22c925eda9f737d0",
+          "size": 66381
+        },
+        "execution-rules.tar.gz": {
+          "sha256": "77595b0f3129271511ffbb945e4327e1b3c32dad5b2f9e2bb2acdab7b9f55302",
+          "size": 4401695
+        },
+        "intent.json": {
+          "sha256": "0354b968b3e0655fde54f8f7839a2fc6e5b1ae3a82085e994e1b3407a561e914",
+          "size": 714
+        },
+        "invocation_control/attempts/a01e584e6d2fd99a567962a452a23c77fb0889f73abba8ffb63b85ac607f3e48/01_e4115daa194300910dadd0ebbd5f7d534cbb675e422ae0352432207d37d57991.json": {
+          "sha256": "906fe5b981ebbdfcd7b7cd47e53084515f9fcea835fd03d250618a68ef3e86c9",
+          "size": 1172
+        },
+        "invocation_control/egress/a01e584e6d2fd99a567962a452a23c77fb0889f73abba8ffb63b85ac607f3e48/01.json": {
+          "sha256": "37a267fbdd57ad16d3f1505a0b4407351351dae748a2a4ba881f0e6bc7c3059d",
+          "size": 713
+        },
+        "invocation_control/executions/a01e584e6d2fd99a567962a452a23c77fb0889f73abba8ffb63b85ac607f3e48.json": {
+          "sha256": "fec23972acf9223c8da24a43d514b36106b60a912f4b9f910abe1d46a4febf63",
+          "size": 1932
+        },
+        "invocation_control/plans/61474255b3b914f2d62d27259f50ec9bcfaf191681264ce2d3845eeeb84c1f41.json": {
+          "sha256": "bd75d08fe74ec8f9f409fc29cbb0c6cf0ac26eaed165e732b0b44646f68eff6c",
+          "size": 3089
+        },
+        "invocation_control/requests/d0d1349a61e85e2769e1e4435977393cb435442153c13afe2ac973ebe8aafadb.bin": {
+          "sha256": "1ccddad4685de639209d48ccf5ba261cc9e8f43baee87a0ed33273fbfa8a4d02",
+          "size": 456165
+        },
+        "invocation_control/reservation_archive/d0d1349a61e85e2769e1e4435977393cb435442153c13afe2ac973ebe8aafadb/a01e584e6d2fd99a567962a452a23c77fb0889f73abba8ffb63b85ac607f3e48.json": {
+          "sha256": "cac2331f3232e31c860db2a7a9957d70d00aec261e7578d70015b505c3e43e92",
+          "size": 490
+        },
+        "semantic-request.json": {
+          "sha256": "31f61cf57553360ccba3e01c05d7bf0620fc436be8ed49ea989919882c793134",
+          "size": 443059
+        },
+        "source.json": {
+          "sha256": "ce82ac5f5844ccb6dd97a2382eb28dd45d784645acdf27b98dc14eba9e825444",
+          "size": 7142869
+        },
+        "terminal.json": {
+          "sha256": "5395eba59ff6f16868bcd888ca695abbf271737070a0ffa59695b92d40bbc4f4",
+          "size": 2283
+        },
+        "wire/assistant-output.bin": {
+          "sha256": "aeb98e204e3f5a7916232fe54b7a6f209ec8217236aa752c712c65b54e4fb2f6",
+          "size": 625
+        },
+        "wire/journal.json": {
+          "sha256": "fe49757d4d8e01c49ee0e25c52e930ea2671875c9ef16c117bf8ae442086261b",
+          "size": 976
+        },
+        "wire/raw-response.bin": {
+          "sha256": "a8ed7cf0e611d6eb7e1d412b3e87bf2d3afad9bf53c5855c3b70c84b6c3e9f63",
+          "size": 1143
+        }
+      },
+      "complete_company_metric": false,
+      "production_authorized": false
+    }
+  ],
+  "current_counts": [
+    36,
+    36,
+    35
+  ],
+  "remaining": [
+    204,
+    204,
+    45
+  ],
+  "ford_current_request_progress": {
+    "accepted_exact_ids": [
+      "sha256:77a7d67057a27769f42a148ffb103fc4eff5abe423cf4edc3e571e686ce98775"
+    ],
+    "accepted_requests": 1,
+    "required_requests": 11,
+    "failed_original_request_id": "sha256:cd327064f63d440e30c9c8dbbf7e3e77b07320f710ad7b78f81819b26325a05a",
+    "unaccepted_requests": 10
+  },
+  "source_or_response_bytes_modified": false,
+  "new_complete_real_company_metric_coordinates": 0,
+  "production_authorized": false
+}

@@ -1,0 +1,37 @@
+PATCH_SHA=79677ed2c8519a952698ee2a0b05e24deb91702a
+BASE=79677ed2^
+SCOPE=exact new diff, D02 Item8 V2, ordinary Run/update bindings and cited evidence
+
+git diff 79677ed2^ 79677ed2 --check
+exit=0
+git rev-parse 79677ed2^:scripts/vnext/ordinary_d02_category_update.py
+git rev-parse 79677ed2:scripts/vnext/ordinary_d02_category_update.py
+both=aa2fa336ad404a50b3f123213809e0eaafcf20d9
+git rev-parse 79677ed2^:scripts/vnext/d02_item8_category_28_v1.py
+git rev-parse 79677ed2:scripts/vnext/d02_item8_category_28_v1.py
+both=8be39cc76ed823d7bd6da573e09b27b7e1a62c88
+
+PYTHONPATH=scripts /private/tmp/issue28-tokenizers-venv/bin/python -m unittest tests.vnext.test_d02_item8_current_material.D02CurrentItem8MaterialTest.test_v1_false_exclusion_remains_suspended_and_v2_keeps_the_matter
+Ran 1 test in 0.008s; OK
+
+PYTHONPATH=scripts /private/tmp/issue28-tokenizers-venv/bin/python (isolated classify + select probe)
+During 2025, our company faced litigation, regulatory proceedings and fines.
+  classify: left_out=True, litigation=LIST_MEMBER, exposure=[]
+  select: kept=0, removed ITEM_8/block_index=9
+During 2025, the Company faced litigation, regulatory proceedings and fines.
+  classify: left_out=False, litigation=GOVERNED_BY_THE_REGISTRANT_AS_SUBJECT
+During 2025, we faced litigation, regulatory proceedings and fines.
+  classify: left_out=False, litigation=KEYWORD_PHRASE_IS_A_CLAUSE
+
+PYTHONPATH=scripts /private/tmp/issue28-tokenizers-venv/bin/python (exact local binding check)
+issue_28_v13=sha256:f5f6bf76dee5222f87e643adf941a7e9e8d12385a4ddb93cb3e3824a9bf3ef84
+issue_28_v14=sha256:9e4e95c06501ebb257b3880a1ceddc31fb1971e23776a91d07b834d80892c2e7
+validate_execution_authority(v13,v14)=PASS
+validate_semantic_rule_bindings(v14)=PASS
+validate_wiring_receipt(v14)=PASS
+
+Original local Lumen FY2025 block 1670, reconstituted via current prepare_case/prepare_business_text_sources:
+In the normal course of our business, we incur costs to hire and retain external legal counsel to advise us on finance, regulatory, litigation, and other matters. Subject to certain exceptions, we expense these costs as the related services are received.
+V2 removed block_index=1670, raw_span_sha256=0529c216c5067e4e579acce330b12aa1ad378ff5be111f4ef6867176c71ca0c8
+
+Read submitter evidence: directed-final.log 3/3; fast-final.log 146/146; run-final.json CANDIDATE_READY; cold-final.json NO_SOURCE_CONTENT_CHANGE. These long-chain results were not rerun independently. No real provider/SEC request, commit, push, or #47 workspace operation.

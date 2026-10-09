@@ -1,0 +1,674 @@
+
+FILE scripts/vnext/normal_run_v3.py
+1: """Ordinary integrated Runs with exact dependencies and source fiscal labels.
+2: 
+3: This successor reuses the existing Run/Review/Calculator machinery. The old
+4: V13 source routes and frozen rules stay unchanged; new creation uses its own
+5: Requirement and installs exact source-owned Spec files before any Run exists.
+6: """
+7: from datetime import datetime, timezone
+8: import json
+9: from pathlib import Path
+10: 
+11: from .canonical import content_hash, sha256_file, strict_json_file
+12: from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value
+13: from .normal_source_authority import ROOT
+14: from .ordinary_source_authority import verify_ordinary_source_proofs
+15: from .normal_run_inputs import prepare_ordinary_zero_ai_run_input
+16: from .normal_run_specs import installed_ordinary_spec_documents
+17: from .requirements import load_requirement_snapshot
+18: from .sources import resolve_repository_file
+19: from .traits import repository_company_traits
+20: 
+21: 
+22: REQUIREMENT_ID = "issue_28_v13"
+23: PREFIX = "run:ordinary-integrated:"
+24: POLICY_PATH = "config/issue28_normal_results_v2.json"
+25: BINDING_DIRECTORY = "ordinary_integrated_bindings"
+26: A05_FORMULA_POLICY = "A05_APPROVED_AVERAGE_ASSETS_FORMULA_V1"
+27: 
+28: 
+29: def _need(condition, reason):
+30:     if not condition:
+31:         raise ValueError(reason)
+32: 
+33: 
+34: def _external(path):
+35:     from .b06_new_source import _external as check
+36:     return check(Path(path))
+37: 
+38: 
+39: def _write(path, content):
+40:     from sec_http import write_immutable_bytes
+41:     write_immutable_bytes(path=path,content=content)
+42: 
+43: 
+44: def _bytes(value):
+45:     return (json.dumps(exact_json_value(value),ensure_ascii=False,sort_keys=True,separators=(",",":"))+"\n").encode("utf-8")
+46: 
+47: 
+48: def _policy(root):
+49:     value = strict_json_file(path=resolve_repository_file(repo_root=root,repo_relative_path=POLICY_PATH))
+50:     _need(value == strict_json_file(path=ROOT/POLICY_PATH),"ORDINARY_INTEGRATED_INSTALLED_POLICY_CHANGED")
+51:     return value
+52: 
+53: 
+54: def update_metric_ids():
+55:     """Existing source routes plus registered B13/D04 consumption; no D03."""
+56:     return sorted(set(_policy(ROOT)['metric_ids']) | {'B13', 'D04'})
+57: 
+58: 
+59: def registered_update_options(metric_id, *, assessment_mode='LIVE',program_quantity_roles=False):
+60:     """A fixed source/request contract, not per-filing answers or call rights."""
+61:     _need(metric_id in {'B13', 'D04'} and assessment_mode in {'LIVE','RECORDED_TEST_ONLY'},
+62:           'ORDINARY_REGISTERED_UPDATE_MODE_INVALID')
+63:     from .continuous_request_context import FORMAT_VERSION
+64:     _need(type(program_quantity_roles) is bool and (not program_quantity_roles or metric_id=='B13'),
+65:           'ORDINARY_PROGRAM_QUANTITY_SELECTION_INVALID')
+66:     result={'assessment_mode':assessment_mode,'request_context_format':FORMAT_VERSION,
+67:             'complete_response_contract':metric_id=='D04'}
+68:     if program_quantity_roles:result['program_quantity_roles']=True
+69:     return result
+70: 
+71: 
+72: def current_registered_update_options(metric_id, *, assessment_mode='LIVE'):
+73:     """One current ordinary-entry contract for preparation and Run consumption.
+74: 
+75:     Low-level callers and historical installed inputs retain their explicit
+300:         **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
+301:         c02_composition=c02_composition,c02_grouped=c02_grouped,d01_emphasis=d01_emphasis,
+302:         a05_formula=a05_formula,d02_category=d02_category,
+303:         c02_auditor_revision=c02_auditor_revision,
+304:             c02_member_revision=c02_member_revision)
+305:     _need(_binding(rebuilt,requirement) == _binding(case,requirement),"ORDINARY_INTEGRATED_IMPORTED_INPUT_CHANGED")
+306:     return rebuilt
+307: 
+308: 
+309: def _install_case_inputs(*, data_root, source_root, company_id, case, requirement, extra_input_bytes=None):
+310:     """Shared immutable runtime/source installation for explicit native routes."""
+311:     verify_ordinary_source_proofs(data_root=source_root,proofs=case["source_proofs"])
+312:     from .ordinary_source_authority import checkpoint_installation,EXPORT_PATH
+313:     checkpoint,extra_source_paths = checkpoint_installation(source_root=source_root)
+314:     from .annual_runtime import _authority_files
+315:     from .annual_continuity_sources import frozen_foundation_receipts
+316:     paths = set(_authority_files(requirement))
+317:     cursor = requirement
+318:     while cursor:
+319:         paths.update(cursor.get("execution_authority",{}).get("files",{}))
+320:         paths.update(cursor.get("baseline",{}).get("new_rule_files",{}))
+321:         cursor = cursor.get("parent_snapshot")
+322:     paths.update(str(p.relative_to(ROOT)) for p in (ROOT/"requirements").rglob("*") if p.is_file())
+323:     parent_index = strict_json_file(path=ROOT/"docs/evidence/issue28_continuous/frozen-parent-v10-index.json")
+324:     paths.update("docs/evidence/issue28_continuous/frozen-parent-v10/"+p for p in parent_index["files"])
+325:     source_paths = {"config/company_registry.csv","evidence/requests_log.csv","evidence/requests_log_manifest.json",*extra_source_paths}
+326:     for proof in case["source_proofs"]:
+327:         source_paths.update([proof["request_repo_relative_path"],proof["request_headers_repo_relative_path"]])
+328:     # Event completeness also compares the authenticated acquisition census.
+329:     # Header bytes used by that census are bound original inputs, not answers.
+330:     if case["primary_metric_id"] in {"C01","E01","E02","E03","E04","E05"}:
+331:         from .traits import repository_company_ciks
+332:         ciks = {int(cik) for cik in repository_company_ciks(repo_root=source_root,company_id=company_id)}
+333:         for directory in (source_root/"evidence/accession_materials").iterdir():
+334:             fields = directory.name.rsplit("_",2)
+335:             if directory.is_dir() and len(fields)==3 and fields[1].isdigit() and int(fields[1]) in ciks:
+336:                 source_paths.update(str(p.relative_to(source_root)) for p in directory.glob("*.hdr.sgml"))
+337:     _need(not source_paths.intersection(_policy(ROOT)["rule_paths"]+_policy(ROOT)["presentation_paths"]),
+338:           "ORDINARY_INTEGRATED_SOURCE_WOULD_REPLACE_RUNTIME")
+339:     receipts = frozen_foundation_receipts()
+340:     for relative in sorted(paths|source_paths):
+341:         source = resolve_repository_file(repo_root=source_root if relative in source_paths else ROOT,repo_relative_path=relative)
+342:         _write(data_root/relative,receipts[relative]["bytes"] if relative in receipts else source.read_bytes())
+343:     if checkpoint is not None:_write(data_root/EXPORT_PATH,_bytes(checkpoint))
+344:     for relative, raw in (extra_input_bytes or {}).items():
+345:         _need(relative not in paths|source_paths and not Path(relative).is_absolute()
+346:               and '..' not in Path(relative).parts, 'ORDINARY_EXTRA_INPUT_WOULD_REPLACE_RUNTIME')
+347:         _write(data_root/relative,raw)
+348: 
+349: 
+350: def text_api(metric_id, c02_composition=False):
+351:     _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
+352:           'ORDINARY_C02_COMPOSITION_TEXT_API_WRONG_METRIC')
+353:     if metric_id == 'C02':
+354:         from . import c02_composition_text_results
+355:         return c02_composition_text_results, c02_composition_text_results.build_text_review_unit
+356:     if metric_id == 'D01':
+357:         from . import d01_emphasis_results
+358:         from .text_review import build_text_review_unit
+359:         return d01_emphasis_results, build_text_review_unit
+360:     if metric_id == 'D02':
+361:         from . import d02_text_results_v3
+362:         return d02_text_results_v3, d02_text_results_v3.build_text_review_unit
+363:     if metric_id in {'B13', 'D04'}:
+364:         from . import capacity_text_results
+365:         return capacity_text_results, capacity_text_results.build_text_review_unit
+366:     from .normal_run_v2 import text_api as select
+367:     return select(metric_id)
+368: 
+369: 
+370: def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False,
+371:                       c04_event_forms=None, c02_composition=False, c02_grouped=False,
+372:                       d01_emphasis=False, a05_formula=False,
+373:                       d02_category=False, c02_auditor_revision=False, c02_member_revision=False):
+374:     _need(c04_event_forms is None or metric_id == 'C04',
+375:           'ORDINARY_C04_EVENT_FORM_SCOPE_WRONG_METRIC')
+376:     _need(type(c02_composition) is bool and (not c02_composition or metric_id == 'C02'),
+377:           'ORDINARY_C02_COMPOSITION_SCOPE_WRONG_METRIC')
+378:     _need(type(c02_grouped) is bool and (not c02_grouped or (c02_composition and metric_id == 'C02')),
+379:           'ORDINARY_C02_GROUPED_SCOPE_WRONG_METRIC')
+380:     _need(type(c02_auditor_revision) is bool and (not c02_auditor_revision or
+381:           (c02_composition and c02_grouped and metric_id == 'C02')),
+382:           'ORDINARY_C02_AUDITOR_REVISION_SCOPE_WRONG_METRIC')
+383:     _need(type(c02_member_revision) is bool and (not c02_member_revision or
+384:           (c02_auditor_revision and c02_composition and c02_grouped and metric_id == 'C02')),
+385:           'ORDINARY_C02_MEMBER_REVISION_SCOPE_WRONG_METRIC')
+386:     _need(type(d01_emphasis) is bool and (not d01_emphasis or metric_id == 'D01'),
+387:           'ORDINARY_D01_EMPHASIS_SCOPE_WRONG_METRIC')
+388:     _need(type(a05_formula) is bool and (not a05_formula or metric_id == 'A05'),
+389:           'ORDINARY_A05_FORMULA_SCOPE_WRONG_METRIC')
+390:     _need((type(d02_category) is bool or d02_category == 'ITEM8_V2')
+391:           and (not d02_category or metric_id == 'D02'),
+392:           'ORDINARY_D02_CATEGORY_SCOPE_WRONG_METRIC')
+393:     _need(d02_category is not True, 'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
+394:     _need(d02_category != 'ITEM8_V2', 'ORDINARY_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED')
+395:     _need(not c02_member_revision, 'ORDINARY_C02_MEMBER_RULE_VALIDATION_SUSPENDED')
+396:     if metric_id in {'B13', 'D04'}:
+397:         _need(not freeze, 'ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED')
+398:         from .capacity_run import create_run as create_capacity_run
+399:         return create_capacity_run(data_root=data_root, run_dir=run_dir, company_id=company_id, metric_id=metric_id)
+400:     data_root,run_dir = _external(data_root),_external(run_dir)
+401:     _need(not run_dir.exists(),"ORDINARY_INTEGRATED_RUN_PATH_EXISTS")
+402:     _need(not freeze or _policy(data_root)["freeze_enabled"],"ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED")
+403:     case = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id,
+404:         **({'c04_event_forms':c04_event_forms} if c04_event_forms is not None else {}),
+405:         c02_composition=c02_composition,c02_grouped=c02_grouped,d01_emphasis=d01_emphasis,
+406:         a05_formula=a05_formula,d02_category=d02_category,
+407:         c02_auditor_revision=c02_auditor_revision,
+408:             c02_member_revision=c02_member_revision)
+409:     from .ordinary_source_authority import require_installed_checkpoint
+410:     require_installed_checkpoint(data_root=data_root,admission=case["admission"])
+411:     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)
+412:     return _create_case_run(data_root=data_root,run_dir=run_dir,company_id=company_id,metric_id=metric_id,
+413:                             case=case,requirement=requirement,freeze=freeze)
+414: 
+415: 
+416: def _create_case_run(*, data_root, run_dir, company_id, metric_id, case, requirement, freeze=False):
+417:     """One native record/Review/Result write order for ordinary source routes."""
+418:     _need(case.get('input_binding', {}).get('c02_selection_policy') != 'COMPOSITION_GROUPED_V4',
+419:           'ORDINARY_C02_MEMBER_RULE_VALIDATION_SUSPENDED')
+420:     if case.get('input_binding', {}).get('d02_category_policy') is not None:
+421:         from .ordinary_d02_item8_v1 import POLICY as suspended_d02_policy
+422:         _need(case['input_binding']['d02_category_policy'] != suspended_d02_policy,
+423:               'ORDINARY_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
+424:         from .ordinary_d02_item8_v2 import POLICY as suspended_d02_v2_policy
+425:         _need(case['input_binding']['d02_category_policy'] != suspended_d02_v2_policy,
+426:               'ORDINARY_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED')
+427:     from .run_store import (create_run,append_run_record,append_review_decision,write_review_assets,
+428:         validate_and_freeze_run,load_frozen_run,_mechanically_replay_open_run)
+429:     data_root,run_dir = _external(data_root),_external(run_dir)
+430:     _need(not run_dir.exists(),"ORDINARY_INTEGRATED_RUN_PATH_EXISTS")
+431:     _need(not freeze or _policy(data_root)["freeze_enabled"],"ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED")
+432:     binding = _binding(case,requirement);key = content_hash(value=binding)[7:]
+433:     _write(data_root/BINDING_DIRECTORY/(key+".json"),_bytes(binding))
+434:     traits = repository_company_traits(repo_root=data_root,company_id=company_id)
+435:     decision,unit,assets = None,None,None
+436:     terminal_records = []
+437:     if case["kind"] == "TEXT":
+438:         api,review_builder = text_api(metric_id,
+439:             c02_composition=case['input_binding'].get('c02_selection_policy') == 'COMPOSITION_FACTS_V1')
+440:         spec = case["compiled_specs"][metric_id]
+441:         candidate = api.create_deterministic_text_candidate(**case["text_arguments"])
+442:         evidence = api.build_text_evidence(candidate=candidate,**case["text_arguments"])
+443:         unit,assets = review_builder(compiled_spec=spec,candidate=candidate,evidence_check=evidence,
+444:                                     source_bindings=case["text_arguments"]["source_references"])
+445:         from .review import create_system_review_decision
+446:         decision = create_system_review_decision(review_unit=unit,required_claims=spec["compiled"]["required_claims"],
+447:             decided_at_utc=datetime.now(timezone.utc).isoformat(),requirement=requirement)
+448:         result,trace,observations = api.replay_text_result(company_traits=traits,candidate=candidate,evidence_check=evidence,
+449:             review_unit=unit,review_decisions=[decision],**case["text_arguments"])
+450:         records = [*case["expected_records"],candidate,evidence,unit]
+451:         terminal_records = [*observations,trace,result]
+452:     else:
+453:         records = case["expected_records"];result = case["results"][metric_id]
+454:     create_run(run_dir=run_dir,run_id=PREFIX+key,company_id=company_id,company_traits=traits,
+455:         target_period=case["target_period"],source_references=case["references"],missing_required_source_roles=[],
+456:         spec_file_hashes={p:sha256_file(path=data_root/p) for p in case["spec_paths"].values()},
+457:         requirement_hashes=requirement["hashes"],requirement_id=requirement['requirement_id'],
+458:         requirement_closure_hash=requirement["requirement_closure_hash"],artifact_requirement_generation="EXPLICIT_REQUIREMENT_V1")
+459:     seen = {}
+460:     for record in records:
+461:         identity = content_hash(value=record)
+462:         _need(identity not in seen or seen[identity] == record,"ORDINARY_INTEGRATED_RECORD_COLLISION")
+463:         if identity not in seen:
+464:             append_run_record(run_dir=run_dir,record=record);seen[identity] = record
+465:     if decision:
+466:         write_review_assets(run_dir=run_dir,review_unit=unit,review_context_bytes=assets["review_context_bytes"],
+467:                             rendered_review_bytes=assets["rendered_review_bytes"])
+468:         append_review_decision(run_dir=run_dir,decision=decision)
+469:     for record in terminal_records:
+470:         append_run_record(run_dir=run_dir,record=record)
+471:     if freeze:
+472:         validate_and_freeze_run(run_dir=run_dir,repo_root=data_root)
+473:         manifest,stored,_ = load_frozen_run(run_dir=run_dir,repo_root=data_root)
+474:     else:
+475:         manifest,stored,_ = _mechanically_replay_open_run(run_dir=run_dir,repo_root=data_root,require_complete_results=True)
+476:     _need(result in stored,"ORDINARY_INTEGRATED_RESULT_CHANGED")
+477:     return {"manifest":manifest,"result":result,"input_binding":binding,"selection":case.get("selection"),
+478:             "new_calls":{"provider":0,"paid":0,"sec":0},"production_authorized":False}
+479: 
+480: 
+481: def replay_case(*, data_root, manifest, spec=None):
+482:     if manifest.get('requirement_id') == 'issue_28_v14':
+483:         from .capacity_run import validate_run_authority
+484:         case = validate_run_authority(repo_root=data_root, manifest=manifest, records=None, compiled_specs=None)
+485:         _need(spec is None or spec == case['compiled_specs'][case['primary_metric_id']], 'B13_NATIVE_SPEC_CHANGED')
+486:         return case
+487:     _need(manifest["requirement_id"] == REQUIREMENT_ID and manifest["run_id"].startswith(PREFIX),
+488:           "ORDINARY_INTEGRATED_RUN_IDENTITY_REQUIRED")
+489:     key = manifest["run_id"][len(PREFIX):]
+490:     saved = strict_json_file(path=resolve_repository_file(repo_root=data_root,repo_relative_path=BINDING_DIRECTORY+"/"+key+".json"))
+
+FILE scripts/vnext/ordinary_update_cycle.py
+1: """Persistent zero-egress update checks over the ordinary source/Run pipeline.
+2: 
+3: The current runtime admits saved and explicitly recorded sources. This module
+4: does not fetch, enable model calls, publish or reuse closed execution budgets.
+5: It keeps failed attempts separate from the last completely verified candidate.
+6: """
+7: from contextlib import contextmanager
+8: from datetime import datetime,timezone
+9: import fcntl
+10: from pathlib import Path
+11: from uuid import uuid4
+12: 
+13: from git_workspace import first_symlink_in_path
+14: from . import normal_run_v3 as normal
+15: from .canonical import atomic_write_json,content_hash,sha256_file,strict_json_file
+16: from .normal_annual_input import _registry_rows
+17: from .ordinary_projection import render_ordinary_run
+18: from .requirements import load_requirement_snapshot
+19: 
+20: 
+21: class OrdinaryUpdateError(ValueError):
+22:     pass
+23: 
+24: 
+25: def _need(condition,reason):
+26:     if not condition:raise OrdinaryUpdateError(reason)
+27: 
+28: 
+29: def _now():return datetime.now(timezone.utc).isoformat()
+30: 
+31: 
+32: def _write(path,value):normal._write(path,normal._bytes(value))
+33: 
+34: 
+35: def _record(path,body):
+36:     value={**body,'record_id':content_hash(value=body)};_write(path,value);return value
+37: 
+38: 
+39: def _read(path):
+40:     _need(first_symlink_in_path(path=path) is None,'UPDATE_STATE_PATH_ALIAS')
+41:     value=strict_json_file(path=path)
+42:     _need(value['record_id']==content_hash(value={k:v for k,v in value.items() if k!='record_id'}),'UPDATE_RECORD_CHANGED')
+43:     return value
+44: 
+45: 
+46: @contextmanager
+47: def _locked(root):
+48:     _need(first_symlink_in_path(path=root) is None,'UPDATE_STATE_PATH_ALIAS')
+49:     root.mkdir(parents=True,exist_ok=True);path=root/'update.lock'
+50:     _need(first_symlink_in_path(path=path) is None,'UPDATE_STATE_PATH_ALIAS')
+51:     with path.open('a+b') as handle:
+52:         try:fcntl.flock(handle.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)
+53:         except BlockingIOError as error:raise OrdinaryUpdateError('UPDATE_ALREADY_RUNNING') from error
+54:         yield
+55: 
+56: 
+57: def _d02_v2_policy():
+58:     from .ordinary_d02_item8_v2 import POLICY
+59:     return POLICY
+60: 
+61: 
+62: def _config(root,source_root,company_id,metrics,native_assessment_mode='LIVE',
+63:             a05_formula=False,d02_category=False,c02_auditor_revision=False, c02_member_revision=False):
+64:     policy=normal._policy(normal.ROOT)
+65:     _need(policy['provider_enabled'] is False and policy['sec_fetch_enabled'] is False
+66:           and policy['freeze_enabled'] is False,'UPDATE_ZERO_EGRESS_RUNTIME_REQUIRED')
+67:     _need(company_id in {c['company_id'] for c in _registry_rows(repo_root=normal.ROOT)},'UPDATE_COMPANY_NOT_CONFIGURED')
+68:     _need(type(metrics) is list and metrics and len(metrics)==len(set(metrics))
+69:           and set(metrics)<=set(normal.update_metric_ids()),'UPDATE_METRIC_SCOPE_INVALID')
+70:     native = bool(set(metrics) & {'B13','D04'})
+71:     _need(not native or len(metrics) == 1, 'UPDATE_NATIVE_REQUIRES_PER_METRIC_HISTORY')
+72:     _need(type(a05_formula) is bool and (not a05_formula or metrics == ['A05']),
+73:           'UPDATE_A05_FORMULA_SCOPE_INVALID')
+74:     _need((type(d02_category) is bool or d02_category == 'ITEM8_V2')
+75:           and (not d02_category or metrics == ['D02']),
+76:           'UPDATE_D02_CATEGORY_SCOPE_INVALID')
+77:     _need(type(c02_auditor_revision) is bool and (not c02_auditor_revision or
+78:           metrics == ['C02']), 'UPDATE_C02_AUDITOR_REVISION_SCOPE_INVALID')
+79:     _need(type(c02_member_revision) is bool and (not c02_member_revision or
+80:           c02_auditor_revision), 'UPDATE_C02_MEMBER_REVISION_SCOPE_INVALID')
+275:         intent=intents[cursor]
+276:         _need(intent['previous_successful_attempt']==historical_success,'UPDATE_INTENT_PREDECESSOR_CHANGED')
+277:         work=_attempt(root,cursor)
+278:         if (work/'terminal.json').exists():
+279:             terminal=_terminal(root,cursor)
+280:             _need(terminal['intent_id']==intent['record_id'] and terminal['configuration_id']==configuration['record_id'],
+281:                   'UPDATE_TERMINAL_INTENT_CHANGED')
+282:             if terminal['status']=='CANDIDATE_READY':historical_success=cursor
+283:         else:
+284:             _need(not successors.get(cursor),'UPDATE_HISTORICAL_TERMINAL_MISSING')
+285:         if cursor==state['latest_attempt']:
+286:             _need(state['successful_attempt']==historical_success,'UPDATE_STATE_REFERENCE_CHAIN_CHANGED')
+287:     _need(visited==set(intents),'UPDATE_JOURNAL_DISCONNECTED')
+288:     while True:
+289:         following=successors.get(state['latest_attempt'],[])
+290:         if not following:break
+291:         _need(len(following)==1 and following[0] not in seen,'UPDATE_JOURNAL_BRANCH_OR_CYCLE')
+292:         identity=following[0];seen.add(identity);intent=intents[identity];work=_attempt(root,identity)
+293:         _need(intent['previous_successful_attempt']==state['successful_attempt'],'UPDATE_INTENT_PREDECESSOR_CHANGED')
+294:         if not (work/'terminal.json').exists():
+295:             _record(work/'terminal.json',{'record_type':'ORDINARY_UPDATE_TERMINAL','attempt_id':identity,
+296:                 'configuration_id':configuration['record_id'],'intent_id':intent['record_id'],
+297:                 'status':'INTERRUPTED','completed_at':_now(),'input':None,'metrics':{},
+298:                 'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False})
+299:         terminal=_terminal(root,identity)
+300:         _need(terminal['intent_id']==intent['record_id'] and terminal['configuration_id']==configuration['record_id'],
+301:               'UPDATE_TERMINAL_INTENT_CHANGED')
+302:         if terminal['status']=='CANDIDATE_READY':
+303:             verifier(root,terminal,configuration);state['successful_attempt']=identity
+304:         state['latest_attempt']=identity
+305:     atomic_write_json(path=root/'current.json',value=state)
+306:     return state
+307: 
+308: 
+309: def run_once(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None,
+310:              source_identity_root=None,a05_formula=False,d02_category=False,
+311:              c02_auditor_revision=False, c02_member_revision=False):
+312:     """Check one company's current input and keep a durable candidate history."""
+313:     _need(type(d02_category) is bool or d02_category == 'ITEM8_V2',
+314:           'UPDATE_D02_CATEGORY_SCOPE_INVALID')
+315:     _need(d02_category is not True, 'UPDATE_D02_CATEGORY_RULE_VALIDATION_SUSPENDED')
+316:     _need(d02_category != 'ITEM8_V2', 'UPDATE_D02_V2_CATEGORY_RULE_VALIDATION_SUSPENDED')
+317:     _need(type(c02_auditor_revision) is bool and (not c02_auditor_revision or
+318:           metric_ids == ['C02']), 'UPDATE_C02_AUDITOR_REVISION_SCOPE_INVALID')
+319:     _need(type(c02_member_revision) is bool and (not c02_member_revision or
+320:           c02_auditor_revision), 'UPDATE_C02_MEMBER_REVISION_SCOPE_INVALID')
+321:     _need(not c02_member_revision, 'UPDATE_C02_MEMBER_RULE_VALIDATION_SUSPENDED')
+322:     root=normal._external(Path(state_root));source=(normal._external(Path(source_root))
+323:         if source_identity_root is not None else Path(source_root).resolve())
+324:     identity_source=(source if source_identity_root is None else
+325:                      normal._external(Path(source_identity_root)))
+326:     _need(root!=source and root not in source.parents and source not in root.parents,'UPDATE_SOURCE_STATE_ROOTS_OVERLAP')
+327:     if source_identity_root is not None:
+328:         from .ordinary_processing_source import verify_processing_source
+329:         from .continuous_call_policy import REQUIREMENT_ID
+330:         processing_requirement=load_requirement_snapshot(
+331:             snapshot_dir=normal.ROOT/'requirements'/REQUIREMENT_ID)
+332:         verify_processing_source(acquisition_root=identity_source,
+333:             processing_root=source,requirement=processing_requirement)
+334:     with _locked(root):
+335:         configuration=_config(root,identity_source,company_id,metric_ids,
+336:                               native_assessment_mode,a05_formula,d02_category,
+337:                               c02_auditor_revision=c02_auditor_revision,
+338:                               c02_member_revision=c02_member_revision)
+339:         state=_recover(root,_state(root,configuration),configuration)
+340:         previous=None;successful_results={}
+341:         if state['successful_attempt'] is not None:
+342:             previous=_terminal(root,state['successful_attempt']);successful_results=_verify_candidate(root,previous,configuration)
+343:         identity=uuid4().hex;work=_attempt(root,identity)
+344:         intent=_record(work/'intent.json',{'record_type':'ORDINARY_UPDATE_INTENT','attempt_id':identity,
+345:             'configuration_id':configuration['record_id'],'started_at':_now(),'previous_attempt':state['latest_attempt'],
+346:             'previous_successful_attempt':state['successful_attempt']})
+347:         descriptor=None;metrics={};status='INPUT_FAILED';error=None
+348:         try:
+349:             _,descriptor,ledger=_inspect(source,configuration,native_assessment_ledger)
+350:             if previous:
+351:                 _need(all(descriptor['targets'][m]['period_end']>=previous['input']['targets'][m]['period_end']
+352:                           for m in configuration['metric_ids']),'UPDATE_SOURCE_PERIOD_REGRESSED')
+353:             if previous and descriptor==previous['input']:
+354:                 status='NO_SOURCE_CONTENT_CHANGE'
+355:             elif state['latest_attempt'] and (prior:=_terminal(root,state['latest_attempt']))['status'] in {'CANDIDATE_WITHHELD','PREVIOUS_INPUT_WITHHELD'} and prior['input']==descriptor:
+356:                 status='PREVIOUS_INPUT_WITHHELD'
+357:             else:
+358:                 for metric in configuration['metric_ids']:
+359:                     normal.install_normal_inputs(data_root=work/'data',source_root=None if source==normal.ROOT else source,
+360:                         company_id=company_id,metric_id=metric,
+361:                         **({'registered_update_options':configuration['registered_update_options'],'native_assessment_ledger':native_assessment_ledger} if 'registered_update_options' in configuration else {}),
+362:                         **({'c02_composition':True,'c02_grouped':True,
+363:                             'c02_auditor_revision':c02_auditor_revision,
+364:                             'c02_member_revision':c02_member_revision} if metric == 'C02' else {}),
+365:                         **({'d01_emphasis':True} if metric == 'D01' else {}),
+366:                         **({'a05_formula':True} if a05_formula else {}),
+367:                         **({'d02_category':d02_category} if d02_category else {}))
+368:                     created=normal.create_normal_run(data_root=work/'data',run_dir=work/'runs'/metric,
+369:                         company_id=company_id,metric_id=metric,
+370:                         **({'c02_composition':True,'c02_grouped':True,
+371:                             'c02_auditor_revision':c02_auditor_revision,
+372:                             'c02_member_revision':c02_member_revision} if metric == 'C02' else {}),
+373:                         **({'d01_emphasis':True} if metric == 'D01' else {}),
+374:                         **({'a05_formula':True} if a05_formula else {}),
+375:                         **({'d02_category':d02_category} if d02_category else {}))
+376:                     rendered=render_ordinary_run(data_root=work/'data',run_dir=work/'runs'/metric)
+377:                     hashes={}
+378:                     for name,raw in rendered['files'].items():
+379:                         path=work/'rows'/metric/name;normal._write(path,raw);hashes[name]=sha256_file(path=path)
+380:                     metrics[metric]={'result_id':created['result']['result_id'],'publication':created['result']['publication'],
+381:                                      'source_credit':created['input_binding']['source_admission']['source_credit'],'files':hashes}
+382:                     if metric in {'B13','D04'}:
+383:                         current_case=normal.replay_case(data_root=work/'data',manifest=created['manifest'])
+384:                         metrics[metric]['native_assessment_completed'] = _completed_result(metric=metric,
+385:                             result=created['result'],case=current_case,rendered=rendered,data_root=work/'data')
+386:                 _need(sha256_file(path=source/'evidence/requests_log.csv')==ledger,'UPDATE_SOURCE_CHANGED_DURING_EXECUTION')
+387:                 status='CANDIDATE_READY' if all(v['publication']=='PUBLISHED' or v.get('native_assessment_completed') is True for v in metrics.values()) else 'CANDIDATE_WITHHELD'
+388:                 if status=='CANDIDATE_READY':
+389:                     successful_results=_verify_candidate(root,{'status':status,'configuration_id':configuration['record_id'],
+390:                         'attempt_id':identity,'input':descriptor,'metrics':metrics},configuration)
+391:             if source_identity_root is not None:
+392:                 verify_processing_source(acquisition_root=identity_source,
+393:                     processing_root=source,requirement=processing_requirement)
+394:         except Exception as failure:
+395:             error={'error_type':type(failure).__name__,'reason':str(failure)}
+396:             status='EXECUTION_FAILED' if descriptor is not None else 'INPUT_FAILED'
+397:         terminal=_record(work/'terminal.json',{'record_type':'ORDINARY_UPDATE_TERMINAL','attempt_id':identity,
+398:             'configuration_id':configuration['record_id'],'intent_id':intent['record_id'],'status':status,
+399:             'completed_at':_now(),'input':descriptor,'metrics':metrics,'error':error,
+400:             'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False})
+401:         if status=='CANDIDATE_READY':
+402:             state['successful_attempt']=identity;previous=terminal
+403:         state['latest_attempt']=identity;atomic_write_json(path=root/'current.json',value=state)
+404:         return {'status':status,'attempt_id':identity,'latest_attempt':identity,
+405:             'successful_attempt':state['successful_attempt'],'previous_successful_attempt':intent['previous_successful_attempt'],
+406:             'last_verified_candidate':None if previous is None else {
+407:                 'attempt_id':previous['attempt_id'],'targets':previous['input']['targets'],
+408:                 'current_input_matches':descriptor==previous['input'],'results':successful_results,
+409:                 'rows_root':str(_attempt(root,previous['attempt_id'])/'rows')},
+410:             'new_candidate_created':bool(metrics),'terminal':terminal,'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
+411: 
+412: 
+413: def run_company(*,state_root,source_root,company_id,metric_ids,native_assessment_mode='LIVE',native_assessment_ledger=None,
+414:                 source_identity_root=None):
+415:     """Keep each metric's candidate independent of other metric failures."""
+416:     root=normal._external(Path(state_root));policy=normal._policy(normal.ROOT)
+417:     _need(type(metric_ids) is list and metric_ids and len(metric_ids)==len(set(metric_ids))
+418:           and set(metric_ids)<=set(normal.update_metric_ids()),'UPDATE_METRIC_SCOPE_INVALID')
+419:     # Earlier group histories remain intact and must use their pinned runtime.
+420:     # Never silently start unrelated histories beside an existing group pointer.
+421:     _need(not (root/'configuration.json').exists() and not (root/'current.json').exists(),
+422:           'UPDATE_GROUP_HISTORY_REQUIRES_PINNED_RUNTIME')
+423:     outcomes=[]
+424:     for metric in sorted(metric_ids):
+425:         try:
+426:             outcome=run_once(state_root=root/'metrics'/metric,source_root=source_root,
+427:                              company_id=company_id,metric_ids=[metric],native_assessment_mode=native_assessment_mode,
+428:                              native_assessment_ledger=native_assessment_ledger,source_identity_root=source_identity_root)
+429:         except Exception as error:
+430:             outcome={'status':'UPDATE_BLOCKED','error_type':type(error).__name__,'reason':str(error),
+431:                      'last_verified_candidate':None,'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
+432:         outcomes.append({'metric_id':metric,**outcome})
+433:     ready=sum(o['status'] in {'CANDIDATE_READY','NO_SOURCE_CONTENT_CHANGE'} for o in outcomes)
+434:     return {'company_id':company_id,'status':'UPDATES_READY' if ready==len(outcomes) else
+435:             'UPDATES_PARTIAL' if ready else 'UPDATES_INCOMPLETE','metrics':outcomes,
+436:             'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
+
+FILE scripts/vnext/ordinary_c02_member_update_v4.py
+1: """Select the explicit #28 C02 member-clause repair on normal updates.
+2: 
+3: Old C02 journals keep their installed rules. New C02 attempts use a separate
+4: successor journal; other metrics retain their current explicit routes.
+5: """
+6: from pathlib import Path
+7: 
+8: from . import normal_run_v3 as normal
+9: from . import ordinary_update_cycle as current
+10: from .ordinary_d02_category_update_v2 import run_company as run_other_metrics
+11: 
+12: 
+13: def run_company(*, state_root, source_root, company_id, metric_ids,
+14:                 native_assessment_mode='LIVE', native_assessment_ledger=None,
+15:                 source_identity_root=None):
+16:     root = normal._external(Path(state_root))
+17:     if 'C02' not in metric_ids:
+18:         return run_other_metrics(state_root=root, source_root=source_root,
+19:             company_id=company_id, metric_ids=metric_ids,
+20:             native_assessment_mode=native_assessment_mode,
+21:             native_assessment_ledger=native_assessment_ledger,
+22:             source_identity_root=source_identity_root)
+23:     current._need(type(metric_ids) is list and metric_ids and
+24:                   len(metric_ids) == len(set(metric_ids)) and
+25:                   set(metric_ids) <= set(normal.update_metric_ids()),
+26:                   'UPDATE_METRIC_SCOPE_INVALID')
+27:     current._need(not (root/'configuration.json').exists() and
+28:                   not (root/'current.json').exists(),
+29:                   'UPDATE_GROUP_HISTORY_REQUIRES_PINNED_RUNTIME')
+30:     other_ids = [metric for metric in metric_ids if metric != 'C02']
+31:     other_rows = (run_other_metrics(state_root=root, source_root=source_root,
+32:         company_id=company_id, metric_ids=other_ids,
+33:         native_assessment_mode=native_assessment_mode,
+34:         native_assessment_ledger=native_assessment_ledger,
+35:         source_identity_root=source_identity_root)['metrics'] if other_ids else [])
+36:     try:
+37:         c02 = current.run_once(state_root=root/'metrics/C02-composition-member-v4',
+38:             source_root=source_root, company_id=company_id,
+39:             metric_ids=['C02'], native_assessment_mode=native_assessment_mode,
+40:             native_assessment_ledger=native_assessment_ledger,
+41:             source_identity_root=source_identity_root, c02_auditor_revision=True,
+42:             c02_member_revision=True)
+43:         c02 = {'metric_id': 'C02', **c02}
+44:     except Exception as error:
+45:         c02 = {'metric_id': 'C02', 'status': 'UPDATE_BLOCKED',
+46:                'error_type': type(error).__name__, 'reason': str(error),
+47:                'last_verified_candidate': None,
+48:                'calls': {'provider': 0, 'paid': 0, 'sec': 0},
+49:                'production_authorized': False}
+50:     rows = {row['metric_id']: row for row in [*other_rows, c02]}
+51:     ordered = [rows[metric] for metric in metric_ids]
+52:     ready = sum(row['status'] in {'CANDIDATE_READY',
+53:                                   'NO_SOURCE_CONTENT_CHANGE'} for row in ordered)
+54:     return {'company_id': company_id,
+55:         'status': 'UPDATES_READY' if ready == len(ordered) else
+56:             'UPDATES_PARTIAL' if ready else 'UPDATES_INCOMPLETE',
+57:         'metrics': ordered,
+58:         'calls': {'provider': 0, 'paid': 0, 'sec': 0},
+59:         'production_authorized': False}
+
+FILE tests/vnext/test_c02_member_successor.py
+1: """Ordinary C02 receives the shared member-clause scope repair."""
+2: from pathlib import Path
+3: from tempfile import TemporaryDirectory
+4: import unittest
+5: 
+6: from vnext import c02_board_composition_28_v3 as old
+7: from vnext import c02_board_composition_28_v4 as current
+8: from vnext import c02_composition_text_results as api
+9: from vnext.normal_run_v3 import prepare_case
+10: from tests.vnext.test_c02_auditor_successor import prepared, governance, selected_original
+11: 
+12: 
+13: ROOT = Path(__file__).resolve().parents[2]
+14: 
+15: 
+16: class C02MemberScopeFastTest(unittest.TestCase):
+17:     def test_unreviewed_member_rule_cannot_write_new_runs_or_update_state(self):
+18:         from vnext.normal_run_v3 import create_normal_run, _create_case_run
+19:         from vnext.ordinary_update_cycle import run_once
+20:         with TemporaryDirectory() as temporary:
+21:             root = Path(temporary)
+22:             with self.assertRaisesRegex(ValueError, 'ORDINARY_C02_MEMBER_RULE_VALIDATION_SUSPENDED'):
+23:                 create_normal_run(data_root=root/'data', run_dir=root/'run',
+24:                     company_id='jpmorgan_chase', metric_id='C02', c02_composition=True,
+25:                     c02_grouped=True, c02_auditor_revision=True, c02_member_revision=True)
+26:             with self.assertRaisesRegex(ValueError, 'ORDINARY_C02_MEMBER_RULE_VALIDATION_SUSPENDED'):
+27:                 _create_case_run(data_root=root/'data', run_dir=root/'run',
+28:                     company_id='jpmorgan_chase', metric_id='C02',
+29:                     case={'input_binding':{'c02_selection_policy':'COMPOSITION_GROUPED_V4'}},
+30:                     requirement={})
+31:             with self.assertRaisesRegex(ValueError, 'UPDATE_C02_MEMBER_RULE_VALIDATION_SUSPENDED'):
+32:                 run_once(state_root=root/'state', source_root=ROOT,
+33:                     company_id='jpmorgan_chase', metric_ids=['C02'],
+34:                     c02_auditor_revision=True, c02_member_revision=True)
+35:             self.assertEqual([], list(root.iterdir()))
+36: 
+37:     def test_disclaimer_is_excluded_and_member_determinations_are_preserved(self):
+38:         own = frozenset({'audit', 'compensation'})
+39:         disclaimer = ('The members of the Audit Committee are not professionally engaged '
+40:                       'in the practice of accounting or auditing; as noted above, the '
+41:                       'Audit Committee’s responsibility is to monitor and oversee these processes.')
+42:         self.assertIn('COMMITTEE_COMPOSITION_STATEMENT',
+43:                       old.statement_labels(disclaimer, own, period_start='2025-01-01'))
+44:         self.assertEqual([], current.statement_labels(disclaimer, own, period_start='2025-01-01'))
+45:         for status in ('independent', 'financially literate', 'not employees of the Company'):
+46:             self.assertIn('COMMITTEE_COMPOSITION_STATEMENT', current.statement_labels(
+47:                 'The members of the Audit Committee are ' + status + '.',
+48:                 own, period_start='2025-01-01'))
+49:         self.assertIn('COMMITTEE_COMPOSITION_STATEMENT', current.statement_labels(
+50:             'The members of the Audit Committee include Mr. Smith and Ms. Jones.',
+51:             own, period_start='2025-01-01'))
+52:         self.assertEqual([], current.statement_labels(
+53:             'The members of the Audit Committee are responsible for overseeing the independent external auditor.',
+54:             own, period_start='2025-01-01'))
+55: 
+56:     def test_explicit_successor_requires_its_dependencies_and_correct_metric(self):
+57:         with self.assertRaisesRegex(ValueError, 'ORDINARY_C02_MEMBER_REVISION_SCOPE_WRONG_METRIC'):
+58:             prepare_case(data_root=ROOT, company_id='jpmorgan_chase', metric_id='C02',
+59:                          c02_composition=True, c02_grouped=True, c02_member_revision=True)
+60:         from vnext.ordinary_update_cycle import run_once
+61:         with TemporaryDirectory() as folder:
+62:             path = Path(folder) / 'state'
+63:             with self.assertRaisesRegex(ValueError, 'UPDATE_C02_MEMBER_REVISION_SCOPE_INVALID'):
+64:                 run_once(state_root=path, source_root=ROOT, company_id='jpmorgan_chase',
+65:                          metric_ids=['C02'], c02_member_revision=True)
+66:             self.assertFalse(path.exists())
+67: 
+68: 
+69: class C02MemberScopeMaterialTest(unittest.TestCase):
+70:     def test_current_original_loses_only_the_disclaimer_and_retains_actual_qualifications(self):
+71:         kwargs = dict(data_root=ROOT, company_id='jpmorgan_chase', metric_id='C02',
+72:                       c02_composition=True, c02_grouped=True, c02_auditor_revision=True)
+73:         prior = prepare_case(**kwargs)
+74:         same = prepare_case(**kwargs, c02_member_revision=False)
+75:         self.assertEqual(prior, same)
+76:         new = prepare_case(**kwargs, c02_member_revision=True)
+77:         a, b = prepared(prior), prepared(new)
+78:         sid, p = governance(a['proposals'])
+79:         sid2, q = governance(b['proposals'])
+80:         self.assertEqual(sid, sid2)
+81:         self.assertEqual({3436}, selected_original(p) - selected_original(q))
+82:         self.assertEqual(set(), selected_original(q) - selected_original(p))
+83:         self.assertIn(3409, selected_original(q))
+84:         self.assertFalse(any(3436 in x['selected_source_blocks'] + x['context_source_blocks']
+85:                              for x in q['candidates']))
+86:         self.assertFalse(any(3367 in x['selected_source_blocks'] + x['context_source_blocks']
+87:                              for x in q['candidates']))
+88:         candidate = api.create_deterministic_text_candidate(**new['text_arguments'])
+89:         self.assertEqual('PASS', api.build_text_evidence(
+90:             candidate=candidate, **new['text_arguments'])['status'])
+91:         with self.assertRaisesRegex(ValueError, 'C02_COMPOSITION_CANDIDATE_REPLAY_CHANGED'):
+92:             api.build_text_evidence(candidate=api.create_deterministic_text_candidate(
+93:                 **prior['text_arguments']), **new['text_arguments'])
+94:         self.assertEqual('COMPOSITION_GROUPED_V4', new['input_binding']['c02_selection_policy'])
+95:         self.assertEqual('catalog/r6/C02_board_disclosures_v5.md', new['spec_paths']['C02'])
+96: 
+97: 
+98: if __name__ == '__main__':
+99:     unittest.main()

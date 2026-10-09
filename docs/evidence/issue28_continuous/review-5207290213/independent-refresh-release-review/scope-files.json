@@ -1,0 +1,57 @@
+{
+  "base_head": "ddecbf03b98c9c40f24be87c8181ae9077cb7ae3",
+  "scope_files": {
+    "scripts/vnext/ordinary_refresh_cycle.py": {
+      "sha256": "a05bc58af77d8543d0a3260334c94c606b4ef3544048902e7e3844977bd94eb3",
+      "size": 11018
+    },
+    "tools/vnext_ordinary_refresh.py": {
+      "sha256": "bc9618d05c522efde784c085a9f3c1dde2e175a98f6dd06b1a7e2922df7a9fd0",
+      "size": 2050
+    },
+    "scripts/vnext/ordinary_release_preparation.py": {
+      "sha256": "75fe4e6cf442320905b873446ce76e6bccefadc75b2b91cf399e76522fc22cb3",
+      "size": 11639
+    },
+    "tests/vnext/test_ordinary_refresh_cycle.py": {
+      "sha256": "d809ad671a9f9db21000b5c96748257b964c2ca43fcaa54aa11cb441c6695bef",
+      "size": 5147
+    },
+    "tests/vnext/test_ordinary_refresh_cycle_material.py": {
+      "sha256": "694edcb2a9478713bd58a37f3e84e06b5d869480ea5fd801fcada23142464c44",
+      "size": 7793
+    },
+    "tests/vnext/test_ordinary_release_preparation_material.py": {
+      "sha256": "396891aa57475d65f1cc71847859016e3e0b7c9eb7676a7365a19b8004c12545",
+      "size": 7955
+    },
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/current-summary.json": {
+      "sha256": "b4d5e4b3289e48b01a398b372531f5ed35ef1eeec7500b93a280d12b72d82aee",
+      "size": 2078
+    },
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/final-reentry-summary.json": {
+      "sha256": "e3489cfc302eeea17d809880633b1d3113ac44af2de8e0e9018d5083858527b8",
+      "size": 2282
+    },
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/wiring-draft.json": {
+      "sha256": "b6c5e201670182ae3aa5c7769b84c16ed02370704a5dbb46eb1a475de5f2704a",
+      "size": 1527
+    },
+    "docs/evidence/issue28_continuous/ordinary-release-preparation/summary.json": {
+      "sha256": "fea8073bafce0c5124ab2fbbb8438aa39373dc06a565e81cfb00da90b42da9fa",
+      "size": 18360
+    },
+    "docs/evidence/issue28_continuous/ordinary-release-preparation/archive-verification.json": {
+      "sha256": "006c6458f8c738dd627ab51206371bfb7c3ce0dc2163b6fedf6c528e42f94236",
+      "size": 164
+    }
+  },
+  "live_refresh_wiring_installed_at_review": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "whole_pr_approval": false,
+  "release_material_runtime_and_test_bytes_equal_current": true
+}

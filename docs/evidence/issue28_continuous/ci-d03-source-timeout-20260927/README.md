@@ -1,0 +1,7 @@
+# D03 saved-source selector time bound after deterministic sharding
+
+At pushed head `1613dab6`, main CI `36276931767` completed `failure`: 13 jobs succeeded, saved-source shard 0 failed, and its dependent aggregate failed. Shard 1 succeeded. The shard-0 JSON completed in 1118.982 seconds and identified one nonzero selector: `tests.vnext.test_d03_recorded_response_store.D03RecordedResponseStoreTest`, return code 124 at its 240-second per-case limit. No D03 assertion failure or incomplete-output success was reported. `failed-selector.json` retains the one row and run identity without duplicating the whole CI log.
+
+The identical D03 selector passed at earlier head `68abb7a1` in 227.163 seconds; the local complete saved-source test passed in 116.887 seconds. The relevant D03 implementation and test bytes did not change between `1613dab6` and this timeout adjustment. We therefore give **only this selector** 300 seconds, leaving the existing C04 300-second and SEC acquisition 480-second overrides, other cases at 240, two-worker shards, and the 35-minute job limit unchanged. This is CI scheduling headroom, not a D03 semantics repair. `verify.log` checks the exact selector limits and source-list partition. It does not rerun the expensive test. The next pushed head must establish the remote verdict.
+
+No business code, model/SEC request, quota, source bytes or production state changed. The B13 V7 semantic review remains `NEEDS_FIX` and default-closed; this CI repair does not count it as accepted.

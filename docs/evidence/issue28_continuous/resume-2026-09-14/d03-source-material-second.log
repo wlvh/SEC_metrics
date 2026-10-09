@@ -1,0 +1,15 @@
+test_current_jpm_source_alias_and_proposal_conflict (tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest.test_current_jpm_source_alias_and_proposal_conflict) ... FAIL
+
+======================================================================
+FAIL: test_current_jpm_source_alias_and_proposal_conflict (tests.vnext.test_regulatory_statement_facts.RegulatoryStatementSourceMaterialTest.test_current_jpm_source_alias_and_proposal_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_regulatory_statement_facts.py", line 140, in test_current_jpm_source_alias_and_proposal_conflict
+    path = Path(output); self.assertFalse(path.exists())
+                         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 133.649s
+
+FAILED (failures=1)

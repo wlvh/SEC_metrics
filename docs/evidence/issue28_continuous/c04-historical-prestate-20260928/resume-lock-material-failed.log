@@ -1,0 +1,36 @@
+E
+======================================================================
+ERROR: test_historical_b01_pointer_without_new_attempt_can_resume (tests.vnext.test_c04_source_only_install.C04MixedSourceRouteMaterialTest.test_historical_b01_pointer_without_new_attempt_can_resume)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_c04_source_only_install.py", line 169, in test_historical_b01_pointer_without_new_attempt_can_resume
+    resumed = refresh.refresh_and_process(session=session,
+        state_root=root/'state',
+        company_ids=['marriott_international'],
+        metric_ids=['B01', 'C04'], max_sec_requests=1,
+        c04_successor=True, resume_from=prior)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_refresh_cycle.py", line 494, in refresh_and_process
+    resumed = (_resume_one_c04_source(session=session, state_root=state_root,
+               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        company_id=selected[0], snapshot=snapshot, report_path=resume_from,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        metric_ids=metrics, mixed_stale=mixed_stale)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_refresh_cycle.py", line 425, in _resume_one_c04_source
+    need(row['metric_id'] == 'C04'
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+         and state['latest_attempt'] == row['attempt_id']
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+         and report['companies'][0]['acquisition_errors'] == expected_errors,
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'ORDINARY_REFRESH_RESUME_C04_HISTORY_CHANGED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_call_policy.py", line 15, in need
+    raise ValueError(reason)
+ValueError: ORDINARY_REFRESH_RESUME_C04_HISTORY_CHANGED
+
+----------------------------------------------------------------------
+Ran 1 test in 322.258s
+
+FAILED (errors=1)

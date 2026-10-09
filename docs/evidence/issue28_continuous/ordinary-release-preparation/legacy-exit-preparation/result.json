@@ -1,0 +1,2952 @@
+{
+  "record_type": "LEGACY_EXIT_PREPARATION_ONLY",
+  "production_exit_activated": false,
+  "scope": "One disposable Python process; original inventory and existing tombstone/metric-write guards, no source edits or active switch",
+  "inventory_sha256": "78d2732a19ac838b00cb878e085bad2976b1dc16f2632438cf38276e64a442a1",
+  "pipeline_sha256": "f62bd3dba3a140002d0d4e74912876ff5972d785a4a029f80d5a75dfbb89b438",
+  "semantic_producer_count": 116,
+  "shared_inventory_rows_retained": 20,
+  "target_metric_ids": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08",
+    "B09",
+    "B10",
+    "B11",
+    "B12",
+    "B13",
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+  ],
+  "original_existing_retirement_check": {
+    "check_id": "legacy_b01_b03_b10_b11_production_paths_retired",
+    "severity": "P0",
+    "status": "PASS",
+    "details": "retired_symbols=22"
+  },
+  "prepared_blocked_symbols": [
+    "a04_companyfacts_proxy_note",
+    "annual_duration_ok",
+    "apply_8k_event_metrics_from_events",
+    "apply_fi_mda_table_metrics",
+    "apply_lodging_kpi_metrics",
+    "apply_rpo_crpo_metric",
+    "apply_stub_period_metric_semantics",
+    "auditor_current_filing_candidates",
+    "auditor_fact_for_accession",
+    "auditor_facts_for_company",
+    "basel_candidate_role",
+    "basel_ratio_candidate_rows",
+    "basel_ratio_candidates_from_rows",
+    "build_c03_repair_rows",
+    "c04_period_start",
+    "c04_target_filing",
+    "candidate_fact_hits",
+    "canonical_auditor_name",
+    "captive_dimension_axis_allowed",
+    "captive_dimension_member_allowed",
+    "captive_finance_signal_from_rows",
+    "company_continuity_status",
+    "company_extractors",
+    "company_has_captive_finance_signal",
+    "compatible_b07_component_hits",
+    "compatible_component_hits",
+    "concept_excluded_from_total_debt",
+    "concept_has_cet1_semantics",
+    "concept_has_rwa_ratio_semantics",
+    "concept_is_basel_threshold_or_requirement",
+    "concept_is_captive_debt_probe",
+    "concept_matches_basel_metric",
+    "concept_matches_rpo",
+    "custom_da_observation_note",
+    "def14a_quote",
+    "derived_metric",
+    "dimension_pairs",
+    "dimensions_have_basel_methodology",
+    "dump_ecd_facts",
+    "eight_k_event_update_specs",
+    "ensure_auditor_fact_from_candidates",
+    "entity_continuity_yoy_result",
+    "event_inventory_coverage_errors",
+    "event_rows_for_metric",
+    "event_rows_from_document",
+    "fact_is_annual_duration",
+    "fact_is_instant",
+    "fi_mda_table_specs",
+    "fi_metric_rows",
+    "governance_risk_event_placeholders",
+    "has_extractor",
+    "instant_component_hits_compatible",
+    "is_dei_namespace",
+    "is_ecd_namespace",
+    "legacy_non_migrated_metric_rows",
+    "lodging_candidate_from_cells",
+    "lodging_header_order",
+    "lodging_identity_error",
+    "lodging_kpi_fact_from_text",
+    "lodging_metric_orders",
+    "lodging_numeric_cells",
+    "lodging_quote_text",
+    "lodging_scope_matches",
+    "lodging_scope_row_labels",
+    "lodging_section_before",
+    "lodging_table_segments",
+    "mda_anchor_quote",
+    "metric_from_fact",
+    "normalize_item_code",
+    "normalized_concept_name",
+    "normalized_scope_text",
+    "optional_b_metric_ids",
+    "optional_b_metric_is_main_applicable",
+    "parse_items_from_hdr",
+    "parse_items_from_primary_text",
+    "primary_peo_fact",
+    "prior_10k_for_company",
+    "prune_non_applicable_optional_b_metrics",
+    "raw_auditor_facts_for_candidates",
+    "repair_basel_capital_ratios",
+    "repair_c02_board_text_from_governance",
+    "repair_c03_compensation",
+    "repair_c04_auditor_changes",
+    "repair_captive_finance_debt",
+    "repair_lodging_kpis",
+    "repair_rpo_crpo_metrics",
+    "resolve_b07_operating_income_component",
+    "resolve_da_component",
+    "resolve_operating_income_component",
+    "resolve_total_debt_component",
+    "row_has_captive_finance_signal",
+    "rpo_instance_fact",
+    "rpo_instance_fact_from_rows",
+    "rpo_text_fact",
+    "scaled_mda_value",
+    "scope_pattern",
+    "select_auditor_fact_from_candidates",
+    "select_component",
+    "select_fact",
+    "select_target_component",
+    "selected_basel_ratio_fact",
+    "snippet_for_pattern",
+    "special_metric_placeholders",
+    "stage_compute_standard_metrics",
+    "stage_extract_8k_events",
+    "stage_extract_def14a",
+    "stage_extract_mda_and_risk_text",
+    "stub_period_bounds",
+    "stub_period_fact_hits",
+    "target_10k_for_company",
+    "target_instant_component_exists",
+    "text_has_capacity_keywords",
+    "text_has_lodging_kpi_keywords",
+    "text_has_rpo_keywords",
+    "upsert_lodging_text_metric",
+    "valid_peo_total_comp_facts"
+  ],
+  "write_boundary_cases": [
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A01"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A01"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A02"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A02"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A03"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A03"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A04"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A04"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A05"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A05"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A06"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A06"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A07"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A07"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A08"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A08"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A09"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A09"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A10"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A10"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A11"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A11"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A12"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A12"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "A13"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "A13"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B01"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B01"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B02"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B02"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B03"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B03"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B04"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B04"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B05"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B05"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B06"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B06"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B07"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B07"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B08"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B08"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B09"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B09"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B10"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B10"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B11"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B11"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B12"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B12"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "B13"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "B13"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "C01"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "C01"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "C02"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "C02"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "C03"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "C03"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "C04"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "C04"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "D01"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "D01"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "D02"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "D02"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "D03"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "D03"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "D04"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "D04"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "E01"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "E01"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "E02"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "E02"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "E03"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "E03"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "E04"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "E04"
+    },
+    {
+      "operation": "upsert_metric",
+      "metric_id": "E05"
+    },
+    {
+      "operation": "append_evidence",
+      "metric_id": "E05"
+    }
+  ],
+  "historical_publication": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+  "historical_rows_bytes_unchanged": true,
+  "source_producer_inventory": [
+    {
+      "producer_id": "scripts/sec_pipeline.py::a04_companyfacts_proxy_note",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::annual_duration_ok",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B02",
+        "B07"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B02",
+        "B07"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::apply_8k_event_metrics_from_events",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::apply_fi_mda_table_metrics",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A03",
+        "A04",
+        "A11",
+        "A12"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A03",
+        "A04",
+        "A11",
+        "A12"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::apply_lodging_kpi_metrics",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "legacy_write_entry_points",
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::apply_rpo_crpo_metric",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B12"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B12"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::apply_stub_period_metric_semantics",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [
+        "additional_migrated_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::auditor_current_filing_candidates",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::auditor_fact_for_accession",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::auditor_facts_for_company",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::basel_candidate_role",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::basel_ratio_candidate_rows",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::basel_ratio_candidates_from_rows",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::build_c03_repair_rows",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C03"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C03"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::c04_period_start",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::c04_target_filing",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::candidate_fact_hits",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "retired_metric_ids": [
+        "B03"
+      ],
+      "covered_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::canonical_auditor_name",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::captive_dimension_axis_allowed",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::captive_dimension_member_allowed",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::captive_finance_signal_from_rows",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::company_continuity_status",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::company_extractors",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B12",
+        "B13",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [
+        "B01",
+        "B03",
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B10",
+        "B11",
+        "B12",
+        "B13",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::company_has_captive_finance_signal",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::compatible_b07_component_hits",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B07"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B07"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::compatible_component_hits",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B03"
+      ],
+      "covered_metric_ids": [
+        "B03"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "b03_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::concept_excluded_from_total_debt",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::concept_has_cet1_semantics",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::concept_has_rwa_ratio_semantics",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::concept_is_basel_threshold_or_requirement",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::concept_is_captive_debt_probe",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::concept_matches_basel_metric",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::concept_matches_rpo",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B12"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B12"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::custom_da_observation_note",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B03"
+      ],
+      "covered_metric_ids": [
+        "B03"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "additional_migrated_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::def14a_quote",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C02",
+        "C03"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C02",
+        "C03"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::derived_metric",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B05",
+        "B06",
+        "B07",
+        "B08"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B05",
+        "B06",
+        "B07",
+        "B08"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::dimension_pairs",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::dimensions_have_basel_methodology",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::dump_ecd_facts",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C03"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C03"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::eight_k_event_update_specs",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::ensure_auditor_fact_from_candidates",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::entity_continuity_yoy_result",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::event_inventory_coverage_errors",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::event_rows_for_metric",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::event_rows_from_document",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::fact_is_annual_duration",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "retired_metric_ids": [
+        "B03"
+      ],
+      "covered_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::fact_is_instant",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A10",
+        "B06",
+        "B08",
+        "B09"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A10",
+        "B06",
+        "B08",
+        "B09"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::fi_mda_table_specs",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A03",
+        "A04",
+        "A11",
+        "A12"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A03",
+        "A04",
+        "A11",
+        "A12"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "B08"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "B08"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::governance_risk_event_placeholders",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::has_extractor",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B12",
+        "B13",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [
+        "B01",
+        "B03",
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B10",
+        "B11",
+        "B12",
+        "B13",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::instant_component_hits_compatible",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::is_dei_namespace",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::is_ecd_namespace",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C03"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C03"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::legacy_non_migrated_metric_rows",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [
+        "b03_production_symbols",
+        "legacy_write_entry_points"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::lodging_candidate_from_cells",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::lodging_header_order",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::lodging_identity_error",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::lodging_kpi_fact_from_text",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::lodging_metric_orders",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::lodging_numeric_cells",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::lodging_quote_text",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::lodging_scope_matches",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::lodging_scope_row_labels",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::lodging_section_before",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::lodging_table_segments",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::mda_anchor_quote",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A03",
+        "A04",
+        "A11",
+        "A12"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A03",
+        "A04",
+        "A11",
+        "A12"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::metric_from_fact",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B04",
+        "B09"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B04",
+        "B09"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::normalize_item_code",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::normalized_concept_name",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::normalized_scope_text",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::optional_b_metric_ids",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B12",
+        "B13"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B12",
+        "B13"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [
+        "additional_migrated_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::optional_b_metric_is_main_applicable",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B12",
+        "B13"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B12",
+        "B13"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [
+        "additional_migrated_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::parse_items_from_hdr",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::parse_items_from_primary_text",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::primary_peo_fact",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C03"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C03"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::prior_10k_for_company",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A05",
+        "A07",
+        "B02",
+        "C04"
+      ],
+      "retired_metric_ids": [
+        "B01",
+        "B03"
+      ],
+      "covered_metric_ids": [
+        "A05",
+        "A07",
+        "B01",
+        "B02",
+        "B03",
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::prune_non_applicable_optional_b_metrics",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B12",
+        "B13"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B12",
+        "B13"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [
+        "additional_migrated_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::raw_auditor_facts_for_candidates",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::repair_basel_capital_ratios",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::repair_c02_board_text_from_governance",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::repair_c03_compensation",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C03"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C03"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::repair_c04_auditor_changes",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::repair_captive_finance_debt",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::repair_lodging_kpis",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "legacy_write_entry_points",
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::repair_rpo_crpo_metrics",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B12"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B12"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::resolve_b07_operating_income_component",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B07"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B07"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::resolve_da_component",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B03"
+      ],
+      "covered_metric_ids": [
+        "B03"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "b03_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::resolve_operating_income_component",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B03"
+      ],
+      "covered_metric_ids": [
+        "B03"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "b03_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::resolve_total_debt_component",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::row_has_captive_finance_signal",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::rpo_instance_fact",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B12"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B12"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::rpo_instance_fact_from_rows",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B12"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B12"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::rpo_text_fact",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B12"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B12"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::scaled_mda_value",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A03",
+        "A04",
+        "A11",
+        "A12"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A03",
+        "A04",
+        "A11",
+        "A12"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::scope_pattern",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::select_auditor_fact_from_candidates",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::select_component",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "retired_metric_ids": [
+        "B03"
+      ],
+      "covered_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::select_fact",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "retired_metric_ids": [
+        "B03"
+      ],
+      "covered_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::select_target_component",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A04",
+        "A08",
+        "A10",
+        "B06",
+        "B07"
+      ],
+      "retired_metric_ids": [
+        "B03"
+      ],
+      "covered_metric_ids": [
+        "A04",
+        "A08",
+        "A10",
+        "B03",
+        "B06",
+        "B07"
+      ],
+      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "parent_inventory_groups": [
+        "b03_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::selected_basel_ratio_fact",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01",
+        "A02"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::snippet_for_pattern",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B13",
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B13",
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::special_metric_placeholders",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B12",
+        "B13"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B12",
+        "B13"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [
+        "additional_migrated_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::stage_compute_standard_metrics",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B12",
+        "B13",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B12",
+        "B13",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [
+        "additional_migrated_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::stage_extract_8k_events",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C01",
+        "C04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::stage_extract_def14a",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C02",
+        "C03"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C02",
+        "C03"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::stage_extract_mda_and_risk_text",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A03",
+        "A04",
+        "A11",
+        "A12",
+        "B12",
+        "B13",
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "A03",
+        "A04",
+        "A11",
+        "A12",
+        "B12",
+        "B13",
+        "D01",
+        "D02",
+        "D03",
+        "D04"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [
+        "legacy_write_entry_points"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::stub_period_bounds",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [
+        "additional_migrated_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::stub_period_fact_hits",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [
+        "additional_migrated_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::target_10k_for_company",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B12",
+        "B13",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "retired_metric_ids": [
+        "B01",
+        "B03",
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+        "B10",
+        "B11",
+        "B12",
+        "B13",
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05"
+      ],
+      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::target_instant_component_exists",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B06"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::text_has_capacity_keywords",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B13"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B13"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::text_has_lodging_kpi_keywords",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::text_has_rpo_keywords",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "B12"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "B12"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::upsert_lodging_text_metric",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "covered_metric_ids": [
+        "B10",
+        "B11"
+      ],
+      "lifecycle": "RETIRED_TOMBSTONE",
+      "parent_inventory_groups": [
+        "lodging_production_symbols"
+      ],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    },
+    {
+      "producer_id": "scripts/sec_pipeline.py::valid_peo_total_comp_facts",
+      "kind": "SEMANTIC_PRODUCER",
+      "active_metric_ids": [
+        "C03"
+      ],
+      "retired_metric_ids": [],
+      "covered_metric_ids": [
+        "C03"
+      ],
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
+      "parent_inventory_groups": [],
+      "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
+    }
+  ],
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "remaining": [
+    "Full current390 native successor coverage",
+    "Independent whole production graph validation with old semantics unavailable",
+    "Actual successor publication-bound retirement declaration",
+    "Separate production authorization and corresponding deployed entry switch"
+  ],
+  "not_proven": "This isolated export/write-boundary check is not a complete transitive call-graph proof or formal retirement receipt."
+}

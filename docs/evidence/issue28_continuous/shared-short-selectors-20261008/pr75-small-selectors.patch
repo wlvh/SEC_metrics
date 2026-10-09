@@ -1,0 +1,27 @@
+--- a/tools/run_fast_tests_v2.py
++++ b/tools/run_fast_tests_v2.py
+@@ -164,6 +164,9 @@
+ SOURCE_TESTS += ("tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",)
+ SOURCE_TESTS += ("tests.vnext.test_d01_emphasis_material",)
+ FAST_TESTS += ("tests.vnext.test_a05_formula_successor",)
++FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest',)
++FAST_TESTS += ('tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks',)
++FAST_TESTS += ('tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest',)
+ SOURCE_TESTS += ("tests.vnext.test_a05_formula_material",)
+ SOURCE_TESTS += ("tests.vnext.test_d02_item8_current_material",)
+ SOURCE_TESTS += ("tests.vnext.test_ordinary_e01_item_text_input",)
+--- a/.github/workflows/vnext-fast.yml
++++ b/.github/workflows/vnext-fast.yml
+@@ -26,6 +26,12 @@
+         env:
+           PYTHONDONTWRITEBYTECODE: "1"
+         run: python3 -m unittest -v tests.vnext.test_company_handoff tests.vnext.test_company_source_authority tests.vnext.test_company_results tests.vnext.test_company_processing tests.vnext.test_company_event_census tests.vnext.test_company_local
++
++      - name: Historical statement scope, inventory and shared dispatch (small state)
++        env:
++          PYTHONDONTWRITEBYTECODE: "1"
++          PYTHONPATH: scripts:tools
++        run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest
+ 
+       - name: Run fast suite
+         env:

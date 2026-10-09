@@ -1,0 +1,30 @@
+WITHHELD
+[
+  {
+    "record_type": "INSTANT_BALANCE_AMENDMENT_SCOPE",
+    "company_id": "paramount_skydance_paramount_global",
+    "input_class": "ORIGINAL_CURRENT_INSTANT_BALANCES",
+    "metric_ids": [
+      "B08",
+      "B09"
+    ],
+    "decision": "WITHHELD",
+    "original_scope_id": "sha256:745f92495cb8f16ef1dc58f177b5a85196af17c42b5b9d19cda0b2f085ec1b2a",
+    "original_accession": "0002041610-26-000011",
+    "amendment_accession": "0001140361-26-016758",
+    "details": {},
+    "issues": [
+      {
+        "reason": "INSTANT_AMENDMENT_NOTE_NUMBER_CONFLICT",
+        "error_type": "InstantAmendmentError"
+      }
+    ],
+    "policy_sha256": "7487f50e7ef3db64ff180b5d5bf81096023c121fc9dd07addea6785bb78406f9",
+    "source_acquisition_credit": false,
+    "annual_continuity_proven": false,
+    "debt_completeness_proven": false,
+    "metric_result_created": false,
+    "production_authorized": false,
+    "instant_scope_id": "sha256:91f4d21843ede1dbfea814b9d41bfe8c58a652f222ec68c62fcadfdfcd5859b8"
+  }
+]

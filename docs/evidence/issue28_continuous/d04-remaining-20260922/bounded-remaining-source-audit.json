@@ -1,0 +1,64 @@
+{
+  "record_type": "BOUNDED_REMAINING_SOURCE_AUDIT",
+  "lease_rows": [
+    {
+      "company_id": "pfizer",
+      "original_path": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+      "original_sha256": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+      "scope": "Selected original lessee policy and operating lease table, not a whole-report absence proof",
+      "facts": [
+        {
+          "ordinal": 2861,
+          "qualified_name": "us-gaap:LesseeLeasesPolicyTextBlock",
+          "text": "We lease real estate, fleet, and equipment for use in our operations. Our leases generally have lease terms of 1 to 30 years, some of which include options to terminate or extend leases for up to 5 to 10 years or on a month-to-month basis. We include options that are reasonably certain to be exercised as part of the determination of lease terms. We may negotiate termination clauses in anticipation of any changes in market conditions, but generally these termination options have not been exercised. Residual value guarantees are generally not included within our operating leases with the exception of some fleet leases. In addition to base rent payments, the leases may require us to pay directly for taxes and other non-lease components, such as insurance, maintenance and other operating expenses, which may be dependent on usage or vary month-to-month. Variable lease payments amounted to $453 million in 2025, $517 million in 2024 and $444 million in 2023. We elected the practical expedient to not separate non-lease components from lease components in calculating the amounts of ROU assets and lease liabilities for all underlying asset classes.We determine if an arrangement is a lease at inception of the contract and we perform the lease classification test as of the lease commencement date. ROU assets represent our right to use an underlying asset for the lease term and lease liabilities represent our obligation to make lease payments arising from the lease. Operating lease ROU assets and liabilities are recognized at commencement date"
+        },
+        {
+          "ordinal": 2869,
+          "qualified_name": "pfe:LeaseAssetsAndLiabilitiesLesseeTableTextBlock",
+          "text": "For operating leases, the ROU assets and liabilities in our consolidated balance sheets follows:As of December 31, (MILLIONS)Balance Sheet Classification20252024ROU assetsOther noncurrent assets$2,213 $2,289 Lease liabilities (short-term)Other current liabilities330 356 Lease liabilities (long-term)Other noncurrent liabilities2,291 2,286"
+        }
+      ],
+      "supported_observation": "The liability table explicitly applies to operating leases. It cannot supply finance-lease liabilities or establish zero.",
+      "B06_ratio_created": false
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "original_path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+      "original_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "scope": "Selected original lessee policy and operating lease table, not a whole-report absence proof",
+      "facts": [
+        {
+          "ordinal": 6580,
+          "qualified_name": "us-gaap:LesseeLeasesPolicyTextBlock",
+          "text": "At December 31, 2025 JPMorganChase and its subsidiaries were obligated under a number of noncancellable leases, predominantly operating leases for premises and equipment used primarily for business purposes. These leases generally have terms of 20 years or less, determined based on the contractual maturity of the lease, and include periods covered by options to extend or terminate the lease when the Firm is reasonably certain that it will exercise those options. All leases with lease terms greater than twelve months are reported as a lease liability with a corresponding right-of-use (“ROU”) asset. None of these lease agreements impose restrictions on the Firm’s ability to pay dividends, engage in debt or equity financing transactions or enter into further lease agreements. Certain of these leases contain escalation clauses that will increase rental payments based on maintenance, utility and tax increases, which are non-lease components. The Firm elected not to separate lease and non-lease components of a contract for its real estate leases. As such, real estate lease payments represent payments on both lease and non-lease components."
+        },
+        {
+          "ordinal": 6582,
+          "qualified_name": "us-gaap:LeaseCostTableTextBlock",
+          "text": "The carrying values of the Firm’s operating leases were as follows: December 31,(in millions, except where otherwise noted)20252024Right-of-use assets$8,901$8,494Lease liabilities9,3378,900Weighted average remaining lease term (in years)8.28.3Weighted average discount rate4.43 %4.24 %Year ended December 31, (in millions)202520242023Supplemental cash flow informationCash paid for amounts included in the measurement of lease liabilities - operating cash flows$1,759$1,734$1,662Supplemental non-cash informationRight-of-use assets obtained in exchange for operating lease obligations$1,834$1,565$2,094 Year ended December 31, (in millions)202520242023Rental expenseGross rental expense$2,388 $2,231 $2,079 Sublease rental income(28)(41)(72)Net rental expense$2,360 $2,190 $2,007"
+        }
+      ],
+      "supported_observation": "JPM explicitly says predominantly operating leases; operating lease table is not a complete finance-lease balance.",
+      "B06_ratio_created": false
+    }
+  ],
+  "C04": {
+    "spec_path": "catalog/r5/C04_auditor_changes_v2.md",
+    "spec_sha256": "596a442394f159c61a00aaab5d6e2b8b4cd32a897e1e98a01f80144b12f2f2fc",
+    "current_absence_rule": "same_current_prior_names_and_complete_fiscal_8k_set_without_item_4_01",
+    "accepted_event_forms": [
+      "8-K",
+      "8-K/A"
+    ],
+    "current_paramount_evidence": "docs/evidence/issue28_continuous/paramount-c04-source-inspection/registration-variants-real-material/source-analysis.json",
+    "unresolved_decision": "Using explicit Item9/continuous-auditor prose instead of same-registrant prior AuditorName requires a successor acceptance-rule decision. No value0 or cross-CIK combination is granted by this audit."
+  },
+  "source_updated_or_requested": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_complete_coordinates": 0,
+  "limits": "This audit narrows why the shortcuts are unsupported. It does not certify full SEC nondisclosure, complete B06 debt, C04 value, or all390 acceptance."
+}

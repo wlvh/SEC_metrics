@@ -1,0 +1,35 @@
+{
+  "record_type": "ISSUE28_E01_801_OPT_IN_COMPONENT_SCOPE_CHECK",
+  "base_commit": "237c7cf4c949a9c58bf857cd406e41ad6ec237d0",
+  "existing_default_and_frozen_files": {
+    "scripts/vnext/deterministic_router.py": {
+      "unchanged": true,
+      "sha256": "4b2867c017f1f770e1a61b8c435114c69eb0c793298d17147a11615698d9aa7c"
+    },
+    "scripts/vnext/normal_zero_ai_results.py": {
+      "unchanged": true,
+      "sha256": "91247d1cf336b9202c8c84aec947ce283d723c6a5302dee37a70840993e26565"
+    },
+    "catalog/event_routes.json": {
+      "unchanged": true,
+      "sha256": "863746896a4a54da1cc84cc7385e90e58e01d8e5df076d8df14e90f1bf71672a"
+    },
+    "requirements/issue_28_v13/baseline_manifest.json": {
+      "unchanged": true,
+      "sha256": "e32e45efdd81208f77b78c5d06354b2d989a120677795838d6521bf9c588fa52"
+    },
+    "requirements/issue_28_v14/baseline_manifest.json": {
+      "unchanged": true,
+      "sha256": "32c2ec77aebfe2f68ca1a1bf1c8c5571b8fa7f1593d852f05da6558b10c0e0ab"
+    }
+  },
+  "new_module_sha256": "b2db9e8ab29ab01d826bcd07f0e6543ea6d6d8bf7e44ab37a6b0e4bfca59d698",
+  "current_V14_runtime_binding_includes_new_module": false,
+  "fast_selector_appended_once_without_runner_body_change": true,
+  "current_E01_result_or_route_changed": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

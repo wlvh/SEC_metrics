@@ -1,0 +1,6 @@
+{'case': 'auto_restore_registered_supported_format', 'result': 'PASS', 'source_id': 'sha256:1cd5cf9eb65cae7d119ec8962d21cf834c89b90b73af21740b375f6767a54319'}
+{'case': 'remove_format', 'result': 'REJECTED', 'reason': 'NATIVE_ASSESSMENT_CONTEXT_FORMAT_CHANGED'}
+{'case': 'explicit_null', 'result': 'REJECTED', 'reason': 'NATIVE_ASSESSMENT_CONTEXT_FORMAT_CHANGED'}
+{'case': 'unsupported_format', 'result': 'REJECTED', 'reason': 'D04_NATIVE_CONTEXT_FORMAT_UNSUPPORTED'}
+{'case': 'forge_supported_format_input_identity', 'result': 'REJECTED', 'reason': 'B13_REGISTERED_ASSESSMENT_INPUT_CHANGED'}
+{'case': 'explicit_hint_conflict', 'result': 'REJECTED', 'reason': 'NATIVE_INSTALLED_CONTEXT_FORMAT_CONFLICT'}

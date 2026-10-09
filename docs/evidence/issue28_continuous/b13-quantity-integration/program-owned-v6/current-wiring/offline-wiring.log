@@ -1,0 +1,18 @@
+{'company_id': 'ford_motor_company', 'request_count': 11, 'all_current_request_ids_match_plan': True, 'representative_group': 1, 'unit_count': 5, 'required_candidates': 16, 'program_quantity_count': 0, 'request_id': 'sha256:c36e807f897c44831f829affa039e26226c52f53755e59ec847cf1008727469c', 'provider_body_sha256': '8271e8e2119ae37cffa4b3ed41d75506855db593cd8706a106757cd5b579df81', 'estimated_context_tokens': 190502, 'native_acceptance': 'PASS', 'omitted_unit': 'FAILED_TERMINAL', 'partial_cannot_be_absence': True, 'mocked_official_opener_invocations': 1, 'recorded_path': '/private/tmp/sec_metrics_issue28_continuous/b13-v6-current/wiring/ford_motor_company/accepted/calls/0001'}
+{'company_id': 'enphase_energy', 'request_count': 6, 'all_current_request_ids_match_plan': True, 'representative_group': 1, 'unit_count': 5, 'required_candidates': 5, 'program_quantity_count': 1, 'request_id': 'sha256:c9c057bdfd028c69bbbe8ea13efee8ad74c5c7a346997cf6478e000f683732f5', 'provider_body_sha256': 'c0a3521ca5ade59719561126ebe00ca8a6e2378b407cdeebfdac9a2a4d3754b9', 'estimated_context_tokens': 189064, 'native_acceptance': 'PASS', 'omitted_unit': 'FAILED_TERMINAL', 'partial_cannot_be_absence': True, 'mocked_official_opener_invocations': 1, 'recorded_path': '/private/tmp/sec_metrics_issue28_continuous/b13-v6-current/wiring/enphase_energy/accepted/calls/0001'}
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/b13-v6-current/offline_wiring.py", line 72, in <module>
+    (base/'summary.json').write_bytes(canonical_json_bytes(value=summary));print(summary,flush=True)
+                                      ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 415, in canonical_json_bytes
+    normalized = _canonicalize(value=value, path=(), set_paths=set_paths)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 350, in _canonicalize
+    raise CanonicalError("Binary float is forbidden; use Decimal")
+vnext.canonical.CanonicalError: Binary float is forbidden; use Decimal

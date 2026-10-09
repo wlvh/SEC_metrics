@@ -1,0 +1,41 @@
+{
+  "status": "STOP_UNRESOLVED_RESOURCE",
+  "measure": {
+    "request_sha256": "5a45c4b659d09115f269464f51395247c5091aab2af14c58f91b2e2b1e6af730",
+    "request_bytes": 696575,
+    "rendered_prompt_sha256": "f76bec2c34d5a38a83bb473b177cefbd442a8d84a4a32144a0933beb261c6134",
+    "rendered_prompt_bytes": 650772,
+    "input_tokens": 226548,
+    "output_reserve_tokens": 4096,
+    "context_tokens": 230644,
+    "maximum_context_tokens": 200000,
+    "maximum_payload_bytes": 8388608,
+    "fits": false,
+    "fallback_reason": null,
+    "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+    "estimator_id": "continuous_bounded_chat_context",
+    "estimator_version": "deepseek-v41-two-message-json-chat-1",
+    "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+    "identity": {
+      "provider": "deepseek",
+      "model": "deepseek-flash",
+      "api": "chat_completions",
+      "format_version": "deepseek-v41-two-message-json-chat-1",
+      "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277",
+      "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+      "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+      "tokenizer_engine": "tokenizers",
+      "tokenizer_engine_version": "0.22.2",
+      "method": "PINNED_REFERENCE_CHAT_FORMAT",
+      "output_reserve": 4096
+    }
+  },
+  "context_rows": 3,
+  "context_bytes": 134057,
+  "recorded_not_model": true,
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

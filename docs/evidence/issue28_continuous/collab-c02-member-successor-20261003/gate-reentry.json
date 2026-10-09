@@ -1,0 +1,34 @@
+{
+  "status": "PASS_NEW_V4_WRITE_SUSPENDED_OLD_PRIVATE_STATE_UNCHANGED",
+  "outcome": {
+    "company_id": "jpmorgan_chase",
+    "status": "UPDATES_INCOMPLETE",
+    "metrics": [
+      {
+        "metric_id": "C02",
+        "status": "UPDATE_BLOCKED",
+        "error_type": "OrdinaryUpdateError",
+        "reason": "UPDATE_C02_MEMBER_RULE_VALIDATION_SUSPENDED",
+        "last_verified_candidate": null,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    ],
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "same_saved_state": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

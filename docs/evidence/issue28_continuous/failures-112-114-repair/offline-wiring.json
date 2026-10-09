@@ -1,0 +1,26 @@
+{
+  "record_type": "CONTINUOUS_OFFLINE_WIRING_RECEIPT",
+  "requirement_id": "issue_28_v14",
+  "requirement_closure_hash": "sha256:ad0b4f4e27ac3019e2ccd3c46e823d75d19246bf38d8776712821136be13a9c8",
+  "execution_authority_hash": "sha256:f99bebb825471ef334ea982dae17eb7253505ddcbf09ee273b4eb21121b28470",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5651558538",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "network_disabled": true,
+  "legacy_default_forbidden": true,
+  "real_request_factory_to_controller_verified": true,
+  "count_control_tests_passed": true,
+  "evidence": {
+    "docs/evidence/issue28_continuous/failures-112-114-repair/current-wiring-summary.json": "e54dc0fd4d43dc1c053594893dc895924b84ffa06b6dc510dbc307886277d849",
+    "docs/evidence/issue28_continuous/failures-112-114-repair/paramount-cold-summary.json": "3a54eafb298c5ed90bc83428e73d88dfaafc3f4a69c5b3595328df7884f0d87b",
+    "docs/evidence/issue28_continuous/failures-112-114-repair/paramount-lossless-summary.json": "0092edddc9cc45a6a4d4346c0b411c27d3d2000d6aab021ae303e842c57c6240",
+    "docs/evidence/issue28_continuous/failures-112-114-repair/compact-output-census.json": "267608e4d29165faae0c24353ba524f38b8b21d96a0585cdecbac6332b7b922d",
+    "docs/evidence/issue28_continuous/failures-112-114-repair/fast.json": "103c8a44bea1d346e7230cb3b9eac37d423505e8a675e6f67d286d7381b8aac3",
+    "docs/evidence/issue28_continuous/failures-112-114-repair/independent-review/conclusion.md": "8be1ef177f45981e16b68e2cccc8348808489af9e13ab9d5469414cabf7b4908",
+    "docs/evidence/issue28_continuous/failures-112-114-repair/stale-receipt-rejection.json": "78ab7c6665a7dfd4cceda8a9340e134a1ad5fa81d707e8c6702b1b483d4f610a"
+  },
+  "scope": "Native B13 compact/retained V1 and D04 lossless indexed source. No original113/114 repeat authorization; no D03 or SEC calls."
+}

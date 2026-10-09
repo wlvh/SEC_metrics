@@ -1,0 +1,23 @@
+{
+  "runtime_manifest_path": "old-runtime-files.json",
+  "preserved_runtime_file_count": 344,
+  "code_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-runtime-4c9e195",
+  "source_data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "original_mapper_sha256": "3097ae197ef17660eec4d8ff3a466713a9ccebb7f646f7963c30f41e2c614cdc",
+  "existing_after_guard_replay_record": {
+    "runtime_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/c02-table-runtime-4c9e195",
+    "seconds": 5.633,
+    "candidate_hash": "sha256:f94c88771b7f8627470fd06fe44427d58af0fce75a5a856dc97d4b06896b3bf4",
+    "review_unit_hash": "sha256:8faf9fec2e563a8c7ee4693df427501697a8483f30fd6f78fe31deb1955b335c",
+    "old_mapper_sha256": "3097ae197ef17660eec4d8ff3a466713a9ccebb7f646f7963c30f41e2c614cdc",
+    "actual_new_mapper_sha256": "05806a450132628fc195f25ce18c3161b1193519e99ef285ed82329b79cbbd35",
+    "all_saved_bytes_replayed": true,
+    "native_status": "PENDING",
+    "calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "independent_checks": "saved-runtime-byte-check.log and old-runtime-independent-replay.log"
+}

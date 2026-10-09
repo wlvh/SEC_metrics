@@ -1,0 +1,48 @@
+--- /Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_zero_ai_results.py
++++ /tmp/sec_metrics_issue28_continuous/zero-ai-amendment-route-candidate.py
+@@ -9,6 +9,7 @@
+ 
+ from sec_urls import accession_document_url, companyfacts_url, hdr_sgml_url, submissions_url, submissions_file_url
+ from .annual_update import AnnualUpdateError
++from .annual_amendment_scope import prepare_saved_amendment_input
+ from .batch_workflow import BatchWorkflowError, _structured_concepts
+ from .calculator import calculate_metric, withheld_metric_result, calculate_observation_metric
+ from .canonical import canonical_json_bytes, content_hash, sha256_file, strict_json_loads
+@@ -146,6 +147,7 @@
+     traits = repository_company_traits(repo_root=repo_root, company_id=company_id)
+     claims, source_sets, observations, filing_rows, selection = [], [], [], [prepared["filing"]], {}
+     dependency_specs, dependency_records = {}, []
++    amendment_input = None
+     if metric_id in {"B01", "B03"}:
+         spec_path = B01_SPEC_PATH if metric_id == "B01" else B03_SPEC_PATH
+         if metric_id == "B03":
+@@ -163,7 +165,13 @@
+         "scope":scope, "scope_key":scope_key(scope=scope)}
+     try:
+         _need(prepared["subject_policy"]["mode"] == "CONTINUOUS_PRIMARY", "NORMAL_ZERO_AI_SUCCESSOR_SCOPE_NOT_IMPLEMENTED")
+-        _need(not prepared["amendments"], "NORMAL_ZERO_AI_AMENDMENT_REPLAY_NOT_IMPLEMENTED")
++        if prepared["amendments"]:
++            amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,
++                input_class="ORIGINAL_STATEMENT_VALUES" if metric_id in {"B01","B03"} else "FISCAL_EVENT_WINDOW")
++            _need(amendment_input["prepared_input"] == prepared.get("original_input",prepared),
++                  "NORMAL_AMENDMENT_ORIGINAL_INPUT_DIFFERS", "SOURCE_INTEGRITY_ERROR")
++            _need(amendment_input["decision"] == "INPUT_PROPERTY_PROVEN", "NORMAL_AMENDMENT_INPUT_SCOPE_UNRESOLVED")
++            filing_rows.extend(s["amendment"]["filing"] for s in amendment_input["scopes"])
+         if metric_id in {"B01", "B03"}:
+             manifest = _exact_set(prepared, inventory, facts_source, "companyfacts")
+             source_sets = [manifest]
+@@ -210,10 +218,13 @@
+         observations = []
+         selection = {**selection, "reason_code":result["reason_code"], "reason":reason, "category":category}
+     proofs = prepared["source_proofs"] + [entry["proof"] for entry in reader.proofs.values()]
++    if amendment_input is not None: proofs.extend(amendment_input["source_proofs"])
+     proofs = list({content_hash(value=p):p for p in proofs}.values())
+     admission = verify_saved_source_proofs(data_root=repo_root, proofs=proofs)
+     source_records = list(reader.records.values())
+-    input_binding = {"prepared_input":prepared,"target":target,"target_period":period,
++    if amendment_input is not None:
++        source_records = list({content_hash(value=r):r for r in [*source_records,*amendment_input["source_records"]]}.values())
++    input_binding = {"prepared_input":prepared,"target":target,"target_period":period,"amendment_input":amendment_input,
+         "spec_origin":spec_origin,"spec_closure_hash":spec["spec_closure_hash"],"authority_file_hashes":authority,
+         "dependency_spec_closure_hashes":{key:value["spec_closure_hash"] for key,value in dependency_specs.items()},
+         "source_proofs":proofs,"source_admission":admission,"source_set_manifests":source_sets,

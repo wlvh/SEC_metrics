@@ -1,0 +1,14 @@
+Conservative count: wrapper plus nested MCP tools; shell subprocesses are not separate tools.
+1 startup/read 1+3=4
+2 mapper/test/memory read 1+3=4; cumulative 8
+3 seam/predecessor/evidence read 1+3=4; cumulative 12
+4 dependency read and targeted tests 1+2=3; cumulative 15
+5 actual cold read 1+1=2; cumulative 17
+6 source context and locator read 1+2=3; cumulative 20
+7 binding metadata read 1+1=2; cumulative 22
+8 direct original source spans 1+1=2; cumulative 24
+9 supplementary temporary boundaries 1+1=2; cumulative 26
+10 scope integrity 1+1=2; cumulative 28
+11 conclusion/predecessor log write 1+1=2; cumulative 30
+12 final verification and end timestamp 1+1=2; final 32
+Normal messages: intro + progress + final = 3; questions 0.

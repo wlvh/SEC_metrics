@@ -1,0 +1,35 @@
+Target: 7d0f7a69c202c0caf58d54e4a2785e1fa1c36ad9..80322de9bfe171245c2d37bdff43c370321ea418
+HEAD at review: 80322de9bfe171245c2d37bdff43c370321ea418
+Reviewed worktree source, test and repair-summary: git diff --exit-code 80322de9 -- <three paths> returned 0.
+Other worktree changes existed before this review and were not modified.
+
+Command: PYTHONPATH=scripts /private/tmp/issue28_py314_venv/bin/python -m unittest -v tests.vnext.test_e01_item_source
+test_ambiguous_and_missing_heading_fail_closed ... ok
+test_body_cross_references_are_not_section_boundaries ... ok
+test_header_identity_kept_while_original_801_body_is_available ... ok
+test_hidden_or_unproven_visibility_does_not_create_section ... ok
+Ran 4 tests in 0.005s; OK; exit 0.
+
+Command: PYTHONPATH=.:scripts /private/tmp/issue28_py314_venv/bin/python docs/evidence/issue28_continuous/e01-item-source-v1-20260929/check-binding.py
+{"new_module_runtime_authorized": false, "requirement_closure_hash": "sha256:7cf19f62e7c84656dc2d1fb2f06cbcaa7a1d501b90d9e9dd372c54a7148f6a5c", "status": "PASS_EXISTING_V14_AUTHORITY"}
+Exit 0.
+
+Read-only parse of parent repair-fast.log: FAST_LOCAL_ONLY, PASSED, 142 selectors, 0 failed; e01_item_source selector return_code=0. This reviewer did not rerun fast.
+
+Independent parser probes, using PYTHONPATH=scripts and _visible_801_section(raw_bytes):
+1. mixed_tag_false_boundary input:
+<p><strong>Item 8.01 Other Events</strong></p><p>See the exhibit discussion below:</p><p><strong>Item 9.01 Financial Statements and Exhibits</strong></p><p>After that cross-reference, we signed an acquisition agreement.</p><h2>Item 9.01 Financial Statements and Exhibits</h2>
+ACCEPT 'Item 8.01 Other Events See the exhibit discussion below:'
+2. inline_opacity_zero input contains <p style="opacity:0.0">Hidden acquisition assertion.</p> between h2 8.01 and h2 9.01.
+ACCEPT 'Item 8.01 Other Events Hidden acquisition assertion. Visible disclosure.'
+3. inline_color_transparent input contains <p style="color:transparent">Hidden acquisition assertion.</p> between h2 8.01 and h2 9.01.
+ACCEPT 'Item 8.01 Other Events Hidden acquisition assertion. Visible disclosure.'
+
+Independent full-bound reproduction of case 1: built a source-set manifest with existing test fixture helpers, verified hdr 8.01 claim, fy_8k_primary SourceReference, and exact raw bytes; called bound_801_primary_section and verify_bound_801_primary_section. Both accepted. Output:
+ACCEPT_AUTHENTICATED 'Item 8.01 Other Events See the exhibit discussion below:'
+OMITTED_801_BODY True
+
+Independent read-only saved Southwest probe: read prior successful E01 records and saved d83756d8k.htm from the fixed local source-input state; called bound_801_primary_section and verify_bound_801_primary_section without writing results. raw_sha_matches=true; claim_id_retained=true; chars=174; section_id=sha256:62495bc5783ed9fc554b3baf67161a092135d3d2f470cfb7a2d15829ce9977d1; metric_result_created=false. Accepted section:
+Item 8.01 Other Events. The Company completed its public offering of the Notes pursuant to the Underwriting Agreement filed as Exhibit 1.1 to this Current Report on Form 8-K.
+
+No SEC/provider request, account action, branch change, commit, push, publication, or full-suite run was made in this review.

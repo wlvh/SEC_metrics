@@ -1,0 +1,37 @@
+test_changed_source_matching_old_group_blocks_before_any_new_call (__main__.NewNativeUpdateTest.test_changed_source_matching_old_group_blocks_before_any_new_call) ... ok
+test_default_zero_and_whole_source_reuse_never_execute (__main__.NewNativeUpdateTest.test_default_zero_and_whole_source_reuse_never_execute) ... ok
+test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format (__main__.NewNativeUpdateTest.test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format) ... FAIL
+test_finite_partial_success_then_exact_reuse_completes_without_redraw (__main__.NewNativeUpdateTest.test_finite_partial_success_then_exact_reuse_completes_without_redraw) ... FAIL
+test_invalid_limits_and_d03_cannot_enter (__main__.NewNativeUpdateTest.test_invalid_limits_and_d03_cannot_enter) ... ok
+test_live_b13_pause_and_recorded_wire_rejection (__main__.NewNativeUpdateTest.test_live_b13_pause_and_recorded_wire_rejection) ... ok
+test_unknown_claim_keeps_count_and_stops_provider (__main__.NewNativeUpdateTest.test_unknown_claim_keeps_count_and_stops_provider) ... ok
+test_failure_continues_other_metrics_and_uses_one_shared_limit (__main__.RefreshCoordinatorNewNativeTest.test_failure_continues_other_metrics_and_uses_one_shared_limit) ... ok
+
+======================================================================
+FAIL: test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format (__main__.NewNativeUpdateTest.test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/native-refresh-execution/probe.py", line 64, in test_failure_has_one_terminal_and_next_trigger_does_not_try_other_format
+    self.content_failure=True;r=self.run_update(3);self.assertEqual(r['status'],'NATIVE_REQUEST_FAILED',r);self.assertEqual(r['attempted_executions'],1)
+                                                   ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_EXECUTION_ERROR' != 'NATIVE_REQUEST_FAILED'
+- NATIVE_EXECUTION_ERROR
++ NATIVE_REQUEST_FAILED
+ : {'company_id': 'sample_entity', 'metric_id': 'D04', 'executions': [], 'attempted_executions': 1, 'counts': [1, 1, 0], 'call_accounting': 'KNOWN', 'stop_provider': False, 'new_complete_metric_credit': False, 'production_authorized': False, 'status': 'NATIVE_EXECUTION_ERROR', 'error_type': 'KeyError', 'reason': "'evidence_id'"}
+
+======================================================================
+FAIL: test_finite_partial_success_then_exact_reuse_completes_without_redraw (__main__.NewNativeUpdateTest.test_finite_partial_success_then_exact_reuse_completes_without_redraw)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/native-refresh-execution/probe.py", line 60, in test_finite_partial_success_then_exact_reuse_completes_without_redraw
+    first=self.run_update(2);self.assertEqual(first['status'],'PROVIDER_LIMIT_DEFERRED',first);self.assertEqual(first['counts'],[2,2,0]);self.assertEqual(first['attempted_executions'],2)
+                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NATIVE_EXECUTION_ERROR' != 'PROVIDER_LIMIT_DEFERRED'
+- NATIVE_EXECUTION_ERROR
++ PROVIDER_LIMIT_DEFERRED
+ : {'company_id': 'sample_entity', 'metric_id': 'D04', 'executions': [], 'attempted_executions': 1, 'counts': [1, 1, 0], 'call_accounting': 'KNOWN', 'stop_provider': False, 'new_complete_metric_credit': False, 'production_authorized': False, 'status': 'NATIVE_EXECUTION_ERROR', 'error_type': 'KeyError', 'reason': "'evidence_id'"}
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.086s
+
+FAILED (failures=2)

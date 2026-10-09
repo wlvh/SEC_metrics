@@ -1,0 +1,97 @@
+{
+  "candidate_hash": "sha256:ed6952e93daf2bc978d53faf8093cb75de98fca99ba143ff0fc60cea82e7d8be",
+  "cold_read": "PASS",
+  "cwd": "/private/tmp",
+  "facts": 2,
+  "files": {
+    "processing/c02/table-metadata.json": "be659f2940dabe4f3c816db79bd7a1dbb3e0032365d37c2d47a31628aa3152e6",
+    "records.jsonl": "d533da75a513f8a9e57e9e95f166eb0a9ed647d265641d2a46d09fbc5a5a2187",
+    "request-body.bin": "5397bcbfae90ffef4ead2f10ed27df8113d9250ea6f8f2668f17cb85951e9b1e",
+    "response.bin": "074c1b6b961e443c98168b8dccca8b978304e21da201515b97e613fb0d910d40",
+    "review-context.json": "24584c07368f78c8acaa31e9b9fcd5d05100f4b85241c727d5491750f8006bf4",
+    "review.md": "659f003fb91df317e9f1c9dacbd50b59c6952625f9675833e17fc19ac736f3ae"
+  },
+  "grid_tables": 409,
+  "model_answer_tested": false,
+  "network_and_subprocess": "blocked",
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "origin": "RECORDED_PROGRAM_TEST",
+  "request_context": {
+    "context_authority_hash": "sha256:0aecf80fe3abcd1426d269053ea5630a6ac73e53dac76375378973225d110cf1",
+    "context_tokens": 133901,
+    "estimator_id": "continuous_bounded_chat_context",
+    "estimator_method": "PINNED_REFERENCE_CHAT_FORMAT",
+    "estimator_version": "deepseek-v41-two-message-json-chat-1",
+    "fallback_reason": null,
+    "fits": true,
+    "identity": {
+      "api": "chat_completions",
+      "format_version": "deepseek-v41-two-message-json-chat-1",
+      "method": "PINNED_REFERENCE_CHAT_FORMAT",
+      "model": "deepseek-flash",
+      "output_reserve": 4096,
+      "provider": "deepseek",
+      "tokenizer_engine": "tokenizers",
+      "tokenizer_engine_version": "0.22.2",
+      "tokenizer_sha256": "c90dfa01249db1be4245780a052ede752e1361c612ac6d08e2bdada7d599476b",
+      "upstream_format_sha256": "502bdaec8a3fd88ebc24c4721a7038fbe42f2063c664638127056107920035c1",
+      "upstream_revision": "dba1be0a40aa45a94ad051997016db3960a90277"
+    },
+    "input_tokens": 129805,
+    "maximum_context_tokens": 200000,
+    "maximum_payload_bytes": 8388608,
+    "output_reserve_tokens": 4096,
+    "rendered_prompt_bytes": 515283,
+    "rendered_prompt_sha256": "9ec2afa30874fbb64604a31785a5386544c4746da94cdbca6c3d85d380f6b535",
+    "request_bytes": 530507,
+    "request_sha256": "5397bcbfae90ffef4ead2f10ed27df8113d9250ea6f8f2668f17cb85951e9b1e"
+  },
+  "request_sha256": "5397bcbfae90ffef4ead2f10ed27df8113d9250ea6f8f2668f17cb85951e9b1e",
+  "response_sha256": "074c1b6b961e443c98168b8dccca8b978304e21da201515b97e613fb0d910d40",
+  "review_unit_hash": "sha256:a19f0fc416e72ba405e2819bd58c8e7931ff97760e3ad118fe09a9ad37ab1c29",
+  "saved_files_unchanged": true,
+  "seconds": 5.447,
+  "semantic_acceptance": false,
+  "source_citations": [
+    766,
+    767,
+    1244,
+    1245,
+    1252,
+    1253,
+    1276
+  ],
+  "source_filing": {
+    "acceptanceDateTime": "2026-04-06T10:17:40.000Z",
+    "accessionNumber": "0000019617-26-000096",
+    "act": "34",
+    "core_type": "XBRL",
+    "fileNumber": "001-05805",
+    "filingDate": "2026-04-06",
+    "filmNumber": "26839512",
+    "form": "DEF 14A",
+    "isInlineXBRL": 1,
+    "isXBRL": 1,
+    "isXBRLNumeric": 1,
+    "items": "",
+    "metadata_origin": {
+      "inventory_name": "CIK0000019617.json",
+      "row_index": 9675
+    },
+    "primaryDocDescription": "DEF 14A",
+    "primaryDocument": "jpm-20260402.htm",
+    "reportDate": "2026-04-06",
+    "size": 74694140
+  },
+  "source_reference_id": "sha256:97602b7cc8c9c60a45b475d15758aefd6c81053a6f0056397f132a27b53efa84",
+  "source_sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+  "system_refused": [
+    "SYSTEM review requires exact enum scope evidence",
+    "SYSTEM review requires exact enum scope evidence"
+  ],
+  "unresolved": 1
+}

@@ -1,0 +1,135 @@
+{
+  "patch_sha256": "f2291a0212a9b4906e573de52d1c635d9c909c9595ce2f7e114c944de4a2742f",
+  "overlay_files": {
+    "capacity_semantic_review.py": "1433a6d671eba6b63b975e37c7bcab80258b440d10cd649189b83972a40e1a37",
+    "capacity_text_results.py": "6e21fb8310ec96d3082c9b29ef7b2fcbf17f9571dacd82abba8967a5ce418124",
+    "capacity_quantity_roles.py": "82a3aba23fb1514fd1d413cd5250771118f3ed965f49de1b89fdf295c819306a"
+  },
+  "scope": "INDEPENDENT_SYNTHETIC_ACCEPTOR_AND_NATIVE_PUBLIC_ABSENCE_PROBES",
+  "results": [
+    {
+      "name": "current-current",
+      "returned": []
+    },
+    {
+      "name": "historical-current",
+      "raised": "ValueError",
+      "reason": "B13_SOURCE_PHYSICAL_QUANTITY_CLASSIFICATION_CONFLICT"
+    },
+    {
+      "name": "historical-correct",
+      "returned": []
+    },
+    {
+      "name": "cause-current",
+      "returned": []
+    },
+    {
+      "name": "ambiguous-current",
+      "returned": [
+        {
+          "unit_id": "sha256:ae85ba9b2e8bdd9d15173a6ef76a0be45d3b77c5cfc8fdc519d311b5eff2163e",
+          "reason": "B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED",
+          "source_indices": [
+            0
+          ],
+          "quantity_role": "AVAILABLE_CAPACITY"
+        },
+        {
+          "unit_id": "sha256:ae85ba9b2e8bdd9d15173a6ef76a0be45d3b77c5cfc8fdc519d311b5eff2163e",
+          "source_index": 0,
+          "reason": "B13_PHYSICAL_QUANTITY_ROLE_SCOPE_UNSUPPORTED"
+        }
+      ]
+    },
+    {
+      "name": "mixed-industry-wrong-current",
+      "raised": "ValueError",
+      "reason": "B13_INDUSTRY_CAPACITY_IS_NOT_TARGET_CAPACITY"
+    },
+    {
+      "name": "mixed-industry-correct-historical",
+      "returned": []
+    },
+    {
+      "name": "unsupported-labelled-production",
+      "returned": [
+        {
+          "unit_id": "sha256:e7988132459eee475eb11836faf7f2a139673544265b3fed457e09edca1dc89a",
+          "reason": "B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED",
+          "source_indices": [
+            0
+          ],
+          "quantity_role": "ACTUAL_PRODUCTION"
+        },
+        {
+          "unit_id": "sha256:e7988132459eee475eb11836faf7f2a139673544265b3fed457e09edca1dc89a",
+          "source_index": 0,
+          "reason": "B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED",
+          "quantity_role": "ACTUAL_PRODUCTION",
+          "statement_start_character": 0,
+          "statement_end_character": 55
+        }
+      ]
+    },
+    {
+      "name": "unsupported-labelled-other",
+      "returned": [
+        {
+          "unit_id": "sha256:e7988132459eee475eb11836faf7f2a139673544265b3fed457e09edca1dc89a",
+          "source_index": 0,
+          "reason": "B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED",
+          "quantity_role": "ACTUAL_PRODUCTION",
+          "statement_start_character": 0,
+          "statement_end_character": 55
+        }
+      ]
+    },
+    {
+      "name": "unsupported-native-absence",
+      "raised": "ValueError",
+      "reason": "B13_QUANTITY_SCOPE_UNRESOLVED"
+    },
+    {
+      "name": "nominal-production-other",
+      "returned": [
+        {
+          "unit_id": "sha256:e6d479ab2e8a62c928d64c05a409a42591a534685790d003a878024537459fb8",
+          "source_index": 0,
+          "reason": "B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED",
+          "quantity_role": "ACTUAL_PRODUCTION",
+          "statement_start_character": 0,
+          "statement_end_character": 62
+        }
+      ]
+    },
+    {
+      "name": "nominal-production-native-absence",
+      "raised": "ValueError",
+      "reason": "B13_QUANTITY_SCOPE_UNRESOLVED"
+    },
+    {
+      "name": "nominal-capacity-other",
+      "returned": [
+        {
+          "unit_id": "sha256:da49af9fef71b9604c3cefc3cba7420f6b53609b09e793a88b5bdd846970420b",
+          "source_index": 0,
+          "reason": "B13_PHYSICAL_QUANTITY_ROLE_SYNTAX_OR_SCOPE_UNSUPPORTED",
+          "quantity_role": "AVAILABLE_CAPACITY",
+          "statement_start_character": 0,
+          "statement_end_character": 68
+        }
+      ]
+    },
+    {
+      "name": "nominal-capacity-native-absence",
+      "raised": "ValueError",
+      "reason": "B13_QUANTITY_SCOPE_UNRESOLVED"
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

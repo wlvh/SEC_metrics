@@ -1,0 +1,32 @@
+{
+  "record_type": "ISSUE28_D02_V2_EXISTING_PRIVATE_NATIVE_RUN_RECOVERY",
+  "tested_tree": "UNCOMMITTED_WORKTREE_WITH_BOUND_V13_V14_IDS",
+  "original_report_script_exit": 1,
+  "original_report_failure": "KEYERROR_BINDING_SUMMARY_FIELD_AFTER_NATIVE_RUN_WRITE",
+  "code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "state_root": "/private/tmp/issue28-d02-versioned-v2-20261002/state/lumen_technologies/metrics/D02-item8-v2",
+  "requirement_closure_hash": "sha256:5d2867d1a13357cb47e72d18eb9cbf37f816b518a7a82a8dcf0db824233e9a2d",
+  "status": "CANDIDATE_READY",
+  "attempt_id": "77b119adadb94303ac0b3bf08edb5b8a",
+  "run_id": "run:ordinary-integrated:a0e84342f4892134b55defe0a20dd551dc1f4d79423bb432b346f8cbb5fdb550",
+  "old_result_id_withdrawn": "sha256:7e2d21f01d5b0cd93ab46b619d5979e2d6cd8efc119cfd2469980ed42edc436f",
+  "new_private_result_id": "sha256:845ef41fd5d00cd8c82d698bc894efb24a86b814dc62f5ab6843d3e41f24ab53",
+  "old_selected_count": 15,
+  "new_selected_count": 14,
+  "removed_known_block": 1670,
+  "native_evidence_status": "PASS",
+  "new_result_content_acceptance": false,
+  "current_390_credit": false,
+  "reported_calls": {
+    "paid": 0,
+    "provider": 0,
+    "sec": 0
+  },
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "protected_hash_before_after_from_original_script": "NOT_PERSISTED_AFTER_REPORT_ERROR"
+}

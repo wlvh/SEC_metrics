@@ -1,0 +1,24 @@
+{
+  "status": "FAILED",
+  "seconds": 162.921,
+  "entries": 112,
+  "passed_entries": 110,
+  "passed_tests": 360,
+  "failures": [
+    {
+      "duration_seconds": 30.005,
+      "return_code": 124,
+      "stderr_tail": "\nFAST_TEST_TIMEOUT_SECONDS=30\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_balance_scope.FinancialBalanceScopeTest.test_aum_client_enumeration_cannot_hide_exclusions_or_selected_subsets"
+    },
+    {
+      "duration_seconds": 30.006,
+      "return_code": 124,
+      "stderr_tail": "\nFAST_TEST_TIMEOUT_SECONDS=30\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_financial_candidates.LcrDisclosedFactTest.test_unnamed_consolidated_group_is_not_proof_of_another_legal_entity"
+    }
+  ],
+  "repair": "same original-source assertions split per variant; timeout unchanged; being tested"
+}

@@ -1,0 +1,53 @@
+{
+  "status": "OFFLINE_SOURCE_ELIGIBILITY_AND_POLICY_DEPENDENCIES",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "Ford_B06": {
+    "saved_source_sha256": "b112e6f1e6383e154c48e0e18a4f732bf93f4eeef1a24a21d0f18ef312919c5b",
+    "native_equity_fact_count": 187,
+    "current_parent_equity_facts": [
+      {
+        "ordinal": 282,
+        "name": "us-gaap:StockholdersEquity",
+        "text": "35,952",
+        "unit_ref": "usd",
+        "scale": "6",
+        "sign": "",
+        "context_ref": "c-19",
+        "context_xml": "<xbrli:context id=\"c-19\"><xbrli:entity><xbrli:identifier scheme=\"http://www.sec.gov/CIK\">0000037996</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2025-12-31</xbrli:instant></xbrli:period></xbrli:context>",
+        "instant": [
+          "2025-12-31"
+        ],
+        "dimensions": []
+      }
+    ],
+    "inventory": "ford-equity-native-inventory.json",
+    "conclusion": "Current parent StockholdersEquity fact has no segment dimension: consolidated, not an independently established industrial denominator. Component/NCI/credit equity must not be subtracted without a proven scope/elimination relationship. This tagged-fact census does not prove whole-report nondisclosure.",
+    "new_ratio": null
+  },
+  "Paramount_C04": {
+    "archive_read_only": true,
+    "verified_original_anchors": 9,
+    "current_absence_rule": "same_current_prior_names_and_complete_fiscal_8k_set_without_item_4_01",
+    "current_event_forms": [
+      "8-K",
+      "8-K/A"
+    ],
+    "source_facts": {
+      "registration_and_acquisition_relationship": "Original August 7 report establishes successor issuer and reports transaction closing; Paramount Global and Skydance Media LLC become separate subsidiaries of Paramount Skydance Corporation",
+      "amendment_relationship": "October 23 Amendment No1 only supplements deferred Item9.01 financial statements; explanatory note says no other changes",
+      "no_item_401_in_these_sources": true,
+      "ey_23_1_scope": "Exhibit description expressly with respect to Skydance Media LLC; not a statement appointing EY as Paramount Skydance auditor; actual consent exhibit was not among four acquired files",
+      "pwc_mention_scope": "Paul Marinelli biography describes prior employment; not an auditor appointment or dismissal",
+      "header_visible_form_difference": "SEC header registration form 8-K12B(/A) versus visible 8-K(/A) must be preserved, not silently normalized"
+    },
+    "policy_decision_needed": "If a successor no-change branch is desired for a new registrant lacking a same-CIK prior annual AuditorName, explicitly define the acceptable first-period audit-history evidence and event coverage; currentv2 has no such negative branch. Do not cross CIKs, treat EY subsidiary consent or PwC employment as issuer change, or replace missing comparison with Item9 None.",
+    "new_metric_value": null
+  },
+  "other_B06": "Pfizer/JPM operating-lease evidence and Southwest supplier-credit relationship remain limited; unchanged original investigations reused, no zero-finance-lease inference or business-definition relaxation.",
+  "complete_390_credit": false,
+  "formal_retirement_or_adoption": false
+}

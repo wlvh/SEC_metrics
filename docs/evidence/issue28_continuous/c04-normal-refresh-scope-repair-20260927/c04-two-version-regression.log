@@ -1,0 +1,32 @@
+test_two_saved_metadata_versions_create_two_native_c04_results (tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest.test_two_saved_metadata_versions_create_two_native_c04_results) ... ERROR
+
+======================================================================
+ERROR: test_two_saved_metadata_versions_create_two_native_c04_results (tests.vnext.test_c04_refresh_cycle.C04RefreshCycleMaterialTest.test_two_saved_metadata_versions_create_two_native_c04_results)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_c04_refresh_cycle.py", line 66, in test_two_saved_metadata_versions_create_two_native_c04_results
+    second_report, second = advance(2)
+                            ~~~~~~~^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_c04_refresh_cycle.py", line 37, in advance
+    result = refresh.refresh_and_process(session=session, state_root=state,
+        company_ids=['marriott_international'], metric_ids=['C04'],
+        max_sec_requests=maximum, c04_successor=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_refresh_cycle.py", line 130, in refresh_and_process
+    _check_session(session, c04_successor=c04_successor)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ordinary_refresh_cycle.py", line 29, in _check_session
+    session._check()
+    ~~~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/continuous_sec_acquisition.py", line 107, in _check
+    validate_execution_authority(repo_root=ROOT,requirement=self.requirement)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v1.py", line 2014, in validate_execution_authority
+    raise RequirementProfileError(
+        "Successor execution authority bytes differ: " + relative
+    )
+vnext.requirement_profile_v1.RequirementProfileError: Successor execution authority bytes differ: scripts/vnext/ordinary_refresh_cycle.py
+
+----------------------------------------------------------------------
+Ran 1 test in 77.445s
+
+FAILED (errors=1)

@@ -1,0 +1,59 @@
+{
+  "status": "PROVIDER_STOPPED_AFTER_171_HTTP402",
+  "before": [
+    120,
+    120,
+    49
+  ],
+  "limit_new_provider_requests": 16,
+  "requirement_closure_hash": "sha256:ad0b4f4e27ac3019e2ccd3c46e823d75d19246bf38d8776712821136be13a9c8",
+  "companies": [
+    {
+      "company_id": "enphase_energy",
+      "status": "FAILED_TERMINAL_NO_RETRY",
+      "calls": [
+        {
+          "ordinal": 170,
+          "status": "FAILED_TERMINAL",
+          "stop_reason": "",
+          "call_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0170"
+        }
+      ],
+      "reused": [
+        111
+      ],
+      "planned_new_calls": 5
+    },
+    {
+      "company_id": "ford_motor_company",
+      "status": "FAILED_TERMINAL_NO_RETRY",
+      "calls": [
+        {
+          "ordinal": 171,
+          "status": "FAILED_TERMINAL",
+          "stop_reason": "HTTP_402",
+          "call_path": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0171"
+        }
+      ],
+      "reused": [],
+      "planned_new_calls": 11
+    }
+  ],
+  "same_digest_retries_authorized": false,
+  "production_authorized": false,
+  "after": [
+    122,
+    122,
+    49
+  ],
+  "new_calls": [
+    2,
+    2,
+    0
+  ],
+  "through_ordinal": 171,
+  "seconds": 115.678,
+  "stopped_channels": [
+    "PROVIDER"
+  ]
+}

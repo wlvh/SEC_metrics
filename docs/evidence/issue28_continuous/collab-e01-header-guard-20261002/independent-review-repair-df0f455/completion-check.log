@@ -1,0 +1,36 @@
+{
+  "ended_utc": "2026-10-02T15:11:35.651354+00:00",
+  "patch_sha": "df0f455ffcff35836cd70d8ea3bd9a9c2706f743",
+  "product_still_matches_patch": {
+    "scripts/vnext/e01_header_document_guard_28_v1.py": true,
+    "scripts/vnext/e01_item_text_28_v1.py": true,
+    "scripts/vnext/ordinary_e01_item_text_input_v2.py": true,
+    "scripts/vnext/deterministic_router.py": true,
+    "scripts/vnext/canonical.py": true,
+    "tests/vnext/test_e01_header_document_guard.py": true
+  },
+  "installed_saved_bytes_only": {
+    "enphase_energy": {
+      "same_input_id": true,
+      "same_candidate_count": true,
+      "same_check_count": true,
+      "three_modules_equal_patch": {
+        "scripts/vnext/e01_header_document_guard_28_v1.py": true,
+        "scripts/vnext/e01_item_text_28_v1.py": true,
+        "scripts/vnext/ordinary_e01_item_text_input_v2.py": true
+      }
+    },
+    "pfizer": {
+      "same_input_id": true,
+      "same_candidate_count": true,
+      "same_check_count": true,
+      "three_modules_equal_patch": {
+        "scripts/vnext/e01_header_document_guard_28_v1.py": true,
+        "scripts/vnext/e01_item_text_28_v1.py": true,
+        "scripts/vnext/ordinary_e01_item_text_input_v2.py": true
+      }
+    }
+  },
+  "worktree_status_registered_only": " M docs/evidence/issue28_continuous/execution-state.json\n?? docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/independent-review-repair-df0f455/\n?? docs/evidence/issue28_continuous/collab-e01-header-guard-20261002/tested-commit-equivalence-repair.json\n",
+  "product_or_state_mutation": false
+}

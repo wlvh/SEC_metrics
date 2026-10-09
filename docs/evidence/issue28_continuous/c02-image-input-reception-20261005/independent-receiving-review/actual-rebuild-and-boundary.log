@@ -1,0 +1,43 @@
+{
+  "verdict": "PASS_ACTUAL_REBUILD_AND_INDEPENDENT_LOCATIONS",
+  "no_network_or_subprocess_allowed_during_proof": true,
+  "source_sha256": "bea52712a4297691c6844441f3a138bb53d9e8f38278b08b3d3731280c4fc476",
+  "independent_source_nodes": 604,
+  "independent_tables": 409,
+  "all_604_attributes_byte_spans_table_ids_cell_origins_rowspans_colspans_independently_equal": true,
+  "outside_cell_nodes": 7,
+  "outside_cell_enclosing_tables": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "rebuild_files_exactly_equal": {
+    "request-body.json": "18abb36b70d36cb95052d564f7c3fd7e0373f46ccb612df934841c5926b48f6b",
+    "all-original-image-markup.json": "8a3741a3db5fe592c4e8bd304a1ce7d32339d32e532855e68519f8440ca58d76",
+    "context-measurement.json": "4ece394df6b4c0d4953b359b9ce410dc03a1447f642e7c034535bdc91321e856",
+    "metadata.json": "205924047e21931ed73a026392ab833f6f0772c3a131a7d9cfd79dcc3b2c4d5e"
+  },
+  "rebuild_seconds": 0.56,
+  "old_mapper_refusal": "C02_TABLE_MODEL_REQUEST_OR_RESOURCE_CHANGED",
+  "old_mapper_reauthenticated_then_refused_seconds": 4.276,
+  "program_placeholder_only": true,
+  "response_parser_not_reached": true,
+  "new_model_answer_generated": false,
+  "new_native_or_semantic_record_created": false,
+  "input_tokens": 161921,
+  "reserved_output_tokens": 4096,
+  "context_tokens": 166017,
+  "maximum_context_tokens": 200000,
+  "payload_bytes": 603523,
+  "reference_measurement_only_not_hosted_usage": true,
+  "image_pixels_supplied": false,
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}

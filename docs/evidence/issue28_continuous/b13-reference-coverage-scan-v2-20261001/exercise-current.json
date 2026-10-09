@@ -1,0 +1,59 @@
+{
+  "record_type": "ISSUE28_B13_191_COMPLETE_REFERENCE_COVERAGE_OFFLINE",
+  "tested_module_sha256": "df27e2f51b9c9e94d1b0e2867680f420b32b7c19f87cedbe5a721899fefc5d55",
+  "tested_v14_manifest_sha256": "c569628a57b901fef0005d61b6058e536d8f7c3283b0b910545a30969e8fb9f5",
+  "tested_scalability_policy_sha256": "4da4cbc8f2bab99d0ea86755b3751e2fda4cacd43eadfa2e2e23208c4ad2ea5a",
+  "original_191_request_sha256": "45e4c32e3fe588145d145cac5e2c03981082e60c47fb70744d3569d8d051e5dd",
+  "original_192_request_sha256": "835d62594e5b25ba5e9038089d2d06e8c3c0f195dd71d8c1b84fe92d8dea4eb1",
+  "original_191_terminal_status": "FAILED_TERMINAL",
+  "original_192_terminal_status": "FAILED_TERMINAL",
+  "v4_prior_request_id": "sha256:781d7883bb366846eefaadf6627f8521889c5aaeae872561036a47d08e1576d4",
+  "new_scan_request_id": "sha256:bf9cece0768f9d6b93350231ce9a573c0d3709364012b24f30cf790fa97d23a2",
+  "source_id": "sha256:63ba353bbf5ec678ec52ce21028aa7ee1beead11a684dcae6e70723f86a0396c",
+  "source_reference_count": 1276,
+  "candidate_count": 0,
+  "excluded_count": 1276,
+  "excluded_ranges": [
+    [
+      "B",
+      0,
+      1884,
+      2382
+    ],
+    [
+      "B",
+      1,
+      2382,
+      2709
+    ],
+    [
+      "F",
+      2,
+      1,
+      237
+    ],
+    [
+      "F",
+      3,
+      237,
+      452
+    ]
+  ],
+  "synthetic_response_bytes": 160,
+  "new_request_input_tokens": 155889,
+  "new_request_output_reserve_tokens": 4096,
+  "new_request_context_tokens": 159985,
+  "new_request_fits_current_limit": true,
+  "negative_gap_reason": "B13_COVERAGE_SCAN_SOURCE_GAP",
+  "negative_wrong_owner_reason": "B13_COVERAGE_SCAN_RANGE_NOT_ORIGINAL_OR_OVERLAPS",
+  "negative_candidate_overlap_reason": "B13_COVERAGE_SCAN_RANGE_NOT_ORIGINAL_OR_OVERLAPS",
+  "saved_originals_unchanged": true,
+  "model_relevance_proven": false,
+  "absence_established": false,
+  "native_result_or_run_created": false,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ]
+}

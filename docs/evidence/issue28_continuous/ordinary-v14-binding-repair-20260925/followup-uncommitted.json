@@ -1,0 +1,54 @@
+{
+  "record_type": "ISSUE28_ORDINARY_BINDING_P2_FOLLOWUP_UNCOMMITTED_TEST_IDENTITY",
+  "first_patch_sha": "5c307e55932a8c65dbd05ba8ce44d93b66b7c980",
+  "first_review_verdict": "BLOCKED_SCOPED_P2_STALE_WIRING_REQUIREMENT_CLOSURE",
+  "source_code_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "working_tree_modified_paths": [
+    "docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json",
+    "docs/evidence/issue28_continuous/continuation.md",
+    "docs/evidence/issue28_continuous/execution-state.json",
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json",
+    "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/README.md",
+    "docs/evidence/issue28_continuous/ordinary-v14-binding-repair-20260925/no-call-reuse-190.json",
+    "requirements/issue_28_v14/baseline_manifest.json",
+    "scripts/vnext/continuous_call_wiring.py",
+    "tests/vnext/test_continuous_call_policy.py"
+  ],
+  "followup_input_files": {
+    "requirements/issue_28_v14/baseline_manifest.json": {
+      "sha256": "ca3ac795069e35d102b438263dc11dabb8e869660a03e9622ce8b0728fc63b0c",
+      "size": 86764
+    },
+    "scripts/vnext/continuous_call_wiring.py": {
+      "sha256": "6538abbdf600a468c2acad8a29a86abbaf22872c0e4530dbfe728965275d0094",
+      "size": 1471
+    },
+    "tests/vnext/test_continuous_call_policy.py": {
+      "sha256": "5389461330d281b6cd45483e641351a1a69f0e59e231af0cb6f6c217fd9ecc07",
+      "size": 5106
+    },
+    "docs/evidence/issue28_continuous/b13-170-source-audit/offline-wiring.json": {
+      "sha256": "dcca68d2bbf7c126edb1ab56cb59fc3985cdd592554888cb85b5428c763140e0",
+      "size": 6633
+    },
+    "docs/evidence/issue28_continuous/ordinary-refresh-cycle/sec-wiring.json": {
+      "sha256": "ee8581bbecac6a11a11a38027c863f0c45d0692b55c6f62089fe0a1ecbfc4413",
+      "size": 1984
+    }
+  },
+  "v13_parent_closure": "sha256:ecaef2291efd6eae67f5c1625ee794514c5d05988a4f9348208219ae4601ea01",
+  "v14_closure": "sha256:b482d46b2ba4a4e34e394974df5b62d3f8a5419fced4aae17630a9172840de8e",
+  "tests": {
+    "directed": "31_PASS_CURRENT_FACTORY_AND_STALE_CLOSURE_NEGATIVE",
+    "fast": "127_SELECTORS_PASS",
+    "old_190_readonly_selection": "REUSED_190_NO_CALL",
+    "sec_live_admission_check": "PASS_NO_CAPTURE"
+  },
+  "long_material_tests_not_repeated": true,
+  "new_real_calls": [
+    0,
+    0,
+    0
+  ],
+  "tests_on_committed_patch": false
+}
