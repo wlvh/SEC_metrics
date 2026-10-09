@@ -99,6 +99,60 @@ def prepare_historical_current_annual_year_case(*, repo_root, company_id, metric
         metric_id=metric_id, fiscal_year=fiscal_year, withhold_known_source_errors=True)
 
 
+def _successor_comparability_case(*, source, company_id, metric_id, prepared, selection):
+    """Consume the approved metadata-only guard, without statement claims."""
+    route = _load_deterministic_catalog(repo_root=ROOT)['metrics'][metric_id]
+    _need(route['adapter_id'] == 'companyfacts' and route['continuity_policy'] == 'REQUIRE_CONTINUOUS'
+          and route['result_period_role'] == 'current_annual',
+          'HISTORICAL_SUCCESSOR_COMPARABILITY_ROUTE_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
+    registry = next(r for r in _registry_rows(repo_root=source) if r['company_id'] == company_id)
+    expected = next(r for r in _registry_rows(repo_root=ROOT) if r['company_id'] == company_id)
+    subject = prepared['subject_policy']
+    _need(subject['mode'] == 'SUCCESSOR_REGISTRANT_ONLY'
+          and registry == expected and registry['entity_continuity_status'] != 'continuous'
+          and subject['cross_entity_combination_authorized'] is False
+          and str(int(subject['selected_cik'])) == str(int(prepared['entity']))
+          == str(int(registry['primary_cik'])), 'HISTORICAL_SUCCESSOR_SUBJECT_NOT_PROVEN')
+    period = prepared['table_input']['target_period']
+    documents = installed_ordinary_spec_documents()
+    reader = _Sources(source, company_id, prepared['entity'])
+    reader.read(submissions_url(cik=int(prepared['entity'])),
+        role='sec_submissions_inventory', media_type='application/json')
+    reader.primary(prepared['filing'])
+    for filing in prepared['amendments']:
+        reader.primary(filing)
+    context = {'repo_root': ROOT, 'deterministic_catalog': _load_deterministic_catalog(repo_root=ROOT),
+        'role_context': {(company_id, 'companyfacts'): {'sources': [], 'claims_by_accession_role': {}}},
+        'target_periods': {company_id: {'current': period, 'prior': None}},
+        'targets': {company_id: period}, 'registry': {company_id: registry},
+        'filings_by_company': {company_id: {'current': {'accession': prepared['filing']['accessionNumber']}}}}
+    graph = _deterministic_metric_graph(context=context, company_id=company_id, metric_id=metric_id)
+    result = graph['result']
+    _need(result['value'] is None and result['quality'] == 'NOT_MEANINGFUL'
+          and result['reason_code'] == 'ENTITY_CONTINUITY_NOT_COMPARABLE'
+          and not graph['claims'] and graph['observation'] is None,
+          'HISTORICAL_SUCCESSOR_COMPARABILITY_GUARD_CHANGED')
+    assessment = {'category': 'APPROVED_COMPARABILITY_LIMIT',
+        'reason': 'ENTITY_CONTINUITY_NOT_COMPARABLE', 'subject_policy': subject,
+        'statement_values_used': False, 'annual_statement_scope_admitted': False,
+        'amendment_scope_not_admitted': bool(prepared['amendments'])}
+    proofs = list({content_hash(value=p): p for p in
+        [*prepared['source_proofs'], *[s['proof'] for s in reader.proofs.values()]]}.values())
+    records = list(reader.records.values())
+    return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id,
+        'input_binding': {'record_type': 'HISTORICAL_SUCCESSOR_COMPARABILITY_INPUT',
+            'prepared_input': prepared, 'period_selection': selection, 'metric_id': metric_id,
+            'assessment': assessment},
+        'compiled_specs': {metric_id: documents[metric_id]['compiled_spec']},
+        'spec_paths': {metric_id: documents[metric_id]['path']}, 'target_period': period,
+        'prepared_annual_input': prepared, 'expected_records': [*records, graph['trace'], result],
+        'results': {metric_id: result}, 'traces': {metric_id: graph['trace']},
+        'references': [r for r in records if r['record_type'] == 'SOURCE_REFERENCE'],
+        'source_proofs': proofs, 'admission': verify_ordinary_source_proofs(data_root=source, proofs=proofs),
+        'selection': assessment, 'input_assessments': {'successor_comparability': assessment},
+        'rules_root': str(ROOT)}
+
+
 def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fiscal_year,
                                        withhold_known_source_errors=False):
     """Shared selected-filing case; catalog and Calculator retain computation."""
@@ -107,6 +161,9 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
                                          fiscal_year=fiscal_year, rules_root=ROOT)
     prepared = prepare_historical_annual_input(repo_root=source, company_id=company_id,
                                                period_selection=selection, rules_root=ROOT)
+    if prepared['subject_policy']['mode'] == 'SUCCESSOR_REGISTRANT_ONLY' and metric_id != 'B01':
+        return _successor_comparability_case(source=source, company_id=company_id,
+            metric_id=metric_id, prepared=prepared, selection=selection)
     _need(not prepared['amendments'] and prepared['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY',
           'HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
     period = prepared['table_input']['target_period']
