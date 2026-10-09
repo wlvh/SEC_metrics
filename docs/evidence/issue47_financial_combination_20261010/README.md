@@ -42,3 +42,11 @@ python3 tools/vnext_company.py results --company jpmorgan_chase \
 现有六指标混选测试进一步同时检查每族processing_files与原声明完全对应，并把B01/B10/A01已交付族放在同一次选择中；防止后来分派合并保住函数名却覆盖计算依赖。仅这一受影响方法.455s过、零skip，mixed-dependency-control.log。它是分派控制，不当真实财报值或复用验收；原真实30位/混批证据继续复用。
 
 公共方已给固定91087684基础的最小workflow patch，本方接收至同一组合：仅补geography/average_risk两个paths及原Historical步骤的两个模块，既有三模块不丢，没有新runner。按实际步骤命令本地58方法.219s零skip；workflow-five-modules.json/log逐模块确认加载和执行。该组合分支无PR，push本身不会触发pull_request工作流；接收者把同一配置合入实际候选后再核远端步骤，不把本地成功冒充远端CI成功。
+
+## 同一实际main接收后的验证
+
+接收方已把公共104/107/109与历史105/108/110合入main f6ef7886（另含94/99/93），本方未执行GitHub merge。在新干净main检出而非候选overlay中，原五模块59方法.210s零skip；main工作流已经保三业务模块及对应path，不再有原组合缺项。该merge的gh run list为空，未把旧PR绿灯写成main远端组合已执行。
+
+同干净main另进程读取原三个task：A13 .590s、平均族.645s、范围族.807s；原30值/单位/季度、全年或instant期间/ResultID保持，scope task另保代表混选新增3值，285旧结果/pointer文件保持，factory/socket禁止。post-receiving-actual-main-read.json/log。读取驱动固定元数据初把clean main写成uncommitted及scope三新增成功误标missing，后只读取现成CSV更正摘要，无重复执行。A13/平均族最近缺26仍各1/2空行；scope最近请求21，18成功结果，旧缺26日志保原版本。
+
+现有组合树正常合入该main为076cd45e，四冲突采用main实际公司分派/工作流/指南/原测试，额外保本方六族+B01/B10/A01依赖保护；该受影响1方法.424s通过。导入的原历史日志有既有空白，未为diff-check改写证据。后续只接公共cfg无关变化修补并验证代表复跑，不重算30位。96/102尚未main，E01仍待公共显式门。

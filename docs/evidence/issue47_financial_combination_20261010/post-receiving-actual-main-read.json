@@ -1,0 +1,57 @@
+{
+  "code_commit": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+  "code_uncommitted_at_execution": false,
+  "checks": [
+    {
+      "family": "a13",
+      "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/a13-company-xx1efnej/state",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/financial-combination-read-8um0os1b/a13",
+      "seconds": 0.5895885829813778,
+      "exit_code": 0,
+      "old_successful_rows_preserved": 5,
+      "protected_files": 46,
+      "protected_unchanged": true,
+      "calculation_calls": 0,
+      "actual_missing_year_rows": 1,
+      "additional_saved_mixed_results": 0
+    },
+    {
+      "family": "average",
+      "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/a03-a12-company-8t008wu_/state",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/financial-combination-read-8um0os1b/average",
+      "seconds": 0.6451386250555515,
+      "exit_code": 0,
+      "old_successful_rows_preserved": 10,
+      "protected_files": 80,
+      "protected_unchanged": true,
+      "calculation_calls": 0,
+      "actual_missing_year_rows": 2,
+      "additional_saved_mixed_results": 0
+    },
+    {
+      "family": "scope",
+      "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-company-aw1qyxi9/state",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/financial-combination-read-8um0os1b/scope",
+      "seconds": 0.8069218748714775,
+      "exit_code": 0,
+      "old_successful_rows_preserved": 15,
+      "protected_files": 159,
+      "protected_unchanged": true,
+      "calculation_calls": 0,
+      "actual_missing_year_rows": 0,
+      "additional_saved_mixed_results": 3
+    }
+  ],
+  "total_original_correct_values": 30,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "old_result_ids_unchanged": true,
+  "actual_main_clean_checkout": true,
+  "original_30_plus_3_saved_values": 33,
+  "protected_files_total": 285,
+  "calculation_factories_forbidden": true,
+  "network_forbidden": true
+}
