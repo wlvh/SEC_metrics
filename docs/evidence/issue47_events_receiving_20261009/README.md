@@ -51,3 +51,15 @@ FY2021–FY2025共25位置已通过同公司CLI计算/读取/导出，既有独�
 EX-99单独只读核查：2531请求日志行/SHA61252ac5…eef9、1547原claims保持，指定ex-99.htm没有请求条目，累计仍1771含224保守数，原最多一次GET/零重试仍未消费。现公共company_online调用continuous CallLedger，但旧历史intent使用allowance_binding_id、初始binding1354加原extension/resume累计，而公共snapshot期望binding_id和直接limits，结构不同；已交#28做本触及部分的普通用途/计数/日志接线。未创建账本、改旧binding、重新GET或重铸旧封存。该来源阻塞不阻止上述保存来源事件交付，也不把余额变成其他附件用途许可。
 
 Ford FY2021–FY2025同五事件族也已完成，同一b7640660生产代码（与65471处理文件相同）首次387.991秒、原factory禁止复跑82.188秒、另进程独立读1.052秒，各25值/单位/实际全年窗口以及每个完整header申报池与既有两日期参考一致，200保存结果/指针文件保持。原件只通过现有读口使用，socket禁止，新增SEC/模型/Run/正式接受0。见[Ford紧凑比较](ford-fiveyear.json)和[实际日志](ford-fiveyear-cli.log)，复现采用指南同参数改公司ford_motor_company和FY2021–2025。该实际大来源复跑仍需82秒来源核查，不把factory0写成没有读取成本，也不因此重跑其他未变族；剩余十公司事件接收、E01和在线历史补齐继续。
+
+## main事件接收与剩余公司消费者
+
+实际main已有44719c7e公共源接口、408e89e2历史事件接线及后继1c578c61/9493ed0e记录接收；服务器PR89/90现在均MERGED，由接收方执行，本方未merge/Ready/切active。本次消费者执行代码仍da873af8，scripts/vnext、公司CLI、runtime config和事件catalog与该main逐文件无差异；只更新历史指南到main现有事件能力及后续消费者记录，不因文档/参考表变化重算财报。
+
+JPM五年五事件25位已完成：首次1140.944秒、禁止原factory复跑127.170秒、独立进程读1.230秒，200文件保持，全部值/单位/全年窗口及完整header申报集合与已有独立两日期阅读相符。见[jpm-fiveyear.json](jpm-fiveyear.json)及[原日志](jpm-fiveyear-cli.log)。不是C02 proxy重读、模型调用或全部银行业务接受；较慢准备/来源核对实数保留，不将factory0称为零成本。Enphase/Lumen/Pfizer及Southwest串行消费者现已全部终态，共100位值/单位/窗口/完整header池零差异，各200保存文件不变，逐项比较在[additional-company-fiveyear.json](additional-company-fiveyear.json)，首次188.668/305.296/273.136/263.724秒、禁止factory复跑30.440/63.960/40.497/53.986秒、独立读0.805/0.985/0.834/0.885秒，实际日志在additional-company-fiveyear-cli.log。
+
+Paramount本次直接接已保存FY2025 C01任务，只新增其余年度/指标。原FY2024的PartIII补充经同一v2检查器仅准入FISCAL_EVENT_WINDOW，C01=9 count/2024全年；原收入August7/August8冲突和金融scope拒绝保持。真实范围执行550.498秒完成24新位置，旧FY2025 C01却因录制ordinary_source_session.py的19a→2357字节差异进入factory，被禁止旧项复算控件拦住，整个CLI保持限制终态。原12 count及旧version保留，独立读1.032秒/25可读行与原独立两日期计数、期间及完整header池相符；这不表示本次25项均已执行成功。错误和旧值保持，[真实失败](paramount-fiveyear-reuse-failure.json)、[配置差异](paramount-unrelated-processing-differences.json)、[逐项原参考比较](paramount-fiveyear-partial.json)和[日志](paramount-fiveyear-partial-cli.log)供公共#28收窄实际消费者依赖。不得手改旧configuration、裁掉旧失败或整体重算24邻居。
+
+新增一个历史短反例直接构造完整original/PartIII amended HTML，实际调用共享修订解析器：PartIII只放行事件窗口、不准入财务；改年度起点必须拒绝。它在原HistoricalEventCaseTest类内，既有workflow路径/明确class命令自然执行，不新增selector、runner或历史平台；[10例0.041秒/零skip日志](amendment-consumer-short.log)保实际结果。构造来源不冒充真实财报；真实ParamountFY2024 scope在[paramount2024-amendment-case.json](paramount2024-amendment-case.json)独立列明。
+
+后续从实际main9493ed0e短分支接收，上游已入main代码不重复携带，只有本轮消费者记录/指南/一个构造修订边界方法；30例0.196秒零skip，见main-receiving-amendment-short.log。接收指南冲突保双方已经入main的能力，实际示例改9493ed0e，避免用户检出旧73ead后运行事件参数失败。自有改动stash作为恢复备份保留，不删除用户work或旧分支。新增运行不完整部分依上述真实失败解释，原模型批次/账本/Run不改。
