@@ -32,6 +32,17 @@ def install_retained_local(*, repo_root, output_root):
         paths.update(p for p in names if p.startswith('docs/evidence/issue28_continuous/frozen-parent-v10'))
         subprocess.run(['git','-C',str(source),'checkout-index','--stdin'],
                        input='\n'.join(sorted(paths & names))+'\n',text=True,check=True,capture_output=True)
+        # Keep the retained business implementation, but allow the host's
+        # ordinary system /tmp alias. The real installer below binds this
+        # changed platform helper into the new private runtime; old tasks
+        # keep their previously saved program.
+        rate = source/'scripts/vnext/company_local_acquisition.py'
+        original = rate.read_text()
+        old = "root = Path('/tmp')/('sec-metrics-sec-rate-'+str(os.getuid()))"
+        if original.count(old) != 1:
+            raise ValueError('RETAINED_LOCAL_RATE_SEAM_CHANGED')
+        rate.write_text(original.replace(old,
+            "root = Path('/tmp').resolve()/('sec-metrics-sec-rate-'+str(os.getuid()))"))
         env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1'}
         # Avoid loading caller modules through PYTHONPATH before the retained
         # CLI establishes its own source root. This installation has no HTTP.

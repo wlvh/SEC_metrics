@@ -38,6 +38,12 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts:tools
         run: python3 -m unittest -v tests.vnext.test_selected_income_source_v1
+      - name: Native system rate path (small state)
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 -m unittest -v tests.vnext.test_native_rate_path tests.vnext.test_company_retained_local
+
 
       - name: Run fast suite
         env:
