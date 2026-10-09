@@ -62,9 +62,8 @@
   },
   "amendment_checks": [
     {
-      "record_type": "ANNUAL_AMENDMENT_SOURCE_SCOPE",
+      "record_type": "HISTORICAL_AMENDMENT_SCOPE_SUMMARY",
       "schema_version": 1,
-      "scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
       "classification": "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS",
       "fiscal_window_unchanged": true,
       "unchanged_input_classes": [
@@ -86,7 +85,59 @@
       ],
       "source_acquisition_credit": false,
       "native_run_created": false,
-      "production_authorized": false
+      "production_authorized": false,
+      "referenced_complete_scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+      "original_statement_admission_requires_further_review": true,
+      "original": {
+        "filing": {
+          "form": "10-K",
+          "reportDate": "2024-12-31",
+          "filingDate": "2025-02-26",
+          "accessionNumber": "0000813828-25-000005",
+          "primaryDocument": "para-20241231.htm"
+        },
+        "source_reference": {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+          "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+          "company_id": "paramount_skydance_paramount_global",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+          "accession": "0000813828-25-000005",
+          "document_name": "para-20241231.htm",
+          "source_role": "target_primary",
+          "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+        },
+        "raw_sha256": "5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+        "period": {
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31"
+        }
+      },
+      "amendment": {
+        "filing": {
+          "form": "10-K/A",
+          "reportDate": "2024-12-31",
+          "filingDate": "2025-04-25",
+          "accessionNumber": "0001193125-25-096776",
+          "primaryDocument": "d886907d10ka.htm"
+        },
+        "source_reference": {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:abfc5dda276a9f731c9c7551acd16e4a4bb40f846784178b8c06f999cf6c74e7",
+          "raw_asset_id": "sha256:ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+          "company_id": "paramount_skydance_paramount_global",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000119312525096776/d886907d10ka.htm",
+          "accession": "0001193125-25-096776",
+          "document_name": "d886907d10ka.htm",
+          "source_role": "target_primary",
+          "request_attempt_id": "request:attempt:6b270f8c914232d0bfc5fd978e7f19dc4e249956218b93c68bb067e43735a206"
+        },
+        "raw_sha256": "ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+        "period": {
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31"
+        }
+      }
     }
   ],
   "new_calls": {
@@ -95,5 +146,6 @@
     "paid": 0
   },
   "case_only_not_company_delivery": true,
-  "complete_source_objects_omitted_from_summary": true
+  "complete_source_objects_omitted_from_summary": true,
+  "reconstruction": "Use committed PR52 source-inputs and main9493ed0e prepare_historical_event_year_case(company_id=paramount_skydance_paramount_global, metric_id=C01, fiscal_year=2024); no network."
 }
