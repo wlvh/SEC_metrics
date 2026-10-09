@@ -326,6 +326,23 @@ class CurrentProcessingConfigurationTest(unittest.TestCase):
 class SelectedPeriodUpdateTest(unittest.TestCase):
     setUp = CurrentUpdateTest.setUp
 
+    def test_explicit_a13_selected_case_reaches_factory_without_default_expansion(self):
+        calls=[]
+        def factory(**kw):
+            calls.append(kw)
+            raise ValueError('CONSTRUCTED_A13_FACTORY_BOUNDARY_NO_BUSINESS_RESULT')
+        observed=update.run_once(state_root=self.root,source_root=ROOT,
+            company_id='marriott_international',metric_id='A13',fiscal_year=2021,case_factory=factory)
+        self.assertEqual(len(calls),1)
+        self.assertEqual(observed['status'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertEqual(observed['reason'],'CONSTRUCTED_A13_FACTORY_BOUNDARY_NO_BUSINESS_RESULT')
+
+    def test_a13_without_explicit_year_and_other_unsupported_family_stay_closed(self):
+        for metric,extra in [('A13',{}),('D03',{'fiscal_year':2021,'case_factory':self.factory})]:
+            with self.subTest(metric=metric),self.assertRaisesRegex(ValueError,'CURRENT_UPDATE_METRIC_UNSUPPORTED'):
+                update.run_once(state_root=self.root,source_root=ROOT,
+                    company_id='marriott_international',metric_id=metric,**extra)
+
     def factory(self, *,repo_root,company_id,metric_id,fiscal_year):
         self.factory_calls=getattr(self,'factory_calls',0)+1
         return {'target_period':{'fiscal_year':fiscal_year}}

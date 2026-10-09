@@ -16,7 +16,7 @@ from .company_handoff import _atomic_json
 from .csv_output import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
 from .normal_source_authority import ROOT
 from .ordinary_current_update import run_once
-from .ordinary_saved_result import SAVED_METRIC_IDS, read_saved_result
+from .ordinary_saved_result import SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS, read_saved_result
 
 EXTRA_FIELDS = ('company_id', 'result_id', 'record_root', 'source_root',
                 'local_metric_status', 'period_role', 'result_validity',
@@ -24,6 +24,9 @@ EXTRA_FIELDS = ('company_id', 'result_id', 'record_root', 'source_root',
 # Old E01 item-code counts do not satisfy the adopted content-confirmed M&A
 # definition. Keep them in old records, not the new company's current result.
 CURRENT_METRICS = SAVED_METRIC_IDS - {'E01'}
+# A13 has an existing native Spec/writer but no default current producer.
+# A selected-year consumer must explicitly supply its per-metric factory;
+# other unimplemented families remain closed. Verified saved A13 is readable.
 
 
 def _need(condition, reason):
@@ -81,7 +84,9 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
           and all(type(y) is int and 1900<=y<=9998 for y in fiscal_years)
           and len(fiscal_years)==len(set(fiscal_years)), 'COMPANY_CURRENT_FISCAL_YEAR_SCOPE_INVALID')
     _need(case_factories is None or type(case_factories) is dict
-          and case_factory is None and set(case_factories) == set(selected) & CURRENT_METRICS
+          and case_factory is None
+          and set(selected) & CURRENT_METRICS <= set(case_factories)
+          and set(case_factories) <= set(selected) & (CURRENT_METRICS | EXPLICIT_CASE_METRICS)
           and all(callable(f) for f in case_factories.values()), 'COMPANY_CURRENT_METRIC_FACTORIES_INVALID')
     _need(processing_files_by_metric is None or type(processing_files_by_metric) is dict
           and not processing_files and set(processing_files_by_metric) <= set(selected)
@@ -111,7 +116,9 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
         for year,metric in scopes:
             controller = work/'updates'/metric
             period_controller = controller if year is None else controller/'periods'/('FY'+str(year))
-            if metric not in CURRENT_METRICS:
+            explicit_case = (case_factories is not None and metric in EXPLICIT_CASE_METRICS
+                             and metric in case_factories)
+            if metric not in CURRENT_METRICS and not explicit_case:
                 observation = {'metric_id': metric, 'status': 'PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED',
                                'reason': 'This saved-source branch has no complete current processing interface for '+metric}
             else:
@@ -254,7 +261,7 @@ def _read_current_company(root, company_id, defects_file, output_root):
                 _need(result.get('publication')==('PUBLISHED' if conclusion=='CANDIDATE_READY' else 'WITHHELD'),
                       'COMPANY_CURRENT_READ_COMPLETED_PUBLICATION_CHANGED')
             holds = _defects(result, registry)
-            scope_ready = result['metric_id'] in CURRENT_METRICS
+            scope_ready = result['metric_id'] in CURRENT_METRICS | EXPLICIT_CASE_METRICS
             rows.append({'metric_id': result['metric_id'], 'result_id': result['result_id'],
                 'period_start': result.get('period_start'), 'period_end': result['period_end'],
                 'fiscal_year':saved['manifest']['target_period']['fiscal_year'],

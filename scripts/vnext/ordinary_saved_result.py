@@ -19,6 +19,7 @@ from .records import validate_record
 METRIC_IDS = frozenset(installed_ordinary_spec_documents())
 LODGING_METRIC_IDS = frozenset({'B10','B11'})
 SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS
+EXPLICIT_CASE_METRICS = frozenset({'A13'})
 
 
 def _program_version(root):
