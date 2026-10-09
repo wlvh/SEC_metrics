@@ -54,7 +54,8 @@ class HistoricalStatementScopeTest(unittest.TestCase):
             controls = {
                 'resolve_period_selection': {}, 'prepare_historical_annual_input': annual,
                 'installed_ordinary_spec_documents': documents,
-                '_registry_rows': [{'company_id': annual['company_id']}],
+                '_registry_rows': [{'company_id': annual['company_id'],
+                                    'entity_continuity_status': 'continuous'}],
                 'repository_company_traits': {}, '_Sources': reader,
                 'filing_inventory': {}, '_load_deterministic_catalog': {},
                 '_structured_concepts': ['us-gaap:Revenues'],
@@ -109,3 +110,45 @@ class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
                     cases.prepare_historical_current_annual_year_case(repo_root=Path('/constructed'),
                         company_id='constructed', metric_id='B07', fiscal_year=2024)
                 specs.assert_not_called();graph.assert_not_called()
+
+
+class HistoricalPeriodSubjectTest(unittest.TestCase):
+    def example(self):
+        return ({'primary_cik':'2','entity_continuity_status':'successor'},
+                {'entity':'1','subject_policy':{'mode':'CONTINUOUS_PRIMARY',
+                    'selected_cik':'1','cross_entity_combination_authorized':False}},
+                {'period_registrant':{'role':'PREDECESSOR','reporting_cik':'1','successor_cik':'2'}})
+
+    def test_predecessor_context_uses_its_own_cik_without_mutating_registry(self):
+        registry,prepared,selection=self.example()
+        current,detail=cases._registry_for_selected_period(registry=registry,
+            prepared=prepared,selection=selection)
+        self.assertEqual('1',current['primary_cik'])
+        self.assertEqual('continuous',current['entity_continuity_status'])
+        self.assertEqual('2',registry['primary_cik'])
+        self.assertEqual('successor',registry['entity_continuity_status'])
+        self.assertEqual('1',detail['period_registrant_cik'])
+        self.assertFalse(detail['cross_entity_combination_authorized'])
+
+    def test_continuous_company_keeps_original_registry_object(self):
+        registry,prepared,selection=self.example();registry['entity_continuity_status']='continuous'
+        current,detail=cases._registry_for_selected_period(registry=registry,
+            prepared=prepared,selection=selection)
+        self.assertIs(registry,current);self.assertIsNone(detail)
+
+    def test_successor_context_keeps_its_existing_noncomparability(self):
+        registry,prepared,selection=self.example();prepared['subject_policy']['mode']='SUCCESSOR_REGISTRANT_ONLY'
+        current,detail=cases._registry_for_selected_period(registry=registry,
+            prepared=prepared,selection=selection)
+        self.assertIs(registry,current);self.assertIsNone(detail)
+
+    def test_mismatched_reporter_successor_or_cross_entity_does_not_get_override(self):
+        for changed in ['reporter','successor','cross_entity','role']:
+            registry,prepared,selection=self.example()
+            if changed=='reporter':selection['period_registrant']['reporting_cik']='3'
+            elif changed=='successor':selection['period_registrant']['successor_cik']='3'
+            elif changed=='cross_entity':prepared['subject_policy']['cross_entity_combination_authorized']=True
+            else:selection['period_registrant']['role']='PRIMARY'
+            with self.subTest(changed=changed):
+                with self.assertRaisesRegex(cases.StatementCaseError,'PERIOD_SUBJECT_NOT_PROVEN'):
+                    cases._registry_for_selected_period(registry=registry,prepared=prepared,selection=selection)

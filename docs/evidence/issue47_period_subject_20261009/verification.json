@@ -1,0 +1,364 @@
+{
+  "status": "PERIOD_SUBJECT_HISTORY_CONSUMER_RECEIVED_NOT_MAIN",
+  "base": "PR81/efee7e86; later doc-onlycf78 same code",
+  "retained_rule": "historical_results.py period_continuity lines242-251; minimum rule reused, no historical engine installation",
+  "company": "paramount_skydance_paramount_global",
+  "years": [
+    2021,
+    2022,
+    2023
+  ],
+  "metrics": [
+    "B01",
+    "B02",
+    "B04",
+    "B05",
+    "B07"
+  ],
+  "selected_cik": "813828",
+  "context_registry_only": true,
+  "global_registry_unchanged": true,
+  "successor_annual_scope_not_admitted": true,
+  "first_seconds": 104.81577849993482,
+  "repeat": {
+    "company": "paramount_skydance_paramount_global",
+    "repeat_exit": 0,
+    "repeat_seconds": 3.7598676669877023,
+    "repeat_preparation_calls": 0,
+    "repeat_calculation_calls": 0,
+    "saved_files": 120,
+    "saved_files_unchanged": true,
+    "read_exit": 0,
+    "read_seconds": 0.0331425410695374,
+    "read_selection_calls": 0,
+    "read_update_calls": 0,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "cold_read": {
+    "exit_code": 0,
+    "seconds": 0.15474141598679125,
+    "source_selection_calls": 0,
+    "update_calls": 0,
+    "saved_files_unchanged": true,
+    "saved_file_count": 120,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    }
+  },
+  "numeric_positions": 14,
+  "business_nulls": 1,
+  "value_unit_window_differences": [],
+  "claim_and_trace_entities": "813828 only; checked each selected claim and trace, including nonpositive B07",
+  "continuity_checks": [
+    {
+      "year": 2021,
+      "metric": "B01",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2021,
+      "metric": "B02",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2021,
+      "metric": "B04",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2021,
+      "metric": "B05",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2021,
+      "metric": "B07",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2022,
+      "metric": "B01",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2022,
+      "metric": "B02",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2022,
+      "metric": "B04",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2022,
+      "metric": "B05",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2022,
+      "metric": "B07",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2023,
+      "metric": "B01",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2023,
+      "metric": "B02",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2023,
+      "metric": "B04",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2023,
+      "metric": "B05",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    },
+    {
+      "year": 2023,
+      "metric": "B07",
+      "period_continuity": {
+        "company_registry_status": "successor_predecessor",
+        "cross_entity_combination_authorized": false,
+        "period_registrant_cik": "813828",
+        "period_subject_policy": "CONTINUOUS_PRIMARY"
+      }
+    }
+  ],
+  "later_year_boundary": {
+    "seconds": 14.776752416975796,
+    "checks": [
+      {
+        "year": 2024,
+        "error": "HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+        "category": "IMPLEMENTATION_GAP"
+      },
+      {
+        "year": 2025,
+        "error": "HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED",
+        "category": "IMPLEMENTATION_GAP"
+      }
+    ],
+    "global_registry_unchanged": true,
+    "new_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "no_result_saved": true
+  },
+  "short_tests": {
+    "count": 47,
+    "seconds": 0.139,
+    "skip": 0
+  },
+  "capability_alignment": "PASS against actualPR81 parent",
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "new_native_run": false,
+  "new_business_acceptance": false,
+  "remaining": [
+    "FY2024 amended annual source and actual income dates",
+    "FY2025 successor approved noncomparability receiving in historical thin entry not yet integrated",
+    "Public source discovery/CLI increments",
+    "Main and complete39 metrics five-year acceptance"
+  ],
+  "archive": {
+    "members": 108,
+    "bytes": 73880,
+    "sha256": "2bf7caf03c277a77e3129d74f37efbc039b8fffb00a66b4ccc28cd05799c1a78"
+  },
+  "explicit_unit_receiving": [
+    {
+      "metric": "B01",
+      "year": 2021,
+      "old_unit": "USD",
+      "current_unit": "USD",
+      "same": true
+    },
+    {
+      "metric": "B02",
+      "year": 2021,
+      "old_unit": "ratio",
+      "current_unit": "ratio",
+      "same": true
+    },
+    {
+      "metric": "B04",
+      "year": 2021,
+      "old_unit": "USD",
+      "current_unit": "USD",
+      "same": true
+    },
+    {
+      "metric": "B05",
+      "year": 2021,
+      "old_unit": "USD",
+      "current_unit": "USD",
+      "same": true
+    },
+    {
+      "metric": "B07",
+      "year": 2021,
+      "old_unit": "ratio",
+      "current_unit": "ratio",
+      "same": true
+    },
+    {
+      "metric": "B01",
+      "year": 2022,
+      "old_unit": "USD",
+      "current_unit": "USD",
+      "same": true
+    },
+    {
+      "metric": "B02",
+      "year": 2022,
+      "old_unit": "ratio",
+      "current_unit": "ratio",
+      "same": true
+    },
+    {
+      "metric": "B04",
+      "year": 2022,
+      "old_unit": "USD",
+      "current_unit": "USD",
+      "same": true
+    },
+    {
+      "metric": "B05",
+      "year": 2022,
+      "old_unit": "USD",
+      "current_unit": "USD",
+      "same": true
+    },
+    {
+      "metric": "B07",
+      "year": 2022,
+      "old_unit": "ratio",
+      "current_unit": "ratio",
+      "same": true
+    },
+    {
+      "metric": "B01",
+      "year": 2023,
+      "old_unit": "USD",
+      "current_unit": "USD",
+      "same": true
+    },
+    {
+      "metric": "B02",
+      "year": 2023,
+      "old_unit": "ratio",
+      "current_unit": "ratio",
+      "same": true
+    },
+    {
+      "metric": "B04",
+      "year": 2023,
+      "old_unit": "USD",
+      "current_unit": "USD",
+      "same": true
+    },
+    {
+      "metric": "B05",
+      "year": 2023,
+      "old_unit": "USD",
+      "current_unit": "USD",
+      "same": true
+    },
+    {
+      "metric": "B07",
+      "year": 2023,
+      "old_reading_has_bound_unit": false,
+      "current_null_unit": "ratio",
+      "computed_observation_unit": "ratio",
+      "comparison_scope": "Old negative reading had no checked identity; source-derived observation/spec unit verified separately, no claim old unit-byte identity"
+    }
+  ]
+}
