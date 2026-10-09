@@ -1,0 +1,37 @@
+{
+  "peer_source_sha": "0dc5de75",
+  "scope": "Actual current/prior native facts adapted to claim shape for finite guard execution, not Candidate or company result acceptance",
+  "problem": {
+    "reason_code": "NORMAL_PAIRED_MEASURE_NOT_COMPARABLE",
+    "current": {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "accession": "0000078003-22-000027",
+      "unit": "USD",
+      "value": "81288000000"
+    },
+    "prior": {
+      "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+      "period_start": "2020-01-01",
+      "period_end": "2020-12-31",
+      "accession": "0000078003-21-000038",
+      "unit": "USD",
+      "value": "41908000000"
+    },
+    "target_filing_reports_the_prior_year_under_the_current_concept": [
+      "41651000000"
+    ]
+  },
+  "bridged": [],
+  "old_prior_not_replaced": true,
+  "default_bad_result_holds": [
+    "ISSUE47_PFIZER_2023_REVENUE_COMPONENT_IS_NOT_TOTAL"
+  ],
+  "current2025_holds": [],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
