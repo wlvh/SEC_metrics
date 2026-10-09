@@ -45,8 +45,7 @@ class HistoricalAverageRiskCaseTest(TestCase):
                 return_value={'source_credit': 'RECORDED_TEST_ONLY'}))
             stack.enter_context(patch.object(cases, 'repository_company_traits',
                 return_value=['financial'] if applicable else []))
-            name = 'inspect_lcr_disclosed_fact' if metric_id == 'A03' else 'inspect_total_var'
-            inspector = stack.enter_context(patch.object(cases, name,
+            inspector = stack.enter_context(patch.object(cases, 'inspect_historical_average_risk',
                 side_effect=component if isinstance(component, Exception) else None,
                 return_value=component if not isinstance(component, Exception) else None))
             result = cases.prepare_historical_average_risk_year_case(repo_root='/constructed',
@@ -123,3 +122,63 @@ class HistoricalAverageRiskCaseTest(TestCase):
     def test_measurement_rejects_unknown_family_instead_of_treating_as_var(self):
         with self.assertRaisesRegex(ValueError, 'FAMILY_NOT_RECEIVED'):
             cases.measurement(metric_id='A13', annual=ANNUAL, component=VAR)
+
+
+class HistoricalAverageRiskWordingTest(TestCase):
+    def test_original_resolved_answer_is_kept_without_fallback(self):
+        from vnext import historical_average_risk_wording as wording
+        for metric_id, name, older, answer in (
+                ('A03', 'inspect_lcr_disclosed_fact', '_older_lcr', LCR),
+                ('A12', 'inspect_total_var', '_older_var', VAR)):
+            module = wording.candidates if metric_id == 'A03' else wording.balances
+            with self.subTest(metric_id=metric_id), patch.object(module, name, return_value=answer), \
+                    patch.object(wording, older) as fallback:
+                self.assertIs(answer, wording.inspect_historical_average_risk(metric_id=metric_id))
+                fallback.assert_not_called()
+
+    def test_unresolved_fallback_keeps_original_competitors(self):
+        from vnext import historical_average_risk_wording as wording
+        original = {'status': 'UNRESOLVED', 'unresolved': [{'reason': 'conflicting scope'}]}
+        with patch.object(wording.candidates, 'inspect_lcr_disclosed_fact', return_value=original), \
+                patch.object(wording, '_older_lcr', return_value={'status': 'UNRESOLVED'}):
+            self.assertIs(original, wording.inspect_historical_average_risk(metric_id='A03'))
+
+    def test_resolved_known_form_retains_original_status_and_provenance(self):
+        from vnext import historical_average_risk_wording as wording
+        with patch.object(wording.balances, 'inspect_total_var',
+                          return_value={'semantic_status': 'UNRESOLVED'}), \
+                patch.object(wording, '_older_var', return_value=VAR):
+            resolved = wording.inspect_historical_average_risk(metric_id='A12')
+        self.assertEqual(VAR['totals'], resolved['totals'])
+        self.assertEqual(['COUNTERFACTUAL_HEADER'], resolved['historical_older_wording']['forms'])
+        self.assertEqual({'semantic_status': 'UNRESOLVED'},
+                         resolved['historical_older_wording']['frozen_inspector_status'])
+
+    def test_known_forms_compile_without_mutating_shared_functions(self):
+        from vnext import historical_average_risk_wording as wording
+        originals = (wording.duration._linked_notes, wording.duration.inspect_financial_duration,
+                     wording.balances.inspect_total_var)
+        forms = (wording.GENERAL_NOTE, wording.MEASURE_ABBREVIATION, wording.COUNTERFACTUAL_HEADER)
+        for function, substitutions in zip(originals, forms):
+            made = wording._known_form(function, substitutions)
+            self.assertIsNot(function, made)
+            self.assertEqual(function.__name__, made.__name__)
+        self.assertEqual(originals, (wording.duration._linked_notes,
+            wording.duration.inspect_financial_duration, wording.balances.inspect_total_var))
+
+    def test_general_note_only_before_lettered_notes_and_never_across_heading(self):
+        from vnext import historical_average_risk_wording as wording
+        reader = wording._known_form(wording.duration._linked_notes, wording.GENERAL_NOTE)
+        def block(start, text):
+            return {'start_byte': start, 'inside_table': False, 'visible_text': text}
+        base = {'tables': [{'end_byte': 10, 'start_byte': 0}], 'source_size': 200}
+        chosen, missing = reader(structure={**base, 'blocks': [
+            block(11, 'Effective January 1, an accounting policy changed.'),
+            block(20, '(a) The percentage represents average LCR for three months ended December 31, 2021.')]},
+            table_order=0, markers={'a'})
+        self.assertFalse(missing)
+        self.assertEqual(20, chosen[0]['start_byte'])
+        for middle in ('Liquidity discussion heading', 'First general sentence.\nSecond general sentence.'):
+            blocks = [block(11, middle), block(20, 'Second general note.'), block(30, '(a) three months ended')]
+            _, missing = reader(structure={**base, 'blocks': blocks}, table_order=0, markers={'a'})
+            self.assertTrue(missing)

@@ -4,8 +4,7 @@ from sec_urls import submissions_url
 from .calculator import calculate_metric, calculate_observation_metric, metric_is_applicable, withheld_metric_result
 from .canonical import content_hash
 from .financial_results import _installed_rule, _actual_period, RESOLVER, _ROLES
-from .financial_candidates import inspect_lcr_disclosed_fact
-from .financial_balance_scope import inspect_total_var
+from .historical_average_risk_wording import inspect_historical_average_risk
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_filing_inventory import filing_inventory
 from .normal_governance_input import _Sources
@@ -19,7 +18,7 @@ from .zero_ai_r2 import _exact_filing_source_set
 METRICS = frozenset({'A03', 'A12'})
 DEI_RELEASE = 'YEAR_QUARTER_OR_DATE'
 PROCESSING_FILES = tuple('scripts/vnext/' + name + '.py' for name in (
-    'historical_average_risk_cases', 'historical_annual_input', 'historical_dei',
+    'historical_average_risk_cases', 'historical_average_risk_wording', 'historical_annual_input', 'historical_dei',
     'historical_fiscal_labels', 'historical_filing_inventory', 'normal_period_selection',
     'normal_history_catalog', 'normal_annual_input', 'normal_governance_input',
     'financial_results', 'financial_candidates', 'financial_balance_scope',
@@ -74,8 +73,8 @@ def prepare_historical_average_risk_year_case(*, repo_root, company_id, metric_i
     if applicable:
         reason = 'HISTORICAL_AVERAGE_RISK_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED'
         if not prepared['amendments'] and prepared['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY':
-            inspect = inspect_lcr_disclosed_fact if metric_id == 'A03' else inspect_total_var
-            component = inspect(repo_root=ROOT, source_bytes=primary['raw_bytes'],
+            component = inspect_historical_average_risk(metric_id=metric_id,
+                repo_root=ROOT, source_bytes=primary['raw_bytes'],
                 expected_source_sha256=primary['source_reference']['raw_asset_id'][7:],
                 expected_cik=prepared['entity'], target_period=annual, dei_release=DEI_RELEASE)
             passed, value, actual, basis = measurement(metric_id=metric_id, annual=annual, component=component)

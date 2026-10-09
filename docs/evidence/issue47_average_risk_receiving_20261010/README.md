@@ -13,3 +13,7 @@ A03原年报容器FY2021是2021-01-01至12-31；实际LCR披露平均测量期20
 ## 明确边界
 
 当前源码只接这两个历史指标；default CURRENT/SAVED指标集合、旧任务和旧Run不改。其他金融族、修订/继任金额适配、在线历史来源发现和缺件补齐仍待。全部新增SEC/provider/paid调用0；无新Run、正式采纳、发布或active信用。两个组件的旧成功解释不能替代新公司出口验证。
+
+## 有限旧措辞适配
+
+仅取原bcc0c0bc历史实现的GENERAL_NOTE/MEASURE_ABBREVIATION/COUNTERFACTUAL_HEADER三组逐字相同替换，wording-reuse.json记录原路径/SHA及比较。局部函数命名空间不改共享全局，不递归重建release-aware视图，不导入A04/A09/A11。原核心已成功时原对象保持；旧措辞仍未决时原竞争候选保持；只有已核形式解出完整源语义才取结果并保原状态/形式标签。13小控制加原历史分派/状态共34例0.169s/零skip，实际财报路径待公共固定hook后验证。
