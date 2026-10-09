@@ -30,12 +30,13 @@ class FinancialBalanceScopeError(ValueError):
     """Reject source or unsupported scope instead of inventing a total."""
 
 
-def _prepare(*, repo_root, source_bytes, expected_source_sha256, expected_cik, target_period, metric_id):
+def _prepare(*, repo_root, source_bytes, expected_source_sha256, expected_cik, target_period, metric_id,
+             dei_release="YEAR_ONLY"):
     if (type(source_bytes) is not bytes or not source_bytes or len(source_bytes) > RESOURCE_LIMITS.max_html_bytes
             or sha256_bytes(content=source_bytes) != expected_source_sha256):
         raise FinancialBalanceScopeError("SOURCE_BYTES_DIFFER")
     period = annual_period(raw=source_bytes, cik=expected_cik,
-                           filing={"form": "10-K", "reportDate": target_period["period_end"]})
+                           filing={"form": "10-K", "reportDate": target_period["period_end"]},dei_release=dei_release)
     if period != target_period:
         raise FinancialBalanceScopeError("SOURCE_PERIOD_DIFFERS")
     tasks = [task for task in inspect_r4_task_catalog(repo_root=repo_root)["contracts"] if task["metric_ids"] == [metric_id]]
@@ -234,10 +235,12 @@ def _aum_reported_scope(*, builders, structure, disclosures, target_period, issu
 
 
 def inspect_aum_balance(*, repo_root: Path, source_bytes: bytes, expected_source_sha256: str,
-                        expected_cik: str, target_period: dict) -> dict:
+                        expected_cik: str, target_period: dict,
+                        dei_release="YEAR_ONLY") -> dict:
     """Inspect complete named AUM balances and consistent repeated disclosures."""
     task, builders, structure = _prepare(repo_root=repo_root, source_bytes=source_bytes,
-        expected_source_sha256=expected_source_sha256, expected_cik=expected_cik, target_period=target_period, metric_id="A11")
+        expected_source_sha256=expected_source_sha256, expected_cik=expected_cik,
+        target_period=target_period, metric_id="A11", dei_release=dei_release)
     if task["required_claims"] != {"asset_scope": "total_assets_under_management"}:
         raise FinancialBalanceScopeError("AUM_SCOPE_CONTRACT_UNSUPPORTED")
     aliases = task["scope_contract"]["exact_enum_aliases"]["asset_scope"]["total_assets_under_management"]
@@ -287,7 +290,8 @@ def inspect_aum_balance(*, repo_root: Path, source_bytes: bytes, expected_source
     if len(values) > 1:
         unresolved.append({"reason": "CONFLICTING_SAME_SCOPE_AUM_BALANCES"})
     issuer = _issuer_identity(source_bytes=source_bytes, expected_cik=expected_cik,
-                              target_period=target_period, structure=structure)
+                              target_period=target_period, structure=structure,
+                              dei_release=dei_release)
     whole = _aum_reported_scope(builders=builders, structure=structure, disclosures=accepted,
                                target_period=target_period, issuer=issuer) if accepted and not unresolved else None
     body = {"record_type": "AUM_BALANCE_SCOPE_COMPONENT", "schema_version": 1,
@@ -358,10 +362,11 @@ def _var_scope(structure, table):
 
 
 def inspect_total_var(*, repo_root: Path, source_bytes: bytes, expected_source_sha256: str,
-                      expected_cik: str, target_period: dict) -> dict:
+                      expected_cik: str, target_period: dict, dei_release="YEAR_ONLY") -> dict:
     """Inspect an annual-average total VaR with explicit component/offset proof."""
     task, builders, structure = _prepare(repo_root=repo_root, source_bytes=source_bytes,
-        expected_source_sha256=expected_source_sha256, expected_cik=expected_cik, target_period=target_period, metric_id="A12")
+        expected_source_sha256=expected_source_sha256, expected_cik=expected_cik, target_period=target_period,
+        metric_id="A12",dei_release=dei_release)
     if task["required_claims"] != {"confidence_level": "ninety_five_percent", "holding_period": "one_day"}:
         raise FinancialBalanceScopeError("VAR_SCOPE_CONTRACT_UNSUPPORTED")
     proven, unresolved, target_census = [], [], []
@@ -452,7 +457,7 @@ def inspect_total_var(*, repo_root: Path, source_bytes: bytes, expected_source_s
                 "offset_label": _cell_proof(table=table, cell=offset_label), "trading_components_excluded": trading,
                 "reconciliation": "REPORTED_COMPONENTS_PLUS_REPORTED_DIVERSIFICATION_OFFSET"})
     issuer = _issuer_identity(source_bytes=source_bytes, expected_cik=expected_cik,
-                              target_period=target_period, structure=structure)
+                              target_period=target_period, structure=structure, dei_release=dei_release)
     definitions = [a for a in issuer["source_consolidated_aliases"] if a["alias"] == "Firm"]
     whole = (len(proven) == 1 and not unresolved and bool(definitions)
              and proven[0]["risk_horizon"]["firmwide_aggregation_evidence"] is not None)

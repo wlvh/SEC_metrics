@@ -25,6 +25,56 @@ def _need(condition, reason):
     if not condition:raise ValueError(reason)
 
 
+def _reported_average_period(*, case, result, annual, records):
+    """Bind A03's disclosed average to its observation, not the year label.
+
+    The existing source resolver owns the economic reading; saved records and
+    source proofs are checked by the writer. This only checks that its actual
+    measurement window is faithfully carried through the shared CSV path.
+    """
+    if result['metric_id'] != 'A03' or result.get('value') is None:
+        return False
+    spec = case['compiled_specs']['A03']['compiled']
+    _need(spec.get('quality_rule',{}).get('measurement_period') ==
+          'source_disclosed_average_ending_at_filing_end',
+          'ORDINARY_PROJECTION_AVERAGE_PERIOD_SPEC_CHANGED')
+    fact = (case.get('selection') or {}).get('source_fact')
+    if fact is None:
+        return False
+    traces = [r for r in records if r['record_type'] == 'EXECUTION_TRACE'
+              and r['trace_id'] == result['trace_id']]
+    _need(len(traces) == 1, 'ORDINARY_PROJECTION_AVERAGE_PERIOD_TRACE_CHANGED')
+    observations = [r for r in records if r['record_type'] == 'VERIFIED_OBSERVATION'
+                    and r['observation_id'] in traces[0]['input_observation_ids']]
+    _need(len(observations) == 1,'ORDINARY_PROJECTION_AVERAGE_PERIOD_OBSERVATION_CHANGED')
+    observation = observations[0]; binding = observation['source_binding']
+    entity = binding.get('entity')
+    filing = annual['table_input']['target_period']
+    actual = binding.get('actual_measurement_period', {})
+    refs = {r['source_reference_id']:r for r in case['references']}
+    reference = refs.get(binding.get('source_reference_id'))
+    _need(fact.get('status') == 'SINGLE_SOURCE_SEMANTIC_FACT'
+          and not fact.get('unresolved') and fact.get('target_filing_period') == filing
+          and binding.get('source_fact_hash') == content_hash(value=fact)
+          and binding.get('measurement_time_basis') == 'SOURCE_DISCLOSED_AVERAGE'
+          and binding.get('filing_period') == filing
+          and observation['company_id'] == annual['company_id']
+          and observation['metric_id'] == 'A03' and observation['semantic_role'] == 'lcr_disclosed_average'
+          and observation['value'] == result['value'] == fact['value']
+          and observation['unit'] == result['unit'] == 'ratio'
+          and reference is not None and reference['company_id'] == annual['company_id']
+          and reference['raw_asset_id'] == binding.get('raw_asset_id') == 'sha256:'+fact['source_sha256']
+          and reference['accession'] == binding.get('accession') == annual['filing']['accessionNumber']
+          and type(entity) in (str,int) and str(entity).isdigit()
+          and str(int(entity)) == str(int(annual['entity']))
+          and all(actual.get(k) == result[k] == observation[k] == fact['measurement_period'][k]
+                  for k in ('period_start','period_end'))
+          and case['target_period']['fiscal_year'] == filing['fiscal_year']
+          and filing['period_start'] <= result['period_start'] < result['period_end'] == filing['period_end'],
+          'ORDINARY_PROJECTION_AVERAGE_PERIOD_PROOF_CHANGED')
+    return True
+
+
 def _registered_event_period(*, data_root, manifest, annual, case, result):
     """Keep the approved event lookback distinct from the reporting year."""
     if case['primary_metric_id'] not in {'C01', 'E02', 'E03', 'E04', 'E05'}:
@@ -184,10 +234,13 @@ def render_ordinary_records(*, data_root, manifest, records, case,
               'ORDINARY_PROJECTION_PREPARED_SUBJECT_CHANGED')
         event_period_proven = _registered_event_period(
             data_root=data_root, manifest=manifest, annual=annual, case=case, result=result)
+        average_period_proven = _reported_average_period(
+            case=case,result=result,annual=annual,records=records)
         _need(annual['filing']['reportDate'] == period['period_end']
               and result['period_end'] == period['period_end']
               and (result['period_start'] == period['period_start'] or
-                   result['period_start'] == result['period_end'] or income_period_proven or event_period_proven),
+                   result['period_start'] == result['period_end'] or income_period_proven
+                   or event_period_proven or average_period_proven),
               'ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED')
     indexes = projector._record_indexes(runs=[(manifest,records)])
     trace = indexes["traces"][result["trace_id"]]
