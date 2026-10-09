@@ -86,3 +86,9 @@ python3 tools/vnext_company.py results --company salesforce \
 实际修后Param21–24五事件族二十位90.900s纯保存/冷读全部成功，120旧文件保持。只添加原选期已验证annual RAW/SOURCE，使共享renderer证明报送主体；矩阵及证据CIK均813828，原Result/Trace/input/值/单位/期间/状态、引用原文与金额/locator保持。CSVcontext新增annualref；纯重构首驱动遗漏原filing metadata导致form/filed回到annual，改用已存真实submissions metadata恢复原事件form/date（不是放宽业务检查），另零值证据允许其实际CIK submissions URL。三个驱动失败保本地，未算事件/GET/改旧结果。historical-events-reporter-fixed.json/log。九shared reporter反例.002s通过，错CIK/错acc/未知/无证明scope仍拒；30历史source/dispatch/state.186s零skip。此二十位的实证补齐，不能扩大为全事件/1950。
 
 同一公司入口再核实际FY21/C01一个受影响处理版本：首13.161s/禁factory复2.247s0/独立读全任务.886s，新矩阵CIK813828、原ResultID保持。只此source-proof呈现依赖改变的坐标处理；其他年/指标及旧结果文件不动，原206文件保护，新增后212文件复/读保持。historical-event-company-subset.json/log精确终态；其余旧版本仍按原字节读，二十位纯渲染新输出不暗改旧current指针。不把这个代表迁移说成所有历史事件现行版本已全部切换。无新calls/Run/采纳。
+
+## 已接六金融main后的PR96兼容接收
+
+接收者已合金融104/107/109及105/108/110到main f6，PR96随后真实DIRTY。正常合入main为b0043687：保main公司六族和workflow全部模块，再加既有RPO；投影原公共c3报送函数与main平均期间函数共存，公共runner保各自既有selectors，未开发新内核/runner。42分派/主体/季度/事件例9.238s零skip，main-conflict-controls.log。旧公共说明采用main更完整审阅结论，不修改原日志。
+
+另进程同新版读原Salesforce五年B12及受影响ParamFY21C01，原值/单位/日期/ResultID保，factory/socket禁止、旧结果/pointer字节保；main-received-old-result-read.json/log。驱动误把Salesforce CIK写794323导致首摘要断言失败，实际CSV一直1108524，随后只读该现成输出更正，未重复CLI/计算；首CLI耗时未记就保null，不把.001s摘要核对当性能。Param新独立读.819s保CIK813828。PR96只解合并/兼容冲突，原五年RPO、20位事件纯投影及一个实际公司迁移不重跑。新head远端终态另核，不借3905旧CI。
