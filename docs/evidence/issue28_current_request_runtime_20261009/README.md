@@ -138,3 +138,5 @@ selector branch; constructed selector-state/replay substitute only, no native
 success credit. Two mode guards separately rechecked. Unchanged55 whole source
 and native41 chain reused, not endlessly rerun. Final repair independent review
 is still pending; parent tests do not change the original reviewer verdict.
+
+Final repair416391c9 received independent PASS_LIMITED_REPAIR (only3fixes):12/0.185s,2mode/6.610s,existingegressgatePASS,37tools/3msgs. Originalebaf3P2 remains historical. Actual416all11CI SUCCESS read at natural checkpoint; this proves current checks, not model/390/production. Sources/controller55/native41 were not independently rerun. Conclusion/logs now portable in independent-repair.
