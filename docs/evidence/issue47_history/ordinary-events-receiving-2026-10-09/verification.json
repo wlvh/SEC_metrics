@@ -32,7 +32,7 @@
     "E03": 3,
     "E04": 0,
     "E05": 0,
-    "status": "partial positive source-to-CSV passed; reentry/migration blocked by shared current-source legacy-attempt ambiguity",
+    "status": "same company CLI calculation, repeat and cold read passed after public controller received",
     "independent_both_date_bases_reused": "../content-acceptance/event-count-read.json marriott-2025",
     "partial_read": {
       "file": "partial-read-2025.json",
@@ -63,7 +63,23 @@
           "local_metric_status": "INPUT_OR_EXECUTION_FAILED"
         }
       }
-    }
+    },
+    "current_record_file": "cli-2025-public-received.json",
+    "operations": [
+      {
+        "name": "first",
+        "seconds": 36.36118504218757
+      },
+      {
+        "name": "repeat",
+        "seconds": 7.538264750037342
+      },
+      {
+        "name": "read",
+        "seconds": 0.34448220883496106
+      }
+    ],
+    "protected_files": 74
   },
   "Macys2023": {
     "company": "macys",
@@ -109,12 +125,12 @@
   "public_defect": {
     "file": "reentry-source-ambiguity.json",
     "affected_headers": 10,
-    "all_existing_source_reader_successful": true
+    "all_existing_source_reader_successful": true,
+    "correction": "not current main defect; old loaded historical controller missed already-delivered public fix"
   },
   "unreceived": [
     "E01 content confirmation",
     "successor multi-CIK selected-source API",
-    "ordinary public reentry fix",
     "online history discovery/acquisition",
     "complete five-year business acceptance"
   ],
