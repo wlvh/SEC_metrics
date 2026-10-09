@@ -94,3 +94,19 @@ python /path/to/SEC_metrics/tools/vnext_company.py acquire \
 Marriott真实空来源首跑和同目录复跑已完成：累计31次真实SEC GET、27份来源复用，复跑36个原生候选独立冷读通过；39项中D02/D03/D04仍明确限制，不是39项业务验收或正式发布。实际CSV、摘要、来源/运行版本、修复与合并依赖见[真实运行材料](evidence/issue54_company/live-marriott/README.md)；[此前本地接线材料](evidence/issue54_company/local-run/README.md)仍按录制范围保留。
 
 2026-10-04另以新工作目录从空来源重新真实运行（新增29+2次GET，含原31次累计62/120），首跑36候选冷读通过、复跑0新Run、局部重入保留其它行；已配置的旧LIVE D04因本次收到的10-K比原版本多一个script元素（注入方未归因）、原始字节身份不同，严格等价按现行规则被拒并如实保留。见[本轮材料](evidence/issue54_company/live2/README.md)。
+
+## 轻量在线接续候选：有限指标从空来源完成
+
+这是 PR67 之后的代码候选，尚未进入 main。`run --call-context` 将来源发现/获取与普通记录计算/CSV串接；首批只支持 B01/B02，不调用旧计算，不新建真实额度或恢复失败机会。当前验证替换外部 HTTP 返回，使用真实保存 SEC 原件，发现、落盘、解析、计算、保存和导出均走实际程序；不代表新的真实 SEC 验收或全部39指标完成。
+
+```bash
+python /path/to/online-candidate/tools/vnext_company.py run \
+  --company marriott_international --period latest-complete-fy \
+  --work-dir /data/marriott-task --output-dir /data/marriott-output \
+  --call-context /data/existing-sec-call-context.json \
+  --metric B01 --metric B02 --max-sec-requests 20
+```
+
+调用上下文只说明本次适用的既有账本/用途/公司/指标、原调用上限、原执行模式和运行版本；不能用这个文件给自己新增许可。真实运行须先核原适用授权，本文没有为当前候选授予新用途。原账本的初始化锚点、历史行、停止和计数继续生效，不能通过新任务目录拆分/重置额度；未知远端结果或落盘中断保留占用并停止，不自动重发。`--sec-allowance`不覆盖已有账本上限。
+
+来源保存在任务 `sources`，普通计算状态在 `company-state`，输出在指定输出目录；用户不手工准备 FULL_SOURCE 或选择内部程序树。独立采集用同版 `acquire --company ... --work-dir ... --call-context ... --metric B01 --metric B02 --max-sec-requests 20`；单独计算可用同版保存来源 `run --source-root <任务/sources>` 指向另一个普通状态目录。日常读取用 `results --state-root <任务/company-state> --company ...`，不重放计算。已有原生任务继续原固定入口，不用此候选覆盖旧状态。
