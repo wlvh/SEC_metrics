@@ -364,4 +364,88 @@ class MixedSavedBusinessOutcomeTest(unittest.TestCase):
         self.assertEqual({k:m['result_id'] for k,m in metrics.items()},before)
 
 
+class PerMetricProducerTest(unittest.TestCase):
+    setUp=CurrentCompanyTest.setUp
+    def test_each_selected_metric_keeps_its_factory_and_exact_dependencies(self):
+        def income(**kw): return None
+        def lodging(**kw): return None
+        paths={'B03':('income.py',),'B10':('lodging.py',)}
+        factories={'B03':income,'B10':lodging};seen=[]
+        def update(**kw):
+            seen.append(kw)
+            return {'status':'INPUT_OR_EXECUTION_FAILED','reason':'Explicit test boundary: no financial computation'}
+        with patch.object(current,'run_once',side_effect=update):
+            current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B03','B10'],
+                fiscal_years=[2024],case_factories=factories,processing_files_by_metric=paths)
+        self.assertEqual([r['metric_id'] for r in seen],['B03','B10'])
+        for row in seen:
+            self.assertIs(row['case_factory'],factories[row['metric_id']])
+            self.assertEqual(row['processing_files'],paths[row['metric_id']])
+        self.assertEqual(paths,{'B03':('income.py',),'B10':('lodging.py',)})
+
+    def test_single_factory_and_dependency_tuple_are_passed_unchanged(self):
+        def factory(**kw): return None
+        files=('existing.py',);seen=[]
+        def update(**kw):
+            seen.append(kw)
+            return {'status':'INPUT_OR_EXECUTION_FAILED','reason':'Explicit test boundary'}
+        with patch.object(current,'run_once',side_effect=update):
+            current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B03','B10'],
+                fiscal_years=[2024],case_factory=factory,processing_files=files)
+        self.assertTrue(all(r['case_factory'] is factory and r['processing_files'] is files for r in seen))
+
+    def test_bad_or_ambiguous_metric_mapping_is_rejected_before_writes(self):
+        def factory(**kw): return None
+        for extra in [{'case_factories':{'B03':factory}},
+                      {'case_factories':{'B03':factory,'B10':factory},'case_factory':factory},
+                      {'case_factories':{'B03':factory,'B10':factory},
+                       'processing_files_by_metric':{'B03':('x.py',)},'processing_files':('y.py',)},
+                      {'case_factories':{'B03':factory,'B10':factory},
+                       'processing_files_by_metric':{'B01':('unrequested.py',)}}]:
+            with self.subTest(extra=extra),self.assertRaisesRegex(ValueError,'METRIC_.*INVALID'):
+                current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                    work_dir=self.work,output_dir=self.outputs,metric_ids=['B03','B10'],
+                    fiscal_years=[2024],**extra)
+            self.assertFalse(self.work.exists());self.assertFalse(self.outputs.exists())
+
+    def test_adding_another_metric_reuses_completed_input_in_the_actual_controller(self):
+        from vnext import ordinary_current_update as update
+        counts={'B03':0,'B10':0};records={}
+        def income(**kw):
+            counts['B03']+=1;return {'target_period':{'fiscal_year':kw['fiscal_year']}}
+        def lodging(**kw):
+            counts['B10']+=1;return {'target_period':{'fiscal_year':kw['fiscal_year']}}
+        def save(**kw):
+            metric=kw['metric_id'];path=kw['output_root'];path.mkdir(parents=True)
+            result={'company_id':'marriott_international','metric_id':metric,'publication':'PUBLISHED',
+                    'period_start':'2024-01-01','period_end':'2024-12-31','result_id':metric+'-fixture'}
+            row={**{f:'' for f in METRIC_FIELDS},'company':'Marriott International','metric_id':metric,
+                 'value':'1','unit':'USD','status':'OK','period_start':'2024-01-01',
+                 'period_end':'2024-12-31','fiscal_year':'2024'}
+            record={'result':result,'manifest':{'company_id':'marriott_international','metric_id':metric,
+                    'source_proofs':[],'target_period':{'fiscal_year':2024}},'files':{
+                    'metrics_matrix.csv':_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS),
+                    'metric_evidence.csv':_csv_bytes(rows=[],fieldnames=EVIDENCE_FIELDS)}}
+            records[str(path)]=record;return record
+        def read(**kw):return records[str(kw['output_root'])]
+        with patch.object(current,'run_once',update.run_once),patch.object(current,'read_saved_result',side_effect=read), \
+             patch.object(update,'read_saved_result',side_effect=read),patch.object(update,'save_calculated_case',side_effect=save), \
+             patch.object(update,'_configuration',return_value={'fixture_version':'one'}), \
+             patch.object(update,'_source_census',return_value=[]),patch.object(update,'_current_sources',return_value=[]):
+            first=current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B03'],fiscal_years=[2024],case_factory=income)
+            mixed=current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B03','B10'],fiscal_years=[2024],
+                case_factories={'B03':income,'B10':lodging},processing_files_by_metric={'B03':(),'B10':()})
+            again=current.run_saved_company(company_id='marriott_international',source_root=self.source,
+                work_dir=self.work,output_dir=self.outputs,metric_ids=['B03','B10'],fiscal_years=[2024],
+                case_factories={'B03':income,'B10':lodging})
+        self.assertEqual(first['status'],'FLOW_COMPLETED');self.assertEqual(mixed['status'],'FLOW_COMPLETED')
+        self.assertEqual(counts,{'B03':1,'B10':1})
+        self.assertEqual([r['status'] for r in mixed['metrics']],['NO_SOURCE_CONTENT_CHANGE','CANDIDATE_READY'])
+        self.assertEqual([r['status'] for r in again['metrics']],['NO_SOURCE_CONTENT_CHANGE','NO_SOURCE_CONTENT_CHANGE'])
+
+
 if __name__=='__main__':unittest.main()
