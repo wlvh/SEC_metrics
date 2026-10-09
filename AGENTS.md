@@ -14,6 +14,14 @@
 
 ### 只读取当前结果
 
+当前保存来源普通任务先读 `docs/company_local_run.md`，使用：
+
+```text
+python3 tools/vnext_company.py results --company <公司> --state-root <保存状态> --output-root <日常输出>
+```
+
+该命令只读保存结果，不重新计算或核验新来源；状态与出处仍显示，业务接受另行判断。旧native任务可按自身记录显式提供原runtime/trust位置。以下是已发布旧批次的只读路径，不是新普通任务的默认前置：
+
 ```text
 SOP.md「只读取现有结果」
 → docs/business_user_guide.md

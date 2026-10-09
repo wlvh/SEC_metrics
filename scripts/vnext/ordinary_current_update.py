@@ -34,6 +34,7 @@ def _configuration(source, company, metric):
     # set never prepares a lodging case; unrelated edits must not recalculate
     # B01/B02 or their other supported deterministic neighbours.
     if metric in METRIC_IDS:
+        paths.add('scripts/vnext/zero_ai_r2.py')
         paths.difference_update({'scripts/vnext/normal_lodging_results.py',
             'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
             'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
@@ -48,11 +49,13 @@ def _configuration(source, company, metric):
         'saved_source_checks','request_bindings','company_registry'))
     paths.update({'catalog/company_traits.yaml','config/metric_applicability.yaml',
                   'config/company_registry.csv'})
+    if metric == 'B02':
+        paths.add('scripts/vnext/paired_measure_v1.py')
     if metric == 'B03':
         paths.add('catalog/r6/text_results_v2_policy.json')
         paths.update('scripts/vnext/'+name+'.py' for name in (
             'ordinary_da_scope_v1','ordinary_b03_input_scope','xbrl_namespace_policy','b03_depreciation_scope',
-            'b03_contract_amortization_scope','financial_structured','text_results_v2'))
+            'b03_contract_amortization_scope','financial_structured','text_results_v2','reported_monetary_literal'))
     return {'company_id':company,'metric_id':metric,'source_root':str(source),
         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
         'source_registry_sha256':sha256_file(path=source/'config/company_registry.csv'),

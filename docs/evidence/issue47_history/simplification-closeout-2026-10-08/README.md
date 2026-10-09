@@ -2,7 +2,19 @@
 
 本轮唯一主验证记录为 [verification.json](verification.json)。能力结构检查通过（6.868秒），检查器两个副产物按检查前字节恢复；这只证明结构对齐。实际 main 仍为 `8588ccbb`；这里是分支交付，尚未入 main，也不是完整五年业务接受。
 
-可取得的组合是 PR67 的公共候选 `adee3036`（运行代码承接8805777d，CI范围及取码承接a4） 加本分支 `task/issue47-history-consumers`。后者只增加现有历史期间选择、酒店 case 适配及同一公司 CLI 分派。公共控制器、保存器、投影、状态恢复和测试运行器全部来自 PR67。PR59 的已选来源共用计算已经包含在 PR67，不需要再次顺序合入 PR59。现有 `historical_dei` 旧命名空间包装作为必要上游依赖保留，没有将删除所有旧包装作为接收前置。
+当前可取得的组合是 PR67 的公共候选 `29c9c9e2080a1de8c809660ac8fbdfc49072ef12` 加本分支 `task/issue47-history-consumers`。原adee/c56验证按原版本保留，下方2026-10-09记录核当前组合。后者只增加现有历史期间选择、酒店 case 适配及同一公司 CLI 分派。公共控制器、保存器、投影、状态恢复和测试运行器全部来自 PR67。PR59 的已选来源共用计算已经包含在 PR67，不需要再次顺序合入 PR59。现有 `historical_dei` 旧命名空间包装作为必要上游依赖保留，没有将删除所有旧包装作为接收前置。
+
+## 2026-10-09 首批接收审查入口
+
+[当前组合与自动回归记录](pr71-first-batch-20261009.json)是本主记录的增量；旧日志及结果保持。PR71已在既有 `company-current-records.yml` 加入两个测试文件的精确路径过滤，并新增同一作业内的verbose步骤实际执行两个模块，不修改公共runner、原作业或五分钟时限。本地12项0.140s全部通过。`0d58e55f` 的[pull_request工作流37881312033](https://github.com/wlvh/SEC_metrics/actions/runs/37881312033)已SUCCESS，job113661400662及历史步骤均SUCCESS；[实际日志](pr71-history-ci-0d58e55f-remote.log)列出两模块12项逐例ok、0.845s、零skip。触发范围由精确paths核对，本提交的workflow变化实际触发；没有为测试文件单独触发制造提交。
+
+随后按当前拟接收PR67/29c9接收实际普通处理依赖和B03数值来源修补。历史分派、producer和两个历史测试字节保持，公共controller/writer/reader与当前公共候选一致。84项受影响当期/历史/酒店/状态/公司测试7.486s全部通过，[原日志](pr71-current67-combination-local-20261009.log)。未再跑既有两年B01、全部酒店原文或五年集合。
+
+当前组合直接用PR71已提交原件、headers和日志运行Marriott FY2024/25 B10/B11：[真实首跑及禁止工厂复跑](pr71-current67-real.json)分别19.130/2.465s，四值与本页原数值/单位/实际期间相同；[独立进程读取](pr71-current67-read.json)1.021s，选源/计算/update/业务网络禁止，32个结果和指针不变。不依赖开发者私人来源目录、不拷程序/来源树、不产生新调用。正式命令与输出目录解释在[历史使用指南](../../../historical_company_usage.md)，只读来源，审查输出写新的外部目录。
+
+PR58固定372f4b74与PR62固定09563892分别依赖PR61/86e63816；两份原PR head的实际检查已SUCCESS。机械D02直接执行 `python3 -m unittest tests.vnext.test_legal_review_contract -v`：夹具为12份完整原回答及所引原块，8拒绝/4合同通过、14条真实长引文仍保持。H2直接执行 `python3 -m unittest tests.vnext.test_history_business_boundaries -v`：15短例调用实际业务判断，JPM完整来源既有9.249s核对复用，不重读。两个模块的夹具都随各自PR提交，不需恢复虚拟机。两PR一起接收的selector/CI冲突使用#28固定补丁，现有c318725a组合及[联合验证记录](https://github.com/wlvh/SEC_metrics/blob/c318725aad605b1ba37c6cf9e1be0b19bce4338b/docs/evidence/issue47_h1_h2_combination_20261009/README.md)实际30短例/66导入文件检查通过；不重复建立runner或审查包。
+
+首批接收范围保持：PR71酒店保存来源历史；PR58引用机械分类；PR62业务反例。后续PR75—79/83等不并入。公共默认新任务/在线安装问题由#28按同一保存HTTP输入复现与修复，本方按返回增量验证历史消费者，未审PR83不解除首批阻塞。PR71仅需接收PR67实际公共候选，不再顺序合入已经包含的PR59。修订、主体变化、其他历史指标、在线发现/补齐和D02公司模型链仍未完成；这些限制不取消完整五年责任。技术可审查与合并授权分开，全部保持Draft，没有Ready/合并/正式采纳/部署/active操作。
 
 ## 实际公司入口
 
