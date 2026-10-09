@@ -9,7 +9,8 @@ from .calculator import calculate_observation_metric, withheld_metric_result
 from .canonical import content_hash, strict_json_file
 from .deterministic_router import load_event_route_catalog, project_event_result
 from .historical_annual_input import prepare_historical_annual_input
-from .historical_event_cases import check_historical_event_block, _event_amendment_checks
+from .historical_event_cases import (check_historical_event_block, _event_amendment_checks,
+                                     PROCESSING_FILES as EVENT_PROCESSING_FILES)
 from .historical_event_items import content_confirmation_candidates, successor_event_route
 from .historical_event_attachments import attachment_dependencies, POLICY_PATH
 from .historical_e01_incorporated_input import prepare_incorporated_e01_input
@@ -34,6 +35,9 @@ PROCESSING_FILES = tuple('scripts/vnext/'+name+'.py' for name in (
     'deterministic_router','composite_scope','specs')) + (
     SPEC_PATH,'catalog/r6/E01_content_confirmed_ma_v1.json','catalog/event_routes.json',POLICY_PATH,
     'config/normal_period_selection_v1.json','config/normal_fiscal_year_labels_v1.json')
+# This consumer actually calls the delivered event walk and amendment checks.
+# Reuse their finite dependency declaration so policy changes invalidate reuse.
+PROCESSING_FILES = tuple(dict.fromkeys((*EVENT_PROCESSING_FILES, *PROCESSING_FILES)))
 
 
 def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal_year):

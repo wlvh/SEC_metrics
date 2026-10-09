@@ -68,6 +68,14 @@ class HistoricalE01CompanyCaseTest(TestCase):
         with self.assertRaisesRegex(ValueError,'MISSING_EVENT_HEADER'):
             self.prepare(packet_error=ValueError('MISSING_EVENT_HEADER'))
 
+    def test_declared_dependencies_include_the_used_event_and_amendment_rules(self):
+        from vnext.historical_event_cases import PROCESSING_FILES as event_files
+        self.assertTrue(set(event_files) <= set(cases.PROCESSING_FILES))
+        self.assertEqual(len(cases.PROCESSING_FILES),len(set(cases.PROCESSING_FILES)))
+        self.assertTrue(all((cases.ROOT/path).is_file() for path in cases.PROCESSING_FILES))
+        self.assertIn('config/annual_amendment_scope_v1.json',cases.PROCESSING_FILES)
+        self.assertIn('scripts/vnext/normal_zero_ai_results.py',cases.PROCESSING_FILES)
+
     def test_wrong_family_refuses_before_source_selection(self):
         with patch.object(cases,'resolve_period_selection') as select:
             with self.assertRaisesRegex(ValueError,'FAMILY_NOT_RECEIVED'):

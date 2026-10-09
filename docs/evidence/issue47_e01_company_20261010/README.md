@@ -74,3 +74,5 @@ PY_SOURCE_ONLY
 ```
 
 命令已在小型构造恢复目录实际执行：仅放同一registry及原完整源CSV，首次只加入指定EX99源成员，第二次`ALREADY_PRESENT`；现有`saved_source`及`verify_ordinary_source_proofs`以.113s读取18964字节并核原attempt。increment-source-import-control.json明确这是小型恢复控制，不能冒充完整公司来源重建或公司CLI验证。没有复制755份HTML、没有修改实际来源根、没有导入calls/claims、没有新增调用。
+
+后继消费者依赖修补：E01实际调用现有event walk和_event_amendment_checks，却只列其入口文件而漏其修订政策/检查与来源walk依赖。现直接并入已交付事件族的有限PROCESSING_FILES并去重，保相关规则变化触发处理；不写递归依赖平台、不改公共controller、不改变请求/Spec/旧结果。15本消费者及原事件例.027s零skip；dependency-controls.log。真实首次CLI尚未运行，依赖变动复用验证随公共门接收一起完成，不为声明修补重建八项原件。
