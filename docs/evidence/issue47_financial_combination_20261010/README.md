@@ -36,3 +36,5 @@ python3 tools/vnext_company.py results --company jpmorgan_chase \
 ```
 
 独立results使用所要读取的原任务根，output-root必须新。公司实际run会按本次配置比较是否复用；上述cf8无关依赖差异未修前，不能把“重复run必不计算”作为当前可用承诺，也不为测试这句话重算全部位置。修补接收后仅用受影响代表坐标、禁factory及原文件保护核对。
+
+组合工作流增量检查发现具体保护遗漏：原105和108各自的定向workflow均加载本族模块及测试路径，但组合沿110仅保bank_scope；geography、average_risk两个模块/paths未并入。workflow-combination-gap.json给原候选与组合对照，已直接交公共#28在同一现有步骤集成，不另写runner或以分派mock代替业务反例。当前三模块加分派/状态58例实际.215s零skip，current-three-family-controls.log；没有重算财报。修复尚未返回，远端组合全模块执行未宣通过。

@@ -1,0 +1,39 @@
+{
+  "combination_commit": "91087684f639690e7e75898010e449990c5417b3",
+  "checks": [
+    {
+      "family": "geography",
+      "candidate_commit": "62bf7b49",
+      "candidate_workflow_has_module": true,
+      "candidate_workflow_has_path": true,
+      "combination_workflow_has_module": false,
+      "combination_workflow_has_path": false
+    },
+    {
+      "family": "average_risk",
+      "candidate_commit": "aefcca10",
+      "candidate_workflow_has_module": true,
+      "candidate_workflow_has_path": true,
+      "combination_workflow_has_module": false,
+      "combination_workflow_has_path": false
+    },
+    {
+      "family": "bank_scope",
+      "candidate_commit": "5b3e6ee7",
+      "candidate_workflow_has_module": true,
+      "candidate_workflow_has_path": true,
+      "combination_workflow_has_module": true,
+      "combination_workflow_has_path": true
+    }
+  ],
+  "local_required_tests": 58,
+  "local_seconds": 0.215,
+  "skips": 0,
+  "business_recalculation": 0,
+  "public_owner_notified": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
