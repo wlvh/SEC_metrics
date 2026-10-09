@@ -2,6 +2,7 @@
 **2026-10-10 当前请求运行实交：**Draft PR106最新ab65d453仅归档独审/说明，产品源码仍416391c9。普通配置接现有WB-3/CallLedger/唯一HTTP，实际Enphase保存源准备29请求、录制HTTP/usage/保存读及native单请求Candidate/Evidence/same-config replay成立；55组合88.910秒及最后模式2/6.990秒复用。原ebaf三P2/49工具3消息历史保留；416回修12短例/2模式及出口扫描通过，独立限定回修37工具3消息PASS_LIMITED_REPAIR，已结案，不再写待审。ab65当前11检查已实际全部SUCCESS。上述不是新模型/完整公司结果或生产信用，原账本143/143/52、97/97/28、本批21/66/claimsSHA6023不变。
 
 Draft PR107当前80ca9883：显式A03/A12 DEI＋A03原披露平均窗口接公共保存路径，默认YEAR_ONLY及默认指标集合不扩。原JPM21两个组件的旧措辞仍未决，由#47原有限消费者处理。c5d的真实CI原历史annual包装失效已复现；复用固定b0ead0e5仅historical_dei最小补丁，33定向0.046秒/零skip通过，旧失败不抹除。80ca10检查已全部SUCCESS，原失败fast已恢复。已读取#47固定616fe531实际两指标同CLI终态：A03实际FY2021/Q4保存1.11ratio，A12为55mUSD全年；首恢复125.385秒、禁工厂复跑5.739秒/0、独立读0.572秒、16文件不变。是执行方日志/保存输出读取，不是本方亲跑或正式内容接受。新期间hook有限独审34工具/3消息PASS：80短例7.354秒＋5控制0.093秒，不代公司内容接受；ae7b只归档说明/审阅，产品源码仍80ca，后继CI另看。下一项核实际组合与必要限定复核，保旧Run/Result和当期默认；不重跑已通过大材料或付费请求。
+公共后继Draft PR109@dbd2a4cb从main6e接必要107代码，只在四原NIM/AUM/A09native及fallback读者加默认YEAR_ONLY参数/转发，原全部经济判定函数AST可恢复相等；有限显式factory门加A04/A09/A11，CURRENT默认不扩。7新/84组合及3实际当前原件正例通过，保JPM_AUM4.791trUSD、JPM_A09.0066歧义fallback、BAC_A09.0049原生；原JPM25 NIM .025完整年组件5.629秒仍成立，非新公司结果。#47固定668db准备薄case、收到公共commit后执行实际同CLI；本方不修改其state/wording。dbd初10CI运行，后继终态自然核，原额度/机会0变化。
 <!-- current-runtime-repair-20261009:END -->
 
 <!-- dei-current-20261009:BEGIN -->
