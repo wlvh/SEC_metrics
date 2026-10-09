@@ -19,3 +19,7 @@ A03原年报容器FY2021是2021-01-01至12-31；实际LCR披露平均测量期20
 仅取原bcc0c0bc历史实现的GENERAL_NOTE/MEASURE_ABBREVIATION/COUNTERFACTUAL_HEADER三组逐字相同替换，wording-reuse.json记录原路径/SHA及比较。局部函数命名空间不改共享全局，不递归重建release-aware视图，不导入A04/A09/A11。原核心已成功时原对象保持；旧措辞仍未决时原竞争候选保持；只有已核形式解出完整源语义才取结果并保原状态/形式标签。13小控制加原历史分派/状态共34例0.169s/零skip，实际财报路径待公共固定hook后验证。
 
 后继局部完整表格直接调用原duration函数的这两项已核形式：Q4/percent成功，全年声称、错误缩写、错脚注及Bank替代Firm均准确拒绝。连同原病例和分派/状态35项0.176s零skip；没有安装整家公司、复制来源或新增模型/SEC请求。
+
+## 取得当前开发版本
+
+`origin/task/issue47-average-risk-history-20261010`已有本方已提交薄适配及35定向例；公共受控DEI与季度保存接口尚待固定提交接入，不能现在运行它来宣称公司计算成立。真实来源恢复沿保留task/sec-history-five-year的restore入口，复用已有恢复根、不再复制整树；来源只读、审查输出用外部新目录。待公共提交后此处给同一可取得代码组合及run/results完整命令。
