@@ -55,6 +55,7 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
     reader = _Sources(source,company_id,annual['entity'])
     reader.primary(annual['filing'])  # Bind the actual annual reporter in ordinary output.
     packet, request, incorporated, dependencies, candidates = None,None,None,[],[]
+    amendment_checks = []
     reason = 'E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST'
     observations = []
     if annual['subject_policy']['mode'] != 'CONTINUOUS_PRIMARY':
@@ -137,6 +138,7 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
         'candidate_item_ids':[] if request is None else [x['item_id'] for x in request['items']],
         'request_id':None if current_request is None else current_request['request_id'],
         'request_contract':None if current_request is None else current_request['contract'],
+        'annual_amendment_checks':amendment_checks,
         'attachment_dependencies':dependencies,'matching_response_available':False,
         'old_answer_reused':False,'partial_count_exported':False,
         'target_model_execution_authorized':False,'new_calls':[0,0,0]}

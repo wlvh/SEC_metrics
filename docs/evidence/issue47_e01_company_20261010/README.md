@@ -17,3 +17,5 @@ source root用原EX99已执行账本的source-inputs，保存材料完整，不�
 ## 原普通writer的真实未决记录
 
 实际接main0b（eaf16e55）及公共102/c3固定reporter源码，不覆盖controller/runner；61源合同/主体/历史控制.162s零skip。原prepared case经同save_calculated_case/read_saved_result纯保存/冷读，null/WITHHELD/CIK813828、FY2024全年，8item IDs及完整原2aa V2请求已进入普通input-assessments。ordinary-reporter-withheld.json给可读CSV和保存位置。此前未接102时直接输出今日CIK2041610，只新增呈现版本、不改原ResultID/源；这就是本批必要公共依赖。公司CLI有限E01门尚待公共方，直接writer成功不代替用户入口已交付，也不在本阶段新建PR称成功。
+
+后继把已完成的annual amendment来源影响检查保存在e01_content评估内，避免用户只看到结果而看不到为何接受该修订来源。31相关纯合同/consumer控制.017s零skip；不改变既有V2 request对象或计数结论。待同CLI实际终态一次验证，不为这字段重跑历史全部原件。
