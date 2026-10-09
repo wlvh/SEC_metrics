@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<stdin>", line 16, in <module>
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-recheck/SEC_metrics/tests/vnext/test_selected_event_source_v1.py", line 75, in read
+    return read_selected_event_sources(data_root=self.source, rules_root=ROOT,
+        prepared={'company_id': company, 'entity': cik}, period=PERIOD, **kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-recheck/SEC_metrics/scripts/vnext/selected_event_source_v1.py", line 68, in read_selected_event_sources
+    claims, manifests, filings, registered_scope = _registered_event_sources(
+                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=source, reader=reader, prepared=context, inventory=inventory,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        period=period, rules_root=rules, history_validator=history_validator)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _registered_event_sources() got an unexpected keyword argument 'history_validator'

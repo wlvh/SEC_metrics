@@ -63,7 +63,8 @@ def _exact_set(prepared, inventory, source, role):
         inventory_bytes=inventory["raw_bytes"])
 
 
-def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_required=True):
+def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_required=True,
+                   history_validator=None):
     """Discover only the actual annual event window, including history shards."""
     period = prepared["table_input"]["target_period"]
     payload = strict_json_loads(text=inventory["raw_bytes"].decode("utf-8"))
@@ -77,7 +78,10 @@ def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_r
             _need("cik" not in data or str(data["cik"]).isdigit() and int(data["cik"]) == int(prepared["entity"]),
                   "NORMAL_EVENT_HISTORY_ENTITY_CONFLICT", "SOURCE_INTEGRITY_ERROR")
             rows = _filings(data, inventory_name=shard["name"])
-            _need(history_body_alignment(shard=shard, rows=rows) is None,
+            conflict = (history_body_alignment(shard=shard, rows=rows) if history_validator is None
+                        else history_validator(shard=shard, body=data, rows=rows,
+                                               shards=shards, period=period))
+            _need(conflict is None,
                   "NORMAL_EVENT_HISTORY_SNAPSHOT_CONFLICT", "SOURCE_COVERAGE_CONFLICT")
             inventories.append(item)
     sets, claims, seen, filing_rows = [], [], set(), []
@@ -129,7 +133,8 @@ def _event_sources(*, repo_root, reader, prepared, inventory, installed_census_r
     return claims, [s["manifest"] for s in sets] + [collection], filing_rows
 
 
-def _registered_event_sources(*, repo_root, reader, prepared, inventory, period, rules_root=None):
+def _registered_event_sources(*, repo_root, reader, prepared, inventory, period, rules_root=None,
+                              history_validator=None):
     """Rebuild the approved union from each registered CIK's actual sources."""
     from .traits import repository_company_ciks
     rules=repo_root if rules_root is None else Path(rules_root)
@@ -143,7 +148,7 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period,
             # This is a source-discovery context, not a rewritten annual identity.
             context={'company_id':prepared['company_id'],'entity':cik,'table_input':{'target_period':period}}
             claims,manifests,filings=_event_sources(repo_root=repo_root,reader=current,prepared=context,inventory=current_inventory,
-                installed_census_required=rules_root is None)
+                installed_census_required=rules_root is None, history_validator=history_validator)
             accessions={f['accessionNumber'] for f in filings}
             _need(not seen.intersection(accessions),'NORMAL_REGISTERED_EVENT_CIK_ACCESSION_OVERLAP','SOURCE_COVERAGE_CONFLICT')
             seen.update(accessions)
@@ -156,7 +161,16 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period,
         finally:
             if current is not reader:
                 for key,value in current.records.items():
-                    _need(key not in reader.records or reader.records[key]==value,'NORMAL_REGISTERED_EVENT_RECORD_CONFLICT')
+                    existing = reader.records.get(key)
+                    if existing is not None and existing != value:
+                        # Both readers already checked these exact bytes.
+                        # A content-addressed blob can have two saved paths;
+                        # retain one locator and both distinct request proofs.
+                        _need(existing['record_type'] == value['record_type'] == 'RAW_BLOB'
+                              and {k:v for k,v in existing.items() if k != 'storage_uri'}
+                              == {k:v for k,v in value.items() if k != 'storage_uri'},
+                              'NORMAL_REGISTERED_EVENT_RECORD_CONFLICT')
+                        continue
                     reader.records[key]=value
                 reader.proofs.update(current.proofs);reader.failed_attempts.update(current.failed_attempts)
     collection=_event_collection_manifest(company_id=prepared['company_id'],target=period,
