@@ -31,3 +31,5 @@ python3.12 -B <修后PR67>/tools/vnext_company.py run --company marriott_interna
 
 
 818dd871限定复核PASS_LIMITED_COMPATIBILITY：28例6.781s、无网实际静态安装3.838s；程序树8585f541...与main/长链完全相同，配置39项/支持38条同main，未携SEC原件/AI响应或5项处理配置。29HTTP回复Git blob长度/SHA全匹配。注意新增retained_main上层字段未在165s长链重跑，当前静态探针直接核它并比较实装程序树；不声称全上层摘要字节已重跑。旧任务优先原程序，saved-source不进安装。无新费用/合并/生产信用。详见independent-review/conclusion.md。
+
+接收审查非阻断P2已实际复现：normal_annual_input/normal_source_authority改变时处理配置未变（小回归两失败，dependency-before.log）。这两个被实际消费的模块现进入显式配置，不扩递归权限/全仓闭包。55受影响例7.215s通过；小状态用实际配置函数验证依赖改变产生一次新版本、重复检查禁止计算仍复用，旧结果目录保留。源/计算记录是明确合成控制器例，不冒充新财报数值。此前默认166/165s长链的安装/来源/业务责任没变，不重跑。源码增量交现有Claude接收复核，旧限定兼容独审不扩成这个P2的独审。

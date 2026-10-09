@@ -46,7 +46,8 @@ def _configuration(source, company, metric):
         'deterministic_router','calculator','canonical','records','observations',
         'specs','sources','table_grid','resource_limits','traits','projector',
         'governance_signals','annual_input','annual_sources','deterministic_catalog',
-        'saved_source_checks','request_bindings','company_registry'))
+        'saved_source_checks','request_bindings','company_registry',
+        'normal_annual_input','normal_source_authority'))
     paths.update({'catalog/company_traits.yaml','config/metric_applicability.yaml',
                   'config/company_registry.csv'})
     if metric == 'B02':
