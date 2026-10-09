@@ -8,7 +8,7 @@
 | [PR67](https://github.com/wlvh/SEC_metrics/pull/67) 保存来源及兼容候选 `f7905156f7972b214e71d7f0a9a1172f7ac969cf` | `run --source-root` 处理已保存来源，普通记录 `results` 日常读取 | 尚未进入main；省略`--source-root`会自动安装固定main8588原生程序，需完整Git对象及其匹配依赖。Marriott B01/B02从空目录的完整录制HTTP入口已验证；这不是全部39项业务接受。 |
 | 已有原生任务 | `results` / 显式审计导出读取原 Run | 使用创建该任务的固定程序、状态、来源登记及依赖；新 CLI 与任意旧程序混用不保证兼容。 |
 
-本页最新main核对为`f447a374`，已含PR61测试基础和PR58 D02检查；本文所述原生运行的完整录制基线仍是`8588ccbb`，不能把该成对结果扩为新main所有指标的重新验收。PR67的默认入口兼容、三个审查入口及限定证据见[接收前主要记录](https://github.com/wlvh/SEC_metrics/blob/f7905156f7972b214e71d7f0a9a1172f7ac969cf/docs/evidence/issue28_company_records_20261007/default-online-review-20261009/README.md)。
+本页核对时的main为`f447a374`，已含PR61测试基础和PR58 D02检查；本文所述原生运行的完整录制基线仍是`8588ccbb`，不能把该成对结果扩为新main所有指标的重新验收。PR67的默认入口兼容、三个审查入口及限定证据见[接收前主要记录](https://github.com/wlvh/SEC_metrics/blob/f7905156f7972b214e71d7f0a9a1172f7ac969cf/docs/evidence/issue28_company_records_20261007/default-online-review-20261009/README.md)。
 
 来源与计算分别运行，`run`只顺序调度。main 原生流程与 PR67 普通记录是过渡版本，不是永久双系统。轻量在线续接由#28在独立PR83交付候选；已实现但尚未接收的能力不写成main默认可用。代码交付、运行成功、业务接受和正式发布分别判断。
 
