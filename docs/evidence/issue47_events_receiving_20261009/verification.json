@@ -1,6 +1,6 @@
 {
   "base_main": "ae8a13c82b11cc5f64fabf217298bed0257778d7",
-  "public_source_interface": "820461a0 (e7e54bec product), limited review still running",
+  "public_source_interface": "PR89/4118efdc, product35b9329d; limited source+gap review passed",
   "public_files": {
     "scripts/vnext/normal_zero_ai_results.py": "67543d1c08b8c84177ef92382a8ccaacb72dcffaeceaa51bdae18b9d3e2735f3",
     "scripts/vnext/selected_event_source_v1.py": "040be9d0b4c95a22cd98f0f5085935eda3858dbb44ac7561c0e67d0de696ac20"
@@ -32,9 +32,10 @@
     "file": "paramount2025-save.json",
     "reason": "ORDINARY_PROJECTION_PREPARED_PERIOD_CHANGED",
     "owner": "#28 public projection",
-    "annual_dates_unchanged": true
+    "annual_dates_unchanged": true,
+    "resolved_by": "public ordinary_projection1d612b82, original unchanged case and same company CLI validated"
   },
-  "history_boundary_gap": "explicit history_last_days=block_last_days selects blocks and validator receives/checks same last_day; small gap regression passed; public limited delta review pending",
+  "history_boundary_gap": "explicit block_last_days selection plus same-bound full-body validation; shared limited review passed, old NEEDS_FIX retained",
   "new_calls": {
     "sec": 0,
     "provider": 0,
@@ -88,5 +89,33 @@
     "interrupted_intents": 1,
     "old_versions_unchanged": true
   },
-  "history_callback_reads": "one public source walk, block_last_days computed from its actual inventory; full body checker; no duplicate metadata preparation"
+  "history_callback_reads": "one public source walk, block_last_days computed from its actual inventory; full body checker; no duplicate metadata preparation",
+  "wide_projection_public_file_sha256": "c865be5554fa57650732611ed95bb59c1fde91d8332cd747e004dff1e6752911",
+  "wide_original_case_reuse": {
+    "file": "wide-original-case-consumer.json",
+    "save_seconds": 3.0703965418506414,
+    "read_seconds": 0.007601874880492687,
+    "calculation_calls": 0
+  },
+  "wide_cli": {
+    "file": "paramount-wide-cli.json",
+    "operations": [
+      {
+        "name": "wide-first",
+        "seconds": 20.67524441680871
+      },
+      {
+        "name": "wide-reuse",
+        "seconds": 4.908691375050694
+      },
+      {
+        "name": "wide-cold",
+        "seconds": 0.5613640840165317
+      }
+    ],
+    "saved_files": 8,
+    "annual_unchanged": true,
+    "value": "12",
+    "unit": "count"
+  }
 }
