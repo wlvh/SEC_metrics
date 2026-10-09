@@ -56,6 +56,7 @@ class CurrentD04DependencyUpdateTest(unittest.TestCase):
         for relative in ('scripts/vnext/going_concern_source.py',
                 'catalog/r6/going_concern_source_rules_v1.json',
                 'catalog/r6/semantic_source_v1.json',
+                'catalog/r6/regulatory_investigation_candidates_v1.json',
                 'scripts/vnext/r6_semantic_review.py',
                 'scripts/vnext/invocation_control.py'):
             with self.subTest(dependency=relative),tempfile.TemporaryDirectory() as folder:

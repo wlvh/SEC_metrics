@@ -82,6 +82,7 @@ def _configuration(source, company, metric):
             'config/issue28_continuous_calls_v1.json','config/normal_fiscal_year_labels_v1.json',
             'catalog/r6/going_concern_source_rules_v1.json','catalog/r6/semantic_source_v1.json',
             'catalog/r6/semantic_review_v1.json','catalog/r6/text_business_candidates_v1.json',
+            'catalog/r6/regulatory_investigation_candidates_v1.json',
             'catalog/r6/text_results_v2_policy.json',
             'catalog/r6/D04_going_concern_assessment_v1.md',
             'catalog/r6/semantic_review_v4.json','catalog/r6/semantic_review_v5.json'})

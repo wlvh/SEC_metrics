@@ -84,9 +84,10 @@ restoration, saved-response validation and directly consumed policies in the
 existing D04-only configuration. It does not build an authority/closure
 framework or change old requests, response contracts, results or calls.
 Capacity review policy files used only by B13 are not added just because D04
-imports its representation helpers; regulatory assertion policies are likewise
-not used by D04's quotation helper. Source and interpretation code shared with
-those modules is included because D04 executes that code.
+imports its representation helpers; D04 also consumes quotation_tags from the regulatory candidate policy,
+which is now included. It does not use that policy to assert a regulatory
+investigation. Source and interpretation code shared with those modules is
+included because D04 executes that code.
 
 The new controller regression first fails on four previously missing paths,
 then passes five finite source/rule/interpretation cases: first WITHHELD,
@@ -104,3 +105,12 @@ already verified real company aggregation/CLI and original-byte checks are
 reused for unchanged behavior. They are not a claim that a pre-repair saved
 configuration equals the new one: the repaired configuration legitimately
 requires one new local revalidation, without purchasing a model call.
+
+The 666f245f narrow follow-up is also retained as CHANGES_REQUESTED: it
+correctly identified the quotation_tags policy omission. Final minimal repair
+adds that one JSON and one more case to the same regression (six consumed
+source/interpretation paths). The new case first fails, then the 38 affected
+controller/gate tests pass in .385s, zero skips. Independent quotation helper
+control establishes actual consumption; parent verifies the final one-line
+repair, which remains for receiving-review confirmation. Neither old review
+is relabelled PASS. There is no third same-scope agent or long-chain rerun.
