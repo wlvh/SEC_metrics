@@ -16,6 +16,11 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--source-root', type=Path, required=True)
 parser.add_argument('--output-root', type=Path, required=True)
 args = parser.parse_args()
+args.source_root = args.source_root.resolve()
+args.output_root = args.output_root.resolve()
+if any(protected == args.output_root or protected in args.output_root.parents
+       for protected in (ROOT.resolve(), args.source_root)):
+    raise SystemExit('Keep review output outside code and source trees')
 if args.output_root.exists():
     raise SystemExit('Choose a new output directory')
 args.output_root.mkdir(parents=True)
