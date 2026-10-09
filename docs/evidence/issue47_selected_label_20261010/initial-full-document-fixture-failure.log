@@ -1,0 +1,108 @@
+test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata) ... FAIL
+test_consistent_original_metadata_resolves_without_end_year_inference (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_consistent_original_metadata_resolves_without_end_year_inference) ... ERROR
+test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it) ... ERROR
+test_hash_subject_and_same_accession_evidence_are_required (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_hash_subject_and_same_accession_evidence_are_required) ... ok
+test_historical_release_is_controlled_and_fake_dei_is_not_admitted (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_historical_release_is_controlled_and_fake_dei_is_not_admitted) ... ERROR
+
+======================================================================
+ERROR: test_consistent_original_metadata_resolves_without_end_year_inference (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_consistent_original_metadata_resolves_without_end_year_inference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 30, in test_consistent_original_metadata_resolves_without_end_year_inference
+    r=self.resolve();self.assertEqual(r['selected_fiscal_year'],2021)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 27, in resolve
+    return resolve_selected_fiscal_year_label(**args)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_fiscal_labels.py", line 199, in resolve_selected_fiscal_year_label
+    inspected = release_aware(_frozen_labels.inspect_fiscal_year_labels)(
+        primary_bytes=primary_bytes, companyfacts_bytes=companyfacts_bytes,
+        expected_primary_sha256=expected_primary_sha256,
+        expected_companyfacts_sha256=expected_companyfacts_sha256,
+        expected_cik=expected_cik, filing=filing)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_dei.py", line 500, in view
+    return runnable(*args, **kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 215, in inspect_fiscal_year_labels
+    definitions,unparsed=_definitions(primary_bytes,period["period_end"],registrant_names)
+                         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 118, in _definitions
+    _need(not parser.structural_errors and (parser.html_count,parser.body_count,parser.html_closed,parser.body_closed)==(1,1,1,1),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "FISCAL_LABEL_FULL_DOCUMENT_REQUIRED")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 37, in _need
+    raise FiscalYearLabelError(reason)
+vnext.fiscal_year_labels.FiscalYearLabelError: FISCAL_LABEL_FULL_DOCUMENT_REQUIRED
+
+======================================================================
+ERROR: test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 38, in test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it
+    r=self.resolve(raw=raw);self.assertEqual(r['selected_fiscal_year'],2022)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 27, in resolve
+    return resolve_selected_fiscal_year_label(**args)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_fiscal_labels.py", line 199, in resolve_selected_fiscal_year_label
+    inspected = release_aware(_frozen_labels.inspect_fiscal_year_labels)(
+        primary_bytes=primary_bytes, companyfacts_bytes=companyfacts_bytes,
+        expected_primary_sha256=expected_primary_sha256,
+        expected_companyfacts_sha256=expected_companyfacts_sha256,
+        expected_cik=expected_cik, filing=filing)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_dei.py", line 500, in view
+    return runnable(*args, **kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 215, in inspect_fiscal_year_labels
+    definitions,unparsed=_definitions(primary_bytes,period["period_end"],registrant_names)
+                         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 118, in _definitions
+    _need(not parser.structural_errors and (parser.html_count,parser.body_count,parser.html_closed,parser.body_closed)==(1,1,1,1),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "FISCAL_LABEL_FULL_DOCUMENT_REQUIRED")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 37, in _need
+    raise FiscalYearLabelError(reason)
+vnext.fiscal_year_labels.FiscalYearLabelError: FISCAL_LABEL_FULL_DOCUMENT_REQUIRED
+
+======================================================================
+ERROR: test_historical_release_is_controlled_and_fake_dei_is_not_admitted (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_historical_release_is_controlled_and_fake_dei_is_not_admitted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 55, in test_historical_release_is_controlled_and_fake_dei_is_not_admitted
+    self.assertEqual(self.resolve(raw=annual('http://xbrl.sec.gov/dei/'+suffix))['selected_fiscal_year'],2021)
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 27, in resolve
+    return resolve_selected_fiscal_year_label(**args)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_fiscal_labels.py", line 199, in resolve_selected_fiscal_year_label
+    inspected = release_aware(_frozen_labels.inspect_fiscal_year_labels)(
+        primary_bytes=primary_bytes, companyfacts_bytes=companyfacts_bytes,
+        expected_primary_sha256=expected_primary_sha256,
+        expected_companyfacts_sha256=expected_companyfacts_sha256,
+        expected_cik=expected_cik, filing=filing)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_dei.py", line 500, in view
+    return runnable(*args, **kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 215, in inspect_fiscal_year_labels
+    definitions,unparsed=_definitions(primary_bytes,period["period_end"],registrant_names)
+                         ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 118, in _definitions
+    _need(not parser.structural_errors and (parser.html_count,parser.body_count,parser.html_closed,parser.body_closed)==(1,1,1,1),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "FISCAL_LABEL_FULL_DOCUMENT_REQUIRED")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 37, in _need
+    raise FiscalYearLabelError(reason)
+vnext.fiscal_year_labels.FiscalYearLabelError: FISCAL_LABEL_FULL_DOCUMENT_REQUIRED
+
+======================================================================
+FAIL: test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata)
+----------------------------------------------------------------------
+vnext.fiscal_year_labels.FiscalYearLabelError: FISCAL_LABEL_FULL_DOCUMENT_REQUIRED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 45, in test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata
+    with self.assertRaisesRegex(ValueError,'FISCAL_LABEL_UNRESOLVED'):self.resolve(raw=raw)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "FISCAL_LABEL_UNRESOLVED" does not match "FISCAL_LABEL_FULL_DOCUMENT_REQUIRED"
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.022s
+
+FAILED (failures=1, errors=3)

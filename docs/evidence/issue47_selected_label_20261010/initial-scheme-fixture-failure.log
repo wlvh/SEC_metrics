@@ -1,0 +1,124 @@
+test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata) ... FAIL
+test_consistent_original_metadata_resolves_without_end_year_inference (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_consistent_original_metadata_resolves_without_end_year_inference) ... ERROR
+test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it) ... ERROR
+test_hash_subject_and_same_accession_evidence_are_required (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_hash_subject_and_same_accession_evidence_are_required) ... FAIL
+test_historical_release_is_controlled_and_fake_dei_is_not_admitted (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_historical_release_is_controlled_and_fake_dei_is_not_admitted) ... ERROR
+
+======================================================================
+ERROR: test_consistent_original_metadata_resolves_without_end_year_inference (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_consistent_original_metadata_resolves_without_end_year_inference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 30, in test_consistent_original_metadata_resolves_without_end_year_inference
+    r=self.resolve();self.assertEqual(r['selected_fiscal_year'],2021)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 27, in resolve
+    return resolve_selected_fiscal_year_label(**args)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_fiscal_labels.py", line 199, in resolve_selected_fiscal_year_label
+    inspected = release_aware(_frozen_labels.inspect_fiscal_year_labels)(
+        primary_bytes=primary_bytes, companyfacts_bytes=companyfacts_bytes,
+        expected_primary_sha256=expected_primary_sha256,
+        expected_companyfacts_sha256=expected_companyfacts_sha256,
+        expected_cik=expected_cik, filing=filing)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_dei.py", line 500, in view
+    return runnable(*args, **kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 186, in inspect_fiscal_year_labels
+    proof=_verified_context(native=context,metadata=metadata)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/text_results_v2.py", line 127, in _verified_context
+    _need(entity["scheme"] in _CAPABILITY_POLICY["cik_identifier_schemes"]
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and entity["value"].isdigit() and entity["value"] == native["entity_identifier"],
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "D02_FACT_ENTITY_SCHEME_NOT_PROVEN")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/text_results_v2.py", line 50, in _need
+    raise TextResultV2Error(reason)
+vnext.text_results_v2.TextResultV2Error: D02_FACT_ENTITY_SCHEME_NOT_PROVEN
+
+======================================================================
+ERROR: test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 38, in test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it
+    r=self.resolve(raw=raw);self.assertEqual(r['selected_fiscal_year'],2022)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 27, in resolve
+    return resolve_selected_fiscal_year_label(**args)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_fiscal_labels.py", line 199, in resolve_selected_fiscal_year_label
+    inspected = release_aware(_frozen_labels.inspect_fiscal_year_labels)(
+        primary_bytes=primary_bytes, companyfacts_bytes=companyfacts_bytes,
+        expected_primary_sha256=expected_primary_sha256,
+        expected_companyfacts_sha256=expected_companyfacts_sha256,
+        expected_cik=expected_cik, filing=filing)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_dei.py", line 500, in view
+    return runnable(*args, **kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 186, in inspect_fiscal_year_labels
+    proof=_verified_context(native=context,metadata=metadata)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/text_results_v2.py", line 127, in _verified_context
+    _need(entity["scheme"] in _CAPABILITY_POLICY["cik_identifier_schemes"]
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and entity["value"].isdigit() and entity["value"] == native["entity_identifier"],
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "D02_FACT_ENTITY_SCHEME_NOT_PROVEN")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/text_results_v2.py", line 50, in _need
+    raise TextResultV2Error(reason)
+vnext.text_results_v2.TextResultV2Error: D02_FACT_ENTITY_SCHEME_NOT_PROVEN
+
+======================================================================
+ERROR: test_historical_release_is_controlled_and_fake_dei_is_not_admitted (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_historical_release_is_controlled_and_fake_dei_is_not_admitted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 55, in test_historical_release_is_controlled_and_fake_dei_is_not_admitted
+    self.assertEqual(self.resolve(raw=annual('http://xbrl.sec.gov/dei/'+suffix))['selected_fiscal_year'],2021)
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 27, in resolve
+    return resolve_selected_fiscal_year_label(**args)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_fiscal_labels.py", line 199, in resolve_selected_fiscal_year_label
+    inspected = release_aware(_frozen_labels.inspect_fiscal_year_labels)(
+        primary_bytes=primary_bytes, companyfacts_bytes=companyfacts_bytes,
+        expected_primary_sha256=expected_primary_sha256,
+        expected_companyfacts_sha256=expected_companyfacts_sha256,
+        expected_cik=expected_cik, filing=filing)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/historical_dei.py", line 500, in view
+    return runnable(*args, **kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/fiscal_year_labels.py", line 186, in inspect_fiscal_year_labels
+    proof=_verified_context(native=context,metadata=metadata)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/text_results_v2.py", line 127, in _verified_context
+    _need(entity["scheme"] in _CAPABILITY_POLICY["cik_identifier_schemes"]
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and entity["value"].isdigit() and entity["value"] == native["entity_identifier"],
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          "D02_FACT_ENTITY_SCHEME_NOT_PROVEN")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/text_results_v2.py", line 50, in _need
+    raise TextResultV2Error(reason)
+vnext.text_results_v2.TextResultV2Error: D02_FACT_ENTITY_SCHEME_NOT_PROVEN
+
+======================================================================
+FAIL: test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata)
+----------------------------------------------------------------------
+vnext.text_results_v2.TextResultV2Error: D02_FACT_ENTITY_SCHEME_NOT_PROVEN
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 45, in test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata
+    with self.assertRaisesRegex(ValueError,'FISCAL_LABEL_UNRESOLVED'):self.resolve(raw=raw)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "FISCAL_LABEL_UNRESOLVED" does not match "D02_FACT_ENTITY_SCHEME_NOT_PROVEN"
+
+======================================================================
+FAIL: test_hash_subject_and_same_accession_evidence_are_required (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_hash_subject_and_same_accession_evidence_are_required)
+----------------------------------------------------------------------
+vnext.text_results_v2.TextResultV2Error: D02_FACT_ENTITY_SCHEME_NOT_PROVEN
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_selected_historical_fiscal_label.py", line 50, in test_hash_subject_and_same_accession_evidence_are_required
+    with self.assertRaisesRegex(ValueError,'COMPANYFACTS_ENTITY_CONFLICT'):self.resolve(cf=facts(cik=1))
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "COMPANYFACTS_ENTITY_CONFLICT" does not match "D02_FACT_ENTITY_SCHEME_NOT_PROVEN"
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.019s
+
+FAILED (failures=2, errors=3)

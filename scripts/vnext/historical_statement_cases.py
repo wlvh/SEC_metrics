@@ -92,11 +92,12 @@ def _registry_for_selected_period(*, registry, prepared, selection):
     return {**registry, 'primary_cik': reporting, 'entity_continuity_status': 'continuous'}, detail
 
 
-def prepare_historical_statement_year_case(*, repo_root, company_id, metric_id, fiscal_year):
+def prepare_historical_statement_year_case(*, repo_root, company_id, metric_id, fiscal_year,
+                                           period_selection=None):
     """Select one issuer year and supply the existing common computation."""
     _need(metric_id in METRICS, 'HISTORICAL_STATEMENT_FAMILY_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
     return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
-        metric_id=metric_id, fiscal_year=fiscal_year)
+        metric_id=metric_id, fiscal_year=fiscal_year, period_selection=period_selection)
 
 
 def prepare_historical_current_annual_year_case(*, repo_root, company_id, metric_id, fiscal_year):
@@ -176,13 +177,20 @@ def _metadata_outcome_case(*, source, company_id, metric_id, prepared, selection
 
 
 def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fiscal_year,
-                                       withhold_known_source_errors=False):
+                                       withhold_known_source_errors=False, period_selection=None):
     """Shared selected-filing case; catalog and Calculator retain computation."""
     source = Path(repo_root)
-    selection = resolve_period_selection(repo_root=source, company_id=company_id,
-                                         fiscal_year=fiscal_year, rules_root=ROOT)
+    selection = (resolve_period_selection(repo_root=source, company_id=company_id,
+                                          fiscal_year=fiscal_year, rules_root=ROOT)
+                 if period_selection is None else period_selection)
     prepared = prepare_historical_annual_input(repo_root=source, company_id=company_id,
                                                period_selection=selection, rules_root=ROOT)
+    # Explicit selection saves the preceding fiscal-year search only. Annual
+    # preparation re-derives its source selection, and the requested label is
+    # still checked even when the selection was originally made by report end.
+    if period_selection is not None:
+        _need(type(fiscal_year) is int and prepared['table_input']['target_period']['fiscal_year'] == fiscal_year,
+              'HISTORICAL_STATEMENT_REQUESTED_FISCAL_YEAR_CHANGED')
     if prepared['subject_policy']['mode'] == 'SUCCESSOR_REGISTRANT_ONLY' and metric_id != 'B01':
         return _successor_comparability_case(source=source, company_id=company_id,
             metric_id=metric_id, prepared=prepared, selection=selection)
