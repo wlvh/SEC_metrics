@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "seconds": 3.2919329998549074,
+  "report": {
+    "elapsed_seconds": 2.688815750181675,
+    "status": "RUNTIME_INSTALLED",
+    "runtime_root": "/private/tmp/rate-review-install-_x4r2gr3/program",
+    "requirement_id": "issue_54_v4",
+    "dispatch_files": [
+      "scripts/vnext/requirement_profile.py",
+      "scripts/vnext/run_store.py",
+      "scripts/vnext/normal_run_v3.py",
+      "scripts/vnext/ordinary_source_authority.py",
+      "scripts/vnext/records.py",
+      "scripts/vnext/capacity_run.py",
+      "scripts/vnext/ordinary_update_cycle.py",
+      "scripts/vnext/normal_zero_ai_results.py",
+      "scripts/vnext/normal_source_authority.py",
+      "scripts/vnext/continuous_sec_acquisition.py",
+      "config/sec_config.json",
+      "config/company_empty_source_baseline_v1.json",
+      "config/company_empty_source_seed/config/company_registry.csv",
+      "config/company_empty_source_seed/evidence/requests_log.csv",
+      "config/company_empty_source_seed/evidence/requests_log_manifest.json"
+    ],
+    "authority_hash": "sha256:59decba9861f521d7d548c7b5ec480e7ad731f29bcf662a9ace9e58703de760e",
+    "sec_originals_installed": false,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "production_authorized": false,
+    "retained_main_commit": "8588ccbbb1c91d81e0fb1a89dff3575214282549"
+  },
+  "helper": {
+    "sha256": "d76c7235789799dab1438155940c32d1718c9186f3b1c1d8e96a740ed255ed16",
+    "size": 14071
+  },
+  "bound_authority": {
+    "sha256": "d76c7235789799dab1438155940c32d1718c9186f3b1c1d8e96a740ed255ed16",
+    "size": 14071
+  },
+  "single_line_delta_from_retained_main": true,
+  "network": "No invocation of a SEC/provider client; installer is a local Git/Python operation"
+}
