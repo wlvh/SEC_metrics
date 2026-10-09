@@ -126,18 +126,19 @@ echo "REMOTE_ROOT=$REMOTE_ROOT RUN_DIR=$RUN_DIR"   # 记下这两个值，第 4�
 
 | 退出码 / status | 含义 |
 |---|---|
-| 0 / `PASS` | 调通，且回答是本次请求的正确 JSON |
-| 2 / `RESPONSE_RECEIVED_CONTRACT_FAILED` | **已经调通**（`sdk_returned: true`），但回答不是要求的纯 JSON，例如被包在 Markdown 代码块里 |
-| 2 / `RESPONSE_RECEIVED_UNPARSED_OR_ERROR` | 收到返回，但类型或 HTTP 状态不能当成功 |
+| 0 / `PASS` | 调通，且回答是本次请求的正确 JSON。**只有这一项算通过** |
+| 2 / `RESPONSE_RECEIVED_CONTRACT_FAILED` | SDK 有返回，但内容没通过检查。不一定调通了模型，按下面第二张表区分 |
+| 2 / `RESPONSE_RECEIVED_UNPARSED_OR_ERROR` | SDK 有返回，但类型或 HTTP 状态不能当成功 |
 | 1 / `INITIALIZATION_FAILED` | 还没发请求就失败了：SDK、依赖、配置或初始化问题 |
 | 1 / `REQUEST_ERROR_REMOTE_OUTCOME_UNKNOWN` | 请求时抛出异常，远端是否已执行未知；不自动重试 |
 | 1 / `WORKER_EXIT_FAILED` | 工作进程在自身处理之外退出（如 SDK 调用 `sys.exit`、被 OOM 杀掉） |
-| 124 / `TIMEOUT` | 180 秒内没有返回；已发出的请求不保证被取消，不自动重试 |
+| 124 / `TIMEOUT` | 180 秒内没结束。原因不确定：网络被挡、服务慢、SDK 卡住或在内部重试都可能；已发出的请求不保证被取消，不自动重试 |
 
-失败时，结合摘要里的 `error_type`，在终端查看 Pod 内的错误信息（可能含内部信息，只在自己终端看，不要转发到公共渠道）：
+失败时查看 Pod 内的错误详情（可能含内部信息，只在自己终端看，不要转发到公共渠道）。`TIMEOUT` 和 `WORKER_EXIT_FAILED` 不会生成 `failure.json`，这条命令会改为显示 SDK 自己输出的最后 50 行错误日志：
 
 ```bash
-oc -n "$NS" exec "$POD" -c "$CONTAINER" -- cat "$RUN_DIR/failure.json"
+oc -n "$NS" exec "$POD" -c "$CONTAINER" -- \
+  sh -c 'cat "$1/failure.json" 2>/dev/null || tail -n 50 "$1/sdk.stderr.log"' sh "$RUN_DIR"
 ```
 
 | 现象 | 问题在哪 | 找谁 |
@@ -145,8 +146,19 @@ oc -n "$NS" exec "$POD" -c "$CONTAINER" -- cat "$RUN_DIR/failure.json"
 | `ModuleNotFoundError` / `ImportError` | `SDK_ROOT` 填错，或镜像缺 SDK 的依赖 | 自查路径；缺依赖找平台同事改镜像 |
 | 错误里出现 `spark`、`dbutils` | SDK 依赖 Databricks 对象 | 回到第 0 步，按表格换做法 |
 | `KeyError` 或提示缺某个环境变量 | Pod 里没有需要的凭证或配置 | 平台同事配 Secret |
-| `TIMEOUT`，或错误里有 DNS、connection、timed out | Pod 出不了网络到 SecureGPT | 平台/网络同事放通出站 |
+| 错误或日志里**明确**出现 DNS、`Name or service not known`、`Connection refused`、`connect timed out` | Pod 连不到 SecureGPT | 平台/网络同事放通出站 |
 | 401 / 403 | 认证失败或没有权限 | IAM/权限负责人 |
+| `TIMEOUT`，日志里没有上述明确的网络错误 | 不确定。摘要里 `remote_outcome` 为 `NO_REQUEST_INVOCATION_OBSERVED` 表示卡在初始化、还没发请求；为 `UNKNOWN_DO_NOT_AUTOMATICALLY_RETRY` 表示卡在请求过程中 | 把摘要和日志交给平台同事一起判断；不要直接重跑 |
+
+`RESPONSE_RECEIVED_CONTRACT_FAILED` 时，看 `failure.json` 里的 `message`：
+
+| `message` | 含义 | 算不算调通了模型 |
+|---|---|---|
+| `SDK_ERROR_RESPONSE` / `SDK_HTTP_ERROR_RESPONSE` | 服务返回的是错误信息，不是回答；具体内容在 `response.json` 里（常见为认证或参数问题） | 不算 |
+| `INCOMPLETE_OR_FILTERED_RESPONSE` / `NOT_AN_ASSISTANT_ANSWER` | 回答被截断、被内容过滤或拒答 | 模型可达，但这次回答不可用 |
+| `ASSISTANT_TEXT_NOT_FOUND` | 回答不在默认位置 | 待定：按第 3 节离线复查 |
+| JSON 解析错误（如 `Expecting value`）/ `JSON_FIELDS_MISMATCH` | 模型回答了，但不是要求的纯 JSON（例如外面包了代码块） | 模型已调通；JSON 格式问题记给 N1 |
+| `NONCE_MISMATCH` / `SUM_MISMATCH` | 回答不是本次请求的正确结果，可能是缓存或模型没照做 | 不能算通过 |
 
 `sdk_request_invocations` 是本脚本发起的 SDK 调用次数（最多 1）。SDK 内部是否重试取决于第 0 步看到的实现，所以"一次调用"不等于服务端只计费一次。
 
@@ -155,7 +167,7 @@ oc -n "$NS" exec "$POD" -c "$CONTAINER" -- cat "$RUN_DIR/failure.json"
 - `securegpt-summary.json`；
 - 第 0 步的五项结论（不带源码和密钥）；
 - 实际是否加了 `--bootstrap`；
-- 失败时：`status`、`error_type`，以及按上表判断的原因。
+- 失败时：`status`、`error_type` 或 `remote_outcome`、`failure.json` 里的 `message`（如有），以及按上表判断的原因。
 
 ## 3. 回答位置不同时：离线复查，不再调用模型
 
