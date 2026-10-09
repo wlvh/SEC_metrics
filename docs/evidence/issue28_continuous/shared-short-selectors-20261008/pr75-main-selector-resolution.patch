@@ -1,0 +1,19 @@
+--- a/tools/run_fast_tests_v2.py
++++ b/tools/run_fast_tests_v2.py
+@@ -164,16 +164,13 @@
+ SOURCE_TESTS += ("tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",)
+ SOURCE_TESTS += ("tests.vnext.test_d01_emphasis_material",)
+ FAST_TESTS += ("tests.vnext.test_a05_formula_successor",)
+-<<<<<<< 5272797e0bc79ddb007fc021d8243f2ad46cf7d7
+ FAST_TESTS += ('tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest',)
+ FAST_TESTS += ('tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks',)
+ FAST_TESTS += ('tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest',)
+-=======
+ FAST_TESTS += ("tests.vnext.test_legal_review_contract",)
+ FAST_TESTS += ("tests.vnext.test_history_business_boundaries.BankScopeBusinessTest",)
+ FAST_TESTS += ("tests.vnext.test_history_business_boundaries.ParamountWindowBusinessTest",)
+ FAST_TESTS += ("tests.vnext.test_history_business_boundaries.FiscalDurationCalculationTest",)
+->>>>>>> e2d6784c9a464a04b793d3487e6e9868a37614b3
+ SOURCE_TESTS += ("tests.vnext.test_a05_formula_material",)
+ SOURCE_TESTS += ("tests.vnext.test_d02_item8_current_material",)
+ SOURCE_TESTS += ("tests.vnext.test_ordinary_e01_item_text_input",)

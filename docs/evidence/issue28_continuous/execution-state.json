@@ -5331,6 +5331,24 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-income/SEC_metrics/docs/evidence/issue28_selected_income_source_20261009/independent-review/结论.md",
       "verdict": "PASS_LIMITED_SOURCE_API",
       "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_nativerate_a3e3e64",
+      "purpose": "review",
+      "scope_paths": [
+        "scripts/vnext/company_local_acquisition.py",
+        "scripts/vnext/company_retained_local.py",
+        "tests/vnext/test_native_rate_path.py",
+        ".github/workflows/vnext-fast.yml",
+        "tools/run_fast_tests_v2.py"
+      ],
+      "patch_sha": "a3e3e643aafd63b85561173177a6fbead2796a1b",
+      "spawned_at": "2026-10-09T06:50:50Z",
+      "ended_at": "2026-10-09T06:57:37Z",
+      "tool_calls": 31,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-native-rate-path/SEC_metrics/docs/evidence/issue28_native_rate_path_20261009/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_NATIVE_RATE_AND_INSTALLATION",
+      "ordinary_messages": 3
     }
   ],
   "ci_capacity_20260922": {
@@ -16861,5 +16879,28 @@
     "record": "docs/evidence/issue28_selected_income_source_20261009/README.md",
     "peer_notified": true,
     "ci_last_observed": "Reference/fast/source-authority SUCCESS; remaining IN_PROGRESS, no overall terminal"
+  },
+  "native_rate_platform_20261009": {
+    "pr": 87,
+    "base": "e2d6784c9a464a04b793d3487e6e9868a37614b3",
+    "product_sha": "a3e3e643aafd63b85561173177a6fbead2796a1b",
+    "head": "88c168529dda1e56ed6c0e177387ca7416c18227",
+    "scope": "Canonicalize only system tmp before same per-UID directory; new retained installer adapts one platform line and binds new program; old tasks unchanged",
+    "regression": "Alias-positive initially LOCAL_SEC_RATE_ALIAS; residual interval/shared inode/child alias/owner behaviours preserve",
+    "tests": 7,
+    "small_seconds": 0.298,
+    "actual_install_seconds": 3.0651098750531673,
+    "full_entry_seconds": 159.59494429104961,
+    "full_entry_status": "FLOW_COMPLETED",
+    "full_entry_scope": "Real default native LIVE branch from empty isolated test task; only29 HTTP replies replayed, socket/DNS forbidden; synthetic LIVE receipt labels grant no acquisition credit",
+    "review": "a3e limited PASS:7small/shortinstall/two-process shared lock; did not rerun159s chain",
+    "old_programs_untouched": true,
+    "new_real_calls": [
+      0,
+      0,
+      0
+    ],
+    "record": "docs/evidence/issue28_native_rate_path_20261009/README.md",
+    "remaining": "Actual new-head CI terminal and separate reception; not all39/live/production credit"
   }
 }
