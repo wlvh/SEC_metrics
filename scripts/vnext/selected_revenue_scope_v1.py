@@ -81,7 +81,8 @@ def _statement_scope(raw, index, parsed, table):
             text = c['text'] if c['is_origin'] else ''
             if (re.search(r'\b(?:excludes?|excluded|excluding|only|limited to)\b', text, re.I)
                     and re.search(r'\b(?:operations?|subsidiar(?:y|ies)|segments?|businesses)\b', text, re.I)):
-                _need(False, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')
+                _need(False, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED:'+table['table_id']
+                      +':row='+str(c['row_index'])+':column='+str(c['column_index']))
     unknown = []
     for row in table['rows']:
         if row['row_index'] in native_rows:
