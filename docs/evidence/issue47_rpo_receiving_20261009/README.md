@@ -42,3 +42,13 @@ python3 tools/vnext_company.py results --company salesforce \
 上游main4a03f223只修本指南此前误写的B04/B07名称：B04为净利润，B05为自由现金流，B07为利息保障倍数。该文档增量已接本候选06f02369，原计算/真实数值不因名称修正重跑。原错误及修复版本在Git保留，不把模块名当指标业务定义。
 
 公共身份修复用的单个真实预计算case已保存为paramount2021-b12-precalculated.json.gz（gzip JSON，30796B；原JSON SHAcc9c10babf53e428ba93a4c9158bb39c46cda29a6379b876467db199f6f8ebb4）。只从原保存records/Result/Trace及输入ID重组，源金额检查器禁用，期间/报送身份用既有选期/DEI读取器核，旧Result文件未改；不是重算全批或新审查包。prepared.entity/trace.entity/源813828，原CSV2041610差异可经现有save_calculated_case→CSV→read真实重现。来源仍用原PR52恢复data_root，不给这个case新增许可/Run/接受。
+
+## 公共报送主体修复的接收结果
+
+远端 e4eff843 的十项检查全部 SUCCESS。实际 company-current 日志 run37931586112/job113823358130 明确加载并执行历史分派/保存状态两模块21项，1.082秒、零skip，包含RPO分派；现有工作流的 paths 同时列出两个测试文件。摘录在ci-e4eff843-history-execution.log。不是只核CI总绿，也没有为路径过滤制造额外提交。
+
+公共固定79ff47b4已接入本候选c0487230，仅消费同一renderer，不另写历史版本。原Paramount FY2021 B12预计算case经真实save_calculated_case/独立子进程读取，CSV只有CIK从2041610变813828；原Result/Trace/input身份、期末、结构NA/null保持。该结构结果没有财务证据行，header-only evidence按原合同保留，不制造金额出处。金额检查器/Calculator禁止，无新SEC/provider调用。见reporting-cik-real-saved-case.json。记录器曾误用不存在的检查函数、将Result ID视为基础CSV列、要求结构NA有金额证据，原失败保留本地；更正的是记录器，最后直接读取已经保存的结果，没有重算。
+
+同一组合的52项短/保存来源回归21.144秒中，51项通过、1项error、零skip。失败是既有真实当期Salesforce B12的RpoDisplayTest，不是旧防伪机制：_ordinary_case准备的annual实体1108524和accession0001108524-26-000060正确，但当前deterministic_source_set Trace的entity/accession按旧合同为null，新renderer直接要求Trace字段相同因而TRACE_SUBJECT_CHANGED。实际字段在reporting-cik-current-rpo-trace-boundary.json，完整日志在reporting-cik-combination-tests.log。
+
+该具体兼容缺口已直接交公共#28，用既有SourceSet/claims可证明身份处理旧Trace格式，并保留未知/混主体的拒绝；不改旧Trace、删回归或放宽来源检查。当前仅Param旧期另存修复验证成立，组合尚未可接收；不得据此宣称当期不退化或50位置完整导出通过。后继修复返回后只跑受影响回归及必要保存/读取，不重做其余45结构检查或完整五年计算。
