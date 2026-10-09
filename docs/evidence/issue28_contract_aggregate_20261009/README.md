@@ -48,3 +48,14 @@ Zero SEC/model requests, source-root writes, old-results re-signing, or full
 historical reruns. Tested worktree is main9493ed0e with the named code/test/
 selector differences; commit identity and limited review are recorded through
 Git rather than describing dirty runs as committed-head runs.
+
+## Limited review and targeted style correction
+
+Review2bec3464 reports NEEDS_FIX/P2: duplicate display declarations or a
+comment containing display:none could make a visible empty spacer be removed.
+The report is retained unchanged. The correction only skips a single clear
+display:none declaration, refuses comment ambiguity, and keeps conflicting/
+duplicate declarations as original cells. Three reported variants are added
+to the existing finite regression. It does not implement CSS precedence or
+prove general CSS rendering. The final original-source triples are rechecked
+in style-fix-saved.json; complete historical B03 credit remains unassigned.

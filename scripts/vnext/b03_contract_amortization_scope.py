@@ -33,8 +33,14 @@ class _RevenueTableIndex(_InlineTableIndex):
     @staticmethod
     def _hidden_cell(tag, attrs):
         style = dict(attrs).get('style', '') or ''
-        return tag in {'td', 'th'} and re.search(
-            r'(?:^|;)\s*display\s*:\s*none\s*(?:!important\s*)?(?:;|$)', style, re.I)
+        if tag not in {'td', 'th'} or '/*' in style or '*/' in style:
+            return False
+        declarations = [part.strip() for part in style.split(';')]
+        displays = [part for part in declarations if re.match(r'display\s*:', part, re.I)]
+        # Duplicate declarations require CSS precedence interpretation. Keep
+        # the cell rather than guessing that a visible spacer is hidden.
+        return len(displays) == 1 and re.fullmatch(
+            r'display\s*:\s*none\s*(?:!important\s*)?', displays[0], re.I) is not None
 
     def _flush_pending(self):
         if self._pending_empty_cell is not None:

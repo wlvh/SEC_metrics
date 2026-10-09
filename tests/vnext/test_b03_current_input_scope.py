@@ -357,5 +357,15 @@ class ContractAggregateTest(unittest.TestCase):
             with self.subTest(extra=extra):
                 self.assertIsNone(self.check((raw.replace(marker,extra+marker),parsed,amounts)))
 
+    def test_conflicting_or_commented_display_does_not_erase_visible_spacer(self):
+        raw,parsed,amounts=self.material()
+        marker=b'<td><ix:nonFraction contextRef="synthetic" scale="6">-7'
+        for style in ('display:none;display:table-cell',
+                      'display:none!important;display:table-cell!important',
+                      '/* display:none; */ display:table-cell'):
+            with self.subTest(style=style):
+                extra=('<td colspan="4" style="'+style+'"></td>').encode()
+                self.assertIsNone(self.check((raw.replace(marker,extra+marker),parsed,amounts)))
+
 
 if __name__=='__main__':unittest.main()
