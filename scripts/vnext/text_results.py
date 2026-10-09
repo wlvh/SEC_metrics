@@ -211,7 +211,8 @@ def validate_deterministic_candidate_shape(*, candidate):
           and target["scope_key"] == content_hash(value=target["scope"]), "DETERMINISTIC_TEXT_TARGET_INVALID")
 
 
-def _derive_deterministic_candidate(*, compiled_spec, target, source_references, documents, coverages):
+def _derive_deterministic_candidate(*, compiled_spec, target, source_references, documents, coverages,
+                                    exclude_combined_part_headers=False):
     from .risk_signals import risk_factor_headings
     policy = text_policy(compiled_spec)
     _need(compiled_spec["compiled"]["quality_rule"].get("deterministic_text_method") == DETERMINISTIC_METHOD
@@ -220,7 +221,8 @@ def _derive_deterministic_candidate(*, compiled_spec, target, source_references,
     for source in source_references:
         source_id = source["source_reference_id"]
         document = documents[source_id]
-        proposal = risk_factor_headings(document=document)
+        proposal = risk_factor_headings(document=document,
+            exclude_combined_part_headers=exclude_combined_part_headers)
         _need(proposal["status"] == "SOURCE_HEADINGS_READY", "DETERMINISTIC_TEXT_HEADINGS_UNSUPPORTED")
         document_bindings[source_id] = {"document_id": document["text_document_id"],
             "coverage_hash": coverages[source_id]["coverage_hash"], "proposal_id": proposal["proposal_id"]}
