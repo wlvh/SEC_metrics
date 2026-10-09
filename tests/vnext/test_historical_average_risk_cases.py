@@ -65,6 +65,9 @@ class HistoricalAverageRiskCaseTest(TestCase):
         observations = [r for r in case['expected_records'] if r['record_type'] == 'VERIFIED_OBSERVATION']
         self.assertEqual('SOURCE_DISCLOSED_AVERAGE', observations[0]['source_binding']['measurement_time_basis'])
         self.assertEqual(ANNUAL, observations[0]['source_binding']['filing_period'])
+        self.assertEqual(case['target_period'], observations[0]['source_binding']['actual_measurement_period'])
+        self.assertEqual(cases.content_hash(value=component),
+                         observations[0]['source_binding']['source_fact_hash'])
         self.assertEqual(LCR, component)
 
     def test_var_annual_average_keeps_annual_period_and_usd_value(self):
@@ -182,3 +185,33 @@ class HistoricalAverageRiskWordingTest(TestCase):
             blocks = [block(11, middle), block(20, 'Second general note.'), block(30, '(a) three months ended')]
             _, missing = reader(structure={**base, 'blocks': blocks}, table_order=0, markers={'a'})
             self.assertTrue(missing)
+
+    def test_old_lcr_note_grammar_preserves_unit_and_duration_rejections(self):
+        import hashlib
+        from vnext import historical_average_risk_wording as wording
+        notes = wording._known_form(wording.duration._linked_notes, wording.GENERAL_NOTE)
+        inspect = wording._known_form(wording.duration.inspect_financial_duration,
+                                      wording.MEASURE_ABBREVIATION, _linked_notes=notes)
+        source = b'''<table><tr><td></td><td>2021</td></tr>
+<tr><td>Firm Liquidity coverage ratio ("LCR") (a)</td><td>111</td></tr></table>
+<p>Effective January 1, the accounting policy changed.</p>
+<p>(a) The percentage represents average LCR for three months ended December 31, 2021.</p>'''
+        def evaluate(raw, **changes):
+            args = dict(source_bytes=raw, expected_source_sha256=hashlib.sha256(raw).hexdigest(),
+                table_id='table_000001', row_index=1, column_index=1,
+                measurement_aliases=['Liquidity coverage ratio', 'LCR'],
+                required_row_terms=['Firm'], reported_unit='percent',
+                claimed_period_start='2021-10-01', claimed_period_end='2021-12-31')
+            return inspect(**{**args, **changes})
+        good = evaluate(source)
+        self.assertEqual('PASSED', good['status'])
+        self.assertEqual('2021-10-01', good['measurement_period']['period_start'])
+        bad = evaluate(source, claimed_period_start='2021-01-01')
+        self.assertIn('CLAIMED_MEASUREMENT_PERIOD_DIFFERS', bad['reasons'])
+        for old, new, reason in (
+                (b'average LCR for', b'average XYZ for', 'REPORTED_UNIT_NOT_PROVEN'),
+                (b'(a) The percentage', b'(b) The percentage', 'ROW_FOOTNOTE_NOT_PROVEN'),
+                (b'Firm Liquidity', b'Bank subsidiary Liquidity', 'REQUIRED_ROW_TERM_NOT_PROVEN')):
+            changed = evaluate(source.replace(old, new))
+            self.assertNotEqual('PASSED', changed['status'])
+            self.assertIn(reason, changed['reasons'])
