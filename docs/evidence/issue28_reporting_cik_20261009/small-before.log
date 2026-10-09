@@ -1,0 +1,58 @@
+test_current_reporter_preserves_current_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_current_reporter_preserves_current_view) ... ERROR
+test_different_filing_or_bad_entity_does_not_gain_display_identity (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_different_filing_or_bad_entity_does_not_gain_display_identity) ... ERROR
+test_predecessor_reporting_cik_changes_only_presentation_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_predecessor_reporting_cik_changes_only_presentation_view) ... ERROR
+test_unregistered_reporter_or_cross_subject_trace_is_rejected (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_unregistered_reporter_or_cross_subject_trace_is_rejected) ... ERROR
+
+======================================================================
+ERROR: test_current_reporter_preserves_current_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_current_reporter_preserves_current_view)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tests/vnext/test_reporting_company_projection.py", line 30, in test_current_reporter_preserves_current_view
+    self.assertEqual(self.view(),self.company)
+                     ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tests/vnext/test_reporting_company_projection.py", line 17, in view
+    return projection._reporting_company_view(data_root=ROOT,company=self.company,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_reporting_company_view'
+
+======================================================================
+ERROR: test_different_filing_or_bad_entity_does_not_gain_display_identity (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_different_filing_or_bad_entity_does_not_gain_display_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tests/vnext/test_reporting_company_projection.py", line 42, in test_different_filing_or_bad_entity_does_not_gain_display_identity
+    with self.assertRaisesRegex(ValueError,'TRACE_FILING_CHANGED'):self.view()
+                                                                   ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tests/vnext/test_reporting_company_projection.py", line 17, in view
+    return projection._reporting_company_view(data_root=ROOT,company=self.company,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_reporting_company_view'
+
+======================================================================
+ERROR: test_predecessor_reporting_cik_changes_only_presentation_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_predecessor_reporting_cik_changes_only_presentation_view)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tests/vnext/test_reporting_company_projection.py", line 21, in test_predecessor_reporting_cik_changes_only_presentation_view
+    before=deepcopy(self.company);actual=self.view()
+                                         ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tests/vnext/test_reporting_company_projection.py", line 17, in view
+    return projection._reporting_company_view(data_root=ROOT,company=self.company,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_reporting_company_view'
+
+======================================================================
+ERROR: test_unregistered_reporter_or_cross_subject_trace_is_rejected (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_unregistered_reporter_or_cross_subject_trace_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tests/vnext/test_reporting_company_projection.py", line 34, in test_unregistered_reporter_or_cross_subject_trace_is_rejected
+    with self.assertRaisesRegex(ValueError,'REPORTER_NOT_REGISTERED'):self.view()
+                                                                      ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tests/vnext/test_reporting_company_projection.py", line 17, in view
+    return projection._reporting_company_view(data_root=ROOT,company=self.company,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'scripts.vnext.ordinary_projection' has no attribute '_reporting_company_view'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (errors=4)
+{"allowed_skips": 0, "errors": 4, "failures": 0, "run": 4, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_reporting_company_projection"]}
