@@ -23,18 +23,56 @@
 
 ## 3. 在目标 Pod 上运行
 
-在本机的 SEC_metrics 仓库根目录执行。只复制两个无凭据的源文件到 Pod 临时目录；替换 namespace、Pod、容器名、公司代码目录和工作区地址。工作区地址只出现在命令行，不写进仓库。
+整个流程都在**你自己电脑的 bash 终端**里执行（macOS/Linux 终端，或 Windows 的 Git Bash/WSL），不需要先克隆整个仓库：
+
+1. 从 GitHub 下载两个文件到本机；
+2. 用 `oc` 把它们复制进目标 Pod；
+3. 在 Pod 里运行探针（这一步真实调用 SecureGPT 一次）；
+4. 把结果摘要取回本机。
+
+目标 Pod 通常在内网、访问不了 GitHub，所以先下载到本机再复制进去。前提：本机能访问 github.com，已安装 `oc` 并已 `oc login` 到目标集群。
+
+### 3.1 下载代码（本机）
+
+仓库是公开的，直接下载已合入 main 的固定版本，不需要 GitHub 账号：
+
+```bash
+REF=67ae2c193c5dc8d1b5904154b7751155a9b58422   # PR100 合入 main 的提交
+BASE="https://raw.githubusercontent.com/wlvh/SEC_metrics/$REF"
+mkdir -p securegpt-probe/tools securegpt-probe/scripts
+cd securegpt-probe
+curl -fsSL -o tools/probe_securegpt.py "$BASE/tools/probe_securegpt.py"
+curl -fsSL -o scripts/securegpt_sdk.py "$BASE/scripts/securegpt_sdk.py"
+ls -l tools scripts            # 应各有一个 .py 文件
+```
+
+后面的命令都在这个 `securegpt-probe` 目录里执行。已经有仓库克隆的话，也可以 `git pull` 后在仓库根目录执行，效果相同。
+
+### 3.2 找到要填的参数（本机，只读）
+
+```bash
+oc get pods -n 你的namespace                                        # 选一个 Running 的、带公司SDK的 Pod
+oc get pod <Pod名> -n 你的namespace -o jsonpath='{.spec.containers[*].name}'; echo   # 容器名
+# 找公司 SDK 目录：输出 .../utils/secure_gpt.py 时，SDK_ROOT 填 utils 的上一级目录
+oc exec -n 你的namespace <Pod名> -c <容器名> -- sh -c 'find / -path "*/utils/secure_gpt.py" 2>/dev/null | head -5'
+```
+
+`find` 什么都找不到，说明这个容器没有公司 SDK，换一个 Pod，不要继续往下跑。
+
+### 3.3 复制、运行、取回结果（本机）
+
+把下面前五行换成你的值，再整段执行。工作区地址只出现在命令行，不写进仓库。
 
 ```bash
 NS='你的namespace'
 POD='运行中的企业SDK Pod'
 CONTAINER='容器名'
-SDK_ROOT='/opt/company-project'          # 该目录下能找到公司的 config、utils 等模块
+SDK_ROOT='/opt/company-project'          # 3.2 找到的 utils 上一级目录
 WORKSPACE_URL='<dev工作区地址>'
 REMOTE_ROOT="/tmp/sec-probe-$$"
 RUN_DIR="/tmp/securegpt-probe-$(date -u +%Y%m%dT%H%M%SZ)-$$"
 
-# 1) 复制探针和共用 SDK 模块（保持 tools/ 与 scripts/ 的相对位置）
+# 1) 复制两个文件进 Pod（保持 tools/ 与 scripts/ 的相对位置，不含任何凭据）
 for f in tools/probe_securegpt.py scripts/securegpt_sdk.py; do
   oc -n "$NS" exec -i "$POD" -c "$CONTAINER" -- \
     sh -c 'umask 077; mkdir -p "${1%/*}" && cat > "$1"' sh "$REMOTE_ROOT/$f" < "$f"
@@ -49,7 +87,10 @@ oc -n "$NS" exec "$POD" -c "$CONTAINER" -- \
 
 # 3) 只取回不含 SDK 原始诊断的摘要
 oc -n "$NS" exec "$POD" -c "$CONTAINER" -- cat "$RUN_DIR/summary.json" > ./securegpt-summary.json
+echo "REMOTE_ROOT=$REMOTE_ROOT RUN_DIR=$RUN_DIR"   # 记下这两个值，第5节离线复查要用
 ```
+
+第 2 步终端会打印一行 JSON 摘要，`status` 的含义见第 4 节。
 
 参数说明：
 
