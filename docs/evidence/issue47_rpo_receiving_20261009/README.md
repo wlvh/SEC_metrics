@@ -54,3 +54,5 @@ python3 tools/vnext_company.py results --company salesforce \
 该具体兼容缺口已直接交公共#28，用既有SourceSet/claims可证明身份处理旧Trace格式，并保留未知/混主体的拒绝；不改旧Trace、删回归或放宽来源检查。当前仅Param旧期另存修复验证成立，组合尚未可接收；不得据此宣称当期不退化或50位置完整导出通过。后继修复返回后只跑受影响回归及必要保存/读取，不重做其余45结构检查或完整五年计算。
 
 实际同一公司CLI另核只FY2021/B12一个相关处理版本：首7.998s/禁factory复.905s/独立读全部5年.582s，FY2021 CSV.cik=813828、原ResultID保持。其余四年未处理，30旧结果文件字节相同；旧年度CSV仍按原版本读取，不暗中重渲染。见reporting-cik-company-subset.json/log。结构NA在当前controller按CANDIDATE_READY→NO_SOURCE_CONTENT_CHANGE保存，其业务行仍N_A_STRUCTURAL/null，不误称业务扣留。当前真实当期SF旧Trace兼容失败仍待公共后继，不借这一历史路径通过消除限制。
+
+同固定83225a57程序另核受影响的Param FY2022/FY2023/FY2024原预计算记录：26.159s纯保存/读，三年CSV唯一CIK2041610→813828，原Result/Trace/input及日期/空值保持；金额提取/Calculator禁止，旧每年六文件保持，不更新原公司state/其他年份。见reporting-cik-remaining-predecessor.json/log。首驱动漏已有admission字段在保存阶段被拒，补现有verify_ordinary_source_proofs返回后重做，未构造新scope或修改原件。四个前身年均有实际修正呈现验证，不据此授予当期null Trace兼容或完整B12五年接受。
