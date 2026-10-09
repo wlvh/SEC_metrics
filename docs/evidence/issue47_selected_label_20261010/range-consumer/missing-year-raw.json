@@ -1,0 +1,25 @@
+{
+  "seconds": 3.5677753328345716,
+  "exit_code": 2,
+  "stdout": "{\n  \"elapsed_seconds\": 3.041805708082393,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"salesforce\",\n  \"run_id\": \"20261009T234757Z-b4ac295b\",\n  \"status\": \"FLOW_COMPLETED_WITH_LIMITATIONS\",\n  \"selected_metrics\": [\n    \"B01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"b615aa32d5f74ac5b2bfe6a6942ee8da\",\n      \"version\": \"9e5d4bbd9c5343908ebd147475a2a251\",\n      \"result_id\": \"sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fiscal-range-salesforce-20261010/state/updates/B01/periods/FY2026/results/9e5d4bbd9c5343908ebd147475a2a251\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2026,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fiscal-range-salesforce-20261010/state/updates/B01/periods/FY2026/results/9e5d4bbd9c5343908ebd147475a2a251\",\n      \"program_version\": {\n        \"commit\": \"4cc51f1d9586b576c954b95779f68a1ca64ade20\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"INPUT_OR_EXECUTION_FAILED\",\n      \"attempt_id\": \"52d94ba4b597409991cc8ba2f1d4669a\",\n      \"error_type\": \"ValueError\",\n      \"reason\": \"COMPANY_FISCAL_RANGE_YEAR_UNRESOLVED:[{'phase': 'FISCAL_LABEL_UNIQUENESS', 'reason': 'FISCAL_YEAR_MISSING_OR_AMBIGUOUS', 'matching_report_ends': []}]\",\n      \"previous_result\": null,\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2027\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fiscal-range-salesforce-20261010/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fiscal-range-salesforce-20261010/output/20261009T234757Z-b4ac295b\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2026,\n    2027\n  ]\n}\n",
+  "stderr": "",
+  "arguments": [
+    "run",
+    "--company",
+    "salesforce",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2026",
+    "--fiscal-year-end",
+    "2027",
+    "--metric",
+    "B01",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fiscal-range-salesforce-20261010/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/fiscal-range-salesforce-20261010/output"
+  ]
+}
