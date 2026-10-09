@@ -1,0 +1,123 @@
+{
+  "exit_code": 0,
+  "seconds": 0.1455529578961432,
+  "source_selection_calls": 0,
+  "update_calls": 0,
+  "saved_files_unchanged": true,
+  "saved_file_count": 75,
+  "command": [
+    "results",
+    "--company",
+    "jpmorgan_chase",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-jpm-20261009/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-jpm-20261009/cold-read"
+  ],
+  "result": {
+    "elapsed_seconds": 0.014490125002339482,
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "jpmorgan_chase",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "metrics": [
+      {
+        "metric_id": "B07",
+        "result_id": "sha256:1ac94b1aa4f42fda3374079d7f3326ea2a4821e5b09767fa691266529122fa09",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "fiscal_year": 2021,
+        "value": null,
+        "unit": null,
+        "publication": "PUBLISHED",
+        "quality": "NONE",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-jpm-20261009/state/updates/B07/periods/FY2021/results/0fb7f949844746638f705aef59c3bf9b"
+      },
+      {
+        "metric_id": "B07",
+        "result_id": "sha256:afd957e488da8f8957ea976853e29e5ed83a71b6bec5a7a8db894ec3334662f2",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "fiscal_year": 2022,
+        "value": null,
+        "unit": null,
+        "publication": "PUBLISHED",
+        "quality": "NONE",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-jpm-20261009/state/updates/B07/periods/FY2022/results/295e30cd475d4856a70f604076fbffb7"
+      },
+      {
+        "metric_id": "B07",
+        "result_id": "sha256:19c5f5a22a5d90be8d6b437cdde149fdad114e9a473d0db31750ce174cd850a1",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "fiscal_year": 2023,
+        "value": null,
+        "unit": null,
+        "publication": "PUBLISHED",
+        "quality": "NONE",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-jpm-20261009/state/updates/B07/periods/FY2023/results/6fcfee5323ca4a68a26ce90bcf052387"
+      },
+      {
+        "metric_id": "B07",
+        "result_id": "sha256:bf444fc5e42fdfaaaa0d5b5059afcf6a3faa95ee921f2e65cfe10133a40c3885",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "fiscal_year": 2024,
+        "value": null,
+        "unit": null,
+        "publication": "PUBLISHED",
+        "quality": "NONE",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-jpm-20261009/state/updates/B07/periods/FY2024/results/fe168d07a4b241d7b90f9115396f8c77"
+      },
+      {
+        "metric_id": "B07",
+        "result_id": "sha256:e6ccc20de74467bd00d94b2a3e49ab1afa7d4b5b668b03f1a3099c05596a3a0c",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": null,
+        "unit": null,
+        "publication": "PUBLISHED",
+        "quality": "NONE",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-jpm-20261009/state/updates/B07/periods/FY2025/results/7a65ed90351c49b18075e3961acde8b7"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-jpm-20261009/cold-read"
+  },
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

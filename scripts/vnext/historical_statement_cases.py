@@ -9,7 +9,7 @@ from pathlib import Path
 
 from sec_urls import companyfacts_url, submissions_url
 from .batch_workflow import _structured_concepts
-from .calculator import calculate_metric, withheld_metric_result
+from .calculator import calculate_metric, withheld_metric_result, metric_is_applicable
 from .canonical import content_hash
 from .historical_annual_input import prepare_historical_annual_input
 from .historical_dei import annual_period
@@ -25,7 +25,7 @@ from .ordinary_source_authority import verify_ordinary_source_proofs
 from .paired_measure_v1 import paired_measure_problem
 from .sources import companyfacts_structured_facts
 from .traits import repository_company_traits
-from .zero_ai_r2 import _load_deterministic_catalog, _deterministic_metric_graph
+from .zero_ai_r2 import _load_deterministic_catalog, _deterministic_metric_graph, _manual_result_trace
 
 METRICS = frozenset({'B01', 'B02', 'B04', 'B05'})
 CURRENT_ANNUAL_METRICS = frozenset({'B04', 'B05', 'B07'})
@@ -114,13 +114,6 @@ def _successor_comparability_case(*, source, company_id, metric_id, prepared, se
           and str(int(subject['selected_cik'])) == str(int(prepared['entity']))
           == str(int(registry['primary_cik'])), 'HISTORICAL_SUCCESSOR_SUBJECT_NOT_PROVEN')
     period = prepared['table_input']['target_period']
-    documents = installed_ordinary_spec_documents()
-    reader = _Sources(source, company_id, prepared['entity'])
-    reader.read(submissions_url(cik=int(prepared['entity'])),
-        role='sec_submissions_inventory', media_type='application/json')
-    reader.primary(prepared['filing'])
-    for filing in prepared['amendments']:
-        reader.primary(filing)
     context = {'repo_root': ROOT, 'deterministic_catalog': _load_deterministic_catalog(repo_root=ROOT),
         'role_context': {(company_id, 'companyfacts'): {'sources': [], 'claims_by_accession_role': {}}},
         'target_periods': {company_id: {'current': period, 'prior': None}},
@@ -136,20 +129,36 @@ def _successor_comparability_case(*, source, company_id, metric_id, prepared, se
         'reason': 'ENTITY_CONTINUITY_NOT_COMPARABLE', 'subject_policy': subject,
         'statement_values_used': False, 'annual_statement_scope_admitted': False,
         'amendment_scope_not_admitted': bool(prepared['amendments'])}
+    return _metadata_outcome_case(source=source, company_id=company_id, metric_id=metric_id,
+        prepared=prepared, selection=selection, graph=graph, assessment=assessment,
+        record_type='HISTORICAL_SUCCESSOR_COMPARABILITY_INPUT', assessment_name='successor_comparability')
+
+
+def _metadata_outcome_case(*, source, company_id, metric_id, prepared, selection,
+                           graph, assessment, record_type, assessment_name):
+    """Common ordinary case shape for already determined metadata outcomes."""
+    period = prepared['table_input']['target_period']
+    documents = installed_ordinary_spec_documents()
+    reader = _Sources(source, company_id, prepared['entity'])
+    reader.read(submissions_url(cik=int(prepared['entity'])),
+        role='sec_submissions_inventory', media_type='application/json')
+    reader.primary(prepared['filing'])
+    for filing in prepared['amendments']:
+        reader.primary(filing)
     proofs = list({content_hash(value=p): p for p in
         [*prepared['source_proofs'], *[s['proof'] for s in reader.proofs.values()]]}.values())
     records = list(reader.records.values())
     return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id,
-        'input_binding': {'record_type': 'HISTORICAL_SUCCESSOR_COMPARABILITY_INPUT',
+        'input_binding': {'record_type': record_type,
             'prepared_input': prepared, 'period_selection': selection, 'metric_id': metric_id,
             'assessment': assessment},
         'compiled_specs': {metric_id: documents[metric_id]['compiled_spec']},
         'spec_paths': {metric_id: documents[metric_id]['path']}, 'target_period': period,
-        'prepared_annual_input': prepared, 'expected_records': [*records, graph['trace'], result],
-        'results': {metric_id: result}, 'traces': {metric_id: graph['trace']},
+        'prepared_annual_input': prepared, 'expected_records': [*records, graph['trace'], graph['result']],
+        'results': {metric_id: graph['result']}, 'traces': {metric_id: graph['trace']},
         'references': [r for r in records if r['record_type'] == 'SOURCE_REFERENCE'],
         'source_proofs': proofs, 'admission': verify_ordinary_source_proofs(data_root=source, proofs=proofs),
-        'selection': assessment, 'input_assessments': {'successor_comparability': assessment},
+        'selection': assessment, 'input_assessments': {assessment_name: assessment},
         'rules_root': str(ROOT)}
 
 
@@ -176,6 +185,20 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
     period_registry, period_continuity = _registry_for_selected_period(
         registry=registry, prepared=prepared, selection=selection)
     traits = repository_company_traits(repo_root=ROOT, company_id=company_id)
+    if not metric_is_applicable(applicability=spec['compiled']['applicability'], traits=traits):
+        scope = {'coverage': 'deterministic_source_set', 'fiscal_year': fiscal_year}
+        result, trace = _manual_result_trace(metric_id=metric_id, company_id=company_id,
+            period_start=period['period_start'], period_end=period['period_end'], scope=scope,
+            spec_closure_hash=spec['spec_closure_hash'], applicability='N_A_STRUCTURAL',
+            quality='NONE', reason_code='TRAIT_NOT_APPLICABLE', input_observation_ids=[],
+            steps=[{'event':'N_A_STRUCTURAL'}], accession=prepared['filing']['accessionNumber'],
+            entity=prepared['entity'], unit=None)
+        return _metadata_outcome_case(source=source, company_id=company_id, metric_id=metric_id,
+            prepared=prepared, selection=selection, graph={'result':result,'trace':trace},
+            assessment={'category':'APPROVED_STRUCTURAL_APPLICABILITY',
+                'applicability_rule':spec['compiled']['applicability'], 'traits':traits,
+                'statement_values_used':False, 'source_extraction_failure':False},
+            record_type='HISTORICAL_STRUCTURAL_APPLICABILITY_INPUT', assessment_name='structural_applicability')
     reader = _Sources(source, company_id, prepared['entity'])
     main = reader.read(submissions_url(cik=int(prepared['entity'])),
                        role='sec_submissions_inventory', media_type='application/json')

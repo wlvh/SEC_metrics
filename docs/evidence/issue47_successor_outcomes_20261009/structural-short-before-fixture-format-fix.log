@@ -1,0 +1,30 @@
+======================================================================
+ERROR: test_bank_trait_is_na_before_any_amount_selection (tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest.test_bank_trait_is_na_before_any_amount_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-structural-applicability/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 176, in test_bank_trait_is_na_before_any_amount_selection
+    r=cases.prepare_historical_current_annual_year_case(repo_root=Path('/constructed'),
+        company_id='constructed',metric_id='B07',fiscal_year=2024)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-structural-applicability/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 98, in prepare_historical_current_annual_year_case
+    return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
+        metric_id=metric_id, fiscal_year=fiscal_year, withhold_known_source_errors=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-structural-applicability/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 203, in _prepare_historical_statement_case
+    main = reader.read(submissions_url(cik=int(prepared['entity'])),
+                       role='sec_submissions_inventory', media_type='application/json')
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-structural-applicability/SEC_metrics/scripts/vnext/normal_governance_input.py", line 184, in read
+    item = saved_source(repo_root=self.root, url=url, accession=accession)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-structural-applicability/SEC_metrics/scripts/vnext/annual_sources.py", line 37, in saved_source
+    rows = _rows(repo_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-structural-applicability/SEC_metrics/scripts/vnext/annual_sources.py", line 31, in _rows
+    annual_input.validate_request_log_manifest(log_path=path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-structural-applicability/SEC_metrics/scripts/sec_http.py", line 1077, in validate_request_log_manifest
+    raise FileNotFoundError(
+        f"Request log manifest not found: {manifest_path}"
+    )
+FileNotFoundError: Request log manifest not found: /constructed/evidence/requests_log_manifest.json
+
+----------------------------------------------------------------------
+Ran 52 tests in 0.147s
+
+FAILED (errors=1)

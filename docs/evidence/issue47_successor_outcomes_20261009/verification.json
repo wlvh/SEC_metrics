@@ -284,5 +284,43 @@
     "members": 44,
     "bytes": 19844,
     "sha256": "8bef1f290b1a2459f27300196e66d64bde76cb8ce5c9db012d62834e5c8a42ac"
+  },
+  "structural_applicability_followup": {
+    "problem": "B07 bank trait was incorrectly classified as amount-source failure before applicability",
+    "company": "jpmorgan_chase",
+    "years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "policy_and_calculator_unchanged": true,
+    "uses_existing_metric_is_applicable_and_manual_result_trace": true,
+    "outcome": "N_A_STRUCTURAL/null/TRAIT_NOT_APPLICABLE",
+    "first_seconds": 176.04351129219867,
+    "repeat_seconds": 6.042436624877155,
+    "repeat_preparation_and_calculation_calls": 0,
+    "protected_files": 75,
+    "bytes_unchanged": true,
+    "independent_read_seconds": 0.1455529578961432,
+    "source_amount_extraction_and_graph_calls_in_real_2025_probe": 0,
+    "no_amount_probe_seconds": 20.905365832848474,
+    "complete_existing_successor_case_bytes_unchanged": true,
+    "successor_comparison_seconds": 13.146030124975368,
+    "short_tests": 52,
+    "short_seconds": 0.153,
+    "short_skips": 0,
+    "source_code_sha256": "27cf088331c112cc39737d933ecda72343fa4a7f73208ac3c3013f671570d562",
+    "test_code_sha256": "9f7b76e6153d14aff6426afcc9b81af41700eb71901ceb0970bd3e145e986e8f",
+    "prior_wrong_results": 5,
+    "prior_wrong_result_files_still_unchanged": true,
+    "restorable_normal_result_records": "structural-results-index.json",
+    "new_calls": {
+      "sec": 0,
+      "provider": 0,
+      "paid": 0
+    },
+    "CI_new_class_registration": "Pending public shared runner integration; local exact tests passed, old green not evidence for new class"
   }
 }
