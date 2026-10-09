@@ -1,0 +1,955 @@
+{
+  "cases": [
+    {
+      "fiscal_year": 2021,
+      "seconds": 5.641483124811202,
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B03",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+        "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+        "applicability": "APPLICABLE",
+        "quality": "NONE",
+        "publication": "WITHHELD",
+        "reason_code": "ALL_BRANCHES_REJECTED",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:e631c43b9d2c30f27703d12892d88ead953ddfee20802d95e4cb0b636d0470be",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:bafe01e1e307a3f33597024eb4da8f3ab94139278aa1c9dba97e3c4e04372e19"
+      },
+      "source_scope": {
+        "source_candidate_count": 18,
+        "selected_fact_ids": [
+          "fact:sha256:bcfdd93c81ea57fc93c26e250902d22d96ba08b5843d0ab785f1326e2666cf05",
+          "fact:sha256:8b79a14351a3abdd4d698a9b8647fd6a17a91153a7b16720a4e715334e0a21df"
+        ],
+        "source_reported_periods": [
+          [
+            "2019-01-01",
+            "2019-12-31"
+          ],
+          [
+            "2020-01-01",
+            "2020-12-31"
+          ],
+          [
+            "2021-01-01",
+            "2021-12-31"
+          ]
+        ],
+        "reason_code": "ALL_BRANCHES_REJECTED"
+      }
+    },
+    {
+      "fiscal_year": 2024,
+      "seconds": 6.763172208098695,
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B03",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8",
+        "spec_closure_hash": "sha256:706e541ffaf0e1d2cc091b56a635485a2145e70f40f86a401fa2e2c5b0a471e5",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.1653386454183266932270916335",
+        "unit": "ratio",
+        "trace_id": "sha256:0e67361395fa1bea716df9c8dcaec5ee60cc04b79b5d1fc08b7cd1c78448b245",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783"
+      },
+      "source_scope": {
+        "source_candidate_count": 21,
+        "selected_fact_ids": [
+          "fact:sha256:bfaeba3174709c79421d56ed7d00e1b2064c30a0cbf613ea2ed06ea00acb1556",
+          "fact:sha256:c8b67afc330386357c7dfba2c190bef98c89785a57d2d0dc8a557acb07ff2f55",
+          "fact:sha256:1f516b55dbd323d92e9b4d92e3dae48bd9585daf92e11a78cb9f3f5cc9b08162",
+          "fact:sha256:d1e2083e46a6144d2dc727f1955dfba925e0a9a8c0d70e7af4144314d3fe80ae"
+        ],
+        "source_reported_periods": [
+          [
+            "2022-01-01",
+            "2022-12-31"
+          ],
+          [
+            "2023-01-01",
+            "2023-12-31"
+          ],
+          [
+            "2024-01-01",
+            "2024-12-31"
+          ]
+        ],
+        "reason_code": "PASS",
+        "depreciation_scope": {
+          "filing_answer": {
+            "status": "NO_DIRECT_CANDIDATE",
+            "why": "THE_APPROVED_COMPOSITION_APPLIES",
+            "candidates": []
+          },
+          "chain_input": {
+            "concept": "Depreciation+AmortizationOfIntangibleAssets",
+            "value": "383000000"
+          },
+          "primary_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+          "entity": "1048286",
+          "period": {
+            "fiscal_year": 2024,
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31"
+          },
+          "source_facts": [
+            {
+              "concept": "AmortizationOfIntangibleAssets",
+              "fact_ordinal": 888,
+              "context_ref": "c-1",
+              "unit_ref": "usd",
+              "value": "255000000",
+              "decimals": "-6",
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0001048286",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2024-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2024-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              }
+            },
+            {
+              "concept": "Depreciation",
+              "fact_ordinal": 936,
+              "context_ref": "c-1",
+              "unit_ref": "usd",
+              "value": "128000000",
+              "decimals": "-6",
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0001048286",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2024-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2024-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              }
+            }
+          ],
+          "complete_business_scope_proven": false,
+          "status": "KEEP",
+          "composition_originals": {
+            "depreciation": {
+              "concept": "us-gaap:Depreciation",
+              "value_usd": "128000000",
+              "primary_fact_ordinals": [
+                936
+              ]
+            },
+            "amortization": {
+              "concept": "us-gaap:AmortizationOfIntangibleAssets",
+              "value_usd": "255000000",
+              "primary_fact_ordinals": [
+                888
+              ]
+            }
+          },
+          "why": "THE_APPROVED_COMPOSITION_APPLIES",
+          "contract_amortization": {
+            "status": "COMPOSED_DA_CONTRACT_REVENUE_DEDUCTION_EXCLUDED",
+            "blocked": false,
+            "primary_source_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+            "selected_components": {
+              "depreciation": "128000000",
+              "amortization": "255000000"
+            },
+            "selected_original_facts": {
+              "depreciation": {
+                "concept": "us-gaap:Depreciation",
+                "value_usd": "128000000",
+                "primary_fact_ordinals": [
+                  936
+                ]
+              },
+              "amortization": {
+                "concept": "us-gaap:AmortizationOfIntangibleAssets",
+                "value_usd": "255000000",
+                "primary_fact_ordinals": [
+                  888
+                ]
+              }
+            },
+            "excluded_facts": [
+              {
+                "ordinal": 80,
+                "context_ref": "c-13",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+                },
+                "resolved_dimensions": {
+                  "srt:ProductOrServiceAxis": "{http://www.marriott.com/20241231}FeeServiceMember"
+                },
+                "value_usd": "103000000"
+              },
+              {
+                "ordinal": 1017,
+                "context_ref": "c-231",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+                },
+                "resolved_dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "{http://www.marriott.com/20241231}FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "{http://www.marriott.com/20241231}USAndCanadaSegmentMember"
+                },
+                "value_usd": "76000000"
+              },
+              {
+                "ordinal": 1018,
+                "context_ref": "c-232",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "mar:EMEASegmentMember"
+                },
+                "resolved_dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "{http://www.marriott.com/20241231}FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "{http://www.marriott.com/20241231}EMEASegmentMember"
+                },
+                "value_usd": "14000000"
+              },
+              {
+                "ordinal": 1019,
+                "context_ref": "c-233",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "mar:GreaterChinaMember"
+                },
+                "resolved_dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "{http://www.marriott.com/20241231}FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "{http://www.marriott.com/20241231}GreaterChinaMember"
+                },
+                "value_usd": "1000000"
+              },
+              {
+                "ordinal": 1020,
+                "context_ref": "c-234",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "mar:APECMember"
+                },
+                "resolved_dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "{http://www.marriott.com/20241231}FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "{http://www.marriott.com/20241231}APECMember"
+                },
+                "value_usd": "5000000"
+              }
+            ],
+            "revenue_deduction_proofs": [
+              {
+                "fact_ordinal": 80,
+                "relation_class": "CONSOLIDATED_REVENUE_DEDUCTION",
+                "dimensions": {
+                  "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+                },
+                "table_id": "table_000026",
+                "table_grid_sha256": "sha256:54efb5bd24f9884174ad7acec45b9e15a7f7f471fcee90819e89f867e94a68aa",
+                "gross_row": 6,
+                "deduction_row": 7,
+                "net_row": 8,
+                "reported_labels": [
+                  "Gross fee revenues",
+                  "Contract investment amortization",
+                  "Net fee revenues"
+                ],
+                "displayed_amounts": [
+                  "5170",
+                  "-103",
+                  "5067"
+                ]
+              },
+              {
+                "fact_ordinal": 1017,
+                "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "mar:USAndCanadaSegmentMember"
+                },
+                "table_id": "table_000051",
+                "table_grid_sha256": "sha256:b267a6e86447b08796fdffc6e7fe9e71cb792dc47c1c290782af3145aa402646",
+                "gross_row": 3,
+                "deduction_row": 4,
+                "net_row": 5,
+                "reported_labels": [
+                  "Gross fee revenues",
+                  "Contract investment amortization",
+                  "Net fee revenues"
+                ],
+                "displayed_amounts": [
+                  "2951",
+                  "-76",
+                  "2875"
+                ]
+              },
+              {
+                "fact_ordinal": 1018,
+                "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "mar:EMEASegmentMember"
+                },
+                "table_id": "table_000051",
+                "table_grid_sha256": "sha256:b267a6e86447b08796fdffc6e7fe9e71cb792dc47c1c290782af3145aa402646",
+                "gross_row": 3,
+                "deduction_row": 4,
+                "net_row": 5,
+                "reported_labels": [
+                  "Gross fee revenues",
+                  "Contract investment amortization",
+                  "Net fee revenues"
+                ],
+                "displayed_amounts": [
+                  "589",
+                  "-14",
+                  "575"
+                ]
+              },
+              {
+                "fact_ordinal": 1019,
+                "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "mar:GreaterChinaMember"
+                },
+                "table_id": "table_000051",
+                "table_grid_sha256": "sha256:b267a6e86447b08796fdffc6e7fe9e71cb792dc47c1c290782af3145aa402646",
+                "gross_row": 3,
+                "deduction_row": 4,
+                "net_row": 5,
+                "reported_labels": [
+                  "Gross fee revenues",
+                  "Contract investment amortization",
+                  "Net fee revenues"
+                ],
+                "displayed_amounts": [
+                  "250",
+                  "-1",
+                  "249"
+                ]
+              },
+              {
+                "fact_ordinal": 1020,
+                "relation_class": "OPERATING_SEGMENT_REVENUE_DEDUCTION",
+                "dimensions": {
+                  "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+                  "srt:ProductOrServiceAxis": "mar:FeeServiceMember",
+                  "us-gaap:StatementBusinessSegmentsAxis": "mar:APECMember"
+                },
+                "table_id": "table_000051",
+                "table_grid_sha256": "sha256:b267a6e86447b08796fdffc6e7fe9e71cb792dc47c1c290782af3145aa402646",
+                "gross_row": 3,
+                "deduction_row": 4,
+                "net_row": 5,
+                "reported_labels": [
+                  "Gross fee revenues",
+                  "Contract investment amortization",
+                  "Net fee revenues"
+                ],
+                "displayed_amounts": [
+                  "345",
+                  "-5",
+                  "340"
+                ]
+              }
+            ],
+            "amount_added_or_result_recomputed": false
+          }
+        },
+        "income_observation_checks": [
+          {
+            "observation_id": "sha256:af01b12ad1237cc7ea83573b89cd8c48b772117ac9ca2bc9783969cf9c251ef4",
+            "original_reports": {
+              "primary": [
+                {
+                  "concept": "us-gaap:Revenues",
+                  "value": "25100000000",
+                  "unit": "USD",
+                  "period_start": "2024-01-01",
+                  "period_end": "2024-12-31",
+                  "decimals": "-6",
+                  "ordinal": 92,
+                  "context_ref": "c-1",
+                  "context": {
+                    "context_ref": "c-1",
+                    "dimensions": {},
+                    "entity_identifier": "0001048286",
+                    "period_end": "2024-12-31",
+                    "period_start": "2024-01-01",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "identifiers": [
+                      {
+                        "value": "0001048286",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2024-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2024-12-31"
+                      }
+                    ],
+                    "dimensions": [],
+                    "typed_dimension_count": 0
+                  },
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+                    "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+                    "company_id": "marriott_international",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+                    "accession": "0001628280-25-004818",
+                    "document_name": "mar-20241231.htm",
+                    "source_role": "target_primary",
+                    "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+                  }
+                },
+                {
+                  "concept": "us-gaap:Revenues",
+                  "value": "25100000000",
+                  "unit": "USD",
+                  "period_start": "2024-01-01",
+                  "period_end": "2024-12-31",
+                  "decimals": "-6",
+                  "ordinal": 1164,
+                  "context_ref": "c-1",
+                  "context": {
+                    "context_ref": "c-1",
+                    "dimensions": {},
+                    "entity_identifier": "0001048286",
+                    "period_end": "2024-12-31",
+                    "period_start": "2024-01-01",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "identifiers": [
+                      {
+                        "value": "0001048286",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2024-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2024-12-31"
+                      }
+                    ],
+                    "dimensions": [],
+                    "typed_dimension_count": 0
+                  },
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+                    "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+                    "company_id": "marriott_international",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+                    "accession": "0001628280-25-004818",
+                    "document_name": "mar-20241231.htm",
+                    "source_role": "target_primary",
+                    "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+                  }
+                }
+              ],
+              "xml": [
+                {
+                  "concept": "us-gaap:revenues",
+                  "value": "25100000000",
+                  "unit": "USD",
+                  "period_start": "2024-01-01",
+                  "period_end": "2024-12-31",
+                  "decimals": "-6",
+                  "ordinal": 92,
+                  "context_ref": "c-1",
+                  "context": {
+                    "context_ref": "c-1",
+                    "dimensions": {},
+                    "entity_identifier": "0001048286",
+                    "period_end": "2024-12-31",
+                    "period_start": "2024-01-01",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "identifiers": [
+                      {
+                        "value": "0001048286",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2024-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2024-12-31"
+                      }
+                    ],
+                    "dimensions": [],
+                    "typed_dimension_count": 0
+                  },
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+                    "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+                    "company_id": "marriott_international",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml",
+                    "accession": "0001628280-25-004818",
+                    "document_name": "mar-20241231_htm.xml",
+                    "source_role": "auditor_facts",
+                    "request_attempt_id": "request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292"
+                  }
+                },
+                {
+                  "concept": "us-gaap:revenues",
+                  "value": "25100000000",
+                  "unit": "USD",
+                  "period_start": "2024-01-01",
+                  "period_end": "2024-12-31",
+                  "decimals": "-6",
+                  "ordinal": 1164,
+                  "context_ref": "c-1",
+                  "context": {
+                    "context_ref": "c-1",
+                    "dimensions": {},
+                    "entity_identifier": "0001048286",
+                    "period_end": "2024-12-31",
+                    "period_start": "2024-01-01",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "identifiers": [
+                      {
+                        "value": "0001048286",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2024-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2024-12-31"
+                      }
+                    ],
+                    "dimensions": [],
+                    "typed_dimension_count": 0
+                  },
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+                    "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+                    "company_id": "marriott_international",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml",
+                    "accession": "0001628280-25-004818",
+                    "document_name": "mar-20241231_htm.xml",
+                    "source_role": "auditor_facts",
+                    "request_attempt_id": "request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "observation_id": "sha256:2c234a65f8ae17b04d8f3ee208cc9e6558a1f164dbd6deaf21ba2321caa66164",
+            "original_reports": {
+              "primary": [
+                {
+                  "concept": "us-gaap:OperatingIncomeLoss",
+                  "value": "3767000000",
+                  "unit": "USD",
+                  "period_start": "2024-01-01",
+                  "period_end": "2024-12-31",
+                  "decimals": "-6",
+                  "ordinal": 113,
+                  "context_ref": "c-1",
+                  "context": {
+                    "context_ref": "c-1",
+                    "dimensions": {},
+                    "entity_identifier": "0001048286",
+                    "period_end": "2024-12-31",
+                    "period_start": "2024-01-01",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "identifiers": [
+                      {
+                        "value": "0001048286",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2024-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2024-12-31"
+                      }
+                    ],
+                    "dimensions": [],
+                    "typed_dimension_count": 0
+                  },
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+                    "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+                    "company_id": "marriott_international",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+                    "accession": "0001628280-25-004818",
+                    "document_name": "mar-20241231.htm",
+                    "source_role": "target_primary",
+                    "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+                  }
+                }
+              ],
+              "xml": [
+                {
+                  "concept": "us-gaap:operatingincomeloss",
+                  "value": "3767000000",
+                  "unit": "USD",
+                  "period_start": "2024-01-01",
+                  "period_end": "2024-12-31",
+                  "decimals": "-6",
+                  "ordinal": 113,
+                  "context_ref": "c-1",
+                  "context": {
+                    "context_ref": "c-1",
+                    "dimensions": {},
+                    "entity_identifier": "0001048286",
+                    "period_end": "2024-12-31",
+                    "period_start": "2024-01-01",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "identifiers": [
+                      {
+                        "value": "0001048286",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2024-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2024-12-31"
+                      }
+                    ],
+                    "dimensions": [],
+                    "typed_dimension_count": 0
+                  },
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+                    "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+                    "company_id": "marriott_international",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml",
+                    "accession": "0001628280-25-004818",
+                    "document_name": "mar-20241231_htm.xml",
+                    "source_role": "auditor_facts",
+                    "request_attempt_id": "request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "observation_id": "sha256:46e3980620e2fc1440b34ea84d5e3593c5c4dd270349bf99eea455317202c67f",
+            "original_reports": {
+              "primary": [
+                {
+                  "concept": "us-gaap:Depreciation",
+                  "value": "128000000",
+                  "unit": "USD",
+                  "period_start": "2024-01-01",
+                  "period_end": "2024-12-31",
+                  "decimals": "-6",
+                  "ordinal": 936,
+                  "context_ref": "c-1",
+                  "context": {
+                    "context_ref": "c-1",
+                    "dimensions": {},
+                    "entity_identifier": "0001048286",
+                    "period_end": "2024-12-31",
+                    "period_start": "2024-01-01",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "identifiers": [
+                      {
+                        "value": "0001048286",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2024-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2024-12-31"
+                      }
+                    ],
+                    "dimensions": [],
+                    "typed_dimension_count": 0
+                  },
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+                    "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+                    "company_id": "marriott_international",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+                    "accession": "0001628280-25-004818",
+                    "document_name": "mar-20241231.htm",
+                    "source_role": "target_primary",
+                    "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+                  }
+                }
+              ],
+              "xml": [
+                {
+                  "concept": "us-gaap:depreciation",
+                  "value": "128000000",
+                  "unit": "USD",
+                  "period_start": "2024-01-01",
+                  "period_end": "2024-12-31",
+                  "decimals": "-6",
+                  "ordinal": 936,
+                  "context_ref": "c-1",
+                  "context": {
+                    "context_ref": "c-1",
+                    "dimensions": {},
+                    "entity_identifier": "0001048286",
+                    "period_end": "2024-12-31",
+                    "period_start": "2024-01-01",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "identifiers": [
+                      {
+                        "value": "0001048286",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2024-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2024-12-31"
+                      }
+                    ],
+                    "dimensions": [],
+                    "typed_dimension_count": 0
+                  },
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+                    "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+                    "company_id": "marriott_international",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml",
+                    "accession": "0001628280-25-004818",
+                    "document_name": "mar-20241231_htm.xml",
+                    "source_role": "auditor_facts",
+                    "request_attempt_id": "request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "observation_id": "sha256:eda9dee2c1c9377bf47d522772ac698ff9f2bf6e080132411c973841a895da31",
+            "original_reports": {
+              "primary": [
+                {
+                  "concept": "us-gaap:AmortizationOfIntangibleAssets",
+                  "value": "255000000",
+                  "unit": "USD",
+                  "period_start": "2024-01-01",
+                  "period_end": "2024-12-31",
+                  "decimals": "-6",
+                  "ordinal": 888,
+                  "context_ref": "c-1",
+                  "context": {
+                    "context_ref": "c-1",
+                    "dimensions": {},
+                    "entity_identifier": "0001048286",
+                    "period_end": "2024-12-31",
+                    "period_start": "2024-01-01",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "identifiers": [
+                      {
+                        "value": "0001048286",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2024-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2024-12-31"
+                      }
+                    ],
+                    "dimensions": [],
+                    "typed_dimension_count": 0
+                  },
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+                    "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+                    "company_id": "marriott_international",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+                    "accession": "0001628280-25-004818",
+                    "document_name": "mar-20241231.htm",
+                    "source_role": "target_primary",
+                    "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+                  }
+                }
+              ],
+              "xml": [
+                {
+                  "concept": "us-gaap:amortizationofintangibleassets",
+                  "value": "255000000",
+                  "unit": "USD",
+                  "period_start": "2024-01-01",
+                  "period_end": "2024-12-31",
+                  "decimals": "-6",
+                  "ordinal": 888,
+                  "context_ref": "c-1",
+                  "context": {
+                    "context_ref": "c-1",
+                    "dimensions": {},
+                    "entity_identifier": "0001048286",
+                    "period_end": "2024-12-31",
+                    "period_start": "2024-01-01",
+                    "typed_dimension_count": 0
+                  },
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "identifiers": [
+                      {
+                        "value": "0001048286",
+                        "scheme": "http://www.sec.gov/CIK"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2024-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2024-12-31"
+                      }
+                    ],
+                    "dimensions": [],
+                    "typed_dimension_count": 0
+                  },
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2",
+                    "raw_asset_id": "sha256:86079986e69065c1c561543f263ba9d1ca2d41fda7ad3cf027be5a855848bbca",
+                    "company_id": "marriott_international",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231_htm.xml",
+                    "accession": "0001628280-25-004818",
+                    "document_name": "mar-20241231_htm.xml",
+                    "source_role": "auditor_facts",
+                    "request_attempt_id": "request:attempt:db5df37ab8280cba8c8a4f5b09f511e9a3cd6be7655bcecdc9d9172c5069e292"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "saved_and_read": true,
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-aggregate-receiving-1791548946834842000",
+      "same_old_Result_ID": true
+    }
+  ],
+  "unreleased_older_scope_retained": true,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}
