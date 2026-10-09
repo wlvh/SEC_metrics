@@ -7,7 +7,7 @@ from vnext import historical_e01_company_case as cases
 from tests.vnext.test_historical_ma_confirmation import candidate,POINTER
 
 class HistoricalE01CompanyCaseTest(TestCase):
-    def prepare(self, *, dependency=None, successor=False, packet_error=None):
+    def prepare(self, *, dependency=None, successor=False, packet_error=None, amendment_checks=None):
         annual={'company_id':'paramount_skydance_paramount_global','entity':'813828',
             'filing':{'accessionNumber':'constructed'},'amendments':[],
             'subject_policy':{'mode':'SUCCESSOR_REGISTRANT_ONLY' if successor else 'CONTINUOUS_PRIMARY'},
@@ -21,7 +21,7 @@ class HistoricalE01CompanyCaseTest(TestCase):
         reader=SimpleNamespace(primary=Mock(),records={},proofs={})
         with ExitStack() as stack:
             for name,value in [('resolve_period_selection',{}),('prepare_historical_annual_input',annual),
-                ('_Sources',reader),('_event_amendment_checks',[]),('verify_ordinary_source_proofs',{}),
+                ('_Sources',reader),('_event_amendment_checks',amendment_checks or []),('verify_ordinary_source_proofs',{}),
                 ('content_confirmation_candidates',{'candidates':[item]}),
                 ('strict_json_file',{'items':[] if dependency is None else [declaration]})]:
                 stack.enter_context(patch.object(cases,name,return_value=value))
@@ -67,6 +67,22 @@ class HistoricalE01CompanyCaseTest(TestCase):
     def test_source_error_is_not_no_candidate_or_zero(self):
         with self.assertRaisesRegex(ValueError,'MISSING_EVENT_HEADER'):
             self.prepare(packet_error=ValueError('MISSING_EVENT_HEADER'))
+
+    def test_display_summary_keeps_amendment_conclusion_and_full_evidence_separate(self):
+        source={'filing':{'accessionNumber':'constructed'},'period':{'period_end':'2024-12-31'},
+                'raw_sha256':'1'*64,'source_reference':{'source_reference_id':'constructed-reference'},
+                'document':{'text':'constructed original text '*10000}}
+        check={'scope_id':'constructed-scope','classification':'CONSTRUCTED_UNCHANGED_EVENT_WINDOW',
+               'fiscal_window_unchanged':True,'unchanged_input_classes':['FISCAL_EVENT_WINDOW'],
+               'issues':[],'original':source,'amendment':source}
+        case,_,_=self.prepare(amendment_checks=[check])
+        self.assertEqual(check,case['input_assessments']['e01_content']['annual_amendment_checks'][0])
+        summary=case['selection']['e01_content']['annual_amendment_checks'][0]
+        self.assertEqual(check['scope_id'],summary['scope_id'])
+        self.assertTrue(summary['fiscal_window_unchanged'])
+        self.assertEqual(['FISCAL_EVENT_WINDOW'],summary['unchanged_input_classes'])
+        self.assertNotIn('document',summary['original'])
+        self.assertEqual(source['source_reference'],summary['original']['source_reference'])
 
     def test_declared_dependencies_include_the_used_event_and_amendment_rules(self):
         from vnext.historical_event_cases import PROCESSING_FILES as event_files

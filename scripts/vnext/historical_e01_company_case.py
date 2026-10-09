@@ -146,6 +146,17 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
         'attachment_dependencies':dependencies,'matching_response_available':False,
         'old_answer_reused':False,'partial_count_exported':False,
         'target_model_execution_authorized':False,'new_calls':[0,0,0]}
+    # Full amendment evidence remains in input-assessments and the input
+    # binding. The daily CSV needs the conclusion and precise source pointers,
+    # not a second copy of every document/fact in the mechanical scope record.
+    display_assessment = {**assessment, 'annual_amendment_checks': [
+        {key:check[key] for key in ('scope_id','classification',
+            'fiscal_window_unchanged','unchanged_input_classes','issues')} |
+        {'original': {key:check['original'][key] for key in
+            ('filing','period','raw_sha256','source_reference')},
+         'amendment': {key:check['amendment'][key] for key in
+            ('filing','period','raw_sha256','source_reference')}}
+        for check in amendment_checks]}
     binding={'record_type':'HISTORICAL_E01_COMPANY_SOURCE_INPUT','prepared_input':annual,
         'period_selection':selection,'source_proofs':proofs,'request':current_request,
         'predecessor_request_id':None if request is None else request['request_id'],
@@ -158,4 +169,4 @@ def prepare_historical_e01_year_case(*, repo_root, company_id, metric_id, fiscal
         'references':[r for r in indexed.values() if r['record_type']=='SOURCE_REFERENCE'],
         'source_proofs':proofs,'admission':admission,'rules_root':str(ROOT),
         'input_assessments':{'e01_content':assessment,'e01_request':current_request},
-        'selection':{'e01_content':assessment}}
+        'selection':{'e01_content':display_assessment}}
