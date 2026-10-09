@@ -17,3 +17,5 @@
 ex99-increment.tar.gz是本次最小可取得增量，含原件/headers、当前源CSV/manifest/registry及1548slot审查记录；index逐成员SHA。没有复制完整来源/程序树。解包到新目录后，既有_Sources只读读新附件逐字节同一；restored-source-read.json保实际恢复核对。它是源材料及调用事实备份，不初始化/恢复新的可执行账本或许可。已有旧源版本不能原地覆盖，以免旧结果漂移；后继来源版本须在新目录使用当前源CSV及两原件文件，其余来源依原已提交导出恢复。若当前源CSV已经9cb8adec…9dc，只核缺件，不重复追加或GET。
 
 旧source-only导出仍按旧版本解释；本增量不重签旧export/checkpoint，也不改变正在使用的运行包。初恢复记录器误取item['proof']（实际proof在reader.proofs）失败，修后仅读取已解包目录，不重取材料，原失败保留本地work。
+
+现行E01输入消费边界进一步核对：historical_ma_confirmation.confirmation_request及SYSTEM_PROMPT明确只读每个item自身text，validate_answer只许quote为该text的子串；历史e01_confirmation_request仍走此V1。附件依赖已取到并验证不等于现程序把附件提供给抽取上下文。后继输入需显式保父item全文及独立附件全文/SourceReference/proof、在独立源上定位quote，并有不同输入/请求身份；不能把附件拼进原V1text或给原35包/旧回答补成功。指定来源已获准，后继开发接线可继续；任何新目标模型执行仍无额度，完整年度E01接受未证明。此为具体消费者开发缺口，不重新申请已批准的GET、不重启旧批次、不引入压缩/第三轮模型试验或新的信任证明层。
