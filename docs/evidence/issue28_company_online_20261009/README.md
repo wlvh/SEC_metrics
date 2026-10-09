@@ -15,3 +15,5 @@
 共享影响：ordinary_projection.render_ordinary_records录制来源无checkpoint兼容；CLI新增可选call-context，原source-root/原生任务入口默认不变。原SEC客户端/CallLedger/旧冻结Spec及默认_binding()未改。本候选依赖PR67接收，未把全部PR43/历史分支带入。
 
 现有CompanyLocal模拟测试在本机20项中4项因未解析macOS系统临时目录别名报LOCAL_PATH_ALIAS；原行为未改，不伪称通过。新在线真实用户入口在显式绝对/已解析路径执行，不借该错误跳过计数/恢复验证。
+
+61adc0e限定独审REQUEST_CHANGES保留：申领后计划落盘失败的摘要漏报、B02缺前期先阻断B01。修后pending在claim返回即设置，run/acquire摘要均保留未知槽；当前来源先获取，B02前期限制单独传递，继任主体不强迫前期比较。两个新增回归及原公司入口33项8.311s通过。原34行源/完整演练复用未变的HTTP/计算/保存责任；改变的获取顺序与摘要另作定向检查。非阻断观察：整体在线状态/计数从run_summary.json读，company-results/latest-execution描述计算阶段而非全流程。

@@ -82,8 +82,8 @@ class Capture:
         with self.ledger.locked():
             slot,intent=self.ledger.claim(channel='SEC',request_digest=content_hash(value=request),
                 requirement=requirement,plan_id=content_hash(value=request),purpose=self.context['purpose'])
-            _atomic_json(slot/'sec-plan.json', request)
             self.pending = intent['ordinal']
+            _atomic_json(slot/'sec-plan.json', request)
             before=len(rows)
             path=self.source/'evidence/raw'/content_hash(value={'url':url})[7:]/urlsplit(url).path.rsplit('/',1)[-1]
             # An exception after claim intentionally leaves an incomplete slot;
@@ -119,37 +119,42 @@ def acquire_financial(capture, company, metrics):
     raw=capture.get(submissions_url(cik=cik),refresh=True)['raw']
     payload=strict_json_loads(text=raw.decode('utf-8'))
     rows=_filings(payload,inventory_name='current_submissions')
-    for shard in _history_index(payload,str(cik)):
-        latest=max((r['reportDate'] for r in rows if r['form']=='10-K'),default='')
-        prior=max((r['reportDate'] for r in rows if r['form']=='10-K' and r['reportDate']<latest),default='')
-        cutoff=prior if 'B02' in metrics else latest
-        if cutoff and shard['filingTo']<cutoff:continue
-        source=capture.get(submissions_file_url(file_name=shard['name']),refresh=True)
-        body=strict_json_loads(text=source['raw'].decode('utf-8'))
-        values=_filings(body,inventory_name=shard['name'])
-        _need(history_body_alignment(shard=shard,rows=values) is None,'HISTORY_ALIGNMENT_FAILED')
-        rows.extend(values)
-    _need(len({r['accessionNumber'] for r in rows})==len(rows),'METADATA_OVERLAP')
-    # Existing select_filing remains the authority for the recent current
-    # filing; unsupported current history shapes are named limits, not silence.
+    # Fetch the independently supported current filing first. Missing prior
+    # metadata can limit B02 but cannot prevent B01's current sources.
     selected=select_filing(company=company,submissions=payload)
     filing=selected['filing']
-    filings=[filing,*selected['amendments']]
-    if 'B02' in metrics:
-        prior=max((r['reportDate'] for r in rows if r['form']=='10-K' and r['reportDate']<filing['reportDate']),default='')
-        previous=[r for r in rows if r['form']=='10-K' and r['reportDate']==prior]
-        _need(len(previous)==1,'PRIOR_ANNUAL_MISSING_OR_AMBIGUOUS')
-        filings.extend(previous)
-        filings.extend(r for r in rows if r['form']=='10-K/A' and r['reportDate']==prior)
+    def fetch_filings(filings):
+        for current in filings:
+            accession=current['accessionNumber']
+            capture.get(accession_document_url(cik=cik,accession=accession,document_name=current['primaryDocument']),accession=accession)
+            index=capture.get(accession_directory_url(cik=cik,accession=accession),accession=accession)
+            for name in _instance_names(strict_json_loads(text=index['raw'].decode('utf-8')),company,current):
+                capture.get(accession_document_url(cik=cik,accession=accession,document_name=name),accession=accession)
     capture.get(companyfacts_url(cik=cik),refresh=True)
-    for current in filings:
-        accession=current['accessionNumber']
-        capture.get(accession_document_url(cik=cik,accession=accession,document_name=current['primaryDocument']),accession=accession)
-        index=capture.get(accession_directory_url(cik=cik,accession=accession),accession=accession)
-        for name in _instance_names(strict_json_loads(text=index['raw'].decode('utf-8')),company,current):
-            capture.get(accession_document_url(cik=cik,accession=accession,document_name=name),accession=accession)
-    return {'status':'SOURCES_READY_FOR_SELECTED_METRICS','filing':filing,
-            'metric_ids':list(metrics),'all_39_sources_proven':False}
+    fetch_filings([filing,*selected['amendments']])
+    limitations=[]
+    # The existing B02 continuity rule has a no-comparison result for current
+    # successor subjects. Do not force that route to have a predecessor source.
+    if 'B02' in metrics and company['entity_continuity_status']=='continuous':
+        try:
+            for shard in _history_index(payload,str(cik)):
+                prior=max((r['reportDate'] for r in rows if r['form']=='10-K' and r['reportDate']<filing['reportDate']),default='')
+                if prior and shard['filingTo']<prior:continue
+                source=capture.get(submissions_file_url(file_name=shard['name']),refresh=True)
+                body=strict_json_loads(text=source['raw'].decode('utf-8'))
+                _need('cik' not in body or str(body['cik']).isdigit() and int(body['cik'])==cik,'PRIOR_HISTORY_CIK_CHANGED')
+                values=_filings(body,inventory_name=shard['name'])
+                _need(history_body_alignment(shard=shard,rows=values) is None,'HISTORY_ALIGNMENT_FAILED')
+                rows.extend(values)
+            _need(len({r['accessionNumber'] for r in rows})==len(rows),'METADATA_OVERLAP')
+            prior=max((r['reportDate'] for r in rows if r['form']=='10-K' and r['reportDate']<filing['reportDate']),default='')
+            previous=[r for r in rows if r['form']=='10-K' and r['reportDate']==prior]
+            _need(len(previous)==1,'PRIOR_ANNUAL_MISSING_OR_AMBIGUOUS')
+            fetch_filings([*previous,*(r for r in rows if r['form']=='10-K/A' and r['reportDate']==prior)])
+        except Exception as error:
+            limitations.append({'metric_id':'B02','error_type':type(error).__name__,'reason':str(error)})
+    return {'status':'SOURCES_PARTIAL_FOR_SELECTED_METRICS' if limitations else 'SOURCES_READY_FOR_SELECTED_METRICS',
+            'filing':filing,'metric_ids':list(metrics),'metric_limitations':limitations,'all_39_sources_proven':False}
 
 
 def run_online_company(*, company_id, work_dir, output_dir, call_context, metric_ids=None,max_sec_requests=20, calculate=True):
@@ -192,6 +197,6 @@ def run_online_company(*, company_id, work_dir, output_dir, call_context, metric
         calls={'provider':0,'paid':0,'sec':(None if capture.pending is not None else len(capture.captures)) if ledger.live else 0}
         result={**calculated,'source_mode':'ONLINE_DISCOVERY_WITH_ORDINARY_RECORDS','discovery':discovery,'calls':calls,'simulated_sec_claims':len(capture.captures)+int(capture.pending is not None) if not ledger.live else 0,
                 'execution_mode':context['execution_mode'],'unknown_capture_ordinal':capture.pending,'source_capture_receipts':capture.captures}
-        if discovery['status']=='SOURCE_DISCOVERY_FAILED':result['status']='FLOW_COMPLETED_WITH_LIMITATIONS'
+        if discovery['status']!='SOURCES_READY_FOR_SELECTED_METRICS':result['status']='FLOW_COMPLETED_WITH_LIMITATIONS'
         _atomic_json(Path(result['output_root'])/'run_summary.json',result)
         return result

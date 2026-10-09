@@ -65,3 +65,52 @@ class CompanyOnlineTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'METRIC_NOT_CONNECTED'):
             online.run_online_company(company_id='marriott_international',work_dir=self.root/'task',output_dir=self.root/'out',call_context=self.root/'missing-context',metric_ids=['D03'])
         with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,0])
+
+    def test_claim_is_reported_pending_before_plan_persistence(self):
+        context=self.root/'context.json';context.write_text(json.dumps(self.context))
+        original=online._atomic_json
+        def interrupted(path,value):
+            if path.name=='sec-plan.json':raise RuntimeError('plan persistence interrupted')
+            return original(path,value)
+        for calculate in (False,True):
+            # Each mode uses a separate isolated recorded ledger, no real quota.
+            if calculate:
+                ledger=recorded_ledger(root=self.root/'ledger-run',limits=(0,0,10))
+                with ledger.locked():ledger.snapshot()
+                context.write_text(json.dumps({**self.context,'ledger_root':str(ledger.root)}))
+            output=self.root/'output';output.mkdir(exist_ok=True)
+            with patch.object(online,'_atomic_json',side_effect=interrupted), \
+                 patch('vnext.company_current_records.run_saved_company',return_value={'output_root':str(output),'status':'FLOW_COMPLETED'}) as calculator, \
+                 patch('sec_http.urlopen',side_effect=AssertionError('no HTTP before plan')):
+                result=online.run_online_company(company_id='marriott_international',work_dir=self.root/('run' if calculate else 'acquire'),output_dir=output,call_context=context,calculate=calculate)
+            self.assertEqual(result['unknown_capture_ordinal'],1)
+            self.assertEqual(result['simulated_sec_claims'],1)
+            self.assertEqual(result['calls'],{'provider':0,'paid':0,'sec':0})
+            self.assertEqual(calculator.call_count,int(calculate))
+
+    def test_prior_metadata_missing_does_not_prevent_current_sources(self):
+        from vnext.normal_annual_input import _registry_rows
+        for company_id in ('marriott_international','paramount_skydance_paramount_global'):
+            company=next(r for r in _registry_rows(repo_root=REPO_ROOT) if r['company_id']==company_id)
+            cik=company['primary_cik'];accession=cik.zfill(10)+'-26-000007';document='issuer-20251231.htm'
+            payload={'cik':int(cik),'filings':{'recent':{
+                'form':['10-K'],'reportDate':['2025-12-31'],'filingDate':['2026-02-10'],
+                'accessionNumber':[accession],'primaryDocument':[document]},'files':[]}}
+            requested=[]
+            class CaptureSpy:
+                def get(self,url,**kwargs):
+                    requested.append(url)
+                    if '/submissions/' in url:raw=json.dumps(payload).encode()
+                    elif url.endswith('index.json'):raw=json.dumps({'directory':{'name':'/Archives/edgar/data/'+cik+'/'+accession.replace('-',''),'item':[{'name':document}]}}).encode()
+                    else:raw=b'dummy body; discovery only, not semantic acceptance'
+                    return {'raw':raw}
+            result=online.acquire_financial(CaptureSpy(),company,['B01','B02'])
+            self.assertEqual(len(requested),4)
+            self.assertTrue(any('/companyfacts/' in u for u in requested))
+            self.assertTrue(any(u.endswith(document) for u in requested))
+            if company['entity_continuity_status']=='continuous':
+                self.assertEqual(result['metric_limitations'][0]['metric_id'],'B02')
+                self.assertEqual(result['status'],'SOURCES_PARTIAL_FOR_SELECTED_METRICS')
+            else:
+                self.assertEqual(result['metric_limitations'],[])
+                self.assertEqual(result['status'],'SOURCES_READY_FOR_SELECTED_METRICS')
