@@ -614,3 +614,10 @@ ac25689c字典修复独审REQUEST_CHANGES保留：32工具/3消息、16:44:23–
 PR67 exact5f35cca2 all9CI SUCCESS, stable success/withheld reuse and real Paramount date conflict remain under its existing primary evidence; no new family/model/online path. PR70 exactcf02fc65 all13checks SUCCESS, old30s failures preserved. Independent source-only DraftPR79 main1cc80525 uses explicit inline-paragraphs-v2 and preserves defaultblocks-v1/old identities. Three prior P1 reviews remain NEEDS_FIX; exact77e3 hidden-gap and b2d84 quoted-fragment deltas independently pass their bounded scopes.16short tests.097s, real2024 thirteen blocks/three paragraphs instantaneous source property4.618s; no company Result/CSV/annual continuity credit. Receiver must explicitly select all3processing files and verify its own Paramount24 B08/B09, retaining null until then. Own current source consumers not silently switched; PR67 scope closed. Initial79CI running/queued, terminal must be read later.
 
 Shared short test patches fixedPR77e333/PR78a457:25/32actual method counts, no duplicate whole dispatch registration; temporary-index application/function-AST checks only. Existing shared-short-selectors record holds exact hashes/prerequisites; receiver owns real tests/newhead CI. This is not new25/32parent execution or allhistorical acceptance. Ledger143/143/52, new0/0/0 and production limits unchanged. Continue actual receiving and CI failures, not more broad source/metric expansion.
+
+
+## 2026-10-09 公共文档与有限在线接续
+
+PR80/ccf9d56f基于main8588，仅修当前导航与版本边界；12检查成功、fast两项未变NormalAnnualInput原件测试30秒超时，未全绿。PR83/784dbdb2依赖PR67，产品精确f1c0088：现有客户端/原账本计数→来源发现/落盘→普通B01/B02计算/CSV真实程序链，只有外部HTTP重放，真实新增0/0/0。8源首跑9.164s、禁计算复跑1.102s保原目录、独立读0.00841s，消费变化/503失败与恢复/前期404邻居隔离均实际通过；测试数值变化不授业务信用。33相关例通过；原61adc独审两P2保留，f1修后限定增量通过。默认旧任务/保存来源入口保留，不伪称新模型/39项在线已就绪。整体run_summary与计算阶段company-results分开；旧原生main调用及其固定依赖、候选source-root、83call-context参数见各PR对应公司运行文档。#47通知6073433127。
+
+下一步：读取83实际CI终态/解决真实残余失败，接收#47 PR81/82所需短测试增量（不重算财报），继续原队列业务与其他在线适配；不以本次推送或CI状态为总Goal完成。原总账195槽保持，provider/paid/SEC143/143/52、余97/97/28；调用前仍核用途/机会/停止，未借#54余额。原#54不重开、不联系旧执行者。

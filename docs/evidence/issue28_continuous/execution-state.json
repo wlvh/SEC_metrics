@@ -5248,6 +5248,39 @@
       "current_input_credit": false,
       "review_started_at": "2026-10-08T21:22:22Z",
       "messages": 3
+    },
+    {
+      "task_name": "review_companyonline_61adc0e",
+      "purpose": "review",
+      "scope_paths": [
+        "scripts/vnext/company_online.py",
+        "scripts/vnext/sec_rate.py",
+        "scripts/vnext/ordinary_projection.py",
+        "tools/vnext_company.py",
+        "tests/vnext/test_company_online.py"
+      ],
+      "patch_sha": "61adc0e7fb7e63b46d5ff84773ca58b8119f84fa",
+      "spawned_at": "2026-10-09T02:42:52.413825+00:00",
+      "ended_at": "2026-10-09T02:52:00Z",
+      "tool_calls": 45,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/docs/evidence/issue28_company_online_20261009/independent-review/conclusion.md",
+      "verdict": "REQUEST_CHANGES_P2_PENDING_SUMMARY_AND_PRIOR_ISOLATION",
+      "message_count": 3
+    },
+    {
+      "task_name": "review_companyonlinep2_f1c0088",
+      "purpose": "review-p2-increment",
+      "scope_paths": [
+        "scripts/vnext/company_online.py",
+        "tests/vnext/test_company_online.py"
+      ],
+      "patch_sha": "f1c0088d3a2069ea3ef98272f22349f738e88ef0",
+      "spawned_at": "2026-10-09T02:57:12.723278+00:00",
+      "ended_at": "2026-10-09T03:04:27Z",
+      "tool_calls": 27,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-company-online/SEC_metrics/docs/evidence/issue28_company_online_20261009/independent-p2/conclusion.md",
+      "verdict": "APPROVE_WITHIN_P2_INCREMENT",
+      "message_count": 3
     }
   ],
   "ci_capacity_20260922": {
@@ -16230,7 +16263,13 @@
       "tests": 30,
       "seconds": 0.006,
       "imported_project_modules_byte_checked": 66,
-      "scope": "Small business/source checks only; no model/company result acceptance"
+      "scope": "Small business/source checks only; no model/company result acceptance",
+      "receiver_reported_branch": "task/issue47-h1-h2-combination-20261009",
+      "receiver_reported_commit": "c318725a",
+      "receiver_direct_tests": 30,
+      "receiver_seconds": 0.005,
+      "receiver_original_12responses": "8length failures/4contract passes preserved",
+      "receiver_no_new_business_acceptance": true
     }
   },
   "peer_increment_20261009": {
@@ -16399,7 +16438,7 @@
   "amendment_source_layout_20261009": {
     "pr": 79,
     "base": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
-    "published_head": "6691ab8fa4fff8043f4cce4079d88aa2ada4aebd",
+    "published_head": "7f3b9957935983fff66917a1439042f42a15e704",
     "source_sha": "b2d84a3c4f8770698c43d9cb95fd16c030d33f24",
     "explicit_api": "inspect_instant_balance_amendment(note_layout=inline-paragraphs-v2)",
     "default_behavior": "blocks-v1 unchanged, known original limitations retained",
@@ -16428,7 +16467,14 @@
       "993d3fb",
       "5cc8bfc"
     ],
-    "ci_initial": "6691: source/reference/ledger/source-material SUCCESS;10 remaining jobs still running, not overall terminal",
+    "ci_initial": {
+      "head": "7f3b9957935983fff66917a1439042f42a15e704",
+      "main": 37853892912,
+      "source": 37853892905,
+      "reference": 37853892902,
+      "all14checks": "SUCCESS",
+      "business_acceptance": false
+    },
     "company_receiving": "Issue47 owner must verify its actual Paramount24 B08/B09/CSV and reuse; own source evidence does not accept it",
     "evidence": "docs/evidence/issue28_amendment_note_20261009/README.md",
     "new_calls": [
@@ -16483,6 +16529,21 @@
       "files_unchanged_on_repeat": 100,
       "independent_read_seconds": 0.074,
       "evidence_read_not_parent_rerun": true
+    },
+    "predecessor_ci": {
+      "head": "6691ab8fa4fff8043f4cce4079d88aa2ada4aebd",
+      "main": 37849375317,
+      "source": 37849375300,
+      "reference": 37849375202,
+      "all14checks": "SUCCESS",
+      "updated_at": "2026-10-08T22:28:15Z"
+    },
+    "receiving61": {
+      "commit": "86e63816d00e2f241f626c59f58041d04d9064cd",
+      "source_test_config_workflow_bytes_exact_6691": true,
+      "67_79_merge_tree_clean": true,
+      "small_tests": 22,
+      "seconds": 0.103
     }
   },
   "pr67_pr61_receiving_seam_20261009": {
@@ -16504,6 +16565,63 @@
       0,
       0,
       0
-    ]
+    ],
+    "ci_549": "All9SUCCESS",
+    "current_reading_document_head": "29c9c9e2080a1de8c809660ac8fbdfc49072ef12",
+    "reading_entry": "AGENTS existing read-results section points to ordinary results; old manifest/trust explanations explicit legacy",
+    "source_test_config_bytes_unchanged": true,
+    "current_doc_head_ci": {
+      "head": "29c9c9e2080a1de8c809660ac8fbdfc49072ef12",
+      "main": 37853754994,
+      "dedicated": 37853755000,
+      "reference": 37853754996,
+      "all9checks": "SUCCESS"
+    }
+  },
+  "public_company_delivery_20261009": {
+    "main_sha": "8588ccbbb1c91d81e0fb1a89dff3575214282549",
+    "docs_pr": 80,
+    "docs_sha": "ccf9d56f0d14dde9cf93f0ad0b58c7cea87c0d11",
+    "docs_ci": {
+      "run_id": 37874068537,
+      "status": "FAILURE",
+      "successful_checks": 12,
+      "failed_checks": {
+        "vNext fast suite": [
+          "NormalAnnualInputTest.test_invalid_source_fiscal_label_and_cik_are_integrity_failures",
+          "NormalAnnualInputTest.test_registry_company_04"
+        ]
+      },
+      "failure_type": "30_SECOND_SOURCE_TEST_TIMEOUT"
+    },
+    "online_pr": 83,
+    "online_head": "784dbdb2c8e0696af24df36f4d9f5ed43ed22b6e",
+    "tested_product_sha": "f1c0088d3a2069ea3ef98272f22349f738e88ef0",
+    "base_pr": 67,
+    "live_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "recorded_program_chain": "PASS_HTTP_BOUNDARY_ONLY",
+    "supported_metrics": [
+      "B01",
+      "B02"
+    ],
+    "review": "APPROVE_WITHIN_P2_INCREMENT",
+    "first_seconds": 9.164,
+    "unchanged_seconds": 1.102,
+    "independent_read_seconds": 0.008408,
+    "source_recovery_seconds": 4.093,
+    "source_failure_isolation_seconds": 6.675,
+    "online_ci_last_observed": "IN_PROGRESS",
+    "remaining": [
+      "exact_head_CI_terminal",
+      "existing_scope_live_execution_not_performed",
+      "other_metric_online_adapters",
+      "required_PR61_main_test_feedback_receiving"
+    ],
+    "doc_entry": "docs/company_local_run.md",
+    "peer_notice": "https://github.com/wlvh/SEC_metrics/issues/47#issuecomment-6073433127"
   }
 }
