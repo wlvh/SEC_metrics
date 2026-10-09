@@ -1,0 +1,25 @@
+name: SecureGPT probe offline checks
+"on":
+  pull_request:
+    paths:
+      - 'scripts/securegpt_sdk.py'
+      - 'tools/probe_securegpt.py'
+      - 'tests/vnext/test_securegpt_probe.py'
+      - '.github/workflows/securegpt-probe.yml'
+permissions:
+  contents: read
+jobs:
+  probe-offline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14'
+      - name: Synthetic SDK only; no network or model call
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 -m unittest -v tests.vnext.test_securegpt_probe

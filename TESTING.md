@@ -608,3 +608,7 @@ PR42来源修订短回归：`python3 -m unittest tests.vnext.test_r5_b06_followu
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_company_results tests.vnext.test_company_processing -v` 为编排／信任回归，财报计算及渲染明确模拟；不替代真实来源、原生 Run 或内容验收。覆盖 B01+D01 后只更新 B01、多指标首次出口、单项失败／重放拒绝保留其它项、旧年度／历史多期间、混合 closure、已确认缺陷和当前来源未复核。保存处理包按外置信任及原请求／响应登记／运行树字节验证；改答案、伪 LIVE、额外 Result、错公司、别名和程序漂移拒绝。
 
 真实材料与原失败见 `docs/evidence/issue54_company/corrective-results/README.md`。CLI 查询／导出使用 `--runtime-root` 指定各结果的原固定树；D04 原录制材料保持原 V14 和 tokenizer0.22.2，只验证独立 SEC 来源与处理输入接线。原请求／响应不改签，无真实新增 SEC/provider/paid 调用；完整 LIVE 材料、内容独审和 OpenShift 未测部分分别登记。
+
+## SecureGPT 探针离线测试
+
+`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v tests.vnext.test_securegpt_probe`：24项，约3秒，由 `.github/workflows/securegpt-probe.yml` 按路径触发。全部使用临时目录里的模拟 SDK，不联网、不调用任何模型；覆盖消息格式转换与非文本拒绝、只认 nonce/整数和的严格 JSON、错误/截断/Markdown/任意文本不算通过、非 JSON 响应体保存后离线复查、超时/异常/SDK 退出均只调用一次且不重试、SDK 缺失或工作区与环境不符时不发请求、已有输出目录拒绝复用、`--bootstrap` 顺序不依赖 spark。它不证明目标 OpenShift 的真实连通，真实结果按 `docs/securegpt_probe.md` 在目标容器执行并单独报告。
