@@ -632,5 +632,14 @@ def unviewed_references(obj, *, own_modules):
 
 # The annual reader, and the fiscal-year label inspection a pinned annual input
 # runs, which re-reads the period and collects the DEI facts' spans.
-annual_period = release_aware(_frozen_annual.annual_period)
+def annual_period(*, raw, cik, filing):
+    """Use the shared finite release option for newly selected historical input."""
+    return _frozen_annual.annual_period(raw=raw, cik=cik, filing=filing,
+                                      dei_release='YEAR_QUARTER_OR_DATE')
+
+# Remaining fiscal-label views still reference the shared annual function.
+# Treat this explicit adapter as its view so they cannot recursively rewrite
+# the new finite namespace-policy helper as an old re.fullmatch question.
+_VIEWS[id(_frozen_annual.annual_period)] = (_frozen_annual.annual_period, annual_period)
+_VIEW_IDS.add(id(annual_period))
 inspect_prepared_fiscal_year_labels = release_aware(_frozen_labels._inspect_prepared_input)
