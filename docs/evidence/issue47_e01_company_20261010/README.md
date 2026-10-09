@@ -90,3 +90,5 @@ PY_SOURCE_ONLY
 这一真正展示代码变化只正常迁移原E01该一坐标22.861s，原旧版本保留，禁factory复3.371s/calculationfalse、独立results.603s；15旧新结果/pointer文件保持，全年/CIK/null/2aa完整请求及annual amendment原评估均在。company-cli-display-final.json/log。没有其他公司/年份重算，原大CSV保旧版本。正式用户入口现在能写出可读未决和具体来源依赖，但内容确认模型业务仍未交付；新SEC/provider/paid0，无NativeRun/接受/active。
 
 公共方按885c固定tree提供最小CI patch，现PR114接收：只追加本consumer/完整附件合同/原MA合同三测试path及原Selected event步骤三模块，原source/projection/explicit门不丢、金融历史步骤不变。按同一实际步骤命令53方法.130s零skip，workflow-six-modules.json/log逐模块确认。此为小型纯合同/程序控制，真实ParamCLI复用上节，不以这些控制增加模型接受；新head远端执行单独核。
+
+7f02实际公司workflow37979164089/job113984974948已SUCCESS，日志逐模块source8/projection5/explicit7/consumer9/incorporated11/MA13，共53方法.285s零skip；不是模块名只登记未加载。原保存源194/177.604s、三金融/历史分派状态60/.486s、event retention10/.107s、原账本兼容22/6.050s均执行通过。ci-7f02-company.log/summary记录本提交实际触发、作业及方法。两个基础作业当时仍在运行，整体终态另读；纯记录后继不改变该生产实现，也不重复财报或provider。
