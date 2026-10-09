@@ -41,6 +41,12 @@ python3 -m unittest -v tests.vnext.test_historical_geography_cases \
   tests.vnext.test_dei_release_selection tests.vnext.test_company_current_records
 ```
 
-原件只读，状态/输出在代码和来源目录之外；results输出目录必须新。年度缺件与金融完整五年、其他公司年度、online历史发现/补齐及其余指标仍未验证，责任继续。全部本批新SEC/provider/paid=0，无原调用额度重启或旧回答改写；有限公开组件接收与完整业务关闭标准分别说明。
+原件只读，状态/输出在代码和来源目录之外；results输出目录必须新。年度缺件、其他公司年度/其他金融指标、online历史发现/补齐及完整业务目标仍未验证，责任继续。全部本批新SEC/provider/paid=0，无原调用额度重启或旧回答改写；有限公开组件接收与完整业务关闭标准分别说明。
 
 公共作者已提供仅本候选使用的最小CI patch：现有company-current workflow增加本5短例文件的paths，并在原historical步骤显式追加模块。三个模块本地26项.162s/零skip，workflow-short.log；无公共runner/策略变更，也不为路径触发另造提交。正式历史指南已标为候选、只JPM21实测，不改main能力声明。新远端head作业/具体方法执行另核，不能借公共104的绿灯。
+
+## JPMorgan五年范围的后续实际消费者验证
+
+在同一已提交c1853bf1和同一原状态上只新增FY2022–FY2025四坐标：首94.199/81.299/67.157/40.113s，FY2021工厂被禁止且其旧文件保持。全部五年CLI禁factory复跑9.773s/调用0，无新相同结果目录；独立全状态读.631s，46结果/pointer文件保持。五值分别28971000000/31968000000/34873000000/38233000000/42758000000 USD，各年度实际1月1日至12月31日/CIK19617，全部XBRL_OK，来源和计算0新网络调用。five-year-summary.json/log保完整终态，不以五行状态代替内容核对。
+
+直接复用原历史分支已提交bank-measures-read-full-frame.json：五年度已读原Total international行/Revenue窗口逐项对照，新值、USD、全年日期和primary原件SHA全部相同，five-year-reference-comparison.json保对照/原参考SHA，existing-reference-index.json只是原记录A13子集，不改原阅读或增加接受登记。未重读未变年报，也未重算64小组合/原FY2021。这里证明本候选的JPM五年A13保存来源计算、复用、读取和出处贯通；其他公司、其他金融族、在线来源及完整1950业务目标继续。
