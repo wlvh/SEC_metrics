@@ -52,3 +52,5 @@ python3 -m unittest -v tests.vnext.test_historical_geography_cases \
 直接复用原历史分支已提交bank-measures-read-full-frame.json：五年度已读原Total international行/Revenue窗口逐项对照，新值、USD、全年日期和primary原件SHA全部相同，five-year-reference-comparison.json保对照/原参考SHA，existing-reference-index.json只是原记录A13子集，不改原阅读或增加接受登记。未重读未变年报，也未重算64小组合/原FY2021。这里证明本候选的JPM五年A13保存来源计算、复用、读取和出处贯通；其他公司、其他金融族、在线来源及完整1950业务目标继续。
 
 真实缺FY2026边界：同一公司任务请求2026，.873s返回INPUT_OR_EXECUTION_FAILED／ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS，空值不借FY2025。随后禁止factory独立读.582s保五年原值/ResultID，并列第六行缺年空状态，46旧结果/pointer文件不变。missing-year.json/log保实际输出，不把该真实来源缺失解释为结构性不适用、零值或新模型失败；未重算任何旧年度。
+
+Macy’s FY2023真实非自然年结构路径另核：金融金额检查器禁止时同CLI首5.243s返回N_A_STRUCTURAL/null/TRAIT_NOT_APPLICABLE，实际2023-01-29至2024-02-03共371天/FY2023/CIK794367保持；禁factory复.796s调用0/独立读.510s，6旧结果文件不变。noncalendar-structural.json给准确来源/期末/状态。只按既有financial trait资格门，不据此称没有国际收入披露；不是9家公司全范围接受，不重算JPM五年。全部0真实调用，后继仅记录，生产仍c185。
