@@ -1,0 +1,1168 @@
+{
+  "company_id": "jpmorgan_chase",
+  "metric_id": "A13",
+  "fiscal_year": 2021,
+  "reader": "existing historical_financial_wording.fact; development probe, not ordinary dispatch",
+  "outcome": {
+    "passed": true,
+    "value": "28971000000",
+    "source_fact": {
+      "record_type": "FINANCIAL_NATIVE_STRUCTURED_COMPONENT",
+      "schema_version": 1,
+      "metric_id": "A13",
+      "task_contract_hash": "sha256:f197f432bddcf5112bfafd8a2b914e362e15f68fcf35697ad780b7bc6c9f2310",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:7a658afc2bc677dad3fa43df9855352a93dd04afa38766574ae0c3d094105cf0",
+        "raw_asset_id": "sha256:7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478",
+        "company_id": "jpmorgan_chase",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961722000272/jpm-20211231.htm",
+        "accession": "0000019617-22-000272",
+        "document_name": "jpm-20211231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:11c6ef68b6f931651350515faf7899bf4762ef3a0bd2b635064a8d2dd93c1540"
+      },
+      "source_set_manifest": {
+        "schema_version": 1,
+        "record_type": "SOURCE_SET_MANIFEST",
+        "company_id": "jpmorgan_chase",
+        "source_role": "target_primary",
+        "form_types": [
+          "10-K"
+        ],
+        "fiscal_or_date_window": {
+          "period_start": "2022-02-22",
+          "period_end": "2022-02-22"
+        },
+        "discovery_policy": "PINNED_SUBMISSIONS_EXACT_FILING_V1",
+        "discovered_accession_set_hash": "sha256:8bc89290b0ebcd2f467ce02563bd00d1527aecd5c268bb0c5511dadc9e6beec8",
+        "sec_submissions_inventory_hash": "sha256:77f7ffeb5a9778a235b1b9b645d57e407eddeb683d3ab1eda2d3e5483b1de8e6",
+        "inventory_source_reference_id": "sha256:1063739d76a16fab9e1f321b3a268dec6c88f22d37fc823ca7e22b7beb1be24d",
+        "ordered_source_reference_ids": [
+          "sha256:7a658afc2bc677dad3fa43df9855352a93dd04afa38766574ae0c3d094105cf0"
+        ],
+        "cutoff_timestamp_or_pinned_submissions_attempt": "request:attempt:dac03b164b63e26519e5c97f3d1b3c2a9733e362e1e804fe849ed2f9c79fd44d",
+        "source_set_manifest_id": "sha256:db92327f8800e236617ec7d1ec390bc49a5de23b5b758befe1e1087c03b2efa9"
+      },
+      "source_set_scope": "NATIVE_SAVED_SUBMISSIONS_COMPLETE_SOURCE_SET",
+      "target_period": {
+        "fiscal_year": 2021,
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31"
+      },
+      "parsed_source_id": "sha256:c29cc92e216f7abadb9915317176ea702cea9d3190091b545a890e1309ac384e",
+      "source_sha256": "7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478",
+      "native_claims_count": 45,
+      "native_claims_hash": "sha256:674d50d4fa7e4f01ab84ecd1818019de4d445d0cba901a5b193ef663e5dbfc9f",
+      "native_raw_fact_dispositions": [],
+      "selected": [
+        {
+          "claim": {
+            "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+            "claim_kind": "ACCESSION_XBRL_NUMERIC_FACT",
+            "company_id": "jpmorgan_chase",
+            "source_reference_id": "sha256:7a658afc2bc677dad3fa43df9855352a93dd04afa38766574ae0c3d094105cf0",
+            "source_role": "target_primary",
+            "source_set_manifest_id": "sha256:db92327f8800e236617ec7d1ec390bc49a5de23b5b758befe1e1087c03b2efa9",
+            "locator": {
+              "qualified_name": "us-gaap:Revenues",
+              "context_ref": "i51f1831d6a2a46a585226ebec0383592_D20210101-20211231",
+              "ordinal": 7406
+            },
+            "value": "28971000000",
+            "unit": "usd",
+            "attributes": {
+              "adapter_id": "ACCESSION_XBRL",
+              "canonical_name": "us-gaap:Revenues",
+              "context": {
+                "context_ref": "i51f1831d6a2a46a585226ebec0383592_D20210101-20211231",
+                "dimensions": {
+                  "srt:StatementGeographicalAxis": "jpm:TotalInternationalMember"
+                },
+                "entity_identifier": "0000019617",
+                "period_end": "2021-12-31",
+                "period_start": "2021-01-01",
+                "typed_dimension_count": 0
+              },
+              "lexical_value": "28,971",
+              "deterministic_router_semantic_version": "2"
+            },
+            "verified_claim_id": "sha256:9a7424132afd78577e201f9c9d45641a9955996cc5bcb55927bd43821a7cc942"
+          },
+          "source_witness": {
+            "native_fact_ordinal": 7406,
+            "native_context": {
+              "context_ref": "i51f1831d6a2a46a585226ebec0383592_D20210101-20211231",
+              "dimensions": {
+                "srt:StatementGeographicalAxis": "jpm:TotalInternationalMember"
+              },
+              "entity_identifier": "0000019617",
+              "period_end": "2021-12-31",
+              "period_start": "2021-01-01",
+              "typed_dimension_count": 0
+            },
+            "table_cell": {
+              "table_id": "table_000614",
+              "grid_sha256": "sha256:4f13607aad267e509c242d4ad50170d3810ee71b965215c13b8d7b69af819a94",
+              "row_index": 6,
+              "column_index": 6,
+              "origin_row_index": 6,
+              "origin_column_index": 6,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "28,971&#160;",
+              "text": "28,971"
+            },
+            "geography_label": {
+              "table_id": "table_000614",
+              "grid_sha256": "sha256:4f13607aad267e509c242d4ad50170d3810ee71b965215c13b8d7b69af819a94",
+              "row_index": 6,
+              "column_index": 0,
+              "origin_row_index": 6,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "Total international",
+              "text": "Total international"
+            },
+            "reporting_declarations": {
+              "status": "NO_ASSOCIATED_REPORTING_CONTRADICTION",
+              "conflicts": [],
+              "associated_qualifying_statements": []
+            },
+            "revenue_measure": {
+              "header": {
+                "table_id": "table_000614",
+                "grid_sha256": "sha256:4f13607aad267e509c242d4ad50170d3810ee71b965215c13b8d7b69af819a94",
+                "row_index": 1,
+                "column_index": 6,
+                "origin_row_index": 1,
+                "origin_column_index": 6,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "\nRevenue(c)",
+                "text": "Revenue(c)"
+              },
+              "definition": {
+                "start_byte": 14965122,
+                "end_byte": 14965505,
+                "tag": "div",
+                "attributes": [
+                  [
+                    "style",
+                    "padding-left:13.5pt;text-indent:-13.5pt"
+                  ]
+                ],
+                "inside_table": false,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "ix:continuation:72",
+                  "ix:nonnumeric:1",
+                  "div:5"
+                ],
+                "visible_text": "(c)Revenue is composed of net interest income and noninterest revenue.",
+                "span_sha256": "04b91b352a37294b5d1e7d8af63c5e8e4a1331e13047fbc3aa1a9cdf771ed829"
+              },
+              "interpretation": "SOURCE_DEFINED_NET_INTEREST_PLUS_NONINTEREST_REVENUE"
+            },
+            "source_amount_scale": {
+              "unit": "USD",
+              "factor": "1000000",
+              "source_cells": [
+                {
+                  "table_id": "table_000614",
+                  "grid_sha256": "sha256:4f13607aad267e509c242d4ad50170d3810ee71b965215c13b8d7b69af819a94",
+                  "row_index": 1,
+                  "column_index": 0,
+                  "origin_row_index": 1,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3,
+                  "raw_text": "As of or for the year ended December 31, \n(in millions)",
+                  "text": "As of or for the year ended December 31, (in millions)"
+                }
+              ]
+            },
+            "member_classification": "FROM_SAME_FACT_ORIGINAL_ROW_LABEL_NOT_MEMBER_SPELLING",
+            "native_unit_definition": {
+              "unit_id": "usd",
+              "measure": "iso4217:USD",
+              "namespace": "http://www.xbrl.org/2003/iso4217",
+              "canonical_unit": "USD"
+            }
+          }
+        }
+      ],
+      "claim_dispositions": [
+        {
+          "verified_claim_id": "sha256:04b0602a1a9df60f02e726b99881eede5fbce3229a0e8ddf19846ff45d4980f9",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "iaa630f7673884d5b854c2c86f396dc04_D20190101-20191231",
+            "ordinal": 7653
+          },
+          "context": {
+            "context_ref": "iaa630f7673884d5b854c2c86f396dc04_D20190101-20191231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "1211000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:0cc8da38dd323cce0c94a3f4163c86e1da66371db088506f6a5340cca329a5a6",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i0925510e9fe549c98e6c782033374f48_D20200101-20201231",
+            "ordinal": 7655
+          },
+          "context": {
+            "context_ref": "i0925510e9fe549c98e6c782033374f48_D20200101-20201231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:MaterialReconcilingItemsMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "-2978000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:0e104677bfbafd855dc8a143468fe4b45ade9650d63869a3227e564109eafed7",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i7a6202ad38244d89a68ea5a63d980c15_D20200101-20201231",
+            "ordinal": 7520
+          },
+          "context": {
+            "context_ref": "i7a6202ad38244d89a68ea5a63d980c15_D20200101-20201231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:CommercialBankingMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "9313000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:1146ba46f8d8f08e740aec19426fc556c169aa3360c943af3d489a5582cf991a",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i9de82da7210043edbd12a1a99db9e61a_D20190101-20191231",
+            "ordinal": 7656
+          },
+          "context": {
+            "context_ref": "i9de82da7210043edbd12a1a99db9e61a_D20190101-20191231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:MaterialReconcilingItemsMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "-2744000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:1771384bcfcf51b1e1015c13e5b1aa4d1ed32e1b12f3035ea7297e9ebc476f2b",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "iec9fba8577504a83a126be2915f80cfe_D20200101-20201231",
+            "ordinal": 7431
+          },
+          "context": {
+            "context_ref": "iec9fba8577504a83a126be2915f80cfe_D20200101-20201231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "srt:LatinAmericaMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "2740000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:209e8d2b2426e3c6fa7bfe0e6ebc456fd5d688670b59eb2fb9e598396c296b83",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i9d3b729745f44041ac861ff024d34db6_D20190101-20191231",
+            "ordinal": 7476
+          },
+          "context": {
+            "context_ref": "i9d3b729745f44041ac861ff024d34db6_D20190101-20191231",
+            "dimensions": {},
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "115720000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:24895e19e25aec9c53bae61edc4efb0f77f12da83ab094ab01cad7dd6c5c9b5a",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i5392396f8ec0417e98652611efa0fe0f_D20200101-20201231",
+            "ordinal": 7658
+          },
+          "context": {
+            "context_ref": "i5392396f8ec0417e98652611efa0fe0f_D20200101-20201231",
+            "dimensions": {},
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "119951000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:271aef073379b267d17723b770362fd0ae0d517b9d5b0da26f9943faab561e00",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i7635a1f0443946a6b68a1e01e558bb05_D20190101-20191231",
+            "ordinal": 7524
+          },
+          "context": {
+            "context_ref": "i7635a1f0443946a6b68a1e01e558bb05_D20190101-20191231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:AssetandWealthManagementSegmentMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "13591000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:2901bcf0d262b42986d89f6884bacdcbaa5c98924fb37a95e593a3959746290c",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i0f1b7418d3dc455185c478db6596bf8c_D20200101-20201231",
+            "ordinal": 7517
+          },
+          "context": {
+            "context_ref": "i0f1b7418d3dc455185c478db6596bf8c_D20200101-20201231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:CorporateInvestmentBankMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "49284000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:29ef6c2d3518c01c1fc006ad007ef55ef35aa979bdc934289b2ec34a0b9b005b",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+            "ordinal": 109
+          },
+          "context": {
+            "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+            "dimensions": {},
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "121649000000",
+          "unit": "usd",
+          "disposition": "NOT_SOLE_GEOGRAPHY_CONTEXT"
+        },
+        {
+          "verified_claim_id": "sha256:324d09b45cc945df281aeafc0b984d6cec8c2bfee4f6896d67a7c5bd7fc44b86",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i485c602760ad49f9a4cd4da738149222_D20200101-20201231",
+            "ordinal": 7426
+          },
+          "context": {
+            "context_ref": "i485c602760ad49f9a4cd4da738149222_D20200101-20201231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "srt:AsiaPacificMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "9289000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:3b5c0582a30dd9efa60297349c818d3fe8d520087a4d317f3cd4181082c51c4e",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i62e474bb63f6411f99562a555863fa1d_D20190101-20191231",
+            "ordinal": 7521
+          },
+          "context": {
+            "context_ref": "i62e474bb63f6411f99562a555863fa1d_D20190101-20191231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:CommercialBankingMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "9264000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:3bf021aaede4d1126f86a302ee37bcac439af058fb3c87d0f5e65215a52e10f1",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "ib2e461ef73614acb8b7a28ffd50c0570_D20210101-20211231",
+            "ordinal": 7519
+          },
+          "context": {
+            "context_ref": "ib2e461ef73614acb8b7a28ffd50c0570_D20210101-20211231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:CommercialBankingMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "10008000000",
+          "unit": "usd",
+          "disposition": "NOT_SOLE_GEOGRAPHY_CONTEXT"
+        },
+        {
+          "verified_claim_id": "sha256:3e4ab70bf0e9649008c837634d168d803e1e99cee09f35c4dc607a6418edd5eb",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "ie1cdb722ae58450cb67a0700b54999fa_D20200101-20201231",
+            "ordinal": 7421
+          },
+          "context": {
+            "context_ref": "ie1cdb722ae58450cb67a0700b54999fa_D20200101-20201231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "us-gaap:EMEAMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "16566000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:4a4f281adf311b2016636ccb5b52a234be0db371ceafaa73822e98bb183ebd8b",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "ic3eae1944bed4a778f3cbaf99c344a35_D20200101-20201231",
+            "ordinal": 7514
+          },
+          "context": {
+            "context_ref": "ic3eae1944bed4a778f3cbaf99c344a35_D20200101-20201231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:ConsumerCommunityBankingMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "51268000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:55902e9401d744d2b9fa68e84ae320a1bd8c2a5b954125619d7e4a12fd96b378",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i30738e4c25e84804ae223e4564e9a685_D20190101-20191231",
+            "ordinal": 7461
+          },
+          "context": {
+            "context_ref": "i30738e4c25e84804ae223e4564e9a685_D20190101-20191231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "srt:LatinAmericaMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "2405000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:561b63834854c3ab3bd08561b462676d47906f9be8ef0dad9b5c5df2622ed65b",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i5392396f8ec0417e98652611efa0fe0f_D20200101-20201231",
+            "ordinal": 110
+          },
+          "context": {
+            "context_ref": "i5392396f8ec0417e98652611efa0fe0f_D20200101-20201231",
+            "dimensions": {},
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "119951000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:590e193ddda02105ce5b7b3a3870be940c43ace77717f6c40ee865785224c39f",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i220088897e1c4b43abf924397dcc0a12_D20190101-20191231",
+            "ordinal": 7748
+          },
+          "context": {
+            "context_ref": "i220088897e1c4b43abf924397dcc0a12_D20190101-20191231",
+            "dimensions": {
+              "srt:ConsolidatedEntitiesAxis": "srt:ParentCompanyMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "27427000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:6b88ceaf7a169bcec0ba5ed8c84d24bd6fe7fcb69f3378a295c247fb92f79011",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "ifea60796b564449ba9d70bf18b6aecf6_D20200101-20201231",
+            "ordinal": 7441
+          },
+          "context": {
+            "context_ref": "ifea60796b564449ba9d70bf18b6aecf6_D20200101-20201231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "srt:NorthAmericaMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "91356000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:7594cac13eb0b69d326a85a341b5a5981f0cc3504aab27b60b3099324941f40d",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i213ca9fe8b0c4d67b1ffa3a66a688b8f_D20190101-20191231",
+            "ordinal": 7518
+          },
+          "context": {
+            "context_ref": "i213ca9fe8b0c4d67b1ffa3a66a688b8f_D20190101-20191231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:CorporateInvestmentBankMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "39265000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:7a842b6d50aa76a420b6bd437f05ec07fb2628462a5c3b0967cc40d52c926786",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i3259c453d918425389d24b34e9c949d6_D20190101-20191231",
+            "ordinal": 7471
+          },
+          "context": {
+            "context_ref": "i3259c453d918425389d24b34e9c949d6_D20190101-20191231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "srt:NorthAmericaMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "90174000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:7e74925cbce78a2086345874bf3adb9558160dd184c9cd72719086dcc5fe6733",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i05c40230283748d3bf6d83e6a5fde8f4_D20210101-20211231",
+            "ordinal": 7391
+          },
+          "context": {
+            "context_ref": "i05c40230283748d3bf6d83e6a5fde8f4_D20210101-20211231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "us-gaap:EMEAMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "16561000000",
+          "unit": "usd",
+          "disposition": "NOT_DIRECT_DISCLOSED_INTERNATIONAL_TOTAL_LABEL"
+        },
+        {
+          "verified_claim_id": "sha256:7f38fa5fb211b9cc10ed20df701d9dc819529d1e7f60aaa9ac11b089744b3186",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i9d3b729745f44041ac861ff024d34db6_D20190101-20191231",
+            "ordinal": 7659
+          },
+          "context": {
+            "context_ref": "i9d3b729745f44041ac861ff024d34db6_D20190101-20191231",
+            "dimensions": {},
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "115720000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:8be2039b112ced32b834f719124e8da15e9dd666260eda4ede9d8c85506795ec",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i281dfcb177c24111b55943b18d3803ad_D20210101-20211231",
+            "ordinal": 7401
+          },
+          "context": {
+            "context_ref": "i281dfcb177c24111b55943b18d3803ad_D20210101-20211231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "srt:LatinAmericaMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "2756000000",
+          "unit": "usd",
+          "disposition": "NOT_DIRECT_DISCLOSED_INTERNATIONAL_TOTAL_LABEL"
+        },
+        {
+          "verified_claim_id": "sha256:94f549341b701990d3a33375b5c31c56e85c0a7f9903301f7895a47c795bbe8e",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "ib94da930191a4653b2939c6353f5e0fb_D20200101-20201231",
+            "ordinal": 7652
+          },
+          "context": {
+            "context_ref": "ib94da930191a4653b2939c6353f5e0fb_D20200101-20201231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "-1176000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:9514a355942692d4ed7f2e01a5e3592df73f64cb532a9d584f9b45fb9aa42758",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i1e7c8ea6c9224777b12b3f9a0cc0b769_D20210101-20211231",
+            "ordinal": 7522
+          },
+          "context": {
+            "context_ref": "i1e7c8ea6c9224777b12b3f9a0cc0b769_D20210101-20211231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:AssetandWealthManagementSegmentMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "16957000000",
+          "unit": "usd",
+          "disposition": "NOT_SOLE_GEOGRAPHY_CONTEXT"
+        },
+        {
+          "verified_claim_id": "sha256:9a7424132afd78577e201f9c9d45641a9955996cc5bcb55927bd43821a7cc942",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i51f1831d6a2a46a585226ebec0383592_D20210101-20211231",
+            "ordinal": 7406
+          },
+          "context": {
+            "context_ref": "i51f1831d6a2a46a585226ebec0383592_D20210101-20211231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "jpm:TotalInternationalMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "28971000000",
+          "unit": "usd",
+          "disposition": "SELECTED_NATIVE_SOURCE_WITNESSED_DIRECT_TOTAL"
+        },
+        {
+          "verified_claim_id": "sha256:ae0f005bb891ca5544340b993941db247ed8f911f01430136c6cc6ef71c82b99",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i707cdba2e1034a9c8ae6e7a1b1637aee_D20190101-20191231",
+            "ordinal": 7451
+          },
+          "context": {
+            "context_ref": "i707cdba2e1034a9c8ae6e7a1b1637aee_D20190101-20191231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "us-gaap:EMEAMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "15887000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:aea98e9b39d2bcee27bc5155b41197f412da243c9b9d647ac74beb59e1ca34f7",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "ia83c9ad983564aa18260860411a62610_D20210101-20211231",
+            "ordinal": 7513
+          },
+          "context": {
+            "context_ref": "ia83c9ad983564aa18260860411a62610_D20210101-20211231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:ConsumerCommunityBankingMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "50073000000",
+          "unit": "usd",
+          "disposition": "NOT_SOLE_GEOGRAPHY_CONTEXT"
+        },
+        {
+          "verified_claim_id": "sha256:aff99579aa2b2824b6ae8195695193298eecc3d3e24d92572b473bf75503d9d4",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i9d3b729745f44041ac861ff024d34db6_D20190101-20191231",
+            "ordinal": 111
+          },
+          "context": {
+            "context_ref": "i9d3b729745f44041ac861ff024d34db6_D20190101-20191231",
+            "dimensions": {},
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "115720000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:b6a62de857d6f0c255c4201d81a1ad5bd62d4fc41c86cb7aba1e42f392beaee6",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i522ebd407599417e9aafb8ee628c6abd_D20200101-20201231",
+            "ordinal": 7436
+          },
+          "context": {
+            "context_ref": "i522ebd407599417e9aafb8ee628c6abd_D20200101-20201231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "jpm:TotalInternationalMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "28595000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:b93667e97c4e777382041f18d4668387891ac3c4c3e80977b8992c30b376712a",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i092d2e2b1ec74946a004edd02641e950_D20210101-20211231",
+            "ordinal": 7654
+          },
+          "context": {
+            "context_ref": "i092d2e2b1ec74946a004edd02641e950_D20210101-20211231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:MaterialReconcilingItemsMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "-3655000000",
+          "unit": "usd",
+          "disposition": "NOT_SOLE_GEOGRAPHY_CONTEXT"
+        },
+        {
+          "verified_claim_id": "sha256:b954b2e51d4da54f61f20f2dea2775114fb598d03327db54709f8977886acb7b",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i5d338894b7404a1eb81cb716185ed183_D20200101-20201231",
+            "ordinal": 7747
+          },
+          "context": {
+            "context_ref": "i5d338894b7404a1eb81cb716185ed183_D20200101-20201231",
+            "dimensions": {
+              "srt:ConsolidatedEntitiesAxis": "srt:ParentCompanyMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "7718000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:bb68608b3d6c65442b5733ffea60dba31481c3cf5bcc349f606fa6433a5ea24f",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i4266b7d2b0fc43e4bf8a1f907c3019c9_D20190101-20191231",
+            "ordinal": 7456
+          },
+          "context": {
+            "context_ref": "i4266b7d2b0fc43e4bf8a1f907c3019c9_D20190101-20191231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "srt:AsiaPacificMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "7254000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:bd921ef644389d970fee9b71d06b14ef9aa80e24cfd3654d03dd0335a5dbcd37",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+            "ordinal": 7657
+          },
+          "context": {
+            "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+            "dimensions": {},
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "121649000000",
+          "unit": "usd",
+          "disposition": "NOT_SOLE_GEOGRAPHY_CONTEXT"
+        },
+        {
+          "verified_claim_id": "sha256:d91fa7c386e596a0bc45fd7417179fd1d92d43df63132c40383dc9a757aaaea3",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i5392396f8ec0417e98652611efa0fe0f_D20200101-20201231",
+            "ordinal": 7446
+          },
+          "context": {
+            "context_ref": "i5392396f8ec0417e98652611efa0fe0f_D20200101-20201231",
+            "dimensions": {},
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "119951000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:dd9de2ff10088a1afcb276f9de670e91286373af786f9889c61495a1633e1d79",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i8a542adeccb040358562cfe9dfc3c729_D20210101-20211231",
+            "ordinal": 7396
+          },
+          "context": {
+            "context_ref": "i8a542adeccb040358562cfe9dfc3c729_D20210101-20211231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "srt:AsiaPacificMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "9654000000",
+          "unit": "usd",
+          "disposition": "NOT_DIRECT_DISCLOSED_INTERNATIONAL_TOTAL_LABEL"
+        },
+        {
+          "verified_claim_id": "sha256:e4e742f243c03318f7c35430718bcc782cbf3ebe09935493fc35c05bf7ad0395",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "ie327c6e6aee244af8db1607699f145c9_D20210101-20211231",
+            "ordinal": 7651
+          },
+          "context": {
+            "context_ref": "ie327c6e6aee244af8db1607699f145c9_D20210101-20211231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:CorporateNonSegmentMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "-3483000000",
+          "unit": "usd",
+          "disposition": "NOT_SOLE_GEOGRAPHY_CONTEXT"
+        },
+        {
+          "verified_claim_id": "sha256:e8b59341bd3fa7de27f12c3231b7a239c56bc7c1a5c050126caebab5a58bcd23",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "i499352a54da346059b91a1ef6c4997fd_D20190101-20191231",
+            "ordinal": 7466
+          },
+          "context": {
+            "context_ref": "i499352a54da346059b91a1ef6c4997fd_D20190101-20191231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "jpm:TotalInternationalMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "25546000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:eb3bf3ce393f66bf77fc5df58e0048242f4eca7ba834738778afb8f9f81d595e",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+            "ordinal": 7416
+          },
+          "context": {
+            "context_ref": "ia97c6db89a8e4392be10731e62e7ce24_D20210101-20211231",
+            "dimensions": {},
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "121649000000",
+          "unit": "usd",
+          "disposition": "NOT_SOLE_GEOGRAPHY_CONTEXT"
+        },
+        {
+          "verified_claim_id": "sha256:ed71e584528a2eb5e133e9d4fc01a5b0ed578bd445c3ffa63b4f425466090b85",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "idf9ccd8549374f62b6f2e96354ac83b7_D20200101-20201231",
+            "ordinal": 7523
+          },
+          "context": {
+            "context_ref": "idf9ccd8549374f62b6f2e96354ac83b7_D20200101-20201231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:AssetandWealthManagementSegmentMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2020-12-31",
+            "period_start": "2020-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "14240000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        },
+        {
+          "verified_claim_id": "sha256:f3ac13687530e7b9d726de11497821f203fe110dce3e784bc1304df0679e64ad",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "id95c350143104efb986baadbffb8bde2_D20210101-20211231",
+            "ordinal": 7746
+          },
+          "context": {
+            "context_ref": "id95c350143104efb986baadbffb8bde2_D20210101-20211231",
+            "dimensions": {
+              "srt:ConsolidatedEntitiesAxis": "srt:ParentCompanyMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "12394000000",
+          "unit": "usd",
+          "disposition": "NOT_SOLE_GEOGRAPHY_CONTEXT"
+        },
+        {
+          "verified_claim_id": "sha256:f3ba725338f3b18c7bc8d69a0a95e622ce1ea5e0faba6d18c64da33d6c57bbd9",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i6168e6c680ef4e67aaea84dda0a188fb_D20210101-20211231",
+            "ordinal": 7516
+          },
+          "context": {
+            "context_ref": "i6168e6c680ef4e67aaea84dda0a188fb_D20210101-20211231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:CorporateInvestmentBankMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "51749000000",
+          "unit": "usd",
+          "disposition": "NOT_SOLE_GEOGRAPHY_CONTEXT"
+        },
+        {
+          "verified_claim_id": "sha256:f3cf5d24b675b5d2317eb75d856adfe18d4a18b9a8a0348fbc0f572f7404a44b",
+          "native_locator": {
+            "qualified_name": "us-gaap:Revenues",
+            "context_ref": "iee164815831241aa94e429ab1f9c21d7_D20210101-20211231",
+            "ordinal": 7411
+          },
+          "context": {
+            "context_ref": "iee164815831241aa94e429ab1f9c21d7_D20210101-20211231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "srt:NorthAmericaMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "92678000000",
+          "unit": "usd",
+          "disposition": "NOT_DIRECT_DISCLOSED_INTERNATIONAL_TOTAL_LABEL"
+        },
+        {
+          "verified_claim_id": "sha256:fa6a188557001294fb7116a04a7994df806d4ced4bfdf86f2f4615fd8c8ca6dc",
+          "native_locator": {
+            "qualified_name": "us-gaap:RevenuesNetOfInterestExpense",
+            "context_ref": "i6df897b478f945168c717cbcf38121be_D20190101-20191231",
+            "ordinal": 7515
+          },
+          "context": {
+            "context_ref": "i6df897b478f945168c717cbcf38121be_D20190101-20191231",
+            "dimensions": {
+              "srt:ConsolidationItemsAxis": "us-gaap:OperatingSegmentsMember",
+              "us-gaap:StatementBusinessSegmentsAxis": "jpm:ConsumerCommunityBankingMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2019-12-31",
+            "period_start": "2019-01-01",
+            "typed_dimension_count": 0
+          },
+          "value": "55133000000",
+          "unit": "usd",
+          "disposition": "DIFFERENT_PERIOD_END"
+        }
+      ],
+      "outcome": "STRUCTURED_PRIMARY_RESOLVED",
+      "value": "28971000000",
+      "implementation_gaps": [],
+      "regional_sum_used": false,
+      "source_conflicts": [],
+      "fallback_plan_allowed_by_route": false,
+      "fallback_provider_authorized": false,
+      "native_run_status": "NOT_CREATED",
+      "qualification_credit": "NONE_COMPONENT_ONLY",
+      "publication_credit": "NONE",
+      "calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "component_id": "sha256:9fe011f804b4452c579d910a97870e1dfa8814b0eeb889d0666c307c6ad22fa8"
+    }
+  },
+  "seconds": 4.169623584020883,
+  "old_default_error": {
+    "error_type": "NormalAnnualInputError",
+    "reason": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+    "passed": false
+  },
+  "metric_result_created": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -65,3 +65,7 @@ A03/A04/A09/A11/A12/A13 按 `financial` 特征门控。此前历史路线只答�
 最短bundle参数、真实来源引用/SourceSet及原DEI字段在a13-jpm2021-minimal-bundle-20261009.json，4651B；六字段确为http://xbrl.sec.gov/dei/2021q4，同一个2021-01-01至2021-12-31 context，DocumentType为10-K、CIK19617、FY2021、AmendmentFlag FALSE；按原件给name属性字节位置，不伪造新声明。探针是在原PR96 eb03aa84开始的只读开发调用，后来reporter补丁不改financial/选期源码；没有新金融候选/公司分派或模型试验。原预计算/Run/答案和本目录早期失败保留。
 
 最小公共接缝已交#28：保持当期默认，给现有金融原件检查器受控的历史taxonomy政策参数，消费已有历史DEI校验；优先明确YEAR_OR_DATE_RELEASE等受控枚举，不提供任意regex/调用者validator、不复制年报解析或金额内核。历史侧随后传实际选择来源/期间并验证公司消费者；本轮未改shared normal_annual_input/financial_structured，不以一个namespace探针宣布六指标或A13已交付。所有新增SEC/provider/paid为0。
+
+同一最短bundle进一步调用既有historical_financial_wording.fact（已有适配，不新增计算/提示/模型）：4.170s返回A13 STRUCTURED_PRIMARY_RESOLVED、28971000000 USD、regional_sum_used=false，原native ordinal7406/完整context/原格table_000614(6,6)/出处保持。该时长仅此已准备bundle上的调用，不与先前57.291s含选期/准备的边界混比，不宣称性能优化。完整来源组件保存在a13-jpm2021-existing-reader-20261009.json，仍无MetricResult/Run/接受。
+
+执行者直接读同SHA原件相关完整表（2021/2020/2019栏保留）、2021 Total international行28,971、usd/scale6及已记录原定义脚注字节SHA：Revenue含net interest income和noninterest revenue。原件核对见a13-jpm2021-original-table-read-20261009.json，不依计算器的PASS替代原件；不称整份年报/全部地域含义或五年独立内容接受。旧适配证明现有检查/金额读取可复用，新普通历史接线仍待显式受控namespace接缝；不把release_aware全族搬入新公司pipeline，不改共同core、旧Result或原失败。
