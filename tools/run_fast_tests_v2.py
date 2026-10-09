@@ -164,6 +164,7 @@ SOURCE_TESTS += ("tests.vnext.test_d03_complete_interpretation.D03CompleteInterp
 SOURCE_TESTS += ("tests.vnext.test_normal_c02_composition.C02CompositionMaterialTest",)
 SOURCE_TESTS += ("tests.vnext.test_d01_emphasis_material",)
 FAST_TESTS += ("tests.vnext.test_a05_formula_successor",)
+FAST_TESTS += ("tests.vnext.test_legal_review_contract",)
 SOURCE_TESTS += ("tests.vnext.test_a05_formula_material",)
 SOURCE_TESTS += ("tests.vnext.test_d02_item8_current_material",)
 SOURCE_TESTS += ("tests.vnext.test_ordinary_e01_item_text_input",)
