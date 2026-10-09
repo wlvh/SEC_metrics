@@ -1,0 +1,19 @@
+test_original_historical_context_without_closure_hash_can_capture (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_original_historical_context_without_closure_hash_can_capture) ... ERROR
+
+======================================================================
+ERROR: test_original_historical_context_without_closure_hash_can_capture (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_original_historical_context_without_closure_hash_can_capture)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/tests/vnext/test_historical_sec_capture_adapter.py", line 75, in test_original_historical_context_without_closure_hash_can_capture
+    self.capture().get(self.url)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-sec-ledger/SEC_metrics/scripts/vnext/company_online.py", line 99, in get
+    requirement={k:self.context[k] for k in ('requirement_id','requirement_closure_hash')}
+                   ~~~~~~~~~~~~^^^
+KeyError: 'requirement_closure_hash'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_original_historical_context_without_closure_hash_can_capture"]}

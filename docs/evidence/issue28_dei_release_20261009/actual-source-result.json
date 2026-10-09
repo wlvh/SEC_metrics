@@ -1,0 +1,162 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-dei-release/SEC_metrics",
+  "source_root_read_only": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "source_sha256": "7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478",
+  "source_bytes": 16005889,
+  "baseline_error": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+  "baseline_boundary_seconds": 1.5986319170333445,
+  "explicit_full_component_seconds": 4.031599165871739,
+  "outcome": "STRUCTURED_PRIMARY_RESOLVED",
+  "value": "28971000000",
+  "period": {
+    "fiscal_year": 2021,
+    "period_start": "2021-01-01",
+    "period_end": "2021-12-31"
+  },
+  "selected": [
+    {
+      "claim": {
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "claim_kind": "ACCESSION_XBRL_NUMERIC_FACT",
+        "company_id": "jpmorgan_chase",
+        "source_reference_id": "sha256:7a658afc2bc677dad3fa43df9855352a93dd04afa38766574ae0c3d094105cf0",
+        "source_role": "target_primary",
+        "source_set_manifest_id": "sha256:db92327f8800e236617ec7d1ec390bc49a5de23b5b758befe1e1087c03b2efa9",
+        "locator": {
+          "qualified_name": "us-gaap:Revenues",
+          "context_ref": "i51f1831d6a2a46a585226ebec0383592_D20210101-20211231",
+          "ordinal": 7406
+        },
+        "value": "28971000000",
+        "unit": "usd",
+        "attributes": {
+          "adapter_id": "ACCESSION_XBRL",
+          "canonical_name": "us-gaap:Revenues",
+          "context": {
+            "context_ref": "i51f1831d6a2a46a585226ebec0383592_D20210101-20211231",
+            "dimensions": {
+              "srt:StatementGeographicalAxis": "jpm:TotalInternationalMember"
+            },
+            "entity_identifier": "0000019617",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "lexical_value": "28,971",
+          "deterministic_router_semantic_version": "2"
+        },
+        "verified_claim_id": "sha256:9a7424132afd78577e201f9c9d45641a9955996cc5bcb55927bd43821a7cc942"
+      },
+      "source_witness": {
+        "native_fact_ordinal": 7406,
+        "native_context": {
+          "context_ref": "i51f1831d6a2a46a585226ebec0383592_D20210101-20211231",
+          "dimensions": {
+            "srt:StatementGeographicalAxis": "jpm:TotalInternationalMember"
+          },
+          "entity_identifier": "0000019617",
+          "period_end": "2021-12-31",
+          "period_start": "2021-01-01",
+          "typed_dimension_count": 0
+        },
+        "table_cell": {
+          "table_id": "table_000614",
+          "grid_sha256": "sha256:4f13607aad267e509c242d4ad50170d3810ee71b965215c13b8d7b69af819a94",
+          "row_index": 6,
+          "column_index": 6,
+          "origin_row_index": 6,
+          "origin_column_index": 6,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "28,971&#160;",
+          "text": "28,971"
+        },
+        "geography_label": {
+          "table_id": "table_000614",
+          "grid_sha256": "sha256:4f13607aad267e509c242d4ad50170d3810ee71b965215c13b8d7b69af819a94",
+          "row_index": 6,
+          "column_index": 0,
+          "origin_row_index": 6,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "Total international",
+          "text": "Total international"
+        },
+        "reporting_declarations": {
+          "status": "NO_ASSOCIATED_REPORTING_CONTRADICTION",
+          "conflicts": [],
+          "associated_qualifying_statements": []
+        },
+        "revenue_measure": {
+          "header": {
+            "table_id": "table_000614",
+            "grid_sha256": "sha256:4f13607aad267e509c242d4ad50170d3810ee71b965215c13b8d7b69af819a94",
+            "row_index": 1,
+            "column_index": 6,
+            "origin_row_index": 1,
+            "origin_column_index": 6,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "\nRevenue(c)",
+            "text": "Revenue(c)"
+          },
+          "definition": {
+            "start_byte": 14965122,
+            "end_byte": 14965505,
+            "tag": "div",
+            "attributes": [
+              [
+                "style",
+                "padding-left:13.5pt;text-indent:-13.5pt"
+              ]
+            ],
+            "inside_table": false,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "ix:continuation:72",
+              "ix:nonnumeric:1",
+              "div:5"
+            ],
+            "visible_text": "(c)Revenue is composed of net interest income and noninterest revenue.",
+            "span_sha256": "04b91b352a37294b5d1e7d8af63c5e8e4a1331e13047fbc3aa1a9cdf771ed829"
+          },
+          "interpretation": "SOURCE_DEFINED_NET_INTEREST_PLUS_NONINTEREST_REVENUE"
+        },
+        "source_amount_scale": {
+          "unit": "USD",
+          "factor": "1000000",
+          "source_cells": [
+            {
+              "table_id": "table_000614",
+              "grid_sha256": "sha256:4f13607aad267e509c242d4ad50170d3810ee71b965215c13b8d7b69af819a94",
+              "row_index": 1,
+              "column_index": 0,
+              "origin_row_index": 1,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 3,
+              "raw_text": "As of or for the year ended December 31, \n(in millions)",
+              "text": "As of or for the year ended December 31, (in millions)"
+            }
+          ]
+        },
+        "member_classification": "FROM_SAME_FACT_ORIGINAL_ROW_LABEL_NOT_MEMBER_SPELLING",
+        "native_unit_definition": {
+          "unit_id": "usd",
+          "measure": "iso4217:USD",
+          "namespace": "http://www.xbrl.org/2003/iso4217",
+          "canonical_unit": "USD"
+        }
+      }
+    }
+  ],
+  "source_set_scope": "NATIVE_SAVED_SUBMISSIONS_COMPLETE_SOURCE_SET",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_result_run_or_business_acceptance": false
+}

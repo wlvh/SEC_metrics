@@ -1,0 +1,49 @@
+2026-10-09T05:19:55.2382144Z ##[group]Run python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state -v
+2026-10-09T05:19:55.2383025Z python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state -v
+2026-10-09T05:19:55.2449756Z shell: /usr/bin/bash -e {0}
+2026-10-09T05:19:55.2450009Z env:
+2026-10-09T05:19:55.2450272Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T05:19:55.2450709Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+2026-10-09T05:19:55.2451155Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T05:19:55.2451530Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T05:19:55.2451915Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T05:19:55.2452304Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+2026-10-09T05:19:55.2452636Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-09T05:19:55.2452901Z ##[endgroup]
+2026-10-09T05:19:56.5683018Z test_cli_passes_period_arguments_to_the_same_company_entry (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_cli_passes_period_arguments_to_the_same_company_entry) ... ok
+2026-10-09T05:19:56.5685536Z test_completed_withheld_survives_read_after_another_metric_subset (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_completed_withheld_survives_read_after_another_metric_subset)
+2026-10-09T05:19:57.2512038Z Constructed history control: a later subset cannot revive old success. ... ok
+2026-10-09T05:19:57.2517394Z test_current_mode_keeps_the_existing_public_route (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_current_mode_keeps_the_existing_public_route) ... ok
+2026-10-09T05:19:57.2521947Z test_invalid_range_rejects_before_source_or_writes (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_invalid_range_rejects_before_source_or_writes) ... ok
+2026-10-09T05:19:57.2526080Z test_missing_source_is_explicit_and_does_not_acquire (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_missing_source_is_explicit_and_does_not_acquire) ... ok
+2026-10-09T05:19:57.4149691Z test_range_uses_one_public_company_controller_and_existing_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_range_uses_one_public_company_controller_and_existing_case) ... ok
+2026-10-09T05:19:57.4154682Z test_unsupported_family_uses_no_fabricated_historical_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_unsupported_family_uses_no_fabricated_historical_case) ... ok
+2026-10-09T05:19:57.4156572Z test_actual_selected_year_dependencies_ignore_unused_admission_code (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_actual_selected_year_dependencies_ignore_unused_admission_code)
+2026-10-09T05:19:57.5315540Z Constructed state control with the actual processing configuration. ... ok
+2026-10-09T05:19:57.5409855Z test_completed_withheld_recovers_pointer_without_recalculation (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_completed_withheld_recovers_pointer_without_recalculation) ... ok
+2026-10-09T05:19:57.5556717Z test_current_withheld_replaces_same_year_success_but_retains_old_version (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_current_withheld_replaces_same_year_success_but_retains_old_version) ... ok
+2026-10-09T05:19:57.5779747Z test_dependency_source_and_processing_changes_reprocess_withheld_once (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_dependency_source_and_processing_changes_reprocess_withheld_once) ... ok
+2026-10-09T05:19:57.5982953Z test_missing_year_and_one_metric_failure_preserve_other_periods (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_missing_year_and_one_metric_failure_preserve_other_periods) ... ok
+2026-10-09T05:19:57.6163000Z test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates) ... ok
+2026-10-09T05:19:57.6164539Z 
+2026-10-09T05:19:57.6164798Z ----------------------------------------------------------------------
+2026-10-09T05:19:57.6165299Z Ran 13 tests in 1.053s
+2026-10-09T05:19:57.6165512Z 
+2026-10-09T05:19:57.6165619Z OK
+2026-10-09T05:19:57.6794728Z Post job cleanup.
+2026-10-09T05:19:57.8154910Z Post job cleanup.
+2026-10-09T05:19:57.9049463Z [command]/usr/bin/git version
+2026-10-09T05:19:57.9092219Z git version 2.55.0
+2026-10-09T05:19:57.9139018Z Temporarily overriding HOME='/home/runner/work/_temp/76ff2a75-aa4f-4279-9941-c92d2a1de99a' before making global git config changes
+2026-10-09T05:19:57.9140408Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T05:19:57.9146072Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-09T05:19:57.9181287Z Removing SSH command configuration
+2026-10-09T05:19:57.9189978Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T05:19:57.9237866Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T05:19:57.9491038Z Removing HTTP extra header
+2026-10-09T05:19:57.9497879Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T05:19:57.9536988Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T05:19:57.9854558Z Removing includeIf entries pointing to credentials config files
+2026-10-09T05:19:57.9866176Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T05:19:57.9948011Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T05:19:58.0425619Z Cleaning up orphan processes
