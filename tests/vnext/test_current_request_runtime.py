@@ -57,6 +57,53 @@ class Response(io.BytesIO):
     headers = {'x-request-id': 'RECORDED-HTTP-TEST'}
 
 
+class CurrentVariantLimitsTest(unittest.TestCase):
+    def test_real_variant_selection_keeps_body_and_transport_limits(self):
+        from tests.vnext.test_native_request_variants import synthetic_source
+        from vnext.current_request_configuration import load_current_configuration,transport_policy
+        source,_=synthetic_source()
+        configuration=load_current_configuration(repo_root=REPO_ROOT)
+        limits=RequestLimits(output_tokens=8192,max_payload_bytes=4*1024*1024)
+        policy=transport_policy(configuration=configuration,repo_root=REPO_ROOT,limits=limits)
+        context=invocation_control.prepare_current_invocation_context(repo_root=REPO_ROOT,
+            configuration=configuration,transport=policy,limits=limits)
+        raw=calls._source_json(source)
+        prepared=[calls.SemanticRequest(calls._FACTORY,raw,calls._source_json(r),
+            calls.request_body(r,policy,limits=limits),calls._json(r['response_protocol']),
+            configuration,context,limits=limits) for r in calls.source_requests(source)]
+        with tempfile.TemporaryDirectory() as directory:
+            ledger=recorded_ledger(root=Path(directory).resolve()/'ledger')
+            selected,report=calls.select_native_request_variants(prepared_requests=prepared,ledger=ledger)
+            # Constructed selector-state fixture only. No HTTP/acceptance or
+            # business credit; exercise the already-successful variant branch.
+            with ledger.locked():
+                item=selected[0]
+                request=strict_json_loads(text=item.request_bytes.decode())
+                path,intent=ledger.claim(channel='PROVIDER',request_digest=calls.request_digest(
+                    request,policy,limits=limits),requirement=configuration,
+                    plan_id=invocation_control.content_hash(value='constructed-selector-plan'),
+                    purpose='remaining_development_feasibility')
+                (path/'semantic-request.json').write_bytes(item.request_bytes)
+                body={'intent_id':intent['intent_id'],'status':'SUCCEEDED','stop_reason':'',
+                      'counts':[1,1,0],'evidence':{}}
+                (path/'terminal.json').write_text(json.dumps({**body,
+                    'terminal_id':invocation_control.content_hash(value=body)}))
+            with patch('vnext.native_assessment_replay.replay_native_response',
+                       return_value={'revalidation':{'constructed_selector_fixture':True}}) as replay:
+                retained,receipt=calls.select_native_request_variants(prepared_requests=prepared,ledger=ledger)
+            self.assertEqual(receipt[0]['original_ordinal'],1)
+            checked=replay.call_args.kwargs['prepared']
+            self.assertEqual(json.loads(checked.provider_request_body_bytes)['max_tokens'],8192)
+            self.assertEqual(calls._prepared_transport_policy(checked).maximum_payload_bytes,4*1024*1024)
+        self.assertEqual(len(selected),3)
+        for item in selected:
+            request=strict_json_loads(text=item.request_bytes.decode())
+            self.assertEqual(json.loads(item.provider_request_body_bytes)['max_tokens'],8192)
+            self.assertEqual(calls._prepared_transport_policy(item).maximum_payload_bytes,4*1024*1024)
+            self.assertEqual(item.provider_request_body_bytes,calls.request_body(request,policy,limits=limits))
+        self.assertTrue(all(row['original_ordinal'] is None for row in report))
+
+
 class CurrentRequestRuntimeTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

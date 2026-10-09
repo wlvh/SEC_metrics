@@ -118,3 +118,23 @@ and no program-required candidates; it proves current acceptance wiring only,
 not semantic correctness or absence. Live request scope remains default resource
 config/B13-D04 plus original batch/group admission; D03/new purposes still need
 separate approval. Native company composition and old190 reuse are not claimed.
+
+## Limited review and the three receiving corrections
+
+Independent review ebaf9a36 is CHANGES_REQUESTED/3P2,49 tools/3 messages, retained
+unchanged in independent-review. Independent42 short6.436s plus2 mode6.813s;
+55/native41 evidence only read, not independently reproduced. Parent corrected:
+(1) original replay-only ValueError now precedes current config access, while
+live/recorded guard remains before claim;(2) all native variant new/saved branches
+use per-object policy/body/digest limits, including payload;(3) config host check
+reuses ai_adapter's existing constant, not a second production host literal.
+No old assertion/gate dropped or expected failure renamed into PASS.
+
+Original CI source job113896582274 and main-foundation113896582670 failures
+are preserved externally and diagnosed.12 directed0.166s/zero skip passes,
+including original registered-native8 cases and mixed-native3; provider egress
+scan PASS. New variant regression covers three8192/4MiB objects and saved-version
+selector branch; constructed selector-state/replay substitute only, no native
+success credit. Two mode guards separately rechecked. Unchanged55 whole source
+and native41 chain reused, not endlessly rerun. Final repair independent review
+is still pending; parent tests do not change the original reviewer verdict.

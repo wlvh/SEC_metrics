@@ -449,6 +449,13 @@ def prepare_d03_replay_only_requests(*, company_id, source_root=None, source_led
     return selected
 
 
+def _prepared_transport_policy(prepared):
+    if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        from .current_request_configuration import transport_policy
+        return transport_policy(configuration=prepared.requirement,repo_root=ROOT,limits=prepared.limits)
+    return configured_transport_policy(requirement=prepared.requirement,repo_root=ROOT)
+
+
 def select_native_request_variants(*, prepared_requests, ledger, source_references=False,
                                    compact_references=False, semantic_role_labels=False,
                                    relevance_repair_group_index=None):
@@ -538,18 +545,18 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
             if batch is not None and semantic_role_labels and row['ordinal'] == 111:
                 from .continuous_batch33 import historical_successor_allowed
                 candidate = variant_requests[i][ROLE_VERSION]
-                policy = configured_transport_policy(requirement=prepared_requests[i].requirement, repo_root=ROOT)
+                policy = _prepared_transport_policy(prepared_requests[i])
                 if historical_successor_allowed(authorization=batch, ledger=ledger,
                         ordinal=row['ordinal'], saved_request=saved,
                         replacement_request=candidate,
-                        replacement_digest=request_digest(candidate, policy)):
+                        replacement_digest=request_digest(candidate, policy, limits=getattr(prepared_requests[i],'limits',DEFAULT_LIMITS))):
                     continue
             request = variant_requests[i][version]
             need(saved == request, 'NATIVE_VARIANT_SAVED_REQUEST_CHANGED')
             prepared = prepared_requests[i]
-            policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
+            policy = _prepared_transport_policy(prepared)
             selected = replace(prepared, request_bytes=_source_json(request),
-                provider_request_body_bytes=request_body(request, policy),
+                provider_request_body_bytes=request_body(request, policy, limits=getattr(prepared,'limits',DEFAULT_LIMITS)),
                 output_schema_bytes=_json(request['response_protocol']))
             replay = replay_native_response(prepared=selected, path=path)
             successful[i] = (selected, {'request_id':request['request_id'], 'variant':version,
@@ -561,9 +568,9 @@ def select_native_request_variants(*, prepared_requests, ledger, source_referenc
         else:
             version = (RELEVANCE_VERSION if i == relevance_repair_group_index else selected_version)
             request = variant_requests[i][version]
-            policy = configured_transport_policy(requirement=prepared.requirement, repo_root=ROOT)
+            policy = _prepared_transport_policy(prepared)
             item = replace(prepared, request_bytes=_source_json(request),
-                provider_request_body_bytes=request_body(request,policy),
+                provider_request_body_bytes=request_body(request,policy,limits=getattr(prepared,'limits',DEFAULT_LIMITS)),
                 output_schema_bytes=_json(request['response_protocol']))
             entry = {'request_id':request['request_id'], 'variant':version, 'original_ordinal':None}
         selected.append(item); report.append(entry)
@@ -907,10 +914,6 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
                       d03_recorded_native=False):
     from .r6_semantic_scope import validate_response
     request_fields=strict_json_loads(text=prepared.request_bytes.decode())
-    if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
-        from .ai_adapter import recorded_provider_http_active
-        need(not ledger.live or not recorded_provider_http_active(),
-             'CURRENT_RECORDED_HTTP_CANNOT_RUN_LIVE')
     if request_fields.get('metric_id') == 'D03':
         source_fields = strict_json_loads(text=prepared.source_bytes.decode())
         if (prepared.data_root != ROOT or source_fields.get('external_replay_only')
@@ -945,6 +948,10 @@ def _execute_semantic(*, prepared, ledger, recorded_wire, native_assessment,
              'B13_ROLE_V3_LIVE_VALIDATION_NOT_AUTHORIZED')
     need(not prepared.replay_only or d03_recorded_native,
          'CONTINUOUS_REPLAY_OBJECT_CANNOT_EXECUTE')
+    if prepared.requirement.get('record_type') == 'CURRENT_REQUEST_CONFIGURATION_V1':
+        from .ai_adapter import recorded_provider_http_active
+        need(not ledger.live or not recorded_provider_http_active(),
+             'CURRENT_RECORDED_HTTP_CANNOT_RUN_LIVE')
     # The D03 source-fact successor is a diagnostic request identity only.
     # A copied dataclass with replay_only=False cannot turn it into a call.
     need('source_fact_review_contract' not in request_fields or d03_recorded_native,

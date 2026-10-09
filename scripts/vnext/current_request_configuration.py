@@ -46,7 +46,7 @@ def load_current_configuration(*, repo_root):
 
 
 def transport_policy(*, configuration, repo_root, limits=None):
-    from .ai_adapter import TransportPolicy
+    from .ai_adapter import TransportPolicy, _DEEPSEEK_ENDPOINT_HOST
     from .provider_runtime import load_provider_runtime_authority
     limits = configured_limits(limits)
     current = load_current_configuration(repo_root=repo_root)
@@ -54,7 +54,7 @@ def transport_policy(*, configuration, repo_root, limits=None):
     selected = TransportPolicy.from_mapping(value=current['runtime']['transport'])
     need((selected.provider, selected.model, selected.api, selected.endpoint_host,
           selected.retry_count) == ('deepseek','deepseek-flash','chat_completions',
-                                   'api.deepseek.com',0), 'CURRENT_TRANSPORT_CHANGED')
+                                   _DEEPSEEK_ENDPOINT_HOST,0), 'CURRENT_TRANSPORT_CHANGED')
     load_provider_runtime_authority(repo_root=repo_root, provider=selected.provider,
                                    model=selected.model, api=selected.api)
     return replace(selected, maximum_payload_bytes=limits.max_payload_bytes)
