@@ -64,7 +64,7 @@ python3 tools/vnext_company.py results \
 
 Salesforce 使用 `--company salesforce`、FY2022–FY2026；Macy’s 使用 `--company macys`、FY2021–FY2025。这些命令与三家公司60位置的原实际运行、复跑和独立读取可在[四指标主要记录](evidence/issue47_statement_pilot_20261009/README.md)核对；main 接收未改变其计算/读取实现，不为了说明变化重跑60位置。
 
-B01 为收入、B02 为增长比率、B04/B05 为所选年度现金流。B02需要同主体且实际相邻的前期申报；不以任意重述值或错误年份代替。目标或前期修订尚未完成该族适配时，显示具名缺口/扣留，其他项继续保存。Salesforce FY2026 原 DEI 字面标签为2025，发行人定义明确解析FY2026，实际日期2025-02-01→2026-01-31；两种标签与冲突依据保留，不改写原件或日期。
+B01 为营业收入、B02 为收入同比增长率、B04 为净利润、B05 为自由现金流（经营活动现金流减资本支出）。B02需要同主体且实际相邻的前期申报；不以任意重述值或错误年份代替。目标或前期修订尚未完成该族适配时，显示具名缺口/扣留，其他项继续保存。Salesforce FY2026 原 DEI 字面标签为2025，发行人定义明确解析FY2026，实际日期2025-02-01→2026-01-31；两种标签与冲突依据保留，不改写原件或日期。
 
 B01源核对同时读取所选primary/XML的金额、单位、主体及实际期间；main此次接收的边界仍是连续主体、未修订输入。它不解除 Paramount 收入的 August7/August8 冲突，也不接 B03、继任收入范围或所有39指标；B08/B09的年末余额接收见下节。
 
@@ -74,9 +74,9 @@ B08流动比率和B09现金储备已随PR76进入main。沿用上节命令，指
 
 原十公司五年100位置的来源、计算与限制验证见[余额主要记录](evidence/issue47_liquidity_receiving_20261009/README.md)，main接收未改计算。结构性不适用保留N_A_STRUCTURAL依据与空值，不当作零或缺源。修订仅经已有共享输入属性核对后用于指定余额指标，未决类别仍扣留；继任主体只取所选CIK期末余额，不拼前身、不据此证明可比完整年度或债务完整性。Paramount FY2024两项明确采用原申报年末余额；收入August7/August8冲突仍另行保留。
 
-## 资本、银行和年度营业利润
+## 资本、银行和利息保障倍数
 
-main `73ead3b4` 已包含 A01/A02（Tier1、CET1资本比率）、A05/A06（ROA、ROE）、A07（净利润变动）、A08（非利息/净利息收入）、A10（贷款损失准备）和 B07（营业利润率）的历史分派。仍使用上面的 `run --period fiscal-years` / `results`，以 `--metric` 明确选择；例如 JPM 五年资本使用 `--company jpmorgan_chase --fiscal-year-start 2021 --fiscal-year-end 2025 --metric A01 --metric A02`。来源、工作目录和输出参数都保留，不先运行其他公司。
+main `73ead3b4` 已包含 A01/A02（Tier1、CET1资本比率）、A05/A06（ROA、ROE）、A07（净利润变动）、A08（非利息/净利息收入）、A10（贷款损失准备）和 B07（利息保障倍数：营业利润除以利息费用）的历史分派。仍使用上面的 `run --period fiscal-years` / `results`，以 `--metric` 明确选择；例如 JPM 五年资本使用 `--company jpmorgan_chase --fiscal-year-start 2021 --fiscal-year-end 2025 --metric A01 --metric A02`。来源、工作目录和输出参数都保留，不先运行其他公司。
 
 资本与A10按实际年末时点输出；A05/A06用同主体全年净利润和两个相邻年末的平均分母，A07需要自身前期申报，A08与B07保留年度流量窗口。不能把单日期末余额当作全年流量，也不能拿当前重述金额替代原前期。既有[资本验证](evidence/issue47_capital_receiving_20261009/README.md)、[银行验证](evidence/issue47_bank_performance_20261009/README.md)和[年度盈利验证](evidence/issue47_annual_earnings_20261009/README.md)按保存版本复用；其中原“未main”文字是当时记录，本节说明今日接收状态，不改写原记录。
 
