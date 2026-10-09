@@ -16,7 +16,7 @@ from .company_handoff import _atomic_json
 from .csv_output import METRIC_FIELDS, EVIDENCE_FIELDS, _csv_bytes
 from .normal_source_authority import ROOT
 from .ordinary_current_update import run_once
-from .ordinary_saved_result import SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS, read_saved_result
+from .ordinary_saved_result import SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS, current_e01_scope, read_saved_result
 
 EXTRA_FIELDS = ('company_id', 'result_id', 'record_root', 'source_root',
                 'local_metric_status', 'period_role', 'result_validity',
@@ -149,13 +149,17 @@ def run_saved_company(*, company_id, source_root, work_dir, output_dir,
                     holds = _defects(result, registry)
                     observation['defect_holds'] = holds
                     row = _rows(saved['files']['metrics_matrix.csv'])[0]
+                    scope_ready = metric != 'E01' or current_e01_scope(saved)
                     if holds:
                         row.update(value='', unit='', status='WITHHELD_KNOWN_DEFECT',
                                    notes=row.get('notes', '')+'; '+','.join(holds))
+                    elif not scope_ready:
+                        row.update(value='',unit='',status='WITHHELD_CURRENT_SCOPE_NOT_IMPLEMENTED')
                     row.update(company_id=company_id, result_id=result['result_id'],
                         record_root=str(record), source_root=str(source),
                         local_metric_status=observation['status'], period_role='PREVIOUS_RESULT' if previous and not new_record else 'REQUESTED_RESULT',
-                        result_validity='CONFIRMED_INVALID' if holds else 'SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED',
+                        result_validity=('CONFIRMED_INVALID' if holds else 'CURRENT_SCOPE_NOT_READY' if not scope_ready
+                            else 'SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED'),
                         source_observation_status=('FAILED_CURRENT_CHECK' if previous and not new_record else
                             'SAVED_SOURCE_CHECKED_WITH_DISCOVERY_ERRORS' if observation.get('source_observation_errors') else
                             'SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED'),
@@ -261,7 +265,8 @@ def _read_current_company(root, company_id, defects_file, output_root):
                 _need(result.get('publication')==('PUBLISHED' if conclusion=='CANDIDATE_READY' else 'WITHHELD'),
                       'COMPANY_CURRENT_READ_COMPLETED_PUBLICATION_CHANGED')
             holds = _defects(result, registry)
-            scope_ready = result['metric_id'] in CURRENT_METRICS | EXPLICIT_CASE_METRICS
+            scope_ready = (current_e01_scope(saved) if result['metric_id']=='E01'
+                           else result['metric_id'] in CURRENT_METRICS | EXPLICIT_CASE_METRICS)
             rows.append({'metric_id': result['metric_id'], 'result_id': result['result_id'],
                 'period_start': result.get('period_start'), 'period_end': result['period_end'],
                 'fiscal_year':saved['manifest']['target_period']['fiscal_year'],

@@ -612,7 +612,11 @@
         "parser_version": "ordinary_projection_v1",
         "notes": "Count of filing items matched by the approved route; it does not confirm a count of real-world business events."
       },
-      "spec_overrides": {}
+      "spec_overrides": {
+        "catalog/r6/E01_content_confirmed_ma_v1.md": {
+          "notes": "Content-confirmed M&A announcements under the selected successor contract. Filing item codes or financing keywords alone do not establish an announcement; missing matching semantic responses remain withheld."
+        }
+      }
     },
     "E02": {
       "name": null,
