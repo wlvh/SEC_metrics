@@ -1,0 +1,139 @@
+{
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/state",
+  "operations": [
+    {
+      "name": "wide-first",
+      "seconds": 20.67524441680871,
+      "metrics": [
+        {
+          "metric_id": "C01",
+          "status": "CANDIDATE_READY",
+          "attempt_id": "a8bfdc5c337a442aa647846797737ecd",
+          "version": "731791393db54caf98fd61a93a63fd4a",
+          "result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/state/updates/C01/periods/FY2025/results/731791393db54caf98fd61a93a63fd4a",
+          "calculation_performed": true,
+          "new_candidate_created": true,
+          "result_reason_code": "PASS",
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2025,
+          "defect_holds": [],
+          "read_result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/state/updates/C01/periods/FY2025/results/731791393db54caf98fd61a93a63fd4a",
+          "program_version": {
+            "commit": "4f78bccb35083b5b5fcca16125d657a038201e22",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/outputs/runs/20261009T092801Z-2d0385dc"
+    },
+    {
+      "name": "wide-reuse",
+      "seconds": 4.908691375050694,
+      "metrics": [
+        {
+          "metric_id": "C01",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "d85d746ed49e469c9f73e7c211caac16",
+          "version": "731791393db54caf98fd61a93a63fd4a",
+          "result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/state/updates/C01/periods/FY2025/results/731791393db54caf98fd61a93a63fd4a",
+          "result_reason_code": "PASS",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2025,
+          "defect_holds": [],
+          "read_result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/state/updates/C01/periods/FY2025/results/731791393db54caf98fd61a93a63fd4a",
+          "program_version": {
+            "commit": "4f78bccb35083b5b5fcca16125d657a038201e22",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/outputs/runs/20261009T092822Z-83ece7c8"
+    },
+    {
+      "name": "wide-cold",
+      "seconds": 0.5613640840165317,
+      "metrics": [
+        {
+          "metric_id": "C01",
+          "result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a",
+          "period_start": "2024-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": 2025,
+          "value": "12",
+          "unit": "count",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "defect_holds": [],
+          "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+          "requested_in_latest_execution": true,
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/state/updates/C01/periods/FY2025/results/731791393db54caf98fd61a93a63fd4a"
+        }
+      ],
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/outputs/read"
+    }
+  ],
+  "rows": [
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "cik": "2041610",
+      "metric_id": "C01",
+      "metric_name": "CEO / CFO changes",
+      "value": "12",
+      "unit": "count",
+      "status": "8K_ITEM_OK",
+      "source_class": "8K_ITEM",
+      "formula": "",
+      "period_start": "2024-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "fiscal_period": "DURATION",
+      "accession": "0002041610-25-000021;0000813828-24-000023;0000813828-24-000033;0000813828-24-000034;0000813828-24-000038;0000813828-24-000073;0000813828-24-000075;0000813828-24-000083;0000813828-24-000085;0000813828-24-000087;0000813828-25-000015;0001193125-25-175027",
+      "form": "8-K;8-K/A",
+      "filed_date": "2025-09-16;2024-05-03;2024-06-10;2024-06-21;2024-10-15;2024-10-18;2024-11-21;2024-12-11;2024-12-27;2025-06-09;2025-08-07",
+      "concept_or_section": "CEO / CFO changes",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"DURATION\", \"scope\": {\"coverage\": \"fiscal_year_source_set\", \"fiscal_year\": 2025, \"shared_claim_group_id\": \"leadership_item_5_02\"}, \"selection\": {\"matched_verified_claim_ids\": [\"sha256:8adc734c3e6ebfaa89534f97f0e546f019531b91f397cbbe177905e10ee17d2a\", \"sha256:55441729dc84d2e18064f56028c1e1e46de0eda061982d45c4c2d5adb8e57f15\", \"sha256:b6db5b962017a6d81803787c439bb14fd50250a1825b38b8873c38c57b0ec150\", \"sha256:5321c38f0a976f4cf7c0af13712087cb107c66e01c5af28ef926906031e991f3\", \"sha256:e60f9dc9a82cb7d99f29f9a84560dbf942807323cade3af1c061b9d5689ceff4\", \"sha256:f90950ab25367ae8cd4db3e65fc32c227484768e53574e8a7465d6f9c23c96a5\", \"sha256:060f22aa4f3238d4de85ec621826d5fa51005d47a46a59526acd74a805e7e76c\", \"sha256:cfbf0f6ac522cccf7de6b9e269dcb2ecc77e974c75f1727367ddac4cbe20be1e\", \"sha256:24d6ed7ca6ba8dae388eb015d5fa69fe108e631b5e524568e8414eb6ca01a41a\", \"sha256:c479fd51ff83e95bddcf8df0cf6dcf2d62e77f87e093fd2fae5b5589ef2a8016\", \"sha256:f12cc04ea403f949363778b5096fc7b0b98d724a01f4f201031120784aba6815\", \"sha256:ea3b36aa45f25fb84cb7da8d716f4cd5881059e07c23961433cf29bd2dbd5538\"], \"reason_code\": \"PASS\", \"source_event_accessions\": [\"0000813828-24-000009\", \"0000813828-24-000018\", \"0000813828-24-000023\", \"0000813828-24-000028\", \"0000813828-24-000033\", \"0000813828-24-000034\", \"0000813828-24-000038\", \"0000813828-24-000042\", \"0000813828-24-000063\", \"0000813828-24-000069\", \"0000813828-24-000073\", \"0000813828-24-000075\", \"0000813828-24-000081\", \"0000813828-24-000083\", \"0000813828-24-000085\", \"0000813828-24-000087\", \"0000813828-25-000015\", \"0000813828-25-000019\", \"0001104659-25-123496\", \"0001193125-24-050664\", \"0001193125-24-122356\", \"0001193125-24-177535\", \"0001193125-24-196053\", \"0001193125-24-196972\", \"0001193125-24-253719\", \"0001193125-25-036747\", \"0001193125-25-052917\", \"0001193125-25-115947\", \"0001193125-25-120877\", \"0001193125-25-165497\", \"0001193125-25-170521\", \"0001193125-25-175027\", \"0001193125-25-310710\", \"0002041610-25-000021\", \"0002041610-25-000042\"]}, \"source_reference_ids\": [\"sha256:ca0329884451e51380468f4ffee24a484a67e6571f3a5691acb4794319770a99\", \"sha256:9bf93630dc255ffbd6dc9d2e8166df2601d7a44facf152648086c2115550bc3e\", \"sha256:1675e3728606efda84d87ed739d2743656f0c40054b565754e0caf43ec55dd99\", \"sha256:d1f46db1e1c3625a9209716b2c4019529d5a6ce521bd757956d13b07dde741b2\", \"sha256:149b6ded123fa4436b12e60962539247a32bf990f07652ae255ddc749b5afd0f\", \"sha256:19e2c5ab0635cd71563ae94a027bcb9a834a2d6bd616a26983c78eac292797cb\", \"sha256:9e1aab0ddb1b2f927bb5e5c975f4e272c3c166300ccda45fa0bc1da96868f878\", \"sha256:fb4d0a962a11d0314b7f9dee96e5997c7af53b93590ad47af213aa5d4a63519e\", \"sha256:94297a1d85e1412fa6811e41e74efc4e98ebb2d4611758468b093c0212f2cd26\", \"sha256:1102eefef16721aa1b4b45d0fdf940b793aedad466809e7b7616b325abcc60ba\", \"sha256:f6cea44e2de0168ae37e514513fbff0bdc3d5bc0be4d1d982ea2332bcd240c79\", \"sha256:61199b5b50703b802a686ef3abe519dc58675db5fc17338abd4b76b8ba5aaf6a\", \"sha256:50a73435b6af7951327bc709fe26701203be7bfa188f301b054fa5a1fd4c7172\", \"sha256:47bee06712d8a4b3c58a863591fd7a512da5865d5be8f9300135dc24082e1874\", \"sha256:7c60b144e746530cd9eea4c8454ec3fd746f7ae8d110d866807d8c1c45d0296f\", \"sha256:acd7de24c267ff053a382b6be77843612e72fff1f3c201e089c9dc01d2f7ee5b\", \"sha256:2907743a405076d34802da9378f8f6dad7f624a10909f90c7de858b8c21fc7e2\", \"sha256:7ca2f12ad25ad8c0ca6eaac086376342ccef0d891a07ae073692db6ca6adffd2\", \"sha256:84726a89731fb7258e401161da6035d98eccfebd47534a506bef19821bf99e82\", \"sha256:30bf4dafa9249114ed14b5d6a5725ac4c560da0e8938a56915a585284d4f8469\", \"sha256:04f7c26aac93a3486c134107989447b6f54c1b46bcb9163890d79e6fa098df5a\", \"sha256:a8a650bf1fa1706754ef576c88cea35241153e8644d36ea6275d9fb72a5507b0\", \"sha256:9c72986ca5cf0c5b1052350631994a048b471dd7332c1f9226bed839c2aed09e\", \"sha256:b11a670db32772bb1ae4baa67b21ad5904335a28f6d8b4bb8d5a46d0989e51e9\", \"sha256:baf51cf4965585cbc807e38aa18c4ee62456ac4ecb3fea54ec8c5fdc1f3d5fed\", \"sha256:d0eb2774b111e9b889981959463935793a5c69985a8d75c4dd72bb3549d62c77\", \"sha256:da00e470ca0e7d9a9c96734022ab099637e3ea082be8cc8275055af3341b3d1c\", \"sha256:e4aafaf7496af957b7d18e53de4f121279177ca21182027c97be579ef4502d4a\", \"sha256:13093750802fc9cfcc25923c5ed13d6b28b995bd505fe6a92e2c137e1746b472\", \"sha256:189936e563d0c17a5a107f68668982889e449253d212bb3a3ded0fc0032fde69\", \"sha256:459afde231b066b5bce4fcc9a28746895ab2bfbfacbf189ff5abc3bed5123575\", \"sha256:8187018be2c83e51fbad1297728207115dcebb157bea7bfa0d78daf4dacd827d\", \"sha256:1a6c22965ad19ccbf9c7b45087a01838c44dc67675469deedd1044dd1b5b0b70\", \"sha256:206be43bed1e23fc15c04a48861f7b0c5e20dabe07974975ae15e15d2c22a29f\", \"sha256:105cc75034abf0abde6b491ad9115a664872f3ac3509431b140cff0cccdd2ea1\", \"sha256:9f0062ce858bd3502f337db1b0bedda4ee639ee2244cd2a460d5342664836c32\", \"sha256:c90c466936ba3972f3b7e8f32c90803b84d79a3811f484c9fb6af6a3dd1359d0\", \"sha256:3d00399d7e9a4493fead3928a3fc2e527dab8375a75358b31bf5d14020244414\", \"sha256:9b0d87240be7eca3ad51dbd11f600ab6d5fca0425cc4d0ba6621d13c6e601da5\", \"sha256:c5cdaecf99be93cf4b3156085de2b68d84363447969bcdd7d969b5260bca1241\", \"sha256:25f65cacece1a9ced430202178f58573b96d5cdad7bfd8cab974131c2d0910bc\", \"sha256:5f2e4eb68dae172392e2078256b4c9d783189434bd582f311fadfb23f4df2a43\", \"sha256:eb089b5dfa0c8aa69c4f2543de59029abab5941d90b35b752532ff5374ef9e5c\", \"sha256:2838d00c004fc44f2c4ab79bc0d5179105a834fce2585d1ef0ba56f0f660a9eb\", \"sha256:ff54b48fc6becc96ca6fad6243966249eba519e30f6c42955a8ff65229f5f3e5\", \"sha256:3b819ff9122210d0aaad5e7de329d84f9476a57a121c805c70dffc885102caae\", \"sha256:9ea650b3fbf858b15897800ce7c7c7077aebcf43f94bffba16c84b392e74bc73\", \"sha256:e556a35d26beb390f74ccf70a4a9440ff85d5957873794068462e54de2c04f49\", \"sha256:2ea64671516cb84167d90eb0f5dd0941b285d9f267856ebff90e59da188677fe\", \"sha256:bbc860f0e29220717acc565b9f49532d193e96e1856c1d90cf93428697c4d49c\", \"sha256:64424ae53f8fddb99eb8cb26fbda62c2fd5b90f9fb602f8d60fb992efd032e24\", \"sha256:0e7abb23c8b2e67727f941c243e5d17c86bcfc9d9db77cf05f0fecc3b301a859\", \"sha256:f9bec7cd502e5e95ca8601024f6a87d50cf2008b0d847690a61e0827dcc44ebc\", \"sha256:9c8fde24a7d3ce4fd288f17ddcac9f5cc33e8e5cca0d16e68123ec8418359449\", \"sha256:176c4fc402c0559f253f36cc6bc960216b9fe8c6fa5e717e62077409afad1e97\", \"sha256:98bdadb31c5bdacbcba891e3af693f519867cfe9ff43bd46ede652a1317df75b\", \"sha256:9e675e04a6997961e94889e9a3c28987cfeaee52e1d7f4788a008c85652a5dab\", \"sha256:2956862c22686e120d7d85f4c77e553bcf2da93de25361131177cba78c45fac1\", \"sha256:28f21653cb8a671c43e029b798e31d115264c516316587016eb6d304630661e6\", \"sha256:5afe77284f4143b0cbe34db564584532413834618a44bfa4a9642424a67f26ab\", \"sha256:634f7eeec1c89bdb14b0c8c809c15c8af153bd95cf19d425bece99a308e32151\", \"sha256:194e2e5d89586054345ca9ac9160e52b0c94974805a07e3c8e00ee912752e4a7\", \"sha256:cbb1171796d4a5bd79deaa980f0c571a60ea17175dea6074089aee8a5ff02600\", \"sha256:d0bb001f46ec8a3551311e7a1f86154ca92e5fc4b8cd27879321c3ea6b7ce3bb\", \"sha256:b12cf6e78831e3804fe13eed8029bdb5c4a0913973a929098dc4eeeee611c4aa\", \"sha256:48e1637d8f3f1336cc252e052335f20a13a89ca50ff1e88fe95c14956f11c1c6\", \"sha256:2907e34ede77457b53fca2e90b7f6d15d894bb3f38da302006455720b44a5cdf\", \"sha256:b5599fbdc33618c0e47cd4251099d28c91dc4369a429ff2b01c460f20a298343\", \"sha256:de971e48adcd8c01f9d7378df83c5647fc6af699df1b9f11fc1e2111d7710da3\", \"sha256:13c5c36ad0f934f818c693c10b2569cd2de966d6ceb7fe23cf17d7bddbc15e8c\", \"sha256:3d033b5762a482f20cf61dedb648dd7182a5766a0719ea61b2bae7ca8f17298c\", \"sha256:960a967084e6b65f4b0e20c16865e644a4306c953c763d395e6f06abdd52acc3\", \"sha256:db9d6e8d3ae10a1108f44dc1951c5fd11a22c1cf097e6dff85ac93b7a8096560\", \"sha256:bc6226c9c2a50420ce67d092a4cecfd3bfba6584ff3c220d661839e72cf74eb4\"]}",
+      "confidence": "",
+      "notes": "Count of filing items matched by the approved route; it does not confirm a count of real-world business events. Measurement retains its exact disclosed start and end dates. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "paramount_skydance_paramount_global",
+      "result_id": "sha256:3d8c392b6b3a3e3e53a877fae10bfaf4d938a8587ef878f61a6525aaacbf354a",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/state/updates/C01/periods/FY2025/results/731791393db54caf98fd61a93a63fd4a",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  ],
+  "saved_files": 8,
+  "annual_container_unchanged": true,
+  "full_range_repeat_factory_forbidden": true,
+  "read_files_unchanged": true,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-events/SEC_metrics/work/receiving/check_marriott_fouryears.py", line 3, in <module>
+    parent=Path('/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence');task=Path(json.loads(Path('work/receiving/marriott-fiveyear.json').read_text())['task_root'])
+                                                                                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'work/receiving/marriott-fiveyear.json'

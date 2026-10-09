@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-events/SEC_metrics/work/receiving/check_marriott_fouryears.py", line 12, in <module>
+    first=invoke('first',args);before=files();repeat=invoke('repeat',args,True);assert before==files() and all(not m['calculation_performed'] for m in repeat['metrics']);read=invoke('read',['results','--company','marriott_international','--state-root',str(task/'state'),'--output-root',str(task/'read-fiveyear')],True);assert before==files()
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-events/SEC_metrics/work/receiving/check_marriott_fouryears.py", line 11, in invoke
+    start=time.monotonic();p=subprocess.run([sys.executable,'-c',code,json.dumps(a)],capture_output=True,text=True,timeout=120,env={**os.environ,'PYTHONPATH':'scripts:tools:.','PYTHONDONTWRITEBYTECODE':'1'});(task/('four-new-years-'+name+'.stdout')).write_text(p.stdout);(task/('four-new-years-'+name+'.stderr')).write_text(p.stderr);print(name,p.returncode,time.monotonic()-start,flush=True);assert p.returncode==0,(p.stderr,p.stdout[:1700]);v=json.loads(p.stdout);ops.append({'name':name,'seconds':time.monotonic()-start,'metrics':v.get('metrics'),'output_root':v['output_root']});return v
+                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 557, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1221, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 2154, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 1268, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/work/issue47-venv/bin/python', '-c', 'import json,sys;from contextlib import ExitStack;from unittest.mock import patch;from tools.vnext_company import main\nwith ExitStack() as s:\n s.enter_context(patch("socket.socket.connect",side_effect=AssertionError("No network")))\n raise SystemExit(main(json.loads(sys.argv[1])))', '["run", "--company", "marriott_international", "--source-root", "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs", "--work-dir", "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-events-1791536680068011000/state", "--output-dir", "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/historical-events-1791536680068011000/runs", "--metric", "C01", "--metric", "E02", "--metric", "E03", "--metric", "E04", "--metric", "E05", "--period", "fiscal-years", "--fiscal-year-start", "2021", "--fiscal-year-end", "2024"]']' timed out after 120 seconds
