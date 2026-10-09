@@ -1,0 +1,142 @@
+{
+  "actual_main": "f6ef7886",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/liquidity-marriott-20261009/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-remaining-earnings-7ir7pumg",
+  "operations": [
+    {
+      "name": "first-B04-2021",
+      "seconds": 13.65719687496312,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "repeat-forbid-B04-2021",
+      "seconds": 1.3010050000157207,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "first-B04-2025",
+      "seconds": 3.6471417918801308,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "repeat-forbid-B04-2025",
+      "seconds": 0.7809731250163168,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "first-B05-2021",
+      "seconds": 20.363069790881127,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "repeat-forbid-B05-2021",
+      "seconds": 1.8499763750005513,
+      "exit_code": 0,
+      "status": "FLOW_COMPLETED"
+    },
+    {
+      "name": "independent-results",
+      "seconds": 0.6146607911214232,
+      "exit_code": 0,
+      "status": null
+    }
+  ],
+  "comparisons": [
+    {
+      "metric_id": "B04",
+      "fiscal_year": "2021",
+      "value": "1099000000",
+      "unit": "USD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "result_id": "sha256:14645ecd803b11cd620d5879e6cf948985bfc4d424e38b18e6871f9fc53c2732"
+    },
+    {
+      "metric_id": "B05",
+      "fiscal_year": "2021",
+      "value": "994000000",
+      "unit": "USD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "result_id": "sha256:e7acc7383d1788621d31bb1d872a0f5989f16f675632908b57cc9ed46437869e"
+    },
+    {
+      "metric_id": "B04",
+      "fiscal_year": "2022",
+      "value": "2358000000",
+      "unit": "USD",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:75f5c22a8076ea6da3e863bd439702b808c6ebb02dc65bf4099f983713b8a2ee"
+    },
+    {
+      "metric_id": "B05",
+      "fiscal_year": "2022",
+      "value": "2031000000",
+      "unit": "USD",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:702f1b8d5e6d925aaf5a72f6eeb419dbe2941a6a5e0c06f1c217f8b572ce2c48"
+    },
+    {
+      "metric_id": "B04",
+      "fiscal_year": "2023",
+      "value": "3083000000",
+      "unit": "USD",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:d23fda934dc9a703c2b877213dfee46949b1a233ce4838248cd64e5ba67fb206"
+    },
+    {
+      "metric_id": "B05",
+      "fiscal_year": "2023",
+      "value": "2718000000",
+      "unit": "USD",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:45beef522248a1009944a74a3a49c950330ce62ce3d80162a034ef907e1d35be"
+    },
+    {
+      "metric_id": "B05",
+      "fiscal_year": "2024",
+      "value": "1999000000",
+      "unit": "USD",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "result_id": "sha256:1b125bca8565fd568f6e8fb22244477613b4e877b283ca7b4de10b390ad9d68c"
+    },
+    {
+      "metric_id": "B04",
+      "fiscal_year": "2025",
+      "value": "2601000000",
+      "unit": "USD",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2"
+    },
+    {
+      "metric_id": "B05",
+      "fiscal_year": "2025",
+      "value": "2608000000",
+      "unit": "USD",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:e2bffe807958df738353c6f337bd40562f5c71f79d5171b8c8c12f3cfa0656a1"
+    }
+  ],
+  "old_files": 139,
+  "all_files": 211,
+  "old_files_preserved": true,
+  "repeat_factory_calls": 0,
+  "fy2024_b04_original_result_not_recomputed": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
