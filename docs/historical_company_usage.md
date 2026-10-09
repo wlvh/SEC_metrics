@@ -101,6 +101,25 @@ python3 tools/vnext_company.py results \
 
 实际事件来源窗口、申报、原header条目和出处都经同一保存/读取出口。C01/E03按现行Item5.02披露计数，不把相同集合解释为已经区分任命与离任事件。Paramount FY2025仍有2025全年年报容器及目录批准的2024-01-01至2025-12-31事件测量宽窗；只对这几个事件指标成立，财务及E01不能借用。验证和具体运行版本见[事件主要记录](evidence/issue47_events_receiving_20261009/README.md)。E01内容确认、在线历史发现和缺件补齐不在此已实现范围，完整交付责任继续。
 
+## A03/A12：候选分支的历史测量期
+
+`task/issue47-average-risk-history-20261010` 在 main `6e51f416` 上消费公共 PR107 的受控旧 DEI 版本、显式历史工厂及季度保存接口，尚未进入 main。本候选只添加 A03/A12 和三项既有历史措辞适配，不要求先运行其他公司，也不复制公共控制器/保存器。
+
+```bash
+git fetch origin task/issue47-average-risk-history-20261010
+git worktree add -b review/issue47-average-risk ../SEC_metrics-average-risk-review \
+  origin/task/issue47-average-risk-history-20261010
+cd ../SEC_metrics-average-risk-review
+python3 tools/vnext_company.py run --company jpmorgan_chase \
+  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2021 \
+  --metric A03 --metric A12 --source-root /saved/sec/source-inputs \
+  --work-dir /new/average-risk/state --output-dir /new/average-risk/runs
+python3 tools/vnext_company.py results --company jpmorgan_chase \
+  --state-root /new/average-risk/state --output-root /new/average-risk/read-01
+```
+
+来源仍用上节保留历史分支恢复的实际 `source-inputs` 根；原件只读，目录名称已占用时另选。JPM FY2021 已实测 A03=1.11 ratio（111%），实际2021-10-01至12-31；FY2021是年报分组，不能把该季度平均值年化。A12=55,000,000 USD，是全年平均VaR；95%/一日为风险口径，不是一日测量窗口。同一CLI计算、禁工厂复用、独立读取及原格出处已贯通，见[唯一接收记录](evidence/issue47_average_risk_receiving_20261010/README.md)。其余四年、修订/继任金额处理、其他金融族及在线历史取源仍待；默认当期指标集合没有因此扩大。
+
 ## 状态、复跑和局部失败
 
 同一指标按财年各自保存。成功同输入复跑为 `NO_SOURCE_CONTENT_CHANGE`；已经完整检查但因业务原因扣留的同输入复跑为 `PREVIOUS_INPUT_WITHHELD`。两者均不再调用计算工厂，不新增相同结果目录。改变实际相关来源、补齐依赖或处理配置后重新处理；普通异常和未完成记录不被缓存为已完成业务结论。
