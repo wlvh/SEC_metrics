@@ -16778,6 +16778,14 @@
       "actual_factory_calls": 2,
       "repeat": "NO_SOURCE_CONTENT_CHANGE both B01/B02",
       "scope": "Recorded developer task; same source, new processing dependency; no new live business result"
+    },
+    "docs80_current": {
+      "head_sha": "ba606330e4d046c2d68ead31211468d643715452",
+      "main_received": "73ead3b4",
+      "ci": "ALL_9_CHECKS_SUCCESS",
+      "observed_at": "2026-10-09T10:11:52.480016+00:00",
+      "command_help_and_postcommit_alignment": "PASS_STRUCTURE_ONLY",
+      "new_financial_material_runs": 0
     }
   },
   "first_pr_review_20261009": {
@@ -16991,7 +16999,19 @@
     },
     "no_result_run_or_e01_credit": true,
     "pr": 89,
-    "head_sha": "b82111a56d0e24d17d4e54279e87222da2a2963d"
+    "head_sha": "8ed718e3e62f86108262fe5c211088d9458477cf",
+    "latest_main_received": "73ead3b4",
+    "current_ci": {
+      "observed_at": "2026-10-09T10:11:52.480016+00:00",
+      "head": "8ed718e3e62f86108262fe5c211088d9458477cf",
+      "success_checks": 8,
+      "remaining": [
+        "Foundation inherited source material",
+        "Main foundation audit and historical compatibility"
+      ],
+      "overall": "IN_PROGRESS",
+      "prior_b821_absence_reason": "main selector conflict, resolved without runner function changes"
+    }
   },
   "selected_event_window_projection_20261009": {
     "patch_sha": "e2ca7c8f1101ccf915cd9a7887d93b0101e18109",
@@ -17020,7 +17040,7 @@
       "sec": 0
     },
     "pr": 89,
-    "head_sha": "b82111a56d0e24d17d4e54279e87222da2a2963d"
+    "head_sha": "8ed718e3e62f86108262fe5c211088d9458477cf"
   },
   "shared_short_selectors_pr90_20261009": {
     "peer_sha": "54b3b524de725802fbf989116d0533f5bff22a52",
@@ -17028,5 +17048,15 @@
     "evidence_path": "docs/evidence/issue28_continuous/shared-short-selectors-20261008/pr90-6d09-event-selectors.json",
     "status": "STATIC_TWO_FILE_PATCH_PROVIDED_RECEIVER_TESTS_PENDING",
     "runner_function_changed": false
+  },
+  "goal_runtime_observation_20261009": {
+    "observed_at": "2026-10-09T10:11:52.480016+00:00",
+    "native_status": "blocked",
+    "budget": null,
+    "agent_resume_tool_available": false,
+    "does_not_mean_all_engineering_blocked": true,
+    "completion_claim": false,
+    "resume_control": "USER_OR_SYSTEM_NATIVE_LIFECYCLE",
+    "reference": "https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex"
   }
 }
