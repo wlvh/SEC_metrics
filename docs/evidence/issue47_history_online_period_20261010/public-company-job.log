@@ -1,0 +1,618 @@
+﻿2026-10-09T21:49:37.8689877Z Current runner version: '2.337.0'
+2026-10-09T21:49:37.8710701Z ##[group]Runner Image Provisioner
+2026-10-09T21:49:37.8711562Z Hosted Compute Agent
+2026-10-09T21:49:37.8711948Z Version: 20261002.596
+2026-10-09T21:49:37.8712351Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-09T21:49:37.8712789Z Build Date: 2026-10-02T22:28:27Z
+2026-10-09T21:49:37.8713199Z Worker ID: {efb9559c-be8a-4b78-a276-cb4adde0dcaa}
+2026-10-09T21:49:37.8713655Z Region: centralus
+2026-10-09T21:49:37.8714043Z Cloud: Azure
+2026-10-09T21:49:37.8714398Z ##[endgroup]
+2026-10-09T21:49:37.8715234Z ##[group]Operating System
+2026-10-09T21:49:37.8715599Z Ubuntu
+2026-10-09T21:49:37.8715958Z 24.04.5
+2026-10-09T21:49:37.8716302Z LTS
+2026-10-09T21:49:37.8716601Z ##[endgroup]
+2026-10-09T21:49:37.8716975Z ##[group]Runner Image
+2026-10-09T21:49:37.8717358Z Image: ubuntu-24.04
+2026-10-09T21:49:37.8717719Z Version: 20261004.327.1
+2026-10-09T21:49:37.8718543Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-09T21:49:37.8719444Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-09T21:49:37.8720006Z ##[endgroup]
+2026-10-09T21:49:37.8720741Z ##[group]GITHUB_TOKEN Permissions
+2026-10-09T21:49:37.8722092Z Contents: read
+2026-10-09T21:49:37.8722492Z Metadata: read
+2026-10-09T21:49:37.8722825Z ##[endgroup]
+2026-10-09T21:49:37.8724185Z Secret source: Actions
+2026-10-09T21:49:37.8724819Z Cache mode: write
+2026-10-09T21:49:37.8725267Z Prepare workflow directory
+2026-10-09T21:49:37.9078464Z Prepare all required actions
+2026-10-09T21:49:37.9110553Z Getting action download info
+2026-10-09T21:49:38.1183271Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-10-09T21:49:38.4569323Z Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+2026-10-09T21:49:38.8565771Z Complete job name: company-current
+2026-10-09T21:49:38.9216176Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+2026-10-09T21:49:38.9217241Z with:
+2026-10-09T21:49:38.9217782Z   persist-credentials: false
+2026-10-09T21:49:38.9218435Z   repository: wlvh/SEC_metrics
+2026-10-09T21:49:38.9223736Z   token: ***
+2026-10-09T21:49:38.9224262Z   ssh-strict: true
+2026-10-09T21:49:38.9224806Z   ssh-user: git
+2026-10-09T21:49:38.9225338Z   clean: true
+2026-10-09T21:49:38.9225899Z   sparse-checkout-cone-mode: true
+2026-10-09T21:49:38.9226557Z   fetch-depth: 1
+2026-10-09T21:49:38.9227099Z   fetch-tags: false
+2026-10-09T21:49:38.9227663Z   show-progress: true
+2026-10-09T21:49:38.9228229Z   lfs: false
+2026-10-09T21:49:38.9228759Z   submodules: false
+2026-10-09T21:49:38.9229327Z   set-safe-directory: true
+2026-10-09T21:49:38.9230019Z ##[endgroup]
+2026-10-09T21:49:38.9938762Z Syncing repository: wlvh/SEC_metrics
+2026-10-09T21:49:38.9940578Z ##[group]Getting Git version info
+2026-10-09T21:49:38.9941853Z Working directory is '/home/runner/work/SEC_metrics/SEC_metrics'
+2026-10-09T21:49:38.9943326Z [command]/usr/bin/git version
+2026-10-09T21:49:39.0029793Z git version 2.55.0
+2026-10-09T21:49:39.0047145Z ##[endgroup]
+2026-10-09T21:49:39.0060123Z Temporarily overriding HOME='/home/runner/work/_temp/5cb5e6bf-32e9-4d16-aadd-0d58210e3a78' before making global git config changes
+2026-10-09T21:49:39.0063026Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T21:49:39.0065106Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-09T21:49:39.0734448Z Deleting the contents of '/home/runner/work/SEC_metrics/SEC_metrics'
+2026-10-09T21:49:39.0737858Z ##[group]Initializing the repository
+2026-10-09T21:49:39.0742410Z [command]/usr/bin/git init /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-09T21:49:39.1512015Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-09T21:49:39.1513933Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-09T21:49:39.1515529Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-09T21:49:39.1516784Z hint: call:
+2026-10-09T21:49:39.1517520Z hint:
+2026-10-09T21:49:39.1518355Z hint: 	git config --global init.defaultBranch <name>
+2026-10-09T21:49:39.1519109Z hint:
+2026-10-09T21:49:39.1519826Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-09T21:49:39.1521191Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-09T21:49:39.1522332Z hint:
+2026-10-09T21:49:39.1522855Z hint: 	git branch -m <name>
+2026-10-09T21:49:39.1523479Z hint:
+2026-10-09T21:49:39.1524251Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-09T21:49:39.1525486Z Initialized empty Git repository in /home/runner/work/SEC_metrics/SEC_metrics/.git/
+2026-10-09T21:49:39.1527763Z [command]/usr/bin/git remote add origin https://github.com/wlvh/SEC_metrics
+2026-10-09T21:49:39.1812590Z ##[endgroup]
+2026-10-09T21:49:39.1813976Z ##[group]Disabling automatic garbage collection
+2026-10-09T21:49:39.1816210Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-09T21:49:39.2234542Z ##[endgroup]
+2026-10-09T21:49:39.2235996Z ##[group]Setting up auth
+2026-10-09T21:49:39.2237086Z Removing SSH command configuration
+2026-10-09T21:49:39.2240546Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T21:49:39.2274137Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T21:49:39.2581045Z Removing HTTP extra header
+2026-10-09T21:49:39.2586733Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T21:49:39.2619425Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T21:49:39.2801506Z Removing includeIf entries pointing to credentials config files
+2026-10-09T21:49:39.2806959Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T21:49:39.2840456Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T21:49:39.3034061Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-09T21:49:39.3139437Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:39.3277554Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:39.3444728Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:39.3636361Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:39.3844023Z ##[endgroup]
+2026-10-09T21:49:39.3845102Z ##[group]Fetching the repository
+2026-10-09T21:49:39.3853109Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9d164ee18916e90733f5dea2ed4c456dbd4b7786:refs/remotes/pull/122/merge
+2026-10-09T21:49:49.8690186Z From https://github.com/wlvh/SEC_metrics
+2026-10-09T21:49:49.8691076Z  * [new ref]         9d164ee18916e90733f5dea2ed4c456dbd4b7786 -> pull/122/merge
+2026-10-09T21:49:49.8706983Z ##[endgroup]
+2026-10-09T21:49:49.8707997Z ##[group]Determining the checkout info
+2026-10-09T21:49:49.8708511Z ##[endgroup]
+2026-10-09T21:49:49.8708977Z [command]/usr/bin/git sparse-checkout disable
+2026-10-09T21:49:49.8755527Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-09T21:49:49.8784084Z ##[group]Checking out the ref
+2026-10-09T21:49:49.8786677Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/122/merge
+2026-10-09T21:49:50.9090414Z Updating files:  66% (5747/8702)
+2026-10-09T21:49:50.9278099Z Updating files:  67% (5831/8702)
+2026-10-09T21:49:51.1100321Z Updating files:  68% (5918/8702)
+2026-10-09T21:49:51.1125558Z Updating files:  69% (6005/8702)
+2026-10-09T21:49:51.1340632Z Updating files:  70% (6092/8702)
+2026-10-09T21:49:51.1514856Z Updating files:  71% (6179/8702)
+2026-10-09T21:49:51.1715784Z Updating files:  72% (6266/8702)
+2026-10-09T21:49:51.1793431Z Updating files:  73% (6353/8702)
+2026-10-09T21:49:51.1926037Z Updating files:  74% (6440/8702)
+2026-10-09T21:49:51.2058572Z Updating files:  75% (6527/8702)
+2026-10-09T21:49:51.2157471Z Updating files:  76% (6614/8702)
+2026-10-09T21:49:51.2287427Z Updating files:  77% (6701/8702)
+2026-10-09T21:49:51.2532916Z Updating files:  78% (6788/8702)
+2026-10-09T21:49:51.2721533Z Updating files:  79% (6875/8702)
+2026-10-09T21:49:51.2772261Z Updating files:  80% (6962/8702)
+2026-10-09T21:49:51.2924852Z Updating files:  81% (7049/8702)
+2026-10-09T21:49:51.3085580Z Updating files:  82% (7136/8702)
+2026-10-09T21:49:51.3220588Z Updating files:  83% (7223/8702)
+2026-10-09T21:49:51.3269845Z Updating files:  84% (7310/8702)
+2026-10-09T21:49:51.3305477Z Updating files:  85% (7397/8702)
+2026-10-09T21:49:51.3342461Z Updating files:  86% (7484/8702)
+2026-10-09T21:49:51.3488474Z Updating files:  87% (7571/8702)
+2026-10-09T21:49:51.3631983Z Updating files:  88% (7658/8702)
+2026-10-09T21:49:51.3792878Z Updating files:  89% (7745/8702)
+2026-10-09T21:49:51.3853835Z Updating files:  90% (7832/8702)
+2026-10-09T21:49:51.3939147Z Updating files:  91% (7919/8702)
+2026-10-09T21:49:51.4013702Z Updating files:  92% (8006/8702)
+2026-10-09T21:49:51.4077221Z Updating files:  93% (8093/8702)
+2026-10-09T21:49:51.4147515Z Updating files:  94% (8180/8702)
+2026-10-09T21:49:51.4208130Z Updating files:  95% (8267/8702)
+2026-10-09T21:49:51.4278440Z Updating files:  96% (8354/8702)
+2026-10-09T21:49:51.4339768Z Updating files:  97% (8441/8702)
+2026-10-09T21:49:51.4391576Z Updating files:  98% (8528/8702)
+2026-10-09T21:49:51.4449389Z Updating files:  99% (8615/8702)
+2026-10-09T21:49:51.4449635Z Updating files: 100% (8702/8702)
+2026-10-09T21:49:51.4449853Z Updating files: 100% (8702/8702), done.
+2026-10-09T21:49:51.4636413Z Note: switching to 'refs/remotes/pull/122/merge'.
+2026-10-09T21:49:51.4636655Z 
+2026-10-09T21:49:51.4636826Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-09T21:49:51.4637258Z changes and commit them, and you can discard any commits you make in this
+2026-10-09T21:49:51.4637724Z state without impacting any branches by switching back to a branch.
+2026-10-09T21:49:51.4637963Z 
+2026-10-09T21:49:51.4638117Z If you want to create a new branch to retain commits you create, you may
+2026-10-09T21:49:51.4638542Z do so (now or later) by using -c with the switch command. Example:
+2026-10-09T21:49:51.4638759Z 
+2026-10-09T21:49:51.4638858Z   git switch -c <new-branch-name>
+2026-10-09T21:49:51.4639004Z 
+2026-10-09T21:49:51.4639155Z Or undo this operation with:
+2026-10-09T21:49:51.4639429Z 
+2026-10-09T21:49:51.4639487Z   git switch -
+2026-10-09T21:49:51.4639563Z 
+2026-10-09T21:49:51.4639694Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-09T21:49:51.4639865Z 
+2026-10-09T21:49:51.4640052Z HEAD is now at 9d164ee Merge ea7a1aaa8fa7376422578925348117b1888a9c61 into f6ef7886d6630f7675c25cd42e306c373ab05769
+2026-10-09T21:49:51.4705662Z ##[endgroup]
+2026-10-09T21:49:51.4747968Z [command]/usr/bin/git log -1 --format=%H
+2026-10-09T21:49:51.4774906Z 9d164ee18916e90733f5dea2ed4c456dbd4b7786
+2026-10-09T21:49:51.4789382Z ##[group]Removing auth
+2026-10-09T21:49:51.4789703Z Removing SSH command configuration
+2026-10-09T21:49:51.4790093Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T21:49:51.4818133Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T21:49:51.5008881Z Removing HTTP extra header
+2026-10-09T21:49:51.5013170Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T21:49:51.5047275Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T21:49:51.5236041Z Removing includeIf entries pointing to credentials config files
+2026-10-09T21:49:51.5239740Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T21:49:51.5265977Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+2026-10-09T21:49:51.5266278Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+2026-10-09T21:49:51.5266637Z includeif.gitdir:/github/workspace/.git.path
+2026-10-09T21:49:51.5266957Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-09T21:49:51.5274962Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+2026-10-09T21:49:51.5297769Z /home/runner/work/_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:51.5307019Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:51.5653835Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+2026-10-09T21:49:51.5680065Z /home/runner/work/_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:51.5689241Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:51.6258238Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+2026-10-09T21:49:51.6287992Z /github/runner_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:51.6295189Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:51.6758992Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+2026-10-09T21:49:51.6785807Z /github/runner_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:51.6791590Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config
+2026-10-09T21:49:51.7761637Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T21:49:51.7958066Z Removing credentials config '/home/runner/work/_temp/git-credentials-b2a57e30-3901-42b4-bb65-8cc090628354.config'
+2026-10-09T21:49:51.7967286Z ##[endgroup]
+2026-10-09T21:49:51.8875449Z ##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+2026-10-09T21:49:51.8875687Z with:
+2026-10-09T21:49:51.8875815Z   python-version: 3.14
+2026-10-09T21:49:51.8875950Z   check-latest: false
+2026-10-09T21:49:51.8877240Z   token: ***
+2026-10-09T21:49:51.8877374Z   update-environment: true
+2026-10-09T21:49:51.8877519Z   allow-prereleases: false
+2026-10-09T21:49:51.8877658Z   freethreaded: false
+2026-10-09T21:49:51.8877964Z ##[endgroup]
+2026-10-09T21:49:51.9775540Z ##[group]Installed versions
+2026-10-09T21:49:52.0432655Z Successfully set up CPython (3.14.8)
+2026-10-09T21:49:52.0433149Z ##[endgroup]
+2026-10-09T21:49:52.0973646Z ##[group]Run python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy tests.vnext.test_dei_release_selection tests.vnext.test_successor_income_projection tests.vnext.test_event_rule_root tests.vnext.test_financial_dei_release tests.vnext.test_reported_average_period tests.vnext.test_bank_scope_dei_release -v
+2026-10-09T21:49:52.0977484Z python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy tests.vnext.test_dei_release_selection tests.vnext.test_successor_income_projection tests.vnext.test_event_rule_root tests.vnext.test_financial_dei_release tests.vnext.test_reported_average_period tests.vnext.test_bank_scope_dei_release -v
+2026-10-09T21:49:52.1612064Z shell: /usr/bin/bash -e {0}
+2026-10-09T21:49:52.1612272Z env:
+2026-10-09T21:49:52.1612472Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:49:52.1612737Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+2026-10-09T21:49:52.1612980Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:49:52.1613197Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:49:52.1613415Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:49:52.1613634Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+2026-10-09T21:49:52.1613832Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-09T21:49:52.1613977Z ##[endgroup]
+2026-10-09T21:49:55.8261734Z test_helper_import_does_not_load_release_or_requirement (tests.vnext.test_saved_source_checks.RequestBindingsCompatibilityTest.test_helper_import_does_not_load_release_or_requirement) ... ok
+2026-10-09T21:49:55.8263028Z test_original_imports_keep_same_exception_and_helpers (tests.vnext.test_saved_source_checks.RequestBindingsCompatibilityTest.test_original_imports_keep_same_exception_and_helpers) ... ok
+2026-10-09T21:49:56.5269957Z test_complete_saved_package_without_git_journal_checks_actual_bytes (tests.vnext.test_saved_source_checks.SavedSourceChecksTest.test_complete_saved_package_without_git_journal_checks_actual_bytes) ... ok
+2026-10-09T21:49:56.5869787Z test_corrupted_body_or_headers_are_rejected (tests.vnext.test_saved_source_checks.SavedSourceChecksTest.test_corrupted_body_or_headers_are_rejected) ... ok
+2026-10-09T21:49:56.5902177Z test_empty_scope_is_not_complete (tests.vnext.test_saved_source_checks.SavedSourceChecksTest.test_empty_scope_is_not_complete) ... ok
+2026-10-09T21:49:56.6225792Z test_later_failed_request_cannot_be_hidden_by_old_success (tests.vnext.test_saved_source_checks.SavedSourceChecksTest.test_later_failed_request_cannot_be_hidden_by_old_success) ... ok
+2026-10-09T21:49:56.6848170Z test_missing_or_changed_attempt_identity_is_rejected (tests.vnext.test_saved_source_checks.SavedSourceChecksTest.test_missing_or_changed_attempt_identity_is_rejected) ... ok
+2026-10-09T21:49:56.7157473Z test_missing_selected_body_is_rejected (tests.vnext.test_saved_source_checks.SavedSourceChecksTest.test_missing_selected_body_is_rejected) ... ok
+2026-10-09T21:49:56.7626911Z test_wrong_filing_or_document_identity_is_rejected (tests.vnext.test_saved_source_checks.SavedSourceChecksTest.test_wrong_filing_or_document_identity_is_rejected) ... ok
+2026-10-09T21:50:17.9897447Z test_noncalendar_rpo_and_bank_ratios_complete_without_rules_in_source (tests.vnext.test_separate_rule_root.NativeRuleRootTest.test_noncalendar_rpo_and_bank_ratios_complete_without_rules_in_source) ... ok
+2026-10-09T21:50:17.9995081Z test_wrong_native_subject_is_rejected_before_completion (tests.vnext.test_separate_rule_root.NativeRuleRootTest.test_wrong_native_subject_is_rejected_before_completion) ... ok
+2026-10-09T21:50:30.7051805Z test_b02_uses_actual_comparative_original_without_calculation_rules_in_source (tests.vnext.test_separate_rule_root.SeparateRuleRootTest.test_b02_uses_actual_comparative_original_without_calculation_rules_in_source) ... ok
+2026-10-09T21:50:30.7054259Z test_existing_shared_lodging_calculation_uses_program_rules_and_keeps_source_only (tests.vnext.test_separate_rule_root.SeparateRuleRootTest.test_existing_shared_lodging_calculation_uses_program_rules_and_keeps_source_only) ... ok
+2026-10-09T21:50:30.7058455Z test_no_catalog_rules_code_or_answers_required_in_source_root (tests.vnext.test_separate_rule_root.SeparateRuleRootTest.test_no_catalog_rules_code_or_answers_required_in_source_root) ... ok
+2026-10-09T21:50:30.7156900Z test_registry_subject_change_is_not_hidden_by_program_rules (tests.vnext.test_separate_rule_root.SeparateRuleRootTest.test_registry_subject_change_is_not_hidden_by_program_rules) ... ok
+2026-10-09T21:50:30.7167363Z test_saved_result_read_retains_value_unit_period_and_source_rows (tests.vnext.test_separate_rule_root.SeparateRuleRootTest.test_saved_result_read_retains_value_unit_period_and_source_rows) ... ok
+2026-10-09T21:50:30.7377702Z test_common_company_reader_keeps_other_metric_after_subset_run (tests.vnext.test_company_current_records.CurrentCompanyTest.test_common_company_reader_keeps_other_metric_after_subset_run) ... ok
+2026-10-09T21:50:30.7471744Z test_common_read_exports_csv_and_honours_supplied_defects_without_update (tests.vnext.test_company_current_records.CurrentCompanyTest.test_common_read_exports_csv_and_honours_supplied_defects_without_update) ... ok
+2026-10-09T21:50:30.7489831Z test_competing_writer_does_not_enter_calculation (tests.vnext.test_company_current_records.CurrentCompanyTest.test_competing_writer_does_not_enter_calculation) ... ok
+2026-10-09T21:50:30.7605346Z test_completed_pointer_cannot_label_a_success_record_as_withheld (tests.vnext.test_company_current_records.CurrentCompanyTest.test_completed_pointer_cannot_label_a_success_record_as_withheld) ... ok
+2026-10-09T21:50:30.7720523Z test_completed_withheld_survives_a_later_different_metric_request (tests.vnext.test_company_current_records.CurrentCompanyTest.test_completed_withheld_survives_a_later_different_metric_request) ... ok
+2026-10-09T21:50:30.7802512Z test_daily_read_does_not_select_sources_or_run_update (tests.vnext.test_company_current_records.CurrentCompanyTest.test_daily_read_does_not_select_sources_or_run_update) ... ok
+2026-10-09T21:50:30.7867286Z test_existing_local_entry_selects_saved_branch_without_configure_task (tests.vnext.test_company_current_records.CurrentCompanyTest.test_existing_local_entry_selects_saved_branch_without_configure_task) ... ok
+2026-10-09T21:50:30.7941992Z test_known_bad_exact_result_is_removed_from_numeric_csv (tests.vnext.test_company_current_records.CurrentCompanyTest.test_known_bad_exact_result_is_removed_from_numeric_csv) ... ok
+2026-10-09T21:50:30.7998322Z test_metric_exception_is_local_not_batch_failure (tests.vnext.test_company_current_records.CurrentCompanyTest.test_metric_exception_is_local_not_batch_failure) ... ok
+2026-10-09T21:50:30.8054020Z test_missing_ai_and_deprecated_e01_do_not_manufacture_results (tests.vnext.test_company_current_records.CurrentCompanyTest.test_missing_ai_and_deprecated_e01_do_not_manufacture_results) ... ok
+2026-10-09T21:50:30.8201876Z test_new_withheld_result_is_shown_instead_of_old_success (tests.vnext.test_company_current_records.CurrentCompanyTest.test_new_withheld_result_is_shown_instead_of_old_success) ... ok
+2026-10-09T21:50:30.8295005Z test_range_public_entry_isolates_missing_year_and_exports_actual_success_period (tests.vnext.test_company_current_records.CurrentCompanyTest.test_range_public_entry_isolates_missing_year_and_exports_actual_success_period) ... ok
+2026-10-09T21:50:30.8321921Z test_range_requires_unique_bounded_years_and_existing_factory (tests.vnext.test_company_current_records.CurrentCompanyTest.test_range_requires_unique_bounded_years_and_existing_factory) ... ok
+2026-10-09T21:50:30.8394051Z test_same_metric_two_period_pointers_are_both_visible (tests.vnext.test_company_current_records.CurrentCompanyTest.test_same_metric_two_period_pointers_are_both_visible) ... ok
+2026-10-09T21:50:30.8479806Z test_source_binding_and_old_task_are_not_reset (tests.vnext.test_company_current_records.CurrentCompanyTest.test_source_binding_and_old_task_are_not_reset) ... ok
+2026-10-09T21:50:30.8582222Z test_source_failure_preserves_old_period_and_other_metric_continues (tests.vnext.test_company_current_records.CurrentCompanyTest.test_source_failure_preserves_old_period_and_other_metric_continues) ... ok
+2026-10-09T21:50:30.8684040Z test_two_metrics_share_source_and_program_without_installer (tests.vnext.test_company_current_records.CurrentCompanyTest.test_two_metrics_share_source_and_program_without_installer) ... ok
+2026-10-09T21:50:30.8783009Z test_unrelated_source_discovery_failure_still_shows_limitation (tests.vnext.test_company_current_records.CurrentCompanyTest.test_unrelated_source_discovery_failure_still_shows_limitation) ... ok
+2026-10-09T21:50:30.8790756Z test_writable_state_cannot_overlap_source_or_code (tests.vnext.test_company_current_records.CurrentCompanyTest.test_writable_state_cannot_overlap_source_or_code) ... ok
+2026-10-09T21:50:30.8885765Z test_wrong_metric_saved_record_is_not_exported (tests.vnext.test_company_current_records.CurrentCompanyTest.test_wrong_metric_saved_record_is_not_exported) ... ok
+2026-10-09T21:50:35.3877101Z test_actual_scope_withheld_preserves_two_successful_numeric_results (tests.vnext.test_company_current_records.MixedSavedBusinessOutcomeTest.test_actual_scope_withheld_preserves_two_successful_numeric_results) ... ok
+2026-10-09T21:50:35.6819357Z test_repeated_mixed_inputs_reuse_success_and_hold_without_factory (tests.vnext.test_company_current_records.MixedSavedBusinessOutcomeTest.test_repeated_mixed_inputs_reuse_success_and_hold_without_factory) ... ok
+2026-10-09T21:50:35.7190969Z test_adding_another_metric_reuses_completed_input_in_the_actual_controller (tests.vnext.test_company_current_records.PerMetricProducerTest.test_adding_another_metric_reuses_completed_input_in_the_actual_controller) ... ok
+2026-10-09T21:50:35.7215011Z test_bad_or_ambiguous_metric_mapping_is_rejected_before_writes (tests.vnext.test_company_current_records.PerMetricProducerTest.test_bad_or_ambiguous_metric_mapping_is_rejected_before_writes) ... ok
+2026-10-09T21:50:35.7269067Z test_default_a13_stays_unimplemented_and_unknown_explicit_core_rejects (tests.vnext.test_company_current_records.PerMetricProducerTest.test_default_a13_stays_unimplemented_and_unknown_explicit_core_rejects) ... ok
+2026-10-09T21:50:35.7317723Z test_each_selected_metric_keeps_its_factory_and_exact_dependencies (tests.vnext.test_company_current_records.PerMetricProducerTest.test_each_selected_metric_keeps_its_factory_and_exact_dependencies) ... ok
+2026-10-09T21:50:35.7371071Z test_explicit_a13_factory_reaches_same_update_boundary (tests.vnext.test_company_current_records.PerMetricProducerTest.test_explicit_a13_factory_reaches_same_update_boundary) ... ok
+2026-10-09T21:50:35.7439786Z test_explicit_a13_saved_reading_keeps_value_and_content_unaccepted (tests.vnext.test_company_current_records.PerMetricProducerTest.test_explicit_a13_saved_reading_keeps_value_and_content_unaccepted) ... ok
+2026-10-09T21:50:35.7488031Z test_single_factory_and_dependency_tuple_are_passed_unchanged (tests.vnext.test_company_current_records.PerMetricProducerTest.test_single_factory_and_dependency_tuple_are_passed_unchanged) ... ok
+2026-10-09T21:50:38.8379020Z test_real_marriott_values_periods_and_source_links_reach_company_csv (tests.vnext.test_company_current_records.SavedSourceCompanyEntryTest.test_real_marriott_values_periods_and_source_links_reach_company_csv) ... ok
+2026-10-09T21:50:38.8424292Z test_real_read_does_not_parse_or_update (tests.vnext.test_company_current_records.SavedSourceCompanyEntryTest.test_real_read_does_not_parse_or_update) ... ok
+2026-10-09T21:50:39.0909826Z test_real_reentry_never_invokes_calculation_factory (tests.vnext.test_company_current_records.SavedSourceCompanyEntryTest.test_real_reentry_never_invokes_calculation_factory) ... ok
+2026-10-09T21:50:39.1177202Z test_completed_withheld_recovers_interrupted_pointer_write (tests.vnext.test_ordinary_current_update.CompletedWithheldUpdateTest.test_completed_withheld_recovers_interrupted_pointer_write) ... ok
+2026-10-09T21:50:39.1321818Z test_first_withheld_repeats_without_factory_or_another_result (tests.vnext.test_ordinary_current_update.CompletedWithheldUpdateTest.test_first_withheld_repeats_without_factory_or_another_result) ... ok
+2026-10-09T21:50:39.1484619Z test_program_exception_does_not_become_reusable_withheld (tests.vnext.test_ordinary_current_update.CompletedWithheldUpdateTest.test_program_exception_does_not_become_reusable_withheld) ... ok
+2026-10-09T21:50:39.1608402Z test_source_and_configuration_changes_reprocess_stable_withheld (tests.vnext.test_ordinary_current_update.CompletedWithheldUpdateTest.test_source_and_configuration_changes_reprocess_stable_withheld) ... ok
+2026-10-09T21:50:39.1723541Z test_withheld_replaces_current_conclusion_but_preserves_success_history (tests.vnext.test_ordinary_current_update.CompletedWithheldUpdateTest.test_withheld_replaces_current_conclusion_but_preserves_success_history) ... ok
+2026-10-09T21:50:39.1858325Z test_b02_paired_scope_changes_invalidate_only_its_processing_identity (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_b02_paired_scope_changes_invalidate_only_its_processing_identity) ... ok
+2026-10-09T21:50:39.1971733Z test_changed_annual_selection_and_saved_input_checks_are_not_cached (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_changed_annual_selection_and_saved_input_checks_are_not_cached) ... ok
+2026-10-09T21:50:39.2209053Z test_changed_graph_reprocesses_same_input_instead_of_reusing_old_result (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_changed_graph_reprocesses_same_input_instead_of_reusing_old_result) ... ok
+2026-10-09T21:50:39.2421453Z test_changed_paired_scope_rechecks_then_reuses_a_withheld_conclusion (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_changed_paired_scope_rechecks_then_reuses_a_withheld_conclusion) ... ok
+2026-10-09T21:50:39.2610782Z test_consumed_deterministic_graph_is_part_of_processing_identity (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_consumed_deterministic_graph_is_part_of_processing_identity) ... ok
+2026-10-09T21:50:39.2675321Z test_consumed_parser_changes_still_change_processing_identity (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_consumed_parser_changes_still_change_processing_identity) ... ok
+2026-10-09T21:50:39.2739172Z test_lodging_only_changes_do_not_change_b01_processing_identity (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_lodging_only_changes_do_not_change_b01_processing_identity) ... ok
+2026-10-09T21:50:39.2812572Z test_unused_legacy_source_authority_does_not_invalidate_current_input (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_unused_legacy_source_authority_does_not_invalidate_current_input) ... ok
+2026-10-09T21:50:39.3094617Z test_unused_recorded_source_session_does_not_change_current_configuration (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_unused_recorded_source_session_does_not_change_current_configuration) ... ok
+2026-10-09T21:50:39.3370159Z test_used_source_dependency_change_reprocesses_once_then_reuses (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_used_source_dependency_change_reprocesses_once_then_reuses) ... ok
+2026-10-09T21:50:39.3379276Z test_census_uses_company_latest_bodies_not_request_identity_or_other_company (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_census_uses_company_latest_bodies_not_request_identity_or_other_company) ... ok
+2026-10-09T21:50:39.3455454Z test_configuration_failure_is_persisted (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_configuration_failure_is_persisted) ... ok
+2026-10-09T21:50:39.3704488Z test_existing_update_entry_selects_current_record_storage_explicitly (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_existing_update_entry_selects_current_record_storage_explicitly) ... ok
+2026-10-09T21:50:39.3779460Z test_identical_raw_and_config_never_enters_calculation (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_identical_raw_and_config_never_enters_calculation) ... ok
+2026-10-09T21:50:39.3855745Z test_latest_get_failure_does_not_claim_no_change_or_overwrite_success (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_latest_get_failure_does_not_claim_no_change_or_overwrite_success) ... ok
+2026-10-09T21:50:39.3994510Z test_new_company_file_or_processing_change_makes_new_version (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_new_company_file_or_processing_change_makes_new_version) ... ok
+2026-10-09T21:50:39.4003295Z test_old_native_history_requires_its_old_controller (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_old_native_history_requires_its_old_controller) ... ok
+2026-10-09T21:50:39.4080590Z test_saved_completion_recovers_pointer_before_next_check (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_saved_completion_recovers_pointer_before_next_check) ... ok
+2026-10-09T21:50:39.4167115Z test_unfinished_intent_is_interrupted_not_success (tests.vnext.test_ordinary_current_update.CurrentUpdateTest.test_unfinished_intent_is_interrupted_not_success) ... ok
+2026-10-09T21:50:39.4173722Z test_a13_without_explicit_year_and_other_unsupported_family_stay_closed (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_a13_without_explicit_year_and_other_unsupported_family_stay_closed) ... ok
+2026-10-09T21:50:39.4373676Z test_completed_withheld_periods_do_not_override_current_or_each_other (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_completed_withheld_periods_do_not_override_current_or_each_other) ... ok
+2026-10-09T21:50:39.4545406Z test_declared_dependency_change_recalculates_but_unrelated_change_does_not (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_declared_dependency_change_recalculates_but_unrelated_change_does_not) ... ok
+2026-10-09T21:50:39.4577741Z test_explicit_a13_selected_case_reaches_factory_without_default_expansion (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_explicit_a13_selected_case_reaches_factory_without_default_expansion) ... ok
+2026-10-09T21:50:39.4704491Z test_explicit_recorded_session_dependency_still_reprocesses (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_explicit_recorded_session_dependency_still_reprocesses) ... ok
+2026-10-09T21:50:39.4738875Z test_period_selection_failure_retains_year_and_category (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_period_selection_failure_retains_year_and_category) ... ok
+2026-10-09T21:50:39.4816758Z test_processing_dependency_path_error_preserves_previous_result (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_processing_dependency_path_error_preserves_previous_result) ... ok
+2026-10-09T21:50:39.4822468Z test_selected_period_without_factory_never_selects_latest (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_selected_period_without_factory_never_selects_latest) ... ok
+2026-10-09T21:50:39.4910472Z test_two_selected_periods_have_separate_pointers_and_current_layout_stays (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_two_selected_periods_have_separate_pointers_and_current_layout_stays) ... ok
+2026-10-09T21:50:39.4993474Z test_unchanged_selected_period_does_not_invoke_case_factory (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_unchanged_selected_period_does_not_invoke_case_factory) ... ok
+2026-10-09T21:50:39.5072771Z test_wrong_selected_year_preserves_previous_pointer (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_wrong_selected_year_preserves_previous_pointer) ... ok
+2026-10-09T21:50:39.5091119Z test_byte_changes_are_not_cache_hits_or_identity_equivalence (tests.vnext.test_company_parse_reuse.CompanyParseReuseTest.test_byte_changes_are_not_cache_hits_or_identity_equivalence) ... ok
+2026-10-09T21:50:39.5158881Z test_cache_is_bounded_without_omitting_later_sources (tests.vnext.test_company_parse_reuse.CompanyParseReuseTest.test_cache_is_bounded_without_omitting_later_sources) ... ok
+2026-10-09T21:50:39.5174001Z test_nested_operations_and_failures_restore_previous_scope (tests.vnext.test_company_parse_reuse.CompanyParseReuseTest.test_nested_operations_and_failures_restore_previous_scope) ... ok
+2026-10-09T21:50:39.5187805Z test_one_operation_parses_same_bytes_once_with_same_immutable_content (tests.vnext.test_company_parse_reuse.CompanyParseReuseTest.test_one_operation_parses_same_bytes_once_with_same_immutable_content) ... ok
+2026-10-09T21:50:39.5201315Z test_reused_parse_does_not_bypass_consumer_company_or_period_checks (tests.vnext.test_company_parse_reuse.CompanyParseReuseTest.test_reused_parse_does_not_bypass_consumer_company_or_period_checks) ... ok
+2026-10-09T21:50:40.8657457Z test_independent_read_checks_changed_or_missing_shared_material (tests.vnext.test_precalculated_case.PrecalculatedCaseTest.test_independent_read_checks_changed_or_missing_shared_material) ... ok
+2026-10-09T21:50:40.9842638Z test_projection_consumes_selected_annual_input_without_latest_reselection (tests.vnext.test_precalculated_case.PrecalculatedCaseTest.test_projection_consumes_selected_annual_input_without_latest_reselection) ... ok
+2026-10-09T21:50:41.1027271Z test_real_precalculated_case_reaches_rows_without_selector_or_calculator (tests.vnext.test_precalculated_case.PrecalculatedCaseTest.test_real_precalculated_case_reaches_rows_without_selector_or_calculator) ... ok
+2026-10-09T21:50:41.3354813Z test_shared_asset_is_stored_once_and_both_records_remain_readable (tests.vnext.test_precalculated_case.PrecalculatedCaseTest.test_shared_asset_is_stored_once_and_both_records_remain_readable) ... ok
+2026-10-09T21:50:41.4497052Z test_shared_material_cannot_be_written_into_readonly_source (tests.vnext.test_precalculated_case.PrecalculatedCaseTest.test_shared_material_cannot_be_written_into_readonly_source) ... ok
+2026-10-09T21:50:41.5595098Z test_wrong_prepared_fiscal_label_is_rejected_without_latest_fallback (tests.vnext.test_precalculated_case.PrecalculatedCaseTest.test_wrong_prepared_fiscal_label_is_rejected_without_latest_fallback) ... ok
+2026-10-09T21:50:41.6752395Z test_wrong_prepared_subject_is_rejected_before_completion (tests.vnext.test_precalculated_case.PrecalculatedCaseTest.test_wrong_prepared_subject_is_rejected_before_completion) ... ok
+2026-10-09T21:50:41.6802142Z test_wrong_spec_has_no_completion_manifest (tests.vnext.test_precalculated_case.PrecalculatedCaseTest.test_wrong_spec_has_no_completion_manifest) ... ok
+2026-10-09T21:50:41.6841079Z test_wrong_target_period_has_no_completion_manifest (tests.vnext.test_precalculated_case.PrecalculatedCaseTest.test_wrong_target_period_has_no_completion_manifest) ... ok
+2026-10-09T21:50:43.4414054Z test_rpo_saved_csv_is_explicitly_not_arr_or_churn (tests.vnext.test_precalculated_case.RpoDisplayTest.test_rpo_saved_csv_is_explicitly_not_arr_or_churn) ... ok
+2026-10-09T21:50:43.4540251Z test_both_metrics_reach_calculator_without_selecting_or_reading_again (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_both_metrics_reach_calculator_without_selecting_or_reading_again) ... ok
+2026-10-09T21:50:43.4551147Z test_changed_period_or_scope_is_rejected_before_calculation (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_changed_period_or_scope_is_rejected_before_calculation) ... ok
+2026-10-09T21:50:43.4561511Z test_company_accession_reference_and_metric_conflicts_are_rejected (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_company_accession_reference_and_metric_conflicts_are_rejected) ... ok
+2026-10-09T21:50:43.4651423Z test_selected_noncalendar_interval_is_preserved_through_calculation (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_selected_noncalendar_interval_is_preserved_through_calculation) ... ok
+2026-10-09T21:50:43.4662299Z test_wrong_unit_cannot_become_an_exact_result (tests.vnext.test_selected_lodging_calculation.SelectedLodgingCalculationTest.test_wrong_unit_cannot_become_an_exact_result) ... ok
+2026-10-09T21:50:43.4674398Z test_context_and_reported_cik_cannot_change_the_selected_subject (tests.vnext.test_selected_lodging_source.PreparedPeriodBusinessTest.test_context_and_reported_cik_cannot_change_the_selected_subject) ... ok
+2026-10-09T21:50:43.4684545Z test_invalid_label_is_an_integrity_failure (tests.vnext.test_selected_lodging_source.PreparedPeriodBusinessTest.test_invalid_label_is_an_integrity_failure) ... ok
+2026-10-09T21:50:43.4694184Z test_quarter_and_amendment_are_not_an_ordinary_annual_selection (tests.vnext.test_selected_lodging_source.PreparedPeriodBusinessTest.test_quarter_and_amendment_are_not_an_ordinary_annual_selection) ... ok
+2026-10-09T21:50:43.4699458Z test_short_interval_is_a_named_implementation_gap (tests.vnext.test_selected_lodging_source.PreparedPeriodBusinessTest.test_short_interval_is_a_named_implementation_gap) ... ok
+2026-10-09T21:50:43.4704374Z test_source_label_and_52_week_interval_are_kept (tests.vnext.test_selected_lodging_source.PreparedPeriodBusinessTest.test_source_label_and_52_week_interval_are_kept) ... ok
+2026-10-09T21:50:43.4789780Z test_both_metrics_keep_units_scope_period_and_raw_cell_positions (tests.vnext.test_selected_lodging_source.SelectedLodgingSourceTest.test_both_metrics_keep_units_scope_period_and_raw_cell_positions) ... ok
+2026-10-09T21:50:43.4791914Z test_company_accession_raw_bytes_and_period_must_match_selected_source (tests.vnext.test_selected_lodging_source.SelectedLodgingSourceTest.test_company_accession_raw_bytes_and_period_must_match_selected_source) ... ok
+2026-10-09T21:50:43.4885530Z test_competing_target_and_truncated_html_are_not_a_success (tests.vnext.test_selected_lodging_source.SelectedLodgingSourceTest.test_competing_target_and_truncated_html_are_not_a_success) ... ok
+2026-10-09T21:50:43.5018603Z test_local_period_currency_and_footnote_conflicts_are_not_ignored (tests.vnext.test_selected_lodging_source.SelectedLodgingSourceTest.test_local_period_currency_and_footnote_conflicts_are_not_ignored) ... ok
+2026-10-09T21:50:43.5096828Z test_non_calendar_prepared_period_is_not_inferred_from_end_year (tests.vnext.test_selected_lodging_source.SelectedLodgingSourceTest.test_non_calendar_prepared_period_is_not_inferred_from_end_year) ... ok
+2026-10-09T21:50:43.5265107Z test_policy_is_explicit_and_never_changes_module_globals (tests.vnext.test_selected_lodging_source.SelectedLodgingSourceTest.test_policy_is_explicit_and_never_changes_module_globals) ... ok
+2026-10-09T21:50:43.5400438Z test_scope_and_unit_cannot_be_borrowed_or_guessed (tests.vnext.test_selected_lodging_source.SelectedLodgingSourceTest.test_scope_and_unit_cannot_be_borrowed_or_guessed) ... ok
+2026-10-09T21:50:43.5481433Z test_selected_reader_does_not_prepare_or_parse_dei_again (tests.vnext.test_selected_lodging_source.SelectedLodgingSourceTest.test_selected_reader_does_not_prepare_or_parse_dei_again) ... ok
+2026-10-09T21:50:43.5568838Z test_year_column_and_introduction_are_independent_checks (tests.vnext.test_selected_lodging_source.SelectedLodgingSourceTest.test_year_column_and_introduction_are_independent_checks) ... ok
+2026-10-09T21:50:43.5569907Z test_five_adapters_emit_deterministic_verified_claims (tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims)
+2026-10-09T21:50:43.5624580Z Run all five adapters with a socket-open canary fixed at zero. ... ok
+2026-10-09T21:50:43.5625310Z test_source_set_tamper_and_metric_specific_branch_fail (tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail)
+2026-10-09T21:50:43.5828342Z Reject manifest drift and ban a shared E01 identity branch. ... ok
+2026-10-09T21:50:43.5849829Z test_catalog_compile_keeps_metric_formula_unit_and_dimension_rules (tests.vnext.test_runtime_tools.RuntimeToolsTest.test_catalog_compile_keeps_metric_formula_unit_and_dimension_rules) ... ok
+2026-10-09T21:50:43.5850946Z test_csv_columns_quotes_newlines_and_unicode_are_preserved (tests.vnext.test_runtime_tools.RuntimeToolsTest.test_csv_columns_quotes_newlines_and_unicode_are_preserved) ... ok
+2026-10-09T21:50:43.5856507Z test_invalid_formula_arity_unit_and_dimensions_not_silently_accepted (tests.vnext.test_runtime_tools.RuntimeToolsTest.test_invalid_formula_arity_unit_and_dimensions_not_silently_accepted) ... ok
+2026-10-09T21:50:43.5857564Z test_legacy_null_result_constructor_remains_the_same_callable (tests.vnext.test_runtime_tools.RuntimeToolsTest.test_legacy_null_result_constructor_remains_the_same_callable) ... ok
+2026-10-09T21:50:43.9334765Z test_lodging_source_and_result_entry_do_not_import_publication_or_qualification (tests.vnext.test_runtime_tools.RuntimeToolsTest.test_lodging_source_and_result_entry_do_not_import_publication_or_qualification) ... ok
+2026-10-09T21:50:43.9335807Z test_missing_or_extra_csv_field_is_a_real_failure (tests.vnext.test_runtime_tools.RuntimeToolsTest.test_missing_or_extra_csv_field_is_a_real_failure) ... ok
+2026-10-09T21:50:44.2330083Z test_small_source_and_spec_tools_do_not_import_release_workflows (tests.vnext.test_runtime_tools.RuntimeToolsTest.test_small_source_and_spec_tools_do_not_import_release_workflows) ... ok
+2026-10-09T21:50:44.2348548Z test_aggregate_preserves_all_proofs_without_double_counting (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_aggregate_preserves_all_proofs_without_double_counting) ... ok
+2026-10-09T21:50:44.2359581Z test_aggregate_still_requires_original_gross_to_net_relation (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_aggregate_still_requires_original_gross_to_net_relation) ... ok
+2026-10-09T21:50:44.2404172Z test_conflicting_or_commented_display_does_not_erase_visible_spacer (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_conflicting_or_commented_display_does_not_erase_visible_spacer) ... ok
+2026-10-09T21:50:44.2405215Z test_duplicate_aggregate_or_segment_does_not_gain_credit (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_duplicate_aggregate_or_segment_does_not_gain_credit) ... ok
+2026-10-09T21:50:44.2427672Z test_hidden_self_closing_empty_cells_do_not_shift_visible_year_columns (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_hidden_self_closing_empty_cells_do_not_shift_visible_year_columns) ... ok
+2026-10-09T21:50:44.2428854Z test_unreconciled_aggregate_or_unknown_scope_stays_unproved (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_unreconciled_aggregate_or_unknown_scope_stays_unproved) ... ok
+2026-10-09T21:50:44.2450570Z test_visible_spacers_and_nonempty_hidden_cells_are_not_erased (tests.vnext.test_b03_current_input_scope.ContractAggregateTest.test_visible_spacers_and_nonempty_hidden_cells_are_not_erased) ... ok
+2026-10-09T21:50:50.0064107Z test_amendment_input_uses_program_policy_without_sources_containing_it (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_amendment_input_uses_program_policy_without_sources_containing_it) ... ok
+2026-10-09T21:50:50.5805043Z test_contract_revenue_deduction_keeps_relationship_under_legal_prefix_alias (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_contract_revenue_deduction_keeps_relationship_under_legal_prefix_alias) ... ok
+2026-10-09T21:50:50.5807943Z test_marriott_composition_458m_and_135m_revenue_deduction_excluded (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_marriott_composition_458m_and_135m_revenue_deduction_excluded) ... ok
+2026-10-09T21:50:50.5824957Z test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01 (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_salesforce_named_withheld_does_not_consume_bad_subtotal_and_carries_b01) ... ok
+2026-10-09T21:50:50.5834935Z test_saved_input_assessment_is_read_without_recalculation_and_damage_is_visible (tests.vnext.test_b03_current_input_scope.CurrentB03SourceOnlyTest.test_saved_input_assessment_is_read_without_recalculation_and_damage_is_visible) ... ok
+2026-10-09T21:50:50.5879346Z test_company_custom_same_local_name_cannot_displace_legitimate_gaap_composition (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_company_custom_same_local_name_cannot_displace_legitimate_gaap_composition) ... ok
+2026-10-09T21:50:50.5886999Z test_conflicting_subtotal_is_withheld_and_larger_total_not_automatically_taken (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_conflicting_subtotal_is_withheld_and_larger_total_not_automatically_taken) ... ok
+2026-10-09T21:50:50.6208221Z test_context_policy_alone_changes_update_configuration_and_requires_calculation (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_context_policy_alone_changes_update_configuration_and_requires_calculation) ... ok
+2026-10-09T21:50:50.6219079Z test_currency_alias_is_resolved_and_foreign_identifier_scheme_is_not_accepted (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_currency_alias_is_resolved_and_foreign_identifier_scheme_is_not_accepted) ... ok
+2026-10-09T21:50:50.6224207Z test_declared_numeric_transform_remains_supported (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_declared_numeric_transform_remains_supported) ... ok
+2026-10-09T21:50:50.6245164Z test_existing_direct_scope_uses_namespace_alias_and_retains_usd_check (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_existing_direct_scope_uses_namespace_alias_and_retains_usd_check) ... ok
+2026-10-09T21:50:50.6276040Z test_foreign_entity_period_unit_segment_or_namespace_does_not_create_own_total_conflict (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_foreign_entity_period_unit_segment_or_namespace_does_not_create_own_total_conflict) ... ok
+2026-10-09T21:50:50.6288711Z test_legal_gaap_prefix_alias_composition_keeps_same_quantity (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_legal_gaap_prefix_alias_composition_keeps_same_quantity) ... ok
+2026-10-09T21:50:50.6295570Z test_nil_keeps_other_evidence_and_gives_a_named_withhold (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_nil_keeps_other_evidence_and_gives_a_named_withhold) ... ok
+2026-10-09T21:50:50.6443455Z test_numeric_helper_change_affects_b03_configuration_but_not_b01 (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_numeric_helper_change_affects_b03_configuration_but_not_b01) ... ok
+2026-10-09T21:50:50.6456454Z test_only_unique_original_composition_can_retake_a_later_direct_candidate (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_only_unique_original_composition_can_retake_a_later_direct_candidate) ... ok
+2026-10-09T21:50:50.6464164Z test_reported_precision_agreement_keeps_chain_not_exact_numeric_equality (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_reported_precision_agreement_keeps_chain_not_exact_numeric_equality) ... ok
+2026-10-09T21:50:50.6469367Z test_unformatted_comma_is_not_silently_removed_to_confirm_chain (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_unformatted_comma_is_not_silently_removed_to_confirm_chain) ... ok
+2026-10-09T21:50:50.6474073Z test_unsupported_numeric_tag_cannot_confirm_chain_amount (tests.vnext.test_b03_current_input_scope.CurrentDaScopeTest.test_unsupported_numeric_tag_cannot_confirm_chain_amount) ... ok
+2026-10-09T21:50:50.6488933Z test_composition_passes_same_explicit_policy_to_original_component_lookup (tests.vnext.test_xbrl_namespace_policy.NamespacePolicyTest.test_composition_passes_same_explicit_policy_to_original_component_lookup) ... ok
+2026-10-09T21:50:50.6490182Z test_default_year_only_and_explicit_date_release (tests.vnext.test_xbrl_namespace_policy.NamespacePolicyTest.test_default_year_only_and_explicit_date_release) ... ok
+2026-10-09T21:50:50.6498065Z test_direct_scope_requires_explicit_release_policy (tests.vnext.test_xbrl_namespace_policy.NamespacePolicyTest.test_direct_scope_requires_explicit_release_policy) ... ok
+2026-10-09T21:50:50.6510000Z test_conflicting_facts_and_short_context_remain_rejected (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_conflicting_facts_and_short_context_remain_rejected) ... ok
+2026-10-09T21:50:50.6531200Z test_foreign_extension_invalid_quarter_and_extra_suffix_rejected (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_foreign_extension_invalid_quarter_and_extra_suffix_rejected) ... ok
+2026-10-09T21:50:50.7252091Z test_historical_annual_and_remaining_views_use_the_explicit_adapter (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_historical_annual_and_remaining_views_use_the_explicit_adapter) ... ok
+2026-10-09T21:50:50.7292106Z test_historical_fiscal_labels_still_reject_changed_source_bytes (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_historical_fiscal_labels_still_reject_changed_source_bytes) ... ok
+2026-10-09T21:50:50.7293353Z test_no_arbitrary_regex_or_boolean_selection (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_no_arbitrary_regex_or_boolean_selection) ... ok
+2026-10-09T21:50:50.7343088Z test_old_release_requires_explicit_successor (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_old_release_requires_explicit_successor) ... ok
+2026-10-09T21:50:50.7356190Z test_original_default_and_explicit_year_have_identical_return (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_original_default_and_explicit_year_have_identical_return) ... ok
+2026-10-09T21:50:50.7381880Z test_successor_does_not_relax_entity_or_annual_identity (tests.vnext.test_dei_release_selection.DeiReleaseSelectionTest.test_successor_does_not_relax_entity_or_annual_identity) ... ok
+2026-10-09T21:51:15.9029883Z test_actual_original_header_context_conflict_is_named_withheld (tests.vnext.test_successor_income_projection.SuccessorIncomeProjectionTest.test_actual_original_header_context_conflict_is_named_withheld) ... ok
+2026-10-09T21:51:15.9515017Z test_missing_proof_does_not_allow_an_arbitrary_shorter_period (tests.vnext.test_successor_income_projection.SuccessorIncomeProjectionTest.test_missing_proof_does_not_allow_an_arbitrary_shorter_period) ... ok
+2026-10-09T21:51:15.9982683Z test_numeric_result_requires_checked_source_observations (tests.vnext.test_successor_income_projection.SuccessorIncomeProjectionTest.test_numeric_result_requires_checked_source_observations) ... ok
+2026-10-09T21:51:16.0444946Z test_result_cannot_claim_a_different_short_period (tests.vnext.test_successor_income_projection.SuccessorIncomeProjectionTest.test_result_cannot_claim_a_different_short_period) ... ok
+2026-10-09T21:51:16.1133531Z test_short_period_state_has_actual_dates_and_preserves_annual_guard (tests.vnext.test_successor_income_projection.SuccessorIncomeProjectionTest.test_short_period_state_has_actual_dates_and_preserves_annual_guard) ... ok
+2026-10-09T21:51:16.2849185Z test_wrong_subject_or_statement_period_still_rejected (tests.vnext.test_successor_income_projection.SuccessorIncomeProjectionTest.test_wrong_subject_or_statement_period_still_rejected) ... ok
+2026-10-09T21:51:16.2864188Z test_conflict_and_consistent_short_period (tests.vnext.test_successor_income_projection.VisibleIncomePeriodTest.test_conflict_and_consistent_short_period) ... ok
+2026-10-09T21:51:16.2866307Z test_missing_range_remains_unresolved (tests.vnext.test_successor_income_projection.VisibleIncomePeriodTest.test_missing_range_remains_unresolved) ... ok
+2026-10-09T21:51:16.2869537Z test_other_column_date_cannot_prove_this_fact (tests.vnext.test_successor_income_projection.VisibleIncomePeriodTest.test_other_column_date_cannot_prove_this_fact) ... ok
+2026-10-09T21:51:29.0174923Z test_existing_item_contract_counts_match_independent_original_headers (tests.vnext.test_event_rule_root.EventRuleRootTest.test_existing_item_contract_counts_match_independent_original_headers) ... ok
+2026-10-09T21:51:29.0176218Z test_explicit_current_rules_cannot_grant_old_e01_item_count_new_credit (tests.vnext.test_event_rule_root.EventRuleRootTest.test_explicit_current_rules_cannot_grant_old_e01_item_count_new_credit) ... ok
+2026-10-09T21:51:29.0246722Z test_independent_read_has_no_selection_or_calculation (tests.vnext.test_event_rule_root.EventRuleRootTest.test_independent_read_has_no_selection_or_calculation) ... ok
+2026-10-09T21:51:30.1573031Z test_missing_event_body_cannot_turn_into_smaller_complete_count (tests.vnext.test_event_rule_root.EventRuleRootTest.test_missing_event_body_cannot_turn_into_smaller_complete_count) ... ok
+2026-10-09T21:51:33.1603653Z test_normal_company_entry_and_reentry_use_saved_source_without_install (tests.vnext.test_event_rule_root.EventRuleRootTest.test_normal_company_entry_and_reentry_use_saved_source_without_install) ... ok
+2026-10-09T21:51:35.9876047Z test_unused_session_change_reuses_real_company_result_without_calculation (tests.vnext.test_event_rule_root.EventRuleRootTest.test_unused_session_change_reuses_real_company_result_without_calculation) ... ok
+2026-10-09T21:51:35.9970292Z test_arbitrary_release_never_enters_shared_issuer_rules (tests.vnext.test_financial_dei_release.FinancialDeiReleaseTest.test_arbitrary_release_never_enters_shared_issuer_rules) ... ok
+2026-10-09T21:51:35.9991904Z test_issuer_successor_and_default_keep_exact_identity_checks (tests.vnext.test_financial_dei_release.FinancialDeiReleaseTest.test_issuer_successor_and_default_keep_exact_identity_checks) ... ok
+2026-10-09T21:51:35.9993213Z test_lcr_checks_source_hash_before_any_release_or_facts (tests.vnext.test_financial_dei_release.FinancialDeiReleaseTest.test_lcr_checks_source_hash_before_any_release_or_facts) ... ok
+2026-10-09T21:51:36.0047797Z test_var_prepare_uses_controlled_release_and_original_period (tests.vnext.test_financial_dei_release.FinancialDeiReleaseTest.test_var_prepare_uses_controlled_release_and_original_period) ... ok
+2026-10-09T21:51:36.0059660Z test_year_only_default_is_identical_to_explicit_on_ordinary_source (tests.vnext.test_financial_dei_release.FinancialDeiReleaseTest.test_year_only_default_is_identical_to_explicit_on_ordinary_source) ... ok
+2026-10-09T21:51:36.0065821Z test_another_metric_cannot_borrow_the_quarter_exception (tests.vnext.test_reported_average_period.ReportedAveragePeriodTest.test_another_metric_cannot_borrow_the_quarter_exception) ... ok
+2026-10-09T21:51:36.0070774Z test_quarter_stays_quarter_with_annual_filing_group (tests.vnext.test_reported_average_period.ReportedAveragePeriodTest.test_quarter_stays_quarter_with_annual_filing_group) ... ok
+2026-10-09T21:51:36.0077034Z test_reference_period_entity_value_and_uncertainty_do_not_disappear (tests.vnext.test_reported_average_period.ReportedAveragePeriodTest.test_reference_period_entity_value_and_uncertainty_do_not_disappear) ... ok
+2026-10-09T21:51:36.0081148Z test_year_label_cannot_annualize_the_measurement (tests.vnext.test_reported_average_period.ReportedAveragePeriodTest.test_year_label_cannot_annualize_the_measurement) ... ok
+2026-10-09T21:51:36.0089299Z test_a09_only_complete_ambiguity_enters_html_with_same_option (tests.vnext.test_bank_scope_dei_release.BankScopeDeiReleaseTest.test_a09_only_complete_ambiguity_enters_html_with_same_option) ... ok
+2026-10-09T21:51:36.0091585Z test_a09_primary_has_priority_and_forwards_selection (tests.vnext.test_bank_scope_dei_release.BankScopeDeiReleaseTest.test_a09_primary_has_priority_and_forwards_selection) ... ok
+2026-10-09T21:51:36.0093524Z test_a09_source_failure_cannot_become_ambiguity (tests.vnext.test_bank_scope_dei_release.BankScopeDeiReleaseTest.test_a09_source_failure_cannot_become_ambiguity) ... ok
+2026-10-09T21:51:36.0252962Z test_all_three_real_parsers_require_explicit_old_release (tests.vnext.test_bank_scope_dei_release.BankScopeDeiReleaseTest.test_all_three_real_parsers_require_explicit_old_release) ... ok
+2026-10-09T21:51:36.0533898Z test_original_year_default_returns_same_components (tests.vnext.test_bank_scope_dei_release.BankScopeDeiReleaseTest.test_original_year_default_returns_same_components) ... ok
+2026-10-09T21:51:36.0539129Z test_selected_case_set_does_not_expand_default_or_bypass_factory (tests.vnext.test_bank_scope_dei_release.BankScopeDeiReleaseTest.test_selected_case_set_does_not_expand_default_or_bypass_factory) ... ok
+2026-10-09T21:51:36.0570519Z test_wrong_source_subject_period_and_option_still_reject (tests.vnext.test_bank_scope_dei_release.BankScopeDeiReleaseTest.test_wrong_source_subject_period_and_option_still_reject) ... ok
+2026-10-09T21:51:36.0571294Z 
+2026-10-09T21:51:36.0571479Z ----------------------------------------------------------------------
+2026-10-09T21:51:36.0571833Z Ran 194 tests in 100.352s
+2026-10-09T21:51:36.0571977Z 
+2026-10-09T21:51:36.0572056Z OK
+2026-10-09T21:51:36.0582218Z {'scenario': 'saved Marriott FY2025 C01 unused-session edit', 'first_seconds': 2.4055235339999967, 'repeat_seconds': 0.4169204309999941, 'read_seconds': 0.003675864999991063, 'result_id': 'sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95', 'value': '3', 'unit': 'count', 'result_files': 6, 'new_calls': [0, 0, 0]}
+2026-10-09T21:51:36.1528344Z ##[group]Run python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases -v
+2026-10-09T21:51:36.1529348Z python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases -v
+2026-10-09T21:51:36.1585775Z shell: /usr/bin/bash -e {0}
+2026-10-09T21:51:36.1585936Z env:
+2026-10-09T21:51:36.1586105Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:36.1586363Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+2026-10-09T21:51:36.1586611Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:36.1586898Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:36.1587116Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:36.1587336Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+2026-10-09T21:51:36.1587541Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-09T21:51:36.1587691Z ##[endgroup]
+2026-10-09T21:51:37.6024185Z test_average_risk_family_preserves_existing_metric_factories (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_average_risk_family_preserves_existing_metric_factories) ... ok
+2026-10-09T21:51:37.6027910Z test_bank_performance_family_uses_original_factories_for_other_families (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_bank_performance_family_uses_original_factories_for_other_families) ... ok
+2026-10-09T21:51:37.6031132Z test_bank_scope_family_preserves_existing_metric_factories (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_bank_scope_family_preserves_existing_metric_factories) ... ok
+2026-10-09T21:51:37.6034192Z test_capital_family_preserves_each_existing_metric_factory (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_capital_family_preserves_each_existing_metric_factory) ... ok
+2026-10-09T21:51:37.6058704Z test_cli_passes_period_arguments_to_the_same_company_entry (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_cli_passes_period_arguments_to_the_same_company_entry) ... ok
+2026-10-09T21:51:37.6059949Z test_completed_withheld_survives_read_after_another_metric_subset (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_completed_withheld_survives_read_after_another_metric_subset)
+2026-10-09T21:51:37.6259587Z Constructed history control: a later subset cannot revive old success. ... ok
+2026-10-09T21:51:37.6263709Z test_current_mode_keeps_the_existing_public_route (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_current_mode_keeps_the_existing_public_route) ... ok
+2026-10-09T21:51:37.6267010Z test_event_family_keeps_existing_income_balance_and_hotel_factories (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_event_family_keeps_existing_income_balance_and_hotel_factories) ... ok
+2026-10-09T21:51:37.6270181Z test_geography_keeps_existing_factories_and_declares_its_source_dependencies (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_geography_keeps_existing_factories_and_declares_its_source_dependencies) ... ok
+2026-10-09T21:51:37.6275904Z test_interest_coverage_adds_only_its_current_annual_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_interest_coverage_adds_only_its_current_annual_case) ... ok
+2026-10-09T21:51:37.6277109Z test_invalid_range_rejects_before_source_or_writes (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_invalid_range_rejects_before_source_or_writes) ... ok
+2026-10-09T21:51:37.6286052Z test_liquidity_keeps_the_statement_and_lodging_original_factories (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_liquidity_keeps_the_statement_and_lodging_original_factories) ... ok
+2026-10-09T21:51:37.6287342Z test_missing_source_is_explicit_and_does_not_acquire (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_missing_source_is_explicit_and_does_not_acquire) ... ok
+2026-10-09T21:51:37.6288473Z test_mixed_lodging_keeps_its_previous_factory_and_tuple (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_mixed_lodging_keeps_its_previous_factory_and_tuple) ... ok
+2026-10-09T21:51:37.6289692Z test_range_uses_one_public_company_controller_and_existing_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_range_uses_one_public_company_controller_and_existing_case) ... ok
+2026-10-09T21:51:37.6292443Z test_statement_pilot_uses_original_per_metric_factories_and_dependencies (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_statement_pilot_uses_original_per_metric_factories_and_dependencies) ... ok
+2026-10-09T21:51:37.6295314Z test_unsupported_family_uses_no_fabricated_historical_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_unsupported_family_uses_no_fabricated_historical_case) ... ok
+2026-10-09T21:51:37.6296604Z test_actual_selected_year_dependencies_ignore_unused_admission_code (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_actual_selected_year_dependencies_ignore_unused_admission_code)
+2026-10-09T21:51:37.6999691Z Constructed state control with the actual processing configuration. ... ok
+2026-10-09T21:51:37.7076875Z test_completed_withheld_recovers_pointer_without_recalculation (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_completed_withheld_recovers_pointer_without_recalculation) ... ok
+2026-10-09T21:51:37.7190190Z test_current_withheld_replaces_same_year_success_but_retains_old_version (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_current_withheld_replaces_same_year_success_but_retains_old_version) ... ok
+2026-10-09T21:51:37.7363419Z test_dependency_source_and_processing_changes_reprocess_withheld_once (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_dependency_source_and_processing_changes_reprocess_withheld_once) ... ok
+2026-10-09T21:51:37.7502015Z test_missing_year_and_one_metric_failure_preserve_other_periods (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_missing_year_and_one_metric_failure_preserve_other_periods) ... ok
+2026-10-09T21:51:37.7637918Z test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates) ... ok
+2026-10-09T21:51:37.7674076Z test_amendment_and_successor_remain_named_withheld_before_inspection (tests.vnext.test_historical_geography_cases.HistoricalGeographyCaseTest.test_amendment_and_successor_remain_named_withheld_before_inspection) ... ok
+2026-10-09T21:51:37.7688636Z test_source_failure_propagates_without_inventing_disclosure_absence (tests.vnext.test_historical_geography_cases.HistoricalGeographyCaseTest.test_source_failure_propagates_without_inventing_disclosure_absence) ... ok
+2026-10-09T21:51:37.7706034Z test_structural_not_applicable_never_reads_financial_amount (tests.vnext.test_historical_geography_cases.HistoricalGeographyCaseTest.test_structural_not_applicable_never_reads_financial_amount) ... ok
+2026-10-09T21:51:37.7721571Z test_unresolved_source_is_not_a_partial_geography_sum (tests.vnext.test_historical_geography_cases.HistoricalGeographyCaseTest.test_unresolved_source_is_not_a_partial_geography_sum) ... ok
+2026-10-09T21:51:37.7722933Z test_wrong_family_refuses_before_selecting_any_sources (tests.vnext.test_historical_geography_cases.HistoricalGeographyCaseTest.test_wrong_family_refuses_before_selecting_any_sources) ... ok
+2026-10-09T21:51:37.7788493Z test_amendment_or_successor_remains_withheld_before_inspection (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_amendment_or_successor_remains_withheld_before_inspection) ... ok
+2026-10-09T21:51:37.7807377Z test_lcr_quarter_is_measurement_while_fiscal_year_remains_annual_group (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_lcr_quarter_is_measurement_while_fiscal_year_remains_annual_group) ... ok
+2026-10-09T21:51:37.7808655Z test_measurement_rejects_unknown_family_instead_of_treating_as_var (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_measurement_rejects_unknown_family_instead_of_treating_as_var) ... ok
+2026-10-09T21:51:37.7841167Z test_structural_not_applicable_skips_amount_inspection (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_structural_not_applicable_skips_amount_inspection) ... ok
+2026-10-09T21:51:37.7872073Z test_unresolved_component_cannot_reuse_candidate_value (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_unresolved_component_cannot_reuse_candidate_value) ... ok
+2026-10-09T21:51:37.7892308Z test_var_annual_average_keeps_annual_period_and_usd_value (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_var_annual_average_keeps_annual_period_and_usd_value) ... ok
+2026-10-09T21:51:37.7893533Z test_wrong_family_refuses_before_any_source_selection (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_wrong_family_refuses_before_any_source_selection) ... ok
+2026-10-09T21:51:37.7907480Z test_wrong_source_error_is_not_disclosure_absence (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskCaseTest.test_wrong_source_error_is_not_disclosure_absence) ... ok
+2026-10-09T21:51:37.7916037Z test_general_note_only_before_lettered_notes_and_never_across_heading (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_general_note_only_before_lettered_notes_and_never_across_heading) ... ok
+2026-10-09T21:51:37.7974099Z test_known_forms_compile_without_mutating_shared_functions (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_known_forms_compile_without_mutating_shared_functions) ... ok
+2026-10-09T21:51:37.8028213Z test_old_lcr_note_grammar_preserves_unit_and_duration_rejections (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_old_lcr_note_grammar_preserves_unit_and_duration_rejections) ... ok
+2026-10-09T21:51:37.8031616Z test_original_resolved_answer_is_kept_without_fallback (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_original_resolved_answer_is_kept_without_fallback) ... ok
+2026-10-09T21:51:37.8033078Z test_resolved_known_form_retains_original_status_and_provenance (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_resolved_known_form_retains_original_status_and_provenance) ... ok
+2026-10-09T21:51:37.8036503Z test_unresolved_fallback_keeps_original_competitors (tests.vnext.test_historical_average_risk_cases.HistoricalAverageRiskWordingTest.test_unresolved_fallback_keeps_original_competitors) ... ok
+2026-10-09T21:51:37.8037630Z test_history_passes_shared_release_option_without_recursive_view (tests.vnext.test_historical_average_risk_cases.HistoricalExplicitAnnualInterfaceTest.test_history_passes_shared_release_option_without_recursive_view) ... ok
+2026-10-09T21:51:37.8075250Z test_remaining_fiscal_label_view_uses_explicit_annual_adapter (tests.vnext.test_historical_average_risk_cases.HistoricalExplicitAnnualInterfaceTest.test_remaining_fiscal_label_view_uses_explicit_annual_adapter) ... ok
+2026-10-09T21:51:37.8076766Z test_shared_source_failure_propagates_as_failure (tests.vnext.test_historical_average_risk_cases.HistoricalExplicitAnnualInterfaceTest.test_shared_source_failure_propagates_as_failure) ... ok
+2026-10-09T21:51:37.8108410Z test_amendment_and_successor_remain_named_withheld_before_inspection (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_amendment_and_successor_remain_named_withheld_before_inspection) ... ok
+2026-10-09T21:51:37.8158744Z test_resolved_aum_and_nonaccrual_keep_filing_end_instant (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_resolved_aum_and_nonaccrual_keep_filing_end_instant) ... ok
+2026-10-09T21:51:37.8178439Z test_resolved_nim_is_annual_and_uses_managed_rate (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_resolved_nim_is_annual_and_uses_managed_rate) ... ok
+2026-10-09T21:51:37.8192084Z test_source_failure_propagates_without_inventing_disclosure_absence (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_source_failure_propagates_without_inventing_disclosure_absence) ... ok
+2026-10-09T21:51:37.8207082Z test_structural_not_applicable_never_reads_financial_amount (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_structural_not_applicable_never_reads_financial_amount) ... ok
+2026-10-09T21:51:37.8224125Z test_unresolved_source_is_not_a_partial_bank_sum (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_unresolved_source_is_not_a_partial_bank_sum) ... ok
+2026-10-09T21:51:37.8225154Z test_wrong_family_refuses_before_selecting_any_sources (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeCaseTest.test_wrong_family_refuses_before_selecting_any_sources) ... ok
+2026-10-09T21:51:37.8255035Z test_source_conflict_remains_distinct_from_implementation_gap (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeClassificationTest.test_source_conflict_remains_distinct_from_implementation_gap) ... ok
+2026-10-09T21:51:37.8290073Z test_a09_local_import_rebinding_retains_native_ambiguity_gate (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_a09_local_import_rebinding_retains_native_ambiguity_gate) ... ok
+2026-10-09T21:51:37.8389771Z test_compilation_keeps_shared_functions_and_known_forms_are_finite (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_compilation_keeps_shared_functions_and_known_forms_are_finite) ... ok
+2026-10-09T21:51:37.8402787Z test_missing_native_source_propagates_and_never_reaches_html (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_missing_native_source_propagates_and_never_reaches_html) ... ok
+2026-10-09T21:51:37.8415106Z test_old_glossary_accepts_one_colon_and_preserves_subset_text (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_old_glossary_accepts_one_colon_and_preserves_subset_text) ... ok
+2026-10-09T21:51:37.8444353Z test_old_segment_list_cannot_hide_conflicting_or_noncorporate_remainder (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_old_segment_list_cannot_hide_conflicting_or_noncorporate_remainder) ... ok
+2026-10-09T21:51:37.8446636Z test_original_native_success_is_kept_without_old_form (tests.vnext.test_historical_bank_scope_cases.HistoricalBankScopeWordingTest.test_original_native_success_is_kept_without_old_form) ... ok
+2026-10-09T21:51:37.8447101Z 
+2026-10-09T21:51:37.8447214Z ----------------------------------------------------------------------
+2026-10-09T21:51:37.8447418Z Ran 59 tests in 0.297s
+2026-10-09T21:51:37.8447505Z 
+2026-10-09T21:51:37.8447560Z OK
+2026-10-09T21:51:37.8875365Z ##[group]Run python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1 tests.vnext.test_registered_event_projection
+2026-10-09T21:51:37.8875933Z python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1 tests.vnext.test_registered_event_projection
+2026-10-09T21:51:37.8927864Z shell: /usr/bin/bash -e {0}
+2026-10-09T21:51:37.8928013Z env:
+2026-10-09T21:51:37.8928171Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:37.8928413Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+2026-10-09T21:51:37.8928655Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:37.8928884Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:37.8929099Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:37.8929312Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+2026-10-09T21:51:37.8929510Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-09T21:51:37.8929681Z ##[endgroup]
+2026-10-09T21:51:38.6734470Z test_explicit_history_check_receives_full_body_and_conflict_is_not_empty_success (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_explicit_history_check_receives_full_body_and_conflict_is_not_empty_success) ... ok
+2026-10-09T21:51:38.6932526Z test_gap_day_block_is_selected_and_validated_using_same_effective_last_day (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_gap_day_block_is_selected_and_validated_using_same_effective_last_day) ... ok
+2026-10-09T21:51:38.7004515Z test_missing_header_and_header_date_conflict_remain_failures (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_missing_header_and_header_date_conflict_remain_failures) ... ok
+2026-10-09T21:51:38.7169905Z test_registered_union_reads_both_issuers_and_rules_from_code_root (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_registered_union_reads_both_issuers_and_rules_from_code_root) ... ok
+2026-10-09T21:51:38.7359369Z test_repeated_legacy_gets_are_bound_but_latest_failure_is_visible (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_repeated_legacy_gets_are_bound_but_latest_failure_is_visible) ... ok
+2026-10-09T21:51:38.7558967Z test_same_blob_key_does_not_hide_a_conflicting_media_record (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_same_blob_key_does_not_hide_a_conflicting_media_record) ... ok
+2026-10-09T21:51:38.7644235Z test_source_only_nonempty_claims_keep_real_requests_and_no_results (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_source_only_nonempty_claims_keep_real_requests_and_no_results) ... ok
+2026-10-09T21:51:38.7657123Z test_wrong_registry_selected_entity_or_window_is_rejected (tests.vnext.test_selected_event_source_v1.SelectedEventSourceTest.test_wrong_registry_selected_entity_or_window_is_rejected) ... ok
+2026-10-09T21:51:38.7670491Z test_approved_wide_window_retains_the_original_annual_period (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_approved_wide_window_retains_the_original_annual_period) ... ok
+2026-10-09T21:51:38.7681621Z test_arbitrary_wider_period_or_wrong_label_is_rejected (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_arbitrary_wider_period_or_wrong_label_is_rejected) ... ok
+2026-10-09T21:51:38.7682917Z test_financial_and_unreceived_e01_do_not_receive_wide_period_exception (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_financial_and_unreceived_e01_do_not_receive_wide_period_exception) ... ok
+2026-10-09T21:51:38.7705764Z test_missing_registrant_or_wrong_inventory_cannot_complete_union (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_missing_registrant_or_wrong_inventory_cannot_complete_union) ... ok
+2026-10-09T21:51:38.7720978Z test_wrong_registry_catalog_or_financial_combination_is_rejected (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_wrong_registry_catalog_or_financial_combination_is_rejected) ... ok
+2026-10-09T21:51:38.7721647Z 
+2026-10-09T21:51:38.7721791Z ----------------------------------------------------------------------
+2026-10-09T21:51:38.7722066Z Ran 13 tests in 0.113s
+2026-10-09T21:51:38.7722152Z 
+2026-10-09T21:51:38.7722203Z OK
+2026-10-09T21:51:38.7722587Z {"allowed_skips": 0, "errors": 0, "failures": 0, "run": 13, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_event_source_v1", "tests.vnext.test_registered_event_projection"]}
+2026-10-09T21:51:38.8017649Z ##[group]Run python3 tests/required_unittests.py tests.vnext.test_historical_event_cases.HistoricalEventCaseTest tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest
+2026-10-09T21:51:38.8018682Z python3 tests/required_unittests.py tests.vnext.test_historical_event_cases.HistoricalEventCaseTest tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest
+2026-10-09T21:51:38.8071959Z shell: /usr/bin/bash -e {0}
+2026-10-09T21:51:38.8072101Z env:
+2026-10-09T21:51:38.8072261Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:38.8072506Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+2026-10-09T21:51:38.8072742Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:38.8072983Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:38.8073209Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:38.8073428Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+2026-10-09T21:51:38.8073623Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-09T21:51:38.8073767Z ##[endgroup]
+2026-10-09T21:51:39.6255189Z test_catalog_change_to_content_method_is_an_explicit_gap (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_catalog_change_to_content_method_is_an_explicit_gap) ... ok
+2026-10-09T21:51:39.6256478Z test_content_confirmation_route_is_not_silently_counted (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_content_confirmation_route_is_not_silently_counted) ... ok
+2026-10-09T21:51:39.6321394Z test_incoherent_history_block_is_not_read_around (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_incoherent_history_block_is_not_read_around) ... ok
+2026-10-09T21:51:39.6388106Z test_missing_event_header_is_withheld_not_a_correct_zero (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_missing_event_header_is_withheld_not_a_correct_zero) ... ok
+2026-10-09T21:51:39.6623065Z test_part_iii_window_clearance_does_not_admit_financial_inputs (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_part_iii_window_clearance_does_not_admit_financial_inputs) ... ok
+2026-10-09T21:51:39.6624384Z test_predecessor_period_reads_only_its_selected_registrant (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_predecessor_period_reads_only_its_selected_registrant) ... ok
+2026-10-09T21:51:39.6628364Z test_successor_keeps_wide_measurement_and_pinned_container (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_successor_keeps_wide_measurement_and_pinned_container) ... ok
+2026-10-09T21:51:39.6694065Z test_unknown_program_error_is_not_mislabeled_as_disclosure_absence (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_unknown_program_error_is_not_mislabeled_as_disclosure_absence) ... ok
+2026-10-09T21:51:39.6695528Z test_complete_body_and_gap_day_use_the_existing_coherence_rule (tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest.test_complete_body_and_gap_day_use_the_existing_coherence_rule) ... ok
+2026-10-09T21:51:39.6760457Z test_source_reference_does_not_overwrite_its_raw_blob (tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest.test_source_reference_does_not_overwrite_its_raw_blob) ... ok
+2026-10-09T21:51:39.6761274Z 
+2026-10-09T21:51:39.6761443Z ----------------------------------------------------------------------
+2026-10-09T21:51:39.6761787Z Ran 10 tests in 0.057s
+2026-10-09T21:51:39.6761919Z 
+2026-10-09T21:51:39.6761997Z OK
+2026-10-09T21:51:39.6763330Z {"allowed_skips": 0, "errors": 0, "failures": 0, "run": 10, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_event_cases.HistoricalEventCaseTest", "tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest", "tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest"]}
+2026-10-09T21:51:39.7081664Z ##[group]Run python3 tests/required_unittests.py tests.vnext.test_existing_historical_sec_state tests.vnext.test_historical_sec_capture_adapter tests.vnext.test_company_online
+2026-10-09T21:51:39.7082353Z python3 tests/required_unittests.py tests.vnext.test_existing_historical_sec_state tests.vnext.test_historical_sec_capture_adapter tests.vnext.test_company_online
+2026-10-09T21:51:39.7137259Z shell: /usr/bin/bash -e {0}
+2026-10-09T21:51:39.7137408Z env:
+2026-10-09T21:51:39.7137570Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:39.7137825Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+2026-10-09T21:51:39.7138069Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:39.7138286Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:39.7138505Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+2026-10-09T21:51:39.7138765Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+2026-10-09T21:51:39.7138967Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-09T21:51:39.7139123Z ##[endgroup]
+2026-10-09T21:51:40.4776426Z test_additive_limit_and_conservative_count_are_separate_from_binding (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_additive_limit_and_conservative_count_are_separate_from_binding) ... ok
+2026-10-09T21:51:40.4799401Z test_known_failure_is_charged_and_wrong_logged_row_is_rejected (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_known_failure_is_charged_and_wrong_logged_row_is_rejected) ... ok
+2026-10-09T21:51:40.4817435Z test_missing_terminal_is_counted_and_blocks (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_missing_terminal_is_counted_and_blocks) ... ok
+2026-10-09T21:51:40.4837577Z test_unknown_outcome_is_not_free_or_resolved (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_unknown_outcome_is_not_free_or_resolved) ... ok
+2026-10-09T21:51:40.4864393Z test_wrong_intent_binding_or_extension_prefix_is_rejected (tests.vnext.test_existing_historical_sec_state.ExistingHistoricalSecStateTest.test_wrong_intent_binding_or_extension_prefix_is_rejected) ... ok
+2026-10-09T21:51:40.4987345Z test_new_403_is_persisted_as_a_stop (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_new_403_is_persisted_as_a_stop) ... SEC retry exhausted for https://data.sec.gov/submissions/CIK0001048286-attachments-001.json; status=403; error=
+2026-10-09T21:51:40.5058403Z ok
+2026-10-09T21:51:41.5082586Z test_original_historical_context_without_closure_hash_can_capture (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_original_historical_context_without_closure_hash_can_capture) ... ok
+2026-10-09T21:51:41.5219329Z test_plan_interrupt_consumes_opportunity_without_http_or_fake_terminal (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_plan_interrupt_consumes_opportunity_without_http_or_fake_terminal) ... ok
+2026-10-09T21:51:42.5174454Z test_recorded_capture_preserves_prior_rows_and_uses_next_old_format_slot (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_recorded_capture_preserves_prior_rows_and_uses_next_old_format_slot) ... ok
+2026-10-09T21:51:42.5215667Z test_unclaimed_new_log_row_is_not_treated_as_old_imported_history (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_unclaimed_new_log_row_is_not_treated_as_old_imported_history) ... ok
+2026-10-09T21:51:43.5042953Z test_unknown_and_new_rate_refusal_remain_charged_and_stopped (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_unknown_and_new_rate_refusal_remain_charged_and_stopped) ... ok
+2026-10-09T21:51:43.5098496Z test_wrong_url_root_refresh_and_limit_refuse_before_transport (tests.vnext.test_historical_sec_capture_adapter.HistoricalSecCaptureAdapterTest.test_wrong_url_root_refresh_and_limit_refuse_before_transport) ... ok
+2026-10-09T21:51:43.5169123Z test_latest_does_not_silently_ignore_supplied_years (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_latest_does_not_silently_ignore_supplied_years) ... ok
+2026-10-09T21:51:43.5183101Z test_latest_saved_source_also_rejects_ignored_year_arguments (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_latest_saved_source_also_rejects_ignored_year_arguments) ... ok
+2026-10-09T21:51:43.5197424Z test_online_historical_range_rejected_before_context_or_writer (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_online_historical_range_rejected_before_context_or_writer) ... ok
+2026-10-09T21:51:43.5210575Z test_saved_history_range_forwarded_to_existing_public_consumer (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_saved_history_range_forwarded_to_existing_public_consumer) ... ok
+2026-10-09T21:51:43.5226539Z test_supported_current_online_dispatch_unchanged (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_supported_current_online_dispatch_unchanged) ... ok
+2026-10-09T21:51:43.6888189Z test_claim_is_reported_pending_before_plan_persistence (tests.vnext.test_company_online.CompanyOnlineTest.test_claim_is_reported_pending_before_plan_persistence) ... ok
+2026-10-09T21:51:43.6923660Z test_existing_real_ledger_never_created (tests.vnext.test_company_online.CompanyOnlineTest.test_existing_real_ledger_never_created) ... ok
+2026-10-09T21:51:44.5079813Z test_new_task_source_directory_does_not_reset_immutable_capture (tests.vnext.test_company_online.CompanyOnlineTest.test_new_task_source_directory_does_not_reset_immutable_capture) ... ok
+2026-10-09T21:51:45.5065711Z test_one_native_http_attempt_uses_existing_count_and_no_retry (tests.vnext.test_company_online.CompanyOnlineTest.test_one_native_http_attempt_uses_existing_count_and_no_retry) ... ok
+2026-10-09T21:51:45.5157598Z test_persistence_interrupt_leaves_counted_pending_no_second_transport (tests.vnext.test_company_online.CompanyOnlineTest.test_persistence_interrupt_leaves_counted_pending_no_second_transport) ... ok
+2026-10-09T21:51:45.5197183Z test_prior_metadata_missing_does_not_prevent_current_sources (tests.vnext.test_company_online.CompanyOnlineTest.test_prior_metadata_missing_does_not_prevent_current_sources) ... ok
+2026-10-09T21:51:45.5235851Z test_recorded_context_without_replies_cannot_use_network (tests.vnext.test_company_online.CompanyOnlineTest.test_recorded_context_without_replies_cannot_use_network) ... ok
+2026-10-09T21:51:45.5270405Z test_scope_or_limits_cannot_be_changed_by_call_context (tests.vnext.test_company_online.CompanyOnlineTest.test_scope_or_limits_cannot_be_changed_by_call_context) ... ok
+2026-10-09T21:51:46.5025258Z test_unknown_remote_blocks_next_claim_and_is_not_zero (tests.vnext.test_company_online.CompanyOnlineTest.test_unknown_remote_blocks_next_claim_and_is_not_zero) ... ok
+2026-10-09T21:51:46.5061163Z test_unsupported_metric_rejected_before_sources_or_claim (tests.vnext.test_company_online.CompanyOnlineTest.test_unsupported_metric_rejected_before_sources_or_claim) ... ok
+2026-10-09T21:51:46.5061729Z 
+2026-10-09T21:51:46.5061893Z ----------------------------------------------------------------------
+2026-10-09T21:51:46.5062198Z Ran 27 tests in 6.032s
+2026-10-09T21:51:46.5062322Z 
+2026-10-09T21:51:46.5062396Z OK
+2026-10-09T21:51:46.5063038Z {"allowed_skips": 0, "errors": 0, "failures": 0, "run": 27, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_existing_historical_sec_state", "tests.vnext.test_historical_sec_capture_adapter", "tests.vnext.test_company_online"]}
+2026-10-09T21:51:46.5431478Z Post job cleanup.
+2026-10-09T21:51:46.6318323Z Post job cleanup.
+2026-10-09T21:51:46.6887739Z [command]/usr/bin/git version
+2026-10-09T21:51:46.6919155Z git version 2.55.0
+2026-10-09T21:51:46.6943051Z Temporarily overriding HOME='/home/runner/work/_temp/35fb0db3-da0a-4b28-8ca4-de96d1e0cfd8' before making global git config changes
+2026-10-09T21:51:46.6943756Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T21:51:46.6947127Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+2026-10-09T21:51:46.6974224Z Removing SSH command configuration
+2026-10-09T21:51:46.6982227Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T21:51:46.7011748Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T21:51:46.7215199Z Removing HTTP extra header
+2026-10-09T21:51:46.7219545Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T21:51:46.7253490Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T21:51:46.7497362Z Removing includeIf entries pointing to credentials config files
+2026-10-09T21:51:46.7505767Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T21:51:46.7535629Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T21:51:46.7856932Z Cleaning up orphan processes
