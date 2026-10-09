@@ -5596,6 +5596,28 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics/docs/evidence/issue28_current_request_runtime_20261009/independent-repair/conclusion.md",
       "verdict": "PASS_LIMITED_REPAIR",
       "dedup": "list_agents all nonroot completed; no record/result same416 increment; inherits49tool/3msg ebaf findings without extending oldagent;onlynew3fixes"
+    },
+    {
+      "task_name": "review_avgperiod_80ca988",
+      "purpose": "review",
+      "module": "avgperiod",
+      "base_sha": "6e51f416b12d2e284be1662482ca7a46a37d1e43",
+      "patch_sha": "80ca9883cd0c444fae883d5dd5e5ffbaf95e1f87",
+      "scope_paths": [
+        "scripts/vnext/ordinary_projection.py:_reported_average_period and caller",
+        "scripts/vnext/normal_annual_input.py:dei_namespace_pattern/annual_period",
+        "scripts/vnext/financial_relationships.py:_issuer_identity",
+        "scripts/vnext/financial_candidates.py:inspect_lcr_disclosed_fact",
+        "scripts/vnext/financial_balance_scope.py:_prepare/inspect_total_var",
+        "scripts/vnext/historical_dei.py:explicit annual adapter",
+        "scripts/vnext/ordinary_saved_result.py:EXPLICIT_CASE_METRICS and update/company gates"
+      ],
+      "spawned_at": "2026-10-09T16:38:28.603930+00:00",
+      "ended_at": null,
+      "tool_calls": 0,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-average-risk-dei/SEC_metrics/docs/evidence/issue28_average_risk_dei_20261010/independent-review/conclusion.md",
+      "verdict": "RUNNING",
+      "dedup": "allnonroot DONE; no matchingSHA/purpose module in register or evidence; newly added average-window receiving hook only, no oldclosed P2 review"
     }
   ],
   "ci_capacity_20260922": {
@@ -17419,7 +17441,7 @@
     "api": "annual_period / inspect_inline_financial_claims optional dei_release=YEAR_ONLY; explicit YEAR_QUARTER_OR_DATE",
     "default": "Old default and return structures retained; CURRENT_METRICS not expanded; explicit A13 per-metric selected-year factory only",
     "actual_source": "JPM21 primary16005889B/SHA7c58 and inventory347650B/SHA77f7 verified read-only; fact7406/table614 A13 28971000000 USD2021",
-    "scope": "Source component actual parser plus small company gate controls; no new Result/Run/adoption; peer actual consumer receiving pending",
+    "scope": "Source component own actual parser plus small company gates; fixed peer actualJPM21-25CLI/save/repeat/read receiving now read separately; no parent businessadoption/1950",
     "tests": {
       "small": "45/0.233s/zero skip",
       "current_original_neighbor": "1/11.097s/zero skip JPM/Citi defaults42.758bn/42.295bn",
@@ -17441,7 +17463,7 @@
     "peer_actual_read_sha": "b6317e6edeb8b553d270284136e5df152e9c4e2d",
     "peer_pr": "https://github.com/wlvh/SEC_metrics/pull/105",
     "peer_evidence_scope": "Read fixed remote evidence: JPM21-25 A13 values28.971/31.968/34.873/38.233/42.758bnUSD, original-year scopes; forbidden factory repeat/independent read/no file changes;FY26 missing retained with5old years; author did not independently rerun5years or adopt results",
-    "peer_ci": "b6319SUCCESS/1 inherited source stillrunning atpeer read, exact remote current check separate"
+    "peer_ci": "b63110SUCCESS at natural terminal; latest doc-only826head separate"
   },
   "current_request_runtime_20261009": {
     "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-current-request-runtime/SEC_metrics",
@@ -17489,14 +17511,22 @@
     "received_paths": [
       "scripts/vnext/historical_dei.py"
     ],
-    "peer_in_progress": "A03 FY2021/Q4 actual CSV1.11ratio/MDA_OK/QUARTER reported; A12 and repeat/independentread not terminal atthis observation; no complete acceptance claim",
-    "ci": "c5d fast failed historical annual view; exactfailure preserved/fixed;80ca initialoneSUCCESS/nineIN_PROGRESS, finalpending",
+    "ci": "80ca natural checkpoint9SUCCESS/1 inherited source IN_PROGRESS; old c5d failure preserved, repairedfast SUCCESS",
     "evidence": "docs/evidence/issue28_average_risk_dei_20261010/README.md",
     "new_calls": [
       0,
       0,
       0
     ],
-    "remaining": "Actual same-company mixed save/repeat/independentread; targeted period-hook independent review; current headCI; no general bank/company or businessadoption credit"
+    "remaining": "New period-hook limited independent review RUNNING; final inherited source CI pending; fixed peer actualcompany/save/repeat/independentread evidence read, no formaladoption/allbank scope",
+    "peer_fixed_sha": "616fe531ab17cc979be839015d5ab751d3df4fec",
+    "peer_pr": "https://github.com/wlvh/SEC_metrics/pull/108",
+    "peer_evidence": "docs/evidence/issue47_average_risk_receiving_20261010/company-summary.json",
+    "peer_read_scope": "Fixed remote saved output read: A03 1.11ratioQ4/FY2021;A12 55mUSDannual;sameCLI125.385s, forbiddenfactoryrepeat5.739s/0,independentread0.572s/16unchanged; author did not rerun/adopt",
+    "peer_actual_result_ids": [
+      "sha256:bd89a186f692b5704837942015f259fa2671ada46be47a7a948f6cb3ff123c11",
+      "sha256:f8f004b8242655b40b4e4dbb66b20ed0e73166f0ae678b373e330a4585ded63e"
+    ],
+    "peer_execution_identity": "code_uncommitted_at_execution=true; committed same source afterward, not an exact committed-tree execution claim"
   }
 }
