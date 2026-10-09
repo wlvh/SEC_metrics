@@ -104,6 +104,22 @@ class SelectedHistoricalIncomeConsumerTest(TestCase):
             history.verify_selected_historical_income(reader=reader, prepared=annual,
                 concepts=['us-gaap:Revenues'], observations=[observation])
 
+    def test_resolved_fiscal_label_keeps_literal_dei_and_actual_dates(self):
+        reader, original, source = self.source()
+        prepared = copy.deepcopy(original)
+        prepared['original_input'] = copy.deepcopy(original)
+        prepared['table_input']['target_period']['fiscal_year'] = 2026
+        with patch.object(income, 'verify_income_observations', return_value=['checked']) as verify:
+            checks = history.verify_selected_historical_income(reader=reader,
+                prepared=prepared, concepts=['us-gaap:Revenues'], observations=['observation'])
+        self.assertEqual(['checked'], checks)
+        self.assertEqual(2026, verify.call_args.args[0]['statement_period']['fiscal_year'])
+        changed = copy.deepcopy(prepared)
+        changed['table_input']['target_period']['period_start'] = '2025-02-01'
+        with self.assertRaisesRegex(income.IncomeInputError, 'ORIGINAL_PERIOD_CHANGED'):
+            history.verify_selected_historical_income(reader=reader,
+                prepared=changed, concepts=['us-gaap:Revenues'], observations=[])
+
     def test_missing_original_and_changed_bytes_are_named_failures(self):
         reader, annual, source = self.source()
         with self.assertRaisesRegex(income.IncomeInputError, 'ORIGINAL_SOURCE_SET_AMBIGUOUS'):

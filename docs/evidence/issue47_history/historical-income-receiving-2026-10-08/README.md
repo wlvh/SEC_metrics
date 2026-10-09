@@ -120,3 +120,5 @@ Lumen FY2021–FY2025进一步消费同一固定PR75/527入口，B01/B02/B04/B05
 必要旧入口检查：`mint --check` 仍在既有父代 `normal_source_authority.py` 字节门禁退出（[日志](selected-income-mint.log)），不重新封存祖先或改旧 Run。提交前结构检查只报本主说明与 HEAD 不同（[日志](selected-income-alignment.log)），提交后再核结构。检查器两个副产物已按检查前字节还原。原双指标 CLI 日志在追加 deterministic_router 处理依赖前产生；该追加不改计算，最终短例核其登记，不假称原保存版本已经具有新处理配置。其他不含 B01 的公司事实批次不增这些收入依赖。
 
 实现 bd6ef6d1 提交后能力结构检查 PASS（[日志](selected-income-postcommit-alignment.log)），两个副产物恢复；只是结构证据，不清除旧 mint 门禁或业务缺口。
+
+后续收入原件适配沿用PR75实际发现：原件检查使用历史准备保留的literal original_input，输出保留已经由发行人定义解析的FY标签；原始和输出实际日期不一致仍拒绝。Salesforce FY2026的DEI字面2025与发行人FY2026冲突保持，不把字面标签改写。37相关小例0.163s零skip，原same-source/namespace/字节/单位检查不放宽；主真实源修复证据在PR75同一接收记录，不另外复制完整原件或旧结果。

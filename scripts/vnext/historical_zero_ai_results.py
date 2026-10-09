@@ -403,7 +403,12 @@ def verify_selected_historical_income(*, reader, prepared, concepts, observation
     if any(len(items) != 1 for items in by_kind.values()):
         raise IncomeInputError('HISTORICAL_INCOME_ORIGINAL_SOURCE_SET_AMBIGUOUS')
     try:
-        reports = {kind: native_income_reports(items[0], prepared, concepts,
+        source_annual = prepared.get('original_input', prepared)
+        if any(source_annual['table_input']['target_period'][key]
+               != prepared['table_input']['target_period'][key]
+               for key in ('period_start', 'period_end')):
+            raise IncomeInputError('HISTORICAL_INCOME_ORIGINAL_PERIOD_CHANGED')
+        reports = {kind: native_income_reports(items[0], source_annual, concepts,
                     check_visible_short_period=kind == 'primary',
                     namespace_policy=YEAR_OR_DATE_RELEASE,
                     annual_period_reader=annual_period)
