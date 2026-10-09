@@ -87,4 +87,4 @@ PY_SOURCE_ONLY
 
 驱动读取CSV时默认131072字段容量失败，实际三个CLI均正常；仅读现成输出核对发现本方完整修订scope对象嵌进daily selection造成2.55MB单格。现只在本producer展示scopeID/classification/明确窗口/来源引用，完整评估/原请求仍在input-assessments及绑定。9短例.008s零skip；已算case纯writer2.003s验证CSV字段7910字符/默认csv可读，完整assessment/ResultID同，不重读源。
 
-这一真正展示代码变化只正常迁移原E01该一坐标22.861s，原旧版本保留，禁factory复3.371s/calculationfalse、独立results.603s；16旧新结果/pointer文件保持，全年/CIK/null/2aa完整请求及annual amendment原评估均在。company-cli-display-final.json/log。没有其他公司/年份重算，原大CSV保旧版本。正式用户入口现在能写出可读未决和具体来源依赖，但内容确认模型业务仍未交付；新SEC/provider/paid0，无NativeRun/接受/active。
+这一真正展示代码变化只正常迁移原E01该一坐标22.861s，原旧版本保留，禁factory复3.371s/calculationfalse、独立results.603s；15旧新结果/pointer文件保持，全年/CIK/null/2aa完整请求及annual amendment原评估均在。company-cli-display-final.json/log。没有其他公司/年份重算，原大CSV保旧版本。正式用户入口现在能写出可读未决和具体来源依赖，但内容确认模型业务仍未交付；新SEC/provider/paid0，无NativeRun/接受/active。
