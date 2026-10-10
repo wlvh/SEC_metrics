@@ -201,6 +201,28 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'STATEMENT_HEADING_SCOPE_UNRESOLVED'):
             self.prepare(change=change_intro('<div>Only Subsidiary Beta is included.</div>'))
 
+    def test_reported_late_date_and_cost_group_qualifiers_are_not_hidden(self):
+        from vnext.canonical import sha256_bytes
+        def insert(before,text):
+            def change(primary,xml,annual,source_facts):
+                raw=primary['raw_bytes'].replace(before,text.encode()+before)
+                primary['raw_bytes']=raw
+                primary['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=raw)
+            return change
+        for day in (30,31):
+            change=insert(b'<tr><td>Product revenues</td>',
+                '<tr><td>Fiscal Year Ended December '+str(day)+',</td><td>57</td></tr>')
+            with self.subTest(day=day):
+                if day==30:
+                    with self.assertRaisesRegex(ValueError,'VISIBLE_END_DAY_CONFLICT'):
+                        self.prepare(change=change)
+                else:
+                    self.assertEqual(self.prepare(change=change)[0]['results']['B01']['value'],'58496000000')
+        for text in ['Operating expenses (Europe):','Cost of revenues (Subsidiary):']:
+            with self.subTest(text=text),self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+                self.prepare(change=insert(b'<tr><td>Cost of sales</td>',
+                    '<tr><td>'+text+'</td><td></td></tr>'))
+
 
 class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
     def test_existing_entry_does_not_silently_expand_to_b07(self):
