@@ -39,3 +39,6 @@ Actual new-product CI execution:8fe416bf/run38011562800/job114092501282company-c
 
 
 Actual shared-reader combination9b01f52fmerges correctedpublicPR131/a0e with129/130source+consumer code, preservingexact publicreaderbytes.66reader/history/statementcontrols8.038s/zero skip. Only independentread of existingMacytask.563s,22rows and all480statefiles unchanged: correctedFY2023B01total23866m persists, FY2023B02known-defect remains null, no source or Calculator. reader-combination receipts retain the explicit composition and source-read scope, not new acceptance or rerun of financial calculation. This separate combination has no newfeaturePR and is not inserted into129pending scope.
+
+
+Actual129source-CI receivingheadbec3bff0/companyrun38012288232/job114094745215is terminalSUCCESS. NewpublicV2source tests execute all8methods, including allassociateddate negative/positive; originalhistoricalstep83/.490s retains all8consumer methods plusfinancial/state. Source step225/136.730s/zero skip. Bothnew test paths are in the actualworkflow. Full log stays in reader-combination/ci-bec-company.log; evidence-only combination branch does not trigger another productPR commit. At this observation fast/twofoundationchecks stillrunning; no overallsuccess inferred from thisjob.
