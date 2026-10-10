@@ -32,6 +32,8 @@ Public PR142 normal main-receiving headf1478ea7 includes the fixture portability
 
 The exact existing fast workflow command with the two historical modules was executed locally:69 tests0.118s/zero skip. Existing selectors and other commands remain; dedicated company workflow protection is separately checked before claiming it.
 
+Publicf5cd company-workflow patch received: both historical C04 test files explicitly trigger the existing company workflow, and its original Historical dispatch command actually runs both modules. Exact local command121 tests0.492s/zero skip passed; original other eight command strings and runner functions remain. Remote logs for this successor are checked separately; earlier-head success is not reused. No source/compute changes or financial replay.
+
 Earlier development evidence:
 
 Continues the existing uncommitted auditor selection, not a new research or model experiment. Historical owner selects actual annual/prior/event metadata; public28 owns four-form source/annual-reader/Resolver/Calculator integration and ordinary company gates/storage. No second public implementation is added. Removed old draft proxy-period inference because this C04 slice does not establish C03 proxy responsibility.
