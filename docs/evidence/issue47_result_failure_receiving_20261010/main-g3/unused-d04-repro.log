@@ -1,0 +1,36 @@
+{
+  "actual_main": "bdb27684",
+  "comparison_main": "145a464b",
+  "constructed_state_control": true,
+  "real_annual_result_created": false,
+  "actual_non_D04_configuration_changed_paths": {
+    "scripts/vnext/ordinary_current_update.py": "5c3657bd9023f1b5a0afb865d039a2e81cabef58e3c396c508b71f292132dcca",
+    "scripts/vnext/ordinary_saved_result.py": "f71cca5ed3ab7260764a83d58feb9e835eb8ce8da5b911c6b14b887623318a2d"
+  },
+  "identical_mock_source_census_and_body_proofs": true,
+  "unchanged_business_factory": true,
+  "initial_factory_calls": 2,
+  "unrelated_D04_delta_factory_calls": 2,
+  "first_versions": [
+    "bf58279ee5954507bd7a349d8bb7e711",
+    "eb2b73dc7cbf4f248000cb6af27c2f5e"
+  ],
+  "second_versions": [
+    "0fcd8a335d16473a830dd4334d67da6f",
+    "970610b770d04d17a7cce549ea6cc30c"
+  ],
+  "second_statuses": [
+    "CANDIDATE_READY",
+    "CANDIDATE_WITHHELD"
+  ],
+  "same_new_config_repeat_statuses": [
+    "NO_SOURCE_CONTENT_CHANGE",
+    "PREVIOUS_INPUT_WITHHELD"
+  ],
+  "business_expectation": "D04-specific dispatcher/dependency additions should not recalculate unrelated historical success/withheld",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

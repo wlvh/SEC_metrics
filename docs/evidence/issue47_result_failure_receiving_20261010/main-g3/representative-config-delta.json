@@ -1,0 +1,41 @@
+{
+  "actual_main": "bdb27684",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/bank-scope-company-aw1qyxi9/state",
+  "configuration_equal": false,
+  "fields": {
+    "processing_files": [
+      {
+        "path": "scripts/vnext/ordinary_current_update.py",
+        "old": "a694571002b98da791a7916eaaebd4d704acaea15cd482cf8a2606ca9bfc9724",
+        "new": "434c645f5cfa61999483d1927b06158a51a58c9d977e552c801c7d7de1e20713"
+      },
+      {
+        "path": "scripts/vnext/ordinary_projection.py",
+        "old": "83ea4bc9bbbe2a3ec3b0dc824551f686778e89a850288a04ec3a2b5122e8bb42",
+        "new": "21a717ab51f6ca5a9db7a7f32fb7501cf8aaec865943a7f209fcf1f60fe8db83"
+      },
+      {
+        "path": "scripts/vnext/ordinary_saved_result.py",
+        "old": "f71cca5ed3ab7260764a83d58feb9e835eb8ce8da5b911c6b14b887623318a2d",
+        "new": "ff23e46659e065bbc1c98c6eb4fef6702e9ebba594bf0f2c7e5110d0f49202dd"
+      },
+      {
+        "path": "scripts/vnext/ordinary_update_compatibility.py",
+        "old": "7f885b4e1bf87e656571a35476116c2773c01984cde4ba2b8ababd5c7241b6fd",
+        "new": null
+      }
+    ],
+    "declared_processing_files": []
+  },
+  "old_case_producer": {
+    "module": "vnext.historical_average_risk_cases",
+    "name": "prepare_historical_average_risk_year_case",
+    "sha256": "b71df1945c07be213ba5272d62a1faf7f14f1afd9ad3ab520952808e766fde19"
+  },
+  "new_case_producer": {
+    "module": "vnext.historical_average_risk_cases",
+    "name": "prepare_historical_average_risk_year_case",
+    "sha256": "b71df1945c07be213ba5272d62a1faf7f14f1afd9ad3ab520952808e766fde19"
+  },
+  "no_business_execution": true
+}
