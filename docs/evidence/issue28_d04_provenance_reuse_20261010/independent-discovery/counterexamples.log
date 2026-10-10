@@ -1,0 +1,19 @@
+UTC 2026-10-10T10:35:15.350386+00:00
+PASS exact discovery hashes preserved; originals unchanged; no new credit
+PASS reject non-primary accession annual UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject non-primary document_name wrong.json UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject non-primary source_url https://data.sec.gov/submissions/CIK0009999999.json UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject non-primary source_url https://data.sec.gov/submissions/CIK0001463101-submissions-001.json UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject changed companyfacts bytes UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject changed annual-html bytes UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject annual-amendment UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject subject UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject period UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject new-unit UPDATE_NATIVE_SUBSTANTIVE_SOURCE_CHANGED
+PASS reject changed-unit UPDATE_NATIVE_SUBSTANTIVE_SOURCE_CHANGED
+PASS reject B13 primary submissions bytes still exact UPDATE_NATIVE_SOURCE_BODY_SET_CHANGED
+PASS default annual comparison unchanged
+PASS real reconstructed substantive requests identical
+PASS reject changed request contract UPDATE_NATIVE_SUBSTANTIVE_REQUEST_CHANGED
+PASS newly discovered unsaved amendment stops preparation before equivalence
+ALL PASS 17 independent bounded checks

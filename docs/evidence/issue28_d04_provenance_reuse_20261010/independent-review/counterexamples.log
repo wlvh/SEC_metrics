@@ -1,0 +1,18 @@
+UTC 2026-10-10T10:25:49.880463+00:00
+PASS reject current prepared unbound UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject current original_input unbound UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject original prepared unbound UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject original original_input unbound UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject changed companyfacts company_id UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject changed companyfacts target_period UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject changed companyfacts source_url UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject changed companyfacts accession UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject changed companyfacts document_name UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject changed companyfacts source_repo_relative_path UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject ambiguous companyfacts proof UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS reject current descriptor selects original proof attempt UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+PASS default _annual_content retains companyfacts attempt
+PASS reconstructed substantive requests identical
+PASS reject different constructed request UPDATE_NATIVE_SUBSTANTIVE_REQUEST_CHANGED
+PASS source objects unchanged; no new acquisition or provider credit
+ALL PASS 16 independent bounded checks
