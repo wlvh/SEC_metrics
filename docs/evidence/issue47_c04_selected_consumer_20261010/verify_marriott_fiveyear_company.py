@@ -1,0 +1,26 @@
+"""C04 consumer continuation alongside an existing Marriott B07 five-year state."""
+import csv,hashlib,json,subprocess,sys,tempfile,time
+from pathlib import Path
+state=Path('/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/annual-earnings-marriott-20261009/state');source=json.loads((state/'company-task.json').read_text())['source_root'];base=Path(tempfile.mkdtemp(prefix='marriott-c04-fiveyear-',dir='/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence'))
+def snapshot():return {str(p.relative_to(state)):hashlib.sha256(p.read_bytes()).hexdigest() for p in state.rglob('*') if p.is_file() and ('/results/' in str(p) or '/shared-inputs/' in str(p) or p.name in ['company-task.json','current-result.json','completed-check.json'])}
+before=snapshot();request=Path(source)/'evidence/requests_log.csv';request_hash=hashlib.sha256(request.read_bytes()).hexdigest()
+def invoke(name,args,forbid=False):
+ code='import json,sys\nfrom unittest.mock import patch\nfrom tools.vnext_company import main\nfrom vnext import historical_auditor_case as a,historical_statement_cases as s,calculator\n'
+ code+='blocked={s.prepare_historical_current_annual_year_case.__code__}'+('\nblocked.update({a.prepare_historical_auditor_year_case.__code__,calculator.calculate_metric.__code__,calculator.calculate_observation_metric.__code__})' if forbid else '')+'\ndef guard(frame,event,arg):\n if event=="call" and frame.f_code in blocked:raise AssertionError("Old B07/read or stable C04 must not compute")\nsys.setprofile(guard)\n'
+ code+='with patch("socket.socket.connect",side_effect=AssertionError("No network")):\n raise SystemExit(main(json.loads(sys.argv[1])))'
+ t=time.monotonic();p=subprocess.run([sys.executable,'-B','-c',code,json.dumps(args)],capture_output=True,text=True);r={'name':name,'seconds':time.monotonic()-t,'exit_code':p.returncode,'arguments':args,'stdout':p.stdout,'stderr':p.stderr};(base/(name+'.json')).write_text(json.dumps(r,indent=2)+'\n');print(name,p.returncode,round(r['seconds'],3),flush=True);assert p.returncode in [0,2] and not p.stderr,r;return r,json.loads(p.stdout)
+baseline,view=invoke('old-B07-independent-read',['results','--company','marriott_international','--state-root',str(state),'--output-root',str(base/'old-read')],True);assert before==snapshot();old_rows=list(csv.DictReader((base/'old-read/metrics_matrix.csv').open()));old_b07={r['fiscal_year']:{k:r[k] for k in ['value','unit','period_start','period_end','result_id','record_root','status']} for r in old_rows if r['metric_id']=='B07'};assert len(old_b07)==5
+args=['run','--company','marriott_international','--period','fiscal-years','--fiscal-year-start','2021','--fiscal-year-end','2025','--metric','C04','--source-root',source,'--work-dir',str(state),'--output-dir',str(base/'runs')];first,report=invoke('add-selected-C04-fiveyear',args);assert len(report['metrics'])==5 and all(snapshot().get(k)==h for k,h in before.items());post=snapshot();completed=[m['requested_fiscal_year'] for m in report['metrics'] if m['status'] in ['CANDIDATE_READY','CANDIDATE_WITHHELD','NO_SOURCE_CONTENT_CHANGE','PREVIOUS_INPUT_WITHHELD']];groups=[]
+for year in completed:
+ if groups and year==groups[-1][-1]+1:groups[-1].append(year)
+ else:groups.append([year])
+repeats=[]
+for i,g in enumerate(groups):
+ a=args.copy();a[a.index('--fiscal-year-start')+1]=str(g[0]);a[a.index('--fiscal-year-end')+1]=str(g[-1]);r,rep=invoke('forbidden-C04-repeat-'+str(i),a,True);assert not any(m.get('calculation_performed') for m in rep['metrics']);assert all(m['status'] in ['NO_SOURCE_CONTENT_CHANGE','PREVIOUS_INPUT_WITHHELD'] for m in rep['metrics']);assert snapshot()==post;repeats.append(r)
+read,view=invoke('independent-mixed-results',['results','--company','marriott_international','--state-root',str(state),'--output-root',str(base/'read')],True);assert snapshot()==post and read['exit_code']==0;rows=list(csv.DictReader((base/'read/metrics_matrix.csv').open()));b07={r['fiscal_year']:{k:r[k] for k in ['value','unit','period_start','period_end','result_id','record_root','status']} for r in rows if r['metric_id']=='B07'};assert b07==old_b07;assert len(rows)==10;selected=[r for r in rows if r['metric_id']=='C04'];assert len(selected)==5
+checks=[]
+for row in selected:
+ if row.get('record_root'):
+  root=Path(row['record_root']);a=json.loads((root/'input-assessments.json').read_text())['assessments']['historical_auditor'];checks.append({'fiscal_year':row['fiscal_year'],'row':row,'assessment':a})
+assert hashlib.sha256(request.read_bytes()).hexdigest()==request_hash
+receipt={'code_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'baseline':baseline,'first':first,'repeat':repeats,'read':read,'metrics':report['metrics'],'rows':selected,'old_B07_rows':old_b07,'assessment_checks':checks,'state_root':str(state),'output_root':str(base),'old_protected_files':len(before),'final_protected_files':len(post),'old_B07_factory_calls':0,'new_calls':[0,0,0],'source_log_unchanged':True,'business_acceptance':'not inferred from execution alone'};Path('work/c04-marriott/actual-company.json').write_text(json.dumps(receipt,indent=2)+'\n');print('PASS old B07 preserved, new C04 periods saved or named, completed-only reuse and mixed CSV',flush=True)

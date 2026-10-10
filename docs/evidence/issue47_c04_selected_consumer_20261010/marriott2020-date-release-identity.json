@@ -1,0 +1,113 @@
+{
+  "original_identity_facts": [
+    {
+      "accession": "0001628280-21-006440",
+      "form": "10-K/A",
+      "source_reference": {
+        "accession": "0001628280-21-006440",
+        "company_id": "marriott_international",
+        "document_name": "mar-20201231.htm",
+        "raw_asset_id": "sha256:f37221e249636c8a17667b412e7ddf0a038f7d5d6998af7c95c28de654ce2281",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:4112bb5f8465e11f04ec5df9d611bff95c73566ea6149a14fd9109823a63b3d5",
+        "source_reference_id": "sha256:40610e379077b8a33a5af2f7c56b937777227d9ceda8b6f41b9cc4a5a9d0df49",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828021006440/mar-20201231.htm"
+      },
+      "identity_facts": [
+        {
+          "namespace": "http://xbrl.sec.gov/dei/2020-01-31",
+          "name": "EntityCentralIndexKey",
+          "text": "0001048286",
+          "ordinal": 5,
+          "context": {
+            "entity_identifier": "0001048286",
+            "period_start": "2020-01-01",
+            "period_end": "2020-12-31"
+          }
+        },
+        {
+          "namespace": "http://xbrl.sec.gov/dei/2020-01-31",
+          "name": "DocumentType",
+          "text": "10-K/A",
+          "ordinal": 7,
+          "context": {
+            "entity_identifier": "0001048286",
+            "period_start": "2020-01-01",
+            "period_end": "2020-12-31"
+          }
+        },
+        {
+          "namespace": "http://xbrl.sec.gov/dei/2020-01-31",
+          "name": "DocumentPeriodEndDate",
+          "text": "December 31, 2020",
+          "ordinal": 9,
+          "context": {
+            "entity_identifier": "0001048286",
+            "period_start": "2020-01-01",
+            "period_end": "2020-12-31"
+          }
+        }
+      ],
+      "common_text_reader_failure": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING because year-only common reader ignores actual DEI/2020-01-31 release"
+    },
+    {
+      "accession": "0001628280-21-002433",
+      "form": "10-K",
+      "source_reference": {
+        "accession": "0001628280-21-002433",
+        "company_id": "marriott_international",
+        "document_name": "mar-20201231.htm",
+        "raw_asset_id": "sha256:3b4e35ef3b9aacae886c270b2f76bc98ae42184e2e8bdaef8a7252d9ca11c00d",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:019fe8edb543d76193c04b83a18a48efc1158b5962b35db7239c6ae655d47468",
+        "source_reference_id": "sha256:34153e7349860785153732671cdf349fc0738f8e952a92dea2e44686aeb07406",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828021002433/mar-20201231.htm"
+      },
+      "identity_facts": [
+        {
+          "namespace": "http://xbrl.sec.gov/dei/2020-01-31",
+          "name": "EntityCentralIndexKey",
+          "text": "0001048286",
+          "ordinal": 5,
+          "context": {
+            "entity_identifier": "0001048286",
+            "period_start": "2020-01-01",
+            "period_end": "2020-12-31"
+          }
+        },
+        {
+          "namespace": "http://xbrl.sec.gov/dei/2020-01-31",
+          "name": "DocumentType",
+          "text": "10-K",
+          "ordinal": 18,
+          "context": {
+            "entity_identifier": "0001048286",
+            "period_start": "2020-01-01",
+            "period_end": "2020-12-31"
+          }
+        },
+        {
+          "namespace": "http://xbrl.sec.gov/dei/2020-01-31",
+          "name": "DocumentPeriodEndDate",
+          "text": "December 31, 2020",
+          "ordinal": 20,
+          "context": {
+            "entity_identifier": "0001048286",
+            "period_start": "2020-01-01",
+            "period_end": "2020-12-31"
+          }
+        }
+      ],
+      "common_text_reader_failure": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING because year-only common reader ignores actual DEI/2020-01-31 release"
+    }
+  ],
+  "failure_is_policy_not_missing_identity": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "correction": "Provisional explanation said2020q4; direct original metadata shows2020-01-31. Actual identity facts unchanged."
+}
