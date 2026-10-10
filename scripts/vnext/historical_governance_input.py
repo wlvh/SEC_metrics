@@ -170,7 +170,7 @@ def prepare_selected_auditor_base(*, repo_root, company_id, fiscal_year):
         'history_alignment_conflicts': history['limitations'],
         'metric_input_status': {'C04': 'PREPARED'}, 'new_calls': [0, 0, 0]}
     binding = {**body, 'input_binding_id': content_hash(value=body)}
-    arguments = {'current_filings': current, 'prior_filings': prior, 'prior_sources': [],
+    arguments = {'current_filings': current, 'prior_filings': prior or None, 'prior_sources': [],
         'target_accession': choice['current_filing_chain'][0]['accessionNumber'],
         'prior_period_end': choice['prior_ordinary']['reportDate'] if choice['prior_ordinary'] else '',
         'target': target, 'expected_cik': annual['entity'], 'event_input': None}
