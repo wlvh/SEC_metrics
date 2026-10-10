@@ -37,3 +37,12 @@ New small failure regression uses actual configuration SHA reading and source/re
 New dependency-only review4a99 PASS_LIMITED_DEPENDENCY_REPAIR:8tests/.214s/zero skip plus independent real-tempfile SHA changes proving once-reprocess/third-check reuse and all old small-state file hashes unchanged; original15-path negative still wrongly reuses.25tools/1ordinarymessage,2026-10-10T04:08:07Z..04:12:00.659870Z. Scope only adds actual parser/policy dependency and regression, inherits the prior full adapter review's unresolved-item closure without rewriting its original REQUEST_CHANGES. Does not repeat company or upgrade allten/owneradoption.
 
 Shared impact: run_once and run_saved_company add only optional None-default arguments; historical selected-year call signature/behavior stays. #47 maintains its consumer and validates actual impacts; no peer tree/state/ledger operated. Related fixedsourcePR124 andcapacityPR134 are necessary receiving dependencies; PR1343d now all11CI terminalSUCCESS, this new consumer's CI is separate. No new SEC/provider/paid.
+
+
+## Actual new main combination / Draft PR135
+
+Normal HTTPS GitHub API works with the failed local HTTP proxy excluded only for GitHub commands; original CONNECT500 failures remain reported, no global network/provider/account changes. Successful direct fetch confirms main145a464b. Appended merge9cbb381a retains both newly delivered reporting-company test and explicitcapacity/currentD01steps; no source/case/controller/test code changed from reviewed4a99 except main's original historicalRPO dispatch, which is preserved.139combined controls15.941s/zero skip.
+
+A separate empty current company directory through final combination code9cbb produces the sameEnphaseFY25 60/value/Result3b7a9fa1 at3.958s; forbiddenannual-preparation/writer repeat.317s and separate-processresults.075s, all6businessfiles unchanged. Code is committed9cbb with evidence-only outputs dirty, not falsely labelled clean-tree; this validation is needed for the received newmain reporter/projection path, not rerunning unrelated financial/history batches. Original first and repair-state histories remain untouched.
+
+DraftPR135 created/attached: https://github.com/wlvh/SEC_metrics/pull/135 . Actual initialhead9cbb CI observed5SUCCESS/6inprogress; no all-green claim. Archive commit changes evidence only; finalhead CI must be followed independently.
