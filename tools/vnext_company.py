@@ -26,6 +26,8 @@ def main(argv=None):
     run.add_argument('--source-root', type=Path,
                      help='Use saved sources and ordinary records; no online discovery, capture or AI calls')
     run.add_argument('--call-context', type=Path, help='Existing scoped SEC ledger context for the lightweight online B01/B02 path; no new allowance')
+    run.add_argument('--saved-call-package', type=Path,
+                     help='Original read-only D04 answer archive; requires saved-source historical mode and explicit D04')
     run.add_argument('--max-sec-requests', type=int, default=120, help='Invocation cap, no automatic retries')
     run.add_argument('--sec-allowance', type=int, default=120, help='Fixed cumulative task allowance')
     acquire = sub.add_parser('acquire', help='Only discover/capture sources; never calculate or call AI')
@@ -90,6 +92,12 @@ def main(argv=None):
     view.add_argument('--output-root', type=Path, help='Write ordinary daily CSV/evidence without updating inputs')
     args = parser.parse_args(argv)
     if args.command == 'run':
+        if args.saved_call_package is not None and not (args.source_root is not None
+                and args.period == 'fiscal-years' and args.metric is not None
+                and 'D04' in args.metric and args.call_context is None):
+            parser.error('--saved-call-package requires --source-root, --period fiscal-years and explicit --metric D04')
+        if args.period == 'fiscal-years' and args.metric and 'D04' in args.metric and args.saved_call_package is None:
+            parser.error('Historical D04 requires --saved-call-package with the original answer archive')
         if args.period == 'latest-complete-fy' and (args.fiscal_year_start is not None or args.fiscal_year_end is not None):
             parser.error('Fiscal-year arguments require --period fiscal-years')
         if args.call_context is not None and args.period != 'latest-complete-fy':
@@ -108,7 +116,8 @@ def main(argv=None):
             result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
                 period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
                 sec_allowance=args.sec_allowance, source_root=args.source_root,
-                fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end)
+                fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end,
+                saved_call_package=args.saved_call_package)
     elif args.command == 'acquire' and args.call_context is not None:
         from vnext.company_online import run_online_company
         result = run_online_company(company_id=args.company, work_dir=args.work_dir,

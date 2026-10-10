@@ -1,0 +1,77 @@
+{
+  "label": "independent-read",
+  "exit_code": 0,
+  "seconds": 0.5269861668348312,
+  "arguments": [
+    "results",
+    "--company",
+    "marriott_international",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-history-company-rrx_5uj2/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-history-company-rrx_5uj2/read"
+  ],
+  "report": {
+    "elapsed_seconds": 0.06867183302529156,
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "marriott_international",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "metrics": [
+      {
+        "metric_id": "D04",
+        "value": null,
+        "result_validity": "NO_CURRENT_RESULT",
+        "latest_observation": "INPUT_OR_EXECUTION_FAILED",
+        "fiscal_year": 2026,
+        "requested_in_latest_execution": true,
+        "reason": "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+        "error_type": "PeriodSelectionError",
+        "error_category": "SOURCE_UNAVAILABLE"
+      },
+      {
+        "metric_id": "D04",
+        "result_id": "sha256:9129d2b3e6b54b8a318994cd38a409312bfff9d539b3624677b578d492564014",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "fiscal_year": 2023,
+        "value": null,
+        "unit": null,
+        "publication": "WITHHELD",
+        "quality": "NONE",
+        "reason_code": "D04_SAVED_FILING_MEDIA_COVERAGE_NOT_VERIFIED",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+        "requested_in_latest_execution": false,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-history-company-rrx_5uj2/state/updates/D04/periods/FY2023/results/8b6de702e22f4d7496282e6c1009a4aa"
+      },
+      {
+        "metric_id": "D04",
+        "result_id": "sha256:5c4c22eaacf4d9e61e589820acaab3ccf0a1a970e2c4ec70301e069811aa719d",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "fiscal_year": 2024,
+        "value": null,
+        "unit": null,
+        "publication": "WITHHELD",
+        "quality": "NONE",
+        "reason_code": "D04_SAVED_FILING_MEDIA_COVERAGE_NOT_VERIFIED",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+        "requested_in_latest_execution": false,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-history-company-rrx_5uj2/state/updates/D04/periods/FY2024/results/48bbf485fab6423ba1e1bedee9f5bbc9"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-history-company-rrx_5uj2/read"
+  },
+  "old_state_files_preserved_except_normal_pointers": true,
+  "state_files": 37
+}

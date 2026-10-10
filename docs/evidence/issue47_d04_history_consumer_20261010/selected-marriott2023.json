@@ -1,0 +1,51 @@
+{
+  "record_type": "HISTORICAL_D04_SAVED_SELECTION",
+  "original_source_id": "sha256:c65c0acca441ffe0e892cfca2dc6c120163a545292ba514a0215ab973b872db8",
+  "saved_call_package": "/Users/lyuhongwang/.codex/worktrees/issue47-history-continue/SEC_metrics/evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz",
+  "original_call_members": [
+    {
+      "ordinal": 20,
+      "source_member": "root/calls/0020/source.json",
+      "request_member": "root/calls/0020/semantic-request.json"
+    },
+    {
+      "ordinal": 21,
+      "source_member": "root/calls/0021/source.json",
+      "request_member": "root/calls/0021/semantic-request.json"
+    },
+    {
+      "ordinal": 22,
+      "source_member": "root/calls/0022/source.json",
+      "request_member": "root/calls/0022/semantic-request.json"
+    },
+    {
+      "ordinal": 23,
+      "source_member": "root/calls/0023/source.json",
+      "request_member": "root/calls/0023/semantic-request.json"
+    }
+  ],
+  "metric_executed": false,
+  "reply_or_ledger_modified": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "seconds": 8.262153749819845,
+  "annual_coordinate": {
+    "company_id": "marriott_international",
+    "entity": "1048286",
+    "filing": {
+      "form": "10-K",
+      "reportDate": "2023-12-31",
+      "filingDate": "2024-02-13",
+      "accessionNumber": "0001628280-24-004372",
+      "primaryDocument": "mar-20231231.htm"
+    }
+  },
+  "target_period": {
+    "fiscal_year": 2023,
+    "period_start": "2023-01-01",
+    "period_end": "2023-12-31"
+  }
+}
