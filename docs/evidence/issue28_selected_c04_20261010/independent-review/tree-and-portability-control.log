@@ -1,0 +1,78 @@
+UTC start: 2026-10-10T08:11:57.959722+00:00
+UTC end: 2026-10-10T08:11:58.577146+00:00
+Reviewed SHA: 4e8af50824d8ce0e69c877864977ca25b05573fa
+Command: TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -c [inline frozen-object control]
+fatal: path 'scripts/vnext/c04_verified_document_alias.py' does not exist in '84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf'
+Frozen test SHA256: af0688db2fd74e6d6a7c2c6488ab1a6bc47f8654c34bbf0dcceaeccce50f97b1
+Local base-object availability: commit
+CONFIRMED: exact4e8 baseline test raises unhandled CalledProcessError128 when the fixed base object is absent, before dictionary comparison.
+Control isolates Git-object absence only; it is not a CI-job reproduction.
+Relevant fixed-SHA workflow (fetch-depth absent in full file: False )
+157:   company-c04-source-install:
+158:     name: Company C04 source and subject checks
+159:     runs-on: ubuntu-latest
+160:     timeout-minutes: 5
+161:     steps:
+162:       - name: Check out repository
+163:         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+164:         with:
+165:           persist-credentials: false
+166:       - name: Set up Python 3.14
+167:         uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+168:         with:
+169:           python-version: "3.14"
+170:       - name: Install pinned offline request tokenizer
+171:         run: python3 -m pip install --no-deps --require-hashes -r requirements-continuous-context.txt
+172:       - name: Saved C04 sources, same-subject comparison and event completeness
+173:         env:
+174:           PYTHONDONTWRITEBYTECODE: "1"
+175:           PYTHONPATH: scripts
+176:         # The current saved-source candidate does not install legacy proof trees.
+177:         # Keep source/form/CIK/prior/event requirements; retained installs use saved runtime.
+178:         run: python3 tests/required_unittests.py tests.vnext.test_governance_signals.AuditorSignalsTest tests.vnext.test_c04_registration_successor tests.vnext.test_normal_governance_input tests.vnext.test_c04_selected_input
+179: 
+180:   company-update-history:
+181:     name: Company update history and interruption recovery
+182:     runs-on: ubuntu-latest
+183:     timeout-minutes: 30
+184:     steps:
+HASH MATCH scripts/vnext/c04_registration_successor.py 3dfe9d66a23cee63b12fe057258f3f0e20bdc3408640dc73aac03458e914eede
+HASH MATCH scripts/vnext/c04_verified_document_alias.py a7cb38796887d808ddb689e512fc58ffbb6b07c8ebf43d88c917c66833544ea6
+HASH MATCH scripts/vnext/governance_signals.py b5a81465be57ac332c595c61bd107d0e8da8e90bac5dd47a071c3576dcbce820
+HASH MATCH scripts/vnext/normal_governance_input.py e6b4e3f2b5e80ac4fa63346e56faab4ab249443de3eb3f37fccf8ee30af3e8d4
+HASH MATCH scripts/vnext/normal_annual_input.py 8f7bf4f93c6fc73665304970ee3aaa2536240ce17aacd89879153d5dc7a335cf
+HASH MATCH scripts/vnext/normal_annual_input_v2.py 8c54ef1eaf2a7774fdf4533e07fde6fa4a0391c3cec51bdaf76a317d9ebd5e19
+HASH MATCH scripts/vnext/fiscal_year_labels.py b4c2c6d696604f6e313da83c7845bfa6dfe2ffae250de137dcaecf9633b93251
+HASH MATCH scripts/vnext/deterministic_router.py 1e5d71233fbfda516bdbefbc2c50ce36dd4f780ab515b26fbfbb69ece825f1c5
+HASH MATCH catalog/r5/C04_auditor_changes_v2.md 596a442394f159c61a00aaab5d6e2b8b4cd32a897e1e98a01f80144b12f2f2fc
+HASH MATCH catalog/r5/C04_auditor_changes_v3.md 54612951aa27b88c8cf1dbe046e2506a8384ce8f7fb018629aaaa3ef019a98d8
+HASH MATCH config/normal_fiscal_year_labels_v1.json fde417632520d90046818fd31046615b6ea3b3df9cfdf5a1a527e38deea7bd87
+The saved actual evidence is base84+uncommitted11file hashes; all11 match exact4e8. No archive/original or #47 worktree opened.
+Exit code: 0
+
+INLINE PROGRAM:
+
+from pathlib import Path
+from unittest.mock import patch
+import subprocess,tempfile,types,hashlib,json
+sha='4e8af50824d8ce0e69c877864977ca25b05573fa'
+source=subprocess.check_output(['git','show',sha+':tests/vnext/test_c04_selected_input.py'])
+module=types.ModuleType('tests.vnext._frozen_c04_4e8_control');module.__package__='tests.vnext'
+exec(compile(source,'4e8:test_c04_selected_input.py','exec'),module.__dict__)
+print('Frozen test SHA256:',hashlib.sha256(source).hexdigest())
+print('Local base-object availability:',subprocess.check_output(['git','cat-file','-t','84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf'],text=True).strip())
+with tempfile.TemporaryDirectory(prefix='c04-review-object-absent-',dir='/private/tmp') as folder:
+ root=Path(folder);r=subprocess.run(['git','init','-q',str(root)],capture_output=True,text=True);assert r.returncode==0
+ with patch.object(module,'ROOT',root):
+  try:module.SelectedC04InputTest('test_year_only_checked_filing_default_dictionary_matches_main').test_year_only_checked_filing_default_dictionary_matches_main()
+  except subprocess.CalledProcessError as error:
+   assert error.returncode==128;print('CONFIRMED: exact4e8 baseline test raises unhandled CalledProcessError128 when the fixed base object is absent, before dictionary comparison.')
+  else:raise AssertionError('Object-absent control unexpectedly completed')
+print('Control isolates Git-object absence only; it is not a CI-job reproduction.')
+w=subprocess.check_output(['git','show',sha+':.github/workflows/vnext-fast.yml'],text=True).splitlines();a=next(i for i,l in enumerate(w) if '  company-c04-source-install:' in l)
+print('Relevant fixed-SHA workflow (fetch-depth absent in full file:',not any('fetch-depth' in l for l in w),')')
+for i in range(a,a+28):print(f'{i+1}: {w[i]}')
+data=json.loads(subprocess.check_output(['git','show',sha+':docs/evidence/issue28_selected_c04_20261010/final-actual-selected.json'],text=True))
+for n,v in data['public_code_sha256'].items():
+ actual=hashlib.sha256(subprocess.check_output(['git','show',sha+':'+n])).hexdigest();assert actual==v;print('HASH MATCH',n,actual)
+print('The saved actual evidence is base84+uncommitted11file hashes; all11 match exact4e8. No archive/original or #47 worktree opened.')
