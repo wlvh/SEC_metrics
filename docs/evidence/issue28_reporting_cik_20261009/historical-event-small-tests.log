@@ -1,0 +1,21 @@
+test_combined_or_unproven_subject_policy_does_not_get_single_reporter_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_combined_or_unproven_subject_policy_does_not_get_single_reporter_view) ... ok
+test_current_reporter_preserves_current_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_current_reporter_preserves_current_view) ... ok
+test_different_filing_or_bad_entity_does_not_gain_display_identity (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_different_filing_or_bad_entity_does_not_gain_display_identity) ... ok
+test_explicit_null_issuer_fields_use_verified_annual_without_modifying_trace (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_explicit_null_issuer_fields_use_verified_annual_without_modifying_trace) ... ok
+test_metadata_only_outcome_can_keep_inventory_issuer_without_claiming_amount (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_metadata_only_outcome_can_keep_inventory_issuer_without_claiming_amount) ... ok
+test_null_target_requires_matching_source_not_another_registered_issuer (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_null_target_requires_matching_source_not_another_registered_issuer) ... ok
+test_nullable_contract_does_not_hide_filled_conflicts_or_missing_fields (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_nullable_contract_does_not_hide_filled_conflicts_or_missing_fields) ... ok
+test_predecessor_reporting_cik_changes_only_presentation_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_predecessor_reporting_cik_changes_only_presentation_view) ... ok
+test_unregistered_reporter_or_cross_subject_trace_is_rejected (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_unregistered_reporter_or_cross_subject_trace_is_rejected) ... ok
+test_valued_historical_event_uses_selected_inventory_and_source_set (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_valued_historical_event_uses_selected_inventory_and_source_set) ... ok
+test_approved_wide_window_retains_the_original_annual_period (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_approved_wide_window_retains_the_original_annual_period) ... ok
+test_arbitrary_wider_period_or_wrong_label_is_rejected (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_arbitrary_wider_period_or_wrong_label_is_rejected) ... ok
+test_financial_and_unreceived_e01_do_not_receive_wide_period_exception (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_financial_and_unreceived_e01_do_not_receive_wide_period_exception) ... ok
+test_missing_registrant_or_wrong_inventory_cannot_complete_union (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_missing_registrant_or_wrong_inventory_cannot_complete_union) ... ok
+test_wrong_registry_catalog_or_financial_combination_is_rejected (tests.vnext.test_registered_event_projection.RegisteredEventProjectionTest.test_wrong_registry_catalog_or_financial_combination_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.007s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 15, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest", "tests.vnext.test_registered_event_projection"]}

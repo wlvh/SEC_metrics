@@ -51,3 +51,11 @@ SouthwestFY25阻塞已定位为消费者未接已成立公共证明：修订只�
 后继原件范围核对纠正一个业务判断：PfizerFY2023 B01新结果与原reference同50,914m，仅证明选定事实的数值一致；原table113明确它是Product revenues，另有Alliance7,582m，Total58,496m，因此该位置不再列作完整营业收入正确值。原比较JSON/Result保留，新精确缺陷及原表/native ordinal/重列说明在[后继固定证据](https://github.com/wlvh/SEC_metrics/blob/0dc5de75/docs/evidence/issue47_growth_reference_20261010/README.md)。使用现有optional defect列表独立read已将该一Result扣留，默认公共缺陷登记/收入scope修补待#28，不改共享内核或扩大PR116。Southwest有限链接修订证明及实测不受该发现影响；旧MATCH不能替代业务范围核对。
 
 生产de192公司workflow37983406969/job113999286264实际SUCCESS；原Historical步骤63方法.312s零skip，新四个修订方法逐项已加载/ok，ci-de192-company.log/json保实际执行而非登记名。后继040624只说明Pfizer范围新发现，不改此生产代码，按自身CI读终态；不因纯记录再次计算财报。
+
+## main收入接收后的修订消费者组合
+
+实际mainc99已读并正常接续本PR，原_statement_amendment_checks函数AST及公共checker/policy不变。本方两处冲突保main总收入范围/请求label/原pairedguard和原original-statement proof/有限依赖；原main workflow整statement模块已执行本四修订方法，不再重复添加class，paired/D04/旧source步骤/path保。初自动冲突拼接留下重复字典尾导致语法失败，保原loader日志后只去重复尾，无断言放松。
+
+96历史statement/dispatch/state/收入V1/V2/原note布局控制.495s零skip。真实原Southwest任务只FY25B01在收入/处理依赖变更后正常处理7.447s，原28063000000USD/FY25/全年/8197ResultID保；修订proof与已选收入scope均在assessment/binding。禁factory/Calc复1.071s0，独立读.668s，原20financial值/unit/date/ID和其他年度/指标保（实际保护文件数量、scope是否完整见main-c99-actual-company.json，不把机械链当额外内容信用）。未重读完整参考、未重算其他三指标或五年。实际执行915+未提交main合并修补树，后继提交不倒签。
+
+候选接收不是main已支持此修订，不带未main137/136或公共138，不改model/source许可。新CI独立核，原915全绿不盖新head；调用0，旧Run/失败/答案/原结果保留。

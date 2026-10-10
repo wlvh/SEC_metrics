@@ -1,0 +1,34 @@
+{
+  "start_utc": "2026-10-09T14:11:55Z",
+  "completed_utc": "2026-10-09T14:19:44.815664+00:00",
+  "functions_exec_wrappers": 9,
+  "exec_command_child_tools": 14,
+  "clock_curr_time_child_tools": 1,
+  "all_tools_including_wrappers": 24,
+  "ordinary_messages_including_final": 3,
+  "question_count": 0,
+  "messages": [
+    "opening commentary",
+    "progress commentary and external-read deviation disclosure",
+    "final reply"
+  ],
+  "review_budget": {
+    "max_tools": 80,
+    "max_minutes": 90,
+    "max_ordinary_messages": 3
+  },
+  "head": "abb7abdd78b0330b0c2464668e81cd4de7fdf375",
+  "all_selected_hashes_unchanged": true,
+  "hashes_after": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "scripts/vnext/ordinary_projection.py": "766fa980175098a3ae248bfbe60f000da40a0553b2f61f7791be8b031693b283",
+    "scripts/vnext/calculator.py": "797424587429470d28e2f22b041f3df3ae959d4259507e9f93a9f692b4f13b9c",
+    "scripts/vnext/ordinary_saved_result.py": "d96b1a02e0591969003fb450034a7af3db9c1759edd8428d8b58c7e250a00e5b",
+    "tests/vnext/test_reporting_company_projection.py": "e4f19bd952ebf09d6a68ec9b9a168c0ab3902016c788e69d1ca2ed8adbe0ecbb",
+    "tools/run_fast_tests_v2.py": "a47334fa8f3df2ae0b5b062c8415324e20ce82e6dfe777e915f689bc1fdc38ef",
+    "docs/evidence/issue28_reporting_cik_20261009/independent-review/conclusion.md": "812317a8fd54e0a6f29843a2b8bb56e5049c00a860f78b3a6e1c565951714ca0"
+  },
+  "git_status_before_final_artifact": "?? docs/evidence/issue28_reporting_cik_20261009/nullable-review/\n",
+  "existing_review_conclusion_preserved": true,
+  "note": "This log and conclusion are written by the ninth and last functions.exec wrapper; counts include that wrapper and its exec_command. Internal subprocess commands are not MCP tool calls. No previous reviewer/developer/receiving execution budget is reused."
+}
