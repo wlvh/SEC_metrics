@@ -347,7 +347,7 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
         self.factory_calls=getattr(self,'factory_calls',0)+1
         return {'target_period':{'fiscal_year':fiscal_year}}
 
-    def selected(self,year,factory=None,processing_files=()):
+    def selected(self,year,factory=None,processing_files=(),processing_inputs=()):
         def save(**kwargs):
             y=kwargs['case']['target_period']['fiscal_year'];path=kwargs['output_root'];path.mkdir(parents=True)
             value={'manifest':{'company_id':'marriott_international','metric_id':'B01','source_proofs':[self.proof]},
@@ -357,7 +357,34 @@ class SelectedPeriodUpdateTest(unittest.TestCase):
             return value
         with patch.object(update,'save_calculated_case',side_effect=save):
             return update.run_once(state_root=self.root,source_root=ROOT,company_id='marriott_international',
-                metric_id='B01',fiscal_year=year,case_factory=factory or self.factory,processing_files=processing_files)
+                metric_id='B01',fiscal_year=year,case_factory=factory or self.factory,
+                processing_files=processing_files,processing_inputs=processing_inputs)
+
+    def test_saved_answer_input_change_rechecks_once_then_reuses_withheld(self):
+        self.publication='WITHHELD'
+        package=Path(self.temp.name)/'answers.tar.gz';package.write_bytes(b'original-small-state')
+        first=self.selected(2024,processing_inputs=[package])
+        package.write_bytes(b'changed-small-state')
+        second=self.selected(2024,processing_inputs=[package])
+        self.assertNotEqual(first['version'],second['version'])
+        self.assertEqual(self.factory_calls,2)
+        with patch.object(update,'save_calculated_case',side_effect=AssertionError('No repeated answer processing')):
+            repeated=update.run_once(state_root=self.root,source_root=ROOT,company_id='marriott_international',
+                metric_id='B01',fiscal_year=2024,case_factory=self.factory,processing_inputs=[package])
+        self.assertEqual(repeated['status'],'PREVIOUS_INPUT_WITHHELD')
+        self.assertFalse(repeated['calculation_performed'])
+        self.assertEqual(repeated['version'],second['version'])
+        self.assertEqual(self.factory_calls,2)
+
+    def test_missing_saved_answer_input_does_not_reuse_old_success(self):
+        package=Path(self.temp.name)/'answers.tar.gz';package.write_bytes(b'small-state')
+        self.selected(2024,processing_inputs=[package])
+        pointer=self.root/'periods/FY2024/current-result.json';old=pointer.read_bytes()
+        package.unlink()
+        observed=self.selected(2024,processing_inputs=[package])
+        self.assertEqual(observed['status'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertIn('PROCESSING_INPUT_MISSING',observed['reason'])
+        self.assertEqual(pointer.read_bytes(),old)
 
     def test_two_selected_periods_have_separate_pointers_and_current_layout_stays(self):
         first=self.selected(2024);second=self.selected(2025)

@@ -16,6 +16,7 @@ from .normal_source_authority import ROOT
 def require_complete_assessment(assessment):
     """A missing or undecided group cannot be a company-level conclusion."""
     need(assessment['all_source_requests_accepted'] is True
+         and assessment.get('filing_media_coverage_verified') is not False
          and not assessment['missing_request_ids'] and not assessment['failed_requests']
          and [r['request_id'] for r in assessment['completed']] == assessment['required_request_ids']
          and assessment['proposed_branch'] in {'DEFINED_SCOPE_ABSENCE_PROPOSAL_REQUIRES_NATIVE_REVIEW',

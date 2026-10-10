@@ -469,13 +469,34 @@ def render_ordinary_records(*, data_root, manifest, records, case,
     elif result['text_payload'] is not None:
         _need(len(evidence)==len(result["text_payload"]["items"]),"ORDINARY_TEXT_EVIDENCE_SET_CHANGED")
     elif metric in {'B13', 'D04'}:
+        media_hold = (metric == 'D04'
+            and result['reason_code'] == 'D04_SAVED_FILING_MEDIA_COVERAGE_NOT_VERIFIED'
+            and result['publication'] == 'WITHHELD' and result['value'] is None
+            and case['selection'].get('source_replay_only') is True
+            and case['input_binding'].get('filing_media_coverage_verified') is False)
         structural = case['selection']['status'] == 'N_A_STRUCTURAL'
-        _need((structural and result['applicability'] == 'N_A_STRUCTURAL' and not evidence)
+        _need(media_hold or (structural and result['applicability'] == 'N_A_STRUCTURAL' and not evidence)
               or (case['selection']['status'] == ('NOT_AVAILABLE_SEC' if metric == 'B13' else 'TEXT_QUAL')
                   and result['reason_code'] in {'B13_DEFINED_SCOPE_NO_RELEVANT_DISCLOSURE',
                                                 'D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE'}
                   and len(evidence) == len(case['text_arguments']['source']['documents'])),
               'B13_NULL_TEXT_PROJECTION_CHANGED')
+        if media_hold:
+            row['notes'] = '原保存的完整模型文字请求已重读；申报图片等媒体尚未验证，不能据此认定未披露持续经营疑虑。'
+            row['context_or_dimension'] = json.dumps({'reason': result['reason_code'],
+                'source_id': case['input_binding']['source_id'],
+                'original_call_ordinals': case['input_binding']['original_call_ordinals'],
+                'filing_media_coverage_verified': False}, ensure_ascii=False, sort_keys=True)
+            for document in case['input_binding']['original_documents']:
+                ref, blob = document['source_reference'], document['raw_blob']
+                item = {key: '' for key in csv_output.EVIDENCE_FIELDS}
+                item.update(company=company['display_name'], cik=company['primary_cik'], metric_id=metric,
+                    source_url=ref['source_url'], repo_relative_path=blob['storage_uri'],
+                    content_sha256=ref['raw_asset_id'][7:], accession=ref['accession'],
+                    document_name=ref['document_name'], period_start=result['period_start'],
+                    period_end=result['period_end'], concept_or_section='Saved text input; media unverified',
+                    context_or_dimension=row['context_or_dimension'], unit='text')
+                evidence.append(item)
         if structural:
             row['notes'] = 'Outside the approved B13 company scope. No disclosure-absence or utilization claim is made.'
     else:

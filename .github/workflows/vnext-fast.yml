@@ -72,6 +72,12 @@ jobs:
           PYTHONPATH: scripts:tools
         run: python3 -m unittest -v tests.vnext.test_ordinary_depreciation_sources
 
+      - name: Verify original D04 replay and saved-answer update inputs
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 tests/required_unittests.py tests.vnext.test_saved_d04_replay tests.vnext.test_current_d04_company tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest tests.vnext.test_company_current_records
+
 
   inherited-source-material:
     name: Foundation inherited source material
