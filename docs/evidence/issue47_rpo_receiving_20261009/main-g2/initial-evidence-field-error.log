@@ -1,0 +1,6 @@
+salesforce-rpo 0.572118875104934 7 110
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/main-g2-consumer/verify_actual_reads.py", line 28, in <module>
+    hits=[e for e in evidence if e['metric_id']=='C01' and e['fiscal_year']=='2021'];assert hits and all(e['cik']=='813828' for e in hits)
+                                                           ~^^^^^^^^^^^^^^^
+KeyError: 'fiscal_year'
