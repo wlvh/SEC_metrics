@@ -15,3 +15,6 @@ Direct bounded read of the already saved amendment confirms the exact dependency
 
 
 Actual independent daily read of the saved failed task finds a separate public-view gap: 0.427s (exact JSON time retained), exit0; JSON/CSV preserveFY2025/null/INPUT_OR_EXECUTION_FAILED but drop the saved reason HISTORICAL_RISK_HEADINGS_AMENDMENT_NOT_RECEIVED and category IMPLEMENTATION_GAP. CSV notes is empty. Latest-execution.json still contains both. gap-independent-read.json is the real consumer evidence; no source/factory/calculation occurred. The public owner receives this exact read-only repro to retain reason/category in the shared view, not a historical renderer. The current omission is not evidence that financial source is absent.
+
+
+Consumer0d862263also names each unreceived amendment accession in its existing error, preservingIMPLEMENTATION_GAP and all rejection behavior.35small tests/.233s/zero skip confirm the source dependency is actionable instead of just a generic amendment label. This changes error presentation only; the original4.619s company receipt remains its actual earlier code, and the financial/source run is not repeated to manufacture a new receipt. Public daily-reader reason retention is still a separate unimplemented correction.
