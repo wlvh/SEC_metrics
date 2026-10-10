@@ -37,3 +37,6 @@ Second actual period selection8.485s chooses MarriottFY2024 and originalslots24â
 
 
 Two ordinary data-integrity controls added before public consumption: a malformed source coordinate is SOURCE_INTEGRITY_ERROR rather than an absent-year result; a repeated named regular archive member is refused instead of dictionary overwrite. Ten final controls0.023s/zero skip pass. These small input-error checks do not change actual annual/source selection or request grouping and do not repeat source reads, model processing or original calls. Constructed archives are isolated test data, not modifications of the real package.
+
+
+Actual predecessor selector check: ParamountFY2024 selection15.883s keeps reportingCIK813828 and the original annual container/source, and returns all8 originalcalls28â€“35. This source-only correspondence does not select a financial operating start date, annualize a short period, reconcile the existing August7/August8 financial conflict or assign old replies to currentCIK2041610. No model finding/quantity is created; full original group and limits remain, media/status are still for public replay validation.
