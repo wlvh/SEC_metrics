@@ -1,0 +1,79 @@
+{
+  "commit": "547f9cb644a9e22f6a2f719a7a863b03abf0afd7",
+  "seconds": 0.4196504580322653,
+  "view": {
+    "elapsed_seconds": 0.35723933298140764,
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "paramount_skydance_paramount_global",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "metrics": [
+      {
+        "metric_id": "D01",
+        "value": null,
+        "result_validity": "NO_CURRENT_RESULT",
+        "latest_observation": "INPUT_OR_EXECUTION_FAILED",
+        "fiscal_year": 2025,
+        "requested_in_latest_execution": true,
+        "reason": "HISTORICAL_RISK_HEADINGS_AMENDMENT_NOT_RECEIVED",
+        "error_type": "RiskHeadingCaseError",
+        "error_category": "IMPLEMENTATION_GAP"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-final-failure-read-nqhjfbta/read"
+  },
+  "rows": [
+    {
+      "company": "",
+      "cik": "",
+      "metric_id": "D01",
+      "metric_name": "",
+      "value": "",
+      "unit": "",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "source_class": "",
+      "formula": "",
+      "period_start": "",
+      "period_end": "",
+      "fiscal_year": "2025",
+      "fiscal_period": "",
+      "accession": "",
+      "form": "",
+      "filed_date": "",
+      "concept_or_section": "",
+      "context_or_dimension": "",
+      "confidence": "",
+      "notes": "reason: HISTORICAL_RISK_HEADINGS_AMENDMENT_NOT_RECEIVED; error_type: RiskHeadingCaseError; error_category: IMPLEMENTATION_GAP",
+      "company_id": "paramount_skydance_paramount_global",
+      "result_id": "",
+      "record_root": "",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "INPUT_OR_EXECUTION_FAILED",
+      "period_role": "REQUESTED_WITHOUT_RESULT",
+      "result_validity": "NO_CURRENT_RESULT",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "",
+      "requested_in_latest_execution": "True"
+    }
+  ],
+  "all_state_files_preserved": {
+    "company-task.json": "0fd445ce022f04de53ae0e019602c52852cb9799ec38151a4bf724235ef461ed",
+    "company.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "latest-execution.json": "587da1b3af9f7dbc7768b8f98975263d6c1d5dc3594bfa8e92c0448b9e3db061",
+    "updates/D01/periods/FY2025/latest-check.json": "a39e7ba664c84c35e0cd0d782fb50ccf075940fed17ebfc014dade5d75e65a91",
+    "updates/D01/periods/FY2025/update.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "updates/D01/periods/FY2025/checks/28f0647451c341a69d4f3d078fb448d8/intent.json": "d05682a5a3d867262a8012097697fe39b5e57fef4246e0f1659f40bf7cb2f8e7",
+    "updates/D01/periods/FY2025/checks/28f0647451c341a69d4f3d078fb448d8/terminal.json": "a39e7ba664c84c35e0cd0d782fb50ccf075940fed17ebfc014dade5d75e65a91"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
