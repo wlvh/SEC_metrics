@@ -84,8 +84,15 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False):
                    if f['qualified_name'].split(':')[-1].casefold()=='entityregistrantname'}
     issuer_lines = {name+suffix for name in registrants
                     for suffix in ('','andsubsidiaries','andsubsidiarycompanies')}
+    navigation = []
     if adjacent_heading:
-        _need(all(company_key(b['visible_text']) in issuer_lines
+        # Pagination and the previous statement's standard note reference may
+        # precede this title. Preserve their spans, without allowing arbitrary
+        # pre-title scope prose or a note after the title to disappear.
+        navigation = [b for b in intro if titles and b['end_byte'] <= titles[-1]['start_byte']
+                      and re.fullmatch(r'(?:[0-9]+|table of contents|see accompanying notes\.)',
+                                       b['visible_text'].strip(), re.I)]
+        _need(all(b in navigation or company_key(b['visible_text']) in issuer_lines
                   or re.fullmatch(title_pattern,_label_key(b['visible_text']))
                   or any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in UNIT_HEADER)
                   for b in intro), 'STATEMENT_HEADING_SCOPE_UNRESOLVED')
@@ -121,9 +128,14 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False):
             header = (re.fullmatch(r'[0-9]{4}', text)
                       or adjacent_heading and _DATE.fullmatch(text)
                       or re.fullmatch(r'(?:for the )?years? ended [a-z]+ [0-9]{1,2},?', text)
+                      or adjacent_heading and re.fullmatch(r'(?:for the )?fiscal years? ended [a-z]+ [0-9]{1,2},?', text)
+                      or adjacent_heading and re.fullmatch(r'[0-9]+',text) and any(
+                          re.fullmatch(r'(?:for the )?(?:fiscal )?years? ended [a-z]+ [0-9]{1,2},?',
+                                       _label_key(other['text'])) for other in cells)
                       or any(re.fullmatch(p, text) for p in UNIT_HEADER)
                       or re.fullmatch(title_pattern, text)
-                      or re.fullmatch(r'(?:revenues|costs and expenses|earnings per (?:common )?share[–— -]*(?:basic|diluted)):', text))
+                      or re.fullmatch(r'(?:revenues|costs and expenses|earnings per (?:common )?share[–— -]*(?:basic|diluted)):', text)
+                      or adjacent_heading and re.fullmatch(r'(?:cost of revenues|operating expenses)\s*:', text))
             if not header:
                 unknown.append(_cell_proof(table=table, cell=c))
     _need(not unknown, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')
@@ -132,6 +144,8 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False):
             'unresolved_annotations':unknown}
     if adjacent_heading:
         proof['adjacent_heading_table']=heading_span
+        if navigation:
+            proof['preceding_navigation_sources']=navigation
     return proof
 
 
