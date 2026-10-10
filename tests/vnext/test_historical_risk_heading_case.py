@@ -2,6 +2,7 @@
 import copy
 from contextlib import ExitStack
 from pathlib import Path
+import tempfile
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
@@ -139,6 +140,31 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
         with patch.object(cases,'inspect_risk_heading_amendment',return_value=check):
             with self.assertRaisesRegex(ValueError,'AMENDMENT_SOURCE_BINDING_CHANGED'):
                 self.case(prepared=value)
+
+    def test_suspended_public_route_never_extracts_even_a_structurally_clean_amendment(self):
+        from tests.vnext.test_risk_heading_amendment_input import sources
+        with tempfile.TemporaryDirectory() as folder:
+            old,new=sources(Path(folder))
+            value=self.prepared();value.update(company_id='constructed',entity='1',
+                filing=old['filing'],amendments=[new['filing']],
+                subject_policy={'mode':'CONTINUOUS_PRIMARY','selected_cik':'1',
+                                'cross_entity_combination_authorized':False})
+            value['table_input']['target_period']={'fiscal_year':2024,
+                'period_start':'2024-01-01','period_end':'2024-12-31'}
+            def primary(filing):
+                frame=old if filing['form']=='10-K' else new
+                return {'raw_bytes':frame['raw'],'raw_blob':frame['blob'],
+                        'source_reference':frame['reference']}
+            reader=SimpleNamespace(primary=primary,proofs={},records={})
+            with patch.object(cases,'resolve_period_selection',return_value={}), \
+                    patch.object(cases,'prepare_historical_annual_input',return_value=value), \
+                    patch.object(cases,'_Sources',return_value=reader), \
+                    patch.object(cases.d01_emphasis_results,'create_deterministic_text_candidate',
+                                 side_effect=AssertionError('Suspended input cannot extract')) as extract:
+                with self.assertRaisesRegex(ValueError,'RISK_AMENDMENT_INPUT_ROUTE_SUSPENDED_REFERENCE_COVERAGE'):
+                    cases.prepare_historical_risk_heading_year_case(repo_root=Path(folder),
+                        company_id='constructed',metric_id='D01',fiscal_year=2024)
+                extract.assert_not_called()
 
     def test_single_successor_source_does_not_combine_other_registrants_or_assert_events(self):
         value=self.prepared();value['subject_policy']['mode']='SUCCESSOR_REGISTRANT_ONLY'
