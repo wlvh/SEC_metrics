@@ -187,7 +187,7 @@ main本批已支持27个历史指标分派，仍要求保存来源；B12候选PR
 
 当前扣留不得被同年旧成功替代。公共 `completed-check.json` 表示最近完成检查，`current-result.json` 保留最近成功；日常 CSV 读取最近完成结论。后续只请求另一指标或另一年，仍能读出原坐标当前扣留，旧成功只留作历史。`requested_in_latest_execution` 区分本次请求，不能把未请求项算成本次新成功。
 
-缺源年份、实现失败和业务扣留分开表达。缺源/处理失败保留空值、请求财年、具体 `error_category` / reason；其他年份及指标的成功记录保留。`FLOW_COMPLETED_WITH_LIMITATIONS` 表示有明确限制，不能当成所有指标交付。`SOURCE_UNAVAILABLE` 不是正确零值；`IMPLEMENTATION_GAP` 表示已有材料或路径尚未实现。当前 main 未支持的历史家族在入口拒绝，不能省略 `--metric` 后把默认39项当成已支持。
+缺源年份、实现失败和业务扣留应分别解释。`run` 的 JSON、当次 `run_summary.json` 和状态目录 `latest-execution.json` 保留失败项的具体 `error_category` / `reason`，其他年份及指标的成功记录保留。当前独立 `results` 对没有保存结果的失败项只输出通用失败状态、空值和请求财年，尚未把这些具体原因带入日常 JSON/CSV；排查时请读取上述运行报告，不要把空 `notes` 解读为没有限制。已用真实 D01 修订未接入状态核实，公共读口修复仍待接收，见[具体复现](https://github.com/wlvh/SEC_metrics/blob/3a3f98e8/docs/evidence/issue47_risk_heading_consumer_20261010/selected-subject/gap-independent-read.json)。`FLOW_COMPLETED_WITH_LIMITATIONS` 表示有明确限制，不能当成所有指标交付。`SOURCE_UNAVAILABLE` 不是正确零值；`IMPLEMENTATION_GAP` 表示已有材料或路径尚未实现。当前 main 未支持的历史家族在入口拒绝，不能省略 `--metric` 后把默认39项当成已支持。
 
 当前 main 历史选择器明确保留修订情况，但尚未完成修订历史酒店处理；主体变换也未取得完整适配接受。Paramount 可见 August7 与原生 context August8 的真实期间冲突仍保留两种证据，不任选日期、年化或拼接前身。它不是本酒店接收的输入；这条范围限制不授其他指标接受。
 
