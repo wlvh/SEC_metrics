@@ -149,6 +149,44 @@ cd ../SEC_metrics-bank-scope-review
 同CLI首跑、禁工厂复用及另进程读取已核，见[唯一接收记录](evidence/issue47_bank_scope_receiving_20261010/README.md)。JPM FY2021–FY2025十五坐标已完成同入口处理、全范围复用、独立读取和原参考逐项核对；修订/继任金额、其他金融族和在线历史取源尚待；候选接线不等于完整业务接受。
 已核的主干输出限制：Paramount FY2021–FY2024所选原件和Trace报送人为813828，但当前公共CSV仍使用今日登记CIK2041610；旧结果读取保留原字节，不能把该列作为当期申报主体结论。公共主体修复仍在接收中，新版本须核同一年度CSV与证据身份，不能手改旧记录。其2025事件宽窗不据此获得拼接财务主体的许可。见[原RPO消费者主要记录](https://github.com/wlvh/SEC_metrics/blob/e4eff843/docs/evidence/issue47_rpo_receiving_20261009/README.md)；PR96是B12候选，尚未进入上述main，完整年度E01仍未交付。
 
+## 历史 C03 ECD 消费者候选（尚未入 main）
+
+分支 `task/issue47-c03-selected-consumer-20261010` 的 `28608958` 已组合公共 C03 修补 `32c730bf`。它通过同一公司入口选择原年度结束后首份同主体代理，直接使用共享 ECD 原生事实解析、保存和出表，不改变当期默认规则。原 first-reported 决定继续：后来的修正值不替代首次报告值。代理的 accession、DEF 14A 类型和申报日期与年度容器分开保留。
+
+使用已有恢复根，外部状态／输出目录与只读输入分开。以下命令在该组合版本上已有实际运行结果：
+
+```bash
+python3 tools/vnext_company.py run --company marriott_international \
+  --period fiscal-years --fiscal-year-start 2022 --fiscal-year-end 2022 \
+  --metric C03 --source-root "$ISSUE47_SAVED_SOURCE_ROOT" \
+  --work-dir "$ISSUE47_C03_STATE" --output-dir "$ISSUE47_C03_RUNS"
+python3 tools/vnext_company.py results --company marriott_international \
+  --state-root "$ISSUE47_C03_STATE" --output-root "$ISSUE47_C03_NEW_READ"
+```
+
+Marriott FY2022 输出18,686,271 USD，来源是2023-03-28的原DEF 14A `0001140361-23-014123`，不取后版18,715,093。Lumen FY2022明确扣留多CEO金额；Macy’s FY2022在保留实际2022-01-30至2023-01-28财年的情况下扣留ECD期间不符，不能把日历年上下文改成年报期间。正值运行返回0，完整检查后的具名扣留返回2，独立 `results` 返回0；同输入成功／扣留均可复用，实际禁用来源准备和解析器后的复跑已验证。完整选择与解析候选保存在 `record_root/input-assessments.json`，CSV仅显示对应结论与出处。
+
+这项候选只接ECD事实消费，不包含无ECD旧代理的完整SCT表读取，也不证明其他公司／修订／五年C03已经完成。无ECD、多人、错期间、缺源和未接收代理修订分别保留限制；SCT阅读与完整历史来源发现仍是待交付责任，不能把扣留当作最终修复。[原件、真实公司验证、初始失败与当前组合记录](evidence/issue47_c03_selected_consumer_20261010/README.md)。新SEC／模型调用为0，不授正式采纳或发布权限。
+
+## 无内嵌 XBRL 的代理 SCT 候选（PR151，未入 main）
+
+[PR151](https://github.com/wlvh/SEC_metrics/pull/151) 的消费者组合 `2532d4a3` 在 PR149 历史选择基础上接公共 [PR150](https://github.com/wlvh/SEC_metrics/pull/150) 的固定原表读取器。只有所选原代理确实没有内嵌 XBRL 且 ECD 报无上下文，才进入它的 Summary Compensation Table；坏内嵌文件、错单位、多人或其他 ECD 问题不能任意换表／换代理制造成功。
+
+使用同一公司命令和已有完整来源根，状态／输出写外部目录：
+
+```bash
+python3 tools/vnext_company.py run --company macys \
+  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2021 \
+  --metric C03 --source-root "$ISSUE47_SAVED_SOURCE_ROOT" \
+  --work-dir "$ISSUE47_SCT_STATE" --output-dir "$ISSUE47_SCT_RUNS"
+python3 tools/vnext_company.py results --company macys \
+  --state-root "$ISSUE47_SCT_STATE" --output-root "$ISSUE47_SCT_NEW_READ"
+```
+
+实际 Macy’s FY2021 为12,290,931 USD，期间2021-01-31至2022-01-29；Ford FY2021为22,813,174 USD、全年；CSV为MDA_OK／PROXY和原DEF 14A accession、申报日期。Marriott FY2021同年两位CEO，保留18,391,882及12,278,151候选并WITHHELD／null，不选一个人补值。完整表格资产、姓名／年份／总额原格和组件勾稽随结果保存，旧数据只读。
+
+同输入禁工厂复跑均不计算，独立结果读取保留实际期间和出处。原Marriott任务只处理原失败FY2021，其他四个ECD年度的值／ID不改不重算；同一读口已可查看这五年结果和原缺源失败。该事实是候选消费范围，不代表完整十公司C03、修订、所有年度或自动取源已完成。实际公司首跑78–139秒，不能用来源函数检查的短耗时代替；后续性能优化仍按共享实现处理。[原公司链、原格定位、复跑与旧任务接续记录](evidence/issue47_c03_sct_consumer_20261010/README.md)。没有新增SEC／模型调用、Ready／合并或正式采纳权限。
+
 ## 状态、复跑和局部失败
 
 同一指标按财年各自保存。成功同输入复跑为 `NO_SOURCE_CONTENT_CHANGE`；已经完整检查但因业务原因扣留的同输入复跑为 `PREVIOUS_INPUT_WITHHELD`。两者均不再调用计算工厂，不新增相同结果目录。改变实际相关来源、补齐依赖或处理配置后重新处理；普通异常和未完成记录不被缓存为已完成业务结论。

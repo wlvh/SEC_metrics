@@ -1,0 +1,25 @@
+utc 2026-10-10T13:57:48.622866+00:00
+reviewed_head c1b141d4103c78f988e6fad38f0a0cb48642f2f8
+Initial control harness stopped at SourceReference builder refusing the non-SEC URL before its try block; corrected harness includes source assembly in the rejected-input check. No source/test changes.
+{"control": "raw_bytes_changed", "detail": {"reason": "PROXY_SOURCE_BYTES_CHANGED", "type": "ProxySourceIdentityError"}, "outcome": "PASS"}
+{"control": "wrong_raw_size", "detail": {"reason": "PROXY_SOURCE_BYTES_CHANGED", "type": "ProxySourceIdentityError"}, "outcome": "PASS"}
+{"control": "wrong_media", "detail": {"reason": "PROXY_SOURCE_BYTES_CHANGED", "type": "ProxySourceIdentityError"}, "outcome": "PASS"}
+{"control": "wrong_reference_company", "detail": {"reason": "PROXY_SELECTED_REFERENCE_CHANGED", "type": "ProxySourceIdentityError"}, "outcome": "PASS"}
+{"control": "wrong_reference_role", "detail": {"reason": "PROXY_SELECTED_REFERENCE_CHANGED", "type": "ProxySourceIdentityError"}, "outcome": "PASS"}
+{"control": "wrong_reference_accession", "detail": {"reason": "PROXY_SELECTED_REFERENCE_CHANGED", "type": "ProxySourceIdentityError"}, "outcome": "PASS"}
+{"control": "wrong_reference_document", "detail": {"reason": "PROXY_SELECTED_REFERENCE_CHANGED", "type": "ProxySourceIdentityError"}, "outcome": "PASS"}
+{"control": "wrong_issuer_url", "detail": {"reason": "Live Reader filing identity differs from registry authority", "type": "SourceError"}, "outcome": "PASS"}
+{"control": "non_sec_url_rejected_during_source_assembly", "detail": {"reason": "SourceReference URL must use an official SEC origin", "type": "SourceError"}, "outcome": "PASS"}
+{"control": "wrong_form", "detail": {"reason": "PROXY_SOURCE_FORM_NOT_DEF14A", "type": "ProxySourceIdentityError"}, "outcome": "PASS"}
+{"control": "wrong_inventory_cik", "detail": {"reason": "C03_PROXY_SCT_INVENTORY_CIK_CHANGED", "type": "ProxyCompensationError"}, "outcome": "PASS"}
+{"control": "wrong_target_company", "detail": {"reason": "C03_PROXY_SCT_TARGET_IDENTITY_INVALID", "type": "ProxyCompensationError"}, "outcome": "PASS"}
+{"control": "boolean_fiscal_year", "detail": {"reason": "C03_PROXY_SCT_TARGET_IDENTITY_INVALID", "type": "ProxyCompensationError"}, "outcome": "PASS"}
+{"control": "wrong_target_scope", "detail": {"reason": "C03_PROXY_SCT_TARGET_SCOPE_INVALID", "type": "ProxyCompensationError"}, "outcome": "PASS"}
+{"control": "trailing_separate_footnote_7", "detail": {"marks": ["7"], "total_text": "1,500,000", "value": "1500000", "witnesses": 3}, "outcome": "PASS"}
+{"control": "trailing_parenthesized_footnote", "detail": {"marks": [], "total_text": "1,500,000", "value": "1500000", "witnesses": 3}, "outcome": "PASS"}
+{"control": "footnote_before_total", "detail": {"marks": ["7"], "total_text": "1,500,000", "value": "1500000", "witnesses": 3}, "outcome": "PASS"}
+{"control": "legitimate_small_amount_retained", "detail": {"marks": [], "total_text": "1,000,007", "value": "1000007", "witnesses": 3}, "outcome": "PASS"}
+{"control": "nil_component_retained", "detail": {"marks": [], "total_text": "1,000,000", "value": "1000000", "witnesses": 3}, "outcome": "PASS"}
+{"control": "fixed_commit_provenance", "detail": {"Spec_bytes_equal": true, "eight_table_functions_AST_equal": true, "six_identity_functions_AST_equal": true, "three_helper_files_bytes_equal": true}, "outcome": "PASS"}
+{"control": "helper_configuration_dependency", "detail": {"explicit_C03_dependencies": ["scripts/vnext/proxy_compensation_source.py", "scripts/vnext/proxy_source_identity.py", "scripts/vnext/organization_name_core.py", "scripts/vnext/governance_compensation_table.py", "scripts/vnext/table_grid.py", "scripts/vnext/text_coverage.py", "scripts/vnext/sources.py", "scripts/vnext/records.py", "scripts/vnext/canonical.py", "scripts/vnext/calculator.py", "scripts/vnext/observations.py", "scripts/vnext/resource_limits.py", "catalog/r6/C03_proxy_compensation_table_v1.md"], "only_C02_default_changes": true}, "outcome": "PASS"}
+{"controls_passed": 21, "controls_run": 21, "new_business_calls": [0, 0, 0], "synthetic_controls_only": true}
