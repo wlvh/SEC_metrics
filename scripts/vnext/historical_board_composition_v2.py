@@ -59,6 +59,7 @@ from pathlib import Path
 
 from .canonical import content_hash, strict_json_file
 from .text_business_candidates import _check_document, _excerpt
+from .organization_name_core import _LEGAL_SUFFIX, _name_core
 
 SELECTION_POLICY = "BOARD_COMPOSITION_FACTS_V1"
 SECTION_ID = "GOVERNANCE_DISCLOSURES"
@@ -1157,15 +1158,6 @@ _CAPITALISED_RUN = re.compile("(?:[A-Z][\\w’'&\\.\\-]*)(?:\\s+(?:[A-Z][\\w’'
 _RUN_IGNORED = frozenset("""president chief executive officer operating financial ceo cfo coo vice chair chairman
 chairperson chairwoman board directors director lead independent non-executive since present founder co-founder
 and inc inc. co co. corp corp. corporation company ltd llc plc the of""".split()) | frozenset(_MONTHS.split("|"))
-_LEGAL_SUFFIX = frozenset({"inc", "co", "corp", "corporation", "company", "ltd", "llc", "plc", "the", "lp"})
-
-
-def _name_core(text):
-    """The words of an organisation's name without legal suffixes or state tags."""
-    text = re.sub(r"/[A-Z]{2}/", " ", text).casefold().replace("’", "'")
-    return tuple(word for word in re.findall(r"[a-z0-9']+", text) if word not in _LEGAL_SUFFIX)
-
-
 def _registrant_cores(document):
     return {core for core in (_name_core(name) for name in document.get("registrant_names", [])) if core}
 

@@ -17,16 +17,17 @@ from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .specs import compile_spec_file
 from .deterministic_router import DeterministicRouterError
+from .proxy_compensation_source import (SPEC_PATH as PROXY_SCT_SPEC_PATH,
+    PROCESSING_FILES as PROXY_SCT_PROCESSING_FILES, resolve_proxy_compensation_table)
 
-PROXY_SCT_SPEC_PATH = 'catalog/r6/C03_proxy_compensation_table_v1.md'
 
 METRICS = ('C03',)
-PROCESSING_FILES = tuple('scripts/vnext/'+name+'.py' for name in (
+PROCESSING_FILES = tuple(dict.fromkeys((*tuple('scripts/vnext/'+name+'.py' for name in (
     'historical_compensation_case', 'historical_annual_input', 'historical_dei',
     'historical_fiscal_labels', 'normal_period_selection', 'normal_history_catalog',
     'normal_governance_input', 'governance_signals', 'xbrl_namespace_policy',
 )) + ('config/normal_period_selection_v1.json', 'config/normal_fiscal_year_labels_v1.json',
-      C03_SPEC_PATH)
+      C03_SPEC_PATH), *PROXY_SCT_PROCESSING_FILES)))
 
 
 class HistoricalCompensationInputError(ValueError):
@@ -124,7 +125,6 @@ def prepare_historical_compensation_year_case(*, repo_root, company_id, metric_i
         # retains its original outcome rather than escaping into another table.
         if str(error) != 'XBRL source contains no contexts' or b'<ix:' in args['raw_bytes'].lower():
             raise
-        from .proxy_compensation_source import resolve_proxy_compensation_table
         spec_path, source_kind = PROXY_SCT_SPEC_PATH, 'FIRST_REPORTED_PROXY_SCT'
         spec = compile_spec_file(path=ROOT/spec_path, dependency_specs={})
         resolution = resolve_proxy_compensation_table(**args,
