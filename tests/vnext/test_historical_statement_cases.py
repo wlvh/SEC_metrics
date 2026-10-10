@@ -164,6 +164,17 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
         self.assertTrue(full['splits'])
         self.assertEqual(value['results']['B01']['value'],'58496000000')
 
+    def test_source_bound_resolved_label_reaches_the_shared_reader_without_raw_year_rewrite(self):
+        from vnext import selected_reported_revenue_v2 as reported
+        label={'record_type':'ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION','selected_fiscal_year':2026,
+               'constructed_source_inspection_marker':True}
+        def change(primary,xml,annual,source_facts):
+            annual['fiscal_year_label_resolution']=label
+        with patch.object(reported,'reported_revenue_scope',return_value={'complete_scope_proven':False}) as shared:
+            self.prepare(change=change)
+        self.assertIs(shared.call_args.kwargs['fiscal_label_resolution'],label)
+        self.assertEqual(shared.call_args.kwargs['annual']['table_input']['target_period']['fiscal_year'],2025)
+
 
 class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
     def test_existing_entry_does_not_silently_expand_to_b07(self):
