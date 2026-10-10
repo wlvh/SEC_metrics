@@ -11,7 +11,7 @@ from sec_urls import accession_document_url, companyfacts_url
 from .canonical import content_hash, sha256_file
 from .normal_annual_input import _registry_rows, _subject_policy
 from .normal_history_catalog import load_history_for_period, annual_periods
-from .normal_period_selection import restore_period_selection
+from .normal_period_selection import PeriodSelectionError, restore_period_selection
 from .normal_source_authority import ROOT
 from .normal_source_requirements import _Requirements
 from .selected_source_requirements import discover_selected_annual_requirements
@@ -172,7 +172,16 @@ def range_case_factories(*,company_id,fiscal_years,metric_ids,case_factories):
                 cache[key]=discover_fiscal_range(repo_root=source,company_id=company_id,
                     fiscal_year_start=years[0],fiscal_year_end=years[-1],metric_ids=sorted(selected))
             task=next(t for t in cache[key]['tasks'] if t['fiscal_year']==fiscal_year)
-            _need(task['status']=='FISCAL_YEAR_RESOLVED','YEAR_UNRESOLVED:'+str(task['limitations']))
+            if task['status'] != 'FISCAL_YEAR_RESOLVED':
+                limitations = task['limitations']
+                missing = isinstance(limitations, (list, tuple)) and bool(limitations) and all(
+                    isinstance(item, dict) and item.get('phase') == 'FISCAL_LABEL_UNIQUENESS'
+                    and item.get('reason') == 'FISCAL_YEAR_MISSING_OR_AMBIGUOUS'
+                    and item.get('matching_report_ends') == [] for item in limitations)
+                if missing:
+                    raise PeriodSelectionError('COMPANY_FISCAL_RANGE_YEAR_UNRESOLVED:'
+                        + str(limitations), 'SOURCE_UNAVAILABLE')
+                _need(False, 'YEAR_UNRESOLVED:' + str(limitations))
             # The actual business case still revalidates the supplied selection,
             # periods, amendment semantics and complete sources before saving.
             return producer(repo_root=source,company_id=company_id,metric_id=metric_id,

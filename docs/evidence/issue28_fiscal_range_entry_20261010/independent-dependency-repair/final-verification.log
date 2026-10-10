@@ -1,0 +1,25 @@
+{
+  "utc_end": "2026-10-10T08:54:33.923548+00:00",
+  "elapsed_seconds": 125.12038,
+  "tool_nodes": 8,
+  "wrapper_calls": 4,
+  "nested_exec_command_calls": 4,
+  "tests_run": 19,
+  "test_invocations": 1,
+  "tracked_diff": "",
+  "working_files": [
+    {
+      "path": "scripts/vnext/company_local.py",
+      "matches_patch": true,
+      "sha256": "1187c5bbb55d63122ffe9b094e70768fa19932171249cf14558889e31bb349e6"
+    },
+    {
+      "path": "tests/vnext/test_history_company_dispatch.py",
+      "matches_patch": true,
+      "sha256": "0b1ca905de6454bf738a8cb5e10395e41670d33a3e7a5f8d199cd69f168466aa"
+    }
+  ],
+  "numstat": "1\t1\tscripts/vnext/company_local.py\n16\t0\ttests/vnext/test_history_company_dispatch.py\n",
+  "head": "4d58197892eea09ee0cc6fde10a860a29a5111fd",
+  "git_status": "?? docs/evidence/issue28_fiscal_range_entry_20261010/independent-dependency-repair/\n?? docs/evidence/issue28_fiscal_range_entry_20261010/main-f51-salesforce-source-range.log\n?? docs/evidence/issue28_fiscal_range_entry_20261010/verify_current_source_range.py\n?? work/\n"
+}
