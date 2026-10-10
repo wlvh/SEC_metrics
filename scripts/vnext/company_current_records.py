@@ -327,7 +327,9 @@ def _read_current_company(root, company_id, defects_file, output_root):
             matrix.append({**{f:'' for f in (*METRIC_FIELDS,*EXTRA_FIELDS)},
                 'company_id':company_id,'metric_id':observation['metric_id'],'status':observation['status'],
                 'local_metric_status':observation['status'],'result_validity':'NO_CURRENT_RESULT',
-                'period_role':'REQUESTED_WITHOUT_RESULT','source_root':task['source_root'],
+                'period_role':('REQUESTED_WITHOUT_RESULT' if observation['requested_in_latest_execution']
+                               else 'SAVED_CHECK_NOT_REQUESTED_WITHOUT_RESULT'),
+                'source_root':task['source_root'],
                 'source_observation_status':'NOT_CHECKED_BY_SAVED_READER',
                 'notes':failure_note,
                 'requested_in_latest_execution':observation['requested_in_latest_execution']})
