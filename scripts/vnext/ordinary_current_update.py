@@ -91,9 +91,14 @@ def _configuration(source, company, metric):
             'catalog/r6/text_results_v2_policy.json',
             'catalog/r6/D04_going_concern_assessment_v1.md',
             'catalog/r6/semantic_review_v4.json','catalog/r6/semantic_review_v5.json'})
+    from .ordinary_registry_scope import registered_company_row
+    paths.discard('config/company_registry.csv')
+    paths.add('scripts/vnext/ordinary_registry_scope.py')
     return {'company_id':company,'metric_id':metric,'source_root':str(source),
         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
-        'source_registry_sha256':sha256_file(path=source/'config/company_registry.csv'),
+        'company_registry_rows':{
+            'program':registered_company_row(repo_root=ROOT,company_id=company),
+            'source':registered_company_row(repo_root=source,company_id=company)},
         'provider_enabled':False,'sec_fetch_enabled':False}
 
 

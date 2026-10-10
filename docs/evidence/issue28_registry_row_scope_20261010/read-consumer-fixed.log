@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/private/tmp/issue28-registry-row-scope-20261010/verify_real_consumer.py", line 36, in <module>
+    try:runpy.run_path('tools/vnext_company.py',run_name='__main__')
+        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 294, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "tools/vnext_company.py", line 214, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "tools/vnext_company.py", line 165, in main
+    result = read_company_results(state_root=args.state_root, company_id=args.company,
+                                 defects_file=args.defects_file, output_root=args.output_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics/scripts/vnext/company_result_view.py", line 344, in read_company_results
+    return read_current_company(state_root=state_root, company_id=company_id,
+                                defects_file=defects_file, output_root=output_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics/scripts/vnext/company_current_records.py", line 206, in read_current_company
+    return _read_current_company(root, company_id, defects_file, output_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics/scripts/vnext/company_current_records.py", line 346, in _read_current_company
+    _need(not output.exists(), 'COMPANY_CURRENT_EXPORT_OUTPUT_EXISTS')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics/scripts/vnext/company_current_records.py", line 34, in _need
+    raise ValueError(reason)
+ValueError: COMPANY_CURRENT_EXPORT_OUTPUT_EXISTS

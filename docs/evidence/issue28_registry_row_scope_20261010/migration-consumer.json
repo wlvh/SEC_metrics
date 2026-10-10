@@ -1,0 +1,88 @@
+{
+  "phase": "migration",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "state_root": "/private/tmp/issue28-processing-company-20261010",
+  "command": [
+    "tools/vnext_company.py",
+    "run",
+    "--company",
+    "marriott_international",
+    "--metric",
+    "B04",
+    "--source-root",
+    "/Users/lyuhongwang/Developer/SEC_metrics",
+    "--work-dir",
+    "/private/tmp/issue28-processing-company-20261010",
+    "--output-dir",
+    "/private/tmp/issue28-registry-row-scope-20261010/migration-out"
+  ],
+  "seconds": 2.037105540977791,
+  "exit": 0,
+  "old_result_files_preserved": 12,
+  "metrics": [
+    {
+      "metric_id": "B04",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "4b737dfa633341f5b6b1df31259ca33c",
+      "version": "e2ba7756b86d45e38c698875f0d3c67b",
+      "result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2",
+      "result_root": "/private/tmp/issue28-processing-company-20261010/updates/B04/results/e2ba7756b86d45e38c698875f0d3c67b",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2",
+      "record_root": "/private/tmp/issue28-processing-company-20261010/updates/B04/results/e2ba7756b86d45e38c698875f0d3c67b",
+      "program_version": {
+        "commit": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "row": {
+    "company": "Marriott International",
+    "cik": "1048286",
+    "metric_id": "B04",
+    "metric_name": "Net income",
+    "value": "2601000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0001048286-26-000007",
+    "form": "10-K",
+    "filed_date": "2026-02-10",
+    "concept_or_section": "Net income",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": null, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b\", \"sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9\", \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"sha256:63687b69a68ec70135351fc580e0a0d4f4f9d369bfc8a4f087772217b312a630\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "marriott_international",
+    "result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2",
+    "record_root": "/private/tmp/issue28-processing-company-20261010/updates/B04/results/e2ba7756b86d45e38c698875f0d3c67b",
+    "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "local_metric_status": "CANDIDATE_READY",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "method": "Actual CLI/controller/source/calculator/save/read; repeat/target only inject registry row input and forbid factory. No source/HTTP/business-answer stub. Target must fail before value credit; initial migration actually processes.",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
