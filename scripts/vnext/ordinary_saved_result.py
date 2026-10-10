@@ -92,8 +92,8 @@ def create_saved_result(*, source_root, output_root, company_id, metric_id, shar
     _need(metric_id in SAVED_METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')
     def prepare(source):
         if metric_id in SAVED_MODEL_METRIC_IDS:
-            from .current_d04_result import prepare_current_d04_case
-            return prepare_current_d04_case(source_root=source,company_id=company_id)
+            from .ordinary_d04_saved_route import prepare_case
+            return prepare_case(source_root=source,company_id=company_id,metric_id=metric_id)
         if metric_id in LODGING_METRIC_IDS:
             from .normal_lodging_results import prepare_ordinary_lodging_case
             return prepare_ordinary_lodging_case(repo_root=source,company_id=company_id,metric_id=metric_id,

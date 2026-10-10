@@ -1,0 +1,479 @@
+INVALID HARNESS DIAGNOSTIC ONLY: duplicate vnext/scripts.vnext module binding; patches did not target run_control module. Not product evidence.
+[
+  {
+    "publication": "PUBLISHED",
+    "change": "current_body",
+    "first": {
+      "status": "CANDIDATE_READY",
+      "attempt_id": "d37f883a50774ff08670b68df383f347",
+      "version": "54f22b476ed6459abbc146cb654ef5ce",
+      "result_id": "CONSTRUCTED-CONTROL-54f22b476ed6459abbc146cb654ef5ce",
+      "result_root": "/private/tmp/tmpa2u8e2lk/state/B10/periods/FY2024/results/54f22b476ed6459abbc146cb654ef5ce",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "report": {
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "32ae87b0059a49f599bfee36f9e5c927",
+      "version": "54f22b476ed6459abbc146cb654ef5ce",
+      "result_id": "CONSTRUCTED-CONTROL-54f22b476ed6459abbc146cb654ef5ce",
+      "result_root": "/private/tmp/tmpa2u8e2lk/state/B10/periods/FY2024/results/54f22b476ed6459abbc146cb654ef5ce",
+      "result_reason_code": "PASS",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "factory_calls": [
+      [
+        2024,
+        "B10"
+      ]
+    ]
+  },
+  {
+    "publication": "PUBLISHED",
+    "change": "census",
+    "first": {
+      "status": "CANDIDATE_READY",
+      "attempt_id": "40dc6187311c4c1c8c4cb6eaeabdc71d",
+      "version": "aa2a9cde5660428682aeb6af6beb3fb4",
+      "result_id": "CONSTRUCTED-CONTROL-aa2a9cde5660428682aeb6af6beb3fb4",
+      "result_root": "/private/tmp/tmp2xe8n63n/state/B10/periods/FY2024/results/aa2a9cde5660428682aeb6af6beb3fb4",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "report": {
+      "status": "CANDIDATE_READY",
+      "attempt_id": "cd1d469988c34cc89f7a9627ec13abaf",
+      "version": "cff5927d2d5b4419be6226cee4651c5b",
+      "result_id": "CONSTRUCTED-CONTROL-cff5927d2d5b4419be6226cee4651c5b",
+      "result_root": "/private/tmp/tmp2xe8n63n/state/B10/periods/FY2024/results/cff5927d2d5b4419be6226cee4651c5b",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "factory_calls": [
+      [
+        2024,
+        "B10"
+      ],
+      [
+        2024,
+        "B10"
+      ]
+    ]
+  },
+  {
+    "publication": "PUBLISHED",
+    "change": "source_failure",
+    "first": {
+      "status": "CANDIDATE_READY",
+      "attempt_id": "c2c2cab68eb4441fa81175250899924f",
+      "version": "277ea601e60c4aa9b821a147c9e40235",
+      "result_id": "CONSTRUCTED-CONTROL-277ea601e60c4aa9b821a147c9e40235",
+      "result_root": "/private/tmp/tmp_j1w7981/state/B10/periods/FY2024/results/277ea601e60c4aa9b821a147c9e40235",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "report": {
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "9188c7a35ad241b0827513e043cc7a8e",
+      "version": "277ea601e60c4aa9b821a147c9e40235",
+      "result_id": "CONSTRUCTED-CONTROL-277ea601e60c4aa9b821a147c9e40235",
+      "result_root": "/private/tmp/tmp_j1w7981/state/B10/periods/FY2024/results/277ea601e60c4aa9b821a147c9e40235",
+      "result_reason_code": "PASS",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "factory_calls": [
+      [
+        2024,
+        "B10"
+      ]
+    ]
+  },
+  {
+    "publication": "PUBLISHED",
+    "change": "unknown_controller",
+    "first": {
+      "status": "CANDIDATE_READY",
+      "attempt_id": "09bff2d349ee4ca685e0113536105d6d",
+      "version": "dc141fccf7d240209fe72300cf4b21bc",
+      "result_id": "CONSTRUCTED-CONTROL-dc141fccf7d240209fe72300cf4b21bc",
+      "result_root": "/private/tmp/tmp88_acwt5/state/B10/periods/FY2024/results/dc141fccf7d240209fe72300cf4b21bc",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "report": {
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "b663707d3303407d917d41a3d62b3c29",
+      "version": "dc141fccf7d240209fe72300cf4b21bc",
+      "result_id": "CONSTRUCTED-CONTROL-dc141fccf7d240209fe72300cf4b21bc",
+      "result_root": "/private/tmp/tmp88_acwt5/state/B10/periods/FY2024/results/dc141fccf7d240209fe72300cf4b21bc",
+      "result_reason_code": "PASS",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "factory_calls": [
+      [
+        2024,
+        "B10"
+      ]
+    ]
+  },
+  {
+    "publication": "PUBLISHED",
+    "change": "unknown_bridge_after_transition",
+    "first": {
+      "status": "CANDIDATE_READY",
+      "attempt_id": "8a2794e0135d46f5bcf516ee564d9917",
+      "version": "2b4b16227fe84472bb44c903a5d0090c",
+      "result_id": "CONSTRUCTED-CONTROL-2b4b16227fe84472bb44c903a5d0090c",
+      "result_root": "/private/tmp/tmpe_rll4bm/state/B10/periods/FY2024/results/2b4b16227fe84472bb44c903a5d0090c",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "report": {
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "aa71308c08cb4857acf96107223287a5",
+      "version": "2b4b16227fe84472bb44c903a5d0090c",
+      "result_id": "CONSTRUCTED-CONTROL-2b4b16227fe84472bb44c903a5d0090c",
+      "result_root": "/private/tmp/tmpe_rll4bm/state/B10/periods/FY2024/results/2b4b16227fe84472bb44c903a5d0090c",
+      "result_reason_code": "PASS",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "factory_calls": [
+      [
+        2024,
+        "B10"
+      ]
+    ]
+  },
+  {
+    "publication": "WITHHELD",
+    "change": "current_body",
+    "first": {
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "019ec4e6994047adbe50765f22f76b72",
+      "version": "62a9e63af6de43989da9e69bad07cc56",
+      "result_id": "CONSTRUCTED-CONTROL-62a9e63af6de43989da9e69bad07cc56",
+      "result_root": "/private/tmp/tmp7iqh4j0i/state/B10/periods/FY2024/results/62a9e63af6de43989da9e69bad07cc56",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "CONSTRUCTED_CONTROL_BUSINESS_WITHHELD",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "report": {
+      "status": "PREVIOUS_INPUT_WITHHELD",
+      "attempt_id": "91dda456b4e048ac9a94424ee05b2075",
+      "version": "62a9e63af6de43989da9e69bad07cc56",
+      "result_id": "CONSTRUCTED-CONTROL-62a9e63af6de43989da9e69bad07cc56",
+      "result_root": "/private/tmp/tmp7iqh4j0i/state/B10/periods/FY2024/results/62a9e63af6de43989da9e69bad07cc56",
+      "result_reason_code": "CONSTRUCTED_CONTROL_BUSINESS_WITHHELD",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "factory_calls": [
+      [
+        2024,
+        "B10"
+      ]
+    ]
+  },
+  {
+    "publication": "WITHHELD",
+    "change": "census",
+    "first": {
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "c9b5f28316fe474eaa9f03c2842098bc",
+      "version": "ff20c378b18a4811a7c83b428bc8cd14",
+      "result_id": "CONSTRUCTED-CONTROL-ff20c378b18a4811a7c83b428bc8cd14",
+      "result_root": "/private/tmp/tmp_0mtgyy2/state/B10/periods/FY2024/results/ff20c378b18a4811a7c83b428bc8cd14",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "CONSTRUCTED_CONTROL_BUSINESS_WITHHELD",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "report": {
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "6c3517f52fbe4563af11a2480bc47e3b",
+      "version": "9987edadfeee49068d0b3f92be916bf7",
+      "result_id": "CONSTRUCTED-CONTROL-9987edadfeee49068d0b3f92be916bf7",
+      "result_root": "/private/tmp/tmp_0mtgyy2/state/B10/periods/FY2024/results/9987edadfeee49068d0b3f92be916bf7",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "CONSTRUCTED_CONTROL_BUSINESS_WITHHELD",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "factory_calls": [
+      [
+        2024,
+        "B10"
+      ],
+      [
+        2024,
+        "B10"
+      ]
+    ]
+  },
+  {
+    "publication": "WITHHELD",
+    "change": "source_failure",
+    "first": {
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "e043a8c8f9074afaa85ad37b4394de95",
+      "version": "d9872cd0a92a462f9b4080780d98bb7a",
+      "result_id": "CONSTRUCTED-CONTROL-d9872cd0a92a462f9b4080780d98bb7a",
+      "result_root": "/private/tmp/tmpytbaiz_x/state/B10/periods/FY2024/results/d9872cd0a92a462f9b4080780d98bb7a",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "CONSTRUCTED_CONTROL_BUSINESS_WITHHELD",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "report": {
+      "status": "PREVIOUS_INPUT_WITHHELD",
+      "attempt_id": "9aadb1e6763b4bbbaecef043917c62f8",
+      "version": "d9872cd0a92a462f9b4080780d98bb7a",
+      "result_id": "CONSTRUCTED-CONTROL-d9872cd0a92a462f9b4080780d98bb7a",
+      "result_root": "/private/tmp/tmpytbaiz_x/state/B10/periods/FY2024/results/d9872cd0a92a462f9b4080780d98bb7a",
+      "result_reason_code": "CONSTRUCTED_CONTROL_BUSINESS_WITHHELD",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "factory_calls": [
+      [
+        2024,
+        "B10"
+      ]
+    ]
+  },
+  {
+    "publication": "WITHHELD",
+    "change": "unknown_controller",
+    "first": {
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "de74882272224ea0835aa8189082213a",
+      "version": "45e9f2727f8840af8ff00b6dc7a48d8b",
+      "result_id": "CONSTRUCTED-CONTROL-45e9f2727f8840af8ff00b6dc7a48d8b",
+      "result_root": "/private/tmp/tmp_jkw60o3/state/B10/periods/FY2024/results/45e9f2727f8840af8ff00b6dc7a48d8b",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "CONSTRUCTED_CONTROL_BUSINESS_WITHHELD",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "report": {
+      "status": "PREVIOUS_INPUT_WITHHELD",
+      "attempt_id": "31eddb8463a942a39451e682c7038019",
+      "version": "45e9f2727f8840af8ff00b6dc7a48d8b",
+      "result_id": "CONSTRUCTED-CONTROL-45e9f2727f8840af8ff00b6dc7a48d8b",
+      "result_root": "/private/tmp/tmp_jkw60o3/state/B10/periods/FY2024/results/45e9f2727f8840af8ff00b6dc7a48d8b",
+      "result_reason_code": "CONSTRUCTED_CONTROL_BUSINESS_WITHHELD",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "factory_calls": [
+      [
+        2024,
+        "B10"
+      ]
+    ]
+  },
+  {
+    "publication": "WITHHELD",
+    "change": "unknown_bridge_after_transition",
+    "first": {
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "a1c8070382144bef9dbc71a2e7ac2f84",
+      "version": "d8f4a00dbaea4a05910cccddd5e42efd",
+      "result_id": "CONSTRUCTED-CONTROL-d8f4a00dbaea4a05910cccddd5e42efd",
+      "result_root": "/private/tmp/tmpav8m1g1w/state/B10/periods/FY2024/results/d8f4a00dbaea4a05910cccddd5e42efd",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "CONSTRUCTED_CONTROL_BUSINESS_WITHHELD",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "report": {
+      "status": "PREVIOUS_INPUT_WITHHELD",
+      "attempt_id": "e2524cf357ac418284b99a776b8d0cd5",
+      "version": "d8f4a00dbaea4a05910cccddd5e42efd",
+      "result_id": "CONSTRUCTED-CONTROL-d8f4a00dbaea4a05910cccddd5e42efd",
+      "result_root": "/private/tmp/tmpav8m1g1w/state/B10/periods/FY2024/results/d8f4a00dbaea4a05910cccddd5e42efd",
+      "result_reason_code": "CONSTRUCTED_CONTROL_BUSINESS_WITHHELD",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    },
+    "factory_calls": [
+      [
+        2024,
+        "B10"
+      ]
+    ]
+  }
+]

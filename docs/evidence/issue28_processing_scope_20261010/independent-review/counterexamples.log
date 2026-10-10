@@ -1,0 +1,139 @@
+Initial harness attempt: ModuleNotFoundError: sec_http before checks. Second attempt/debug: fixture imported scripts.vnext, harness imported vnext, so patches addressed distinct module objects; assertion caught invalid harness. Both are harness errors, no product finding. Corrected harness uses the same scripts.vnext object and all assertions below passed.
+start UTC: 2026-10-10T05:42:39.805869+00:00
+[
+  {
+    "check": "D04 exact original dependencies kept and one adapter added",
+    "result": {
+      "old_count": 41,
+      "new_count": 42,
+      "added": [
+        "scripts/vnext/ordinary_d04_saved_route.py"
+      ]
+    }
+  },
+  {
+    "check": "D04 dispatch preserves arguments and rejects non-D04",
+    "result": true
+  },
+  {
+    "check": "Each old pair rejects all consumed dependency changes, addition/removal, reverse and ten metadata changes",
+    "result": {
+      "pairs": 3,
+      "dependencies_per_pair": 123
+    }
+  },
+  {
+    "check": "isolated PUBLISHED current_body",
+    "result": {
+      "status": "CANDIDATE_READY",
+      "factory_calls": 2
+    }
+  },
+  {
+    "check": "isolated PUBLISHED census",
+    "result": {
+      "status": "CANDIDATE_READY",
+      "factory_calls": 2
+    }
+  },
+  {
+    "check": "isolated PUBLISHED source_failure",
+    "result": {
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "factory_calls": 1
+    }
+  },
+  {
+    "check": "isolated PUBLISHED unknown_controller",
+    "result": {
+      "status": "CANDIDATE_READY",
+      "factory_calls": 2
+    }
+  },
+  {
+    "check": "isolated PUBLISHED unknown_bridge_after_transition",
+    "result": {
+      "status": "CANDIDATE_READY",
+      "factory_calls": 2
+    }
+  },
+  {
+    "check": "isolated PUBLISHED interruption_after_terminal",
+    "result": {
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "factory_calls": 1
+    }
+  },
+  {
+    "check": "isolated PUBLISHED interruption_after_pointer",
+    "result": {
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "factory_calls": 1
+    }
+  },
+  {
+    "check": "isolated PUBLISHED legacy_no_completed_check",
+    "result": {
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "factory_calls": 1
+    }
+  },
+  {
+    "check": "isolated WITHHELD current_body",
+    "result": {
+      "status": "CANDIDATE_WITHHELD",
+      "factory_calls": 2
+    }
+  },
+  {
+    "check": "isolated WITHHELD census",
+    "result": {
+      "status": "CANDIDATE_WITHHELD",
+      "factory_calls": 2
+    }
+  },
+  {
+    "check": "isolated WITHHELD source_failure",
+    "result": {
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "factory_calls": 1
+    }
+  },
+  {
+    "check": "isolated WITHHELD unknown_controller",
+    "result": {
+      "status": "CANDIDATE_WITHHELD",
+      "factory_calls": 2
+    }
+  },
+  {
+    "check": "isolated WITHHELD unknown_bridge_after_transition",
+    "result": {
+      "status": "CANDIDATE_WITHHELD",
+      "factory_calls": 2
+    }
+  },
+  {
+    "check": "isolated WITHHELD interruption_after_terminal",
+    "result": {
+      "status": "PREVIOUS_INPUT_WITHHELD",
+      "factory_calls": 1
+    }
+  },
+  {
+    "check": "isolated WITHHELD interruption_after_pointer",
+    "result": {
+      "status": "PREVIOUS_INPUT_WITHHELD",
+      "factory_calls": 1
+    }
+  },
+  {
+    "check": "isolated WITHHELD legacy_no_completed_check",
+    "result": {
+      "status": "CANDIDATE_WITHHELD",
+      "factory_calls": 2
+    }
+  }
+]
+all assertions passed
+finish UTC: 2026-10-10T05:42:40.121293+00:00
