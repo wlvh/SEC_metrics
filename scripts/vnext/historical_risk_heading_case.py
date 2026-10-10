@@ -3,6 +3,7 @@
 This adapter selects a historical annual identity and consumes the shared D01
 source/Evidence/Review/Calculator. It owns no heading classifier or persistence.
 """
+import copy
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -21,6 +22,7 @@ from . import d01_emphasis_results
 
 METRICS = frozenset({'D01'})
 SPEC_PATH = 'catalog/r6/D01_risk_factor_headings.md'
+CAPACITY_SPEC_PATH = 'catalog/ordinary_risk_headings/D01_128.md'
 PROCESSING_FILES = (
     'scripts/vnext/historical_risk_heading_case.py',
     'scripts/vnext/historical_annual_input.py',
@@ -43,6 +45,8 @@ PROCESSING_FILES = (
     'config/normal_period_selection_v1.json',
     'config/normal_fiscal_year_labels_v1.json',
     SPEC_PATH,
+    CAPACITY_SPEC_PATH,
+    'scripts/vnext/text_rendering_limits.py',
 )
 
 
@@ -89,7 +93,29 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
     # The retained namespace view keeps shared D01 algorithms while admitting
     # actual historical SEC/FASB release names. It is not a second selector.
     api = release_aware(d01_emphasis_results)
-    candidate = api.create_deterministic_text_candidate(**args)
+    selected_spec_path = SPEC_PATH
+    try:
+        candidate = api.create_deterministic_text_candidate(**args)
+    except ValueError as error:
+        if str(error) != 'DETERMINISTIC_TEXT_HEADINGS_EXCEED_BOUND':
+            raise
+        successor = compile_spec_file(path=ROOT/CAPACITY_SPEC_PATH, dependency_specs={})
+        old_contract = copy.deepcopy(spec['compiled'])
+        new_contract = copy.deepcopy(successor['compiled'])
+        old_policy = old_contract['text_policy']; new_policy = new_contract['text_policy']
+        _need(old_policy['renderer'] == 'ORDERED_NEWLINE_V1' and old_policy['max_items'] == 64
+              and new_policy['renderer'] == 'ORDERED_NEWLINE_128_V2' and new_policy['max_items'] == 128,
+              'HISTORICAL_RISK_HEADINGS_CAPACITY_SUCCESSOR_CHANGED')
+        new_policy.update(renderer=old_policy['renderer'], max_items=old_policy['max_items'])
+        _need(old_contract == new_contract, 'HISTORICAL_RISK_HEADINGS_CAPACITY_SEMANTICS_CHANGED')
+        args['compiled_spec'] = successor
+        candidate = api.create_deterministic_text_candidate(**args)
+        # The old guard covers zero as well as overflow. A capacity successor
+        # is usable only when the reconstructed complete count truly exceeds64.
+        _need(len(candidate['selected']) > old_policy['max_items'],
+              'HISTORICAL_RISK_HEADINGS_CAPACITY_NOT_REQUIRED')
+        spec = successor
+        selected_spec_path = CAPACITY_SPEC_PATH
     evidence = api.build_text_evidence(candidate=candidate, **args)
     unit, _ = build_text_review_unit(compiled_spec=spec, candidate=candidate,
         evidence_check=evidence, source_bindings=args['source_references'])
@@ -110,7 +136,7 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
         'new_provider_execution': False}
     return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id,
         'input_binding': binding, 'compiled_specs': {metric_id: spec},
-        'spec_paths': {metric_id: SPEC_PATH}, 'target_period': period,
+        'spec_paths': {metric_id: selected_spec_path}, 'target_period': period,
         'prepared_annual_input': annual, 'references': args['source_references'],
         'source_proofs': proofs, 'admission': verify_ordinary_source_proofs(data_root=source, proofs=proofs),
         'expected_records': [*reader.records.values(), candidate, evidence, unit, decision,
@@ -118,5 +144,6 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
         'results': {metric_id: result}, 'traces': {metric_id: trace},
         'selection': {'method': 'RISK_FACTOR_HEADINGS_V1',
             'source_reference_ids': candidate['source_reference_ids'],
-            'heading_count': len(candidate['selected']), 'risk_occurrence_asserted': False},
+            'heading_count': len(candidate['selected']), 'risk_occurrence_asserted': False,
+            'capacity_spec_path': selected_spec_path},
         'rules_root': str(ROOT)}
