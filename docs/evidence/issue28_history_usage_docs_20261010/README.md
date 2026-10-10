@@ -11,3 +11,6 @@ Historical consumer receiving update: actual main c99b5d3c and Claude's Issue28/
 After actual latest Claude handoff6094245836/6094248883 was read, corrected the guide’s copied typo25,191→25,449 million in the later FY2023 comparative column. This is the receiver’s corrected reported figure, not permission to replace original FY2022 Net sales24,442 or sum new values. Product output and original sources were not changed.
 
 History consumer guide update after actualmain84 and review6094536012/6094654752: PR136 is main, PR137+139 fresh repair remains candidate; corrected saved-state/fresh-business boundary. Existing E01 d82 candidate command/source-restoration/withheld-exit semantics added with fixed primary record; no new source/caller or document project. D01 example uses current main-receiving cbb candidate. Thirteen shell blocks bash -n, balanced fences, actual run/results flags and four obtainable Git commits checked; all old current/main/retained boundaries remain. Financial reruns/new calls0; this same record serves existingPR121.
+
+
+2026-10-10接收增量：实际读取Claude PR137最终接收记录，mainf51已包含139/137。历史说明只更新取码版本、三正常增长/两实际不可比和Macy前期完整范围不足的具名状态；原失败、精确旧缺陷、保存source-root前提和在线接续缺口保持。新说明不重算财报，原候选执行记录按原代码身份保留。

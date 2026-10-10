@@ -1,6 +1,6 @@
 # 历史公司使用指南
 
-截至2026-10-10，main `84d15f35` 已包含 PR61/58/62/67/71/74/75/76/79/83/86、PR77/78/81/82/84/88，以及事件接收提交 `44719c7e` / `408e89e2`。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及未修订、连续主体的 B01/B02/B04/B05和所选CIK余额的B08/B09。酒店共用计算与四指标历史适配已 main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
+截至2026-10-10，main `f51d8c3d` 已包含 PR61/58/62/67/71/74/75/76/79/83/86、PR77/78/81/82/84/88，以及事件接收提交 `44719c7e` / `408e89e2`。同一 `tools/vnext_company.py`、公共更新器、保存器和结果读口支持保存来源的历史 B10/B11，以及未修订、连续主体的 B01/B02/B04/B05和所选CIK余额的B08/B09。酒店共用计算与四指标历史适配已 main；PR58 合入的是机械 D02 引文检查，D02 公司模型链和完整五年业务验收仍未完成。
 
 A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C01/E02–E05普通历史适配及公共事件源/宽窗接口已在main；[PR90](https://github.com/wlvh/SEC_metrics/pull/90)和[PR89](https://github.com/wlvh/SEC_metrics/pull/89)已由接收方合入；后续消费者记录继续按本记录的执行版本解释，不改旧运行记录。PR83 的普通在线接续不等于历史模式已能在线发现与补齐来源；本指南的 `fiscal-years` 仍需已保存来源根。代码合入不表示正式采纳、发布或 active 切换。
 
@@ -11,7 +11,7 @@ A01/A02资本、A05/A06/A07/A08/A10银行指标和B07年度计算也已main。C0
 ```bash
 git fetch origin main
 git worktree add -b review/issue47-hotel-history ../SEC_metrics-history-review \
-  84d15f35
+  f51d8c3d
 cd ../SEC_metrics-history-review
 python3 tools/vnext_company.py run --help
 ```
@@ -64,9 +64,9 @@ python3 tools/vnext_company.py results \
 
 Salesforce 使用 `--company salesforce`、FY2022–FY2026；Macy’s 使用 `--company macys`、FY2021–FY2025。这些命令与三家公司60位置的原实际运行、复跑和独立读取可在[四指标主要记录](evidence/issue47_statement_pilot_20261009/README.md)核对；main 接收未改变其计算/读取实现，不为了说明变化重跑60位置。
 
-**原五年先导的逐值一致只证明当时的输入、计算和保存接线，不能保证旧参考没有选错范围。** main `84d15f35` 已接收 PR119/120/130/132/129 收入修复链：Macy’s FY2023 B01 由原 Net sales 小计修为原表 Total revenue 23,866百万 USD（2023-01-29→2024-02-03，53周）；原 B01 `5f17ec97…` 和依其小计生成的 B02 `db609edd…` 仍由确切缺陷登记隔离。当前 B02 仍 `WITHHELD_KNOWN_DEFECT/null`，修正 B01 不释放旧增长率。Macy’s FY2022 原件报告 Net sales 24,442百万、另列 Credit card revenues, net 863百万，没有同样的 Total revenue 行或 us-gaap:Revenues 事实；当前保留原件组件路径，不能自行用后一年重列的 25,449百万替换原年度。详见[原件关系与旧结果限制](https://github.com/wlvh/SEC_metrics/blob/47c632e2/docs/evidence/issue47_macys_revenue_scope_20261010/README.md)及[收入链实际接收](https://github.com/wlvh/SEC_metrics/pull/129#issuecomment-6093934843)。
+**原五年先导的逐值一致只证明当时的输入、计算和保存接线，不能保证旧参考没有选错范围。** main `f51d8c3d` 已接收 PR119/120/130/132/129 收入修复链：Macy’s FY2023 B01 由原 Net sales 小计修为原表 Total revenue 23,866百万 USD（2023-01-29→2024-02-03，53周）；原 B01 `5f17ec97…` 和依其小计生成的 B02 `db609edd…` 仍由确切缺陷登记隔离。新处理的 B02 FY2023 为 `HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED/null`：前期原件的完整收入范围未成立。旧 `db609edd…` 仍由已知缺陷登记隔离，修正 B01 不释放旧增长率。Macy’s FY2022 原件报告 Net sales 24,442百万、另列 Credit card revenues, net 863百万，没有同样的 Total revenue 行或 us-gaap:Revenues 事实；当前保留原件组件路径，不能自行用后一年重列的 25,449百万替换原年度。详见[原件关系与旧结果限制](https://github.com/wlvh/SEC_metrics/blob/47c632e2/docs/evidence/issue47_macys_revenue_scope_20261010/README.md)及[收入链实际接收](https://github.com/wlvh/SEC_metrics/pull/129#issuecomment-6093934843)。
 
-Pfizer FY2023 B01 现从原表 Total revenues 得到58,496百万 USD，原 product revenue 小计结果 `a6e31052…` 保留原文件并按缺陷登记隔离。main 的 B02 FY2023 仍扣留；公共 [PR136](https://github.com/wlvh/SEC_metrics/pull/136) 已进入 main `84d15f35`，历史消费者 [PR137](https://github.com/wlvh/SEC_metrics/pull/137) 与公共修补 [PR139](https://github.com/wlvh/SEC_metrics/pull/139) 仍是候选。PR137 原版本出现全新处理 FY2022 退化，现接单位说明修补后的 `70bb38e6` 已在全新 work-dir 从原件处理 FY2021–FY2025：FY2022 恢复0.2342535183544926680444838106，FY2023 为−0.4169640187381640586065982259，FY2025 原值保持；FY2021/FY2024 的两期范围成立后仍因实际比较数矛盾为空。这些候选执行与 main 能力分别说明，原失败不改签，见[唯一修后记录](https://github.com/wlvh/SEC_metrics/blob/82e99842/docs/evidence/issue47_reported_total_receiving_20261010/paired-revenue/README.md)。旧任务可读不能代替全新处理正确，结果可读不等于正式采纳。
+Pfizer FY2023 B01 现从原表 Total revenues 得到58,496百万 USD，原 product revenue 小计结果 `a6e31052…` 保留原文件并按缺陷登记隔离。main `f51d8c3d` 已接收公共 PR136、PR139 和历史消费者 PR137。同一公司入口从各年度原件处理 Pfizer B02：FY2022=0.2342535183544926680444838106，FY2023=−0.4169640187381640586065982259，FY2025=−0.01647099501783833906989171264；FY2021/FY2024 先完成两期完整范围识别，再因原比较数矛盾准确扣留 `HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE/null`。两期范围与既有可比性计算共用，未以本期重列值替换原前期。PR137 原版本的全新处理退化及后继修补分别保留，见[唯一修后记录](https://github.com/wlvh/SEC_metrics/blob/82e99842/docs/evidence/issue47_reported_total_receiving_20261010/paired-revenue/README.md)和[接收方独立全新状态验证](https://github.com/wlvh/SEC_metrics/pull/137#issuecomment-6095577547)。同命令混合选择、复跑不计算和独立 results/CSV 已在该接收版本核对；旧任务可读不能代替全新处理正确，代码已入main也不等于正式采纳。
 
 B01 为营业收入、B02 为收入同比增长率、B04 为净利润、B05 为自由现金流（经营活动现金流减资本支出）。B02需要同主体且实际相邻的前期申报；不以任意重述值或错误年份代替。目标或前期修订尚未完成该族适配时，显示具名缺口/扣留，其他项继续保存。Salesforce FY2026 原 DEI 字面标签为2025，发行人定义明确解析FY2026，实际日期2025-02-01→2026-01-31；两种标签与冲突依据保留，不改写原件或日期。
 
