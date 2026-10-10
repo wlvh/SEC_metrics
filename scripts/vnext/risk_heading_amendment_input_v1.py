@@ -116,7 +116,7 @@ def _risk_references(scope, raw):
     return records,unresolved
 
 
-def inspect_risk_heading_amendment(*, original, amendment, company_id, cik):
+def _assess_risk_heading_amendment(*, original, amendment, company_id, cik):
     """Consume existing raw/blob/reference/filing source frames, never saved answers.
 
     Authentication/byte/identity failures propagate. Only a proved source frame
@@ -144,7 +144,8 @@ def inspect_risk_heading_amendment(*, original, amendment, company_id, cik):
     body=exact_json_value({'record_type':'RISK_HEADING_AMENDMENT_INPUT_SCOPE','schema_version':1,
         'company_id':company_id,'cik':str(int(cik)),'metric_ids':['D01'],'input_class':INPUT_CLASS,
         'classification':'PART_III_ADDITION_WITH_NO_AMENDED_ITEM_1A' if not issues else 'UNRESOLVED',
-        'decision':'INPUT_PROPERTY_PROVEN' if not issues else 'WITHHELD',
+        'decision':'PROPOSED_INPUT_SCOPE' if not issues else 'WITHHELD',
+        'development_proposal_only':True,
         'fiscal_window_unchanged':scope['fiscal_window_unchanged'],
         'original':{k:old[k] for k in ('filing','period','raw_sha256','source_reference')},
         'amendment':{k:new[k] for k in ('filing','period','raw_sha256','source_reference')},
@@ -152,4 +153,22 @@ def inspect_risk_heading_amendment(*, original, amendment, company_id, cik):
         'whole_amendment_semantic_no_effect_asserted':False,
         'financial_input_clearance':False,'subject_continuity_proven':False,
         'metric_result_created':False,'source_acquisition_credit':False,'production_authorized':False})
+    return {**body,'scope_id':content_hash(value=body)}
+
+
+def inspect_risk_heading_amendment(*, original, amendment, company_id, cik):
+    """Retain the source assessment without granting unfinished route credit.
+
+    The bounded development batch has an unclosed named-reference coverage
+    error. A structurally clean source is a proposal, never current D01 input
+    permission. This public gate must stay closed until a different adequately
+    validated source-impact method replaces the stopped list recognizer.
+    """
+    proposal=_assess_risk_heading_amendment(original=original,amendment=amendment,
+        company_id=company_id,cik=cik)
+    body={k:v for k,v in proposal.items() if k!='scope_id'}
+    body.update(decision='WITHHELD',assessment_decision=proposal['decision'],
+        proposal_scope_id=proposal['scope_id'],validation_route_suspended=True,
+        issues=[*proposal['issues'],{'reason':'RISK_AMENDMENT_INPUT_ROUTE_SUSPENDED_REFERENCE_COVERAGE',
+                                    'error_type':'IncompleteSourceImpactValidation'}])
     return {**body,'scope_id':content_hash(value=body)}

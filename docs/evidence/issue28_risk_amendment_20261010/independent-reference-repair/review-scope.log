@@ -1,0 +1,45 @@
+{
+  "head": "4ba6a440cb708711794f415cb39b965d2fbf2f91",
+  "base": "a915570a0961509d93c0759491cefebb444da988",
+  "reviewed_code_files": [
+    "scripts/vnext/risk_heading_amendment_input_v1.py",
+    "tests/vnext/test_risk_heading_amendment_input.py"
+  ],
+  "line_map": {
+    "identifier": 73,
+    "separator": 74,
+    "pattern": 75,
+    "discard": 104,
+    "residual": 109
+  },
+  "ordinary_messages": {
+    "process": 0,
+    "question": 0,
+    "final_planned": 1,
+    "total_including_final": 1
+  },
+  "tools_including_this_final_write_and_verification": {
+    "functions_exec_wrappers": 7,
+    "nested_exec_command_calls": 13,
+    "conservative_total": 20,
+    "limit": 80
+  },
+  "network_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "final_status_before_report": "?? docs/evidence/issue28_risk_amendment_20261010/independent-reference-repair/\n",
+  "source_replay": false,
+  "code_changes_by_reviewer": false,
+  "commit_push_spawn_tar": false,
+  "written_artifacts": [
+    "conclusion.md",
+    "required-tests.log",
+    "directed-references.log",
+    "saved-evidence-binding.log",
+    "review-scope.log"
+  ],
+  "review_start_utc": "2026-10-10T02:39:01.205136+00:00",
+  "review_end_utc": "2026-10-10T02:57:32.967005+00:00"
+}

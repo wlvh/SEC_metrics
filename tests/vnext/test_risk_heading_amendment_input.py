@@ -5,7 +5,9 @@ import tempfile
 import unittest
 
 from tests.vnext.test_instant_amendment_paragraph_api import filing_html
-from vnext.risk_heading_amendment_input_v1 import inspect_risk_heading_amendment, INPUT_CLASS
+from vnext.risk_heading_amendment_input_v1 import (
+    _assess_risk_heading_amendment as inspect_risk_heading_amendment,
+    inspect_risk_heading_amendment as public_inspect, INPUT_CLASS)
 from vnext.sources import raw_blob_record, source_reference_record
 from vnext.annual_amendment_scope_v2 import inspect_annual_amendment_scope
 
@@ -42,7 +44,7 @@ class RiskHeadingAmendmentInputTest(unittest.TestCase):
 
     def test_clean_complete_part_iii_addition_admits_only_selected_original_headings(self):
         result=self.inspect()
-        self.assertEqual(result['decision'],'INPUT_PROPERTY_PROVEN')
+        self.assertEqual(result['decision'],'PROPOSED_INPUT_SCOPE')
         self.assertEqual(result['input_class'],INPUT_CLASS)
         self.assertEqual(result['metric_ids'],['D01']);self.assertEqual(result['issues'],[])
         self.assertEqual(result['details']['original_item_1a_section']['status'],'LOCATED')
@@ -57,7 +59,7 @@ class RiskHeadingAmendmentInputTest(unittest.TestCase):
                  '<p>These risks, uncertainties and other factors are discussed in “Item 1A. Risk Factors” in our Initial Form 10-K.</p>')
         amended=filing_html(True).replace(b'<p>PART III</p>',caution.encode()+b'<p>PART III</p>')
         result=self.inspect(amended=amended)
-        self.assertEqual(result['decision'],'INPUT_PROPERTY_PROVEN')
+        self.assertEqual(result['decision'],'PROPOSED_INPUT_SCOPE')
         refs=result['details']['risk_section_references']
         self.assertEqual(len(refs),1);self.assertEqual(refs[0]['status'],'INITIAL_FILING_CROSS_REFERENCE')
         self.assertTrue(refs[0]['source_blocks']);self.assertTrue(refs[0]['initial_filing_citations'])
@@ -124,7 +126,7 @@ class RiskHeadingAmendmentInputTest(unittest.TestCase):
         raw=filing_html(True).replace(b'<p>PART III</p>',citation.encode()+b'<p>PART III</p>')
         raw=raw.replace(b'<p>Item 12.',b'<p>PART III</p><p>Item 12.')
         result=self.inspect(amended=raw)
-        self.assertEqual(result['decision'],'INPUT_PROPERTY_PROVEN')
+        self.assertEqual(result['decision'],'PROPOSED_INPUT_SCOPE')
         ref=result['details']['risk_section_references'][0]
         self.assertLess(ref['caution_window']['heading_block'],ref['block_indices'][0])
         self.assertLess(ref['block_indices'][0],ref['caution_window']['end_block_exclusive'])
@@ -164,3 +166,27 @@ class RiskHeadingAmendmentInputTest(unittest.TestCase):
             with self.subTest(text=text):self.assertTrue(_mentions_risk_section(text))
         for name in ('normal_annual_input_v2','canonical'):
             self.assertIn('scripts/vnext/'+name+'.py',PROCESSING_FILES)
+
+    def test_public_route_withholds_structural_positive_and_known_unclosed_list_variants(self):
+        for extra in ('',
+            '<p>This Amendment replaces the disclosures in Items 1B &amp; 1A of the Initial Form 10-K.</p>',
+            '<p>This Amendment replaces the disclosures in Items 1B and/or 1A of the Initial Form 10-K.</p>',
+            '<p>This Amendment replaces the disclosures in Items 1B; 1A of the Initial Form 10-K.</p>'):
+            with self.subTest(extra=extra),tempfile.TemporaryDirectory() as folder:
+                old,new=sources(Path(folder),amended=filing_html(True,extra))
+                result=public_inspect(original=old,amendment=new,company_id='constructed',cik='1')
+                self.assertEqual(result['decision'],'WITHHELD')
+                self.assertTrue(result['validation_route_suspended'])
+                self.assertTrue(result['development_proposal_only'])
+                self.assertIn('RISK_AMENDMENT_INPUT_ROUTE_SUSPENDED_REFERENCE_COVERAGE',
+                              [i['reason'] for i in result['issues']])
+                self.assertFalse(result['metric_result_created'])
+
+    def test_public_route_keeps_specific_source_issue_distinct_from_suspension(self):
+        with tempfile.TemporaryDirectory() as folder:
+            old,new=sources(Path(folder),amended=filing_html(True,'<p>We replace Item 1A.</p>'))
+            result=public_inspect(original=old,amendment=new,company_id='constructed',cik='1')
+            reasons=[i['reason'] for i in result['issues']]
+            self.assertIn('RISK_AMENDMENT_RISK_SECTION_REFERENCE_UNRESOLVED',reasons)
+            self.assertIn('RISK_AMENDMENT_INPUT_ROUTE_SUSPENDED_REFERENCE_COVERAGE',reasons)
+            self.assertEqual(result['assessment_decision'],'WITHHELD')
