@@ -1,0 +1,53 @@
+{
+  "elapsed_seconds": 0.5004591250326484,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "paramount_skydance_paramount_global",
+  "run_id": "20261009T124645Z-eea88b18",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B01"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "c74c63fd41284ac5b738a93795cc0f9d",
+      "version": "5af6b3c385af4fb4b580fe0f52fe39ff",
+      "result_id": "sha256:ba43668519d6bf929a0a89d4c7e3afd8441bfae78161420c4106ddc73d9cf456",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/development/issue28-reporting-nq3m1m8x/state/updates/B01/periods/FY2021/results/5af6b3c385af4fb4b580fe0f52fe39ff",
+      "result_reason_code": "PASS",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2021,
+      "defect_holds": [],
+      "read_result_id": "sha256:ba43668519d6bf929a0a89d4c7e3afd8441bfae78161420c4106ddc73d9cf456",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/development/issue28-reporting-nq3m1m8x/state/updates/B01/periods/FY2021/results/5af6b3c385af4fb4b580fe0f52fe39ff",
+      "program_version": {
+        "commit": "4a03f22393182eb642a0472f1480354ff430267c",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/development/issue28-reporting-nq3m1m8x/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/development/issue28-reporting-nq3m1m8x/output/20261009T124645Z-eea88b18",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2021
+  ]
+}

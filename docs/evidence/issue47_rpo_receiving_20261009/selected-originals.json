@@ -1,0 +1,110 @@
+{
+  "seconds": 29.77569620893337,
+  "years": [
+    {
+      "fiscal_year": 2022,
+      "actual_instant": "2022-01-31",
+      "accession": "0001108524-22-000013",
+      "reference_file": "rpo-read-salesforce-2022.json",
+      "reference_read": "43700000000",
+      "namespace_policy_changed": true,
+      "status": "SOURCE_SCOPE_PROVEN",
+      "values": [
+        {
+          "value": "43700000000",
+          "unit": "USD",
+          "locator": {
+            "qualified_name": "us-gaap:RevenueRemainingPerformanceObligation",
+            "context_ref": "ib3aa3e8b070e47c9b6503939c6421bf7_I20220131",
+            "ordinal": 527
+          }
+        }
+      ]
+    },
+    {
+      "fiscal_year": 2023,
+      "actual_instant": "2023-01-31",
+      "accession": "0001108524-23-000011",
+      "reference_file": "rpo-read-salesforce-2023.json",
+      "reference_read": "48600000000",
+      "namespace_policy_changed": false,
+      "status": "SOURCE_SCOPE_PROVEN",
+      "values": [
+        {
+          "value": "48600000000",
+          "unit": "USD",
+          "locator": {
+            "qualified_name": "us-gaap:RevenueRemainingPerformanceObligation",
+            "context_ref": "ie6748ffeeac5417d84d7370a0ab64035_I20230131",
+            "ordinal": 522
+          }
+        }
+      ]
+    },
+    {
+      "fiscal_year": 2024,
+      "actual_instant": "2024-01-31",
+      "accession": "0001108524-24-000005",
+      "reference_file": "rpo-read-salesforce-2024.json",
+      "reference_read": "56900000000",
+      "namespace_policy_changed": false,
+      "status": "SOURCE_SCOPE_PROVEN",
+      "values": [
+        {
+          "value": "56900000000",
+          "unit": "USD",
+          "locator": {
+            "qualified_name": "us-gaap:RevenueRemainingPerformanceObligation",
+            "context_ref": "c-4",
+            "ordinal": 521
+          }
+        }
+      ]
+    },
+    {
+      "fiscal_year": 2025,
+      "actual_instant": "2025-01-31",
+      "accession": "0001108524-25-000006",
+      "reference_file": "rpo-read-batch.json",
+      "reference_read": "63400000000",
+      "namespace_policy_changed": false,
+      "status": "SOURCE_SCOPE_PROVEN",
+      "values": [
+        {
+          "value": "63400000000",
+          "unit": "USD",
+          "locator": {
+            "qualified_name": "us-gaap:RevenueRemainingPerformanceObligation",
+            "context_ref": "c-4",
+            "ordinal": 531
+          }
+        }
+      ]
+    },
+    {
+      "fiscal_year": 2026,
+      "actual_instant": "2026-01-31",
+      "accession": "0001108524-26-000060",
+      "reference_file": "rpo-read.json",
+      "reference_read": "72400000000",
+      "namespace_policy_changed": false,
+      "status": "SOURCE_SCOPE_PROVEN",
+      "values": [
+        {
+          "value": "72400000000",
+          "unit": "USD",
+          "locator": {
+            "qualified_name": "us-gaap:RevenueRemainingPerformanceObligation",
+            "context_ref": "c-4",
+            "ordinal": 541
+          }
+        }
+      ]
+    }
+  ],
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

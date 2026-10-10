@@ -1,0 +1,58 @@
+{
+  "operations": [
+    {
+      "name": "one-related-config-update",
+      "seconds": 4.232879458926618,
+      "exit_code": 0
+    },
+    {
+      "name": "repeat-forbid",
+      "seconds": 0.8181575830094516,
+      "exit_code": 0
+    },
+    {
+      "name": "independent-read",
+      "seconds": 0.5096567079890519,
+      "exit_code": 0
+    }
+  ],
+  "updated_row": {
+    "company": "Salesforce",
+    "cik": "1108524",
+    "metric_id": "B12",
+    "metric_name": "Remaining performance obligation (RPO substitute)",
+    "value": "72400000000",
+    "unit": "USD",
+    "status": "DIM_XBRL_OK",
+    "source_class": "DIM_XBRL",
+    "formula": "",
+    "period_start": "2026-01-31",
+    "period_end": "2026-01-31",
+    "fiscal_year": "2026",
+    "fiscal_period": "INSTANT",
+    "accession": "0001108524-26-000060",
+    "form": "10-K",
+    "filed_date": "2026-03-02",
+    "concept_or_section": "ARR / churn or RPO substitute",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2026, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-01\"}, \"measurement_kind\": \"INSTANT\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2026}, \"selection\": {\"conflicts\": [], \"facts\": [{\"concept_qname\": [\"http://fasb.org/us-gaap/2025\", \"RevenueRemainingPerformanceObligation\"], \"context\": {\"context_ref\": \"c-4\", \"dimensions\": {}, \"entity_identifier\": \"0001108524\", \"period_end\": \"2026-01-31\", \"period_start\": \"2026-01-31\", \"typed_dimension_count\": 0}, \"ordinal\": 541, \"qualified_name\": \"us-gaap:RevenueRemainingPerformanceObligation\", \"reason\": \"EXACT_SOURCE_SCOPE\", \"source_text\": \"72.4\", \"unit\": \"USD\", \"unit_ref\": \"usd\", \"value\": \"72400000000\"}, {\"concept_qname\": [\"http://fasb.org/us-gaap/2025\", \"RevenueRemainingPerformanceObligation\"], \"context\": {\"context_ref\": \"c-5\", \"dimensions\": {}, \"entity_identifier\": \"0001108524\", \"period_end\": \"2025-01-31\", \"period_start\": \"2025-01-31\", \"typed_dimension_count\": 0}, \"ordinal\": 544, \"qualified_name\": \"us-gaap:RevenueRemainingPerformanceObligation\", \"reason\": \"OTHER_SOURCE_PERIOD\", \"source_text\": \"63.4\", \"unit_ref\": \"usd\"}, {\"concept_qname\": [\"http://fasb.org/us-gaap/2025\", \"RevenueRemainingPerformanceObligation\"], \"context\": {\"context_ref\": \"c-116\", \"dimensions\": {\"us-gaap:BusinessAcquisitionAxis\": \"crm:InformaticaInc.Member\"}, \"entity_identifier\": \"0001108524\", \"period_end\": \"2026-01-31\", \"period_start\": \"2026-01-31\", \"typed_dimension_count\": 0}, \"ordinal\": 545, \"qualified_name\": \"us-gaap:RevenueRemainingPerformanceObligation\", \"reason\": \"OTHER_DISCLOSED_DIMENSION_SCOPE\", \"source_text\": \"2.2\", \"unit_ref\": \"usd\"}], \"metric_id\": \"B12\", \"selected_claims\": [{\"attributes\": {\"adapter_id\": \"ACCESSION_XBRL\", \"canonical_name\": \"RevenueRemainingPerformanceObligation\", \"concept_qname\": [\"http://fasb.org/us-gaap/2025\", \"RevenueRemainingPerformanceObligation\"], \"context\": {\"context_ref\": \"c-4\", \"dimensions\": {}, \"entity_identifier\": \"0001108524\", \"period_end\": \"2026-01-31\", \"period_start\": \"2026-01-31\", \"typed_dimension_count\": 0}, \"deterministic_router_semantic_version\": \"2\", \"lexical_value\": \"72.4\", \"ordinary_policy_hash\": \"sha256:5460cecd2601a747bf43df139d5b7a13041238cdf7cc24f7851cb97dd4c0c273\", \"raw_unit_ref\": \"usd\", \"source_unit_definition\": {\"divided\": false, \"measures\": [[\"http://www.xbrl.org/2003/iso4217\", \"USD\"]]}, \"verified_context\": {\"context_ref\": \"c-4\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0001108524\"}], \"period_fields\": [{\"kind\": \"instant\", \"value\": \"2026-01-31\"}], \"typed_dimension_count\": 0}}, \"claim_kind\": \"ACCESSION_XBRL_NUMERIC_FACT\", \"company_id\": \"salesforce\", \"locator\": {\"context_ref\": \"c-4\", \"ordinal\": 541, \"qualified_name\": \"us-gaap:RevenueRemainingPerformanceObligation\"}, \"record_type\": \"DETERMINISTIC_VERIFIED_CLAIM\", \"source_reference_id\": \"sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c\", \"source_role\": \"target_accession_instance\", \"source_set_manifest_id\": \"sha256:cb35999cae4c0f31c4f5422aac42c9e50c4c07e0e3049d312aa621154c985e1a\", \"unit\": \"USD\", \"value\": \"72400000000\", \"verified_claim_id\": \"sha256:b737e9bd3f6a7fe12f227ec2f8bc7f97c258777e982a6381c697157d0efe02d2\"}], \"source_acquisition_credit\": false, \"source_reference_id\": \"sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c\", \"status\": \"SOURCE_SCOPE_PROVEN\"}, \"source_reference_ids\": [\"sha256:fe3bf7cdab815fd58dc64b19aec533b5aa58e43211b3afe820441d2c9a6706f1\", \"sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c\"]}",
+    "confidence": "",
+    "notes": "Reported remaining performance obligation, used as the approved RPO substitute. RPO != ARR; cRPO != ARR. This is not a churn rate. Measurement is as of 2026-01-31. Native state: PUBLISHED; reason: PASS. Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding.",
+    "company_id": "salesforce",
+    "result_id": "sha256:19158fdcceea3230026350eefc30c93c8e75de1f2384242e29ecb1041e586804",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-salesforce-1791544616362255000/state/updates/B12/periods/FY2026/results/a42ad39e620f4935a9f79e768f934093",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "old_results_unchanged": true,
+  "other_four_years_not_recalculated": true,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

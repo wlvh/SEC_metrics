@@ -132,6 +132,72 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertEqual(len(view['metrics']),2)
         self.assertEqual(view['source_freshness'],'NOT_CHECKED_BY_SAVED_READER')
 
+    def test_independent_read_keeps_failed_input_reason_without_a_result(self):
+        failure={'status':'INPUT_OR_EXECUTION_FAILED','reason':'SAVED_AMENDMENT_NOT_RECEIVED',
+                 'error_type':'CaseError','error_category':'IMPLEMENTATION_GAP'}
+        with patch.object(current,'run_once',return_value=failure):self.run_company(['B01'])
+        with patch.object(current,'run_once',side_effect=AssertionError('No update')):
+            view=current.read_current_company(state_root=self.work,company_id='marriott_international',
+                output_root=self.root/'read')
+        row=view['metrics'][0]
+        self.assertIsNone(row['value']);self.assertEqual(row['reason'],failure['reason'])
+        self.assertEqual(row['error_type'],failure['error_type'])
+        self.assertEqual(row['error_category'],failure['error_category'])
+        with (self.root/'read/metrics_matrix.csv').open() as stream:csv_row=list(csv.DictReader(stream))[0]
+        self.assertIn(failure['reason'],csv_row['notes']);self.assertIn('IMPLEMENTATION_GAP',csv_row['notes'])
+
+    def test_failed_check_remains_visible_after_requesting_another_metric(self):
+        failure={'status':'INPUT_OR_EXECUTION_FAILED','reason':'SAVED_AMENDMENT_NOT_RECEIVED',
+                 'error_type':'CaseError','error_category':'IMPLEMENTATION_GAP','requested_fiscal_year':2025}
+        controller=self.work/'updates/B01/periods/FY2025';controller.mkdir(parents=True)
+        (controller/'latest-check.json').write_text(json.dumps(failure))
+        self.run_company(['B02'])
+        with patch.object(current,'run_once',side_effect=AssertionError('No update')):
+            view=current.read_current_company(state_root=self.work,company_id='marriott_international',
+                output_root=self.root/'read-later-subset')
+        failed=next(m for m in view['metrics'] if m['metric_id']=='B01')
+        self.assertIsNone(failed['value']);self.assertEqual(failed['reason'],failure['reason'])
+        self.assertEqual(failed['fiscal_year'],2025);self.assertFalse(failed['requested_in_latest_execution'])
+        with (self.root/'read-later-subset/metrics_matrix.csv').open() as stream:
+            row=next(r for r in csv.DictReader(stream) if r['metric_id']=='B01')
+        self.assertEqual(row['period_role'],'SAVED_CHECK_NOT_REQUESTED_WITHOUT_RESULT')
+        self.assertEqual(row['requested_in_latest_execution'],'False')
+        self.assertIn('IMPLEMENTATION_GAP',row['notes'])
+
+    def test_failure_detail_does_not_relabel_a_previous_success_as_current(self):
+        self.run_company(['B01'])
+        self.values[str(self.work/'updates/B01/results/first')]['result'].update(value='100',unit='USD')
+        failure={'status':'INPUT_OR_EXECUTION_FAILED','reason':'LATEST_SOURCE_REQUEST_FAILED',
+                 'error_type':'SourceError','error_category':'SOURCE_UNAVAILABLE'}
+        with patch.object(current,'run_once',return_value=failure):self.run_company(['B01'])
+        with patch.object(current,'run_once',side_effect=AssertionError('No update')):
+            view=current.read_current_company(state_root=self.work,company_id='marriott_international',
+                output_root=self.root/'read-previous')
+        row=view['metrics'][0]
+        self.assertEqual(row['reason'],failure['reason'])
+        self.assertEqual(row['latest_observation'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertIsNone(row['value']);self.assertEqual(row['previous_result_value'],'100')
+        with (self.root/'read-previous/metrics_matrix.csv').open() as stream:csv_row=list(csv.DictReader(stream))[0]
+        self.assertEqual(csv_row['period_role'],'PREVIOUS_RESULT')
+        self.assertIn(failure['reason'],csv_row['notes'])
+        self.assertNotEqual(csv_row['status'],'OK')
+
+    def test_current_failure_does_not_hide_an_existing_exact_known_defect(self):
+        self.run_company(['B01'])
+        self.registry.write_text(json.dumps({'defects':[{'defect_id':'known',
+            'company_id':'marriott_international','metric_id':'B01','period_end':'2025-12-31',
+            'result_id':'B01-result','released':[]}]}))
+        with patch.object(current,'run_once',return_value={'status':'INPUT_OR_EXECUTION_FAILED',
+                'reason':'LATEST_SOURCE_REQUEST_FAILED','error_category':'SOURCE_UNAVAILABLE'}):
+            self.run_company(['B01'])
+        view=current.read_current_company(state_root=self.work,company_id='marriott_international',
+            defects_file=self.registry,output_root=self.root/'read-invalid')
+        self.assertEqual(view['metrics'][0]['result_validity'],'CONFIRMED_INVALID')
+        self.assertIsNone(view['metrics'][0]['value']);self.assertIsNone(view['metrics'][0]['previous_result_value'])
+        with (self.root/'read-invalid/metrics_matrix.csv').open() as stream:row=list(csv.DictReader(stream))[0]
+        self.assertEqual(row['status'],'WITHHELD_KNOWN_DEFECT')
+        self.assertIn('LATEST_SOURCE_REQUEST_FAILED',row['notes']);self.assertIn('known',row['notes'])
+
     def test_unrelated_source_discovery_failure_still_shows_limitation(self):
         self.run_company()
         with patch.object(current,'run_once',return_value={'status':'NO_SOURCE_CONTENT_CHANGE',
