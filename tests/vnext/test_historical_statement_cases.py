@@ -224,6 +224,187 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
                     '<tr><td>'+text+'</td><td></td></tr>'))
 
 
+class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
+    """Small real-format originals; no constructed company result is accepted."""
+
+    def prepared_claims(self):
+        from tests.vnext.test_selected_revenue_scope_v1 import originals, facts, APPROVED
+        from types import SimpleNamespace
+        primary, xml, annual = originals()
+        primary['raw_blob'] = {'media_type': 'text/html'}
+        xml['raw_blob'] = {'media_type': 'application/xml'}
+        # A source-format control for native totals; label selection has its own
+        # actual-source and wrong-label regressions in the received shared API.
+        reader = SimpleNamespace(auditor_filing=lambda f: [primary, xml],
+                                 read=lambda *a, **k: {'raw_bytes': b'{}'})
+        claims = [{'claim_kind': 'COMPANYFACTS_NUMERIC_FACT', 'verified_claim_id': 'constructed-'+str(i),
+                   'locator': {'concept': fact['concept'].split(':')[-1],
+                               'period_start': fact['period_start'], 'period_end': fact['period_end']},
+                   'attributes': {'entity': fact['entity'], 'accession': fact['accession']},
+                   'value': fact['value'], 'unit': fact['unit']}
+                  for i, fact in enumerate(facts(annual))]
+        return reader, annual, claims, APPROVED
+
+    def admit(self, reader, annual, claims, concepts):
+        with patch('vnext.historical_fiscal_labels.resolve_selected_fiscal_year_label', return_value=None):
+            return cases._revenue_claims_admitted_by_original(reader=reader, prepared=annual,
+                filing=annual['filing'], period=annual['table_input']['target_period'],
+                claims=claims, concepts=concepts)
+
+    def test_total_admission_keeps_original_claim_id_and_never_retags_its_locator(self):
+        reader, annual, claims, concepts = self.prepared_claims()
+        before = copy.deepcopy(claims)
+        admitted, scope = self.admit(reader, annual, claims, concepts)
+        self.assertTrue(scope['complete_scope_proven'])
+        self.assertEqual(len(admitted), 1)
+        self.assertIs(admitted[0], claims[1])
+        self.assertEqual(admitted[0]['locator']['concept'], 'Revenues')
+        self.assertEqual(claims, before)
+
+    def test_wrong_unit_entity_accession_or_amount_cannot_supply_the_original_total(self):
+        for key in ('unit', 'entity', 'accession', 'value', 'concept', 'period'):
+            reader, annual, claims, concepts = self.prepared_claims()
+            if key in ('entity', 'accession'):claims[1]['attributes'][key] = 'wrong'
+            elif key == 'unit':claims[1]['unit'] = 'EUR'
+            elif key == 'concept':claims[1]['locator']['concept'] = 'SalesRevenueNet'
+            elif key == 'period':claims[1]['locator']['period_end'] = '2025-12-30'
+            else:claims[1]['value'] = '58497000000'
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                self.admit(reader, annual, claims, concepts)
+
+    def test_prior_period_comparisons_stay_for_the_shared_comparability_guard(self):
+        reader, annual, claims, concepts = self.prepared_claims()
+        comparative = copy.deepcopy(claims[0]); comparative['verified_claim_id'] = 'constructed-comparison'
+        comparative['locator'].update(period_start='2024-01-01', period_end='2024-12-31')
+        claims.append(comparative)
+        admitted, _ = self.admit(reader, annual, claims, concepts)
+        self.assertEqual(admitted, [claims[1], comparative])
+
+    def test_stopped_single_line_does_not_gain_new_scope_while_explicit_total_keeps_working(self):
+        from tests.vnext.test_single_revenue_line import single_statement
+        from types import SimpleNamespace
+        primary, annual = single_statement()
+        primary['raw_blob'] = {'media_type': 'text/html'}
+        reader = SimpleNamespace(auditor_filing=lambda f: [primary],
+                                 read=lambda *a, **k: {'raw_bytes': b'{}'})
+        _, _, claims, concepts = self.prepared_claims()
+        with patch.object(cases, 'PAIRED_SINGLE_REVENUE_LINE_ENABLED', False), \
+                self.assertRaisesRegex(ValueError, 'COMPLETE_SCOPE_UNPROVEN'):
+            self.admit(reader, annual, claims, concepts)
+        original_reader, original_annual, original_claims, concepts = self.prepared_claims()
+        admitted, scope = self.admit(original_reader, original_annual, original_claims, concepts)
+        self.assertTrue(scope['complete_scope_proven'])
+        self.assertEqual(admitted, [original_claims[1]])
+
+    def test_fixed_single_line_consumer_keeps_total_and_rejects_appended_cell_amount(self):
+        from tests.vnext.test_single_revenue_line import single_statement
+        from tests.vnext.test_selected_reported_revenue_v2 import changed
+        from types import SimpleNamespace
+        from tests.vnext.test_selected_revenue_scope_v1 import APPROVED
+        source, annual = single_statement()
+        _, _, claims, _ = self.prepared_claims()
+        # Remove the component claim; this original source reports one total.
+        claims = [claims[1]]
+        for extra in (None, b'<span> 100</span>'):
+            raw = source['raw_bytes'] if extra is None else source['raw_bytes'].replace(
+                b'>58496</ix:nonFraction>', b'>58496</ix:nonFraction>'+extra)
+            primary = changed(source, raw); primary['raw_blob'] = {'media_type':'text/html'}
+            reader = SimpleNamespace(auditor_filing=lambda f: [primary],
+                                     read=lambda *a, **k: {'raw_bytes': b'{}'})
+            if extra is None:
+                admitted, scope = self.admit(reader, annual, claims, APPROVED)
+                self.assertEqual(admitted, claims); self.assertTrue(scope['complete_scope_proven'])
+            else:
+                with self.assertRaisesRegex(ValueError, 'SELECTED_CELL_TEXT_CONFLICT'):
+                    self.admit(reader, annual, claims, APPROVED)
+
+    def test_missing_scope_and_conflicting_original_dates_are_not_complete_revenue(self):
+        reader, annual, claims, concepts = self.prepared_claims()
+        with patch('vnext.selected_reported_revenue_v2.reported_revenue_scope',
+                   return_value={'complete_scope_proven': False}), \
+                patch('vnext.selected_revenue_scope_v1.selected_revenue_scope',
+                      return_value={'complete_scope_proven': False}):
+            with self.assertRaisesRegex(ValueError, 'COMPLETE_SCOPE_UNPROVEN'):
+                self.admit(reader, annual, claims, concepts)
+        annual['table_input']['target_period']['period_start'] = '2025-02-01'
+        with self.assertRaisesRegex(ValueError, 'ORIGINAL_PERIOD_CHANGED'):
+            self.admit(reader, annual, claims, concepts)
+
+
+class HistoricalPairedRevenueCaseTest(unittest.TestCase):
+    """Constructed full adapter control; graph stubs are not financial evidence."""
+
+    def case(self, *, unresolved_role=None, wrong_operand=False):
+        from contextlib import ExitStack
+        from types import SimpleNamespace
+        from tests.vnext.test_selected_revenue_scope_v1 import originals
+        from vnext.specs import compile_spec_file
+        primary, xml, annual = originals()
+        annual.update(amendments=[], subject_policy={'mode': 'CONTINUOUS_PRIMARY'}, source_proofs=[])
+        prior = {**annual['filing'], 'accessionNumber': '0000000001-25-000002', 'reportDate': '2024-12-31'}
+        old = {**primary, 'raw_bytes': primary['raw_bytes'].replace(b'2025', b'2024')}
+        reader = SimpleNamespace(read=lambda *a, **k: primary,
+            primary=lambda filing, **k: primary if filing == annual['filing'] else old,
+            proofs={}, records={})
+        current_claim = {'verified_claim_id': 'current-total', 'locator': {'concept': 'Revenues',
+            'period_start': '2025-01-01', 'period_end': '2025-12-31'},
+            'attributes': {'accession': annual['filing']['accessionNumber']}, 'value': '58496000000', 'unit': 'USD'}
+        prior_claim = {'verified_claim_id': 'prior-total', 'locator': {'concept': 'Revenues',
+            'period_start': '2024-01-01', 'period_end': '2024-12-31'},
+            'attributes': {'accession': prior['accessionNumber']}, 'value': '100330000000', 'unit': 'USD'}
+        spec = compile_spec_file(path=cases.ROOT/'catalog/ordinary_zero_ai/B02.md', dependency_specs={})
+        def scope(**args):
+            role = 'current' if args['filing'] == annual['filing'] else 'prior'
+            if role == unresolved_role:
+                raise cases.StatementCaseError('HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN', 'IMPLEMENTATION_GAP')
+            return args['claims'], {'scope_id': 'constructed-'+role, 'status': 'REPORTED_CONSOLIDATED_TOTAL',
+                'complete_scope_proven': True, 'full_evidence': {'original': 'kept only in assessments'}}
+        with ExitStack() as stack:
+            registry = {'company_id': annual['company_id'], 'entity_continuity_status': 'continuous'}
+            values = {'resolve_period_selection': {'prior_filing': prior},
+                'prepare_historical_annual_input': annual, '_Sources': reader,
+                '_registry_rows': [registry], 'repository_company_traits': [], 'metric_is_applicable': True,
+                'installed_ordinary_spec_documents': {'B02': {'compiled_spec': spec, 'path': 'catalog/ordinary_zero_ai/B02.md'}},
+                'filing_inventory': {}, 'prior_filing': (prior, primary),
+                '_load_deterministic_catalog': {'metrics': {'B02': {'branches': [{'components': [
+                    {'accession_role': role, 'approved_concepts': ['Revenues']} for role in ('current','prior')]}]}}},
+                'verify_ordinary_source_proofs': {}}
+            for name, value in values.items():stack.enter_context(patch.object(cases, name, return_value=value))
+            stack.enter_context(patch.object(cases, '_filing_source', side_effect=[
+                ({'manifest': {}}, [current_claim]), ({'manifest': {}}, [prior_claim])]))
+            stack.enter_context(patch.object(cases, '_revenue_claims_admitted_by_original', side_effect=scope))
+            actual_claims = [current_claim, prior_claim]
+            if wrong_operand:
+                actual_claims = [dict(current_claim, verified_claim_id='foreign-operand'), prior_claim]
+            graph = stack.enter_context(patch.object(cases, '_deterministic_metric_graph', return_value={
+                'result': {'publication': 'PUBLISHED'}, 'trace': {}, 'observation': None,
+                'claims': actual_claims}))
+            case = cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
+                company_id=annual['company_id'], metric_id='B02', fiscal_year=2025)
+            return case, graph.call_count
+
+    def test_both_original_scopes_reach_the_one_graph_and_daily_summary_is_bounded(self):
+        case, calls = self.case()
+        self.assertEqual(calls, 1)
+        full = case['input_assessments']['historical_statement']['paired_revenue_scopes']
+        self.assertEqual(set(full), {'current', 'prior'})
+        self.assertTrue(all('full_evidence' in s for s in full.values()))
+        self.assertTrue(all('full_evidence' not in s for s in case['selection']['paired_revenue_scopes'].values()))
+
+    def test_one_unproved_role_withholds_whole_growth_before_graph(self):
+        for role in ('current', 'prior'):
+            with self.subTest(role=role):
+                case, calls = self.case(unresolved_role=role)
+                self.assertEqual(calls, 0)
+                self.assertIsNone(case['results']['B02']['value'])
+                self.assertEqual(case['results']['B02']['reason_code'], 'HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED')
+                self.assertEqual(case['input_assessments']['historical_statement']['unresolved_revenue_role'], role)
+
+    def test_graph_cannot_select_an_operand_outside_the_admitted_original_claims(self):
+        with self.assertRaisesRegex(ValueError, 'SELECTED_OPERAND_CHANGED'):
+            self.case(wrong_operand=True)
+
+
 class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
     def test_existing_entry_does_not_silently_expand_to_b07(self):
         with patch.object(cases, 'resolve_period_selection') as select:
