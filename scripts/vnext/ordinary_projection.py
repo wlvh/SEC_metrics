@@ -25,6 +25,118 @@ def _need(condition, reason):
     if not condition:raise ValueError(reason)
 
 
+def _reporting_company_view(*, data_root, company, annual, calculation_target,
+                            source_references=(), allow_metadata_only=False,
+                            event_input_binding=None, event_metric_id=None,
+                            registered_event_period_proven=False):
+    """Use the verified filing issuer in rows without changing the registry."""
+    from .traits import repository_company_ciks
+    entity = annual.get('entity')
+    _need(isinstance(entity, str) and entity.isdigit() and int(entity) > 0
+          and str(int(entity)) in {str(int(cik)) for cik in
+              repository_company_ciks(repo_root=data_root, company_id=company['company_id'])},
+          'ORDINARY_PROJECTION_REPORTER_NOT_REGISTERED')
+    target_entity = calculation_target.get('entity')
+    _need(annual.get('company_id') == company['company_id']
+          and calculation_target.get('company_id') == company['company_id']
+          and 'entity' in calculation_target and 'accession' in calculation_target
+          and (target_entity is None or isinstance(target_entity, str)
+               and target_entity.isdigit() and int(target_entity) == int(entity)),
+          'ORDINARY_PROJECTION_TRACE_SUBJECT_CHANGED')
+    # Existing Calculator targets explicitly allow absent issuer/filing facts.
+    # Filled fields must agree; null fields rely on the verified annual input
+    # rather than inventing facts or modifying the original Trace.
+    _need(calculation_target['accession'] is None
+          or calculation_target['accession'] == annual['filing']['accessionNumber'],
+          'ORDINARY_PROJECTION_TRACE_FILING_CHANGED')
+    subject = annual.get('subject_policy', {})
+    _need(subject.get('cross_entity_combination_authorized') is False,
+          'ORDINARY_PROJECTION_REPORTER_SCOPE_NOT_PROVEN')
+    if target_entity is None or calculation_target['accession'] is None:
+        from sec_urls import accession_document_url, submissions_url
+        filing = annual['filing']
+        primary_url = accession_document_url(cik=int(entity),
+            accession=filing['accessionNumber'], document_name=filing['primaryDocument'])
+        primary = any(ref.get('company_id') == company['company_id']
+            and ref.get('accession') == filing['accessionNumber']
+            and ref.get('source_url') == primary_url for ref in source_references)
+        inventory = any(ref.get('company_id') == company['company_id']
+            and ref.get('source_url') == submissions_url(cik=int(entity))
+            for ref in source_references)
+        event_source = (not primary and not (allow_metadata_only and inventory)
+            and event_metric_id in {'C01','E02','E03','E04','E05'}
+            and event_input_binding is not None
+            and event_input_binding.get('record_type')=='HISTORICAL_EVENT_SOURCE_INPUT'
+            and _event_reporter_source(
+                company=company, annual=annual, binding=event_input_binding,
+                metric_id=event_metric_id, references=source_references,
+                registered_period_proven=registered_event_period_proven))
+        _need(primary or event_source or allow_metadata_only and inventory,
+              'ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN')
+    return {**company, 'primary_cik': str(int(entity))}
+
+
+def _event_reporter_source(*, company, annual, binding, metric_id, references,
+                          registered_period_proven=False):
+    """Use the event case's existing inventory/body set, without reading a 10-K.
+
+    Source bytes and completeness are checked by the source reader/writer.
+    This presentation check links those same references to the selected issuer;
+    it does not confirm an event or change the original nullable Trace.
+    """
+    from sec_urls import accession_document_url, submissions_url
+    company_id=company['company_id']; entity=annual['entity']
+    window=binding.get('event_window',{})
+    prepared=binding.get('prepared_input',{})
+    _need(binding.get('record_type')=='HISTORICAL_EVENT_SOURCE_INPUT'
+          and binding.get('metric_id')==metric_id
+          and binding.get('financial_cross_entity_combination_authorized') is False
+          and prepared==annual,
+          'ORDINARY_PROJECTION_REPORTER_EVENT_SOURCE_NOT_PROVEN')
+    registered=binding.get('registered_event_scope')
+    _need((registered is None and window==annual['table_input']['target_period'])
+        or registered is not None and registered_period_proven is True
+        and annual['subject_policy']['mode']=='SUCCESSOR_REGISTRANT_ONLY'
+        and window==registered.get('window'),
+        'ORDINARY_PROJECTION_REPORTER_EVENT_SOURCE_NOT_PROVEN')
+    refs={r.get('source_reference_id'):r for r in references}
+    inventory_url=submissions_url(cik=int(entity)); prefix=inventory_url[:-5]+'-submissions-'
+    inventories=[r for r in references if r.get('company_id')==company_id
+        and r.get('source_url')==inventory_url]
+    _need(len(inventories)==1,'ORDINARY_PROJECTION_REPORTER_EVENT_SOURCE_NOT_PROVEN')
+    # For a registered union the existing period proof has already checked all
+    # registered issuers and manifests. The display still needs this reporter's
+    # own inventory/set; it cannot borrow the other issuer's inventory.
+    sets=binding.get('source_set_manifests',[])
+    if registered is not None:
+        sets=[item for item in sets if (refs.get(item.get('inventory_source_reference_id')) or {})
+              .get('source_url','').startswith(inventory_url[:-5])]
+    _need(bool(sets),'ORDINARY_PROJECTION_REPORTER_EVENT_SOURCE_NOT_PROVEN')
+    for item in sets:
+        inventory=refs.get(item.get('inventory_source_reference_id'))
+        _need(item.get('record_type')=='SOURCE_SET_MANIFEST'
+            and item.get('company_id')==company_id
+            and item.get('source_role')=='fy_8k_item_inventory'
+            and set(item.get('form_types',[]))=={'8-K','8-K/A'}
+            and (registered is not None or item.get('discovery_policy') in
+                 {'PINNED_SUBMISSIONS','PINNED_SUBMISSIONS_SHARD_UNION_V1'})
+            and item.get('fiscal_or_date_window')=={k:window[k] for k in ('period_start','period_end')}
+            and inventory is not None and inventory.get('company_id')==company_id
+            and (inventory.get('source_url')==inventory_url
+                or inventory.get('source_role')=='sec_submissions_history'
+                and inventory.get('source_url','').startswith(prefix))
+            and item.get('sec_submissions_inventory_hash')==inventory.get('raw_asset_id'),
+            'ORDINARY_PROJECTION_REPORTER_EVENT_SOURCE_NOT_PROVEN')
+        for ref_id in item.get('ordered_source_reference_ids',[]):
+            ref=refs.get(ref_id)
+            _need(ref is not None and ref.get('company_id')==company_id
+                and ref.get('accession') and ref.get('document_name')
+                and ref.get('source_url')==accession_document_url(cik=int(entity),
+                    accession=ref['accession'],document_name=ref['document_name']),
+                'ORDINARY_PROJECTION_REPORTER_EVENT_SOURCE_NOT_PROVEN')
+    return True
+
+
 def _reported_average_period(*, case, result, annual, records):
     """Bind A03's disclosed average to its observation, not the year label.
 
@@ -73,47 +185,6 @@ def _reported_average_period(*, case, result, annual, records):
           and filing['period_start'] <= result['period_start'] < result['period_end'] == filing['period_end'],
           'ORDINARY_PROJECTION_AVERAGE_PERIOD_PROOF_CHANGED')
     return True
-
-
-def _reporting_company_view(*, data_root, company, annual, calculation_target,
-                            source_references=(), allow_metadata_only=False):
-    """Use the verified filing issuer in rows without changing the registry."""
-    from .traits import repository_company_ciks
-    entity = annual.get('entity')
-    _need(isinstance(entity, str) and entity.isdigit() and int(entity) > 0
-          and str(int(entity)) in {str(int(cik)) for cik in
-              repository_company_ciks(repo_root=data_root, company_id=company['company_id'])},
-          'ORDINARY_PROJECTION_REPORTER_NOT_REGISTERED')
-    target_entity = calculation_target.get('entity')
-    _need(annual.get('company_id') == company['company_id']
-          and calculation_target.get('company_id') == company['company_id']
-          and 'entity' in calculation_target and 'accession' in calculation_target
-          and (target_entity is None or isinstance(target_entity, str)
-               and target_entity.isdigit() and int(target_entity) == int(entity)),
-          'ORDINARY_PROJECTION_TRACE_SUBJECT_CHANGED')
-    # Existing Calculator targets explicitly allow absent issuer/filing facts.
-    # Filled fields must agree; null fields rely on the verified annual input
-    # rather than inventing facts or modifying the original Trace.
-    _need(calculation_target['accession'] is None
-          or calculation_target['accession'] == annual['filing']['accessionNumber'],
-          'ORDINARY_PROJECTION_TRACE_FILING_CHANGED')
-    subject = annual.get('subject_policy', {})
-    _need(subject.get('cross_entity_combination_authorized') is False,
-          'ORDINARY_PROJECTION_REPORTER_SCOPE_NOT_PROVEN')
-    if target_entity is None or calculation_target['accession'] is None:
-        from sec_urls import accession_document_url, submissions_url
-        filing = annual['filing']
-        primary_url = accession_document_url(cik=int(entity),
-            accession=filing['accessionNumber'], document_name=filing['primaryDocument'])
-        primary = any(ref.get('company_id') == company['company_id']
-            and ref.get('accession') == filing['accessionNumber']
-            and ref.get('source_url') == primary_url for ref in source_references)
-        inventory = any(ref.get('company_id') == company['company_id']
-            and ref.get('source_url') == submissions_url(cik=int(entity))
-            for ref in source_references)
-        _need(primary or allow_metadata_only and inventory,
-              'ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN')
-    return {**company, 'primary_cik': str(int(entity))}
 
 
 def _registered_event_period(*, data_root, manifest, annual, case, result):
@@ -267,6 +338,7 @@ def render_ordinary_records(*, data_root, manifest, records, case,
             and income['financial_cross_entity_combination_authorized'] is False
             and period['period_start'] <= result['period_start'] < result['period_end'] == period['period_end'])
         _need(income_period_proven, 'ORDINARY_PROJECTION_INCOME_PERIOD_PROOF_CHANGED')
+    event_period_proven = False
     if prepared_annual_input is not None:
         from .traits import repository_company_ciks
         _need(annual['company_id'] == manifest['company_id']
@@ -288,7 +360,9 @@ def render_ordinary_records(*, data_root, manifest, records, case,
     company = _reporting_company_view(data_root=data_root, company=company,
         annual=annual, calculation_target=trace['calculation_target'],
         source_references=case['references'],
-        allow_metadata_only=result['value'] is None and result.get('text_payload') is None)
+        allow_metadata_only=result['value'] is None and result.get('text_payload') is None,
+        event_input_binding=case.get('input_binding'), event_metric_id=case['primary_metric_id'],
+        registered_event_period_proven=event_period_proven)
     if income_period_proven and result.get('value') is not None:
         checked = {c['observation_id'] for c in case.get('income_observation_checks',[])}
         _need(set(trace['input_observation_ids']) <= checked,
