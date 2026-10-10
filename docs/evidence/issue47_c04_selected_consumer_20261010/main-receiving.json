@@ -1,0 +1,51 @@
+{
+  "commit": "50aeaa154a3a8ac6b4ebd0777da28a4dec3bb047",
+  "main_received": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+  "results": [
+    {
+      "name": "repeat",
+      "seconds": 5.743565249955282,
+      "exit_code": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "ford_motor_company",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2022",
+        "--fiscal-year-end",
+        "2022",
+        "--metric",
+        "C04",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/runs"
+      ]
+    },
+    {
+      "name": "read",
+      "seconds": 0.558848291868344,
+      "exit_code": 0,
+      "arguments": [
+        "results",
+        "--company",
+        "ford_motor_company",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/main-receiving-read"
+      ]
+    }
+  ],
+  "protected_files": 10,
+  "factory_calculator_calls": 0,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

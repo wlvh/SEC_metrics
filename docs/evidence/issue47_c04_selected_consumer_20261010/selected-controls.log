@@ -1,0 +1,14 @@
+test_absent_prior_is_named_and_never_borrowed_from_successor (tests.vnext.test_historical_auditor_selection.HistoricalAuditorSelectionTest.test_absent_prior_is_named_and_never_borrowed_from_successor) ... ok
+test_arbitrary_event_forms_cannot_expand_scope (tests.vnext.test_historical_auditor_selection.HistoricalAuditorSelectionTest.test_arbitrary_event_forms_cannot_expand_scope) ... ok
+test_explicit_registration_scope_keeps_only_actual_period_events (tests.vnext.test_historical_auditor_selection.HistoricalAuditorSelectionTest.test_explicit_registration_scope_keeps_only_actual_period_events) ... ok
+test_same_date_wrong_accession_and_ambiguous_prior_refuse (tests.vnext.test_historical_auditor_selection.HistoricalAuditorSelectionTest.test_same_date_wrong_accession_and_ambiguous_prior_refuse) ... ok
+test_selected_cik_cannot_borrow_current_registry_subject (tests.vnext.test_historical_auditor_selection.HistoricalAuditorSelectionTest.test_selected_cik_cannot_borrow_current_registry_subject) ... ok
+test_selected_year_and_ordered_amendments_do_not_use_latest (tests.vnext.test_historical_auditor_selection.HistoricalAuditorSelectionTest.test_selected_year_and_ordered_amendments_do_not_use_latest) ... ok
+test_selection_does_not_change_original_rows_or_dates (tests.vnext.test_historical_auditor_selection.HistoricalAuditorSelectionTest.test_selection_does_not_change_original_rows_or_dates) ... ok
+test_unread_or_rejected_metadata_is_not_a_complete_auditor_window (tests.vnext.test_historical_auditor_selection.HistoricalAuditorSelectionTest.test_unread_or_rejected_metadata_is_not_a_complete_auditor_window) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 8, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_auditor_selection"]}

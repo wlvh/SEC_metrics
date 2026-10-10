@@ -1,0 +1,42 @@
+{
+  "elapsed_seconds": 0.8419279579538852,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "ford_motor_company",
+  "run_id": "20261010T081905Z-3a313b60",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "C04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "C04",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "0a50c4a3696041a8810f22e4259e8097",
+      "error_type": "PeriodSelectionError",
+      "reason": "ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2026,
+      "error_category": "SOURCE_UNAVAILABLE"
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/runs/20261010T081905Z-3a313b60",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2026
+  ]
+}
