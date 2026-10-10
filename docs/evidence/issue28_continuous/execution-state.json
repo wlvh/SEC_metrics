@@ -6026,6 +6026,28 @@
       "inherits_original_result": "/Users/lyuhongwang/.codex/worktrees/issue28-risk-amendment/SEC_metrics/docs/evidence/issue28_risk_amendment_20261010/independent-review/conclusion.md",
       "new_scope_only": "unreviewed physical Item(s)/list/range reference repair and direct dependency tuple; not original full source API re-review",
       "agent_ended": true
+    },
+    {
+      "task_name": "review_textcapacity_9510a30",
+      "purpose": "review",
+      "module": "text_excerpt_capacity",
+      "scope_paths": [
+        "scripts/vnext/specs.py",
+        "scripts/vnext/text_results.py",
+        "scripts/vnext/text_rendering_limits.py",
+        "catalog/ordinary_risk_headings/D01_128.md",
+        "tests/vnext/test_text_item_capacity.py",
+        ".github/workflows/company-current-records.yml"
+      ],
+      "patch_sha": "9510a3006f24c16a11462ffb3f34ab0e53e396f5",
+      "base_sha": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+      "spawned_at": "2026-10-10T03:26:55.224105+00:00",
+      "ended_at": "2026-10-10T03:35:08.491252+00:00",
+      "tool_calls": 25,
+      "message_count": 1,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/docs/evidence/issue28_text_item_capacity_20261010/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_TEXT_CAPACITY",
+      "agent_ended": true
     }
   ],
   "ci_capacity_20260922": {
@@ -18719,5 +18741,80 @@
     "hard_render_path": "scripts/vnext/text_results.py:render_text_payload items<=64",
     "scope": "complete original Item1A headings; no truncation, no originalspec rewrite or limit change done",
     "next": "inspect saved68/count/text size; prepare explicit text representation/resource successor and identify necessary approval, ordinary read usesPR131"
+  },
+  "text_item_capacity_20261010": {
+    "product_sha": "9510a3006f24c16a11462ffb3f34ab0e53e396f5",
+    "head_sha": "3d1434656e7544ccaf7efc54530e62a48801cc53",
+    "pr": 134,
+    "base": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics",
+    "new_renderer": "ORDERED_NEWLINE_128_V2",
+    "new_spec": "catalog/ordinary_risk_headings/D01_128.md",
+    "old_spec_unchanged": true,
+    "old_renderer_limit": 64,
+    "new_explicit_limit": 128,
+    "max_text_chars": 64000,
+    "parent_tests": {
+      "run": 50,
+      "seconds": 8.501,
+      "skip": 0
+    },
+    "source_actual": {
+      "headings": 68,
+      "characters": 12530,
+      "UTF8bytes": 12538,
+      "processing_seconds": 3.8476740829646587,
+      "source_replay_seconds": 0.8361324169673026,
+      "result_id": "sha256:f154e5af84b9e151e56337b59247c1bc444d5dd41ca4c2fb8e2326a3035fc4d1",
+      "company_cli_completed": false,
+      "reference_only_after_extraction": true
+    },
+    "peer_consumer": {
+      "pr": 133,
+      "fixed_delivery_sha": "6d000bdc",
+      "source": "parent read fixed mainrecord, not rerun",
+      "actual_code": "498f3c10",
+      "actual_company": "Enphase FY2021 only",
+      "actual_company_result": "53085d27, ownV3Spec not copiedpureSourceID",
+      "company_seconds": [
+        9.159,
+        1.036,
+        0.851
+      ],
+      "protected_old_files": 198,
+      "protected_after_files": 206,
+      "old_failed_files": 2,
+      "short_delivery_independent_read_seconds": 0.796,
+      "short_delivery_allstate_files": 368,
+      "old_correct_FY22_25_recomputed": false,
+      "new_formal_credit": false,
+      "CI": "6d000bdc all11 terminal SUCCESS per peer REST observation; parent read fixed primary record, not execution"
+    },
+    "review": "PASS_LIMITED product9510, not company/owneradoption",
+    "CI": {
+      "head": "3d143465",
+      "observation": "8 SUCCESS, 3 IN_PROGRESS; not terminal",
+      "run": "38021176182"
+    },
+    "default_current_or_historical_dispatch_changed": false,
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "receiving of134+133; verify actual current dispatcher gap before new scope",
+    "review_tests": {
+      "run": 50,
+      "seconds": 9.065,
+      "skip": 0
+    },
+    "review_resources": {
+      "tools": 25,
+      "messages": 1
+    },
+    "review_old_complete_records_bytes_same": [
+      2,
+      64
+    ]
   }
 }
