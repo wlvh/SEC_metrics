@@ -40,3 +40,6 @@ Two ordinary data-integrity controls added before public consumption: a malforme
 
 
 Actual predecessor selector check: ParamountFY2024 selection15.883s keeps reportingCIK813828 and the original annual container/source, and returns all8 originalcalls28–35. This source-only correspondence does not select a financial operating start date, annualize a short period, reconcile the existing August7/August8 financial conflict or assign old replies to currentCIK2041610. No model finding/quantity is created; full original group and limits remain, media/status are still for public replay validation.
+
+
+Content reference reuse: the retainedbcc0 d04-full-text-read-2026-10-04 record supersedes the early two-pattern limited read. It already read8800 supplied visible blocks, original16 answers and74units; that reading is not repeated here. Four originalHTML sources still have14 unacquired/uninterpreted image references, and the whole-filing all-media outcome remainsNOT_PROVEN. The three original native results remainNONE/WITHHELD/null. Public replay must carry these exact remaining limitations instead of either claiming no textread or promoting mechanical group completeness to whole-media absence. The existing media-owner plan is a dependency record, not a GETgrant; originalSEC1771 there is an old snapshot, actualEX99 completion made1772.
