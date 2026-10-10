@@ -18584,7 +18584,13 @@
       ]
     },
     "evidence_path": "docs/evidence/issue28_current_reported_revenue_20261010/README.md",
-    "CI": "first query failed Internal Privoxy Error; no terminal claim",
+    "CI": {
+      "head": "9749a2136c5ef82f77a5b6d12515334bab7b818b",
+      "completed_success": 6,
+      "in_progress": 5,
+      "overall_terminal": null,
+      "observation": "actual GraphQL rollup after archive push; no overall SUCCESS claim"
+    },
     "calls": [
       0,
       0,
@@ -18598,7 +18604,7 @@
       "seconds": 8.924,
       "skip": 0
     },
-    "head_sha": "9749a213",
+    "head_sha": "9749a2136c5ef82f77a5b6d12515334bab7b818b",
     "review_tests": {
       "run": 109,
       "seconds": 9.826,
@@ -18609,6 +18615,12 @@
       "messages": 3,
       "agent_ended": true
     },
-    "next": "actual newhead CI and receiving; limited D01 amendment input gap next public task"
+    "next": "actual newhead CI and receiving; limited D01 amendment input gap next public task",
+    "peer_receiving": {
+      "peer_source_commit": "1d00cbd3",
+      "scope": "only two source files, no current caller; peer reports57controls/.343s and sameSalesSourceAPI1.537s; root read fixed diff/main record, not rerun",
+      "old_correct_result_recalculated": false,
+      "new_credit": false
+    }
   }
 }
