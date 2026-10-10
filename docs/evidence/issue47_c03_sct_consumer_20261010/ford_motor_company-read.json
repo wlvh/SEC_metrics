@@ -1,0 +1,46 @@
+{
+  "seconds": 5.844443916110322,
+  "exit_code": 0,
+  "arguments": [
+    "results",
+    "--company",
+    "ford_motor_company",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/ford_motor_company/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/ford_motor_company/read"
+  ],
+  "report": {
+    "elapsed_seconds": 3.954277832992375,
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "ford_motor_company",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "metrics": [
+      {
+        "metric_id": "C03",
+        "result_id": "sha256:bf8ba092ee107e90eddd420dab2b366e16c592f1ca469ba2cb967b72864cb592",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "fiscal_year": 2021,
+        "value": "22813174",
+        "unit": "USD",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/ford_motor_company/state/updates/C03/periods/FY2021/results/7015d22e5b4948968eb9599db293ba96"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/ford_motor_company/read"
+  }
+}

@@ -59,6 +59,53 @@ class HistoricalCompensationSelectionTest(TestCase):
 
 
 class HistoricalCompensationAdapterTest(TestCase):
+    def test_untagged_proxy_uses_shared_sct_and_retains_derived_asset(self):
+        from vnext import historical_compensation_case as cases
+        from vnext.deterministic_router import DeterministicRouterError
+        annual={'entity':'1048286','table_input':{'target_period':{'fiscal_year':2021,
+                'period_start':'2021-01-01','period_end':'2021-12-31'}}}
+        proxy={'raw_bytes':b'constructed untagged proxy','raw_blob':{},'source_reference':{}}
+        selected={'accessionNumber':'proxy','form':'DEF 14A'}
+        source={'prepared_annual_input':annual,'proxy_source':proxy,
+            'selection':{'selected_proxy':selected},'records':[],'source_proofs':[],
+            'proxy_inventory':{'name':'Example','formerNames':[]}}
+        asset={'record_type':'DERIVED_ASSET','id':'constructed'}
+        resolution={'selection':{'reason_code':'PASS'},'derived_assets':[asset],
+            'observation':None,'trace':{},'result':{}}
+        with patch.object(cases,'prepare_historical_compensation_sources',return_value=source), \
+             patch.object(cases,'resolve_c03',side_effect=DeterministicRouterError('XBRL source contains no contexts')), \
+             patch.object(cases,'resolve_proxy_compensation_table',return_value=resolution) as shared, \
+             patch.object(cases,'verify_ordinary_source_proofs',return_value={}):
+            case=cases.prepare_historical_compensation_year_case(repo_root=Path('/constructed'),
+                company_id='example',metric_id='C03',fiscal_year=2021)
+        self.assertIn(asset,case['expected_records'])
+        self.assertEqual(cases.PROXY_SCT_SPEC_PATH,case['spec_paths']['C03'])
+        self.assertIs(source['proxy_inventory'],shared.call_args.kwargs['inventory'])
+        self.assertEqual(selected,shared.call_args.kwargs['filing'])
+        self.assertTrue(case['input_assessments']['C03']['proxy_sct_route_used'])
+        self.assertFalse(case['input_assessments']['C03']['proxy_sct_consumer_complete'])
+
+    def test_broken_inline_and_non_context_errors_do_not_enter_sct(self):
+        from vnext import historical_compensation_case as cases
+        from vnext.deterministic_router import DeterministicRouterError
+        from vnext.governance_signals import GovernanceSignalError
+        annual={'entity':'1048286','table_input':{'target_period':{'fiscal_year':2021,
+                'period_start':'2021-01-01','period_end':'2021-12-31'}}}
+        for raw,error in [(b'<ix:nonNumeric>broken',DeterministicRouterError('XBRL source contains no contexts')),
+                          (b'plain proxy',DeterministicRouterError('wrong entity')),
+                          (b'plain proxy',GovernanceSignalError('C03_USD_UNIT_REQUIRED'))]:
+            source={'prepared_annual_input':annual,'proxy_source':{'raw_bytes':raw,
+                'raw_blob':{},'source_reference':{}},'selection':{'selected_proxy':{}}}
+            with self.subTest(error=error), \
+                 patch.object(cases,'prepare_historical_compensation_sources',return_value=source), \
+                 patch.object(cases,'resolve_c03',side_effect=error), \
+                 patch.object(cases,'resolve_proxy_compensation_table') as table:
+                with self.assertRaises(type(error)) as caught:
+                    cases.prepare_historical_compensation_year_case(repo_root=Path('/constructed'),
+                        company_id='marriott_international',metric_id='C03',fiscal_year=2021)
+                self.assertIs(error,caught.exception)
+                table.assert_not_called()
+
     def test_source_preparer_retains_annual_primary_for_reporter_and_distinct_proxy(self):
         from vnext import historical_compensation_case as cases
         from unittest.mock import Mock
@@ -71,13 +118,15 @@ class HistoricalCompensationAdapterTest(TestCase):
         with patch.object(cases,'resolve_period_selection',return_value={}), \
              patch.object(cases,'prepare_historical_annual_input',return_value=annual), \
              patch.object(cases,'_Sources',return_value=reader), \
-             patch.object(cases,'load_history_for_period',return_value={}), \
+             patch.object(cases,'load_history_for_period',return_value={
+                 'inventory':{'raw_bytes':b'{"name":"Example","formerNames":[]}'}}), \
              patch.object(cases,'select_first_reported_proxy',return_value=selection):
             source=cases.prepare_historical_compensation_sources(repo_root=Path('/constructed'),
                 company_id='marriott_international',fiscal_year=2022)
         self.assertEqual([annual['filing'],selection['selected_proxy']],
                          [call.args[0] for call in reader.primary.call_args_list])
         self.assertEqual({'source':'proxy'},source['proxy_source'])
+        self.assertEqual({'name':'Example','formerNames':[]},source['proxy_inventory'])
 
     def test_history_dispatch_preserves_existing_factories_and_dependencies(self):
         from vnext import company_local
