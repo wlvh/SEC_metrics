@@ -1,0 +1,52 @@
+Traceback (most recent call last):
+  File "<stdin>", line 3, in <module>
+AssertionError: Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/records.py", line 1211, in _validate_record_semantics
+    validate_text_record(record=record)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/text_results.py", line 133, in validate_text_record
+    _need(render_text_payload(payload=record["text_payload"]) == record["value"],
+          ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/text_results.py", line 76, in render_text_payload
+    _need(payload["version"] == VALUE_KIND and payload["content_kind"] == "SOURCE_EXCERPTS"
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          and payload["renderer"] == "ORDERED_NEWLINE_V1", "TEXT_PAYLOAD_PROTOCOL_UNSUPPORTED")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/text_results.py", line 36, in _need
+    raise TextResultError(reason)
+vnext.text_results.TextResultError: TEXT_PAYLOAD_PROTOCOL_UNSUPPORTED
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import runpy,socket; socket.socket.connect=lambda *a,**k: (_ for _ in ()).throw(AssertionError('NETWORK_FORBIDDEN')); runpy.run_path('tools/vnext_company.py',run_name='__main__')
+                                                                                                                          ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen runpy>", line 294, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "tools/vnext_company.py", line 214, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "tools/vnext_company.py", line 165, in main
+    result = read_company_results(state_root=args.state_root, company_id=args.company,
+                                 defects_file=args.defects_file, output_root=args.output_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_result_view.py", line 344, in read_company_results
+    return read_current_company(state_root=state_root, company_id=company_id,
+                                defects_file=defects_file, output_root=output_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_current_records.py", line 206, in read_current_company
+    return _read_current_company(root, company_id, defects_file, output_root)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_current_records.py", line 279, in _read_current_company
+    saved = read_saved_result(output_root=record, shared_record_cache=shared_record_cache)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 237, in read_saved_result
+    result = _validate_records(records, manifest['company_id'], manifest['metric_id'], manifest['result_id'])
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 47, in _validate_records
+    validate_record(record=record)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/records.py", line 1881, in validate_record
+    _validate_record_semantics(record_type=semantic_type, record=record)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/records.py", line 1213, in _validate_record_semantics
+    raise RecordError(str(error)) from error
+vnext.records.RecordError: TEXT_PAYLOAD_PROTOCOL_UNSUPPORTED
+
