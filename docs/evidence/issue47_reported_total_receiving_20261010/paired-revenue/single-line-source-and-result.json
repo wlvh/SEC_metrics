@@ -1,0 +1,81 @@
+{
+  "code_commit": "f41469864e05b5305875fb2afcd87b092a50d77e",
+  "growth": "-0.4169640187381640586065982259",
+  "result_id": "sha256:5aa4a2b626f8fa6276d784642538943f9cf5222b4931ee24a7e56cb877f91780",
+  "original_operands": [
+    {
+      "attributes": {
+        "accession": "0000078003-24-000039",
+        "deterministic_router_semantic_version": "2",
+        "entity": "78003",
+        "filed": "2024-02-22",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "frame": ""
+      },
+      "claim_kind": "COMPANYFACTS_NUMERIC_FACT",
+      "company_id": "pfizer",
+      "locator": {
+        "concept": "Revenues",
+        "fact_id": "fact:sha256:1d6562f86ff1ba54f705ee920a2489a0db17b2fda7c59128c61eb9bb240b2652",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01"
+      },
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "source_reference_id": "sha256:2f7af44418f80e92861561aaada72799f2e38d7ca659b590081a1bca194200e7",
+      "source_role": "companyfacts",
+      "source_set_manifest_id": "sha256:8621ef95673bbd7977f0a54d1fa525e96437123662cce8e6f4391bfee9dfbdac",
+      "unit": "USD",
+      "value": "58496000000",
+      "verified_claim_id": "sha256:984d8b4ff562d29ce0ac6654c57b5c77af23abf1495c012d8641e0ab6b457039"
+    },
+    {
+      "attributes": {
+        "accession": "0000078003-23-000024",
+        "deterministic_router_semantic_version": "2",
+        "entity": "78003",
+        "filed": "2023-02-23",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "frame": ""
+      },
+      "claim_kind": "COMPANYFACTS_NUMERIC_FACT",
+      "company_id": "pfizer",
+      "locator": {
+        "concept": "Revenues",
+        "fact_id": "fact:sha256:d4ac13c65e02c46434776e4efa2e311fddf67ee8e906a205c3d192ca3bb96ce4",
+        "period_end": "2022-12-31",
+        "period_start": "2022-01-01"
+      },
+      "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+      "source_reference_id": "sha256:0243c8b1bff22aaca390ca4bf8d5317cbe200b928b32b9b8d4aacfd0e8609ce4",
+      "source_role": "companyfacts",
+      "source_set_manifest_id": "sha256:e58ec6fc1a11da12cfcd8b2fb4285635f2dcf94bdb93d51170e2c7c964363a6c",
+      "unit": "USD",
+      "value": "100330000000",
+      "verified_claim_id": "sha256:e757f5f0ce112c7cee217ca8c6ad7baa6eaa4f9aca6c353d88c8c83cd3df8b95"
+    }
+  ],
+  "scope_summaries": {
+    "current": {
+      "scope_id": "sha256:848ddb7f7b51cfc91ee6b7fe5cc6ef211697776d40998014259e34ccf41194ee",
+      "status": "REPORTED_CONSOLIDATED_TOTAL",
+      "complete_scope_proven": true
+    },
+    "prior": {
+      "scope_id": "sha256:8fadc7f5f9386d69970fd6993ff8036731d37840883afb3dac1e7549ed5b4754",
+      "status": "REPORTED_CONSOLIDATED_TOTAL",
+      "complete_scope_proven": true
+    }
+  },
+  "paired_measure_bridge": null,
+  "full_assessment_preserved_in_saved_result": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B02/periods/FY2023/results/371564f3cffc414883e29528e3666022/input-assessments.json",
+  "max_daily_csv_field_characters": 12084,
+  "unchanged_old_files": 234,
+  "final_protected_files": 243,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
