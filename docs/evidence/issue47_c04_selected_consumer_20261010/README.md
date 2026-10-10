@@ -22,6 +22,8 @@ python3 tools/vnext_company.py results --company ford_motor_company --state-root
 
 One dependency-union control added after the original run: 61 related tests10.509s/zero skip; it checks that every declared public source/label dependency and the actual historical selectors participate in processing identity. It does not recalculate the saved result.
 
+Received actual main `f51d8c3d` (PR139/137) by normal merge at50aeaa15. Only the B02 statement/source dependencies changed; C04 processing remained identical. 75 dispatch/state/statement/C04 controls0.386s/zero skip passed. Existing Ford22 state, factory/Calculator forbidden: repeat5.744s and independent results0.559s, same0ec6 flag/date/CIK and ten protected files, one result directory; no first calculation repeated. The precommit structural check refused changed uncommitted evidence as expected; postcommit capability alignment passed. No broad fiscal rerun.
+
 Earlier development evidence:
 
 Continues the existing uncommitted auditor selection, not a new research or model experiment. Historical owner selects actual annual/prior/event metadata; public28 owns four-form source/annual-reader/Resolver/Calculator integration and ordinary company gates/storage. No second public implementation is added. Removed old draft proxy-period inference because this C04 slice does not establish C03 proxy responsibility.
