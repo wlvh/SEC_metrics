@@ -127,6 +127,14 @@ class SingleRevenueLineTest(unittest.TestCase):
                 (b'PER COMMON SHARE DATA',b'PER SEGMENT DATA','FISCAL_COLUMN|UNIT_UNRESOLVED')):
             broken=changed(source,raw.replace(before,after))
             with self.subTest(reason=reason),self.assertRaisesRegex(ValueError,reason):self.scope(broken,annual)
+        paired=raw.replace(b'<td colspan="3">2025</td>',
+            b'<td colspan="3">2025</td><td colspan="3">2024</td>')
+        self.assertTrue(self.scope(changed(source,paired),annual)['complete_scope_proven'])
+        # A later matching year does not own the amount in the earlier group.
+        crossed=raw.replace(b'<td colspan="3">2025</td>',
+            b'<td colspan="3">2024</td><td colspan="3">2025</td>')
+        with self.assertRaisesRegex(ValueError,'FISCAL_COLUMN'):
+            self.scope(changed(source,crossed),annual)
         self.assertFalse(reported_revenue_scope(primary=source,annual=annual,
             approved_concepts=APPROVED)['complete_scope_proven'])
 
