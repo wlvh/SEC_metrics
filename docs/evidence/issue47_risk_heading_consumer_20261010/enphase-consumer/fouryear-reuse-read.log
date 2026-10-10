@@ -1,0 +1,8 @@
+existing-four-D01-coordinates 0 1.9552346668206155
+repeat-forbidden-D01-factory 0 1.8900915828999132
+independent-read 0 0.7352441661059856
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/d01-enphase-consumer/verify_company.py", line 40, in <module>
+    assert len(failed)==1 and failed[0]['fiscal_year']=='2021' and failed[0]['reason_code']=='INPUT_OR_EXECUTION_FAILED'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
