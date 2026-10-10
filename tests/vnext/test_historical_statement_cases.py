@@ -224,6 +224,73 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
                     '<tr><td>'+text+'</td><td></td></tr>'))
 
 
+class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
+    """Small real-format originals; no constructed company result is accepted."""
+
+    def prepared_claims(self):
+        from tests.vnext.test_selected_revenue_scope_v1 import originals, facts, APPROVED
+        from types import SimpleNamespace
+        primary, xml, annual = originals()
+        primary['raw_blob'] = {'media_type': 'text/html'}
+        xml['raw_blob'] = {'media_type': 'application/xml'}
+        # A source-format control for native totals; label selection has its own
+        # actual-source and wrong-label regressions in the received shared API.
+        reader = SimpleNamespace(auditor_filing=lambda f: [primary, xml],
+                                 read=lambda *a, **k: {'raw_bytes': b'{}'})
+        claims = [{'claim_kind': 'COMPANYFACTS_NUMERIC_FACT', 'verified_claim_id': 'constructed-'+str(i),
+                   'locator': {'concept': fact['concept'].split(':')[-1],
+                               'period_start': fact['period_start'], 'period_end': fact['period_end']},
+                   'attributes': {'entity': fact['entity'], 'accession': fact['accession']},
+                   'value': fact['value'], 'unit': fact['unit']}
+                  for i, fact in enumerate(facts(annual))]
+        return reader, annual, claims, APPROVED
+
+    def admit(self, reader, annual, claims, concepts):
+        with patch('vnext.historical_fiscal_labels.resolve_selected_fiscal_year_label', return_value=None):
+            return cases._revenue_claims_admitted_by_original(reader=reader, prepared=annual,
+                filing=annual['filing'], period=annual['table_input']['target_period'],
+                claims=claims, concepts=concepts)
+
+    def test_total_admission_keeps_original_claim_id_and_never_retags_its_locator(self):
+        reader, annual, claims, concepts = self.prepared_claims()
+        before = copy.deepcopy(claims)
+        admitted, scope = self.admit(reader, annual, claims, concepts)
+        self.assertTrue(scope['complete_scope_proven'])
+        self.assertEqual(len(admitted), 1)
+        self.assertIs(admitted[0], claims[1])
+        self.assertEqual(admitted[0]['locator']['concept'], 'Revenues')
+        self.assertEqual(claims, before)
+
+    def test_wrong_unit_entity_accession_or_amount_cannot_supply_the_original_total(self):
+        for key in ('unit', 'entity', 'accession', 'value'):
+            reader, annual, claims, concepts = self.prepared_claims()
+            if key in ('entity', 'accession'):claims[1]['attributes'][key] = 'wrong'
+            elif key == 'unit':claims[1]['unit'] = 'EUR'
+            else:claims[1]['value'] = '58497000000'
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                self.admit(reader, annual, claims, concepts)
+
+    def test_prior_period_comparisons_stay_for_the_shared_comparability_guard(self):
+        reader, annual, claims, concepts = self.prepared_claims()
+        comparative = copy.deepcopy(claims[0]); comparative['verified_claim_id'] = 'constructed-comparison'
+        comparative['locator'].update(period_start='2024-01-01', period_end='2024-12-31')
+        claims.append(comparative)
+        admitted, _ = self.admit(reader, annual, claims, concepts)
+        self.assertEqual(admitted, [claims[1], comparative])
+
+    def test_missing_scope_and_conflicting_original_dates_are_not_complete_revenue(self):
+        reader, annual, claims, concepts = self.prepared_claims()
+        with patch('vnext.selected_reported_revenue_v2.reported_revenue_scope',
+                   return_value={'complete_scope_proven': False}), \
+                patch('vnext.selected_revenue_scope_v1.selected_revenue_scope',
+                      return_value={'complete_scope_proven': False}):
+            with self.assertRaisesRegex(ValueError, 'COMPLETE_SCOPE_UNPROVEN'):
+                self.admit(reader, annual, claims, concepts)
+        annual['table_input']['target_period']['period_start'] = '2025-02-01'
+        with self.assertRaisesRegex(ValueError, 'ORIGINAL_PERIOD_CHANGED'):
+            self.admit(reader, annual, claims, concepts)
+
+
 class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
     def test_existing_entry_does_not_silently_expand_to_b07(self):
         with patch.object(cases, 'resolve_period_selection') as select:
