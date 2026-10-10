@@ -729,3 +729,10 @@ PR135ae7 all11CI nowactualSUCCESS, stillDraft/open;D04 via112 alreadymainbdb/cur
 已实际读Claude6094536012/6094536393/6094536621和权限更正6094654752：137freshPF2022wrongheld，保存旧正例不证明fresh路径。单位说明修补Draft139产品b860/目标64ec只UNIT_HEADER加optionalCOMMON，实际grid112/yearcol15span3本已覆盖amount16，拒整行原因是COMMON SHARE caption不认；不动financial_duration/table_grid/列/金额/可比性。60/7.696及新双列组1/.200边界过，authPF2021原primarya6dc+XML+CompanyFacts18.879→81288mUSD/year2021/grid112r3c16/MATCH，本方未创建公司Result。Peer137fixed82e99842fresh21–25 onlyB02首76.830，22=.2342535183544926680444838106/23=-.416964.../25=-.016470995...三正、21/24完整两scope后真实41908vs41651/58496vs59553 business不可比；禁case/Calc复4.2610/独读.694/44保护，旧25rows/424files另读保。本方读固定README/JSON/高精度22公式，不冒称执行peer公司。Receiver原授权涵盖repair/revalidation/conditionalreceipt更正，根本方仍不selfmerge。139新headCI和接收复核继续，不开另一选择器、不旧cache证明fresh、0newcalls。
 
 下一动作：核139/137对应head终态及Claude受影响反例复核；读取peerD01cbb293新增组合验证（仅给定publicstoreEXPLICIT+D01/mainD04集合一行并存，非整个135源覆盖），处理实际反馈；其余390、当前AI成熟度、自动来源更新及旧入口退出责任未完成。预算143/143/52保持，本轮0/0/0，无账本/机会恢复/模型端点改变/Ready/合并/采纳/部署/active。原task/b06-new-source现场未清理。
+
+
+## 2026-10-10 D01组合实际CI期限与公共分层
+
+本方实际读serverjob114153412817/run38031567093与peer9244固定原日志，所有测试命令含尾27/6.053s打印OK但job超5min后CANCELLED，不能绿色/未运行。单次同serverjobsource257/221.083s、capacity30/26.005s、singleline43/22.612s+其他/setup超过总期限。公共Draft140产品0ff/归档47d从actualmain84只移收入source合同到并行source-contracts、其余company-records，每组原5min；原requiredname company-current always汇总，失败/取消/跳过均失败。原8commands、triggers、permissions、pinnedsetup全部保持；16gate结果组合验证，未重财报。固定d01-consumer.patch基cbb保10commands/paths，将已有capacity+singleline两步移同sourcejob，root给定精确公共patch、47自己应用验证；不整拷main吞历史测试、不改保护、不增deadline/skip/旧green缓存。新headCI首次仍运行，后续自然checkpoint读terminal，真实EndToEnd时间未测不虚报。
+
+本轮累计业务新SEC/provider/paid仍0/0/0，原ledger/机会/旧source/结果不改。139/64ec已经actual11CI SUCCESS、137/70bb peer实际11SUCCESS但公司fresh证据与CI分开；接收Claude复核按已有授权，root不selfmerge。下一动作核140与133应用后的实际job/requiredgate终态及newcomments/main，再接续其余合法业务与自动更新责任，不机械在报告后取消Goal。

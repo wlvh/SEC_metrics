@@ -19186,6 +19186,30 @@
       0,
       0,
       0
-    ]
+    ],
+    "ci_followup": {
+      "peer_report": "cbb133company job114153412817 cancelled5min after source/capacity/history/revenue/D04/event/D01 passed; tailSEC27 printsRan before cancellation",
+      "scope": "parentreceivedspecificreport; rawCIjob/log willreadnextbatch beforepublicworkflowchange",
+      "disposition": "root publicCI layer responsibility, preservetests/requiredcheck failure propagation,no timeoutblindincrease/no businessrerun"
+    }
+  },
+  "company_ci_layers_20261010": {
+    "pr": 140,
+    "product": "0ff2645a36b0cecbecb8367d8fe25169b93df769",
+    "head": "47d9435ba7c4e39092e748594fc415b53e947bb8",
+    "base": "84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf",
+    "server_job_read": 114153412817,
+    "fixed_rawlog_peer": "9244c306",
+    "original_result": "allcommandsprintOK includingtail27/6.053,job5minCANCELLED;notPASS",
+    "actual_source_times": "samejobsource221.083/capacity26.005/singleline22.612",
+    "change": "parallel company-records/source-contracts5min,existingrequiredcompany-current alwaysaggregate successonlybothsuccess",
+    "verification": "originalmain8commands multiset/triggers/permissions exact;Ruby YAMLparse;16 resultgate controls;D01fixedconsumerpatch all10commands andpaths preserve",
+    "new_business_tests_or_calls": [
+      0,
+      0,
+      0
+    ],
+    "ci": "newheadinitialrunnotterminal;no claim of timingimprovement",
+    "peer_ownership": "rootpubliclayout+exactpatch;47 applies and consumerCI; no peer tree/ledger edits"
   }
 }
