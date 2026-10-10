@@ -27,3 +27,6 @@ Mainf51 receiving continuation: original09331 combined with actualmain by normal
 
 
 Before the public repair, independent old-state results read0.760s returns22 rows with range discovery/business factory/Calculator forbidden and all491 state files unchanged. It does not refresh sources or clear old defects. Read-only actual configuration comparison names the relevant B01/B02 source/producer changes; only MacyFY2023 two coordinates are planned for reprocessing after the shared fix, not the other20 rows or already received Pfizer five-year batch. The new missing-year classification observation is returned to the public owner, not implemented as a competing historical controller.
+
+
+Actual source-only company CLI on this main combination: MacyFY2023 B01/B02 sources30.474s/exit0, five metadata-window candidate originals; requested fiscal2023 resolves CIK794367 and53-week actual2023-01-29→2024-02-03. Eight known source dependencies available, no unresolvedURL; FISCAL_RANGE_RESOLVED/sourcebytestrue, calls0/fetchfalse/metric_executedfalse/acceptancefalse. Socket/businesscase/Calculator were forbidden. It reads saved material, not online filling; full original revenue scope is still assessed in the business consumer and does not follow merely from sourcebytes availability. This once-only source CLI execution is not repeated after the dispatch-only repair.
