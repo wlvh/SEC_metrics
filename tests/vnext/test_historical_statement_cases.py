@@ -280,6 +280,21 @@ class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
         admitted, _ = self.admit(reader, annual, claims, concepts)
         self.assertEqual(admitted, [claims[1], comparative])
 
+    def test_stopped_single_line_does_not_gain_new_scope_while_explicit_total_keeps_working(self):
+        from tests.vnext.test_single_revenue_line import single_statement
+        from types import SimpleNamespace
+        primary, annual = single_statement()
+        primary['raw_blob'] = {'media_type': 'text/html'}
+        reader = SimpleNamespace(auditor_filing=lambda f: [primary],
+                                 read=lambda *a, **k: {'raw_bytes': b'{}'})
+        _, _, claims, concepts = self.prepared_claims()
+        with self.assertRaisesRegex(ValueError, 'COMPLETE_SCOPE_UNPROVEN'):
+            self.admit(reader, annual, claims, concepts)
+        original_reader, original_annual, original_claims, concepts = self.prepared_claims()
+        admitted, scope = self.admit(original_reader, original_annual, original_claims, concepts)
+        self.assertTrue(scope['complete_scope_proven'])
+        self.assertEqual(admitted, [original_claims[1]])
+
     def test_missing_scope_and_conflicting_original_dates_are_not_complete_revenue(self):
         reader, annual, claims, concepts = self.prepared_claims()
         with patch('vnext.selected_reported_revenue_v2.reported_revenue_scope',
