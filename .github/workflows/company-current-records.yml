@@ -7,6 +7,7 @@ name: Company saved-source records
       - 'tests/vnext/test_company_current_records.py'
       - 'tests/vnext/test_paired_measure_contradiction.py'
       - 'tests/vnext/test_current_d04_company.py'
+      - 'tests/vnext/test_explicit_e01_company.py'
       - 'tests/vnext/test_ordinary_current_update.py'
       - 'tests/vnext/test_selected_revenue_scope_v1.py'
       - 'tests/vnext/test_current_reported_revenue.py'
@@ -76,7 +77,7 @@ jobs:
       - name: Selected event sources and explicit history validation
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1 tests.vnext.test_registered_event_projection
+        run: python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1 tests.vnext.test_registered_event_projection tests.vnext.test_explicit_e01_company
       - name: Historical selected event scope and record retention
         env:
           PYTHONDONTWRITEBYTECODE: '1'

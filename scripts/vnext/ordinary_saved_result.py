@@ -20,7 +20,17 @@ METRIC_IDS = frozenset(installed_ordinary_spec_documents())
 LODGING_METRIC_IDS = frozenset({'B10','B11'})
 SAVED_MODEL_METRIC_IDS = frozenset({'D04'})
 SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | SAVED_MODEL_METRIC_IDS
-EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13'})
+EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13','E01'})
+CURRENT_E01_SPEC_PATH = 'catalog/r6/E01_content_confirmed_ma_v1.md'
+
+
+def current_e01_scope(saved):
+    """Saved item-code results do not acquire the successor's meaning.
+
+    The existing reader verifies the saved Spec/result relationship; this
+    marker is written only for the explicitly selected successor case.
+    """
+    return saved['manifest'].get('selected_spec_path') == CURRENT_E01_SPEC_PATH
 
 
 def _program_version(root):
@@ -163,6 +173,8 @@ def _save_case(*, source_root, output_root, company_id, metric_id, factory, calc
                 'compiled_specs': case['compiled_specs'],
                 'calculation_performed_by_writer': calculation_performed,
                 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}
+            if metric_id == 'E01' and case['spec_paths'][metric_id] == CURRENT_E01_SPEC_PATH:
+                manifest['selected_spec_path'] = CURRENT_E01_SPEC_PATH
             from .ordinary_projection import render_ordinary_records
             rendered = render_ordinary_records(data_root=source_root, manifest=manifest,
                 records=records, case=case, receipt_status='CALCULATED_SAVED_SOURCE' if calculation_performed else 'SAVED_PRECALCULATED_CASE',
