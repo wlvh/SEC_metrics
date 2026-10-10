@@ -26,7 +26,8 @@ class CurrentB06CompositionTest(unittest.TestCase):
                 'period_start':'2025-01-01','period_end':'2025-12-31'}}}
         self.packet={'decision':'INPUT_PROPERTY_PROVEN','prepared_input':self.annual,'checks':[]}
         self.preparation={'input_binding':{'prepared_annual_input':self.annual},'records':[]}
-        self.case={'spec_paths':{'B06':'constructed'},'selection':{'status':'WITHHELD'}}
+        self.case={'spec_paths':{'B06':'constructed'},'selection':{'status':'WITHHELD'},
+                   'results':{'B06':{'publication':'WITHHELD'}}}
 
     def context(self,**more):
         from contextlib import ExitStack
@@ -107,5 +108,31 @@ class CurrentB06CompositionTest(unittest.TestCase):
         self.assertLess(len(row['context_or_dimension']),1000)
         self.assertEqual(180000,len(selection['audit']['debt_candidates'][0]['source_text']))
         self.assertEqual(self.current.content_hash(value=selection),displayed['selection_detail_id'])
+
+    def test_reported_interest_does_not_disappear_from_complete_component_claim(self):
+        from tests.vnext.test_b06_guarded_result_v3 import synthetic
+        original,_=synthetic(47000000)
+        preparation={kind:{'raw_bytes':original[kind].replace(b'StockholdersEquity',b'InterestPayableCurrent'),
+                           'source_reference':{'source_reference_id':'TEST_ONLY_'+kind}}
+                     for kind in ('primary','xml')}
+        annual={'entity':'1','filing':{'reportDate':'2025-12-31'}}
+        rows=self.current._unresolved_current_interest(preparation,annual)
+        self.assertEqual(['47000000','47000000'],[r['value'] for r in rows])
+        self.assertEqual({'primary','xml'},{r['source_kind'] for r in rows})
+        self.assertTrue(all(r['ordinal']>0 and r['context_ref']=='end' for r in rows))
+        annual['filing']['reportDate']='2024-12-31'
+        self.assertEqual([],self.current._unresolved_current_interest(preparation,annual))
+        annual['filing']['reportDate']='2025-12-31';annual['entity']='2'
+        self.assertEqual([],self.current._unresolved_current_interest(preparation,annual))
+
+    def test_zero_or_tax_interest_is_not_a_positive_current_financing_relation(self):
+        from tests.vnext.test_b06_guarded_result_v3 import synthetic
+        annual={'entity':'1','filing':{'reportDate':'2025-12-31'}}
+        for value,name in ((0,b'InterestPayableCurrent'),(47000000,b'IncomeTaxInterestPayable')):
+            original,_=synthetic(value)
+            preparation={kind:{'raw_bytes':original[kind].replace(b'StockholdersEquity',name),
+                               'source_reference':{'source_reference_id':'TEST_ONLY_'+kind}}
+                         for kind in ('primary','xml')}
+            self.assertEqual([],self.current._unresolved_current_interest(preparation,annual))
 
 if __name__=='__main__':unittest.main()

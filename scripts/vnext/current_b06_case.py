@@ -4,6 +4,8 @@ Sources remain at the requested data root. Installed rules and business
 composition are the existing program's; there is no new debt selector or Run.
 """
 from pathlib import Path
+from decimal import Decimal
+import re
 
 from .canonical import content_hash
 from .normal_source_authority import ROOT
@@ -18,6 +20,7 @@ from .normal_bond_debt_results import prepare_bond_debt_case
 from .normal_inclusive_debt_results import prepare_inclusive_debt_case
 from .ordinary_b06_resolution import _b06_resolution
 from .specs import compile_spec_file
+from .calculator import withheld_metric_result
 
 
 PROCESSING_FILES=tuple('scripts/vnext/'+name+'.py' for name in (
@@ -28,7 +31,7 @@ PROCESSING_FILES=tuple('scripts/vnext/'+name+'.py' for name in (
     'normal_bond_debt_results','normal_inclusive_debt_results','b06_note_carrying',
     'b06_bond_leases','b06_inclusive_table','b06_financing_inventory',
     'b06_combined_borrowings','b06_disclosure_v2','b06_disclosure','r5_b06_scope',
-    'r5_b06_measurement','ordinary_source_authority',
+    'r5_b06_measurement','ordinary_source_authority','text_results_v2',
 )) + (
     'config/b06_current_input_v1.json','config/annual_amendment_scope_v1.json',
     'config/normal_fiscal_year_labels_v1.json','config/b06_special_scope_v1.json',
@@ -81,6 +84,42 @@ def _display_selection(selection):
     return displayed
 
 
+def _unresolved_current_interest(preparation, annual):
+    """Retain reported current interest whose debt-set relation is unproved.
+
+    The existing bond inventory does not select InterestPayableCurrent.
+    Its positive amount cannot silently disappear from a completeness claim;
+    neither adding it nor excluding it is authorized by this check.
+    """
+    from .deterministic_router import parse_accession_xbrl_source
+    from .text_results_v2 import _ReportedFactMetadata
+    from .governance_signals import _source_value
+    rows=[]
+    end=annual['filing']['reportDate']
+    for kind in ('primary','xml'):
+        source=preparation[kind];raw=source['raw_bytes']
+        parsed=parse_accession_xbrl_source(raw_bytes=raw)
+        metadata=_ReportedFactMetadata();metadata.feed(raw.decode('utf-8-sig'));metadata.close()
+        for fact in parsed.facts:
+            item=metadata.facts[fact['ordinal']];namespace,name=item['concept']
+            if name.casefold()!='interestpayablecurrent' or not re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',namespace):
+                continue
+            context=parsed.contexts[fact['context_ref']]
+            if (context['period_start']!=end or context['period_end']!=end
+                    or str(int(context['entity_identifier']))!=annual['entity']
+                    or context['dimensions'] or context['typed_dimension_count']):
+                continue
+            _need(metadata.units.get(fact['unit_ref'])=={
+                'measures':[('http://www.xbrl.org/2003/iso4217','USD')],'divided':False},
+                'B06_CURRENT_INTEREST_UNIT_UNRESOLVED')
+            value=_source_value(fact,item)
+            if Decimal(value)!=0:
+                rows.append({'source_kind':kind,'source_reference':source['source_reference'],
+                    'ordinal':fact['ordinal'],'context_ref':fact['context_ref'],
+                    'concept':name,'period_end':end,'value':value,'unit':'USD'})
+    return rows
+
+
 def prepare_current_b06_case(*, source_root, company_id):
     source=Path(source_root)
     packet=prepare_current_debt_input(repo_root=source,company_id=company_id,rules_root=ROOT)
@@ -119,6 +158,22 @@ def prepare_current_b06_case(*, source_root, company_id):
                 spec_path,resolution=_b06_resolution(data_root=ROOT,preparation=preparation)
                 case=_case_from_resolution(preparation=preparation,annual=annual,
                     spec_path=spec_path,resolution=resolution)
+        if (case['results']['B06']['publication']=='PUBLISHED'
+                and case['results']['B06']['quality']!='NOT_MEANINGFUL'
+                and case['traces']['B06']['calculation_target']['scope'].get('entity_scope')=='consolidated'):
+            unresolved=_unresolved_current_interest(preparation,annual)
+            if unresolved:
+                original_target=case['traces']['B06']['calculation_target']
+                target={k:original_target[k] for k in
+                    ('company_id','period_start','period_end','scope','scope_key')}
+                result,trace=withheld_metric_result(compiled_spec=case['compiled_specs']['B06'],
+                    target=target,reason_code='B06_SOURCE_RELATIONSHIP_UNRESOLVED')
+                case=_case_from_resolution(preparation=preparation,annual=annual,
+                    spec_path=case['spec_paths']['B06'],resolution={
+                        'result':result,'trace':trace,'observations':[],
+                        'selection':{'classification':'SOURCE_OR_RELATIONSHIP_UNRESOLVED',
+                            'reason':'B06_REPORTED_INTEREST_DEBT_SCOPE_UNRESOLVED',
+                            'reported_interest':unresolved,'component_selection':case['selection']}})
         case=bind_current_debt_input(case=case,packet=packet,repo_root=source)
     return {**case,'prepared_annual_input':annual,'rules_root':str(ROOT),
         'selection':_display_selection(case['selection']),
