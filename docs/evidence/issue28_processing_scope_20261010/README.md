@@ -15,8 +15,8 @@ A compatible check records the current comparison separately, retaining the orig
 ## Actual parent verification
 
 - `original-regression.log`: one expected failing test before implementation; new controller would enter the forbidden factory for both outcomes.
-- `directed-tests.log`: 52 small configuration/controller/history controls, 0.567s, no skips.
-- `combined-tests.log`: 124 controls and bounded existing full-source integration, 23.557s, no failures/errors/skips. Includes D04 full-group/unresolved controls, source/calculation change, saved/old state, reporter, stable withheld and interruption.
+- `directed-tests.log`: 52 test executions (46 unique IDs; six imported historical tests repeated), 0.567s, no skips.
+- `combined-tests.log`: 124 test executions (118 unique IDs; six imported historical tests repeated) and bounded existing full-source integration, 23.557s, no failures/errors/skips. Includes D04 full-group/unresolved controls, source/calculation change, saved/old state, reporter, stable withheld and interruption.
 - `source-equivalence.json`: parent static AST checks only. The exact old145a/bdb code differs only in D04-specific branches; copied D04 dependency statements match c99. Not independent business acceptance.
 
 `verify_company_reuse.py` uses the real user CLI and disables sockets/DNS. First runs actual detached main c99 with saved original Marriott source; repeat runs this uncommitted candidate with calculation factory forbidden; read runs another process with update forbidden. It does not substitute selection, parser, Calculator, writer or result reading. Initial main produces B04 = 2,601,000,000 USD, CIK1048286, FY2025 / 2025-01-01..2025-12-31, accession0001048286-26-000007. Candidate retains the exact original Result, CSV contents and source citations. Three JSON files give roots, IDs, measured times and actual output locations.
@@ -34,3 +34,14 @@ Use Python3.14 with repository dependencies and TMPDIR=/private/tmp on macOS. Te
 Company driver accepts explicit `--program-root`, `--source-root`, independent `--state-root`, `--output-root`, `--mode first|repeat|read`, and repeat/read `--baseline company-first.json`. Main first was `/private/tmp/issue28-processing-main-c99-20261010`; candidate is `/Users/lyuhongwang/.codex/worktrees/issue28-processing-scope/SEC_metrics`; sources `/Users/lyuhongwang/Developer/SEC_metrics`; state `/private/tmp/issue28-processing-company-20261010`. Use a fresh state for first; never overwrite original tasks. Repeating the old state on already changed business dependencies is deliberately not universally compatible.
 
 CI explicitly runs new small regression in the existing company workflow. Received main tests/steps are preserved. No new runtime platform, source acquisition, provider execution, Ready, merge, formal adoption, deploy or active switch. Independent review and new-head CI will be recorded by their actual scope and terminal status.
+
+
+## Limited independent review and receiving
+
+[Independent conclusion](independent-review/结论.md): PASS for exact21004b59 six-file increment. Actual old Git configuration reconstruction, 41 original D04 dependencies preserved, source/business/unknown transitions refused, 57 test executions /51 unique IDs (six imported history tests duplicated), and16 small interruption/source/correctness controls.32 tool nodes,3 messages, UTC05:37:44..05:46:10,505.924s. Reviewer read the saved small records, did not rerun company or big sources; no full CI/business/production credit. Original conclusions and failures remain.
+
+The duplicate executions were then removed by importing the history test module rather than exposing its TestCase class to unittest discovery. This changes test loading only; product source bytes remain exact21004b59. Subsequent log records five new tests plus the original history tests exactly once, not57 unique new tests. No unchanged financial source/company rerun.
+
+Historical consumer [fixed0cb17d83](https://github.com/wlvh/SEC_metrics/blob/0cb17d83/docs/evidence/issue47_result_failure_receiving_20261010/main-g3/README.md) was actually read by the parent: actualmainMarriottFY25B04 first3.917s; public candidate same history factory/Calculator forbidden repeat.893s, independentresults.521s, eight result/success-pointer files and original Result/value/date/CIK retained.61 history controls.534s were read as peer execution evidence, not re-executed or independent business acceptance. Its oldA03 RPO/PR115 differences remain outside this transition.
+
+committed-code-correspondence.json confirms the executed uncommitted controller/store/compatibility bytes exactly match product21004b59. It does not claim execution occurred after commit. All subsequent evidence-only changes retain these product bytes. New-head CI is recorded separately from previous head.

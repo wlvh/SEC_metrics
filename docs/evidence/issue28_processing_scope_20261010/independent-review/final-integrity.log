@@ -1,0 +1,43 @@
+{
+  "finished_work_utc": "2026-10-10T05:46:10.123407+00:00",
+  "elapsed_seconds": 505.924069,
+  "reviewed_files": [
+    {
+      "file": "scripts/vnext/ordinary_current_update.py",
+      "sha256": "54e940cfe274a7abb2ef484d6e48231e8fc80569c817a27d58f1bf03ae7b1654",
+      "matches_reviewed_commit": true
+    },
+    {
+      "file": "scripts/vnext/ordinary_saved_result.py",
+      "sha256": "d9ae369f7cc19c4728537fa91df4024a620917d57ec5c7cebf929d0968b11876",
+      "matches_reviewed_commit": true
+    },
+    {
+      "file": "scripts/vnext/ordinary_d04_saved_route.py",
+      "sha256": "e936c75710a4607416c1cb0aa7cded10bcc89ef12acd8634d64ef9e6df578575",
+      "matches_reviewed_commit": true
+    },
+    {
+      "file": "scripts/vnext/ordinary_update_compatibility.py",
+      "sha256": "bf0f171024b086f4f85b6c8d81b31255c652fc76d70b51a92e929b971aa13fe3",
+      "matches_reviewed_commit": true
+    },
+    {
+      "file": "tests/vnext/test_d04_processing_scope.py",
+      "sha256": "4f08c8f16ef754a224d720e6ef35dccfd4178ed4e0f097a588e2581f058d372c",
+      "matches_reviewed_commit": true
+    },
+    {
+      "file": ".github/workflows/company-current-records.yml",
+      "sha256": "f3679946edcdb41ba60d7395e86ce9eefc4d031813702f53deda1f82c8b9a002",
+      "matches_reviewed_commit": true
+    }
+  ],
+  "tracked_changes": "",
+  "git_status": "?? docs/evidence/issue28_processing_scope_20261010/committed-code-correspondence.json\n?? docs/evidence/issue28_processing_scope_20261010/independent-review/\n",
+  "external_untracked_note": "committed-code-correspondence.json appeared concurrently outside independent-review; not created, edited or read by this reviewer",
+  "required_test_executions": 57,
+  "distinct_test_ids": 51,
+  "new_D04_scope_test_ids": 5,
+  "initial_finalization_assertion_note": "The tracked tree check passed; an over-strict untracked-only assertion failed because the parent concurrently created committed-code-correspondence.json. Corrected reporting only; no product finding."
+}

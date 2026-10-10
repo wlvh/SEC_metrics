@@ -3,7 +3,10 @@ from copy import deepcopy
 from pathlib import Path
 from unittest import TestCase
 from unittest.mock import patch
-from tests.vnext.test_selected_history_result_state import SelectedHistoryResultStateTest, update, ROOT
+from tests.vnext import test_selected_history_result_state as state_controls
+
+update = state_controls.update
+ROOT = state_controls.ROOT
 
 CONTROLLER = 'scripts/vnext/ordinary_current_update.py'
 STORE = 'scripts/vnext/ordinary_saved_result.py'
@@ -18,11 +21,11 @@ AFTER_D04 = {
 
 class D04ProcessingScopeTest(TestCase):
     # Reuse only the small state preparation, not its test methods.
-    setUp = SelectedHistoryResultStateTest.setUp
-    factory = SelectedHistoryResultStateTest.factory
-    save_control = SelectedHistoryResultStateTest.save_control
-    run_control = SelectedHistoryResultStateTest.run_control
-    period_root = SelectedHistoryResultStateTest.period_root
+    setUp = state_controls.SelectedHistoryResultStateTest.setUp
+    factory = state_controls.SelectedHistoryResultStateTest.factory
+    save_control = state_controls.SelectedHistoryResultStateTest.save_control
+    run_control = state_controls.SelectedHistoryResultStateTest.run_control
+    period_root = state_controls.SelectedHistoryResultStateTest.period_root
 
     def test_proven_d04_only_transition_keeps_success_and_withheld(self):
         self.outcomes[2025, 'B11'] = 'WITHHELD'
