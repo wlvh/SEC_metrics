@@ -1,0 +1,121 @@
+{
+  "scope_id": "sha256:5de4f9c0f7f302e4f1b5c4f50796a27752c766d47db664de353a69114cd122cc",
+  "complete": true,
+  "total": {
+    "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "context": {
+      "context_ref": "c-1",
+      "dimensions": {},
+      "entity_identifier": "0000092380",
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "typed_dimension_count": 0
+    },
+    "context_proof": {
+      "context_ref": "c-1",
+      "dimensions": [],
+      "identifiers": [
+        {
+          "scheme": "http://www.sec.gov/CIK",
+          "value": "0000092380"
+        }
+      ],
+      "period_fields": [
+        {
+          "kind": "startdate",
+          "value": "2025-01-01"
+        },
+        {
+          "kind": "enddate",
+          "value": "2025-12-31"
+        }
+      ],
+      "typed_dimension_count": 0
+    },
+    "context_ref": "c-1",
+    "decimals": "-6",
+    "ordinal": 168,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "source_reference": {
+      "accession": "0000092380-26-000004",
+      "company_id": "southwest_airlines",
+      "document_name": "luv-20251231.htm",
+      "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092",
+      "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+      "source_role": "target_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm"
+    },
+    "unit": "USD",
+    "value": "28063000000"
+  },
+  "total_cell": {
+    "colspan": 2,
+    "column_index": 15,
+    "grid_sha256": "sha256:a8a93c149ca3825838666e93ea3cd2719d00bc98fa5546fc07e5e3c6defc6759",
+    "origin_column_index": 15,
+    "origin_row_index": 7,
+    "raw_text": "28,063&#160;",
+    "row_index": 7,
+    "rowspan": 1,
+    "table_id": "table_000033",
+    "text": "28,063"
+  },
+  "operating_expense_reports": [
+    {
+      "concept": "us-gaap:OperatingCostsAndExpenses",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0000092380",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "typed_dimension_count": 0
+      },
+      "context_proof": {
+        "context_ref": "c-1",
+        "dimensions": [],
+        "identifiers": [
+          {
+            "scheme": "http://www.sec.gov/CIK",
+            "value": "0000092380"
+          }
+        ],
+        "period_fields": [
+          {
+            "kind": "startdate",
+            "value": "2025-01-01"
+          },
+          {
+            "kind": "enddate",
+            "value": "2025-12-31"
+          }
+        ],
+        "typed_dimension_count": 0
+      },
+      "context_ref": "c-1",
+      "decimals": "-6",
+      "ordinal": 189,
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "source_reference": {
+        "accession": "0000092380-26-000004",
+        "company_id": "southwest_airlines",
+        "document_name": "luv-20251231.htm",
+        "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092",
+        "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm"
+      },
+      "unit": "USD",
+      "value": "27635000000"
+    }
+  ],
+  "xml_check": "MATCH",
+  "source_code_fixed": "e98a26c1",
+  "historical_result_id": "sha256:8197d3b73751dbbb4b2e354236111e95deef15a362db528292d7857af687bacc"
+}

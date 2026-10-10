@@ -59,3 +59,11 @@ SouthwestFY25阻塞已定位为消费者未接已成立公共证明：修订只�
 96历史statement/dispatch/state/收入V1/V2/原note布局控制.495s零skip。真实原Southwest任务只FY25B01在收入/处理依赖变更后正常处理7.447s，原28063000000USD/FY25/全年/8197ResultID保；修订proof与已选收入scope均在assessment/binding。禁factory/Calc复1.071s0，独立读.668s，原20financial值/unit/date/ID和其他年度/指标保（实际保护文件数量、scope是否完整见main-c99-actual-company.json，不把机械链当额外内容信用）。未重读完整参考、未重算其他三指标或五年。实际执行915+未提交main合并修补树，后继提交不倒签。
 
 候选接收不是main已支持此修订，不带未main137/136或公共138，不改model/source许可。新CI独立核，原915全绿不盖新head；调用0，旧Run/失败/答案/原结果保留。
+
+## 已审operatingtotal公共来源的历史组合消费
+
+独立组合branch在原116/5ac之上接公共141/e98修后源码，原7a2括号限定P2及失败保历史，e98限定PASS只覆盖新增两行；没有向审查中的116塞新功能或另写收入core。100history/来源V1V2/current/dispatch/state短例.638s零skip，原收入口/年度修订proof/code保持。
+
+真实旧Southwest任务仅FY25B01相关配置迁移7.119s：原28063000000USD/FY2025/原8197ResultID保持，新scope完整REPORTED_CONSOLIDATED_TOTAL，原table000033row7col15/span2 total28063m、同context/表OperatingCostsAndExpenses27635m、primary/XMLMATCH。完整scope与修订原值proof都保input-assessments/binding，日常摘要带scopeID/status/complete；不是手填合计、后年比较或新模型。禁factory/Calc复1.081s0/独读.654s25rows，原20financial及五D01读口保；148old/199后继保护字节保持，其他年份/指标不算。仅检查脚本误用total_cell.cell键，真实输出已完；按实际flatcell结构仅读更正，不重处理。
+
+实际执行5ac+未提交141e98公共merge树，后继commit不倒签；parent共享core审阅/公司current执行不借作本方亲跑。公共default行为/括号限制保，SourceResult现完整不代表其他scopefalse自动解除。原116候选范围不扩，独立组合主记录继续此目录。C04公共接口未返时仅该步骤等待，原选择源/failure另存，不停1950业务目标。新SEC/provider/paid/nativeRun/接受0，不Readymerge/adopt/deploy/active。

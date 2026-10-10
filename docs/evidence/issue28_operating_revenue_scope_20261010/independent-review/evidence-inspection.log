@@ -1,0 +1,468 @@
+{
+  "inspection_utc": "2026-10-10T07:28:30.013399+00:00",
+  "recorded_code_hashes_match_patch": true,
+  "actual_original": {
+    "fiscal_year": 2025,
+    "entity": "92380",
+    "target_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "primary_sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+    "xml_sha256": "b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+    "old_scope_status": "REPORTED_CONSOLIDATED_TOTAL",
+    "new_scope_status": "REPORTED_CONSOLIDATED_TOTAL",
+    "total_cell": {
+      "table_id": "table_000033",
+      "grid_sha256": "sha256:a8a93c149ca3825838666e93ea3cd2719d00bc98fa5546fc07e5e3c6defc6759",
+      "row_index": 7,
+      "column_index": 15,
+      "origin_row_index": 7,
+      "origin_column_index": 15,
+      "rowspan": 1,
+      "colspan": 2,
+      "raw_text": "28,063&#160;",
+      "text": "28,063"
+    },
+    "xml_check": "MATCH",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "company_result_created": false,
+    "reference_used_as_input": false
+  },
+  "actual_total": {
+    "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+    "value": "28063000000",
+    "unit": "USD",
+    "context_ref": "c-1",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "recorded_company": [
+    {
+      "company_id": "southwest_airlines",
+      "first_exit": 0,
+      "repeat_exit": 0,
+      "reader_exit": 0,
+      "revenue_assessment": {
+        "method": "SELECTED_REPORTED_CONSOLIDATED_REVENUE_V2",
+        "scope_id": "sha256:4e97095d53b974e150b83bd9eef67c782c6b75abd7667b6ccbdeab454520bb5a",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true,
+        "selected_fiscal_column_year": 2025,
+        "reported_totals": [
+          {
+            "operating_expense_reports": [
+              {
+                "concept": "us-gaap:OperatingCostsAndExpenses",
+                "value": "27635000000",
+                "unit": "USD",
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31",
+                "decimals": "-6",
+                "ordinal": 189,
+                "context_ref": "c-1",
+                "context": {
+                  "context_ref": "c-1",
+                  "dimensions": {},
+                  "entity_identifier": "0000092380",
+                  "period_end": "2025-12-31",
+                  "period_start": "2025-01-01",
+                  "typed_dimension_count": 0
+                },
+                "context_proof": {
+                  "context_ref": "c-1",
+                  "identifiers": [
+                    {
+                      "value": "0000092380",
+                      "scheme": "http://www.sec.gov/CIK"
+                    }
+                  ],
+                  "period_fields": [
+                    {
+                      "kind": "startdate",
+                      "value": "2025-01-01"
+                    },
+                    {
+                      "kind": "enddate",
+                      "value": "2025-12-31"
+                    }
+                  ],
+                  "dimensions": [],
+                  "typed_dimension_count": 0
+                },
+                "source_reference": {
+                  "record_type": "SOURCE_REFERENCE",
+                  "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+                  "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+                  "company_id": "southwest_airlines",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+                  "accession": "0000092380-26-000004",
+                  "document_name": "luv-20251231.htm",
+                  "source_role": "target_primary",
+                  "request_attempt_id": "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092"
+                }
+              }
+            ],
+            "total": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "value": "28063000000",
+              "unit": "USD",
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31",
+              "decimals": "-6",
+              "ordinal": 168,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000092380",
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000092380",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2025-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2025-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+                "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+                "company_id": "southwest_airlines",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+                "accession": "0000092380-26-000004",
+                "document_name": "luv-20251231.htm",
+                "source_role": "target_primary",
+                "request_attempt_id": "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092"
+              }
+            },
+            "total_cell": {
+              "table_id": "table_000033",
+              "grid_sha256": "sha256:a8a93c149ca3825838666e93ea3cd2719d00bc98fa5546fc07e5e3c6defc6759",
+              "row_index": 7,
+              "column_index": 15,
+              "origin_row_index": 7,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "28,063&#160;",
+              "text": "28,063"
+            },
+            "statement_scope": {
+              "title_sources": [
+                {
+                  "start_byte": 1296714,
+                  "end_byte": 1296901,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1366"
+                  ],
+                  "visible_text": "Consolidated Statement of Income",
+                  "span_sha256": "6aee644ac8747f4f42437a8418aaa52974ab90c3bd25eb2e459524dafdc7b7a9"
+                }
+              ],
+              "caption": "",
+              "table_span": {
+                "table_order": 32,
+                "start_byte": 1297155,
+                "end_byte": 1356895,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:1369",
+                  "table:1"
+                ],
+                "span_sha256": "3c81fcb017eb0b2949b7c0e15de79d640cf046b3e28c7f23d5ff2998a8896327"
+              },
+              "intervening_sources": [
+                {
+                  "start_byte": 1295558,
+                  "end_byte": 1295735,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-indent:36pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1361"
+                  ],
+                  "visible_text": "See accompanying notes.",
+                  "span_sha256": "4548db70179a0aadb0ef6b9e8a664197a69176ba71a9978289e0db84fcd9dbd3"
+                },
+                {
+                  "start_byte": 1295843,
+                  "end_byte": 1296001,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1362",
+                    "div:1",
+                    "div:1"
+                  ],
+                  "visible_text": "84",
+                  "span_sha256": "bd83fb2eb17974f446e01a46cb646cda897d68ad582752e4a25279f74d3843d7"
+                },
+                {
+                  "start_byte": 1296147,
+                  "end_byte": 1296530,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:justify"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1364",
+                    "div:1"
+                  ],
+                  "visible_text": "Table of Contents",
+                  "span_sha256": "70fae265af9f418ce31ace1276fe117e98842afeea4da2a59539c15647c954fd"
+                },
+                {
+                  "start_byte": 1296536,
+                  "end_byte": 1296714,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1365"
+                  ],
+                  "visible_text": " Southwest Airlines Co.",
+                  "span_sha256": "4ee1afcba456854384610366b6ee7b59dacd1518e692918d4bb8639a4ad7a223"
+                },
+                {
+                  "start_byte": 1296714,
+                  "end_byte": 1296901,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1366"
+                  ],
+                  "visible_text": "Consolidated Statement of Income",
+                  "span_sha256": "6aee644ac8747f4f42437a8418aaa52974ab90c3bd25eb2e459524dafdc7b7a9"
+                },
+                {
+                  "start_byte": 1296901,
+                  "end_byte": 1297095,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1367"
+                  ],
+                  "visible_text": "(in millions, except per share amounts)",
+                  "span_sha256": "a64808c1b8a3b7676dca3b83a83031e7cc639bd75e42e5f652e1278d005ef4a3"
+                }
+              ],
+              "unresolved_annotations": [],
+              "adjacent_heading_table": null,
+              "preceding_navigation_sources": [
+                {
+                  "start_byte": 1295558,
+                  "end_byte": 1295735,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-indent:36pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1361"
+                  ],
+                  "visible_text": "See accompanying notes.",
+                  "span_sha256": "4548db70179a0aadb0ef6b9e8a664197a69176ba71a9978289e0db84fcd9dbd3"
+                },
+                {
+                  "start_byte": 1295843,
+                  "end_byte": 1296001,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1362",
+                    "div:1",
+                    "div:1"
+                  ],
+                  "visible_text": "84",
+                  "span_sha256": "bd83fb2eb17974f446e01a46cb646cda897d68ad582752e4a25279f74d3843d7"
+                },
+                {
+                  "start_byte": 1296147,
+                  "end_byte": 1296530,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:justify"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1364",
+                    "div:1"
+                  ],
+                  "visible_text": "Table of Contents",
+                  "span_sha256": "70fae265af9f418ce31ace1276fe117e98842afeea4da2a59539c15647c954fd"
+                }
+              ]
+            },
+            "unit_sources": [
+              {
+                "kind": "heading_block",
+                "proof": {
+                  "start_byte": 1296901,
+                  "end_byte": 1297095,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:1367"
+                  ],
+                  "visible_text": "(in millions, except per share amounts)",
+                  "span_sha256": "a64808c1b8a3b7676dca3b83a83031e7cc639bd75e42e5f652e1278d005ef4a3"
+                },
+                "text": "(in millions, except per share amounts)"
+              }
+            ],
+            "year_headers": [
+              {
+                "table_id": "table_000033",
+                "grid_sha256": "sha256:a8a93c149ca3825838666e93ea3cd2719d00bc98fa5546fc07e5e3c6defc6759",
+                "row_index": 2,
+                "column_index": 15,
+                "origin_row_index": 2,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ],
+            "end_headers": [
+              {
+                "table_id": "table_000033",
+                "grid_sha256": "sha256:a8a93c149ca3825838666e93ea3cd2719d00bc98fa5546fc07e5e3c6defc6759",
+                "row_index": 1,
+                "column_index": 9,
+                "origin_row_index": 1,
+                "origin_column_index": 9,
+                "rowspan": 1,
+                "colspan": 15,
+                "raw_text": "Year ended December 31,",
+                "text": "Year ended December 31,"
+              }
+            ],
+            "annual_period": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            },
+            "xml_matches": [],
+            "xml_check": "NOT_SUPPLIED"
+          }
+        ]
+      },
+      "result_directories": [
+        "updates/B01/results/843de3ea980e4987b3a703243a4ba7e5/manifest.json"
+      ],
+      "repeat_preserves_result_bytes_and_directories": true,
+      "reader_output": "{\n  \"elapsed_seconds\": 0.3779734999407083,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"southwest_airlines\",\n  \"source_root\": \"/private/tmp/issue28-current-reported-total-vzovjpe1/southwest_airlines/source\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"result_id\": \"sha256:8197d3b73751dbbb4b2e354236111e95deef15a362db528292d7857af687bacc\",\n      \"period_start\": \"2025-01-01\",\n      \"period_end\": \"2025-12-31\",\n      \"fiscal_year\": 2025,\n      \"value\": \"28063000000\",\n      \"unit\": \"USD\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/private/tmp/issue28-current-reported-total-vzovjpe1/southwest_airlines/state/updates/B01/results/843de3ea980e4987b3a703243a4ba7e5\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/private/tmp/issue28-current-reported-total-vzovjpe1/southwest_airlines/reader\"\n}\n"
+    }
+  ],
+  "historical_failures": {
+    "original-regressions.log": "test_operating_components_or_wrong_unit_or_segment_do_not_get_total_credit (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_components_or_wrong_unit_or_segment_do_not_get_total_credit) ... ok\ntest_reported_operating_total_preserves_approved_native_amount_and_whole_statement (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_reported_operating_total_preserves_approved_native_amount_and_whole_statement) ... FAIL\n\n======================================================================\nFAIL: test_reported_operating_total_preserves_approved_native_amount_and_whole_statement (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_reported_operating_total_preserves_approved_native_amount_and_whole_statement)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py\", line 180, in test_reported_operating_total_preserves_approved_native_amount_and_whole_statement\n    self.assertTrue(result['complete_scope_proven'])\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n\n----------------------------------------------------------------------\nRan 2 tests in 0.202s\n\nFAILED (failures=1)\n{\"allowed_skips\": 0, \"errors\": 0, \"failures\": 1, \"run\": 2, \"skip_reasons\": [], \"skipped\": 0, \"tests\": [\"tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest\"]}\n",
+    "section-caption-normalization-failure.log": "Traceback (most recent call last):\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/docs/evidence/issue28_operating_revenue_scope_20261010/verify_original.py\", line 31, in <module>\n    result=reported_revenue_scope(**args)\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py\", line 110, in reported_revenue_scope\n    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,\n        extra_unit_headers=extra_units,\n        extra_section_headers=(r'operating revenues:',r'operating expenses:',\n            r'non-operating expenses \\(income\\):') if operating else ())\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py\", line 145, in _statement_scope\n    _need(not unknown, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py\", line 28, in _need\n    raise IncomeSourceError('SELECTED_REVENUE_' + reason)\nvnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED\n",
+    "company-import-path-diagnostic.log": "Traceback (most recent call last):\n  File \"/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/docs/evidence/issue28_operating_revenue_scope_20261010/verify_current_company.py\", line 7, in <module>\n    from tests.vnext.test_normal_zero_ai_results import original_sources_only\nModuleNotFoundError: No module named 'tests'\n"
+  },
+  "recorded_tree": "UNCOMMITTED_CURRENT_CHANGES"
+}

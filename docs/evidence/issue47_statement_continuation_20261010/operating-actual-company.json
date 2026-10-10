@@ -1,0 +1,124 @@
+{
+  "code_commit": "5ac5bcd0d0ce19f4a8771159275c822568b0b5e8",
+  "uncommitted_merge_receiving_tree": true,
+  "first": {
+    "seconds": 7.118766458006576,
+    "exit_code": 0,
+    "arguments": [
+      "run",
+      "--company",
+      "southwest_airlines",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2025",
+      "--fiscal-year-end",
+      "2025",
+      "--metric",
+      "B01",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/southwest-statements-company-j7od5ap_/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/southwest-amendment-main-yj11ydb9/runs"
+    ]
+  },
+  "repeat": {
+    "seconds": 1.0811697081662714,
+    "exit_code": 0,
+    "arguments": [
+      "run",
+      "--company",
+      "southwest_airlines",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2025",
+      "--fiscal-year-end",
+      "2025",
+      "--metric",
+      "B01",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/southwest-statements-company-j7od5ap_/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/southwest-amendment-main-yj11ydb9/runs"
+    ]
+  },
+  "read": {
+    "seconds": 0.6541813751682639,
+    "exit_code": 0,
+    "arguments": [
+      "results",
+      "--company",
+      "southwest_airlines",
+      "--state-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/southwest-statements-company-j7od5ap_/state",
+      "--output-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/southwest-amendment-main-yj11ydb9/read"
+    ]
+  },
+  "row": {
+    "company": "Southwest Airlines",
+    "cik": "92380",
+    "metric_id": "B01",
+    "metric_name": "Revenue",
+    "value": "28063000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "direct",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0000092380-26-000004",
+    "form": "10-K",
+    "filed_date": "2026-02-05",
+    "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:14bf22d91234c494e0d396e1417f48ac7c71ea259b4e5e9f43a32ec2b8898005\", \"source_roles\": [\"primary\", \"xml\"]}], \"selected_revenue_scope\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:5de4f9c0f7f302e4f1b5c4f50796a27752c766d47db664de353a69114cd122cc\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"statement_amendment_checks\": [{\"classification\": \"EXHIBIT_LINK_CORRECTION_WITH_IDENTICAL_ORIGINAL_ITEM15\", \"fiscal_window_unchanged\": true, \"issues\": [], \"policy_hash\": \"sha256:0aff3223e553748783b58ecde0366f0f51cfb5b8e9d95a6a065aad6ade219d49\", \"scope_id\": \"sha256:17be3f58c3af58b4931770450db5f490bf78e17c6cfb252e29930c8728f5b0bf\", \"unchanged_input_classes\": [\"FISCAL_EVENT_WINDOW\", \"ORIGINAL_STATEMENT_VALUES\"]}]}, \"source_reference_ids\": [\"sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07\", \"sha256:f5a2ff5e9b0679bafb13b01c365d215fc6f7fcec35ea398c9e102617f66038ff\", \"sha256:32c3693c118e87d3f36ed71cfc70c721cfc45ea754171362c3aad48dcef46664\", \"sha256:b8c01734eb46fb27c559caa6de8c91a2eb3d1392d1d1be3e01fff8cafa837f45\", \"sha256:c39162481f6f9f806a63e5441212055a1c20695872e2a2f99014369e82e3d133\", \"sha256:43e2f849c96bef14c8e64c4e4452795e4f2994fba34b2ab7a12b12bfba1107ea\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "southwest_airlines",
+    "result_id": "sha256:8197d3b73751dbbb4b2e354236111e95deef15a362db528292d7857af687bacc",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/southwest-statements-company-j7od5ap_/state/updates/B01/periods/FY2025/results/47713215cd674c90ab519e36a74f791e",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "all_twenty_financial_rows_preserved": true,
+  "only_B01_FY2025_processed": true,
+  "old_business_files_preserved": 148,
+  "post_transition_protected_files": 199,
+  "rows": 25,
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/southwest-amendment-main-yj11ydb9",
+  "income_scope_summary": {
+    "scope_id": "sha256:5de4f9c0f7f302e4f1b5c4f50796a27752c766d47db664de353a69114cd122cc",
+    "status": "REPORTED_CONSOLIDATED_TOTAL",
+    "complete_scope_proven": true
+  },
+  "amendment_summary": [
+    {
+      "classification": "EXHIBIT_LINK_CORRECTION_WITH_IDENTICAL_ORIGINAL_ITEM15",
+      "fiscal_window_unchanged": true,
+      "issues": [],
+      "policy_hash": "sha256:0aff3223e553748783b58ecde0366f0f51cfb5b8e9d95a6a065aad6ade219d49",
+      "scope_id": "sha256:17be3f58c3af58b4931770450db5f490bf78e17c6cfb252e29930c8728f5b0bf",
+      "unchanged_input_classes": [
+        "FISCAL_EVENT_WINDOW",
+        "ORIGINAL_STATEMENT_VALUES"
+      ]
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
