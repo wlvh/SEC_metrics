@@ -388,7 +388,7 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
         return run_saved_company(company_id=company_id,source_root=source_root,
             work_dir=work_dir,output_dir=output_dir,metric_ids=selected,fiscal_years=years,
             case_factories=factories,processing_files_by_metric={m:tuple(dict.fromkeys(
-                (*(income_files if m=='B01' else statement_files),*range_files))) for m in selected})
+                (*income_files,*range_files))) for m in selected})
     if not set(selected) <= set(SUPPORTED_METRICS):
         return run_saved_company(company_id=company_id, source_root=source_root,
             work_dir=work_dir, output_dir=output_dir, metric_ids=selected,

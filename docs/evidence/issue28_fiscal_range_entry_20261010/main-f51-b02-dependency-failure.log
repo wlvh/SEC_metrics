@@ -1,0 +1,20 @@
+test_reported_growth_range_tracks_both_income_and_range_readers (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_reported_growth_range_tracks_both_income_and_range_readers)
+Small real-dispatch control; it does not calculate a financial value. ... 
+  test_reported_growth_range_tracks_both_income_and_range_readers (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_reported_growth_range_tracks_both_income_and_range_readers) (metric='B02')
+Small real-dispatch control; it does not calculate a financial value. ... FAIL
+
+======================================================================
+FAIL: test_reported_growth_range_tracks_both_income_and_range_readers (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_reported_growth_range_tracks_both_income_and_range_readers) (metric='B02')
+Small real-dispatch control; it does not calculate a financial value.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-entry/SEC_metrics/tests/vnext/test_history_company_dispatch.py", line 24, in test_reported_growth_range_tracks_both_income_and_range_readers
+    self.assertTrue(set(INCOME_PROCESSING_FILES) <= set(dependencies))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.158s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_reported_growth_range_tracks_both_income_and_range_readers"]}
