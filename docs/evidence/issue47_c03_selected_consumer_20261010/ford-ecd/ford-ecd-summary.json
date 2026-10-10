@@ -1,0 +1,52 @@
+{
+  "product_commit": "77b77724",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/state",
+  "operations": [
+    {
+      "fiscal_year": 2022,
+      "first_seconds": 33.970820374786854,
+      "repeat_seconds": 2.3563903749454767,
+      "row": {
+        "value": "20996146",
+        "unit": "USD",
+        "cik": "37996",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "form": "DEF 14A",
+        "filed_date": "2023-03-31",
+        "accession": "0001558370-23-005203"
+      },
+      "result_id": "sha256:1f7472a601513528a176c738919269d3420c6722fa1631512b059cadb7cbd974",
+      "repeat_calculation": false
+    },
+    {
+      "fiscal_year": 2025,
+      "first_seconds": 53.2749836249277,
+      "repeat_seconds": 6.394805416930467,
+      "row": {
+        "value": "27519558",
+        "unit": "USD",
+        "cik": "37996",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "form": "DEF 14A",
+        "filed_date": "2026-03-27",
+        "accession": "0001552781-26-000164"
+      },
+      "result_id": "sha256:f7cc55af5d686a781fa099c78b4af87be255dc6c7fed3522d8b0fefd0c3b45db",
+      "repeat_calculation": false
+    }
+  ],
+  "read_seconds": 3.416702084010467,
+  "all_state_files_unchanged_on_read": 33,
+  "expected_references": [
+    "c03-across-proxies-read-round3.json",
+    "governance-read.json"
+  ],
+  "other_ford_years_not_claimed": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

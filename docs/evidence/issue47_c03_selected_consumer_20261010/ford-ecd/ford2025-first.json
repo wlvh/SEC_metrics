@@ -1,0 +1,56 @@
+{
+  "seconds": 53.2749836249277,
+  "exit_code": 0,
+  "report": {
+    "elapsed_seconds": 52.726793417008594,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "ford_motor_company",
+    "run_id": "20261010T134237Z-97c4c70e",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "C03"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C03",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "d62222d45d034461b513655ac802633f",
+        "version": "9f060f7b389e447fabc26234c608faa7",
+        "result_id": "sha256:f7cc55af5d686a781fa099c78b4af87be255dc6c7fed3522d8b0fefd0c3b45db",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/state/updates/C03/periods/FY2025/results/9f060f7b389e447fabc26234c608faa7",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2025,
+        "defect_holds": [],
+        "read_result_id": "sha256:f7cc55af5d686a781fa099c78b4af87be255dc6c7fed3522d8b0fefd0c3b45db",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/state/updates/C03/periods/FY2025/results/9f060f7b389e447fabc26234c608faa7",
+        "program_version": {
+          "commit": "77b777248ed958f87bce31085b94704fb29b3f0b",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/state",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/runs/20261010T134237Z-97c4c70e",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "selected_fiscal_years": [
+      2025
+    ]
+  }
+}
