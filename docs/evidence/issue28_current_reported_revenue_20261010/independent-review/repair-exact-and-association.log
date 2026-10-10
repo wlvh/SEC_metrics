@@ -1,0 +1,8 @@
+original wrong end expected REJECT actual REJECT SELECTED_REPORTED_REVENUE_VISIBLE_END_DAY_CONFLICT
+original correct end expected ACCEPT actual ACCEPT REPORTED_CONSOLIDATED_TOTAL
+numeric note groups expected ACCEPT actual ACCEPT REPORTED_CONSOLIDATED_TOTAL
+named geographic qualifier expected REJECT actual REJECT SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED
+named subject qualifier expected REJECT actual REJECT SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED
+Comparative header literal: Fiscal Years Ended December 31, | December 31, 2024 | December 31, 2025
+repair base ACCEPT REPORTED_CONSOLIDATED_TOTAL current_column 2025 native_end 2025-12-31 total_column 2
+repair head ACCEPT REPORTED_CONSOLIDATED_TOTAL current_column 2025 native_end 2025-12-31 total_column 2

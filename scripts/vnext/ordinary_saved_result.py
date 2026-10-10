@@ -59,6 +59,7 @@ def _ordinary_case(source, company, metric):
     program = Path(__file__).resolve().parents[2]
     original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,
         **({'validate_depreciation_scope':True} if metric=='B03' else {}),
+        **({'validate_revenue_scope':True,'revenue_scope_contract':'reported-total-v2'} if metric in {'B01','B03'} else {}),
         rules_root=program)
     income_binding = original['component'].get('input_binding',{})
     detail = original['component']
@@ -70,6 +71,8 @@ def _ordinary_case(source, company, metric):
         assessments['depreciation_scope'] = selection['depreciation_scope']
     if selection.get('income_period') is not None:
         assessments['income_period'] = selection['income_period']
+    if selection.get('revenue_scope') is not None:
+        assessments['revenue_scope'] = selection['revenue_scope']
     return {'primary_metric_id': metric, 'kind': 'STRUCTURED', 'input_binding': original,
         'compiled_specs': original['compiled_specs'], 'spec_paths': original['spec_paths'],
         'references': original['source_references'], 'source_proofs': original['source_proofs'],
