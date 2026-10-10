@@ -18363,7 +18363,8 @@
     ],
     "CI": {
       "head": "446bf33de5e6aa9c0a389abc948bb1211137505f",
-      "observed": "9_SUCCESS_2_FOUNDATION_IN_PROGRESS"
+      "observed": "11_SUCCESS",
+      "conclusion": "ALL_SUCCESS"
     },
     "receiving_review": "await Claude limited increment; peer ParamFY21 consumer supplement pending",
     "peer_consumer_note": {
@@ -18403,23 +18404,60 @@
     "tests": 29,
     "seconds": 0.228,
     "review": "REQUEST_CHANGES preserved; final all-associated-date difference pending independent coverage, no trusted-credit release",
-    "next": "explicit caller plumbing before Calculator, one company B01 save/reuse/read; B02 prior comparison remains unproved",
+    "next": "ordinary current producer explicit V2 integration; final date increment needs independent receiving; B02 original-prior completeness still unresolved",
     "calls": [
       0,
       0,
       0
     ],
     "final_parent_tests": 31,
-    "final_parent_seconds": 0.26
+    "final_parent_seconds": 0.26,
+    "pr": 130,
+    "head_sha": "aa29a0ab",
+    "company_consumer_pr": 129,
+    "company_consumer_record_sha": "8fe416bf",
+    "company_candidate": {
+      "source": "peer actual6662 company CLI and fixed archive read, not parent rerun",
+      "value": "23866000000",
+      "unit": "USD",
+      "year": 2023,
+      "start": "2023-01-29",
+      "end": "2024-02-03",
+      "first_seconds": 9.911,
+      "repeat_seconds": 1.014,
+      "independent_read_seconds": 0.606,
+      "result_id": "sha256:77805235a0d19e2a7dde8d90850d96e555e92399f47a243b60ed3c4c98b2eeed",
+      "old_protected_files": 297,
+      "new_protected_files": 304,
+      "old_exact_holds_released": false,
+      "business_accepted": false
+    }
   },
   "daily_read_error_20261010": {
     "source_peer_sha": "3a3f98e8",
     "scope": "current read drops reason/error_type/error_category for failed/no-result; source exists but unreceived D01 amendment must remain implementation gap",
-    "next": "main small public reader branch; small state + existing failed-state independent CLI read; no source preparation/calculation/HTTP",
+    "next": "current head CI/reception and peer failed-state only-read verification; no finance recalculation",
     "calls": [
       0,
       0,
       0
-    ]
+    ],
+    "pr": 131,
+    "head_sha": "a0e2c809ea492b8641ba6d85a875943645f99ffb",
+    "product_sha": "6bb1d7bff4d8dfe90fc9aa7e68821216d89b6f31",
+    "affected_file_functions": {
+      "scripts/vnext/company_current_records.py": [
+        "_read_current_company"
+      ]
+    },
+    "parent_tests": {
+      "reader_state": 42,
+      "seconds": 6.955,
+      "role_followup_tests": 24,
+      "role_seconds": 0.146
+    },
+    "actual_failed_read_seconds": 0.16516487509943545,
+    "protected_failed_state_files": 7,
+    "stage": "current/no-current failure details JSON/CSV and retained failure after subset; old value only explicit previous field, current failure null; unrequested CSV role repaired"
   }
 }
