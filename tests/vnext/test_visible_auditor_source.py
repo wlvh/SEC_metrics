@@ -17,6 +17,8 @@ related consolidated statements of income for the years then ended.</p>
 <p>In our opinion, these financial statements present fairly the financial position.</p>
 <p>/s/ Example Audit LLP</p><p>February 4, 2026</p>
 <h2>CONSOLIDATED STATEMENTS OF CASH FLOWS</h2>'''
+CHARTER_COVER = '''<p>SECURITIES AND EXCHANGE COMMISSION</p><p>FORM 10-K</p>
+<p>Example Company</p><p>(Exact name of registrant as specified in its charter)</p>'''
 
 
 def arguments(body=REPORT):
@@ -164,6 +166,61 @@ class VisibleAuditorSourceTest(unittest.TestCase):
         self.assertEqual('UNRESOLVED', got['status'])
         self.assertEqual('/s/ Example Audit LLP', got['reports'][0]['signatures'][0]['text'])
         self.assertIn('VISIBLE_AUDITOR_AUDITEE_NOT_ESTABLISHED', got['reports'][0]['reasons'])
+
+    def test_explicit_cover_name_binds_report_without_native_name_rewrite(self):
+        args = arguments(CHARTER_COVER + REPORT)
+        args = binding(args['raw_bytes'].replace(b'Example Company</ix:nonNumeric>',
+                                                b'EXAMPLE COMPANY /MD/</ix:nonNumeric>'))
+        self.assertEqual('UNRESOLVED', inspect_visible_auditor_report(**args)['status'])
+        got = inspect_visible_auditor_report(**args, registrant_binding='COVER_CHARTER_NAME')
+        self.assertEqual('BOUND_REPORT_CANDIDATE', got['status'])
+        self.assertEqual('EXAMPLE COMPANY /MD/', got['registrant_name'])
+        self.assertEqual('Example Company', got['report_registrant_name'])
+        self.assertEqual('2', got['version'])
+        pair = got['cover_charter_name']['candidates'][0]
+        for key in ['name_locator', 'label_locator', 'form_locator', 'commission_locator']:
+            b = pair[key]
+            self.assertEqual(sha256_bytes(content=args['raw_bytes'][
+                b['raw_start_byte']:b['raw_end_byte']]), b['raw_span_sha256'])
+        self.assertEqual(got, verify_visible_auditor_report(inspection=got, **args,
+                         registrant_binding='COVER_CHARTER_NAME'))
+        self.assertFalse(got['metric_result_credit'])
+
+    def test_cover_outside_cover_hidden_or_duplicated_never_binds(self):
+        variants = [
+            REPORT + CHARTER_COVER,
+            CHARTER_COVER.replace('Exact name of registrant', 'Previous auditor') + REPORT,
+            CHARTER_COVER.replace('<p>Example Company</p>',
+                                  '<p style="display:none">Example Company</p>') + REPORT,
+            CHARTER_COVER + '<p>Other Company</p><p>(Exact name of registrant as specified in its charter)</p>' + REPORT,
+            CHARTER_COVER.replace('FORM 10-K', 'FORM 10-Q') + REPORT,
+        ]
+        for body in variants:
+            with self.subTest(body=body[:75]):
+                got = inspect_visible_auditor_report(**arguments(body),
+                    registrant_binding='COVER_CHARTER_NAME')
+                self.assertEqual('UNRESOLVED', got['status'])
+
+    def test_cover_mismatch_and_unknown_option_rejected(self):
+        got = inspect_visible_auditor_report(**arguments(CHARTER_COVER.replace(
+            '<p>Example Company</p>', '<p>Another Company</p>') + REPORT),
+            registrant_binding='COVER_CHARTER_NAME')
+        self.assertEqual('UNRESOLVED', got['status'])
+        self.assertIn('VISIBLE_AUDITOR_AUDITEE_NOT_ESTABLISHED', got['reports'][0]['reasons'])
+        with self.assertRaisesRegex(ValueError, 'REGISTRANT_BINDING_INVALID'):
+            inspect_visible_auditor_report(**arguments(), registrant_binding='strip-jurisdiction')
+
+    def test_cover_option_cannot_hide_amendment_or_period_conflict(self):
+        args = arguments(CHARTER_COVER + REPORT)
+        raw = args['raw_bytes'].replace(b'>10-K</ix:nonNumeric>', b'>10-K/A</ix:nonNumeric>')
+        raw = raw.replace(b'FORM 10-K<', b'FORM 10-K/A<')
+        got = inspect_visible_auditor_report(**binding(raw), registrant_binding='COVER_CHARTER_NAME')
+        self.assertEqual('BOUND_REPORT_CANDIDATE', got['reports'][0]['status'])
+        self.assertEqual('UNRESOLVED', got['status'])
+        self.assertIn('TEXT_AMENDMENT_SOURCE_SET_REQUIRED', got['reasons'])
+        body = (CHARTER_COVER + REPORT).replace('as of December 31, 2025', 'as of December 31, 2024')
+        got = inspect_visible_auditor_report(**arguments(body), registrant_binding='COVER_CHARTER_NAME')
+        self.assertEqual('UNRESOLVED', got['status'])
 
 
 if __name__ == '__main__':

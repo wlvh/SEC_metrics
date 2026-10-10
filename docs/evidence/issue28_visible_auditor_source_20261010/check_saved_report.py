@@ -23,6 +23,8 @@ def main():
     p.add_argument('--cik', required=True)
     p.add_argument('--period-end', required=True)
     p.add_argument('--output', required=True, type=Path)
+    p.add_argument('--registrant-binding', default='NATIVE_NAME_ONLY',
+                   choices=['NATIVE_NAME_ONLY', 'COVER_CHARTER_NAME'])
     a = p.parse_args()
     raw = a.source.read_bytes()
     if sha256_bytes(content=raw) != a.sha256:
@@ -37,7 +39,7 @@ def main():
         request_attempt_id='development-visible-report-inspection')
     args = dict(raw_bytes=raw, raw_blob=blob, source_reference=ref,
         expected_company_id=a.company, expected_cik=a.cik,
-        expected_period_end=a.period_end)
+        expected_period_end=a.period_end, registrant_binding=a.registrant_binding)
     start = time.perf_counter()
     inspection = inspect_visible_auditor_report(**args)
     elapsed = time.perf_counter() - start

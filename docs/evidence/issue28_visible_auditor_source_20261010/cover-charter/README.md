@@ -1,0 +1,11 @@
+# Same-original cover charter-name relation
+
+Base source candidate `3e418c93`, same PR144. This is a specific source-relationship repair of the retained Marriott name mismatch, not another metric family or a new inference engine.
+
+The original native EntityRegistrantName `MARRIOTT INTERNATIONAL INC /MD/` is retained. Explicit COVER_CHARTER_NAME locates the unique visible name immediately before `(Exact name of registrant as specified in its charter)` within the SEC/Form10-K cover, before report/item/part headings. The auditee and financial-opinion name must match that preserved cover name. It never strips `/MD/` or interprets it as incorporation state. Default NATIVE_NAME_ONLY is unchanged, including full returned dictionaries/inspection IDs for four prior controls in default-comparison.json.
+
+Actual source execution against the modified worktree (not yet a committed SHA): Marriott2020 original SHA3b4e35... obtains one bounded financial report candidate, while the distinct preceding ICFR report remains not a financial opinion. The 10-K/A SHAf37221... obtains the same bounded financial report but inspection stays UNRESOLVED due to its amendment-source set requirement. Both cover names are MARRIOTT INTERNATIONAL, INC., each financial report retains EY signature and original report date. Read both JSON for full original SHA/path/byte spans; these are new development source references, not old GET/Run signatures.
+
+Original: .785s source inspection / .793s rebuild. Amendment: .614s / .608s. 29 small tests, zero failures/errors/skips, include missing/hidden/duplicated/out-of-cover labels, wrong cover form/name, wrong opinion period, unknown selection and amendment preservation. Four default controls compare the complete old/new objects, not just status. No business value, C04 result, native AuditorName fact or source-acquisition/model execution credit is granted. The prior default-mode UNRESOLVED JSON remains unchanged.
+
+The caller/contract still does not consume visible report signatures for C04. No current/default C04, event census, calculation, saved result or company state is changed. Structured-only contract vs explicit visible report source acceptance must be resolved before these candidate names can repair a company result. No SEC/provider/paid calls.
