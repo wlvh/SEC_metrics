@@ -181,6 +181,27 @@ python3 tools/vnext_company.py results --company jpmorgan_chase \
 
 main本批已支持27个历史指标分派，仍要求保存来源；B12候选PR96及公共主体修复PR102尚未main。E01完整内容、在线历史来源发现/补齐、修订与主体变化的未成熟金额路径及完整1950业务责任继续。
 
+## D01：保存来源标题候选及显式容量后继（尚未进入main）
+
+历史 [PR125](https://github.com/wlvh/SEC_metrics/pull/125) 和 [PR133](https://github.com/wlvh/SEC_metrics/pull/133) 消费公共 [PR124](https://github.com/wlvh/SEC_metrics/pull/124) 与 [PR134](https://github.com/wlvh/SEC_metrics/pull/134)。main `f6ef7886` 没有该历史分派；以下命令只用于固定候选，不是main默认能力。候选保留完整所选原年报 Item 1A 标题及出处，披露风险不表示风险已经发生，也不表示没有其他风险。
+
+```bash
+git fetch origin task/issue47-d01-capacity-delivery-20261010
+git worktree add --detach ../SEC_metrics-d01-capacity-review 6d000bdc
+cd ../SEC_metrics-d01-capacity-review
+python3 tools/vnext_company.py run --company enphase_energy --period fiscal-years \
+  --fiscal-year-start 2021 --fiscal-year-end 2021 --metric D01 \
+  --source-root /saved/sec/source-inputs --work-dir /new/d01/state --output-dir /new/d01/runs
+python3 tools/vnext_company.py results --company enphase_energy \
+  --state-root /new/d01/state --output-root /new/d01/read-01
+```
+
+来源使用本指南既有恢复方法返回的实际 `source-inputs`，目录已占用时另选，不能覆盖原任务。输入仍是完整SEC原件，不提供旧标题答案。原64项Spec和旧Run保持；确切条数不足且完整候选超过64时，才使用128项的显式后继，文字仍限64000字符。来源、主体、缺章节、空候选或文字过长等错误不能借容量后继放行，超过128仍保留明确失败，不裁剪。
+
+已保存的Enphase FY2021结果包含68标题，其他四个年度保留62/61/60/60；仅FY2021修复坐标处理，后续禁工厂复跑和独立CSV读取成立，财务结果和原失败保留。可取得的最小候选另进程读回同一输出；实际处理组合与最小只读组合的验证分别说明。主记录见[容量消费者证据](https://github.com/wlvh/SEC_metrics/blob/6d000bdc/docs/evidence/issue47_risk_heading_consumer_20261010/capacity-successor/README.md)。这些是开发候选，公共容量限定独审和接收仍待，不授业务采纳、main或完整五年验收信用。
+
+修订件与继任范围仍按当前候选的明确限制处理。停止的风险修订输入实验不作为此候选依赖，不能借事件/财务清除结果忽略修订。在线历史取源/补齐没有因此完成。结束候选检查后返回本指南前述main检出，再执行main命令。
+
 ## 状态、复跑和局部失败
 
 同一指标按财年各自保存。成功同输入复跑为 `NO_SOURCE_CONTENT_CHANGE`；已经完整检查但因业务原因扣留的同输入复跑为 `PREVIOUS_INPUT_WITHHELD`。两者均不再调用计算工厂，不新增相同结果目录。改变实际相关来源、补齐依赖或处理配置后重新处理；普通异常和未完成记录不被缓存为已完成业务结论。
