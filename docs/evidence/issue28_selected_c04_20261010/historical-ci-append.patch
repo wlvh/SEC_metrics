@@ -1,0 +1,22 @@
+--- a/.github/workflows/vnext-fast.yml
++++ b/.github/workflows/vnext-fast.yml
+@@ -31,7 +31,7 @@
+         env:
+           PYTHONDONTWRITEBYTECODE: "1"
+           PYTHONPATH: scripts:tools
+-        run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest
++        run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest tests.vnext.test_historical_auditor_selection tests.vnext.test_historical_auditor_case
+ 
+       - name: Selected filing income source checks (small state)
+         env:
+--- a/tools/run_fast_tests_v2.py
++++ b/tools/run_fast_tests_v2.py
+@@ -207,6 +207,8 @@
+ FAST_TESTS += ('tests.vnext.test_current_d04_company',)
+ FAST_TESTS += ('tests.vnext.test_securegpt_documented_response',)
+ FAST_TESTS += ('tests.vnext.test_c04_selected_input',)
++FAST_TESTS += ('tests.vnext.test_historical_auditor_selection',)
++FAST_TESTS += ('tests.vnext.test_historical_auditor_case',)
+ SOURCE_TIMEOUT_SECONDS = 240
+ SOURCE_TIMEOUT_OVERRIDES = {
+     # The unchanged full original-source module passed on head 698b9a45 in

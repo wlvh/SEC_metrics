@@ -1,0 +1,45 @@
+{
+  "purpose": "Small checked-filing default compatibility, not an annual company answer",
+  "baseline_commit": "84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf",
+  "baseline_reader_sha256": "e4c5d2491e8d5c4f8bbbc222d9e5855d42bd5dbc436a661438abbdee3d53d59d",
+  "fixture_source_sha256": "8aca0aa7e28112bd20b76e9bd2ff6f85207e3b97ce911738074821b0ec5c5b61",
+  "checked_filing": {
+    "accession": "0000012345-26-000001",
+    "form": "10-K",
+    "source_references": [
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:d34e5223df0ba3d6bfe50bcf06bf3af3fdd38dc3e0db0ed7a50dd48d7f7b8395",
+        "raw_asset_id": "sha256:8aca0aa7e28112bd20b76e9bd2ff6f85207e3b97ce911738074821b0ec5c5b61",
+        "company_id": "sample_entity",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/12345/000001234526000001/source.htm",
+        "accession": "0000012345-26-000001",
+        "document_name": "source.htm",
+        "source_role": "auditor_report",
+        "request_attempt_id": "test-only-source-attempt"
+      }
+    ],
+    "facts": [
+      {
+        "source_reference_id": "sha256:d34e5223df0ba3d6bfe50bcf06bf3af3fdd38dc3e0db0ed7a50dd48d7f7b8395",
+        "raw_asset_id": "sha256:8aca0aa7e28112bd20b76e9bd2ff6f85207e3b97ce911738074821b0ec5c5b61",
+        "accession": "0000012345-26-000001",
+        "name": "Example Audit LLP",
+        "canonical_name": "exampleauditllp",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "entity_identifier": "12345",
+        "locator": {
+          "qualified_name": "dei:AuditorName",
+          "context_ref": "annual",
+          "ordinal": 4
+        }
+      }
+    ],
+    "problems": [],
+    "canonical_names": [
+      "exampleauditllp"
+    ],
+    "status": "FOUND"
+  }
+}

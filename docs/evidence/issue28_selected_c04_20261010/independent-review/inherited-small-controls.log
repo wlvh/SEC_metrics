@@ -1,0 +1,14 @@
+UTC start: 2026-10-10T08:07:43.873700+00:00
+UTC end: 2026-10-10T08:07:44.351438+00:00
+Command: TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 python3 tests/required_unittests.py tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_original_annual_alias_needs_matching_proof_and_same_cik_url tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_registration_event_outside_history_index_cannot_be_omitted_before_zero tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_rejects_unapproved_form_subset_and_wrong_metric
+test_original_annual_alias_needs_matching_proof_and_same_cik_url (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_original_annual_alias_needs_matching_proof_and_same_cik_url) ... ok
+test_registration_event_outside_history_index_cannot_be_omitted_before_zero (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_registration_event_outside_history_index_cannot_be_omitted_before_zero) ... ok
+test_rejects_unapproved_form_subset_and_wrong_metric (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_rejects_unapproved_form_subset_and_wrong_metric) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 3, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_original_annual_alias_needs_matching_proof_and_same_cik_url", "tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_registration_event_outside_history_index_cannot_be_omitted_before_zero", "tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_rejects_unapproved_form_subset_and_wrong_metric"]}
+
+Exit code: 0
