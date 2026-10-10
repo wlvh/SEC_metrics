@@ -6157,6 +6157,79 @@
       "dedup": "old323 review ended NEEDS_FIX; new14line source-registration repair notcovered; exactnewSHA notregistered/results absent; processing210 reviewer ended",
       "ordinary_messages": 1,
       "tests": "4 contract tests .052s plus17isolated CSV controls; no fullsource/companyrerun"
+    },
+    {
+      "task_name": "review_operating_7a2ffdd",
+      "purpose": "review",
+      "module": "reported-operating-revenue",
+      "base_sha": "84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf",
+      "patch_sha": "7a2ffdd20b95888dbf0b518e6b3096f2dc67b056",
+      "scope_paths": [
+        "scripts/vnext/selected_revenue_scope_v1.py:_statement_scope optionalheaders",
+        "scripts/vnext/selected_reported_revenue_v2.py:reported operating branch",
+        "tests/vnext/test_selected_reported_revenue_v2.py:operating controls"
+      ],
+      "spawned_at": "2026-10-10T07:25:02.092543+00:00",
+      "ended_at": "2026-10-10T07:29:51.249715+00:00",
+      "tool_calls": 16,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/docs/evidence/issue28_operating_revenue_scope_20261010/independent-review/conclusion.md",
+      "verdict": "REQUIRES_FIX_P2_PARENTHESES_SCOPE_DROPPED",
+      "limits": {
+        "tool_nodes": 30,
+        "minutes": 15,
+        "ordinary_messages": 2
+      },
+      "ordinary_messages": 2
+    },
+    {
+      "task_name": "review_operating_scope_e98a26c",
+      "purpose": "review",
+      "module": "operating-scope-parenthetical-repair",
+      "patch_sha": "e98a26c1828e3a794e2a931c5541e2c0d6ae79b9",
+      "base_sha": "7a2ffdd20b95888dbf0b518e6b3096f2dc67b056",
+      "scope_paths": [
+        "scripts/vnext/selected_reported_revenue_v2.py:two operating label checks",
+        "tests/vnext/test_selected_reported_revenue_v2.py:parenthetical regression"
+      ],
+      "spawned_at": "2026-10-10T07:38:10.556205+00:00",
+      "ended_at": "2026-10-10T07:41:51.578109+00:00",
+      "tool_calls": 10,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/docs/evidence/issue28_operating_revenue_scope_20261010/independent-parenthetical-repair/conclusion.md",
+      "verdict": "PASS_LIMITED_TWO_LINE_PARENTHESES_SCOPE_REPAIR",
+      "limits": {
+        "tool_nodes": 20,
+        "minutes": 10,
+        "ordinary_messages": 2
+      },
+      "dedup": "liveagentsnone;exactSHA register/evidenceabsent;new2lineincrementonly old7a2P2 retained",
+      "ordinary_messages": 2
+    },
+    {
+      "task_name": "review_selected_c04_4e8af50",
+      "purpose": "review",
+      "module": "selected-c04-public-adapter",
+      "patch_sha": "4e8af50824d8ce0e69c877864977ca25b05573fa",
+      "base_sha": "84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf",
+      "scope_paths": [
+        "scripts/vnext/c04_registration_successor.py:selected annual adapter",
+        "scripts/vnext/c04_verified_document_alias.py:explicit DEI/default",
+        "scripts/vnext/ordinary_saved_result.py:explicit C04 gate",
+        "tests/vnext/test_c04_selected_input.py",
+        "tools/run_fast_tests_v2.py:selector append",
+        ".github/workflows/vnext-fast.yml:existing C04 test command"
+      ],
+      "spawned_at": "2026-10-10T08:02:53.044962+00:00",
+      "ended_at": "2026-10-10T08:14:38+00:00",
+      "tool_calls": 32,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/docs/evidence/issue28_selected_c04_20261010/independent-review/conclusion.md",
+      "verdict": "LIMITED_SOURCE_NO_NEW_BLOCKER_TEST_P2_STATIC_76_REPAIR_CHECKED_NO_RERUN",
+      "limits": {
+        "tool_nodes": 35,
+        "minutes": 15,
+        "ordinary_messages": 2
+      },
+      "dedup": "noactiveagent;exactSHA/scope register absent;no independent summary; old C04 reviews cover different source/control patches only",
+      "ordinary_messages": 2
     }
   ],
   "ci_capacity_20260922": {
@@ -19209,7 +19282,95 @@
       0,
       0
     ],
-    "ci": "newheadinitialrunnotterminal;no claim of timingimprovement",
-    "peer_ownership": "rootpubliclayout+exactpatch;47 applies and consumerCI; no peer tree/ledger edits"
+    "ci": {
+      "head": "47d9435ba7c4e39092e748594fc415b53e947bb8",
+      "checks": 13,
+      "conclusion": "SUCCESS",
+      "source": "actualservernaturalterminalread"
+    },
+    "peer_ownership": "rootpubliclayout+exactpatch;47 applies and consumerCI; no peer tree/ledger edits",
+    "peer_ci_report": "1332e08:14checksSUCCESS; sourcecontracts73s/records262s/aggregate3s,all10commands complete; parentrawheadterminal yet to read fixedpeer1c7 record"
+  },
+  "operating_revenue_scope_20261010": {
+    "patch_sha": "7a2ffdd20b95888dbf0b518e6b3096f2dc67b056",
+    "base": "84d15f35",
+    "status": "LIMITED_SOURCE_REPAIR_REVIEW_PASS_CURRENT_SOURCE_CLI_ORIGINAL_EVIDENCE_REUSED",
+    "scope": "existingapprovedRevenueconcept+originalTotalOperatingRevenue28063m;samecontext/tabletotalOperatingExpenses/netIncome;branchonlyheaders/units;unknown/segment/period/scale oldguard keep",
+    "source": "actual0000092380-26-000004/table33native168;componentverifierprimary/XML/Facts7.327s/MATCH",
+    "formal_cli": "currentSW25same28063000000USD/CIK92380/calendarYear;first3.833/factoryforbiddenrepeat.105/independentread.440/7files preserve;sourceonly notanswerinput",
+    "tests": "61/7.834s,2targetedexpense-role/.217s0skip;originalfailures preserved",
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "original_review": "REQUIRES_FIX P2 at7a2; original result retained",
+    "repair": "raw whitespace/case labels only in two new operating branch checks; no qualifier deletion",
+    "repair_tests": "original3failures; repaired62tests7.731s/zero skip",
+    "old_ci": "7a2 elevenSUCCESS; doesnotcoverrepair",
+    "repair_sha": "e98a26c1828e3a794e2a931c5541e2c0d6ae79b9",
+    "review": "7a2 REQUIRES_FIX historical; e98 two-line increment PASS10tools2messages3tests+8controls",
+    "ci": "actualee551707elevenSUCCESS;newsourcee98limitedPASS;peerSWconsumer78a readnotification, actual fixedrecordreading pending",
+    "archive_sha": "ee5517079926cf07c201c46971f2df7d39dee42f"
+  },
+  "selected_c04_public_interface_next_20261010": {
+    "peer_branch": "task/issue47-auditor-selected-consumer-20261010",
+    "current_public_module": "c04_registration_successor.prepare_c04_registration_case latest governance+labelledannual",
+    "needed_shared_adapter": "explicitselectedbase+labelledannual defaultNone preservingcurrent;existingaliasreader controlledDEIrelease forhistorical2021q4;fourforms/defaultmatch/sameCIK/sourceproof/Calc notduplicated",
+    "actual_peer_failure": "Ford22priorDEI2021q4 formsnotrecognized yieldsIDENTITY_OR_FORM_CONFLICT, notsourceunavailable or auditordifference; rawsource/reference keep;samePwC not0untilcompletecensus",
+    "ownership": "rootsharedcore/API,peerselectedmetadata/currentprior/factoryconsumer;parentnotyetimplementedC04selectedadapter",
+    "budget_delta": [
+      0,
+      0,
+      0
+    ],
+    "patch_sha": "4e8af50824d8ce0e69c877864977ca25b05573fa",
+    "peer_fixed_read_sha": "a6ea48f113988ae20c7eb91ca525ca3b0632d29c",
+    "status": "PUBLIC_SELECTED_C04_COMPANY_CASE_VERIFIED_SOURCE_REVIEW_COMPLETE_CONSUMER_CI_RECEIVING",
+    "actual": "Ford22 publicsamecore4forms28events+2annualHTML/XML;0flag/37996/full2022/0ec6ID;final17.842/repeat2.472/independentCLIresults.457/10protected12after/1resultdirectory",
+    "tests": "18business.091s;78controller/company9.346s0skip; smallguards/defaultunchangeddict checked",
+    "scope": "peerhistoricalCLIconsumer ownsfactory; rootexplicitgate only/no currentdefault expansion",
+    "ci": "actual f5cd at08:29UTC C04SUCCESS and9totalSUCCESS; company-current/inherited-source stillIN_PROGRESS; notoverallgreen",
+    "pr": "https://github.com/wlvh/SEC_metrics/pull/142",
+    "review": "4e8 adapter boundedno newbusinessblocker;15specified+3inherited+11syntheticcontrols;32tools2messages;newtestGitdependencyP2 retained,76fixturestaticcheckednotrerunbyreviewer",
+    "test_repair_sha": "76d372fafe707b65bde136d48ca91f5c6325aa2f",
+    "test_repair_parent": "7 selected .223s/one complete defaultdictionary no.git .001s; sourceexact4e8; no company rerun",
+    "peer_report": "241+4e8 CLI Ford22first19.733/repeat4.865/read.579/0flag full2022; subsequentmainf51merge75small.386/repeat5.744/read.559; root actualfixedreading pending",
+    "actual_main": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+    "main_integration_commit": "f1478ea77f4f21469e57c830e939dfb008aca752",
+    "receiving_comment_actually_read": "PR137 issuecomment6095577547: receiver own77s fiveyear+singleyear/repeat/read/neighbor; notrootexecution",
+    "archive_head": "f5cd00bf319ef65f18f517b3b68a30f305382ee1",
+    "main_combination_tests": "96/9.776s0skip atf147, threepublicsourcefiles exact4e",
+    "main_combination_current_read": "root samefactory forbiddenrepeatNO_SOURCE noResult; existingexport correctlyrefused thenfreshCLIread.514674s0flag/full2022/6resultfiles1dir; repeattime missingnull notfabricated",
+    "consumer_ci_patch": "public f5cd two artifacts: existing vnext-fast/historycmd+v2selector tail; company workflow2paths+existing historycmd2modules, YAMLstructure checked; peer applies/testsin own143",
+    "peer_consumer_pr": "https://github.com/wlvh/SEC_metrics/pull/143"
+  },
+  "ledger_read_checkpoint_20261010_c04": {
+    "actual_claim_counts": {
+      "PROVIDER": 143,
+      "SEC": 52
+    },
+    "paid_count_as_existing_policy": 143,
+    "last_ordinal": 195,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "scope": "read claimsJSONL only; failures counted; no account or service probe"
+  },
+  "public_historical_guide_20261010": {
+    "latest_peer_read": "80075281",
+    "actual_main": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+    "head": "ddc2169b",
+    "pr": "https://github.com/wlvh/SEC_metrics/pull/121",
+    "validation": "13shellblocks/bashsyntax/actualCLIflags/fixedrefs; no financialrerun",
+    "ci": "actualddc at08:29UTC8SUCCESS; fast/inherited-source IN_PROGRESS; notoverallgreen"
+  },
+  "next_existing_source_plan_128_20261010": {
+    "pr": "https://github.com/wlvh/SEC_metrics/pull/128",
+    "scope": "readexisting savedfiscal-label planning8540 and actualmain/feedback; currentmain sources lacksfiscal-year; preservelatestdefault/old source identities and B02 income dependencies",
+    "status": "NEXT_INCREMENT_READ_NOT_REIMPLEMENTED",
+    "peer_notice": "existingconsumerc986/37895 preserved; root source/controller owner, no financialrerun or newfetch rights"
   }
 }
