@@ -5986,6 +5986,46 @@
       "total_tool_calls": 62,
       "total_message_count": 3,
       "final_verdict": "PASS_LIMITED_REPAIR_TWO_P2_CLOSED"
+    },
+    {
+      "task_name": "review_riskamend_a915570",
+      "purpose": "review",
+      "module": "risk_heading_amendment_input",
+      "scope_paths": [
+        "scripts/vnext/risk_heading_amendment_input_v1.py",
+        "tests/vnext/test_risk_heading_amendment_input.py",
+        ".github/workflows/company-current-records.yml"
+      ],
+      "patch_sha": "a915570a0961509d93c0759491cefebb444da988",
+      "base_sha": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+      "spawned_at": "2026-10-10T02:22:11.813907+00:00",
+      "ended_at": "2026-10-10T02:28:23+00:00",
+      "tool_calls": 30,
+      "message_count": 3,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-risk-amendment/SEC_metrics/docs/evidence/issue28_risk_amendment_20261010/independent-review/conclusion.md",
+      "verdict": "CHANGES_REQUIRED_P2_PLURAL_ITEM_REFERENCE",
+      "agent_ended": true,
+      "next": "agent message cap reached; no followup or reset, only genuine unreviewed repair increment may be externally reviewed"
+    },
+    {
+      "task_name": "review_riskrefs_4ba6a44",
+      "purpose": "review",
+      "module": "risk_section_reference_repair",
+      "scope_paths": [
+        "scripts/vnext/risk_heading_amendment_input_v1.py",
+        "tests/vnext/test_risk_heading_amendment_input.py"
+      ],
+      "patch_sha": "4ba6a440cb708711794f415cb39b965d2fbf2f91",
+      "base_sha": "a915570a0961509d93c0759491cefebb444da988",
+      "spawned_at": "2026-10-10T02:37:53.698464+00:00",
+      "ended_at": "2026-10-10T02:57:32+00:00",
+      "tool_calls": 20,
+      "message_count": 1,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-risk-amendment/SEC_metrics/docs/evidence/issue28_risk_amendment_20261010/independent-reference-repair/conclusion.md",
+      "verdict": "CHANGES_REQUIRED_P2_UNPARSED_ITEM_LIST",
+      "inherits_original_result": "/Users/lyuhongwang/.codex/worktrees/issue28-risk-amendment/SEC_metrics/docs/evidence/issue28_risk_amendment_20261010/independent-review/conclusion.md",
+      "new_scope_only": "unreviewed physical Item(s)/list/range reference repair and direct dependency tuple; not original full source API re-review",
+      "agent_ended": true
     }
   ],
   "ci_capacity_20260922": {
@@ -18586,10 +18626,10 @@
     "evidence_path": "docs/evidence/issue28_current_reported_revenue_20261010/README.md",
     "CI": {
       "head": "9749a2136c5ef82f77a5b6d12515334bab7b818b",
-      "completed_success": 6,
-      "in_progress": 5,
-      "overall_terminal": null,
-      "observation": "actual GraphQL rollup after archive push; no overall SUCCESS claim"
+      "completed_success": 11,
+      "in_progress": 0,
+      "overall_terminal": "SUCCESS",
+      "observation": "actual GraphQL all11COMPLETED/SUCCESS this goal turn"
     },
     "calls": [
       0,
@@ -18622,5 +18662,62 @@
       "old_correct_result_recalculated": false,
       "new_credit": false
     }
+  },
+  "risk_heading_amendment_input_20261010": {
+    "main_base": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-risk-amendment/SEC_metrics",
+    "original_product_sha": "a915570a0961509d93c0759491cefebb444da988",
+    "repair_sha": "4ba6a440cb708711794f415cb39b965d2fbf2f91",
+    "input_class": "SELECTED_ORIGINAL_ITEM_1A_HEADINGS",
+    "metric_ids": [
+      "D01"
+    ],
+    "actual_source_pair": [
+      "0002041610-26-000011",
+      "0001140361-26-016758"
+    ],
+    "cik": "2041610",
+    "source_scope_id": "sha256:011bfe85ff98017aa34ea4abd6c48ae2bb1512c9c5dd54606dd16c000a0116ef",
+    "actual_source_seconds": 2.892776541877538,
+    "headings_answer_used_as_input": false,
+    "metric_result_created": false,
+    "source_acquisition_credit": false,
+    "original_review": "CHANGES_REQUIRED_P2_PLURAL_REFERENCE;30tools/3messages/ended",
+    "repair_review": "CHANGES_REQUIRED; root structural-marker route stops after initial+one substantive correction; no company input credit",
+    "parent_tests": {
+      "run": 29,
+      "seconds": 0.296,
+      "skip": 0
+    },
+    "peer_consumer_draft": "44854b13, not pushed/run; all-selected-amendments and current subject owned bypeer",
+    "delivery": "twoCONNECT500 failures retained, final2fade branch pushSUCCESS; no featurePR/capability accepted",
+    "evidence": "docs/evidence/issue28_risk_amendment_20261010/README.md",
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "old_source_defaults_and_policies_unchanged": true,
+    "next": "different source-impact design needed; ordinary engineering continues, no actualParamD01 run",
+    "peer_company_run_authorized_to_proceed": false,
+    "stopped_sha": "2fade56be1db94cf04d5d334d93b52681756f6ac",
+    "remote_branch": "origin/task/issue28-risk-amendment",
+    "stage": "stopped after initial+one substantive correction; public alwaysWITHHELD and private assessmentPROPOSED/no input credit",
+    "public_gate_tests": {
+      "run": 31,
+      "seconds": 0.319,
+      "skip": 0
+    }
+  },
+  "text_item_capacity_gap_20261010": {
+    "source_peer": "existingD01 fixed125 consumer EnphaseFY21 evidence, not parent rerun",
+    "actual_heading_count": 68,
+    "failure_reason": "DETERMINISTIC_TEXT_HEADINGS_EXCEED_BOUND",
+    "current_approved_spec_path": "catalog/r6/D01_risk_factor_headings.md",
+    "current_spec_max_items": 64,
+    "hard_compile_path": "scripts/vnext/specs.py:text_policy.max_items<=64",
+    "hard_render_path": "scripts/vnext/text_results.py:render_text_payload items<=64",
+    "scope": "complete original Item1A headings; no truncation, no originalspec rewrite or limit change done",
+    "next": "inspect saved68/count/text size; prepare explicit text representation/resource successor and identify necessary approval, ordinary read usesPR131"
   }
 }
