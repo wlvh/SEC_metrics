@@ -80,6 +80,18 @@ class SelectedReportedRevenueTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'VISIBLE_DATE_CONFLICT'):
             reported_revenue_scope(primary=wrong,annual=annual,approved_concepts=APPROVED)
 
+    def test_later_year_header_cannot_hide_an_earlier_associated_full_date(self):
+        source,_,annual=originals()
+        for descriptor in ('December 30, 2025','December 31, 2025'):
+            raw=source['raw_bytes'].replace(b'<td>Year Ended December 31,</td><td></td>',
+                ('<td>Year Ended December 31,</td><td>'+descriptor+'</td>').encode())
+            if descriptor.startswith('December 30'):
+                with self.assertRaisesRegex(ValueError,'VISIBLE_DATE_CONFLICT'):
+                    reported_revenue_scope(primary=changed(source,raw),annual=annual,approved_concepts=APPROVED)
+            else:
+                scope=reported_revenue_scope(primary=changed(source,raw),annual=annual,approved_concepts=APPROVED)
+                self.assertTrue(scope['complete_scope_proven'])
+
     def test_resolved_label_keeps_raw_year_and_cannot_borrow_another_source(self):
         from vnext.fiscal_year_labels import inspect_fiscal_year_labels
         source,_,annual=originals()

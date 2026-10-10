@@ -70,7 +70,8 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
             origins=[c for c in header_row['cells'] if c['is_origin'] and c['text'].strip()]
             for c in origins:
                 matches=list(end_pattern.finditer(c['text']))
-                if not matches:continue
+                full_dates=list(_DATE.finditer(c['text']))
+                if not matches and not full_dates:continue
                 common=(c['column_index']<cell['column_index'] and all(
                     other is c or re.fullmatch(r'[0-9]{4}',other['text'].strip())
                     or _DATE.fullmatch(other['text'].strip())
@@ -78,6 +79,10 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                     for other in origins))
                 covers=c['column_index']<=cell['column_index']<c['column_index']+c['colspan']
                 if not (covers or common):continue
+                for match in full_dates:
+                    try:described_end=_date(year=int(match[3]),month=match[1],day=int(match[2]))
+                    except ValueError:raise IncomeSourceError('SELECTED_REPORTED_REVENUE_VISIBLE_END_DAY_INVALID')
+                    _need(described_end==actual_end,'VISIBLE_DATE_CONFLICT')
                 for match in matches:
                     try:described_end=_date(year=actual_end.year,month=match[1],day=int(match[2]))
                     except ValueError:raise IncomeSourceError('SELECTED_REPORTED_REVENUE_VISIBLE_END_DAY_INVALID')
