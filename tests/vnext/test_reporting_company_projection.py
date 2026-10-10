@@ -83,6 +83,83 @@ class ReportingCompanyProjectionTest(unittest.TestCase):
         self.metadata_only=True
         self.assertEqual(self.view()['primary_cik'],'813828')
 
+    def test_valued_historical_event_uses_selected_inventory_and_source_set(self):
+        self.target['entity']=self.target['accession']=None
+        inventory={'record_type':'SOURCE_REFERENCE','source_reference_id':'inventory',
+            'company_id':COMPANY,'source_url':submissions_url(cik=813828),
+            'source_role':'sec_submissions_inventory','raw_asset_id':'sha256:inventory'}
+        event={'record_type':'SOURCE_REFERENCE','source_reference_id':'event',
+            'company_id':COMPANY,'accession':'0000813828-21-000001','document_name':'event.htm',
+            'source_url':accession_document_url(cik=813828,accession='0000813828-21-000001',document_name='event.htm')}
+        window={'period_start':'2021-01-01','period_end':'2021-12-31','fiscal_year':2021}
+        self.annual['table_input']={'target_period':window}
+        binding={'record_type':'HISTORICAL_EVENT_SOURCE_INPUT','prepared_input':deepcopy(self.annual),
+            'metric_id':'C01','event_window':window,'financial_cross_entity_combination_authorized':False,
+            'registered_event_scope':None,'source_set_manifests':[{
+                'record_type':'SOURCE_SET_MANIFEST','company_id':COMPANY,'source_role':'fy_8k_item_inventory',
+                'form_types':['8-K','8-K/A'],'discovery_policy':'PINNED_SUBMISSIONS',
+                'inventory_source_reference_id':'inventory','sec_submissions_inventory_hash':'sha256:inventory',
+                'fiscal_or_date_window':{k:window[k] for k in ('period_start','period_end')},
+                'ordered_source_reference_ids':['event']}]}
+        def view(refs,b= binding,metric='C01'):
+            return projection._reporting_company_view(data_root=ROOT,company=self.company,
+                annual=self.annual,calculation_target=self.target,source_references=refs,
+                event_input_binding=b,event_metric_id=metric)
+        before=deepcopy(self.target)
+        self.assertEqual(view([inventory,event])['primary_cik'],'813828')
+        self.assertEqual(self.target,before)
+        union=deepcopy(binding)
+        union['source_set_manifests'].append({**union['source_set_manifests'][0],
+            'discovery_policy':'PINNED_SUBMISSIONS_SHARD_UNION_V1'})
+        self.assertEqual(view([inventory,event],union)['primary_cik'],'813828')
+        foreign=deepcopy(inventory);foreign['source_url']=submissions_url(cik=2041610)
+        with self.assertRaisesRegex(ValueError,'REPORTER_EVENT_SOURCE_NOT_PROVEN'):view([foreign,event])
+        foreign_event=deepcopy(event);foreign_event['source_url']=accession_document_url(cik=2041610,
+            accession=event['accession'],document_name=event['document_name'])
+        with self.assertRaisesRegex(ValueError,'REPORTER_EVENT_SOURCE_NOT_PROVEN'):view([inventory,foreign_event])
+        for field,value in [('metric_id','B01'),('event_window',{**window,'period_end':'2022-12-31'}),
+                            ('financial_cross_entity_combination_authorized',True)]:
+            changed=deepcopy(binding);changed[field]=value
+            with self.subTest(field=field),self.assertRaisesRegex(ValueError,'REPORTER_EVENT_SOURCE_NOT_PROVEN'):
+                view([inventory,event],changed)
+        with self.assertRaisesRegex(ValueError,'REPORTER_SOURCE_NOT_PROVEN'):
+            view([inventory,event],metric='B01')
+        # A failed/missing event set can still display a metadata-only withheld
+        # outcome; it gains no amount or completed event-set credit.
+        missing=deepcopy(binding);missing['source_set_manifests']=[]
+        with self.assertRaisesRegex(ValueError,'REPORTER_EVENT_SOURCE_NOT_PROVEN'):
+            view([inventory],missing)
+        metadata=projection._reporting_company_view(data_root=ROOT,company=self.company,
+            annual=self.annual,calculation_target=self.target,source_references=[inventory],
+            allow_metadata_only=True,event_input_binding=missing,event_metric_id='C01')
+        self.assertEqual(metadata['primary_cik'],'813828')
+
+    def test_registered_union_still_requires_its_existing_period_proof(self):
+        from tests.vnext.test_registered_event_projection import RegisteredEventProjectionTest
+        fixture=RegisteredEventProjectionTest();fixture.setUp()
+        annual=fixture.annual
+        annual['filing'].update(accessionNumber='0002041610-26-000001',primaryDocument='annual.htm')
+        annual['subject_policy']['cross_entity_combination_authorized']=False
+        binding=fixture.case['input_binding']
+        binding.update(record_type='HISTORICAL_EVENT_SOURCE_INPUT',metric_id='C01',
+            prepared_input=deepcopy(annual),financial_cross_entity_combination_authorized=False)
+        for item in binding['source_set_manifests']:
+            item.update(record_type='SOURCE_SET_MANIFEST',source_role='fy_8k_item_inventory',
+                form_types=['8-K','8-K/A'],discovery_policy='PINNED_SUBMISSIONS_SHARD_UNION_V1',
+                sec_submissions_inventory_hash='sha256:inventory',ordered_source_reference_ids=[])
+        for ref in fixture.case['references']:ref['raw_asset_id']='sha256:inventory'
+        target={'company_id':COMPANY,'entity':None,'accession':None}
+        def view(proven=False):
+            return projection._reporting_company_view(data_root=ROOT,company=self.company,
+                annual=annual,calculation_target=target,source_references=fixture.case['references'],
+                event_input_binding=binding,event_metric_id='C01',registered_event_period_proven=proven)
+        with self.assertRaisesRegex(ValueError,'REPORTER_EVENT_SOURCE_NOT_PROVEN'):view()
+        self.assertTrue(fixture.proven())
+        self.assertEqual(view(fixture.proven())['primary_cik'],'2041610')
+        fixture.case['references'][0]['source_url']=submissions_url(cik=813828)
+        with self.assertRaisesRegex(ValueError,'EVENT_SCOPE_CHANGED'):fixture.proven()
+        with self.assertRaisesRegex(ValueError,'REPORTER_EVENT_SOURCE_NOT_PROVEN'):view(True)
+
 
 
 class CurrentNullableTraceProjectionTest(unittest.TestCase):
