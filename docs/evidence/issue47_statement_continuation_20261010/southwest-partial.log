@@ -1,0 +1,7 @@
+repeat-forbid-factory {'name': 'repeat-forbid-factory', 'seconds': 5.772804999956861, 'exit_code': 0, 'status': 'FLOW_COMPLETED'}
+independent-results {'name': 'independent-results', 'seconds': 0.5722228749655187, 'exit_code': 0, 'status': None}
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-main-combination-20261010/SEC_metrics/work/statement-continuation/southwest_partial.py", line 12, in <module>
+    reader,rc=invoke('independent-results',['results','--company','southwest_airlines','--state-root',str(state),'--output-root',str(base/'read')],True);assert rc==0 and before==protected();rows=list(csv.DictReader((base/'read/metrics_matrix.csv').open()));assert len(rows)==20;comparisons=[]
+                                                                                                                                                                                                                                                                        ^^^^^^^^^^^^^
+AssertionError
