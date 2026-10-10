@@ -81,5 +81,44 @@ class SingleRevenueLineTest(unittest.TestCase):
         source=changed(source,source['raw_bytes'].replace(b'<td>Revenues</td>',b'<td>Product revenues</td>'))
         self.assertFalse(self.scope(source,annual)['complete_scope_proven'])
 
+    def test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match(self):
+        source,annual=single_statement()
+        for extra in (b'100',b'<span>100</span>'):
+            raw=source['raw_bytes'].replace(b'>58496</ix:nonFraction></td>',b'>58496</ix:nonFraction>'+extra+b'</td>')
+            self.assertNotEqual(raw,source['raw_bytes'])
+            with self.subTest(extra=extra),self.assertRaisesRegex(ValueError,'SINGLE_REVENUE_'):
+                self.scope(changed(source,raw),annual,xml=source)
+
+    def test_repeated_year_header_does_not_hide_an_earlier_amount(self):
+        source,annual=single_statement()
+        for amount in (
+            b'<ix:nonFraction name="issuer:OtherRevenue" contextRef="annual" unitRef="usd" scale="6" decimals="-6">100</ix:nonFraction>',
+            b'100',
+        ):
+            extra=b'<tr><td>Other revenue</td><td>'+amount+b'</td></tr><tr><td>(MILLIONS, EXCEPT PER SHARE DATA)</td><td>2025</td></tr>'
+            raw=source['raw_bytes'].replace(b'<tr><td>Revenues',extra+b'<tr><td>Revenues')
+            with self.subTest(amount=amount),self.assertRaisesRegex(ValueError,'SINGLE_REVENUE_|STATEMENT_LOCAL_SCOPE'):
+                self.scope(changed(source,raw),annual,xml=source)
+
+    def test_legitimate_repeated_header_and_currency_symbol_keep_the_single_amount(self):
+        source,annual=single_statement()
+        raw=source['raw_bytes'].replace(b'<tr><td>Revenues',
+            b'<tr><td>(MILLIONS, EXCEPT PER SHARE DATA)</td><td>2025</td></tr><tr><td>Revenues')
+        self.assertTrue(self.scope(changed(source,raw),annual,xml=source)['complete_scope_proven'])
+
+    def test_selected_fact_ordinal_is_not_a_python_list_offset(self):
+        source,annual=single_statement()
+        raw=source['raw_bytes'].replace(b'name="us-gaap:CostOfGoodsAndServicesSold" contextRef="annual" unitRef="usd" scale="6"',
+            b'name="us-gaap:CostOfGoodsAndServicesSold" contextRef="annual" unitRef="usd" scale="3"')
+        self.assertNotEqual(raw,source['raw_bytes'])
+        self.assertTrue(self.scope(changed(source,raw),annual)['complete_scope_proven'])
+        raw=source['raw_bytes'].replace(b'name="us-gaap:Revenues" contextRef="annual" unitRef="usd" scale="6"',
+            b'name="us-gaap:Revenues" contextRef="annual" unitRef="usd" scale="3"')
+        with self.assertRaisesRegex(ValueError,'UNIT_UNRESOLVED'):
+            self.scope(changed(source,raw),annual)
+        raw=source['raw_bytes'].replace(b'<td><ix:nonFraction name="us-gaap:Revenues"',
+            b'<td>$ <ix:nonFraction name="us-gaap:Revenues"')
+        self.assertTrue(self.scope(changed(source,raw),annual,xml=source)['complete_scope_proven'])
+
 
 if __name__=='__main__':unittest.main()
