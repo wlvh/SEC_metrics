@@ -18,6 +18,8 @@ from .specs import compile_spec_file
 from .text_review import build_text_review_unit
 from .traits import repository_company_traits
 from . import d01_emphasis_results
+from .risk_heading_amendment_input_v1 import (inspect_risk_heading_amendment,
+    INPUT_CLASS as AMENDMENT_INPUT_CLASS, PROCESSING_FILES as AMENDMENT_PROCESSING_FILES)
 
 METRICS = frozenset({'D01'})
 SPEC_PATH = 'catalog/r6/D01_risk_factor_headings.md'
@@ -44,6 +46,7 @@ PROCESSING_FILES = (
     'config/normal_fiscal_year_labels_v1.json',
     SPEC_PATH,
 )
+PROCESSING_FILES = tuple(dict.fromkeys((*PROCESSING_FILES, *AMENDMENT_PROCESSING_FILES)))
 
 
 class RiskHeadingCaseError(ValueError):
@@ -65,9 +68,6 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
         fiscal_year=fiscal_year, rules_root=ROOT)
     annual = prepare_historical_annual_input(repo_root=source, company_id=company_id,
         period_selection=selection, rules_root=ROOT)
-    _need(not annual['amendments'],
-          'HISTORICAL_RISK_HEADINGS_AMENDMENT_NOT_RECEIVED:' + ','.join(
-              filing['accessionNumber'] for filing in annual['amendments']), 'IMPLEMENTATION_GAP')
     subject = annual['subject_policy']
     _need(subject['mode'] in {'CONTINUOUS_PRIMARY','SUCCESSOR_REGISTRANT_ONLY'}
           and str(subject.get('selected_cik')) == str(annual['entity'])
@@ -82,6 +82,26 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
           and not spec['compiled']['dependencies'], 'HISTORICAL_RISK_HEADINGS_SPEC_CHANGED')
     reader = _Sources(source, company_id, annual['entity'])
     primary = reader.primary(annual['filing'])
+    amendment_checks = []
+    original_frame = {'raw': primary['raw_bytes'], 'blob': primary['raw_blob'],
+        'reference': primary['source_reference'], 'filing': annual['filing']}
+    for filing in annual['amendments']:
+        amended = reader.primary(filing)
+        check = inspect_risk_heading_amendment(original=original_frame,
+            amendment={'raw': amended['raw_bytes'], 'blob': amended['raw_blob'],
+                       'reference': amended['source_reference'], 'filing': filing},
+            company_id=company_id, cik=annual['entity'])
+        amendment_checks.append(check)
+    for check in amendment_checks:
+        accession = check['amendment']['filing']['accessionNumber']
+        _need(check['decision'] == 'INPUT_PROPERTY_PROVEN' and not check['issues']
+              and check['input_class'] == AMENDMENT_INPUT_CLASS and check['metric_ids'] == ['D01']
+              and check['company_id'] == company_id and str(check['cik']) == str(annual['entity'])
+              and check['fiscal_window_unchanged']
+              and all(check['original']['period'][key] == period[key]
+                      for key in ('period_start', 'period_end')),
+              'HISTORICAL_RISK_HEADINGS_AMENDMENT_SCOPE_UNRESOLVED:' + accession + ':'
+              + ','.join(issue['reason'] for issue in check['issues']), 'IMPLEMENTATION_GAP')
     target = {'company_id': company_id, 'entity': annual['entity'],
         'accession': annual['filing']['accessionNumber'],
         'period_start': period['period_start'], 'period_end': period['period_end'],
@@ -115,6 +135,7 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
         'source_proofs': proofs, 'd01_emphasis_policy': d01_emphasis_results.RUNNING_HEADER_POLICY,
         'new_provider_execution': False,
         'heading_scope': 'SELECTED_REGISTRANT_ORIGINAL_ITEM_1A',
+        'risk_heading_amendment_checks': amendment_checks,
         'financial_cross_entity_combination_authorized': False}
     return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id,
         'input_binding': binding, 'compiled_specs': {metric_id: spec},
@@ -124,7 +145,11 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
         'expected_records': [*reader.records.values(), candidate, evidence, unit, decision,
                              *observations, trace, result],
         'results': {metric_id: result}, 'traces': {metric_id: trace},
+        'input_assessments': {'risk_heading_amendment_checks': amendment_checks},
         'selection': {'method': 'RISK_FACTOR_HEADINGS_V1',
             'source_reference_ids': candidate['source_reference_ids'],
-            'heading_count': len(candidate['selected']), 'risk_occurrence_asserted': False},
+            'heading_count': len(candidate['selected']), 'risk_occurrence_asserted': False,
+            'risk_heading_amendment_checks': [{key: check[key] for key in
+                ('scope_id', 'classification', 'decision', 'input_class', 'issues',
+                 'original', 'amendment')} for check in amendment_checks]},
         'rules_root': str(ROOT)}

@@ -19,17 +19,21 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
             'subject_policy':{'mode':'CONTINUOUS_PRIMARY','selected_cik':'12345',
                               'cross_entity_combination_authorized':False},'amendments':[],'source_proofs':[]}
 
-    def case(self, *, source=None, prepared=None):
+    def case(self, *, source=None, prepared=None, amendment_source=None, scopes=None):
         body=BODY.replace('<p>A supply constraint could affect production.</p>',
             '<p><b>Supply constraints may affect production</b>. Explanatory text is separate.</p>'
             '<p><span style="text-decoration:underline">Cybersecurity threats may affect operations</span>. A disclosure is not an occurrence.</p>')
         source=source or binding(annual(body));prepared=prepared or self.prepared()
-        reader=SimpleNamespace(primary=lambda *args:source, proofs={}, records={
-            'blob':source['raw_blob'],'ref':source['source_reference']})
+        amended=amendment_source or source
+        reader=SimpleNamespace(primary=lambda filing: amended if filing['form']=='10-K/A' else source,
+            proofs={}, records={'blob':source['raw_blob'],'ref':source['source_reference'],
+                              'amended_blob':amended['raw_blob'],'amended_ref':amended['source_reference']})
         with ExitStack() as stack:
             for name,value in {'resolve_period_selection':{},'prepare_historical_annual_input':prepared,
                     '_Sources':reader,'repository_company_traits':[], 'verify_ordinary_source_proofs':{}}.items():
                 stack.enter_context(patch.object(cases,name,return_value=value))
+            if scopes is not None:
+                stack.enter_context(patch.object(cases,'inspect_risk_heading_amendment',side_effect=scopes))
             return cases.prepare_historical_risk_heading_year_case(repo_root=Path('/constructed'),
                 company_id='sample_entity',metric_id='D01',fiscal_year=2025)
 
@@ -53,25 +57,70 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
                     company_id='sample_entity',metric_id='D02',fiscal_year=2025)
         select.assert_not_called()
 
-    def test_unreceived_amendment_and_unproven_subject_refuse_before_source_extraction(self):
-        for change in ('amendment','wrong_subject','combined_subject','unknown_mode'):
+    def test_unproven_subject_refuses_before_source_extraction(self):
+        for change in ('wrong_subject','combined_subject','unknown_mode'):
             value=self.prepared()
-            if change=='amendment':value['amendments']=[{'form':'10-K/A','accessionNumber':'0000012345-26-000002'}]
-            elif change=='wrong_subject':value['subject_policy']['selected_cik']='54321'
+            if change=='wrong_subject':value['subject_policy']['selected_cik']='54321'
             elif change=='combined_subject':value['subject_policy']['cross_entity_combination_authorized']=True
             else:value['subject_policy']['mode']='UNRESOLVED'
             with self.subTest(change=change), patch.object(cases,'resolve_period_selection',return_value={}), \
                     patch.object(cases,'prepare_historical_annual_input',return_value=value), \
                     patch.object(cases,'_Sources',side_effect=AssertionError('No source extraction')) as read:
-                with self.assertRaisesRegex(ValueError,'AMENDMENT_NOT_RECEIVED|SELECTED_SUBJECT_NOT_PROVEN'):
+                with self.assertRaisesRegex(ValueError,'SELECTED_SUBJECT_NOT_PROVEN'):
                     cases.prepare_historical_risk_heading_year_case(repo_root=Path('/constructed'),
                         company_id='sample_entity',metric_id='D01',fiscal_year=2025)
                 read.assert_not_called()
 
-    def test_unreceived_amendment_reason_names_the_actual_dependency(self):
+    def scope(self, *, accession='0000012345-26-000002'):
+        return {'scope_id':'constructed-control-only','company_id':'sample_entity','cik':'12345',
+            'classification':'PART_III_ADDITION_WITH_NO_AMENDED_ITEM_1A',
+            'decision':'INPUT_PROPERTY_PROVEN','issues':[],
+            'input_class':cases.AMENDMENT_INPUT_CLASS,'metric_ids':['D01'],
+            'fiscal_window_unchanged':True,
+            'original':{'period':self.prepared()['table_input']['target_period']},
+            'amendment':{'filing':{'accessionNumber':accession}},
+            'source_scope':{'document':{'blocks':['full source only in assessments']}}}
+
+    def test_unresolved_amendment_names_dependency_and_never_extracts_original(self):
         value=self.prepared();value['amendments']=[{'form':'10-K/A','accessionNumber':'0000012345-26-000002'}]
-        with self.assertRaisesRegex(ValueError,'AMENDMENT_NOT_RECEIVED:0000012345-26-000002$'):
-            self.case(prepared=value)
+        check=self.scope();check.update(decision='WITHHELD',issues=[{'reason':'RISK_AMENDMENT_NEW_ITEM_1A_SECTION'}])
+        with patch.object(cases.d01_emphasis_results,'create_deterministic_text_candidate',
+                          side_effect=AssertionError('No extraction from unresolved input')) as extract:
+            with self.assertRaisesRegex(ValueError,'AMENDMENT_SCOPE_UNRESOLVED:0000012345-26-000002:RISK_AMENDMENT_NEW_ITEM_1A_SECTION'):
+                self.case(prepared=value,scopes=[check])
+            extract.assert_not_called()
+
+    def test_every_amendment_must_have_its_own_d01_period_and_subject_property(self):
+        value=self.prepared();value['amendments']=[{'form':'10-K/A','accessionNumber':'0000012345-26-000002'},
+            {'form':'10-K/A','accessionNumber':'0000012345-26-000003'}]
+        for change in ('withheld','class','metric','cik','period','window'):
+            bad=self.scope(accession='0000012345-26-000003')
+            if change=='withheld':bad['decision']='WITHHELD'
+            elif change=='class':bad['input_class']='FINANCIAL_INPUT'
+            elif change=='metric':bad['metric_ids']=['B08']
+            elif change=='cik':bad['cik']='54321'
+            elif change=='period':bad['original']['period']['period_start']='2025-02-01'
+            else:bad['fiscal_window_unchanged']=False
+            with self.subTest(change=change),self.assertRaisesRegex(ValueError,'AMENDMENT_SCOPE_UNRESOLVED:0000012345-26-000003'):
+                self.case(prepared=value,scopes=[self.scope(),bad])
+
+    def test_proven_amendment_keeps_full_assessment_and_only_original_heading_evidence(self):
+        value=self.prepared();value['amendments']=[{'form':'10-K/A','accessionNumber':'0000012345-26-000002'}]
+        check=self.scope();amended=binding(annual('<p><b>Never use amendment title as original risk</b></p>',form='10-K/A'))
+        amended['source_reference']['accession']='0000012345-26-000002'
+        case=self.case(prepared=value,amendment_source=amended,scopes=[check])
+        self.assertEqual(case['selection']['heading_count'],2)
+        self.assertNotIn('Never use',case['results']['D01']['value'])
+        self.assertEqual(case['input_assessments']['risk_heading_amendment_checks'],[check])
+        self.assertEqual(case['input_binding']['risk_heading_amendment_checks'],[check])
+        self.assertNotIn('source_scope',case['selection']['risk_heading_amendment_checks'][0])
+        self.assertEqual(len(case['references']),1)
+        self.assertTrue(any(r.get('accession')=='0000012345-26-000002' for r in case['expected_records']))
+
+    def test_shared_source_identity_error_propagates_before_heading_extraction(self):
+        value=self.prepared();value['amendments']=[{'form':'10-K/A','accessionNumber':'0000012345-26-000002'}]
+        with self.assertRaisesRegex(ValueError,'SOURCE_BYTES_CHANGED'):
+            self.case(prepared=value,scopes=[ValueError('SOURCE_BYTES_CHANGED')])
 
     def test_single_successor_source_does_not_combine_other_registrants_or_assert_events(self):
         value=self.prepared();value['subject_policy']['mode']='SUCCESSOR_REGISTRANT_ONLY'
@@ -98,3 +147,4 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
     def test_consumed_shared_functions_are_actual_declared_processing_dependencies(self):
         for name in ['d01_emphasis_results','d01_emphasis_source','text_coverage','text_results','risk_signals','text_review','review','historical_dei']:
             self.assertIn('scripts/vnext/'+name+'.py',cases.PROCESSING_FILES)
+        self.assertTrue(set(cases.AMENDMENT_PROCESSING_FILES)<=set(cases.PROCESSING_FILES))
