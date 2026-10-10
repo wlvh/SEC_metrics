@@ -105,7 +105,8 @@ def _revenue_claims_admitted_by_original(*, reader, prepared, filing, period, cl
     qualified = ['us-gaap:' + c.split(':')[-1] for c in concepts]
     scope = reported_revenue_scope(primary=primary, xml=xml, annual=annual,
         approved_concepts=qualified, namespace_policy=YEAR_OR_DATE_RELEASE,
-        annual_period_reader=annual_period, fiscal_label_resolution=label)
+        annual_period_reader=annual_period, fiscal_label_resolution=label,
+        allow_single_revenue_line=True)
     admit = admit_reported_revenue_facts
     if not scope['complete_scope_proven']:
         scope = selected_revenue_scope(primary=primary, xml=xml, annual=annual,
