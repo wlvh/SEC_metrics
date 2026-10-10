@@ -113,3 +113,64 @@ def select_historical_governance_metadata(*, prepared: Mapping, history: Mapping
                             "events": "FILING_DATE_INSIDE_THE_PINNED_PERIOD"},
             "loaded_blocks": sorted(history["loaded_inventories"]),
             "value_taken_from_any_filing": False}
+
+
+def prepare_selected_auditor_base(*, repo_root, company_id, fiscal_year):
+    """Prepare selected annual roles for the one public C04 successor.
+
+    No event census or auditor-change decision is made here. Public code
+    receives these source roles and must still prove its complete four-form
+    event window before concluding zero.
+    """
+    from pathlib import Path
+    from .canonical import content_hash
+    from .normal_source_authority import ROOT
+    from .normal_period_selection import resolve_period_selection
+    from .historical_annual_input import prepare_historical_annual_input
+    from .normal_history_catalog import load_history_for_period
+    from .normal_governance_input import _Sources
+    from .observations import scope_key
+    from .governance_signals import C04_V2_SPEC_PATH
+    source = Path(repo_root)
+    selected = resolve_period_selection(repo_root=source, company_id=company_id,
+        fiscal_year=fiscal_year, rules_root=ROOT)
+    labelled = prepare_historical_annual_input(repo_root=source, company_id=company_id,
+        period_selection=selected, rules_root=ROOT)
+    _need(labelled['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY',
+          'HISTORICAL_C04_SELECTED_SUBJECT_NOT_COMPARABLE', 'IMPLEMENTATION_GAP')
+    annual = labelled.get('original_input', labelled)
+    period = annual['table_input']['target_period']
+    reader = _Sources(source, company_id, annual['entity'])
+    history = load_history_for_period(repo_root=source, company_id=company_id,
+        report_end=period['period_end'], cik=annual['entity'], reader=reader)
+    choice = select_historical_governance_metadata(prepared=annual, history=history)
+    choice['history_loaded'] = [name for name in history['loaded_inventories']
+                               if name != history['inventory']['source_reference']['document_name']]
+    from sec_urls import companyfacts_url
+    # Carry the annual preparer's already consumed proof as ordinary records;
+    # CompanyFacts is never used to infer an auditor or a change signal.
+    reader.read(companyfacts_url(cik=int(annual['entity'])),
+                accession=annual['filing']['accessionNumber'], role='companyfacts',
+                media_type='application/json')
+    current = [reader.auditor_filing(f) for f in choice['current_filing_chain']]
+    prior = [reader.auditor_filing(f) for f in choice['prior_filing_chain']]
+    scope = {'entity_scope': 'registrant'}
+    target = {'company_id': company_id, 'period_start': period['period_start'],
+              'period_end': period['period_end'], 'scope': scope, 'scope_key': scope_key(scope=scope)}
+    proof_map = {content_hash(value=p): p for p in
+        [*annual['source_proofs'], *[entry['proof'] for entry in reader.proofs.values()]]}
+    proofs = list(proof_map.values())
+    body = {'record_type': 'HISTORICAL_SELECTED_GOVERNANCE_INPUT',
+        'company_id': company_id, 'prepared_annual_input': annual,
+        'selection': choice, 'period_selection': selected, 'source_proofs': proofs,
+        'history_alignment_conflicts': history['limitations'],
+        'metric_input_status': {'C04': 'PREPARED'}, 'new_calls': [0, 0, 0]}
+    binding = {**body, 'input_binding_id': content_hash(value=body)}
+    arguments = {'current_filings': current, 'prior_filings': prior, 'prior_sources': [],
+        'target_accession': choice['current_filing_chain'][0]['accessionNumber'],
+        'prior_period_end': choice['prior_ordinary']['reportDate'] if choice['prior_ordinary'] else '',
+        'target': target, 'expected_cik': annual['entity'], 'event_input': None}
+    return {'base': {'input_binding': binding, 'records': list(reader.records.values()),
+        'resolver_inputs': {'c04': {'spec_path': C04_V2_SPEC_PATH, 'arguments': arguments}}},
+        'labelled_annual': labelled, 'metadata_only_event_selection': True,
+        'value_created': False, 'new_calls': [0, 0, 0]}

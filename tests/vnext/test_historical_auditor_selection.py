@@ -1,6 +1,7 @@
 """Pinned governance metadata controls; no financial content credit."""
 from copy import deepcopy
 from unittest import TestCase
+from unittest.mock import patch
 from vnext.historical_governance_input import select_historical_governance_metadata as select
 
 FORMS=['8-K','8-K/A','8-K12B','8-K12B/A']
@@ -54,3 +55,13 @@ class HistoricalAuditorSelectionTest(TestCase):
         with self.assertRaisesRegex(ValueError,'SELECTED_CIK_CHANGED'):
             select(prepared=self.prepared,history={'all_rows':self.rows,
                 'loaded_inventories':['saved-shard'],'reporting_cik':'2'},event_forms=FORMS)
+    def test_selected_base_rebuilds_source_and_refuses_successor_before_auditor_read(self):
+        from vnext.historical_governance_input import prepare_selected_auditor_base
+        prepared={'subject_policy':{'mode':'SUCCESSOR_REGISTRANT_ONLY'}}
+        with patch('vnext.normal_period_selection.resolve_period_selection',return_value={'selected':'constructed'}) as select, \
+             patch('vnext.historical_annual_input.prepare_historical_annual_input',return_value=prepared) as rebuild, \
+             patch('vnext.normal_governance_input._Sources') as read:
+            with self.assertRaisesRegex(ValueError,'SUBJECT_NOT_COMPARABLE'):
+                prepare_selected_auditor_base(repo_root='/constructed',company_id='sample',fiscal_year=2025)
+        self.assertEqual(rebuild.call_args.kwargs['period_selection'],select.return_value)
+        read.assert_not_called()
