@@ -1,0 +1,19 @@
+限定独审未通过：有一项会错误确认财年归属的 P1，以及一项工厂范围可被调用方改动的 P2。指定测试亲跑全部通过，但不覆盖这两个反例。没有修改产品或测试，没有执行真实年度公司处理。
+
+审阅对象是 patch 5511d77b1dea2c0f38a37ec60b40547bd03de622 相对 base 3de509ac3874f47220d07986d38fdb73a9ee3942，只覆盖委托指定的 range/CLI、两项 peer API 增量、两个新测试、既有 workflow 和两项 FY2023 精确缺陷登记。当前 HEAD 为该 patch；九项 tested-tree 文件均逐字节匹配原收据，两项 peer 产品文件与 d52b362076de9d4239cd8c69f9e81b0d81b6f6ee 逐字节一致。这证明受审字节一致；原真实公司运行收据仍是未提交树运行，不能倒写成当时已经测试该 commit。
+
+1. [P1] 条件句和明确假设示例被当成实际 issuer fiscal label。scripts/vnext/historical_fiscal_labels.py:207 直接采用 _choose_fiscal_year 的选择，company_fiscal_range.py 随后将其作为范围成员。亲跑构造原件在真实主体/期间/同 accession、hash-bound 的有效框架内，只添加 “Our fiscal year ends on December 31. If the proposed naming convention is approved, References to fiscal 2026, for example, refer to the fiscal year ending December 31, 2025.”；真实的新 discovery 返回 FISCAL_RANGE_RESOLVED、source bytes available=true，把原 DEI 2025 的 2025-12-31 归入 FY2026。句子说明的是待批准条件，未声明现行命名。另一个明确写着 hypothetical / not our actual naming convention 的普通引号示例也覆盖原 DEI；追加 52 weeks 的 ordered form 同样错误接受。HTML blockquote 反例正确拒绝，说明只防 HTML 引用容器不足以证明当前有效定义。原 parser 经现有 historical release wrapper 也复现同问题，所以这是已有 reader 缺口被新公开范围成员流程接收，不能说本 patch 发明了该 parser 错误；但本次“actual issuer labels”承诺不能通过。需要对已经识别到的条件/假设限定保留未决，并在新 helper 与实际 discovery 都留下有限正反例，不能凭这些句子改名、把 metadata conflict 当作成功证据，或扩建无边界的语言规则。
+
+2. [P2] range_case_factories 未保存创建时的年份副本。scripts/vnext/company_fiscal_range.py:160 检查 fiscal_years 后，166、172 行仍引用调用方原列表。亲跑小 API 反例先用 [2024, 2025] 创建工厂，再 append(2026)，此后 FY2026 通过 FACTORY_SCOPE_CHANGED 的检查并实际调用 producer；discovery_end 也变成 2026。创建时约定的范围因外部列表改动而扩大。建议创建时固定独立的不可变年份序列，范围检查与发现上下界使用同一份快照。该反例是工厂 API 的构造调用；本审没有宣称已在当前 CLI 发生这样的改动。
+
+亲跑验证：授权命令 python3 tests/required_unittests.py tests.vnext.test_company_fiscal_range tests.vnext.test_selected_historical_fiscal_label tests.vnext.test_selected_source_requirements tests.vnext.test_history_company_dispatch，exit 0，62 次 test execution，0 failure/error/skip，2.665s。由于新 test_company_fiscal_range 导入了 SelectedSourceRequirementsTest，日志里该类 14 项重复装载；实际是 48 个 distinct test IDs，不能把重复算成额外覆盖。directed-tests.log 保留完整日志。counterexamples.log 保存 helper 的条件、假设、HTML quote、ordered form 反例、年份 mutability，以及 exact defect 两个消费者过滤。verification.log 保存实际新 discovery 反例、继承 reader 复现、SHA 比对和静态定位；一次未经 historical release wrapper 的基线探针失败也在那里说明，未把它算作产品失败。
+
+静态链路检查和指定测试支持以下有限结论：候选是既有 target boundary + nearest-prior metadata window 的全部窗口内 annual periods；没有用 {FY,FY+1} 日期剪裁范围成员；缺失/重复/未读候选形成必要未决，窗口外和未加载历史没有被伪称全局排除。新 B01/B02-only dispatch 只向既有 updater 传 lazy factory，未变输入仍先执行源码、已有 proof 和公司 source census 比较；显式 selection 后仍走 prepare_historical_annual_input 的 catalog 重建、完整相等核对、实际期间和 issuer label 检查。其它 factory/default 路径、旧记录未被改写；workflow 只把两项新 suite 加入既有 directed job，本审没有查询或证明远端 CI。
+
+FY2023 精确缺陷：亲跑两种现有过滤函数证明 5f17ec97a234f3b8bae22bcaedd2bdb9ff2ace36056c7a52adfbc821ff088731 / B01 与 db609edd1f286ee1bf61e51126b8084fea1f0817b03847d8010e02cd1b1e81b7 / B02 各被扣留，同坐标其它 ID 不被误扣。两登记均 period_end=2024-02-03、released=[]。静态 run_saved_company/read results 链仍保存原结果或 hold，将默认 CSV 值清空并报告 WITHHELD_KNOWN_DEFECT；缓存 NO_SOURCE_CONTENT_CHANGE 不绕过读回缺陷 overlay。
+
+README、first-company-cli.json、repeat-and-read.json 及来源表摘要仅作已有收据读取，未重跑、未亲读 #47 原件或状态。Macy 四条只是 source→case→Calculator→保存→CSV 的机械链路收据；FY2023 两条内容已 hold，不能说四条正确。FY2022 两个 ID 是未确诊范围线索，不被本审升级为错误，也不作为已内容验收。PR119/120 的 revenue 修复仍未完成；本审没有开发 selector、会计口径或作全 business 验收。
+
+未覆盖：真实公司再次运行、原始财报逐项业务重算、FY2022 口径判定、所有39指标/所有行业、在线 capture、provider/SEC、远端 CI、正式采纳/发布/active。上述两项反例修复后仍需针对实际差异复审；本结论不授全 PR、模型准确性或生产信用。
+
+实际时间：2026-10-10T07:44:28+08:00 至 2026-10-10T07:49:11+08:00。工具计数：functions.exec 外层 15 次，嵌套 exec_command 22 次、write_stdin 1 次，共 38 次（包含外层与嵌套）；因修正多行 unittest 日志计数及核实代码行号，共38次，超过35次目标3次，低于80次硬限。普通消息 1 次，只有最终报告，无问询/进度消息。本审网络/SEC/provider 调用均 0；无 spawn、commit、push、tar，未写 #47 工作树/总账/状态。唯一持久写入是同 independent-review 目录内 conclusion.md 和三份日志。

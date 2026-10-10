@@ -1,0 +1,49 @@
+test_duplicate_label_does_not_pick_first_candidate (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_duplicate_label_does_not_pick_first_candidate) ... ok
+test_explicit_issuer_year_is_not_discarded_by_report_end_year (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_explicit_issuer_year_is_not_discarded_by_report_end_year) ... ok
+test_invalid_five_year_bounds_and_metric_scope_are_rejected (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_invalid_five_year_bounds_and_metric_scope_are_rejected) ... ok
+test_lazy_factories_share_one_plan_and_preserve_unrelated_producers (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_lazy_factories_share_one_plan_and_preserve_unrelated_producers) ... ok
+test_lazy_factory_freezes_the_callers_year_scope (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_lazy_factory_freezes_the_callers_year_scope) ... ok
+test_malformed_metadata_is_a_source_limit_not_a_fiscal_guess (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_malformed_metadata_is_a_source_limit_not_a_fiscal_guess) ... ok
+test_missing_candidate_cannot_be_silently_excluded_for_label_uniqueness (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_missing_candidate_cannot_be_silently_excluded_for_label_uniqueness) ... ok
+test_new_run_dispatch_is_lazy_and_declares_actual_range_and_business_dependencies (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_new_run_dispatch_is_lazy_and_declares_actual_range_and_business_dependencies) ... ok
+test_originals_resolve_requested_range_and_do_not_claim_metric_acceptance (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_originals_resolve_requested_range_and_do_not_claim_metric_acceptance) ... ok
+test_public_sources_year_range_runs_actual_discovery_and_invalid_scope_is_early (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_public_sources_year_range_runs_actual_discovery_and_invalid_scope_is_early) ... ok
+test_unresolved_year_never_calls_business_producer (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_unresolved_year_never_calls_business_producer) ... ok
+test_explicit_selection_skips_search_but_reaches_existing_annual_rebuild (tests.vnext.test_selected_historical_fiscal_label.ExplicitHistoricalStatementSelectionTest.test_explicit_selection_skips_search_but_reaches_existing_annual_rebuild) ... ok
+test_resolved_source_year_must_equal_requested_year_before_calculation (tests.vnext.test_selected_historical_fiscal_label.ExplicitHistoricalStatementSelectionTest.test_resolved_source_year_must_equal_requested_year_before_calculation) ... ok
+test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_conflicting_explicit_definitions_cannot_be_resolved_by_metadata) ... ok
+test_consistent_original_metadata_resolves_without_end_year_inference (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_consistent_original_metadata_resolves_without_end_year_inference) ... ok
+test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_explicit_issuer_definition_overrides_conflicting_metadata_but_retains_it) ... ok
+test_hash_subject_and_same_accession_evidence_are_required (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_hash_subject_and_same_accession_evidence_are_required) ... ok
+test_historical_release_is_controlled_and_fake_dei_is_not_admitted (tests.vnext.test_selected_historical_fiscal_label.SelectedHistoricalFiscalLabelTest.test_historical_release_is_controlled_and_fake_dei_is_not_admitted) ... ok
+test_absent_index_keeps_unknown_instance_frontier_and_does_not_claim_ready (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_absent_index_keeps_unknown_instance_frontier_and_does_not_claim_ready) ... ok
+test_actual_public_command_returns_structured_missing_and_ready_without_writes (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_actual_public_command_returns_structured_missing_and_ready_without_writes) ... ok
+test_amendment_source_dependencies_remain_and_do_not_gain_semantic_acceptance (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_amendment_source_dependencies_remain_and_do_not_gain_semantic_acceptance) ... ok
+test_b01_does_not_require_unused_prior_annual_sources (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_b01_does_not_require_unused_prior_annual_sources) ... ok
+test_latest_failed_primary_cannot_use_old_success_or_instance_alternative (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_latest_failed_primary_cannot_use_old_success_or_instance_alternative) ... ok
+test_malformed_recorded_metadata_returns_json_exit2_and_never_a_complete_graph (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_malformed_recorded_metadata_returns_json_exit2_and_never_a_complete_graph) ... ok
+test_missing_prior_primary_accepts_complete_verified_native_context_not_a_failure (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_missing_prior_primary_accepts_complete_verified_native_context_not_a_failure) ... ok
+test_missing_target_is_named_without_running_full_preparation (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_missing_target_is_named_without_running_full_preparation) ... ok
+test_non_calendar_label_is_read_from_dei_and_not_report_end_year (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_non_calendar_label_is_read_from_dei_and_not_report_end_year) ... ok
+test_prior_amendment_missing_is_not_excused_by_a_valid_prior_instance (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_prior_amendment_missing_is_not_excused_by_a_valid_prior_instance) ... ok
+test_selected_task_preserves_complete_groups_and_is_read_only_not_acceptance (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_selected_task_preserves_complete_groups_and_is_read_only_not_acceptance) ... ok
+test_unconnected_scope_and_invalid_date_refuse_before_discovery (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_unconnected_scope_and_invalid_date_refuse_before_discovery) ... ok
+test_wrong_directory_and_metadata_subject_cannot_claim_an_available_graph (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_wrong_directory_and_metadata_subject_cannot_claim_an_available_graph) ... ok
+test_wrong_subject_period_or_facts_are_specific_limitations (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_wrong_subject_period_or_facts_are_specific_limitations) ... ok
+test_company_period_guards (unittest.loader._FailedTest.test_company_period_guards) ... ERROR
+
+======================================================================
+ERROR: test_company_period_guards (unittest.loader._FailedTest.test_company_period_guards)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_company_period_guards
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 141, in loadTestsFromName
+    module = __import__(module_name)
+ModuleNotFoundError: No module named 'tests.vnext.test_company_period_guards'
+
+
+----------------------------------------------------------------------
+Ran 33 tests in 1.763s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 33, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_company_fiscal_range", "tests.vnext.test_selected_historical_fiscal_label", "tests.vnext.test_selected_source_requirements", "tests.vnext.test_company_period_guards"]}
