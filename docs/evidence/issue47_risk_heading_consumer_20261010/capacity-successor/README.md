@@ -33,3 +33,5 @@ Minimal deliverytree2c461f48 starts at PR125/bc5, receives only public9510capaci
 69risk/source/capacity/dispatch/state/reporter/D04控制10.916s零skip。真实原Enphase任务仅FY21相关配置迁移9.019s，完整68title/原53085Result/128renderer/EvidencePASS保持；禁止historicalfactory复.955s0，独立read.778s25rows，五年标题与原已读完整参考逐项同、四旧D01和20financial不重算，206旧/212后继保护字节保、原失败检查保。执行准确6d+未提交main合并树，不借后来head改签；算法不新增试验、没有原件全文重读/新SEC/provider/paid/nativeRun/接受。
 
 这一可取得组合解除main新增RPO/收入/D04的接收冲突，不把存储文件变化自动视为全部旧financial兼容；公共兼容工作仍由owner负责，不手改旧cfg。新CI另核，不借6d十一全绿，main尚未接本能力、业务/Ready/merge/采纳/active边界保。
+
+消费公共PR140/47d给定d01-consumer.patch，严格基cbb原工作流：将已有capacity+singleline两命令移source-contracts，其余八命令保company-records，并保持company-current原required名称作为always汇总。10条原命令多重集合逐字相同，原paths同序；两个测试job各5min不延长，汇总1min仅shell；16success/failure/cancelled/skipped组合只有双success过。Ruby/Psych解析YAML及三个job通过。本方不另写runner/改保护/skip/删断言，不重业务计算；新head实际CI另核、原cbb取消保持历史。公共设计/固定patch由#28负责，本方仅其明确D01适配并验证。
