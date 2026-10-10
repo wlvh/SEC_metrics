@@ -59,3 +59,5 @@ SouthwestFY25阻塞已定位为消费者未接已成立公共证明：修订只�
 96历史statement/dispatch/state/收入V1/V2/原note布局控制.495s零skip。真实原Southwest任务只FY25B01在收入/处理依赖变更后正常处理7.447s，原28063000000USD/FY25/全年/8197ResultID保；修订proof与已选收入scope均在assessment/binding。禁factory/Calc复1.071s0，独立读.668s，原20financial值/unit/date/ID和其他年度/指标保（实际保护文件数量、scope是否完整见main-c99-actual-company.json，不把机械链当额外内容信用）。未重读完整参考、未重算其他三指标或五年。实际执行915+未提交main合并修补树，后继提交不倒签。
 
 候选接收不是main已支持此修订，不带未main137/136或公共138，不改model/source许可。新CI独立核，原915全绿不盖新head；调用0，旧Run/失败/答案/原结果保留。
+
+5ac实际company run38029879695/job114148388050已SUCCESS。原步骤直接加载整个historical_statement_cases模块，100history/.958s，新四amendment方法逐项ok；257source/224.245s、6paired/1.002s、5D04/.276s、13event/.200s、10historyevent/.100s、27原SEC/online6.049s均实际执行，零skip。新测试path已有触发，不造无意义提交/新runner；主证据独立记录分支不再推产品CI。当前check观察十成功、一个foundationcompatibility仍运行，不能写全CI终态；后续按实际终态更新既有PR记录。
