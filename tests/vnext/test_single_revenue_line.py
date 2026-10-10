@@ -105,6 +105,9 @@ class SingleRevenueLineTest(unittest.TestCase):
         raw=source['raw_bytes'].replace(b'<tr><td>Revenues',
             b'<tr><td>(MILLIONS, EXCEPT PER SHARE DATA)</td><td>2025</td></tr><tr><td>Revenues')
         self.assertTrue(self.scope(changed(source,raw),annual,xml=source)['complete_scope_proven'])
+        raw=source['raw_bytes'].replace(b'<td><ix:nonFraction name="us-gaap:Revenues"',
+            b'<td>$ <ix:nonFraction name="us-gaap:Revenues"')
+        self.assertTrue(self.scope(changed(source,raw),annual,xml=source)['complete_scope_proven'])
 
     def test_selected_fact_ordinal_is_not_a_python_list_offset(self):
         source,annual=single_statement()
@@ -116,9 +119,23 @@ class SingleRevenueLineTest(unittest.TestCase):
             b'name="us-gaap:Revenues" contextRef="annual" unitRef="usd" scale="3"')
         with self.assertRaisesRegex(ValueError,'UNIT_UNRESOLVED'):
             self.scope(changed(source,raw),annual)
-        raw=source['raw_bytes'].replace(b'<td><ix:nonFraction name="us-gaap:Revenues"',
-            b'<td>$ <ix:nonFraction name="us-gaap:Revenues"')
-        self.assertTrue(self.scope(changed(source,raw),annual,xml=source)['complete_scope_proven'])
+
+    def test_actual_current_consumers_bind_fixed_fiscal_assertion_only_when_used(self):
+        from pathlib import Path
+        from unittest.mock import patch
+        from vnext import ordinary_current_update as update
+        root=Path(__file__).resolve().parents[2]
+        relative='scripts/vnext/selected_fiscal_definition_scope_v1.py'
+        original=update.sha256_file
+        for metric in ('B01','B03','B04'):
+            before=update._configuration(root,'pfizer',metric)
+            with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                    'changed-consumed-assertion' if path==root/relative else original(path=path)):
+                after=update._configuration(root,'pfizer',metric)
+            if metric in ('B01','B03'):
+                self.assertIn(relative,before['processing_files']);self.assertNotEqual(before,after)
+            else:
+                self.assertNotIn(relative,before['processing_files']);self.assertEqual(before,after)
 
 
 if __name__=='__main__':unittest.main()
