@@ -3,7 +3,7 @@
 
 公共C03 ECD接缝PR148/98e5312e和消费者PR149/77b77724均实际十一CI全SUCCESS；两者仍Draft、未main/未正式业务接受。源/合同/主体/期间/扣留代理元信息保持，不把另一方CLI执行改称本方执行。原始no-inline proxy SCT公共增量已推送[Draft PR150](https://github.com/wlvh/SEC_metrics/pull/150)，base PR148/98，source c1b141d4，证据head bd920cea：原bcc0八解析函数/Spec含义保持，名称helper由#47固定4bc提供；原Total后脚注引用错位有失败回归与精确格修复。94受影响85.378s零skip；精确c1限定独审PASS，14指定+21边界+2构造renderer，55tools/3msg结束；不重开相同范围。
 
-本方实际原件源核验：MacyFY21 12,290,931USD、MarFY21两CEO扣留、JPMFY21 84,428,145USD，具体工作树代码/原件身份保于source主要记录。它们不是公司CLI或审阅者重读。对方通知Macy/Mar/Ford三SCT真实公司链已终态、禁工厂复跑及独立读成立；本方仍待读取固定consumer/receipt及原文定位，不据通知直接授信用。下一步接此固定材料，核实际public代码/声明依赖及完整公司保存/读接缝；不重算已完成长材料、不新买回答。PR150首查2SUCCESS/9运行，后在自然检查点读取终态；不继承旧head绿灯。
+本方实际原件源核验：MacyFY21 12,290,931USD、MarFY21两CEO扣留、JPMFY21 84,428,145USD，具体工作树代码/原件身份保于source主要记录。它们不是公司CLI或审阅者重读。实际已fetch/read消费者PR151/2532d4a3固定源码、公司/复/读、原Mar仅FY21接续一视图五年和timings；九公共blob同bd。本方另只读核实际3保存Result/CSV/manifest文件哈希、原Grid Total/year格及完整组成：MacyFY21 12290931USD、MarFY21两CEO null、FordFY21 22813174USD；Ford首次DEF14A原文字/七组成独立核对，不冒称亲跑对方company/全业务独审。相关初始资料定位/记录字段harness失败保留并正确分类。PR150实际自然终态11SUCCESS；151 source2532实际CI日志全绿已读，latest813仅指南差异、首查8SUCCESS/3运行，另核终态。主要接收核对记录proxy-compensation-consumer-read-20261010/。下一项保持候选范围稳定，按反馈修具体差异并接续当前公共运行/来源责任，不重跑已成立长材料或新增调用。
 
 原账本195claims/143provider/143paid/52SEC、余97/97/28保持，本批0/0/0。190历史身份、191/192耗尽机会、D03未授真实用途继续。C04可见审计师候选PR144保源-only且业务决定待答；B13/D03/B06/C02/D02、390、自动更新/旧入口退出仍未完成。Goal实际active、无预算上限；本方不merge/Ready/正式采纳/部署/active，不操作peer工作区/账本或接管历史任务。
 <!-- current-handoff-20261010:END -->
