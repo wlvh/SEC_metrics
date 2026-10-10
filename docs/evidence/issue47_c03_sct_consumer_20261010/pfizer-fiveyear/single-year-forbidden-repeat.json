@@ -1,0 +1,76 @@
+{
+  "seconds": 0.8195849170442671,
+  "exit_code": 0,
+  "arguments": [
+    "run",
+    "--company",
+    "pfizer",
+    "--period",
+    "fiscal-years",
+    "--metric",
+    "C03",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/c03-fiveyear/runs",
+    "--fiscal-year-start",
+    "2025",
+    "--fiscal-year-end",
+    "2025"
+  ],
+  "report": {
+    "elapsed_seconds": 0.5092415830586106,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "pfizer",
+    "run_id": "20261010T150948Z-4173d62a",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "C03"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C03",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "4042211d6c9e41c69d77d625bbfcc268",
+        "version": "86d6542beb3d442bb29d9e815f9c6d4e",
+        "result_id": "sha256:e74cbf3c64eecb33add2e88546f921c2ff63ff9bee113a48ed87e252aefd639d",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/C03/periods/FY2025/results/86d6542beb3d442bb29d9e815f9c6d4e",
+        "result_reason_code": "PASS",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2025,
+        "defect_holds": [],
+        "read_result_id": "sha256:e74cbf3c64eecb33add2e88546f921c2ff63ff9bee113a48ed87e252aefd639d",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/C03/periods/FY2025/results/86d6542beb3d442bb29d9e815f9c6d4e",
+        "program_version": {
+          "commit": "813cf6a13bc64442e0be2e6957903093e1cfe2e5",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/c03-fiveyear/runs/20261010T150948Z-4173d62a",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "selected_fiscal_years": [
+      2025
+    ]
+  }
+}
