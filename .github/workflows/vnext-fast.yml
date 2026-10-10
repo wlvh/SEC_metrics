@@ -72,6 +72,12 @@ jobs:
           PYTHONPATH: scripts:tools
         run: python3 -m unittest -v tests.vnext.test_ordinary_depreciation_sources
 
+      - name: Verify saved D04 provenance and complete company group gates
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 tests/required_unittests.py tests.vnext.test_d04_provenance_reuse tests.vnext.test_current_d04_company tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest
+
 
   inherited-source-material:
     name: Foundation inherited source material

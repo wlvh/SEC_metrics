@@ -17,13 +17,32 @@ _META = {'semantic_source_id','original_source_packet_id','inherited_complete_so
          'module_sha256','capacity_module_sha256'}
 
 
-def _annual_content(value):
+def _annual_content(value, *, ignore_companyfacts_attempt=False):
     value=deepcopy(value)
     value.pop('input_id',None);value.pop('source_proofs',None)
     if isinstance(value.get('original_input'),dict):
         value['original_input'].pop('input_id',None)
         value['original_input'].pop('source_proofs',None)
+    if ignore_companyfacts_attempt:
+        for annual in (value, value.get('original_input', {})):
+            if isinstance(annual,dict) and isinstance(annual.get('companyfacts_input'),dict):
+                annual['companyfacts_input'].pop('request_attempt_id',None)
     return value
+
+
+def _companyfacts_attempt_is_bound(source):
+    annual=source['prepared_annual_input']
+    for item in (annual,annual.get('original_input',{})):
+        if not isinstance(item,dict) or 'companyfacts_input' not in item:continue
+        facts=item['companyfacts_input']
+        if not isinstance(facts,dict):return False
+        matching=[p for p in source['source_proofs']
+            if all(p.get(pk)==facts.get(fk) and facts.get(fk) is not None
+                for pk,fk in (('source_url','source_url'),('accession','accession'),
+                    ('document_name','document_name'),('request_attempt_id','request_attempt_id'),
+                    ('request_repo_relative_path','source_repo_relative_path')))]
+        if len(matching)!=1:return False
+    return True
 
 
 def source_equivalence(*,current,original):
@@ -37,10 +56,17 @@ def source_equivalence(*,current,original):
          and 'HISTORICAL' not in current['record_type'], 'UPDATE_NATIVE_SOURCE_TYPE_CHANGED')
     need(all(current[k]==original[k] for k in current if k not in _META),
          'UPDATE_NATIVE_SUBSTANTIVE_SOURCE_CHANGED')
-    need(_annual_content(current['prepared_annual_input'])==_annual_content(original['prepared_annual_input']),
-         'UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED')
     def bodies(source):
         return sorted((p['source_url'],p['accession'],p['document_name'],p['content_sha256']) for p in source['source_proofs'])
+    # A same-body D04 capture already permits a fresh proof attempt. Its
+    # companyfacts descriptor repeats that provenance, not a selection rule.
+    # Keep the full descriptor and B13 default comparison otherwise unchanged.
+    ignore_attempt=(current['metric_id']=='D04' and bodies(current)==bodies(original)
+                    and _companyfacts_attempt_is_bound(current)
+                    and _companyfacts_attempt_is_bound(original))
+    need(_annual_content(current['prepared_annual_input'],ignore_companyfacts_attempt=ignore_attempt)
+         ==_annual_content(original['prepared_annual_input'],ignore_companyfacts_attempt=ignore_attempt),
+         'UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED')
     need(bodies(current)==bodies(original),'UPDATE_NATIVE_SOURCE_BODY_SET_CHANGED')
     def requests(source):
         return [{k:v for k,v in r.items() if k not in {'source_id','request_id'}} for r in source_requests(source)]
