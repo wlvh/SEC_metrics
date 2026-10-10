@@ -1,0 +1,31 @@
+test_attempt_must_match_its_original_source_proof (tests.vnext.test_d04_provenance_reuse.D04CompanyfactsProvenanceTest.test_attempt_must_match_its_original_source_proof) ... ok
+test_b13_policy_is_not_widened (tests.vnext.test_d04_provenance_reuse.D04CompanyfactsProvenanceTest.test_b13_policy_is_not_widened) ... ok
+test_different_body_subject_period_or_path_still_rejected (tests.vnext.test_d04_provenance_reuse.D04CompanyfactsProvenanceTest.test_different_body_subject_period_or_path_still_rejected) ... ok
+test_discovery_refresh_cannot_hide_changed_task_or_other_metadata (tests.vnext.test_d04_provenance_reuse.D04CompanyfactsProvenanceTest.test_discovery_refresh_cannot_hide_changed_task_or_other_metadata) ... ok
+test_other_annual_attempt_fields_are_not_globally_erased (tests.vnext.test_d04_provenance_reuse.D04CompanyfactsProvenanceTest.test_other_annual_attempt_fields_are_not_globally_erased) ... ok
+test_refreshed_primary_submissions_with_same_full_task_can_reuse (tests.vnext.test_d04_provenance_reuse.D04CompanyfactsProvenanceTest.test_refreshed_primary_submissions_with_same_full_task_can_reuse) ... ERROR
+test_same_body_attempt_change_reuses_complete_original (tests.vnext.test_d04_provenance_reuse.D04CompanyfactsProvenanceTest.test_same_body_attempt_change_reuses_complete_original) ... ok
+
+======================================================================
+ERROR: test_refreshed_primary_submissions_with_same_full_task_can_reuse (tests.vnext.test_d04_provenance_reuse.D04CompanyfactsProvenanceTest.test_refreshed_primary_submissions_with_same_full_task_can_reuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-provenance-reuse/SEC_metrics/tests/vnext/test_d04_provenance_reuse.py", line 91, in test_refreshed_primary_submissions_with_same_full_task_can_reuse
+    receipt = source_equivalence(current=seal(current), original=seal(original))
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-provenance-reuse/SEC_metrics/scripts/vnext/capacity_update_input.py", line 67, in source_equivalence
+    need(_annual_content(current['prepared_annual_input'],ignore_companyfacts_attempt=ignore_attempt)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         ==_annual_content(original['prepared_annual_input'],ignore_companyfacts_attempt=ignore_attempt),
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         'UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-provenance-reuse/SEC_metrics/scripts/vnext/capacity_utilization_source.py", line 29, in need
+    if not value:raise ValueError(reason)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.024s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 7, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_d04_provenance_reuse"]}

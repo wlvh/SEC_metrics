@@ -7,6 +7,7 @@ semantic normalization API and cannot purchase a replacement execution.
 from copy import deepcopy
 from dataclasses import replace
 from pathlib import Path
+from sec_urls import submissions_url
 
 from .canonical import content_hash, sha256_file, strict_json_file, strict_json_loads
 from .capacity_utilization_source import need
@@ -57,7 +58,13 @@ def source_equivalence(*,current,original):
     need(all(current[k]==original[k] for k in current if k not in _META),
          'UPDATE_NATIVE_SUBSTANTIVE_SOURCE_CHANGED')
     def bodies(source):
-        return sorted((p['source_url'],p['accession'],p['document_name'],p['content_sha256']) for p in source['source_proofs'])
+        entity=source['prepared_annual_input'].get('entity')
+        discovery_url=(submissions_url(cik=int(entity))
+            if source['metric_id']=='D04' and str(entity).isdigit() else None)
+        return sorted((p['source_url'],p['accession'],p['document_name'],
+            None if p['source_url']==discovery_url and p['accession']==''
+                and p['document_name']==discovery_url.rsplit('/',1)[-1]
+            else p['content_sha256']) for p in source['source_proofs'])
     # A same-body D04 capture already permits a fresh proof attempt. Its
     # companyfacts descriptor repeats that provenance, not a selection rule.
     # Keep the full descriptor and B13 default comparison otherwise unchanged.
@@ -76,6 +83,14 @@ def source_equivalence(*,current,original):
         'original_source_id':original['semantic_source_id'],'source_body_set_hash':content_hash(value=bodies(current)),
         'substantive_request_set_hash':content_hash(value=current_requests),
         'original_provider_bytes_rewritten':False,'new_provider_execution':False,'new_acquisition_credit':False}
+    if current['metric_id']=='D04':
+        previous={(p['source_url'],p['accession'],p['document_name']):p['content_sha256']
+                  for p in original['source_proofs']}
+        refreshed=[{'source_url':p['source_url'],'original_sha256':previous[
+            (p['source_url'],p['accession'],p['document_name'])],
+            'current_sha256':p['content_sha256']} for p in current['source_proofs']
+            if p['content_sha256']!=previous[(p['source_url'],p['accession'],p['document_name'])]]
+        if refreshed:body['discovery_only_body_changes']=refreshed
     return {**body,'equivalence_id':content_hash(value=body)}
 
 

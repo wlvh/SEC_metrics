@@ -1,0 +1,6 @@
+first 2 15.475544166052714 [{'metric_id': 'D04', 'status': 'INPUT_OR_EXECUTION_FAILED', 'attempt_id': 'f24bd262203c4d0fb3d390dab9c16bf8', 'error_type': 'ValueError', 'reason': 'D04_SAVED_COMPANY_SOURCE_MISSING_OR_AMBIGUOUS', 'previous_result': None, 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False}]
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/issue28_continuous/d04-marriott-company-20261010/company_cli.py", line 36, in <module>
+    if m.get('result_reason_code')!='D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE':raise AssertionError('actual D04 report requires investigation; do not change expected semantics')
+                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual D04 report requires investigation; do not change expected semantics
