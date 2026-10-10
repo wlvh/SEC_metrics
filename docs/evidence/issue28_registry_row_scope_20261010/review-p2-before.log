@@ -1,0 +1,19 @@
+test_unrelated_unknown_profile_cannot_reuse_success (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_unknown_profile_cannot_reuse_success) ... FAIL
+
+======================================================================
+FAIL: test_unrelated_unknown_profile_cannot_reuse_success (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_unknown_profile_cannot_reuse_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics/tests/vnext/test_registry_processing_scope.py", line 92, in test_unrelated_unknown_profile_cannot_reuse_success
+    self.assertEqual('INPUT_OR_EXECUTION_FAILED',failed['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INPUT_OR_EXECUTION_FAILED' != 'NO_SOURCE_CONTENT_CHANGE'
+- INPUT_OR_EXECUTION_FAILED
++ NO_SOURCE_CONTENT_CHANGE
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.030s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_unknown_profile_cannot_reuse_success"]}

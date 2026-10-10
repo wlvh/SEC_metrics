@@ -174,3 +174,14 @@ class D04ProcessingScopeTest(TestCase):
         self.assertEqual(first['version'],again['version']);self.assertEqual(1,len(self.factory_calls))
         self.assertEqual(old_success,(root/'current-result.json').read_bytes())
         self.assertEqual(old_terminal,(root/'checks'/first['attempt_id']/'terminal.json').read_bytes())
+
+    def test_new_registry_representation_must_not_inherit_old_dispatch_bridge(self):
+        from scripts.vnext import ordinary_update_compatibility as compat
+        current=self.actual_configuration(ROOT,'marriott_international','B04')
+        old=self.extracted_configuration(ROOT,'marriott_international','B04')
+        self.assertFalse(compat.compatible_configuration(old,current))
+        legacy=deepcopy(old)
+        legacy.pop('company_registry_rows',None)
+        legacy['source_registry_sha256']='saved-whole-table'
+        legacy['processing_files']['config/company_registry.csv']='saved-whole-table'
+        self.assertFalse(compat.compatible_configuration(legacy,current))
