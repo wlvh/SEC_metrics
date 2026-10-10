@@ -1,0 +1,13 @@
+test_explicit_release_still_rejects_wrong_entity_and_period (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_explicit_release_still_rejects_wrong_entity_and_period) ... ok
+test_fake_namespace_and_invalid_policy_are_not_releases (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_fake_namespace_and_invalid_policy_are_not_releases) ... ok
+test_quarter_and_date_release_require_explicit_existing_policy (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_quarter_and_date_release_require_explicit_existing_policy) ... ok
+test_selected_base_and_labelled_annual_are_a_pair_before_latest_read (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_base_and_labelled_annual_are_a_pair_before_latest_read) ... ok
+test_original_annual_alias_needs_matching_proof_and_same_cik_url (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_original_annual_alias_needs_matching_proof_and_same_cik_url) ... ok
+test_rejects_unapproved_form_subset_and_wrong_metric (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_rejects_unapproved_form_subset_and_wrong_metric) ... ok
+test_registration_event_outside_history_index_cannot_be_omitted_before_zero (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_registration_event_outside_history_index_cannot_be_omitted_before_zero) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.006s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 7, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_c04_selected_input", "tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_original_annual_alias_needs_matching_proof_and_same_cik_url", "tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_rejects_unapproved_form_subset_and_wrong_metric", "tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_registration_event_outside_history_index_cannot_be_omitted_before_zero"]}

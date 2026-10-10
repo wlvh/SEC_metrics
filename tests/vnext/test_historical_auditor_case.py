@@ -47,3 +47,12 @@ class HistoricalAuditorCaseTest(TestCase):
             cases.prepare_historical_auditor_year_case(repo_root='/constructed',
                 company_id='sample',metric_id='C03',fiscal_year=2022)
         source.assert_not_called()
+
+    def test_public_and_historical_read_dependencies_are_tracked_together(self):
+        from vnext.c04_registration_successor import SELECTED_PROCESSING_FILES
+        self.assertTrue(set(SELECTED_PROCESSING_FILES) <= set(cases.PROCESSING_FILES))
+        self.assertEqual(len(cases.PROCESSING_FILES), len(set(cases.PROCESSING_FILES)))
+        for filename in ('historical_governance_input', 'historical_annual_input',
+                         'historical_fiscal_labels', 'normal_period_selection',
+                         'normal_history_catalog'):
+            self.assertIn('scripts/vnext/'+filename+'.py', cases.PROCESSING_FILES)

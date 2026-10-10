@@ -6,6 +6,7 @@ caller selects it, and keeps a missing same-CIK auditor comparison withheld.
 """
 from pathlib import Path
 from copy import deepcopy
+from datetime import date, timedelta
 import re
 
 from sec_urls import (accession_document_url, hdr_sgml_url, submissions_file_url,
@@ -27,6 +28,19 @@ from .specs import compile_spec_file
 EVENT_FORMS = ['8-K', '8-K/A', '8-K12B', '8-K12B/A']
 SPEC_PATH = 'catalog/r5/C04_auditor_changes_v3.md'
 RESOLVER = 'auditor_change_registration_filings_v3'
+# Selected consumers add their own period/source selection dependencies.
+SELECTED_PROCESSING_FILES = (
+    'scripts/vnext/c04_registration_successor.py',
+    'scripts/vnext/c04_verified_document_alias.py',
+    'scripts/vnext/governance_signals.py',
+    'scripts/vnext/normal_governance_input.py',
+    'scripts/vnext/normal_annual_input.py',
+    'scripts/vnext/normal_annual_input_v2.py',
+    'scripts/vnext/fiscal_year_labels.py',
+    'scripts/vnext/deterministic_router.py',
+    'catalog/r5/C04_auditor_changes_v2.md', SPEC_PATH,
+    'config/normal_fiscal_year_labels_v1.json',
+)
 
 
 def _need(condition, reason):
@@ -69,11 +83,18 @@ def _checked_inventory_rows(payload, *, inventory_name, shard=None):
 
 
 def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
-                                  event_forms):
+                                  event_forms, selected_base=None,
+                                  labelled_annual=None, dei_release="YEAR_ONLY"):
     """Rebuild one explicit native C04 case from already saved, proven sources."""
     _need(event_forms == EVENT_FORMS, 'C04_REGISTRATION_EVENT_FORM_SCOPE_REQUIRED')
-    base = prepare_saved_governance_input(repo_root=repo_root,
-                                          company_id=company_id)
+    from .normal_annual_input import dei_namespace_pattern
+    dei_namespace_pattern(dei_release)
+    explicit = selected_base is not None or labelled_annual is not None
+    _need(not explicit or selected_base is not None and labelled_annual is not None,
+          'C04_SELECTED_BASE_AND_ANNUAL_REQUIRED')
+    _need(explicit or dei_release == "YEAR_ONLY", 'C04_SELECTED_INPUT_REQUIRED_FOR_RELEASE')
+    base = selected_base if explicit else prepare_saved_governance_input(
+        repo_root=repo_root, company_id=company_id)
     binding = base['input_binding']
     _need(binding['metric_input_status']['C04'] == 'PREPARED'
           and not binding['history_alignment_conflicts']
@@ -82,7 +103,35 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
     selected = binding['selection']
     annual = binding['prepared_annual_input']['table_input']['target_period']
     from .normal_annual_input_v2 import prepare_saved_annual_input as prepare_labelled_annual
-    labelled = prepare_labelled_annual(repo_root=repo_root, company_id=company_id)
+    labelled = labelled_annual if explicit else prepare_labelled_annual(
+        repo_root=repo_root, company_id=company_id)
+    if explicit:
+        prepared = binding['prepared_annual_input']
+        arguments = base['resolver_inputs']['c04']['arguments']
+        target = arguments['target']
+        _need(binding['company_id'] == prepared['company_id'] == target['company_id'] == company_id
+              and arguments['expected_cik'] == prepared['entity']
+              and all(target[key] == annual[key] for key in ('period_start', 'period_end'))
+              and arguments['target_accession'] == selected['current_filing_chain'][0]['accessionNumber']
+              and selected['current_filing_chain'][0]['reportDate'] == annual['period_end'],
+              'C04_SELECTED_BASE_COORDINATE_CHANGED')
+        _need(binding['input_binding_id'] == content_hash(value={
+            key: value for key, value in binding.items() if key != 'input_binding_id'}),
+            'C04_SELECTED_BASE_BINDING_CHANGED')
+        if arguments.get('prior_filings') or arguments.get('prior_sources'):
+            _need(arguments['prior_period_end'] ==
+                  (date.fromisoformat(annual['period_start']) - timedelta(days=1)).isoformat(),
+                  'C04_SELECTED_PRIOR_NOT_ADJACENT')
+        for sources in [*arguments['current_filings'],
+                *(arguments.get('prior_filings') or []), arguments.get('prior_sources') or []]:
+            for source in sources:
+                ref = source['source_reference']
+                _need(any(all(proof[key] == ref[key] for key in
+                    ('source_url', 'accession', 'document_name', 'request_attempt_id'))
+                    and 'sha256:' + proof['content_sha256'] == ref['raw_asset_id']
+                    for proof in binding['source_proofs']),
+                    'C04_SELECTED_ANNUAL_SOURCE_PROOF_MISSING')
+        verify_ordinary_source_proofs(data_root=repo_root, proofs=binding['source_proofs'])
     _need(labelled['original_input'] == binding['prepared_annual_input']
           and all(labelled['table_input']['target_period'][key] == annual[key]
                   for key in ('period_start', 'period_end')),
@@ -198,8 +247,14 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
                                  dependency_specs={})
     old_arguments = dict(base['resolver_inputs']['c04']['arguments'])
     old_arguments.update(compiled_spec=old_spec, event_input=None)
+    def selected_annual_check():
+        from .c04_verified_document_alias import annual_selection_with_verified_aliases
+        return annual_selection_with_verified_aliases(
+            arguments=old_arguments, source_proofs=binding['source_proofs'],
+            data_root=repo_root, dei_release=dei_release,
+            allow_exact_document_names=True)['selection']
     try:
-        annual_check = resolve_c04(**old_arguments)['selection']
+        annual_check = selected_annual_check() if explicit else resolve_c04(**old_arguments)['selection']
     except GovernanceSignalError as error:
         if str(error) != 'C04_SAME_CIK_FILING_REQUIRED':
             raise
@@ -303,6 +358,9 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
     if annual_check.get('verified_document_aliases'):
         input_body['verified_annual_document_aliases'] = annual_check[
             'verified_document_aliases']
+    if explicit:
+        input_body['selected_annual_input_id'] = labelled['input_id']
+        input_body['dei_release'] = dei_release
     if label_binding is not None:
         input_body['fiscal_year_label_binding'] = label_binding
     input_binding = {**input_body,
@@ -317,4 +375,5 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
         'target_period': period,
         'expected_records': [*records, *event_claims, *observations, trace, result],
         'results': {'C04': result}, 'traces': {'C04': trace},
-        'observations': observations, 'selection': selection}
+        'observations': observations, 'selection': selection,
+        **({'prepared_annual_input': labelled, 'rules_root': str(ROOT)} if explicit else {})}

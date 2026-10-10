@@ -1,6 +1,7 @@
 """Selected C04 annual roles consume the single public four-form core."""
 from .historical_governance_input import prepare_selected_auditor_base
-from .c04_registration_successor import prepare_c04_registration_case, EVENT_FORMS, SPEC_PATH
+from .c04_registration_successor import (
+    prepare_c04_registration_case, EVENT_FORMS, SPEC_PATH, SELECTED_PROCESSING_FILES)
 
 METRICS = frozenset({'C04'})
 DEI_RELEASE = 'YEAR_QUARTER_OR_DATE'
@@ -14,6 +15,7 @@ PROCESSING_FILES = tuple('scripts/vnext/'+name+'.py' for name in (
     'records', 'sources', 'canonical', 'ordinary_source_authority')) + (
     SPEC_PATH, 'catalog/r5/C04_auditor_changes_v2.md',
     'config/normal_period_selection_v1.json', 'config/normal_fiscal_year_labels_v1.json')
+PROCESSING_FILES = tuple(dict.fromkeys((*PROCESSING_FILES, *SELECTED_PROCESSING_FILES)))
 
 
 def prepare_historical_auditor_year_case(*, repo_root, company_id, metric_id, fiscal_year):

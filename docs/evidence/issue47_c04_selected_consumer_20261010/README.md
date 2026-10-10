@@ -1,4 +1,28 @@
-# Existing historical C04 selection — consumer not yet delivered
+# Historical C04 selected-year company consumer
+Current branch result: the historical thin factory consumes public PR142@4e8af508 and uses the same company CLI, four-form census, Calculator, ordinary save and reader. Ford FY2022 returns `0 flag`, CIK37996, 2022-01-01→2022-12-31, Result `0ec6c7d627150e95e00673fe8009110585104fa91fc269bf9d553671909760da`. This is a saved-source branch validation; C04 is not yet in main or formally adopted. Earlier preparation-only paragraphs below retain their original chronology.
+
+Actual first19.733s / same-input repeat4.865s / independent CLI results0.579s. The repeat and read profile the original factory/Calculator code objects and refuse any entry; the producer identity is unchanged. Repeat reports NO_SOURCE_CONTENT_CHANGE, calculation_performed=false, new_candidate_created=false, same Result/root. Ten existing result/pointer files remain unchanged. Socket access is forbidden in all three processes. No other company or year is calculated.
+
+The complete saved input assessment has target2022 accession0000037996-23-000012 and actual adjacent prior2021 accession0000037996-22-000013, each original HTML/XML AuditorName facts = PricewaterhouseCoopers LLP. It preserves all four event forms (8-K,8-K/A,8-K12B,8-K12B/A), 28 discovered filings/56 item claims and the complete SourceSetManifest; no Item4.01 claims. The equal names alone do not establish zero: the shared complete event-coverage decision is also required. Daily CSV carries source/set IDs and the exact fiscal/date/subject, while full selection stays in input-assessments.json. Source records and body/header proofs remain ordinary evidence.
+
+The actual executed code was historical24162276 + the uncommitted public4e8 merge + historical processing dependency union. `tested-code.json` records the exact files; later commits are not labelled as the execution commit. The 60 related controls10.047s/zero skip include selection, thin consumer, public namespace/coordinate/source checks, existing mixed dispatch and saved historical state. Constructed controls are labelled as controls, not financial source conclusions.
+
+Reproduction from this candidate uses an already restored PR52 source root; no online discovery or GET is included. Restore the existing committed export with its retained tool only when local saved sources are absent. The restored root must be the returned source-inputs directory (see the existing historical usage guide); do not point at the export or repository. Write new output/state directories.
+
+```bash
+export PYTHONPATH=scripts:tools:.
+export PYTHONDONTWRITEBYTECODE=1
+python3 tests/required_unittests.py tests.vnext.test_historical_auditor_selection tests.vnext.test_historical_auditor_case tests.vnext.test_c04_selected_input tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state tests.vnext.test_reporting_company_projection
+python3 tools/vnext_company.py run --company ford_motor_company --period fiscal-years --fiscal-year-start 2022 --fiscal-year-end 2022 --metric C04 --source-root "$ISSUE47_SOURCE_ROOT" --work-dir "$ISSUE47_NEW_STATE" --output-dir "$ISSUE47_NEW_OUTPUT/run"
+# Identical command reuses the completed result. Independent reading:
+python3 tools/vnext_company.py results --company ford_motor_company --state-root "$ISSUE47_NEW_STATE" --output-root "$ISSUE47_NEW_OUTPUT/read"
+```
+
+`verify_ford2022_company.py` preserves the actual local driver and source/state roots in the receipt; it is developer evidence, not a second pipeline. The public input/gate/storage code remains #28-owned. Historical selection rejects successor-only comparison, incomplete metadata, wrong CIK and orphan prior amendments; missing adjacent prior is passed as None to the existing named WITHHELD path, never replaced by an older annual. Other C04 years/companies, real changed-auditor positive, amended/successor subjects, current default C04 and online supplementation are not established here. Existing C02/D02 and full five-year responsibility remain unfinished. No SEC/provider/paid/nativeRun/acceptance/Ready/merge/active action.
+
+One dependency-union control added after the original run: 61 related tests10.509s/zero skip; it checks that every declared public source/label dependency and the actual historical selectors participate in processing identity. It does not recalculate the saved result.
+
+Earlier development evidence:
 
 Continues the existing uncommitted auditor selection, not a new research or model experiment. Historical owner selects actual annual/prior/event metadata; public28 owns four-form source/annual-reader/Resolver/Calculator integration and ordinary company gates/storage. No second public implementation is added. Removed old draft proxy-period inference because this C04 slice does not establish C03 proxy responsibility.
 
