@@ -1,0 +1,471 @@
+INDEPENDENT REVIEW AUDIT
+START_UTC=2026-10-10T03:27:46.853986+00:00
+END_UTC=2026-10-10T03:35:08.491252+00:00
+BASE=f6ef7886d6630f7675c25cd42e306c373ab05769
+PRODUCT=9510a3006f24c16a11462ffb3f34ab0e53e396f5
+HEAD=adf89137d31e5c4938a4cb600aa33706635fadec
+TOOL_COUNT=25
+WRAPPERS=12
+EXEC_COMMAND_NESTED=13
+ORDINARY_MESSAGES=1 (final report)
+QUESTIONS=0
+NETWORK_PROVIDER_PAID_SEC_CALLS=0/0/0/0
+OUTPUT_SCOPE=conclusion.md + review.log only
+
+CALL INVENTORY (each line except first is one wrapper + one exec_command; first has two nested)
+1 memory rg with no hits; start/status/HEAD/actual diff read [3]
+2 README/source JSON/harness/workflow/text-results/doc read [2]
+3 limited producer/compiler/required-runner/test/caller read [2]
+4 remaining text producer and retained tests read [2]
+5 required 4-module runner with network/DNS canary [2]
+6 original failure logs and limited caller/control search [2]
+7 base/current old-byte comparison and independent bound probes [2]
+8 read-only source/proof/review/install path inspection [2]
+9 exact saved_source and installer collection logic read [2]
+10 actual Enphase FY2021 API + existing record readonly replay [2]
+11 bounded workflow guidance, anonymous-file 128 replay, product fingerprints [2]
+12 write/readback only allowed conclusion.md + review.log [2]
+
+Note: rg against two assumed module names returned missing-file exit 2 during read-only navigation; actual saved_source module was traced via imports to annual_sources.py. These were inspection errors, not failed tests or source processing, and did not cause edits or network activity.
+
+=== REQUIRED TESTS ===
+TEST_START_UTC=2026-10-10T03:29:11.428337+00:00
+REQUIRED_COMMAND=python3 tests/required_unittests.py tests.vnext.test_text_item_capacity tests.vnext.test_text_results tests.vnext.test_spec_compiler tests.vnext.test_text_results_v2
+EXECUTION_GUARD=runpy __main__; socket connect/connect_ex/getaddrinfo forbidden
+test_128_items_are_supported_but_129_are_not_silently_trimmed (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_128_items_are_supported_but_129_are_not_silently_trimmed) ... ok
+test_68_full_titles_roundtrip_without_cutting_or_changing_old_encoding_fields (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_68_full_titles_roundtrip_without_cutting_or_changing_old_encoding_fields) ... ok
+test_character_bound_and_source_coverage_are_not_relaxed_by_more_items (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_character_bound_and_source_coverage_are_not_relaxed_by_more_items) ... ok
+test_new_catalog_changes_only_explicit_capacity_not_business_selection (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_new_catalog_changes_only_explicit_capacity_not_business_selection) ... ok
+test_new_renderer_cannot_be_bound_to_an_old_or_smaller_spec_in_direct_builder (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_new_renderer_cannot_be_bound_to_an_old_or_smaller_spec_in_direct_builder) ... ok
+test_old_policy_result_and_trace_are_unchanged (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_old_policy_result_and_trace_are_unchanged) ... ok
+test_original_64_contract_and_smaller_successor_contract_remain_real_limits (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_original_64_contract_and_smaller_successor_contract_remain_real_limits) ... ok
+test_renderer_and_compiler_refuse_unknown_capacity_bad_types_and_overlimit (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_renderer_and_compiler_refuse_unknown_capacity_bad_types_and_overlimit) ... ok
+test_deterministic_candidate_has_no_ai_identity_and_replays_all_headings (tests.vnext.test_text_results.TextResultTest.test_deterministic_candidate_has_no_ai_identity_and_replays_all_headings) ... ok
+test_existing_projector_preserves_text_and_each_original_excerpt (tests.vnext.test_text_results.TextResultTest.test_existing_projector_preserves_text_and_each_original_excerpt) ... ok
+test_full_block_and_leading_emphasis_are_controlled_source_extents (tests.vnext.test_text_results.TextResultTest.test_full_block_and_leading_emphasis_are_controlled_source_extents) ... ok
+test_fully_rehashed_text_graph_still_fails_independent_original_replay (tests.vnext.test_text_results.TextResultTest.test_fully_rehashed_text_graph_still_fails_independent_original_replay) ... ok
+test_missing_and_revoked_reviews_and_forged_pass_are_rejected (tests.vnext.test_text_results.TextResultTest.test_missing_and_revoked_reviews_and_forged_pass_are_rejected) ... ok
+test_missing_content_uses_typed_withheld_without_a_fake_text_value (tests.vnext.test_text_results.TextResultTest.test_missing_content_uses_typed_withheld_without_a_fake_text_value) ... ok
+test_missing_coverage_and_cross_source_or_period_do_not_become_results (tests.vnext.test_text_results.TextResultTest.test_missing_coverage_and_cross_source_or_period_do_not_become_results) ... ok
+test_native_text_requires_installed_metric_spec_and_discovered_run_identity (tests.vnext.test_text_results.TextResultTest.test_native_text_requires_installed_metric_spec_and_discovered_run_identity) ... ok
+test_payload_and_input_set_cannot_escape_contract_or_trace (tests.vnext.test_text_results.TextResultTest.test_payload_and_input_set_cannot_escape_contract_or_trace) ... ok
+test_persisted_evidence_preserves_source_order_with_more_than_ten_headings (tests.vnext.test_text_results.TextResultTest.test_persisted_evidence_preserves_source_order_with_more_than_ten_headings) ... ok
+test_rehashed_deterministic_selection_method_and_source_omissions_reject (tests.vnext.test_text_results.TextResultTest.test_rehashed_deterministic_selection_method_and_source_omissions_reject) ... ok
+test_retained_numeric_records_specs_and_runtime_hash_remain_unchanged (tests.vnext.test_text_results.TextResultTest.test_retained_numeric_records_specs_and_runtime_hash_remain_unchanged) ... ok
+test_saved_original_titles_enter_same_native_value_carrier (tests.vnext.test_text_results.TextResultTest.test_saved_original_titles_enter_same_native_value_carrier) ... ok
+test_text_is_explicit_and_cannot_enter_old_numeric_or_unreviewed_structured_path (tests.vnext.test_text_results.TextResultTest.test_text_is_explicit_and_cannot_enter_old_numeric_or_unreviewed_structured_path) ... ok
+test_titles_and_multiple_text_values_roundtrip_through_existing_record_types (tests.vnext.test_text_results.TextResultTest.test_titles_and_multiple_text_values_roundtrip_through_existing_record_types) ... ok
+test_catalog_compiles_and_b03_closes_over_b01 (tests.vnext.test_spec_compiler.SpecCompilerTest.test_catalog_compiles_and_b03_closes_over_b01)
+Compile every Phase 1 Spec and bind the B01 dependency closure. ... ok
+test_company_traits_are_registry_projection (tests.vnext.test_spec_compiler.SpecCompilerTest.test_company_traits_are_registry_projection)
+Derive traits from the canonical registry without company copies. ... ok
+test_dependency_compiled_semantics_must_match_its_hash (tests.vnext.test_spec_compiler.SpecCompilerTest.test_dependency_compiled_semantics_must_match_its_hash)
+Reject altered dependency behavior hidden behind an old closure. ... ok
+test_depth_node_cycle_and_cardinality_limits_fail_closed (tests.vnext.test_spec_compiler.SpecCompilerTest.test_depth_node_cycle_and_cardinality_limits_fail_closed)
+Reject each bounded-DSL limit instead of guessing a fallback. ... ok
+test_human_body_does_not_change_semantic_hash (tests.vnext.test_spec_compiler.SpecCompilerTest.test_human_body_does_not_change_semantic_hash)
+Keep explanation-only edits out of executable semantic identity. ... ok
+test_order_and_unknown_guard_change_or_fail (tests.vnext.test_spec_compiler.SpecCompilerTest.test_order_and_unknown_guard_change_or_fail)
+Bind choose-first order and reject undeclared executable guards. ... ok
+test_python_39_forbidden_api_surface_is_absent (tests.vnext.test_spec_compiler.SpecCompilerTest.test_python_39_forbidden_api_surface_is_absent)
+Keep executable source within the declared Python 3.9 floor. ... ok
+test_c02_and_d02_use_native_records_with_no_ai_or_human_identity (tests.vnext.test_text_results_v2.TextResultV2NativeTest.test_c02_and_d02_use_native_records_with_no_ai_or_human_identity) ... ok
+test_changed_date_evidence_and_fully_rehashed_result_fail_raw_replay (tests.vnext.test_text_results_v2.TextResultV2NativeTest.test_changed_date_evidence_and_fully_rehashed_result_fail_raw_replay) ... ok
+test_current_accrual_survives_real_json_disk_review_and_native_rebuild (tests.vnext.test_text_results_v2.TextResultV2NativeTest.test_current_accrual_survives_real_json_disk_review_and_native_rebuild) ... ok
+test_no_approval_or_stale_review_render_cannot_create_observations (tests.vnext.test_text_results_v2.TextResultV2NativeTest.test_no_approval_or_stale_review_render_cannot_create_observations) ... ok
+test_old_accrual_stays_in_original_context_not_current_value (tests.vnext.test_text_results_v2.TextResultV2NativeTest.test_old_accrual_stays_in_original_context_not_current_value) ... ok
+test_omitted_or_changed_exact_excerpts_and_source_sets_are_rejected (tests.vnext.test_text_results_v2.TextResultV2NativeTest.test_omitted_or_changed_exact_excerpts_and_source_sets_are_rejected) ... ok
+test_rehashed_fact_inventory_cannot_change_a_verified_amount (tests.vnext.test_text_results_v2.TextResultV2NativeTest.test_rehashed_fact_inventory_cannot_change_a_verified_amount) ... ok
+test_unhandled_currency_or_numeric_grouping_remains_literal_and_text_continues (tests.vnext.test_text_results_v2.TextResultV2NativeTest.test_unhandled_currency_or_numeric_grouping_remains_literal_and_text_continues) ... ok
+test_unsupported_transform_is_readable_raw_only_not_wrong_normalized_amount (tests.vnext.test_text_results_v2.TextResultV2NativeTest.test_unsupported_transform_is_readable_raw_only_not_wrong_normalized_amount) ... ok
+test_c02_amendment_metadata_cannot_retarget_different_raw_period (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_c02_amendment_metadata_cannot_retarget_different_raw_period) ... ok
+test_c02_annual_anchor_filing_date_meeting_date_and_unknown_asof_are_distinct (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_c02_annual_anchor_filing_date_meeting_date_and_unknown_asof_are_distinct) ... ok
+test_c02_fye_board_scope_or_old_governance_source_is_rejected (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_c02_fye_board_scope_or_old_governance_source_is_rejected) ... ok
+test_c02_no_annual_anchor_cannot_assign_a_compensation_or_board_year (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_c02_no_annual_anchor_cannot_assign_a_compensation_or_board_year) ... ok
+test_c02_source_filing_or_cross_entity_cannot_supply_positive_result (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_c02_source_filing_or_cross_entity_cannot_supply_positive_result) ... ok
+test_current_same_entity_accrual_is_recorded_without_total_liability_inference (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_current_same_entity_accrual_is_recorded_without_total_liability_inference) ... ok
+test_d02_forward_note_text_and_fact_inventory_are_not_total_liability (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_forward_note_text_and_fact_inventory_are_not_total_liability) ... ok
+test_d02_missing_note_cannot_turn_into_not_disclosed (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_d02_missing_note_cannot_turn_into_not_disclosed) ... ok
+test_missing_unit_context_namespace_and_nil_never_gain_verified_amount (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_missing_unit_context_namespace_and_nil_never_gain_verified_amount) ... ok
+test_old_other_entity_and_unaccrued_facts_are_not_current_accruals (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_old_other_entity_and_unaccrued_facts_are_not_current_accruals) ... ok
+test_supported_currency_and_numeric_lexical_subsets_preserve_exact_amount (tests.vnext.test_text_results_v2.TextResultV2SourceTest.test_supported_currency_and_numeric_lexical_subsets_preserve_exact_amount) ... ok
+
+----------------------------------------------------------------------
+Ran 50 tests in 9.065s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 50, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_text_item_capacity", "tests.vnext.test_text_results", "tests.vnext.test_spec_compiler", "tests.vnext.test_text_results_v2"]}
+TEST_END_UTC=2026-10-10T03:29:20.555569+00:00
+
+=== INDEPENDENT BASELINE / TYPE / RANGE PROBES ===
+PROBE_START_UTC=2026-10-10T03:30:58.970478+00:00
+UNCHANGED: all existing function signatures/defaults, payload/claim/binding field sets, original catalog bytes; successor compiled differences exactly renderer/max_items
+BASE_BYTE_EQUAL: old renderer count=2 graph_sha256=8b1faa5bd056aa9a32fc6c34a19115829860fef6320ea8a924127e698702e8f9
+BASE_BYTE_EQUAL: old renderer count=64 graph_sha256=4794301a9db44a486fd8ddea03824da7da4373e4dbf564d41058d8c5c6460590
+FULL_128_JSON_SAVE_READ_REPLAY: PASS canonical_bytes=254172 graph_sha256=08a863ab6c4baaa7709ca554da4cd9c26265804195b7408543432fb5e16357ee
+COMPILER_TYPE_AND_RANGE_REJECTIONS: 22 / 22
+PAYLOAD_UNKNOWN_TYPE_AND_RANGE_REJECTIONS: 10 / 10
+DIRECT_BUILDER_SMALLER_CHARACTER_SPEC: TEXT_RESULT_SIZE_LIMIT
+PROBE_END_UTC=2026-10-10T03:30:59.245072+00:00
+
+=== READONLY ACTUAL SOURCE AND ORIGINAL STORED RECORDS ===
+ACTUAL_READ_START_UTC=2026-10-10T03:32:19.647782+00:00
+SCOPE=Enphase FY2021 original source API and existing saved records only; no company CLI, no native Run, no peer consumer execution
+OLD64_REAL_ORIGINAL_REJECTION=DETERMINISTIC_TEXT_HEADINGS_EXCEED_BOUND
+SOURCE_CREATED_BEFORE_REFERENCE: count=68 chars=12530 UTF8_bytes=12538 Evidence=PASS Result=sha256:f154e5af84b9e151e56337b59247c1bc444d5dd41ca4c2fb8e2326a3035fc4d1
+POST_EXTRACTION_FIXED_REFERENCE_COMPARISON=PASS; reference was not extraction input
+EXISTING_SAVED_68_RECORDS_READ_AND_RAW_REPLAY=PASS; source/body/header/ledger/records SHA unchanged
+BOUNDARIES: provider=0 paid=0 SEC=0; SourceNoNewModel; SYSTEM_MECHANICAL_NOT_OWNER_ADOPTION; native_run_created=false company_cli_completed=false peer_consumer_rerun=false
+ACTUAL_READ_SECONDS=4.56949762487784
+ACTUAL_READ_END_UTC=2026-10-10T03:32:24.217421+00:00
+
+=== FULL 128 DISK ROUNDTRIP AND REVIEWED PRODUCT FINGERPRINTS ===
+FULL_128_ANONYMOUS_FILE_SAVE_READ_SOURCE_REPLAY=PASS; bytes=254172 sha256=08a863ab6c4baaa7709ca554da4cd9c26265804195b7408543432fb5e16357ee; no persistent record artifact
+REVIEWED_PRODUCT_BYTES=scripts/vnext/specs.py sha256=7910045ff626718fcdceb8aa796e2b2c4927d8ca214936aded394e8fc01c1f53
+REVIEWED_PRODUCT_BYTES=scripts/vnext/text_results.py sha256=8ea6a1b584cee63c483ad25b097656852f11186814bf0916af4c37e7d51fd12f
+REVIEWED_PRODUCT_BYTES=scripts/vnext/text_rendering_limits.py sha256=c2435e54278447b8c81631ed4cd3b9fbd75320e00ff9fb16305bebed6a4b79c1
+REVIEWED_PRODUCT_BYTES=catalog/ordinary_risk_headings/D01_128.md sha256=49f80d3f6ba7421b6eeccaae5261af8e0c5cee7e51b9706596224f75ed2961d2
+REVIEWED_PRODUCT_BYTES=tests/vnext/test_text_item_capacity.py sha256=2431130a0030b4d2d2e55b8836fcda1451f9496959c24c0b50f007b795c5e8c8
+REVIEWED_PRODUCT_BYTES=.github/workflows/company-current-records.yml sha256=fa3f8945b08f6a03970c91ff6a8ec7cd780c0504abfdfd5ab987ed92929867e4
+WORKTREE_STATUS=
+
+=== INITIAL STATUS / ACTUAL DIFF ===
+REVIEW_START_UTC=2026-10-10T03:27:46.853986+00:00
+COMMAND=git status --short
+
+EXIT=0
+COMMAND=git rev-parse HEAD
+adf89137d31e5c4938a4cb600aa33706635fadec
+
+EXIT=0
+COMMAND=git show --stat --oneline 9510a3006f24c16a11462ffb3f34ab0e53e396f5
+9510a300 [shared-with-#47] Add explicit 128-item text capacity without changing old limits
+ .github/workflows/company-current-records.yml      |   5 +
+ catalog/ordinary_risk_headings/D01_128.md          |  76 +++++++++++++
+ .../actual-enphase-source.json                     |  90 ++++++++++++++++
+ .../final-capacity-tests.log                       |  76 +++++++++++++
+ .../final-guarded-tests.log                        |  63 +++++++++++
+ .../first-actual-source.log                        |  19 ++++
+ .../first-repaired-tests.log                       |  40 +++++++
+ .../guarded-actual-source.log                      |   3 +
+ .../guarded-capacity-tests.log                     |  61 +++++++++++
+ .../original-capacity-failures.log                 |  99 +++++++++++++++++
+ .../original-crossed-spec-failure.log              |  16 +++
+ .../release-aware-actual-source.log                |   3 +
+ .../verify_actual_enphase.py                       |  76 +++++++++++++
+ scripts/vnext/specs.py                             |   7 +-
+ scripts/vnext/text_rendering_limits.py             |   5 +
+ scripts/vnext/text_results.py                      |  15 ++-
+ tests/vnext/test_text_item_capacity.py             | 119 +++++++++++++++++++++
+ 17 files changed, 768 insertions(+), 5 deletions(-)
+
+EXIT=0
+COMMAND=git diff f6ef7886d6630f7675c25cd42e306c373ab05769 9510a3006f24c16a11462ffb3f34ab0e53e396f5 -- scripts/vnext/specs.py scripts/vnext/text_results.py scripts/vnext/text_rendering_limits.py catalog/ordinary_risk_headings/D01_128.md tests/vnext/test_text_item_capacity.py .github/workflows/company-current-records.yml
+diff --git a/.github/workflows/company-current-records.yml b/.github/workflows/company-current-records.yml
+index a9bdb377..8716fc19 100644
+--- a/.github/workflows/company-current-records.yml
++++ b/.github/workflows/company-current-records.yml
+@@ -10,6 +10,7 @@ name: Company saved-source records
+       - 'tests/vnext/test_precalculated_case.py'
+       - 'tests/vnext/test_saved_source_checks.py'
+       - 'tests/vnext/test_runtime_tools.py'
++      - 'tests/vnext/test_text_item_capacity.py'
+       - 'tests/vnext/test_b03_current_input_scope.py'
+       - 'tests/vnext/test_xbrl_namespace_policy.py'
+       - 'tests/vnext/test_dei_release_selection.py'
+@@ -54,6 +55,10 @@ jobs:
+         env:
+           PYTHONDONTWRITEBYTECODE: '1'
+         run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy tests.vnext.test_dei_release_selection tests.vnext.test_successor_income_projection tests.vnext.test_event_rule_root tests.vnext.test_financial_dei_release tests.vnext.test_reported_average_period tests.vnext.test_bank_scope_dei_release -v
++      - name: Explicit text capacity and retained excerpt contracts
++        env:
++          PYTHONDONTWRITEBYTECODE: '1'
++        run: python3 tests/required_unittests.py tests.vnext.test_text_item_capacity tests.vnext.test_text_results tests.vnext.test_spec_compiler
+       - name: Historical dispatch and saved result states
+         env:
+           PYTHONDONTWRITEBYTECODE: '1'
+diff --git a/catalog/ordinary_risk_headings/D01_128.md b/catalog/ordinary_risk_headings/D01_128.md
+new file mode 100644
+index 00000000..7dac02c8
+--- /dev/null
++++ b/catalog/ordinary_risk_headings/D01_128.md
+@@ -0,0 +1,76 @@
++---
++{
++  "metric_id": "D01",
++  "name": "Risk factors summary",
++  "kind": "direct_text",
++  "canonical_unit": "text",
++  "source_mode": "ai_text",
++  "disclosure_group": "risk_text_v1",
++  "applicability": {
++    "all": [],
++    "none": []
++  },
++  "required_claims": {
++    "entity_scope": "registrant"
++  },
++  "scope_contract": {
++    "scope_contract_version": "2",
++    "required_dimensions": [
++      "entity_scope"
++    ],
++    "allowed_dimensions": [
++      "entity_scope"
++    ],
++    "exact_enum_aliases": {
++      "entity_scope": {
++        "registrant": [
++          "registrant"
++        ]
++      }
++    },
++    "selection_preference": {
++      "dimension_order": [
++        "entity_scope"
++      ],
++      "prefer_complete_required_dimensions": true
++    },
++    "cross_dimension_constraints": []
++  },
++  "quality_rule": {
++    "deterministic_text_method": "RISK_FACTOR_HEADINGS_V1"
++  },
++  "text_policy": {
++    "version": "TEXT_V1",
++    "content_kind": "SOURCE_EXCERPTS",
++    "required_sections": [
++      "ITEM_1A"
++    ],
++    "allowed_source_roles": [
++      "target_primary"
++    ],
++    "renderer": "ORDERED_NEWLINE_128_V2",
++    "max_items": 128,
++    "max_text_chars": 64000,
++    "review_required": true
++  },
++  "legacy_projection": {
++    "status_exact": "TEXT_QUAL",
++    "source_class": "MDA",
++    "formula": "verbatim Item 1A headings",
++    "confidence": "",
++    "notes": "Source-rebuilt Item 1A heading list; disclosures are not assertions of risk occurrence."
++  },
++  "dependencies": []
++}
++---
++
++# Risk factor headings
++
++D01 follows the approved title-level summary option: all emphasized headings and lead titles in the complete original Item 1A are reproduced with source locators. The deterministic proposal does not choose a convenient subset. Mechanical Evidence and the existing whole-ReviewUnit decision bind the source, target, complete set and rendered text. This source-excerpt policy makes no claim that a risk occurred, that no other risk exists, or that an amendment has no effect.
++
++
++This explicit resource successor preserves the complete original Item 1A
++heading selection, subject, source, review and text-length contract. Its
++self-describing renderer permits up to 128 ordered excerpts without truncation;
++the original r6 Spec/renderer remain at 64. It is a development capability,
++not provider execution permission, amendment clearance or business adoption.
+diff --git a/scripts/vnext/specs.py b/scripts/vnext/specs.py
+index bb235a4f..ec26d6e9 100644
+--- a/scripts/vnext/specs.py
++++ b/scripts/vnext/specs.py
+@@ -765,10 +765,13 @@ def compile_spec(
+         policy = front.get("text_policy")
+         fields = {"version", "content_kind", "required_sections", "allowed_source_roles",
+                   "renderer", "max_items", "max_text_chars", "review_required"}
++        from .text_rendering_limits import RENDERER_MAX_ITEMS
++        renderer_bound=(RENDERER_MAX_ITEMS.get(policy.get("renderer"))
++                        if type(policy) is dict and type(policy.get("renderer")) is str else None)
+         if (type(policy) is not dict or set(policy) != fields
+                 or policy["version"] != "TEXT_V1" or policy["content_kind"] != "SOURCE_EXCERPTS"
+-                or policy["renderer"] != "ORDERED_NEWLINE_V1" or policy["review_required"] is not True
+-                or type(policy["max_items"]) is not int or not 1 <= policy["max_items"] <= 64
++                or renderer_bound is None or policy["review_required"] is not True
++                or type(policy["max_items"]) is not int or not 1 <= policy["max_items"] <= renderer_bound
+                 or type(policy["max_text_chars"]) is not int or not 1 <= policy["max_text_chars"] <= 64000):
+             raise SpecError("TEXT_V1 text_policy is missing or unsupported")
+         for field in ("required_sections", "allowed_source_roles"):
+diff --git a/scripts/vnext/text_rendering_limits.py b/scripts/vnext/text_rendering_limits.py
+new file mode 100644
+index 00000000..42971f51
+--- /dev/null
++++ b/scripts/vnext/text_rendering_limits.py
+@@ -0,0 +1,5 @@
++"""Finite self-describing excerpt capacities; existing renderer stays at 64."""
++RENDERER_MAX_ITEMS = {
++    'ORDERED_NEWLINE_V1': 64,
++    'ORDERED_NEWLINE_128_V2': 128,
++}
+diff --git a/scripts/vnext/text_results.py b/scripts/vnext/text_results.py
+index d978b304..0fbc38d5 100644
+--- a/scripts/vnext/text_results.py
++++ b/scripts/vnext/text_results.py
+@@ -73,8 +73,10 @@ def render_text_payload(*, payload):
+     """Render a strict ordered excerpt list without converting text to a count."""
+     _need(type(payload) is dict and set(payload) == _PAYLOAD_FIELDS,
+           "TEXT_PAYLOAD_FIELDS_INVALID")
++    from .text_rendering_limits import RENDERER_MAX_ITEMS
+     _need(payload["version"] == VALUE_KIND and payload["content_kind"] == "SOURCE_EXCERPTS"
+-          and payload["renderer"] == "ORDERED_NEWLINE_V1", "TEXT_PAYLOAD_PROTOCOL_UNSUPPORTED")
++          and type(payload["renderer"]) is str and payload["renderer"] in RENDERER_MAX_ITEMS,
++          "TEXT_PAYLOAD_PROTOCOL_UNSUPPORTED")
+     for key in ("candidate_hash", "review_unit_hash", "approval_effect_hash"):
+         _need(type(payload[key]) is str and _HASH.fullmatch(payload[key]), "TEXT_PAYLOAD_REVIEW_BINDING_INVALID")
+     coverage = payload["coverage_hashes"]
+@@ -83,7 +85,8 @@ def render_text_payload(*, payload):
+           and coverage == sorted(set(coverage)),
+           "TEXT_PAYLOAD_COVERAGE_INVALID")
+     items = payload["items"]
+-    _need(type(items) is list and 1 <= len(items) <= 64, "TEXT_PAYLOAD_ITEMS_INVALID")
++    _need(type(items) is list and 1 <= len(items) <= RENDERER_MAX_ITEMS[payload["renderer"]],
++          "TEXT_PAYLOAD_ITEMS_INVALID")
+     roles, ids = [], []
+     for ordinal, item in enumerate(items):
+         _need(type(item) is dict and set(item) == {"order", "role", "text", "observation_id"}
+@@ -388,8 +391,14 @@ def payload_from_observations(*, compiled_spec, target, observations):
+ 
+ def build_text_result_and_trace(*, compiled_spec, target, payload=None, reason_code="PASS", structural=False):
+     from .records import metric_result_contract_hash
+-    text_policy(compiled_spec)
++    policy = text_policy(compiled_spec)
++    if payload is not None:
++        _need(type(payload) is dict and payload.get("renderer") == policy["renderer"],
++              "TEXT_PAYLOAD_SPEC_POLICY_CHANGED")
++        _need(type(payload.get("items")) is list and 1 <= len(payload["items"]) <= policy["max_items"],
++              "TEXT_PAYLOAD_SPEC_ITEM_LIMIT")
+     value = render_text_payload(payload=payload) if payload is not None else None
++    _need(value is None or len(value) <= policy["max_text_chars"], "TEXT_RESULT_SIZE_LIMIT")
+     _need((value is not None) == (reason_code == "PASS") and not (value is not None and structural), "TEXT_RESULT_STATE_INVALID")
+     contract = {"company_id": target["company_id"], "metric_id": compiled_spec["compiled"]["metric_id"],
+         "period_start": target["period_start"], "period_end": target["period_end"], "scope_key": target["scope_key"],
+diff --git a/tests/vnext/test_text_item_capacity.py b/tests/vnext/test_text_item_capacity.py
+new file mode 100644
+index 00000000..1095c965
+--- /dev/null
++++ b/tests/vnext/test_text_item_capacity.py
+@@ -0,0 +1,119 @@
++"""Explicit excerpt capacity, original contracts and real replay; no acceptance."""
++import copy,json
++from pathlib import Path
++import tempfile
++import unittest
++
++from tests.vnext import test_text_results as fixtures
++from tests.vnext.test_text_coverage import BODY,annual,binding
++from vnext.specs import compile_spec,compile_spec_file,SpecError
++from vnext.text_results import create_deterministic_text_candidate,replay_text_result,verify_text_result,render_text_payload
++from vnext.canonical import canonical_json_bytes
++from vnext.records import validate_record
++
++ROOT=Path(__file__).resolve().parents[2]
++RENDERER='ORDERED_NEWLINE_128_V2'
++
++
++def successor_front():
++    front=fixtures.spec_front();front['quality_rule']={'deterministic_text_method':'RISK_FACTOR_HEADINGS_V1'}
++    front['text_policy'].update(renderer=RENDERER,max_items=128)
++    return front
++
++
++def arguments(count=68,front=None):
++    source=BODY.replace('<p>A supply constraint could affect production.</p>',
++        ''.join('<p><b>Risk number %s</b>. Disclosure remains separate.</p>' % i for i in range(count)))
++    return fixtures.source_arguments(binding(annual(source)),front=front or successor_front())
++
++
++class TextItemCapacityTest(unittest.TestCase):
++    def test_68_full_titles_roundtrip_without_cutting_or_changing_old_encoding_fields(self):
++        args=arguments();candidate=create_deterministic_text_candidate(**args)
++        self.assertEqual(len(candidate['selected']),68)
++        reviewed=fixtures.reviewed(args,candidate=candidate)
++        result,trace,observations=replay_text_result(**reviewed)
++        self.assertEqual(len(observations),68)
++        self.assertEqual(result['text_payload']['renderer'],RENDERER)
++        self.assertEqual(result['value'],'\n'.join('Risk number %s' % i for i in range(68)))
++        self.assertEqual(result['value_kind'],'TEXT_V1')
++        self.assertEqual(set(result['text_payload']),{'version','content_kind','renderer','items',
++            'coverage_hashes','candidate_hash','review_unit_hash','approval_effect_hash'})
++        with tempfile.TemporaryDirectory() as folder:
++            path=Path(folder)/'records.json';path.write_bytes(canonical_json_bytes(value={'result':result,'trace':trace,'observations':observations}))
++            stored=json.loads(path.read_bytes())
++            self.assertEqual(verify_text_result(**stored,**reviewed),(result,trace,observations))
++            self.assertEqual(validate_record(record=stored['result']),result)
++
++    def test_128_items_are_supported_but_129_are_not_silently_trimmed(self):
++        for count in (128,129):
++            with self.subTest(count=count):
++                args=arguments(count)
++                if count==128:
++                    candidate=create_deterministic_text_candidate(**args)
++                    result,_,obs=replay_text_result(**fixtures.reviewed(args,candidate=candidate))
++                    self.assertEqual(len(obs),128);self.assertEqual(len(result['text_payload']['items']),128)
++                else:
++                    with self.assertRaisesRegex(ValueError,'HEADINGS_EXCEED_BOUND'):
++                        create_deterministic_text_candidate(**args)
++
++    def test_original_64_contract_and_smaller_successor_contract_remain_real_limits(self):
++        for renderer,max_items in (('ORDERED_NEWLINE_V1',64),(RENDERER,64)):
++            front=successor_front();front['text_policy'].update(renderer=renderer,max_items=max_items)
++            with self.subTest(renderer=renderer),self.assertRaisesRegex(ValueError,'HEADINGS_EXCEED_BOUND'):
++                create_deterministic_text_candidate(**arguments(68,front))
++        front=fixtures.spec_front();front['text_policy']['max_items']=65
++        with self.assertRaises(SpecError):fixtures.compiled(front)
++
++    def test_old_policy_result_and_trace_are_unchanged(self):
++        args=fixtures.reviewed();before=replay_text_result(**args)
++        self.assertEqual(before,verify_text_result(result=before[0],trace=before[1],observations=before[2],**args))
++        self.assertEqual(before[0]['text_payload']['renderer'],'ORDERED_NEWLINE_V1')
++        self.assertEqual(len(before[0]['text_payload']['items']),2)
++        original=compile_spec_file(path=ROOT/'catalog/r6/D01_risk_factor_headings.md',dependency_specs={})
++        self.assertEqual(original['compiled']['text_policy']['max_items'],64)
++        self.assertEqual(original['compiled']['text_policy']['renderer'],'ORDERED_NEWLINE_V1')
++
++    def test_renderer_and_compiler_refuse_unknown_capacity_bad_types_and_overlimit(self):
++        for renderer,limit in (('unknown',128),(RENDERER,129),(RENDERER,True),([],128)):
++            front=successor_front();front['text_policy'].update(renderer=renderer,max_items=limit)
++            with self.subTest(renderer=renderer,limit=limit),self.assertRaises(SpecError):fixtures.compiled(front)
++        args=arguments();result,_,_=replay_text_result(**fixtures.reviewed(args,candidate=create_deterministic_text_candidate(**args)))
++        old=copy.deepcopy(result['text_payload']);old['renderer']='ORDERED_NEWLINE_V1'
++        with self.assertRaisesRegex(ValueError,'ITEMS_INVALID'):render_text_payload(payload=old)
++        unknown=copy.deepcopy(result['text_payload']);unknown['renderer']='unknown'
++        with self.assertRaisesRegex(ValueError,'PROTOCOL_UNSUPPORTED'):render_text_payload(payload=unknown)
++        wrong=copy.deepcopy(result['text_payload']);wrong['renderer']=[]
++        with self.assertRaisesRegex(ValueError,'PROTOCOL_UNSUPPORTED'):render_text_payload(payload=wrong)
++
++    def test_new_renderer_cannot_be_bound_to_an_old_or_smaller_spec_in_direct_builder(self):
++        from vnext.text_results import build_text_result_and_trace
++        args=arguments();result,_,_=replay_text_result(**fixtures.reviewed(args,candidate=create_deterministic_text_candidate(**args)))
++        front=successor_front();front['text_policy'].update(renderer='ORDERED_NEWLINE_V1',max_items=64)
++        old=fixtures.compiled(front)
++        with self.assertRaisesRegex(ValueError,'TEXT_PAYLOAD_SPEC_POLICY_CHANGED'):
++            build_text_result_and_trace(compiled_spec=old,target=args['target'],payload=result['text_payload'])
++        front['text_policy'].update(renderer=RENDERER,max_items=64)
++        smaller=fixtures.compiled(front)
++        with self.assertRaisesRegex(ValueError,'TEXT_PAYLOAD_SPEC_ITEM_LIMIT'):
++            build_text_result_and_trace(compiled_spec=smaller,target=args['target'],payload=result['text_payload'])
++
++    def test_character_bound_and_source_coverage_are_not_relaxed_by_more_items(self):
++        front=successor_front();front['text_policy']['max_text_chars']=20
++        with self.assertRaisesRegex(ValueError,'CONTENT_EXCEEDS_BOUND'):
++            create_deterministic_text_candidate(**arguments(3,front))
++        front=successor_front();front['text_policy']['max_text_chars']=64001
++        with self.assertRaises(SpecError):fixtures.compiled(front)
++        args=arguments();changed=copy.deepcopy(args)
++        changed['target']['entity']='999'
++        with self.assertRaisesRegex(ValueError,'filing identity differs from registry authority'):
++            create_deterministic_text_candidate(**changed)
++
++    def test_new_catalog_changes_only_explicit_capacity_not_business_selection(self):
++        old=compile_spec_file(path=ROOT/'catalog/r6/D01_risk_factor_headings.md',dependency_specs={})
++        new=compile_spec_file(path=ROOT/'catalog/ordinary_risk_headings/D01_128.md',dependency_specs={})
++        original=copy.deepcopy(old['compiled']);successor=copy.deepcopy(new['compiled'])
++        successor['text_policy']['renderer']=original['text_policy']['renderer']
++        successor['text_policy']['max_items']=original['text_policy']['max_items']
++        self.assertEqual(successor,original)
++        self.assertNotEqual(old['spec_closure_hash'],new['spec_closure_hash'])
+
+EXIT=0
+
+=== FINAL OUTPUT VERIFICATION ===
+Product six-file byte check PASS; only conclusion.md/review.log written; readback contents verified.
