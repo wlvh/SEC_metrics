@@ -23,3 +23,5 @@ The public-supplied existing-workflow patch actually executes the new test modul
 actualmain84已包含本纯标签接口/非实际定义scope修补，historical_fiscal_labels逐字同5f9；historical_statement_cases的可选selection/请求FY检查已由收入后继进入main。正常merge后两个产品文件严格同actualmain84，不能整拷旧case倒退Total收入修补。旧业务证据保原版本；本后继剩差异为原selectedlabel测试、已提交主要记录和一path/一现有history步骤模块并集，不是重新开发接口或新来源planner。
 
 92label/statement/dispatch/state/收入V1V2短例.512s零skip；conditional/hypothetical/无关句/错CIK/错acc/显式selection重新推导/请求FY不符全部原断言保。当前main workflow所有source/收入/paired/singleline/D04/event/SEC步骤保持，只加本标签模块，触发测试path保。源码与输入未变，不为组合重算Salesforce/Macy/Marriott，原.929/.787/2.322实际source/选期验证沿原记录复用。新headCI另核，不借5f9绿灯。仍不含公共128范围CLI或在线发现/缺件补齐；来源准入/预算/真实调用/Run/业务接受不由纯标签解析授予，0新增calls，不selfmerge/Ready/采纳。
+
+0953当前company run38032418224/job114155956174 SUCCESS。实际加载新11label/explicitselection方法逐项ok，history107/.886s；source257/161.092s、paired6/.860s、singleline43/15.034s、D045/event13/retention10/原SEC27均执行零skip。测试path触发和原模块保；新增保护不是只登记名字或拷旧收入源。当前整体check状态见main84-ci-observation.json，不把单job绿或旧5f9绿作未终态全绿。纯日志独立证据分支不重复触productCI，原件/金额/模型不重算。
