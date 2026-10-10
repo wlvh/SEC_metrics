@@ -6270,6 +6270,62 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-visible-auditor-source/SEC_metrics/docs/evidence/issue28_visible_auditor_source_20261010/independent-review/conclusion.md",
       "verdict": "PASS_LIMITED_SOURCE_ONLY_NO_C04_RESULT_CREDIT",
       "ordinary_messages": 2
+    },
+    {
+      "task_name": "review_visibleauditor_22a6f60",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "cover-charter-only",
+      "scope_paths": [
+        "scripts/vnext/visible_auditor_source.py",
+        "tests/vnext/test_visible_auditor_source.py",
+        "docs/evidence/issue28_visible_auditor_source_20261010/check_saved_report.py"
+      ],
+      "patch_sha": "95a089c0baab5d2247d2570344cf4058d6450b2f",
+      "spawned_at": "2026-10-10T10:03:07.703247+00:00",
+      "ended_at": "2026-10-10T10:05:46Z",
+      "tool_calls": 14,
+      "ordinary_messages": 3,
+      "resource_accounting": "reuse same ended agent increment; prior 8 tools/2 messages counted, no reset",
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-visible-auditor-source/SEC_metrics/docs/evidence/issue28_visible_auditor_source_20261010/cover-charter/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_COVER_CHARTER_INCREMENT_NO_C04_RESULT_CREDIT",
+      "increment_tool_calls": 6,
+      "increment_ordinary_messages": 1
+    },
+    {
+      "task_name": "review_d04reuse_406681f",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "D04_COMPANYFACTS_ATTEMPT_PROVENANCE",
+      "scope_paths": [
+        "scripts/vnext/capacity_update_input.py",
+        "tests/vnext/test_d04_provenance_reuse.py",
+        ".github/workflows/vnext-fast.yml"
+      ],
+      "patch_sha": "406681ffb2c63c9f85652381b5a160ddf29a08d5",
+      "spawned_at": "2026-10-10T10:23:39.274645+00:00",
+      "ended_at": "2026-10-10T10:27:06.825507Z",
+      "tool_calls": 16,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-d04-provenance-reuse/SEC_metrics/docs/evidence/issue28_d04_provenance_reuse_20261010/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_SAME_BODY_CAPTURE_ONLY; ACTUAL_COMPANY_REMAINS_BLOCKED_BY_DISCOVERY_REFRESH",
+      "ordinary_messages": 2
+    },
+    {
+      "task_name": "review_d04reuse_406681f",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "D04_PRIMARY_SUBMISSIONS_REFRESH_ONLY",
+      "scope_paths": [
+        "scripts/vnext/capacity_update_input.py",
+        "tests/vnext/test_d04_provenance_reuse.py"
+      ],
+      "patch_sha": "5cf816503c03e98edb67a463d6d0ce436a1c48d8",
+      "spawned_at": "2026-10-10T10:32:33.644328+00:00",
+      "ended_at": "2026-10-10T10:36:35.384769Z",
+      "tool_calls": 32,
+      "ordinary_messages": 3,
+      "resource_accounting": "same agent increment; no reset; one ordinary message remains",
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-d04-provenance-reuse/SEC_metrics/docs/evidence/issue28_d04_provenance_reuse_20261010/independent-discovery/conclusion.md",
+      "verdict": "PASS_LIMITED_DISCOVERY_INCREMENT_NO_COMPANY_EXECUTION_CREDIT",
+      "increment_tool_calls": 16,
+      "increment_ordinary_messages": 1
     }
   ],
   "ci_capacity_20260922": {
@@ -19449,7 +19505,7 @@
     "explicit_dei_release": "YEAR_QUARTER_OR_DATE",
     "old_default_dei_release": "YEAR_ONLY",
     "ford2020": "BOUND_REPORT_CANDIDATE; no C04 Result",
-    "marriott2020": "two report scopes retained; registrant /MD/ relationship unresolved; amendment additionally source-set unresolved",
+    "marriott2020": "same-original charter-label relation establishes financial report candidate; native /MD/ unchanged; amendment still unresolved at inspection source-set level",
     "independent_review": "PASS_LIMITED_SOURCE_ONLY",
     "evidence": "/Users/lyuhongwang/.codex/worktrees/issue28-visible-auditor-source/SEC_metrics/docs/evidence/issue28_visible_auditor_source_20261010",
     "new_calls": {
@@ -19458,11 +19514,73 @@
       "paid": 0
     },
     "source_contract": "existing C04 structured-only unchanged; visible reports not yet consumed",
-    "CI": "initially11IN_PROGRESS @22a6f601; final not yet read",
+    "CI": "actual a9bbcbaa all11SUCCESS; source-only, not business acceptance",
     "peer_read_sha": "b5bcbc1a2f0b3b1120c5c9e2ed6eec38881c77f9",
     "fetched_peer_tip": "bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786",
-    "delivery_head": "3e418c93",
+    "delivery_head": "a9bbcbaa72a756638d143b40ac85df6689f69669",
     "pr_url": "https://github.com/wlvh/SEC_metrics/pull/144",
-    "next_source_relationship": "Peer supplied same-raw visible cover exact-registrant-name label; not yet independently validated/delivered. Preserve /MD/ native name, never strip it into identity credit."
+    "next_source_relationship": "Peer supplied same-raw visible cover exact-registrant-name label; not yet independently validated/delivered. Preserve /MD/ native name, never strip it into identity credit.",
+    "cover_patch_sha": "95a089c0baab5d2247d2570344cf4058d6450b2f",
+    "cover_mode": "explicit COVER_CHARTER_NAME; default NATIVE_NAME_ONLY retained",
+    "cover_independent_review": "PASS_LIMITED_INCREMENT_14_TOTAL_TOOLS_3_TOTAL_MESSAGES",
+    "owner_source_decision": "requested in existing conversation; pending, no C04 credit or successor consumer enabled",
+    "peer_cover_read_sha": "60caa8a5c2b266458c2673d0720c5a03d2cfa08d"
+  },
+  "d04_marriott_current_company_20261010": {
+    "phase": "PASS_SAVED_REAL_COMPLETE_COMPANY_ENTRY_AND_REPEAT_AND_INDEPENDENT_READ",
+    "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d04-provenance-reuse/SEC_metrics",
+    "code_head": "5cf816503c03e98edb67a463d6d0ce436a1c48d8",
+    "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+    "original_call_ordinals": [
+      115,
+      116,
+      117,
+      118
+    ],
+    "persistent_exec_session": 51074,
+    "pid": 81191,
+    "evidence": "docs/evidence/issue28_continuous/d04-marriott-company-20261010",
+    "new_calls_allowed": false,
+    "socket_and_claim_guards": true,
+    "initial_launch": "PID81131 missing/emptylog; no completion credit; observation and partial material preserved",
+    "delivery_head": "f91c0f25ffa18b198765b30761f13269add4a51b",
+    "pr": 145,
+    "pr_url": "https://github.com/wlvh/SEC_metrics/pull/145",
+    "state_root": "/private/tmp/issue28-marriott-d04-rdebjryk/state",
+    "result_id": "sha256:e523b7a9b36b787596d7de5100746a3c23b44ca336b4791d64c7df9ef7555371",
+    "same_original_native_result": true,
+    "first_seconds": 66.58646212494932,
+    "repeat_seconds": 0.10045837494544685,
+    "read_seconds": 0.2393384580500424,
+    "factory_forbidden_repeat_passed": true,
+    "original_files_protected": 78,
+    "reader_files_protected": 16,
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "primary_evidence": "docs/evidence/issue28_d04_provenance_reuse_20261010/README.md",
+    "failure_history": "first missing launch and two whole-company refusals retained; small fixes separately measured/reviewed",
+    "public_status": "TEXT_QUAL",
+    "native_status": "WITHHELD/null/D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+    "independent_review": "exact406681/5cf source scopes PASS, not reviewer company execution",
+    "CI": "f91 initial6SUCCESS/5IN_PROGRESS; overall terminal not yet read",
+    "scope_limit": "new ordinary-entry delivery of an existing saved complete result; no new model result/company/adoption; original/current source proofs kept"
+  },
+  "historical_d04_interface_20261010": {
+    "read_peer_sha": "8d509dbd8f906db69bd150715d825f268f49ce7a",
+    "index": "docs/evidence/issue47_d04_history_consumer_20261010/original-call-index.json",
+    "original_allowance": [
+      35,
+      35,
+      0
+    ],
+    "original_requirement_id": "issue_47_v1",
+    "actual_groups": "Marriott2023 20–23/16units; Marriott2024 24–27/18units; Paramount2024 28–35/40units",
+    "actual_entry_gap": "LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED before writer; peer current-state147files unchanged",
+    "next_owned_public_work": "explicit selected source + original saved requests/responses readonly replay seam, preserving source/purpose/oldledger; peer owns annual selection and historical company consumer",
+    "not_inherited": "current Mar25 company PASS does not establish historical23 or old35budget permission; media/semantic limits stay",
+    "new_calls_authorized": false
   }
 }
