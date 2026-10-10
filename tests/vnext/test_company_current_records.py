@@ -153,10 +153,16 @@ class CurrentCompanyTest(unittest.TestCase):
         (controller/'latest-check.json').write_text(json.dumps(failure))
         self.run_company(['B02'])
         with patch.object(current,'run_once',side_effect=AssertionError('No update')):
-            view=current.read_current_company(state_root=self.work,company_id='marriott_international')
+            view=current.read_current_company(state_root=self.work,company_id='marriott_international',
+                output_root=self.root/'read-later-subset')
         failed=next(m for m in view['metrics'] if m['metric_id']=='B01')
         self.assertIsNone(failed['value']);self.assertEqual(failed['reason'],failure['reason'])
         self.assertEqual(failed['fiscal_year'],2025);self.assertFalse(failed['requested_in_latest_execution'])
+        with (self.root/'read-later-subset/metrics_matrix.csv').open() as stream:
+            row=next(r for r in csv.DictReader(stream) if r['metric_id']=='B01')
+        self.assertEqual(row['period_role'],'SAVED_CHECK_NOT_REQUESTED_WITHOUT_RESULT')
+        self.assertEqual(row['requested_in_latest_execution'],'False')
+        self.assertIn('IMPLEMENTATION_GAP',row['notes'])
 
     def test_failure_detail_does_not_relabel_a_previous_success_as_current(self):
         self.run_company(['B01'])
