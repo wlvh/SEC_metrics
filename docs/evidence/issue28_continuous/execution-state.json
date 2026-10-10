@@ -6230,6 +6230,29 @@
       },
       "dedup": "noactiveagent;exactSHA/scope register absent;no independent summary; old C04 reviews cover different source/control patches only",
       "ordinary_messages": 2
+    },
+    {
+      "task_name": "review_range_dependency_4d58197",
+      "purpose": "review",
+      "module": "exclusive-revenue-range-dependencies",
+      "base_sha": "fb9cc768ffcc8b1ada445895ff5f04aa9fbe1d8e",
+      "patch_sha": "4d58197892eea09ee0cc6fde10a860a29a5111fd",
+      "scope_paths": [
+        "scripts/vnext/company_local.py:one dependency tuple",
+        "tests/vnext/test_history_company_dispatch.py:16line shared regression"
+      ],
+      "spawned_at": "2026-10-10T08:51:47.806574+00:00",
+      "ended_at": "2026-10-10T08:54:33.923548+00:00",
+      "tool_calls": 8,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-entry/SEC_metrics/docs/evidence/issue28_fiscal_range_entry_20261010/independent-dependency-repair/conclusion.md",
+      "verdict": "PASS_LIMITED_ONE_LINE_B02_PROCESSING_DEPENDENCY_REPAIR",
+      "limits": {
+        "tool_nodes": 12,
+        "minutes": 5,
+        "ordinary_messages": 1
+      },
+      "dedup": "no active children; exactSHA register/result absent; old5511/6f5 label parser ended at54tools3messages and notnew dependency scope",
+      "ordinary_messages": 1
     }
   ],
   "ci_capacity_20260922": {
@@ -18531,12 +18554,14 @@
     "peer_fixed_source": "a2ec0932f99fdee6ca5680024cda67173f4b02a7",
     "peer_consumer_evidence": "docs/evidence/issue47_selected_source_consumer_20261010/README.md",
     "peer_scope": "Read otherexecutor logs, no parent rerun; rawSalesDEI25 notconsumerFY26; Macy371days; Marriottprioramendfilesnotpropertyapproval; Paramown813828/2041610separate, August7/8incomeconflict NOT cleared",
-    "archive_sha": "3de509ac3874f47220d07986d38fdb73a9ee3942",
+    "archive_sha": "31c5ea8ddfbb5089ec41fe47b01c8456bf198ae6",
     "remote_ci": {
-      "head": "3de509ac3874f47220d07986d38fdb73a9ee3942",
+      "head": "31c5ea8ddfbb5089ec41fe47b01c8456bf198ae6",
       "terminal": "SUCCESS",
       "checks_success": 11
-    }
+    },
+    "actual_main": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+    "receiving_tests": "47/3.034s0skip; coreexact407/3de, normalmainCLIretained"
   },
   "public_fiscal_range_entry_20261010": {
     "status": "SOURCE_LABEL_LAZY_COMPANY_CHAIN_IMPLEMENTED_KNOWN_FY23_SCOPE_DEFECT_PRECISE_HOLD_PENDING_LIMITED_REVIEW",
@@ -19330,7 +19355,7 @@
     "actual": "Ford22 publicsamecore4forms28events+2annualHTML/XML;0flag/37996/full2022/0ec6ID;final17.842/repeat2.472/independentCLIresults.457/10protected12after/1resultdirectory",
     "tests": "18business.091s;78controller/company9.346s0skip; smallguards/defaultunchangeddict checked",
     "scope": "peerhistoricalCLIconsumer ownsfactory; rootexplicitgate only/no currentdefault expansion",
-    "ci": "actual f5cd at08:29UTC C04SUCCESS and9totalSUCCESS; company-current/inherited-source stillIN_PROGRESS; notoverallgreen",
+    "ci": "actualf5cd latestelevenSUCCESS; peer14322a elevenSUCCESS actuallyserverread; previousinprogresssnapshot retainedhistorically",
     "pr": "https://github.com/wlvh/SEC_metrics/pull/142",
     "review": "4e8 adapter boundedno newbusinessblocker;15specified+3inherited+11syntheticcontrols;32tools2messages;newtestGitdependencyP2 retained,76fixturestaticcheckednotrerunbyreviewer",
     "test_repair_sha": "76d372fafe707b65bde136d48ca91f5c6325aa2f",
@@ -19369,8 +19394,27 @@
   },
   "next_existing_source_plan_128_20261010": {
     "pr": "https://github.com/wlvh/SEC_metrics/pull/128",
-    "scope": "readexisting savedfiscal-label planning8540 and actualmain/feedback; currentmain sources lacksfiscal-year; preservelatestdefault/old source identities and B02 income dependencies",
-    "status": "NEXT_INCREMENT_READ_NOT_REIMPLEMENTED",
-    "peer_notice": "existingconsumerc986/37895 preserved; root source/controller owner, no financialrerun or newfetch rights"
+    "scope": "originalsource plans/label54review reused; no wholepeerbranch/schema/newcalls",
+    "status": "MAIN_ALIGNED_SOURCE_AND_FISCAL_ENTRY_DEPENDENCY_FIX_REVIEWED_CATEGORY_INCREMENT_PENDING_RECEIVING",
+    "peer_notice": "existingconsumerc986/37895 preserved; root source/controller owner, no financialrerun or newfetch rights",
+    "patch_sha": "4d58197892eea09ee0cc6fde10a860a29a5111fd",
+    "main_merge": "fb9cc768ffcc8b1ada445895ff5f04aa9fbe1d8e",
+    "core_compatibility": "historical_statement_cases/fiscal_labels exactmainf51,38olddefectdicts unchanged withinmain39; current/latest/mixed dispatch preservesmain",
+    "tests": "peer6f78 exact16line test reused; parent1/.158fail;68/1.990s0skip pass",
+    "review": "exact4d oneprodline+16testlines PASS8tools1message;19tests0skip;18historicmodules+selectedIncome strictmainf51",
+    "peer_consumer_record_read_pending": "c54450a3: reportedrealMacy23two coords17.507; success23866m/7780,heldnew3e886priorScopeFalse; forbiddenrepeat2.169/independentread.768/22rows/307old325newprotected; parentmustreadfixedrecordnotclaimownexecution",
+    "head": "4dcc8816be0b249d980205c88b2cedd52edbf23c",
+    "source_cli": "rootSales26first4.242/repeat4.151,issuer26 rawDEI25/dates2025-02-01..2026-01-31,19files/rangeIDunchanged; no calculator/annualprep/HTTP",
+    "peer_actually_read": "c544 fixedrange-combinationREADME plus6095869145 currentcorrectMacyB01/heldB02, rootnotownexecution",
+    "new_category": "reusedpeer3bb original1/.052fail; onlyemptystructuredlabelmatch usesexistingPeriodSelectionError SOURCE_UNAVAILABLE; unknown/ambiguous/legacy notmissing;45/.1.105 tests",
+    "review_boundary": "4ddependencyoneLinePASS8tools1msg; oldbyteunchangedsource/label review reuse;870 category待接收不冒称独审",
+    "upstream": "12631c5 normalmainf51 alignment/source205bytes exact407;47/3.034sourceonline/dispatch0skip",
+    "source_upstream_head": "31c5ea8ddfbb5089ec41fe47b01c8456bf198ae6",
+    "upstream_merge": "4dcc normalmerge31c5, no source diffs versus870; resolves missingCI GitHubDIRTY comparison",
+    "category_peer_fixed": "a6d60dc4 fixedreceivingJSON read; realmissingFY27 SOURCE_UNAVAILABLE/previousResultnull; old325files/read and oldFY23tworesults preserved, no reprocessed amounts",
+    "peer_verified_c04_next": "b5bcbc1a fixedHTMLread SHA526fb verified atbyte2846078..2869619; HTMLParserdecodedissuer/year2020/PwC/date2021Feb4; nativeAuditorName0 issource-readingimplementationgap notdisclosure/GETmissing; no result changed/visiblemethod yet",
+    "ci": "current4dcc MERGEABLE/UNSTABLE, newchecksIN_PROGRESS+severalSUCCESS after upstream31, notold4d terminalcredit",
+    "current_issue_queue_marker": "公共运行与来源入口（当前接续）",
+    "current_queue_scope": "owncurrentblock compacted; oldcomments/majorrecords kept, sharedprotocol/budgets untouched"
   }
 }
