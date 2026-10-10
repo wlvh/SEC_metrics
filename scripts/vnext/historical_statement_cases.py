@@ -30,10 +30,10 @@ from .zero_ai_r2 import _load_deterministic_catalog, _deterministic_metric_graph
 
 METRICS = frozenset({'B01', 'B02', 'B04', 'B05'})
 CURRENT_ANNUAL_METRICS = frozenset({'B04', 'B05', 'B07'})
-# The first shared single-line implementation has two confirmed coverage bugs.
-# Keep its new admission off until the fixed source delta is received. This
-# does not alter the original total/component contracts or saved results.
-PAIRED_SINGLE_REVENUE_LINE_ENABLED = False
+# Explicit single-line source bounds have a fixed corrective implementation.
+# Only the paired original-revenue consumer opts in; old Total/component
+# defaults and existing saved results retain their original meaning.
+PAIRED_SINGLE_REVENUE_LINE_ENABLED = True
 PROCESSING_FILES = (
     'scripts/vnext/historical_statement_cases.py',
     'scripts/vnext/normal_period_selection.py',
