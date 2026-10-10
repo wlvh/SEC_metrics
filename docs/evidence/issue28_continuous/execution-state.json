@@ -5964,11 +5964,28 @@
       "patch_sha": "7e6f6a240e63000ad69c1a9354f86980eced4228",
       "base_sha": "aa29a0ab1b3eafc7ce384f98c1b889e2477012dc",
       "spawned_at": "2026-10-10T01:39:46.211488+00:00",
-      "ended_at": null,
-      "tool_calls": 0,
+      "ended_at": "2026-10-10T01:45:50+00:00",
+      "tool_calls": 44,
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics/docs/evidence/issue28_current_reported_revenue_20261010/independent-review/conclusion.md",
-      "verdict": "RUNNING",
-      "message_count": 0
+      "verdict": "REQUEST_CHANGES_TWO_P2_FORMAT_PERMISSIONS",
+      "message_count": 2,
+      "repair_followup": {
+        "patch_sha": "71ab18de112b193e15c70f2381006c73c42abd09",
+        "base_sha": "7e6f6a240e63000ad69c1a9354f86980eced4228",
+        "started_at": "2026-10-10T01:51:27.920337+00:00",
+        "prior_tool_calls": 44,
+        "prior_messages": 2,
+        "scope": "new Fiscal Year Ended descriptor participation and numeric-only group note markers; original caller/default review reused",
+        "verdict": "PASS_LIMITED_REPAIR_TWO_P2_CLOSED",
+        "ended_at": "2026-10-10T01:54:38+00:00",
+        "new_tool_calls": 18,
+        "cumulative_tool_calls": 62,
+        "cumulative_messages": 3,
+        "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics/docs/evidence/issue28_current_reported_revenue_20261010/independent-review/conclusion.md"
+      },
+      "total_tool_calls": 62,
+      "total_message_count": 3,
+      "final_verdict": "PASS_LIMITED_REPAIR_TWO_P2_CLOSED"
     }
   ],
   "ci_capacity_20260922": {
@@ -18573,6 +18590,25 @@
       0,
       0
     ],
-    "business_credit": "development only, not formal acceptance or all39; Source130 date increment independent coverage pending"
+    "business_credit": "development only, not formal acceptance or all39; Source130 date increment independent coverage pending",
+    "repair_sha": "71ab18de112b193e15c70f2381006c73c42abd09",
+    "review": "same-agent final PASS_LIMITED_REPAIR only71ab newP2 fixes; originalREQUEST_CHANGES kept, source130 coverage not broadened",
+    "final_parent_tests": {
+      "run": 109,
+      "seconds": 8.924,
+      "skip": 0
+    },
+    "head_sha": "9749a213",
+    "review_tests": {
+      "run": 109,
+      "seconds": 9.826,
+      "skip": 0
+    },
+    "review_resources": {
+      "tools": 62,
+      "messages": 3,
+      "agent_ended": true
+    },
+    "next": "actual newhead CI and receiving; limited D01 amendment input gap next public task"
   }
 }
