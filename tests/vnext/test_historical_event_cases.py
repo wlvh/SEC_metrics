@@ -167,5 +167,5 @@ class HistoricalEventRecordRetentionTest(TestCase):
                 company_id='marriott_international', metric_id='E02', fiscal_year=2024)
         self.assertIn(raw, case['expected_records']); self.assertIn(ref, case['expected_records'])
         self.assertIn(ref, case['references'])
-        reader.primary.assert_called_once_with(PREPARED['filing'])
+        reader.primary.assert_not_called()
         self.assertIsNone(case['results']['E02']['value'])

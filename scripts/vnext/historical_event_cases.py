@@ -112,10 +112,8 @@ def prepare_historical_event_year_case(*, repo_root, company_id, metric_id, fisc
     claims, source_sets, filings, observations, selection = [], [], [], [], None
     packet, amendment_checks = None, []
     try:
-        # Annual preparation already verified this source. Carry its actual
-        # records so ordinary rows can prove the historical reporting issuer
-        # even when the existing Calculator Trace has null entity/accession.
-        reader.primary(prepared['filing'])
+        # The event inventory and source sets prove this route's reporter.
+        # Annual files are read here only when amendment impact requires them.
         amendment_checks = _event_amendment_checks(reader, prepared)
         packet = read_selected_event_sources(data_root=source, rules_root=ROOT,
             prepared=prepared, period=period, registered_union=registered_union,
