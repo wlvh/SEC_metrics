@@ -198,7 +198,7 @@ python3 tools/vnext_company.py results --company enphase_energy \
 
 来源使用本指南既有恢复方法返回的实际 `source-inputs`，目录已占用时另选，不能覆盖原任务。输入仍是完整SEC原件，不提供旧标题答案。原64项Spec和旧Run保持；确切条数不足且完整候选超过64时，才使用128项的显式后继，文字仍限64000字符。来源、主体、缺章节、空候选或文字过长等错误不能借容量后继放行，超过128仍保留明确失败，不裁剪。
 
-已保存的Enphase FY2021结果包含68标题，其他四个年度保留62/61/60/60；仅FY2021修复坐标处理，后续禁工厂复跑和独立CSV读取成立，财务结果和原失败保留。可取得的最小候选另进程读回同一输出；实际处理组合与最小只读组合的验证分别说明。主记录见[容量消费者证据](https://github.com/wlvh/SEC_metrics/blob/6d000bdc/docs/evidence/issue47_risk_heading_consumer_20261010/capacity-successor/README.md)。这些是开发候选，公共容量限定独审和接收仍待，不授业务采纳、main或完整五年验收信用。
+已保存的Enphase FY2021结果包含68标题，其他四个年度保留62/61/60/60；仅FY2021修复坐标处理，后续禁工厂复跑和独立CSV读取成立，财务结果和原失败保留。可取得的最小候选另进程读回同一输出；实际处理组合与最小只读组合的验证分别说明。主记录见[容量消费者证据](https://github.com/wlvh/SEC_metrics/blob/6d000bdc/docs/evidence/issue47_risk_heading_consumer_20261010/capacity-successor/README.md)。这些是开发候选，公共容量 `9510a300` 已通过限定独审（非公司消费者内容接受），接收仍待，不授业务采纳、main或完整五年验收信用。
 
 修订件与继任范围仍按当前候选的明确限制处理。停止的风险修订输入实验不作为此候选依赖，不能借事件/财务清除结果忽略修订。在线历史取源/补齐没有因此完成。结束候选检查后返回本指南前述main检出，再执行main命令。
 
@@ -208,7 +208,7 @@ python3 tools/vnext_company.py results --company enphase_energy \
 
 当前扣留不得被同年旧成功替代。公共 `completed-check.json` 表示最近完成检查，`current-result.json` 保留最近成功；日常 CSV 读取最近完成结论。后续只请求另一指标或另一年，仍能读出原坐标当前扣留，旧成功只留作历史。`requested_in_latest_execution` 区分本次请求，不能把未请求项算成本次新成功。
 
-缺源年份、实现失败和业务扣留应分别解释。`run` 的 JSON、当次 `run_summary.json` 和状态目录 `latest-execution.json` 保留失败项的具体 `error_category` / `reason`，其他年份及指标的成功记录保留。当前独立 `results` 对没有保存结果的失败项只输出通用失败状态、空值和请求财年，尚未把这些具体原因带入日常 JSON/CSV；排查时请读取上述运行报告，不要把空 `notes` 解读为没有限制。已用真实 D01 修订未接入状态核实，公共读口修复仍待接收，见[具体复现](https://github.com/wlvh/SEC_metrics/blob/3a3f98e8/docs/evidence/issue47_risk_heading_consumer_20261010/selected-subject/gap-independent-read.json)。`FLOW_COMPLETED_WITH_LIMITATIONS` 表示有明确限制，不能当成所有指标交付。`SOURCE_UNAVAILABLE` 不是正确零值；`IMPLEMENTATION_GAP` 表示已有材料或路径尚未实现。当前 main 未支持的历史家族在入口拒绝，不能省略 `--metric` 后把默认39项当成已支持。
+缺源年份、实现失败和业务扣留应分别解释。`run` 的 JSON、当次 `run_summary.json` 和状态目录 `latest-execution.json` 保留失败项的具体 `error_category` / `reason`，其他年份及指标的成功记录保留。main `6c57ddc2` 已接收 PR131：独立 `results` 为无结果失败项保留 `reason`、`error_type`、`error_category`，CSV 的 `notes` 同步显示原因；后一次只请求其他坐标时，旧失败仍标明 `requested_in_latest_execution=False`，CSV `period_role=SAVED_CHECK_NOT_REQUESTED_WITHOUT_RESULT`。真实 D01 失败、Salesforce 相邻年份及旧 Pfizer 精确扣留的只读核对见[main 接收记录](https://github.com/wlvh/SEC_metrics/blob/f134c7c1/docs/evidence/issue47_result_failure_receiving_20261010/main-g1/README.md)。这次变化只修日常读取，不重算财报，也不解除业务缺口。`FLOW_COMPLETED_WITH_LIMITATIONS` 表示有明确限制，不能当成所有指标交付。`SOURCE_UNAVAILABLE` 不是正确零值；`IMPLEMENTATION_GAP` 表示已有材料或路径尚未实现。当前 main 未支持的历史家族在入口拒绝，不能省略 `--metric` 后把默认39项当成已支持。
 
 当前 main 历史选择器明确保留修订情况，但尚未完成修订历史酒店处理；主体变换也未取得完整适配接受。Paramount 可见 August7 与原生 context August8 的真实期间冲突仍保留两种证据，不任选日期、年化或拼接前身。它不是本酒店接收的输入；这条范围限制不授其他指标接受。
 
