@@ -80,6 +80,10 @@ def prepare_historical_compensation_sources(*, repo_root, company_id, fiscal_yea
     annual = prepare_historical_annual_input(repo_root=root, company_id=company_id,
         period_selection=selected, rules_root=ROOT)
     reader = _Sources(root, company_id, annual['entity'])
+    # The shared reporter projection uses the annual container's original
+    # primary reference when the Calculator target has null entity/accession.
+    # Retain that real source alongside the distinct compensation proxy.
+    reader.primary(annual['filing'])
     history = load_history_for_period(repo_root=root, company_id=company_id,
         report_end=annual['table_input']['target_period']['period_end'],
         cik=annual['entity'], reader=reader)

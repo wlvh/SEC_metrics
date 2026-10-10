@@ -1,0 +1,66 @@
+UTC start: 2026-10-10T12:13:36.478090+00:00
+Independent original-failure reproduction; old source is unmodified git-show bytes executed in memory. No source/test edits.
+{"base": "31b74980b936e89934023408e96573bdc392db5f", "base_source_sha256": "4722ab71d9646d8e377a890e7c11003777be8f1ee8387c830a428f1fe1edcbf6", "head": "8f1250bf7252720d422f8fcdc43c85d431b40dfc"}
+{"after": {"reason": "PASS", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": "100"}, "before": {"reason": "PASS", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": "100"}, "case": "amount_members", "full_replay": "PASS", "release": "2025"}
+{"after": {"reason": "PASS", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": "100"}, "before": {"reason": "PASS", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": "100"}, "case": "current_name_members", "full_replay": "PASS", "release": "2025"}
+{"after": {"reason": "PASS", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": "100"}, "before": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"], ["https://xbrl.sec.gov/ecd/2022q4", "PeoMember"]], "value": null}, "case": "amount_members", "full_replay": "PASS", "release": "2022q4"}
+{"after": {"reason": "PASS", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": "100"}, "before": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"], ["https://xbrl.sec.gov/ecd/2022q4", "PeoMember"]], "value": null}, "case": "current_name_members", "full_replay": "PASS", "release": "2022q4"}
+{"after": {"reason": "PASS", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": "100"}, "before": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"], ["https://xbrl.sec.gov/ecd/2022-10-31", "PeoMember"]], "value": null}, "case": "amount_members", "full_replay": "PASS", "release": "2022-10-31"}
+{"after": {"reason": "PASS", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": "100"}, "before": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"], ["https://xbrl.sec.gov/ecd/2022-10-31", "PeoMember"]], "value": null}, "case": "current_name_members", "full_replay": "PASS", "release": "2022-10-31"}
+Two independent inputs exercise the candidate-amount collection predicate and current-name collection predicate separately.
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"], ["https://example.test/taxonomy", "PersonBMember"]], "value": null}, "case": "amount_two_specific_people", "full_replay": "PASS", "release": "2025"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PeoMember"], ["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "amount_foreign_PeoMember", "full_replay": "PASS", "release": "2025"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"], ["https://example.test/taxonomy", "PersonBMember"]], "value": null}, "case": "name_two_specific_people", "full_replay": "PASS", "release": "2025"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PeoMember"], ["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "name_foreign_PeoMember", "full_replay": "PASS", "release": "2025"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_AMOUNTS", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "generic_conflicting_amount", "full_replay": "PASS", "release": "2025"}
+{"after": {"reason": "C03_TARGET_FACT_INVALID", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "generic_conflicting_name", "full_replay": "PASS", "release": "2025"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"], ["https://example.test/taxonomy", "PersonBMember"]], "value": null}, "case": "amount_two_specific_people", "full_replay": "PASS", "release": "2022q4"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PeoMember"], ["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "amount_foreign_PeoMember", "full_replay": "PASS", "release": "2022q4"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"], ["https://example.test/taxonomy", "PersonBMember"]], "value": null}, "case": "name_two_specific_people", "full_replay": "PASS", "release": "2022q4"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PeoMember"], ["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "name_foreign_PeoMember", "full_replay": "PASS", "release": "2022q4"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_AMOUNTS", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "generic_conflicting_amount", "full_replay": "PASS", "release": "2022q4"}
+{"after": {"reason": "C03_TARGET_FACT_INVALID", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "generic_conflicting_name", "full_replay": "PASS", "release": "2022q4"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"], ["https://example.test/taxonomy", "PersonBMember"]], "value": null}, "case": "amount_two_specific_people", "full_replay": "PASS", "release": "2022-10-31"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PeoMember"], ["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "amount_foreign_PeoMember", "full_replay": "PASS", "release": "2022-10-31"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"], ["https://example.test/taxonomy", "PersonBMember"]], "value": null}, "case": "name_two_specific_people", "full_replay": "PASS", "release": "2022-10-31"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_PEOPLE", "specific_person_members": [["https://example.test/taxonomy", "PeoMember"], ["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "name_foreign_PeoMember", "full_replay": "PASS", "release": "2022-10-31"}
+{"after": {"reason": "C03_MULTIPLE_REPORTED_AMOUNTS", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "generic_conflicting_amount", "full_replay": "PASS", "release": "2022-10-31"}
+{"after": {"reason": "C03_TARGET_FACT_INVALID", "specific_person_members": [["https://example.test/taxonomy", "PersonAMember"]], "value": null}, "case": "generic_conflicting_name", "full_replay": "PASS", "release": "2022-10-31"}
+Default behavior and old-default replay: complete return values or exception type/message compared, including selection hashes and shape.
+{"case": "default_original_positive", "complete_outcome_equal": true, "outcome_kind": "result", "reason_or_error": "PASS", "release": "2025"}
+{"case": "default_names_positive", "complete_outcome_equal": true, "outcome_kind": "result", "reason_or_error": "PASS", "release": "2025"}
+{"case": "default_amount_two_specific_people", "complete_outcome_equal": true, "outcome_kind": "result", "reason_or_error": "C03_MULTIPLE_REPORTED_PEOPLE", "release": "2025"}
+{"case": "default_amount_foreign_PeoMember", "complete_outcome_equal": true, "outcome_kind": "result", "reason_or_error": "C03_MULTIPLE_REPORTED_PEOPLE", "release": "2025"}
+{"case": "default_name_two_specific_people", "complete_outcome_equal": true, "outcome_kind": "result", "reason_or_error": "C03_MULTIPLE_REPORTED_PEOPLE", "release": "2025"}
+{"case": "default_name_foreign_PeoMember", "complete_outcome_equal": true, "outcome_kind": "result", "reason_or_error": "C03_MULTIPLE_REPORTED_PEOPLE", "release": "2025"}
+{"case": "default_generic_conflicting_amount", "complete_outcome_equal": true, "outcome_kind": "result", "reason_or_error": "C03_MULTIPLE_REPORTED_AMOUNTS", "release": "2025"}
+{"case": "default_generic_conflicting_name", "complete_outcome_equal": true, "outcome_kind": "result", "reason_or_error": "C03_TARGET_FACT_INVALID", "release": "2025"}
+{"case": "default_original_positive", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022q4"}
+{"case": "default_names_positive", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022q4"}
+{"case": "default_amount_two_specific_people", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022q4"}
+{"case": "default_amount_foreign_PeoMember", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022q4"}
+{"case": "default_name_two_specific_people", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022q4"}
+{"case": "default_name_foreign_PeoMember", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022q4"}
+{"case": "default_generic_conflicting_amount", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022q4"}
+{"case": "default_generic_conflicting_name", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022q4"}
+{"case": "default_original_positive", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022-10-31"}
+{"case": "default_names_positive", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022-10-31"}
+{"case": "default_amount_two_specific_people", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022-10-31"}
+{"case": "default_amount_foreign_PeoMember", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022-10-31"}
+{"case": "default_name_two_specific_people", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022-10-31"}
+{"case": "default_name_foreign_PeoMember", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022-10-31"}
+{"case": "default_generic_conflicting_amount", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022-10-31"}
+{"case": "default_generic_conflicting_name", "complete_outcome_equal": true, "outcome_kind": "error", "reason_or_error": "C03_DEF14A_SOURCE_REQUIRED", "release": "2022-10-31"}
+Replay rejects mutations for the repaired explicit result.
+{"case": "replay_mutation_specific_person_members", "rejected": "C03_SOURCE_REPLAY_MISMATCH"}
+{"case": "replay_mutation_policy", "rejected": "C03_SOURCE_REPLAY_MISMATCH"}
+{"case": "replay_mutation_value", "rejected": "C03_SOURCE_REPLAY_MISMATCH"}
+{"case": "replay_changed_source_member", "rejected": "C03_SOURCE_REPLAY_MISMATCH"}
+{"checks": "PASS", "default_complete_outcome_comparisons": 24, "explicit_complete_replays": 24, "explicit_negative_controls": 18, "old_default_complete_replays": 8, "original_failure_comparisons": 6, "replay_mutation_rejections": 4}
+UTC end: 2026-10-10T12:13:36.603215+00:00
+Final binding check: 2026-10-10 12:15:16 UTC
+scripts/vnext/governance_signals.py sha256=af071cf433cd8073bc09833a34440f2f07daf47663142f611ba5a165553dab1c matches_head=True
+scripts/vnext/xbrl_namespace_policy.py sha256=951b4d41a2541e96c22d4ad8eb230d03c7ccbdcf0a999131b9ad602e05383f98 matches_head=True
+tests/vnext/test_c03_sec_release.py sha256=969ef9b5d4811f2a144d3d49420c82f929e45032d49b8c018a3cefa4a733f20d matches_head=True
+Namespace policy bytes unchanged across exact diff: True
+replay_c03 AST unchanged across exact diff: True

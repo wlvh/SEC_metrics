@@ -59,6 +59,26 @@ class HistoricalCompensationSelectionTest(TestCase):
 
 
 class HistoricalCompensationAdapterTest(TestCase):
+    def test_source_preparer_retains_annual_primary_for_reporter_and_distinct_proxy(self):
+        from vnext import historical_compensation_case as cases
+        from unittest.mock import Mock
+        annual={'entity':'1048286','filing':{'accessionNumber':'annual','form':'10-K'},
+            'table_input':{'target_period':{'fiscal_year':2022,
+                'period_start':'2022-01-01','period_end':'2022-12-31'}},'source_proofs':[]}
+        selection={'selected_proxy':{'accessionNumber':'proxy','form':'DEF 14A'},'proxy_amendments':[]}
+        reader=Mock();reader.proofs={};reader.records={}
+        reader.primary.side_effect=[{'source':'annual'}, {'source':'proxy'}]
+        with patch.object(cases,'resolve_period_selection',return_value={}), \
+             patch.object(cases,'prepare_historical_annual_input',return_value=annual), \
+             patch.object(cases,'_Sources',return_value=reader), \
+             patch.object(cases,'load_history_for_period',return_value={}), \
+             patch.object(cases,'select_first_reported_proxy',return_value=selection):
+            source=cases.prepare_historical_compensation_sources(repo_root=Path('/constructed'),
+                company_id='marriott_international',fiscal_year=2022)
+        self.assertEqual([annual['filing'],selection['selected_proxy']],
+                         [call.args[0] for call in reader.primary.call_args_list])
+        self.assertEqual({'source':'proxy'},source['proxy_source'])
+
     def test_history_dispatch_preserves_existing_factories_and_dependencies(self):
         from vnext import company_local
         from vnext.historical_compensation_case import prepare_historical_compensation_year_case, PROCESSING_FILES

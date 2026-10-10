@@ -1,0 +1,307 @@
+{
+  "actual_main": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "source_commit": "bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786",
+  "tests_run_on_uncommitted_tree": true,
+  "processing_sha256": {
+    "scripts/vnext/governance_signals.py": "4722ab71d9646d8e377a890e7c11003777be8f1ee8387c830a428f1fe1edcbf6",
+    "scripts/vnext/xbrl_namespace_policy.py": "951b4d41a2541e96c22d4ad8eb230d03c7ccbdcf0a999131b9ad602e05383f98"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "source_bytes_unchanged": true,
+  "cases": [
+    {
+      "company": "marriott_international",
+      "target_period": [
+        "2022-01-01",
+        "2022-12-31"
+      ],
+      "accession": "0001140361-23-014123",
+      "source_sha256": "559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:e6c8e01deeed91d66dd88029e400c0800f94684d9a999e89532ff3443e44ba72",
+        "raw_asset_id": "sha256:559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000114036123014123/ny20006599x500_def14a.htm",
+        "accession": "0001140361-23-014123",
+        "document_name": "ny20006599x500_def14a.htm",
+        "source_role": "governance_proxy",
+        "request_attempt_id": "request:attempt:9be51055b79bd099c15624fb6962b86331aac3dde99c79e8a5d32250de41506c"
+      },
+      "source_proofs": [
+        {
+          "source_reference_id": "sha256:e6c8e01deeed91d66dd88029e400c0800f94684d9a999e89532ff3443e44ba72",
+          "raw_asset_id": "sha256:559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c",
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000114036123014123/ny20006599x500_def14a.htm",
+            "accession": "0001140361-23-014123",
+            "document_name": "ny20006599x500_def14a.htm",
+            "content_sha256": "559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c",
+            "request_body_sha256": "559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c",
+            "request_body_size": 1809226,
+            "request_headers_repo_relative_path": "evidence/request_attempts/55/559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c/ny20006599x500_def14a.htm.6a04ffe2923f418dcd92b088887d8ed3e362430811752d85bc9453492b0ba666.headers.json",
+            "request_headers_sha256": "6a04ffe2923f418dcd92b088887d8ed3e362430811752d85bc9453492b0ba666",
+            "request_headers_size": 1694,
+            "request_locator_kind": "IMMUTABLE_ATTEMPT",
+            "request_repo_relative_path": "evidence/request_attempts/55/559da695a997c02bbfc5a3def4ed96c432acc82385153c241f118819a5a3ec3c/ny20006599x500_def14a.htm",
+            "request_attempt_id": "request:attempt:9be51055b79bd099c15624fb6962b86331aac3dde99c79e8a5d32250de41506c"
+          },
+          "saved_at_utc": "2026-09-30T00:23:17.247369+00:00"
+        }
+      ],
+      "default_matches_actual_main": true,
+      "default_error": "C03_DEF14A_SOURCE_REQUIRED",
+      "explicit_reason": "PASS",
+      "explicit_value": "18686271",
+      "unit": "USD",
+      "result_id": "sha256:719ccfd2cad365cf9e01b7afc5a4a8c9b1fb00629c704430967fc79e5e556aca",
+      "seconds": 0.17516308301128447,
+      "candidate_locators": [
+        {
+          "ordinal": 7,
+          "qualified_name": "ecd:PeoTotalCompAmt",
+          "context_ref": "c20220101to20221231_IndividualAxis_MrCapuanoMember"
+        },
+        {
+          "ordinal": 38,
+          "qualified_name": "ecd:PeoTotalCompAmt",
+          "context_ref": "c20220101to20221231_IndividualAxis_MrCapuanoMember"
+        }
+      ],
+      "excluded_periods": [
+        [
+          "2020-01-01",
+          "2020-12-31"
+        ],
+        [
+          "2021-01-01",
+          "2021-12-31"
+        ]
+      ]
+    },
+    {
+      "company": "marriott_international",
+      "target_period": [
+        "2022-01-01",
+        "2022-12-31"
+      ],
+      "accession": "0001140361-24-015465",
+      "source_sha256": "a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:2f0f10fe36b73e8b0c146657fd28d2828acb6f825d43dff59d990aced9fb8b6e",
+        "raw_asset_id": "sha256:a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000114036124015465/ny20015439x1_def14a.htm",
+        "accession": "0001140361-24-015465",
+        "document_name": "ny20015439x1_def14a.htm",
+        "source_role": "governance_proxy",
+        "request_attempt_id": "request:attempt:b79d7452348b09b50ebd38f9a273966c25f923980f9188500de6666973144d48"
+      },
+      "source_proofs": [
+        {
+          "source_reference_id": "sha256:2f0f10fe36b73e8b0c146657fd28d2828acb6f825d43dff59d990aced9fb8b6e",
+          "raw_asset_id": "sha256:a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954",
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000114036124015465/ny20015439x1_def14a.htm",
+            "accession": "0001140361-24-015465",
+            "document_name": "ny20015439x1_def14a.htm",
+            "content_sha256": "a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954",
+            "request_body_sha256": "a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954",
+            "request_body_size": 2602488,
+            "request_headers_repo_relative_path": "evidence/request_attempts/a2/a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954/ny20015439x1_def14a.htm.273130e73d5c0edf63ecb21519bf94d66af76a9dd7430bbf0addf63add37e0e4.headers.json",
+            "request_headers_sha256": "273130e73d5c0edf63ecb21519bf94d66af76a9dd7430bbf0addf63add37e0e4",
+            "request_headers_size": 1712,
+            "request_locator_kind": "IMMUTABLE_ATTEMPT",
+            "request_repo_relative_path": "evidence/request_attempts/a2/a25ce3426110e7f6ec546419607bff5d718b01825d5fa4faf970929acf294954/ny20015439x1_def14a.htm",
+            "request_attempt_id": "request:attempt:b79d7452348b09b50ebd38f9a273966c25f923980f9188500de6666973144d48"
+          },
+          "saved_at_utc": "2026-09-29T09:39:28.636485+00:00"
+        }
+      ],
+      "default_matches_actual_main": true,
+      "default_error": null,
+      "explicit_reason": "PASS",
+      "explicit_value": "18715093",
+      "unit": "USD",
+      "result_id": "sha256:d4cc578ef3827077cbe0774dae9305aada5e48198194829876af2999b6442ba0",
+      "seconds": 0.22051599994301796,
+      "candidate_locators": [
+        {
+          "ordinal": 11,
+          "qualified_name": "ecd:PeoTotalCompAmt",
+          "context_ref": "c2"
+        }
+      ],
+      "excluded_periods": [
+        [
+          "2020-01-01",
+          "2020-12-31"
+        ],
+        [
+          "2021-01-01",
+          "2021-12-31"
+        ],
+        [
+          "2023-01-01",
+          "2023-12-31"
+        ]
+      ]
+    },
+    {
+      "company": "lumen_technologies",
+      "target_period": [
+        "2022-01-01",
+        "2022-12-31"
+      ],
+      "accession": "0000018926-23-000038",
+      "source_sha256": "a2ab506f740fa63eff2b7b6af22787b686d5720c6932077fec2f20495c474edb",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:a1403d4e57b51d092458a2576942db599c0f57dcffbc22dc06c23bfd59d8e49c",
+        "raw_asset_id": "sha256:a2ab506f740fa63eff2b7b6af22787b686d5720c6932077fec2f20495c474edb",
+        "company_id": "lumen_technologies",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000038/lumn-20230405.htm",
+        "accession": "0000018926-23-000038",
+        "document_name": "lumn-20230405.htm",
+        "source_role": "governance_proxy",
+        "request_attempt_id": "request:attempt:bc50bb6dac3c66f5f47c726d9a31f070de696a17e8610306407c8dad51a35f66"
+      },
+      "source_proofs": [
+        {
+          "source_reference_id": "sha256:a1403d4e57b51d092458a2576942db599c0f57dcffbc22dc06c23bfd59d8e49c",
+          "raw_asset_id": "sha256:a2ab506f740fa63eff2b7b6af22787b686d5720c6932077fec2f20495c474edb",
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000038/lumn-20230405.htm",
+            "accession": "0000018926-23-000038",
+            "document_name": "lumn-20230405.htm",
+            "content_sha256": "a2ab506f740fa63eff2b7b6af22787b686d5720c6932077fec2f20495c474edb",
+            "request_body_sha256": "a2ab506f740fa63eff2b7b6af22787b686d5720c6932077fec2f20495c474edb",
+            "request_body_size": 5016204,
+            "request_headers_repo_relative_path": "evidence/request_attempts/a2/a2ab506f740fa63eff2b7b6af22787b686d5720c6932077fec2f20495c474edb/lumn-20230405.htm.f5fae11f5c59ee73837d91015fa591b794eaf61a412ac3de181d5c4909380343.headers.json",
+            "request_headers_sha256": "f5fae11f5c59ee73837d91015fa591b794eaf61a412ac3de181d5c4909380343",
+            "request_headers_size": 1704,
+            "request_locator_kind": "IMMUTABLE_ATTEMPT",
+            "request_repo_relative_path": "evidence/request_attempts/a2/a2ab506f740fa63eff2b7b6af22787b686d5720c6932077fec2f20495c474edb/lumn-20230405.htm",
+            "request_attempt_id": "request:attempt:bc50bb6dac3c66f5f47c726d9a31f070de696a17e8610306407c8dad51a35f66"
+          },
+          "saved_at_utc": "2026-09-29T23:40:34.689639+00:00"
+        }
+      ],
+      "default_matches_actual_main": true,
+      "default_error": "C03_DEF14A_SOURCE_REQUIRED",
+      "explicit_reason": "C03_MULTIPLE_REPORTED_AMOUNTS",
+      "explicit_value": null,
+      "unit": null,
+      "result_id": "sha256:8d716ae5bcb3cfe47274a2502c6ca21300688212b4fcc492dfdd76c595fc9ef1",
+      "seconds": 0.47702966700308025,
+      "candidate_locators": [
+        {
+          "ordinal": 6,
+          "qualified_name": "ecd:PeoTotalCompAmt",
+          "context_ref": "i4764da62ab984307a75753940bc91762_D20220101-20221231"
+        },
+        {
+          "ordinal": 7,
+          "qualified_name": "ecd:PeoTotalCompAmt",
+          "context_ref": "iaee8f3400acb409a9446c4646e9ab957_D20220101-20221231"
+        },
+        {
+          "ordinal": 42,
+          "qualified_name": "ecd:PeoTotalCompAmt",
+          "context_ref": "i4764da62ab984307a75753940bc91762_D20220101-20221231"
+        },
+        {
+          "ordinal": 60,
+          "qualified_name": "ecd:PeoTotalCompAmt",
+          "context_ref": "iaee8f3400acb409a9446c4646e9ab957_D20220101-20221231"
+        }
+      ],
+      "excluded_periods": [
+        [
+          "2020-01-01",
+          "2020-12-31"
+        ],
+        [
+          "2021-01-01",
+          "2021-12-31"
+        ]
+      ]
+    },
+    {
+      "company": "macys",
+      "target_period": [
+        "2022-01-30",
+        "2023-01-28"
+      ],
+      "accession": "0001558370-23-005400",
+      "source_sha256": "da7d47d8c8efbf7983a2fdeedebe637dccfb23e90fa912d6a132c08d4017dc43",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:e8a8e9052c05bc5bb2b16a3b5f7a0a0ff952bc1c2402e488202de6bae4ddf705",
+        "raw_asset_id": "sha256:da7d47d8c8efbf7983a2fdeedebe637dccfb23e90fa912d6a132c08d4017dc43",
+        "company_id": "macys",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000155837023005400/m-20230519xdef14a.htm",
+        "accession": "0001558370-23-005400",
+        "document_name": "m-20230519xdef14a.htm",
+        "source_role": "governance_proxy",
+        "request_attempt_id": "request:attempt:db269e441dadefbafe15dc937275e37becdf2ee70d76131ee2fbd347ea2ef08c"
+      },
+      "source_proofs": [
+        {
+          "source_reference_id": "sha256:e8a8e9052c05bc5bb2b16a3b5f7a0a0ff952bc1c2402e488202de6bae4ddf705",
+          "raw_asset_id": "sha256:da7d47d8c8efbf7983a2fdeedebe637dccfb23e90fa912d6a132c08d4017dc43",
+          "proof": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000155837023005400/m-20230519xdef14a.htm",
+            "accession": "0001558370-23-005400",
+            "document_name": "m-20230519xdef14a.htm",
+            "content_sha256": "da7d47d8c8efbf7983a2fdeedebe637dccfb23e90fa912d6a132c08d4017dc43",
+            "request_body_sha256": "da7d47d8c8efbf7983a2fdeedebe637dccfb23e90fa912d6a132c08d4017dc43",
+            "request_body_size": 4367111,
+            "request_headers_repo_relative_path": "evidence/request_attempts/da/da7d47d8c8efbf7983a2fdeedebe637dccfb23e90fa912d6a132c08d4017dc43/m-20230519xdef14a.htm.ee9cd286bb32b8dd136fff437f104fb683332dd4836977299dc7e41668d14c74.headers.json",
+            "request_headers_sha256": "ee9cd286bb32b8dd136fff437f104fb683332dd4836977299dc7e41668d14c74",
+            "request_headers_size": 1689,
+            "request_locator_kind": "IMMUTABLE_ATTEMPT",
+            "request_repo_relative_path": "evidence/request_attempts/da/da7d47d8c8efbf7983a2fdeedebe637dccfb23e90fa912d6a132c08d4017dc43/m-20230519xdef14a.htm",
+            "request_attempt_id": "request:attempt:db269e441dadefbafe15dc937275e37becdf2ee70d76131ee2fbd347ea2ef08c"
+          },
+          "saved_at_utc": "2026-09-29T23:58:50.972059+00:00"
+        }
+      ],
+      "default_matches_actual_main": true,
+      "default_error": "C03_DEF14A_SOURCE_REQUIRED",
+      "explicit_reason": "C03_TARGET_PERIOD_NOT_FOUND",
+      "explicit_value": null,
+      "unit": null,
+      "result_id": "sha256:2b1416ac94c74bba9b3fbde7fb36b2df355f5d99c51671e3b4edfc8f92b0af11",
+      "seconds": 0.4360593331512064,
+      "candidate_locators": [],
+      "excluded_periods": [
+        [
+          "2020-01-01",
+          "2020-12-31"
+        ],
+        [
+          "2021-01-01",
+          "2021-12-31"
+        ],
+        [
+          "2022-01-01",
+          "2022-12-31"
+        ]
+      ]
+    }
+  ],
+  "not_granted": [
+    "first-filing-selection",
+    "whole-company-acceptance",
+    "production-adoption"
+  ],
+  "first_reported_convention": "owner-decisions-2026-09-30/c03-convention.json; first value18686271 retained, later18715093 shown only as a distinct original disclosure"
+}

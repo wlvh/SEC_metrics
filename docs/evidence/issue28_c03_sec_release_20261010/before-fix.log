@@ -1,0 +1,182 @@
+test_default_resolution_does_not_gain_a_policy_field (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_default_resolution_does_not_gain_a_policy_field) ... ok
+test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) ... 
+  test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2025') ... ERROR
+  test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2022q4') ... ERROR
+  test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2022-10-31') ... ERROR
+  test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='22') ... ERROR
+  test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2022q5') ... ERROR
+  test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2023x') ... ERROR
+  test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2022q4/other') ... ERROR
+test_foreign_ecd_namespace_and_axis_remain_rejected (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_foreign_ecd_namespace_and_axis_remain_rejected) ... ERROR
+test_multiple_people_period_entity_and_units_are_not_relaxed (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_multiple_people_period_entity_and_units_are_not_relaxed) ... 
+  test_multiple_people_period_entity_and_units_are_not_relaxed (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_multiple_people_period_entity_and_units_are_not_relaxed) (reason='C03_MULTIPLE_REPORTED_AMOUNTS') ... ERROR
+  test_multiple_people_period_entity_and_units_are_not_relaxed (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_multiple_people_period_entity_and_units_are_not_relaxed) (reason='C03_TARGET_PERIOD_NOT_FOUND') ... ERROR
+  test_multiple_people_period_entity_and_units_are_not_relaxed (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_multiple_people_period_entity_and_units_are_not_relaxed) (reason='C03_TARGET_FACT_INVALID') ... ERROR
+  test_multiple_people_period_entity_and_units_are_not_relaxed (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_multiple_people_period_entity_and_units_are_not_relaxed) (reason='C03_TARGET_FACT_INVALID') ... ERROR
+test_old_default_remains_closed_and_explicit_proxy_can_complete (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_old_default_remains_closed_and_explicit_proxy_can_complete) ... ERROR
+test_person_name_relation_uses_the_same_explicit_release (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_person_name_relation_uses_the_same_explicit_release) ... ERROR
+test_policy_and_source_changes_do_not_replay_old_resolution (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_policy_and_source_changes_do_not_replay_old_resolution) ... ERROR
+
+======================================================================
+ERROR: test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2025')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 35, in test_explicit_year_quarter_and_date_releases_are_finite
+    self.assertEqual('100', self.resolve(released_source([{'amount':'100'}],release))['result']['value'])
+                            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2022q4')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 35, in test_explicit_year_quarter_and_date_releases_are_finite
+    self.assertEqual('100', self.resolve(released_source([{'amount':'100'}],release))['result']['value'])
+                            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2022-10-31')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 35, in test_explicit_year_quarter_and_date_releases_are_finite
+    self.assertEqual('100', self.resolve(released_source([{'amount':'100'}],release))['result']['value'])
+                            ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='22')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 39, in test_explicit_year_quarter_and_date_releases_are_finite
+    self.resolve(released_source([{'amount':'100'}],release))
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2022q5')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 39, in test_explicit_year_quarter_and_date_releases_are_finite
+    self.resolve(released_source([{'amount':'100'}],release))
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2023x')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 39, in test_explicit_year_quarter_and_date_releases_are_finite
+    self.resolve(released_source([{'amount':'100'}],release))
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_explicit_year_quarter_and_date_releases_are_finite (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_explicit_year_quarter_and_date_releases_are_finite) (release='2022q4/other')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 39, in test_explicit_year_quarter_and_date_releases_are_finite
+    self.resolve(released_source([{'amount':'100'}],release))
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_foreign_ecd_namespace_and_axis_remain_rejected (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_foreign_ecd_namespace_and_axis_remain_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 45, in test_foreign_ecd_namespace_and_axis_remain_rejected
+    self.resolve(raw)
+    ~~~~~~~~~~~~^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_multiple_people_period_entity_and_units_are_not_relaxed (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_multiple_people_period_entity_and_units_are_not_relaxed) (reason='C03_MULTIPLE_REPORTED_AMOUNTS')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 65, in test_multiple_people_period_entity_and_units_are_not_relaxed
+    resolved = self.resolve(released_source(rows,**kwargs))
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_multiple_people_period_entity_and_units_are_not_relaxed (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_multiple_people_period_entity_and_units_are_not_relaxed) (reason='C03_TARGET_PERIOD_NOT_FOUND')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 65, in test_multiple_people_period_entity_and_units_are_not_relaxed
+    resolved = self.resolve(released_source(rows,**kwargs))
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_multiple_people_period_entity_and_units_are_not_relaxed (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_multiple_people_period_entity_and_units_are_not_relaxed) (reason='C03_TARGET_FACT_INVALID')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 65, in test_multiple_people_period_entity_and_units_are_not_relaxed
+    resolved = self.resolve(released_source(rows,**kwargs))
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_multiple_people_period_entity_and_units_are_not_relaxed (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_multiple_people_period_entity_and_units_are_not_relaxed) (reason='C03_TARGET_FACT_INVALID')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 65, in test_multiple_people_period_entity_and_units_are_not_relaxed
+    resolved = self.resolve(released_source(rows,**kwargs))
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_old_default_remains_closed_and_explicit_proxy_can_complete (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_old_default_remains_closed_and_explicit_proxy_can_complete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 25, in test_old_default_remains_closed_and_explicit_proxy_can_complete
+    resolved = self.resolve(raw)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_person_name_relation_uses_the_same_explicit_release (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_person_name_relation_uses_the_same_explicit_release)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 53, in test_person_name_relation_uses_the_same_explicit_release
+    resolved = self.resolve(released_source(rows))
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+======================================================================
+ERROR: test_policy_and_source_changes_do_not_replay_old_resolution (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_policy_and_source_changes_do_not_replay_old_resolution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 71, in test_policy_and_source_changes_do_not_replay_old_resolution
+    resolved=self.resolve(raw)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 19, in resolve
+    return resolve_c03(**arguments(raw), sec_namespace_release=POLICY)
+TypeError: resolve_c03() got an unexpected keyword argument 'sec_namespace_release'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.008s
+
+FAILED (errors=15)
+{"allowed_skips": 0, "errors": 15, "failures": 0, "run": 7, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_c03_sec_release"]}

@@ -1,0 +1,46 @@
+{
+  "seconds": 0.469997915904969,
+  "exit_code": 0,
+  "arguments": [
+    "results",
+    "--company",
+    "lumen_technologies",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/lumen_technologies/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/lumen_technologies/read"
+  ],
+  "report": {
+    "elapsed_seconds": 0.20411733305081725,
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "lumen_technologies",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "metrics": [
+      {
+        "metric_id": "C03",
+        "result_id": "sha256:8d716ae5bcb3cfe47274a2502c6ca21300688212b4fcc492dfdd76c595fc9ef1",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "fiscal_year": 2022,
+        "value": null,
+        "unit": null,
+        "publication": "WITHHELD",
+        "quality": "NONE",
+        "reason_code": "C03_MULTIPLE_REPORTED_AMOUNTS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "PREVIOUS_INPUT_WITHHELD",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/lumen_technologies/state/updates/C03/periods/FY2022/results/b8575dffe3504952a2930a7fc17edae7"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/lumen_technologies/read"
+  }
+}

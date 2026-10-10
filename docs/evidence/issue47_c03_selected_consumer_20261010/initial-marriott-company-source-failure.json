@@ -1,0 +1,64 @@
+{
+  "seconds": 5.016544250072911,
+  "exit_code": 2,
+  "arguments": [
+    "run",
+    "--company",
+    "marriott_international",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2022",
+    "--fiscal-year-end",
+    "2022",
+    "--metric",
+    "C03",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/marriott_international/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/marriott_international/runs"
+  ],
+  "report": {
+    "elapsed_seconds": 4.961463375017047,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "marriott_international",
+    "run_id": "20261010T123037Z-e81169bd",
+    "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+    "selected_metrics": [
+      "C03"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C03",
+        "status": "INPUT_OR_EXECUTION_FAILED",
+        "attempt_id": "90bd9b6c91154bfa98159d34c5690d85",
+        "error_type": "ValueError",
+        "reason": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN",
+        "previous_result": null,
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2022
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/marriott_international/state",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/marriott_international/runs/20261010T123037Z-e81169bd",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "selected_fiscal_years": [
+      2022
+    ]
+  }
+}

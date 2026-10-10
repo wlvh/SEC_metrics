@@ -13,3 +13,29 @@ Necessary public dependencies are not yet delivered: repaired genericPeoMember q
 No-ECD proxy SCT remains a real implementation gap. Existing historical_proxy_compensation.py / C03_proxy_compensation_table_v1.md / historical_proxy_identity.py and original table references are available in retainedbcc0, including component arithmetic, actual SCT header, twoCEO, subsidiaryCEO and table-misalignment controls. The shared core receiver belongs to the public implementation; no competing historical parser is built. Limited ECD reception cannot claim full five-year C03 or turn absentECD into structuralNA.
 
 Once the fixed public seam is delivered, complete actual company run/save/forbidden-repeat/independent read/CSV on the same obtainable combination. Until then this commit preserves work in progress rather than claiming a user capability. New provider/paid/SEC0/0/0; no NativeRun, acceptance, Ready/merge/adoption/deploy/active change.
+
+## Actual shared C03 company reception
+
+Public32c730bf (including repaired8f1250bf) supplies the controlled SEC namespace choice, explicit C03 save/read gate and selected-proxy display. The historical dispatcher supplies this thin case and its actual dependency list. Public code is received unchanged. Shared controlled projection now binds the DEF14A metadata, primary reference and numeric evidence (when present); no annual object is rewritten. Source/core limited reviews retain their own scope and do not substitute for these CLI checks.
+
+Initial actual MarriottFY2022 company run5.017s reached the writer but failed ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN. The annual input/proofs existed, but the historical case omitted its annual primary raw/reference records. The failure and partial result directory remain. A necessary consumer correction reads and retains that already saved primary alongside the distinct proxy; shared reporter rules were not relaxed. The added source-preparer regression verifies both actual filing roles are retained.
+
+After that correction, standalone company CLI cases complete on the working tree over2384b62d plus uncommitted public32c and the four-line source-record correction:
+- MarriottFY2022 first5.171s exits0,18,686,271USD/XBRL_OK, CIK1048286, 2022-01-01..12-31, firstproxy0001140361-23-014123/DEF14A/filed2023-03-28. Later18,715,093 is not selected. Source/resolver-forbidden repeat.734s calculates0; independent results.468s leaves22 state files unchanged and9 result files preserved on repeat (including the prior partial directory).
+- LumenFY2022 first6.794s exits2, C03_MULTIPLE_REPORTED_AMOUNTS/WITHHELD/null, CIK18926/actualyear/DEF14A0000018926-23-000038/filed2023-04-05. Forbidden repeat.723s calculates0; independent read.470s preserves17 state files/7 result files.
+- MacyFY2022 first7.550s exits2, C03_TARGET_PERIOD_NOT_FOUND/WITHHELD/null, CIK794367, actual2022-01-30..2023-01-28 and DEF14A0001558370-23-005400/filed2023-04-03. No calendar-period substitution. Forbidden repeat.743s calculates0; independent read.478s preserves17 state files/7 result files. This ECD limit does not withdraw the responsibility to receive the original SCT path.
+
+Source CSV/manifest remain unchanged, no model/SEC call and no old Run/value replacement. Each case's complete input assessment retains selection and resolution, with proxy_sct_consumer_complete=false. These original references were already read; no new independent content study is claimed.115 affected public/source/company/dispatch/state controls9.197s pass/zero skips. The new historical test module is added to the existing company/fast steps and its standalone test-file path triggers the existing company workflow, not a new runner. Actual remote execution of the resulting candidate is checked separately.
+
+Copyable command on the combined candidate:
+
+```bash
+python3 tools/vnext_company.py run --company marriott_international \
+  --period fiscal-years --fiscal-year-start 2022 --fiscal-year-end 2022 \
+  --metric C03 --source-root "$ISSUE47_SAVED_SOURCE_ROOT" \
+  --work-dir "$ISSUE47_C03_STATE" --output-dir "$ISSUE47_C03_RUNS"
+python3 tools/vnext_company.py results --company marriott_international \
+  --state-root "$ISSUE47_C03_STATE" --output-root "$ISSUE47_C03_NEW_READ"
+```
+
+Use the existing restored source-inputs root; input/code are read only, state/output external and read output new. Other company examples substitute company and state roots, with the above precise expected restrictions. This ECD consumer remains branch-only, not main/full five-year C03. Source discovery/supplement, noECD/SCT, unreceived proxy amendments and other periods retain real gaps. No new provider/paid/SEC, NativeRun, acceptance, Ready/merge/adoption/active permission.
