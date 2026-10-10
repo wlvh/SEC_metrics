@@ -126,6 +126,18 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertIs(prepare_historical_liquidity_year_case, args['case_factories']['B08'])
         self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['A01'])
 
+    def test_rpo_uses_native_case_without_changing_statement_or_capital_factories(self):
+        from vnext.historical_rpo_cases import prepare_historical_rpo_year_case, PROCESSING_FILES
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        from vnext.historical_capital_cases import prepare_historical_capital_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(company_id='salesforce', metric_ids=['B12', 'B01', 'A01'])
+        args = shared.call_args.kwargs
+        self.assertIs(prepare_historical_rpo_year_case, args['case_factories']['B12'])
+        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B12'])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
+
     def test_bank_performance_family_uses_original_factories_for_other_families(self):
         from vnext.historical_bank_performance_cases import prepare_historical_bank_year_case, PROCESSING_FILES
         from vnext.historical_capital_cases import prepare_historical_capital_year_case

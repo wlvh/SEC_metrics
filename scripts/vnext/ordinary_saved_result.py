@@ -18,7 +18,8 @@ from .records import validate_record
 
 METRIC_IDS = frozenset(installed_ordinary_spec_documents())
 LODGING_METRIC_IDS = frozenset({'B10','B11'})
-SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS
+SAVED_MODEL_METRIC_IDS = frozenset({'D04'})
+SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | SAVED_MODEL_METRIC_IDS
 EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13','E01'})
 CURRENT_E01_SPEC_PATH = 'catalog/r6/E01_content_confirmed_ma_v1.md'
 
@@ -68,6 +69,7 @@ def _ordinary_case(source, company, metric):
     program = Path(__file__).resolve().parents[2]
     original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,
         **({'validate_depreciation_scope':True} if metric=='B03' else {}),
+        **({'validate_revenue_scope':True,'revenue_scope_contract':'reported-total-v2'} if metric in {'B01','B03'} else {}),
         rules_root=program)
     income_binding = original['component'].get('input_binding',{})
     detail = original['component']
@@ -79,6 +81,8 @@ def _ordinary_case(source, company, metric):
         assessments['depreciation_scope'] = selection['depreciation_scope']
     if selection.get('income_period') is not None:
         assessments['income_period'] = selection['income_period']
+    if selection.get('revenue_scope') is not None:
+        assessments['revenue_scope'] = selection['revenue_scope']
     return {'primary_metric_id': metric, 'kind': 'STRUCTURED', 'input_binding': original,
         'compiled_specs': original['compiled_specs'], 'spec_paths': original['spec_paths'],
         'references': original['source_references'], 'source_proofs': original['source_proofs'],
@@ -97,6 +101,9 @@ def create_saved_result(*, source_root, output_root, company_id, metric_id, shar
     """Prepare through the existing Calculator and save its actual records."""
     _need(metric_id in SAVED_METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')
     def prepare(source):
+        if metric_id in SAVED_MODEL_METRIC_IDS:
+            from .current_d04_result import prepare_current_d04_case
+            return prepare_current_d04_case(source_root=source,company_id=company_id)
         if metric_id in LODGING_METRIC_IDS:
             from .normal_lodging_results import prepare_ordinary_lodging_case
             return prepare_ordinary_lodging_case(repo_root=source,company_id=company_id,metric_id=metric_id,

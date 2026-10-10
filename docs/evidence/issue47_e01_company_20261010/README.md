@@ -92,3 +92,11 @@ PY_SOURCE_ONLY
 公共方按885c固定tree提供最小CI patch，现PR114接收：只追加本consumer/完整附件合同/原MA合同三测试path及原Selected event步骤三模块，原source/projection/explicit门不丢、金融历史步骤不变。按同一实际步骤命令53方法.130s零skip，workflow-six-modules.json/log逐模块确认。此为小型纯合同/程序控制，真实ParamCLI复用上节，不以这些控制增加模型接受；新head远端执行单独核。
 
 7f02实际公司workflow37979164089/job113984974948已SUCCESS，日志逐模块source8/projection5/explicit7/consumer9/incorporated11/MA13，共53方法.285s零skip；不是模块名只登记未加载。原保存源194/177.604s、三金融/历史分派状态60/.486s、event retention10/.107s、原账本兼容22/6.050s均执行通过。ci-7f02-company.log/summary记录本提交实际触发、作业及方法。两个基础作业当时仍在运行，整体终态另读；纯记录后继不改变该生产实现，也不重复财报或provider。
+
+## 实际main c99后的同树接收
+
+读取最新正文/交接/PR反馈后，原114/21b与main发生冲突；本方只合历史E01+RPO/六金融/旧族dispatcher和现有workflow步骤/path并集。公共#28原PR113返固定aa61081b，六公共文件逐字接收，ordinary_projection及reporter测试严格同actualmainc99，原旧102展示被已入main后继替代。D04/131/收入链/paired的main实现保，未引入PR138或第二controller/store。五历史处理模块同原21b，没有新方法/更换请求合同。
+
+88公共门/历史consumer/附件MA/dispatch/state/reporter/季度/D04控制10.280s零skip；原七main工作流命令及历史三模块/path保留，不另runner。仅原ParamFY24一个相关配置正常迁移25.269s，仍WITHHELD/null/813828/实际全年/原333187ResultID；完整2aa878ef八项请求与原对象逐字段相同。禁止历史factory复3.649s/计算0，独立results .671s，原业务记录与迁移后保护文件不变（数量见main-c99-company.json）。来源只读/旧大CSV与旧失败保，matchingV2响应仍无、无部分count/旧答借用。实际执行准确记原21b+未提交合并/固定公共文件树，不倒签后继commit。
+
+接收组合只解除代码冲突，非目标模型内容通过或完整年度计数交付；无新SEC/provider/paid/nativeRun/接受/Ready/merge/采纳/active。新head CI另核，旧21b全绿不盖本组合。主体/继任窗口和模型接缝仍未完成；源下载及EX99原一次调用不重复。

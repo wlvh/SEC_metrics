@@ -1,0 +1,27 @@
+test_conflicting_comparisons_cannot_choose_the_matching_one (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_conflicting_comparisons_cannot_choose_the_matching_one) ... FAIL
+test_other_period_unit_or_accession_is_not_a_prior_comparison (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_other_period_unit_or_accession_is_not_a_prior_comparison) ... ok
+test_same_label_matching_or_no_comparison_keeps_existing_behavior (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_same_label_matching_or_no_comparison_keeps_existing_behavior) ... ok
+test_same_label_prior_comparison_difference_is_not_accepted (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_same_label_prior_comparison_difference_is_not_accepted) ... FAIL
+test_supported_label_change_requires_the_original_prior_value (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_supported_label_change_requires_the_original_prior_value) ... ok
+
+======================================================================
+FAIL: test_conflicting_comparisons_cannot_choose_the_matching_one (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_conflicting_comparisons_cannot_choose_the_matching_one)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-scope/SEC_metrics/tests/vnext/test_paired_measure_contradiction.py", line 36, in test_conflicting_comparisons_cannot_choose_the_matching_one
+    self.assertIsNotNone(self.check([self.claim('Revenue','current','2020','40'),
+AssertionError: unexpectedly None
+
+======================================================================
+FAIL: test_same_label_prior_comparison_difference_is_not_accepted (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_same_label_prior_comparison_difference_is_not_accepted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-scope/SEC_metrics/tests/vnext/test_paired_measure_contradiction.py", line 25, in test_same_label_prior_comparison_difference_is_not_accepted
+    self.assertIsNotNone(problem)
+AssertionError: unexpectedly None
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.001s
+
+FAILED (failures=2)
+{"allowed_skips": 0, "errors": 0, "failures": 2, "run": 5, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_paired_measure_contradiction"]}
