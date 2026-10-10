@@ -164,10 +164,14 @@ def _recover_completed_check(root):
 
 
 def run_once(*, state_root, source_root, company_id, metric_id, shared_input_root=None,
-             fiscal_year=None, case_factory=None, processing_files=()):
+             fiscal_year=None, case_factory=None, processing_files=(), current_case_factory=None):
     """One current deterministic update; identical raw input never calculates."""
+    _need(current_case_factory is None or callable(current_case_factory)
+          and fiscal_year is None and case_factory is None,
+          'CURRENT_UPDATE_CURRENT_FACTORY_SCOPE_INVALID')
     _need(metric_id in SAVED_METRIC_IDS or metric_id in EXPLICIT_CASE_METRICS
-          and fiscal_year is not None and callable(case_factory),'CURRENT_UPDATE_METRIC_UNSUPPORTED')
+          and (fiscal_year is not None and callable(case_factory)
+               or callable(current_case_factory)), 'CURRENT_UPDATE_METRIC_UNSUPPORTED')
     _need(fiscal_year is None or type(fiscal_year) is int and 1900<=fiscal_year<=9998,
           'CURRENT_UPDATE_REQUESTED_FISCAL_YEAR_INVALID')
     _need(fiscal_year is None or callable(case_factory), 'CURRENT_UPDATE_SELECTED_PERIOD_REQUIRES_CASE_FACTORY')
@@ -206,6 +210,12 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                 path = resolve_repository_file(repo_root=ROOT,repo_relative_path=relative)
                 extra[relative]=sha256_file(path=path)
             if extra:configuration={**configuration,'declared_processing_files':extra}
+            if current_case_factory is not None:
+                producer_path = inspect.getsourcefile(current_case_factory)
+                _need(producer_path is not None, 'CURRENT_UPDATE_CASE_PRODUCER_VERSION_UNAVAILABLE')
+                configuration = {**configuration, 'current_case_producer':{
+                    'module':current_case_factory.__module__, 'name':current_case_factory.__qualname__,
+                    'sha256':sha256_file(path=Path(producer_path))}}
             if fiscal_year is not None:
                 producer_path = inspect.getsourcefile(case_factory)
                 _need(producer_path is not None, 'CURRENT_UPDATE_CASE_PRODUCER_VERSION_UNAVAILABLE')
@@ -239,7 +249,11 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
             # Full selection/period/subject checks only run for changed/new
             # input. A newly selected filing necessarily changes submissions.
             version = uuid4().hex
-            if fiscal_year is None:
+            if current_case_factory is not None:
+                case = current_case_factory(repo_root=source, company_id=company_id, metric_id=metric_id)
+                saved = save_calculated_case(source_root=source,output_root=root/'results'/version,
+                    company_id=company_id,metric_id=metric_id,case=case,shared_input_root=shared_input_root)
+            elif fiscal_year is None:
                 saved = create_saved_result(source_root=source,output_root=root/'results'/version,
                     company_id=company_id,metric_id=metric_id, shared_input_root=shared_input_root)
             else:

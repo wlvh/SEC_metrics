@@ -1,0 +1,38 @@
+test_consumed_fiscal_parser_and_policy_change_reprocess_once (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_consumed_fiscal_parser_and_policy_change_reprocess_once)
+Real config hashes; small source/record doubles isolate the controller. ... 
+  test_consumed_fiscal_parser_and_policy_change_reprocess_once (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_consumed_fiscal_parser_and_policy_change_reprocess_once) (dependency='scripts/vnext/text_results_v2.py')
+Real config hashes; small source/record doubles isolate the controller. ... FAIL
+  test_consumed_fiscal_parser_and_policy_change_reprocess_once (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_consumed_fiscal_parser_and_policy_change_reprocess_once) (dependency='catalog/r6/text_results_v2_policy.json')
+Real config hashes; small source/record doubles isolate the controller. ... FAIL
+
+======================================================================
+FAIL: test_consumed_fiscal_parser_and_policy_change_reprocess_once (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_consumed_fiscal_parser_and_policy_change_reprocess_once) (dependency='scripts/vnext/text_results_v2.py')
+Real config hashes; small source/record doubles isolate the controller.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-risk-headings/SEC_metrics/tests/vnext/test_current_risk_heading_case.py", line 126, in test_consumed_fiscal_parser_and_policy_change_reprocess_once
+    self.assertEqual(second['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'CANDIDATE_READY'
+- NO_SOURCE_CONTENT_CHANGE
++ CANDIDATE_READY
+
+
+======================================================================
+FAIL: test_consumed_fiscal_parser_and_policy_change_reprocess_once (tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_consumed_fiscal_parser_and_policy_change_reprocess_once) (dependency='catalog/r6/text_results_v2_policy.json')
+Real config hashes; small source/record doubles isolate the controller.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-risk-headings/SEC_metrics/tests/vnext/test_current_risk_heading_case.py", line 126, in test_consumed_fiscal_parser_and_policy_change_reprocess_once
+    self.assertEqual(second['status'],'CANDIDATE_READY')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'CANDIDATE_READY'
+- NO_SOURCE_CONTENT_CHANGE
++ CANDIDATE_READY
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.065s
+
+FAILED (failures=2)
+{"allowed_skips": 0, "errors": 0, "failures": 2, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_risk_heading_case.CurrentRiskHeadingCaseTest.test_consumed_fiscal_parser_and_policy_change_reprocess_once"]}

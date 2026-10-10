@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/docs/evidence/issue28_text_item_capacity_20261010/verify_actual_enphase.py", line 38, in <module>
+    args=dict(compiled_spec=spec,**base);candidate=create_deterministic_text_candidate(**args)
+                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/scripts/vnext/text_results.py", line 248, in create_deterministic_text_candidate
+    documents, coverages = prepare_text_sources(compiled_spec=compiled_spec, target=target,
+                           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        source_references=source_references, raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/scripts/vnext/text_results.py", line 157, in prepare_text_sources
+    document = build_text_document(raw_bytes=raw_bytes_by_id[raw_id], raw_blob=raw_blobs[raw_id],
+        source_reference=source, expected_company_id=target["company_id"],
+        expected_cik=target["entity"], expected_period_end=target["period_end"])
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/scripts/vnext/text_coverage.py", line 271, in build_text_document
+    _need(identities == {str(int(expected_cik))}, "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/scripts/vnext/text_coverage.py", line 53, in _need
+    raise TextCoverageError(reason)
+vnext.text_coverage.TextCoverageError: TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING

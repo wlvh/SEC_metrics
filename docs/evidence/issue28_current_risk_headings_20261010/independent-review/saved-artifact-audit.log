@@ -1,0 +1,465 @@
+{
+  "reviewed_sha": "b4afa87aec04354bc1e0abf3e6aa4aed65a4105d",
+  "base_sha": "256930bfc9747334b28a3021ee2868bd790c1a8f",
+  "original_execution_program_version": {
+    "commit": "256930bfc9747334b28a3021ee2868bd790c1a8f",
+    "has_uncommitted_changes": true
+  },
+  "six_files": {
+    "scripts/vnext/current_risk_heading_case.py": {
+      "sha256": "2e2e1a50251b96e216b67f785628e301c81679296c6b7a41a59fb818757f2839",
+      "workspace_equals_reviewed_commit": true,
+      "captured_execution_digest": "2e2e1a50251b96e216b67f785628e301c81679296c6b7a41a59fb818757f2839",
+      "captured_execution_digest_matches": true
+    },
+    "scripts/vnext/company_current_records.py": {
+      "sha256": "53ba14a633b028f8d12229bfa2df7a1dc7c9104cedc795c4e60e61a7733e98e5",
+      "workspace_equals_reviewed_commit": true,
+      "captured_execution_digest": null,
+      "captured_execution_digest_matches": null
+    },
+    "scripts/vnext/ordinary_current_update.py": {
+      "sha256": "94ebda33e1ad98da59a9f859e99ae1429b22e3178bd597187f5560d1d0054a23",
+      "workspace_equals_reviewed_commit": true,
+      "captured_execution_digest": "94ebda33e1ad98da59a9f859e99ae1429b22e3178bd597187f5560d1d0054a23",
+      "captured_execution_digest_matches": true
+    },
+    "scripts/vnext/company_local.py": {
+      "sha256": "571c07d663e51e0a7743980ea317fb9281e844bb0bfdd965a179407d23b5f9ec",
+      "workspace_equals_reviewed_commit": true,
+      "captured_execution_digest": null,
+      "captured_execution_digest_matches": null
+    },
+    "tests/vnext/test_current_risk_heading_case.py": {
+      "sha256": "1859dcc724f0e3997e76a9a353e87164617d121fe80330cbfcc8d1b3116e7022",
+      "workspace_equals_reviewed_commit": true,
+      "captured_execution_digest": null,
+      "captured_execution_digest_matches": null
+    },
+    ".github/workflows/company-current-records.yml": {
+      "sha256": "b76c9b8c5fe8ecaa4f2f85b4db5599c36fd11b15c9c9471e63f767857267cd2f",
+      "workspace_equals_reviewed_commit": true,
+      "captured_execution_digest": null,
+      "captured_execution_digest_matches": null
+    }
+  },
+  "original_execution_scope": "uncommitted tree after 256930bf; captured adapter/controller bytes match b4afa87, other four have no execution digest and are not retroactively proven",
+  "result_id": "sha256:3b7a9fa13d81f5c38e419b7a6a183da6b381b163a4cfe58329798c4bbfa22182",
+  "value_sha256": "616b39a80a967e6223e9b8b913970bc38f53dc44c0f67b6501bf55bac8f4639c",
+  "heading_count": 60,
+  "company_id": "enphase_energy",
+  "cik": "1463101",
+  "accession": "0001463101-26-000013",
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01"
+  },
+  "renderer": "ORDERED_NEWLINE_V1",
+  "all_manifest_file_digests_match": true,
+  "raw_blob_sha_matches": true,
+  "proof_body_checks": [
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0001463101.json",
+      "body_sha_match": true
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+      "body_sha_match": true
+    },
+    {
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001463101.json",
+      "body_sha_match": true
+    }
+  ],
+  "all_60_title_spans_plain_text_and_scope_match": true,
+  "span_checks": [
+    {
+      "order": 0,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 1,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 2,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 3,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 4,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 5,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 6,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 7,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 8,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 9,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 10,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 11,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 12,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 13,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 14,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 15,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 16,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 17,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 18,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 19,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 20,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 21,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 22,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 23,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 24,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 25,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 26,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 27,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 28,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 29,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 30,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 31,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 32,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 33,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 34,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 35,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 36,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 37,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 38,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 39,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 40,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 41,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 42,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 43,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 44,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 45,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 46,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 47,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 48,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 49,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 50,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 51,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 52,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 53,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 54,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 55,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 56,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 57,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 58,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    },
+    {
+      "order": 59,
+      "span_sha_match": true,
+      "plain_text_match": true,
+      "within_item1a_blocks": true
+    }
+  ],
+  "read_export_same_result_and_value": true,
+  "original_state_before_after_unchanged": true,
+  "original_state_file_digests": {
+    "company-task.json": "b7e98cc61e6cd9c0b5e9f1dcb6c4a99e1c3e96e5a1e42a87a710f9cc3dacbfe0",
+    "company.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "latest-execution.json": "69645eb0176c9d5653b3f1d60ac7b8e21a056861b95b89b27ed72fb6c801ef74",
+    "updates/D01/current-result.json": "d41da826ee4f2a258d230a2f3d9980e9456869a2137151fee28e78a457f5b50e",
+    "updates/D01/latest-check.json": "a80e1922f379dee2ccd2226212ed95f7b6452856fabd4da68bef914c89845cd5",
+    "updates/D01/update.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "updates/D01/completed-check.json": "b997e29d11c72c24dc9dc33c0849e6b8e1349ee02e730f3f6580be825d8705e9",
+    "updates/D01/results/a374380f27354458aaf43e0f496ea262/metrics_matrix.csv": "7cf57b5c4d1e30d41bc072b70ab4efd15ea19be20b97a393e9a10a1e0e6a3012",
+    "updates/D01/results/a374380f27354458aaf43e0f496ea262/metric_evidence.csv": "9bc2f8459b44a7899eac1f8cf52c8ef91df2453ab90edf67921c3d2c34e5a5e0",
+    "updates/D01/results/a374380f27354458aaf43e0f496ea262/records.jsonl": "a0a012c434c0e28e497dcedda9f591668af445626c11a39edc398e39010cc0e3",
+    "updates/D01/results/a374380f27354458aaf43e0f496ea262/manifest.json": "627eab1729cbcba9a861f5b45ca246ae8760dbd12f44fc05cc264840e67e636f",
+    "updates/D01/results/a374380f27354458aaf43e0f496ea262/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "updates/D01/results/a374380f27354458aaf43e0f496ea262/receipt.json": "39896451d53588e09dbbf0c3b011dd295027a833bf9d46437798a72d00de4e58",
+    "updates/D01/checks/6c1606622d2b489da7f375523d19faaa/intent.json": "e7cfac67265c673aba238e57ea06e6cb85e0dae858cf2bdbf1d918e689668e27",
+    "updates/D01/checks/6c1606622d2b489da7f375523d19faaa/terminal.json": "a80e1922f379dee2ccd2226212ed95f7b6452856fabd4da68bef914c89845cd5",
+    "updates/D01/checks/97c1913e0055487ca2835204ae54a972/intent.json": "270495389b9b146241bc9e128280cd58dc08279148ba98bf67adc1c3b8fe3dfc",
+    "updates/D01/checks/97c1913e0055487ca2835204ae54a972/terminal.json": "2c30ddffb5db923ffc82715f8564980c74bce86d1565c94be562a12f340d783c"
+  },
+  "source_preparation_or_company_calculation_rerun": false,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ]
+}
