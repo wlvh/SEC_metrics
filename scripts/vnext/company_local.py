@@ -357,7 +357,8 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
         prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES)
     from .historical_statement_cases import (METRICS as statement_metrics,
         prepare_historical_statement_year_case, PROCESSING_FILES as statement_files,
-        INCOME_PROCESSING_FILES as income_files)
+        INCOME_PROCESSING_FILES as income_files,
+        PAIRED_REVENUE_PROCESSING_FILES as paired_revenue_files)
     from .historical_statement_cases import prepare_historical_current_annual_year_case
     from .historical_liquidity_cases import (METRICS as liquidity_metrics,
         prepare_historical_liquidity_year_case, PROCESSING_FILES as liquidity_files)
@@ -405,7 +406,8 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
                                             capital_files if m in capital_metrics else
                                             liquidity_files if m in liquidity_metrics else
                                             HISTORICAL_LODGING_PROCESSING_FILES if m in SUPPORTED_METRICS
-                                            else income_files if m in {'B01','B02'}
+                                            else paired_revenue_files if m == 'B02'
+                                            else income_files if m == 'B01'
                                             else statement_files) for m in selected})
     return run_saved_company(company_id=company_id, source_root=source_root,
         work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
