@@ -1,0 +1,125 @@
+{
+  "code_commit": "594eb7d97bf5d4e326dc7428dc7ec9d0aa31791e",
+  "scope_summaries": {
+    "current": {
+      "scope_id": "sha256:848ddb7f7b51cfc91ee6b7fe5cc6ef211697776d40998014259e34ccf41194ee",
+      "status": "REPORTED_CONSOLIDATED_TOTAL",
+      "complete_scope_proven": true
+    },
+    "prior": {
+      "scope_id": "sha256:8fadc7f5f9386d69970fd6993ff8036731d37840883afb3dac1e7549ed5b4754",
+      "status": "REPORTED_CONSOLIDATED_TOTAL",
+      "complete_scope_proven": true
+    }
+  },
+  "source_file_fixed_commit": "e4868eb3206538c4d4b00f799dd3448348e23407",
+  "result_id_unchanged_from_pre_repair_development": true,
+  "all_original_operand_ids_unchanged": true,
+  "old_failed_and_development_versions_retained": true,
+  "current": {
+    "concept": "us-gaap:Revenues",
+    "context": {
+      "context_ref": "c-1",
+      "dimensions": {},
+      "entity_identifier": "0000078003",
+      "period_end": "2023-12-31",
+      "period_start": "2023-01-01",
+      "typed_dimension_count": 0
+    },
+    "context_proof": {
+      "context_ref": "c-1",
+      "dimensions": [],
+      "identifiers": [
+        {
+          "scheme": "http://www.sec.gov/CIK",
+          "value": "0000078003"
+        }
+      ],
+      "period_fields": [
+        {
+          "kind": "startdate",
+          "value": "2023-01-01"
+        },
+        {
+          "kind": "enddate",
+          "value": "2023-12-31"
+        }
+      ],
+      "typed_dimension_count": 0
+    },
+    "context_ref": "c-1",
+    "decimals": "-6",
+    "ordinal": 103,
+    "period_end": "2023-12-31",
+    "period_start": "2023-01-01",
+    "source_reference": {
+      "accession": "0000078003-24-000039",
+      "company_id": "pfizer",
+      "document_name": "pfe-20231231.htm",
+      "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:4907e15186ae81f27b60271cdc91da273a66395ec8484f0fb1059b9057f5efd9",
+      "source_reference_id": "sha256:a38f993e4b99318705b78e21e71cf479002cbbee64e48403e9a71d7e5d3a0b4a",
+      "source_role": "target_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800324000039/pfe-20231231.htm"
+    },
+    "unit": "USD",
+    "value": "58496000000"
+  },
+  "prior": {
+    "concept": "us-gaap:Revenues",
+    "context": {
+      "context_ref": "ifd32821b5aa74fbfbe10209f8777cec0_D20220101-20221231",
+      "dimensions": {},
+      "entity_identifier": "0000078003",
+      "period_end": "2022-12-31",
+      "period_start": "2022-01-01",
+      "typed_dimension_count": 0
+    },
+    "context_proof": {
+      "context_ref": "ifd32821b5aa74fbfbe10209f8777cec0_D20220101-20221231",
+      "dimensions": [],
+      "identifiers": [
+        {
+          "scheme": "http://www.sec.gov/CIK",
+          "value": "0000078003"
+        }
+      ],
+      "period_fields": [
+        {
+          "kind": "startdate",
+          "value": "2022-01-01"
+        },
+        {
+          "kind": "enddate",
+          "value": "2022-12-31"
+        }
+      ],
+      "typed_dimension_count": 0
+    },
+    "context_ref": "ifd32821b5aa74fbfbe10209f8777cec0_D20220101-20221231",
+    "decimals": "-6",
+    "ordinal": 80,
+    "period_end": "2022-12-31",
+    "period_start": "2022-01-01",
+    "source_reference": {
+      "accession": "0000078003-23-000024",
+      "company_id": "pfizer",
+      "document_name": "pfe-20221231.htm",
+      "raw_asset_id": "sha256:3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:a5a91811752c8f15d04c11725e1885c5763a51be83de3e624c7b76c8282f1ba5",
+      "source_reference_id": "sha256:1f773f13400a5196093fd497769df312f6176297915efe9b8a04e0467d1f1bd7",
+      "source_role": "target_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800323000024/pfe-20221231.htm"
+    },
+    "unit": "USD",
+    "value": "100330000000"
+  },
+  "paired_bridge": null,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

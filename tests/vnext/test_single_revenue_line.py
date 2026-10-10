@@ -109,6 +109,35 @@ class SingleRevenueLineTest(unittest.TestCase):
             b'<td>$ <ix:nonFraction name="us-gaap:Revenues"')
         self.assertTrue(self.scope(changed(source,raw),annual,xml=source)['complete_scope_proven'])
 
+    def test_common_share_unit_header_and_split_currency_use_spanned_year(self):
+        source,annual=single_statement()
+        raw=source['raw_bytes'].replace(b'<td>(MILLIONS, EXCEPT PER SHARE DATA)</td><td>2025</td>',
+            b'<td>(MILLIONS, EXCEPT PER COMMON SHARE DATA)</td><td colspan="3">2025</td>')
+        raw=re.sub(rb'(<tr><td>[^<]*</td>)(<td><ix:nonFraction)',rb'\1<td>$</td>\2',raw)
+        source=changed(source,raw)
+        scope=self.scope(source,annual,xml=source)
+        self.assertTrue(scope['complete_scope_proven'])
+        total=scope['reported_totals'][0]
+        self.assertEqual(total['total_cell']['column_index'],2)
+        self.assertEqual(total['year_headers'][0]['column_index'],1)
+        self.assertEqual(total['year_headers'][0]['colspan'],3)
+        self.assertEqual(total['total']['value'],'58496000000')
+        for before,after,reason in ((b'>2025</td>',b'>2024</td>','FISCAL_COLUMN'),
+                (b'MILLIONS, EXCEPT PER COMMON SHARE DATA',b'THOUSANDS, EXCEPT PER COMMON SHARE DATA','UNIT_UNRESOLVED'),
+                (b'PER COMMON SHARE DATA',b'PER SEGMENT DATA','FISCAL_COLUMN|UNIT_UNRESOLVED')):
+            broken=changed(source,raw.replace(before,after))
+            with self.subTest(reason=reason),self.assertRaisesRegex(ValueError,reason):self.scope(broken,annual)
+        paired=raw.replace(b'<td colspan="3">2025</td>',
+            b'<td colspan="3">2025</td><td colspan="3">2024</td>')
+        self.assertTrue(self.scope(changed(source,paired),annual)['complete_scope_proven'])
+        # A later matching year does not own the amount in the earlier group.
+        crossed=raw.replace(b'<td colspan="3">2025</td>',
+            b'<td colspan="3">2024</td><td colspan="3">2025</td>')
+        with self.assertRaisesRegex(ValueError,'FISCAL_COLUMN'):
+            self.scope(changed(source,crossed),annual)
+        self.assertFalse(reported_revenue_scope(primary=source,annual=annual,
+            approved_concepts=APPROVED)['complete_scope_proven'])
+
     def test_selected_fact_ordinal_is_not_a_python_list_offset(self):
         source,annual=single_statement()
         raw=source['raw_bytes'].replace(b'name="us-gaap:CostOfGoodsAndServicesSold" contextRef="annual" unitRef="usd" scale="6"',
