@@ -35,3 +35,5 @@ Minimal deliverytree2c461f48 starts at PR125/bc5, receives only public9510capaci
 这一可取得组合解除main新增RPO/收入/D04的接收冲突，不把存储文件变化自动视为全部旧financial兼容；公共兼容工作仍由owner负责，不手改旧cfg。新CI另核，不借6d十一全绿，main尚未接本能力、业务/Ready/merge/采纳/active边界保。
 
 消费公共PR140/47d给定d01-consumer.patch，严格基cbb原工作流：将已有capacity+singleline两命令移source-contracts，其余八命令保company-records，并保持company-current原required名称作为always汇总。10条原命令多重集合逐字相同，原paths同序；两个测试job各5min不延长，汇总1min仅shell；16success/failure/cancelled/skipped组合只有双success过。Ruby/Psych解析YAML及三个job通过。本方不另写runner/改保护/skip/删断言，不重业务计算；新head实际CI另核、原cbb取消保持历史。公共设计/固定patch由#28负责，本方仅其明确D01适配并验证。
+
+2e08分层公司run38032932358完整SUCCESS：source-contracts114157441747从07:00:52至07:02:05=73s，capacity30/26.481s+singleline43/22.990s；company-records114157441849从07:00:53至07:05:15=262s，source257/225.862s/history97/.967s/paired6/D045/event13/retention10/D01公共8+历史9共17/1.174s/原SEC27/6.051s全命令OK零skip。aggregate114158205097 3s实际COMPANY_RESULT/SOURCE_RESULT均success才通过。两个测试job均原5min内，不缩删命令或放宽断言；源码/业务结果不变不重算。当前整体13success/1基础兼容仍live观察保，不能以新company绿声明尚未终态全PRgreen；原cbb全命令pass但jobcancel也保。此日志独立证据分支不重触productCI。
