@@ -1,0 +1,86 @@
+{
+  "constructed_control_not_financial_conclusion": true,
+  "source_or_business_calls": 0,
+  "view": {
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "marriott_international",
+    "source_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpcvyjxtgn/source",
+    "metrics": [
+      {
+        "metric_id": "B02",
+        "result_id": "B02-result",
+        "period_start": null,
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": null,
+        "unit": null,
+        "publication": null,
+        "quality": null,
+        "reason_code": null,
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "CANDIDATE_READY",
+        "requested_in_latest_execution": true,
+        "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpcvyjxtgn/state/updates/B02/results/first"
+      },
+      {
+        "metric_id": "B01",
+        "value": null,
+        "result_validity": "NO_CURRENT_RESULT",
+        "latest_observation": "INPUT_OR_EXECUTION_FAILED",
+        "fiscal_year": 2025,
+        "requested_in_latest_execution": false,
+        "reason": "CONSTRUCTED_AMENDMENT_SCOPE_GAP",
+        "error_type": "ConstructedCaseError",
+        "error_category": "IMPLEMENTATION_GAP"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "output_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpcvyjxtgn/independent-reader"
+  },
+  "csv_row": {
+    "company": "",
+    "cik": "",
+    "metric_id": "B01",
+    "metric_name": "",
+    "value": "",
+    "unit": "",
+    "status": "INPUT_OR_EXECUTION_FAILED",
+    "source_class": "",
+    "formula": "",
+    "period_start": "",
+    "period_end": "",
+    "fiscal_year": "2025",
+    "fiscal_period": "",
+    "accession": "",
+    "form": "",
+    "filed_date": "",
+    "concept_or_section": "",
+    "context_or_dimension": "",
+    "confidence": "",
+    "notes": "reason: CONSTRUCTED_AMENDMENT_SCOPE_GAP; error_type: ConstructedCaseError; error_category: IMPLEMENTATION_GAP",
+    "company_id": "marriott_international",
+    "result_id": "",
+    "record_root": "",
+    "source_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/tmpcvyjxtgn/source",
+    "local_metric_status": "INPUT_OR_EXECUTION_FAILED",
+    "period_role": "REQUESTED_WITHOUT_RESULT",
+    "result_validity": "NO_CURRENT_RESULT",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "",
+    "requested_in_latest_execution": "False"
+  },
+  "state_unchanged": true,
+  "expected_period_role": "SAVED_RESULT_NOT_REQUESTED or explicit SAVED_FAILURE_NOT_REQUESTED; not REQUESTED_WITHOUT_RESULT",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
