@@ -175,6 +175,13 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
         self.assertIs(shared.call_args.kwargs['fiscal_label_resolution'],label)
         self.assertEqual(shared.call_args.kwargs['annual']['table_input']['target_period']['fiscal_year'],2025)
 
+    def test_reported_total_conflict_cannot_fall_back_to_the_old_component(self):
+        from vnext import selected_reported_revenue_v2 as reported,selected_revenue_scope_v1 as component
+        with patch.object(reported,'reported_revenue_scope',side_effect=ValueError('SELECTED_REPORTED_REVENUE_VISIBLE_DATE_CONFLICT')), \
+             patch.object(component,'selected_revenue_scope',side_effect=AssertionError('Conflict is not no reported total')):
+            with self.assertRaisesRegex(ValueError,'VISIBLE_DATE_CONFLICT'):
+                self.prepare()
+
 
 class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
     def test_existing_entry_does_not_silently_expand_to_b07(self):
