@@ -93,7 +93,7 @@ def _cell_proof(*, table: Mapping, cell: Mapping) -> dict:
                 "rowspan", "colspan", "raw_text", "text")}}
 
 
-def _column_period(*, table: Mapping, selected: Mapping) -> tuple:
+def _column_period(*, table: Mapping, selected: Mapping, extra_header_descriptors=()) -> tuple:
     hits = []
     for row in table["rows"][:selected["row_index"]]:
         cells = [cell for cell in row["cells"] if cell["is_origin"] and cell["text"]]
@@ -118,7 +118,8 @@ def _column_period(*, table: Mapping, selected: Mapping) -> tuple:
                 r"^(?:as of\b|(?:for the )?years? ended\b|in\b|\(in\b|\(dollars\b|change\b|average amount \(in\b)",
                 _text(cell["text"]), re.I) or re.fullmatch(
                     _MONTH + r"\s+[0-9]{1,2},?(?:\s+\(.*\))?",
-                    _text(cell["text"]), re.I)) for cell in cells):
+                    _text(cell["text"]), re.I) or any(re.fullmatch(pattern, _text(cell["text"]), re.I)
+                        for pattern in extra_header_descriptors)) for cell in cells):
             continue
         hits.extend((cell, year, end) for cell, year, end in atoms
                     if cell["column_index"] <= selected["column_index"]

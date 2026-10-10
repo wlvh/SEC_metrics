@@ -1,0 +1,33 @@
+{
+  "command": [
+    "python3",
+    "tests/required_unittests.py",
+    "tests.vnext.test_reporting_company_projection"
+  ],
+  "started_utc": "2026-10-09T14:13:53.656060+00:00",
+  "ended_utc": "2026-10-09T14:14:03.164235+00:00",
+  "elapsed_seconds": 9.507862,
+  "return_code": 0,
+  "network_policy": "socket.connect/connect_ex/create_connection denied through temporary sitecustomize; PYTHONDONTWRITEBYTECODE=1"
+}
+STDOUT
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 12, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_reporting_company_projection"]}
+
+STDERR
+test_constructed_withheld_native_trace_keeps_state_without_filled_issuer (tests.vnext.test_reporting_company_projection.CurrentNullableTraceProjectionTest.test_constructed_withheld_native_trace_keeps_state_without_filled_issuer) ... ok
+test_current_reported_rpo_with_nullable_trace_keeps_value_and_issuer (tests.vnext.test_reporting_company_projection.CurrentNullableTraceProjectionTest.test_current_reported_rpo_with_nullable_trace_keeps_value_and_issuer) ... ok
+test_current_structural_and_both_hotel_numbers_save_with_nullable_trace (tests.vnext.test_reporting_company_projection.CurrentNullableTraceProjectionTest.test_current_structural_and_both_hotel_numbers_save_with_nullable_trace) ... ok
+test_combined_or_unproven_subject_policy_does_not_get_single_reporter_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_combined_or_unproven_subject_policy_does_not_get_single_reporter_view) ... ok
+test_current_reporter_preserves_current_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_current_reporter_preserves_current_view) ... ok
+test_different_filing_or_bad_entity_does_not_gain_display_identity (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_different_filing_or_bad_entity_does_not_gain_display_identity) ... ok
+test_explicit_null_issuer_fields_use_verified_annual_without_modifying_trace (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_explicit_null_issuer_fields_use_verified_annual_without_modifying_trace) ... ok
+test_metadata_only_outcome_can_keep_inventory_issuer_without_claiming_amount (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_metadata_only_outcome_can_keep_inventory_issuer_without_claiming_amount) ... ok
+test_null_target_requires_matching_source_not_another_registered_issuer (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_null_target_requires_matching_source_not_another_registered_issuer) ... ok
+test_nullable_contract_does_not_hide_filled_conflicts_or_missing_fields (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_nullable_contract_does_not_hide_filled_conflicts_or_missing_fields) ... ok
+test_predecessor_reporting_cik_changes_only_presentation_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_predecessor_reporting_cik_changes_only_presentation_view) ... ok
+test_unregistered_reporter_or_cross_subject_trace_is_rejected (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_unregistered_reporter_or_cross_subject_trace_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 9.266s
+
+OK

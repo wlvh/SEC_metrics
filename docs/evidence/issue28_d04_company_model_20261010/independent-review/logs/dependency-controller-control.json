@@ -1,0 +1,25 @@
+{
+  "seconds": 0.03947704192250967,
+  "reports": [
+    {
+      "status": "CANDIDATE_WITHHELD",
+      "result_id": "synthetic-result-1",
+      "calculation_performed": true,
+      "new_candidate_created": true
+    },
+    {
+      "status": "PREVIOUS_INPUT_WITHHELD",
+      "result_id": "synthetic-result-1",
+      "calculation_performed": false,
+      "new_candidate_created": false
+    },
+    {
+      "status": "CANDIDATE_WITHHELD",
+      "result_id": "synthetic-result-2",
+      "calculation_performed": true,
+      "new_candidate_created": true
+    }
+  ],
+  "total_calculations": 2,
+  "scope": "Actual _configuration and run_once controller. Source observation and saved-result producer/reader use explicit synthetic fixtures. Only sha256_file return for the named code path changed; source and code files were not edited."
+}
