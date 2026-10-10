@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/d01-enphase-consumer/verify_reader.py", line 26, in <module>
+    assert fail['view_role']=='SAVED_CHECK_NOT_REQUESTED_WITHOUT_RESULT' and fail['requested_in_latest_execution'] is False
+           ~~~~^^^^^^^^^^^^^
+KeyError: 'view_role'
