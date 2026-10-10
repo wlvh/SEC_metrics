@@ -1,0 +1,37 @@
+{
+  "consumer_commit": "377c05b4f370a151d6c7f4fe56329ecd2a2c62e2",
+  "old_results_read_only": true,
+  "checks": [
+    {
+      "family": "a13",
+      "seconds": 0.5155838751234114,
+      "exit_code": 0,
+      "correct_saved_rows_unchanged": 5,
+      "all_state_files_unchanged": 89,
+      "output": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-old-neighbor-read-rax88d22/a13"
+    },
+    {
+      "family": "average",
+      "seconds": 0.48504595807753503,
+      "exit_code": 0,
+      "correct_saved_rows_unchanged": 10,
+      "all_state_files_unchanged": 163,
+      "output": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-old-neighbor-read-rax88d22/average"
+    },
+    {
+      "family": "scope",
+      "seconds": 0.5559106247965246,
+      "exit_code": 0,
+      "correct_saved_rows_unchanged": 18,
+      "all_state_files_unchanged": 312,
+      "output": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d04-old-neighbor-read-rax88d22/scope"
+    }
+  ],
+  "original_financial_rows_plus_saved_mixed": 33,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "no_recalculation": true
+}

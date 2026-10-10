@@ -1,0 +1,58 @@
+{
+  "seconds": 1.0068291670177132,
+  "exit_code": 2,
+  "calculation_performed": false,
+  "existing_state_files": 41,
+  "changed_normal_view_pointers": [
+    "latest-execution.json",
+    "updates/D04/periods/FY2024/latest-check.json",
+    "updates/D04/periods/FY2023/latest-check.json"
+  ],
+  "old_result_files_unchanged": 14,
+  "saved_result_directory_count": 2,
+  "package_unchanged": true,
+  "original_assessments": [
+    {
+      "fiscal_year": 2023,
+      "original_ordinals": [
+        20,
+        21,
+        22,
+        23
+      ],
+      "required_unit_count": 16,
+      "original_call_count": 4,
+      "original_binding_limits": [
+        35,
+        35,
+        0
+      ],
+      "media_coverage_verified": false,
+      "absence_conclusion_authorized": false
+    },
+    {
+      "fiscal_year": 2024,
+      "original_ordinals": [
+        24,
+        25,
+        26,
+        27
+      ],
+      "required_unit_count": 18,
+      "original_call_count": 4,
+      "original_binding_limits": [
+        35,
+        35,
+        0
+      ],
+      "media_coverage_verified": false,
+      "absence_conclusion_authorized": false
+    }
+  ],
+  "initial_observation_limitation": "Initial harness omitted latest-check.json from mutable view pointers; those false flags are retained, not rewritten.",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
