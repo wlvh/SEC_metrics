@@ -65,8 +65,13 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
         fiscal_year=fiscal_year, rules_root=ROOT)
     annual = prepare_historical_annual_input(repo_root=source, company_id=company_id,
         period_selection=selection, rules_root=ROOT)
-    _need(not annual['amendments'] and annual['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY',
-          'HISTORICAL_RISK_HEADINGS_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
+    _need(not annual['amendments'],
+          'HISTORICAL_RISK_HEADINGS_AMENDMENT_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
+    subject = annual['subject_policy']
+    _need(subject['mode'] in {'CONTINUOUS_PRIMARY','SUCCESSOR_REGISTRANT_ONLY'}
+          and str(subject.get('selected_cik')) == str(annual['entity'])
+          and subject.get('cross_entity_combination_authorized') is False,
+          'HISTORICAL_RISK_HEADINGS_SELECTED_SUBJECT_NOT_PROVEN')
     period = annual['table_input']['target_period']
     original = annual.get('original_input', annual)['table_input']['target_period']
     _need(all(original[k] == period[k] for k in ('period_start', 'period_end')),
@@ -107,7 +112,9 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
     binding = {'record_type': 'HISTORICAL_RISK_HEADING_INPUT', 'metric_id': metric_id,
         'prepared_input': annual, 'period_selection': selection,
         'source_proofs': proofs, 'd01_emphasis_policy': d01_emphasis_results.RUNNING_HEADER_POLICY,
-        'new_provider_execution': False}
+        'new_provider_execution': False,
+        'heading_scope': 'SELECTED_REGISTRANT_ORIGINAL_ITEM_1A',
+        'financial_cross_entity_combination_authorized': False}
     return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id,
         'input_binding': binding, 'compiled_specs': {metric_id: spec},
         'spec_paths': {metric_id: SPEC_PATH}, 'target_period': period,

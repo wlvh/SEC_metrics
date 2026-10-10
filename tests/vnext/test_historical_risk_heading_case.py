@@ -16,7 +16,8 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
             'filing':{'form':'10-K','accessionNumber':'0000012345-26-000001','primaryDocument':'source.htm',
                       'reportDate':'2025-12-31','filingDate':'2026-02-01'},
             'table_input':{'target_period':{'fiscal_year':2025,'period_start':'2025-01-01','period_end':'2025-12-31'}},
-            'subject_policy':{'mode':'CONTINUOUS_PRIMARY'},'amendments':[],'source_proofs':[]}
+            'subject_policy':{'mode':'CONTINUOUS_PRIMARY','selected_cik':'12345',
+                              'cross_entity_combination_authorized':False},'amendments':[],'source_proofs':[]}
 
     def case(self, *, source=None, prepared=None):
         body=BODY.replace('<p>A supply constraint could affect production.</p>',
@@ -52,18 +53,29 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
                     company_id='sample_entity',metric_id='D02',fiscal_year=2025)
         select.assert_not_called()
 
-    def test_unreceived_amendment_and_successor_refuse_before_source_extraction(self):
-        for change in ('amendment','successor'):
+    def test_unreceived_amendment_and_unproven_subject_refuse_before_source_extraction(self):
+        for change in ('amendment','wrong_subject','combined_subject','unknown_mode'):
             value=self.prepared()
             if change=='amendment':value['amendments']=[{'form':'10-K/A'}]
-            else:value['subject_policy']['mode']='SUCCESSOR_REGISTRANT_ONLY'
+            elif change=='wrong_subject':value['subject_policy']['selected_cik']='54321'
+            elif change=='combined_subject':value['subject_policy']['cross_entity_combination_authorized']=True
+            else:value['subject_policy']['mode']='UNRESOLVED'
             with self.subTest(change=change), patch.object(cases,'resolve_period_selection',return_value={}), \
                     patch.object(cases,'prepare_historical_annual_input',return_value=value), \
                     patch.object(cases,'_Sources',side_effect=AssertionError('No source extraction')) as read:
-                with self.assertRaisesRegex(ValueError,'AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED'):
+                with self.assertRaisesRegex(ValueError,'AMENDMENT_NOT_RECEIVED|SELECTED_SUBJECT_NOT_PROVEN'):
                     cases.prepare_historical_risk_heading_year_case(repo_root=Path('/constructed'),
                         company_id='sample_entity',metric_id='D01',fiscal_year=2025)
                 read.assert_not_called()
+
+    def test_single_successor_source_does_not_combine_other_registrants_or_assert_events(self):
+        value=self.prepared();value['subject_policy']['mode']='SUCCESSOR_REGISTRANT_ONLY'
+        value['subject_policy']['related_predecessor_ciks']=['54321']
+        case=self.case(prepared=value)
+        self.assertEqual(case['results']['D01']['value_kind'],'TEXT_V1')
+        self.assertFalse(case['selection']['risk_occurrence_asserted'])
+        self.assertFalse(case['input_binding']['financial_cross_entity_combination_authorized'])
+        self.assertEqual(case['input_binding']['heading_scope'],'SELECTED_REGISTRANT_ORIGINAL_ITEM_1A')
 
     def test_original_and_resolved_annual_dates_cannot_diverge(self):
         value=self.prepared();value['original_input']=copy.deepcopy(value)
