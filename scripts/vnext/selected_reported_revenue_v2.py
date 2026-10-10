@@ -29,6 +29,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
     options={'namespace_policy':namespace_policy,'annual_period_reader':annual_period_reader}
     rows=native_income_reports(primary,annual,concepts,**options)
     raw=primary['raw_bytes'];parsed=parse_accession_xbrl_source(raw_bytes=raw)
+    native_by_ordinal={f['ordinal']:f for f in parsed.facts}
     index=_InlineTableIndex(raw);index.feed(raw.decode('utf-8-sig'));index.close()
     bound=_fact_cells(index,parsed,{r['ordinal'] for r in rows})
     period=annual['table_input']['target_period'];approved={c.casefold() for c in approved_concepts}
@@ -102,7 +103,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                      for b in statement['intervening_sources']
                      if any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in UNIT_HEADER))
         scales={6 if 'million' in u['text'].casefold() else 3 for u in units}
-        _need(len(scales)==1 and int(parsed.facts[row['ordinal']]['scale'] or 0)==next(iter(scales)),
+        _need(len(scales)==1 and int(native_by_ordinal[row['ordinal']]['scale'] or 0)==next(iter(scales)),
               'VISIBLE_NATIVE_UNIT_UNRESOLVED')
         matches=[r for r in xml_rows if _key(r)==_key(row)] if xml_rows is not None else []
         _need(xml_rows is None or matches,'PRIMARY_XML_TOTAL_DIFFERS')
@@ -134,22 +135,46 @@ def _single_revenue_line(index,parsed,table,cell,row,column,following):
     a list of approved revenue concepts.
     """
     from .financial_structured import _fact_cells
+    from .financial_duration import _column_period,_MONTH,_date
     costs=[r for r in following if r['concept'].casefold() in
            {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}]
     numeric=_fact_cells(index,parsed,{f['ordinal'] for f in parsed.facts if f.get('unit_ref')})
     first_cost=min(numeric[c['ordinal']][1]['row_index'] for c in costs)
-    start=column['row_index'];selected_column=cell['column_index']
-    _need(start<cell['row_index']<first_cost,'SINGLE_REVENUE_POSITION_UNPROVEN')
+    selected_column=cell['column_index']
+    _need(column['row_index']<cell['row_index']<first_cost,'SINGLE_REVENUE_POSITION_UNPROVEN')
+    visible=''.join(cell['text'].split())
+    native=''.join(next(f for f in parsed.facts if f['ordinal']==row['ordinal'])['text'].split())
+    if visible.startswith('$') and not native.startswith('$'):visible=visible[1:]
+    _need(visible==native,'SINGLE_REVENUE_SELECTED_CELL_TEXT_CONFLICT')
+    # A later/repeated year header cannot erase amounts earlier in this
+    # same statement column. Recognize actual header rows with the existing
+    # parser, then inspect all rows before the first cost, not just those
+    # after whichever header was nearest the selected revenue.
+    header_rows=set()
+    for before in table['rows'][:first_cost]:
+        probe={**cell,'row_index':before['row_index']+1}
+        period,_,reason=_column_period(table=table,selected=probe,extra_header_descriptors=UNIT_HEADER)
+        if not reason and period['row_index']==before['row_index']:
+            _need(period['year']==column['year'],'SINGLE_REVENUE_HEADER_CONFLICT')
+            header_rows.add(before['row_index'])
     for ordinal,(other_table,other_cell) in numeric.items():
         in_column=other_cell['column_index']<=selected_column<other_cell['column_index']+other_cell['colspan']
-        if other_table['table_id']==table['table_id'] and in_column and start<other_cell['row_index']<first_cost:
+        if other_table['table_id']==table['table_id'] and in_column and other_cell['row_index']<first_cost:
             _need(ordinal==row['ordinal'],'SINGLE_REVENUE_OTHER_AMOUNT')
     for other_row in table['rows']:
-        if not start<other_row['row_index']<first_cost or other_row['row_index']==cell['row_index']:continue
+        if not other_row['row_index']<first_cost or other_row['row_index'] in header_rows or other_row['row_index']==cell['row_index']:continue
         for other_cell in other_row['cells']:
             in_column=other_cell['column_index']<=selected_column<other_cell['column_index']+other_cell['colspan']
             if other_cell['is_origin'] and in_column:
-                _need(not re.search(r'[0-9]',other_cell['text']),'SINGLE_REVENUE_UNTAGGED_AMOUNT')
+                descriptor=re.fullmatch(r'(?:for the )?(?:fiscal )?years? ended ('+_MONTH+r')\s+([0-9]{1,2}),?',
+                                        other_cell['text'].strip(),re.I)
+                if descriptor:
+                    end=date.fromisoformat(row['period_end'])
+                    _need(_date(year=end.year,month=descriptor[1],day=int(descriptor[2]))==end,
+                          'SINGLE_REVENUE_HEADER_DATE_CONFLICT')
+                    continue
+                _need(not re.search(r'[0-9]',other_cell['text']),
+                      'SINGLE_REVENUE_UNTAGGED_AMOUNT:row='+str(other_row['row_index'])+':'+other_cell['text'][:120])
 
 
 def admit_reported_revenue_facts(*,facts,scope):
