@@ -6428,6 +6428,57 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-proxy-compensation/SEC_metrics/docs/evidence/issue28_proxy_compensation_20261010/independent-review/conclusion.md",
       "verdict": "LIMITED_REVIEW_PASS_NO_ACTIONABLE_FINDINGS; NO_REAL_CORPUS_OR_COMPANY_CHAIN_REPRODUCTION",
       "ordinary_messages": 3
+    },
+    {
+      "task_name": "review_d04scope_7fcb4e7",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "d04scope_main_alignment",
+      "scope_paths": [
+        "scripts/vnext/ordinary_update_compatibility.py",
+        "tests/vnext/test_d04_processing_scope.py",
+        ".github/workflows/company-current-records.yml"
+      ],
+      "patch_sha": "7fcb4e700235117966ac27fca65e7e033b425f52",
+      "spawned_at": "2026-10-10T15:40:34Z",
+      "ended_at": "2026-10-10T15:51:02.250536Z",
+      "tool_calls": 30,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-processing-scope/SEC_metrics/docs/evidence/issue28_processing_scope_20261010/main-f51-alignment/independent-review/conclusion.md",
+      "verdict": "PASS_LIMITED_MAIN_PAIR_BRIDGE_WORKFLOW_INCREMENT",
+      "limits": {
+        "tool_nodes": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup": "No live child; exact SHA absent in register and evidence; original210 review retained, new main pair/bridge increment only",
+      "actual_first_tool_at": "2026-10-10T15:42:19Z",
+      "ordinary_messages": 3,
+      "duration_seconds": 523.251
+    },
+    {
+      "task_name": "review_registry_6731aff",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "ordinary_registry_row_scope",
+      "scope_paths": [
+        "ordinary_registry_scope.py",
+        "ordinary_current_update.py:_configuration",
+        "test_registry_processing_scope.py",
+        ".github/workflows/company-current-records.yml"
+      ],
+      "patch_sha": "6731aff359746c76cedbe01cf4b7466d7b5a6204",
+      "spawned_at": "2026-10-10T16:25:04Z",
+      "ended_at": "2026-10-10T16:48:44Z",
+      "tool_calls": 35,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics/docs/evidence/issue28_registry_row_scope_20261010/independent-review/conclusion.md",
+      "verdict": "CHANGES_REQUIRED",
+      "limits": {
+        "tool_nodes": 80,
+        "minutes": 90,
+        "ordinary_messages": 3
+      },
+      "dedup": "No live child, no sameSHA register/evidence; independent successor not PR138",
+      "ordinary_messages": 3,
+      "actual_started_at": "2026-10-10T16:26:24Z",
+      "findings": "P2 program registry unknown industry must fail before reuse; repair underway, original verdict retained"
     }
   ],
   "ci_capacity_20260922": {
@@ -19852,7 +19903,7 @@
     "peer_fixed_consumer": "2532d4a35523fb62b8fc99e2de54ae35d58c7bb8 / PR151, base150; latest813cf6a1onlyusage-docs byte diff, sourceunchanged",
     "peer_receipt_actually_read": "Fixed code/tests/3first-repeat-read summaries/stage-timings/locator records and actual saved files/CSV/Result/amount-year cells read; ninepublicblobs same. Not parent company CLI reexecution or fullsource content acceptance.",
     "parent_original_ford_read": "Same actual original firstDEF14A raw454d/2,994,944bytes, Farley2021USD sevencomponentsinclzeros=22813174; stdlibHTML row independent of resolver expectedvalue",
-    "peer_ci": "Source2532elevenSUCCESS peer actual log/comment6098670032 read. Latest813 first8SUCCESS/3running; not inherited sourcehead green",
+    "peer_ci": "Actual parent natural terminal read: latest813cf6a13bc64442e0be2e6957903093e1cfe2e5 all11SUCCESS; source2532 and publicbd statuses separately checked; no inherited green",
     "joining_record": "docs/evidence/issue28_continuous/proxy-compensation-consumer-read-20261010/README.md"
   },
   "github_handoff_read_20261010_increment": {
@@ -19872,5 +19923,107 @@
       0,
       0
     ]
+  },
+  "current_b06_saved_entry_20261010": {
+    "status": "WIP_LOCAL_COMMIT_REVIEW_PENDING_NOT_MAIN",
+    "patch_sha": "cee471a506d052f1b118919d896c3ac0ca92b9ef",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics",
+    "base": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+    "scope": "existing amendment/guard/special/note/bond/inclusive/original cascade, program/source root separation, samewriter; no new debt definition",
+    "original_entry_failure": "Macy formalCLI B06 IMPLEMENTATION_REQUIRED .451s; smallwriterregression SOURCE_ROUTE_NOT_IMPLEMENTED",
+    "actual_enphase_current_case": "FY2025/end2025-12-31/1463101/0001463101-26-000013 ratio1.107959077222837051285943352, original2983956c ResultID. Source standalone28.202s; companycorrected6.637s, factoryforbiddenrepeat.301s, independentresults.404s; distinct scenes, not speedup ratio",
+    "csv_fix": "Initial fullaudit183886chars defaultCSV reader failed. Newcase display1107char summary; complete176513B assessment preserved, oldversion remains",
+    "small_tests": "8controls.083s; sourcegrammar/calculator byte and originalfallbackAST static unchanged; wider/default/root tests and review stillneeded",
+    "next": "Priority moved safely to actual6098982022/directuser PR138 receiving and independent registry successor; no candidate expansion or lostcode",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "processing_scope_main_receiving_20261010": {
+    "pr": 138,
+    "head": "7fcb4e700235117966ac27fca65e7e033b425f52",
+    "previous": "832aea1a0e5927e6bc5aedd75b30ed14a9b76650",
+    "actual_main": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+    "merge": "Normalappendmerge; oneworkflowconflict joinedbothsteps; no B06orotherbranchimport",
+    "first_tests": "97tests10.667s: three finitebridge failures afteractualB01B03 dependencychangedcontrollerbytes. Originalfailurespreserved",
+    "repair": "Finiteknown main/extractedpair and exactpriorbridge; all business/source/period/producer/registry fields continuecomparison; B01missingnewfiscaldep rejectscompatibility",
+    "tests": "98/10.138s zeroerrors/failures/skips",
+    "real_current_reuse": "SameoldMarriottFY25B04 2601000000USD/1048286/year/oldc87ResultID; factoryforbidden .511s; read .438s;7oldfiles intact. Actualworkingmergetree beforecommit, exactbytehashfile recordsrelation",
+    "review": "Exact7f limitedPASS:41tests/4independentstatecontrols/819configcounterexampleassertions;30tools/3messages ended; no company/content re-run",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "delivery_head": "c2ffd556ef4b7b5cd587123210ce726952461745 pushed / PR138 actual MERGEABLE",
+    "ci": "Actual c2ffd556 MERGEABLE all11SUCCESS natural terminal read; received userpriority6098982022/directlatest preserved"
+  },
+  "receiving_comment_read_20261010_6098982022": {
+    "comments": [
+      6098982022,
+      6098985256
+    ],
+    "actual_server_read": true,
+    "response": "PR138mainalignmentfirst;145sourcecomparison independent; registryrisknotyetconfirmed/newsuccessor; B06safelyretained; maturedC03no redevelop",
+    "main": "f51d8c3d27f3169b9cdb3a246295830882240c1f"
+  },
+  "receiving_candidates_20261010_increment": {
+    "actual_main": "f51d8c3d",
+    "server_read": true,
+    "candidates": {
+      "145": "f91c0f25 MERGEABLE11SUCCESS source-discovery reuse standalone",
+      "141": "ee551707 MERGEABLE11SUCCESS approved operating total; parenthesized P2 and source content boundaries kept",
+      "126": "31c5ea8d MERGEABLE11SUCCESS readonly selected-source/preflight",
+      "128": "4dcc8816 base126 MERGEABLE11SUCCESS fiscal/source and income dependency; source planning not wholeonline/390",
+      "148": "98e5312e MERGEABLE11SUCCESS explicit C03 ECD/gate/display",
+      "150": "bd920cea base148 MERGEABLE11SUCCESS original no-inline SCTsource/helper; thin151 contains149 dependencies"
+    },
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "decision": "Keep receiving scopes stable; no Ready/merge/adopt authorization from handoff"
+  },
+  "ordinary_registry_row_scope_20261010": {
+    "base": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+    "patch_sha": "5b3aa10462c15b8fa6681a53c27e794f987b68a2",
+    "worktree": "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics",
+    "status": "DRAFT_PR155_P2_REPAIR_RECEIVER_CHECK_PENDING_CI_RUNNING",
+    "diagnosis": "Actual configuration/isolated registry/state initial4 tests: unrelated program/source row enters forbiddenfactory,2fails; targetandrulechangesalreadyprocess",
+    "change": "Only wholeprogram/source registryfile hashes become complete targetrows. Otherdependencies retained; existingtable integrity+invalidrow/duplicateheader/target checks; no oldconfiguration rewrites or platform",
+    "tests": "79tests9.591s0fail/error/skip;4testedfileshashesexact5b3; original673+uncommittedrepair execution labeled",
+    "real_consumer": "ExistingMarFY25B04 2601000000USD/c87/1048286/year; actualnormalmigration2.037s preservesold12files. ActualCLI withonlyregistry-row leaf changes/program+source unrelated andfactoryforbidden .124s reuse/18oldfiles preserved. TargetCIKentersprocessinghitsforbiddenfactory .123s/exit2,notoldcredit; independentread .021s currentnull+previous2601000000, oldfiles protected. Earlyreadharness old-value assertion andexistingexport guard failures preserved",
+    "review": "673CHANGES_REQUIRED retained(35toolnodes/3messages);5b3 actualtraitadmissionrepair+negative regression delivered receiver increment, noindependentPASS claimed",
+    "compatibility": "Unknown oldwholefile-only configs neednormalprocessing to establishrows, no blindtransition. Targetallfields remainconservative context",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "Receiver specific increment verification+newhead CI naturalterminal. B06 existing localincrement controls continue, no mature candidate expansion",
+    "pr": "https://github.com/wlvh/SEC_metrics/pull/155",
+    "pushed": true,
+    "real_consumer_repair": "ActualMarFY25B04 normal processing2.078897667s same2601000000USD/c87/full2025/1048286 preserves18files; subsequent actualCLI unrelatedrowleaf+factoryforbidden .139644s NO_SOURCE_CONTENT_CHANGE preserves24files",
+    "ci": "First read5b3 11checks,5SUCCESS/6IN_PROGRESS; no overallterminal yet",
+    "attachment": "CreatedPR155; app attach attempted, identity count>100 error, noartifactattach success claimed"
+  },
+  "receiver_transition_20261010": {
+    "own_role": "Issue28 public runtime CLI/store/read/update/current integration Codex",
+    "receiver_role": "User appointed Opus5.5 Max repo-wide technical acceptance, not root merge authority",
+    "main_read": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+    "project_entry": "https://github.com/wlvh/SEC_metrics/issues/153",
+    "own_handoff": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-6099922793",
+    "pr138_increment": "https://github.com/wlvh/SEC_metrics/pull/138#issuecomment-6099920151",
+    "next": "Finish registry P2 repair/actual consumer, independent small Draft; no mature candidate expansion",
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "entry_read": "Actualbody and peer firstcomment read; AGENTS entry maintained by receiver PR154",
+    "own_entry_reference": "https://github.com/wlvh/SEC_metrics/issues/153#issuecomment-6099978998"
   }
 }
