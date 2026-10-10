@@ -1,0 +1,27 @@
+         4749264 function calls (4221566 primitive calls) in 0.662 seconds
+
+   Ordered by: cumulative time
+   List reduced from 283 to 18 due to restriction <18>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001    0.662    0.662 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_current_records.py:201(read_current_company)
+        1    0.000    0.000    0.661    0.661 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_current_records.py:209(_read_current_company)
+        1    0.000    0.000    0.656    0.656 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/ordinary_saved_result.py:209(read_saved_result)
+        1    0.000    0.000    0.376    0.376 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/ordinary_saved_result.py:45(_validate_records)
+       10    0.001    0.000    0.376    0.038 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/records.py:1828(validate_record)
+       19    0.001    0.000    0.373    0.020 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/canonical.py:402(canonical_json_bytes)
+305674/19    0.167    0.000    0.345    0.018 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/canonical.py:326(_canonicalize)
+       11    0.000    0.000    0.282    0.026 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/canonical.py:196(strict_json_file)
+       21    0.000    0.000    0.279    0.013 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/canonical.py:156(strict_json_loads)
+        9    0.001    0.000    0.187    0.021 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/canonical.py:453(content_hash)
+       10    0.000    0.000    0.187    0.019 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/records.py:826(_expected_identifier)
+       21    0.000    0.000    0.162    0.008 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py:304(loads)
+       21    0.000    0.000    0.162    0.008 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:340(decode)
+       21    0.021    0.001    0.162    0.008 /opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py:351(raw_decode)
+   502478    0.079    0.000    0.135    0.000 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/canonical.py:114(_validate_unicode)
+    82052    0.008    0.000    0.134    0.000 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/canonical.py:179(<lambda>)
+    82052    0.014    0.000    0.126    0.000 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/canonical.py:101(_parse_json_integer)
+155936/21    0.054    0.000    0.117    0.006 /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/canonical.py:133(_validate_tree_unicode)
+
+
+SUMMARY 0.6615348751656711 1 19
