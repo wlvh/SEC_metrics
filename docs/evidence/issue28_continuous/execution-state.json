@@ -18431,6 +18431,13 @@
       "new_protected_files": 304,
       "old_exact_holds_released": false,
       "business_accepted": false
+    },
+    "CI": {
+      "head": "aa29a0ab1b3eafc7ce384f98c1b889e2477012dc",
+      "checks": 11,
+      "conclusion": "ALL_SUCCESS",
+      "business_acceptance": false,
+      "last_code_increment_independent_coverage": "PENDING"
     }
   },
   "daily_read_error_20261010": {
@@ -18458,6 +18465,12 @@
     },
     "actual_failed_read_seconds": 0.16516487509943545,
     "protected_failed_state_files": 7,
-    "stage": "current/no-current failure details JSON/CSV and retained failure after subset; old value only explicit previous field, current failure null; unrequested CSV role repaired"
+    "stage": "current/no-current failure details JSON/CSV and retained failure after subset; old value only explicit previous field, current failure null; unrequested CSV role repaired",
+    "CI": {
+      "head": "a0e2c809ea492b8641ba6d85a875943645f99ffb",
+      "success": 10,
+      "in_progress": 1,
+      "pending_name": "Main foundation audit and historical compatibility"
+    }
   }
 }
