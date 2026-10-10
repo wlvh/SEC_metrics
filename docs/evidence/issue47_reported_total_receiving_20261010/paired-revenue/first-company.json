@@ -1,0 +1,26 @@
+{
+  "name": "one-FY2023-growth-source-transition",
+  "seconds": 20.735813457984477,
+  "exit_code": 2,
+  "stdout": "{\n  \"elapsed_seconds\": 20.649339083814994,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"pfizer\",\n  \"run_id\": \"20261010T040628Z-dfed8dc8\",\n  \"status\": \"FLOW_COMPLETED_WITH_LIMITATIONS\",\n  \"selected_metrics\": [\n    \"B02\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"CANDIDATE_WITHHELD\",\n      \"attempt_id\": \"fbd1cae93fec4d47834e2d82b8642908\",\n      \"version\": \"6b6402e9e7624e2b98e84544035d5b8c\",\n      \"result_id\": \"sha256:1ed029960cc2d101818d916d68f361c7e3be0b4658c22d06d3480ba51ece0884\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B02/periods/FY2023/results/6b6402e9e7624e2b98e84544035d5b8c\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"HISTORICAL_PRIOR_INPUT_UNRESOLVED\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2023,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:1ed029960cc2d101818d916d68f361c7e3be0b4658c22d06d3480ba51ece0884\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state/updates/B02/periods/FY2023/results/6b6402e9e7624e2b98e84544035d5b8c\",\n      \"program_version\": {\n        \"commit\": \"de4bd873e869169378a25fb1d2e6ba589f1cd06a\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-revenue-b5nc4v6w/runs/20261010T040628Z-dfed8dc8\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2023\n  ]\n}\n",
+  "stderr": "",
+  "arguments": [
+    "run",
+    "--company",
+    "pfizer",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2023",
+    "--fiscal-year-end",
+    "2023",
+    "--metric",
+    "B02",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-statements-company-nvw2pcdt/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-revenue-b5nc4v6w/runs"
+  ]
+}

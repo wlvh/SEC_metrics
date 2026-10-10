@@ -373,16 +373,19 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
         prepare_historical_average_risk_year_case, PROCESSING_FILES as average_risk_files)
     from .historical_bank_scope_cases import (METRICS as bank_scope_metrics,
         prepare_historical_bank_scope_year_case, PROCESSING_FILES as bank_scope_files)
+    from .historical_rpo_cases import (METRICS as rpo_metrics,
+        prepare_historical_rpo_year_case, PROCESSING_FILES as rpo_files)
     selected = configured_scope(company_id) if metric_ids is None else list(metric_ids)
     need(selected and len(selected) == len(set(selected))
-         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | set(geography_metrics) | set(average_risk_metrics) | set(bank_scope_metrics) | {'B07'},
+         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | set(geography_metrics) | set(average_risk_metrics) | set(bank_scope_metrics) | set(rpo_metrics) | {'B07'},
          'LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry')
     from .company_current_records import run_saved_company
     if not set(selected) <= set(SUPPORTED_METRICS):
         return run_saved_company(company_id=company_id, source_root=source_root,
             work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
             fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
-            case_factories={m: (prepare_historical_event_year_case if m in event_metrics else
+            case_factories={m: (prepare_historical_rpo_year_case if m in rpo_metrics else
+                               prepare_historical_event_year_case if m in event_metrics else
                                prepare_historical_geography_year_case if m in geography_metrics else
                                prepare_historical_average_risk_year_case if m in average_risk_metrics else
                                prepare_historical_bank_scope_year_case if m in bank_scope_metrics else
@@ -392,7 +395,8 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
                                prepare_historical_liquidity_year_case if m in liquidity_metrics else
                                prepare_historical_lodging_year_case if m in SUPPORTED_METRICS
                                else prepare_historical_statement_year_case) for m in selected},
-            processing_files_by_metric={m: (event_files if m in event_metrics else
+            processing_files_by_metric={m: (rpo_files if m in rpo_metrics else
+                                            event_files if m in event_metrics else
                                             geography_files if m in geography_metrics else
                                             average_risk_files if m in average_risk_metrics else
                                             bank_scope_files if m in bank_scope_metrics else
@@ -401,7 +405,7 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
                                             capital_files if m in capital_metrics else
                                             liquidity_files if m in liquidity_metrics else
                                             HISTORICAL_LODGING_PROCESSING_FILES if m in SUPPORTED_METRICS
-                                            else income_files if m == 'B01'
+                                            else income_files if m in {'B01','B02'}
                                             else statement_files) for m in selected})
     return run_saved_company(company_id=company_id, source_root=source_root,
         work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
