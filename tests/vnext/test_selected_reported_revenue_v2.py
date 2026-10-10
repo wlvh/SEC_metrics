@@ -48,18 +48,37 @@ class SelectedReportedRevenueTest(unittest.TestCase):
     def test_fiscal_year_column_matches_full_selected_native_period_not_calendar_year(self):
         source,_,annual=originals()
         raw=source['raw_bytes'].replace(b'2025-01-01',b'2023-01-29').replace(b'2025-12-31',b'2024-02-03').replace(b'>2025<',b'>2023<')
+        conflicting=raw
+        raw=raw.replace(b'Year Ended December 31,',b'')
         annual=deepcopy(annual);annual['filing']['reportDate']='2024-02-03'
         source=changed(source,raw)
         annual['table_input']['target_period']=annual_period(raw=raw,cik=annual['entity'],filing=annual['filing'])
         scope=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,annual_period_reader=annual_period)
         self.assertEqual(annual['table_input']['target_period']['fiscal_year'],2023)
         self.assertEqual(scope['reported_totals'][0]['total']['period_end'],'2024-02-03')
+        with self.assertRaisesRegex(ValueError,'VISIBLE_END_DAY_CONFLICT'):
+            reported_revenue_scope(primary=changed(source,conflicting),annual=annual,
+                approved_concepts=APPROVED,annual_period_reader=annual_period)
         # The same native annual period cannot authenticate a wrong visible
         # fiscal column (keep original DEI, change only the table year).
         wrong_raw=raw.replace(b'<td>2023</td>',b'<td>2022</td>')
         with self.assertRaisesRegex(ValueError,'FISCAL_COLUMN_UNRESOLVED'):
             reported_revenue_scope(primary=changed(source,wrong_raw),annual=annual,
                 approved_concepts=APPROVED,annual_period_reader=annual_period)
+
+    def test_visible_end_day_and_complete_date_agree_before_full_scope_credit(self):
+        source,_,annual=originals()
+        for raw in [source['raw_bytes'].replace(b'December 31,',b'December 30,'),
+                    source['raw_bytes'].replace(b'Year Ended December 31,',b'Years Ended December 30,')]:
+            with self.subTest(raw=raw),self.assertRaisesRegex(ValueError,'VISIBLE_END_DAY_CONFLICT'):
+                reported_revenue_scope(primary=changed(source,raw),annual=annual,approved_concepts=APPROVED)
+        correct=changed(source,source['raw_bytes'].replace(b'<td>2025</td>',b'<td>December 31, 2025</td>'))
+        scope=reported_revenue_scope(primary=correct,annual=annual,approved_concepts=APPROVED)
+        self.assertTrue(scope['complete_scope_proven'])
+        self.assertTrue(scope['reported_totals'][0]['end_headers'])
+        wrong=changed(source,source['raw_bytes'].replace(b'<td>2025</td>',b'<td>December 30, 2025</td>'))
+        with self.assertRaisesRegex(ValueError,'VISIBLE_DATE_CONFLICT'):
+            reported_revenue_scope(primary=wrong,annual=annual,approved_concepts=APPROVED)
 
     def test_resolved_label_keeps_raw_year_and_cannot_borrow_another_source(self):
         from vnext.fiscal_year_labels import inspect_fiscal_year_labels

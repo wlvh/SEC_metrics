@@ -117,7 +117,9 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False):
         cells = [c for c in row['cells'] if c['is_origin'] and c['text'].strip()]
         for c in cells:
             text = _label_key(c['text'])
+            from .financial_duration import _DATE
             header = (re.fullmatch(r'[0-9]{4}', text)
+                      or adjacent_heading and _DATE.fullmatch(text)
                       or re.fullmatch(r'(?:for the )?years? ended [a-z]+ [0-9]{1,2},?', text)
                       or any(re.fullmatch(p, text) for p in UNIT_HEADER)
                       or re.fullmatch(title_pattern, text)

@@ -6,6 +6,7 @@ An extension-labelled component need not be promoted to an approved concept
 when the statement already reports its total with an approved concept.
 """
 import re
+from datetime import date
 
 from .canonical import content_hash
 from .selected_income_source_v1 import native_income_reports, IncomeSourceError
@@ -21,7 +22,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                            namespace_policy=YEAR_ONLY,annual_period_reader=None,
                            fiscal_label_resolution=None):
     from .financial_structured import _InlineTableIndex,_fact_cells
-    from .financial_duration import _column_period,_cell_proof
+    from .financial_duration import _column_period,_cell_proof,_MONTH,_DATE,_date
     from .deterministic_router import parse_accession_xbrl_source
     concepts=sorted(set(approved_concepts)|set(STATEMENT_CONCEPTS))
     options={'namespace_policy':namespace_policy,'annual_period_reader':annual_period_reader}
@@ -61,7 +62,27 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                and names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}):continue
         column,headers,reason=_column_period(table=table,selected=cell,extra_header_descriptors=UNIT_HEADER)
         _need(not reason and column['year']==column_year,'FISCAL_COLUMN_UNRESOLVED')
-        _need(column.get('date') in {None,period['period_end']},'VISIBLE_DATE_CONFLICT')
+        column_end=column.get('date')
+        _need(column_end is None or column_end.isoformat()==period['period_end'],'VISIBLE_DATE_CONFLICT')
+        actual_end=date.fromisoformat(period['period_end']);end_headers=[]
+        end_pattern=re.compile(r'\byears?\s+ended\s+('+_MONTH+r')\s+([0-9]{1,2})',re.I)
+        for header_row in table['rows'][:column['row_index']+1]:
+            origins=[c for c in header_row['cells'] if c['is_origin'] and c['text'].strip()]
+            for c in origins:
+                matches=list(end_pattern.finditer(c['text']))
+                if not matches:continue
+                common=(c['column_index']<cell['column_index'] and all(
+                    other is c or re.fullmatch(r'[0-9]{4}',other['text'].strip())
+                    or _DATE.fullmatch(other['text'].strip())
+                    or any(re.fullmatch(p,other['text'].strip(),re.I) for p in UNIT_HEADER)
+                    for other in origins))
+                covers=c['column_index']<=cell['column_index']<c['column_index']+c['colspan']
+                if not (covers or common):continue
+                for match in matches:
+                    try:described_end=_date(year=actual_end.year,month=match[1],day=int(match[2]))
+                    except ValueError:raise IncomeSourceError('SELECTED_REPORTED_REVENUE_VISIBLE_END_DAY_INVALID')
+                    _need(described_end==actual_end,'VISIBLE_END_DAY_CONFLICT')
+                end_headers.append(_cell_proof(table=table,cell=c))
         statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True)
         units=[{'kind':'visible_cell','proof':_cell_proof(table=table,cell=c),'text':c['text']}
                for r in table['rows'][:column['row_index']+1] for c in r['cells']
@@ -77,6 +98,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         selected.append({'total':row,'total_cell':_cell_proof(table=table,cell=cell),
                          'statement_scope':statement,'unit_sources':units,
                          'year_headers':[_cell_proof(table=table,cell=h) for h,_,_ in headers],
+                         'end_headers':end_headers,
                          'annual_period':period,'xml_matches':matches,
                          'xml_check':'MATCH' if xml_rows is not None else 'NOT_SUPPLIED'})
     _need(len({_key(s['total']) for s in selected})<=1,'STATEMENT_TOTAL_CONFLICT')
