@@ -42,6 +42,12 @@ class HistoricalD04SelectionTest(TestCase):
             select_saved_d04_source(prepared_annual=self.annual(),sources=[self.source(),self.source()])
         self.assertEqual('SOURCE_INTEGRITY_ERROR',error.exception.category)
 
+    def test_missing_coordinate_is_integrity_failure_not_no_matching_year(self):
+        source=self.source();del source['prepared_annual_input']['filing']
+        with self.assertRaisesRegex(ValueError,'SOURCE_COORDINATE_INVALID') as error:
+            select_saved_d04_source(prepared_annual=self.annual(),sources=[source])
+        self.assertEqual('SOURCE_INTEGRITY_ERROR',error.exception.category)
+
     def test_other_metric_or_non_native_source_is_not_upgraded(self):
         for change in [{'metric_id':'D02'},{'record_type':'DIAGNOSTIC_SOURCE'}, {'company_id':'other'}]:
             source={**self.source(),**change}
@@ -112,3 +118,16 @@ class HistoricalD04PackageSelectionTest(TestCase):
     def test_another_actual_period_request_is_refused_before_public_replay(self):
         with self.assertRaisesRegex(ValueError,'REQUEST_COORDINATE_CHANGED'):
             self.select(self.package(changed_period=True))
+
+    def test_duplicate_named_archive_member_is_not_silently_overwritten(self):
+        import tarfile,io,json
+        package=self.package()
+        # Own tiny test archive only: emulate a mistaken double-copy packaging.
+        with tarfile.open(package) as archive:
+            members=[(m.name,archive.extractfile(m).read()) for m in archive if m.isfile()]
+        with tarfile.open(package,'w:gz') as archive:
+            for name,raw in [*members,members[0]]:
+                member=tarfile.TarInfo(name);member.size=len(raw)
+                archive.addfile(member,io.BytesIO(raw))
+        with self.assertRaisesRegex(ValueError,'DUPLICATE_PACKAGE_MEMBER'):
+            self.select(package)

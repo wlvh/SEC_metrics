@@ -34,3 +34,6 @@ Actual saved MarriottFY2023 selection8.262s chooses sourcec65c0acca441ffe0e892cf
 
 
 Second actual period selection8.485s chooses MarriottFY2024 and originalslots24–27, distinct source ID and accession/window, not the preceding fourFY2023 requests. Only selection is executed. Original package remains at the separately named retainedbcc0 commit; selector/executable consumer branch does not contain or repackage it. Source archival location and new-code location are recorded independently, not a new sealing/permission requirement.
+
+
+Two ordinary data-integrity controls added before public consumption: a malformed source coordinate is SOURCE_INTEGRITY_ERROR rather than an absent-year result; a repeated named regular archive member is refused instead of dictionary overwrite. Ten final controls0.023s/zero skip pass. These small input-error checks do not change actual annual/source selection or request grouping and do not repeat source reads, model processing or original calls. Constructed archives are isolated test data, not modifications of the real package.

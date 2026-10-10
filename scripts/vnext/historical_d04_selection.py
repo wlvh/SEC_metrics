@@ -26,10 +26,13 @@ def _need(condition, reason, category='SOURCE_INTEGRITY_ERROR'):
 
 
 def _coordinate(annual):
-    return (annual['company_id'], str(int(annual['entity'])),
-            annual['filing']['accessionNumber'],
-            *(annual['table_input']['target_period'][key] for key in
-              ('fiscal_year', 'period_start', 'period_end')))
+    try:
+        return (annual['company_id'], str(int(annual['entity'])),
+                annual['filing']['accessionNumber'],
+                *(annual['table_input']['target_period'][key] for key in
+                  ('fiscal_year', 'period_start', 'period_end')))
+    except (KeyError, TypeError, ValueError) as error:
+        raise HistoricalD04SelectionError('HISTORICAL_D04_SOURCE_COORDINATE_INVALID') from error
 
 
 def select_saved_d04_source(*, prepared_annual, sources):
@@ -57,7 +60,9 @@ def prepare_historical_d04_selection(*, source_root, company_id, fiscal_year,
     _need(package.is_file(), 'HISTORICAL_D04_SAVED_PACKAGE_MISSING', 'SOURCE_UNAVAILABLE')
     with tarfile.open(package, 'r:gz') as archive:
         # Read named regular members only. Never extract or execute the archive.
-        members = {member.name: member for member in archive.getmembers() if member.isfile()}
+        entries = [member for member in archive.getmembers() if member.isfile()]
+        members = {member.name: member for member in entries}
+        _need(len(members) == len(entries), 'HISTORICAL_D04_DUPLICATE_PACKAGE_MEMBER')
         _need('root/binding.json' in members, 'HISTORICAL_D04_ORIGINAL_BINDING_MISSING')
         def read(name):
             _need(name in members, 'HISTORICAL_D04_PACKAGE_MEMBER_MISSING:'+name)
