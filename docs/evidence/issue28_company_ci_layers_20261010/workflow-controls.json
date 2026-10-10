@@ -1,0 +1,21 @@
+{
+  "base": "84d15f35",
+  "commands": [
+    "python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy tests.vnext.test_dei_release_selection tests.vnext.test_successor_income_projection tests.vnext.test_event_rule_root tests.vnext.test_financial_dei_release tests.vnext.test_reported_average_period tests.vnext.test_bank_scope_dei_release tests.vnext.test_reporting_company_projection tests.vnext.test_selected_revenue_scope_v1 tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_current_reported_revenue -v",
+    "python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest tests.vnext.test_historical_statement_cases -v",
+    "python3 tests/required_unittests.py tests.vnext.test_paired_measure_contradiction",
+    "python3 tests/required_unittests.py tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_financial_duration tests.vnext.test_selected_income_source_v1",
+    "python3 tests/required_unittests.py tests.vnext.test_current_d04_company",
+    "python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1 tests.vnext.test_registered_event_projection",
+    "python3 tests/required_unittests.py tests.vnext.test_historical_event_cases.HistoricalEventCaseTest tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest",
+    "python3 tests/required_unittests.py tests.vnext.test_existing_historical_sec_state tests.vnext.test_historical_sec_capture_adapter tests.vnext.test_company_online"
+  ],
+  "original_command_multiset_unchanged": true,
+  "gate_combinations": 16,
+  "financial_reruns": 0,
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

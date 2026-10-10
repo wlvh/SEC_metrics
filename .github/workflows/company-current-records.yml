@@ -51,7 +51,7 @@ name: Company saved-source records
 permissions:
   contents: read
 jobs:
-  company-current:
+  company-records:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -73,10 +73,6 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 tests/required_unittests.py tests.vnext.test_paired_measure_contradiction
-      - name: Explicit single revenue source and unchanged period defaults
-        env:
-          PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 tests/required_unittests.py tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_financial_duration tests.vnext.test_selected_income_source_v1
       - name: Complete D04 company model input gates
         run: python3 tests/required_unittests.py tests.vnext.test_current_d04_company
       - name: Selected event sources and explicit history validation
@@ -91,3 +87,31 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 tests/required_unittests.py tests.vnext.test_existing_historical_sec_state tests.vnext.test_historical_sec_capture_adapter tests.vnext.test_company_online
+  source-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: '3.14'
+      - name: Explicit single revenue source and unchanged period defaults
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_financial_duration tests.vnext.test_selected_income_source_v1
+  company-current:
+    needs: [company-records, source-contracts]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Require both company records and source contracts
+        env:
+          COMPANY_RESULT: ${{ needs.company-records.result }}
+          SOURCE_RESULT: ${{ needs.source-contracts.result }}
+        run: |
+          set -e
+          test "$COMPANY_RESULT" = success
+          test "$SOURCE_RESULT" = success
