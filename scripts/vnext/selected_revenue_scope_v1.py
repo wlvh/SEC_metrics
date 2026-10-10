@@ -135,7 +135,8 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False):
                       or any(re.fullmatch(p, text) for p in UNIT_HEADER)
                       or re.fullmatch(title_pattern, text)
                       or re.fullmatch(r'(?:revenues|costs and expenses|earnings per (?:common )?share[–— -]*(?:basic|diluted)):', text)
-                      or adjacent_heading and re.fullmatch(r'(?:cost of revenues|operating expenses)\s*:', text))
+                      or adjacent_heading and re.fullmatch(r'(?:cost of revenues|operating expenses)\s*:',
+                          re.sub(r'\([0-9]+\)', '', c['text'].casefold().strip()).strip()))
             if not header:
                 unknown.append(_cell_proof(table=table, cell=c))
     _need(not unknown, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')

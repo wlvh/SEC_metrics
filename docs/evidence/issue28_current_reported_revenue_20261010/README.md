@@ -37,3 +37,12 @@ The initially invoked old 20-coordinate prototype material test failed21 asserti
 ## Review and receiving boundary
 
 This new caller/format delta requires limited independent review. Source PR130's final associated-date repair has parent regressions but remains separately awaiting receiving coverage; its original REQUEST_CHANGES reports are not rewritten or inherited as a PASS. No old held Result is released merely by this new implementation. Current candidates have saved-record checks with content not formally accepted. No Ready/merge/adoption/deploy/active; no new provider/paid/SEC calls. #47 receives the same optional source fix and validates its consumer independently, with its own state untouched by the parent.
+
+
+## Limited P2 review and repair
+
+7e6 limited review is REQUEST_CHANGES, retained verbatim under independent-review/conclusion.md. It found the newly accepted Fiscal Year Ended row after the chosen year header could contradict the native end, and expense-group matching erased arbitrary `(Europe)`/`(Subsidiary)` words as if they were note numbers. The parent now checks governing date headers through the selected total row, including the numeric marker form the scope branch itself allows; new cost/expense permission removes only numeric parenthetical note markers. Unknown parenthetical qualifiers remain unresolved, and default V1 normalization/behavior is unchanged. No schema or meaning revision.
+
+p2-repair-tests.log first109/9.108s passed; that first late-header test lacked the review's numeric57 marker. The exact marker is now included, with associated-date handling corrected and its own final log. This is one finite repair of the reported issue, not a new language-rule route. The original 107 review and all failed logs are preserved.
+
+The affected Macy existing state was actually processed once after the first P2 source repair, then forbidden-factory reused and independently read:2.333/.087/.127s, original7 result files retained,14 protected after, exactly one changed-program version, same923318df/22.621bn and actual period. p2-actual-resume.json accurately records that uncommitted P2 source tree before the final numeric-marker association; it is not labelled a finalSHA run. The final marker branch has exact positive/negative source regressions and the actual Salesforce mixed integration; no unmodified large chain rerun. No business call or old answer resampling. Follow-up limited independent verdict is still pending and does not cover all of Source130.

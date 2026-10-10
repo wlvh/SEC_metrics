@@ -126,3 +126,31 @@ class CurrentReportedRevenueTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
             _revenue_admission(primary=changed,annual=annual,approved_concepts=APPROVED,
                                contract='reported-total-v2')
+
+    def test_late_fiscal_header_before_amounts_is_checked_against_native_interval(self):
+        source, _, annual=originals()
+        for day in (30,31):
+            raw=source['raw_bytes'].replace(b'<tr><td>Product revenues</td>',
+                ('<tr><td>Fiscal Year Ended December '+str(day)+',</td><td>57</td></tr><tr><td>Product revenues</td>').encode())
+            changed={**source,'raw_bytes':raw,'source_reference':{**source['source_reference'],
+                'raw_asset_id':'sha256:'+sha256_bytes(content=raw)}}
+            with self.subTest(day=day):
+                if day==30:
+                    with self.assertRaisesRegex(ValueError,'VISIBLE_END_DAY_CONFLICT'):
+                        _revenue_admission(primary=changed,annual=annual,approved_concepts=APPROVED,
+                                           contract='reported-total-v2')
+                else:
+                    scope,_,_=_revenue_admission(primary=changed,annual=annual,approved_concepts=APPROVED,
+                                               contract='reported-total-v2')
+                    self.assertTrue(any('Fiscal Year' in h['text'] for h in scope['reported_totals'][0]['end_headers']))
+
+    def test_cost_group_non_numeric_parenthesis_is_not_an_invented_footnote(self):
+        source, _, annual=originals()
+        for label in ('Operating expenses (Europe):','Cost of revenues (Subsidiary):'):
+            raw=source['raw_bytes'].replace(b'<tr><td>Cost of sales</td>',
+                ('<tr><td>'+label+'</td><td></td></tr><tr><td>Cost of sales</td>').encode())
+            changed={**source,'raw_bytes':raw,'source_reference':{**source['source_reference'],
+                'raw_asset_id':'sha256:'+sha256_bytes(content=raw)}}
+            with self.subTest(label=label),self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+                _revenue_admission(primary=changed,annual=annual,approved_concepts=APPROVED,
+                                   contract='reported-total-v2')
