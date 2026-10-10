@@ -20,10 +20,11 @@ def _need(condition,reason):
 
 def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                            namespace_policy=YEAR_ONLY,annual_period_reader=None,
-                           fiscal_label_resolution=None):
+                           fiscal_label_resolution=None,allow_single_revenue_line=False):
     from .financial_structured import _InlineTableIndex,_fact_cells
     from .financial_duration import _column_period,_cell_proof,_MONTH,_DATE,_date
     from .deterministic_router import parse_accession_xbrl_source
+    _need(type(allow_single_revenue_line) is bool,'SINGLE_REVENUE_OPTION_INVALID')
     concepts=sorted(set(approved_concepts)|set(STATEMENT_CONCEPTS))
     options={'namespace_policy':namespace_policy,'annual_period_reader':annual_period_reader}
     rows=native_income_reports(primary,annual,concepts,**options)
@@ -35,7 +36,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
     if fiscal_label_resolution is not None:
         from .canonical import sha256_bytes
         from .normal_annual_input_v2 import _choose_fiscal_year
-        from .historical_fiscal_labels import require_actual_definition_scope
+        from .selected_fiscal_definition_scope_v1 import require_actual_definition_scope
         label=fiscal_label_resolution;inspected=label.get('source_inspection',{})
         _need(label.get('record_type') in {'SELECTED_HISTORICAL_FISCAL_LABEL','ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION'}
               and inspected.get('primary_sha256')==sha256_bytes(content=raw)
@@ -52,7 +53,9 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
     for row in rows:
         if row['concept'].casefold() not in approved or row['ordinal'] not in bound:continue
         table,cell=bound[row['ordinal']]
-        if _label_key(_label(table,cell)) not in {'total revenue','total revenues','total net revenues'}:continue
+        label=_label_key(_label(table,cell))
+        single=allow_single_revenue_line and label in {'revenue','revenues'}
+        if label not in {'total revenue','total revenues','total net revenues'} and not single:continue
         if (row['period_start'],row['period_end'])!=(period['period_start'],period['period_end']):continue
         same=[r for r in rows if r['context_ref']==row['context_ref'] and r['ordinal'] in bound
               and bound[r['ordinal']][0]['table_id']==table['table_id']
@@ -62,6 +65,8 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                and names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}):continue
         column,headers,reason=_column_period(table=table,selected=cell,extra_header_descriptors=UNIT_HEADER)
         _need(not reason and column['year']==column_year,'FISCAL_COLUMN_UNRESOLVED')
+        if single:
+            _single_revenue_line(index,parsed,table,cell,row,column,same)
         column_end=column.get('date')
         _need(column_end is None or column_end.isoformat()==period['period_end'],'VISIBLE_DATE_CONFLICT')
         actual_end=date.fromisoformat(period['period_end']);end_headers=[]
@@ -113,7 +118,38 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
           'selected_fiscal_column_year':column_year,'fiscal_label_resolution':fiscal_label_resolution,
           'status':'REPORTED_CONSOLIDATED_TOTAL' if selected else 'NO_REPORTED_TOTAL_PROVEN',
           'complete_scope_proven':bool(selected),'original_reports':rows}
+    if allow_single_revenue_line:
+        body.update(method='SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1',
+                    single_revenue_line_allowed=True)
     return {**body,'scope_id':content_hash(value=body)}
+
+
+def _single_revenue_line(index,parsed,table,cell,row,column,following):
+    """A sole top-line amount in this column, not a component or note subtotal.
+
+    The caller still proves the complete consolidated income statement,
+    native entity/annual context, column, units and any supplied XML match.
+    Check all numeric tags, including company extensions, and visible amounts
+    between the year header and the first actual cost row; do not just search
+    a list of approved revenue concepts.
+    """
+    from .financial_structured import _fact_cells
+    costs=[r for r in following if r['concept'].casefold() in
+           {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}]
+    numeric=_fact_cells(index,parsed,{f['ordinal'] for f in parsed.facts if f.get('unit_ref')})
+    first_cost=min(numeric[c['ordinal']][1]['row_index'] for c in costs)
+    start=column['row_index'];selected_column=cell['column_index']
+    _need(start<cell['row_index']<first_cost,'SINGLE_REVENUE_POSITION_UNPROVEN')
+    for ordinal,(other_table,other_cell) in numeric.items():
+        in_column=other_cell['column_index']<=selected_column<other_cell['column_index']+other_cell['colspan']
+        if other_table['table_id']==table['table_id'] and in_column and start<other_cell['row_index']<first_cost:
+            _need(ordinal==row['ordinal'],'SINGLE_REVENUE_OTHER_AMOUNT')
+    for other_row in table['rows']:
+        if not start<other_row['row_index']<first_cost or other_row['row_index']==cell['row_index']:continue
+        for other_cell in other_row['cells']:
+            in_column=other_cell['column_index']<=selected_column<other_cell['column_index']+other_cell['colspan']
+            if other_cell['is_origin'] and in_column:
+                _need(not re.search(r'[0-9]',other_cell['text']),'SINGLE_REVENUE_UNTAGGED_AMOUNT')
 
 
 def admit_reported_revenue_facts(*,facts,scope):

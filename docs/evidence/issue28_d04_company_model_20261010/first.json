@@ -1,0 +1,48 @@
+{
+  "elapsed_seconds": 119.89343525003642,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "enphase_energy",
+  "run_id": "20261009T181811Z-932b04f1",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "D04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "D04",
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "a276ccae38c84e30b32cf9b1a15216de",
+      "version": "7be58ca65e2d4be6aae594622a4f2eea",
+      "result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b",
+      "result_root": "/private/tmp/issue28-d04-company-model-49po3rao/state/updates/D04/results/7be58ca65e2d4be6aae594622a4f2eea",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:7bf9ea839cb7ef2c636ebf524fb4305056a048447880bd37e2df81664483f99b",
+      "record_root": "/private/tmp/issue28-d04-company-model-49po3rao/state/updates/D04/results/7be58ca65e2d4be6aae594622a4f2eea",
+      "program_version": {
+        "commit": "6e51f416b12d2e284be1662482ca7a46a37d1e43",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d04-company-model/SEC_metrics",
+  "record_root": "/private/tmp/issue28-d04-company-model-49po3rao/state",
+  "output_root": "/private/tmp/issue28-d04-company-model-49po3rao/output/20261009T181811Z-932b04f1",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}
