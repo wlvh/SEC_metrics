@@ -43,3 +43,34 @@ Actual predecessor selector check: ParamountFY2024 selection15.883s keeps report
 
 
 Content reference reuse: the retainedbcc0 d04-full-text-read-2026-10-04 record supersedes the early two-pattern limited read. It already read8800 supplied visible blocks, original16 answers and74units; that reading is not repeated here. Four originalHTML sources still have14 unacquired/uninterpreted image references, and the whole-filing all-media outcome remainsNOT_PROVEN. The three original native results remainNONE/WITHHELD/null. Public replay must carry these exact remaining limitations instead of either claiming no textread or promoting mechanical group completeness to whole-media absence. The existing media-owner plan is a dependency record, not a GETgrant; originalSEC1771 there is an old snapshot, actualEX99 completion made1772.
+
+
+## Reproduce the historical selection without model execution
+
+Use the new selector branch for code and the retainedbcc0 historical checkout
+for the original committed package. Use an already restored source-inputs root;
+the source root is neither the export directory nor its parent. If recovery is
+needed, follow the existing historical guide's retained restore command once.
+
+```bash
+export PYTHONPATH=scripts:tools:.
+export PYTHONDONTWRITEBYTECODE=1
+python3 tests/required_unittests.py tests.vnext.test_historical_d04_selection
+python3 - <<'PY_SELECTION'
+import os
+from vnext.historical_d04_selection import prepare_historical_d04_selection
+selected = prepare_historical_d04_selection(
+    source_root=os.environ['ISSUE47_SOURCE_ROOT'],
+    company_id='marriott_international', fiscal_year=2023,
+    saved_call_package=os.environ['ISSUE47_ORIGINAL_MODEL_PACKAGE'])
+print(selected['prepared_annual_input']['table_input']['target_period'])
+print(selected['original_source_id'])
+print(selected['original_call_members'])
+PY_SELECTION
+```
+
+Set ISSUE47_ORIGINAL_MODEL_PACKAGE to the existing archive file in the retained
+checkout; this consumer branch does not contain the archive. This command only
+prepares selection. The ordinary company producer is pending public replay and
+historical dispatch, so it currently returns the named unsupported-route error
+shown above; no complete-company execution is advertised by this snippet.
