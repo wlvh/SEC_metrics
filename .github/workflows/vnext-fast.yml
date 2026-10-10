@@ -72,6 +72,12 @@ jobs:
           PYTHONPATH: scripts:tools
         run: python3 -m unittest -v tests.vnext.test_ordinary_depreciation_sources
 
+      - name: Verify explicit SEC compensation release selection
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 tests/required_unittests.py tests.vnext.test_c03_sec_release tests.vnext.test_governance_signals tests.vnext.test_xbrl_namespace_policy tests.vnext.test_c03_company_seam
+
 
   inherited-source-material:
     name: Foundation inherited source material
