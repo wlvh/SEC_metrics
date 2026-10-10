@@ -56,7 +56,7 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
     def test_unreceived_amendment_and_unproven_subject_refuse_before_source_extraction(self):
         for change in ('amendment','wrong_subject','combined_subject','unknown_mode'):
             value=self.prepared()
-            if change=='amendment':value['amendments']=[{'form':'10-K/A'}]
+            if change=='amendment':value['amendments']=[{'form':'10-K/A','accessionNumber':'0000012345-26-000002'}]
             elif change=='wrong_subject':value['subject_policy']['selected_cik']='54321'
             elif change=='combined_subject':value['subject_policy']['cross_entity_combination_authorized']=True
             else:value['subject_policy']['mode']='UNRESOLVED'
@@ -67,6 +67,11 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
                     cases.prepare_historical_risk_heading_year_case(repo_root=Path('/constructed'),
                         company_id='sample_entity',metric_id='D01',fiscal_year=2025)
                 read.assert_not_called()
+
+    def test_unreceived_amendment_reason_names_the_actual_dependency(self):
+        value=self.prepared();value['amendments']=[{'form':'10-K/A','accessionNumber':'0000012345-26-000002'}]
+        with self.assertRaisesRegex(ValueError,'AMENDMENT_NOT_RECEIVED:0000012345-26-000002$'):
+            self.case(prepared=value)
 
     def test_single_successor_source_does_not_combine_other_registrants_or_assert_events(self):
         value=self.prepared();value['subject_policy']['mode']='SUCCESSOR_REGISTRANT_ONLY'

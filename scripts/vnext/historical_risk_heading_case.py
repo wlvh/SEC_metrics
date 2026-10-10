@@ -66,7 +66,8 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
     annual = prepare_historical_annual_input(repo_root=source, company_id=company_id,
         period_selection=selection, rules_root=ROOT)
     _need(not annual['amendments'],
-          'HISTORICAL_RISK_HEADINGS_AMENDMENT_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
+          'HISTORICAL_RISK_HEADINGS_AMENDMENT_NOT_RECEIVED:' + ','.join(
+              filing['accessionNumber'] for filing in annual['amendments']), 'IMPLEMENTATION_GAP')
     subject = annual['subject_policy']
     _need(subject['mode'] in {'CONTINUOUS_PRIMARY','SUCCESSOR_REGISTRANT_ONLY'}
           and str(subject.get('selected_cik')) == str(annual['entity'])
