@@ -66,7 +66,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         _need(column_end is None or column_end.isoformat()==period['period_end'],'VISIBLE_DATE_CONFLICT')
         actual_end=date.fromisoformat(period['period_end']);end_headers=[]
         end_pattern=re.compile(r'\byears?\s+ended\s+('+_MONTH+r')\s+([0-9]{1,2})',re.I)
-        for header_row in table['rows'][:column['row_index']+1]:
+        for header_row in table['rows'][:cell['row_index']]:
             origins=[c for c in header_row['cells'] if c['is_origin'] and c['text'].strip()]
             for c in origins:
                 matches=list(end_pattern.finditer(c['text']))
@@ -74,6 +74,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                 if not matches and not full_dates:continue
                 common=(c['column_index']<cell['column_index'] and all(
                     other is c or re.fullmatch(r'[0-9]{4}',other['text'].strip())
+                    or bool(matches) and re.fullmatch(r'[0-9]+',other['text'].strip())
                     or _DATE.fullmatch(other['text'].strip())
                     or any(re.fullmatch(p,other['text'].strip(),re.I) for p in UNIT_HEADER)
                     for other in origins))
