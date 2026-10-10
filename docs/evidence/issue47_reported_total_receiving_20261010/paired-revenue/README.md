@@ -63,3 +63,5 @@ python3 tools/vnext_company.py results --company pfizer \
 全范围禁止case/Calculator复4.261s：三NO_SOURCE_CONTENT_CHANGE、两PREVIOUS_INPUT_WITHHELD，零计算；另进程results .694s/5rows，44result/pointer文件保。旧任务另独立读.740s保25rows/424allstate、旧失败/开发/正确版本不改。新源码执行准确记13cb+未提交b860源码/test树，不倒签提交；原参考只用于抽取后比较，非输入。新SEC/model/paid/NativeRun/正式接受0。
 
 修复与重验按6094654752交回接收者；权限更正不授本方自行merge/Ready/采纳。公共限定差异审查与当前fresh消费分开，新headCI另核。MacyNO_DEMONSTRATED_SPLIT、旧db609/a6e缺陷与1950/在线来源未完责任不变。
+
+70bb修后head十一CI全SUCCESS。实际company run38031660046：257source/220.945s、105history/1.148s、6paired/1.040s、44single-line/period23.138s（COMMON独立$跨列yeargroup正反例方法逐项ok），5D04/13event/10retention/27原SEC全部执行零skip。当前成功不是借790旧绿灯；完整fresh公司证据独立于CI，不因64ec只有测试再算财报。日志存独立主目录证据分支，产品head不再为日志推。

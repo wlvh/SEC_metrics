@@ -1,0 +1,18 @@
+test_actual_current_consumers_bind_fixed_fiscal_assertion_only_when_used (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_actual_current_consumers_bind_fixed_fiscal_assertion_only_when_used) ... ok
+test_common_share_unit_header_and_split_currency_use_spanned_year (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_common_share_unit_header_and_split_currency_use_spanned_year) ... ok
+test_component_rows_cannot_be_relabelled_as_single_revenue (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_component_rows_cannot_be_relabelled_as_single_revenue) ... ok
+test_existing_entity_period_unit_scope_and_xml_checks_still_apply (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_existing_entity_period_unit_scope_and_xml_checks_still_apply) ... ok
+test_explicit_single_line_keeps_original_fact_and_default_contract (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_explicit_single_line_keeps_original_fact_and_default_contract) ... ok
+test_legitimate_repeated_header_and_currency_symbol_keep_the_single_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_legitimate_repeated_header_and_currency_symbol_keep_the_single_amount) ... ok
+test_no_statement_title_no_cost_or_no_income_does_not_prove_total (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_no_statement_title_no_cost_or_no_income_does_not_prove_total) ... ok
+test_only_explicit_boolean_option_and_exact_plain_label (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_only_explicit_boolean_option_and_exact_plain_label) ... ok
+test_remaining_tagged_and_untagged_revenue_parts_are_not_sole_line (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_remaining_tagged_and_untagged_revenue_parts_are_not_sole_line) ... ok
+test_repeated_year_header_does_not_hide_an_earlier_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_repeated_year_header_does_not_hide_an_earlier_amount) ... ok
+test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match) ... ok
+test_selected_fact_ordinal_is_not_a_python_list_offset (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_fact_ordinal_is_not_a_python_list_offset) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.378s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 12, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_single_revenue_line"]}
