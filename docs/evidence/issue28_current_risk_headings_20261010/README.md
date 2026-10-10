@@ -21,3 +21,10 @@ These runs used the accurately recorded uncommitted adapter tree after256930bf; 
 Required test command: `TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 python3 tests/required_unittests.py tests.vnext.test_current_risk_heading_case tests.vnext.test_d01_explicit_running_headers tests.vnext.test_ordinary_current_update tests.vnext.test_company_current_records tests.vnext.test_company_local`. New explicit workflow invokes the current D01 controls; no old tests removed. Limited delta review is pending. Only the cited current company is checked; not all ten, historical consumer or model result.
 
 Receiving requires PR124 + PR134 necessary product differences before this consumer. No Ready, merge, adoption, deploy, active or new calling purposes granted. New scope stays out of candidates134/133 under review.
+
+
+## Limited review finding and minimal correction
+
+Original b4afa87 limited review REQUEST_CHANGES retained:100 independent tests7.908s pass but oneP2actual consumed parser/policy missing from D01 processing declarations. Reviewer37tools/3ordinarymessages/ended; old verdict remains. Actual fiscal label parser uses text_results_v2._ReportedFactMetadata/_verified_context and text_results_v2_policy CIK scheme; these two dependencies now explicitly declared. No business parser/policy bytes or shared defaults altered.
+
+New small failure regression uses actual configuration SHA reading and source/record doubles: changing either file originally returned NO_SOURCE_CONTENT_CHANGE (two subcases fail in1test/.065s); after explicit declaration both reprocess once, then same input/config reuses without another factory, preserving first successful directory.101affected controls now pass (see dependency-repair-tests.log); no hidden answer or fake business credit. This repair changes processing identity legitimately; old Enphase60 records stay original. Original full adapter review is not automatically upgraded; a new limited delta check only covers these declarations/regression.

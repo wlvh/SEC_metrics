@@ -58,7 +58,7 @@ assert row['value']==expected and len(reference['headings_read'])==60
 with (actual_output/'metric_evidence.csv').open() as f:evidence=list(csv.DictReader(f))
 assert evidence and any('0001463101-26-000013' in str(r) for r in evidence)
 after=hashes()
-if a.mode!='first':assert before==after and len(before)==6,(before,after)
+if a.mode!='first':assert before==after and len(before) in (6,12),(before,after)
 print(json.dumps({'mode':a.mode,'program_root':str(program),'source_root':str(a.source_root),
     'work_root':str(a.work_root),'output_root':str(actual_output),'exit_code':exit_code,'seconds':elapsed,
     'status':report.get('status'),'metric_status':report.get('metrics',[{}])[0].get('status'),

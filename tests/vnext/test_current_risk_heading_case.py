@@ -95,5 +95,39 @@ class CurrentRiskHeadingCaseTest(unittest.TestCase):
                     case_factory=current.prepare_current_risk_heading_case,
                     current_case_factory=current.prepare_current_risk_heading_case)
 
+    def test_consumed_fiscal_parser_and_policy_change_reprocess_once(self):
+        """Real config hashes; small source/record doubles isolate the controller."""
+        original_hash=update.sha256_file
+        for relative in ('scripts/vnext/text_results_v2.py','catalog/r6/text_results_v2_policy.json'):
+            with self.subTest(dependency=relative),tempfile.TemporaryDirectory() as folder:
+                calls=[];records={}
+                def factory(**kwargs):calls.append(kwargs);return {'test_only':True}
+                def save(**kwargs):
+                    path=kwargs['output_root'];path.mkdir(parents=True)
+                    record={'manifest':{'company_id':'enphase_energy','metric_id':'D01','source_proofs':[]},
+                        'result':{'company_id':'enphase_energy','metric_id':'D01','publication':'PUBLISHED',
+                                  'period_end':'2025-12-31','result_id':'test-only-'+str(len(calls))}}
+                    records[str(path)]=record;return record
+                args=dict(state_root=Path(folder)/'state',source_root=REPO_ROOT,
+                    company_id='enphase_energy',metric_id='D01',current_case_factory=factory,
+                    processing_files=current.PROCESSING_FILES)
+                with patch.object(update,'_source_census',return_value=[]),\
+                     patch.object(update,'_current_sources',return_value=[]),\
+                     patch.object(update,'save_calculated_case',side_effect=save),\
+                     patch.object(update,'read_saved_result',side_effect=lambda **kw:records[str(kw['output_root'])]):
+                    first=update.run_once(**args)
+                    def changed(*,path):
+                        return 'changed-consumed-rule' if path==REPO_ROOT/relative else original_hash(path=path)
+                    with patch.object(update,'sha256_file',side_effect=changed):
+                        second=update.run_once(**args)
+                        with patch.object(update,'save_calculated_case',side_effect=AssertionError('No third save')):
+                            again=update.run_once(**args)
+                    self.assertEqual(first['status'],'CANDIDATE_READY')
+                    self.assertEqual(second['status'],'CANDIDATE_READY')
+                    self.assertNotEqual(first['version'],second['version'])
+                    self.assertEqual(again['status'],'NO_SOURCE_CONTENT_CHANGE')
+                    self.assertEqual(len(calls),2)
+                    self.assertTrue((Path(folder)/'state/results'/first['version']).is_dir())
+
 
 if __name__=='__main__':unittest.main()

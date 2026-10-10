@@ -1,0 +1,29 @@
+{
+  "ended_at_utc": "2026-10-10T04:03:13+00:00",
+  "tools_including_wrappers_and_nested": 37,
+  "ordinary_messages_including_final": 3,
+  "reviewed_sha": "b4afa87aec04354bc1e0abf3e6aa4aed65a4105d",
+  "head_at_close": "b4afa87aec04354bc1e0abf3e6aa4aed65a4105d",
+  "six_files_still_equal_to_commit": true,
+  "verdict": "REQUEST_CHANGES_LIMITED_DELTA",
+  "findings": [
+    {
+      "priority": 2,
+      "file": "scripts/vnext/current_risk_heading_case.py",
+      "line_start": 13,
+      "line_end": 27,
+      "missing_dependencies": [
+        "scripts/vnext/text_results_v2.py",
+        "catalog/r6/text_results_v2_policy.json"
+      ]
+    }
+  ],
+  "tracked_development_diff": "",
+  "logs": [
+    "dependency-policy-probe.log",
+    "dependency-probe.log",
+    "directed-tests.log",
+    "saved-artifact-audit.log",
+    "结论.md"
+  ]
+}

@@ -14,6 +14,7 @@ PROCESSING_FILES = (
     'scripts/vnext/current_risk_heading_case.py',
     'scripts/vnext/normal_annual_input_v2.py',
     'scripts/vnext/fiscal_year_labels.py',
+    'scripts/vnext/text_results_v2.py',
     'scripts/vnext/normal_governance_input.py',
     'scripts/vnext/d01_emphasis_results.py',
     'scripts/vnext/d01_emphasis_source.py',
@@ -24,6 +25,7 @@ PROCESSING_FILES = (
     'scripts/vnext/text_review.py',
     'scripts/vnext/review.py',
     'config/normal_fiscal_year_labels_v1.json',
+    'catalog/r6/text_results_v2_policy.json',
     SPEC_PATH, CAPACITY_SPEC_PATH,
 )
 
