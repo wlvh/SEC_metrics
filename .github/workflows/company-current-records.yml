@@ -43,6 +43,8 @@ name: Company saved-source records
       - 'tests/vnext/test_historical_geography_cases.py'
       - 'tests/vnext/test_selected_history_result_state.py'
       - 'tests/vnext/test_selected_source_requirements.py'
+      - 'tests/vnext/test_company_fiscal_range.py'
+      - 'tests/vnext/test_selected_historical_fiscal_label.py'
       - 'tests/fixtures/lodging_selected_table.html'
       - 'config/**'
       - 'catalog/**'
@@ -91,7 +93,7 @@ jobs:
       - name: Selected annual source preflight and missing dependencies
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 tests/required_unittests.py tests.vnext.test_selected_source_requirements
+        run: python3 tests/required_unittests.py tests.vnext.test_selected_source_requirements tests.vnext.test_company_fiscal_range tests.vnext.test_selected_historical_fiscal_label
       - name: Existing historical SEC count and recorded capture compatibility
         env:
           PYTHONDONTWRITEBYTECODE: '1'

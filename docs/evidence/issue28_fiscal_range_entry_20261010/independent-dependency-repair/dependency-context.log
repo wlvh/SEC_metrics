@@ -1,0 +1,225 @@
+CONTEXT scripts/vnext/company_local.py:383-423
+383:    if set(selected) <= {'B01','B02'}:
+384:        from .company_fiscal_range import range_case_factories, PROCESSING_FILES as range_files
+385:        years=list(range(fiscal_year_start,fiscal_year_end+1))
+386:        factories=range_case_factories(company_id=company_id,fiscal_years=years,
+387:            metric_ids=selected,case_factories={m:prepare_historical_statement_year_case for m in selected})
+388:        return run_saved_company(company_id=company_id,source_root=source_root,
+389:            work_dir=work_dir,output_dir=output_dir,metric_ids=selected,fiscal_years=years,
+390:            case_factories=factories,processing_files_by_metric={m:tuple(dict.fromkeys(
+391:                (*income_files,*range_files))) for m in selected})
+392:    if not set(selected) <= set(SUPPORTED_METRICS):
+393:        return run_saved_company(company_id=company_id, source_root=source_root,
+394:            work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
+395:            fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
+396:            case_factories={m: (prepare_historical_rpo_year_case if m in rpo_metrics else
+397:                               prepare_historical_event_year_case if m in event_metrics else
+398:                               prepare_historical_geography_year_case if m in geography_metrics else
+399:                               prepare_historical_average_risk_year_case if m in average_risk_metrics else
+400:                               prepare_historical_bank_scope_year_case if m in bank_scope_metrics else
+401:                               prepare_historical_current_annual_year_case if m == 'B07' else
+402:                               prepare_historical_bank_year_case if m in bank_metrics else
+403:                               prepare_historical_capital_year_case if m in capital_metrics else
+404:                               prepare_historical_liquidity_year_case if m in liquidity_metrics else
+405:                               prepare_historical_lodging_year_case if m in SUPPORTED_METRICS
+406:                               else prepare_historical_statement_year_case) for m in selected},
+407:            processing_files_by_metric={m: (rpo_files if m in rpo_metrics else
+408:                                            event_files if m in event_metrics else
+409:                                            geography_files if m in geography_metrics else
+410:                                            average_risk_files if m in average_risk_metrics else
+411:                                            bank_scope_files if m in bank_scope_metrics else
+412:                                            statement_files if m == 'B07' else
+413:                                            bank_files if m in bank_metrics else
+414:                                            capital_files if m in capital_metrics else
+415:                                            liquidity_files if m in liquidity_metrics else
+416:                                            HISTORICAL_LODGING_PROCESSING_FILES if m in SUPPORTED_METRICS
+417:                                            else income_files if m in {'B01','B02'}
+418:                                            else statement_files) for m in selected})
+419:    return run_saved_company(company_id=company_id, source_root=source_root,
+420:        work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
+421:        fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
+422:        case_factory=prepare_historical_lodging_year_case,
+423:        processing_files=HISTORICAL_LODGING_PROCESSING_FILES)
+
+CONTEXT scripts/vnext/historical_statement_cases.py:37-65
+37:PROCESSING_FILES = (
+38:    'scripts/vnext/historical_statement_cases.py',
+39:    'scripts/vnext/normal_period_selection.py',
+40:    'scripts/vnext/normal_history_catalog.py',
+41:    'scripts/vnext/historical_annual_input.py',
+42:    'scripts/vnext/historical_dei.py',
+43:    'scripts/vnext/historical_fiscal_labels.py',
+44:    'scripts/vnext/historical_filing_inventory.py',
+45:    'scripts/vnext/normal_companyfacts_results.py',
+46:    'scripts/vnext/normal_annual_input.py',
+47:    'scripts/vnext/normal_governance_input.py',
+48:    'scripts/vnext/batch_workflow.py',
+49:    'scripts/vnext/zero_ai_r2.py',
+50:    'scripts/vnext/paired_measure_v1.py',
+51:    'config/normal_period_selection_v1.json',
+52:    'config/normal_fiscal_year_labels_v1.json',
+53:    'catalog/deterministic_metrics.json',
+54:)
+55:INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
+56:    'scripts/vnext/selected_income_source_v1.py',
+57:    'scripts/vnext/selected_revenue_scope_v1.py',
+58:    'scripts/vnext/selected_reported_revenue_v2.py',
+59:    'scripts/vnext/selected_fiscal_definition_scope_v1.py',
+60:    'scripts/vnext/normal_annual_input_v2.py',
+61:    'scripts/vnext/fiscal_year_labels.py',
+62:    'scripts/vnext/composite_scope.py',
+63:    'scripts/vnext/xbrl_namespace_policy.py',
+64:    'scripts/vnext/ordinary_income_input.py',
+65:    'scripts/vnext/financial_duration.py',
+
+CONTEXT scripts/vnext/company_fiscal_range.py:1-32
+1:"""Discover issuer fiscal years and reuse the one ordinary company controller.
+2:
+3:Only source/label discovery lives here. The historical owner supplies the label
+4:reader and business cases; no fiscal-date arithmetic, second Calculator or
+5:capture client is introduced. A processing factory discovers lazily so an
+6:unchanged saved result need not prepare annual input just to compare changes.
+7:"""
+8:from pathlib import Path
+9:
+10:from sec_urls import accession_document_url, companyfacts_url
+11:from .canonical import content_hash, sha256_file
+12:from .normal_annual_input import _registry_rows, _subject_policy
+13:from .normal_history_catalog import load_history_for_period, annual_periods
+14:from .normal_period_selection import restore_period_selection
+15:from .normal_source_authority import ROOT
+16:from .normal_source_requirements import _Requirements
+17:from .selected_source_requirements import discover_selected_annual_requirements
+18:
+19:METRIC_IDS = frozenset({'B01', 'B02'})
+20:PROCESSING_FILES = (
+21:    'scripts/vnext/company_fiscal_range.py',
+22:    'scripts/vnext/selected_source_requirements.py',
+23:    'scripts/vnext/fiscal_year_labels.py',
+24:    'scripts/vnext/historical_fiscal_labels.py',
+25:    'scripts/vnext/historical_dei.py',
+26:    'scripts/vnext/normal_annual_input_v2.py',
+27:    'config/normal_fiscal_year_labels_v1.json',
+28:)
+29:
+30:
+31:def _need(condition, reason):
+32:    if not condition:raise ValueError('COMPANY_FISCAL_RANGE_'+reason)
+
+HISTORICAL_CORE_STATIC_BYTES
+[
+  {
+    "path": "scripts/vnext/historical_annual_input.py",
+    "bytes_equal": true,
+    "f51_sha256": "d1ae23acc349f3866298686ca2030186d43d0ed2982fb0fba77bb603d1877ad2",
+    "patch_sha256": "d1ae23acc349f3866298686ca2030186d43d0ed2982fb0fba77bb603d1877ad2"
+  },
+  {
+    "path": "scripts/vnext/historical_average_risk_cases.py",
+    "bytes_equal": true,
+    "f51_sha256": "b71df1945c07be213ba5272d62a1faf7f14f1afd9ad3ab520952808e766fde19",
+    "patch_sha256": "b71df1945c07be213ba5272d62a1faf7f14f1afd9ad3ab520952808e766fde19"
+  },
+  {
+    "path": "scripts/vnext/historical_average_risk_wording.py",
+    "bytes_equal": true,
+    "f51_sha256": "216a3202c0783bd87267b0ef9f4a72558c6b195432cbefc5c47809399c0864d7",
+    "patch_sha256": "216a3202c0783bd87267b0ef9f4a72558c6b195432cbefc5c47809399c0864d7"
+  },
+  {
+    "path": "scripts/vnext/historical_bank_performance_cases.py",
+    "bytes_equal": true,
+    "f51_sha256": "4babe0a06fd9a33a1abec0430154f14fcdcf33e546432c88da4bfdaf5491a524",
+    "patch_sha256": "4babe0a06fd9a33a1abec0430154f14fcdcf33e546432c88da4bfdaf5491a524"
+  },
+  {
+    "path": "scripts/vnext/historical_bank_scope_cases.py",
+    "bytes_equal": true,
+    "f51_sha256": "84790392d91c2eded1fdb1153bfcd48d90b0601d30aeee616a9d1f8097064f22",
+    "patch_sha256": "84790392d91c2eded1fdb1153bfcd48d90b0601d30aeee616a9d1f8097064f22"
+  },
+  {
+    "path": "scripts/vnext/historical_bank_scope_wording.py",
+    "bytes_equal": true,
+    "f51_sha256": "c185a39ed5701e042abcc50b3ff9bc0f661efadb9bb7f4bbc6f2112760197380",
+    "patch_sha256": "c185a39ed5701e042abcc50b3ff9bc0f661efadb9bb7f4bbc6f2112760197380"
+  },
+  {
+    "path": "scripts/vnext/historical_board_composition.py",
+    "bytes_equal": true,
+    "f51_sha256": "a514ceffd0855733222526e38c170840d789b07bcef5e82cda096b4942cf4158",
+    "patch_sha256": "a514ceffd0855733222526e38c170840d789b07bcef5e82cda096b4942cf4158"
+  },
+  {
+    "path": "scripts/vnext/historical_board_composition_v2.py",
+    "bytes_equal": true,
+    "f51_sha256": "73ec30fff3642eba9023c894119e10cbfebe63235e9d80bad0adbb106d37ba6b",
+    "patch_sha256": "73ec30fff3642eba9023c894119e10cbfebe63235e9d80bad0adbb106d37ba6b"
+  },
+  {
+    "path": "scripts/vnext/historical_capital_cases.py",
+    "bytes_equal": true,
+    "f51_sha256": "aa9fd9c7382b1f29a030415f4c7e5422724c821ca127261867aae805c659c56d",
+    "patch_sha256": "aa9fd9c7382b1f29a030415f4c7e5422724c821ca127261867aae805c659c56d"
+  },
+  {
+    "path": "scripts/vnext/historical_dei.py",
+    "bytes_equal": true,
+    "f51_sha256": "2d31e802c78a4bce0b1e26ca4d55cd100aa240031e77309793a91702986472de",
+    "patch_sha256": "2d31e802c78a4bce0b1e26ca4d55cd100aa240031e77309793a91702986472de"
+  },
+  {
+    "path": "scripts/vnext/historical_event_cases.py",
+    "bytes_equal": true,
+    "f51_sha256": "4df99588ebeec2388f2bb6f039387f3379f79e68c694116119108fe882cb668f",
+    "patch_sha256": "4df99588ebeec2388f2bb6f039387f3379f79e68c694116119108fe882cb668f"
+  },
+  {
+    "path": "scripts/vnext/historical_filing_inventory.py",
+    "bytes_equal": true,
+    "f51_sha256": "3f141671afad375cd2bedae87aefdc81cba978c75828304b1ced8d81c89fa164",
+    "patch_sha256": "3f141671afad375cd2bedae87aefdc81cba978c75828304b1ced8d81c89fa164"
+  },
+  {
+    "path": "scripts/vnext/historical_fiscal_labels.py",
+    "bytes_equal": true,
+    "f51_sha256": "280c8dffebfdbd4a302e18270415fc2b6afb00d75a432dcce804b608dadedf4b",
+    "patch_sha256": "280c8dffebfdbd4a302e18270415fc2b6afb00d75a432dcce804b608dadedf4b"
+  },
+  {
+    "path": "scripts/vnext/historical_geography_cases.py",
+    "bytes_equal": true,
+    "f51_sha256": "594f2ff50970eabb9ab03022ab50783aa6b1e469c6f8897f37c1405c920dc707",
+    "patch_sha256": "594f2ff50970eabb9ab03022ab50783aa6b1e469c6f8897f37c1405c920dc707"
+  },
+  {
+    "path": "scripts/vnext/historical_liquidity_cases.py",
+    "bytes_equal": true,
+    "f51_sha256": "297a94bdb6a65f5dabaf3ce587fd636ea37afc612846cb370435714f7e9ed4f6",
+    "patch_sha256": "297a94bdb6a65f5dabaf3ce587fd636ea37afc612846cb370435714f7e9ed4f6"
+  },
+  {
+    "path": "scripts/vnext/historical_lodging_results.py",
+    "bytes_equal": true,
+    "f51_sha256": "8af0a70a404c06298d6da5d426d706f522c36ab0d2cd5094a055bf2b9520fe6a",
+    "patch_sha256": "8af0a70a404c06298d6da5d426d706f522c36ab0d2cd5094a055bf2b9520fe6a"
+  },
+  {
+    "path": "scripts/vnext/historical_rpo_cases.py",
+    "bytes_equal": true,
+    "f51_sha256": "738a969d07b87bf225ec084cc08b2376caf5620698d88d42a92d8be92168ce40",
+    "patch_sha256": "738a969d07b87bf225ec084cc08b2376caf5620698d88d42a92d8be92168ce40"
+  },
+  {
+    "path": "scripts/vnext/historical_statement_cases.py",
+    "bytes_equal": true,
+    "f51_sha256": "454131a7a443402eb7bef6e6af4ae9975e00edcc060861e3d97d648e74b22afc",
+    "patch_sha256": "454131a7a443402eb7bef6e6af4ae9975e00edcc060861e3d97d648e74b22afc"
+  },
+  {
+    "path": "scripts/vnext/selected_income_source_v1.py",
+    "bytes_equal": true,
+    "f51_sha256": "4dfbb72bcc07eb0df98cf98181012fe2a23bc0ce720bd2bf268f08104c178852",
+    "patch_sha256": "4dfbb72bcc07eb0df98cf98181012fe2a23bc0ce720bd2bf268f08104c178852"
+  }
+]

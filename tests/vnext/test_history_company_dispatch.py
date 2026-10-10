@@ -9,6 +9,40 @@ from vnext import company_local as local
 
 
 class HistoryCompanyDispatchTest(TestCase):
+    def test_absent_saved_range_year_retains_source_unavailable_category(self):
+        """Constructed missing-year control executes the public lazy factory."""
+        from vnext.company_fiscal_range import range_case_factories
+        producer = lambda **kwargs: self.fail('An absent year cannot run a business producer')
+        plan = {'tasks': [{'fiscal_year': 2025,
+            'status': 'FISCAL_YEAR_SOURCE_UNRESOLVED',
+            'limitations': [{'phase': 'FISCAL_LABEL_UNIQUENESS',
+                            'reason': 'FISCAL_YEAR_MISSING_OR_AMBIGUOUS',
+                            'matching_report_ends': []}]}]}
+        factories = range_case_factories(company_id='macys', fiscal_years=[2025],
+            metric_ids=['B01'], case_factories={'B01': producer})
+        with patch('vnext.company_fiscal_range.discover_fiscal_range', return_value=plan), \
+             patch('vnext.company_fiscal_range.sha256_file', return_value='constructed-source-version'):
+            with self.assertRaisesRegex(ValueError, 'YEAR_UNRESOLVED') as caught:
+                factories['B01'](repo_root=self.root, company_id='macys',
+                    metric_id='B01', fiscal_year=2025)
+        self.assertEqual('SOURCE_UNAVAILABLE', getattr(caught.exception, 'category', None))
+
+    def test_reported_growth_range_tracks_both_income_and_range_readers(self):
+        """Small real-dispatch control; it does not calculate a financial value."""
+        from vnext.historical_statement_cases import INCOME_PROCESSING_FILES
+        from vnext.company_fiscal_range import PROCESSING_FILES as range_files
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared, \
+             patch('vnext.company_fiscal_range.discover_fiscal_range',
+                   side_effect=AssertionError('Unchanged path must not discover upfront')):
+            self.run_history(company_id='macys', metric_ids=['B01', 'B02'])
+        args = shared.call_args.kwargs
+        for metric in ['B01', 'B02']:
+            dependencies = args['processing_files_by_metric'][metric]
+            with self.subTest(metric=metric):
+                self.assertTrue(set(INCOME_PROCESSING_FILES) <= set(dependencies))
+                self.assertTrue(set(range_files) <= set(dependencies))
+                self.assertEqual(len(dependencies), len(set(dependencies)))
+
     def test_interest_coverage_adds_only_its_current_annual_case(self):
         from vnext.historical_statement_cases import (
             prepare_historical_current_annual_year_case, prepare_historical_statement_year_case,

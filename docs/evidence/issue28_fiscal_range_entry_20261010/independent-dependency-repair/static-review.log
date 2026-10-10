@@ -1,0 +1,543 @@
+UTC_STATIC
+2026-10-10T08:53:01.706151+00:00
+
+BASE
+fb9cc768ffcc8b1ada445895ff5f04aa9fbe1d8e
+
+PATCH_HEAD
+4d58197892eea09ee0cc6fde10a860a29a5111fd
+
+PATCH_PARENTS
+fb9cc768ffcc8b1ada445895ff5f04aa9fbe1d8e
+
+SOURCE_AND_TEST_DIFF
+diff --git a/scripts/vnext/company_local.py b/scripts/vnext/company_local.py
+index cb4745ef..04a1a9b7 100644
+--- a/scripts/vnext/company_local.py
++++ b/scripts/vnext/company_local.py
+@@ -388,7 +388,7 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
+         return run_saved_company(company_id=company_id,source_root=source_root,
+             work_dir=work_dir,output_dir=output_dir,metric_ids=selected,fiscal_years=years,
+             case_factories=factories,processing_files_by_metric={m:tuple(dict.fromkeys(
+-                (*(income_files if m=='B01' else statement_files),*range_files))) for m in selected})
++                (*income_files,*range_files))) for m in selected})
+     if not set(selected) <= set(SUPPORTED_METRICS):
+         return run_saved_company(company_id=company_id, source_root=source_root,
+             work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
+diff --git a/tests/vnext/test_history_company_dispatch.py b/tests/vnext/test_history_company_dispatch.py
+index 526664b9..64df756f 100644
+--- a/tests/vnext/test_history_company_dispatch.py
++++ b/tests/vnext/test_history_company_dispatch.py
+@@ -9,6 +9,22 @@ from vnext import company_local as local
+ 
+ 
+ class HistoryCompanyDispatchTest(TestCase):
++    def test_reported_growth_range_tracks_both_income_and_range_readers(self):
++        """Small real-dispatch control; it does not calculate a financial value."""
++        from vnext.historical_statement_cases import INCOME_PROCESSING_FILES
++        from vnext.company_fiscal_range import PROCESSING_FILES as range_files
++        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared, \
++             patch('vnext.company_fiscal_range.discover_fiscal_range',
++                   side_effect=AssertionError('Unchanged path must not discover upfront')):
++            self.run_history(company_id='macys', metric_ids=['B01', 'B02'])
++        args = shared.call_args.kwargs
++        for metric in ['B01', 'B02']:
++            dependencies = args['processing_files_by_metric'][metric]
++            with self.subTest(metric=metric):
++                self.assertTrue(set(INCOME_PROCESSING_FILES) <= set(dependencies))
++                self.assertTrue(set(range_files) <= set(dependencies))
++                self.assertEqual(len(dependencies), len(set(dependencies)))
++
+     def test_interest_coverage_adds_only_its_current_annual_case(self):
+         from vnext.historical_statement_cases import (
+             prepare_historical_current_annual_year_case, prepare_historical_statement_year_case,
+
+
+DEPENDENCY_RELATED_LOCATIONS
+tests/vnext/test_history_company_dispatch.py:12:    def test_reported_growth_range_tracks_both_income_and_range_readers(self):
+tests/vnext/test_history_company_dispatch.py:14:        from vnext.historical_statement_cases import INCOME_PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:15:        from vnext.company_fiscal_range import PROCESSING_FILES as range_files
+tests/vnext/test_history_company_dispatch.py:19:            self.run_history(company_id='macys', metric_ids=['B01', 'B02'])
+tests/vnext/test_history_company_dispatch.py:24:                self.assertTrue(set(INCOME_PROCESSING_FILES) <= set(dependencies))
+tests/vnext/test_history_company_dispatch.py:28:    def test_interest_coverage_adds_only_its_current_annual_case(self):
+tests/vnext/test_history_company_dispatch.py:31:            PROCESSING_FILES)
+tests/vnext/test_history_company_dispatch.py:34:            self.run_history(company_id='macys', metric_ids=['B07', 'B04', 'B05', 'B08'])
+tests/vnext/test_history_company_dispatch.py:40:        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B07'])
+tests/vnext/test_history_company_dispatch.py:47:    def run_history(self, **changes):
+tests/vnext/test_history_company_dispatch.py:49:            work_dir=self.root/'state', output_dir=self.root/'outputs', metric_ids=['B10', 'B11'],
+tests/vnext/test_history_company_dispatch.py:53:    def test_range_uses_one_public_company_controller_and_existing_case(self):
+tests/vnext/test_history_company_dispatch.py:65:    def test_invalid_range_rejects_before_source_or_writes(self):
+tests/vnext/test_history_company_dispatch.py:72:    def test_missing_source_is_explicit_and_does_not_acquire(self):
+tests/vnext/test_history_company_dispatch.py:77:    def test_unsupported_family_uses_no_fabricated_historical_case(self):
+tests/vnext/test_history_company_dispatch.py:80:                self.run_history(metric_ids=['D03'])
+tests/vnext/test_history_company_dispatch.py:83:    def test_statement_pilot_uses_original_per_metric_factories_and_dependencies(self):
+tests/vnext/test_history_company_dispatch.py:84:        from vnext.historical_statement_cases import prepare_historical_statement_year_case, PROCESSING_FILES, INCOME_PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:86:            self.run_history(company_id='macys', metric_ids=['B01', 'B02', 'B04', 'B05'],
+tests/vnext/test_history_company_dispatch.py:92:        self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B01'])
+tests/vnext/test_history_company_dispatch.py:93:        self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B02'])
+tests/vnext/test_history_company_dispatch.py:95:            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+tests/vnext/test_history_company_dispatch.py:96:        self.assertIn('scripts/vnext/selected_income_source_v1.py', INCOME_PROCESSING_FILES)
+tests/vnext/test_history_company_dispatch.py:97:        self.assertNotIn('scripts/vnext/selected_income_source_v1.py', PROCESSING_FILES)
+tests/vnext/test_history_company_dispatch.py:100:    def test_mixed_lodging_keeps_its_previous_factory_and_tuple(self):
+tests/vnext/test_history_company_dispatch.py:101:        from vnext.historical_lodging_results import prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:104:            self.run_history(metric_ids=['B01', 'B10', 'B11'])
+tests/vnext/test_history_company_dispatch.py:109:            self.assertEqual(HISTORICAL_LODGING_PROCESSING_FILES, args['processing_files_by_metric'][metric])
+tests/vnext/test_history_company_dispatch.py:112:    def test_liquidity_keeps_the_statement_and_lodging_original_factories(self):
+tests/vnext/test_history_company_dispatch.py:113:        from vnext.historical_liquidity_cases import prepare_historical_liquidity_year_case, PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:114:        from vnext.historical_statement_cases import prepare_historical_statement_year_case, INCOME_PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:117:            self.run_history(metric_ids=['B08', 'B09', 'B01', 'B04', 'B10'])
+tests/vnext/test_history_company_dispatch.py:121:            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+tests/vnext/test_history_company_dispatch.py:123:        self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B01'])
+tests/vnext/test_history_company_dispatch.py:127:    def test_current_mode_keeps_the_existing_public_route(self):
+tests/vnext/test_history_company_dispatch.py:135:    def test_capital_family_preserves_each_existing_metric_factory(self):
+tests/vnext/test_history_company_dispatch.py:136:        from vnext.historical_capital_cases import prepare_historical_capital_year_case, PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:139:            self.run_history(company_id='jpmorgan_chase', metric_ids=['A01', 'A02', 'B08'])
+tests/vnext/test_history_company_dispatch.py:144:        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['A01'])
+tests/vnext/test_history_company_dispatch.py:146:    def test_rpo_uses_native_case_without_changing_statement_or_capital_factories(self):
+tests/vnext/test_history_company_dispatch.py:147:        from vnext.historical_rpo_cases import prepare_historical_rpo_year_case, PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:151:            self.run_history(company_id='salesforce', metric_ids=['B12', 'B01', 'A01'])
+tests/vnext/test_history_company_dispatch.py:154:        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B12'])
+tests/vnext/test_history_company_dispatch.py:158:    def test_bank_performance_family_uses_original_factories_for_other_families(self):
+tests/vnext/test_history_company_dispatch.py:159:        from vnext.historical_bank_performance_cases import prepare_historical_bank_year_case, PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:162:            self.run_history(company_id='jpmorgan_chase', metric_ids=['A05', 'A08', 'A01'])
+tests/vnext/test_history_company_dispatch.py:166:        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['A08'])
+tests/vnext/test_history_company_dispatch.py:169:    def test_cli_passes_period_arguments_to_the_same_company_entry(self):
+tests/vnext/test_history_company_dispatch.py:179:    def test_completed_withheld_survives_read_after_another_metric_subset(self):
+tests/vnext/test_history_company_dispatch.py:226:    def test_event_family_keeps_existing_income_balance_and_hotel_factories(self):
+tests/vnext/test_history_company_dispatch.py:227:        from vnext.historical_event_cases import prepare_historical_event_year_case, PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:228:        from vnext.historical_statement_cases import prepare_historical_statement_year_case, INCOME_PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:235:            self.run_history(metric_ids=['C01', 'E02', 'B01', 'B08', 'B10', 'B07', 'A01', 'A05'])
+tests/vnext/test_history_company_dispatch.py:239:            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+tests/vnext/test_history_company_dispatch.py:241:        self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B01'])
+tests/vnext/test_history_company_dispatch.py:248:    def test_geography_keeps_existing_factories_and_declares_its_source_dependencies(self):
+tests/vnext/test_history_company_dispatch.py:249:        from vnext.historical_geography_cases import prepare_historical_geography_year_case, PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:254:            self.run_history(company_id='jpmorgan_chase', metric_ids=['A13', 'A01', 'B01', 'B10'],
+tests/vnext/test_history_company_dispatch.py:261:        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['A13'])
+tests/vnext/test_history_company_dispatch.py:262:        self.assertIn('scripts/vnext/financial_structured.py', PROCESSING_FILES)
+tests/vnext/test_history_company_dispatch.py:263:        self.assertIn('scripts/vnext/normal_annual_input.py', PROCESSING_FILES)
+tests/vnext/test_history_company_dispatch.py:266:    def test_average_risk_family_preserves_existing_metric_factories(self):
+tests/vnext/test_history_company_dispatch.py:267:        from vnext.historical_average_risk_cases import prepare_historical_average_risk_year_case, PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:272:            self.run_history(company_id='jpmorgan_chase', metric_ids=['A03', 'A12', 'A01', 'B01', 'B10'])
+tests/vnext/test_history_company_dispatch.py:276:            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+tests/vnext/test_history_company_dispatch.py:281:    def test_bank_scope_family_preserves_existing_metric_factories(self):
+tests/vnext/test_history_company_dispatch.py:282:        from vnext.historical_bank_scope_cases import prepare_historical_bank_scope_year_case, PROCESSING_FILES
+tests/vnext/test_history_company_dispatch.py:286:            self.run_history(company_id='jpmorgan_chase', metric_ids=['A04', 'A09', 'A11', 'A01', 'B01'])
+tests/vnext/test_history_company_dispatch.py:290:            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+scripts/vnext/historical_statement_cases.py:37:PROCESSING_FILES = (
+scripts/vnext/historical_statement_cases.py:55:INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
+
+
+SOURCE scripts/vnext/company_local.py:320-423
+320:            'latest_attempt', 'successful_attempt', 'new_candidate_created',
+321:            'business_metric_completed', 'saved_processing_mode', 'native_assessment_completed')
+322:            if k in row} for row in (rows[m] for m in configured)]
+323:        for name, stage in summary['stages'].items():
+324:            full = stage.get('result', {})
+325:            result = full.get('result', full)
+326:            summary['stages'][name] = {**{k: stage[k] for k in (
+327:                'returncode', 'elapsed_seconds', 'command', 'recorded_http_only') if k in stage},
+328:                'status': result.get('status'),
+329:                'report_file': stage.get('report_file', str(output/'stages'/(name+'.json')))}
+330:        summary['flow_completed'] = not summary.get('failure') and (output/'company-results.json').exists()
+331:        limited = summary.get('source_status') != 'SOURCES_READY' or any(
+332:            rows[m]['status'] not in {'CANDIDATE_READY', 'NO_SOURCE_CONTENT_CHANGE'} for m in selected)
+333:        limited = limited or any(e.get('replay_status') == 'FAILED' or e.get('result_validity') in {
+334:            'CONFIRMED_INVALID', 'CURRENT_RUNTIME_RELEASE_REQUIRED'} for e in summary.get('result_view', []))
+335:        summary['status'] = ('FLOW_COMPLETED_WITH_LIMITATIONS' if limited else 'FLOW_COMPLETED') \
+336:            if summary['flow_completed'] else 'FLOW_INCOMPLETE'
+337:        summary['all_configured_business_metrics_completed'] = False
+338:        summary['elapsed_seconds'] = format(time.monotonic()-start, '.6f')
+339:        _status_tables(output, company_id, rows, summary)
+340:        summary['outputs'] = {name: str(output/name) for name in ('metrics_matrix.csv', 'metric_evidence.csv', 'run_summary.json')}
+341:        _atomic_json(output/'run_summary.json', summary)
+342:    return summary
+343:
+344:
+345:def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_ids,
+346:                       fiscal_year_start, fiscal_year_end):
+347:    """Select saved issuer years; the shared company controller owns processing.
+348:
+349:    Historical acquisition and unsupported families retain their existing
+350:    entry. No source installation or old native-task mutation occurs here.
+351:    """
+352:    need(type(fiscal_year_start) is int and type(fiscal_year_end) is int
+353:         and 1900 <= fiscal_year_start <= fiscal_year_end <= 9998
+354:         and fiscal_year_end-fiscal_year_start < 5, 'COMPANY_HISTORY_FISCAL_RANGE_INVALID')
+355:    need(source_root is not None, 'LOCAL_HISTORY_PREPARED_SOURCE_REQUIRED')
+356:    from .historical_lodging_results import (SUPPORTED_METRICS,
+357:        prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES)
+358:    from .historical_statement_cases import (METRICS as statement_metrics,
+359:        prepare_historical_statement_year_case, PROCESSING_FILES as statement_files,
+360:        INCOME_PROCESSING_FILES as income_files)
+361:    from .historical_statement_cases import prepare_historical_current_annual_year_case
+362:    from .historical_liquidity_cases import (METRICS as liquidity_metrics,
+363:        prepare_historical_liquidity_year_case, PROCESSING_FILES as liquidity_files)
+364:    from .historical_event_cases import (METRICS as event_metrics,
+365:        prepare_historical_event_year_case, PROCESSING_FILES as event_files)
+366:    from .historical_capital_cases import (METRICS as capital_metrics,
+367:        prepare_historical_capital_year_case, PROCESSING_FILES as capital_files)
+368:    from .historical_bank_performance_cases import (METRICS as bank_metrics,
+369:        prepare_historical_bank_year_case, PROCESSING_FILES as bank_files)
+370:    from .historical_geography_cases import (METRICS as geography_metrics,
+371:        prepare_historical_geography_year_case, PROCESSING_FILES as geography_files)
+372:    from .historical_average_risk_cases import (METRICS as average_risk_metrics,
+373:        prepare_historical_average_risk_year_case, PROCESSING_FILES as average_risk_files)
+374:    from .historical_bank_scope_cases import (METRICS as bank_scope_metrics,
+375:        prepare_historical_bank_scope_year_case, PROCESSING_FILES as bank_scope_files)
+376:    from .historical_rpo_cases import (METRICS as rpo_metrics,
+377:        prepare_historical_rpo_year_case, PROCESSING_FILES as rpo_files)
+378:    selected = configured_scope(company_id) if metric_ids is None else list(metric_ids)
+379:    need(selected and len(selected) == len(set(selected))
+380:         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | set(geography_metrics) | set(average_risk_metrics) | set(bank_scope_metrics) | set(rpo_metrics) | {'B07'},
+381:         'LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry')
+382:    from .company_current_records import run_saved_company
+383:    if set(selected) <= {'B01','B02'}:
+384:        from .company_fiscal_range import range_case_factories, PROCESSING_FILES as range_files
+385:        years=list(range(fiscal_year_start,fiscal_year_end+1))
+386:        factories=range_case_factories(company_id=company_id,fiscal_years=years,
+387:            metric_ids=selected,case_factories={m:prepare_historical_statement_year_case for m in selected})
+388:        return run_saved_company(company_id=company_id,source_root=source_root,
+389:            work_dir=work_dir,output_dir=output_dir,metric_ids=selected,fiscal_years=years,
+390:            case_factories=factories,processing_files_by_metric={m:tuple(dict.fromkeys(
+391:                (*income_files,*range_files))) for m in selected})
+392:    if not set(selected) <= set(SUPPORTED_METRICS):
+393:        return run_saved_company(company_id=company_id, source_root=source_root,
+394:            work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
+395:            fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
+396:            case_factories={m: (prepare_historical_rpo_year_case if m in rpo_metrics else
+397:                               prepare_historical_event_year_case if m in event_metrics else
+398:                               prepare_historical_geography_year_case if m in geography_metrics else
+399:                               prepare_historical_average_risk_year_case if m in average_risk_metrics else
+400:                               prepare_historical_bank_scope_year_case if m in bank_scope_metrics else
+401:                               prepare_historical_current_annual_year_case if m == 'B07' else
+402:                               prepare_historical_bank_year_case if m in bank_metrics else
+403:                               prepare_historical_capital_year_case if m in capital_metrics else
+404:                               prepare_historical_liquidity_year_case if m in liquidity_metrics else
+405:                               prepare_historical_lodging_year_case if m in SUPPORTED_METRICS
+406:                               else prepare_historical_statement_year_case) for m in selected},
+407:            processing_files_by_metric={m: (rpo_files if m in rpo_metrics else
+408:                                            event_files if m in event_metrics else
+409:                                            geography_files if m in geography_metrics else
+410:                                            average_risk_files if m in average_risk_metrics else
+411:                                            bank_scope_files if m in bank_scope_metrics else
+412:                                            statement_files if m == 'B07' else
+413:                                            bank_files if m in bank_metrics else
+414:                                            capital_files if m in capital_metrics else
+415:                                            liquidity_files if m in liquidity_metrics else
+416:                                            HISTORICAL_LODGING_PROCESSING_FILES if m in SUPPORTED_METRICS
+417:                                            else income_files if m in {'B01','B02'}
+418:                                            else statement_files) for m in selected})
+419:    return run_saved_company(company_id=company_id, source_root=source_root,
+420:        work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
+421:        fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
+422:        case_factory=prepare_historical_lodging_year_case,
+423:        processing_files=HISTORICAL_LODGING_PROCESSING_FILES)
+
+SOURCE scripts/vnext/historical_statement_cases.py:35-85
+35:# defaults and existing saved results retain their original meaning.
+36:PAIRED_SINGLE_REVENUE_LINE_ENABLED = True
+37:PROCESSING_FILES = (
+38:    'scripts/vnext/historical_statement_cases.py',
+39:    'scripts/vnext/normal_period_selection.py',
+40:    'scripts/vnext/normal_history_catalog.py',
+41:    'scripts/vnext/historical_annual_input.py',
+42:    'scripts/vnext/historical_dei.py',
+43:    'scripts/vnext/historical_fiscal_labels.py',
+44:    'scripts/vnext/historical_filing_inventory.py',
+45:    'scripts/vnext/normal_companyfacts_results.py',
+46:    'scripts/vnext/normal_annual_input.py',
+47:    'scripts/vnext/normal_governance_input.py',
+48:    'scripts/vnext/batch_workflow.py',
+49:    'scripts/vnext/zero_ai_r2.py',
+50:    'scripts/vnext/paired_measure_v1.py',
+51:    'config/normal_period_selection_v1.json',
+52:    'config/normal_fiscal_year_labels_v1.json',
+53:    'catalog/deterministic_metrics.json',
+54:)
+55:INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
+56:    'scripts/vnext/selected_income_source_v1.py',
+57:    'scripts/vnext/selected_revenue_scope_v1.py',
+58:    'scripts/vnext/selected_reported_revenue_v2.py',
+59:    'scripts/vnext/selected_fiscal_definition_scope_v1.py',
+60:    'scripts/vnext/normal_annual_input_v2.py',
+61:    'scripts/vnext/fiscal_year_labels.py',
+62:    'scripts/vnext/composite_scope.py',
+63:    'scripts/vnext/xbrl_namespace_policy.py',
+64:    'scripts/vnext/ordinary_income_input.py',
+65:    'scripts/vnext/financial_duration.py',
+66:    'scripts/vnext/financial_structured.py',
+67:    'scripts/vnext/text_results_v2.py',
+68:    'scripts/vnext/governance_signals.py',
+69:    'scripts/vnext/r5_b06_scope.py',
+70:    'scripts/vnext/deterministic_router.py',
+71:    'catalog/r6/text_results_v2_policy.json',
+72:)
+73:
+74:
+75:
+76:class StatementCaseError(ValueError):
+77:    def __init__(self, reason, category='SOURCE_INTEGRITY_ERROR', *, revenue_scope=None):
+78:        super().__init__(reason)
+79:        self.category = category
+80:        self.revenue_scope = revenue_scope
+81:
+82:
+83:def _need(condition, reason, category='SOURCE_INTEGRITY_ERROR'):
+84:    if not condition:
+85:        raise StatementCaseError(reason, category)
+
+SOURCE tests/vnext/test_history_company_dispatch.py:1-230
+1:"""Small selected-year dispatch controls; financial checks use saved sources."""
+2:import tempfile
+3:from pathlib import Path
+4:from unittest import TestCase
+5:from unittest.mock import patch
+6:
+7:from tools.vnext_company import main
+8:from vnext import company_local as local
+9:
+10:
+11:class HistoryCompanyDispatchTest(TestCase):
+12:    def test_reported_growth_range_tracks_both_income_and_range_readers(self):
+13:        """Small real-dispatch control; it does not calculate a financial value."""
+14:        from vnext.historical_statement_cases import INCOME_PROCESSING_FILES
+15:        from vnext.company_fiscal_range import PROCESSING_FILES as range_files
+16:        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared, \
+17:             patch('vnext.company_fiscal_range.discover_fiscal_range',
+18:                   side_effect=AssertionError('Unchanged path must not discover upfront')):
+19:            self.run_history(company_id='macys', metric_ids=['B01', 'B02'])
+20:        args = shared.call_args.kwargs
+21:        for metric in ['B01', 'B02']:
+22:            dependencies = args['processing_files_by_metric'][metric]
+23:            with self.subTest(metric=metric):
+24:                self.assertTrue(set(INCOME_PROCESSING_FILES) <= set(dependencies))
+25:                self.assertTrue(set(range_files) <= set(dependencies))
+26:                self.assertEqual(len(dependencies), len(set(dependencies)))
+27:
+28:    def test_interest_coverage_adds_only_its_current_annual_case(self):
+29:        from vnext.historical_statement_cases import (
+30:            prepare_historical_current_annual_year_case, prepare_historical_statement_year_case,
+31:            PROCESSING_FILES)
+32:        from vnext.historical_liquidity_cases import prepare_historical_liquidity_year_case
+33:        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+34:            self.run_history(company_id='macys', metric_ids=['B07', 'B04', 'B05', 'B08'])
+35:        args=shared.call_args.kwargs
+36:        self.assertIs(prepare_historical_current_annual_year_case, args['case_factories']['B07'])
+37:        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B04'])
+38:        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B05'])
+39:        self.assertIs(prepare_historical_liquidity_year_case, args['case_factories']['B08'])
+40:        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B07'])
+41:
+42:    def setUp(self):
+43:        temporary = tempfile.TemporaryDirectory()
+44:        self.addCleanup(temporary.cleanup)
+45:        self.root = Path(temporary.name)
+46:
+47:    def run_history(self, **changes):
+48:        args = dict(company_id='marriott_international', source_root=self.root/'source',
+49:            work_dir=self.root/'state', output_dir=self.root/'outputs', metric_ids=['B10', 'B11'],
+50:            period='fiscal-years', fiscal_year_start=2024, fiscal_year_end=2025)
+51:        return local.run_local(**{**args, **changes})
+52:
+53:    def test_range_uses_one_public_company_controller_and_existing_case(self):
+54:        from vnext.historical_lodging_results import prepare_historical_lodging_year_case
+55:        with (patch('vnext.company_current_records.run_saved_company', return_value={}) as shared,
+56:              patch.object(local, 'prepare_program',
+57:                  side_effect=AssertionError('Saved history must not install a native program'))):
+58:            self.run_history()
+59:        args = shared.call_args.kwargs
+60:        self.assertEqual([2024, 2025], args['fiscal_years'])
+61:        self.assertIs(prepare_historical_lodging_year_case, args['case_factory'])
+62:        self.assertEqual(['B10', 'B11'], args['metric_ids'])
+63:        self.assertFalse((self.root/'state').exists())
+64:
+65:    def test_invalid_range_rejects_before_source_or_writes(self):
+66:        for start, end in [(2025, 2024), (2020, 2025), (True, 2024), (None, 2025)]:
+67:            with self.subTest(start=start, end=end):
+68:                with self.assertRaisesRegex(ValueError, 'FISCAL_RANGE_INVALID'):
+69:                    self.run_history(fiscal_year_start=start, fiscal_year_end=end)
+70:        self.assertFalse((self.root/'outputs').exists())
+71:
+72:    def test_missing_source_is_explicit_and_does_not_acquire(self):
+73:        with patch.object(local, '_invoke', side_effect=AssertionError('No acquisition')):
+74:            with self.assertRaisesRegex(ValueError, 'PREPARED_SOURCE_REQUIRED'):
+75:                self.run_history(source_root=None)
+76:
+77:    def test_unsupported_family_uses_no_fabricated_historical_case(self):
+78:        with patch('vnext.company_current_records.run_saved_company') as shared:
+79:            with self.assertRaisesRegex(ValueError, 'SAVED_FAMILY_NOT_IMPLEMENTED'):
+80:                self.run_history(metric_ids=['D03'])
+81:        shared.assert_not_called()
+82:
+83:    def test_statement_pilot_uses_original_per_metric_factories_and_dependencies(self):
+84:        from vnext.historical_statement_cases import prepare_historical_statement_year_case, PROCESSING_FILES, INCOME_PROCESSING_FILES
+85:        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+86:            self.run_history(company_id='macys', metric_ids=['B01', 'B02', 'B04', 'B05'],
+87:                             fiscal_year_start=2021, fiscal_year_end=2025)
+88:        args = shared.call_args.kwargs
+89:        self.assertEqual([2021, 2022, 2023, 2024, 2025], args['fiscal_years'])
+90:        self.assertNotIn('case_factory', args)
+91:        self.assertTrue(all(f is prepare_historical_statement_year_case for f in args['case_factories'].values()))
+92:        self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B01'])
+93:        self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B02'])
+94:        for metric in ['B04', 'B05']:
+95:            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+96:        self.assertIn('scripts/vnext/selected_income_source_v1.py', INCOME_PROCESSING_FILES)
+97:        self.assertNotIn('scripts/vnext/selected_income_source_v1.py', PROCESSING_FILES)
+98:        self.assertFalse((self.root/'state').exists())
+99:
+100:    def test_mixed_lodging_keeps_its_previous_factory_and_tuple(self):
+101:        from vnext.historical_lodging_results import prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES
+102:        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+103:        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+104:            self.run_history(metric_ids=['B01', 'B10', 'B11'])
+105:        args = shared.call_args.kwargs
+106:        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+107:        for metric in ['B10', 'B11']:
+108:            self.assertIs(prepare_historical_lodging_year_case, args['case_factories'][metric])
+109:            self.assertEqual(HISTORICAL_LODGING_PROCESSING_FILES, args['processing_files_by_metric'][metric])
+110:        self.assertFalse((self.root/'outputs').exists())
+111:
+112:    def test_liquidity_keeps_the_statement_and_lodging_original_factories(self):
+113:        from vnext.historical_liquidity_cases import prepare_historical_liquidity_year_case, PROCESSING_FILES
+114:        from vnext.historical_statement_cases import prepare_historical_statement_year_case, INCOME_PROCESSING_FILES
+115:        from vnext.historical_lodging_results import prepare_historical_lodging_year_case
+116:        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+117:            self.run_history(metric_ids=['B08', 'B09', 'B01', 'B04', 'B10'])
+118:        args = shared.call_args.kwargs
+119:        for metric in ['B08', 'B09']:
+120:            self.assertIs(prepare_historical_liquidity_year_case, args['case_factories'][metric])
+121:            self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
+122:        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+123:        self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B01'])
+124:        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B04'])
+125:        self.assertIs(prepare_historical_lodging_year_case, args['case_factories']['B10'])
+126:
+127:    def test_current_mode_keeps_the_existing_public_route(self):
+128:        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+129:            self.run_history(period='latest-complete-fy', fiscal_year_start=None, fiscal_year_end=None)
+130:        self.assertNotIn('fiscal_years', shared.call_args.kwargs)
+131:        self.assertNotIn('case_factory', shared.call_args.kwargs)
+132:        with self.assertRaisesRegex(ValueError, 'HISTORY_ARGUMENTS_REQUIRE'):
+133:            self.run_history(period='latest-complete-fy')
+134:
+135:    def test_capital_family_preserves_each_existing_metric_factory(self):
+136:        from vnext.historical_capital_cases import prepare_historical_capital_year_case, PROCESSING_FILES
+137:        from vnext.historical_liquidity_cases import prepare_historical_liquidity_year_case
+138:        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+139:            self.run_history(company_id='jpmorgan_chase', metric_ids=['A01', 'A02', 'B08'])
+140:        args = shared.call_args.kwargs
+141:        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
+142:        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A02'])
+143:        self.assertIs(prepare_historical_liquidity_year_case, args['case_factories']['B08'])
+144:        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['A01'])
+145:
+146:    def test_rpo_uses_native_case_without_changing_statement_or_capital_factories(self):
+147:        from vnext.historical_rpo_cases import prepare_historical_rpo_year_case, PROCESSING_FILES
+148:        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+149:        from vnext.historical_capital_cases import prepare_historical_capital_year_case
+150:        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+151:            self.run_history(company_id='salesforce', metric_ids=['B12', 'B01', 'A01'])
+152:        args = shared.call_args.kwargs
+153:        self.assertIs(prepare_historical_rpo_year_case, args['case_factories']['B12'])
+154:        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B12'])
+155:        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+156:        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
+157:
+158:    def test_bank_performance_family_uses_original_factories_for_other_families(self):
+159:        from vnext.historical_bank_performance_cases import prepare_historical_bank_year_case, PROCESSING_FILES
+160:        from vnext.historical_capital_cases import prepare_historical_capital_year_case
+161:        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+162:            self.run_history(company_id='jpmorgan_chase', metric_ids=['A05', 'A08', 'A01'])
+163:        args = shared.call_args.kwargs
+164:        self.assertIs(prepare_historical_bank_year_case, args['case_factories']['A05'])
+165:        self.assertIs(prepare_historical_bank_year_case, args['case_factories']['A08'])
+166:        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['A08'])
+167:        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
+168:
+169:    def test_cli_passes_period_arguments_to_the_same_company_entry(self):
+170:        with (patch.object(local, 'run_local', return_value={'status': 'FLOW_COMPLETED'}) as selected,
+171:              patch('sys.stdout')):
+172:            self.assertEqual(0, main(['run', '--company', 'marriott_international',
+173:                '--period', 'fiscal-years', '--fiscal-year-start', '2024', '--fiscal-year-end', '2025',
+174:                '--source-root', str(self.root/'source'), '--work-dir', str(self.root/'state'),
+175:                '--output-dir', str(self.root/'outputs'), '--metric', 'B10']))
+176:        self.assertEqual(2024, selected.call_args.kwargs['fiscal_year_start'])
+177:        self.assertEqual(2025, selected.call_args.kwargs['fiscal_year_end'])
+178:
+179:    def test_completed_withheld_survives_read_after_another_metric_subset(self):
+180:        """Constructed history control: a later subset cannot revive old success."""
+181:        import copy
+182:        import json
+183:        from tests.vnext.test_company_current_records import CurrentCompanyTest
+184:        from vnext import company_current_records as current
+185:        from vnext.csv_output import METRIC_FIELDS, _csv_bytes
+186:        fixture = CurrentCompanyTest()
+187:        fixture.setUp()
+188:        self.addCleanup(fixture.doCleanups)
+189:        fixture.run_company(['B01'])
+190:        prior = fixture.work/'updates/B01/results/first'
+191:        state = fixture.work/'updates/B01/periods/FY2024'
+192:        success = state/'results/success'; success.mkdir(parents=True)
+193:        held = state/'results/held'; held.mkdir()
+194:        old = copy.deepcopy(fixture.values[str(prior)])
+195:        old['result'].update(period_start='2024-01-01', period_end='2024-12-31',
+196:            result_id='constructed-old-success', value='100', publication='PUBLISHED')
+197:        old['manifest']['target_period']['fiscal_year'] = 2024
+198:        old['files']['metrics_matrix.csv'] = _csv_bytes(rows=[{
+199:            **{f: '' for f in METRIC_FIELDS}, 'metric_id': 'B01', 'fiscal_year': '2024',
+200:            'period_start': '2024-01-01', 'period_end': '2024-12-31',
+201:            'value': '100', 'unit': 'USD', 'status': 'OK'}], fieldnames=METRIC_FIELDS)
+202:        fixture.values[str(success)] = old
+203:        new = copy.deepcopy(old)
+204:        new['result'].update(result_id='constructed-current-withheld', value=None,
+205:            publication='WITHHELD', unit=None, reason_code='CONSTRUCTED_CONTROL_BUSINESS_WITHHELD')
+206:        new['files']['metrics_matrix.csv'] = _csv_bytes(rows=[{
+207:            **{f: '' for f in METRIC_FIELDS}, 'metric_id': 'B01', 'fiscal_year': '2024',
+208:            'period_start': '2024-01-01', 'period_end': '2024-12-31', 'status': 'WITHHELD'}],
+209:            fieldnames=METRIC_FIELDS)
+210:        fixture.values[str(held)] = new
+211:        common = {'company_id': 'marriott_international', 'metric_id': 'B01',
+212:            'requested_fiscal_year': 2024, 'period_end': '2024-12-31',
+213:            'configuration': {'constructed_control': True}, 'source_census': []}
+214:        (state/'current-result.json').write_text(json.dumps({**common,
+215:            'version': 'success', 'result_id': old['result']['result_id']}))
+216:        (state/'completed-check.json').write_text(json.dumps({**common,
+217:            'version': 'held', 'result_id': new['result']['result_id'], 'status': 'CANDIDATE_WITHHELD'}))
+218:        fixture.run_company(['B02'])
+219:        view = current.read_current_company(state_root=fixture.work, company_id='marriott_international')
+220:        row = next(r for r in view['metrics'] if r['metric_id'] == 'B01' and r['fiscal_year'] == 2024)
+221:        self.assertFalse(row['requested_in_latest_execution'])
+222:        self.assertIsNone(row['value'])
+223:        self.assertEqual('WITHHELD', row['publication'])
+224:
+225:
+226:    def test_event_family_keeps_existing_income_balance_and_hotel_factories(self):
+227:        from vnext.historical_event_cases import prepare_historical_event_year_case, PROCESSING_FILES
+228:        from vnext.historical_statement_cases import prepare_historical_statement_year_case, INCOME_PROCESSING_FILES
+229:        from vnext.historical_liquidity_cases import prepare_historical_liquidity_year_case
+230:        from vnext.historical_lodging_results import prepare_historical_lodging_year_case
+
+F51_ANCESTRY_MATCHES
+['f51d8c3d27f3169b9cdb3a246295830882240c1f']
+
+F51_BYTES scripts/vnext/historical_statement_cases.py
+{'f51': 'f51d8c3d27f3169b9cdb3a246295830882240c1f', 'f51_exists': True, 'patch_exists': True, 'equal': True, 'f51_sha256': '454131a7a443402eb7bef6e6af4ae9975e00edcc060861e3d97d648e74b22afc', 'patch_sha256': '454131a7a443402eb7bef6e6af4ae9975e00edcc060861e3d97d648e74b22afc'}
+
+F51_BYTES scripts/vnext/history_metric_dispatch.py
+{'f51': 'f51d8c3d27f3169b9cdb3a246295830882240c1f', 'f51_exists': False, 'patch_exists': False, 'equal': False, 'f51_sha256': None, 'patch_sha256': None}
+
+F51_BYTES scripts/vnext/history_income_growth.py
+{'f51': 'f51d8c3d27f3169b9cdb3a246295830882240c1f', 'f51_exists': False, 'patch_exists': False, 'equal': False, 'f51_sha256': None, 'patch_sha256': None}
+
+F51_BYTES scripts/vnext/history_income_growth_execution.py
+{'f51': 'f51d8c3d27f3169b9cdb3a246295830882240c1f', 'f51_exists': False, 'patch_exists': False, 'equal': False, 'f51_sha256': None, 'patch_sha256': None}
+
+F51_BYTES scripts/vnext/history_sources.py
+{'f51': 'f51d8c3d27f3169b9cdb3a246295830882240c1f', 'f51_exists': False, 'patch_exists': False, 'equal': False, 'f51_sha256': None, 'patch_sha256': None}
+
+STATUS_BEFORE_TEST
+?? docs/evidence/issue28_fiscal_range_entry_20261010/main-f51-salesforce-source-range.log
+?? docs/evidence/issue28_fiscal_range_entry_20261010/verify_current_source_range.py
+?? work/
+

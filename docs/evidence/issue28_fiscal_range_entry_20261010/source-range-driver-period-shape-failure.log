@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-entry/SEC_metrics/docs/evidence/issue28_fiscal_range_entry_20261010/verify_current_source_range.py", line 27, in <module>
+    assert task['label']['actual_period']=={'fiscal_year':2025,'period_start':'2025-02-01','period_end':'2026-01-31'},task['label']['actual_period']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'period_start': '2025-02-01', 'period_end': '2026-01-31'}
