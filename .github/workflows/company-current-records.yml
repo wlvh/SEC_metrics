@@ -10,6 +10,7 @@ name: Company saved-source records
       - 'tests/vnext/test_paired_measure_contradiction.py'
       - 'tests/vnext/test_current_d04_company.py'
       - 'tests/vnext/test_ordinary_current_update.py'
+      - 'tests/vnext/test_registry_processing_scope.py'
       - 'tests/vnext/test_d04_processing_scope.py'
       - 'tests/vnext/test_selected_revenue_scope_v1.py'
       - 'tests/vnext/test_current_reported_revenue.py'
@@ -82,6 +83,10 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 tests/required_unittests.py tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_financial_duration tests.vnext.test_selected_income_source_v1
+      - name: Target registry scope, integrity and required input changes
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_registry_processing_scope
       - name: Complete D04 company model input gates
         run: python3 tests/required_unittests.py tests.vnext.test_current_d04_company
       - name: Selected event sources and explicit history validation

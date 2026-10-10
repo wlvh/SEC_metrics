@@ -27,6 +27,14 @@ class D04ProcessingScopeTest(TestCase):
     run_control = state_controls.SelectedHistoryResultStateTest.run_control
     period_root = state_controls.SelectedHistoryResultStateTest.period_root
 
+    def saved_extracted_configuration(self, source, company, metric):
+        # Exercise the received finite transition using its saved runtime pair.
+        # Later controller changes must not be assumed to inherit this bridge.
+        from scripts.vnext import ordinary_update_compatibility as compat
+        config = self.actual_configuration(source, company, metric)
+        config['processing_files'][CONTROLLER], config['processing_files'][STORE] = compat.EXTRACTED_MAIN_F51
+        return config
+
     def test_proven_d04_only_transition_keeps_success_and_withheld(self):
         self.outcomes[2025, 'B11'] = 'WITHHELD'
         current_hash = update.sha256_file
@@ -74,7 +82,7 @@ class D04ProcessingScopeTest(TestCase):
     def test_main_before_extraction_reuses_and_consumed_period_changes_reprocess(self):
         from scripts.vnext import ordinary_update_compatibility as compat
         def main_before(source, company, metric):
-            config = self.actual_configuration(source, company, metric)
+            config = self.saved_extracted_configuration(source, company, metric)
             config['processing_files'].pop(compat.BRIDGE)
             config['processing_files'][CONTROLLER],config['processing_files'][STORE] = compat.MAIN_C99
             return config
@@ -83,7 +91,7 @@ class D04ProcessingScopeTest(TestCase):
             first=[self.run_control(2024), self.run_control(2025, 'B11')]
         old_pointer={p:p.read_bytes() for p in self.root.rglob('current-result.json')}
         self.forbid_factory=True
-        with patch.object(update, '_configuration', side_effect=self.actual_configuration):
+        with patch.object(update, '_configuration', side_effect=self.saved_extracted_configuration):
             repeated=[self.run_control(2024), self.run_control(2025, 'B11')]
             self.assertEqual([r['version'] for r in first], [r['version'] for r in repeated])
             self.assertEqual(['NO_SOURCE_CONTENT_CHANGE', 'PREVIOUS_INPUT_WITHHELD'], [r['status'] for r in repeated])
@@ -101,7 +109,7 @@ class D04ProcessingScopeTest(TestCase):
 
     def test_actual_main_f51_and_prior_extracted_pairs_keep_business_dependencies(self):
         from scripts.vnext import ordinary_update_compatibility as compat
-        current=self.actual_configuration(ROOT,'marriott_international','B04')
+        current=self.saved_extracted_configuration(ROOT,'marriott_international','B04')
         for pair in (compat.MAIN_F51, compat.EXTRACTED_D04):
             old=deepcopy(current)
             old['processing_files'][CONTROLLER],old['processing_files'][STORE]=pair
@@ -111,7 +119,7 @@ class D04ProcessingScopeTest(TestCase):
             self.assertTrue(compat.compatible_configuration(old,current))
             unknown=deepcopy(old);unknown['processing_files']['scripts/vnext/normal_annual_input.py']='unknown-business-version'
             self.assertFalse(compat.compatible_configuration(unknown,current))
-        income=self.actual_configuration(ROOT,'marriott_international','B01')
+        income=self.saved_extracted_configuration(ROOT,'marriott_international','B01')
         old=deepcopy(income);old['processing_files'].pop(compat.BRIDGE)
         old['processing_files'][CONTROLLER],old['processing_files'][STORE]=compat.MAIN_C99
         old['processing_files'].pop('scripts/vnext/selected_fiscal_definition_scope_v1.py')
@@ -122,7 +130,7 @@ class D04ProcessingScopeTest(TestCase):
 
     def test_unknown_business_scope_or_source_change_cannot_inherit_compatibility(self):
         from scripts.vnext import ordinary_update_compatibility as compat
-        current=self.actual_configuration(ROOT,'marriott_international','B10')
+        current=self.saved_extracted_configuration(ROOT,'marriott_international','B10')
         old=deepcopy(current);old['processing_files'].pop(compat.BRIDGE)
         old['processing_files'][CONTROLLER],old['processing_files'][STORE]=compat.MAIN_C99
         self.assertTrue(compat.compatible_configuration(old,current))
@@ -143,7 +151,7 @@ class D04ProcessingScopeTest(TestCase):
     def test_compatible_completion_recovers_without_recalculating_or_rewriting_old_success(self):
         from scripts.vnext import ordinary_update_compatibility as compat
         def main_before(source,company,metric):
-            config=self.actual_configuration(source,company,metric)
+            config=self.saved_extracted_configuration(source,company,metric)
             config['processing_files'].pop(compat.BRIDGE)
             config['processing_files'][CONTROLLER],config['processing_files'][STORE]=compat.MAIN_C99
             return config
@@ -155,10 +163,21 @@ class D04ProcessingScopeTest(TestCase):
         def interrupted(path,value):
             if path.name=='completed-check.json':raise KeyboardInterrupt('after compatible terminal')
             write(path,value)
-        with patch.object(update,'_configuration',side_effect=self.actual_configuration):
+        with patch.object(update,'_configuration',side_effect=self.saved_extracted_configuration):
             with patch.object(update,'_write',side_effect=interrupted),self.assertRaises(KeyboardInterrupt):
                 self.run_control(2024)
             again=self.run_control(2024)
         self.assertEqual(first['version'],again['version']);self.assertEqual(1,len(self.factory_calls))
         self.assertEqual(old_success,(root/'current-result.json').read_bytes())
         self.assertEqual(old_terminal,(root/'checks'/first['attempt_id']/'terminal.json').read_bytes())
+
+    def test_new_registry_representation_must_not_inherit_old_dispatch_bridge(self):
+        from scripts.vnext import ordinary_update_compatibility as compat
+        current=self.actual_configuration(ROOT,'marriott_international','B04')
+        old=self.saved_extracted_configuration(ROOT,'marriott_international','B04')
+        self.assertFalse(compat.compatible_configuration(old,current))
+        legacy=deepcopy(old)
+        legacy.pop('company_registry_rows',None)
+        legacy['source_registry_sha256']='saved-whole-table'
+        legacy['processing_files']['config/company_registry.csv']='saved-whole-table'
+        self.assertFalse(compat.compatible_configuration(legacy,current))

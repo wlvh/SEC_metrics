@@ -73,9 +73,19 @@ def _configuration(source, company, metric):
     if metric == 'D04':
         from .ordinary_d04_saved_route import processing_paths
         paths.update(processing_paths())
+    from .ordinary_registry_scope import registered_company_row
+    # The producer validates the entire program registry's profile mapping.
+    # Keep that admission check before reuse; valid unrelated rows still do
+    # not become comparison inputs. Source registries use program-side rules.
+    from .traits import repository_company_traits
+    repository_company_traits(repo_root=ROOT,company_id=company)
+    paths.discard('config/company_registry.csv')
+    paths.add('scripts/vnext/ordinary_registry_scope.py')
     return {'company_id':company,'metric_id':metric,'source_root':str(source),
         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
-        'source_registry_sha256':sha256_file(path=source/'config/company_registry.csv'),
+        'company_registry_rows':{
+            'program':registered_company_row(repo_root=ROOT,company_id=company),
+            'source':registered_company_row(repo_root=source,company_id=company)},
         'provider_enabled':False,'sec_fetch_enabled':False}
 
 

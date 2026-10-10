@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/private/tmp/issue28-registry-row-scope-20261010/verify_real_consumer.py", line 44, in <module>
+    if phase!='target':assert row['value']=='2601000000' and row['unit']=='USD' and row['cik']=='1048286' and row['period_end']=='2025-12-31'
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
