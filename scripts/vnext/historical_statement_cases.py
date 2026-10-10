@@ -295,9 +295,8 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
             fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'))
         if reported_scope['complete_scope_proven']:
             revenue_scope = reported_scope
-            admitted_facts = lambda facts: admit_reported_revenue_facts(facts=facts, scope=reported_scope)
-            verify_observations = lambda observations: verify_reported_revenue_observations(
-                observations=observations, scope=reported_scope)
+            admit_facts = admit_reported_revenue_facts
+            check_observations = verify_reported_revenue_observations
             reports = {'primary':reported_scope['original_reports'],
                        'xml':native_income_reports(by_kind['xml'][0],source_annual,
                            sorted(set(concepts)|set(STATEMENT_CONCEPTS)),
@@ -306,9 +305,8 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
             revenue_scope = selected_revenue_scope(primary=by_kind['primary'][0],
                 xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
                 namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period)
-            admitted_facts = lambda facts: admit_revenue_facts(facts=facts, scope=revenue_scope)
-            verify_observations = lambda observations: verify_revenue_observations(
-                observations=observations, scope=revenue_scope)
+            admit_facts = admit_revenue_facts
+            check_observations = verify_revenue_observations
             reports = revenue_scope['original_reports']
         # Preserve the existing visible check for a native short-period fact;
         # the scope helper does not grant that fact an annual interpretation.
@@ -326,9 +324,9 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
             allowed_ciks=[prepared['entity']], include_instant=False)
         result, trace, observations = calculate_metric(compiled_spec=spec,
             target={**target, 'entity': prepared['entity'], 'accession': prepared['filing']['accessionNumber']},
-            company_traits=traits, structured_facts=admitted_facts(facts),
+            company_traits=traits, structured_facts=admit_facts(facts=facts, scope=revenue_scope),
             verified_observations=[])
-        verify_observations(observations)
+        check_observations(observations=observations, scope=revenue_scope)
         assessment = {'selected_revenue_scope': revenue_scope}
         # Bind the CompanyFacts observation to this selected filing's originals.
         # The public reader does no current-year selection or amendment admission.
