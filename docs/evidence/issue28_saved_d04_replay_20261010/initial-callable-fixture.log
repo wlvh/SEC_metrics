@@ -1,0 +1,6 @@
+first 0.026767625007778406 [{'metric_id': 'D04', 'status': 'INPUT_OR_EXECUTION_FAILED', 'attempt_id': 'b721a73ea68f47edb1011d8de9ff5974', 'error_type': 'TypeError', 'reason': 'module, class, method, function, traceback, frame, or code object was expected, got Factory', 'previous_result': None, 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'requested_fiscal_year': 2023}]
+Traceback (most recent call last):
+  File "/tmp/issue28-saved-d04-current/company_api_check.py", line 23, in <module>
+    m=got['metrics'][0];assert m['result_reason_code']=='D04_SAVED_FILING_MEDIA_COVERAGE_NOT_VERIFIED'
+                               ~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'result_reason_code'

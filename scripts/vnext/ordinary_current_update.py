@@ -191,7 +191,7 @@ def _recover_completed_check(root):
 
 
 def run_once(*, state_root, source_root, company_id, metric_id, shared_input_root=None,
-             fiscal_year=None, case_factory=None, processing_files=()):
+             fiscal_year=None, case_factory=None, processing_files=(), processing_inputs=()):
     """One current deterministic update; identical raw input never calculates."""
     _need(metric_id in SAVED_METRIC_IDS or metric_id in EXPLICIT_CASE_METRICS
           and fiscal_year is not None and callable(case_factory),'CURRENT_UPDATE_METRIC_UNSUPPORTED')
@@ -233,6 +233,17 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                 path = resolve_repository_file(repo_root=ROOT,repo_relative_path=relative)
                 extra[relative]=sha256_file(path=path)
             if extra:configuration={**configuration,'declared_processing_files':extra}
+            _need(type(processing_inputs) in (list,tuple), 'CURRENT_UPDATE_PROCESSING_INPUTS_INVALID')
+            inputs = {}
+            for input_path in processing_inputs:
+                path = Path(input_path)
+                _need(path.is_absolute() and path.is_file(), 'CURRENT_UPDATE_PROCESSING_INPUT_MISSING')
+                path = path.resolve()
+                _need(root != path and root not in path.parents,
+                      'CURRENT_UPDATE_PROCESSING_INPUT_STATE_OVERLAP')
+                inputs[str(path)] = sha256_file(path=path)
+            _need(len(inputs)==len(processing_inputs), 'CURRENT_UPDATE_PROCESSING_INPUT_DUPLICATE')
+            if inputs:configuration={**configuration,'saved_processing_inputs':inputs}
             if fiscal_year is not None:
                 producer_path = inspect.getsourcefile(case_factory)
                 _need(producer_path is not None, 'CURRENT_UPDATE_CASE_PRODUCER_VERSION_UNAVAILABLE')
