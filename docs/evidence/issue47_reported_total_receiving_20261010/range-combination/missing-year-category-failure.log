@@ -1,0 +1,18 @@
+test_absent_saved_range_year_retains_source_unavailable_category (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_absent_saved_range_year_retains_source_unavailable_category)
+Constructed missing-year control executes the public lazy factory. ... FAIL
+
+======================================================================
+FAIL: test_absent_saved_range_year_retains_source_unavailable_category (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_absent_saved_range_year_retains_source_unavailable_category)
+Constructed missing-year control executes the public lazy factory.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-range-main-receiving/SEC_metrics/tests/vnext/test_history_company_dispatch.py", line 28, in test_absent_saved_range_year_retains_source_unavailable_category
+    self.assertEqual('SOURCE_UNAVAILABLE', getattr(caught.exception, 'category', None))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'SOURCE_UNAVAILABLE' != None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.310s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_absent_saved_range_year_retains_source_unavailable_category"]}

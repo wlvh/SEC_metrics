@@ -9,6 +9,24 @@ from vnext import company_local as local
 
 
 class HistoryCompanyDispatchTest(TestCase):
+    def test_absent_saved_range_year_retains_source_unavailable_category(self):
+        """Constructed missing-year control executes the public lazy factory."""
+        from vnext.company_fiscal_range import range_case_factories
+        producer = lambda **kwargs: self.fail('An absent year cannot run a business producer')
+        plan = {'tasks': [{'fiscal_year': 2025,
+            'status': 'FISCAL_YEAR_SOURCE_UNRESOLVED',
+            'limitations': [{'phase': 'FISCAL_LABEL_UNIQUENESS',
+                            'reason': 'FISCAL_YEAR_MISSING_OR_AMBIGUOUS',
+                            'matching_report_ends': []}]}]}
+        factories = range_case_factories(company_id='macys', fiscal_years=[2025],
+            metric_ids=['B01'], case_factories={'B01': producer})
+        with patch('vnext.company_fiscal_range.discover_fiscal_range', return_value=plan), \
+             patch('vnext.company_fiscal_range.sha256_file', return_value='constructed-source-version'):
+            with self.assertRaisesRegex(ValueError, 'YEAR_UNRESOLVED') as caught:
+                factories['B01'](repo_root=self.root, company_id='macys',
+                    metric_id='B01', fiscal_year=2025)
+        self.assertEqual('SOURCE_UNAVAILABLE', getattr(caught.exception, 'category', None))
+
     def test_reported_growth_range_tracks_both_income_and_range_readers(self):
         """Small real-dispatch control; it does not calculate a financial value."""
         from vnext.historical_statement_cases import INCOME_PROCESSING_FILES
