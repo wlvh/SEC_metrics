@@ -5904,6 +5904,48 @@
         "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-entry/SEC_metrics/docs/evidence/issue28_fiscal_range_entry_20261010/independent-review/final-repair-conclusion.md"
       },
       "final_verdict": "PASS_LIMITED_REPAIR"
+    },
+    {
+      "task_name": "review_reportedtotal_331bffb",
+      "purpose": "review",
+      "module": "reported_total_fiscal_source_v2",
+      "scope_paths": [
+        "scripts/vnext/selected_reported_revenue_v2.py",
+        "scripts/vnext/selected_revenue_scope_v1.py::_statement_scope optional adjacent heading",
+        "tests/vnext/test_selected_reported_revenue_v2.py"
+      ],
+      "patch_sha": "331bffbb9baef1601b2b915f8b1518bb60b2a385",
+      "base_sha": "209cdcdd48520d02eb8715a4118217a216262b8a",
+      "spawned_at": "2026-10-10T00:42:47.831527+00:00",
+      "ended_at": null,
+      "tool_calls": 33,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-total-fiscal/SEC_metrics/docs/evidence/issue28_reported_revenue_20261010/independent-review/review-date-repair-1cbb6a3a.md",
+      "verdict": "REQUEST_CHANGES",
+      "limits": {
+        "tool_calls": 80,
+        "minutes": 90,
+        "messages": 3
+      },
+      "ended_at_observed": "2026-10-10T00:49:24.648521+00:00",
+      "resources_note": "initial report omitted exact tool/time totals; same-agent final repair must return cumulative originals; no reset",
+      "messages_observed": 2,
+      "repair_followup": {
+        "patch_sha": "1cbb6a3af69cac66dcfe7ab8bd40550079b905ee",
+        "started_at": "2026-10-10T00:49:24.648890+00:00",
+        "scope": "two directly reported date bugs only",
+        "verdict": "REQUEST_CHANGES_NEW_FULL_DATE_REGRESSION",
+        "tool_work_start": "2026-10-10T08:49:56+08:00",
+        "tool_work_end": "2026-10-10T08:52:04+08:00",
+        "cumulative_tools": 33,
+        "cumulative_messages": 3
+      },
+      "ended_at_tool_work": "2026-10-10T08:52:04+08:00",
+      "total_message_count": 3,
+      "tool_count_detail": {
+        "model_visible": 12,
+        "wrapper_and_internal_conservative": 33
+      },
+      "end_boundary_note": "exact original turn boundaries UNKNOWN; tool work windows only, do not invent"
     }
   ],
   "ci_capacity_20260922": {
@@ -18346,5 +18388,38 @@
     "sha": "d0c085e66d837b204ed492ed2a92217a051406ff",
     "peer_source_sha": "5d904b6e27c79223eccbc77061ab2214da24106a",
     "scope": "single historical guide clarified actual main versus candidate and exact revenue defects; no financial rerun"
+  },
+  "reported_total_fiscal_source_v2_20261010": {
+    "product_sha": "266c75efbbf1c9779b5ff0b7332de8a2be943035",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-total-fiscal/SEC_metrics",
+    "stage": "source prototype; peer thin before-calculator consumer prepares one offline company candidate, not business accepted",
+    "actual_source_total": "23866000000",
+    "period": {
+      "fiscal_year": 2023,
+      "start": "2023-01-29",
+      "end": "2024-02-03"
+    },
+    "peer_fiscal_dependency": "0c6cd6c53f555851f8e0f7e526c2d96f54d44df9",
+    "tests": 29,
+    "seconds": 0.228,
+    "review": "REQUEST_CHANGES preserved; final all-associated-date difference pending independent coverage, no trusted-credit release",
+    "next": "explicit caller plumbing before Calculator, one company B01 save/reuse/read; B02 prior comparison remains unproved",
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "final_parent_tests": 31,
+    "final_parent_seconds": 0.26
+  },
+  "daily_read_error_20261010": {
+    "source_peer_sha": "3a3f98e8",
+    "scope": "current read drops reason/error_type/error_category for failed/no-result; source exists but unreceived D01 amendment must remain implementation gap",
+    "next": "main small public reader branch; small state + existing failed-state independent CLI read; no source preparation/calculation/HTTP",
+    "calls": [
+      0,
+      0,
+      0
+    ]
   }
 }
