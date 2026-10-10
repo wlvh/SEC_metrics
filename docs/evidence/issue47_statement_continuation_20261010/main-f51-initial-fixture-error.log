@@ -1,0 +1,272 @@
+test_amendment_and_successor_keep_the_existing_rejection (tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest.test_amendment_and_successor_keep_the_existing_rejection) ... ok
+test_declared_wrong_source_period_cannot_select_a_filing (tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest.test_declared_wrong_source_period_cannot_select_a_filing) ... ok
+test_existing_entry_does_not_silently_expand_to_b07 (tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest.test_existing_entry_does_not_silently_expand_to_b07) ... ok
+test_prior_year_or_instant_metrics_do_not_enter_the_annual_family (tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest.test_prior_year_or_instant_metrics_do_not_enter_the_annual_family) ... ok
+test_fixed_single_line_consumer_keeps_total_and_rejects_appended_cell_amount (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_fixed_single_line_consumer_keeps_total_and_rejects_appended_cell_amount) ... ok
+test_missing_scope_and_conflicting_original_dates_are_not_complete_revenue (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_missing_scope_and_conflicting_original_dates_are_not_complete_revenue) ... ok
+test_prior_period_comparisons_stay_for_the_shared_comparability_guard (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_prior_period_comparisons_stay_for_the_shared_comparability_guard) ... ok
+test_stopped_single_line_does_not_gain_new_scope_while_explicit_total_keeps_working (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_stopped_single_line_does_not_gain_new_scope_while_explicit_total_keeps_working) ... ok
+test_total_admission_keeps_original_claim_id_and_never_retags_its_locator (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_total_admission_keeps_original_claim_id_and_never_retags_its_locator) ... ok
+test_wrong_unit_entity_accession_or_amount_cannot_supply_the_original_total (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_wrong_unit_entity_accession_or_amount_cannot_supply_the_original_total) ... ok
+test_both_original_scopes_reach_the_one_graph_and_daily_summary_is_bounded (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_both_original_scopes_reach_the_one_graph_and_daily_summary_is_bounded) ... ok
+test_graph_cannot_select_an_operand_outside_the_admitted_original_claims (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_graph_cannot_select_an_operand_outside_the_admitted_original_claims) ... ok
+test_link_only_amendment_proof_and_both_revenue_scopes_survive_together (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_link_only_amendment_proof_and_both_revenue_scopes_survive_together) ... ok
+test_one_unproved_role_withholds_whole_growth_before_graph (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_one_unproved_role_withholds_whole_growth_before_graph) ... ok
+test_continuous_company_keeps_original_registry_object (tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest.test_continuous_company_keeps_original_registry_object) ... ok
+test_mismatched_reporter_successor_or_cross_entity_does_not_get_override (tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest.test_mismatched_reporter_successor_or_cross_entity_does_not_get_override) ... ok
+test_predecessor_context_uses_its_own_cik_without_mutating_registry (tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest.test_predecessor_context_uses_its_own_cik_without_mutating_registry) ... ok
+test_successor_context_keeps_its_existing_noncomparability (tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest.test_successor_context_keeps_its_existing_noncomparability) ... ok
+test_display_is_bounded_while_complete_scope_evidence_is_retained (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_display_is_bounded_while_complete_scope_evidence_is_retained) ... ERROR
+test_literal_original_and_resolved_period_must_have_same_dates (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_literal_original_and_resolved_period_must_have_same_dates) ... ERROR
+test_no_reported_total_retains_the_existing_component_scope_path (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_no_reported_total_retains_the_existing_component_scope_path) ... ERROR
+test_processing_configuration_includes_shared_scope_dependency (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_processing_configuration_includes_shared_scope_dependency) ... ok
+test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) ... 
+  test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (day=30) ... ERROR
+  test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (day=31) ... ERROR
+  test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (text='Operating expenses (Europe):') ... ERROR
+  test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (text='Cost of revenues (Subsidiary):') ... ERROR
+test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions) ... ERROR
+test_reported_total_conflict_cannot_fall_back_to_the_old_component (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_total_conflict_cannot_fall_back_to_the_old_component) ... ERROR
+test_reported_total_is_admitted_before_actual_calculator (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_total_is_admitted_before_actual_calculator) ... ERROR
+test_source_bound_resolved_label_reaches_the_shared_reader_without_raw_year_rewrite (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_source_bound_resolved_label_reaches_the_shared_reader_without_raw_year_rewrite) ... ERROR
+test_total_cannot_be_borrowed_from_a_later_filing (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_total_cannot_be_borrowed_from_a_later_filing) ... ERROR
+test_all_amendments_must_pass_not_just_the_first (tests.vnext.test_historical_statement_cases.HistoricalStatementAmendmentTest.test_all_amendments_must_pass_not_just_the_first) ... ok
+test_event_only_part3_period_change_issue_or_pending_review_cannot_admit_values (tests.vnext.test_historical_statement_cases.HistoricalStatementAmendmentTest.test_event_only_part3_period_change_issue_or_pending_review_cannot_admit_values) ... ok
+test_no_amendment_does_not_read_or_classify_sources (tests.vnext.test_historical_statement_cases.HistoricalStatementAmendmentTest.test_no_amendment_does_not_read_or_classify_sources) ... ok
+test_only_explicit_original_statement_proof_is_received (tests.vnext.test_historical_statement_cases.HistoricalStatementAmendmentTest.test_only_explicit_original_statement_proof_is_received) ... ok
+test_amended_target_and_successor_require_explicit_adaptation (tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest.test_amended_target_and_successor_require_explicit_adaptation) ... ok
+test_companyfacts_amount_must_match_the_selected_original (tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest.test_companyfacts_amount_must_match_the_selected_original) ... ok
+test_other_metric_does_not_select_sources (tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest.test_other_metric_does_not_select_sources) ... ok
+test_applicable_company_does_not_skip_its_source_requirements (tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest.test_applicable_company_does_not_skip_its_source_requirements) ... ok
+test_bank_trait_is_na_before_any_amount_selection (tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest.test_bank_trait_is_na_before_any_amount_selection) ... ok
+test_noncontinuous_rule_cannot_be_replaced_by_current_instant_permission (tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest.test_noncontinuous_rule_cannot_be_replaced_by_current_instant_permission) ... ok
+test_revenue_still_requires_statement_scope (tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest.test_revenue_still_requires_statement_scope) ... ok
+test_wrong_subject_or_cross_entity_cannot_use_the_metadata_guard (tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest.test_wrong_subject_or_cross_entity_cannot_use_the_metadata_guard) ... ok
+test_average_risk_family_preserves_existing_metric_factories (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_average_risk_family_preserves_existing_metric_factories) ... ok
+test_bank_performance_family_uses_original_factories_for_other_families (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_bank_performance_family_uses_original_factories_for_other_families) ... ok
+test_bank_scope_family_preserves_existing_metric_factories (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_bank_scope_family_preserves_existing_metric_factories) ... ok
+test_capital_family_preserves_each_existing_metric_factory (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_capital_family_preserves_each_existing_metric_factory) ... ok
+test_cli_passes_period_arguments_to_the_same_company_entry (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_cli_passes_period_arguments_to_the_same_company_entry) ... ok
+test_completed_withheld_survives_read_after_another_metric_subset (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_completed_withheld_survives_read_after_another_metric_subset)
+Constructed history control: a later subset cannot revive old success. ... ok
+test_current_mode_keeps_the_existing_public_route (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_current_mode_keeps_the_existing_public_route) ... ok
+test_event_family_keeps_existing_income_balance_and_hotel_factories (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_event_family_keeps_existing_income_balance_and_hotel_factories) ... ok
+test_geography_keeps_existing_factories_and_declares_its_source_dependencies (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_geography_keeps_existing_factories_and_declares_its_source_dependencies) ... ok
+test_interest_coverage_adds_only_its_current_annual_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_interest_coverage_adds_only_its_current_annual_case) ... ok
+test_invalid_range_rejects_before_source_or_writes (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_invalid_range_rejects_before_source_or_writes) ... ok
+test_liquidity_keeps_the_statement_and_lodging_original_factories (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_liquidity_keeps_the_statement_and_lodging_original_factories) ... ok
+test_missing_source_is_explicit_and_does_not_acquire (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_missing_source_is_explicit_and_does_not_acquire) ... ok
+test_mixed_lodging_keeps_its_previous_factory_and_tuple (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_mixed_lodging_keeps_its_previous_factory_and_tuple) ... ok
+test_range_uses_one_public_company_controller_and_existing_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_range_uses_one_public_company_controller_and_existing_case) ... ok
+test_rpo_uses_native_case_without_changing_statement_or_capital_factories (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_rpo_uses_native_case_without_changing_statement_or_capital_factories) ... ok
+test_statement_pilot_uses_original_per_metric_factories_and_dependencies (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_statement_pilot_uses_original_per_metric_factories_and_dependencies) ... ok
+test_unsupported_family_uses_no_fabricated_historical_case (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_unsupported_family_uses_no_fabricated_historical_case) ... ok
+test_actual_selected_year_dependencies_ignore_unused_admission_code (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_actual_selected_year_dependencies_ignore_unused_admission_code)
+Constructed state control with the actual processing configuration. ... ok
+test_completed_withheld_recovers_pointer_without_recalculation (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_completed_withheld_recovers_pointer_without_recalculation) ... ok
+test_current_withheld_replaces_same_year_success_but_retains_old_version (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_current_withheld_replaces_same_year_success_but_retains_old_version) ... ok
+test_dependency_source_and_processing_changes_reprocess_withheld_once (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_dependency_source_and_processing_changes_reprocess_withheld_once) ... ok
+test_missing_year_and_one_metric_failure_preserve_other_periods (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_missing_year_and_one_metric_failure_preserve_other_periods) ... ok
+test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates) ... ok
+test_default_register_holds_exact_subtotal_result_only (tests.vnext.test_paired_measure_contradiction.DefaultRevenueScopeDefectTest.test_default_register_holds_exact_subtotal_result_only) ... ok
+test_conflicting_comparisons_cannot_choose_the_matching_one (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_conflicting_comparisons_cannot_choose_the_matching_one) ... ok
+test_other_period_unit_or_accession_is_not_a_prior_comparison (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_other_period_unit_or_accession_is_not_a_prior_comparison) ... ok
+test_same_label_matching_or_no_comparison_keeps_existing_behavior (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_same_label_matching_or_no_comparison_keeps_existing_behavior) ... ok
+test_same_label_prior_comparison_difference_is_not_accepted (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_same_label_prior_comparison_difference_is_not_accepted) ... ok
+test_supported_label_change_requires_the_original_prior_value (tests.vnext.test_paired_measure_contradiction.PairedReportedComparisonTest.test_supported_label_change_requires_the_original_prior_value) ... ok
+test_actual_current_consumers_bind_fixed_fiscal_assertion_only_when_used (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_actual_current_consumers_bind_fixed_fiscal_assertion_only_when_used) ... ok
+test_common_share_unit_header_and_split_currency_use_spanned_year (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_common_share_unit_header_and_split_currency_use_spanned_year) ... ok
+test_component_rows_cannot_be_relabelled_as_single_revenue (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_component_rows_cannot_be_relabelled_as_single_revenue) ... ok
+test_existing_entity_period_unit_scope_and_xml_checks_still_apply (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_existing_entity_period_unit_scope_and_xml_checks_still_apply) ... ok
+test_explicit_single_line_keeps_original_fact_and_default_contract (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_explicit_single_line_keeps_original_fact_and_default_contract) ... ok
+test_legitimate_repeated_header_and_currency_symbol_keep_the_single_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_legitimate_repeated_header_and_currency_symbol_keep_the_single_amount) ... ok
+test_no_statement_title_no_cost_or_no_income_does_not_prove_total (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_no_statement_title_no_cost_or_no_income_does_not_prove_total) ... ok
+test_only_explicit_boolean_option_and_exact_plain_label (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_only_explicit_boolean_option_and_exact_plain_label) ... ok
+test_remaining_tagged_and_untagged_revenue_parts_are_not_sole_line (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_remaining_tagged_and_untagged_revenue_parts_are_not_sole_line) ... ok
+test_repeated_year_header_does_not_hide_an_earlier_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_repeated_year_header_does_not_hide_an_earlier_amount) ... ok
+test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match) ... ok
+test_selected_fact_ordinal_is_not_a_python_list_offset (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_fact_ordinal_is_not_a_python_list_offset) ... ok
+test_accounting_cost_exclusion_does_not_change_revenue_entity_scope (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_accounting_cost_exclusion_does_not_change_revenue_entity_scope) ... ok
+test_approved_legacy_calculator_selects_total_after_component_admission (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_approved_legacy_calculator_selects_total_after_component_admission) ... ok
+test_conflicting_part_total_not_fixed_by_larger_value (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_conflicting_part_total_not_fixed_by_larger_value) ... ok
+test_explicit_local_exclusion_is_not_overruled_by_same_context (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_explicit_local_exclusion_is_not_overruled_by_same_context) ... ok
+test_explicit_scope_after_consolidated_title_is_not_ignored (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_explicit_scope_after_consolidated_title_is_not_ignored) ... ok
+test_income_items_alone_do_not_prove_consolidated_statement (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_income_items_alone_do_not_prove_consolidated_statement) ... ok
+test_missing_revenue_component_is_not_an_empty_success (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_missing_revenue_component_is_not_an_empty_success) ... ok
+test_native_fact_row_does_not_hide_unmarked_scope_clause (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_native_fact_row_does_not_hide_unmarked_scope_clause) ... ok
+test_old_visible_header_parser_default_is_retained (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_old_visible_header_parser_default_is_retained) ... ok
+test_other_filing_facts_and_prior_periods_not_rewritten_or_substituted (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_other_filing_facts_and_prior_periods_not_rewritten_or_substituted) ... ok
+test_primary_only_statement_check_is_explicit_not_faked_xml_check (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_primary_only_statement_check_is_explicit_not_faked_xml_check) ... ok
+test_primary_xml_conflict_rejected (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_primary_xml_conflict_rejected) ... ok
+test_quarter_caption_does_not_accept_annual_native_context (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_quarter_caption_does_not_accept_annual_native_context) ... ok
+test_restricted_caption_does_not_become_no_split_success (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_restricted_caption_does_not_become_no_split_success) ... ok
+test_revenue_note_total_without_full_statement_not_treated_as_company_total (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_revenue_note_total_without_full_statement_not_treated_as_company_total) ... ok
+test_same_total_value_must_exist_in_selected_companyfacts (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_same_total_value_must_exist_in_selected_companyfacts) ... ok
+test_saved_producer_opts_in_for_b01_and_b03_but_not_neighbours (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_saved_producer_opts_in_for_b01_and_b03_but_not_neighbours) ... ok
+test_scope_cannot_borrow_later_filing_total_when_original_is_missing (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_scope_cannot_borrow_later_filing_total_when_original_is_missing) ... ok
+test_single_full_revenue_keeps_contract_label_and_no_false_complete_credit (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_single_full_revenue_keeps_contract_label_and_no_false_complete_credit) ... ok
+test_source_bound_cells_year_and_primary_xml_retained (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_source_bound_cells_year_and_primary_xml_retained) ... ok
+test_update_configuration_names_actual_scope_and_header_dependencies (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_update_configuration_names_actual_scope_and_header_dependencies) ... ok
+test_visible_column_year_conflict_rejected (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_visible_column_year_conflict_rejected) ... ok
+test_visible_scale_cannot_be_overruled_by_native_amounts (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_visible_scale_cannot_be_overruled_by_native_amounts) ... ok
+test_complete_nonempty_findings_are_allowed_without_inventing_doubt (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_complete_nonempty_findings_are_allowed_without_inventing_doubt) ... ok
+test_missing_failed_and_conflicting_groups_are_rejected (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_missing_failed_and_conflicting_groups_are_rejected) ... ok
+test_missing_group_cannot_be_complete_even_with_a_stale_true_flag (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_missing_group_cannot_be_complete_even_with_a_stale_true_flag) ... ok
+test_unresolved_or_failed_evidence_is_never_company_credit (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_unresolved_or_failed_evidence_is_never_company_credit) ... ok
+test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) ... ok
+
+======================================================================
+ERROR: test_display_is_bounded_while_complete_scope_evidence_is_retained (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_display_is_bounded_while_complete_scope_evidence_is_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 134, in test_display_is_bounded_while_complete_scope_evidence_is_retained
+    value, _, _ = self.prepare()
+                  ~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+======================================================================
+ERROR: test_literal_original_and_resolved_period_must_have_same_dates (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_literal_original_and_resolved_period_must_have_same_dates)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 155, in test_literal_original_and_resolved_period_must_have_same_dates
+    self.prepare(change=change)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+======================================================================
+ERROR: test_no_reported_total_retains_the_existing_component_scope_path (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_no_reported_total_retains_the_existing_component_scope_path)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 166, in test_no_reported_total_retains_the_existing_component_scope_path
+    value,_,_=self.prepare()
+              ~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+======================================================================
+ERROR: test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (day=30)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 222, in test_reported_late_date_and_cost_group_qualifiers_are_not_hidden
+    self.prepare(change=change)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+======================================================================
+ERROR: test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (day=31)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 224, in test_reported_late_date_and_cost_group_qualifiers_are_not_hidden
+    self.assertEqual(self.prepare(change=change)[0]['results']['B01']['value'],'58496000000')
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+======================================================================
+ERROR: test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (text='Operating expenses (Europe):')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 227, in test_reported_late_date_and_cost_group_qualifiers_are_not_hidden
+    self.prepare(change=insert(b'<tr><td>Cost of sales</td>',
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '<tr><td>'+text+'</td><td></td></tr>'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+======================================================================
+ERROR: test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (text='Cost of revenues (Subsidiary):')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 227, in test_reported_late_date_and_cost_group_qualifiers_are_not_hidden
+    self.prepare(change=insert(b'<tr><td>Cost of sales</td>',
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '<tr><td>'+text+'</td><td></td></tr>'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+======================================================================
+ERROR: test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 198, in test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions
+    value,_,_=self.prepare(change=change_intro(
+              ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+        '<div>See accompanying Notes.</div><div>57</div><div>Table of Contents</div>'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+======================================================================
+ERROR: test_reported_total_conflict_cannot_fall_back_to_the_old_component (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_total_conflict_cannot_fall_back_to_the_old_component)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 187, in test_reported_total_conflict_cannot_fall_back_to_the_old_component
+    self.prepare()
+    ~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+======================================================================
+ERROR: test_reported_total_is_admitted_before_actual_calculator (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_total_is_admitted_before_actual_calculator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 122, in test_reported_total_is_admitted_before_actual_calculator
+    value, source_facts, calculator = self.prepare()
+                                      ~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+======================================================================
+ERROR: test_source_bound_resolved_label_reaches_the_shared_reader_without_raw_year_rewrite (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_source_bound_resolved_label_reaches_the_shared_reader_without_raw_year_rewrite)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 178, in test_source_bound_resolved_label_reaches_the_shared_reader_without_raw_year_rewrite
+    self.prepare(change=change)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+======================================================================
+ERROR: test_total_cannot_be_borrowed_from_a_later_filing (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_total_cannot_be_borrowed_from_a_later_filing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 148, in test_total_cannot_be_borrowed_from_a_later_filing
+    self.prepare(change=change)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-e01-company-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 94, in prepare
+    annual.update(amendments=[] if amendment is None else [{'form':'10-K/A'}],
+                                   ^^^^^^^^^
+NameError: name 'amendment' is not defined
+
+----------------------------------------------------------------------
+Ran 110 tests in 0.691s
+
+FAILED (errors=12)
+{"allowed_skips": 0, "errors": 12, "failures": 0, "run": 110, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_statement_cases", "tests.vnext.test_history_company_dispatch", "tests.vnext.test_selected_history_result_state", "tests.vnext.test_paired_measure_contradiction", "tests.vnext.test_single_revenue_line", "tests.vnext.test_selected_revenue_scope_v1", "tests.vnext.test_current_d04_company"]}

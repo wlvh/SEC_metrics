@@ -1,0 +1,49 @@
+test_both_original_scopes_reach_the_one_graph_and_daily_summary_is_bounded (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_both_original_scopes_reach_the_one_graph_and_daily_summary_is_bounded) ... ERROR
+test_one_unproved_role_withholds_whole_growth_before_graph (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_one_unproved_role_withholds_whole_growth_before_graph) ... 
+  test_one_unproved_role_withholds_whole_growth_before_graph (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_one_unproved_role_withholds_whole_growth_before_graph) (role='current') ... ERROR
+  test_one_unproved_role_withholds_whole_growth_before_graph (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_one_unproved_role_withholds_whole_growth_before_graph) (role='prior') ... ERROR
+
+======================================================================
+ERROR: test_both_original_scopes_reach_the_one_graph_and_daily_summary_is_bounded (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_both_original_scopes_reach_the_one_graph_and_daily_summary_is_bounded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 344, in test_both_original_scopes_reach_the_one_graph_and_daily_summary_is_bounded
+    case, calls = self.case()
+                  ~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 315, in case
+    spec = compile_spec_file(path=cases.ROOT/'catalog/zero_ai/B02.md', dependency_specs={})
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/specs.py", line 873, in compile_spec_file
+    raise SpecError("MetricSpec must be a regular file: {}".format(path))
+vnext.specs.SpecError: MetricSpec must be a regular file: /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/catalog/zero_ai/B02.md
+
+======================================================================
+ERROR: test_one_unproved_role_withholds_whole_growth_before_graph (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_one_unproved_role_withholds_whole_growth_before_graph) (role='current')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 354, in test_one_unproved_role_withholds_whole_growth_before_graph
+    case, calls = self.case(unresolved_role=role)
+                  ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 315, in case
+    spec = compile_spec_file(path=cases.ROOT/'catalog/zero_ai/B02.md', dependency_specs={})
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/specs.py", line 873, in compile_spec_file
+    raise SpecError("MetricSpec must be a regular file: {}".format(path))
+vnext.specs.SpecError: MetricSpec must be a regular file: /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/catalog/zero_ai/B02.md
+
+======================================================================
+ERROR: test_one_unproved_role_withholds_whole_growth_before_graph (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_one_unproved_role_withholds_whole_growth_before_graph) (role='prior')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 354, in test_one_unproved_role_withholds_whole_growth_before_graph
+    case, calls = self.case(unresolved_role=role)
+                  ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 315, in case
+    spec = compile_spec_file(path=cases.ROOT/'catalog/zero_ai/B02.md', dependency_specs={})
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/specs.py", line 873, in compile_spec_file
+    raise SpecError("MetricSpec must be a regular file: {}".format(path))
+vnext.specs.SpecError: MetricSpec must be a regular file: /Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/catalog/zero_ai/B02.md
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.006s
+
+FAILED (errors=3)
+{"allowed_skips": 0, "errors": 3, "failures": 0, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest"]}
