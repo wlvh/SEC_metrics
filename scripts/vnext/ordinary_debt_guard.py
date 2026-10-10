@@ -6,15 +6,17 @@ from .b06_guarded_result_v3 import (SPEC_PATH,RESOLVER,_need,_installed_spec,
 from .canonical import content_hash,sha256_bytes,canonical_json_bytes,strict_json_loads
 from .deterministic_router import parse_accession_xbrl_source
 from .normal_annual_input import _registry_rows
-from .normal_candidates import _prepare_b06
+from .normal_governance_input import prepare_saved_original_financial_sources as _prepare_b06
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .observations import scope_key
 
 
-def prepare_current_guarded_b06_result(*, repo_root: Path, company_id: str):
+def prepare_current_guarded_b06_result(*, repo_root: Path, company_id: str, rules_root=None, preparation=None):
     """Return NOT_MEANINGFUL native records, or CONTINUE_DEBT_PATH; never a Run."""
-    spec, trait_hashes = _installed_spec(repo_root)
-    preparation = _prepare_b06(repo_root=repo_root, company_id=company_id)
+    rules = repo_root if rules_root is None else Path(rules_root)
+    spec, trait_hashes = _installed_spec(rules)
+    preparation = (_prepare_b06(repo_root=repo_root, company_id=company_id)
+                   if preparation is None else preparation)
     prepared = preparation["input_binding"]["prepared_annual_input"]
     proofs = list(preparation["input_binding"]["source_proofs"]) + list(prepared["source_proofs"])
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=proofs)
@@ -30,7 +32,7 @@ def prepare_current_guarded_b06_result(*, repo_root: Path, company_id: str):
     proof = _rebuild_equity(primary=preparation["primary"]["raw_bytes"], xml=preparation["xml"]["raw_bytes"],
         facts_raw=preparation["facts"]["raw_bytes"], facts_source=preparation["facts"]["source_reference"],
         target=target, period=period, filing=prepared["filing"])
-    company = next(c for c in _registry_rows(repo_root=repo_root) if c["company_id"] == company_id)
+    company = next(c for c in _registry_rows(repo_root=rules) if c["company_id"] == company_id)
     parsed = parse_accession_xbrl_source(raw_bytes=preparation["xml"]["raw_bytes"])
     industrial = set(spec["compiled"]["quality_rule"]["scope_review_dimension_members"])
     restricted = company["industry_profile"] == "financial_institution" or any(

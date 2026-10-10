@@ -59,6 +59,9 @@ def _configuration(source, company, metric):
                   'config/company_registry.csv'})
     if metric == 'B02':
         paths.add('scripts/vnext/paired_measure_v1.py')
+    if metric == 'B06':
+        from .current_b06_case import PROCESSING_FILES
+        paths.update(PROCESSING_FILES)
     if metric in {'B01','B03'}:
         paths.update('scripts/vnext/'+name+'.py' for name in (
             'selected_revenue_scope_v1','selected_reported_revenue_v2','selected_fiscal_definition_scope_v1','selected_income_source_v1',
