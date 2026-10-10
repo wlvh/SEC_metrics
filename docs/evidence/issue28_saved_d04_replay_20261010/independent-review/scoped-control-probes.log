@@ -1,0 +1,16 @@
+PASS unchanged synthetic read preserves inputs/package and opens no socket
+PASS selected company_id SAVED_D04_SELECTED_COORDINATE_CHANGED
+PASS selected entity SAVED_D04_SELECTED_COORDINATE_CHANGED
+PASS selected accessionNumber SAVED_D04_SELECTED_COORDINATE_CHANGED
+PASS selected period_start SAVED_D04_SELECTED_COORDINATE_CHANGED
+PASS selected period_end SAVED_D04_SELECTED_COORDINATE_CHANGED
+PASS empty original call group SAVED_D04_ORIGINAL_CALL_GROUP_REQUIRED
+PASS source partition missing its required request NATIVE_REQUEST_PARTITION_INCOMPLETE
+PASS execution receipt tied to another plan SAVED_D04_ORIGINAL_EXECUTION_BINDING_CHANGED
+PASS terminal tied to another execution SAVED_D04_ORIGINAL_EXECUTION_BINDING_CHANGED
+PASS plan tied to another semantic request SAVED_D04_ORIGINAL_PLAN_BINDING_CHANGED
+PASS complete text group still has unverified media D04_COMPLETE_SAVED_RESPONSE_SET_REQUIRED
+PASS old assessment with omitted media flag retains behavior
+PASS per-metric explicit input tuple reaches only selected metric unchanged
+PASS default empty processing inputs leaves comparison record shape unchanged
+{"scoped_probes_passed": 15, "real_package_read": false, "business_or_model_credit": false, "new_calls": {"provider": 0, "paid": 0, "sec": 0}}
