@@ -291,6 +291,73 @@ class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
             self.admit(reader, annual, claims, concepts)
 
 
+class HistoricalPairedRevenueCaseTest(unittest.TestCase):
+    """Constructed full adapter control; graph stubs are not financial evidence."""
+
+    def case(self, *, unresolved_role=None):
+        from contextlib import ExitStack
+        from types import SimpleNamespace
+        from tests.vnext.test_selected_revenue_scope_v1 import originals
+        from vnext.specs import compile_spec_file
+        primary, xml, annual = originals()
+        annual.update(amendments=[], subject_policy={'mode': 'CONTINUOUS_PRIMARY'}, source_proofs=[])
+        prior = {**annual['filing'], 'accessionNumber': '0000000001-25-000002', 'reportDate': '2024-12-31'}
+        old = {**primary, 'raw_bytes': primary['raw_bytes'].replace(b'2025', b'2024')}
+        reader = SimpleNamespace(read=lambda *a, **k: primary,
+            primary=lambda filing, **k: primary if filing == annual['filing'] else old,
+            proofs={}, records={})
+        current_claim = {'verified_claim_id': 'current-total', 'locator': {'concept': 'Revenues',
+            'period_start': '2025-01-01', 'period_end': '2025-12-31'},
+            'attributes': {'accession': annual['filing']['accessionNumber']}, 'value': '58496000000', 'unit': 'USD'}
+        prior_claim = {'verified_claim_id': 'prior-total', 'locator': {'concept': 'Revenues',
+            'period_start': '2024-01-01', 'period_end': '2024-12-31'},
+            'attributes': {'accession': prior['accessionNumber']}, 'value': '100330000000', 'unit': 'USD'}
+        spec = compile_spec_file(path=cases.ROOT/'catalog/ordinary_zero_ai/B02.md', dependency_specs={})
+        def scope(**args):
+            role = 'current' if args['filing'] == annual['filing'] else 'prior'
+            if role == unresolved_role:
+                raise cases.StatementCaseError('HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN', 'IMPLEMENTATION_GAP')
+            return args['claims'], {'scope_id': 'constructed-'+role, 'status': 'REPORTED_CONSOLIDATED_TOTAL',
+                'complete_scope_proven': True, 'full_evidence': {'original': 'kept only in assessments'}}
+        with ExitStack() as stack:
+            registry = {'company_id': annual['company_id'], 'entity_continuity_status': 'continuous'}
+            values = {'resolve_period_selection': {'prior_filing': prior},
+                'prepare_historical_annual_input': annual, '_Sources': reader,
+                '_registry_rows': [registry], 'repository_company_traits': [], 'metric_is_applicable': True,
+                'installed_ordinary_spec_documents': {'B02': {'compiled_spec': spec, 'path': 'catalog/ordinary_zero_ai/B02.md'}},
+                'filing_inventory': {}, 'prior_filing': (prior, primary),
+                '_load_deterministic_catalog': {'metrics': {'B02': {'branches': [{'components': [
+                    {'accession_role': role, 'approved_concepts': ['Revenues']} for role in ('current','prior')]}]}}},
+                'verify_ordinary_source_proofs': {}}
+            for name, value in values.items():stack.enter_context(patch.object(cases, name, return_value=value))
+            stack.enter_context(patch.object(cases, '_filing_source', side_effect=[
+                ({'manifest': {}}, [current_claim]), ({'manifest': {}}, [prior_claim])]))
+            stack.enter_context(patch.object(cases, '_revenue_claims_admitted_by_original', side_effect=scope))
+            graph = stack.enter_context(patch.object(cases, '_deterministic_metric_graph', return_value={
+                'result': {'publication': 'PUBLISHED'}, 'trace': {}, 'observation': None,
+                'claims': [current_claim, prior_claim]}))
+            case = cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
+                company_id=annual['company_id'], metric_id='B02', fiscal_year=2025)
+            return case, graph.call_count
+
+    def test_both_original_scopes_reach_the_one_graph_and_daily_summary_is_bounded(self):
+        case, calls = self.case()
+        self.assertEqual(calls, 1)
+        full = case['input_assessments']['historical_statement']['paired_revenue_scopes']
+        self.assertEqual(set(full), {'current', 'prior'})
+        self.assertTrue(all('full_evidence' in s for s in full.values()))
+        self.assertTrue(all('full_evidence' not in s for s in case['selection']['paired_revenue_scopes'].values()))
+
+    def test_one_unproved_role_withholds_whole_growth_before_graph(self):
+        for role in ('current', 'prior'):
+            with self.subTest(role=role):
+                case, calls = self.case(unresolved_role=role)
+                self.assertEqual(calls, 0)
+                self.assertIsNone(case['results']['B02']['value'])
+                self.assertEqual(case['results']['B02']['reason_code'], 'HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED')
+                self.assertEqual(case['input_assessments']['historical_statement']['unresolved_revenue_role'], role)
+
+
 class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
     def test_existing_entry_does_not_silently_expand_to_b07(self):
         with patch.object(cases, 'resolve_period_selection') as select:
