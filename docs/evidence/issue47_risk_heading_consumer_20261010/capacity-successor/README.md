@@ -33,3 +33,5 @@ Minimal deliverytree2c461f48 starts at PR125/bc5, receives only public9510capaci
 69risk/source/capacity/dispatch/state/reporter/D04控制10.916s零skip。真实原Enphase任务仅FY21相关配置迁移9.019s，完整68title/原53085Result/128renderer/EvidencePASS保持；禁止historicalfactory复.955s0，独立read.778s25rows，五年标题与原已读完整参考逐项同、四旧D01和20financial不重算，206旧/212后继保护字节保、原失败检查保。执行准确6d+未提交main合并树，不借后来head改签；算法不新增试验、没有原件全文重读/新SEC/provider/paid/nativeRun/接受。
 
 这一可取得组合解除main新增RPO/收入/D04的接收冲突，不把存储文件变化自动视为全部旧financial兼容；公共兼容工作仍由owner负责，不手改旧cfg。新CI另核，不借6d十一全绿，main尚未接本能力、业务/Ready/merge/采纳/active边界保。
+
+当前cbb公司run38031567093/job114153412817终态CANCELLED，annotations明确超原5min，不记全绿。本head实际所有命令均已完成：source257/221.083s、capacity30/26.005s、history97/.949s、paired6/.999s、singleline43/22.612s、D045/event13/retention10、explicitD01 public8+history9=17/1.176s，尾SEC/online27/6.053s也OK/structured errors0failures0skips0；随后action canceled。明确测试命令通过≠jobSUCCESS，旧6d全绿不盖新head。本方未放宽超时/删断言/跳测试/重算业务；完整日志和准确开销已交公共owner按现行准备/分层减负。独立证据分支不重触productCI。
