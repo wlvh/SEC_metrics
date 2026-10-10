@@ -30,7 +30,7 @@ class HistoricalAuditorSelectionTest(TestCase):
     def test_absent_prior_is_named_and_never_borrowed_from_successor(self):
         self.rows=[r for r in self.rows if not r['accessionNumber'].startswith('prior')]
         chosen=self.check(event_forms=FORMS)
-        self.assertEqual('NO_SAME_CIK_PRIOR_IN_LOADED_BLOCKS',chosen['prior_status'])
+        self.assertEqual('NO_ADJACENT_SAME_CIK_PRIOR_IN_LOADED_BLOCKS',chosen['prior_status'])
         self.assertEqual([],chosen['prior_filing_chain'])
     def test_same_date_wrong_accession_and_ambiguous_prior_refuse(self):
         self.prepared['filing']={**self.target,'accessionNumber':'wrong'}
@@ -65,3 +65,21 @@ class HistoricalAuditorSelectionTest(TestCase):
                 prepare_selected_auditor_base(repo_root='/constructed',company_id='sample',fiscal_year=2025)
         self.assertEqual(rebuild.call_args.kwargs['period_selection'],select.return_value)
         read.assert_not_called()
+    def test_older_annual_is_not_substituted_for_missing_actual_prior(self):
+        self.rows[0]['reportDate']='2020-12-31'
+        with self.assertRaisesRegex(ValueError,'PRIOR_ORIGINAL_MISSING'):
+            self.check(event_forms=FORMS)
+        self.rows=[r for r in self.rows if r['accessionNumber']!='prior-amendment']
+        chosen=self.check(event_forms=FORMS)
+        self.assertIsNone(chosen['prior_ordinary'])
+        self.assertEqual('2021-12-31',chosen['expected_prior_period_end'])
+        self.assertEqual([],chosen['prior_filing_chain'])
+    def test_noncalendar_and_53_week_period_use_actual_start_not_year_arithmetic(self):
+        self.prepared['table_input']['target_period'].update(period_start='2023-01-29',period_end='2024-02-03',fiscal_year=2023)
+        self.target['reportDate']='2024-02-03'
+        self.target['filingDate']='2024-03-01'
+        self.rows[0]['reportDate']='2023-01-28'
+        self.rows[0]['filingDate']='2023-03-01'
+        chosen=self.check(event_forms=FORMS)
+        self.assertEqual('2023-01-28',chosen['expected_prior_period_end'])
+        self.assertEqual('prior',chosen['prior_ordinary']['accessionNumber'])

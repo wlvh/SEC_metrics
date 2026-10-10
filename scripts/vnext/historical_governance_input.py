@@ -25,6 +25,7 @@ reads the fiscal window's 8-K item index independently so that equal names are
 not turned into a confirmed no-change flag without it.
 """
 from typing import Mapping, Sequence
+from datetime import date, timedelta
 
 RECORD_TYPE = "HISTORICAL_GOVERNANCE_SELECTION"
 # The frozen module's own event forms, imported rather than restated so the two
@@ -87,12 +88,14 @@ def select_historical_governance_metadata(*, prepared: Mapping, history: Mapping
           "HISTORICAL_GOVERNANCE_PINNED_ANNUAL_DIVERGED")
     amendments = _order([row for row in rows if row["form"] == "10-K/A"
                          and row["reportDate"] == period["period_end"]])
-    prior_end = max((row["reportDate"] for row in annual
-                     if row["reportDate"] < period["period_end"]), default="")
-    priors = [row for row in annual if prior_end and row["reportDate"] == prior_end]
+    prior_end = (date.fromisoformat(period["period_start"]) - timedelta(days=1)).isoformat()
+    priors = [row for row in annual if row["reportDate"] == prior_end]
     _need(len(priors) <= 1, "HISTORICAL_GOVERNANCE_PRIOR_ANNUAL_AMBIGUOUS")
     prior_amendments = _order([row for row in rows if row["form"] == "10-K/A"
-                               and prior_end and row["reportDate"] == prior_end])
+                               and row["reportDate"] == prior_end])
+    if not priors:
+        _need(not prior_amendments, "HISTORICAL_GOVERNANCE_PRIOR_ORIGINAL_MISSING",
+              "SOURCE_UNAVAILABLE")
     events = [row for row in rows if row["form"] in forms
               and period["period_start"] <= row["filingDate"] <= period["period_end"]]
     return {"record_type": RECORD_TYPE, "schema_version": 1,
@@ -105,11 +108,12 @@ def select_historical_governance_metadata(*, prepared: Mapping, history: Mapping
             "prior_amendments": prior_amendments,
             "prior_filing_chain": prior_amendments + priors,
             "prior_status": ("SAME_CIK_PRIOR_DISCOVERED" if priors
-                             else "NO_SAME_CIK_PRIOR_IN_LOADED_BLOCKS"),
+                             else "NO_ADJACENT_SAME_CIK_PRIOR_IN_LOADED_BLOCKS"),
+            "expected_prior_period_end": prior_end,
             "events": sorted(events, key=lambda row: (row["filingDate"],
                                                       row["accessionNumber"])),
             "selected_by": {"annual": "PINNED_PERIOD_END_EQUALITY",
-                            "prior": "GREATEST_ANNUAL_REPORT_END_BEFORE_THE_PINNED_ONE",
+                            "prior": "SAME_CIK_ANNUAL_END_ADJACENT_TO_ACTUAL_PERIOD_START",
                             "events": "FILING_DATE_INSIDE_THE_PINNED_PERIOD"},
             "loaded_blocks": sorted(history["loaded_inventories"]),
             "value_taken_from_any_filing": False}
