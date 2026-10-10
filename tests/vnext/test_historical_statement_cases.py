@@ -182,6 +182,25 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'VISIBLE_DATE_CONFLICT'):
                 self.prepare()
 
+    def test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions(self):
+        from vnext.canonical import sha256_bytes
+        def change_intro(text):
+            def change(primary,xml,annual,source_facts):
+                raw=primary['raw_bytes'].replace(b'<div>Consolidated Statements of Income</div>',
+                    text.encode()+b'<div>Consolidated Statements of Income</div>')
+                primary['raw_bytes']=raw
+                primary['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=raw)
+            return change
+        value,_,_=self.prepare(change=change_intro(
+            '<div>See accompanying Notes.</div><div>57</div><div>Table of Contents</div>'))
+        scope=value['input_assessments']['historical_statement']['selected_revenue_scope']
+        self.assertEqual(value['results']['B01']['value'],'58496000000')
+        self.assertEqual([b['visible_text'] for b in scope['reported_totals'][0][
+            'statement_scope']['preceding_navigation_sources']],
+            ['See accompanying Notes.','57','Table of Contents'])
+        with self.assertRaisesRegex(ValueError,'STATEMENT_HEADING_SCOPE_UNRESOLVED'):
+            self.prepare(change=change_intro('<div>Only Subsidiary Beta is included.</div>'))
+
 
 class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
     def test_existing_entry_does_not_silently_expand_to_b07(self):
