@@ -1,0 +1,66 @@
+[
+  {
+    "metric": "B01",
+    "base_changed": [
+      "scripts/vnext/normal_run_inputs.py",
+      "scripts/vnext/normal_zero_ai_results.py",
+      "scripts/vnext/ordinary_current_update.py",
+      "scripts/vnext/ordinary_projection.py",
+      "scripts/vnext/ordinary_saved_result.py",
+      "scripts/vnext/selected_revenue_scope_v1.py"
+    ],
+    "declared_changed": [
+      "scripts/vnext/historical_statement_cases.py",
+      "scripts/vnext/selected_fiscal_definition_scope_v1.py",
+      "scripts/vnext/selected_reported_revenue_v2.py",
+      "scripts/vnext/selected_revenue_scope_v1.py"
+    ],
+    "old_case_producer": {
+      "module": "vnext.company_fiscal_range",
+      "name": "prepared_fiscal_range_B01",
+      "sha256": "232064c422b37caaf249d1257a0d0376eb6e24909fc502e52c21abab510c3848"
+    }
+  },
+  {
+    "metric": "B02",
+    "base_changed": [
+      "config/ordinary_public_projection_v1.json",
+      "scripts/vnext/normal_run_inputs.py",
+      "scripts/vnext/normal_zero_ai_results.py",
+      "scripts/vnext/ordinary_current_update.py",
+      "scripts/vnext/ordinary_projection.py",
+      "scripts/vnext/ordinary_saved_result.py",
+      "scripts/vnext/ordinary_source_session.py"
+    ],
+    "declared_changed": [
+      "catalog/r6/text_results_v2_policy.json",
+      "scripts/vnext/company_fiscal_range.py",
+      "scripts/vnext/composite_scope.py",
+      "scripts/vnext/deterministic_router.py",
+      "scripts/vnext/financial_duration.py",
+      "scripts/vnext/financial_structured.py",
+      "scripts/vnext/fiscal_year_labels.py",
+      "scripts/vnext/governance_signals.py",
+      "scripts/vnext/historical_dei.py",
+      "scripts/vnext/historical_fiscal_labels.py",
+      "scripts/vnext/historical_statement_cases.py",
+      "scripts/vnext/normal_annual_input.py",
+      "scripts/vnext/normal_annual_input_v2.py",
+      "scripts/vnext/ordinary_income_input.py",
+      "scripts/vnext/paired_measure_v1.py",
+      "scripts/vnext/r5_b06_scope.py",
+      "scripts/vnext/selected_fiscal_definition_scope_v1.py",
+      "scripts/vnext/selected_income_source_v1.py",
+      "scripts/vnext/selected_reported_revenue_v2.py",
+      "scripts/vnext/selected_revenue_scope_v1.py",
+      "scripts/vnext/selected_source_requirements.py",
+      "scripts/vnext/text_results_v2.py",
+      "scripts/vnext/xbrl_namespace_policy.py"
+    ],
+    "old_case_producer": {
+      "module": "vnext.historical_statement_cases",
+      "name": "prepare_historical_statement_year_case",
+      "sha256": "2c1647ff2e5008e95672a9d2e84a6ca40eeb76b233f2ccc5df7d55fa9f0571d9"
+    }
+  }
+]
