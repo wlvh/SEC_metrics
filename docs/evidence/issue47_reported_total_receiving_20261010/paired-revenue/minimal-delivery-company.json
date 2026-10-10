@@ -1,0 +1,89 @@
+{
+  "code_commit": "9dd13184760d89e37f60a4adfbd791b96f9e898f",
+  "first": {
+    "seconds": 17.039,
+    "exit_code": 0,
+    "arguments": [
+      "run",
+      "--company",
+      "pfizer",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2023",
+      "--fiscal-year-end",
+      "2023",
+      "--metric",
+      "B02",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-growth-minimal-vpo4_ssh/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-growth-minimal-vpo4_ssh/runs"
+    ],
+    "saved_first_execution_resumed_without_recalculation": true
+  },
+  "repeat": {
+    "seconds": 1.441037124954164,
+    "exit_code": 0,
+    "arguments": [
+      "run",
+      "--company",
+      "pfizer",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2023",
+      "--fiscal-year-end",
+      "2023",
+      "--metric",
+      "B02",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-growth-minimal-vpo4_ssh/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-growth-minimal-vpo4_ssh/runs"
+    ]
+  },
+  "read": {
+    "seconds": 0.7182082082144916,
+    "exit_code": 0,
+    "arguments": [
+      "results",
+      "--company",
+      "pfizer",
+      "--state-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-growth-minimal-vpo4_ssh/state",
+      "--output-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-growth-minimal-vpo4_ssh/read"
+    ]
+  },
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-growth-minimal-vpo4_ssh",
+  "copied_state_bytes_unchanged_at_start": 424,
+  "original_state_all_files_preserved": 424,
+  "old_business_files_preserved": 202,
+  "repeat_read_business_files_preserved": 257,
+  "rows": 25,
+  "original_rows_identity_values_periods_equal": true,
+  "claims": [
+    {
+      "id": "sha256:984d8b4ff562d29ce0ac6654c57b5c77af23abf1495c012d8641e0ab6b457039",
+      "value": "58496000000",
+      "accession": "0000078003-24-000039"
+    },
+    {
+      "id": "sha256:e757f5f0ce112c7cee217ca8c6ad7baa6eaa4f9aca6c353d88c8c83cd3df8b95",
+      "value": "100330000000",
+      "accession": "0000078003-23-000024"
+    }
+  ],
+  "result_id": "sha256:5aa4a2b626f8fa6276d784642538943f9cf5222b4931ee24a7e56cb877f91780",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "isolated_state_copy_not_real_original_migration": true
+}

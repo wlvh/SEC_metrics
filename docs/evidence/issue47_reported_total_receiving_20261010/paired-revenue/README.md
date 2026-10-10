@@ -47,3 +47,11 @@ python3 tools/vnext_company.py results --company pfizer \
 ```
 
 公共限定修后PASS只覆盖其确切源差异；历史消费者及完整五年业务分别验收。main收入能力已接119/120/130/132/129，不等于这一B02新消费者已main。旧不可比和源方法失败保留，新增调用及正式信用0。依赖/代码组合明确用于执行和审查，不建立exact-head批准或封存体系。
+
+## 最小交付同版本公司验收及远端实际执行
+
+PR137产品9dd13184在独立复制的小状态上正常消费同一保存来源，原任务未修改：仅FY2023相关处理配置迁移17.039s，原两个claims/金额/日期/ResultID保持；本最小组合禁止工厂/Calculator复跑1.441s，独立读取0.718s，25rows的值/身份/期间同原修后输出。minimal-delivery-company.json明确隔离复制及保护范围；配置中不再含PR128范围工厂，所以这次必要接线验证独立于594开发组合，不重复全五年。最初验证器误用RESULT而非真实METRIC_RESULT，处理已完才读错；保错误日志、从完成状态恢复后只执行复跑和读取，未重算首轮或改数据以通过。
+
+9dd本head十一远端检查全部终态SUCCESS。实际company run38027624347/job114141730259：保存源257/221.365s；历史dispatch/state/sourceconsumer105/1.168s，九个新paired方法逐项ok；配对6/1.029s；single-line/原period43/23.051s；D04 5、event13/historyevent10、原SEC/online27保持，零skip。工作流两个测试路径均触发且整模块实际执行；已有HistoricalRevenueScopeConsumerTest在步骤中重复选择的事实不抹掉，105为实际执行次数而非唯一业务位置。主要日志原目录，产品head不为记录再推，不产生无意义重复CI。
+
+Draft PR137仍依赖公共PR136，尚未main、非完整B02五年/在线来源/业务采纳；代码审查、CI与发布权限分别判断。新增真实调用0。

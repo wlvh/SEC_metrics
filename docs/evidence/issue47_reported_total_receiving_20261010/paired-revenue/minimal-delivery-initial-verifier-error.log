@@ -1,0 +1,5 @@
+minimal-related-config-migration 0 17.039
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/paired-revenue-delivery/verify_delivery_cli.py", line 24, in <module>
+    result=next(r for r in newrecords if r['record_type']=='RESULT');assert result['value']=='-0.4169640187381640586065982259' and result['unit']=='ratio'
+StopIteration
