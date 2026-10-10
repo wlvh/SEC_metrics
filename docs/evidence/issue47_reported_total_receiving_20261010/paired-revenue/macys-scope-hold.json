@@ -1,0 +1,115 @@
+{
+  "code_commit": "9dd13184760d89e37f60a4adfbd791b96f9e898f",
+  "uncommitted_scope_reporting_patch": true,
+  "first": {
+    "seconds": 9.764755208976567,
+    "exit_code": 2,
+    "arguments": [
+      "run",
+      "--company",
+      "macys",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2023",
+      "--fiscal-year-end",
+      "2023",
+      "--metric",
+      "B02",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-paired-scope-hold-83qas_sn/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-paired-scope-hold-83qas_sn/runs"
+    ]
+  },
+  "repeat": {
+    "seconds": 1.2370469998568296,
+    "exit_code": 2,
+    "arguments": [
+      "run",
+      "--company",
+      "macys",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2023",
+      "--fiscal-year-end",
+      "2023",
+      "--metric",
+      "B02",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-paired-scope-hold-83qas_sn/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-paired-scope-hold-83qas_sn/runs"
+    ]
+  },
+  "read": {
+    "seconds": 0.5548899588175118,
+    "exit_code": 0,
+    "arguments": [
+      "results",
+      "--company",
+      "macys",
+      "--state-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-paired-scope-hold-83qas_sn/state",
+      "--output-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-paired-scope-hold-83qas_sn/read"
+    ]
+  },
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-paired-scope-hold-83qas_sn/state",
+  "row": {
+    "company": "Macy's",
+    "cik": "794367",
+    "metric_id": "B02",
+    "metric_name": "Revenue YoY growth",
+    "value": "",
+    "unit": "ratio",
+    "status": "WITHHELD",
+    "source_class": "DERIVED",
+    "formula": "",
+    "period_start": "2023-01-29",
+    "period_end": "2024-02-03",
+    "fiscal_year": "2023",
+    "fiscal_period": "TARGET_PERIOD",
+    "accession": "",
+    "form": "10-K",
+    "filed_date": "2024-03-22",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2024-02-03\", \"period_start\": \"2023-01-29\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2023}, \"selection\": {\"category\": \"IMPLEMENTATION_GAP\", \"error_type\": \"StatementCaseError\", \"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:bbc2871389ca09f8b54aa448a034516c65cdf2072e09d92f15d8c6fc7fb74294\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": false, \"scope_id\": \"sha256:b15f954b4f08c9429076d17abfff2e600962cd27bee17a0a5d191e78eca7d9cc\", \"status\": \"NO_DEMONSTRATED_SPLIT\"}}, \"reason\": \"HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN\", \"unresolved_revenue_role\": \"prior\"}, \"source_reference_ids\": [\"sha256:bda4fee952c97c0a8f9ff51423551e575d045b61ac6b079ddc6c9267eb6249a6\", \"sha256:d96b6b700eede53248bc2246f5bcb3e5b8bef0b1e0643076c96589ff9a0b46c5\", \"sha256:3d0d63f27fb9550bcb2cc95c2e0df7e03c6db07c1da190fb4a1ef46f38e56328\", \"sha256:c07930c47134001e778c8ef315aae3408624a3158da0db24ba40ca79390af057\", \"sha256:ad727eb6b2472ca84507603a535189c4e7f5c01197c49bacd84afa53f8e61efa\", \"sha256:8601c81e2146a60945d8cf9a3c5a391cb202e2926ad6d5097c17e96020b39c32\", \"sha256:92c2d164faf82980138035284464c998022646f1f56e57353bc7179faef90cfc\", \"sha256:82c8613c4ee55fab4c52876c07fa2d96ec2bdf318192733ff18aefae95965dec\", \"sha256:f489be1212e54ba01adb8ec8da71cc01e9c1baceed60fe1c459ed5ab9cec6125\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. No accepted value is asserted for this target period. Native state: WITHHELD; reason: HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED.",
+    "company_id": "macys",
+    "result_id": "sha256:3e8862c327c83ba437335700220e41c9599d0df1a751f89a8182f86d63aca3c2",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-paired-scope-hold-83qas_sn/state/updates/B02/periods/FY2023/results/4e0f23ff0a2543a78d93c89ac34d6b94",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "unresolved_revenue_role": "prior",
+  "scope_summaries": {
+    "current": {
+      "scope_id": "sha256:bbc2871389ca09f8b54aa448a034516c65cdf2072e09d92f15d8c6fc7fb74294",
+      "status": "REPORTED_CONSOLIDATED_TOTAL",
+      "complete_scope_proven": true
+    },
+    "prior": {
+      "scope_id": "sha256:b15f954b4f08c9429076d17abfff2e600962cd27bee17a0a5d191e78eca7d9cc",
+      "status": "NO_DEMONSTRATED_SPLIT",
+      "complete_scope_proven": false
+    }
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "reference_values_not_supplied_to_consumer": true
+}
