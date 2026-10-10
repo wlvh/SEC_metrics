@@ -100,3 +100,13 @@ PY_SOURCE_ONLY
 88公共门/历史consumer/附件MA/dispatch/state/reporter/季度/D04控制10.280s零skip；原七main工作流命令及历史三模块/path保留，不另runner。仅原ParamFY24一个相关配置正常迁移25.269s，仍WITHHELD/null/813828/实际全年/原333187ResultID；完整2aa878ef八项请求与原对象逐字段相同。禁止历史factory复3.649s/计算0，独立results .671s，原业务记录与迁移后保护文件不变（数量见main-c99-company.json）。来源只读/旧大CSV与旧失败保，matchingV2响应仍无、无部分count/旧答借用。实际执行准确记原21b+未提交合并/固定公共文件树，不倒签后继commit。
 
 接收组合只解除代码冲突，非目标模型内容通过或完整年度计数交付；无新SEC/provider/paid/nativeRun/接受/Ready/merge/采纳/active。新head CI另核，旧21b全绿不盖本组合。主体/继任窗口和模型接缝仍未完成；源下载及EX99原一次调用不重复。
+
+## Actual main f51 receiving, 2026-10-10
+
+The latest Claude handoff and actual main f51d8c3d were read before receiving. PR114/d82 remains a candidate; the received revenue chain and historical B02 implementation are already main and are reused. Normal main merge has just one conflict: the company workflow's explicit E01 versus revenue test-path additions. The resolution retains all three paths and both existing command sets. Existing E01 source/producer/contract files are byte-identical to d82. Public updater changes are the normal main implementation, without an alternate historical controller.
+
+105 affected E01/attachment/MA/history dispatch/state/statement/D04 controls pass in0.525s with zero skips (main-f51-controls.log). An independent, network/factory-forbidden company `results --output-root` reads the existing Paramount FY2024 E01 in0.466s, null/WITHHELD, CIK813828, 2024-01-01..12-31 and original333187ResultID; all39 state files remain unchanged (main-f51-independent-read.json). This is reading validation; the d82 source-processing/forbidden-repeat receipt retains its original executed version and is not relabelled as a new f51 run. No financial or E01 source calculation was repeated.
+
+Read-only comparison with the existing completed check finds exactly one changed processing dependency: ordinary_current_update.py, changed by main's income-family dependency declaration. E01 source, producer and every declared E01 dependency remain the same. Under the current public configuration comparison, a subsequent E01 run would process again. main-f51-unrelated-configuration-change.json is the minimal historical case handed directly to #28; no old configuration/hash is rewritten and no repeated source processing hides this limitation. This does not block the limited workflow/merge conflict repair, but stable withholding reuse across this unrelated public change is not claimed.
+
+The complete eight-item V2 input and EX99 remain saved; no matching V2 target-model answer exists, so annual count remains null. New real calls0/0/0. Candidate stays Draft, not main; no Ready/merge, business acceptance, adoption or active switch.

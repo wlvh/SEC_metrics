@@ -74,7 +74,8 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertNotIn('case_factory', args)
         self.assertTrue(all(f is prepare_historical_statement_year_case for f in args['case_factories'].values()))
         self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B01'])
-        for metric in ['B02', 'B04', 'B05']:
+        self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B02'])
+        for metric in ['B04', 'B05']:
             self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
         self.assertIn('scripts/vnext/selected_income_source_v1.py', INCOME_PROCESSING_FILES)
         self.assertNotIn('scripts/vnext/selected_income_source_v1.py', PROCESSING_FILES)
