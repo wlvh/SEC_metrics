@@ -39,7 +39,7 @@ def _label_key(text):
     return re.sub(r'\s+', ' ', re.sub(r'\([a-z0-9]+\)', '', text.casefold())).strip()
 
 
-def _statement_scope(raw, index, parsed, table):
+def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False):
     """Bind the actual consolidated statement title and unassigned prose.
 
     An unfamiliar local scope statement is unresolved, not silently ignored.
@@ -53,6 +53,26 @@ def _statement_scope(raw, index, parsed, table):
                     if t['end_byte'] <= span['start_byte']), default=0)
     intro = [b for b in structure['blocks'] if not b['inside_table']
              and previous <= b['start_byte'] < b['end_byte'] <= span['start_byte']]
+    heading_span = None
+    if adjacent_heading and not intro:
+        # Some filings put the statement title and units in a separate layout
+        # table immediately before the amount table. Retain those exact spans;
+        # never cross a monetary/native-fact table to borrow another title.
+        heading = next((t for t in structure['tables'] if t['end_byte']==previous),None)
+        if heading is not None:
+            builder = index.tables[heading['table_order']]
+            if not any(index.cell_ordinals.get(id(c)) for row in builder.rows for c in row):
+                intro = [b for b in structure['blocks']
+                         if heading['start_byte'] <= b['start_byte'] < b['end_byte'] <= heading['end_byte']]
+                from .financial_structured import _expanded_table, RESOURCE_LIMITS
+                heading_grid,_ = _expanded_table(builder=builder,
+                    remaining_total_cells=RESOURCE_LIMITS.max_total_cells,
+                    remaining_expanded_text_chars=RESOURCE_LIMITS.max_expanded_text_chars)
+                all_text=''.join(c['text'] for row in heading_grid['rows'] for c in row['cells'] if c['is_origin'])
+                covered=''.join(b['visible_text'] for b in intro)
+                _need(re.sub(r'\s+','',all_text)==re.sub(r'\s+','',covered),
+                      'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+                heading_span = heading
     title_pattern = r'consolidated statements? of (?:income|operations|earnings)'
     titles = [b for b in intro if re.fullmatch(title_pattern, _label_key(b['visible_text']))]
     caption = table.get('caption', '').strip()
@@ -64,8 +84,15 @@ def _statement_scope(raw, index, parsed, table):
                    if f['qualified_name'].split(':')[-1].casefold()=='entityregistrantname'}
     issuer_lines = {name+suffix for name in registrants
                     for suffix in ('','andsubsidiaries','andsubsidiarycompanies')}
+    if adjacent_heading:
+        _need(all(company_key(b['visible_text']) in issuer_lines
+                  or re.fullmatch(title_pattern,_label_key(b['visible_text']))
+                  or any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in UNIT_HEADER)
+                  for b in intro), 'STATEMENT_HEADING_SCOPE_UNRESOLVED')
     after_title = [b for b in intro if titles and b['start_byte'] >= titles[-1]['end_byte']]
-    _need(all(company_key(b['visible_text']) in issuer_lines for b in after_title),
+    _need(all(company_key(b['visible_text']) in issuer_lines
+              or adjacent_heading and any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in UNIT_HEADER)
+              for b in after_title),
           'STATEMENT_INTRODUCTION_SCOPE_UNRESOLVED')
     # Capture every nonempty explanatory row, not just a cancellation keyword.
     # An annotation without native data is not given a financial meaning by
@@ -90,7 +117,9 @@ def _statement_scope(raw, index, parsed, table):
         cells = [c for c in row['cells'] if c['is_origin'] and c['text'].strip()]
         for c in cells:
             text = _label_key(c['text'])
+            from .financial_duration import _DATE
             header = (re.fullmatch(r'[0-9]{4}', text)
+                      or adjacent_heading and _DATE.fullmatch(text)
                       or re.fullmatch(r'(?:for the )?years? ended [a-z]+ [0-9]{1,2},?', text)
                       or any(re.fullmatch(p, text) for p in UNIT_HEADER)
                       or re.fullmatch(title_pattern, text)
@@ -98,9 +127,12 @@ def _statement_scope(raw, index, parsed, table):
             if not header:
                 unknown.append(_cell_proof(table=table, cell=c))
     _need(not unknown, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')
-    return {'title_sources':titles[-1:] if titles else [], 'caption':caption,
+    proof = {'title_sources':titles[-1:] if titles else [], 'caption':caption,
             'table_span':span, 'intervening_sources':intro,
             'unresolved_annotations':unknown}
+    if adjacent_heading:
+        proof['adjacent_heading_table']=heading_span
+    return proof
 
 
 def _key(row):
