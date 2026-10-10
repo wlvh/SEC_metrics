@@ -1,0 +1,89 @@
+{
+  "phase": "unrelated",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "state_root": "/private/tmp/issue28-processing-company-20261010",
+  "command": [
+    "tools/vnext_company.py",
+    "run",
+    "--company",
+    "marriott_international",
+    "--metric",
+    "B04",
+    "--source-root",
+    "/Users/lyuhongwang/Developer/SEC_metrics",
+    "--work-dir",
+    "/private/tmp/issue28-processing-company-20261010",
+    "--output-dir",
+    "/private/tmp/issue28-registry-row-scope-20261010/review-p2/unrelated-out"
+  ],
+  "seconds": 0.1396439999807626,
+  "exit": 0,
+  "old_result_files_preserved": 24,
+  "metrics": [
+    {
+      "metric_id": "B04",
+      "status": "NO_SOURCE_CONTENT_CHANGE",
+      "attempt_id": "c3a13b72acd84aeea386db1fefcca65e",
+      "version": "0a67ce9d29a4435cb718fa945441a57e",
+      "result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2",
+      "result_root": "/private/tmp/issue28-processing-company-20261010/updates/B04/results/0a67ce9d29a4435cb718fa945441a57e",
+      "result_reason_code": "PASS",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2",
+      "record_root": "/private/tmp/issue28-processing-company-20261010/updates/B04/results/0a67ce9d29a4435cb718fa945441a57e",
+      "program_version": {
+        "commit": "6731aff359746c76cedbe01cf4b7466d7b5a6204",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "row": {
+    "company": "Marriott International",
+    "cik": "1048286",
+    "metric_id": "B04",
+    "metric_name": "Net income",
+    "value": "2601000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0001048286-26-000007",
+    "form": "10-K",
+    "filed_date": "2026-02-10",
+    "concept_or_section": "Net income",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": null, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b\", \"sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9\", \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"sha256:63687b69a68ec70135351fc580e0a0d4f4f9d369bfc8a4f087772217b312a630\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "marriott_international",
+    "result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2",
+    "record_root": "/private/tmp/issue28-processing-company-20261010/updates/B04/results/0a67ce9d29a4435cb718fa945441a57e",
+    "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "method": "Actual CLI/controller/source/calculator/save/read; repeat/target only inject registry row input and forbid factory. No source/HTTP/business-answer stub. Target must fail before value credit; initial migration actually processes.",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

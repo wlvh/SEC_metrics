@@ -70,7 +70,7 @@ class RegistryProcessingScopeTest(unittest.TestCase):
         self.run_check()
         for path in (self.program_registry,self.source_registry):
             for field,value in (('primary_cik','1048287'),('roles','primary:1048287'),
-                ('industry_profile','general_industrial'),('fiscal_year_end','0630'),
+                ('industry_profile','manufacturing'),('fiscal_year_end','0630'),
                 ('target_period_policy','TEST_ONLY changed period rule')):
                 before=self.calculations;self.edit(path,'marriott_international',field,value)
                 answer=self.run_check()
@@ -83,6 +83,16 @@ class RegistryProcessingScopeTest(unittest.TestCase):
                 'TEST_ONLY new selected rule' if path==PROGRAM/'scripts/vnext/normal_annual_input.py' else original(path=path)):
             answer=self.run_check()
         self.assertEqual('CANDIDATE_READY',answer['status']);self.assertEqual(2,self.calculations)
+
+    def test_unrelated_unknown_profile_cannot_reuse_success(self):
+        self.run_check();old=(self.root/'current-result.json').read_bytes()
+        self.edit(self.program_registry,'southwest_airlines','industry_profile','TEST_ONLY_MISSING_PROFILE')
+        with patch.object(update,'create_saved_result',side_effect=AssertionError('Invalid profile must stop')):
+            failed=self.run_check()
+        self.assertEqual('INPUT_OR_EXECUTION_FAILED',failed['status'])
+        self.assertIn('Company registry profile has no trait mapping',failed['reason'])
+        self.assertEqual(old,(self.root/'current-result.json').read_bytes())
+        self.assertEqual(1,self.calculations)
 
     def test_registry_integrity_failure_never_reuses_old_success(self):
         self.run_check();old=(self.root/'current-result.json').read_bytes()

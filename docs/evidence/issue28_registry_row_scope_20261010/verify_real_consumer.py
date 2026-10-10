@@ -8,6 +8,8 @@ source=Path('/Users/lyuhongwang/Developer/SEC_metrics')
 state=Path('/private/tmp/issue28-processing-company-20261010')
 output=Path('/private/tmp/issue28-registry-row-scope-20261010')
 program=Path.cwd();phase=sys.argv[1]
+if len(sys.argv)>2:
+    output=output/sys.argv[2];output.mkdir(parents=True,exist_ok=True)
 socket.socket.connect=lambda *a,**kw: (_ for _ in ()).throw(AssertionError('NETWORK_FORBIDDEN'))
 protected={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in state.rglob('*') if p.is_file() and '/results/' in str(p)}
 original=registry._registry_rows

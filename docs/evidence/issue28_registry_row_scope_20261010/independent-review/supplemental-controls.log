@@ -1,0 +1,12 @@
+{"control": "complete_target_rows_and_loader_hashes", "fields_each": 12, "result": "PASS"}
+{"control": "legacy_whole_hash_configuration_not_silently_rewritten", "result": "PASS", "status": "INPUT_OR_EXECUTION_FAILED", "old_pointers_preserved": true}
+{"control": "blank_primary_cik", "side": "program", "result": "PASS", "reason": "CURRENT_UPDATE_COMPANY_REGISTRY_ROW_INVALID", "previous_pointer_preserved": true}
+{"control": "short_row", "side": "program", "result": "PASS", "reason": "CURRENT_UPDATE_COMPANY_REGISTRY_ROW_INVALID", "previous_pointer_preserved": true}
+{"control": "extra_cell", "side": "program", "result": "PASS", "reason": "CURRENT_UPDATE_COMPANY_REGISTRY_ROW_INVALID", "previous_pointer_preserved": true}
+{"control": "empty_file", "side": "program", "result": "PASS", "reason": "Company registry fields are incomplete", "previous_pointer_preserved": true}
+{"control": "symlink", "side": "program", "result": "PASS", "reason": "Company registry is unsafe or absent", "previous_pointer_preserved": true}
+{"control": "blank_primary_cik", "side": "source", "result": "PASS", "reason": "CURRENT_UPDATE_COMPANY_REGISTRY_ROW_INVALID", "previous_pointer_preserved": true}
+{"control": "short_row", "side": "source", "result": "PASS", "reason": "CURRENT_UPDATE_COMPANY_REGISTRY_ROW_INVALID", "previous_pointer_preserved": true}
+{"control": "extra_cell", "side": "source", "result": "PASS", "reason": "CURRENT_UPDATE_COMPANY_REGISTRY_ROW_INVALID", "previous_pointer_preserved": true}
+{"control": "empty_file", "side": "source", "result": "PASS", "reason": "Company registry fields are incomplete", "previous_pointer_preserved": true}
+{"control": "symlink", "side": "source", "result": "PASS", "reason": "Company registry is unsafe or absent", "previous_pointer_preserved": true}
