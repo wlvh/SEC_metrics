@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/auditor-selected/verify_annual_sources.py", line 22, in <module>
+    try:r=resolve_c04(**args)
+          ~~~~~~~~~~~^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/governance_signals.py", line 386, in resolve_c04
+    prior_checks = [_auditor_filing(sources=sources, company_id=target["company_id"], cik=expected_cik, period_end=prior_period_end)
+                    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/governance_signals.py", line 345, in _auditor_filing
+    _need(len(accessions) == 1 and len(forms) == 1 and forms <= {"10-K", "10-K/A"}, "C04_FILING_IDENTITY_OR_FORM_CONFLICT")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/governance_signals.py", line 42, in _need
+    raise GovernanceSignalError(reason)
+vnext.governance_signals.GovernanceSignalError: C04_FILING_IDENTITY_OR_FORM_CONFLICT
