@@ -1,0 +1,99 @@
+test_128_items_are_supported_but_129_are_not_silently_trimmed (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_128_items_are_supported_but_129_are_not_silently_trimmed) ... 
+  test_128_items_are_supported_but_129_are_not_silently_trimmed (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_128_items_are_supported_but_129_are_not_silently_trimmed) (count=128) ... ERROR
+  test_128_items_are_supported_but_129_are_not_silently_trimmed (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_128_items_are_supported_but_129_are_not_silently_trimmed) (count=129) ... ERROR
+test_68_full_titles_roundtrip_without_cutting_or_changing_old_encoding_fields (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_68_full_titles_roundtrip_without_cutting_or_changing_old_encoding_fields) ... ERROR
+test_old_policy_result_and_trace_are_unchanged (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_old_policy_result_and_trace_are_unchanged) ... ok
+test_original_64_contract_and_smaller_successor_contract_remain_real_limits (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_original_64_contract_and_smaller_successor_contract_remain_real_limits) ... 
+  test_original_64_contract_and_smaller_successor_contract_remain_real_limits (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_original_64_contract_and_smaller_successor_contract_remain_real_limits) (renderer='ORDERED_NEWLINE_128_V2') ... FAIL
+test_renderer_and_compiler_refuse_unknown_capacity_bad_types_and_overlimit (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_renderer_and_compiler_refuse_unknown_capacity_bad_types_and_overlimit) ... ERROR
+
+======================================================================
+ERROR: test_128_items_are_supported_but_129_are_not_silently_trimmed (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_128_items_are_supported_but_129_are_not_silently_trimmed) (count=128)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_item_capacity.py", line 51, in test_128_items_are_supported_but_129_are_not_silently_trimmed
+    args=arguments(count)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_item_capacity.py", line 27, in arguments
+    return fixtures.source_arguments(binding(annual(source)),front=front or successor_front())
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_results.py", line 61, in source_arguments
+    return {"compiled_spec": compiled(front), "target": target, "source_references": [ref],
+                             ~~~~~~~~^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_results.py", line 36, in compiled
+    return compile_spec(text="---\n" + json.dumps(front or spec_front()) + "\n---\n", dependency_specs={})
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/scripts/vnext/specs.py", line 773, in compile_spec
+    raise SpecError("TEXT_V1 text_policy is missing or unsupported")
+vnext.specs.SpecError: TEXT_V1 text_policy is missing or unsupported
+
+======================================================================
+ERROR: test_128_items_are_supported_but_129_are_not_silently_trimmed (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_128_items_are_supported_but_129_are_not_silently_trimmed) (count=129)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_item_capacity.py", line 51, in test_128_items_are_supported_but_129_are_not_silently_trimmed
+    args=arguments(count)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_item_capacity.py", line 27, in arguments
+    return fixtures.source_arguments(binding(annual(source)),front=front or successor_front())
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_results.py", line 61, in source_arguments
+    return {"compiled_spec": compiled(front), "target": target, "source_references": [ref],
+                             ~~~~~~~~^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_results.py", line 36, in compiled
+    return compile_spec(text="---\n" + json.dumps(front or spec_front()) + "\n---\n", dependency_specs={})
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/scripts/vnext/specs.py", line 773, in compile_spec
+    raise SpecError("TEXT_V1 text_policy is missing or unsupported")
+vnext.specs.SpecError: TEXT_V1 text_policy is missing or unsupported
+
+======================================================================
+ERROR: test_68_full_titles_roundtrip_without_cutting_or_changing_old_encoding_fields (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_68_full_titles_roundtrip_without_cutting_or_changing_old_encoding_fields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_item_capacity.py", line 32, in test_68_full_titles_roundtrip_without_cutting_or_changing_old_encoding_fields
+    args=arguments();candidate=create_deterministic_text_candidate(**args)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_item_capacity.py", line 27, in arguments
+    return fixtures.source_arguments(binding(annual(source)),front=front or successor_front())
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_results.py", line 61, in source_arguments
+    return {"compiled_spec": compiled(front), "target": target, "source_references": [ref],
+                             ~~~~~~~~^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_results.py", line 36, in compiled
+    return compile_spec(text="---\n" + json.dumps(front or spec_front()) + "\n---\n", dependency_specs={})
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/scripts/vnext/specs.py", line 773, in compile_spec
+    raise SpecError("TEXT_V1 text_policy is missing or unsupported")
+vnext.specs.SpecError: TEXT_V1 text_policy is missing or unsupported
+
+======================================================================
+ERROR: test_renderer_and_compiler_refuse_unknown_capacity_bad_types_and_overlimit (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_renderer_and_compiler_refuse_unknown_capacity_bad_types_and_overlimit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_item_capacity.py", line 81, in test_renderer_and_compiler_refuse_unknown_capacity_bad_types_and_overlimit
+    args=arguments();result,_,_=replay_text_result(**fixtures.reviewed(args,candidate=create_deterministic_text_candidate(**args)))
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_item_capacity.py", line 27, in arguments
+    return fixtures.source_arguments(binding(annual(source)),front=front or successor_front())
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_results.py", line 61, in source_arguments
+    return {"compiled_spec": compiled(front), "target": target, "source_references": [ref],
+                             ~~~~~~~~^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_results.py", line 36, in compiled
+    return compile_spec(text="---\n" + json.dumps(front or spec_front()) + "\n---\n", dependency_specs={})
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/scripts/vnext/specs.py", line 773, in compile_spec
+    raise SpecError("TEXT_V1 text_policy is missing or unsupported")
+vnext.specs.SpecError: TEXT_V1 text_policy is missing or unsupported
+
+======================================================================
+FAIL: test_original_64_contract_and_smaller_successor_contract_remain_real_limits (tests.vnext.test_text_item_capacity.TextItemCapacityTest.test_original_64_contract_and_smaller_successor_contract_remain_real_limits) (renderer='ORDERED_NEWLINE_128_V2')
+----------------------------------------------------------------------
+vnext.specs.SpecError: TEXT_V1 text_policy is missing or unsupported
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/tests/vnext/test_text_item_capacity.py", line 63, in test_original_64_contract_and_smaller_successor_contract_remain_real_limits
+    with self.subTest(renderer=renderer),self.assertRaisesRegex(ValueError,'HEADINGS_EXCEED_BOUND'):
+                                         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "HEADINGS_EXCEED_BOUND" does not match "TEXT_V1 text_policy is missing or unsupported"
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.031s
+
+FAILED (failures=1, errors=4)
+{"allowed_skips": 0, "errors": 4, "failures": 1, "run": 5, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_text_item_capacity"]}
