@@ -33,7 +33,16 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
                     '_Sources':reader,'repository_company_traits':[], 'verify_ordinary_source_proofs':{}}.items():
                 stack.enter_context(patch.object(cases,name,return_value=value))
             if scopes is not None:
-                stack.enter_context(patch.object(cases,'inspect_risk_heading_amendment',side_effect=scopes))
+                def inspect(**frames):
+                    check=next(assessments)
+                    if isinstance(check,Exception):raise check
+                    check=copy.deepcopy(check)
+                    for name in ('original','amendment'):
+                        check[name].update(filing=frames[name]['filing'],
+                                          source_reference=frames[name]['reference'])
+                    return check
+                assessments=iter(scopes)
+                stack.enter_context(patch.object(cases,'inspect_risk_heading_amendment',side_effect=inspect))
             return cases.prepare_historical_risk_heading_year_case(repo_root=Path('/constructed'),
                 company_id='sample_entity',metric_id='D01',fiscal_year=2025)
 
@@ -111,8 +120,9 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
         case=self.case(prepared=value,amendment_source=amended,scopes=[check])
         self.assertEqual(case['selection']['heading_count'],2)
         self.assertNotIn('Never use',case['results']['D01']['value'])
-        self.assertEqual(case['input_assessments']['risk_heading_amendment_checks'],[check])
-        self.assertEqual(case['input_binding']['risk_heading_amendment_checks'],[check])
+        self.assertEqual(case['input_assessments']['risk_heading_amendment_checks'][0]['scope_id'],check['scope_id'])
+        self.assertEqual(case['input_binding']['risk_heading_amendment_checks'],
+                         case['input_assessments']['risk_heading_amendment_checks'])
         self.assertNotIn('source_scope',case['selection']['risk_heading_amendment_checks'][0])
         self.assertEqual(len(case['references']),1)
         self.assertTrue(any(r.get('accession')=='0000012345-26-000002' for r in case['expected_records']))

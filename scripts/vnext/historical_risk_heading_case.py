@@ -91,6 +91,11 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
             amendment={'raw': amended['raw_bytes'], 'blob': amended['raw_blob'],
                        'reference': amended['source_reference'], 'filing': filing},
             company_id=company_id, cik=annual['entity'])
+        _need(check['original']['filing'] == annual['filing']
+              and check['amendment']['filing'] == filing
+              and check['original']['source_reference'] == primary['source_reference']
+              and check['amendment']['source_reference'] == amended['source_reference'],
+              'HISTORICAL_RISK_HEADINGS_AMENDMENT_SOURCE_BINDING_CHANGED')
         amendment_checks.append(check)
     for check in amendment_checks:
         accession = check['amendment']['filing']['accessionNumber']
