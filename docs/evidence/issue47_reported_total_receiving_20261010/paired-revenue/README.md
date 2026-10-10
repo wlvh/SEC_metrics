@@ -1,0 +1,15 @@
+# 历史 B02：复用总收入来源检查，保留未解决的前期路径
+
+本方在独立历史短开发分支复用公共119/130/132的已选原件收入检查，分别约束B02两个原申报。CompanyFacts claim的概念是本地名，原件事实带us-gaap前缀；仅对已由原适配器证明的COMPANYFACTS_NUMERIC_FACT构造临时字段视图，供已有admit函数筛选，再按原verified_claim_id选回原claim。原概念、身份、SourceSet和当前申报比较数不改，图中的两个操作数必须属于各自已允许集合，再用原paired_measure保护。没有新的nativeparser、选择收入概念政策、Calculator、renderer或controller。
+
+完整原件scope保存在input-assessments和绑定，日常输出只保scopeID/status/complete字段；B02实际处理依赖声明包括来源/财年模块，两种历史分派都使用该声明。缺任一角色的完整范围，整份增长率扣留，当前/前期角色与原因分开，不把增长观测上无revenue-role检查当操作数已验证。
+
+100项来源/消费者/配对/分派/范围控制1.649秒、零skip；后补7项定向控制0.080秒，包含错概念、单位、金额、申报、期间、未知scope和图选择外部操作数。构造图替身明确不是财报值证据。原夹具路径错误保留，改为实际ordinary_zero_ai/B02而没有放松断言。
+
+## 真实未完成段
+
+固定de4bd873仅请求原PfizerFY2023 B02，20.736秒，CANDIDATE_WITHHELD/null。当前FY2023原件已经由公共V2证明总收入58496000000USD，完整scope在actual-current-source-scope.json。前期FY2022原合并利润表的行字面为Revenues100330000000；现V2只接Total前缀，V1没有分项求和结构，因此明确HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN。来源已保存、已有完整阅读，不称下载或许可不足。原数据见固定1678f3bb的docs/evidence/issue47_growth_reference_20261010/pfizer-supported-revenue-tables.json和pfizer-supported-native-revenue.json。共享核心负责人已收到准确缺口，历史侧不通过公司/年份规则、手工操作数或后来重述值绕过。
+
+原实际执行的Result reason为HISTORICAL_PRIOR_INPUT_UNRESOLVED，完整assessment保精确范围原因。后继2a241仅将将来结果分类改为HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED并记录失败角色，不重算来改签原记录。await公共source增量后只处理同一受影响坐标。0.794秒独立读取确认25行、B02仍空、B01正确总額58496m保持，401状态文件字节不变，工厂和网络禁止；新SEC/provider/paid/nativeRun/接受0。
+
+这一分支有实际公司未决输出与完整当前来源支持，尚无修正增长率交付。没有新功能PR或扩PR129/133范围，不把测试成功写成完整B02或五年验收。main接收与候选版本分别说明；旧B02失败、B01小计缺陷/修正结果、原Run和来源保留。保守扣留不取消前期完整范围的修复责任。
