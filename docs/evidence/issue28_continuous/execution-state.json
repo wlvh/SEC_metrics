@@ -6048,6 +6048,40 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics/docs/evidence/issue28_text_item_capacity_20261010/independent-review/conclusion.md",
       "verdict": "PASS_LIMITED_TEXT_CAPACITY",
       "agent_ended": true
+    },
+    {
+      "task_name": "review_currentd01_b4afa87",
+      "purpose": "review",
+      "scope_paths": [
+        "scripts/vnext/current_risk_heading_case.py",
+        "scripts/vnext/company_current_records.py",
+        "scripts/vnext/ordinary_current_update.py",
+        "scripts/vnext/company_local.py",
+        "tests/vnext/test_current_risk_heading_case.py",
+        ".github/workflows/company-current-records.yml"
+      ],
+      "patch_sha": "b4afa87aec04354bc1e0abf3e6aa4aed65a4105d",
+      "spawned_at": "2026-10-10T03:53:23Z",
+      "ended_at": "2026-10-10T04:03:13Z",
+      "tool_calls": 37,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-current-risk-headings/SEC_metrics/docs/evidence/issue28_current_risk_headings_20261010/independent-review/结论.md",
+      "verdict": "REQUEST_CHANGES_LIMITED_DELTA",
+      "messages": 3
+    },
+    {
+      "task_name": "review_d01deps_4a99f5c",
+      "purpose": "review",
+      "scope_paths": [
+        "scripts/vnext/current_risk_heading_case.py:PROCESSING_FILES",
+        "tests/vnext/test_current_risk_heading_case.py:test_consumed_fiscal_parser_and_policy_change_reprocess_once"
+      ],
+      "patch_sha": "4a99f5c269422790bbf23c1a41ee107884e1e9b0",
+      "spawned_at": "2026-10-10T04:07:24.139335+00:00",
+      "ended_at": "2026-10-10T04:12:00.659870Z",
+      "tool_calls": 25,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-current-risk-headings/SEC_metrics/docs/evidence/issue28_current_risk_headings_20261010/independent-dependency-repair/结论.md",
+      "verdict": "PASS_LIMITED_DEPENDENCY_REPAIR",
+      "messages": 1
     }
   ],
   "ci_capacity_20260922": {
@@ -18793,8 +18827,9 @@
     "review": "PASS_LIMITED product9510, not company/owneradoption",
     "CI": {
       "head": "3d143465",
-      "observation": "8 SUCCESS, 3 IN_PROGRESS; not terminal",
-      "run": "38021176182"
+      "checks": 11,
+      "terminal": "SUCCESS",
+      "observed": "2026-10-10"
     },
     "default_current_or_historical_dispatch_changed": false,
     "calls": [
@@ -18816,5 +18851,55 @@
       2,
       64
     ]
+  },
+  "current_risk_heading_company_20261010": {
+    "main_base": "6c57ddc22daa3a9f31da20d8294e52e3d54990d0",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-risk-headings/SEC_metrics",
+    "product": "b4afa87aec04354bc1e0abf3e6aa4aed65a4105d",
+    "repair": "4a99f5c269422790bbf23c1a41ee107884e1e9b0",
+    "archive_local": "57ab6e37",
+    "publication": "LOCAL_COMMITTED_PUSH_FAILED_CONNECT_500",
+    "depends_on": [
+      124,
+      134
+    ],
+    "shared_functions": [
+      "ordinary_current_update.run_once(current_case_factory=None)",
+      "company_current_records.run_saved_company(current_case_factories=None)",
+      "company_local.run_local source_root current dispatch"
+    ],
+    "shared_defaults_preserved": true,
+    "actual_company": "Enphase FY2025",
+    "headings": 60,
+    "result_id": "sha256:3b7a9fa13d81f5c38e419b7a6a183da6b381b163a4cfe58329798c4bbfa22182",
+    "actual_first_uncommitted_seconds": [
+      4.313156374963,
+      0.6630264581181109,
+      0.41143120895139873
+    ],
+    "repair_code_commit": "4a99f5c269422790bbf23c1a41ee107884e1e9b0",
+    "repair_seconds": [
+      4.583197917090729,
+      0.29002091591246426,
+      0.13330354215577245
+    ],
+    "old_files_protected": 6,
+    "new_old_files_unchanged_after_repeat_read": 12,
+    "tests": {
+      "count": 101,
+      "seconds": 7.811,
+      "skip": 0
+    },
+    "initial_review": "REQUEST_CHANGES37tools/3messages; two fiscal parser/policy deps missing",
+    "repair_review": "PASS_LIMITED25tools/1message; only declarations and regression, not whole-company adoption",
+    "old_direct_default_D01_closed": true,
+    "online_native_unchanged": true,
+    "amendment_successor": "IMPLEMENTATION_GAP, stopped source branch not used",
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "push at natural checkpoint, create Draft and actual CI, fixed Pfizer prior reported revenue scope next"
   }
 }
