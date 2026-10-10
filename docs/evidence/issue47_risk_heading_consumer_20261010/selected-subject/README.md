@@ -12,3 +12,6 @@ This branch therefore has a bounded subject implementation and a precise real bl
 
 
 Direct bounded read of the already saved amendment confirms the exact dependency:776505bytes/SHA10fcfbc3…ff7d0. Explanatory note adds PartIIIItems10–14 and states no other changes except expressly stated; its cautionary text specifically points to Item1A of the InitialForm10-K. Actual section headings are PartIII/IV and Items10–15. Adjacent amendment-note.json retains verbatim note/caution blocks and exact byte spans. This supports a concrete proposed original-Item1A preservation interface, but does not itself grant D01 admission under the existing not-covered policy. No original risk-heading study or company calculation is repeated.
+
+
+Actual independent daily read of the saved failed task finds a separate public-view gap: .267s (exact JSON time retained), exit0; JSON/CSV preserveFY2025/null/INPUT_OR_EXECUTION_FAILED but drop the saved reason HISTORICAL_RISK_HEADINGS_AMENDMENT_NOT_RECEIVED and category IMPLEMENTATION_GAP. CSV notes is empty. Latest-execution.json still contains both. gap-independent-read.json is the real consumer evidence; no source/factory/calculation occurred. The public owner receives this exact read-only repro to retain reason/category in the shared view, not a historical renderer. The current omission is not evidence that financial source is absent.
