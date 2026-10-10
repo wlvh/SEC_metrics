@@ -1,0 +1,122 @@
+{
+  "start_utc": "2026-10-10T07:27:58.419497+00:00",
+  "base": "84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf",
+  "checks": [
+    {
+      "check": "valid_v2",
+      "old_complete": true,
+      "new_complete": true,
+      "full_dict_and_scope_id_equal": true,
+      "scope_id": "sha256:585dcd3eff1ba560c015515a271a660df21abc3e7bc286bb9c3cb124e220de54"
+    },
+    {
+      "check": "valid_single_line_default_output",
+      "old_complete": true,
+      "new_complete": true,
+      "full_dict_and_scope_id_equal": true,
+      "scope_id": "sha256:aca2c77eb7805169b964916fa2c79c8f7033231a13e1f759578a89587c707f6d"
+    },
+    {
+      "check": "valid_v1",
+      "old_complete": true,
+      "new_complete": true,
+      "full_dict_and_scope_id_equal": true,
+      "scope_id": "sha256:7e6ff888561c01a96b2fe8af137ebbafe543c21f8d09fe9a2bd15a61bdd577cc"
+    },
+    {
+      "check": "unknown_scope_unassigned_row",
+      "mutation_occurred": true,
+      "base": {
+        "complete_scope_proven": false,
+        "status": "NO_REPORTED_TOTAL_PROVEN",
+        "value": null
+      },
+      "patch": {
+        "rejected": "SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED"
+      }
+    },
+    {
+      "check": "known_segment_limitation",
+      "mutation_occurred": true,
+      "base": {
+        "complete_scope_proven": false,
+        "status": "NO_REPORTED_TOTAL_PROVEN",
+        "value": null
+      },
+      "patch": {
+        "complete_scope_proven": false,
+        "status": "NO_REPORTED_TOTAL_PROVEN",
+        "value": null
+      }
+    },
+    {
+      "check": "parenthesized_unknown_total_scope",
+      "mutation_occurred": true,
+      "base": {
+        "complete_scope_proven": false,
+        "status": "NO_REPORTED_TOTAL_PROVEN",
+        "value": null
+      },
+      "patch": {
+        "complete_scope_proven": true,
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "value": "58496000000"
+      }
+    },
+    {
+      "check": "parenthesized_unknown_expense_scope",
+      "mutation_occurred": true,
+      "base": {
+        "complete_scope_proven": false,
+        "status": "NO_REPORTED_TOTAL_PROVEN",
+        "value": null
+      },
+      "patch": {
+        "complete_scope_proven": true,
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "value": "58496000000"
+      }
+    },
+    {
+      "check": "parenthesized_known_subtotal",
+      "mutation_occurred": true,
+      "base": {
+        "complete_scope_proven": false,
+        "status": "NO_REPORTED_TOTAL_PROVEN",
+        "value": null
+      },
+      "patch": {
+        "complete_scope_proven": true,
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "value": "58496000000"
+      }
+    },
+    {
+      "check": "wrong_visible_year",
+      "mutation_occurred": true,
+      "base": {
+        "complete_scope_proven": false,
+        "status": "NO_REPORTED_TOTAL_PROVEN",
+        "value": null
+      },
+      "patch": {
+        "rejected": "SELECTED_REPORTED_REVENUE_FISCAL_COLUMN_UNRESOLVED"
+      }
+    },
+    {
+      "check": "unrecognized_revenue_label",
+      "mutation_occurred": true,
+      "base": {
+        "complete_scope_proven": false,
+        "status": "NO_REPORTED_TOTAL_PROVEN",
+        "value": null
+      },
+      "patch": {
+        "complete_scope_proven": false,
+        "status": "NO_REPORTED_TOTAL_PROVEN",
+        "value": null
+      }
+    }
+  ],
+  "end_utc": "2026-10-10T07:27:58.696473+00:00"
+}
