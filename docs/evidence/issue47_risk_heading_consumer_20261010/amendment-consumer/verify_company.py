@@ -1,13 +1,19 @@
 """One real previously blocked D01 consumer; no source/model acquisition."""
-import csv,hashlib,json,subprocess,sys,tempfile,time
+import argparse,csv,hashlib,json,subprocess,sys,tempfile,time
 from pathlib import Path
-state=Path('/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-paramount-selected-20261010/state')
+parser=argparse.ArgumentParser()
+parser.add_argument('--state-root',type=Path,required=True)
+parser.add_argument('--output-parent',type=Path,required=True)
+parser.add_argument('--reference',type=Path,default=Path(__file__).resolve().parents[1]/'selected-subject/existing-reference.json')
+options=parser.parse_args()
+state=options.state_root.resolve()
 source=json.loads((state/'company-task.json').read_text())['source_root']
-base=Path(tempfile.mkdtemp(prefix='d01-paramount-amendment-',dir='/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence'))
-root=Path('work/d01-amendment-consumer')
-ref=json.loads((root/'existing-reference.json').read_text())['reference']
+base=Path(tempfile.mkdtemp(prefix='d01-paramount-amendment-',dir=options.output_parent))
+root=base
+ref=json.loads(options.reference.read_text())['reference']
 def hashes():
  return {str(p.relative_to(state)):hashlib.sha256(p.read_bytes()).hexdigest() for p in state.rglob('*') if p.is_file()}
+source_before={k:hashlib.sha256((Path(source)/k).read_bytes()).hexdigest() for k in ('evidence/requests_log.csv','evidence/requests_log_manifest.json','config/company_registry.csv')}
 before=hashes();(root/'before-state.json').write_text(json.dumps({'state_root':str(state),'files':before},indent=2)+'\n')
 args=['run','--company','paramount_skydance_paramount_global','--period','fiscal-years','--fiscal-year-start','2025','--fiscal-year-end','2025','--metric','D01','--source-root',source,'--work-dir',str(state),'--output-dir',str(base/'runs')]
 def invoke(name,args,forbid=False):
@@ -36,8 +42,7 @@ rows=list(csv.DictReader((base/'read/metrics_matrix.csv').open()));row=next(r fo
 assert row['value'].splitlines()==ref['headings_read'] and len(ref['headings_read'])==38
 assert row['unit']=='text' and row['period_start']=='2025-01-01' and row['period_end']=='2025-12-31'
 assert row['accession']==ref['accession'] and row['cik']=='2041610'
-source_before=json.loads((root/'source-before.json').read_text())
-assert all(hashlib.sha256((Path(source_before['source_root'])/k).read_bytes()).hexdigest()==h for k,h in source_before['unchanged_source_files'].items())
+assert all(hashlib.sha256((Path(source)/k).read_bytes()).hexdigest()==h for k,h in source_before.items())
 result_root=Path(run['metrics'][0].get('result_root') or run['metrics'][0]['record_root'])
 assessment=json.loads((result_root/'input-assessments.json').read_text())
 scopes=assessment['assessments']['risk_heading_amendment_checks']
