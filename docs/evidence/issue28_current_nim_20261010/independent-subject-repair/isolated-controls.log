@@ -1,0 +1,175 @@
+{
+  "kind": "INDEPENDENT_SUBJECT_REPAIR_SMALL_CSV_CONTROLS",
+  "patch_sha": "a541a5b606379a478198a4d41190fd5088db52f9",
+  "actual_head": "8f28e09e7bc09527420d0430fb420ade3bafab1b",
+  "utc": "2026-10-10T05:59:24.914783+00:00",
+  "isolated_cases": 17,
+  "passed": 17,
+  "network_calls": 0,
+  "full_annual_source_reads": 0,
+  "full_company_pipeline_runs": 0,
+  "temporary_source_registries_only": true,
+  "cases": [
+    {
+      "name": "old_P2_cik_and_role",
+      "temporary_csv_changes": {
+        "primary_cik": "19617",
+        "roles": "primary:19617"
+      },
+      "actual_exception": "NORMAL_FINANCIAL_COMPANY_REGISTRATION_DIFFERS",
+      "category": "SOURCE_INTEGRITY_ERROR",
+      "installed_rule_calls": 0,
+      "source_calls": 0,
+      "trait_calls": 0,
+      "N_A_calculator_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "primary_cik_only",
+      "temporary_csv_changes": {
+        "primary_cik": "19617"
+      },
+      "actual_exception": "NORMAL_FINANCIAL_COMPANY_REGISTRATION_DIFFERS",
+      "category": "SOURCE_INTEGRITY_ERROR",
+      "installed_rule_calls": 0,
+      "source_calls": 0,
+      "trait_calls": 0,
+      "N_A_calculator_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "roles_only",
+      "temporary_csv_changes": {
+        "roles": "primary:19617"
+      },
+      "actual_exception": "NORMAL_FINANCIAL_COMPANY_REGISTRATION_DIFFERS",
+      "category": "SOURCE_INTEGRITY_ERROR",
+      "installed_rule_calls": 0,
+      "source_calls": 0,
+      "trait_calls": 0,
+      "N_A_calculator_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "related_ciks_only",
+      "temporary_csv_changes": {
+        "related_ciks": "19617"
+      },
+      "actual_exception": "NORMAL_FINANCIAL_COMPANY_REGISTRATION_DIFFERS",
+      "category": "SOURCE_INTEGRITY_ERROR",
+      "installed_rule_calls": 0,
+      "source_calls": 0,
+      "trait_calls": 0,
+      "N_A_calculator_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "industry_only",
+      "temporary_csv_changes": {
+        "industry_profile": "financial_institution"
+      },
+      "actual_exception": "NORMAL_FINANCIAL_COMPANY_REGISTRATION_DIFFERS",
+      "category": "SOURCE_INTEGRITY_ERROR",
+      "installed_rule_calls": 0,
+      "source_calls": 0,
+      "trait_calls": 0,
+      "N_A_calculator_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "continuity_only",
+      "temporary_csv_changes": {
+        "entity_continuity_status": "successor_predecessor"
+      },
+      "actual_exception": "NORMAL_FINANCIAL_COMPANY_REGISTRATION_DIFFERS",
+      "category": "SOURCE_INTEGRITY_ERROR",
+      "installed_rule_calls": 0,
+      "source_calls": 0,
+      "trait_calls": 0,
+      "N_A_calculator_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "missing_selected_company",
+      "company_id": "macys",
+      "actual_exception": "NORMAL_FINANCIAL_COMPANY_REGISTRATION_MISSING",
+      "source_calls": 0,
+      "N_A_calculator_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "unknown_requested_company",
+      "company_id": "unknown_company",
+      "actual_exception": "NORMAL_FINANCIAL_COMPANY_REGISTRATION_MISSING",
+      "source_calls": 0,
+      "N_A_calculator_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "renamed_selected_company",
+      "company_id": "macys",
+      "actual_exception": "NORMAL_FINANCIAL_COMPANY_REGISTRATION_MISSING",
+      "source_calls": 0,
+      "N_A_calculator_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "duplicate_company_id",
+      "company_id": "macys",
+      "actual_exception": "Company registry identities are ambiguous",
+      "source_calls": 0,
+      "N_A_calculator_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "missing_roles_field",
+      "company_id": "macys",
+      "actual_exception": "NORMAL_FINANCIAL_COMPANY_REGISTRATION_DIFFERS",
+      "source_calls": 0,
+      "N_A_calculator_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "unchanged_business_registration",
+      "actual_outcome": "Validated registration and installed rule, reached isolated source-selection sentinel",
+      "source_calls": 1,
+      "real_source_reads": 0,
+      "passed": true
+    },
+    {
+      "name": "display_name_only",
+      "actual_outcome": "Validated registration and installed rule, reached isolated source-selection sentinel",
+      "source_calls": 1,
+      "real_source_reads": 0,
+      "passed": true
+    },
+    {
+      "name": "single_selected_company_row",
+      "actual_outcome": "Validated registration and installed rule, reached isolated source-selection sentinel",
+      "source_calls": 1,
+      "real_source_reads": 0,
+      "passed": true
+    },
+    {
+      "name": "unrelated_company_changed_and_rows_reordered",
+      "actual_outcome": "Validated registration and installed rule, reached isolated source-selection sentinel",
+      "source_calls": 1,
+      "real_source_reads": 0,
+      "passed": true
+    },
+    {
+      "name": "old_default_omitted",
+      "actual_outcome": "Original installed-rule path receives source repo_root; new guard skipped",
+      "registration_guard_calls": 0,
+      "source_calls": 0,
+      "passed": true
+    },
+    {
+      "name": "old_default_explicit_false",
+      "actual_outcome": "Original installed-rule path receives source repo_root; new guard skipped",
+      "registration_guard_calls": 0,
+      "source_calls": 0,
+      "passed": true
+    }
+  ]
+}

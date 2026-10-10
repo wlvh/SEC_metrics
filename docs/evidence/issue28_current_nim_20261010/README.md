@@ -1,0 +1,99 @@
+# Current NIM through the ordinary company entry
+
+The parked source-only adapter's failed prototype is preserved at a8237c57.
+It is continued on actualmain f6ef7886, not redeveloped in PR112 or the old
+PR67. The existing financial resolver/calculator is reused. A new optional
+ordinary_records=False flag preserves old defaults; explicit True reads
+installed program Specs and the existing V2 fiscal-label/current-source checks.
+The company writer enables only A04. Historical per-metric factories and other
+financial defaults remain available/closed as before; no competing resolver.
+
+The data-only test input has nine actual saved files: original mixed request
+log/manifest and company registry plus the three selected SEC body/header pairs.
+It contains no code, catalog, answers, model result or fresh ledger. Original
+mixed-history rows and order stay intact; this is a read-only calculation input,
+not a reset/split of the original model/SEC quota.
+
+Actual company CLI JPMorgan FY2025 A04 now saves Result b0cc2576…2db64,
+0.025 ratio, 2025-01-01–2025-12-31, managed basis, CIK19617, source filing
+0001628280-26-008131. Native PUBLISHED denotes calculator state, not adoption.
+CSV/evidence and separate results entry retain those fields. First8.678s,
+forbidden calculation repeat.1137s, saved results read.0048s, six result files
+unchanged. Parent source-table read verifies table100 annual2025 column:
+reported income95,443m +FTE425m =managed95,868m; earning assets3,834,359m;
+the disclosed2.50% remains the result, the division only validates rounding.
+Original-table-read.json gives direct original rows/SHA and installed Spec.
+This parent check is not independent code/business approval.
+
+The company census also retains an unrelated old failed event-header request.
+The actual NIM sources and result are ready; the batch honestly exits2 with
+limitations. Initial driver wrongly required0 and failed after the correct
+record was saved. resume-entry.py only reuses/reads that existing state; no
+first-run reprocessing to hide the error. Old preview fiscal-key failures and
+bad harness CSV-write prohibition likewise remain. Source-only/rules separation
+is demonstrated by this actual input, not by changing hidden checkout paths.
+
+Tests: initial80 methods had one new test-field mistake (scope instead of
+scope_key);79 passed. Corrected NIM six cases pass30.070s, zero skips, including
+old-default value/unit/period/ScopeKey equality, forbidden read, and invalid
+source-body rejection with old success preserved. The actual retail case uses
+Macy's complete sources and returns N_A_STRUCTURAL/null without bank extraction.
+Its first wrong enum expectation is retained; corrected dedicated test1.885s
+avoids preparing an unrelated JPM source. Ten final small mode/dependency/bank
+controls.083s pass. The existing economic functions are AST-identical to main.
+
+Actual consumed dependencies are named for NIM, fiscal label/context checks
+and the task catalog (which currently compiles all six retained Specs).
+Unused AUM/A09/LCR interpretation modules are not added just for imports.
+Fast selection uses only small contract tests; full-source NIM integration is
+explicit in the existing company workflow. No retired permissions are restored.
+
+The actual CLI was the staged main merge plus named dirty source changes;
+logs do not claim a retrospectively exact commit. Final dependency-list changes
+require one normal local revalidation on the next update, without a model call.
+New provider/paid/SEC0/0/0. Existing amounts, traits and Specs are not revised;
+old defaults/Run/Result/source bytes are retained. Public increment shared with
+#47; historical consumers do not need to adopt the new flag. No Ready, merge,
+adoption, deployment, active or complete390/current online claim.
+
+## Limited review and subject-registration repair
+
+323eabf1 independent review found one P2 despite50 passing tests: a temporary
+source registry could label JPM's admitted sources as Macy's while installed
+traits still classified Macy's as retail, saving an incorrect structural N_A.
+The review/real source negative stay NEEDS_FIX; they are not relabelled PASS.
+The repair compares only the selected company's business registration fields
+(CIK, roles/related CIKs, industry and continuity) with installed definitions,
+before source selection/applicability. Cosmetic names and whole registry file
+bytes are not an authority gate. Wrong identity/industry/roles now reject,
+normal source-only registries remain usable. Four mismatch controls and a
+cosmetic positive are included;47 affected small checks pass.304s/zero skips.
+Final repair is for receiving-review confirmation, not parent independent PASS.
+
+Final source-registration repair validation on a541a5b6: the existing saved
+company state normally revalidates once8.794s under the final changed code and
+dependency set, then a forbidden-factory repeat.221s performs no calculation;
+a separate Python process results.120s preserves original result files. The
+unrelated recorded source-discovery error remains visible/exit2, while NIM's
+selected sources/result stay ready. final-company-validation.json records the
+actual commit, roots and reports. No long ten-company or provider execution.
+
+Current head37bef company job37985882099/114007629778 cancelled after
+five-minute job budget: base saved-source step181s, historical3s, added NIM96s
+all pass; the old SEC-compat command also reports22 passing methods, then
+the step/job is cancelled during completion. The job terminal is still
+CANCELLED. This is not a NIM assertion
+failure or unknown source result. The same NIM module is now a separate
+five-minute job in the existing workflow; all original company modules remain
+in their original job. No timeout increase, skip, weakened assertion or rerun
+of passed company material locally. Remote new head terminal is separate.
+
+
+## Source-company P2 limited closure and main compatibility
+
+The original323NEEDS_FIX record remains. [Independent subject-only repair](independent-subject-repair/conclusion.md) PASS bindsa54114new source lines and two registration tests; four actual contract tests plus17independent smallCSV controls,10tools/one message/179.688s,05:57:29..06:00:29UTC. It closes the specific wrong-company/CIK/traits P2, not whole currentHEAD or fullNIM content. Earlier actualsource/company/default/failed-source evidence retains its original scope.
+
+Actualmainc99 has advanced. Existing117 now appends that main and keeps four conflict unions: its currentA04 dispatch plus mainD04, both specific dependency lists, mainfast functions/classes plus oneNIMcontract selector, and all mainworkflow steps plus original separateNIMjob. Actual financial resolver and NIMsource/contract test bytes remain exactrevieweda541. Publicreporter131/102/income/oldhistoricalroutes are retained, not overwritten by earlier fixed snapshots. No E01 or unmerged138dependency added. Required current/oldbank/default-source/subject/update/D04/company/reporting tests and representative formalCLI compatibility follow below; this is reception compatibility for an existing capability, not a newfamily scope.
+
+
+`main-receiving-tests.log`:104 necessary currentNIM/old-bank/defaults/controller/D04/company/reporter executions42.837s,zero failures/errors/skips. Formal own existing task then reprocessed onlyA04 once under actualmergeef07e1a4 and retained original0.025ratio/managed/FY25full-year/19617/b0ccResult. First duration is explicitly null: the harness incorrectly rejected normal emptywrite.lock after the real CANDIDATE_READY terminal was already saved, then tried an elapsed_seconds field that the CLI does not persist. Both harness failures remain; corrected verification resumed that committed terminal without another calculation. Original12resultfiles are still checksum-valid,18post-transitionfiles are unchanged on forbidden-factory repeat.131370s and separate-processresults.460828s. All9sourcefiles remained unchanged. The old unrelated recorded event-header failure stays visible/exit2; no claim of successful online discovery. main-company-validation.json and verifier record actualcommit/roots/returncodes/time scope; outputrow .025 remains prior correctly read content, not newbusiness acceptance or independent source audit.

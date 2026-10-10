@@ -1,0 +1,16 @@
+COMMAND: TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 python3 tests/required_unittests.py tests.vnext.test_current_nim_company.CurrentNIMContractTest
+RETURN_CODE: 0
+ELAPSED_SECONDS: 0.574058
+STDOUT:
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 4, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_nim_company.CurrentNIMContractTest"]}
+
+STDERR:
+test_cosmetic_registration_name_does_not_require_identical_file_bytes (tests.vnext.test_current_nim_company.CurrentNIMContractTest.test_cosmetic_registration_name_does_not_require_identical_file_bytes) ... ok
+test_current_source_and_interpretation_dependencies_are_tracked (tests.vnext.test_current_nim_company.CurrentNIMContractTest.test_current_source_and_interpretation_dependencies_are_tracked) ... ok
+test_invalid_current_record_option_rejects_before_selection (tests.vnext.test_current_nim_company.CurrentNIMContractTest.test_invalid_current_record_option_rejects_before_selection) ... ok
+test_registry_subject_roles_and_industry_cannot_mix_with_installed_traits (tests.vnext.test_current_nim_company.CurrentNIMContractTest.test_registry_subject_roles_and_industry_cannot_mix_with_installed_traits) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.052s
+
+OK
