@@ -132,6 +132,14 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'SOURCE_BYTES_CHANGED'):
             self.case(prepared=value,scopes=[ValueError('SOURCE_BYTES_CHANGED')])
 
+    def test_scope_from_another_amendment_cannot_replace_the_selected_input(self):
+        value=self.prepared();value['amendments']=[{'form':'10-K/A','accessionNumber':'0000012345-26-000002'}]
+        check=self.scope();check['original']['filing']=value['filing']
+        check['original']['source_reference']={};check['amendment']['source_reference']={}
+        with patch.object(cases,'inspect_risk_heading_amendment',return_value=check):
+            with self.assertRaisesRegex(ValueError,'AMENDMENT_SOURCE_BINDING_CHANGED'):
+                self.case(prepared=value)
+
     def test_single_successor_source_does_not_combine_other_registrants_or_assert_events(self):
         value=self.prepared();value['subject_policy']['mode']='SUCCESSOR_REGISTRANT_ONLY'
         value['subject_policy']['related_predecessor_ciks']=['54321']
