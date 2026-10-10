@@ -100,3 +100,5 @@ PY_SOURCE_ONLY
 88公共门/历史consumer/附件MA/dispatch/state/reporter/季度/D04控制10.280s零skip；原七main工作流命令及历史三模块/path保留，不另runner。仅原ParamFY24一个相关配置正常迁移25.269s，仍WITHHELD/null/813828/实际全年/原333187ResultID；完整2aa878ef八项请求与原对象逐字段相同。禁止历史factory复3.649s/计算0，独立results .671s，原业务记录与迁移后保护文件不变（数量见main-c99-company.json）。来源只读/旧大CSV与旧失败保，matchingV2响应仍无、无部分count/旧答借用。实际执行准确记原21b+未提交合并/固定公共文件树，不倒签后继commit。
 
 接收组合只解除代码冲突，非目标模型内容通过或完整年度计数交付；无新SEC/provider/paid/nativeRun/接受/Ready/merge/采纳/active。新head CI另核，旧21b全绿不盖本组合。主体/继任窗口和模型接缝仍未完成；源下载及EX99原一次调用不重复。
+
+实际d82addec产品同树只读JPM原A13/average/scope三任务，.520/.531/.621秒，原30正确值和3代表混选值、单位、季度/全年/期末日期、原ResultID/申报保持；89/163/312全部state文件字节保持，run/network禁止。初驱动误猜不存在output_root/路径父级，未执行业务；改直接用已有实际输出基线，不手填财务值。公共同文件已接收后验证读口影响，不重算30个位置，纯证据分支不为日志再推产品CI。
