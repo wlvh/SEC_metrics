@@ -1,0 +1,39 @@
+{
+  "base": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+  "patch": "22a6f601a0ccdad00fcb6b699f8930c389ca6b4a",
+  "year_only_pattern": "https?://xbrl\\.sec\\.gov/dei/\\d{4}",
+  "checks": [
+    {
+      "case": "standard",
+      "exact_base_default_equal": true,
+      "text_document_id": "sha256:a15c41471248edc099f4726125bdd8f056c43d6532441b2ca4ccb0db388d9887",
+      "source_state": "COMPLETE_LOCAL_DOCUMENT"
+    },
+    {
+      "case": "no_report",
+      "exact_base_default_equal": true,
+      "text_document_id": "sha256:3adca04f08e69077cd7e0177e90713ae95d343ae6e75e68cb820cf913f9cfc4c",
+      "source_state": "COMPLETE_LOCAL_DOCUMENT"
+    },
+    {
+      "case": "amendment",
+      "exact_base_default_equal": true,
+      "text_document_id": "sha256:c91223eaa41df628af04e822d86b958b8ff21690a496c15ceca7dfa635eabf8d",
+      "source_state": "INCOMPLETE"
+    },
+    {
+      "case": "truncated",
+      "exact_base_default_equal": true,
+      "text_document_id": "sha256:3b084ad88f514dd837c2e46be9fddae1061aeffbae1ed5a2f2f5b9fc561cff49",
+      "source_state": "INCOMPLETE"
+    },
+    {
+      "date_namespace_default": "base",
+      "rejected": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING"
+    },
+    {
+      "date_namespace_default": "patch",
+      "rejected": "TEXT_DOCUMENT_ENTITY_MISMATCH_OR_MISSING"
+    }
+  ]
+}

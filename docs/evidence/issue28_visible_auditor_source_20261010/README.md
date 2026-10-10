@@ -19,3 +19,7 @@ Shared change: `text_coverage.build_text_document` and `verify_text_document` ga
 The report candidate is deliberately not semantic business acceptance. Standard-layout coverage is finite; unsupported layouts/name relationships and conflicts remain unresolved. The current structured-only C04 input contract does not yet consume visible audit-report signatures. A successor source-policy/acceptance decision and actual company consumer validation remain necessary before a visible report can repair a withheld C04 result. Do not treat the candidate as a new correct company result.
 
 Peer original reading was fixed at `b5bcbc1a2f0b3b1120c5c9e2ed6eec38881c77f9`; after the later fetch origin/task/sec-history-five-year was `bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786`. The former exact reading remains an available Git object; the latter is the actual fetched branch tip, not falsely claimed to contain the newer reading. Peer consumer/state is not modified.
+
+## Limited independent review
+
+Exact patch `22a6f601` received PASS for the four assigned source/test/workflow files, 25 small tests and full default-object equality controls. Reviewer did not rerun the real saved corpus, source driver or company chain. See independent-review/conclusion.md. Source signatures are unchanged after this review; tested-tree.json binds the actual code hashes. This remains source-only credit, not C04 business acceptance.

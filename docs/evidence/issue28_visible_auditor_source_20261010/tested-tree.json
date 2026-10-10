@@ -1,0 +1,14 @@
+{
+  "reviewed_patch_sha": "22a6f601a0ccdad00fcb6b699f8930c389ca6b4a",
+  "base_sha": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-visible-auditor-source/SEC_metrics",
+  "data_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "source_files": {
+    "scripts/vnext/text_coverage.py": "378c50adbef649294b73adaf042d2bfb8f4b22ea3f339be185acacb4de45a658",
+    "scripts/vnext/visible_auditor_source.py": "4d6c39772e26fcc0ddb98397aa5415a2f338ab2fb28d4a7fd6d6d986fdb84ee4",
+    "tests/vnext/test_visible_auditor_source.py": "b00263643a9e996bb40f05ee9c9a1d2fbdd6926d808912ecc94451ca0ebe7fac",
+    ".github/workflows/vnext-fast.yml": "c3d8b689e2666f3b8c52b88feee2dc15d2926a4bd4f68d4297f729388f500f41"
+  },
+  "qualification": "source-only development candidate; no C04 Result or native AuditorName fact",
+  "CI_initial_observation": "all11 IN_PROGRESS @22a6f601; no terminal claim"
+}
