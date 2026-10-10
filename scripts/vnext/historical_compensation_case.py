@@ -6,7 +6,7 @@ does not provide a second compensation parser or result store.
 """
 from pathlib import Path
 
-from .canonical import content_hash
+from .canonical import content_hash, strict_json_loads
 from .historical_annual_input import prepare_historical_annual_input
 from .normal_governance_input import _Sources, _order
 from .normal_history_catalog import load_history_for_period
@@ -95,7 +95,8 @@ def prepare_historical_compensation_sources(*, repo_root, company_id, fiscal_yea
     proofs.update({content_hash(value=s['proof']):s['proof'] for s in reader.proofs.values()})
     return {'prepared_annual_input':annual, 'selection':proxy, 'proxy_source':source,
         'records':list(reader.records.values()), 'source_proofs':list(proofs.values()),
-        'source_selection':selected}
+        'source_selection':selected,
+        'proxy_inventory':strict_json_loads(text=history['inventory']['raw_bytes'].decode('utf-8'))}
 
 
 def prepare_historical_compensation_year_case(*, repo_root, company_id, metric_id, fiscal_year):

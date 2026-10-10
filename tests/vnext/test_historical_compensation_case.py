@@ -71,13 +71,15 @@ class HistoricalCompensationAdapterTest(TestCase):
         with patch.object(cases,'resolve_period_selection',return_value={}), \
              patch.object(cases,'prepare_historical_annual_input',return_value=annual), \
              patch.object(cases,'_Sources',return_value=reader), \
-             patch.object(cases,'load_history_for_period',return_value={}), \
+             patch.object(cases,'load_history_for_period',return_value={
+                 'inventory':{'raw_bytes':b'{"name":"Example","formerNames":[]}'}}), \
              patch.object(cases,'select_first_reported_proxy',return_value=selection):
             source=cases.prepare_historical_compensation_sources(repo_root=Path('/constructed'),
                 company_id='marriott_international',fiscal_year=2022)
         self.assertEqual([annual['filing'],selection['selected_proxy']],
                          [call.args[0] for call in reader.primary.call_args_list])
         self.assertEqual({'source':'proxy'},source['proxy_source'])
+        self.assertEqual({'name':'Example','formerNames':[]},source['proxy_inventory'])
 
     def test_history_dispatch_preserves_existing_factories_and_dependencies(self):
         from vnext import company_local
