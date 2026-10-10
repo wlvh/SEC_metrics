@@ -1,0 +1,25 @@
+UTC start: 2026-10-10T12:31:56.792024+00:00
+Gate and display controls only. No complete C03 business success is generated or claimed.
+run_once signature: (*, state_root, source_root, company_id, metric_id, shared_input_root=None, fiscal_year=None, case_factory=None, processing_files=())
+{"case": "factory_without_year", "outcome": "exception", "reason": "COMPANY_CURRENT_SELECTED_YEARS_REQUIRE_CASE_FACTORY", "type": "ValueError"}
+{"case": "year_without_factory", "outcome": "exception", "reason": "COMPANY_CURRENT_SELECTED_YEARS_REQUIRE_CASE_FACTORY", "type": "ValueError"}
+{"case": "amount_evidence", "helper_display": {"accessionNumber": "0001140361-23-014123", "filingDate": "2023-03-23", "form": "DEF 14A"}, "inputs_unchanged": true}
+{"case": "withheld_no_evidence", "helper_display": {"accessionNumber": "0001140361-23-014123", "filingDate": "2023-03-23", "form": "DEF 14A"}, "inputs_unchanged": true}
+{"case": "wrong_metric", "rejected": "ORDINARY_SELECTED_PROXY_DISPLAY_INVALID"}
+{"case": "wrong_form", "rejected": "ORDINARY_SELECTED_PROXY_DISPLAY_INVALID"}
+{"case": "missing_primary_document", "rejected": "ORDINARY_SELECTED_PROXY_DISPLAY_INVALID"}
+{"case": "metadata_date_changed", "rejected": "ORDINARY_SELECTED_PROXY_METADATA_NOT_BOUND"}
+{"case": "metadata_missing", "rejected": "ORDINARY_SELECTED_PROXY_METADATA_NOT_BOUND"}
+{"case": "foreign_company_ref", "rejected": "ORDINARY_SELECTED_PROXY_SOURCE_NOT_BOUND"}
+{"case": "foreign_cik_url", "rejected": "ORDINARY_SELECTED_PROXY_SOURCE_NOT_BOUND"}
+{"case": "wrong_document_ref", "rejected": "ORDINARY_SELECTED_PROXY_SOURCE_NOT_BOUND"}
+{"case": "wrong_role_ref", "rejected": "ORDINARY_SELECTED_PROXY_SOURCE_NOT_BOUND"}
+{"case": "duplicate_primary_refs", "rejected": "ORDINARY_SELECTED_PROXY_SOURCE_NOT_BOUND"}
+{"case": "cross_proxy_evidence", "rejected": "ORDINARY_SELECTED_PROXY_SOURCE_NOT_BOUND"}
+Old no-selected-proxy helper route returns None without accessing annual/input binding/references: PASS
+UTC end: 2026-10-10T12:31:56.794678+00:00
+Final exact-head byte check: 2026-10-10 12:33:46 UTC
+scripts/vnext/ordinary_saved_result.py sha256=c1f9641a796d1d7ca1aba4c817cb157b10f7f2c6c62d75991bcd8fd8d65fa90e matches_head=True
+scripts/vnext/ordinary_projection.py sha256=e665ed34cd7e1ee4c63452d39dd227cd96a65f02547bacdabefd8423b7678ae8 matches_head=True
+tests/vnext/test_c03_company_seam.py sha256=933d8f993955a91773ebac97d74713841eecd2fb6d45b511cac3dc2269d287ba matches_head=True
+.github/workflows/vnext-fast.yml sha256=c8bfa9de87e3f51e14e43587a9451abeeff28275f1a52a46b48484929cc63047 matches_head=True
