@@ -20,6 +20,7 @@ from .observations import scope_key, structured_observation
 from .records import validate_record
 from .resource_limits import RESOURCE_LIMITS
 from .sources import validate_public_sec_filing_identity
+from .xbrl_namespace_policy import is_sec_namespace, YEAR_ONLY
 
 
 C03_RESOLVER = "ecd_peo_total_compensation_v1"
@@ -125,13 +126,19 @@ def _source_value(fact, metadata):
 
 
 def resolve_c03(*, raw_bytes: bytes, raw_blob: Mapping, source_reference: Mapping,
-                target: Mapping, expected_cik: str, compiled_spec: Mapping) -> dict:
+                target: Mapping, expected_cik: str, compiled_spec: Mapping,
+                sec_namespace_release: str = YEAR_ONLY) -> dict:
     """Select a scalar only when raw ECD facts determine one person/amount.
 
     ``target`` is the already-discovered annual company/period/scope grain.
     This function does not label an old proxy as current or issue source/live
     credit; callers must bind their selected filing to the input inventory.
     """
+    # Validate the finite caller selection before reading facts. Default
+    # resolutions retain their original shape and namespace interpretation.
+    is_sec_namespace('',taxonomy='ecd',namespace_policy=sec_namespace_release)
+    def sec_taxonomy(uri, taxonomy):
+        return is_sec_namespace(uri,taxonomy=taxonomy,namespace_policy=sec_namespace_release)
     _need(type(raw_bytes) is bytes and 0 < len(raw_bytes) <= RESOURCE_LIMITS.max_html_bytes,
           "GOVERNANCE_SOURCE_SIZE_LIMIT")
     blob, ref = validate_record(record=dict(raw_blob)), validate_record(record=dict(source_reference))
@@ -161,7 +168,7 @@ def resolve_c03(*, raw_bytes: bytes, raw_blob: Mapping, source_reference: Mappin
           "GOVERNANCE_ATTRIBUTE_STREAM_INCOMPLETE")
     forms = {f["text"].upper().replace(" ", "") for f in parsed.facts
              if metadata.facts[f["ordinal"]]["concept"][1].casefold() == "documenttype"
-             and re.fullmatch(r"https?://xbrl\.sec\.gov/dei/\d{4}", metadata.facts[f["ordinal"]]["concept"][0])}
+             and sec_taxonomy(metadata.facts[f["ordinal"]]["concept"][0], 'dei')}
     _need(forms == {"DEF14A"}, "C03_DEF14A_SOURCE_REQUIRED")
     candidates, excluded, failures = [], [], []
     people_facts = []
@@ -170,13 +177,13 @@ def resolve_c03(*, raw_bytes: bytes, raw_blob: Mapping, source_reference: Mappin
     for fact in parsed.facts:
         meta = metadata.facts[fact["ordinal"]]
         uri, local = meta["concept"]
-        if local.casefold() != "peoname" or re.fullmatch(r"https?://xbrl\.sec\.gov/ecd/\d{4}", uri) is None:
+        if local.casefold() != "peoname" or not sec_taxonomy(uri, 'ecd'):
             continue
         context = parsed.contexts[fact["context_ref"]]
         dimensions = dict(context["dimensions"])
         members = [_qname(v, meta["namespaces"]) for v in dimensions.values()]
         valid_axes = all(_qname(k, meta["namespaces"])[1] == "IndividualAxis"
-                         and re.fullmatch(r"https?://xbrl\.sec\.gov/ecd/\d{4}", _qname(k, meta["namespaces"])[0])
+                         and sec_taxonomy(_qname(k, meta["namespaces"])[0], 'ecd')
                          for k in dimensions)
         same_period = context["period_start"] == target["period_start"] and context["period_end"] == target["period_end"]
         identity_valid = (str(context["entity_identifier"]).isdigit()
@@ -199,7 +206,7 @@ def resolve_c03(*, raw_bytes: bytes, raw_blob: Mapping, source_reference: Mappin
         if local.casefold() != "peototalcompamt":
             continue
         all_peo += 1
-        _need(re.fullmatch(r"https?://xbrl\.sec\.gov/ecd/\d{4}", uri) is not None,
+        _need(sec_taxonomy(uri, 'ecd'),
               "C03_ECD_TAXONOMY_REQUIRED")
         _need(meta["attrs"]["contextref"] == fact["context_ref"], "GOVERNANCE_NATIVE_ORDINAL_MISMATCH")
         context = parsed.contexts[fact["context_ref"]]
@@ -216,7 +223,7 @@ def resolve_c03(*, raw_bytes: bytes, raw_blob: Mapping, source_reference: Mappin
             reason = "C03_TYPED_PERSON_SCOPE_UNSUPPORTED"
         dimensions = dict(context["dimensions"])
         if any(_qname(k, meta["namespaces"])[1] != "IndividualAxis"
-               or re.fullmatch(r"https?://xbrl\.sec\.gov/ecd/\d{4}", _qname(k, meta["namespaces"])[0]) is None
+               or not sec_taxonomy(_qname(k, meta["namespaces"])[0], 'ecd')
                for k in dimensions):
             reason = "C03_NON_PERSON_DIMENSION"
         if any(not all(_qname(v, meta["namespaces"])) for v in dimensions.values()):
@@ -274,6 +281,8 @@ def resolve_c03(*, raw_bytes: bytes, raw_blob: Mapping, source_reference: Mappin
                  "reported_person_facts": people_facts,
                  "distinct_values": values, "specific_person_members": [list(p) for p in people],
                  "reason_code": reason}
+    if sec_namespace_release != YEAR_ONLY:
+        selection['sec_namespace_release'] = sec_namespace_release
     selection["selection_id"] = content_hash(value=selection)
     observation = None
     if reason == "PASS":
