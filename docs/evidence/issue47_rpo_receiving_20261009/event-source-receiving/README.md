@@ -1,0 +1,19 @@
+# Receive historical event reporters from their existing sources
+
+Claude's PR102 receiving comment6086515406 found a real regression: a valid historical C01/E02–E05 result with nullable Trace issuer fields was required to carry a separate10-K reference. Adding that reference only to satisfy CSV was not the requested remedy. The earlier twenty-coordinate presentation receipt and0e4228e8extra-reference fix remain historical evidence, not closure of this feedback.
+
+Historical consumer7c8109c7removes only the added reader.primary call. Annual preparation still resolves the actual issuer/year, and actual amendment-impact checks still read annuals when necessary. The record-retention test still protects inventory RawBlob/SourceReference and now forbids the unnecessary annual read. Public PR102 product446bf33d provides the reporter proof from selected submissions/event sets. Combination04671728 adopts its exact ordinary_projection.py and reporter tests, retaining the public average-period helper, all financial factories, policy and shared controller/store/reader. No second renderer is written.
+
+28consumer/dispatch controls pass.121s;48affected reporter/history/dispatch/state tests pass9.449s, zero skips. Public MarriottFY2025C01/FY2021E05 actual runs are reused, not repeated.
+
+## Actual predecessor consumer
+
+Only ParamountFY2021/C01 in the existing task is processed under the new relevant configuration, using the same saved source root. Actual same company CLI22.255s returns1count,2021-01-01–2021-12-31,reportingCIK813828 and original Result5ac9c139ff43782999798ff564570c47c0463ec3f5010ab47adf9f3a411b561d. Other years and metrics are not recalculated. An identity-based guard forbids the event consumer's _Sources.primary; the existing annual fiscal-label preparation remains. The new result contains25SourceReferences from813828submissions and8-Kprimary/header sources, with no extra annual-primary reference for projection. Original Trace entity/accession stays null, never manually filled.
+
+SourceSet objects are checked from the actual case input by the public writer. They are not separate records in the resulting records.jsonl; source-proof.json does not claim a separately saved stream SourceSet object. The actual shared source proof, not a synthetic reference assembled from an old summary, permits the output.
+
+Forbidden-factory repeat2.276s returnsNO_SOURCE_CONTENT_CHANGE/no calculation. Another process independently reads all25current rows in.885s with the selected value/unit/dates/CIK/ResultID intact.213previously protected files remain: old result files and other coordinate pointers unchanged, only the selected coordinate's current/completed pointers undergo their ordinary transition. Afterward219protected files remain byte-identical across repeat/read. Latest operational reports and check journals are not immutable business results.
+
+This covers the predecessor export beyond Marriott's continuous issuer examples. Registered successor wide windows still need public_registered_event_period proof; annual fallback cannot change that window. Wrong issuer/metric/window, missing valued source sets and unauthorized financial combination still reject. It does not prove E01 content, all events, general financial subject handling or the full1,950target.
+
+Actual commands, stdout, timings, CSV and protected digests are in actual-company.json; the ordinary CLI driver is adjacent. Existing source restoration from retainedPR52is reused, no GET. Sources are read-only, state/output external, results output directory fresh. No SEC/provider/paid calls, native Run, old Result/Trace/source rewrite, acceptance, Ready, merge, deployment or active switch. PR96 remains the existing candidate with actual public102dependency; technical passing does not substitute for final receiving verdict or owner permission.

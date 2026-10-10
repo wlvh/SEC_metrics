@@ -94,3 +94,8 @@ python3 tools/vnext_company.py results --company salesforce \
 另进程同新版读原Salesforce五年B12及受影响ParamFY21C01，原值/单位/日期/ResultID保，factory/socket禁止、旧结果/pointer字节保；main-received-old-result-read.json/log。驱动误把Salesforce CIK写794323导致首摘要断言失败，实际CSV一直1108524，随后只读该现成输出更正，未重复CLI/计算；首CLI耗时未记就保null，不把.001s摘要核对当性能。Param新独立读.819s保CIK813828。PR96只解合并/兼容冲突，原五年RPO、20位事件纯投影及一个实际公司迁移不重跑。新head远端终态另核，不借3905旧CI。
 
 新ae293公司workflow实际触发37977413671/job113979074778并终态SUCCESS。日志逐模块核geography5/average17/scope14/dispatch18/state6共60方法.476s、零skip；shared主体12方法也实际执行，原保存源步骤208例194.737s，事件源13/.192s、历史scope10/.105s、原账本兼容22/6.049s均执行通过。ci-ae293-company-current.log/summary证明本提交的路径触发、作业执行及具体方法，不借旧CI。较宽fast/基础作业当时仍运行，整体终态另读，不因此重跑本地财报。
+
+
+## 事件来源报送主体的当前接收修复
+
+Claude6086515406的实际反馈按公共PR102/446bf33d接收，历史producer移除为了CSV新增的年报读取，恢复事件自身来源责任。固定组合04671728只正常迁移ParamFY2021/C01该一版本，1count/813828/全年/原ResultID保持；首22.255s、禁factory复2.276s、独立读.885s，其他坐标与全部旧结果保留，219受保护文件复读不变。48相关例9.449s零skip。原20位额外primary呈现记录保留，不把它当当前反馈已闭合；具体源码依赖、实际来源、未覆盖边界见同一目录[event-source-receiving](event-source-receiving/README.md)。本方未重复公共Marriott两反例，不新renderer/PR/真实调用。
