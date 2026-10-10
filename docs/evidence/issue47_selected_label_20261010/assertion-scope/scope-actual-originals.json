@@ -1,0 +1,48 @@
+{
+  "rows": [
+    {
+      "company_id": "salesforce",
+      "seconds": 0.9313889581244439,
+      "original_source_inspection_id_unchanged": "sha256:07b94467c10d4b198ab354c2b4f9a8db5fc7e54bb1b4f472705495f53b43c0cb",
+      "selected_fiscal_year": 2026,
+      "raw_dei_fiscal_year": 2025,
+      "actual_period": {
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31"
+      },
+      "old_outer_resolution_id": "sha256:7a5fde74ecc7de5044080311f41a650f92a93ab14bd2eca470829dc5da7da434",
+      "new_outer_resolution_id": "sha256:ac00f7c982c6b3a51c82ff86cae38828d168ae597a469fe1f3206a53a7890b6a",
+      "outer_id_reason": "Old raw receipt predates PR127 policy_id/policy_sha256/forms fields; complete source inspection and all earlier business fields equal",
+      "added_fields": {
+        "policy_id": "ordinary_fiscal_year_labels_v1",
+        "policy_sha256": "fde417632520d90046818fd31046615b6ea3b3df9cfdf5a1a527e38deea7bd87",
+        "historical_definition_forms_rule": "HISTORICAL_FISCAL_DEFINITION_FORMS_V1"
+      }
+    },
+    {
+      "company_id": "macys",
+      "seconds": 0.7987605000380427,
+      "original_source_inspection_id_unchanged": "sha256:e22e3403047505695056dae0738a6478e600d9a467c5b23aa99417e71a398fde",
+      "selected_fiscal_year": 2023,
+      "raw_dei_fiscal_year": 2023,
+      "actual_period": {
+        "period_start": "2023-01-29",
+        "period_end": "2024-02-03"
+      },
+      "old_outer_resolution_id": "sha256:261919c241955a147c832b3946d743a4bf1d2046bc9a6412a0087c818cc8f9e7",
+      "new_outer_resolution_id": "sha256:fc3ee9ab8e3d1e709777a7fdd909476fb4057e0b0190d7aa62a9da7bc50f5362",
+      "outer_id_reason": "Old raw receipt predates PR127 policy_id/policy_sha256/forms fields; complete source inspection and all earlier business fields equal",
+      "added_fields": {
+        "policy_id": "ordinary_fiscal_year_labels_v1",
+        "policy_sha256": "fde417632520d90046818fd31046615b6ea3b3df9cfdf5a1a527e38deea7bd87",
+        "historical_definition_forms_rule": "HISTORICAL_FISCAL_DEFINITION_FORMS_V1"
+      }
+    }
+  ],
+  "annual_preparation_or_calculation_calls": 0,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
