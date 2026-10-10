@@ -1,0 +1,11 @@
+# Keep company CI complete under the existing five-minute test budgets
+
+Actualmain84d15f35. Parent actually read serverjob114153412817/run38031567093 and fixed9244c306 rawlog. Joboverall CANCELLED after5min; source257tests221.083s, textcapacity30tests26.005s, single-revenue43tests22.612s, remaininghistory/source/event/SEC commandsallprintOK. Final27tests6.053s/OK appear beforeaction cancellation. This is not a business assertion failure, not a passedjob and not an unexecutedtail. original-job.json retains serverstep conclusions separately from teststdout.
+
+The existingcompany workflow now separates its single-revenue/periodsource step into source-contracts and other exactcommands into company-records. Both use originalfive-minute budgets and pinnedsetup. The existingcompany-currentcheckname remains a small always-running aggregate: needsboth, failsforfailure/cancelled/skipped. It does not turndependencySKIPPED into protected-check success. Triggerpaths/permissions and all8original testcommand strings retainexactmultiset. No testskip, source fixture substitution, oldgreen cache, source/code/metric change, branchprotection modification, timeoutincrease or newtestframework.
+
+A D01 consumer with the already-existingtextcapacity step moves that identicalcommand alongside thesource-contracts step; its D01/history-specific commands staycompany-records. This additionalstep adaptation belongs to the receivingbranchand will beprovided as a small sharedpatch; parentdoesnotedit#47tree. CurrentNIM's existingseparatejob remains its originaljob whenreceivingthepatch; it must notbe silently dropped.
+
+workflow-controls.log/json: Ruby/Psych standard YAML parse, old/newcommandmultiset equality, unchangedtriggers/permissions/testbudgets, exactcheckname and always gate,16success/failure/cancelled/skippedcombination controls. Onlybothsuccessreturns0. No financial rerun needed for verbatim relocation; observed221+26+22s are the same serverjob evidence, not interpolated cross-machine speedups. End-to-end newCI timing/terminal willbereadfromactualnewhead; no estimatedspeedup acceptedasactual.
+
+Progress on #28; publicCIowner28, historicalconsumer47. Oldcancelledjob stayscancelled. No businessprovider/paid/SECcalls, runtime/ledger changes, Ready/merge/adoption/deploy/active. Developer/test andDraftPR authority only.
