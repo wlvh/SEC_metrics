@@ -35,3 +35,10 @@ Actual corrected FY2022 source16.907s returns exactly the original3ec scopeID,10
 
 
 Repair e486 limited review PASS42tests/7.288s/zero skip+12independent controls; authenticated89908-byte realtable fragment passes corrected helper, source JSON/header/proofs unchanged.20tools/1message05:06:25..05:10:35UTC. Closes onlynewbounds/ordinal defects; consumer reenable/paired-company/otheryears/fullCI/owneradoption not included. Initial3ec REQUEST_CHANGES remains.
+
+
+## Actual main receiving and current dependency seam
+
+Appended merge66adbb5e receives actualmainc99b5d3c (119/120/130/132/129 already received). The only source add/add conflict is proven mainV2 byte-identical to fixed9749 parent; preserve reviewed e486 descendant, no newmain source difference swallowed. Reporter/RPO/normal-current and explicitsingle source steps both preserved. Existing ordinary source callers now truly present in this branch: all149 tests16.900s/zero skip, including previously absent twocurrent-caller tests. Prior helper-only failure evidence remains, not rewritten as pass. Initial newcombined test hit misplacedcurrency test NameError; moved its unchanged assertions back to its actualsource fixture, failedlog kept.
+
+B01/B03 current processing declaration now includes actually consumed selected_fiscal_definition_scope_v1; normalB04 is unaffected by this dependency alone. New actualconfig SHA regression checks both affected consumers and unaffected neighbor, no broad closure scan or old configuration rewrite. Other unrelated broad controller/store hash changes are a separate known issue stillnotfixed. Source arithmetic/label/oldscope defaults remain.
