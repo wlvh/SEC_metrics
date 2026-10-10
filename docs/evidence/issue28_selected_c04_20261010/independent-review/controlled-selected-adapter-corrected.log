@@ -1,0 +1,89 @@
+UTC start: 2026-10-10T08:08:48.850649+00:00
+UTC end: 2026-10-10T08:08:49.209383+00:00
+Command: TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -c [inline program below]
+Controlled synthetic adapter checks: physical saved-proof verification and _Sources are replaced. Annual parser, real four-form census/manifests, Calculator, Spec consistency and correspondence checks execute. Network forbidden. This is not real-source or company-chain acceptance.
+PASS selected same auditors + all four forms -> 0 with preserved v3 Spec/period
+PASS equal year-end auditors + Item4.01 in 8-K -> 1
+PASS equal year-end auditors + Item4.01 in 8-K/A -> 1
+PASS equal year-end auditors + Item4.01 in 8-K12B -> 1
+PASS equal year-end auditors + Item4.01 in 8-K12B/A -> 1
+PASS {'missing_prior': True} -> C04_COMPARABLE_AUDITOR_FACTS_MISSING
+PASS {'bad_entity': True} -> C04_AUDITOR_SOURCE_CONFLICT
+PASS {'bad_period': True} -> C04_AUDITOR_SOURCE_CONFLICT
+PASS missing 8-K12B/A source -> fails before 0
+PASS alias-reader default refuses exact-name-only fallback
+PASS explicit exact-name selection allowed
+Exit code: 0
+
+INLINE PROGRAM:
+
+from pathlib import Path
+from unittest.mock import patch
+from datetime import datetime,timezone
+import json,hashlib
+from sec_urls import hdr_sgml_url,accession_document_url,submissions_url
+from vnext.c04_registration_successor import prepare_c04_registration_case,EVENT_FORMS
+from vnext.c04_verified_document_alias import annual_selection_with_verified_aliases
+from vnext.normal_source_authority import ROOT
+from vnext.canonical import content_hash
+from vnext.sources import source_reference_record
+from tests.vnext.test_governance_signals import c04_arguments,c04_filing
+
+def proof(s):
+ r=s['source_reference'];return {**{k:r[k] for k in ('source_url','accession','document_name','request_attempt_id')},'content_sha256':r['raw_asset_id'][7:],'request_body_sha256':r['raw_asset_id'][7:]}
+def annual_source(name, *, year, accession, entity='12345'):
+ s=c04_filing(name,year=year,accession=accession,entity=entity);r=s['source_reference']
+ s['source_reference']=source_reference_record(raw_blob=s['raw_blob'],company_id='sample_entity',source_url=r['source_url'],accession=accession,document_name=r['document_name'],source_role=r['source_role'],request_attempt_id='review-'+accession)
+ return s
+
+def fixture(item_form=None, omit_form=None, missing_prior=False, bad_entity=False, bad_period=False):
+ args=c04_arguments();args['current_filings']=[[annual_source('Example Audit LLP',year='2025',accession=args['target_accession'])]]
+ args['prior_sources']=[] if missing_prior else [annual_source('Example Audit LLP',year='2023' if bad_period else '2024',accession='0000012345-25-000001',entity='54321' if bad_entity else '12345')]
+ aps=[proof(s) for chain in args['current_filings'] for s in chain]+[proof(s) for s in args['prior_sources']]
+ annual={'company_id':'sample_entity','entity':'12345','source_proofs':aps,'table_input':{'target_period':{'fiscal_year':2025,'period_start':'2025-01-01','period_end':'2025-12-31'}}}
+ inventory_name='CIK0000012345.json';rows=[];event_map={}
+ for i,form in enumerate(EVENT_FORMS,5):
+  acc=f'0000012345-25-{i:06d}';row={'form':form,'filingDate':'2025-04-01','reportDate':'2025-04-01','accessionNumber':acc,'primaryDocument':'event.htm','metadata_origin':{'inventory_name':inventory_name,'row_index':i-5}}
+  rows.append(row)
+  if form!=omit_form:
+   event_map[accession_document_url(cik=12345,accession=acc,document_name='event.htm')]=(f'<html><body>Item {"4.01" if form==item_form else "8.01"}. Auditor report.</body></html>'.encode(),acc)
+   event_map[hdr_sgml_url(cik=12345,accession=acc)]=(f'<TYPE>{form}\n<ITEMS>{"4.01" if form==item_form else "8.01"}\n'.encode(),acc)
+ payload={'cik':'12345','filings':{'recent':{k:[r[k] for r in rows] for k in ('form','filingDate','reportDate','accessionNumber','primaryDocument')},'files':[]}}
+ event_map[submissions_url(cik=12345)]=(json.dumps(payload).encode(),'SUBMISSIONS-12345')
+ body={'company_id':'sample_entity','prepared_annual_input':annual,'selection':{'current_filing_chain':[{'accessionNumber':args['target_accession'],'reportDate':'2025-12-31'}],'events':[r for r in rows if r['form'] in {'8-K','8-K/A'}],'history_loaded':[],'prior_status':'NO_SAME_CIK_PRIOR_IN_COMPLETE_SAVED_SUBMISSIONS' if missing_prior else 'SAME_CIK_PRIOR_DISCOVERED'},'metric_input_status':{'C04':'PREPARED'},'history_alignment_conflicts':[],'source_proofs':aps}
+ base={'input_binding':{**body,'input_binding_id':content_hash(value=body)},'resolver_inputs':{'c04':{'arguments':args}},'records':[r for chain in args['current_filings'] for s in chain for r in (s['raw_blob'],s['source_reference'])]+[r for s in args['prior_sources'] for r in (s['raw_blob'],s['source_reference'])]}
+ labelled={'original_input':annual,'table_input':annual['table_input'],'fiscal_year_label_resolution':{'metadata_conflict_retained':False},'input_id':content_hash(value=annual)}
+ class Reader:
+  def __init__(self,*a):self.records={};self.proofs={}
+  def read(self,url,*,accession='',role,media_type,**kwargs):
+   raw,acc=event_map[url];digest=hashlib.sha256(raw).hexdigest();name=url.rsplit('/',1)[-1]
+   blob={'record_type':'RAW_BLOB','raw_asset_id':'sha256:'+digest,'byte_length':len(raw),'media_type':media_type,'storage_uri':'review/'+name}
+   ref=source_reference_record(raw_blob=blob,company_id='sample_entity',source_url=url,accession=acc,document_name=name,source_role=role,request_attempt_id='review-event-'+acc+'-'+name)
+   s={'raw_bytes':raw,'raw_blob':blob,'source_reference':ref};self.records[blob['raw_asset_id']]=blob;self.records[ref['source_reference_id']]=ref;self.proofs[ref['source_reference_id']]={'proof':proof(s)}
+   return s
+ return base,labelled,Reader
+
+def case(**kwargs):
+ b,l,r=fixture(**kwargs)
+ with patch('vnext.c04_registration_successor._Sources',r),patch('vnext.c04_registration_successor.verify_ordinary_source_proofs',return_value={'controlled_fixture':True}),patch('vnext.c04_verified_document_alias.verify_ordinary_source_proofs',return_value={'controlled_fixture':True}),patch('socket.socket.connect',side_effect=AssertionError('NETWORK_FORBIDDEN')):
+  return prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',event_forms=EVENT_FORMS,selected_base=b,labelled_annual=l)
+
+print('Controlled synthetic adapter checks: physical saved-proof verification and _Sources are replaced. Annual parser, real four-form census/manifests, Calculator, Spec consistency and correspondence checks execute. Network forbidden. This is not real-source or company-chain acceptance.')
+out=case();assert out['results']['C04']['value']=='0';assert len(out['input_binding']['c04_registration_successor']['event_accessions'])==4;assert out['target_period']['fiscal_year']==2025
+print('PASS selected same auditors + all four forms -> 0 with preserved v3 Spec/period')
+for f in EVENT_FORMS:
+ out=case(item_form=f);assert out['results']['C04']['value']=='1';assert len(out['selection']['matched_item_4_01_claim_ids'])==1
+ print('PASS equal year-end auditors + Item4.01 in '+f+' -> 1')
+for kw in ({'missing_prior':True},{'bad_entity':True},{'bad_period':True}):
+ out=case(**kw);assert out['results']['C04']['value'] is None;assert out['results']['C04']['publication']=='WITHHELD'
+ print('PASS '+str(kw)+' -> '+out['results']['C04']['reason_code'])
+try:case(omit_form='8-K12B/A')
+except KeyError as e:
+ assert str(e).endswith("000001234525000008/event.htm'");print('PASS missing 8-K12B/A source -> fails before 0')
+else:raise AssertionError('omitted registered event completed')
+b,l,r=fixture();args=dict(b['resolver_inputs']['c04']['arguments']);args['event_input']=None
+with patch('vnext.c04_verified_document_alias.verify_ordinary_source_proofs',return_value={'controlled_fixture':True}):
+ try:annual_selection_with_verified_aliases(arguments=args,source_proofs=b['input_binding']['source_proofs'],data_root=ROOT)
+ except ValueError as e:assert str(e)=='C04_ALIAS_FALLBACK_WITHOUT_REAL_ALIAS';print('PASS alias-reader default refuses exact-name-only fallback')
+ else:raise AssertionError('default exact-name alias fallback opened')
+ v=annual_selection_with_verified_aliases(arguments=args,source_proofs=b['input_binding']['source_proofs'],data_root=ROOT,allow_exact_document_names=True);assert v['selection']['names_differ'] is False;assert not v['aliases'];print('PASS explicit exact-name selection allowed')

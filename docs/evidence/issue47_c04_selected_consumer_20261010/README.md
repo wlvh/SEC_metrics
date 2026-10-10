@@ -24,6 +24,14 @@ One dependency-union control added after the original run: 61 related tests10.50
 
 Received actual main `f51d8c3d` (PR139/137) by normal merge at50aeaa15. Only the B02 statement/source dependencies changed; C04 processing remained identical. 75 dispatch/state/statement/C04 controls0.386s/zero skip passed. Existing Ford22 state, factory/Calculator forbidden: repeat5.744s and independent results0.559s, same0ec6 flag/date/CIK and ten protected files, one result directory; no first calculation repeated. The precommit structural check refused changed uncommitted evidence as expected; postcommit capability alignment passed. No broad fiscal rerun.
 
+Actual missing-year control on existing Ford state: FY2026 returns CLI exit2/FLOW_COMPLETED_WITH_LIMITATIONS, SOURCE_UNAVAILABLE/ORDINARY_PERIOD_SELECTION_FISCAL_YEAR_NOT_IN_SAVED_SUBMISSIONS, previous_result=null; no Calculator enters. Independent read0.557s preserves original FY2022 0ec6/value0/date and requested=false, not a substitute2026 result. The initial developer verifier wrongly required exit0; its failure is retained and the completed missing-year command was not repeated. This is the real absent saved year, not constructed financial non-applicability.
+
+Nine existing small public business controls0.027s/zero skip also pass: changed names/intervening4.01 positive, equal names needing coverage, absent prior, deleted event/history, wrong subject/period, amendment conflict and original alias proof. They reuse the business resolver; constructed facts remain controls, not a new observed real change.
+
+Public PR142 normal main-receiving headf1478ea7 includes the fixture portability repair and mainf51; all three public processing files remain4e8. The historical candidate receives the same code and the public7caf minimal fast-step/selector patch, not a new runner. Final combined82 tests0.432s/zero skip pass. Public limited review found the old shallow-checkout test P2, statically checked76 fixture repair and found no further selected adapter business blocker in its bounded controls; this report does not independently validate the historical CLI or full Ford sources. Parent and historical real-source executions remain separately identified.
+
+The exact existing fast workflow command with the two historical modules was executed locally:69 tests0.118s/zero skip. Existing selectors and other commands remain; dedicated company workflow protection is separately checked before claiming it.
+
 Earlier development evidence:
 
 Continues the existing uncommitted auditor selection, not a new research or model experiment. Historical owner selects actual annual/prior/event metadata; public28 owns four-form source/annual-reader/Resolver/Calculator integration and ordinary company gates/storage. No second public implementation is added. Removed old draft proxy-period inference because this C04 slice does not establish C03 proxy responsibility.
