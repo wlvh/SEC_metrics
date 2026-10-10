@@ -288,12 +288,35 @@ class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
         reader = SimpleNamespace(auditor_filing=lambda f: [primary],
                                  read=lambda *a, **k: {'raw_bytes': b'{}'})
         _, _, claims, concepts = self.prepared_claims()
-        with self.assertRaisesRegex(ValueError, 'COMPLETE_SCOPE_UNPROVEN'):
+        with patch.object(cases, 'PAIRED_SINGLE_REVENUE_LINE_ENABLED', False), \
+                self.assertRaisesRegex(ValueError, 'COMPLETE_SCOPE_UNPROVEN'):
             self.admit(reader, annual, claims, concepts)
         original_reader, original_annual, original_claims, concepts = self.prepared_claims()
         admitted, scope = self.admit(original_reader, original_annual, original_claims, concepts)
         self.assertTrue(scope['complete_scope_proven'])
         self.assertEqual(admitted, [original_claims[1]])
+
+    def test_fixed_single_line_consumer_keeps_total_and_rejects_appended_cell_amount(self):
+        from tests.vnext.test_single_revenue_line import single_statement
+        from tests.vnext.test_selected_reported_revenue_v2 import changed
+        from types import SimpleNamespace
+        from tests.vnext.test_selected_revenue_scope_v1 import APPROVED
+        source, annual = single_statement()
+        _, _, claims, _ = self.prepared_claims()
+        # Remove the component claim; this original source reports one total.
+        claims = [claims[1]]
+        for extra in (None, b'<span> 100</span>'):
+            raw = source['raw_bytes'] if extra is None else source['raw_bytes'].replace(
+                b'>58496</ix:nonFraction>', b'>58496</ix:nonFraction>'+extra)
+            primary = changed(source, raw); primary['raw_blob'] = {'media_type':'text/html'}
+            reader = SimpleNamespace(auditor_filing=lambda f: [primary],
+                                     read=lambda *a, **k: {'raw_bytes': b'{}'})
+            if extra is None:
+                admitted, scope = self.admit(reader, annual, claims, APPROVED)
+                self.assertEqual(admitted, claims); self.assertTrue(scope['complete_scope_proven'])
+            else:
+                with self.assertRaisesRegex(ValueError, 'SELECTED_CELL_TEXT_CONFLICT'):
+                    self.admit(reader, annual, claims, APPROVED)
 
     def test_missing_scope_and_conflicting_original_dates_are_not_complete_revenue(self):
         reader, annual, claims, concepts = self.prepared_claims()
