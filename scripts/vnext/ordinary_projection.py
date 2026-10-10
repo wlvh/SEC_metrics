@@ -21,6 +21,34 @@ A05_FORMULA_TEXT = ("Selected net income / ((current period-end total assets + "
                     "prior period-end total assets) / 2)")
 
 
+def _selected_proxy_display(*, case, annual, evidence):
+    """Display the explicit C03 source even when its amount is withheld.
+
+    The producer owns proxy selection and validates its metadata/source
+    proofs. This check connects that selected filing to the same input
+    binding, reporter and actual primary reference used by the saved case.
+    """
+    selected=case.get('selected_proxy')
+    if selected is None:
+        return None
+    from sec_urls import accession_document_url
+    _need(case['primary_metric_id']=='C03' and type(selected) is dict
+          and {'accessionNumber','primaryDocument','form','filingDate'}<=set(selected)
+          and selected['form']=='DEF 14A', 'ORDINARY_SELECTED_PROXY_DISPLAY_INVALID')
+    identity={k:selected[k] for k in ('accessionNumber','form','filingDate')}
+    _need(_filings(case['input_binding']).get(selected['accessionNumber'])==identity,
+          'ORDINARY_SELECTED_PROXY_METADATA_NOT_BOUND')
+    url=accession_document_url(cik=int(annual['entity']),accession=selected['accessionNumber'],
+                              document_name=selected['primaryDocument'])
+    matching=[r for r in case['references'] if r.get('company_id')==annual['company_id']
+              and r.get('accession')==selected['accessionNumber']
+              and r.get('document_name')==selected['primaryDocument']
+              and r.get('source_url')==url and r.get('source_role')=='governance_proxy']
+    _need(len(matching)==1 and all(e['accession']==selected['accessionNumber'] for e in evidence),
+          'ORDINARY_SELECTED_PROXY_SOURCE_NOT_BOUND')
+    return identity
+
+
 def _need(condition, reason):
     if not condition:raise ValueError(reason)
 
@@ -486,6 +514,10 @@ def render_ordinary_records(*, data_root, manifest, records, case,
     row.update(accession=";".join(accessions),confidence="")
     if known:
         row.update(form=";".join(dict.fromkeys(f["form"] for f in known)),filed_date=";".join(dict.fromkeys(f["filingDate"] for f in known)))
+    selected_proxy=_selected_proxy_display(case=case,annual=annual,evidence=evidence)
+    if selected_proxy is not None:
+        row.update(form=selected_proxy['form'],filed_date=selected_proxy['filingDate'],
+                   accession=selected_proxy['accessionNumber'])
     if metric=="C02":row["source_class"]="PROXY" if known and all(f["form"]=="DEF 14A" for f in known) else "TEXT"
     if annual["fiscal_year_label_resolution"]["metadata_conflict_retained"]:
         row["notes"]+=" Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding."
