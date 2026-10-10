@@ -39,7 +39,8 @@ def _label_key(text):
     return re.sub(r'\s+', ' ', re.sub(r'\([a-z0-9]+\)', '', text.casefold())).strip()
 
 
-def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False):
+def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
+                     extra_unit_headers=(), extra_section_headers=()):
     """Bind the actual consolidated statement title and unassigned prose.
 
     An unfamiliar local scope statement is unresolved, not silently ignored.
@@ -47,6 +48,7 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False):
     """
     from .composite_scope import index_source_structure
     from .financial_duration import _cell_proof
+    unit_headers = UNIT_HEADER + tuple(extra_unit_headers)
     structure = index_source_structure(source_bytes=raw)
     span = structure['tables'][table['order']]
     previous = max((t['end_byte'] for t in structure['tables']
@@ -94,11 +96,11 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False):
                                        b['visible_text'].strip(), re.I)]
         _need(all(b in navigation or company_key(b['visible_text']) in issuer_lines
                   or re.fullmatch(title_pattern,_label_key(b['visible_text']))
-                  or any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in UNIT_HEADER)
+                  or any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in unit_headers)
                   for b in intro), 'STATEMENT_HEADING_SCOPE_UNRESOLVED')
     after_title = [b for b in intro if titles and b['start_byte'] >= titles[-1]['end_byte']]
     _need(all(company_key(b['visible_text']) in issuer_lines
-              or adjacent_heading and any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in UNIT_HEADER)
+              or adjacent_heading and any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in unit_headers)
               for b in after_title),
           'STATEMENT_INTRODUCTION_SCOPE_UNRESOLVED')
     # Capture every nonempty explanatory row, not just a cancellation keyword.
@@ -132,11 +134,13 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False):
                       or adjacent_heading and re.fullmatch(r'[0-9]+',text) and any(
                           re.fullmatch(r'(?:for the )?(?:fiscal )?years? ended [a-z]+ [0-9]{1,2},?',
                                        _label_key(other['text'])) for other in cells)
-                      or any(re.fullmatch(p, text) for p in UNIT_HEADER)
+                      or any(re.fullmatch(p, text) for p in unit_headers)
                       or re.fullmatch(title_pattern, text)
                       or re.fullmatch(r'(?:revenues|costs and expenses|earnings per (?:common )?share[–— -]*(?:basic|diluted)):', text)
                       or adjacent_heading and re.fullmatch(r'(?:cost of revenues|operating expenses)\s*:',
                           re.sub(r'\([0-9]+\)', '', c['text'].casefold().strip()).strip()))
+            header = header or any(re.fullmatch(p, ' '.join(c['text'].casefold().split()))
+                                   for p in extra_section_headers)
             if not header:
                 unknown.append(_cell_proof(table=table, cell=c))
     _need(not unknown, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')

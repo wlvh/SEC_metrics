@@ -56,15 +56,28 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         table,cell=bound[row['ordinal']]
         label=_label_key(_label(table,cell))
         single=allow_single_revenue_line and label in {'revenue','revenues'}
-        if label not in {'total revenue','total revenues','total net revenues'} and not single:continue
+        operating = label == 'total operating revenues'
+        if label not in {'total revenue','total revenues','total net revenues'} and not (single or operating):continue
         if (row['period_start'],row['period_end'])!=(period['period_start'],period['period_end']):continue
         same=[r for r in rows if r['context_ref']==row['context_ref'] and r['ordinal'] in bound
               and bound[r['ordinal']][0]['table_id']==table['table_id']
               and bound[r['ordinal']][1]['row_index']>cell['row_index']]
+        operating_costs=[]
+        if operating:
+            # The income statement's complete operating-expense total can
+            # prove the expense side without inventing a cost-of-sales tag.
+            cost_rows=native_income_reports(primary,annual,['us-gaap:OperatingCostsAndExpenses'],**options)
+            cost_bound=_fact_cells(index,parsed,{r['ordinal'] for r in cost_rows})
+            operating_costs=[r for r in cost_rows if r['context_ref']==row['context_ref']
+                and r['ordinal'] in cost_bound and cost_bound[r['ordinal']][0]['table_id']==table['table_id']
+                and cost_bound[r['ordinal']][1]['row_index']>cell['row_index']
+                and _label_key(_label(*cost_bound[r['ordinal']]))=='total operating expenses']
         names={r['concept'].casefold() for r in same}
         if not(names & {'us-gaap:netincomeloss','us-gaap:profitloss'}
-               and names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}):continue
-        column,headers,reason=_column_period(table=table,selected=cell,extra_header_descriptors=UNIT_HEADER)
+               and (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'} or operating_costs)):continue
+        extra_units=(r'\(?(?:in |dollars in )?(?:millions|thousands), except per share amounts\)?',) if operating else ()
+        unit_headers=UNIT_HEADER+extra_units
+        column,headers,reason=_column_period(table=table,selected=cell,extra_header_descriptors=unit_headers)
         _need(not reason and column['year']==column_year,'FISCAL_COLUMN_UNRESOLVED')
         if single:
             _single_revenue_line(index,parsed,table,cell,row,column,same)
@@ -82,7 +95,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                     other is c or re.fullmatch(r'[0-9]{4}',other['text'].strip())
                     or bool(matches) and re.fullmatch(r'[0-9]+',other['text'].strip())
                     or _DATE.fullmatch(other['text'].strip())
-                    or any(re.fullmatch(p,other['text'].strip(),re.I) for p in UNIT_HEADER)
+                    or any(re.fullmatch(p,other['text'].strip(),re.I) for p in unit_headers)
                     for other in origins))
                 covers=c['column_index']<=cell['column_index']<c['column_index']+c['colspan']
                 if not (covers or common):continue
@@ -95,19 +108,22 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                     except ValueError:raise IncomeSourceError('SELECTED_REPORTED_REVENUE_VISIBLE_END_DAY_INVALID')
                     _need(described_end==actual_end,'VISIBLE_END_DAY_CONFLICT')
                 end_headers.append(_cell_proof(table=table,cell=c))
-        statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True)
+        statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+            extra_unit_headers=extra_units,
+            extra_section_headers=(r'operating revenues:',r'operating expenses:',
+                r'non-operating expenses \(income\):') if operating else ())
         units=[{'kind':'visible_cell','proof':_cell_proof(table=table,cell=c),'text':c['text']}
                for r in table['rows'][:column['row_index']+1] for c in r['cells']
-               if c['is_origin'] and any(re.fullmatch(p,c['text'].strip(),re.I) for p in UNIT_HEADER)]
+               if c['is_origin'] and any(re.fullmatch(p,c['text'].strip(),re.I) for p in unit_headers)]
         units.extend({'kind':'heading_block','proof':b,'text':b['visible_text']}
                      for b in statement['intervening_sources']
-                     if any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in UNIT_HEADER))
+                     if any(re.fullmatch(p,b['visible_text'].strip(),re.I) for p in unit_headers))
         scales={6 if 'million' in u['text'].casefold() else 3 for u in units}
         _need(len(scales)==1 and int(native_by_ordinal[row['ordinal']]['scale'] or 0)==next(iter(scales)),
               'VISIBLE_NATIVE_UNIT_UNRESOLVED')
         matches=[r for r in xml_rows if _key(r)==_key(row)] if xml_rows is not None else []
         _need(xml_rows is None or matches,'PRIMARY_XML_TOTAL_DIFFERS')
-        selected.append({'total':row,'total_cell':_cell_proof(table=table,cell=cell),
+        selected.append({**({'operating_expense_reports':operating_costs} if operating else {}),'total':row,'total_cell':_cell_proof(table=table,cell=cell),
                          'statement_scope':statement,'unit_sources':units,
                          'year_headers':[_cell_proof(table=table,cell=h) for h,_,_ in headers],
                          'end_headers':end_headers,
