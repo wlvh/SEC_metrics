@@ -47,3 +47,9 @@ python3 tools/vnext_company.py results --company pfizer \
 ```
 
 公共限定修后PASS只覆盖其确切源差异；历史消费者及完整五年业务分别验收。main收入能力已接119/120/130/132/129，不等于这一B02新消费者已main。旧不可比和源方法失败保留，新增调用及正式信用0。依赖/代码组合明确用于执行和审查，不建立exact-head批准或封存体系。
+
+## 未证明前期范围的同入口负例
+
+已读接收者GitHub交接6094245836/6094248883；历史薄适配保留被拒收入scope到异常与inputassessment，日常选择只存scopeID/status/complete，不丢NO_DEMONSTRATED_SPLIT。拒绝/金额/原pairedguard不变。119相关控制0.759s零skip，构造current/prior角色控制核完整scope保存且摘要带准确限制。
+
+真实已保存MacyFY2023一个新隔离状态：当前原件总额范围成立，原FY2022无Total/完整范围未证，prior NO_DEMONSTRATED_SPLIT导致B02 null；首9.765s/exit2、禁止case/Calculator复1.237s/稳定扣留/0、独立读.555s/exit0，CSV原角色范围可读。原任务/旧db609错误Result不改、不以later25449m代前期。执行准确标为9dd+未提交scope显示修补树，不倒签后继commit。它是公司负例消费者验证，不授范围不一致合法增长或新method信用；SEC/model/paid0。

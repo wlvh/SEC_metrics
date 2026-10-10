@@ -356,7 +356,10 @@ class HistoricalPairedRevenueCaseTest(unittest.TestCase):
         def scope(**args):
             role = 'current' if args['filing'] == annual['filing'] else 'prior'
             if role == unresolved_role:
-                raise cases.StatementCaseError('HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN', 'IMPLEMENTATION_GAP')
+                raise cases.StatementCaseError('HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN',
+                    'IMPLEMENTATION_GAP', revenue_scope={'scope_id': 'constructed-unresolved-'+role,
+                        'status': 'NO_DEMONSTRATED_SPLIT', 'complete_scope_proven': False,
+                        'full_evidence': {'original': 'unproven source scope is retained'}})
             return args['claims'], {'scope_id': 'constructed-'+role, 'status': 'REPORTED_CONSOLIDATED_TOTAL',
                 'complete_scope_proven': True, 'full_evidence': {'original': 'kept only in assessments'}}
         with ExitStack() as stack:
@@ -399,6 +402,11 @@ class HistoricalPairedRevenueCaseTest(unittest.TestCase):
                 self.assertIsNone(case['results']['B02']['value'])
                 self.assertEqual(case['results']['B02']['reason_code'], 'HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED')
                 self.assertEqual(case['input_assessments']['historical_statement']['unresolved_revenue_role'], role)
+                self.assertEqual(case['selection']['paired_revenue_scopes'][role]['status'],
+                                 'NO_DEMONSTRATED_SPLIT')
+                self.assertFalse(case['selection']['paired_revenue_scopes'][role]['complete_scope_proven'])
+                self.assertIn('full_evidence', case['input_assessments']['historical_statement']
+                              ['paired_revenue_scopes'][role])
 
     def test_graph_cannot_select_an_operand_outside_the_admitted_original_claims(self):
         with self.assertRaisesRegex(ValueError, 'SELECTED_OPERAND_CHANGED'):

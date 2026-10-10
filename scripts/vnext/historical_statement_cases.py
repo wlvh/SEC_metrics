@@ -74,9 +74,10 @@ INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
 
 
 class StatementCaseError(ValueError):
-    def __init__(self, reason, category='SOURCE_INTEGRITY_ERROR'):
+    def __init__(self, reason, category='SOURCE_INTEGRITY_ERROR', *, revenue_scope=None):
         super().__init__(reason)
         self.category = category
+        self.revenue_scope = revenue_scope
 
 
 def _need(condition, reason, category='SOURCE_INTEGRITY_ERROR'):
@@ -118,8 +119,9 @@ def _revenue_claims_admitted_by_original(*, reader, prepared, filing, period, cl
             approved_concepts=qualified, namespace_policy=YEAR_OR_DATE_RELEASE,
             annual_period_reader=annual_period)
         admit = admit_revenue_facts
-    _need(scope['complete_scope_proven'], 'HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN',
-          'IMPLEMENTATION_GAP')
+    if not scope['complete_scope_proven']:
+        raise StatementCaseError('HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN',
+            'IMPLEMENTATION_GAP', revenue_scope=scope)
     views = []
     for claim in claims:
         _need(claim['claim_kind'] == 'COMPANYFACTS_NUMERIC_FACT'
@@ -332,6 +334,9 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
                     reader=reader, prepared=prepared, filing=filings[role], period=periods[role],
                     claims=by_role[role], concepts=concepts)
         except (*_SOURCE_ERRORS, NormalCompanyfactsError, StatementCaseError, IncomeSourceError) as error:
+            unresolved_scope = getattr(error, 'revenue_scope', None)
+            if unresolved_scope is not None:
+                paired_revenue_scopes[role] = unresolved_scope
             prior_error = {'category': getattr(error, 'category', 'SOURCE_OR_IMPLEMENTATION_UNRESOLVED'),
                 'reason': str(error), 'error_type': type(error).__name__,
                 'unresolved_revenue_role': role,
