@@ -53,3 +53,5 @@ python3 tools/vnext_company.py results --company pfizer \
 已读接收者GitHub交接6094245836/6094248883；历史薄适配保留被拒收入scope到异常与inputassessment，日常选择只存scopeID/status/complete，不丢NO_DEMONSTRATED_SPLIT。拒绝/金额/原pairedguard不变。119相关控制0.759s零skip，构造current/prior角色控制核完整scope保存且摘要带准确限制。
 
 真实已保存MacyFY2023一个新隔离状态：当前原件总额范围成立，原FY2022无Total/完整范围未证，prior NO_DEMONSTRATED_SPLIT导致B02 null；首9.765s/exit2、禁止case/Calculator复1.237s/稳定扣留/0、独立读.555s/exit0，CSV原角色范围可读。原任务/旧db609错误Result不改、不以later25449m代前期。执行准确标为9dd+未提交scope显示修补树，不倒签后继commit。它是公司负例消费者验证，不授范围不一致合法增长或新method信用；SEC/model/paid0。
+
+790ab872后继本head十一CI均终态SUCCESS（不是借9dd绿灯）。实际run38028256882/job114143610544：257saved-source/165.357s，105history/1.296s含unproved角色scope输出用例逐项ok，6paired/.850s，43single-line/period14.919s，其余D04/event/历史事件/原SEC兼容步骤实际执行，零skip。源码未再改，日志放独立记录分支不重复触发productCI。790另进程只读原PF修后25rows .782s，424原state文件保持，未计算。
