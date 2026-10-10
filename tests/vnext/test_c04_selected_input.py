@@ -98,13 +98,13 @@ class SelectedC04InputTest(unittest.TestCase):
                         event_forms=EVENT_FORMS,selected_base=selected,labelled_annual=labels)
 
     def test_year_only_checked_filing_default_dictionary_matches_main(self):
-        import subprocess,types
-        raw=subprocess.check_output(['git','show','84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf:scripts/vnext/c04_verified_document_alias.py'],cwd=ROOT)
-        old=types.ModuleType('vnext._old_c04_alias_control');old.__package__='vnext'
-        exec(compile(raw,'main84:c04_verified_document_alias.py','exec'),old.__dict__)
+        import json,hashlib
+        baseline=json.loads((ROOT/'tests/vnext/fixtures/c04_year_only_base84.json').read_text())
         source=c04_filing('Example Audit LLP',year='2024')
-        kwargs=dict(sources=[source],company_id='sample_entity',cik='12345',period_end='2024-12-31',source_proofs=[],aliases=[])
-        self.assertEqual(old._checked_filing(**kwargs),_checked_filing(**kwargs))
+        self.assertEqual(baseline['fixture_source_sha256'],hashlib.sha256(source['raw_bytes']).hexdigest())
+        checked=_checked_filing(sources=[source],company_id='sample_entity',cik='12345',
+            period_end='2024-12-31',source_proofs=[],aliases=[])
+        self.assertEqual(baseline['checked_filing'],checked)
 
     def test_selected_gate_does_not_open_default_current_producer(self):
         from vnext.ordinary_saved_result import EXPLICIT_CASE_METRICS, SAVED_METRIC_IDS
