@@ -6128,10 +6128,35 @@
       ],
       "patch_sha": "21004b5968576431d1af7f135108c4a96dd76681",
       "spawned_at": "2026-10-10T05:36:56.490892+00:00",
-      "ended_at": null,
-      "tool_calls": 0,
+      "ended_at": "2026-10-10T05:46:10.123407+00:00",
+      "tool_calls": 32,
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-processing-scope/SEC_metrics/docs/evidence/issue28_processing_scope_20261010/independent-review/结论.md",
-      "verdict": "RUNNING"
+      "verdict": "PASS_LIMITED_D04_PROCESSING_SCOPE",
+      "messages": 3
+    },
+    {
+      "task_name": "review_nimsubject_a541a5b",
+      "purpose": "review",
+      "module": "currentnim-subject-repair",
+      "base_sha": "323eabf155376ae14bc130635fd86f77fb75d9d1",
+      "patch_sha": "a541a5b606379a478198a4d41190fd5088db52f9",
+      "scope_paths": [
+        "scripts/vnext/financial_results.py:_current_company_registration and ordinary_records call",
+        "tests/vnext/test_current_nim_company.py:registration repair controls"
+      ],
+      "spawned_at": "2026-10-10T05:56:40.331766+00:00",
+      "ended_at": "2026-10-10T06:00:29.416640+00:00",
+      "tool_calls": 10,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-current-nim/SEC_metrics/docs/evidence/issue28_current_nim_20261010/independent-subject-repair/conclusion.md",
+      "verdict": "PASS_LIMITED_SOURCE_COMPANY_REGISTRATION_REPAIR",
+      "limits": {
+        "tools": 20,
+        "minutes": 10,
+        "ordinary_messages": 2
+      },
+      "dedup": "old323 review ended NEEDS_FIX; new14line source-registration repair notcovered; exactnewSHA notregistered/results absent; processing210 reviewer ended",
+      "ordinary_messages": 1,
+      "tests": "4 contract tests .052s plus17isolated CSV controls; no fullsource/companyrerun"
     }
   ],
   "ci_capacity_20260922": {
@@ -19025,21 +19050,35 @@
       "checks": 11,
       "conclusion": "SUCCESS",
       "source": "actual server read at natural checkpoint after handoff6094245836"
+    },
+    "main_receiving": {
+      "actual_main": "84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf",
+      "merged_pr": 136,
+      "receiver_comment": 6094536393,
+      "peer_consumer_137": "PAUSED_FRESH_FY2022_REGRESSION; oldcachedpositive notfreshproof"
     }
   },
   "d04_unused_processing_identity_20261010": {
     "peer_evidence_sha": "1037bbd5",
     "scope": "D04 route extracted; finite inspected config transitions only; no broad PR115 compatibility or source/business policy change",
     "parent_static_diff_confirmed": true,
-    "fixed": false,
+    "fixed": true,
     "disposition": "root shared controller/store responsibility, no oldconfig rewrite/no real30recompute; separate bounded repair after source receiving",
     "candidate_patch_sha": "21004b5968576431d1af7f135108c4a96dd76681",
-    "status": "PARENT_REPAIR_VERIFIED_LIMITED_INDEPENDENT_REVIEW_RUNNING",
-    "tests": "124 tests 23.557s zero errors failures skips",
+    "status": "PARENT_AND_LIMITED_REVIEW_PASS_CANDIDATE_NOT_MAIN",
+    "tests": "124 executions118unique23.557s plus discovery loading11unique.241s;0skips",
     "actual_company": "MarriottFY2025 B04 c99 first3.547s / candidate repeat .507s forbidden factory / independent read .380s;2601000000USD same Result",
     "pr": "https://github.com/wlvh/SEC_metrics/pull/138",
-    "head": "21004b5968576431d1af7f135108c4a96dd76681",
-    "primary_record": "docs/evidence/issue28_processing_scope_20261010/README.md"
+    "head": "832aea1a0e5927e6bc5aedd75b30ed14a9b76650",
+    "primary_record": "docs/evidence/issue28_processing_scope_20261010/README.md",
+    "independent": "21004b59 PASS limited six files;32tools3messages57executions51unique;no full-company or production credit",
+    "peer_actual_consumer": "fixed0cb17d83 read by parent;main MarriottFY25B04first3.917s/public candidate forbidden factory-Calculatorrepeat.893s/read.521s8protectedfiles;not root re-execution",
+    "ci": {
+      "head": "832aea1a0e5927e6bc5aedd75b30ed14a9b76650",
+      "checks": 11,
+      "conclusion": "SUCCESS",
+      "source": "actual server read at natural checkpoint after113mainreceiving; no repeated workflow dispatch"
+    }
   },
   "github_handoff_read_20261010": {
     "actual_main": "c99b5d3c3180b8e8dfbac7f9182a941af4ae7705",
@@ -19060,5 +19099,87 @@
     ],
     "historical_document_receipt": "6bb92f94 -> PR121 d354cf48 plus actual6094245836 typo correction999cda49",
     "latest_peer_consumer": "PR137790ab872: scope failure preserves original prior NO_DEMONSTRATED_SPLIT; owner-run actualMacyFY23 remains null; root not re-executed"
+  },
+  "explicit_e01_main_receiving_20261010": {
+    "pr": 113,
+    "head": "aa61081b98e6110f4bebaf2e7aab5b2d1f5c7ddc",
+    "main": "c99b5d3c3180b8e8dfbac7f9182a941af4ae7705",
+    "scope": "existing explicitE01 publicgate compatible with mainD04/131/reporter/revenue; no new modelmethod",
+    "conflicts": "storeD04+sixfinance+E01 union; mainrunner functions andappendE01selector; allmainworkflow steps+E01test",
+    "projection": "exactmainc99 source andreporter tests, supersedesoldpeer102insertion; histCLI/workflow owned47",
+    "tests": "107executions9.830s0errors/fails/skips",
+    "real_model_response": "matchingV2stillabsent; oldscope and originalnull/requests retained",
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "peer_consumed_sha": "d82addec",
+    "peer_scope": "parent actually read fixed primary record, not executing peer task;oneParamFY24 migration25.269s/same333187Result,null/forbid factoryrepeat3.649s/read.671s",
+    "ci": {
+      "head": "aa61081b98e6110f4bebaf2e7aab5b2d1f5c7ddc",
+      "checks": 11,
+      "conclusion": "SUCCESS",
+      "source": "actualservernaturalterminalread"
+    }
+  },
+  "current_nim_main_receiving_20261010": {
+    "pr": 117,
+    "product_main_merge": "ef07e1a49198c45b94d9d08bc500d650e22c0618",
+    "registration_repair_sha": "a541a5b606379a478198a4d41190fd5088db52f9",
+    "independent": "source-company repair limitedPASS10tools1message4contract+17smallCSV;old323NEEDS_FIXkept",
+    "main": "c99b5d3c3180b8e8dfbac7f9182a941af4ae7705",
+    "tests": "104 executions42.837szero errors/fails/skips",
+    "actual_company": "ownJPMFY25A04 .025ratio/managed/year/19617/sameb0cc;firstmaintransitioncommitted but firsttime unavailable dueharness emptylock+missingelapsed errors retained;resume forbiddenfactory.131370/independentread.460828;12old/18post files and9source files keep",
+    "source_observation": "oldunrelatedeventheaderfailed remains visible exit2",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "scope": "existing currentA04 candidate, not newfamily/wholemain acceptance/production",
+    "head": "7cba5ee86cfc435dfd2f8f4f4fcb9966970a98fa",
+    "ci": {
+      "head": "7cba5ee86cfc435dfd2f8f4f4fcb9966970a98fa",
+      "checks": 12,
+      "conclusion": "SUCCESS",
+      "source": "actualservernaturalterminalread"
+    }
+  },
+  "revenue_common_share_caption_20261010": {
+    "pr": 139,
+    "base": "84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf",
+    "product_sha": "b860f0ffaf59b0d1bbdedca85466671e8e5d6df3",
+    "source_file": "scripts/vnext/selected_revenue_scope_v1.py:UNIT_HEADER",
+    "actual_cause": "existing2021headercol15span3coversamount16;COMMON SHARE unitcaption rejected thewhole row, notcurrency-columnmisalignment",
+    "parent_tests": "60/7.696s0skip; wrongyear/scale/segmentdescriptor; additional2yeargroup positive/cross-groupnegative1/.200s",
+    "actual_original": "PF2021authprimarya6dc.../XML/CompanyFacts18.879s→81288000000USD/table112row3col16/header15span3/2021/MATCH;uncommittedexecution,nocompanyResult",
+    "receiver_correction_comment": 6094654752,
+    "permission_disposition": "receivercorrected existingauthorizationcoversrepair/revalidation/conditionalreceipt;rootnotselfmerge",
+    "peer_responsibility": "freshPF21–25B02 source+Calc/save/forbidrepeat/read; oldpositive/oldnullnotindependentfreshproof",
+    "budget_delta": [
+      0,
+      0,
+      0
+    ],
+    "status": "SOURCE_PARENT_FIX_AND_PEER_FRESH_COMPANY_PROVEN_RECEIVING_REVIEW_PENDING",
+    "head": "64ec86db4ac7f383cd3631b79d8037b41ad72b2c",
+    "fixed_peer_fresh_sha": "82e99842",
+    "peer_fresh_first_seconds": 76.82977729104459,
+    "peer_forbidden_repeat_seconds": 4.261092207860202,
+    "peer_independent_read_seconds": 0.6940592089667916,
+    "peer_protected_result_files": 44,
+    "peer_rows": "FY22=.2342535183544926680444838106/FY23=-.4169640187381640586065982259/FY25=-.01647099501783833906989171264;FY21/FY24complete scopes then original businessnotcomparable;IDs preserve",
+    "root_scope": "actuallyreadfixedREADMEandfreshJSON;60digitindependentFY22arithmeticmatches28decimaldisplay;notrootcompanyexecution/owneradoption"
+  },
+  "d01_historical_main_union_20261010": {
+    "peer_head": "cbb293c8",
+    "public_resolution": "main84SAVED_MODEL D04 retained;EXPLICITsixfinancial+D01 exactunionfromreviewed135/ae7;notwhole135storecopy",
+    "scope": "parent authored one-line resolution, peerowns merge/application/historyvalidation;roothasnotyetreadnewpeer69controls/companyrecords",
+    "calls": [
+      0,
+      0,
+      0
+    ]
   }
 }

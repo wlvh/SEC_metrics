@@ -718,3 +718,14 @@ PR135ae7 all11CI nowactualSUCCESS, stillDraft/open;D04 via112 alreadymainbdb/cur
 ## 2026-10-10 实际 GitHub 交接后接续
 
 实际main c99b5d3c，已读#28/#47正文、Claude6094245836/6094248883及相关PR接收反馈。102/106/112、金融及119/120/130/132/129收入链已main，不重开旧解阻。PR135ae7与PR136cbb目前各11SUCCESS；新PR13821004b59修D04专项两个文件全哈希导致无关指标重算：D04路由/依赖独立，通用规则仍比较，有限精确转换兼容不改旧结果/终态/成功指针，不接入PR115额外过渡。124定向23.557s零skip；真实mainMarriott25B04=2601mUSD首3.547s，候选禁factory复.507s/独读.380s同期间/出处/Result与文件；小状态成功/扣留/中断和未知规则变化保。新限定独审review_processing_21004b5正在执行，只单一活跃子代理；其结论不得提前记PASS，下一动作核实际结论及受影响修补，然后记录新headCI。PR121接#47文档6bb为d354、后继999更正接收方笔误比较列25191→25449；原FY22政策/业务值不改，11shell块核对，无财报重跑。PR137最新790仅历史消费者补NO_DEMONSTRATED_SPLIT来源scope展示，根公共实现不重复；其新CI以实际终态另核。无新SEC/provider/paid、无账户/生产操作，原账本/旧失败及逐组机会保持。原分支85084之后只本方登记修改，原未提交目录不动。
+
+
+## 2026-10-10 接收回归与本轮实际闭环
+
+实际main现84d15f35，接收方已合136，根本方未merge。138产品210有限独审PASS32工具3消息、归档832明确124executions118unique，精确83211CI SUCCESS；真实currentB04复用及peer0cb历史消费各按自己的执行范围保。原113已追加actualmainc99为aa61081b，三冲突semanticunion保D04/131/reporter/收入与mainrunner；107/9.830零skip，113aa11CI SUCCESS。Peer114d82真实ParamFY24依赖迁移25.269/禁factory复3.6490/读.671same333187null/八项2aa保，matchingV2仍缺，本方实际读固定记录而非亲跑。
+
+117当前登记修补a541闭具体P2限定独审10工具1消息/4contract+17CSVcontrols，不覆盖全NIM；追加mainc99ef07四冲突union保D04/currentA04/依赖/runner/workflow，104/42.837s过。真实ownJPMFY25仅A04必要迁移仍.025ratio/managed/fullYear/19617/b0cc；脚本把空write.lock当异常和未持久elapsed字段的两失败保，不重复计算，读取已存CANDIDATE_READY恢复后禁factory复.131370/独进程read.460828，12old/18postrecord/9source不变。首次外部耗时unknown不编数；source旧无关eventheader错误保持exit2。归档7cba12CI SUCCESS；只取消被它替代的ef纯CI，不取消任何真实/持久业务运行。
+
+已实际读Claude6094536012/6094536393/6094536621和权限更正6094654752：137freshPF2022wrongheld，保存旧正例不证明fresh路径。单位说明修补Draft139产品b860/目标64ec只UNIT_HEADER加optionalCOMMON，实际grid112/yearcol15span3本已覆盖amount16，拒整行原因是COMMON SHARE caption不认；不动financial_duration/table_grid/列/金额/可比性。60/7.696及新双列组1/.200边界过，authPF2021原primarya6dc+XML+CompanyFacts18.879→81288mUSD/year2021/grid112r3c16/MATCH，本方未创建公司Result。Peer137fixed82e99842fresh21–25 onlyB02首76.830，22=.2342535183544926680444838106/23=-.416964.../25=-.016470995...三正、21/24完整两scope后真实41908vs41651/58496vs59553 business不可比；禁case/Calc复4.2610/独读.694/44保护，旧25rows/424files另读保。本方读固定README/JSON/高精度22公式，不冒称执行peer公司。Receiver原授权涵盖repair/revalidation/conditionalreceipt更正，根本方仍不selfmerge。139新headCI和接收复核继续，不开另一选择器、不旧cache证明fresh、0newcalls。
+
+下一动作：核139/137对应head终态及Claude受影响反例复核；读取peerD01cbb293新增组合验证（仅给定publicstoreEXPLICIT+D01/mainD04集合一行并存，非整个135源覆盖），处理实际反馈；其余390、当前AI成熟度、自动来源更新及旧入口退出责任未完成。预算143/143/52保持，本轮0/0/0，无账本/机会恢复/模型端点改变/Ready/合并/采纳/部署/active。原task/b06-new-source现场未清理。
