@@ -83,6 +83,21 @@ class C03SecReleaseTest(unittest.TestCase):
         result=resolve_c03(**arguments(source([{'amount':'100'}])))
         self.assertNotIn('sec_namespace_release',result['selection'])
 
+    def test_generic_member_does_not_become_a_second_specific_person(self):
+        rows=[{'amount':'100'},{'amount':'100','person':'ecd:PeoMember'},
+              {'amount':'100','person':'ex:PersonAMember'}]
+        for release in ('2025','2022q4','2022-10-31'):
+            with self.subTest(release=release):
+                resolved=self.resolve(released_source(rows,release))
+                self.assertEqual('100',resolved['result']['value'])
+                self.assertEqual(1,len(resolved['selection']['specific_person_members']))
+                two_people=self.resolve(released_source(rows+[
+                    {'amount':'100','person':'ex:PersonBMember'}],release))
+                self.assertEqual('C03_MULTIPLE_REPORTED_PEOPLE',two_people['selection']['reason_code'])
+                foreign=self.resolve(released_source(rows+[
+                    {'amount':'100','person':'ex:PeoMember'}],release))
+                self.assertEqual('C03_MULTIPLE_REPORTED_PEOPLE',foreign['selection']['reason_code'])
+
 
 if __name__ == '__main__':
     unittest.main()

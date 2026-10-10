@@ -261,8 +261,8 @@ def resolve_c03(*, raw_bytes: bytes, raw_blob: Mapping, source_reference: Mappin
             candidates.append(row)
     values = sorted({row["value"] for row in candidates})
     people = sorted(({tuple(p) for row in candidates for p in row["person_members"]
-                     if not (p[1] == "PeoMember" and re.fullmatch(r"https?://xbrl\.sec\.gov/ecd/\d{4}", p[0]))})
-                    | {p for p in current_people if not (p[1] == "PeoMember" and re.fullmatch(r"https?://xbrl\.sec\.gov/ecd/\d{4}", p[0]))})
+                     if not (p[1] == "PeoMember" and sec_taxonomy(p[0], 'ecd'))})
+                    | {p for p in current_people if not (p[1] == "PeoMember" and sec_taxonomy(p[0], 'ecd'))})
     if any(len({p["name"] for p in names}) > 1 for names in current_people.values()):
         failures.append({"reason": "C03_CONFLICTING_PEO_NAMES"})
     if failures:
