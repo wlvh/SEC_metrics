@@ -1,0 +1,134 @@
+{
+  "review_start_utc": "2026-10-10T07:39:06Z",
+  "base": "7a2ffdd20b95888dbf0b518e6b3096f2dc67b056",
+  "patch": "e98a26c1828e3a794e2a931c5541e2c0d6ae79b9",
+  "test_command": "TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 python3 tests/required_unittests.py tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest",
+  "test_start_utc": "2026-10-10T07:39:55.438261+00:00",
+  "test_end_utc": "2026-10-10T07:39:55.992369+00:00",
+  "test_exit": 0
+}
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 3, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest"]}
+test_operating_components_or_wrong_unit_or_segment_do_not_get_total_credit (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_components_or_wrong_unit_or_segment_do_not_get_total_credit) ... ok
+test_operating_label_parenthetical_scope_cannot_be_discarded (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_label_parenthetical_scope_cannot_be_discarded) ... ok
+test_reported_operating_total_preserves_approved_native_amount_and_whole_statement (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_reported_operating_total_preserves_approved_native_amount_and_whole_statement) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.229s
+
+OK
+
+FINITE CONTROLS
+{
+  "control_start_utc": "2026-10-10T07:40:46.320436+00:00",
+  "base": "7a2ffdd20b95888dbf0b518e6b3096f2dc67b056",
+  "patch": "e98a26c1828e3a794e2a931c5541e2c0d6ae79b9",
+  "checks": [
+    {
+      "name": "plain_operating_total_matches_base_and_preserves_native_amount",
+      "base_complete": true,
+      "patch_complete": true,
+      "base_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "patch_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "full_dict_equal": true,
+      "patch_value": "58496000000",
+      "patch_xml": "MATCH"
+    },
+    {
+      "name": "inherited_P2_revenue_domestic",
+      "base_complete": true,
+      "patch_complete": false,
+      "base_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "patch_status": "NO_REPORTED_TOTAL_PROVEN",
+      "full_dict_equal": false,
+      "patch_value": null,
+      "patch_xml": null
+    },
+    {
+      "name": "inherited_P2_revenue_subtotal",
+      "base_complete": true,
+      "patch_complete": false,
+      "base_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "patch_status": "NO_REPORTED_TOTAL_PROVEN",
+      "full_dict_equal": false,
+      "patch_value": null,
+      "patch_xml": null
+    },
+    {
+      "name": "inherited_P2_expense_domestic",
+      "base_complete": true,
+      "patch_complete": false,
+      "base_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "patch_status": "NO_REPORTED_TOTAL_PROVEN",
+      "full_dict_equal": false,
+      "patch_value": null,
+      "patch_xml": null
+    },
+    {
+      "name": "additional_expense_subtotal",
+      "base_complete": true,
+      "patch_complete": false,
+      "base_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "patch_status": "NO_REPORTED_TOTAL_PROVEN",
+      "full_dict_equal": false,
+      "patch_value": null,
+      "patch_xml": null
+    },
+    {
+      "name": "operating_case_and_whitespace_without_scope_change",
+      "base_complete": true,
+      "patch_complete": true,
+      "base_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "patch_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "full_dict_equal": true,
+      "patch_value": "58496000000",
+      "patch_xml": "MATCH"
+    },
+    {
+      "name": "ordinary_V2_default_full_dictionary_and_scope_id",
+      "base_complete": true,
+      "patch_complete": true,
+      "base_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "patch_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "full_dict_equal": true,
+      "patch_value": "58496000000",
+      "patch_xml": "MATCH"
+    },
+    {
+      "name": "explicit_single_line_default_full_dictionary_and_scope_id",
+      "base_complete": true,
+      "patch_complete": true,
+      "base_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "patch_status": "REPORTED_CONSOLIDATED_TOTAL",
+      "full_dict_equal": true,
+      "patch_value": "58496000000",
+      "patch_xml": "MATCH"
+    }
+  ],
+  "unchanged_inherited_helper": {
+    "path": "scripts/vnext/selected_revenue_scope_v1.py",
+    "sha256": "4fe90d3d291c5bdf8bf225027b0c9a0c17a4d0854533dd35aaa6ab9ed6122bfc",
+    "base_patch_worktree_bytes_equal": true
+  },
+  "source_changed_lines": [
+    59,
+    74
+  ],
+  "patch_source_sha256": "aa72d649d2261593c55c135a82514213fa6eb3df955e64c520e795a4ab1e1e74",
+  "control_end_utc": "2026-10-10T07:40:46.648911+00:00"
+}
+
+FINAL AUDIT
+{
+  "review_end_utc": "2026-10-10T07:41:51.578109+00:00",
+  "elapsed_seconds": 165.578109,
+  "tool_nodes": 10,
+  "wrapper_nodes": 5,
+  "nested_nodes": 5,
+  "ordinary_messages_including_final": 2,
+  "questions": 0,
+  "provider": 0,
+  "paid": 0,
+  "sec": 0,
+  "tracked_worktree_diff_empty": true,
+  "diagnostic_warning": "One initial read-only rg query referenced a nonexistent test filename; no retry or execution used that path."
+}

@@ -161,3 +161,47 @@ class SelectedReportedRevenueTest(unittest.TestCase):
         rows=facts(annual);rows[1]['accession']='later'
         with self.assertRaisesRegex(ValueError,'TOTAL_NOT_IN_COMPANYFACTS'):
             admit_reported_revenue_facts(facts=rows,scope=scope)
+
+
+class ReportedOperatingRevenueTest(unittest.TestCase):
+    def statement(self):
+        source,_,annual=originals()
+        raw=source['raw_bytes'].replace(b'Total revenues',b'Total operating revenues')
+        raw=raw.replace(b'CostOfGoodsAndServicesSold',b'OperatingCostsAndExpenses')
+        raw=raw.replace(b'Cost of sales',b'Total operating expenses')
+        raw=raw.replace(b'EXCEPT PER SHARE DATA',b'EXCEPT PER SHARE AMOUNTS')
+        raw=raw.replace(b'<tr><td>Product revenues',b'<tr><td>OPERATING REVENUES:</td><td></td></tr><tr><td>Product revenues')
+        raw=raw.replace(b'<tr><td>Total operating expenses',b'<tr><td>OPERATING EXPENSES:</td><td></td></tr><tr><td>Total operating expenses')
+        raw=raw.replace(b'<tr><td>Net income',b'<tr><td>NON-OPERATING EXPENSES (INCOME):</td><td></td></tr><tr><td>Net income')
+        return changed(source,raw),annual
+
+    def test_reported_operating_total_preserves_approved_native_amount_and_whole_statement(self):
+        source,annual=self.statement()
+        result=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,xml=source)
+        self.assertTrue(result['complete_scope_proven'])
+        self.assertEqual(result['reported_totals'][0]['total']['value'],'58496000000')
+        self.assertEqual(result['reported_totals'][0]['xml_check'],'MATCH')
+
+    def test_operating_components_or_wrong_unit_or_segment_do_not_get_total_credit(self):
+        source,annual=self.statement()
+        for old,new in ((b'Total operating revenues',b'Passenger revenues'),
+                (b'MILLIONS, EXCEPT PER SHARE AMOUNTS',b'THOUSANDS, EXCEPT PER SHARE AMOUNTS'),
+                (b'Total operating expenses',b'Total operating expenses; only Segment Alpha operations included'),
+                (b'Total operating expenses',b'Salaries, wages, and benefits'),
+                (b'OperatingCostsAndExpenses',b'OtherCostAndExpenseOperating')):
+            altered=changed(source,source['raw_bytes'].replace(old,new))
+            try:scope=reported_revenue_scope(primary=altered,annual=annual,approved_concepts=APPROVED)
+            except ValueError:continue
+            self.assertFalse(scope['complete_scope_proven'])
+
+
+    def test_operating_label_parenthetical_scope_cannot_be_discarded(self):
+        source,annual=self.statement()
+        for before,after in ((b'Total operating revenues',b'Total operating revenues (domestic)'),
+                (b'Total operating revenues',b'Total operating revenues (subtotal)'),
+                (b'Total operating expenses',b'Total operating expenses (domestic)')):
+            altered=changed(source,source['raw_bytes'].replace(before,after))
+            with self.subTest(label=after):
+                result=reported_revenue_scope(primary=altered,annual=annual,
+                    approved_concepts=APPROVED,xml=altered)
+                self.assertFalse(result['complete_scope_proven'])
