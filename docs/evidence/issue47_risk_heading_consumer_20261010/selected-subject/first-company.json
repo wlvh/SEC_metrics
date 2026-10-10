@@ -1,0 +1,27 @@
+{
+  "commit": "33a22dacf98438790d330352283fe1d276e699a4",
+  "arguments": [
+    "run",
+    "--company",
+    "paramount_skydance_paramount_global",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2025",
+    "--fiscal-year-end",
+    "2025",
+    "--metric",
+    "D01",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-paramount-selected-20261010/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-paramount-selected-20261010/output"
+  ],
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-paramount-selected-20261010/state",
+  "seconds": 4.619278791826218,
+  "exit_code": 2,
+  "stdout": "{\n  \"elapsed_seconds\": 4.525438791839406,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"paramount_skydance_paramount_global\",\n  \"run_id\": \"20261010T002307Z-14b9c0f3\",\n  \"status\": \"FLOW_COMPLETED_WITH_LIMITATIONS\",\n  \"selected_metrics\": [\n    \"D01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"D01\",\n      \"status\": \"INPUT_OR_EXECUTION_FAILED\",\n      \"attempt_id\": \"28f0647451c341a69d4f3d078fb448d8\",\n      \"error_type\": \"RiskHeadingCaseError\",\n      \"reason\": \"HISTORICAL_RISK_HEADINGS_AMENDMENT_NOT_RECEIVED\",\n      \"previous_result\": null,\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2025,\n      \"error_category\": \"IMPLEMENTATION_GAP\"\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-paramount-selected-20261010/state\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/d01-paramount-selected-20261010/output/20261010T002307Z-14b9c0f3\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2025\n  ]\n}\n",
+  "stderr": ""
+}

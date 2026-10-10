@@ -1,0 +1,58 @@
+{
+  "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+  "schema_version": 1,
+  "policy_id": "ordinary_period_selection_v1",
+  "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+  "company_id": "paramount_skydance_paramount_global",
+  "reporting_cik": "2041610",
+  "subject_policy": {
+    "mode": "SUCCESSOR_REGISTRANT_ONLY",
+    "selected_cik": "2041610",
+    "related_predecessor_ciks": [
+      "813828"
+    ],
+    "cross_entity_combination_authorized": false,
+    "per_metric_statement_scope_required": true
+  },
+  "target_report_end": "2025-12-31",
+  "requested_fiscal_year": 2025,
+  "current_filing": {
+    "form": "10-K",
+    "reportDate": "2025-12-31",
+    "filingDate": "2026-02-25",
+    "accessionNumber": "0002041610-26-000011",
+    "primaryDocument": "psky-20251231.htm"
+  },
+  "current_amendments": [
+    {
+      "form": "10-K/A",
+      "reportDate": "2025-12-31",
+      "filingDate": "2026-04-24",
+      "accessionNumber": "0001140361-26-016758",
+      "primaryDocument": "ef20071103_10ka.htm"
+    }
+  ],
+  "prior_report_end": null,
+  "prior_filing": null,
+  "prior_amendments": [],
+  "prior_status": "NO_SAME_CIK_PRIOR_IN_COMPLETE_SAVED_SUBMISSIONS",
+  "dependency_filing_roles": {
+    "target_primary": "0002041610-26-000011",
+    "target_amendment_primary": [
+      "0001140361-26-016758"
+    ],
+    "prior_annual_primary": null,
+    "prior_amendment_primary": []
+  },
+  "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+  "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+  "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+  "source_set_identity": "sha256:cce06eb12db9356d7f66fee0246658026d81fd4a090793aeb15297b649ab72c4",
+  "loaded_inventories": [
+    "CIK0002041610.json"
+  ],
+  "latest_restated_values_used": false,
+  "caller_supplied_selection_trusted": false,
+  "production_authorized": false,
+  "selection_id": "sha256:15f76521c172cf0c3bfd655085ba15471acac581b28a62b269095a762129faa4"
+}
