@@ -9,3 +9,5 @@ A D01 consumer with the already-existingtextcapacity step moves that identicalco
 workflow-controls.log/json: Ruby/Psych standard YAML parse, old/newcommandmultiset equality, unchangedtriggers/permissions/testbudgets, exactcheckname and always gate,16success/failure/cancelled/skippedcombination controls. Onlybothsuccessreturns0. No financial rerun needed for verbatim relocation; observed221+26+22s are the same serverjob evidence, not interpolated cross-machine speedups. End-to-end newCI timing/terminal willbereadfromactualnewhead; no estimatedspeedup acceptedasactual.
 
 Progress on #28; publicCIowner28, historicalconsumer47. Oldcancelledjob stayscancelled. No businessprovider/paid/SECcalls, runtime/ledger changes, Ready/merge/adoption/deploy/active. Developer/test andDraftPR authority only.
+
+Fixed consumer patch d01-consumer.patch targets cbb293c8, preserves all10testcommands and consumerpaths; moves only its existingcapacity+singlerevenue steps. Public rootauthored exactunion. Receiver applies it to ownbranch; no source/business rerun or competingCIrunner.
