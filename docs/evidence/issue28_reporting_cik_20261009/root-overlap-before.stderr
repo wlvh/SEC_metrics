@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tools/vnext_company.py", line 209, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tools/vnext_company.py", line 103, in main
+    result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
+        period=args.period, metric_ids=args.metric, max_sec_requests=args.max_sec_requests,
+        sec_allowance=args.sec_allowance, source_root=args.source_root,
+        fiscal_year_start=args.fiscal_year_start, fiscal_year_end=args.fiscal_year_end)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/scripts/vnext/company_local.py", line 172, in run_local
+    return _run_saved_history(company_id=company_id, source_root=source_root,
+        work_dir=work_dir, output_dir=output_dir, metric_ids=metric_ids,
+        fiscal_year_start=fiscal_year_start, fiscal_year_end=fiscal_year_end)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/scripts/vnext/company_local.py", line 376, in _run_saved_history
+    return run_saved_company(company_id=company_id, source_root=source_root,
+        work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
+    ...<14 lines>...
+                                        else income_files if m == 'B01'
+                                        else statement_files) for m in selected})
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/scripts/vnext/company_current_records.py", line 72, in run_saved_company
+    _need(left != right and left not in right.parents and right not in left.parents,
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'COMPANY_CURRENT_ROOTS_OVERLAP')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/scripts/vnext/company_current_records.py", line 31, in _need
+    raise ValueError(reason)
+ValueError: COMPANY_CURRENT_ROOTS_OVERLAP

@@ -5,8 +5,14 @@ name: Company saved-source records
       - 'scripts/**'
       - 'tools/vnext_company.py'
       - 'tests/vnext/test_company_current_records.py'
+      - 'tests/vnext/test_paired_measure_contradiction.py'
+      - 'tests/vnext/test_current_d04_company.py'
       - 'tests/vnext/test_explicit_e01_company.py'
       - 'tests/vnext/test_ordinary_current_update.py'
+      - 'tests/vnext/test_selected_revenue_scope_v1.py'
+      - 'tests/vnext/test_current_reported_revenue.py'
+      - 'tests/vnext/test_historical_statement_cases.py'
+      - 'tests/vnext/test_selected_reported_revenue_v2.py'
       - 'tests/vnext/test_company_parse_reuse.py'
       - 'tests/vnext/test_precalculated_case.py'
       - 'tests/vnext/test_saved_source_checks.py'
@@ -21,9 +27,12 @@ name: Company saved-source records
       - 'tests/vnext/test_event_rule_root.py'
       - 'tests/vnext/test_selected_event_source_v1.py'
       - 'tests/vnext/test_historical_event_cases.py'
+      - 'tests/vnext/test_historical_statement_cases.py'
       - 'tests/vnext/test_registered_event_projection.py'
+      - 'tests/vnext/test_reporting_company_projection.py'
       - 'tests/vnext/test_existing_historical_sec_state.py'
       - 'tests/vnext/test_historical_sec_capture_adapter.py'
+      - 'tests/vnext/test_reporting_company_projection.py'
       - 'tests/vnext/test_separate_rule_root.py'
       - 'tests/vnext/test_selected_lodging_calculation.py'
       - 'tests/vnext/test_selected_lodging_source.py'
@@ -54,11 +63,17 @@ jobs:
       - name: Saved source through calculation, records, CSV and reading
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy tests.vnext.test_dei_release_selection tests.vnext.test_successor_income_projection tests.vnext.test_event_rule_root tests.vnext.test_financial_dei_release tests.vnext.test_reported_average_period tests.vnext.test_bank_scope_dei_release -v
+        run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy tests.vnext.test_dei_release_selection tests.vnext.test_successor_income_projection tests.vnext.test_event_rule_root tests.vnext.test_financial_dei_release tests.vnext.test_reported_average_period tests.vnext.test_bank_scope_dei_release tests.vnext.test_reporting_company_projection tests.vnext.test_selected_revenue_scope_v1 tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_current_reported_revenue -v
       - name: Historical dispatch and saved result states
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases -v
+        run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest tests.vnext.test_historical_statement_cases -v
+      - name: Paired reported comparisons and exact revenue defect
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_paired_measure_contradiction
+      - name: Complete D04 company model input gates
+        run: python3 tests/required_unittests.py tests.vnext.test_current_d04_company
       - name: Selected event sources and explicit history validation
         env:
           PYTHONDONTWRITEBYTECODE: '1'

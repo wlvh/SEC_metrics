@@ -1,0 +1,39 @@
+{
+  "utc": "2026-10-09T13:02:39.778173+00:00",
+  "action": "Small constructed B12 projection control using unchanged native _manual_result_trace contract; no source/Calculator/CLI rerun",
+  "native_producer_source": "normal_accession_results.py:187-190 uses _manual_result_trace with entity=None/accession=None for structural results",
+  "trace_calculation_target": {
+    "accession": null,
+    "company_id": "paramount_skydance_paramount_global",
+    "entity": null,
+    "period_end": "2021-12-31",
+    "period_start": "2021-12-31",
+    "scope": {
+      "coverage": "deterministic_source_set",
+      "fiscal_year": 2021
+    },
+    "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92"
+  },
+  "result_state": {
+    "applicability": "N_A_STRUCTURAL",
+    "publication": "PUBLISHED",
+    "value": null,
+    "reason_code": "TRAIT_NOT_APPLICABLE"
+  },
+  "base_projection_succeeded": true,
+  "patch_projection_error": "ORDINARY_PROJECTION_TRACE_SUBJECT_CHANGED",
+  "minimal_failure": "Unconditional new reporter guard requires a string target entity for every ordinary record, including valid original native traces with entity=None/accession=None",
+  "other_static_affected_paths": [
+    "normal_lodging_results.py:79-81 (numeric B10/B11 target omits entity/accession; calculator stores None)",
+    "normal_accession_results.py:183-213 (observation targets omit entity/accession; structural/withheld targets have None)",
+    "normal_companyfacts_results.py:173-176 structural; other withheld paths use target without issuer",
+    "normal_candidates.py:162-168 and 256-257 withheld traces without issuer",
+    "capacity_run.py:167-182 B13 structural trace with None issuer"
+  ],
+  "coverage_limit": "Constructed compatibility reproduction only; no claim of independent whole financial-source or all metric business validation",
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}
