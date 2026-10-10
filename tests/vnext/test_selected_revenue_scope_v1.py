@@ -202,11 +202,13 @@ class SelectedRevenueScopeTest(unittest.TestCase):
             with self.subTest(metric=metric),patch.object(saved,'prepare_ordinary_zero_ai_run_input',side_effect=ValueError('stop')) as prepare:
                 with self.assertRaisesRegex(ValueError,'stop'):saved._ordinary_case(Path('/source'), 'test_company', metric)
                 self.assertEqual(prepare.call_args.kwargs.get('validate_revenue_scope',False),metric in {'B01','B03'})
+                self.assertEqual(prepare.call_args.kwargs.get('revenue_scope_contract'),
+                                 'reported-total-v2' if metric in {'B01','B03'} else None)
 
     def test_update_configuration_names_actual_scope_and_header_dependencies(self):
         from vnext.ordinary_current_update import _configuration
         root=Path(__file__).resolve().parents[2]
         for metric in ('B01','B03'):
             cfg=_configuration(root,'pfizer',metric)['processing_files']
-            for name in ('selected_revenue_scope_v1','selected_income_source_v1','financial_duration'):
+            for name in ('selected_revenue_scope_v1','selected_reported_revenue_v2','historical_fiscal_labels','selected_income_source_v1','financial_duration'):
                 self.assertIn('scripts/vnext/'+name+'.py',cfg)

@@ -58,7 +58,7 @@ def _ordinary_case(source, company, metric):
     program = Path(__file__).resolve().parents[2]
     original = prepare_ordinary_zero_ai_run_input(repo_root=source, company_id=company, metric_id=metric,
         **({'validate_depreciation_scope':True} if metric=='B03' else {}),
-        **({'validate_revenue_scope':True} if metric in {'B01','B03'} else {}),
+        **({'validate_revenue_scope':True,'revenue_scope_contract':'reported-total-v2'} if metric in {'B01','B03'} else {}),
         rules_root=program)
     income_binding = original['component'].get('input_binding',{})
     detail = original['component']
