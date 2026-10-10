@@ -72,6 +72,12 @@ jobs:
           PYTHONPATH: scripts:tools
         run: python3 -m unittest -v tests.vnext.test_ordinary_depreciation_sources
 
+      - name: Verify explicit visible auditor source candidates
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 tests/required_unittests.py tests.vnext.test_visible_auditor_source tests.vnext.test_text_coverage
+
 
   inherited-source-material:
     name: Foundation inherited source material

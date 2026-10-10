@@ -1,0 +1,34 @@
+UTC: 2026-10-10T09:52:16+00:00
+COMMAND: PYTHONDONTWRITEBYTECODE=1 TMPDIR=/private/tmp python3 tests/required_unittests.py tests.vnext.test_visible_auditor_source tests.vnext.test_text_coverage
+EXIT: 0
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 25, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_visible_auditor_source", "tests.vnext.test_text_coverage"]}
+test_amendment_and_corporate_abbreviation_keep_limits (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_amendment_and_corporate_abbreviation_keep_limits) ... ok
+test_contents_link_and_elsewhere_signature_are_not_reports (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_contents_link_and_elsewhere_signature_are_not_reports) ... ok
+test_date_namespace_explicit_and_no_lookalike (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_date_namespace_explicit_and_no_lookalike) ... ok
+test_fake_name_namespace_or_missing_name_unresolved (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_fake_name_namespace_or_missing_name_unresolved) ... ok
+test_icfr_report_cannot_supply_financial_report_signature (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_icfr_report_cannot_supply_financial_report_signature) ... ok
+test_identity_and_rehashed_locator_mutation_rejected (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_identity_and_rehashed_locator_mutation_rejected) ... ok
+test_nonempty_report_and_exact_replay_without_result_credit (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_nonempty_report_and_exact_replay_without_result_credit) ... ok
+test_report_conflicts_are_not_resolved_by_first_match (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_report_conflicts_are_not_resolved_by_first_match) ... ok
+test_shared_text_reader_default_remains_unmodified (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_shared_text_reader_default_remains_unmodified) ... ok
+test_subject_period_and_signature_each_must_be_established (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_subject_period_and_signature_each_must_be_established) ... ok
+test_unproved_legal_name_alias_is_retained_as_unresolved (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_unproved_legal_name_alias_is_retained_as_unresolved) ... ok
+test_unsupported_layout_and_truncation_are_never_absence (tests.vnext.test_visible_auditor_source.VisibleAuditorSourceTest.test_unsupported_layout_and_truncation_are_never_absence) ... ok
+test_a_found_span_does_not_close_a_missing_required_scope (tests.vnext.test_text_coverage.TextCoverageTest.test_a_found_span_does_not_close_a_missing_required_scope) ... ok
+test_amendment_even_with_headings_cannot_claim_full_filing_coverage (tests.vnext.test_text_coverage.TextCoverageTest.test_amendment_even_with_headings_cannot_claim_full_filing_coverage) ... ok
+test_contents_link_and_page_rows_do_not_compete_with_body (tests.vnext.test_text_coverage.TextCoverageTest.test_contents_link_and_page_rows_do_not_compete_with_body) ... ok
+test_contents_only_and_wrong_section_never_confirm_absence (tests.vnext.test_text_coverage.TextCoverageTest.test_contents_only_and_wrong_section_never_confirm_absence) ... ok
+test_found_and_complete_are_separate_with_exact_source_span (tests.vnext.test_text_coverage.TextCoverageTest.test_found_and_complete_are_separate_with_exact_source_span) ... ok
+test_fragment_truncation_and_unclosed_sections_are_incomplete (tests.vnext.test_text_coverage.TextCoverageTest.test_fragment_truncation_and_unclosed_sections_are_incomplete) ... ok
+test_hidden_terms_and_partial_word_sec_are_not_evidence (tests.vnext.test_text_coverage.TextCoverageTest.test_hidden_terms_and_partial_word_sec_are_not_evidence) ... ok
+test_identity_local_names_cannot_impersonate_dei_namespace (tests.vnext.test_text_coverage.TextCoverageTest.test_identity_local_names_cannot_impersonate_dei_namespace) ... ok
+test_rehashed_span_and_source_mutation_fail_independent_replay (tests.vnext.test_text_coverage.TextCoverageTest.test_rehashed_span_and_source_mutation_fail_independent_replay) ... ok
+test_repeated_page_heading_keeps_later_content (tests.vnext.test_text_coverage.TextCoverageTest.test_repeated_page_heading_keeps_later_content) ... ok
+test_subject_url_document_entity_and_period_are_bound (tests.vnext.test_text_coverage.TextCoverageTest.test_subject_url_document_entity_and_period_are_bound) ... ok
+test_two_unclosed_body_candidates_are_ambiguous (tests.vnext.test_text_coverage.TextCoverageTest.test_two_unclosed_body_candidates_are_ambiguous) ... ok
+test_utf8_entities_inline_markup_and_visible_hyperlinks_round_trip (tests.vnext.test_text_coverage.TextCoverageTest.test_utf8_entities_inline_markup_and_visible_hyperlinks_round_trip) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 0.050s
+
+OK

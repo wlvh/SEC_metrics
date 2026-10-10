@@ -1,0 +1,52 @@
+{
+  "base": "3e418c93f5b50ff09a7b76f231e7b06e2193caba",
+  "patch": "95a089c0baab5d2247d2570344cf4058d6450b2f",
+  "checks": [
+    {
+      "case": "normal",
+      "exact_default_equal": true,
+      "inspection_id": "sha256:8d48e76e3e860d1bd664dbca5552c192e42dfa6737dc2ebcf62e166b8122b529"
+    },
+    {
+      "case": "cover-native-alias",
+      "exact_default_equal": true,
+      "inspection_id": "sha256:a7cbb3f93001a6b4d525d396b45a8ee700ab1e70c9f04cbf73b80a493bcbb4c5"
+    },
+    {
+      "case": "missing",
+      "exact_default_equal": true,
+      "inspection_id": "sha256:420f08876abd5d77cb68b3c3569d3927ec2e979715e1b8421cb40b9def36da0c"
+    },
+    {
+      "case": "wrong-year",
+      "exact_default_equal": true,
+      "inspection_id": "sha256:02b3aacb0ffe62173967956266292357388432a76236a09b3e72647a9c2f40c1"
+    },
+    {
+      "case": "rehashed-cover-locator",
+      "rejected": "VISIBLE_AUDITOR_SOURCE_REPLAY_MISMATCH"
+    },
+    {
+      "case": "wrong-subject",
+      "rejected": "Live Reader filing identity differs from registry authority"
+    },
+    {
+      "case": "wrong-source-period",
+      "rejected": "TEXT_DOCUMENT_PERIOD_MISMATCH_OR_MISSING"
+    },
+    {
+      "case": "cover-icfr-separated",
+      "status": "BOUND_REPORT_CANDIDATE",
+      "financial_signatures": [
+        "/s/ Example Audit LLP"
+      ],
+      "all_credit_false": true
+    },
+    {
+      "case": "cover-financial-missing-signature",
+      "status": "UNRESOLVED",
+      "financial_signatures": [],
+      "all_credit_false": true
+    }
+  ]
+}

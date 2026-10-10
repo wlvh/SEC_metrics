@@ -219,7 +219,8 @@ def _byte_offsets(text, positions):
 
 def build_text_document(*, raw_bytes: bytes, raw_blob: Mapping,
                         source_reference: Mapping, expected_company_id: str,
-                        expected_cik: str, expected_period_end: str) -> dict:
+                        expected_cik: str, expected_period_end: str,
+                        dei_release: str = "YEAR_ONLY") -> dict:
     """Derive annual HTML blocks and closed item boundaries from exact bytes.
 
     The existing acquisition/Run layer still owns ledger authenticity and the
@@ -252,10 +253,12 @@ def build_text_document(*, raw_bytes: bytes, raw_blob: Mapping,
     metadata.feed(text)
     metadata.close()
     _need(metadata.ordinal == len(parsed.facts), "TEXT_IDENTITY_ATTRIBUTE_STREAM_CHANGED")
+    from .normal_annual_input import dei_namespace_pattern
+    namespace_pattern = dei_namespace_pattern(dei_release)
     identities, periods, forms, names = set(), set(), set(), set()
     for fact in parsed.facts:
         namespace, name = metadata.facts[fact["ordinal"]]["concept"]
-        if not re.fullmatch(r"https?://xbrl\.sec\.gov/dei/\d{4}", namespace):
+        if not re.fullmatch(namespace_pattern, namespace):
             continue
         name = name.casefold()
         context = parsed.contexts.get(fact["context_ref"], {})
@@ -375,10 +378,12 @@ def inspect_text_scope(*, document: Mapping, required_sections: Sequence[str],
 
 def verify_text_document(*, document: Mapping, raw_bytes: bytes, raw_blob: Mapping,
                          source_reference: Mapping, expected_company_id: str,
-                         expected_cik: str, expected_period_end: str) -> dict:
+                         expected_cik: str, expected_period_end: str,
+                         dei_release: str = "YEAR_ONLY") -> dict:
     """Replay source bytes, so a self-consistent modified range is insufficient."""
     rebuilt = build_text_document(raw_bytes=raw_bytes, raw_blob=raw_blob,
         source_reference=source_reference, expected_company_id=expected_company_id,
-        expected_cik=expected_cik, expected_period_end=expected_period_end)
+        expected_cik=expected_cik, expected_period_end=expected_period_end,
+        dei_release=dei_release)
     _need(rebuilt == document, "TEXT_DOCUMENT_REPLAY_MISMATCH")
     return rebuilt
