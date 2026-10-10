@@ -1,0 +1,1207 @@
+{
+  "checks": [
+    {
+      "fiscal_year": 2021,
+      "original_accession": "0000037996-22-000013",
+      "original_raw_asset_id": "sha256:7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+      "original_source_bytes_match_committed_reading": true,
+      "new_spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+      "old_reference_spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+      "new_scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "old_reference_scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "new_result_id": "sha256:419578fd5d152ae7c956226b1010e50c384ad6f36a653d507704270f8a44b29d",
+      "old_reference_result_id": "sha256:6d7d2306dff462f159b38c503d74d0f13fbf44bec01cc751b8eeb6f926ea39d2",
+      "saved_candidate_id": null,
+      "evidence_check": {
+        "candidate_hash": "sha256:c8691df72bd871edbd6b6cdbb146ee4384a203b765abec0f88aa67a4f333ce03",
+        "checks": [
+          {
+            "check": "TEXT_REQUIRED_SECTIONS",
+            "coverage": [
+              {
+                "coverage_hash": "sha256:12d02c261a69d1f4e2bf9e5b59710bc8e1c2918008387bc9f096878476766aa4",
+                "document_id": "sha256:f5de9f9772d3f2225c716281c82df5c290644a627fdfb409b1b5f379d091ff84",
+                "ranges": [
+                  {
+                    "closing_heading": {
+                      "block_index": 486,
+                      "heading_end_index": 486,
+                      "item": "1B"
+                    },
+                    "end_block_exclusive": 486,
+                    "heading": {
+                      "block_index": 425,
+                      "heading_end_index": 425,
+                      "item": "1A"
+                    },
+                    "section_id": "ITEM_1A",
+                    "start_block": 426
+                  }
+                ],
+                "required_sections": [
+                  "ITEM_1A"
+                ],
+                "scope": "COMPLETE_LOCAL_SECTIONS_NOT_SEMANTIC_ABSENCE",
+                "source_reference_id": "sha256:c8c87b309c47a1eacbb481254dc031ccad771785063dab9ad376cc7fc286e3d6"
+              }
+            ],
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_0",
+            "claim_hash": "sha256:74e4f2301d02dd3d749e0fc29e1f7d1c4bde87cba569a0d360d6038f009cbae0",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_1",
+            "claim_hash": "sha256:2e0425a49a3f584b38c38222e2364ebb8eaceb6353a3557ad9d28494f900a64a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_2",
+            "claim_hash": "sha256:fde0c561db40fcc888a817be42d0fc8de513545bc55536cdc0437a5ecbe615b0",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_3",
+            "claim_hash": "sha256:e7d60237030a2959fbf6e8c9e0dfddaa914f1def63cc6b935537e6bbcaa9c326",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_4",
+            "claim_hash": "sha256:002ed65b5182eecd38b5454d9210f9c3cf8446a8d82bf0b816d5cc4f86816484",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_5",
+            "claim_hash": "sha256:516db9d7cc9006c64f231aea62b81064af944e34d456973f20cad1a55608daaa",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_6",
+            "claim_hash": "sha256:82eee9700f68b17490c2ae3871bbbed42c0eed2295880f22b9e3f40998372486",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_7",
+            "claim_hash": "sha256:a9faf89b0c7301d66ae815d3580780480d0d9252f8e63b1593b7d5cea0593768",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_8",
+            "claim_hash": "sha256:ccb8e16be3d6cb633dd298fd74b74c6908f60837a384c64bca451298aa804805",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_9",
+            "claim_hash": "sha256:fdcbed67fc290037827bfefc9afb1629cf47a51e8590635b734d52c6398a70ff",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_10",
+            "claim_hash": "sha256:685c6b4783c62bf7229b4c831c0a2acf77444f146c34614bbbb3a0ace677ffd1",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_11",
+            "claim_hash": "sha256:c35dfd4f462c67335e33fe7731871bc03225b11a6d7c7768bdd891c0e4315105",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_12",
+            "claim_hash": "sha256:8441f27ee24e0f0c5b07f0b354f23786a9e391b50c5fcab390740e87c461b20a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_13",
+            "claim_hash": "sha256:05dc98f5dacc648d676a00516b639c335bd0613a915f9625e375cb36b5e96d81",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_14",
+            "claim_hash": "sha256:bd0030ab1a49dfa928dec0b6882b0239ab72da04951d9deb3da053a647a4240f",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_15",
+            "claim_hash": "sha256:89b212af29f3af6c091902873ca85815e31c5d67bec0e28a29e5d5f350207723",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_16",
+            "claim_hash": "sha256:6f09b6d8fa491c832fd74215cfcefc1fd78d70d79adb9901f06f5773d5df3ada",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_17",
+            "claim_hash": "sha256:c5918268a3cc8a8e1d50dab7957459153a15d2188d17c16f5c0933c5ddcc811c",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_18",
+            "claim_hash": "sha256:210be11f65c7bb37538ab76def63d452f8d4958bbd4f547fe5b772a3175f1679",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_19",
+            "claim_hash": "sha256:2f6cd964cda2141d15f7520e22564f2301ee070dbb1e9b40fabb4b7c6ffeebc6",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_20",
+            "claim_hash": "sha256:b90f99e9464ba578db34c2f8fd1ffc05e663b0cfebcd9f516f3412503ad6bc4a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_21",
+            "claim_hash": "sha256:a42932f6c118f230c9bbe32f2d3ad5efa44e63349ce4fd210a30c2a98fc9e327",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_22",
+            "claim_hash": "sha256:1a8739a4532c1be3f246059fc50bf9efcaf24b73a1e42cfbdc8b445986abb000",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_23",
+            "claim_hash": "sha256:58b9c678139fda6eac52ce28a6b7c294a88404217e81256ef9024070a0b919fe",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_24",
+            "claim_hash": "sha256:5b21757fec4234fc9f037d7320a2c4b80eee684d2d40e6e1842eb9490a8397de",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_25",
+            "claim_hash": "sha256:e121568ca3d62f15e7b0b778f9bac9e59fced1eb68b1bd1de13775c520f6e1cd",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_26",
+            "claim_hash": "sha256:f7e066b17e557a071828ccecb530ed4bd1eedc349df9bd50315731129402aba8",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_27",
+            "claim_hash": "sha256:30e237d006c7b784ea81c7a44aeeb84a1bdb36037fb08ba7bb1a44d7be520c09",
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:e1c371ce66b31dbee56a61f753053a28d7596771334d89e11787ba0bd3b857d7",
+        "identity_constraints": [],
+        "normalized_scope": {
+          "entity_scope": "registrant"
+        },
+        "normalized_values": {
+          "excerpt_0": "Operational Risks",
+          "excerpt_1": "Ford and Ford Credit\u2019s financial condition and results of operations have been and may continue to be adversely affected by public health issues, including epidemics or pandemics such as COVID-19.",
+          "excerpt_10": "Macroeconomic, Market, and Strategic Risks",
+          "excerpt_11": "Ford\u2019s new and existing products, digital and physical services, and mobility services are subject to market acceptance and face significant competition from existing and new entrants in the automotive, mobility, and digital services industries.",
+          "excerpt_12": "Ford\u2019s near-term results are dependent on sales of larger, more profitable vehicles, particularly in the United States.",
+          "excerpt_13": "With a global footprint, Ford\u2019s results could be adversely affected by economic, geopolitical, protectionist trade policies, or other events, including tariffs.",
+          "excerpt_14": "Industry sales volume in any of Ford\u2019s key markets can be volatile and could decline if there is a financial crisis, recession, or significant geopolitical event.",
+          "excerpt_15": "Ford may face increased price competition or a reduction in demand for its products resulting from industry excess capacity, currency fluctuations, competitive actions, or other factors.",
+          "excerpt_16": "Inflationary pressure and fluctuations in commodity prices, foreign currency exchange rates, interest rates, and market value of Ford or Ford Credit\u2019s investments, including marketable securities, can have a significant effect on results.",
+          "excerpt_17": "Financial Risks",
+          "excerpt_18": "Ford and Ford Credit\u2019s access to debt, securitization, or derivative markets around the world at competitive rates or in sufficient amounts could be affected by credit rating downgrades, market volatility, market disruption, regulatory requirements, or other factors.",
+          "excerpt_19": "Ford\u2019s receipt of government incentives could be subject to reduction, termination, or clawback.",
+          "excerpt_2": "Ford is highly dependent on its suppliers to deliver components in accordance with Ford\u2019s production schedule, and a shortage of key components, such as semiconductors, or raw materials can disrupt Ford\u2019s production of vehicles.",
+          "excerpt_20": "Ford Credit could experience higher-than-expected credit losses, lower-than-anticipated residual values, or higher-than-expected return volumes for leased vehicles.",
+          "excerpt_21": "Economic and demographic experience for pension and other postretirement benefit plans (e.g., discount rates or investment returns) could be worse than Ford has assumed.",
+          "excerpt_22": "Pension and other postretirement liabilities could adversely affect Ford\u2019s liquidity and financial condition.",
+          "excerpt_23": "Legal and Regulatory Risks",
+          "excerpt_24": "Ford and Ford Credit could experience unusual or significant litigation, governmental investigations, or adverse publicity arising out of alleged defects in products, services, perceived environmental impacts, or otherwise.",
+          "excerpt_25": "Ford may need to substantially modify its product plans to comply with safety, emissions, fuel economy, autonomous vehicle, and other regulations.",
+          "excerpt_26": "Ford and Ford Credit could be affected by the continued development of more stringent privacy, data use, and data protection laws and regulations as well as consumers\u2019 heightened expectations to safeguard their personal information.",
+          "excerpt_27": "Ford Credit could be subject to new or increased credit regulations, consumer protection regulations, or other regulations.",
+          "excerpt_3": "Ford\u2019s long-term competitiveness depends on the successful execution of Ford+.",
+          "excerpt_4": "Ford\u2019s vehicles could be affected by defects that result in delays in new model launches, recall campaigns, or increased warranty costs.",
+          "excerpt_5": "Ford may not realize the anticipated benefits of existing or pending strategic alliances, joint ventures, acquisitions, divestitures, or new business strategies.",
+          "excerpt_6": "Operational systems, security systems, vehicles, and services could be affected by cyber incidents, ransomware attacks, and other disruptions.",
+          "excerpt_7": "Ford\u2019s production, as well as Ford\u2019s suppliers\u2019 production, could be disrupted by labor issues, natural or man-made disasters, financial distress, production difficulties, capacity limitations, or other factors.",
+          "excerpt_8": "Ford\u2019s ability to maintain a competitive cost structure could be affected by labor or other constraints.",
+          "excerpt_9": "Ford\u2019s ability to attract and retain talented, diverse, and highly skilled employees is critical to its success and competitiveness."
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS",
+        "system_approval_eligible": true,
+        "unresolved_scope_dimensions": []
+      },
+      "old_Run_not_resigned": true
+    },
+    {
+      "fiscal_year": 2022,
+      "original_accession": "0000037996-23-000012",
+      "original_raw_asset_id": "sha256:34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80",
+      "original_source_bytes_match_committed_reading": true,
+      "new_spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+      "old_reference_spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+      "new_scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "old_reference_scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "new_result_id": "sha256:ab443d72fdfe8f9a82a5e8f2de6196044ee845bc85f0bd9f231aa287dbd015c1",
+      "old_reference_result_id": "sha256:ba09707a5ab99ee09a7f644b9decc508cafde6b8fba0194ee126d979060a225d",
+      "saved_candidate_id": null,
+      "evidence_check": {
+        "candidate_hash": "sha256:01fb3bffc6db3e6f156b082e8f190e5f0d4710422b91e1d0420b0d499f0f4cc2",
+        "checks": [
+          {
+            "check": "TEXT_REQUIRED_SECTIONS",
+            "coverage": [
+              {
+                "coverage_hash": "sha256:c518e264522ab02deb1825345511bfd4b041916051366579e19953815cafb5c6",
+                "document_id": "sha256:1c25672031b39bfa907274ea2e4b5a9f26b4e798f1bf47391689ec6d3e34e1e7",
+                "ranges": [
+                  {
+                    "closing_heading": {
+                      "block_index": 494,
+                      "heading_end_index": 494,
+                      "item": "1B"
+                    },
+                    "end_block_exclusive": 494,
+                    "heading": {
+                      "block_index": 417,
+                      "heading_end_index": 417,
+                      "item": "1A"
+                    },
+                    "section_id": "ITEM_1A",
+                    "start_block": 418
+                  }
+                ],
+                "required_sections": [
+                  "ITEM_1A"
+                ],
+                "scope": "COMPLETE_LOCAL_SECTIONS_NOT_SEMANTIC_ABSENCE",
+                "source_reference_id": "sha256:85c8a9e6cfeaf791526a2f0c11649a6f7fb1429d4328c5742125b554d0a59d47"
+              }
+            ],
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_0",
+            "claim_hash": "sha256:8f2ae6ce3c5aeb3e5b3ce50ee1defd69a38fdbb3735409655746a9d316c2aaff",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_1",
+            "claim_hash": "sha256:5dfd339a8adf7ff80a7f91a27bf66438d9ff6b4f3cdcf394cbc6dc61ecaf4eea",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_2",
+            "claim_hash": "sha256:ba67446c7f55b04012aea37adb0f639584259c39b6dcb17a67f2791aaca483d4",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_3",
+            "claim_hash": "sha256:6f98ffcac09102da09d5c2c6a18d5d5b56540eb3154346053d82e4b6358c964e",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_4",
+            "claim_hash": "sha256:f07c2b26992b43c780586ff2f544cf9dbd96fd2bce549ec45c5e52bab15ca0ba",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_5",
+            "claim_hash": "sha256:76e36b8b3a8fda942634e1ad5dfbf3fcb09421439e3919c3eb2f75782b3453da",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_6",
+            "claim_hash": "sha256:bf0de2e85408555a9c55b723b02ba97ff064f7c4fa7d937118617410f7821514",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_7",
+            "claim_hash": "sha256:b22efd29a3e1c3191b3608ebfd42faa4ee19238134c891ff162508ae7e981317",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_8",
+            "claim_hash": "sha256:a821de12714f7c599b7b8e4451f0c2b6e55a57faf5169207cc4690794160ba52",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_9",
+            "claim_hash": "sha256:7cf44310025a596136db805dbac5fead3f63899915f530fb574021de69a60b1c",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_10",
+            "claim_hash": "sha256:c6d30551e2d6ad0f679a81333e73f048c8d60f265377fa1bde1272347d3ca46e",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_11",
+            "claim_hash": "sha256:e5883c6cba43e49ea302f8d667e064585583e79ed24ec647e1e961517f14665b",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_12",
+            "claim_hash": "sha256:6c861d6ef538fc70ddaf709f1c8bdc703212c47ca73705e479b227fba965adb0",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_13",
+            "claim_hash": "sha256:8b241f0221bb5bcd5aec974cfb96a39e4ee01d18e4c487f3aff56e26a5950015",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_14",
+            "claim_hash": "sha256:b75a65958d476dcab63b09e7099f4cae846af88e231d9d3817efae5597b791c3",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_15",
+            "claim_hash": "sha256:77922458b7a23192fc81d70993680b223fca230385dba3d013349ce1bae64a68",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_16",
+            "claim_hash": "sha256:7e6aaad28b9dbb3306d294f3e7ce83e3cdcf75b6a8f97c1d9d0bba61b262f32f",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_17",
+            "claim_hash": "sha256:3a0a471bd2be21c4ee8d1ef7574e0bdec7c17563f809d9731cdf9c44fa87bf88",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_18",
+            "claim_hash": "sha256:538b369f6e91e1a669ea5592b68ce9bb1ba64d2e3af45aabee8edd1149a60347",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_19",
+            "claim_hash": "sha256:9cb0c2fe7160da66aa406828b517efa54a056914d15cc910c5fa968827c82444",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_20",
+            "claim_hash": "sha256:1212d40d26e515a9a21d1c3ce25c74de7aaf05805d38c41c9a5e560bec8e50b8",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_21",
+            "claim_hash": "sha256:1ef62d4ed595db0fdfb1c209ae4fc44810a2731af1e8ec35a8147572bdf0c3c1",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_22",
+            "claim_hash": "sha256:92c67d19f90e5a3dfed031b62a7445f1299d6783553d9abe685625f375dac9bb",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_23",
+            "claim_hash": "sha256:af14644f5649cff708eee2c01282daa8141032956d2a0c098fafc6b81b65e45c",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_24",
+            "claim_hash": "sha256:3f7afe350d6fe7f8d865855022d8055118d479e148f7ee62ff8a2f856646ccce",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_25",
+            "claim_hash": "sha256:dbf56869393717cb8c4179445ed53feb4e3420d71448ba6ed4ddabdd49e1b5cd",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_26",
+            "claim_hash": "sha256:c11c47556d0acb1ec3e0e006a8b7cd4eee676feb1a75b747d9b0d8045362f099",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_27",
+            "claim_hash": "sha256:87f2ebc06ed1f53774ee00fff745b9a72b74ec8dfe7682154e8a1d1905b8b6df",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_28",
+            "claim_hash": "sha256:6188cc28fa489b92a9a473dae517e80e18597798414a1940425dd00a154c4569",
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:8001044678cf554baa151973918d6afabd154265490417c33936876a0f7bf425",
+        "identity_constraints": [],
+        "normalized_scope": {
+          "entity_scope": "registrant"
+        },
+        "normalized_values": {
+          "excerpt_0": "Operational Risks",
+          "excerpt_1": "Ford and Ford Credit\u2019s financial condition and results of operations have been and may continue to be adversely affected by public health issues, including epidemics or pandemics such as COVID-19.",
+          "excerpt_10": "Ford\u2019s ability to attract and retain talented, diverse, and highly skilled employees is critical to its success and competitiveness.",
+          "excerpt_11": "Macroeconomic, Market, and Strategic Risks",
+          "excerpt_12": "Ford\u2019s new and existing products and digital, software, and physical services are subject to market acceptance and face significant competition from existing and new entrants in the automotive and digital and software services industries, and its reputation may be harmed if it is unable to achieve the initiatives it has announced.",
+          "excerpt_13": "Ford\u2019s results are dependent on sales of larger, more profitable vehicles, particularly in the United States.",
+          "excerpt_14": "With a global footprint, Ford\u2019s results could be adversely affected by economic or geopolitical developments, including protectionist trade policies such as tariffs, or other events.",
+          "excerpt_15": "Industry sales volume can be volatile and could decline if there is a financial crisis, recession, or significant geopolitical event.",
+          "excerpt_16": "Ford may face increased price competition or a reduction in demand for its products resulting from industry excess capacity, currency fluctuations, competitive actions, or other factors.",
+          "excerpt_17": "Inflationary pressure and fluctuations in commodity and energy prices, foreign currency exchange rates, interest rates, and market value of Ford or Ford Credit\u2019s investments, including marketable securities, can have a significant effect on results.",
+          "excerpt_18": "Financial Risks",
+          "excerpt_19": "Ford and Ford Credit\u2019s access to debt, securitization, or derivative markets around the world at competitive rates or in sufficient amounts could be affected by credit rating downgrades, market volatility, market disruption, regulatory requirements, or other factors.",
+          "excerpt_2": "Ford is highly dependent on its suppliers to deliver components in accordance with Ford\u2019s production schedule and specifications, and a shortage of or inability to acquire key components, such as semiconductors, or raw materials, such as lithium, cobalt, nickel, graphite, and manganese, can disrupt Ford\u2019s production of vehicles.",
+          "excerpt_20": "The impact of government incentives on Ford\u2019s business could be significant, and Ford\u2019s receipt of government incentives could be subject to reduction, termination, or clawback.",
+          "excerpt_21": "Ford Credit could experience higher-than-expected credit losses, lower-than-anticipated residual values, or higher-than-expected return volumes for leased vehicles.",
+          "excerpt_22": "Economic and demographic experience for pension and OPEB plans (e.g., discount rates or investment returns) could be worse than Ford has assumed.",
+          "excerpt_23": "Pension and other postretirement liabilities could adversely affect Ford\u2019s liquidity and financial condition.",
+          "excerpt_24": "Legal and Regulatory Risks",
+          "excerpt_25": "Ford and Ford Credit could experience unusual or significant litigation, governmental investigations, or adverse publicity arising out of alleged defects in products, services, perceived environmental impacts, or otherwise.",
+          "excerpt_26": "Ford may need to substantially modify its product plans and facilities to comply with safety, emissions, fuel economy, autonomous driving technology, environmental, and other regulations.",
+          "excerpt_27": "Ford and Ford Credit could be affected by the continued development of more stringent privacy, data use, and data protection laws and regulations as well as consumers\u2019 heightened expectations to safeguard their personal information.",
+          "excerpt_28": "Ford Credit could be subject to new or increased credit regulations, consumer protection regulations, or other regulations.",
+          "excerpt_3": "To facilitate access to the raw materials necessary for the production of electric vehicles, Ford has entered into, and expects to continue to enter into, multi-year commitments to raw material suppliers that subject Ford to risks associated with lower future demand for such materials as well as costs that fluctuate and are difficult to accurately forecast.",
+          "excerpt_4": "Ford\u2019s long-term competitiveness depends on the successful execution of Ford+.",
+          "excerpt_5": "Ford\u2019s vehicles could be affected by defects that result in delays in new model launches, recall campaigns, or increased warranty costs.",
+          "excerpt_6": "Ford may not realize the anticipated benefits of existing or pending strategic alliances, joint ventures, acquisitions, divestitures, restructurings, or new business strategies.",
+          "excerpt_7": "Operational systems, security systems, vehicles, and services could be affected by cyber incidents, ransomware attacks, and other disruptions and impact Ford and Ford Credit as well as their suppliers and dealers.",
+          "excerpt_8": "Ford\u2019s production, as well as Ford\u2019s suppliers\u2019 production, and/or the ability to deliver products to consumers could be disrupted by labor issues, natural or man-made disasters, adverse effects of climate change, financial distress, production difficulties, capacity limitations, or other factors.",
+          "excerpt_9": "Ford\u2019s ability to maintain a competitive cost structure could be affected by labor or other constraints."
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS",
+        "system_approval_eligible": true,
+        "unresolved_scope_dimensions": []
+      },
+      "old_Run_not_resigned": true
+    },
+    {
+      "fiscal_year": 2023,
+      "original_accession": "0000037996-24-000009",
+      "original_raw_asset_id": "sha256:9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f",
+      "original_source_bytes_match_committed_reading": true,
+      "new_spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+      "old_reference_spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+      "new_scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "old_reference_scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "new_result_id": "sha256:57612dc255eac4407731a7d54af5bc116f71656819ddbc0bcff37489f0748ea6",
+      "old_reference_result_id": "sha256:fd38833e489b1ea3c0f85a6770ae5b0f5600fc48ea2b7fbb78faa2b9436d617b",
+      "saved_candidate_id": null,
+      "evidence_check": {
+        "candidate_hash": "sha256:8318ff77e5cb6cf89ea391bc3de03698773efe4049e6383b16686c5cd920ec33",
+        "checks": [
+          {
+            "check": "TEXT_REQUIRED_SECTIONS",
+            "coverage": [
+              {
+                "coverage_hash": "sha256:69faa40054af44ba3105ebb77d08ecdbf80b3ed2fd038433ff6923480cabf1d9",
+                "document_id": "sha256:0ad2de8ceb2064f3012d859991a60c23a7e696ad84783391713c180b68348525",
+                "ranges": [
+                  {
+                    "closing_heading": {
+                      "block_index": 497,
+                      "heading_end_index": 497,
+                      "item": "1B"
+                    },
+                    "end_block_exclusive": 497,
+                    "heading": {
+                      "block_index": 409,
+                      "heading_end_index": 409,
+                      "item": "1A"
+                    },
+                    "section_id": "ITEM_1A",
+                    "start_block": 410
+                  }
+                ],
+                "required_sections": [
+                  "ITEM_1A"
+                ],
+                "scope": "COMPLETE_LOCAL_SECTIONS_NOT_SEMANTIC_ABSENCE",
+                "source_reference_id": "sha256:6eb6a378ba9a2c92578561143ddf479d2a42fe32f9d750f2de472237b15267b2"
+              }
+            ],
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_0",
+            "claim_hash": "sha256:a4618f98f5f50085054e967ef8fe8e49e19699558a782f32cce3e79bdc73df2e",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_1",
+            "claim_hash": "sha256:720a0399d1615530f3c42a54360704d52b4db8454259c3d152f91dbe5e437440",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_2",
+            "claim_hash": "sha256:c05b0154c4e69295628c8bfb80fc33b0018f5f2236f40e01b7e84b139b54a9a1",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_3",
+            "claim_hash": "sha256:f5ecba0af311e4094f083556bbe25b73f0a0154800c1bb1f00f230736ffb5496",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_4",
+            "claim_hash": "sha256:3ce76b6f8757affea8d18bf55e2754d79998ab0afedd49a01c0553989cc8bf9f",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_5",
+            "claim_hash": "sha256:068e966d7cb72ef9a65b2368ccd3ceed2b95ecde2d9859d7222dcb7de96e9341",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_6",
+            "claim_hash": "sha256:d3ecced2a6944ad99c776459b19057d3abde00b365844630df3bcb6c69cafcbc",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_7",
+            "claim_hash": "sha256:d66f7ebafe9545d0c6e488b9291d5b3eb362d4cdb39b9ad6d790320da4cc453b",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_8",
+            "claim_hash": "sha256:0c60212934ba678311e3db8a58d9dada529f93a25bc610108deead3f2e7cacca",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_9",
+            "claim_hash": "sha256:9eea04a8407e7337e3a243bedf0789480d507243c4ba03aeb6e6271484facd92",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_10",
+            "claim_hash": "sha256:87dd6a3e9227739390b8fc7c226a335ecbe10f281d5d99176c55393d38060565",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_11",
+            "claim_hash": "sha256:f5c1836f36bf7affa4faf230bc7e48a42543a1709ba8d883e028faeda9fb82fc",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_12",
+            "claim_hash": "sha256:ea7b4b0ed52a2027cb94aa38fc9d67ad0213ab534de48cd4e0fa75323d8f0e59",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_13",
+            "claim_hash": "sha256:f728c529fe076ec9b69cd361c13b7c3412439c447f0e3f65c1f2d335a1356928",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_14",
+            "claim_hash": "sha256:a93534155dda5509af72768923969a3968fd848c8e40102b8315767c0ce59f0a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_15",
+            "claim_hash": "sha256:6042855e29643fde2778e56fb01b95c59df1c77cdfcae4ac6fda03884453afbf",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_16",
+            "claim_hash": "sha256:0c030556e4a478c344f6360cf9fade36b590464fb0d667e524684a01bf20b40e",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_17",
+            "claim_hash": "sha256:3e18d9ba6ccb015a5ad77148f9d264c54ff90b490c977b7a415f36aad858bfd4",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_18",
+            "claim_hash": "sha256:cf1d9178370f330c25c843e71e6c9c5e6070d223167dca1527fa271bf2734531",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_19",
+            "claim_hash": "sha256:2bf676aaa593c9b4799448c1f5a876e96787bd3bf8f6bd54627e522667aac597",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_20",
+            "claim_hash": "sha256:799d56c64c1d68fd9709448258b84d5779700dc8ac6f72149526fae07b72c8a3",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_21",
+            "claim_hash": "sha256:de30be127d947552d9391f64efc4a483712b5814b8fbbde2287050149ac904e9",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_22",
+            "claim_hash": "sha256:e09c5bbc8a6ab358d83d624bbb4f784da4303da4330bd50422a08688ebcd126a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_23",
+            "claim_hash": "sha256:ac76f528369092d5474afd28ced2c53c53c43c2b58cc659871b412df9596f4aa",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_24",
+            "claim_hash": "sha256:c99f3aa4141b6b2daa686bdccfeee62d3a052d80db403fc600f1b1d2a886f479",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_25",
+            "claim_hash": "sha256:3f4dcb7e886af0f8a5a8e00fbcaa0265f7a6fb17ccc26441a858024e54a6f4be",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_26",
+            "claim_hash": "sha256:4b37a14d4fa580694f2d715c23e61d6f79d38e45f57a2475304ff646b808806d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_27",
+            "claim_hash": "sha256:3982de047e74e042336212c521e191f845e829d77c77b1cbc6118d29359ab382",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_28",
+            "claim_hash": "sha256:d67391498cbbb126323ded73cec2a9ec6ba990dc0a311f2ec5d23a9ed0c68053",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_29",
+            "claim_hash": "sha256:16a7a0c8ca835630cf63d4f77b6342dae24f549bb3b53640ba525c4dda17a5fe",
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:800033f3acfb9c001c609eb73cbcfd564b511ecdea9831dec739df1ed1760f4c",
+        "identity_constraints": [],
+        "normalized_scope": {
+          "entity_scope": "registrant"
+        },
+        "normalized_values": {
+          "excerpt_0": "Operational Risks",
+          "excerpt_1": "Ford is highly dependent on its suppliers to deliver components in accordance with Ford\u2019s production schedule and specifications, and a shortage of or inability to acquire key components or raw materials, such as lithium, cobalt, nickel, graphite, and manganese, can disrupt Ford\u2019s production of vehicles.",
+          "excerpt_10": "Ford\u2019s ability to maintain a competitive cost structure could be affected by labor or other constraints.",
+          "excerpt_11": "Ford\u2019s ability to attract, develop, grow, and reward talent is critical to its success and competitiveness.",
+          "excerpt_12": "Macroeconomic, Market, and Strategic Risks",
+          "excerpt_13": "Ford\u2019s new and existing products and digital, software, and physical services are subject to market acceptance and face significant competition from existing and new entrants in the automotive and digital and software services industries, and its reputation may be harmed if it is unable to achieve the initiatives it has announced.",
+          "excerpt_14": "Ford\u2019s results are dependent on sales of larger, more profitable vehicles, particularly in the United States.",
+          "excerpt_15": "With a global footprint and supply chain, Ford\u2019s results and operations could be adversely affected by economic or geopolitical developments, including protectionist trade policies such as tariffs, or other events.",
+          "excerpt_16": "Industry sales volume can be volatile and could decline if there is a financial crisis, recession, public health emergency, or significant geopolitical event.",
+          "excerpt_17": "Ford may face increased price competition or a reduction in demand for its products resulting from industry excess capacity, currency fluctuations, competitive actions, or other factors, particularly for electric vehicles.",
+          "excerpt_18": "Inflationary pressure and fluctuations in commodity and energy prices, foreign currency exchange rates, interest rates, and market value of Ford or Ford Credit\u2019s investments, including marketable securities, can have a significant effect on results.",
+          "excerpt_19": "Financial Risks",
+          "excerpt_2": "To facilitate access to the raw materials and other components necessary for the production of electric vehicles, Ford has entered into and may, in the future, enter into multi-year commitments to raw material and other suppliers that subject Ford to risks associated with lower future demand for such items as well as costs that fluctuate and are difficult to accurately forecast.",
+          "excerpt_20": "Ford and Ford Credit\u2019s access to debt, securitization, or derivative markets around the world at competitive rates or in sufficient amounts could be affected by credit rating downgrades, market volatility, market disruption, regulatory requirements, or other factors.",
+          "excerpt_21": "The impact of government incentives on Ford\u2019s business could be significant, and Ford\u2019s receipt of government incentives could be subject to reduction, termination, or clawback.",
+          "excerpt_22": "Ford Credit could experience higher-than-expected credit losses, lower-than-anticipated residual values, or higher-than-expected return volumes for leased vehicles.",
+          "excerpt_23": "Economic and demographic experience for pension and OPEB plans (e.g., discount rates or investment returns) could be worse than Ford has assumed.",
+          "excerpt_24": "Pension and other postretirement liabilities could adversely affect Ford\u2019s liquidity and financial condition.",
+          "excerpt_25": "Legal and Regulatory Risks",
+          "excerpt_26": "Ford and Ford Credit could experience unusual or significant litigation, governmental investigations, or adverse publicity arising out of alleged defects in products, services, perceived environmental impacts, or otherwise.",
+          "excerpt_27": "Ford may need to substantially modify its product plans and facilities to comply with safety, emissions, fuel economy, autonomous driving technology, environmental, and other regulations.",
+          "excerpt_28": "Ford and Ford Credit could be affected by the continued development of more stringent privacy, data use, data protection, and artificial intelligence laws and regulations as well as consumers\u2019 heightened expectations to safeguard their personal information.",
+          "excerpt_29": "Ford Credit could be subject to new or increased credit regulations, consumer protection regulations, or other regulations.",
+          "excerpt_3": "Ford\u2019s long-term competitiveness depends on the successful execution of Ford+.",
+          "excerpt_4": "Ford\u2019s vehicles could be affected by defects that result in recall campaigns, increased warranty costs, or delays in new model launches, and the time it takes to improve the quality of our vehicles and services could continue to have an adverse effect on our business.",
+          "excerpt_5": "Ford may not realize the anticipated benefits of existing or pending strategic alliances, joint ventures, acquisitions, divestitures, or business strategies.",
+          "excerpt_6": "Ford may not realize the anticipated benefits of restructuring actions and such actions may cause Ford to incur significant charges, disrupt our operations, or harm our reputation.",
+          "excerpt_7": "Operational information systems, security systems, vehicles, and services could be affected by cybersecurity incidents, ransomware attacks, and other disruptions and impact Ford and Ford Credit as well as their suppliers and dealers.",
+          "excerpt_8": "Ford\u2019s production, as well as Ford\u2019s suppliers\u2019 production, and/or the ability to deliver products to consumers could be disrupted by labor issues, public health issues, natural or man-made disasters, adverse effects of climate change, financial distress, production difficulties, capacity limitations, or other factors.",
+          "excerpt_9": "Failure to develop and deploy secure digital services that appeal to customers could have a negative impact on Ford\u2019s business."
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS",
+        "system_approval_eligible": true,
+        "unresolved_scope_dimensions": []
+      },
+      "old_Run_not_resigned": true
+    },
+    {
+      "fiscal_year": 2024,
+      "original_accession": "0000037996-25-000013",
+      "original_raw_asset_id": "sha256:9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da",
+      "original_source_bytes_match_committed_reading": true,
+      "new_spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+      "old_reference_spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+      "new_scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "old_reference_scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "new_result_id": "sha256:00e5e0ca7e8ca9f665adc7a9d56d8215e21e6b6bdd38728191080435ab4a45c8",
+      "old_reference_result_id": "sha256:e44e4e76e8e4be8701ba0691ae7d840711d567e919972e14ce35fd59eeaac475",
+      "saved_candidate_id": null,
+      "evidence_check": {
+        "candidate_hash": "sha256:4b9520422e495ee70b05f43e669944c9404a84334ed7389c4c1acc445df51c31",
+        "checks": [
+          {
+            "check": "TEXT_REQUIRED_SECTIONS",
+            "coverage": [
+              {
+                "coverage_hash": "sha256:a338a0ac7c349c32dfa24f3a39498090091c541f7ad994015779c2728158e249",
+                "document_id": "sha256:f0d5628a7438a11a5c554f653e456b23ef78d0c09618e6a4204f9b3652f142dd",
+                "ranges": [
+                  {
+                    "closing_heading": {
+                      "block_index": 519,
+                      "heading_end_index": 519,
+                      "item": "1B"
+                    },
+                    "end_block_exclusive": 519,
+                    "heading": {
+                      "block_index": 421,
+                      "heading_end_index": 421,
+                      "item": "1A"
+                    },
+                    "section_id": "ITEM_1A",
+                    "start_block": 422
+                  }
+                ],
+                "required_sections": [
+                  "ITEM_1A"
+                ],
+                "scope": "COMPLETE_LOCAL_SECTIONS_NOT_SEMANTIC_ABSENCE",
+                "source_reference_id": "sha256:5ebe46904e53123b73181862a7369a98c633603a88b8d4cab4d9142a422ee9ae"
+              }
+            ],
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_0",
+            "claim_hash": "sha256:51f46edd92142a5e80eedd6642cc94ea0b707d790bc7f47c975551b08941d278",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_1",
+            "claim_hash": "sha256:69976fe7a0ca990e8c1d0d1cb7d85c729fce5fbb0c141dbb164fb1c0c59a905d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_2",
+            "claim_hash": "sha256:daa32bb81acd4b66d0283be2172a098b35e2e5b2c59a87e23ac29329929a6253",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_3",
+            "claim_hash": "sha256:4b15b51872d2eea8e60482d8e1dda767df86eb4eb8661b214400f7393aacb10a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_4",
+            "claim_hash": "sha256:e2e188c22ae9dcac09ebad2e346d8efa127cba82486a18d594d0c0f6f751ab9d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_5",
+            "claim_hash": "sha256:3f6d05fbe51483f663b19eeea033a23e2ba2731b9e00af3c1b72bbf459325dea",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_6",
+            "claim_hash": "sha256:d01a07494efb3935e2fcd8e61aaf4d0d12ccaf1698f1b382154a3e2c2381fed4",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_7",
+            "claim_hash": "sha256:ff9fd46512a5408653f51d5fa4ab1d7bbc09a627c71a64b9be29b901345e65a8",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_8",
+            "claim_hash": "sha256:5dea9c42d27e70147fde329665ae045cab300bc1858a5bb9c62c69792baf3222",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_9",
+            "claim_hash": "sha256:226e2d97760039591362a712b718b0e4c0b212dd991cae25037050505723233a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_10",
+            "claim_hash": "sha256:311200df1820406a6baaf5a51a2fa6c31caddd272e041a94a3c77754c0f31052",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_11",
+            "claim_hash": "sha256:f7fb785d355023c57ada95e6bcedcf15715a8b6abf734660e3da69637443e0a0",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_12",
+            "claim_hash": "sha256:60c7d1db9268888f862a34f65606b9f5d6eed440d425bde456b6fa1d90a30334",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_13",
+            "claim_hash": "sha256:b630d194b63a7ffcf0115313d095e686c93bd15739be5c3350aaad00f50df4a3",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_14",
+            "claim_hash": "sha256:648332ebbdc82850bee7210ddc65baef98baed5490a36545dd3ff4ab07c6615e",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_15",
+            "claim_hash": "sha256:135e208d82ae426257074e9adfc9b52eb7b3b2c1b2a2e9298b9577a95e0c781a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_16",
+            "claim_hash": "sha256:6369af07ce31e03d641cf4315c76ed8e66d018e00a1640edbb0dc32a5eb06c7a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_17",
+            "claim_hash": "sha256:5bcc68593c468e1031af434f72e8c474ef1893091d02e6601085c7088da0db55",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_18",
+            "claim_hash": "sha256:ea094b532076993b240fb3e7be22ca4752de46bbb2b719b553044475973aea72",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_19",
+            "claim_hash": "sha256:2feec4066894b8842a6662c8dae8f923d5db66d755bec311c9d0930ba6e76d27",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_20",
+            "claim_hash": "sha256:6a0583540c2edad006ceac12954d946b9f2a5379e93f3e8e2574988626d7e113",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_21",
+            "claim_hash": "sha256:c70281e47ac69d723acf6db3ed6edf4ca78001c49dedbc77f61a0d13919c5ab6",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_22",
+            "claim_hash": "sha256:3eb7a66260d125fd3facf984bb235d4dc8a9e0c1d5995d562aef859f5071b621",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_23",
+            "claim_hash": "sha256:99f72624cd6de5c26b62ceb09e16378d206236178da34aedf77b1ca624afa583",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_24",
+            "claim_hash": "sha256:90769ff9879b005891edf4020bc5c016fd847b2a47135c64fb74708515a60cd3",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_25",
+            "claim_hash": "sha256:f7b619ec83de90c1d4089b34f6567189bf611b369890984aff8144e1675f227b",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_26",
+            "claim_hash": "sha256:945d2e1bad63654df9305aeeccd253a47482ad073fb15eedbd9b3139fe308813",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_27",
+            "claim_hash": "sha256:998c4b6324863cb3fd5be254a278e72d17a6b8eefca04e46c53a018c2e2b4457",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_28",
+            "claim_hash": "sha256:f8ec831ae2cae3b661175b0b558c7a229da7c9d486cd97b6c3cadb634cb71932",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_29",
+            "claim_hash": "sha256:0baa5450524f82dd6fef4605fec4f8c2514b8df0dadf0650c87eddb0fbe31f94",
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:4f608a20c5eda88e8dfabcfdcfc46e84c0989356bc2d1d92a0c8deb730526b4a",
+        "identity_constraints": [],
+        "normalized_scope": {
+          "entity_scope": "registrant"
+        },
+        "normalized_values": {
+          "excerpt_0": "Operational Risks",
+          "excerpt_1": "Ford\u2019s long-term success depends on delivering the Ford+ plan, including improving cost competitiveness.",
+          "excerpt_10": "Operational information systems, security systems, vehicles, and services could be affected by cybersecurity incidents, ransomware attacks, and other disruptions and impact Ford, Ford Credit, their suppliers, and dealers.",
+          "excerpt_11": "To facilitate access to the raw materials and other components necessary for the production of electric vehicles, Ford has entered into and may, in the future, enter into multi-year commitments to raw material and other suppliers that subject Ford to risks associated with lower future demand for such items as well as costs that fluctuate and are difficult to accurately forecast.",
+          "excerpt_12": "Macroeconomic, Market, and Strategic Risks",
+          "excerpt_13": "With a global footprint and supply chain, Ford\u2019s results and operations could be adversely affected by economic or geopolitical developments, including protectionist trade policies such as tariffs, or other events.",
+          "excerpt_14": "Ford\u2019s new and existing products and digital, software, and physical services are subject to market acceptance and face significant competition from existing and new entrants in the automotive and digital and software services industries, and Ford\u2019s reputation may be harmed based on positions it takes or if it is unable to achieve the initiatives it has announced.",
+          "excerpt_15": "Ford may face increased price competition for its products and services, including pricing pressure resulting from industry excess capacity, currency fluctuations, competitive actions, or economic or other factors, particularly for electric vehicles.",
+          "excerpt_16": "Inflationary pressure and fluctuations in commodity and energy prices, foreign currency exchange rates, interest rates, and market value of Ford or Ford Credit\u2019s investments, including marketable securities, can have a significant effect on results.",
+          "excerpt_17": "Ford\u2019s results are dependent on sales of larger, more profitable vehicles, particularly in the United States.",
+          "excerpt_18": "Industry sales volume can be volatile and could decline if there is a financial crisis, recession, public health emergency, or significant geopolitical event.",
+          "excerpt_19": "Financial Risks",
+          "excerpt_2": "Ford\u2019s vehicles could be affected by defects that result in recall campaigns, increased warranty costs, or delays in new model launches, and the time it takes to improve the quality of our vehicles and services and reduce the costs associated therewith could continue to have an adverse effect on our business.",
+          "excerpt_20": "The impact of government incentives on Ford\u2019s business could be significant, and Ford\u2019s receipt of government incentives could be subject to reduction, termination, or clawback.",
+          "excerpt_21": "Ford and Ford Credit\u2019s access to debt, securitization, or derivative markets around the world at competitive rates or in sufficient amounts could be affected by credit rating downgrades, market volatility, market disruption, regulatory requirements, asset portfolios, or other factors.",
+          "excerpt_22": "Ford Credit could experience higher-than-expected credit losses, lower-than-anticipated residual values, or higher-than-expected return volumes for leased vehicles.",
+          "excerpt_23": "Economic and demographic experience for pension and OPEB plans (e.g., discount rates or investment returns) could be worse than Ford has assumed.",
+          "excerpt_24": "Pension and other postretirement liabilities could adversely affect Ford\u2019s liquidity and financial condition.",
+          "excerpt_25": "Legal and Regulatory Risks",
+          "excerpt_26": "Ford and Ford Credit could experience unusual or significant litigation, governmental investigations, or adverse publicity arising out of alleged defects in products, services, perceived environmental impacts, or otherwise.",
+          "excerpt_27": "Ford may need to substantially modify its product plans and facilities to comply with safety, emissions, fuel economy, autonomous driving technology, environmental, and other regulations.",
+          "excerpt_28": "Ford and Ford Credit could be affected by the continued development of more stringent privacy, data use, data protection, data access, and artificial intelligence laws and regulations as well as consumers\u2019 heightened expectations to safeguard their personal information.",
+          "excerpt_29": "Ford Credit could be subject to new or increased credit regulations, consumer protection regulations, or other regulations.",
+          "excerpt_3": "Ford is highly dependent on its suppliers to deliver components in accordance with Ford\u2019s production schedule and specifications, and a shortage of or inability to timely acquire key components or raw materials can disrupt Ford\u2019s production of vehicles.",
+          "excerpt_4": "Ford\u2019s production, as well as Ford\u2019s suppliers\u2019 production, and/or the ability to deliver products to consumers could be disrupted by labor issues, public health issues, natural or man-made disasters, adverse effects of climate change, financial distress, production difficulties, capacity limitations, or other factors.",
+          "excerpt_5": "Ford may not realize the anticipated benefits of existing or pending strategic alliances, joint ventures, acquisitions, divestitures, or business strategies or the benefits may take longer than expected to materialize.",
+          "excerpt_6": "Ford may not realize the anticipated benefits of restructuring actions and such actions may cause Ford to incur significant charges, disrupt our operations, or harm our reputation.",
+          "excerpt_7": "Failure to develop and deploy secure digital services that appeal to customers and grow our subscription rates could have a negative impact on Ford\u2019s business.",
+          "excerpt_8": "Ford\u2019s ability to maintain a competitive cost structure could be affected by labor or other constraints.",
+          "excerpt_9": "Ford\u2019s ability to attract, develop, grow, support, and reward talent is critical to its success and competitiveness."
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS",
+        "system_approval_eligible": true,
+        "unresolved_scope_dimensions": []
+      },
+      "old_Run_not_resigned": true
+    },
+    {
+      "fiscal_year": 2025,
+      "original_accession": "0000037996-26-000015",
+      "original_raw_asset_id": "sha256:3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+      "original_source_bytes_match_committed_reading": true,
+      "new_spec_closure_hash": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+      "old_reference_spec_closure_hash": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+      "new_scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "old_reference_scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "new_result_id": "sha256:53dd4055ce062890372cd207b52f562f841e6e40700ed1974e80338e9f0a3bea",
+      "old_reference_result_id": "sha256:4ddaf86c6bc23429ed6bb3c53b4771f8bfeb7fbef9c697c93f7e7ce3e5e31ee3",
+      "saved_candidate_id": null,
+      "evidence_check": {
+        "candidate_hash": "sha256:122deef13eb2bcfdd576bac76ced35b1c77934787fd1ddb900e8c2120307a9e2",
+        "checks": [
+          {
+            "check": "TEXT_REQUIRED_SECTIONS",
+            "coverage": [
+              {
+                "coverage_hash": "sha256:2450aede7c46f19ac7ce00c58841fccb97daa12373ffc1defe5717c0cf05d265",
+                "document_id": "sha256:a1d7c700e5703ea022468c714484f6fa390a790ffbd870dfa8dfbc5e250b2849",
+                "ranges": [
+                  {
+                    "closing_heading": {
+                      "block_index": 519,
+                      "heading_end_index": 519,
+                      "item": "1B"
+                    },
+                    "end_block_exclusive": 519,
+                    "heading": {
+                      "block_index": 412,
+                      "heading_end_index": 412,
+                      "item": "1A"
+                    },
+                    "section_id": "ITEM_1A",
+                    "start_block": 413
+                  }
+                ],
+                "required_sections": [
+                  "ITEM_1A"
+                ],
+                "scope": "COMPLETE_LOCAL_SECTIONS_NOT_SEMANTIC_ABSENCE",
+                "source_reference_id": "sha256:4fe37d81a86951f5d28883627e2c475f7ec5085ba2deb3a165ecd3b6d1bbb3f2"
+              }
+            ],
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_0",
+            "claim_hash": "sha256:137297504d0a85128155268a2991bd1c7008ccecfabe6fdc483522e4bc88a9fd",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_1",
+            "claim_hash": "sha256:59dfae77feb6fcf708a5b093496ccd3d6f3387999e7eee7ab17695e7e5806ea1",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_2",
+            "claim_hash": "sha256:8b4bbc4a25150d5e53fe868538ed82af82db5c87fe23e114175cb41a1d4cfb67",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_3",
+            "claim_hash": "sha256:87f83b2eb6774bc3f679507d4a925cd9120f2284ac4e98976fba889a7203ae3c",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_4",
+            "claim_hash": "sha256:019a59a8d66e60061b84fdeea94b8eb31c9f657d254524350ad705c621e5557a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_5",
+            "claim_hash": "sha256:167b4331f4e829cfa6f9a8fb3b492e29d36d2356dbcbe0d5458d586daf552591",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_6",
+            "claim_hash": "sha256:5555b351653dc1720cd5008de94bbaaaba6d0dca7890c7ad18284a1649b7a39f",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_7",
+            "claim_hash": "sha256:bb3c6f995447c84a53d8b3fba6e286a3bae7b83f4456f1df055138862a09f430",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_8",
+            "claim_hash": "sha256:6fd547356d315270fa19052450578423351205a239f0b95fbda7dd51dbd1687c",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_9",
+            "claim_hash": "sha256:eaee870bdbe0663ee58504bb80668637070d15cee3ca6a46221c1af442c57a19",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_10",
+            "claim_hash": "sha256:0a805784f237da085a04ec2c5e550c21343557faaf1115af781f43e33ce5224b",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_11",
+            "claim_hash": "sha256:d85de486bec3a034f6cbc98236a08af2877ea9df5cea2661aa735af6bb2122de",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_12",
+            "claim_hash": "sha256:ca843dfb84a9ec7beaae8fbe5a64eb87e7edc016877633d04961b09c9a8edccb",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_13",
+            "claim_hash": "sha256:88ae0b26193d860188edcb1bcd8f75b024cd533a300f52cde4b963e45d8f64ec",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_14",
+            "claim_hash": "sha256:67ed50f9ddb812bd7775e4168e4eceacb4d8bc2f6279218ba3f66368c61b01c6",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_15",
+            "claim_hash": "sha256:943deee2069bfd787ffffbb9625f3f86610f4aff7da19e15c099af9de2dfb1d8",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_16",
+            "claim_hash": "sha256:1a45d52477b582feb09c489f922671d5339ae77a263ad5b2e0ceb1a45f503313",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_17",
+            "claim_hash": "sha256:1252f004c5bb29471c7eb5c91cf779f484e3626ce47345a794f317048ed7a5ce",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_18",
+            "claim_hash": "sha256:94aeb74acee4ca7259e54e0278263368aae71fc2763985efa29d16c595c0c969",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_19",
+            "claim_hash": "sha256:dc0bc66947430c8524c1f42d59cddc2376bef3910c52956b4c9245e8d07fc691",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_20",
+            "claim_hash": "sha256:92d549903b983616be1a26d1f1c5f29747a68e3fffa5950f98dee617d560ab9d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_21",
+            "claim_hash": "sha256:6a64e90e1d70f9c2d2a3ebc11c552511ade4a0fa4aab936bc3fd2233ad81c184",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_22",
+            "claim_hash": "sha256:a76d9d48867250da30f9954e74c9f2bc078d6f198203055cd88e692c79ea3fdc",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_23",
+            "claim_hash": "sha256:1cf50d4afb04c525e096be5ba32d45a7f3cfb85c80eec65f4bba097c3b9bac62",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_24",
+            "claim_hash": "sha256:fc8d7cfea7b60eff0368173c98728d979e468fe37c6e61b62895b706a771ac12",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_25",
+            "claim_hash": "sha256:b7807312861fb37c9ac796c470309d02ae034b642d377198fa926062a1aae78b",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_26",
+            "claim_hash": "sha256:0231814192f29cf7de48005ca4c740bd32a5a4732908996ff6355e9d87449757",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_27",
+            "claim_hash": "sha256:23210f58f7ff466f37b0c083f257d4a23ebb48c552d3708650d88cef82d7a29e",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_28",
+            "claim_hash": "sha256:59b3c4101a198e774fa6c71a25112322ece5077302ac2f199eeb59619ad062bd",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_29",
+            "claim_hash": "sha256:efd427a4f7898df1c5c039645a576d1b4db370a1b2299d8e05ffe4909f567a2c",
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:39c78efe4f1ebd28cc84f1c3791c1139ca2aa21f3f40690440410ed4b3ceb968",
+        "identity_constraints": [],
+        "normalized_scope": {
+          "entity_scope": "registrant"
+        },
+        "normalized_values": {
+          "excerpt_0": "Operational Risks",
+          "excerpt_1": "Ford\u2019s long-term success depends on delivering the Ford+ plan, including improving cost competitiveness.",
+          "excerpt_10": "Operational information systems, security systems, products, and services could be affected by cybersecurity incidents, ransomware attacks, and other disruptions and impact Ford, Ford Credit, their suppliers, and dealers.",
+          "excerpt_11": "To facilitate access to the raw materials and other components necessary for the manufacture of electrified products, Ford has entered into and may, in the future, enter into multi-year commitments to raw material and other suppliers that subject Ford to risks associated with lower future demand for such items as well as costs that fluctuate and are difficult to accurately forecast.",
+          "excerpt_12": "Macroeconomic, Market, and Strategic Risks",
+          "excerpt_13": "With a global footprint and supply chain, Ford\u2019s results and operations have been and could continue to be adversely affected by economic or geopolitical developments, including protectionist trade policies such as tariffs, or other events.",
+          "excerpt_14": "Ford\u2019s new and existing products and digital, software, and physical services are subject to market acceptance and face significant competition from existing and new entrants in the automotive and digital and software services industries, and Ford\u2019s reputation may be harmed based on positions it takes or if it is unable to achieve the initiatives it has announced.",
+          "excerpt_15": "Ford may face increased price competition for its products and services, including pricing pressure resulting from industry excess capacity, currency fluctuations, competitive actions, legal and policy changes, or economic or other factors, particularly for electrified vehicles.",
+          "excerpt_16": "Inflationary pressure and fluctuations in commodity and energy prices, foreign currency exchange rates, interest rates, and market value of Ford or Ford Credit\u2019s investments, including marketable securities, can have a significant effect on results.",
+          "excerpt_17": "Ford\u2019s results are dependent on sales of larger, more profitable vehicles, particularly in the United States.",
+          "excerpt_18": "Industry sales volume can be volatile and could decline if there is a financial crisis, recession, public health emergency, or significant geopolitical event.",
+          "excerpt_19": "Financial Risks",
+          "excerpt_2": "Ford\u2019s products have been and could continue to be affected by defects that result in recall campaigns, increased warranty costs, or delays in new model launches, and the time it takes to improve the quality of our products and services and reduce the costs associated therewith could continue to have an adverse effect on our business.",
+          "excerpt_20": "The impact of government incentives on Ford\u2019s business has been and could continue to be significant, and Ford\u2019s receipt of government incentives could be subject to reduction, termination, or clawback.",
+          "excerpt_21": "Ford and Ford Credit\u2019s access to debt, securitization, or derivative markets around the world at competitive rates or in sufficient amounts could be affected by credit rating downgrades, market volatility, market disruption, regulatory requirements, asset portfolios, or other factors.",
+          "excerpt_22": "Ford Credit could experience higher-than-expected credit losses, lower-than-anticipated residual values, or higher-than-expected return volumes for leased vehicles.",
+          "excerpt_23": "Economic and demographic experience for pension and OPEB plans (e.g., discount rates or investment returns) could be worse than Ford has assumed.",
+          "excerpt_24": "Pension and other postretirement liabilities could adversely affect Ford\u2019s liquidity and financial condition.",
+          "excerpt_25": "Legal and Regulatory Risks",
+          "excerpt_26": "Ford and Ford Credit have experienced and could continue to experience unusual or significant litigation, governmental investigations, or adverse publicity arising out of alleged defects in products, services, perceived environmental impacts, or otherwise.",
+          "excerpt_27": "Ford may need to substantially modify its product plans and facilities to respond to shifting consumer sentiment and competitive dynamics as a result of policy changes affecting, or otherwise to comply with, safety, emissions, fuel economy, autonomous driving technology, environmental, and other regulations.",
+          "excerpt_28": "Ford and Ford Credit could be affected by the continued development of more stringent privacy, data use, data protection, data access, and artificial intelligence laws and regulations as well as consumers\u2019 heightened expectations to safeguard their personal information.",
+          "excerpt_29": "Ford Credit could be subject to new or increased credit regulations, consumer protection regulations, or other regulations.",
+          "excerpt_3": "Ford is highly dependent on its suppliers to deliver components in accordance with Ford\u2019s production schedule and specifications, and a shortage of or inability to timely acquire key components or raw materials has previously disrupted and may, in the future, disrupt Ford\u2019s operations.",
+          "excerpt_4": "Ford\u2019s production, as well as Ford\u2019s suppliers\u2019 production, and/or the ability to deliver products to consumers could be disrupted by labor issues, public health issues, natural or man-made disasters, adverse effects of climate change, financial distress, production difficulties, capacity limitations, or other factors.",
+          "excerpt_5": "Ford may not realize the anticipated benefits of existing or pending strategic alliances, joint ventures, acquisitions, divestitures, commercial relationships, or business strategies or the benefits may take longer than expected to materialize.",
+          "excerpt_6": "Ford may not realize the anticipated benefits of restructuring actions and such actions may cause Ford to incur significant charges, disrupt our operations, or harm our reputation.",
+          "excerpt_7": "Failure to develop and deploy secure digital services that appeal to customers, retain existing subscribers, and grow our subscription rates could have a negative impact on Ford\u2019s business.",
+          "excerpt_8": "Ford\u2019s ability to maintain a competitive cost structure could be affected by labor or other constraints.",
+          "excerpt_9": "Ford\u2019s ability to attract, develop, grow, support, and reward talent is critical to its success and competitiveness."
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS",
+        "system_approval_eligible": true,
+        "unresolved_scope_dimensions": []
+      },
+      "old_Run_not_resigned": true
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "full_old_Run_record_field_comparison_not_claimed": true
+}
