@@ -1,0 +1,52 @@
+{
+  "elapsed_seconds": 3.8384786669630557,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261010T054204Z-6a6d305d",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B04",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "35730afb9a9040a592706da61aa010ee",
+      "version": "3f5825c837544ccbb4a53732d6bc7003",
+      "result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-processing-scope-jzzwa24o/state/updates/B04/periods/FY2025/results/3f5825c837544ccbb4a53732d6bc7003",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2025,
+      "defect_holds": [],
+      "read_result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-processing-scope-jzzwa24o/state/updates/B04/periods/FY2025/results/3f5825c837544ccbb4a53732d6bc7003",
+      "program_version": {
+        "commit": "c99b5d3c3180b8e8dfbac7f9182a941af4ae7705",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-processing-scope-jzzwa24o/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-processing-scope-jzzwa24o/runs/20261010T054204Z-6a6d305d",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2025
+  ]
+}
