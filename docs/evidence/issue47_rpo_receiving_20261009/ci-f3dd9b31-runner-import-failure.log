@@ -1,0 +1,87 @@
+vNext fast suite	Run fast suite	﻿2026-10-09T13:52:05.3361191Z ##[group]Run python3 tools/run_foundation_ci.py --suite fast --jobs 4
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.3361818Z ^[[36;1mpython3 tools/run_foundation_ci.py --suite fast --jobs 4^[[0m
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.3403278Z shell: /usr/bin/bash -e {0}
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.3403741Z env:
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.3404115Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.3404836Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.3405377Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.3405839Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.3406319Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.3406773Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.3407181Z   PYTHONDONTWRITEBYTECODE: 1
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.3407544Z ##[endgroup]
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.4595680Z Traceback (most recent call last):
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.4603025Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tools/run_foundation_ci.py", line 16, in <module>
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.4604121Z     import run_fast_tests_v2 as v2
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.4605904Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tools/run_fast_tests_v2.py", line 200, in <module>
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.4607118Z     SOURCE_MATERIAL_TESTS += ('tests.vnext.test_reporting_company_projection.CurrentNullableTraceProjectionTest',)
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.4607830Z     ^^^^^^^^^^^^^^^^^^^^^
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.4608730Z NameError: name 'SOURCE_MATERIAL_TESTS' is not defined
+vNext fast suite	Run fast suite	2026-10-09T13:52:05.4718323Z ##[error]Process completed with exit code 1.
+Foundation inherited source material	Run inherited material selectors with existing limits	﻿2026-10-09T13:51:52.7860270Z ##[group]Run python3 tools/run_foundation_ci.py --suite source-material --jobs 2
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:52.7860963Z ^[[36;1mpython3 tools/run_foundation_ci.py --suite source-material --jobs 2^[[0m
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:52.8303647Z shell: /usr/bin/bash -e {0}
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:52.8304009Z env:
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:52.8304363Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:52.8305142Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:52.8305718Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:52.8306210Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:52.8306705Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:52.8307206Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:52.8307658Z   PYTHONDONTWRITEBYTECODE: 1
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:52.8307966Z ##[endgroup]
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:53.6886562Z Traceback (most recent call last):
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:53.6895324Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tools/run_foundation_ci.py", line 16, in <module>
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:53.6896119Z     import run_fast_tests_v2 as v2
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:53.6896810Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tools/run_fast_tests_v2.py", line 200, in <module>
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:53.6897807Z     SOURCE_MATERIAL_TESTS += ('tests.vnext.test_reporting_company_projection.CurrentNullableTraceProjectionTest',)
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:53.6898515Z     ^^^^^^^^^^^^^^^^^^^^^
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:53.6898890Z NameError: name 'SOURCE_MATERIAL_TESTS' is not defined
+Foundation inherited source material	Run inherited material selectors with existing limits	2026-10-09T13:51:53.7016220Z ##[error]Process completed with exit code 1.
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	﻿2026-10-09T13:51:51.7283275Z ##[group]Run python3 -m unittest -v tests.test_foundation_ci tests.vnext.test_main_scalability_audit tests.vnext.test_issue28_requirement_transition
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7284368Z ^[[36;1mpython3 -m unittest -v tests.test_foundation_ci tests.vnext.test_main_scalability_audit tests.vnext.test_issue28_requirement_transition^[[0m
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7285178Z ^[[36;1mpython3 tools/check_main_scalability.py --output /tmp/main-scalability-audit.csv^[[0m
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7285687Z ^[[36;1mpython3 tools/check_provider_egress.py^[[0m
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7286086Z ^[[36;1mpython3 tools/generate_metrics_reference.py --check^[[0m
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7447750Z shell: /usr/bin/bash -e {0}
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7448067Z env:
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7448362Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.8/x64
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7449233Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib/pkgconfig
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7449971Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7450372Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7451112Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.8/x64
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7451538Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.8/x64/lib
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7451890Z   PYTHONDONTWRITEBYTECODE: 1
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7452145Z   PYTHONPATH: scripts:tools
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:51.7452403Z ##[endgroup]
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0713433Z Traceback (most recent call last):
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0728759Z   File "<frozen runpy>", line 203, in _run_module_as_main
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0729374Z   File "<frozen runpy>", line 88, in _run_code
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0730096Z   File "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/unittest/__main__.py", line 18, in <module>
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0731143Z     main(module=None)
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0731484Z     ~~~~^^^^^^^^^^^^^
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0732095Z   File "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/unittest/main.py", line 103, in __init__
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0732745Z     self.parseArgs(argv)
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0733061Z     ~~~~~~~~~~~~~~^^^^^^
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0733665Z   File "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/unittest/main.py", line 142, in parseArgs
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0734303Z     self.createTests()
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0734580Z     ~~~~~~~~~~~~~~~~^^
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0735171Z   File "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/unittest/main.py", line 153, in createTests
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0735936Z     self.test = self.testLoader.loadTestsFromNames(self.testNames,
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0736716Z                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0737136Z                                                    self.module)
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0737540Z                                                    ^^^^^^^^^^^^
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0738264Z   File "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/unittest/loader.py", line 214, in loadTestsFromNames
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0739024Z     suites = [self.loadTestsFromName(name, module) for name in names]
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0739397Z               ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0739953Z   File "/opt/hostedtoolcache/Python/3.14.8/x64/lib/python3.14/unittest/loader.py", line 141, in loadTestsFromName
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0740495Z     module = __import__(module_name)
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0741159Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/test_foundation_ci.py", line 13, in <module>
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0741636Z     import run_foundation_ci as ci
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0742112Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tools/run_foundation_ci.py", line 16, in <module>
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0742566Z     import run_fast_tests_v2 as v2
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0743012Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tools/run_fast_tests_v2.py", line 200, in <module>
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0743735Z     SOURCE_MATERIAL_TESTS += ('tests.vnext.test_reporting_company_projection.CurrentNullableTraceProjectionTest',)
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0744258Z     ^^^^^^^^^^^^^^^^^^^^^
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0744767Z NameError: name 'SOURCE_MATERIAL_TESTS' is not defined
+Main foundation audit and historical compatibility	Validate main audit and fixed historical objects	2026-10-09T13:51:53.0898654Z ##[error]Process completed with exit code 1.

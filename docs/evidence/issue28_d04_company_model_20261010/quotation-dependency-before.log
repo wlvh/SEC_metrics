@@ -1,0 +1,19 @@
+test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) ... 
+  test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) (dependency='catalog/r6/regulatory_investigation_candidates_v1.json') ... FAIL
+
+======================================================================
+FAIL: test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) (dependency='catalog/r6/regulatory_investigation_candidates_v1.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-company-model/SEC_metrics/tests/vnext/test_current_d04_company.py", line 85, in test_source_or_interpretation_change_rechecks_once_then_reuses
+    self.assertEqual(second['status'],'CANDIDATE_WITHHELD')
+AssertionError: 'PREVIOUS_INPUT_WITHHELD' != 'CANDIDATE_WITHHELD'
+- PREVIOUS_INPUT_WITHHELD
++ CANDIDATE_WITHHELD
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.153s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest"]}
