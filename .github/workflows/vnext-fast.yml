@@ -175,7 +175,7 @@ jobs:
           PYTHONPATH: scripts
         # The current saved-source candidate does not install legacy proof trees.
         # Keep source/form/CIK/prior/event requirements; retained installs use saved runtime.
-        run: python3 tests/required_unittests.py tests.vnext.test_governance_signals.AuditorSignalsTest tests.vnext.test_c04_registration_successor tests.vnext.test_normal_governance_input
+        run: python3 tests/required_unittests.py tests.vnext.test_governance_signals.AuditorSignalsTest tests.vnext.test_c04_registration_successor tests.vnext.test_normal_governance_input tests.vnext.test_c04_selected_input
 
   company-update-history:
     name: Company update history and interruption recovery
