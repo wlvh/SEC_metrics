@@ -1,0 +1,46 @@
+{
+  "seconds": 0.4682602919638157,
+  "exit_code": 0,
+  "arguments": [
+    "results",
+    "--company",
+    "marriott_international",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/marriott_international/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/marriott_international/read"
+  ],
+  "report": {
+    "elapsed_seconds": 0.20447841589339077,
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "marriott_international",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "metrics": [
+      {
+        "metric_id": "C03",
+        "result_id": "sha256:719ccfd2cad365cf9e01b7afc5a4a8c9b1fb00629c704430967fc79e5e556aca",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "fiscal_year": 2022,
+        "value": "18686271",
+        "unit": "USD",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/marriott_international/state/updates/C03/periods/FY2022/results/ec0b4f3fbd984ca49ef1751c8490c223"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/marriott_international/read"
+  }
+}

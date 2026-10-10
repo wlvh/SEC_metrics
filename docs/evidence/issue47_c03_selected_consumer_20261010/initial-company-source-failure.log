@@ -1,0 +1,6 @@
+marriott_international-first 2 5.016544250072911
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/c03-selected/verify_company.py", line 16, in <module>
+    first=execute(company+'-first',common);assert first['exit_code']==(0 if value else 2);m=first['report']['metrics'][0];assert m.get('result_reason_code')==reason,(company,m)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
