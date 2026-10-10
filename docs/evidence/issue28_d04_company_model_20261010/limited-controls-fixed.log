@@ -1,0 +1,16 @@
+test_complete_nonempty_findings_are_allowed_without_inventing_doubt (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_complete_nonempty_findings_are_allowed_without_inventing_doubt) ... ok
+test_missing_failed_and_conflicting_groups_are_rejected (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_missing_failed_and_conflicting_groups_are_rejected) ... ok
+test_missing_group_cannot_be_complete_even_with_a_stale_true_flag (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_missing_group_cannot_be_complete_even_with_a_stale_true_flag) ... ok
+test_unresolved_or_failed_evidence_is_never_company_credit (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_unresolved_or_failed_evidence_is_never_company_credit) ... ok
+test_missing_ai_and_deprecated_e01_do_not_manufacture_results (tests.vnext.test_company_current_records.CurrentCompanyTest.test_missing_ai_and_deprecated_e01_do_not_manufacture_results) ... ok
+test_documented_envelope_uses_existing_shared_answer_parser (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_documented_envelope_uses_existing_shared_answer_parser) ... ok
+test_injected_sdk_receives_one_text_request_without_private_imports (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_injected_sdk_receives_one_text_request_without_private_imports) ... ok
+test_known_counts_are_read_but_charge_is_not_invented (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_known_counts_are_read_but_charge_is_not_invented) ... ok
+test_missing_invalid_usage_remains_unknown (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_missing_invalid_usage_remains_unknown) ... ok
+test_truncated_filtered_and_error_returns_cannot_be_answers (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_truncated_filtered_and_error_returns_cannot_be_answers) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.007s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 10, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_d04_company", "tests.vnext.test_company_current_records.CurrentCompanyTest.test_missing_ai_and_deprecated_e01_do_not_manufacture_results", "tests.vnext.test_securegpt_documented_response"]}

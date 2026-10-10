@@ -72,6 +72,158 @@ class HistoricalStatementScopeTest(unittest.TestCase):
                 cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
                     company_id=annual['company_id'], metric_id='B01', fiscal_year=2025)
 
+class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
+    """Constructed source controls at the actual adapter, never saved results."""
+
+    def prepare(self, *, change=None):
+        from contextlib import ExitStack
+        from types import SimpleNamespace
+        from tests.vnext.test_selected_revenue_scope_v1 import originals, facts, APPROVED
+        from vnext.canonical import sha256_bytes
+        from vnext.specs import compile_spec_file
+        primary, xml, annual = originals()
+        # The shared fixture also contains an unrelated standalone Revenues
+        # control. This adapter test supplies only its constructed statement.
+        for original in (primary, xml):
+            original['raw_bytes'] = original['raw_bytes'].replace(
+                b'<us-gaap:Revenues contextRef="annual" unitRef="usd" decimals="0">12000000</us-gaap:Revenues>', b'')
+            original['source_reference']['raw_asset_id'] = 'sha256:' + sha256_bytes(content=original['raw_bytes'])
+        annual.update(amendments=[], subject_policy={'mode': 'CONTINUOUS_PRIMARY'}, source_proofs=[])
+        primary['raw_blob'] = {'media_type': 'text/html'}
+        xml['raw_blob'] = {'media_type': 'application/xml'}
+        source_facts = facts(annual)
+        if change:
+            change(primary, xml, annual, source_facts)
+        reader = SimpleNamespace(read=lambda *args, **kwargs: primary,
+            primary=lambda *args: primary, auditor_filing=lambda *args: [primary, xml],
+            proofs={}, records={})
+        spec = compile_spec_file(path=cases.ROOT/'catalog/metrics/B01_revenue.md', dependency_specs={})
+        with ExitStack() as stack:
+            for name, value in {
+                'resolve_period_selection': {}, 'prepare_historical_annual_input': annual,
+                'installed_ordinary_spec_documents': {'B01': {'path': 'unused', 'compiled_spec': spec}},
+                '_registry_rows': [{'company_id': annual['company_id'], 'entity_continuity_status': 'continuous'}],
+                'repository_company_traits': ['non_financial'], '_Sources': reader,
+                'filing_inventory': {}, '_load_deterministic_catalog': {},
+                '_structured_concepts': APPROVED, '_filing_source': ({'manifest': {}}, []),
+                'companyfacts_structured_facts': source_facts, 'verify_ordinary_source_proofs': {},
+            }.items():
+                stack.enter_context(patch.object(cases, name, return_value=value))
+            calculator = stack.enter_context(patch.object(cases, 'calculate_metric', wraps=cases.calculate_metric))
+            value = cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
+                company_id=annual['company_id'], metric_id='B01', fiscal_year=2025)
+        return value, source_facts, calculator
+
+    def test_reported_total_is_admitted_before_actual_calculator(self):
+        value, source_facts, calculator = self.prepare()
+        self.assertEqual(value['results']['B01']['value'], '58496000000')
+        self.assertEqual(calculator.call_args.kwargs['structured_facts'], [source_facts[1]])
+        self.assertEqual(source_facts[0]['value'], '50914000000')
+        check = value['input_assessments']['historical_statement']['income_observation_checks'][0]
+        self.assertEqual(check['observation_id'],
+                         next(r['observation_id'] for r in value['expected_records']
+                              if r.get('record_type') == 'VERIFIED_OBSERVATION'))
+        self.assertEqual({row['value'] for rows in check['original_reports'].values() for row in rows},
+                         {'58496000000'})
+
+    def test_display_is_bounded_while_complete_scope_evidence_is_retained(self):
+        value, _, _ = self.prepare()
+        full = value['input_assessments']['historical_statement']['selected_revenue_scope']
+        self.assertTrue(full['reported_totals'])
+        self.assertEqual(full['method'],'SELECTED_REPORTED_CONSOLIDATED_REVENUE_V2')
+        self.assertNotIn('splits',full)
+        self.assertEqual(value['input_binding']['assessment']['selected_revenue_scope'], full)
+        self.assertEqual(set(value['selection']['selected_revenue_scope']),
+                         {'scope_id', 'status', 'complete_scope_proven'})
+        self.assertEqual(value['selection']['selected_revenue_scope']['scope_id'], full['scope_id'])
+
+    def test_total_cannot_be_borrowed_from_a_later_filing(self):
+        def change(primary, xml, annual, source_facts):
+            source_facts[1]['accession'] = 'later'
+        with self.assertRaisesRegex(ValueError, 'TOTAL_NOT_IN_COMPANYFACTS'):
+            self.prepare(change=change)
+
+    def test_literal_original_and_resolved_period_must_have_same_dates(self):
+        def change(primary, xml, annual, source_facts):
+            annual['original_input'] = copy.deepcopy(annual)
+            annual['original_input']['table_input']['target_period']['period_start'] = '2025-02-01'
+        with self.assertRaisesRegex(cases.StatementCaseError, 'ORIGINAL_PERIOD_CHANGED'):
+            self.prepare(change=change)
+
+    def test_processing_configuration_includes_shared_scope_dependency(self):
+        self.assertIn('scripts/vnext/selected_revenue_scope_v1.py', cases.INCOME_PROCESSING_FILES)
+        self.assertIn('scripts/vnext/selected_reported_revenue_v2.py', cases.INCOME_PROCESSING_FILES)
+        self.assertNotIn('scripts/vnext/selected_revenue_scope_v1.py', cases.PROCESSING_FILES)
+        self.assertNotIn('scripts/vnext/selected_reported_revenue_v2.py', cases.PROCESSING_FILES)
+
+    def test_no_reported_total_retains_the_existing_component_scope_path(self):
+        from vnext import selected_reported_revenue_v2 as reported
+        with patch.object(reported,'reported_revenue_scope',return_value={'complete_scope_proven':False}):
+            value,_,_=self.prepare()
+        full=value['input_assessments']['historical_statement']['selected_revenue_scope']
+        self.assertTrue(full['splits'])
+        self.assertEqual(value['results']['B01']['value'],'58496000000')
+
+    def test_source_bound_resolved_label_reaches_the_shared_reader_without_raw_year_rewrite(self):
+        from vnext import selected_reported_revenue_v2 as reported
+        label={'record_type':'ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION','selected_fiscal_year':2026,
+               'constructed_source_inspection_marker':True}
+        def change(primary,xml,annual,source_facts):
+            annual['fiscal_year_label_resolution']=label
+        with patch.object(reported,'reported_revenue_scope',return_value={'complete_scope_proven':False}) as shared:
+            self.prepare(change=change)
+        self.assertIs(shared.call_args.kwargs['fiscal_label_resolution'],label)
+        self.assertEqual(shared.call_args.kwargs['annual']['table_input']['target_period']['fiscal_year'],2025)
+
+    def test_reported_total_conflict_cannot_fall_back_to_the_old_component(self):
+        from vnext import selected_reported_revenue_v2 as reported,selected_revenue_scope_v1 as component
+        with patch.object(reported,'reported_revenue_scope',side_effect=ValueError('SELECTED_REPORTED_REVENUE_VISIBLE_DATE_CONFLICT')), \
+             patch.object(component,'selected_revenue_scope',side_effect=AssertionError('Conflict is not no reported total')):
+            with self.assertRaisesRegex(ValueError,'VISIBLE_DATE_CONFLICT'):
+                self.prepare()
+
+    def test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions(self):
+        from vnext.canonical import sha256_bytes
+        def change_intro(text):
+            def change(primary,xml,annual,source_facts):
+                raw=primary['raw_bytes'].replace(b'<div>Consolidated Statements of Income</div>',
+                    text.encode()+b'<div>Consolidated Statements of Income</div>')
+                primary['raw_bytes']=raw
+                primary['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=raw)
+            return change
+        value,_,_=self.prepare(change=change_intro(
+            '<div>See accompanying Notes.</div><div>57</div><div>Table of Contents</div>'))
+        scope=value['input_assessments']['historical_statement']['selected_revenue_scope']
+        self.assertEqual(value['results']['B01']['value'],'58496000000')
+        self.assertEqual([b['visible_text'] for b in scope['reported_totals'][0][
+            'statement_scope']['preceding_navigation_sources']],
+            ['See accompanying Notes.','57','Table of Contents'])
+        with self.assertRaisesRegex(ValueError,'STATEMENT_HEADING_SCOPE_UNRESOLVED'):
+            self.prepare(change=change_intro('<div>Only Subsidiary Beta is included.</div>'))
+
+    def test_reported_late_date_and_cost_group_qualifiers_are_not_hidden(self):
+        from vnext.canonical import sha256_bytes
+        def insert(before,text):
+            def change(primary,xml,annual,source_facts):
+                raw=primary['raw_bytes'].replace(before,text.encode()+before)
+                primary['raw_bytes']=raw
+                primary['source_reference']['raw_asset_id']='sha256:'+sha256_bytes(content=raw)
+            return change
+        for day in (30,31):
+            change=insert(b'<tr><td>Product revenues</td>',
+                '<tr><td>Fiscal Year Ended December '+str(day)+',</td><td>57</td></tr>')
+            with self.subTest(day=day):
+                if day==30:
+                    with self.assertRaisesRegex(ValueError,'VISIBLE_END_DAY_CONFLICT'):
+                        self.prepare(change=change)
+                else:
+                    self.assertEqual(self.prepare(change=change)[0]['results']['B01']['value'],'58496000000')
+        for text in ['Operating expenses (Europe):','Cost of revenues (Subsidiary):']:
+            with self.subTest(text=text),self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+                self.prepare(change=insert(b'<tr><td>Cost of sales</td>',
+                    '<tr><td>'+text+'</td><td></td></tr>'))
+
+
 class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
     def test_existing_entry_does_not_silently_expand_to_b07(self):
         with patch.object(cases, 'resolve_period_selection') as select:

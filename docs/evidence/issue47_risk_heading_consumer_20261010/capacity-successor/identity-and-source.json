@@ -1,0 +1,489 @@
+{
+  "result_id": "sha256:53085d271061f0c013b9b4b1c53c35766d0acc2e429d81bf194556f8418d7989",
+  "spec_closure_hash": "sha256:510d869a8bdfcb368d2f6cda55916719b4be31a4e90c9793732232700b1e0553",
+  "spec_path": null,
+  "renderer": "ORDERED_NEWLINE_128_V2",
+  "observations": 68,
+  "headings": 68,
+  "value_chars": 12530,
+  "original_raw_asset_id": "sha256:d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a",
+  "evidence": {
+    "candidate_hash": "sha256:2b4c910106f6dfe0904992e601368ce9141f470caf855b25f72073a8b45e0e1c",
+    "checks": [
+      {
+        "check": "TEXT_REQUIRED_SECTIONS",
+        "coverage": [
+          {
+            "coverage_hash": "sha256:207195fa67804f94baaffeba4ec5f5e36074c2bd12f6d08f4b26930b383d7574",
+            "document_id": "sha256:50569534f6f3284ec0339b1324c3248de1870ab2a5df2ae8e7083912f426cc9b",
+            "ranges": [
+              {
+                "closing_heading": {
+                  "block_index": 715,
+                  "heading_end_index": 715,
+                  "item": "1B"
+                },
+                "end_block_exclusive": 715,
+                "heading": {
+                  "block_index": 299,
+                  "heading_end_index": 299,
+                  "item": "1A"
+                },
+                "section_id": "ITEM_1A",
+                "start_block": 300
+              }
+            ],
+            "required_sections": [
+              "ITEM_1A"
+            ],
+            "scope": "COMPLETE_LOCAL_SECTIONS_NOT_SEMANTIC_ABSENCE",
+            "source_reference_id": "sha256:39808ae04e68862f11cf338bcf02a07e44498b167574f3360a8c11594c97297f"
+          }
+        ],
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_0",
+        "claim_hash": "sha256:82a3c414ffd0999c1eb5877bb6712e094bc90716dbf1f3dcaed1e0a1ae9ae163",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_1",
+        "claim_hash": "sha256:ac90d4c03b788c70a8079fa3949848fdb7f7c6d7b740bb93791899f743a75501",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_2",
+        "claim_hash": "sha256:ebdc051e6f857e4b9a6efb510c59bda4fbfbd4558ebf9ba07ee65df6d599c70f",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_3",
+        "claim_hash": "sha256:321e47d521b9a9ff91808d8d9cbb5356d37205fd824a8f8cc60334332952665a",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_4",
+        "claim_hash": "sha256:6a5f8add3562bc9a384983b2d24b9b3db2d979c8aaa854ae05555a186a18cf56",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_5",
+        "claim_hash": "sha256:eede2e4a958526189e74f96cda4f7da602862ed5044ca8c6ac3fb843eee74fcb",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_6",
+        "claim_hash": "sha256:0d7e13b0d4ee96290fb1355438ccbc0590363a67a5a5560637f2d6d3aaf43439",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_7",
+        "claim_hash": "sha256:ef40c356162530722d2b4fa158f6a34dac03ab03cc01e6058310a5ab85c88915",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_8",
+        "claim_hash": "sha256:5982f4f1461201d4509c912bfb28517e0940d0e681ac8cadbf10889d3cf0ce3f",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_9",
+        "claim_hash": "sha256:4d81e6f118212637e6af52b1114067e424f7e8f45719d3c0baa9ddbba10b62c6",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_10",
+        "claim_hash": "sha256:2e01679c067e0c06412efa0066a40091aa56c3040dd0416cd40e8aff9e569cbb",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_11",
+        "claim_hash": "sha256:9fffb6f60690932fb21b3cc53138f7426e21faac89fea4ba62000e9ef53a5e20",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_12",
+        "claim_hash": "sha256:b57ead2dd9120b728fdd2c62f57eb89252472bc09e412d4756e9e872d492dc3a",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_13",
+        "claim_hash": "sha256:bb43fe7e2b0933fb74aceaf3555b76167c48b359480f9debeffa4f2c58b4ada0",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_14",
+        "claim_hash": "sha256:b5afe758e72aeb78d5af5e29f51e94d82e59d94b6ebe7f02d77a8804c4c6096e",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_15",
+        "claim_hash": "sha256:5502e36b5e5d242131fa4689176bb731075b4d85c72792e9e66767027746ed18",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_16",
+        "claim_hash": "sha256:968f8b935e2cca290c6ff969bfc9b22344ea7e5748653ebe52f65e0a4c41a062",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_17",
+        "claim_hash": "sha256:b9c8102a5d3f3db45569b7eb8fcfa2e50485e8cbf8969c52934505e6bf0e6ad2",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_18",
+        "claim_hash": "sha256:f49a841018fccc114c3bf785017400af00e029a7c85c405281872c4bd4a5bfd9",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_19",
+        "claim_hash": "sha256:35819608abdebf9f68987c867b89bf6d55f7c82095b2db4d3ef1d20a5bb6aedf",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_20",
+        "claim_hash": "sha256:919144b2b27a1237a7370966ad5dbb1152c3796c7ea065bfd2b75edac804a040",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_21",
+        "claim_hash": "sha256:33265d349528925ba14a3167fdae0e7e42659d7623acba99c444ee976c5e5e04",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_22",
+        "claim_hash": "sha256:a63e68be295f58edb972cba8b7095c9da1e90ac31c1f2ea4aa127ddba736f68d",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_23",
+        "claim_hash": "sha256:78617fedacbed9a1fa2c90ba8263aaf52fde0c1e6f6e079a8f2b92ebdb578812",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_24",
+        "claim_hash": "sha256:f5c62223980f5ecb79f4eb3208d3e5fdceb6e61d0269e8e55dd400a2b0d6456e",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_25",
+        "claim_hash": "sha256:3e4de3ffcdce0772720ec5a83904d6f955dcde2be8a8a28834ba4e117e6fa506",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_26",
+        "claim_hash": "sha256:b5d3f82597ba1b8eb6b04482ef592f73ade8ad71444c9e85b9ce59db135cffea",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_27",
+        "claim_hash": "sha256:21c466dc907dc86d6d5ba616accd7589c1a1f01ca8774f6e37156f417370faef",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_28",
+        "claim_hash": "sha256:4f7f070d96cf95c841176f030791179a3ab280ecdd943514d0dcfd6c9978e318",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_29",
+        "claim_hash": "sha256:de8530a807773e98b200875fc69736448514fad5da0913ab8fcc478d16c5e758",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_30",
+        "claim_hash": "sha256:5ada683758c20f0b519e6b06cd9d9739fe4f050cd99e70dc871436e9804c9e74",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_31",
+        "claim_hash": "sha256:7f9a9b12b41bc45168bda83b2cb24006e7becaf51dc14ecbe40baa76312126b3",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_32",
+        "claim_hash": "sha256:5e175d34afcaa40621edd7168e6fd6a53457001e452e8f68b3e18515a2c63193",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_33",
+        "claim_hash": "sha256:71287713f9724cf53d1ed286fec425b690ca692aa89085ecba1ff56ab118deb3",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_34",
+        "claim_hash": "sha256:f4adf52cff4927fcfd2dcd8787dc727d9b6d851d0f3380dd82d38852734042e3",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_35",
+        "claim_hash": "sha256:54cf5997efeb446c9764269da43daa0ebd7b5f1931b82ccab8cea69bc6184c07",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_36",
+        "claim_hash": "sha256:3d4dfcc64a1e3f608496fcea82f58db138c0d257073152154bf22564958f20f0",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_37",
+        "claim_hash": "sha256:9a4254070745b82c1170cda01b39f2f809ed38bc8c5b503b633624495efcb8fe",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_38",
+        "claim_hash": "sha256:a7950e164bf6596dfb587b471039a377cf8fa9c0423d9d1d5cd784ca932b4373",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_39",
+        "claim_hash": "sha256:d70ca9eaa9afe7827c7e4daeb9c7815b3e877c7b53e68e13eb30ee165222b61f",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_40",
+        "claim_hash": "sha256:78699887d267f9bc1166226d665ebfb7961b392317c6d63e8feb01c1e30988c9",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_41",
+        "claim_hash": "sha256:cacc26a23042a12404792d23c1b6b1ad8009e3335b4ac30dbb61c5a6f1356d1a",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_42",
+        "claim_hash": "sha256:7ad5d2ddab4840b7d66184f2a25e57de7d375c37c46a846c90eec9e9b215c9f1",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_43",
+        "claim_hash": "sha256:34debcee0e364aa4a39063fdc43a6e1967e0bc34b09d45465f6a468460d02119",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_44",
+        "claim_hash": "sha256:d41092e54051da70c92c45da4834d6ea222b9500300de7879adcdfb0fa9e3b2d",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_45",
+        "claim_hash": "sha256:be54128e32c9bceb830dee357b5d9b9a5bbb7b63f693f4cfdb2d6a953d281a1a",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_46",
+        "claim_hash": "sha256:65686aa8a75348cdc71e6e34793a6a1cfb0653278fcea028e87f78b35b669184",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_47",
+        "claim_hash": "sha256:03a3da66a34f4866ac65ba0478569f9a827d21f12725dff9474e7354ed957952",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_48",
+        "claim_hash": "sha256:5a1d0d9c94b2471450ee7d255d187e6c4f1e18b0f243629f1612a7846a384e99",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_49",
+        "claim_hash": "sha256:9270753e04c6c821cadd2c265f959db09b66ef264b91f352ccde921e32f3e149",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_50",
+        "claim_hash": "sha256:ed13edcb24c01dfbe6495111ce4c24dbcf37d54e46bb4434dc4c12d95f17726d",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_51",
+        "claim_hash": "sha256:e8f7044f982311773fab5260c731bf7e41b0576ad2fa597a122cbe508f43cea2",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_52",
+        "claim_hash": "sha256:a908bd166c20ef88a0a71b68d4f37042df2f6f1fd37e26b757cd8de7c61d7b72",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_53",
+        "claim_hash": "sha256:867b6d5ecd28128d633c7abf30fc892f5d17fd8589c8637897a51ad7cb28429d",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_54",
+        "claim_hash": "sha256:7013bcdd130f3a38e6acae693d36aafb91aa26939d3b9c247061e92c449d55b6",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_55",
+        "claim_hash": "sha256:ce226d0641332993e43be25aeb5d311f2af0fae810adafe5bf9272d46eb77dde",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_56",
+        "claim_hash": "sha256:5dd19f504aa77fa8a35e4676699664f95b4d4eb4e81fbba9542cb483dbe5f0b8",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_57",
+        "claim_hash": "sha256:3971a8f2f78565b0472150bf96ca207384cf0b41fee20381d03a8704325632f8",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_58",
+        "claim_hash": "sha256:ee309a0879c105c0441b68b295e4cd9f42abaa65c81ef29dac4e4816aad6db69",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_59",
+        "claim_hash": "sha256:747ffd413d0ef0e87bedccf4cb20dd87ee9d63c3751e8e4264356e493db165f8",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_60",
+        "claim_hash": "sha256:81abd4f71f46f1582de0982af969bb261e4058c115151f22e8d5e68aed274691",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_61",
+        "claim_hash": "sha256:a304f9f4898f8729961fa8919d7166caee30e68357b2226c95417b7cea07fbda",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_62",
+        "claim_hash": "sha256:3706060087f7728e6c86ce161724eb9e2c393ab005fc65961e935b763b77b257",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_63",
+        "claim_hash": "sha256:4f8106083db0bc737af7feffd16d25a61b14e8740f140d0892b3863b422736f3",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_64",
+        "claim_hash": "sha256:3a848ee55c9c6d111eab59d20834643798d4983e36338e0848c3d3b186e226e2",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_65",
+        "claim_hash": "sha256:a23d942bbf68bb10ffff9284e5b64aa4561e14bad1022cca364ee6faec10e5a5",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_66",
+        "claim_hash": "sha256:5a84b23118ef67bcd3e11f9539f4dbc698a2558dcb7411180087a4840f196bc4",
+        "status": "PASS"
+      },
+      {
+        "check": "TEXT_EXACT_EXCERPT:excerpt_67",
+        "claim_hash": "sha256:72f88e62873002990ff44cd43de18c161d26198ab8c13d3d70f029ecf04aab41",
+        "status": "PASS"
+      }
+    ],
+    "evidence_check_id": "sha256:886adae55ce2a48bcc275afdbca8065ba5f57f3bdfa5eb6f35eb3ef65ae8cfbf",
+    "identity_constraints": [],
+    "normalized_scope": {
+      "entity_scope": "registrant"
+    },
+    "normalized_values": {
+      "excerpt_0": "Risks Related to our Business, Operations and Our Industry",
+      "excerpt_1": "The reduction, elimination or expiration of government subsidies and economic incentives for on-grid solar electricity applications could reduce demand for solar PV systems and harm our business.",
+      "excerpt_10": "The solar industry is highly competitive, and we expect to face increased competition as new and existing competitors introduce products or develop alternative technologies, which could negatively impact our business, financial condition and results of operations.",
+      "excerpt_11": "The loss of, or events affecting, one of our major customers could reduce our sales and have an adverse effect on our business, financial condition and results of operations.",
+      "excerpt_12": "Our energy systems, including our storage solution, integrated AC Module, IQ8TM solar microinverters and Ensemble technology, may not achieve broader market acceptance, which would prevent us from increasing our revenue and market share.",
+      "excerpt_13": "Our success in marketing and selling \u201cAC module\u201d versions of our microinverter system depends in part upon our ability to continue to work closely with leading solar module manufacturers.",
+      "excerpt_14": "Our recent and planned expansion into existing and new markets could subject us to additional business, financial and competitive risks.",
+      "excerpt_15": "We may fail to capture customers in the new product and geographic markets that we are pursuing.",
+      "excerpt_16": "If we fail to retain our key personnel or if we fail to attract additional qualified personnel, we may not be able to achieve our anticipated level of growth and our business could suffer.",
+      "excerpt_17": "Any failure by management to properly manage growth could have a material adverse effect on our business, operating results, and financial condition.",
+      "excerpt_18": "If we are unsuccessful in continuing to expand our direct-to-consumer sales channel by driving purchases through our website, our business and results of operation could be harmed.",
+      "excerpt_19": "Risks Related to our Intellectual Property and Technology",
+      "excerpt_2": "If demand for solar energy solutions does not grow or grows at a slower rate than we anticipate, including as a result of the ongoing COVID-19 pandemic, our business will suffer.",
+      "excerpt_20": "We are dependent on information technology systems, infrastructure and data. We could be subject to breaches of our information technology systems caused by system security risks, failure of our data protection, cyber-attacks, and erroneous or non-malicious actions or failures to act by our employees or others with authorized access to our networks, which could cause significant reputational, legal and financial damages.",
+      "excerpt_21": "The software we use in providing system configuration recommendations or potential energy savings estimates to customers relies in part on third party information that may not be accurate or up-to-date; this may therefore generate inaccurate recommendations or estimates, resulting in a loss of reputation and customer confidence.",
+      "excerpt_22": "We are subject to stringent privacy laws, information security policies and contractual obligations governing the use, processing and transfer of personal information and any unauthorized access to, or disclosure or theft of personal information we gather, store or use could harm our reputation and subject us to claims or litigation.",
+      "excerpt_23": "If we fail to protect, or incur significant costs in defending, our intellectual property and other proprietary rights, our business and results of operations could be materially harmed.",
+      "excerpt_24": "We may be subject to disruptions or failures in information technology systems and network infrastructures that could have a material adverse effect on our business and financial condition.",
+      "excerpt_25": "Third parties may assert that we are infringing upon their intellectual property rights, which could divert management\u2019s attention, cause us to incur significant costs and prevent us from selling or using the technology to which such rights relate.",
+      "excerpt_26": "Our failure to obtain the right to use necessary third-party intellectual property rights on reasonable terms, or our failure to maintain, and comply with the terms and conditions applicable to these rights, could harm our business and prospects.",
+      "excerpt_27": "We may not be able to protect and enforce our trademarks and trade names, or build name recognition in our markets of interest thereby harming our competitive position.",
+      "excerpt_28": "Obtaining and maintaining our patent protection depends on compliance with various required procedures, document submissions, fee payments and other requirements imposed by governmental patent agencies, and our patent protection could be reduced or eliminated for non-compliance with these requirements.",
+      "excerpt_29": "Patent terms may be inadequate to protect our competitive position on our products for an adequate amount of time.",
+      "excerpt_3": "The rapidly changing solar industry makes it difficult to evaluate our current business and future prospects.",
+      "excerpt_30": "Risks related to Legal Proceedings and Regulations",
+      "excerpt_31": "Changes in current laws or regulations or the imposition of new laws or regulations, or new interpretations thereof, in the solar energy sector or international trade, by federal or state agencies in the United States or foreign jurisdictions could impair our ability to compete, and could materially harm our business, financial condition and results of operations.",
+      "excerpt_32": "Changes in the U.S. trade environment, including the recent imposition of import tariffs, could adversely affect the amount or timing of our revenues, results of operations or cash flows.",
+      "excerpt_33": "Our significant international operations subject us to additional risks that could adversely affect our business, results of operations and financial condition.",
+      "excerpt_34": "We could be adversely affected by any violations of the FCPA, the U.K. Bribery Act, and other foreign anti-bribery laws.",
+      "excerpt_35": "From time to time we are involved in a number of legal proceedings and, while we cannot predict the outcomes of such proceedings and other contingencies with certainty, some of these outcomes could adversely affect our business and financial condition.",
+      "excerpt_36": "Risks Related to Our Financial Condition and Liquidity",
+      "excerpt_37": "Our gross profit may fluctuate over time, which could impair our ability to achieve or maintain profitability.",
+      "excerpt_38": "We are under continuous pressure to reduce the prices of our products, which has adversely affected, and may continue to adversely affect, our gross margins.",
+      "excerpt_39": "A drop in the retail price of electricity derived from the utility grid or from alternative energy sources, or a change in utility pricing structures, may harm our business, financial condition and results of operations.",
+      "excerpt_4": "We depend on limited-source suppliers for key components and products. If we are unable to source these components and products on a timely basis, we will not be able to deliver our products to our customers.",
+      "excerpt_40": "If we do not forecast demand for our products accurately, we may experience product shortages, delays in product shipment, excess product inventory, difficulties in planning expenses or disputes with suppliers, any of which will adversely affect our business and financial condition.",
+      "excerpt_41": "Our focus on a limited number of specific markets increases risks associated with the modification, elimination or expiration of governmental subsidies and economic incentives for on-grid solar electricity applications.",
+      "excerpt_42": "Our portfolio of marketable securities is subject to market, interest and credit risk that may reduce its value.",
+      "excerpt_43": "Risks Related to our Acquisition Activity",
+      "excerpt_44": "We may fail to realize some or all of the anticipated benefits of the SunPower transaction which may result in conflicts between us and SunPower.",
+      "excerpt_45": "As part of growing our business, we have made and expect to continue to make acquisitions. If we fail to successfully select, execute or integrate our acquisitions, then our business and operating results could be harmed and our stock price could decline.",
+      "excerpt_46": "We invest in companies for both strategic and financial reasons but may not realize a return on our investments.",
+      "excerpt_47": "An impairment in the carrying value of goodwill or other intangible and long-lived assets could negatively affect our operating results.",
+      "excerpt_48": "Risks Related to our Debt and Equity Securities",
+      "excerpt_49": "Conversion of our Convertible Notes may dilute the ownership interest of existing stockholders or may otherwise depress the price of our common stock, adversely affect our financial condition and operating results.",
+      "excerpt_5": "Our business has been affected by, is currently being adversely affected and could be materially and adversely affected in the future by the current impacts and evolving effects of the ongoing COVID-19 pandemic. The COVID-19 pandemic may continue to, and other actual or threatened epidemics, pandemics, outbreaks, or public health crises may in the future, adversely affect our and our customers\u2019 results of operations and financial condition, our supply chain and our business.",
+      "excerpt_50": "Servicing our debts requires a significant amount of cash, and we may not have sufficient cash flow from our business to pay our debts.",
+      "excerpt_51": "We may not have the ability to raise the funds necessary to settle conversions of the Convertible Notes or repurchase the Convertible Note upon a fundamental change, and our future debt may contain limitations on our ability to pay cash upon conversion or repurchase of the Convertible Notes.",
+      "excerpt_52": "The convertible note hedge and warrant transactions and/or their early termination may affect the value of our common stock.",
+      "excerpt_53": "Changes in current accounting methods, standards, or regulations applicable to the Convertible Notes due 2028, Notes due 2026 and Notes due 2025 could have a material impact on our reported financial results, future financial results, future cash flows, and/or our stock price.",
+      "excerpt_54": "The market price of our common stock may be volatile or may decline regardless of our operating performance.",
+      "excerpt_55": "Our financial results may vary significantly from quarter to quarter due to a number of factors, which may lead to volatility in our stock price.",
+      "excerpt_56": "If research analysts do not publish research about our business or if they issue unfavorable commentary or downgrade our common stock, our stock price and trading volume could decline.",
+      "excerpt_57": "We may not be able to raise additional capital to execute on our current or future business opportunities on favorable terms, if at all, or without dilution to our stockholders.",
+      "excerpt_58": "Sales of a substantial number of shares of our common stock in the public market by our existing stockholders could cause our stock price to fall.",
+      "excerpt_59": "Manipulative techniques employed by short sellers may drive down the market price of our common stock.",
+      "excerpt_6": "We depend upon a small number of outside contract manufacturers, and our business and operations could be disrupted if we encounter problems with these contract manufacturers.",
+      "excerpt_60": "We currently do not intend to pay dividends on our common stock and, consequently, your only opportunity to achieve a return on your investment is if the price of our common stock appreciates.",
+      "excerpt_61": "Our charter documents and Delaware law could prevent a takeover that stockholders consider favorable and could also reduce the market price of our stock.",
+      "excerpt_62": "General Risks Related to our Business",
+      "excerpt_63": "Natural disasters, public health events, significant disruptions of information technology systems, data security breaches, or other catastrophic events could adversely affect our operations.",
+      "excerpt_64": "The threat of global economic, capital markets and credit disruptions, including sovereign debt issues, pose risks to our business.",
+      "excerpt_65": "If we fail to maintain an effective system of internal controls or are unable to remediate any deficiencies in our internal controls, we might not be able to report our financial results accurately or prevent fraud; in that case, our stockholders could lose confidence in our financial reporting, which would harm our business and could negatively impact the price of our stock.",
+      "excerpt_66": "Our business is subject to potential tax liabilities.",
+      "excerpt_67": "Our business has been and could continue to be affected by seasonal trends and construction cycles",
+      "excerpt_7": "If we or our contract manufacturers are unable to obtain raw materials in a timely manner or if the price of raw materials increases significantly, production time and product costs could increase, which may adversely affect our business.",
+      "excerpt_8": "Manufacturing problems could result in delays in product shipments, which would adversely affect our revenue, competitive position and reputation.",
+      "excerpt_9": "We rely primarily on distributors, installers and providers of solar financing to assist in selling our products to customers, and the failure of these customers to perform at the expected level, or at all, would have an adverse effect on our business, financial condition and results of our operations."
+    },
+    "reason_codes": [],
+    "record_type": "EVIDENCE_CHECK",
+    "status": "PASS",
+    "system_approval_eligible": true,
+    "unresolved_scope_dimensions": []
+  },
+  "source_references": [
+    {
+      "accession": "0001463101-22-000016",
+      "company_id": "enphase_energy",
+      "document_name": "enph-20211231.htm",
+      "raw_asset_id": "sha256:d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:2f78da70da49e97934551e0e0112d2add95c200735e43570fefb97b8671030e0",
+      "source_reference_id": "sha256:39808ae04e68862f11cf338bcf02a07e44498b167574f3360a8c11594c97297f",
+      "source_role": "target_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310122000016/enph-20211231.htm"
+    }
+  ],
+  "four_old_result_ids_unchanged": true,
+  "original_failed_checks_kept": 2,
+  "old_other_protected": 198,
+  "final_protected": 206,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

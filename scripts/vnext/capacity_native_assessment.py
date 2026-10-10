@@ -118,7 +118,7 @@ def d03_review_blockers(checked):
     return blockers
 
 
-def collect_native_assessments(*, prepared_requests, ledger):
+def collect_native_assessments(*, prepared_requests, ledger, original_d04_inputs=False):
     """Read all current source requests; a diagnostic terminal cannot fill one.
 
     This uses the existing ledger and native success reader. Missing/failed
@@ -130,6 +130,10 @@ def collect_native_assessments(*, prepared_requests, ledger):
     need(bool(prepared_requests), 'B13_COMPLETE_REQUEST_SET_REQUIRED')
     source = strict_json_loads(text=prepared_requests[0].source_bytes.decode())
     metric_id = source['metric_id']
+    need(type(original_d04_inputs) is bool and (not original_d04_inputs or
+         metric_id == 'D04' and all(p.requirement.get('record_type') ==
+             'CURRENT_REQUEST_CONFIGURATION_V1' for p in prepared_requests)),
+         'CURRENT_ORIGINAL_D04_INPUT_REQUIRED')
     need(metric_id in {'B13', 'D04'}, 'NATIVE_SOURCE_METRIC_UNSUPPORTED')
     if metric_id == 'D04':
         need(source['record_type'] == 'D04_NATIVE_COMPLETE_SEMANTIC_SOURCE', 'D04_FRESH_NATIVE_SOURCE_REQUIRED')
@@ -196,7 +200,11 @@ def collect_native_assessments(*, prepared_requests, ledger):
             if row['status'] != 'SUCCEEDED':
                 failures.append({'request_id': identity, 'ordinal': row['ordinal'], 'status': row['status']})
                 continue
-            replay = replay_native_response(prepared=prepared, path=path)
+            if original_d04_inputs:
+                from .native_assessment_replay import replay_original_d04_response
+                replay = replay_original_d04_response(prepared=prepared,path=path)
+            else:
+                replay = replay_native_response(prepared=prepared, path=path)
             success = replay['success']; acceptance = success['acceptance_receipt']
             terminal = strict_json_file(path=path / 'terminal.json')
             intent = (strict_json_file(path=path / 'intent.json')

@@ -78,6 +78,36 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
         raw=annual(BODY).replace(b'http://xbrl.sec.gov/dei/2025',b'https://example.org/dei/2025')
         with self.assertRaises(ValueError):self.case(source=binding(raw))
 
+    def test_capacity_successor_keeps_the_complete_source_set_only_above_old_count(self):
+        for count in (64,65,68,128,129):
+            text=''.join('<p><b>Source risk heading '+str(i)+'</b>. Explanation.</p>' for i in range(count))
+            raw=annual(BODY.replace('<p>A supply constraint could affect production.</p>',text))
+            with self.subTest(count=count):
+                if count>128:
+                    with self.assertRaisesRegex(ValueError,'DETERMINISTIC_TEXT_HEADINGS_EXCEED_BOUND'):
+                        self.case(source=binding(raw))
+                    continue
+                case=self.case(source=binding(raw))
+                self.assertEqual(case['selection']['heading_count'],count)
+                self.assertEqual(case['results']['D01']['value'].splitlines(),
+                                 ['Source risk heading '+str(i) for i in range(count)])
+                renderer='ORDERED_NEWLINE_V1' if count==64 else 'ORDERED_NEWLINE_128_V2'
+                self.assertEqual(case['results']['D01']['text_payload']['renderer'],renderer)
+                self.assertEqual(case['spec_paths']['D01'],
+                                 cases.SPEC_PATH if count==64 else cases.CAPACITY_SPEC_PATH)
+
+    def test_source_and_character_failures_are_not_capacity_fallback(self):
+        raw=annual(BODY.replace('<p>A supply constraint could affect production.</p>',
+            '<p><b>'+('A'*64001)+'</b></p>'))
+        with self.assertRaisesRegex(ValueError,'DETERMINISTIC_TEXT_CONTENT_EXCEEDS_BOUND'):
+            self.case(source=binding(raw))
+        with patch.object(cases.d01_emphasis_results,'create_deterministic_text_candidate',
+                          side_effect=ValueError('TEXT_SOURCE_IDENTITY_CHANGED')):
+            with self.assertRaisesRegex(ValueError,'TEXT_SOURCE_IDENTITY_CHANGED'):
+                self.case()
+
     def test_consumed_shared_functions_are_actual_declared_processing_dependencies(self):
         for name in ['d01_emphasis_results','d01_emphasis_source','text_coverage','text_results','risk_signals','text_review','review','historical_dei']:
             self.assertIn('scripts/vnext/'+name+'.py',cases.PROCESSING_FILES)
+        self.assertIn(cases.CAPACITY_SPEC_PATH,cases.PROCESSING_FILES)
+        self.assertIn('scripts/vnext/text_rendering_limits.py',cases.PROCESSING_FILES)

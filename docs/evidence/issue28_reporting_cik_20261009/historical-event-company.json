@@ -1,0 +1,425 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics",
+  "git_parent": "8789b7bd4d515d437d02085c7208e28ccfb92ba7",
+  "uncommitted_at_execution": true,
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "state_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77",
+  "rows": [
+    {
+      "metric": "C01",
+      "year": 2025,
+      "args": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2025",
+        "--fiscal-year-end",
+        "2025",
+        "--metric",
+        "C01",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/state",
+        "--output-dir",
+        "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/out"
+      ],
+      "reused_existing_first_material": true,
+      "first_seconds": 11.79768529185094,
+      "repeat_seconds": 0.9175463749561459,
+      "read_seconds": 0.1256605840753764,
+      "old_error": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN",
+      "actual_row": {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "C01",
+        "metric_name": "CEO / CFO changes",
+        "value": "3",
+        "unit": "count",
+        "status": "8K_ITEM_OK",
+        "source_class": "8K_ITEM",
+        "formula": "",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": "2025",
+        "fiscal_period": "ANNUAL",
+        "accession": "0001193125-25-009110;0001193125-25-118861;0001193125-25-158742",
+        "form": "8-K;8-K/A",
+        "filed_date": "2025-01-21;2025-05-13;2025-07-14",
+        "concept_or_section": "CEO / CFO changes",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"fiscal_year_source_set\", \"fiscal_year\": 2025, \"shared_claim_group_id\": \"leadership_item_5_02\"}, \"selection\": {\"matched_verified_claim_ids\": [\"sha256:298484a847e3d30a1f1f04475b7a90c7c3167ce6b7cac2e14c2350059550c5de\", \"sha256:6ae0e5d4dd6981ed98ed917dcacd19752794178f9d94430ebd9d46b75975ef35\", \"sha256:17e543c70feb68c010ec513a32726fd39fcecca75626a343516ec8b2382dac21\"], \"reason_code\": \"PASS\", \"source_event_accessions\": [\"0001048286-25-000011\", \"0001193125-25-009110\", \"0001193125-25-036732\", \"0001193125-25-118853\", \"0001193125-25-118861\", \"0001193125-25-158742\", \"0001193125-25-184082\", \"0001628280-25-004772\", \"0001628280-25-022390\", \"0001628280-25-037592\"]}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:fad6b06c485aa6415e0dfdfb312d09e774c0d42951288db4d0bbe035c62c52bb\", \"sha256:36c617d02d818b4902d5acf94a0d1d04d4efd5d3400922c92295f8bbf0c17094\", \"sha256:bbe8d18d5b70456fdfe6a7141f2da0e1b2ee5866d814c1fecf09b786ec310e45\", \"sha256:60936afcc1962b3f09c405897c949eb586c262d02fdcd5e316511733012058eb\", \"sha256:b7918006e714a2f7fd504bdb6267415f25cec432dabd167cb9a5fbbedcfcc888\", \"sha256:1f83e50639e251e30a9d72aa512b92666a3d1238a9c34f9afe4b101057dae5cf\", \"sha256:46b84f82f464a007e2db9a2072261bb78d01fa2116e2d0da5ae8bf4d5638b6b8\", \"sha256:61a6a86137f6a970ed09f81a01e7f1635fd9245a556be6e5987a840f7b605ece\", \"sha256:7b56655b78f8633b1c90334cbbb23d0fa2f500317ba3216a4a42986a6bc315c7\", \"sha256:cf130d2988d1fb9f249c865230b00afbe0e54cc31af3a7efc93a336c736927fa\", \"sha256:317b5401fbe6ef4544bf193a8a0f144c0359e680e7c6293ab7ff264d2a1b6be5\", \"sha256:2afc5ddf640c0aaa4cb4142cb7a0d46731c1d8f777997290321cee9e191449d9\", \"sha256:691fb329e31d5d498d01bf3693695a2b456bbc6e9ddef8f6c88f3894f5357caf\", \"sha256:87109107b65e3837910d65360fdbd0f86f569c832c94c35dc8f477db39c33cfc\", \"sha256:124b8847246c3b2b1035f38a9edfd8055b78a34b5829ea329db922848dfafc92\", \"sha256:04bb0255f0a10aaf9794d06b52cc4cbb45f4a45b8717df332bca22cd3741e8c0\", \"sha256:291ee02009d2b24b65045254d61aae4e99f2cda9580bafac1a2e992e37dfdb66\", \"sha256:38d839367e9e4abfd3e2ebb4ddc32a2f53e5a3bf74d9338be0c1059bb33efbb3\", \"sha256:794697f46a8915c60583241949d41513405204326be36bdfc6b384c092e548d4\", \"sha256:d4fdf2105a90e20788593ec0dd8922df5d294c1f446c1386216dfa613c20c65b\"]}",
+        "confidence": "",
+        "notes": "Count of filing items matched by the approved route; it does not confirm a count of real-world business events. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+        "company_id": "marriott_international",
+        "result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+        "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/state/updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "case_source_urls": [
+        "https://data.sec.gov/submissions/CIK0001048286.json",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/d890503d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525009110/0001193125-25-009110.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/mar-20250211.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004772/0001628280-25-004772.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/d927802d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525036732/0001193125-25-036732.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/mar-20250506.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828025022390/0001628280-25-022390.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/d888404d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118853/0001193125-25-118853.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/d935320d8ka.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525118861/0001193125-25-118861.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/d858138d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525158742/0001193125-25-158742.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/mar-20250805.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828025037592/0001628280-25-037592.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/d52476d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312525184082/0001193125-25-184082.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/mar-20251104.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000104828625000011/0001048286-25-000011.hdr.sgml"
+      ],
+      "result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+      "protected_files": {
+        "updates/C01/periods/FY2025/current-result.json": "c282bfa53e6697dd3ebaab59c56fe5818a0e8c4c646f7f948b6a142c1d70302e",
+        "updates/C01/periods/FY2025/completed-check.json": "f4aa0c48209783da2d4dedfe45c8a8c8fd076eb3922804f7c2df3f06ec3b0c4c",
+        "updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6/metrics_matrix.csv": "4e6375452815ec850d93c5a602760d12969602ab5c993b79afa665bbefea9e66",
+        "updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6/metric_evidence.csv": "c68a5ae71a81eceb9031c7732f0c4eb648a402873eb4a6e733ce2428f0bdc161",
+        "updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6/records.jsonl": "4f2ba197e7583dadb395354651bfe4033406fc90c32a50bfda29781c3c8d6174",
+        "updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6/manifest.json": "312612dad214787050c884d2c39ca1534b2ab36690b642f4b6e5ff02f1ebd0d8",
+        "updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6/receipt.json": "5adea4d0450f787b296d2997d966573dc993889df92010c648f5401a34cde988"
+      },
+      "first_report": {
+        "calls": {
+          "paid": 0,
+          "provider": 0,
+          "sec": 0
+        },
+        "company_id": "marriott_international",
+        "metrics": [
+          {
+            "attempt_id": "54be0a093ea84ff7b2db1f16a3cc7fa0",
+            "calculation_performed": true,
+            "defect_holds": [],
+            "metric_id": "C01",
+            "new_calls": {
+              "paid": 0,
+              "provider": 0,
+              "sec": 0
+            },
+            "new_candidate_created": true,
+            "production_authorized": false,
+            "program_version": {
+              "commit": "8789b7bd4d515d437d02085c7208e28ccfb92ba7",
+              "has_uncommitted_changes": true
+            },
+            "read_result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+            "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/state/updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6",
+            "requested_fiscal_year": 2025,
+            "result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+            "result_reason_code": "PASS",
+            "result_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/state/updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6",
+            "source_observation_errors": [],
+            "status": "CANDIDATE_READY",
+            "version": "cbaee7b1b7714b6cb70d1932c971f0a6"
+          }
+        ],
+        "output_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/out/20261010T000548Z-58c07f9c",
+        "production_authorized": false,
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics",
+        "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/state",
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "run_id": "20261010T000548Z-58c07f9c",
+        "selected_fiscal_years": [
+          2025
+        ],
+        "selected_metrics": [
+          "C01"
+        ],
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "status": "FLOW_COMPLETED"
+      },
+      "repeat_report": {
+        "elapsed_seconds": 0.9098958750255406,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "marriott_international",
+        "run_id": "20261010T000724Z-f4833d7f",
+        "status": "FLOW_COMPLETED",
+        "selected_metrics": [
+          "C01"
+        ],
+        "metrics": [
+          {
+            "metric_id": "C01",
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "attempt_id": "f24e684f448f41fb98c12ff0b8313779",
+            "version": "cbaee7b1b7714b6cb70d1932c971f0a6",
+            "result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+            "result_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/state/updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6",
+            "result_reason_code": "PASS",
+            "raw_input_unchanged": true,
+            "calculation_performed": false,
+            "new_candidate_created": false,
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "requested_fiscal_year": 2025,
+            "defect_holds": [],
+            "read_result_id": "sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95",
+            "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/state/updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6",
+            "program_version": {
+              "commit": "8789b7bd4d515d437d02085c7208e28ccfb92ba7",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics",
+        "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/state",
+        "output_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/out/20261010T000724Z-f4833d7f",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "selected_fiscal_years": [
+          2025
+        ]
+      },
+      "read_output": "{\n  \"elapsed_seconds\": 0.07956724986433983,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"marriott_international\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"C01\",\n      \"result_id\": \"sha256:724b92ab35202cc6c9e26099e8d8710f1b4321b5370e7c3b3e086a1d2a895a95\",\n      \"period_start\": \"2025-01-01\",\n      \"period_end\": \"2025-12-31\",\n      \"fiscal_year\": 2025,\n      \"value\": \"3\",\n      \"unit\": \"count\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/state/updates/C01/periods/FY2025/results/cbaee7b1b7714b6cb70d1932c971f0a6\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/C012025/read\"\n}\n"
+    },
+    {
+      "metric": "E05",
+      "year": 2021,
+      "args": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2021",
+        "--fiscal-year-end",
+        "2021",
+        "--metric",
+        "E05",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/state",
+        "--output-dir",
+        "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/out"
+      ],
+      "reused_existing_first_material": false,
+      "first_seconds": 15.6225879159756,
+      "repeat_seconds": 1.1726139169186354,
+      "read_seconds": 0.131610041949898,
+      "old_error": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN",
+      "actual_row": {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "E05",
+        "metric_name": "Material agreements",
+        "value": "1",
+        "unit": "count",
+        "status": "8K_ITEM_OK",
+        "source_class": "8K_ITEM",
+        "formula": "",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "fiscal_year": "2021",
+        "fiscal_period": "ANNUAL",
+        "accession": "0001193125-21-019849",
+        "form": "8-K",
+        "filed_date": "2021-01-28",
+        "concept_or_section": "Material agreements",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"fiscal_year_source_set\", \"fiscal_year\": 2021, \"shared_claim_group_id\": \"agreement_item_1_01\"}, \"selection\": {\"matched_verified_claim_ids\": [\"sha256:5ade11f4a1d370a42346433eff79c7bf07263cca5aaf29b9c4a52587b45f9305\"], \"reason_code\": \"PASS\", \"source_event_accessions\": [\"0001193125-21-019849\", \"0001193125-21-025328\", \"0001193125-21-044857\", \"0001193125-21-056950\", \"0001193125-21-071474\", \"0001193125-21-267374\", \"0001193125-21-278943\", \"0001193125-21-279481\", \"0001628280-21-002419\", \"0001628280-21-004738\", \"0001628280-21-009580\", \"0001628280-21-009942\", \"0001628280-21-015244\", \"0001628280-21-021312\"]}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:be3e1cd86e8288dd339e450b2d3fa7673a6a010ed6b2994dbef898e3f3701161\", \"sha256:afa17942f8975432aa2daa22ad7d35c38297ba5b635a2f4bc2a844063f241790\", \"sha256:adbd8a7a88f10eb9e8f28aff013c04871e339ba74289a8d7a85bb4ccb7937881\", \"sha256:b71090c0860313f7a5dcf3c889f55b0f74b0b93dcec02329723f88be44fd2946\", \"sha256:f2c5ba386243798ed80e56c731c2bd2dd2222ad121524bde57b6720b9017b920\", \"sha256:8694b4b70aaee25774ab62c62f69c5df42feacb5cbb7d6a74be49b4a00d248f3\", \"sha256:663d5c5d5bc3e36582e4bbb8e8ecba7314f54f6e2acca6958a664ca8b48d33d2\", \"sha256:3ceac4f408ef6037287cd646ccee4bd3d7817aeb879eaea558419b0226670cd9\", \"sha256:92b9712b0c423426a7cfa0becdfc6a6652bb8864eed6abb3ce94635165b0cf11\", \"sha256:0f6786dabda2db1755df063936e89d6da25a3246022c7256bc5e0a5fd7241b48\", \"sha256:16bb366c3cd0e11073579551d04824cb718bfe78fa2531378da67162df44cd9f\", \"sha256:05e97be558e18060426b9466f4ecc3bcbdfe021d876b460ea574a077d23c549c\", \"sha256:bb8b0216fc6740e7ae96cd8cb38b4648afe7b50d4bf515a77b4bae4ef3a8ad56\", \"sha256:a21b4a74fc303012f9ab613ea5b291fbe681c2bdd91877446e6fa1577fc7c5ed\", \"sha256:1f5a78cf1c4cabb7c4ffbf989c6d0896135d7ba4678748eb343f7a1fae744df3\", \"sha256:a741f8e17962092b49edfe34b4cd5cf9c5555f299b91b76d48dc7f88a850d53f\", \"sha256:e4b24fce23b773f9d4d8c47d7c6bf4ca15befa5f48264f061a878e50a1f9c7f8\", \"sha256:bc2f339a32e5adf64ab1437872595cb16dfd94594d4c759c16a6bf6286fb7fe1\", \"sha256:66575a582d8ded6d162ae18cf5e70bf9348b69bc0b00a910aa374e77a11978ca\", \"sha256:37f013846aabaa32e4aa516a885498293dd3a09b87ab0e157cd0a57350ebca21\", \"sha256:4bd0cc0cd777ed11ddcce0e409d9ba1756b3f297cff443a944324021d372cc3d\", \"sha256:a1d85035f37e17d2b6f9cde7a7577b78a5df78c0daa1e059d3a893f915b3ccc2\", \"sha256:37740fa0050c02053d4a96ab861fa55ef5f207934af846be353b612ae965914e\", \"sha256:90c06b517937b60525ddd735933c6ff48727b880b9440738d83a078c72809356\", \"sha256:216dbf99f92353d8d76d712c35044db3756c2f27301e765385b28f063984c9d2\", \"sha256:a45763f32c9beaf18abf324eca03920f1c0b8726622694cee17e01193a74982d\", \"sha256:5880c839b5cd363af20b7532c98cb99ddcfe7457cfb7871bf4f331e159c887c6\", \"sha256:331a3298dbf0903b2a027704fcf09e60ab3683e76a9679e49a1f38cbd7bbb4ed\"]}",
+        "confidence": "",
+        "notes": "Count of filing items matched by the approved route; it does not confirm a count of real-world business events. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+        "company_id": "marriott_international",
+        "result_id": "sha256:c545a0734370e56269c3bdf1bdb19ee3da16e53afdbfd1b8e4d36b964cb60fdd",
+        "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/state/updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      "case_source_urls": [
+        "https://data.sec.gov/submissions/CIK0001048286.json",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521019849/d59364d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521019849/0001193125-21-019849.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521025328/d125705d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521025328/0001193125-21-025328.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521044857/d112089d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521044857/0001193125-21-044857.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021002419/mar-20210218.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021002419/0001628280-21-002419.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521056950/d125070d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521056950/0001193125-21-056950.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521071474/d133751d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521071474/0001193125-21-071474.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021004738/mar-20210312.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021004738/0001628280-21-004738.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021009580/mar-20210510.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021009580/0001628280-21-009580.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021009942/mar-20210507.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021009942/0001628280-21-009942.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021015244/mar-20210803.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021015244/0001628280-21-015244.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521267374/d211557d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521267374/0001193125-21-267374.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521278943/d203995d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521278943/0001193125-21-278943.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521279481/d191158d8k.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000119312521279481/0001193125-21-279481.hdr.sgml",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021021312/mar-20211103.htm",
+        "https://www.sec.gov/Archives/edgar/data/1048286/000162828021021312/0001628280-21-021312.hdr.sgml"
+      ],
+      "result_id": "sha256:c545a0734370e56269c3bdf1bdb19ee3da16e53afdbfd1b8e4d36b964cb60fdd",
+      "protected_files": {
+        "updates/E05/periods/FY2021/current-result.json": "1fb9fb3c81d8878caed00a83754d64ffda5555306cbf3ed67daaf03828648e79",
+        "updates/E05/periods/FY2021/completed-check.json": "00a6726dd61f73950960dac7ebff6e43e85ac1c724fdb7f6e4df347d3edd3f44",
+        "updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42/metrics_matrix.csv": "0e85d9e3fb9cebdd14e4acd1e3330d362571c5f55d6e1f048997b6a8de9d2863",
+        "updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42/metric_evidence.csv": "8d61b65536890127dd27f3f3edd09ee6e0b0dc2f489be3d3c0263dc0be188b5d",
+        "updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42/records.jsonl": "2e0a84067da3ce9b6633c2b028ba3f3f362f4936b3861c451bd43b4ed08b87a6",
+        "updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42/manifest.json": "c3e29643ab14c8b47a4adf359dd9078738b82d8316f64153f00da70ce5f674d7",
+        "updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42/receipt.json": "b9923e13fa9ece2865483ba38a648610801bbe7227ff16b995b3d2c749c412b7"
+      },
+      "first_report": {
+        "elapsed_seconds": 15.620451166993007,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "marriott_international",
+        "run_id": "20261010T000725Z-2ac299f2",
+        "status": "FLOW_COMPLETED",
+        "selected_metrics": [
+          "E05"
+        ],
+        "metrics": [
+          {
+            "metric_id": "E05",
+            "status": "CANDIDATE_READY",
+            "attempt_id": "fbea525f953a47da9aed16a34d7415b4",
+            "version": "f3ad9b58a7dc4534a1dfd082a72bdb42",
+            "result_id": "sha256:c545a0734370e56269c3bdf1bdb19ee3da16e53afdbfd1b8e4d36b964cb60fdd",
+            "result_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/state/updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42",
+            "calculation_performed": true,
+            "new_candidate_created": true,
+            "result_reason_code": "PASS",
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "requested_fiscal_year": 2021,
+            "defect_holds": [],
+            "read_result_id": "sha256:c545a0734370e56269c3bdf1bdb19ee3da16e53afdbfd1b8e4d36b964cb60fdd",
+            "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/state/updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42",
+            "program_version": {
+              "commit": "8789b7bd4d515d437d02085c7208e28ccfb92ba7",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics",
+        "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/state",
+        "output_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/out/20261010T000725Z-2ac299f2",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "selected_fiscal_years": [
+          2021
+        ]
+      },
+      "repeat_report": {
+        "elapsed_seconds": 1.171604875009507,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "marriott_international",
+        "run_id": "20261010T000741Z-c5ce4f3b",
+        "status": "FLOW_COMPLETED",
+        "selected_metrics": [
+          "E05"
+        ],
+        "metrics": [
+          {
+            "metric_id": "E05",
+            "status": "NO_SOURCE_CONTENT_CHANGE",
+            "attempt_id": "0b0f701c5b7c4dafb708ef00d223f053",
+            "version": "f3ad9b58a7dc4534a1dfd082a72bdb42",
+            "result_id": "sha256:c545a0734370e56269c3bdf1bdb19ee3da16e53afdbfd1b8e4d36b964cb60fdd",
+            "result_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/state/updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42",
+            "result_reason_code": "PASS",
+            "raw_input_unchanged": true,
+            "calculation_performed": false,
+            "new_candidate_created": false,
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "requested_fiscal_year": 2021,
+            "defect_holds": [],
+            "read_result_id": "sha256:c545a0734370e56269c3bdf1bdb19ee3da16e53afdbfd1b8e4d36b964cb60fdd",
+            "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/state/updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42",
+            "program_version": {
+              "commit": "8789b7bd4d515d437d02085c7208e28ccfb92ba7",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics",
+        "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/state",
+        "output_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/out/20261010T000741Z-c5ce4f3b",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "selected_fiscal_years": [
+          2021
+        ]
+      },
+      "read_output": "{\n  \"elapsed_seconds\": 0.0816086248960346,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"marriott_international\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"E05\",\n      \"result_id\": \"sha256:c545a0734370e56269c3bdf1bdb19ee3da16e53afdbfd1b8e4d36b964cb60fdd\",\n      \"period_start\": \"2021-01-01\",\n      \"period_end\": \"2021-12-31\",\n      \"fiscal_year\": 2021,\n      \"value\": \"1\",\n      \"unit\": \"count\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/state/updates/E05/periods/FY2021/results/f3ad9b58a7dc4534a1dfd082a72bdb42\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-event-reporter-58vh_m77/E052021/read\"\n}\n"
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "source_read_only": true,
+  "extra_event_primary_reads": 0,
+  "verifier_failure": "original broad state hash included mutable latest-check and new check receipts; final protects only results/current/completed",
+  "scope": "actual existing-event source claims -> company CLI -> save -> forbidden repeat -> independent results -> CSV; preserved count semantics, not new content-defined E01"
+}

@@ -1,0 +1,26 @@
+test_combined_or_unproven_subject_policy_does_not_get_single_reporter_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_combined_or_unproven_subject_policy_does_not_get_single_reporter_view) ... ok
+test_current_reporter_preserves_current_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_current_reporter_preserves_current_view) ... ok
+test_different_filing_or_bad_entity_does_not_gain_display_identity (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_different_filing_or_bad_entity_does_not_gain_display_identity) ... ok
+test_explicit_null_issuer_fields_use_verified_annual_without_modifying_trace (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_explicit_null_issuer_fields_use_verified_annual_without_modifying_trace) ... ok
+test_nullable_contract_does_not_hide_filled_conflicts_or_missing_fields (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_nullable_contract_does_not_hide_filled_conflicts_or_missing_fields) ... FAIL
+test_predecessor_reporting_cik_changes_only_presentation_view (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_predecessor_reporting_cik_changes_only_presentation_view) ... ok
+test_unregistered_reporter_or_cross_subject_trace_is_rejected (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_unregistered_reporter_or_cross_subject_trace_is_rejected) ... ok
+
+======================================================================
+FAIL: test_nullable_contract_does_not_hide_filled_conflicts_or_missing_fields (tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest.test_nullable_contract_does_not_hide_filled_conflicts_or_missing_fields)
+----------------------------------------------------------------------
+ValueError: ORDINARY_PROJECTION_TRACE_SUBJECT_CHANGED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tests/vnext/test_reporting_company_projection.py", line 65, in test_nullable_contract_does_not_hide_filled_conflicts_or_missing_fields
+    with self.assertRaisesRegex(ValueError,'REPORTER_SCOPE_NOT_PROVEN'):self.view()
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "REPORTER_SCOPE_NOT_PROVEN" does not match "ORDINARY_PROJECTION_TRACE_SUBJECT_CHANGED"
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 7, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_reporting_company_projection"]}
