@@ -189,3 +189,20 @@ class CompanyFiscalRangeTest(TestCase):
         with self.assertRaisesRegex(ValueError,'METRIC_NOT_CONNECTED'):
             ranges.discover_fiscal_range(repo_root=self.source,company_id=COMPANY,
                 fiscal_year_start=2025,fiscal_year_end=2025,metric_ids=['D04'])
+
+    def test_only_an_explicit_absent_label_gets_missing_source_category(self):
+        producer=lambda **kw:self.fail('Unresolved input cannot calculate')
+        limits=[
+            [{'phase':'FISCAL_LABEL_UNIQUENESS','reason':'FISCAL_YEAR_MISSING_OR_AMBIGUOUS','matching_report_ends':['2024-12-31','2025-12-31']}],
+            [{'phase':'FISCAL_LABEL','reason':'CONDITIONAL_FISCAL_DEFINITION','category':'SOURCE_OR_READER_ERROR'}],
+            [{'phase':'ANNUAL_METADATA','reason':'KeyError: filings','category':'SOURCE_SCHEMA_OR_READER_ERROR'}],
+            [], ['unstructured-reader-failure'], None, 'missing',
+        ]
+        for limitations in limits:
+            factories=ranges.range_case_factories(company_id=COMPANY,fiscal_years=[2025],
+                metric_ids=['B01'],case_factories={'B01':producer})
+            plan={'tasks':[{'fiscal_year':2025,'status':'FISCAL_YEAR_SOURCE_UNRESOLVED','limitations':limitations}]}
+            with self.subTest(limitations=limitations),patch.object(ranges,'discover_fiscal_range',return_value=plan):
+                with self.assertRaisesRegex(ValueError,'YEAR_UNRESOLVED') as caught:
+                    factories['B01'](repo_root=self.source,company_id=COMPANY,metric_id='B01',fiscal_year=2025)
+                self.assertNotEqual('SOURCE_UNAVAILABLE',getattr(caught.exception,'category',None))
