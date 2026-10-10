@@ -5,6 +5,8 @@ name: Company saved-source records
       - 'scripts/**'
       - 'tools/vnext_company.py'
       - 'tests/vnext/test_company_current_records.py'
+      - 'tests/vnext/test_single_revenue_line.py'
+      - 'tests/vnext/test_selected_reported_revenue_v2.py'
       - 'tests/vnext/test_paired_measure_contradiction.py'
       - 'tests/vnext/test_current_d04_company.py'
       - 'tests/vnext/test_ordinary_current_update.py'
@@ -76,6 +78,10 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 tests/required_unittests.py tests.vnext.test_d04_processing_scope
+      - name: Explicit single revenue source and unchanged period defaults
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_financial_duration tests.vnext.test_selected_income_source_v1
       - name: Complete D04 company model input gates
         run: python3 tests/required_unittests.py tests.vnext.test_current_d04_company
       - name: Selected event sources and explicit history validation
