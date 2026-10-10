@@ -262,10 +262,12 @@ class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
         self.assertEqual(claims, before)
 
     def test_wrong_unit_entity_accession_or_amount_cannot_supply_the_original_total(self):
-        for key in ('unit', 'entity', 'accession', 'value'):
+        for key in ('unit', 'entity', 'accession', 'value', 'concept', 'period'):
             reader, annual, claims, concepts = self.prepared_claims()
             if key in ('entity', 'accession'):claims[1]['attributes'][key] = 'wrong'
             elif key == 'unit':claims[1]['unit'] = 'EUR'
+            elif key == 'concept':claims[1]['locator']['concept'] = 'SalesRevenueNet'
+            elif key == 'period':claims[1]['locator']['period_end'] = '2025-12-30'
             else:claims[1]['value'] = '58497000000'
             with self.subTest(key=key), self.assertRaises(ValueError):
                 self.admit(reader, annual, claims, concepts)
@@ -294,7 +296,7 @@ class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
 class HistoricalPairedRevenueCaseTest(unittest.TestCase):
     """Constructed full adapter control; graph stubs are not financial evidence."""
 
-    def case(self, *, unresolved_role=None):
+    def case(self, *, unresolved_role=None, wrong_operand=False):
         from contextlib import ExitStack
         from types import SimpleNamespace
         from tests.vnext.test_selected_revenue_scope_v1 import originals
@@ -333,9 +335,12 @@ class HistoricalPairedRevenueCaseTest(unittest.TestCase):
             stack.enter_context(patch.object(cases, '_filing_source', side_effect=[
                 ({'manifest': {}}, [current_claim]), ({'manifest': {}}, [prior_claim])]))
             stack.enter_context(patch.object(cases, '_revenue_claims_admitted_by_original', side_effect=scope))
+            actual_claims = [current_claim, prior_claim]
+            if wrong_operand:
+                actual_claims = [dict(current_claim, verified_claim_id='foreign-operand'), prior_claim]
             graph = stack.enter_context(patch.object(cases, '_deterministic_metric_graph', return_value={
                 'result': {'publication': 'PUBLISHED'}, 'trace': {}, 'observation': None,
-                'claims': [current_claim, prior_claim]}))
+                'claims': actual_claims}))
             case = cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
                 company_id=annual['company_id'], metric_id='B02', fiscal_year=2025)
             return case, graph.call_count
@@ -356,6 +361,10 @@ class HistoricalPairedRevenueCaseTest(unittest.TestCase):
                 self.assertIsNone(case['results']['B02']['value'])
                 self.assertEqual(case['results']['B02']['reason_code'], 'HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED')
                 self.assertEqual(case['input_assessments']['historical_statement']['unresolved_revenue_role'], role)
+
+    def test_graph_cannot_select_an_operand_outside_the_admitted_original_claims(self):
+        with self.assertRaisesRegex(ValueError, 'SELECTED_OPERAND_CHANGED'):
+            self.case(wrong_operand=True)
 
 
 class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
