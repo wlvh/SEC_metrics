@@ -1,0 +1,28 @@
+# Historical D04 consumer seam over saved calls
+
+This continues the existing paid batch, without another model trial, ledger, caller, controller or result credit. The input archive remains the committed PR52 material at `evidence/issue47_model_calls/9a368413797ddef1/model-ledger.tar.gz`, obtainable from the retained `task/sec-history-five-year` branch. The archive was read in place; it was not extracted, rewritten or reauthorized. Original binding is `issue_47_v1`, limits35/35/0 and original purpose `ISSUE47_HISTORICAL_SEMANTIC_ASSESSMENT`.
+
+Actual saved native source format is `D04_NATIVE_COMPLETE_SEMANTIC_SOURCE`, request context `deepseek-v41-two-message-json-chat-1`, response contract `D04_COMPLETE_UNITS_V1`. The new16 requests in this archive are MarriottFY2023 slots20–23/16units, MarriottFY2024 slots24–27/18units, ParamountFY2024 slots28–35/40units. An initial oral attribution of28–31 toLumen was wrong and was corrected before any credit or code change; no Lumen new call belongs to these slots. Existing older reused paths are separate. Model/provider calls are not issued again.
+
+## Real inputs through shared checks and actual company entry
+
+`validate_request_partition` accepts MarriottFY2023 source plus allfour original requests. `source_equivalence` accepts that same source unchanged. Using FY2024 instead refuses `UPDATE_NATIVE_SUBSTANTIVE_SOURCE_CHANGED`; substituting a FY2024 request into the FY2023 group refuses `NATIVE_REQUEST_VARIANT_NOT_SOURCE_BOUND`. These are real archived inputs, not fabricated correct answers. They prove input partition/correspondence controls only, not full semantic or media acceptance of the replies.
+
+Actual standalone company CLI at unchanged143 source22a5 plus evidence-only consumer commits:
+
+```bash
+python3 tools/vnext_company.py run --company marriott_international \
+  --period fiscal-years --fiscal-year-start 2023 --fiscal-year-end 2023 \
+  --metric D04 --source-root "$ISSUE47_SAVED_SOURCE_ROOT" \
+  --work-dir "$ISSUE47_EXISTING_STATE" --output-dir "$ISSUE47_NEW_OUTPUT"
+```
+
+This currently refuses before the writer with `LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED`, exit1/uncaughtValueError, in0.594s. All147 existing Marriott state files remain unchanged. The first developer harness expected controlled exit2 incorrectly; its original stderr is retained. The corrected observation uses the actual standalone entry with socket forbidden and verifies the exact unsupported-family refusal. This is an implementation/entry gap, not missing disclosure or structural N/A; no D04 result was created. A named limited/withheld company result, if applicable, still needs the same shared producer/ordinary writer integration rather than this early exit.
+
+## Required public seam, historical responsibility
+
+The existing `prepare_current_d04_case` always prepares latest current source, while `prepare_requests` loads the public240/240/80 configuration and restricts live source roots to its own budget directory. That cannot select FY2023 or silently transfer these original35 calls into the public allowance. A public read-only replay seam must accept the explicitly selected annual/source and the original saved request/answer/ledger identities, preserve original purpose/counts, verify current saved source correspondence and aggregate every required group using the same existing primitives. Historical side supplies period selection, adapter and affected company validation; public28 owns request/replay/runtime/storage integration. No competing implementation is added here.
+
+The original package/saved responses are available and source format is compatible, but the historical company route is unfinished. The current MarriottFY2025 public chain is not evidence for this earlier period or for the original historical budget. Prior full-media limitations and missing image interpretation remain; mechanical group success does not grant full filing semantics. Old answers cannot be relabelled as a different contract/request or have excerpts trimmed to manufacture acceptance.
+
+One index and one control/actual-entry receipt retain exact paths, source/request identifiers, timings and failure. No new SEC/provider/paid calls, NativeRun, business acceptance, Ready/merge/adoption/deploy/active change.
