@@ -31,3 +31,34 @@ Use existing restoredsource-inputs; code/source read only, state/output external
 Only originalFY2021 is normally processed in the existing Marriott C03 task after adding the real SCT capability;72.678s gives the same two-person withheld03d5e338 result as the isolated source case. FY2022..2025 are never passed to a calculation factory. Old79 files including source-failure checks/partial result records are preserved where immutable; no JSON pointer/config is manually patched. Forbidden FY2021 repeat9.009s calculates0. Independent company results7.470s leaves92 state files unchanged and reads allfive historical years in one view: FY2021 WITHHELD/null/twopeople and FY2022–25 existing18,686,271/22,664,045/21,934,093/22,970,926 values/IDs, each real DEF14A metadata. The FY2026 missing-source failure also remains as unrequested saved check. No hand-spliced CSV or second task merge is used.
 
 The existing task closes the first-year program gap to a genuine business restriction; this is not authority to call allcompany/C03/1950 complete. Older ECD versions remain read under their saved program/source identity, not silently relabelled as processed under the new SCT configuration. Full-range cache reuse across newly declared SCT dependencies is separately limited; we do not recalculate four old years merely to fill that assertion. Publicbd920cea limited-review evidence is received normally, source remainsc1b and no source/runtime logic changes.
+
+
+## Reception combination at actual main f51d8c3d
+
+Read #28 comment6098982022 and #47 comment6098985256 before this receiving check. Remote main remains f51d8c3d. No implementation, test runner, fiscal selection or original source is rebuilt. Actual candidate151/813cf6a1 already contains mainf51; normal merge reports already up to date and merge-tree is clean.
+
+Receive dependencies by capability: PR148/98e5312e supplies shared ECD release/gate/proxy display; PR149/77b77724 supplies historical first-proxy preparation and company dispatch; PR150/bd920cea supplies untagged SCT source (sourcec1b141d4, based148); PR151/813cf6a1 contains149+150 and the narrow fallback/derived assets. Receiving148,149,150 then151 does not require importing the old historical branch. PR151 is itself an obtainable combined tree. None is main/adopted yet. PR144/145/146/147 and model configuration are not prerequisites.
+
+For a fresh review checkout, use an unused path/branch and the existing complete source-inputs root. A first restoration, only if absent, uses the retained task/sec-history-five-year export/restore tool described in docs/historical_company_usage.md; inspect its returned data_root and return to the candidate code checkout before running these commands. Restoration and this entry make no network requests. Code and source are read only, state/output external and new. The guide in this candidate distinguishes main from the two C03 candidates.
+
+```sh
+git fetch origin task/issue47-c03-proxy-sct-consumer-20261010
+git worktree add -b review/issue47-c03 ../SEC_metrics-c03-review 813cf6a1
+cd ../SEC_metrics-c03-review
+python3 tools/vnext_company.py run --company pfizer \
+  --period fiscal-years --fiscal-year-start 2021 --fiscal-year-end 2025 \
+  --metric C03 --source-root "$ISSUE47_SAVED_SOURCE_ROOT" \
+  --work-dir /new/pfizer-c03/state --output-dir /new/pfizer-c03/runs
+python3 tools/vnext_company.py results --company pfizer \
+  --state-root /new/pfizer-c03/state --output-root /new/pfizer-c03/read-01
+```
+
+The saved source references and exact first-proxy metadata are in the original records, with actual company results in pfizer-fiveyear/, enphase-fiveyear/ and the original three SCT cases above. Pfizer FY2021 uses SCT, FY2022–25 ECD; actual five-year values24,353,219/33,017,453/21,562,064/24,648,727/27,585,301USD are already checked. MarriottFY2021 remains a two-CEO business hold; LumenFY2022 multiple amounts and MacyFY2022 actual fiscal-period mismatch are not promoted to success. Proxy amendments and missing source remain separate unfinished paths. Public source/gate limited review is not company acceptance.
+
+This checkpoint runs49 source/name/history-dispatch/state controls in.456s with zero skips. Their real assertion execution is in main-receiving/main-combination-controls.log; existing151 remote company/fast11-method execution and eleven terminal-success checks are reused, not rerun for this evidence branch.
+
+One additional same-task mixed check preserves a material boundary. In the original Pfizer task, FY2025 C03+B02 with internal preparation/calculation/network forbidden gives C03 NO_SOURCE_CONTENT_CHANGE and B02 INPUT_OR_EXECUTION_FAILED at the constructed preparation control (3.562s, exit2). It is not a financial withholding or mixed reuse PASS. That old B02's creator91537993 configuration has genuine historical statement/fiscal-label/paired-measure and shared writer/projection differences; the isolated C03 change is not the only difference. The small saved configuration reproducer is provided to #28, which owns dependency/transition decisions; no hashes or pointers are manually modified and no old result is recomputed to hide the limitation. PR138's finite D04-only transition cannot be assumed to cover it.
+
+Independent results after that check takes1.030s, returns all30 existing rows with every value/unit/CIK/date/accession/ResultID/status unchanged, and does not modify state. The old B02 is displayed as a previous result after the failed current check, not as a newly verified current conclusion. Source log61252ac5 and manifeste9119340 remain unchanged. There are no new result directories or business calls. The initial harness import/name error and invalid whole-factory substitution are retained as test harness failures; the corrected internal guard retains the actual factory identity. A continuation harness NameError occurred only after read/state/row assertions had passed; final summary was completed from those saved outputs without repeating the run.
+
+The combined candidate is technically available with the above old-task boundary. New-task processing, same-input repetition, independent reading and old-version migration are distinct claims. No claim of complete C03/1950, online source preparation, default currentC03, adoption, Ready, merge, deployment or active permission is made.

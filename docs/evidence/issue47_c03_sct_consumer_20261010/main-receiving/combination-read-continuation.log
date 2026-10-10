@@ -1,0 +1,6 @@
+combination-independent-read 1.0295155830681324 0
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/c03-pfizer/resume_receiving_read.py", line 66, in <module>
+    for p,digest in source_before.items())
+                    ^^^^^^^^^^^^^
+NameError: name 'source_before' is not defined
