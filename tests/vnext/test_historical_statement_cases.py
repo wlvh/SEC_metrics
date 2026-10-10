@@ -129,7 +129,9 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
     def test_display_is_bounded_while_complete_scope_evidence_is_retained(self):
         value, _, _ = self.prepare()
         full = value['input_assessments']['historical_statement']['selected_revenue_scope']
-        self.assertTrue(full['splits'])
+        self.assertTrue(full['reported_totals'])
+        self.assertEqual(full['method'],'SELECTED_REPORTED_CONSOLIDATED_REVENUE_V2')
+        self.assertNotIn('splits',full)
         self.assertEqual(value['input_binding']['assessment']['selected_revenue_scope'], full)
         self.assertEqual(set(value['selection']['selected_revenue_scope']),
                          {'scope_id', 'status', 'complete_scope_proven'})
@@ -150,7 +152,17 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
 
     def test_processing_configuration_includes_shared_scope_dependency(self):
         self.assertIn('scripts/vnext/selected_revenue_scope_v1.py', cases.INCOME_PROCESSING_FILES)
+        self.assertIn('scripts/vnext/selected_reported_revenue_v2.py', cases.INCOME_PROCESSING_FILES)
         self.assertNotIn('scripts/vnext/selected_revenue_scope_v1.py', cases.PROCESSING_FILES)
+        self.assertNotIn('scripts/vnext/selected_reported_revenue_v2.py', cases.PROCESSING_FILES)
+
+    def test_no_reported_total_retains_the_existing_component_scope_path(self):
+        from vnext import selected_reported_revenue_v2 as reported
+        with patch.object(reported,'reported_revenue_scope',return_value={'complete_scope_proven':False}):
+            value,_,_=self.prepare()
+        full=value['input_assessments']['historical_statement']['selected_revenue_scope']
+        self.assertTrue(full['splits'])
+        self.assertEqual(value['results']['B01']['value'],'58496000000')
 
 
 class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
