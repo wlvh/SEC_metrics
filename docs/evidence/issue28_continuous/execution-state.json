@@ -6404,6 +6404,30 @@
       "verdict": "PASS_LIMITED_EXPLICIT_GATE_AND_PROXY_DISPLAY; FULL_C03_COMPANY_CHAIN_NOT_REPRODUCED_BY_REVIEWER",
       "increment_tool_calls": 20,
       "increment_ordinary_messages": 1
+    },
+    {
+      "task_name": "review_proxysct_c1b141d",
+      "purpose": "LIMITED_INDEPENDENT_REVIEW_INCREMENT",
+      "module": "PUBLIC_PROXY_SCT_SOURCE_AND_IDENTITY",
+      "scope_paths": [
+        "scripts/vnext/proxy_compensation_source.py",
+        "scripts/vnext/proxy_source_identity.py",
+        "scripts/vnext/organization_name_core.py",
+        "scripts/vnext/historical_board_composition_v2.py re-export",
+        "scripts/vnext/ordinary_current_update.py C02 dependency",
+        "config/ordinary_public_projection_v1.json C03 spec override",
+        "catalog/r6/C03_proxy_compensation_table_v1.md",
+        "tests/vnext/test_proxy_compensation_source.py",
+        "tests/vnext/test_organization_name_core.py",
+        ".github/workflows/vnext-fast.yml new step"
+      ],
+      "patch_sha": "c1b141d4103c78f988e6fad38f0a0cb48642f2f8",
+      "spawned_at": "2026-10-10T13:48:23.034876+00:00",
+      "ended_at": "2026-10-10T14:01:00Z",
+      "tool_calls": 55,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-proxy-compensation/SEC_metrics/docs/evidence/issue28_proxy_compensation_20261010/independent-review/conclusion.md",
+      "verdict": "LIMITED_REVIEW_PASS_NO_ACTIONABLE_FINDINGS; NO_REAL_CORPUS_OR_COMPANY_CHAIN_REPRODUCTION",
+      "ordinary_messages": 3
     }
   ],
   "ci_capacity_20260922": {
@@ -19774,6 +19798,74 @@
     },
     "evidence_boundary": "Peer actual original-source companyCLI executed working combination; root fetched fixed source+receipts/read and compared four public blobs. Root did not rerun peer companychain or grantbusiness adoption. Source currentactual table/facts separatelyverified on rootfour savedproxies",
     "peer_initial_failure": "REPORTER_SOURCE_NOT_PROVEN because consumer missing annual primary ref; peer fixed reference set without relaxing public checks, old partial directory/failure preserved",
-    "next_owned_public_work": "Receive existing noECD proxy SCT source capability from retainedbcc0 via minimal explicit shared interface; peer owns selected-year/firstproxy consumer; do notclaim allcurrent orfive-year C03 complete"
+    "next_owned_public_work": "Receive existing noECD proxy SCT source capability from retainedbcc0 via minimal explicit shared interface; peer owns selected-year/firstproxy consumer; do notclaim allcurrent orfive-year C03 complete",
+    "public_ci_terminal": {
+      "head": "98e5312e2b1e5170724055a171942f9c10f337a6",
+      "checks": 11,
+      "conclusion": "SUCCESS",
+      "observed_at": "2026-10-10T12:48:44.365562+00:00"
+    },
+    "peer_pr149_observation": {
+      "head": "77b777248ed958f87bce31085b94704fb29b3f0b",
+      "base": "task/issue28-c03-release",
+      "base_sha": "98e5312e2b1e5170724055a171942f9c10f337a6",
+      "success": 10,
+      "in_progress": 1,
+      "not_business_adoption": true
+    },
+    "next_reference_inspection": "Read retainedbcc0 historical_proxy_compensation.py/identity/spec dependencies only; shared identity currently imports C02 name helper plus old release-aware wrappers. No wholemodule import or new source/body reread; next pure-source interface must separate those dependencies."
+  },
+  "proxy_compensation_public_20261010": {
+    "base_public_c03": "98e5312e2b1e5170724055a171942f9c10f337a6",
+    "actual_main": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+    "source_sha": "c1b141d4103c78f988e6fad38f0a0cb48642f2f8",
+    "branch": "task/issue28-proxy-compensation",
+    "original_source_reference": "bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786",
+    "name_helper_source": "4bcf6fbf9b92337940c6321eb84e1f1d10b9330c",
+    "received_dependency_files": [
+      "organization_name_core.py",
+      "historical_board_composition_v2.py re-export",
+      "test_organization_name_core.py"
+    ],
+    "owned_source_files": [
+      "proxy_source_identity.py",
+      "proxy_compensation_source.py"
+    ],
+    "interfaces": "resolve_proxy_compensation_table original signature; PROCESSING_FILES; original C03_proxy_compensation_table_v1.md bytes",
+    "author_actual_source_checks": "MacyFY21 12290931USD/7.685s;MarFY21twoCEO withheld/4.797s;JPMFY21 84428145USD/19.961s, actualsource proofs/bytes/networkforbidden, no company chain claim",
+    "author_tests": "13smallcontrols0.095s;94affected85.378s zero skip; eight original table functions ASTsame; Specbytes same",
+    "known_citation_repair": "Trailing standalonefootnote totalcalculatedcorrect but original amount_locator pointed7. Failure preserved; last retained amountcell and actualresolve_cell recovery nowchecked",
+    "review_status": "c1b141d4 limitedPASS14tests/3.039s+21controls+2constructedactualrenderer controls;55tools3messages ended. No actualoriginal corpus/companyCLI/wholeC03/production credit",
+    "presentation": "Only explicit proxy SCT Spec PROXY/MDA_OK; existingtable_locator/raw_text/witnesses; oldpresentdefaults unchanged",
+    "dependency": "C02 only recognizes newnamehelper; perSCT dependencydeclaredexplicit, no globalpolicy expansion",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "next": "Read fixed thin consumer/company receipt, independently inspect original amount/subject/period/locator; no re-run completed source/review or old ledger/calls",
+    "delivery_head": "bd920cea037ac9f283e9e4228a6c3a6176c6c70b",
+    "pr_url": "https://github.com/wlvh/SEC_metrics/pull/150",
+    "push_status": "PUSHED_DRAFT; stacked on PR148, source c1 unchanged; bd evidence only",
+    "ci": "First actual server read: 2SUCCESS/9IN_PROGRESS; not terminal or inherited green",
+    "peer_company_notification_unverified": "Actual peer notification says Macy21 12290931USD/138.772s, Mar21twoCEO WITHHELD/null78.368s, Ford21 22813174USD/106.455s; forbidden-factory repeat and independent reads; fixed receipt/source still to read"
+  },
+  "github_handoff_read_20261010_increment": {
+    "actual_main": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+    "issues_read": [
+      28,
+      47
+    ],
+    "latest_receiving_comments": [
+      6095577791,
+      6095578058
+    ],
+    "receiving_effect": "PR139/137 actually in main; Pfizer B02 fix and five-year consumer read, no duplicate development",
+    "related_feedback_read": "PR148/149 actual heads and PR149 full CI/source tests plus Mar22-25 consumer comments read; source/business/company credit separate",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ]
   }
 }
