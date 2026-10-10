@@ -328,6 +328,7 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         except (*_SOURCE_ERRORS, NormalCompanyfactsError, StatementCaseError, IncomeSourceError) as error:
             prior_error = {'category': getattr(error, 'category', 'SOURCE_OR_IMPLEMENTATION_UNRESOLVED'),
                 'reason': str(error), 'error_type': type(error).__name__,
+                'unresolved_revenue_role': role,
                 'paired_revenue_scopes': paired_revenue_scopes}
             assessment = prior_error
     if metric_id == 'B01':
@@ -400,7 +401,9 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         selected_claims = claims
     elif prior_error:
         result, trace = withheld_metric_result(compiled_spec=spec, target=target,
-                                               reason_code='HISTORICAL_PRIOR_INPUT_UNRESOLVED')
+            reason_code=('HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED'
+                         if 'unresolved_revenue_role' in prior_error
+                         else 'HISTORICAL_PRIOR_INPUT_UNRESOLVED'))
         observations, selected_claims = [], []
     else:
         context = {'repo_root': ROOT, 'deterministic_catalog': catalog,
