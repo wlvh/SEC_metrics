@@ -1,0 +1,89 @@
+{
+  "source_sha256": "526fb5776b965a871eb0ae49ec307a51a93166e9ee7199413a33af40d9e0bd35",
+  "inspection": {
+    "record_type": "VISIBLE_AUDITOR_SOURCE_INSPECTION",
+    "version": "1",
+    "source_reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:5a6636067cb719f2d317e4ed31f53163cdbe233d1ea55f52bdaff8f72b144931",
+      "raw_asset_id": "sha256:526fb5776b965a871eb0ae49ec307a51a93166e9ee7199413a33af40d9e0bd35",
+      "company_id": "ford_motor",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799621000012/f-20201231.htm",
+      "accession": "0000037996-21-000012",
+      "document_name": "f-20201231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "development-visible-report-inspection"
+    },
+    "raw_asset_id": "sha256:526fb5776b965a871eb0ae49ec307a51a93166e9ee7199413a33af40d9e0bd35",
+    "company_id": "ford_motor",
+    "cik": "37996",
+    "period_end": "2020-12-31",
+    "registrant_name": "Ford Motor Co",
+    "reports": [
+      {
+        "status": "BOUND_REPORT_CANDIDATE",
+        "report_purpose": "FINANCIAL_STATEMENT_REPORT",
+        "reasons": [],
+        "heading": {
+          "block_index": 2223,
+          "text": "Report of Independent Registered Public Accounting Firm",
+          "raw_start_byte": 2846078,
+          "raw_end_byte": 2846133,
+          "raw_span_sha256": "e614b455b2a37923fcfeaec702e88b4df850a4a8dee6c3f02edaa252b5688d54"
+        },
+        "auditee": [
+          {
+            "block_index": 2224,
+            "text": "To the Board of Directors and Stockholders of Ford Motor Company",
+            "raw_start_byte": 2846287,
+            "raw_end_byte": 2846351,
+            "raw_span_sha256": "2146b7816e2a7bbdeb032aa00d4f637271d9d654a6b3d34afc56adaba5b22e85"
+          }
+        ],
+        "opinions": [
+          {
+            "block_index": 2226,
+            "text": "We have audited the accompanying consolidated balance sheets of Ford Motor Company and its subsidiaries (the “Company”) as of December 31, 2020 and 2019, and the related consolidated statements of income, of comprehensive income, of equity and of cash flows for each of the three years in the period ended December 31, 2020, including the related notes and financial statement schedule listed in the index appearing under Item 15(a)(2) (collectively referred to as the “consolidated financial statements”). We also have audited the Company’s internal control over financial reporting as of December 31, 2020, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+            "raw_start_byte": 2846759,
+            "raw_end_byte": 2848173,
+            "raw_span_sha256": "3475389f88b12400bbb54bfbcae4b4c5268940ba4d71bc78edaf6ccbb5248110"
+          }
+        ],
+        "signatures": [
+          {
+            "block_index": 2254,
+            "text": "/s/ PricewaterhouseCoopers LLP",
+            "raw_start_byte": 2869002,
+            "raw_end_byte": 2869032,
+            "raw_span_sha256": "6180c23642b90df7b8d801fd2606a67009a3067a5d06caef29d825507155f852"
+          }
+        ],
+        "report_dates": [
+          {
+            "date": "2021-02-04",
+            "block_index": 2256,
+            "text": "February 4, 2021",
+            "raw_start_byte": 2869357,
+            "raw_end_byte": 2869379,
+            "raw_span_sha256": "f642c08d868e61b251b425a05a4677129c43ae92399bfd543d6795904d5f9f6c"
+          }
+        ],
+        "raw_start_byte": 2846078,
+        "raw_end_byte": 2870267,
+        "raw_span_sha256": "19597cef140df25ad2cd6d394ec148cb1d928fa12ff1a372d17109ed289b740a"
+      }
+    ],
+    "status": "BOUND_REPORT_CANDIDATE",
+    "reasons": [],
+    "native_fact_credit": false,
+    "metric_result_credit": false,
+    "publication_credit": false,
+    "inspection_id": "sha256:1c0506415b7b3a0be4c0f7168eb4ec4002e41f5551288d03a05d3fd065971a56"
+  },
+  "inspection_seconds": 1.877971458947286,
+  "source_rebuild_seconds": 1.8685472500510514,
+  "SEC_calls": 0,
+  "provider_calls": 0,
+  "paid_calls": 0,
+  "result_created": false
+}
