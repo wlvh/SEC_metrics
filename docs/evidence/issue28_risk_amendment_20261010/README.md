@@ -36,3 +36,12 @@ Original firstprobe fails before parsing due to a driver import of a nonexistent
 ## Delivery boundary
 
 This is an explicit interface candidate, not an automatic ordinary/historical D01 result. Required next: limited review of this new source delta, #47 thin consumer that retains all amendment assessments and actual company save/repeat/independentCSV. The original38-heading content reference is for post-extraction comparison only. No upstream old clearance gained, no current company counted correct solely by this source-only check, no model truth/source acquisition/financial support inferred. Zero newSEC/provider/paid; no account/SDK/production or peer worktree/state write, Ready/merge/adoption/deploy/active. Existing main path and saved older Runs use unchanged original APIs.
+
+
+## Limited review and explicit numbered-reference repair
+
+Original a915 independent review CHANGES_REQUIRED found a concrete plural Item reference being missed: `Items1A and1B` alone or after the valid caution citation was wrongly cleared. Its full API counterexamples and original report remain under independent-review/conclusion.md. Reviewer independently reran27tests and actual source2.882s, preserving011b source scope and all identities; it did not run the historical company. Agent ended at30tools/3ordinary messages (two processcommentary plusfinal), leaving no permitted followup; it is not reopened/reset.
+
+The minimal repair recognizes SEC Item/Items identifiers, lists and numerical ranges that name or span1A; this is a mechanical section reference check, not a new assertion/tense/subject classifier. Unknown named references still WITHHELD, including a second statement after a valid citation. Ordinary items10–14, Item1B and exhibit10.1A do not acquire risk meaning. All3newdirect variations have complete API regressions. PROCESSING_FILES now also explicitly names the actually used normal_annual_input_v2 serializer and canonical helper; no recursive closure platform or default source policy change.29parenttests/.307s/zero skip. Newly uncovered repair difference remains pending independent coverage, not parentPASS.
+
+Reference-repair actual source is recorded separately (reference-repair-actual-source.json/log), so the earlier a915 source execution is retained. No title answer/result or shared source/ledger/state modification. #47 has its thin case draft ready but doesnot consume into the actual company until this interface's new coverage is resolved.

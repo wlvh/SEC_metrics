@@ -23,6 +23,8 @@ PROCESSING_FILES = (
     'scripts/vnext/amendment_note_layout.py',
     'scripts/vnext/text_coverage.py',
     'scripts/vnext/text_results_v2.py',
+    'scripts/vnext/normal_annual_input_v2.py',
+    'scripts/vnext/canonical.py',
     'scripts/vnext/deterministic_router.py',
     'scripts/vnext/fiscal_year_labels.py',
     'config/annual_amendment_scope_v1.json',
@@ -63,6 +65,26 @@ def _note_identity(scope):
             'note_grammar_hash':content_hash(value=grammar)}
 
 
+def _mentions_risk_section(text):
+    if re.search(r'\brisk factors\b',text,re.I):return True
+    # SEC item identifiers, lists and ranges are mechanical references, not
+    # a classification of the assertion's meaning. Unexplained references to
+    # the selected item remain unresolved regardless of the surrounding verb.
+    identifier=r'[0-9]+[A-Z]?'
+    separator=r'(?:,\s*(?:and\s+|or\s+)?|and\s+|or\s+|through\s+|to\s+|[-–—]\s*)'
+    pattern=re.compile(r'\bitems?\s*('+identifier+r'(?:\s*'+separator+identifier+r')*)',re.I)
+    def key(value):
+        number=re.fullmatch(r'([0-9]+)([A-Z]?)',value,re.I)
+        return int(number[1]),number[2].casefold()
+    target=(1,'a')
+    for reference in pattern.finditer(text):
+        value=reference[1]
+        if target in [key(i) for i in re.findall(identifier,value,re.I)]:return True
+        for interval in re.finditer('('+identifier+r')\s*(?:through|to|[-–—])\s*('+identifier+')',value,re.I):
+            if key(interval[1])<=target<=key(interval[2]):return True
+    return False
+
+
 def _risk_references(scope, raw):
     """Retain references; unsupported assertions are unresolved, not reclassified.
 
@@ -76,16 +98,15 @@ def _risk_references(scope, raw):
     part3=next((i for i in range(start+1,len(blocks))
                 if blocks[i]['text'].upper()=='PART III' and not blocks[i]['linked']),None)
     citation=re.compile(r'These risks, uncertainties and other factors are discussed in [“\"]Item\s+1A\. Risk Factors[”\"] in our Initial Form 10-K\.')
-    mentions=re.compile(r'\bitem\s*1a\b|\brisk factors\b',re.I)
     records=[];unresolved=[]
     for group in paragraph_blocks(blocks,raw):
         text=paragraph_text(group,raw)
-        if not mentions.search(text):continue
+        if not _mentions_risk_section(text):continue
         indices=[b['block_index'] for b in group]
         matches=list(citation.finditer(text));residual=citation.sub('',text)
         inside=(caution is not None and part3 is not None and all(caution<i<part3 for i in indices))
         quoted=bool(set(indices)&set(scope['amendment']['quoted_block_indices']))
-        accepted=inside and bool(matches) and not mentions.search(residual) and not quoted
+        accepted=inside and bool(matches) and not _mentions_risk_section(residual) and not quoted
         item={'source_blocks':group,'block_indices':indices,'text':text,
               'initial_filing_citations':[m.group() for m in matches],
               'caution_window':{'heading_block':caution,'end_block_exclusive':part3},

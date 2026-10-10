@@ -8,7 +8,7 @@ from vnext.sources import raw_blob_record,source_reference_record
 from vnext.saved_source_checks import verify_saved_inputs
 from vnext.canonical import sha256_file
 
-p=argparse.ArgumentParser();p.add_argument('--source-root',type=Path,required=True);a=p.parse_args();root=a.source_root.resolve()
+p=argparse.ArgumentParser();p.add_argument('--source-root',type=Path,required=True);p.add_argument('--output-name',default='final-actual-saved-source.json');a=p.parse_args();root=a.source_root.resolve()
 company='paramount_skydance_paramount_global';cik='2041610'
 filings=[{'form':'10-K','reportDate':'2025-12-31','filingDate':'2026-02-25',
           'accessionNumber':'0002041610-26-000011','primaryDocument':'psky-20251231.htm'},
@@ -43,7 +43,7 @@ record={'program_root':str(program),'source_root':str(root),'git_base':subproces
         'tested_processing_files':{f:sha256_file(path=program/f) for f in PROCESSING_FILES},
         'reference_headings_used_as_input':False,'metric_result_created':False,
         'source_acquisition_credit':False,'calls':[0,0,0]}
-output=program/'docs/evidence/issue28_risk_amendment_20261010/final-actual-saved-source.json'
+output=program/'docs/evidence/issue28_risk_amendment_20261010'/a.output_name
 output.write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n')
 print('decision',result['decision'],'classification',result['classification'],'seconds',record['seconds'])
 print('issues',result['issues']);print('note declared',result['details'].get('note_identity',{}).get('declared_identity'))

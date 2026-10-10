@@ -1,0 +1,94 @@
+{
+  "network": "socket connect and DNS blocked",
+  "source": "constructed finite complete source frames",
+  "cases": [
+    {
+      "case": "baseline",
+      "decision": "INPUT_PROPERTY_PROVEN",
+      "classification": "PART_III_ADDITION_WITH_NO_AMENDED_ITEM_1A",
+      "issues": [],
+      "risk_reference_texts": []
+    },
+    {
+      "case": "plural_unheaded_risk_reference",
+      "decision": "INPUT_PROPERTY_PROVEN",
+      "classification": "PART_III_ADDITION_WITH_NO_AMENDED_ITEM_1A",
+      "issues": [],
+      "risk_reference_texts": []
+    },
+    {
+      "case": "plural_reference_after_allowed_citation",
+      "decision": "INPUT_PROPERTY_PROVEN",
+      "classification": "PART_III_ADDITION_WITH_NO_AMENDED_ITEM_1A",
+      "issues": [],
+      "risk_reference_texts": [
+        "These risks, uncertainties and other factors are discussed in “Item 1A. Risk Factors” in our Initial Form 10-K. Items 1A and 1B are replaced by this Amendment."
+      ]
+    },
+    {
+      "case": "singular_control",
+      "decision": "WITHHELD",
+      "classification": "UNRESOLVED",
+      "issues": [
+        {
+          "reason": "RISK_AMENDMENT_RISK_SECTION_REFERENCE_UNRESOLVED",
+          "error_type": "AmendmentScopeError"
+        }
+      ],
+      "risk_reference_texts": [
+        "This Amendment replaces the disclosures in Item 1A of the Initial Form 10-K."
+      ]
+    },
+    {
+      "case": "quoted_citation",
+      "decision": "WITHHELD",
+      "classification": "UNRESOLVED",
+      "issues": [
+        {
+          "reason": "RISK_AMENDMENT_RISK_SECTION_REFERENCE_UNRESOLVED",
+          "error_type": "AmendmentScopeError"
+        }
+      ],
+      "risk_reference_texts": [
+        "These risks, uncertainties and other factors are discussed in “Item 1A. Risk Factors” in our Initial Form 10-K."
+      ]
+    },
+    {
+      "case": "note_scope_name_conflict",
+      "decision": "WITHHELD",
+      "classification": "UNRESOLVED",
+      "issues": [
+        {
+          "reason": "RISK_AMENDMENT_NOTE_SUBJECT_CONFLICT",
+          "error_type": "AmendmentScopeError"
+        }
+      ],
+      "risk_reference_texts": []
+    },
+    {
+      "case": "old_original_date_conflict",
+      "decision": "WITHHELD",
+      "classification": "UNRESOLVED",
+      "issues": [
+        {
+          "reason": "RISK_AMENDMENT_NOTE_ORIGINAL_IDENTITY_CONFLICT",
+          "error_type": "AmendmentScopeError"
+        }
+      ],
+      "risk_reference_texts": []
+    },
+    {
+      "case": "complete_note_with_extra_purpose",
+      "decision": "WITHHELD",
+      "classification": "UNRESOLVED",
+      "issues": [
+        {
+          "reason": "RISK_AMENDMENT_COMPLETE_NOTE_UNSUPPORTED",
+          "error_type": "AmendmentScopeError"
+        }
+      ],
+      "risk_reference_texts": []
+    }
+  ],
+  "recorded_utc": "2026-10-10T02:25:24.489716+00:00"
+}

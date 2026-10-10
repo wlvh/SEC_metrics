@@ -138,3 +138,29 @@ class RiskHeadingAmendmentInputTest(unittest.TestCase):
         self.assertFalse(result['financial_input_clearance'])
         self.assertEqual(result['input_class'],INPUT_CLASS)
         self.assertEqual(result['metric_ids'],['D01'])
+
+    def test_plural_item_list_changes_standalone_and_after_citation_are_unresolved(self):
+        changes=('This Amendment replaces the disclosures in Items 1A and 1B of the Initial Form 10-K.',
+                 'This Amendment replaces the disclosures in Items 1, 1A and 1B of the Initial Form 10-K.',
+                 'This Amendment replaces the disclosures in Items 1 through 2 of the Initial Form 10-K.')
+        for change in changes:
+            with self.subTest(change=change):
+                result=self.inspect(amended=filing_html(True,'<p>'+change+'</p>'))
+                self.assertEqual(result['decision'],'WITHHELD')
+                self.assertTrue(result['details']['unresolved_risk_section_references'])
+                caution=('<p>CAUTIONARY NOTE CONCERNING FORWARD-LOOKING STATEMENTS</p><p>'
+                    'These risks, uncertainties and other factors are discussed in “Item 1A. Risk Factors” in our Initial Form 10-K. '
+                    +change+'</p>')
+                result=self.inspect(amended=filing_html(True).replace(b'<p>PART III</p>',caution.encode()+b'<p>PART III</p>'))
+                self.assertEqual(result['decision'],'WITHHELD')
+                self.assertEqual(result['details']['risk_section_references'][0]['status'],
+                                 'UNRESOLVED_RISK_SECTION_REFERENCE')
+
+    def test_identifier_check_preserves_unrelated_items_exhibits_and_actual_dependencies(self):
+        from vnext.risk_heading_amendment_input_v1 import _mentions_risk_section, PROCESSING_FILES
+        for text in ('Items 10, 11, 12, 13 and 14','Exhibit 10.1A','Item 1B','Items 10 through 14'):
+            with self.subTest(text=text):self.assertFalse(_mentions_risk_section(text))
+        for text in ('Item 1A','Item1A','Items 1A and 1B','Items 1 and 1A','Items 1–2','Items 1B, 1A'):
+            with self.subTest(text=text):self.assertTrue(_mentions_risk_section(text))
+        for name in ('normal_annual_input_v2','canonical'):
+            self.assertIn('scripts/vnext/'+name+'.py',PROCESSING_FILES)
