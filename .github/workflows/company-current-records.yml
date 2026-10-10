@@ -11,6 +11,7 @@ name: Company saved-source records
       - 'tests/vnext/test_current_d04_company.py'
       - 'tests/vnext/test_ordinary_current_update.py'
       - 'tests/vnext/test_registry_processing_scope.py'
+      - 'tests/vnext/test_d04_processing_scope.py'
       - 'tests/vnext/test_selected_revenue_scope_v1.py'
       - 'tests/vnext/test_current_reported_revenue.py'
       - 'tests/vnext/test_historical_statement_cases.py'
@@ -74,6 +75,10 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 tests/required_unittests.py tests.vnext.test_paired_measure_contradiction
+      - name: D04-only dependency changes and unchanged conclusion reuse
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_d04_processing_scope
       - name: Explicit single revenue source and unchanged period defaults
         env:
           PYTHONDONTWRITEBYTECODE: '1'

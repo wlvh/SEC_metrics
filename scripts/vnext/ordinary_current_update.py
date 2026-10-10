@@ -43,7 +43,8 @@ def _configuration(source, company, metric):
             'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
             'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
     paths.update({'scripts/vnext/ordinary_current_update.py','scripts/vnext/ordinary_saved_result.py',
-                  'scripts/vnext/csv_output.py','config/issue28_normal_results_v2.json'})
+                  'scripts/vnext/csv_output.py','scripts/vnext/ordinary_update_compatibility.py',
+                  'config/issue28_normal_results_v2.json'})
     # The old Requirement inherited these dependencies implicitly. Ordinary
     # records must name their actual shared parser/calculator dependencies.
     paths.update('scripts/vnext/'+name+'.py' for name in (
@@ -70,27 +71,8 @@ def _configuration(source, company, metric):
             'ordinary_da_scope_v1','ordinary_b03_input_scope','xbrl_namespace_policy','b03_depreciation_scope',
             'b03_contract_amortization_scope','financial_structured','text_results_v2','reported_monetary_literal'))
     if metric == 'D04':
-        # This route rebuilds annual text/native units and rechecks original
-        # responses. Name the consumed rules, not a recursive authority tree:
-        # unchanged SEC bytes cannot preserve credit after these rules change.
-        paths.update('scripts/vnext/'+name+'.py' for name in (
-            'current_d04_result','current_request_configuration','continuous_semantic_calls',
-            'continuous_request_context','request_limits','continuous_call_ledger',
-            'native_assessment_replay','capacity_native_assessment','capacity_update_input',
-            'd04_native_assessment','r6_semantic_source','r6_semantic_review',
-            'native_unit_index','capacity_text_results','text_results','text_review','review',
-            'going_concern_source','text_business_candidates','text_coverage',
-            'regulatory_investigation_candidates','normal_annual_input_v2','fiscal_year_labels',
-            'ordinary_source_authority','text_results_v2','capacity_semantic_review',
-            'capacity_utilization_source','invocation_control','continuous_call_policy'))
-        paths.update({'config/issue28_current_request_runtime_v1.json',
-            'config/issue28_continuous_calls_v1.json','config/normal_fiscal_year_labels_v1.json',
-            'catalog/r6/going_concern_source_rules_v1.json','catalog/r6/semantic_source_v1.json',
-            'catalog/r6/semantic_review_v1.json','catalog/r6/text_business_candidates_v1.json',
-            'catalog/r6/regulatory_investigation_candidates_v1.json',
-            'catalog/r6/text_results_v2_policy.json',
-            'catalog/r6/D04_going_concern_assessment_v1.md',
-            'catalog/r6/semantic_review_v4.json','catalog/r6/semantic_review_v5.json'})
+        from .ordinary_d04_saved_route import processing_paths
+        paths.update(processing_paths())
     from .ordinary_registry_scope import registered_company_row
     # The producer validates the entire program registry's profile mapping.
     # Keep that admission check before reuse; valid unrelated rows still do
@@ -260,7 +242,10 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                 current = _current_sources(source,saved['manifest']['source_proofs'])
                 old = [{k:p[k] for k in ('source_url','accession','document_name','content_sha256')}
                        for p in saved['manifest']['source_proofs']]
-                if configuration==comparison['configuration'] and census==comparison.get('source_census') and current==old:
+                from .ordinary_update_compatibility import compatible_configuration
+                compatible = configuration != comparison['configuration'] and compatible_configuration(
+                    comparison['configuration'], configuration)
+                if (configuration==comparison['configuration'] or compatible) and census==comparison.get('source_census') and current==old:
                     status=('PREVIOUS_INPUT_WITHHELD' if saved['result']['publication']=='WITHHELD'
                             else 'NO_SOURCE_CONTENT_CHANGE')
                     report = {'status':status,'attempt_id':identity,
@@ -271,8 +256,17 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
                     if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
-                    _write(attempt/'terminal.json',report); _write(root/'latest-check.json',report)
-                    return report
+                    if compatible:
+                        # A new check can recognize the same inputs; the old
+                        # result, terminal and last success keep their identities.
+                        report['configuration_compatibility'] = 'FINITE_D04_DISPATCH_ONLY'
+                        report['completed_check'] = {**comparison, 'configuration':configuration,
+                            'status':('CANDIDATE_WITHHELD' if status=='PREVIOUS_INPUT_WITHHELD'
+                                      else 'CANDIDATE_READY')}
+                    _write(attempt/'terminal.json',report)
+                    if compatible:_write(root/'completed-check.json', report['completed_check'])
+                    _write(root/'latest-check.json',report)
+                    return {k:v for k,v in report.items() if k != 'completed_check'}
             # Full selection/period/subject checks only run for changed/new
             # input. A newly selected filing necessarily changes submissions.
             version = uuid4().hex

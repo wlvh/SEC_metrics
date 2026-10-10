@@ -1,0 +1,203 @@
+[
+  {
+    "pair": "MAIN_F51",
+    "git_ref": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+    "actual_sha256": [
+      "3c741f3500b34f1778b89875e2c19af71084a53749dc1cc7f2fabd368dc96976",
+      "cfba3fa8cd6f1d6b9dcb6b49c50b8d40362069c0965171b9b022e79afcf9d0fd"
+    ],
+    "matched_constant": true
+  },
+  {
+    "pair": "EXTRACTED_D04",
+    "git_ref": "832aea1a0e5927e6bc5aedd75b30ed14a9b76650",
+    "actual_sha256": [
+      "54e940cfe274a7abb2ef484d6e48231e8fc80569c817a27d58f1bf03ae7b1654",
+      "d9ae369f7cc19c4728537fa91df4024a620917d57ec5c7cebf929d0968b11876"
+    ],
+    "matched_constant": true
+  },
+  {
+    "pair": "EXTRACTED_MAIN_F51",
+    "git_ref": "7fcb4e700235117966ac27fca65e7e033b425f52",
+    "actual_sha256": [
+      "349d11b6ebbb35c41b2c5e38e8a3e3c3f32fb7d806d8e8a5379c69dd71f2ca85",
+      "d9ae369f7cc19c4728537fa91df4024a620917d57ec5c7cebf929d0968b11876"
+    ],
+    "matched_constant": true
+  },
+  {
+    "old_bridge_sha256_matches_actual_old_git": true
+  },
+  {
+    "transition": "f51d8c3d27f3169b9cdb3a246295830882240c1f -> 7fcb4e700235117966ac27fca65e7e033b425f52",
+    "metric": "B01",
+    "compatible": true,
+    "different_dependencies": [
+      "scripts/vnext/ordinary_current_update.py",
+      "scripts/vnext/ordinary_saved_result.py",
+      "scripts/vnext/ordinary_update_compatibility.py"
+    ]
+  },
+  {
+    "accepted_transition_negative_checks": {
+      "metric": "B01",
+      "remaining_dependency_mutations": 127,
+      "configuration_fields": 9,
+      "unknown_dependency": 1,
+      "current_bridge_absent": 1,
+      "unknown_controller_store": 2
+    }
+  },
+  {
+    "transition": "f51d8c3d27f3169b9cdb3a246295830882240c1f -> 7fcb4e700235117966ac27fca65e7e033b425f52",
+    "metric": "B03",
+    "compatible": true,
+    "different_dependencies": [
+      "scripts/vnext/ordinary_current_update.py",
+      "scripts/vnext/ordinary_saved_result.py",
+      "scripts/vnext/ordinary_update_compatibility.py"
+    ]
+  },
+  {
+    "accepted_transition_negative_checks": {
+      "metric": "B03",
+      "remaining_dependency_mutations": 132,
+      "configuration_fields": 9,
+      "unknown_dependency": 1,
+      "current_bridge_absent": 1,
+      "unknown_controller_store": 2
+    }
+  },
+  {
+    "transition": "f51d8c3d27f3169b9cdb3a246295830882240c1f -> 7fcb4e700235117966ac27fca65e7e033b425f52",
+    "metric": "B04",
+    "compatible": true,
+    "different_dependencies": [
+      "scripts/vnext/ordinary_current_update.py",
+      "scripts/vnext/ordinary_saved_result.py",
+      "scripts/vnext/ordinary_update_compatibility.py"
+    ]
+  },
+  {
+    "accepted_transition_negative_checks": {
+      "metric": "B04",
+      "remaining_dependency_mutations": 117,
+      "configuration_fields": 9,
+      "unknown_dependency": 1,
+      "current_bridge_absent": 1,
+      "unknown_controller_store": 2
+    }
+  },
+  {
+    "transition": "f51d8c3d27f3169b9cdb3a246295830882240c1f -> 7fcb4e700235117966ac27fca65e7e033b425f52",
+    "metric": "B10",
+    "compatible": true,
+    "different_dependencies": [
+      "scripts/vnext/ordinary_current_update.py",
+      "scripts/vnext/ordinary_saved_result.py",
+      "scripts/vnext/ordinary_update_compatibility.py"
+    ]
+  },
+  {
+    "accepted_transition_negative_checks": {
+      "metric": "B10",
+      "remaining_dependency_mutations": 121,
+      "configuration_fields": 9,
+      "unknown_dependency": 1,
+      "current_bridge_absent": 1,
+      "unknown_controller_store": 2
+    }
+  },
+  {
+    "transition": "832aea1a0e5927e6bc5aedd75b30ed14a9b76650 -> 7fcb4e700235117966ac27fca65e7e033b425f52",
+    "metric": "B01",
+    "compatible": false,
+    "different_dependencies": [
+      "scripts/vnext/ordinary_current_update.py",
+      "scripts/vnext/ordinary_update_compatibility.py",
+      "scripts/vnext/selected_fiscal_definition_scope_v1.py",
+      "scripts/vnext/selected_reported_revenue_v2.py",
+      "scripts/vnext/selected_revenue_scope_v1.py"
+    ]
+  },
+  {
+    "transition": "832aea1a0e5927e6bc5aedd75b30ed14a9b76650 -> 7fcb4e700235117966ac27fca65e7e033b425f52",
+    "metric": "B03",
+    "compatible": false,
+    "different_dependencies": [
+      "scripts/vnext/ordinary_current_update.py",
+      "scripts/vnext/ordinary_update_compatibility.py",
+      "scripts/vnext/selected_fiscal_definition_scope_v1.py",
+      "scripts/vnext/selected_reported_revenue_v2.py",
+      "scripts/vnext/selected_revenue_scope_v1.py"
+    ]
+  },
+  {
+    "transition": "832aea1a0e5927e6bc5aedd75b30ed14a9b76650 -> 7fcb4e700235117966ac27fca65e7e033b425f52",
+    "metric": "B04",
+    "compatible": true,
+    "different_dependencies": [
+      "scripts/vnext/ordinary_current_update.py",
+      "scripts/vnext/ordinary_update_compatibility.py"
+    ]
+  },
+  {
+    "accepted_transition_negative_checks": {
+      "metric": "B04",
+      "remaining_dependency_mutations": 117,
+      "configuration_fields": 9,
+      "unknown_dependency": 1,
+      "current_bridge_absent": 1,
+      "unknown_controller_store": 2
+    }
+  },
+  {
+    "transition": "832aea1a0e5927e6bc5aedd75b30ed14a9b76650 -> 7fcb4e700235117966ac27fca65e7e033b425f52",
+    "metric": "B10",
+    "compatible": true,
+    "different_dependencies": [
+      "scripts/vnext/ordinary_current_update.py",
+      "scripts/vnext/ordinary_update_compatibility.py"
+    ]
+  },
+  {
+    "accepted_transition_negative_checks": {
+      "metric": "B10",
+      "remaining_dependency_mutations": 121,
+      "configuration_fields": 9,
+      "unknown_dependency": 1,
+      "current_bridge_absent": 1,
+      "unknown_controller_store": 2
+    }
+  },
+  {
+    "precise_old_bridge_missing_unknown_rejected": true,
+    "later_new_pair_bridge_change_rejected": true,
+    "d04_either_side_rejected": true,
+    "total_negative_assertions": 819
+  },
+  {
+    "tested_tree_six_file_bytes_match_git_and_worktree": true,
+    "metadata_note": "tested_uncommitted_merge_tree describes the original execution; all recorded bytes match committed merge"
+  },
+  {
+    "workflow_parent": "832aea1a0e5927e6bc5aedd75b30ed14a9b76650",
+    "all_complete_step_blocks_preserved_in_order": true,
+    "parent_steps": 10,
+    "merged_steps": 11,
+    "all_trigger_paths_preserved": true,
+    "non_step_non_path_options_unchanged": true
+  },
+  {
+    "workflow_parent": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+    "all_complete_step_blocks_preserved_in_order": true,
+    "parent_steps": 10,
+    "merged_steps": 11,
+    "all_trigger_paths_preserved": true,
+    "non_step_non_path_options_unchanged": true
+  },
+  {
+    "diagnostic": "First audit script reached workflow parsing and stopped because optional yaml package is unavailable. No product failure; rerun uses exact workflow blocks with all substantive assertions repeated."
+  }
+]

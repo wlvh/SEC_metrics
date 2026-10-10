@@ -1,0 +1,460 @@
+
+$ git diff --no-ext-diff --unified=12 145a464b bdb27684 -- scripts/vnext/ordinary_current_update.py scripts/vnext/ordinary_saved_result.py
+diff --git a/scripts/vnext/ordinary_current_update.py b/scripts/vnext/ordinary_current_update.py
+index 639d4517..4c8de573 100644
+--- a/scripts/vnext/ordinary_current_update.py
++++ b/scripts/vnext/ordinary_current_update.py
+@@ -55,24 +55,46 @@ def _configuration(source, company, metric):
+     # Current producers import only ROOT from normal_source_authority; its
+     # historical admission gates do not process this ordinary input. Actual
+     # request/body checks are covered by saved_source_checks above.
+     paths.update({'catalog/company_traits.yaml','config/metric_applicability.yaml',
+                   'config/company_registry.csv'})
+     if metric == 'B02':
+         paths.add('scripts/vnext/paired_measure_v1.py')
+     if metric == 'B03':
+         paths.add('catalog/r6/text_results_v2_policy.json')
+         paths.update('scripts/vnext/'+name+'.py' for name in (
+             'ordinary_da_scope_v1','ordinary_b03_input_scope','xbrl_namespace_policy','b03_depreciation_scope',
+             'b03_contract_amortization_scope','financial_structured','text_results_v2','reported_monetary_literal'))
++    if metric == 'D04':
++        # This route rebuilds annual text/native units and rechecks original
++        # responses. Name the consumed rules, not a recursive authority tree:
++        # unchanged SEC bytes cannot preserve credit after these rules change.
++        paths.update('scripts/vnext/'+name+'.py' for name in (
++            'current_d04_result','current_request_configuration','continuous_semantic_calls',
++            'continuous_request_context','request_limits','continuous_call_ledger',
++            'native_assessment_replay','capacity_native_assessment','capacity_update_input',
++            'd04_native_assessment','r6_semantic_source','r6_semantic_review',
++            'native_unit_index','capacity_text_results','text_results','text_review','review',
++            'going_concern_source','text_business_candidates','text_coverage',
++            'regulatory_investigation_candidates','normal_annual_input_v2','fiscal_year_labels',
++            'ordinary_source_authority','text_results_v2','capacity_semantic_review',
++            'capacity_utilization_source','invocation_control','continuous_call_policy'))
++        paths.update({'config/issue28_current_request_runtime_v1.json',
++            'config/issue28_continuous_calls_v1.json','config/normal_fiscal_year_labels_v1.json',
++            'catalog/r6/going_concern_source_rules_v1.json','catalog/r6/semantic_source_v1.json',
++            'catalog/r6/semantic_review_v1.json','catalog/r6/text_business_candidates_v1.json',
++            'catalog/r6/regulatory_investigation_candidates_v1.json',
++            'catalog/r6/text_results_v2_policy.json',
++            'catalog/r6/D04_going_concern_assessment_v1.md',
++            'catalog/r6/semantic_review_v4.json','catalog/r6/semantic_review_v5.json'})
+     return {'company_id':company,'metric_id':metric,'source_root':str(source),
+         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
+         'source_registry_sha256':sha256_file(path=source/'config/company_registry.csv'),
+         'provider_enabled':False,'sec_fetch_enabled':False}
+ 
+ 
+ def _current_sources(source, proofs):
+     from sec_http import request_log_attempt_id
+     from .request_bindings import validate_request_attempt_binding
+     latest = {row['source_url']:(i,row) for i,row in enumerate(_rows(source)) if row['method']=='GET'}
+     rows = []
+     for old in proofs:
+diff --git a/scripts/vnext/ordinary_saved_result.py b/scripts/vnext/ordinary_saved_result.py
+index 1e6cf8f5..271d094e 100644
+--- a/scripts/vnext/ordinary_saved_result.py
++++ b/scripts/vnext/ordinary_saved_result.py
+@@ -9,25 +9,26 @@ from pathlib import Path
+ import subprocess
+ import time
+ 
+ from sec_http import write_immutable_bytes
+ from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_file, strict_json_loads
+ from .normal_run_inputs import prepare_ordinary_zero_ai_run_input
+ from .normal_zero_ai_results import SUPPORTED_METRICS
+ from .normal_run_specs import installed_ordinary_spec_documents
+ from .records import validate_record
+ 
+ METRIC_IDS = frozenset(installed_ordinary_spec_documents())
+ LODGING_METRIC_IDS = frozenset({'B10','B11'})
+-SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS
++SAVED_MODEL_METRIC_IDS = frozenset({'D04'})
++SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | SAVED_MODEL_METRIC_IDS
+ EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13'})
+ 
+ 
+ def _program_version(root):
+     """Version information for diagnosis, never a clean-tree admission gate."""
+     def git(*args):
+         completed = subprocess.run(['git', '-C', str(root), *args], capture_output=True, text=True)
+         return completed.stdout.strip() if completed.returncode == 0 else None
+     return {'commit': git('rev-parse', 'HEAD'),
+             'has_uncommitted_changes': bool(git('status', '--porcelain'))}
+ 
+ 
+@@ -78,24 +79,27 @@ def _ordinary_case(source, company, metric):
+         **({'input_assessments':assessments} if assessments else {}),
+         'prepared_annual_input': original['component'].get('prepared_input'),
+         **({'prepared_income_input':income_binding['current_income_input'],
+             'income_observation_checks':income_binding['income_observation_checks']}
+            if income_binding.get('current_income_input') is not None else {}),
+         'selection': detail.get('selection', detail.get('inspection'))}
+ 
+ 
+ def create_saved_result(*, source_root, output_root, company_id, metric_id, shared_input_root=None):
+     """Prepare through the existing Calculator and save its actual records."""
+     _need(metric_id in SAVED_METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')
+     def prepare(source):
++        if metric_id in SAVED_MODEL_METRIC_IDS:
++            from .current_d04_result import prepare_current_d04_case
++            return prepare_current_d04_case(source_root=source,company_id=company_id)
+         if metric_id in LODGING_METRIC_IDS:
+             from .normal_lodging_results import prepare_ordinary_lodging_case
+             return prepare_ordinary_lodging_case(repo_root=source,company_id=company_id,metric_id=metric_id,
+                 rules_root=Path(__file__).resolve().parents[2])
+         return _ordinary_case(source,company_id,metric_id)
+     return _save_case(source_root=source_root, output_root=output_root, company_id=company_id,
+         metric_id=metric_id, factory=prepare,
+         calculation_performed=True, shared_input_root=shared_input_root)
+ 
+ 
+ def save_calculated_case(*, source_root, output_root, company_id, metric_id, case, shared_input_root=None):
+     """Persist an already calculated case; do not select sources or calculate again.
+
+exit=0
+
+KNOWN HASH PAIRS
+[
+  {
+    "revision": "145a464b",
+    "actual": [
+      "5c3657bd9023f1b5a0afb865d039a2e81cabef58e3c396c508b71f292132dcca",
+      "f71cca5ed3ab7260764a83d58feb9e835eb8ce8da5b911c6b14b887623318a2d"
+    ],
+    "expected": [
+      "5c3657bd9023f1b5a0afb865d039a2e81cabef58e3c396c508b71f292132dcca",
+      "f71cca5ed3ab7260764a83d58feb9e835eb8ce8da5b911c6b14b887623318a2d"
+    ],
+    "matches": true
+  },
+  {
+    "revision": "bdb27684",
+    "actual": [
+      "434c645f5cfa61999483d1927b06158a51a58c9d977e552c801c7d7de1e20713",
+      "ff23e46659e065bbc1c98c6eb4fef6702e9ebba594bf0f2c7e5110d0f49202dd"
+    ],
+    "expected": [
+      "434c645f5cfa61999483d1927b06158a51a58c9d977e552c801c7d7de1e20713",
+      "ff23e46659e065bbc1c98c6eb4fef6702e9ebba594bf0f2c7e5110d0f49202dd"
+    ],
+    "matches": true
+  },
+  {
+    "revision": "c99b5d3c3180b8e8dfbac7f9182a941af4ae7705",
+    "actual": [
+      "7270d5b23acbababd292f8f3833812d5927c1881ed925321d453b97f3908f700",
+      "cfba3fa8cd6f1d6b9dcb6b49c50b8d40362069c0965171b9b022e79afcf9d0fd"
+    ],
+    "expected": [
+      "7270d5b23acbababd292f8f3833812d5927c1881ed925321d453b97f3908f700",
+      "cfba3fa8cd6f1d6b9dcb6b49c50b8d40362069c0965171b9b022e79afcf9d0fd"
+    ],
+    "matches": true
+  },
+  {
+    "revision": "21004b5968576431d1af7f135108c4a96dd76681",
+    "actual": [
+      "54e940cfe274a7abb2ef484d6e48231e8fc80569c817a27d58f1bf03ae7b1654",
+      "d9ae369f7cc19c4728537fa91df4024a620917d57ec5c7cebf929d0968b11876"
+    ],
+    "expected": [
+      "54e940cfe274a7abb2ef484d6e48231e8fc80569c817a27d58f1bf03ae7b1654",
+      "d9ae369f7cc19c4728537fa91df4024a620917d57ec5c7cebf929d0968b11876"
+    ],
+    "matches": true
+  }
+]
+
+POLICY
+{
+  "schema_version": 1,
+  "policy_id": "issue28_normal_results_v2",
+  "development_delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
+  "parent_requirement_id": "issue_28_v12",
+  "production_authorized": false,
+  "provider_enabled": false,
+  "sec_fetch_enabled": false,
+  "new_business_budget": "NOT_GRANTED_BY_THIS_POLICY",
+  "source_admission": "PREEXISTING_SAVED_BASELINE_ONLY",
+  "metric_ids": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08",
+    "B09",
+    "B10",
+    "B11",
+    "B12",
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D02",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+  ],
+  "metric_spec_paths": {
+    "A03": [
+      "catalog/r4_normal/A03_liquidity_coverage_ratio.md"
+    ],
+    "A04": [
+      "catalog/r4_normal/A04_net_interest_margin.md"
+    ],
+    "A09": [
+      "catalog/r4_normal/A09_nonperforming_loan_ratio.md"
+    ],
+    "A11": [
+      "catalog/r4_normal/A11_assets_under_management.md"
+    ],
+    "A12": [
+      "catalog/r4_normal/A12_trading_exposure.md"
+    ],
+    "A13": [
+      "catalog/r4_normal/A13_geographic_exposure.md"
+    ],
+    "B06": [
+      "catalog/r5/B06_new_source_v2.md",
+      "catalog/r5/B06_guarded_v3.md",
+      "catalog/r5/B06_note_carrying_v4.md",
+      "catalog/r5/B06_bond_leases_v5.md",
+      "catalog/r5/B06_inclusive_table_v6.md"
+    ],
+    "C02": [
+      "catalog/r6/C02_board_disclosures_v1.md",
+      "catalog/r6/C02_board_disclosures_v2.md",
+      "catalog/r6/C02_board_disclosures_v3.md"
+    ],
+    "C03": [
+      "catalog/r5/C03_peo_total_compensation.md",
+      "catalog/r5/C03_reported_compensation_v2.md"
+    ],
+    "C04": [
+      "catalog/r5/C04_auditor_changes_v2.md",
+      "catalog/r5/C04_auditor_changes_v3.md"
+    ],
+    "D01": [
+      "catalog/r6/D01_risk_factor_headings.md"
+    ],
+    "D02": [
+      "catalog/r6/D02_legal_disclosures_v1.md"
+    ],
+    "B01": [
+      "catalog/metrics/B01_revenue.md"
+    ],
+    "B03": [
+      "catalog/metrics/B03_ebitda_margin.md",
+      "catalog/r6/B03_impairment_excluded_v1.md"
+    ],
+    "A01": [
+      "catalog/ordinary_zero_ai/A01.md"
+    ],
+    "A02": [
+      "catalog/ordinary_zero_ai/A02.md"
+    ],
+    "A05": [
+      "catalog/ordinary_zero_ai/A05.md"
+    ],
+    "A06": [
+      "catalog/ordinary_zero_ai/A06.md"
+    ],
+    "A07": [
+      "catalog/ordinary_zero_ai/A07.md"
+    ],
+    "A08": [
+      "catalog/ordinary_zero_ai/A08.md"
+    ],
+    "A10": [
+      "catalog/ordinary_zero_ai/A10.md"
+    ],
+    "B02": [
+      "catalog/ordinary_zero_ai/B02.md"
+    ],
+    "B04": [
+      "catalog/ordinary_zero_ai/B04.md"
+    ],
+    "B05": [
+      "catalog/ordinary_zero_ai/B05.md"
+    ],
+    "B07": [
+      "catalog/ordinary_zero_ai/B07.md"
+    ],
+    "B08": [
+      "catalog/ordinary_zero_ai/B08.md"
+    ],
+    "B09": [
+      "catalog/ordinary_zero_ai/B09.md"
+    ],
+    "B12": [
+      "catalog/ordinary_zero_ai/B12.md"
+    ],
+    "C01": [
+      "catalog/ordinary_zero_ai/C01.md"
+    ],
+    "E01": [
+      "catalog/ordinary_zero_ai/E01.md"
+    ],
+    "E02": [
+      "catalog/ordinary_zero_ai/E02.md"
+    ],
+    "E03": [
+      "catalog/ordinary_zero_ai/E03.md"
+    ],
+    "E04": [
+      "catalog/ordinary_zero_ai/E04.md"
+    ],
+    "E05": [
+      "catalog/ordinary_zero_ai/E05.md"
+    ],
+    "B10": [
+      "catalog/ordinary_lodging/B10.md"
+    ],
+    "B11": [
+      "catalog/ordinary_lodging/B11.md"
+    ]
+  },
+  "temporarily_blocked_metrics": [],
+  "native_deterministic_text_methods": [
+    "RISK_FACTOR_HEADINGS_V1",
+    "BOARD_DISCLOSURE_EXCERPTS_V1",
+    "LEGAL_DISCLOSURE_EXCERPTS_V1"
+  ],
+  "preserve_actual_measurement_period": true,
+  "governance_annual_period_is_grouping_not_board_asof": true,
+  "typed_legal_accrual_branch": "STRICT_REPORTED_FACTS_IN_TEXT_EVIDENCE_AND_REVIEW_NO_AGGREGATION",
+  "b13_economic_meaning": "PENDING_EXTERNAL_APPROVAL",
+  "rule_paths": [
+    "catalog/metrics/B01_revenue.md",
+    "catalog/metrics/B03_ebitda_margin.md",
+    "catalog/ordinary_lodging/B10.md",
+    "catalog/ordinary_lodging/B11.md",
+    "catalog/ordinary_zero_ai/A01.md",
+    "catalog/ordinary_zero_ai/A02.md",
+    "catalog/ordinary_zero_ai/A05.md",
+    "catalog/ordinary_zero_ai/A06.md",
+    "catalog/ordinary_zero_ai/A07.md",
+    "catalog/ordinary_zero_ai/A08.md",
+    "catalog/ordinary_zero_ai/A10.md",
+    "catalog/ordinary_zero_ai/B02.md",
+    "catalog/ordinary_zero_ai/B04.md",
+    "catalog/ordinary_zero_ai/B05.md",
+    "catalog/ordinary_zero_ai/B07.md",
+    "catalog/ordinary_zero_ai/B08.md",
+    "catalog/ordinary_zero_ai/B09.md",
+    "catalog/ordinary_zero_ai/B12.md",
+    "catalog/ordinary_zero_ai/C01.md",
+    "catalog/ordinary_zero_ai/E01.md",
+    "catalog/ordinary_zero_ai/E02.md",
+    "catalog/ordinary_zero_ai/E03.md",
+    "catalog/ordinary_zero_ai/E04.md",
+    "catalog/ordinary_zero_ai/E05.md",
+    "catalog/r5/B06_bond_leases_v5.md",
+    "catalog/r5/B06_inclusive_table_v6.md",
+    "catalog/r5/B06_note_carrying_v4.md",
+    "catalog/r6/B03_impairment_excluded_v1.md",
+    "catalog/r6/C02_board_composition_terms_v1.json",
+    "catalog/r6/C02_board_disclosures_v2.md",
+    "catalog/r6/C02_board_disclosures_v3.md",
+    "catalog/r6/D02_item8_category_28_v1.json",
+    "catalog/r6/D02_item8_category_28_v2.json",
+    "config/annual_amendment_scope_v1.json",
+    "config/b06_bond_debt_set_v1.json",
+    "config/b06_bond_leases_v1.json",
+    "config/b06_current_input_v1.json",
+    "config/b06_financing_inventory_v1.json",
+    "config/b06_inclusive_table_v1.json",
+    "config/b06_note_carrying_v1.json",
+    "config/b06_special_scope_v1.json",
+    "config/instant_balance_amendment_v1.json",
+    "config/issue28_normal_results_v2.json",
+    "config/normal_accession_metrics_v1.json",
+    "config/normal_fiscal_year_labels_v1.json",
+    "config/ordinary_income_input_v1.json",
+    "config/ordinary_lodging_table_v1.json",
+    "scripts/vnext/annual_amendment_scope.py",
+    "scripts/vnext/b03_depreciation_scope.py",
+    "scripts/vnext/b03_exact_impairment_relation.py",
+    "scripts/vnext/b03_impairment_adjusted_run.py",
+    "scripts/vnext/b06_bond_leases.py",
+    "scripts/vnext/b06_current_input.py",
+    "scripts/vnext/b06_financing_inventory.py",
+    "scripts/vnext/b06_inclusive_table.py",
+    "scripts/vnext/b06_note_carrying.py",
+    "scripts/vnext/c02_composition_text_results.py",
+    "scripts/vnext/c02_grouped_source.py",
+    "scripts/vnext/d01_emphasis_results.py",
+    "scripts/vnext/d01_emphasis_source.py",
+    "scripts/vnext/d02_item8_category_28_v1.py",
+    "scripts/vnext/d02_item8_category_28_v2.py",
+    "scripts/vnext/d02_text_results_v3.py",
+    "scripts/vnext/e01_item_text_28_v1.py",
+    "scripts/vnext/fiscal_year_labels.py",
+    "scripts/vnext/historical_board_composition.py",
+    "scripts/vnext/historical_board_composition_v2.py",
+    "scripts/vnext/instant_balance_amendment.py",
+    "scripts/vnext/lodging_table_source.py",
+    "scripts/vnext/normal_accession_results.py",
+    "scripts/vnext/normal_annual_input_v2.py",
+    "scripts/vnext/normal_bond_debt_results.py",
+    "scripts/vnext/normal_companyfacts_results.py",
+    "scripts/vnext/normal_inclusive_debt_results.py",
+    "scripts/vnext/normal_lodging_results.py",
+    "scripts/vnext/normal_note_debt_results.py",
+    "scripts/vnext/normal_run_inputs.py",
+    "scripts/vnext/normal_run_specs.py",
+    "scripts/vnext/normal_run_v3.py",
+    "scripts/vnext/normal_zero_ai_results.py",
+    "scripts/vnext/ordinary_d02_category_update_v2.py",
+    "scripts/vnext/ordinary_d02_item8_v1.py",
+    "scripts/vnext/ordinary_d02_item8_v2.py",
+    "scripts/vnext/ordinary_debt_guard.py",
+    "scripts/vnext/ordinary_e01_item_text_input.py",
+    "scripts/vnext/ordinary_financial_results.py",
+    "scripts/vnext/ordinary_income_input.py",
+    "scripts/vnext/ordinary_remaining_cases.py",
+    "scripts/vnext/ordinary_source_authority.py",
+    "scripts/vnext/ordinary_source_session.py",
+    "scripts/vnext/ordinary_special_debt_scope.py",
+    "scripts/vnext/ordinary_text_input.py",
+    "scripts/vnext/ordinary_update_cycle.py",
+    "scripts/vnext/ordinary_scalability_audit.py",
+    "config/ordinary_scalability_exemptions_v1.json",
+    "config/main_scalability_exemptions_v1.json",
+    "tools/check_main_scalability.py"
+  ],
+  "freeze_enabled": false,
+  "declared_issue_metric_count": 39,
+  "pending_metric_ids": [
+    "B13",
+    "D03",
+    "D04"
+  ],
+  "integration_status": "DEVELOPMENT_DRAFT_NO_FREEZE",
+  "fiscal_year_label_policy": "config/normal_fiscal_year_labels_v1.json",
+  "presentation_paths": [
+    "scripts/vnext/ordinary_projection.py",
+    "config/ordinary_public_projection_v1.json"
+  ]
+}
+

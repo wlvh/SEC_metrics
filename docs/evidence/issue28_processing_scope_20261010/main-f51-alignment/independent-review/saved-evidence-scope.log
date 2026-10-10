@@ -1,0 +1,76 @@
+[
+  {
+    "saved_record": "pr138-real-main-read.json",
+    "exact_head_bytes": true,
+    "mode": "read",
+    "row_identity": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "metric_id": "B04",
+      "value": "2601000000",
+      "unit": "USD",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "accession": "0001048286-26-000007",
+      "result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2"
+    },
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "protected_files_unchanged_claim": true,
+    "scope": "saved execution evidence; not independently rerun"
+  },
+  {
+    "saved_record": "pr138-real-main-repeat.json",
+    "exact_head_bytes": true,
+    "mode": "repeat",
+    "row_identity": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "metric_id": "B04",
+      "value": "2601000000",
+      "unit": "USD",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "accession": "0001048286-26-000007",
+      "result_id": "sha256:c87ee735d9b6f33bbecd5c35658a4f5791dac5956341ab46244076781cade5d2"
+    },
+    "new_calls": [
+      0,
+      0,
+      0
+    ],
+    "protected_files_unchanged_claim": true,
+    "scope": "saved execution evidence; not independently rerun"
+  },
+  {
+    "actual_small_state_read_only": true,
+    "result_directory": "/private/tmp/issue28-processing-company-20261010/updates/B04/results/0a2a01fa880a4e40923982f34e12653c",
+    "same_result_id_and_version": true,
+    "old_success_to_completed_configuration_compatible": true,
+    "success_controller": "7270d5b23acbababd292f8f3833812d5927c1881ed925321d453b97f3908f700",
+    "comparison_controller": "349d11b6ebbb35c41b2c5e38e8a3e3c3f32fb7d806d8e8a5379c69dd71f2ca85",
+    "manifest_subject": "marriott_international",
+    "metric": "B04",
+    "source_proof_count": 5
+  },
+  {
+    "old_candidate_unchanged_file": "scripts/vnext/ordinary_d04_saved_route.py"
+  },
+  {
+    "old_candidate_unchanged_file": "scripts/vnext/ordinary_saved_result.py"
+  },
+  {
+    "main_business_helper_byte_preserved": "scripts/vnext/selected_fiscal_definition_scope_v1.py"
+  },
+  {
+    "required_execution_count": 41,
+    "unique_test_ids": 41,
+    "new_incremental_method_count": 1,
+    "added_scope_module_case_count": 6
+  }
+]
