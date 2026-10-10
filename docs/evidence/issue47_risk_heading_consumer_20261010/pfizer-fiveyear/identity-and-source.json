@@ -1,0 +1,1200 @@
+{
+  "checks": [
+    {
+      "fiscal_year": 2021,
+      "source_reference": {
+        "accession": "0000078003-22-000027",
+        "company_id": "pfizer",
+        "document_name": "pfe-20211231.htm",
+        "raw_asset_id": "sha256:a6dc538da8dd8c78563933a612ccb61bcc77ed9d067383ee6ed394612d5f0dd8",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:1ae0d92ddb2cb055a2562790d6dde11178b66fb19252f932c58905e173af3d41",
+        "source_reference_id": "sha256:7d168d078d4719ad48a2bf1f5ccc6810144b9512890e75d52043d8df43f151d2",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800322000027/pfe-20211231.htm"
+      },
+      "original_source_bytes_match_reading": true,
+      "evidence_check": {
+        "candidate_hash": "sha256:2433745e06cde826d270287129a5642c9d84bbe619254f9ce970b82b6afb3b9b",
+        "checks": [
+          {
+            "check": "TEXT_REQUIRED_SECTIONS",
+            "coverage": [
+              {
+                "coverage_hash": "sha256:7de9228e5036f125f0959927b1b204fb89f9ce5da9d0d3c429151c0ab22a2a6b",
+                "document_id": "sha256:749f6a11257c64a6ea28e7fb0b6c7892e50fe78d3fd92232b2e53828f017b49b",
+                "ranges": [
+                  {
+                    "closing_heading": {
+                      "block_index": 740,
+                      "heading_end_index": 740,
+                      "item": "2"
+                    },
+                    "end_block_exclusive": 740,
+                    "heading": {
+                      "block_index": 582,
+                      "heading_end_index": 582,
+                      "item": "1A"
+                    },
+                    "section_id": "ITEM_1A",
+                    "start_block": 583
+                  }
+                ],
+                "required_sections": [
+                  "ITEM_1A"
+                ],
+                "scope": "COMPLETE_LOCAL_SECTIONS_NOT_SEMANTIC_ABSENCE",
+                "source_reference_id": "sha256:7d168d078d4719ad48a2bf1f5ccc6810144b9512890e75d52043d8df43f151d2"
+              }
+            ],
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_0",
+            "claim_hash": "sha256:360987abb3c8ab8108f1c4e7f8537e4f41ee7ffd3034e08572c2b12140359bdd",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_1",
+            "claim_hash": "sha256:b797af113e759dd485d54395e347bc45d564200dad133cf574d932586ba0f546",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_2",
+            "claim_hash": "sha256:37ef99b4d50e7f01370f40c048ad29ae1e6d76be4ca05ea513b4dec768d8b3bf",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_3",
+            "claim_hash": "sha256:e9103f0edcc00cc114bf16c9a121b76b1bc6c8f480e4b40d189061cca24826b2",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_4",
+            "claim_hash": "sha256:b744155d61d3e24a1f551ddbbccc88089c72aa110fb108635a12313ab3dcff6f",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_5",
+            "claim_hash": "sha256:26cc8eedb546795aeb3defa06ef2d267a85d650f21f3b43e8371683f4aec6b36",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_6",
+            "claim_hash": "sha256:7446710569e88048f1d37e8c39a46e53ad1c2a23b24e7f3ca75cbff28031c6db",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_7",
+            "claim_hash": "sha256:85e2c976439de7a3520ce9f7014036c479db72b8c5534f556fbb075d1d97c6c7",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_8",
+            "claim_hash": "sha256:7e74c16b9439ca23685854561e356e1f04c8f68da4d9fe6057210f1fdc1eed0b",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_9",
+            "claim_hash": "sha256:975cdce274b9aa5a5f424d52082e03cc22c4941a62786294fde3feaed55632ac",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_10",
+            "claim_hash": "sha256:a1be0faef7f8985bfa80f0f353f21f2406a0b5e1a34b83ba2eee99fa05a057cc",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_11",
+            "claim_hash": "sha256:b0ee87fe840ffcd2edc1fbd447ebcf914b1a98f8aed13c2eadc557397f417dcc",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_12",
+            "claim_hash": "sha256:f1f045e88008f01b50e9dab4bb32c5e8c0b8dc4a2a7d7c3d94dd12b201b956f5",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_13",
+            "claim_hash": "sha256:666d7e6b2d44a219a0324104f78e1656a472dd844e4adeeca939c686f7cdbdd7",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_14",
+            "claim_hash": "sha256:18a7004ba227c833ab8cb621bae75ada275f052b0de5b382064df456820e11ff",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_15",
+            "claim_hash": "sha256:d077da06a11b34ff2dc99839ed374fe7173b0971468301f5167d9ffb999af1fe",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_16",
+            "claim_hash": "sha256:849ddc2294f0d04de6f9f744913adeda551f8575cf7d2d3e1f296ee92e4bde70",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_17",
+            "claim_hash": "sha256:44da4c2656a8e13567ad7bade12090fcfdef655d2e9d8534ae3a4f3312693f0a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_18",
+            "claim_hash": "sha256:b1895470573d290810fd663c81d7df63d9a7166ffb68e4292ef69a2acfbda3b8",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_19",
+            "claim_hash": "sha256:2a4cbfe2da0851ed4ef491542415b2c23c02f0aa0fe7e5c7860cf8622dcd9faf",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_20",
+            "claim_hash": "sha256:cff317539fefd96a4e12b43171091dd1a6479a89ad591a736fbe8f30354edea8",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_21",
+            "claim_hash": "sha256:5923d171a81e226d9e418bfb9d8374d17f97c51eebffe000a268deefaa8264f9",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_22",
+            "claim_hash": "sha256:a4a92d93bf0e92881205e19cd738182b19728707c499bc6605989911ebb6c087",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_23",
+            "claim_hash": "sha256:345917cf24b5f3765c0f8088af4503d97824ead378dc8f22c71b7bfb913125fe",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_24",
+            "claim_hash": "sha256:546e3b6bbe735e0455ed0a30bc11a24d454420a7b7d9e9cc4052c3ed50b88188",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_25",
+            "claim_hash": "sha256:67670c71fd52e3c310048e1c9aa3992e832eace7a0b8ac6ff74da3ed69aae09a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_26",
+            "claim_hash": "sha256:29dbd6572da7a3d3104d4577c3e6a50b981e1820085355635efa3b379addecf0",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_27",
+            "claim_hash": "sha256:3803a48f2c7ed7c31916972f0a3d1f8114d1c3da7ee2134c39fbd49912488817",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_28",
+            "claim_hash": "sha256:acc2d2ceb96bdc8abba7d5f59eaa3883ae3cb14a9c28b04ea800f0fde1e46380",
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:3970a45974081eea04c0f5c9fef09098dceb1879678505da4d1ec1d30438d1a0",
+        "identity_constraints": [],
+        "normalized_scope": {
+          "entity_scope": "registrant"
+        },
+        "normalized_values": {
+          "excerpt_0": "RISKS RELATED TO OUR BUSINESS, INDUSTRY AND OPERATIONS:",
+          "excerpt_1": "MANAGED CARE TRENDS",
+          "excerpt_10": "PRICING AND REIMBURSEMENT",
+          "excerpt_11": "U.S. HEALTHCARE REGULATION",
+          "excerpt_12": "DEVELOPMENT, REGULATORY APPROVAL AND MARKETING OF PRODUCTS",
+          "excerpt_13": "POST-AUTHORIZATION/APPROVAL DATA",
+          "excerpt_14": "LEGAL MATTERS",
+          "excerpt_15": "RISKS RELATED TO INTELLECTUAL PROPERTY, TECHNOLOGY AND SECURITY:",
+          "excerpt_16": "INTELLECTUAL PROPERTY PROTECTION",
+          "excerpt_17": "THIRD-PARTY INTELLECTUAL PROPERTY CLAIMS",
+          "excerpt_18": "INFORMATION TECHNOLOGY AND SECURITY",
+          "excerpt_19": "RISKS RELATED TO BUSINESS DEVELOPMENT:",
+          "excerpt_2": "COMPETITIVE PRODUCTS",
+          "excerpt_20": "BUSINESS DEVELOPMENT ACTIVITIES",
+          "excerpt_21": "SPIN-OFF AND COMBINATION OF UPJOHN WITH MYLAN",
+          "excerpt_22": "CONSUMER HEALTHCARE JV WITH GSK",
+          "excerpt_23": "GENERAL RISKS:",
+          "excerpt_24": "COVID-19 PANDEMIC",
+          "excerpt_25": "MARKET FLUCTUATIONS IN OUR EQUITY AND OTHER INVESTMENTS",
+          "excerpt_26": "COST AND EXPENSE CONTROL AND NONORDINARY EVENTS",
+          "excerpt_27": "INTANGIBLE ASSETS, GOODWILL AND EQUITY-METHOD INVESTMENTS",
+          "excerpt_28": "CHANGES IN LAWS AND ACCOUNTING STANDARDS",
+          "excerpt_3": "CONCENTRATION",
+          "excerpt_4": "RESEARCH AND DEVELOPMENT",
+          "excerpt_5": "GLOBAL OPERATIONS",
+          "excerpt_6": "PRODUCT MANUFACTURING, SALES AND MARKETING RISKS",
+          "excerpt_7": "COLLABORATIONS AND OTHER RELATIONSHIPS WITH THIRD PARTIES",
+          "excerpt_8": "COUNTERFEIT PRODUCTS",
+          "excerpt_9": "RISKS RELATED TO GOVERNMENT REGULATION AND LEGAL PROCEEDINGS:"
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS",
+        "system_approval_eligible": true,
+        "unresolved_scope_dimensions": []
+      },
+      "old_spec_closure": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+      "new_spec_closure": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+      "old_scope": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "new_scope": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "old_result_id": "sha256:9026bc36bc6bb5c241d473e496176752a2f23ebe3cccf520597ba24fd805d6b6",
+      "new_result_id": "sha256:88ec91029855739bbc1f35fdeb755a215c9c7455b49ff1c656144237b3fce6d5"
+    },
+    {
+      "fiscal_year": 2022,
+      "source_reference": {
+        "accession": "0000078003-23-000024",
+        "company_id": "pfizer",
+        "document_name": "pfe-20221231.htm",
+        "raw_asset_id": "sha256:3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:a5a91811752c8f15d04c11725e1885c5763a51be83de3e624c7b76c8282f1ba5",
+        "source_reference_id": "sha256:1f773f13400a5196093fd497769df312f6176297915efe9b8a04e0467d1f1bd7",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800323000024/pfe-20221231.htm"
+      },
+      "original_source_bytes_match_reading": true,
+      "evidence_check": {
+        "candidate_hash": "sha256:e70878d52177a1b50a9584dc2a8a7f10375ebfeafb39321aea1d2d9302775172",
+        "checks": [
+          {
+            "check": "TEXT_REQUIRED_SECTIONS",
+            "coverage": [
+              {
+                "coverage_hash": "sha256:d54c54df86fe9eb75eb2970ffebe009bd8dd8505a87499cfda5ac7d8b5023673",
+                "document_id": "sha256:884d2667e09ecd2d8f41fe164c630817a9bbd6a2b85c297190068a28df5ee7f2",
+                "ranges": [
+                  {
+                    "closing_heading": {
+                      "block_index": 740,
+                      "heading_end_index": 740,
+                      "item": "2"
+                    },
+                    "end_block_exclusive": 740,
+                    "heading": {
+                      "block_index": 585,
+                      "heading_end_index": 585,
+                      "item": "1A"
+                    },
+                    "section_id": "ITEM_1A",
+                    "start_block": 586
+                  }
+                ],
+                "required_sections": [
+                  "ITEM_1A"
+                ],
+                "scope": "COMPLETE_LOCAL_SECTIONS_NOT_SEMANTIC_ABSENCE",
+                "source_reference_id": "sha256:1f773f13400a5196093fd497769df312f6176297915efe9b8a04e0467d1f1bd7"
+              }
+            ],
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_0",
+            "claim_hash": "sha256:3bbc9b26cdf9c9cb7a41be5ab1f47392ce97651a0523ab6045d952ba6c770540",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_1",
+            "claim_hash": "sha256:232b4daa8c240f2187cc1d35c6ce79fd064c8e8a88e16c6db43307cdca745dc7",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_2",
+            "claim_hash": "sha256:986f6d54e7d6287ffc7df4fa109432c7c434b87aefa7900e47571718558a1d9d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_3",
+            "claim_hash": "sha256:b2375e1b9b7c3690487022962ac0638e1484c8e1e13c169e16292af39768af3a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_4",
+            "claim_hash": "sha256:f8a9c3b192ad05381165bf36b174d6ea06be46bc69250de639538c0948fa090d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_5",
+            "claim_hash": "sha256:4668078936d45fe2c43df4229b191e6e520523b0c30f1e0dc84fb5dd64ba55ce",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_6",
+            "claim_hash": "sha256:66bb01b5a331d05a1851833af5d3f00b28bca07e16a3e64052e6de3bee84fc61",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_7",
+            "claim_hash": "sha256:2c9641dac2743199ae80aaea425501c21b9e6eefc1389f6873159baefa7f2198",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_8",
+            "claim_hash": "sha256:be025c6d92cf29ffd7e5af8e8d2c6f597e9c09f8a1e0623501a9e32a7ad664a0",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_9",
+            "claim_hash": "sha256:438c9257381b170007ccc3e980a3d81ae98554854d4ef8f1562e10591e9f5e7d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_10",
+            "claim_hash": "sha256:acda521854d2572169b22615cf0637e58f0468f32cc51e054cc235949593d298",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_11",
+            "claim_hash": "sha256:4b143fd3a574c1133de7fac259b28bbdeb733fa7b8c50e0cb78ab8c46b848263",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_12",
+            "claim_hash": "sha256:cb0ae671b93d9fe19ddfb75bf60b896f13689b38af782ae15aeadc86a244fb91",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_13",
+            "claim_hash": "sha256:e6896d58fc735073ed3891dfcc498a86eabe12199a61380024f7cba28db799f5",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_14",
+            "claim_hash": "sha256:2a5736cc1050fd42e04017fc8b14b825153ca1ee810a320881d16115669c7daa",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_15",
+            "claim_hash": "sha256:4ad7b2d379a1e6d2d7608f7461814d2f62e9621b90682366772b9fbaaa051ad7",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_16",
+            "claim_hash": "sha256:8d1b45cecfc1ed90e9f213053b0d91519676228494931b3314f843adc032ec33",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_17",
+            "claim_hash": "sha256:fb1ce0c04eb518181939fc1eabd3824eb8fbbd70c89800cba11ac6dcab5503e8",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_18",
+            "claim_hash": "sha256:ba2389ddf054e4e15a56f5bd29662027a795fb241a433b08d27e93b247c23e70",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_19",
+            "claim_hash": "sha256:a0ac6e1aeb6ccb42d0810da6706e23fa63f0935ff5af5a9ba2e93f099879e3e9",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_20",
+            "claim_hash": "sha256:49c8959f092faf2d571ceab485866030db398851ef392fd49372b67436be34d3",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_21",
+            "claim_hash": "sha256:2ec62e8eb1ce337748b24af614dda5c7d25a5f715e678f61263db1a89ecb946d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_22",
+            "claim_hash": "sha256:a7f4a7f5d25a156b06461f8b8da00dcffd91297c9fb54b2b4563a8e2e09dec3e",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_23",
+            "claim_hash": "sha256:b5f208666432f64ccac6f7a517e5cb2561c9da1dc9b42723f182c1810477e542",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_24",
+            "claim_hash": "sha256:a3425888e448d55e5e9240102d968911d4c816e2fff99b3e54331beacd99732f",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_25",
+            "claim_hash": "sha256:b60a076cf4e8541b896f0cf4df82b44493f227a027e1f45677f8a7d98a92d075",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_26",
+            "claim_hash": "sha256:1fd38ad9e4b8ec8356b61ad1f83038f2e73d3e9ed0ee2a22ff005f105bc8e009",
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:5ca6b87d8ead56011c12775effc6d51a31b91c2fd107a10d68a10f2e2cc86ed5",
+        "identity_constraints": [],
+        "normalized_scope": {
+          "entity_scope": "registrant"
+        },
+        "normalized_values": {
+          "excerpt_0": "RISKS RELATED TO OUR BUSINESS, INDUSTRY AND OPERATIONS:",
+          "excerpt_1": "MANAGED CARE TRENDS",
+          "excerpt_10": "PRICING AND REIMBURSEMENT",
+          "excerpt_11": "U.S. HEALTHCARE REGULATION",
+          "excerpt_12": "DEVELOPMENT, REGULATORY APPROVAL AND MARKETING OF PRODUCTS",
+          "excerpt_13": "POST-AUTHORIZATION/APPROVAL DATA",
+          "excerpt_14": "LEGAL MATTERS",
+          "excerpt_15": "RISKS RELATED TO INTELLECTUAL PROPERTY, TECHNOLOGY AND SECURITY:",
+          "excerpt_16": "INTELLECTUAL PROPERTY PROTECTION",
+          "excerpt_17": "THIRD-PARTY INTELLECTUAL PROPERTY CLAIMS",
+          "excerpt_18": "INFORMATION TECHNOLOGY AND SECURITY",
+          "excerpt_19": "GENERAL RISKS",
+          "excerpt_2": "COMPETITIVE PRODUCTS",
+          "excerpt_20": "BUSINESS DEVELOPMENT ACTIVITIES",
+          "excerpt_21": "COVID-19",
+          "excerpt_22": "CLIMATE CHANGE AND SUSTAINABILITY",
+          "excerpt_23": "MARKET FLUCTUATIONS IN OUR EQUITY AND OTHER INVESTMENTS",
+          "excerpt_24": "COST AND EXPENSE CONTROL AND NONORDINARY EVENTS",
+          "excerpt_25": "INTANGIBLE ASSETS, GOODWILL AND EQUITY-METHOD INVESTMENTS",
+          "excerpt_26": "CHANGES IN LAWS AND ACCOUNTING STANDARDS",
+          "excerpt_3": "CONCENTRATION",
+          "excerpt_4": "RESEARCH AND DEVELOPMENT",
+          "excerpt_5": "GLOBAL OPERATIONS",
+          "excerpt_6": "PRODUCT MANUFACTURING, SALES AND MARKETING RISKS",
+          "excerpt_7": "COLLABORATIONS AND OTHER RELATIONSHIPS WITH THIRD PARTIES",
+          "excerpt_8": "COUNTERFEIT PRODUCTS",
+          "excerpt_9": "RISKS RELATED TO GOVERNMENT REGULATION AND LEGAL PROCEEDINGS:"
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS",
+        "system_approval_eligible": true,
+        "unresolved_scope_dimensions": []
+      },
+      "old_spec_closure": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+      "new_spec_closure": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+      "old_scope": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "new_scope": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "old_result_id": "sha256:11ad34179cb8eb38ccb69ff12645dc91cb9bce26fffadedd0ec41498cea231de",
+      "new_result_id": "sha256:0e6428a13f55388aa174a4f5323d8be56b8bf6085052e7ff8a0ec55b15578684"
+    },
+    {
+      "fiscal_year": 2023,
+      "source_reference": {
+        "accession": "0000078003-24-000039",
+        "company_id": "pfizer",
+        "document_name": "pfe-20231231.htm",
+        "raw_asset_id": "sha256:e8439987e90aeb5170db8daf9cddf9c2c9e2a4567c87ef8e4bc6722a83c905c0",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:4907e15186ae81f27b60271cdc91da273a66395ec8484f0fb1059b9057f5efd9",
+        "source_reference_id": "sha256:a38f993e4b99318705b78e21e71cf479002cbbee64e48403e9a71d7e5d3a0b4a",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800324000039/pfe-20231231.htm"
+      },
+      "original_source_bytes_match_reading": true,
+      "evidence_check": {
+        "candidate_hash": "sha256:573c4b5d22b9d1c506ec9ad3d43e2f77cbad5a4a9cebc8ab534263beeb45eb1b",
+        "checks": [
+          {
+            "check": "TEXT_REQUIRED_SECTIONS",
+            "coverage": [
+              {
+                "coverage_hash": "sha256:315d48f09c53b40d96215ae73f9cd4d02bf9d711a73d6ee19b1d15ee7909cd4a",
+                "document_id": "sha256:b5bca46e01e80221db3ff8a6c62a864594140ead720710f0132f73009d557bf2",
+                "ranges": [
+                  {
+                    "closing_heading": {
+                      "block_index": 918,
+                      "heading_end_index": 919,
+                      "item": "1C"
+                    },
+                    "end_block_exclusive": 918,
+                    "heading": {
+                      "block_index": 741,
+                      "heading_end_index": 741,
+                      "item": "1A"
+                    },
+                    "section_id": "ITEM_1A",
+                    "start_block": 742
+                  }
+                ],
+                "required_sections": [
+                  "ITEM_1A"
+                ],
+                "scope": "COMPLETE_LOCAL_SECTIONS_NOT_SEMANTIC_ABSENCE",
+                "source_reference_id": "sha256:a38f993e4b99318705b78e21e71cf479002cbbee64e48403e9a71d7e5d3a0b4a"
+              }
+            ],
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_0",
+            "claim_hash": "sha256:604b384a89e8ac7d99931a821841911c666dbd403da6d95dd0feff888a548a4b",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_1",
+            "claim_hash": "sha256:302f50604bd08dc8bac9b83406442b3ba0b78ef7d6f899862dd21919b77f62ea",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_2",
+            "claim_hash": "sha256:eb4a09e0ccb20e82a133afe2d2f59b965c94f9f8f8b91ce9e8478206701a5dce",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_3",
+            "claim_hash": "sha256:c8ddaf050583fb01b294752f6c4807a19c786e6c12d1f922733047e468442dca",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_4",
+            "claim_hash": "sha256:9caab594909ff684dcc5c877fc4fa520b6e1808d49627dbc7735618e7308786b",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_5",
+            "claim_hash": "sha256:d4fc0702bb9fc556954fc50bdca3092f9b7d9940a11866186dc424a467bdc0c5",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_6",
+            "claim_hash": "sha256:a547cefa4058ca26ec6ed5a1debdd3b3cf931c2b3cd451862610b4e0f40ff63b",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_7",
+            "claim_hash": "sha256:8e2029f7e995a6934c9f0c8d771662446b8c82173cc405c7100228c3523e69dd",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_8",
+            "claim_hash": "sha256:9f813f6c46810e3f5beeaffbe4619ad27b301773f52a288d30b85dc78d5b6f73",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_9",
+            "claim_hash": "sha256:d2ee90978e7548e810e620759703a3a173821c7924c0fbc62afd470b7e57d95b",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_10",
+            "claim_hash": "sha256:c8afee9a30ceff4639ee36742c9c2415653e83d9cdbe21f22345eae4aaf6355a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_11",
+            "claim_hash": "sha256:a23cc335e2a8e8172b0cb6b7250d1aa06633c1612332c46d3a4cceb8096fc8d9",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_12",
+            "claim_hash": "sha256:cada7cfbbc0c9f641f2d01c5e0daa19a290eda7c937ef83e68d8165886beb9c4",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_13",
+            "claim_hash": "sha256:d8a0637fcbd72471716fd66b093ce1e75720d9a758519a5db1d3a6bb845f9952",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_14",
+            "claim_hash": "sha256:b6507f27745558748784f82cffffada2f2da426a4839178d3339cab3de4e846b",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_15",
+            "claim_hash": "sha256:137d188c0a2f88a9f1e4857a4b2d37befd3df0468e9bba82b84d9e1b7e836d42",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_16",
+            "claim_hash": "sha256:8110d51bfbca3fb781f44112b0849b993a43c1f177efe8c7086a33f77d878c36",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_17",
+            "claim_hash": "sha256:fd3a7cfe679872c57271a3bdc0802afff7ed1e79f200bba67432c8fa71c82d03",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_18",
+            "claim_hash": "sha256:af85ab6a51801b22498a2e7d50b8e9116beb7629ea702dd5226ca4b2129d1cec",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_19",
+            "claim_hash": "sha256:6a71f8dd04a425b16d3e3a50235365d75e432b4b59703d112c3e17ba26a02710",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_20",
+            "claim_hash": "sha256:8c3bfbdc14d01df1d0f8fb8bad94b2ac20d6b2ca28abfaad20739a017a6ee8ba",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_21",
+            "claim_hash": "sha256:92cab8775f600351c846a60fc1b1bafd0f38fbb958bc4306a824096ab2f6d784",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_22",
+            "claim_hash": "sha256:544981127dff6a7bb5ea61971e1d0a396e087b3e2cf198b6cb71b8ff48afd098",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_23",
+            "claim_hash": "sha256:5a053fa93dd0e321d6032a8ae3d33acd63e67938d57b1ffaf17e9cbeae68bef8",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_24",
+            "claim_hash": "sha256:d225d145a0f7a3d977cd7c65e9f3764abfad350432d92a35b2f22e6405368073",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_25",
+            "claim_hash": "sha256:ba338e77c9ccb1f9135a951b7e34e2725f018b0f6b70a4d3f0356d3f81e72c4c",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_26",
+            "claim_hash": "sha256:b9d2478fb1401e07d8f3dba62f927e2890a4b32a1576792ca9db9e86c88e18d1",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_27",
+            "claim_hash": "sha256:6023f26bc136e2c8aae3156448e9cb83b24ab5beee727a313873588dd92b62da",
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:b68331563cb3afc1e1ee204386fa1e4a2342a02b46381ca94eb098f5af1a2bff",
+        "identity_constraints": [],
+        "normalized_scope": {
+          "entity_scope": "registrant"
+        },
+        "normalized_values": {
+          "excerpt_0": "RISKS RELATED TO OUR BUSINESS, INDUSTRY AND OPERATIONS:",
+          "excerpt_1": "MANAGED CARE TRENDS",
+          "excerpt_10": "PRICING AND REIMBURSEMENT",
+          "excerpt_11": "U.S. HEALTHCARE REGULATION",
+          "excerpt_12": "DEVELOPMENT, REGULATORY APPROVAL AND MARKETING OF PRODUCTS",
+          "excerpt_13": "POST-AUTHORIZATION/APPROVAL DATA",
+          "excerpt_14": "LEGAL MATTERS",
+          "excerpt_15": "RISKS RELATED TO INTELLECTUAL PROPERTY, TECHNOLOGY AND SECURITY:",
+          "excerpt_16": "INTELLECTUAL PROPERTY PROTECTION",
+          "excerpt_17": "THIRD-PARTY INTELLECTUAL PROPERTY CLAIMS",
+          "excerpt_18": "INFORMATION TECHNOLOGY AND SECURITY",
+          "excerpt_19": "GENERAL RISKS",
+          "excerpt_2": "COMPETITIVE PRODUCTS",
+          "excerpt_20": "BUSINESS DEVELOPMENT ACTIVITIES AND STRATEGIC GOALS",
+          "excerpt_21": "PANDEMICS",
+          "excerpt_22": "COVID-19",
+          "excerpt_23": "CLIMATE CHANGE AND SUSTAINABILITY",
+          "excerpt_24": "MARKET FLUCTUATIONS IN OUR EQUITY AND OTHER INVESTMENTS",
+          "excerpt_25": "COST AND EXPENSE CONTROL AND NONORDINARY EVENTS",
+          "excerpt_26": "INTANGIBLE ASSETS, GOODWILL AND EQUITY-METHOD INVESTMENTS",
+          "excerpt_27": "CHANGES IN LAWS AND ACCOUNTING STANDARDS",
+          "excerpt_3": "CONCENTRATION",
+          "excerpt_4": "RESEARCH AND DEVELOPMENT",
+          "excerpt_5": "GLOBAL OPERATIONS",
+          "excerpt_6": "PRODUCT MANUFACTURING, SALES AND MARKETING RISKS",
+          "excerpt_7": "COLLABORATIONS AND OTHER RELATIONSHIPS WITH THIRD PARTIES",
+          "excerpt_8": "COUNTERFEIT PRODUCTS",
+          "excerpt_9": "RISKS RELATED TO GOVERNMENT REGULATION AND LEGAL PROCEEDINGS:"
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS",
+        "system_approval_eligible": true,
+        "unresolved_scope_dimensions": []
+      },
+      "old_spec_closure": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+      "new_spec_closure": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+      "old_scope": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "new_scope": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "old_result_id": "sha256:f0a19109be4110d222d4f71049864950885814395ea99dee8c89178cb8bfdfd1",
+      "new_result_id": "sha256:ec83ede8c593b608b8f3ac1fab382d31899e9e7dc8b127649d370a66e7c63098"
+    },
+    {
+      "fiscal_year": 2024,
+      "source_reference": {
+        "accession": "0000078003-25-000054",
+        "company_id": "pfizer",
+        "document_name": "pfe-20241231.htm",
+        "raw_asset_id": "sha256:05b77064b72e16b39bc80dfa10d12d18e4b470c0df63c2cb89d3884e813bb97f",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:902b1380c26823d3a7c454af88c027239d636d4e0de5b2ec25edb951374a1487",
+        "source_reference_id": "sha256:fa5d70cd1c1de6c244617d8deedd350dcc2a7d8b733f3df238257e1caf10ed4a",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000054/pfe-20241231.htm"
+      },
+      "original_source_bytes_match_reading": true,
+      "evidence_check": {
+        "candidate_hash": "sha256:b1b5ef742ca3309dd2645977e0eae0b0c737109323f7194fe258b731fe765b93",
+        "checks": [
+          {
+            "check": "TEXT_REQUIRED_SECTIONS",
+            "coverage": [
+              {
+                "coverage_hash": "sha256:79150a77079b135b19188560c428e0f24500889274c0ebddff716d3d1c624dbc",
+                "document_id": "sha256:20073935bb75fe2f94251b1b0d2cd0dbc35b909643b6b503454011c5e763df73",
+                "ranges": [
+                  {
+                    "closing_heading": {
+                      "block_index": 875,
+                      "heading_end_index": 876,
+                      "item": "1C"
+                    },
+                    "end_block_exclusive": 875,
+                    "heading": {
+                      "block_index": 741,
+                      "heading_end_index": 741,
+                      "item": "1A"
+                    },
+                    "section_id": "ITEM_1A",
+                    "start_block": 742
+                  }
+                ],
+                "required_sections": [
+                  "ITEM_1A"
+                ],
+                "scope": "COMPLETE_LOCAL_SECTIONS_NOT_SEMANTIC_ABSENCE",
+                "source_reference_id": "sha256:fa5d70cd1c1de6c244617d8deedd350dcc2a7d8b733f3df238257e1caf10ed4a"
+              }
+            ],
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_0",
+            "claim_hash": "sha256:41c7e990693881e8c9bbc44067710ae5d7b39c6344c3570078a7dce05ab1ae85",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_1",
+            "claim_hash": "sha256:5ea1baa1edfeb9e30886fa1e6656e2cbc746a9ac67581f8535b76831df3ef016",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_2",
+            "claim_hash": "sha256:914c809eb0341ae5e0118d10fe2a6a3f754c5a1ca99d09c4fb938558d20cfb00",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_3",
+            "claim_hash": "sha256:7365470617dbcc9bdc9326e9c06bc898e524340864d3c5596d99ae89cc43aecb",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_4",
+            "claim_hash": "sha256:f24e5800653c65f42e9fa6dc79b7b289607e0e225a0abcb0999dc13f96908b2c",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_5",
+            "claim_hash": "sha256:eae187666fa7e0a47c1aff6802aafaf5732fd05bc918cdd375357b327f7e5569",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_6",
+            "claim_hash": "sha256:e6c74174d56641f69c35b0ffde4c825e80be29e6d6321a2f5af7152c40460aff",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_7",
+            "claim_hash": "sha256:8fdec7476e91187297a7471cdaef26c4020f5ce093332945a0f518e69ae46ea1",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_8",
+            "claim_hash": "sha256:35490ce2c16c46b46b790527c1c7d7ea3fcea22695d598d06e7e3e18667387af",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_9",
+            "claim_hash": "sha256:88859e9ca25e74dcb904ca73e3bb177891c203141a3bb3a84c940f930373dbb9",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_10",
+            "claim_hash": "sha256:cb93584e27af79952cb5d639f8d65cda5de785b2b94f906a86faea556a295a53",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_11",
+            "claim_hash": "sha256:ee68b3e99964c48d3b68ebf606991733ab76abdba9ce0770092694e52a6a6206",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_12",
+            "claim_hash": "sha256:409d4751f856e32c3c624a6243515368dae2ea0cb43760bf3aa3ded33fc55fa6",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_13",
+            "claim_hash": "sha256:da2fb2039b4868c51379c65e3f18c7d747e387478f04e4f30bcb83bbd7ab4d20",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_14",
+            "claim_hash": "sha256:ef42391f2d7d0b038f3f9eb2f1c8666674851ac94599a48b8127ad3a4b7c4d7a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_15",
+            "claim_hash": "sha256:4fa0ed2b29f6a074d80719ecda624ca17b07b7c3f8d7167797cf76a14c5b3a16",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_16",
+            "claim_hash": "sha256:640bffadd30b7fe6723b710cdf72570a964c1983f4435dfd9ab28cb42074d415",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_17",
+            "claim_hash": "sha256:c935b1e1cabc39d39c8b0625059ebc7d061bd88cb755cd2b3666c7f718556da1",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_18",
+            "claim_hash": "sha256:0646d3ecd18d2becb05f6c064ab70d1b4a219fa78b698ab62afa6dd0287aa485",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_19",
+            "claim_hash": "sha256:faa033b7025322cb3324b6b2590bce23986f6a39458954dd477331f922529da5",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_20",
+            "claim_hash": "sha256:4aef5627914213cd2774e53d57c37c5add343f7364f0c6f94ed6178d0e410ea1",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_21",
+            "claim_hash": "sha256:d8598fbcb768924a6c1264dd3a208768867834466220f7765a28533e4bc9c3ed",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_22",
+            "claim_hash": "sha256:c2ccf234fb552c4220da0dc6dac1e2ee8d7a36d98e4ae18c6faa84476bea919c",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_23",
+            "claim_hash": "sha256:91cfa97e3e7d1c25b168b4ba49272ae855a1ef809ce5e299016193a962781d47",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_24",
+            "claim_hash": "sha256:d297b3711919cad13749594a7249f1cf287509f2d6978f9139c7b494f1f2df24",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_25",
+            "claim_hash": "sha256:82ff7a1f0441d4cbf3d9775f231266cbb78ce876b82312c967008fd7705abed7",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_26",
+            "claim_hash": "sha256:48fa8e4e02b564765c36a9e9384e74d50ad24c1fcc332133f542b176992d2448",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_27",
+            "claim_hash": "sha256:5b32389e1f98a21ee65bf0588987eb46341218ccc379bdebf4897696cdf2231c",
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:a20bc19ee961a1ec1cfeca243ef702c09b83a094b8b4a48d22ed8cd5e47724ae",
+        "identity_constraints": [],
+        "normalized_scope": {
+          "entity_scope": "registrant"
+        },
+        "normalized_values": {
+          "excerpt_0": "RISKS RELATED TO OUR BUSINESS, INDUSTRY AND OPERATIONS:",
+          "excerpt_1": "MANAGED CARE TRENDS",
+          "excerpt_10": "PRICING AND REIMBURSEMENT",
+          "excerpt_11": "U.S. HEALTHCARE REGULATION",
+          "excerpt_12": "DEVELOPMENT, REGULATORY APPROVAL AND MARKETING OF PRODUCTS",
+          "excerpt_13": "POST-AUTHORIZATION/APPROVAL DATA",
+          "excerpt_14": "LEGAL MATTERS",
+          "excerpt_15": "RISKS RELATED TO INTELLECTUAL PROPERTY, TECHNOLOGY AND SECURITY:",
+          "excerpt_16": "INTELLECTUAL PROPERTY PROTECTION",
+          "excerpt_17": "THIRD-PARTY INTELLECTUAL PROPERTY CLAIMS",
+          "excerpt_18": "INFORMATION TECHNOLOGY AND SECURITY",
+          "excerpt_19": "GENERAL RISKS",
+          "excerpt_2": "COMPETITIVE PRODUCTS",
+          "excerpt_20": "BUSINESS DEVELOPMENT ACTIVITIES AND STRATEGIC GOALS",
+          "excerpt_21": "PANDEMICS",
+          "excerpt_22": "COVID-19",
+          "excerpt_23": "RESPONSIBLE BUSINESS GROWTH",
+          "excerpt_24": "MARKET FLUCTUATIONS IN OUR EQUITY AND OTHER INVESTMENTS",
+          "excerpt_25": "COST AND EXPENSE CONTROL AND UNUSUAL EVENTS",
+          "excerpt_26": "INTANGIBLE ASSETS, GOODWILL AND EQUITY-METHOD INVESTMENTS",
+          "excerpt_27": "CHANGES IN LAWS AND ACCOUNTING STANDARDS",
+          "excerpt_3": "CONCENTRATION",
+          "excerpt_4": "RESEARCH AND DEVELOPMENT",
+          "excerpt_5": "GLOBAL OPERATIONS",
+          "excerpt_6": "PRODUCT MANUFACTURING, SALES AND MARKETING RISKS",
+          "excerpt_7": "COLLABORATIONS AND OTHER RELATIONSHIPS WITH THIRD PARTIES",
+          "excerpt_8": "COUNTERFEIT PRODUCTS",
+          "excerpt_9": "RISKS RELATED TO GOVERNMENT REGULATION AND LEGAL PROCEEDINGS:"
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS",
+        "system_approval_eligible": true,
+        "unresolved_scope_dimensions": []
+      },
+      "old_spec_closure": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+      "new_spec_closure": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+      "old_scope": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "new_scope": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "old_result_id": "sha256:f6a7297715c62d5b4251dea4fd39e98fd31366ae357669e3465c596cfe01c561",
+      "new_result_id": "sha256:dd009aa7d4e973a22d3867e2f7fe2a538d9a77eb9fe49f3214caf9cabf13df51"
+    },
+    {
+      "fiscal_year": 2025,
+      "source_reference": {
+        "accession": "0000078003-26-000026",
+        "company_id": "pfizer",
+        "document_name": "pfe-20251231.htm",
+        "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4",
+        "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm"
+      },
+      "original_source_bytes_match_reading": true,
+      "evidence_check": {
+        "candidate_hash": "sha256:e5cc53c8b19851ed4497ee2258f54810f052253b1c9bba024d31cb5f284f8e78",
+        "checks": [
+          {
+            "check": "TEXT_REQUIRED_SECTIONS",
+            "coverage": [
+              {
+                "coverage_hash": "sha256:6d302d59137ddec3e8307b69f8a9c0a5cb70103054fdc612e61d10d2f8ef0516",
+                "document_id": "sha256:61a9935c16050a836f0fbb285bc89d20377b4e2da2fa198a752fdf395e7216c9",
+                "ranges": [
+                  {
+                    "closing_heading": {
+                      "block_index": 909,
+                      "heading_end_index": 910,
+                      "item": "1C"
+                    },
+                    "end_block_exclusive": 909,
+                    "heading": {
+                      "block_index": 766,
+                      "heading_end_index": 766,
+                      "item": "1A"
+                    },
+                    "section_id": "ITEM_1A",
+                    "start_block": 767
+                  }
+                ],
+                "required_sections": [
+                  "ITEM_1A"
+                ],
+                "scope": "COMPLETE_LOCAL_SECTIONS_NOT_SEMANTIC_ABSENCE",
+                "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d"
+              }
+            ],
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_0",
+            "claim_hash": "sha256:9e73735f83f36f60e8bfa7b6062eab7370f58be4d51307b33366bf3a90b423f0",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_1",
+            "claim_hash": "sha256:b142f7197c332a33451ee9e1dfe6788357976b31a38c642dd71f62700f17b95e",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_2",
+            "claim_hash": "sha256:9e83843a4909c9b6e0b3c1d7cea617edc188626ef4bcd49925962471f2ee1eb4",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_3",
+            "claim_hash": "sha256:8e26296f33c75ad9deec8ad99e7a407a00c04ff6ddca491f4a6ca7bb80b2cbc0",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_4",
+            "claim_hash": "sha256:fe783e3c8f3e48411532c9fc88d7cb2a53be55fa42368bac1a214b24ce2ed631",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_5",
+            "claim_hash": "sha256:ce68e12a60917aeb1fbdcaebb258b46c48a88eeee0853aad1f11f56ecc593edb",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_6",
+            "claim_hash": "sha256:3fad6ef499f2838450eb29fa49c45dbfa9b2ad6c84df02b1c7484706c555e05d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_7",
+            "claim_hash": "sha256:860d5b8949dd623fa6b153a0b05ca2e07d2d57dbdb95e6087bab7d21c10ae7ad",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_8",
+            "claim_hash": "sha256:b2cb6fa205f31c45d1338c300935b896e4f0d9b41591ce34a0bf9e54a63e746e",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_9",
+            "claim_hash": "sha256:57dc8c828bf6f0be191918ddba685352a0e9044346e0de3489f5994c843c34d2",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_10",
+            "claim_hash": "sha256:57947a10cd7c1bc88d0e50c42b6ea0325c252fff7a5fb35ded5a6a2cf50919bc",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_11",
+            "claim_hash": "sha256:9f3cb3dc3236c4d91f83b1883aa2128e4350637e323dcc8b1ccce729165be895",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_12",
+            "claim_hash": "sha256:3789f1dc2b112fad0f216f6782a04b89fde6984339cde2c074eb2ed646d1e06d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_13",
+            "claim_hash": "sha256:414417ca0b3569c61a67ef956b0aa63395cd8f7caf9e0c85969d736df2473b24",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_14",
+            "claim_hash": "sha256:74efbe1e4d65146f2b83f82ec530552c1871b42b8e862c2ecb3aaff61209ec4e",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_15",
+            "claim_hash": "sha256:bc1df07fa507654e353817f54d44bd1ac14be3bf337ea79a9fcf774a24acba48",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_16",
+            "claim_hash": "sha256:d8320e84382546b1cfca4da60002032036f3b18b02b0bda0e889e79602b6be26",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_17",
+            "claim_hash": "sha256:fa4ecfbdc3cd3edafe5e15e406662ac803b49da17f9d40c8510aaea8e913fac0",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_18",
+            "claim_hash": "sha256:8b544f86da2eba386e22447161304745852462784331f9fdac0aa013527e332a",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_19",
+            "claim_hash": "sha256:2c1c34bd972dcf6753940e6093e94ef1234b03855fe92f3af0d9b5c240301f65",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_20",
+            "claim_hash": "sha256:bd89f6ba3954727d91ee0df2d055f9dc879dc3896f0e2c17672616666ff4cdb9",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_21",
+            "claim_hash": "sha256:d92b409d3f7e60ba8f9f94f0538866691fb0c309ee1fc96500109a96a648974d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_22",
+            "claim_hash": "sha256:ee176e1c9ddaa2e9b8c5d0080a5582b75d024e0860c90d6be0d110f9da8d5bbc",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_23",
+            "claim_hash": "sha256:36c78301a15d08e8f611645e594e95a3917fb80084294df61eb3bdf5851ff6c2",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_24",
+            "claim_hash": "sha256:c09ef7c2c503280ae36a82ecec9493a6b7730a03787fb82e883f5456050e322e",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_25",
+            "claim_hash": "sha256:ea4ae1d92644da719e1b717d768e83e7b0d4e22937496e7f538e09b07d393d92",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_26",
+            "claim_hash": "sha256:3fbee59a60735d828351c2dccdc444678f8c6b1e9030f1fabed085598e79cd9d",
+            "status": "PASS"
+          },
+          {
+            "check": "TEXT_EXACT_EXCERPT:excerpt_27",
+            "claim_hash": "sha256:2d020f3e5fc41c3492fab6ce5ac3f3a4212d020c3debd7f501ca5e53577b6d65",
+            "status": "PASS"
+          }
+        ],
+        "evidence_check_id": "sha256:98e6f61bd375cec101faae27a3658e92597a2edd353d552928cd141fcbd33098",
+        "identity_constraints": [],
+        "normalized_scope": {
+          "entity_scope": "registrant"
+        },
+        "normalized_values": {
+          "excerpt_0": "RISKS RELATED TO OUR BUSINESS, INDUSTRY AND OPERATIONS:",
+          "excerpt_1": "MANAGED CARE TRENDS",
+          "excerpt_10": "PRICING AND REIMBURSEMENT",
+          "excerpt_11": "U.S. HEALTHCARE REGULATION",
+          "excerpt_12": "DEVELOPMENT, REGULATORY APPROVAL AND MARKETING OF PRODUCTS",
+          "excerpt_13": "POST-AUTHORIZATION/APPROVAL DATA",
+          "excerpt_14": "LEGAL MATTERS",
+          "excerpt_15": "RISKS RELATED TO INTELLECTUAL PROPERTY, TECHNOLOGY AND SECURITY:",
+          "excerpt_16": "INTELLECTUAL PROPERTY PROTECTION",
+          "excerpt_17": "THIRD-PARTY INTELLECTUAL PROPERTY CLAIMS",
+          "excerpt_18": "INFORMATION TECHNOLOGY AND CYBERSECURITY",
+          "excerpt_19": "GENERAL RISKS",
+          "excerpt_2": "COMPETITIVE PRODUCTS",
+          "excerpt_20": "BUSINESS DEVELOPMENT ACTIVITIES AND STRATEGIC GOALS",
+          "excerpt_21": "PANDEMICS",
+          "excerpt_22": "COVID-19",
+          "excerpt_23": "RESPONSIBLE BUSINESS PRACTICES",
+          "excerpt_24": "MARKET FLUCTUATIONS IN OUR EQUITY AND OTHER INVESTMENTS",
+          "excerpt_25": "COST AND EXPENSE CONTROL AND UNUSUAL EVENTS",
+          "excerpt_26": "INTANGIBLE ASSETS, GOODWILL AND EQUITY-METHOD INVESTMENTS",
+          "excerpt_27": "CHANGES IN LAWS AND ACCOUNTING STANDARDS",
+          "excerpt_3": "CONCENTRATION",
+          "excerpt_4": "RESEARCH AND DEVELOPMENT",
+          "excerpt_5": "GLOBAL OPERATIONS",
+          "excerpt_6": "PRODUCT MANUFACTURING, SALES AND MARKETING RISKS",
+          "excerpt_7": "COLLABORATIONS AND OTHER RELATIONSHIPS WITH THIRD PARTIES",
+          "excerpt_8": "COUNTERFEIT PRODUCTS",
+          "excerpt_9": "RISKS RELATED TO GOVERNMENT REGULATION AND LEGAL PROCEEDINGS:"
+        },
+        "reason_codes": [],
+        "record_type": "EVIDENCE_CHECK",
+        "status": "PASS",
+        "system_approval_eligible": true,
+        "unresolved_scope_dimensions": []
+      },
+      "old_spec_closure": "sha256:06be2bd2096a0383de1469b3b1f3b869becc40e15f11a7d97c368cdf80595b16",
+      "new_spec_closure": "sha256:2cf616ccdb70214edf453184505f984279be5cfa9fd0b966993eeb70b767b400",
+      "old_scope": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "new_scope": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+      "old_result_id": "sha256:0e5e340efb51ed7711a1f0ebb869214b325fab770d79697d5419fa3b4f76409d",
+      "new_result_id": "sha256:28de004b771ba1e0abc89dbafcf4419b3bc70e55128c13a4b956bdca63b7ec06"
+    }
+  ],
+  "full_old_Run_field_comparison_not_claimed": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
