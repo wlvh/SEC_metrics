@@ -59,6 +59,22 @@ class HistoricalCompensationSelectionTest(TestCase):
 
 
 class HistoricalCompensationAdapterTest(TestCase):
+    def test_history_dispatch_preserves_existing_factories_and_dependencies(self):
+        from vnext import company_local
+        from vnext.historical_compensation_case import prepare_historical_compensation_year_case, PROCESSING_FILES
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        from vnext.historical_event_cases import prepare_historical_event_year_case
+        with patch('vnext.company_current_records.run_saved_company',return_value={}) as shared:
+            company_local.run_local(company_id='marriott_international',source_root=Path('/saved'),
+                work_dir=Path('/new/state'),output_dir=Path('/new/out'),period='fiscal-years',
+                fiscal_year_start=2022,fiscal_year_end=2022,metric_ids=['C03','B01','C01'])
+        args=shared.call_args.kwargs
+        self.assertIs(prepare_historical_compensation_year_case,args['case_factories']['C03'])
+        self.assertEqual(PROCESSING_FILES,args['processing_files_by_metric']['C03'])
+        self.assertIs(prepare_historical_statement_year_case,args['case_factories']['B01'])
+        self.assertIs(prepare_historical_event_year_case,args['case_factories']['C01'])
+        self.assertEqual([2022],args['fiscal_years'])
+
     def test_selected_proxy_and_annual_identity_remain_distinct(self):
         from vnext import historical_compensation_case as cases
         annual={'entity':'1048286','filing':{'form':'10-K','accessionNumber':'annual'},
