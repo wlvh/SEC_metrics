@@ -1,0 +1,63 @@
+{
+  "seconds": 0.597198958043009,
+  "exit_code": 0,
+  "arguments": [
+    "results",
+    "--company",
+    "ford_motor_company",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/ford-c03-two-year-m1h1khcs/baseline"
+  ],
+  "report": {
+    "elapsed_seconds": 0.2488942078780383,
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "ford_motor_company",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "metrics": [
+      {
+        "metric_id": "C03",
+        "result_id": "sha256:f7cc55af5d686a781fa099c78b4af87be255dc6c7fed3522d8b0fefd0c3b45db",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": 2025,
+        "value": "27519558",
+        "unit": "USD",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/state/updates/C03/periods/FY2025/results/9f060f7b389e447fabc26234c608faa7"
+      },
+      {
+        "metric_id": "C03",
+        "result_id": "sha256:1f7472a601513528a176c738919269d3420c6722fa1631512b059cadb7cbd974",
+        "period_start": "2022-01-01",
+        "period_end": "2022-12-31",
+        "fiscal_year": 2022,
+        "value": "20996146",
+        "unit": "USD",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+        "requested_in_latest_execution": false,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/state/updates/C03/periods/FY2022/results/57d45b96301b453bb47443996594cd06"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/ford-c03-two-year-m1h1khcs/baseline"
+  }
+}

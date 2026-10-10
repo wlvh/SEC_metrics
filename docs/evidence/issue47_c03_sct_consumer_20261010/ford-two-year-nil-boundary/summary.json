@@ -1,0 +1,86 @@
+{
+  "product_code_commit": "813cf6a1 guide-only/source2532d4a3",
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-ford-ecd-rvv7auy0/ford-c03-two-year-m1h1khcs",
+  "first_seconds": 15.750921125058085,
+  "repeat_seconds": 1.5918268340174109,
+  "read_seconds": 0.58172387490049,
+  "newly_processed_years": [
+    2023,
+    2024
+  ],
+  "old_2022_2025_values_dates_ids_unchanged": true,
+  "state_files_unchanged_on_read": 61,
+  "source_log_manifest_unchanged": true,
+  "rows": [
+    {
+      "fiscal_year": "2023",
+      "value": "",
+      "unit": "USD",
+      "cik": "37996",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:dc846b15bf058695af53e71d32686eed6cbc99443d3b24a039db9de316148bed",
+      "status": "WITHHELD",
+      "accession": "0001104659-24-040871",
+      "form": "DEF 14A",
+      "filed_date": "2024-03-29",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "fiscal_year": "2024",
+      "value": "",
+      "unit": "USD",
+      "cik": "37996",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "result_id": "sha256:9c790477d4ef0a043045fa2b7f12cbd655c1ca74bf1a89a45bfb24df12966981",
+      "status": "WITHHELD",
+      "accession": "0001104659-25-029100",
+      "form": "DEF 14A",
+      "filed_date": "2025-03-28",
+      "requested_in_latest_execution": "True"
+    },
+    {
+      "fiscal_year": "2022",
+      "value": "20996146",
+      "unit": "USD",
+      "cik": "37996",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:1f7472a601513528a176c738919269d3420c6722fa1631512b059cadb7cbd974",
+      "status": "XBRL_OK",
+      "accession": "0001558370-23-005203",
+      "form": "DEF 14A",
+      "filed_date": "2023-03-31",
+      "requested_in_latest_execution": "False"
+    },
+    {
+      "fiscal_year": "2025",
+      "value": "27519558",
+      "unit": "USD",
+      "cik": "37996",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "result_id": "sha256:f7cc55af5d686a781fa099c78b4af87be255dc6c7fed3522d8b0fefd0c3b45db",
+      "status": "XBRL_OK",
+      "accession": "0001552781-26-000164",
+      "form": "DEF 14A",
+      "filed_date": "2026-03-27",
+      "requested_in_latest_execution": "False"
+    }
+  ],
+  "expected_original_table_values": {
+    "2023": "26470033",
+    "2024": "24861866"
+  },
+  "actual_new_values": null,
+  "new_years_complete": false,
+  "withheld_reason": "C03_TARGET_FACT_INVALID: former-person nil fact",
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "new_content_reference_scope": "two original Summary Compensation Table rows; no blind/model experiment"
+}

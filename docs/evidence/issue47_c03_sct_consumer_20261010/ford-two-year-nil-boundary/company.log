@@ -1,0 +1,9 @@
+baseline-read 0 0.597198958043009
+two-year-first 2 15.750921125058085
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/c03-ford-remaining/verify_company.py", line 43, in <module>
+    first=invoke('two-year-first',args)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/c03-ford-remaining/verify_company.py", line 37, in invoke
+    assert p.returncode==0 and not p.stderr
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

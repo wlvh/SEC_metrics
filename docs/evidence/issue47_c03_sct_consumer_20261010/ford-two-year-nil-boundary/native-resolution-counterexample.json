@@ -1,0 +1,162 @@
+[
+  {
+    "fiscal_year": 2023,
+    "source_reference_id": "sha256:fe3f4374a2d373b0c67ba403e496067ee4b1a18578d575755d14567c51e7b370",
+    "raw_asset_id": "sha256:706abbd3080e856948fd83c21105df78154a3ad9bdfec0bb7257e7e45629d3d7",
+    "reason_code": "C03_TARGET_FACT_INVALID",
+    "candidates": [
+      {
+        "dimensions": {
+          "ecd:IndividualAxis": "f:JamesDFarleyJrMember"
+        },
+        "entity_identifier": "0000037996",
+        "locator": {
+          "context_ref": "c1",
+          "ordinal": 4,
+          "qualified_name": "ecd:PeoTotalCompAmt"
+        },
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "person_members": [
+          [
+            "http://www.ford.com/20231231",
+            "JamesDFarleyJrMember"
+          ]
+        ],
+        "source_text": "26,470,033",
+        "source_transform": "ixt:num-dot-decimal",
+        "unit_ref": "usd",
+        "value": "26470033"
+      },
+      {
+        "dimensions": {},
+        "entity_identifier": "0000037996",
+        "locator": {
+          "context_ref": "c0",
+          "ordinal": 43,
+          "qualified_name": "ecd:PeoTotalCompAmt"
+        },
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "person_members": [],
+        "source_text": "26,470,033",
+        "source_transform": "ixt:num-dot-decimal",
+        "unit_ref": "usd",
+        "value": "26470033"
+      }
+    ],
+    "invalid_target_facts": [
+      {
+        "dimensions": {
+          "ecd:IndividualAxis": "f:JamesPHackettMember"
+        },
+        "entity_identifier": "0000037996",
+        "locator": {
+          "context_ref": "c2",
+          "ordinal": 93,
+          "qualified_name": "ecd:PeoTotalCompAmt"
+        },
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "reason": "C03_NIL_TARGET_COMPENSATION",
+        "source_text": "",
+        "source_transform": "",
+        "unit_ref": "usd"
+      }
+    ],
+    "reported_person_facts": [
+      {
+        "identity_valid": true,
+        "locator": {
+          "context_ref": "c0",
+          "ordinal": 2,
+          "qualified_name": "ecd:PeoName"
+        },
+        "name": "James D. Farley, Jr.",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "person_members": []
+      }
+    ]
+  },
+  {
+    "fiscal_year": 2024,
+    "source_reference_id": "sha256:231679d9ec02e65509f59f488aa64fecc5dcd6772dfc248795dd019328a71ea7",
+    "raw_asset_id": "sha256:c2a4be1e714f832c6e13843a6ac27b3706217fcf72ce5362670bc202ba423eca",
+    "reason_code": "C03_TARGET_FACT_INVALID",
+    "candidates": [
+      {
+        "dimensions": {
+          "ecd:IndividualAxis": "f:JamesDFarleyJrMember"
+        },
+        "entity_identifier": "0000037996",
+        "locator": {
+          "context_ref": "c1",
+          "ordinal": 12,
+          "qualified_name": "ecd:PeoTotalCompAmt"
+        },
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "person_members": [
+          [
+            "http://www.ford.com/20241231",
+            "JamesDFarleyJrMember"
+          ]
+        ],
+        "source_text": "24,861,866",
+        "source_transform": "ixt:num-dot-decimal",
+        "unit_ref": "usd",
+        "value": "24861866"
+      },
+      {
+        "dimensions": {},
+        "entity_identifier": "0000037996",
+        "locator": {
+          "context_ref": "c0",
+          "ordinal": 58,
+          "qualified_name": "ecd:PeoTotalCompAmt"
+        },
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "person_members": [],
+        "source_text": "24,861,866",
+        "source_transform": "ixt:num-dot-decimal",
+        "unit_ref": "usd",
+        "value": "24861866"
+      }
+    ],
+    "invalid_target_facts": [
+      {
+        "dimensions": {
+          "ecd:IndividualAxis": "f:JamesPHackettMember"
+        },
+        "entity_identifier": "0000037996",
+        "locator": {
+          "context_ref": "c2",
+          "ordinal": 115,
+          "qualified_name": "ecd:PeoTotalCompAmt"
+        },
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "reason": "C03_NIL_TARGET_COMPENSATION",
+        "source_text": "",
+        "source_transform": "",
+        "unit_ref": "usd"
+      }
+    ],
+    "reported_person_facts": [
+      {
+        "identity_valid": true,
+        "locator": {
+          "context_ref": "c0",
+          "ordinal": 10,
+          "qualified_name": "ecd:PeoName"
+        },
+        "name": "James D. Farley, Jr.",
+        "period_end": "2024-12-31",
+        "period_start": "2024-01-01",
+        "person_members": []
+      }
+    ]
+  }
+]
