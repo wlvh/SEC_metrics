@@ -16,6 +16,9 @@ from .governance_signals import C03_SPEC_PATH, resolve_c03
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .specs import compile_spec_file
+from .deterministic_router import DeterministicRouterError
+
+PROXY_SCT_SPEC_PATH = 'catalog/r6/C03_proxy_compensation_table_v1.md'
 
 METRICS = ('C03',)
 PROCESSING_FILES = tuple('scripts/vnext/'+name+'.py' for name in (
@@ -100,7 +103,7 @@ def prepare_historical_compensation_sources(*, repo_root, company_id, fiscal_yea
 
 
 def prepare_historical_compensation_year_case(*, repo_root, company_id, metric_id, fiscal_year):
-    """Use the shared ECD resolver for a selected proxy; no SCT substitution."""
+    """Use ECD, then the shared SCT only for a truly untagged proxy."""
     _need(metric_id=='C03', 'HISTORICAL_C03_METRIC_REQUIRED', 'IMPLEMENTATION_GAP')
     source = prepare_historical_compensation_sources(repo_root=repo_root,
         company_id=company_id, fiscal_year=fiscal_year)
@@ -111,17 +114,35 @@ def prepare_historical_compensation_year_case(*, repo_root, company_id, metric_i
         'period_end':period['period_end'], 'scope':scope, 'scope_key':scope_key(scope=scope)}
     spec = compile_spec_file(path=ROOT/C03_SPEC_PATH, dependency_specs={})
     args = {key:proxy[key] for key in ('raw_bytes','raw_blob','source_reference')}
-    resolution = resolve_c03(**args, target=target, expected_cik=annual['entity'],
-        compiled_spec=spec, sec_namespace_release='YEAR_QUARTER_OR_DATE')
+    spec_path, source_kind = C03_SPEC_PATH, 'FIRST_REPORTED_PROXY_ECD'
+    try:
+        resolution = resolve_c03(**args, target=target, expected_cik=annual['entity'],
+            compiled_spec=spec, sec_namespace_release='YEAR_QUARTER_OR_DATE')
+    except DeterministicRouterError as error:
+        # This is the existing historical route's narrow no-context rule.
+        # Any broken inline document, wrong unit/person/period or other error
+        # retains its original outcome rather than escaping into another table.
+        if str(error) != 'XBRL source contains no contexts' or b'<ix:' in args['raw_bytes'].lower():
+            raise
+        from .proxy_compensation_source import resolve_proxy_compensation_table
+        spec_path, source_kind = PROXY_SCT_SPEC_PATH, 'FIRST_REPORTED_PROXY_SCT'
+        spec = compile_spec_file(path=ROOT/spec_path, dependency_specs={})
+        resolution = resolve_proxy_compensation_table(**args,
+            filing=source['selection']['selected_proxy'], inventory=source['proxy_inventory'],
+            company_id=company_id, cik=annual['entity'], target=target,
+            fiscal_year=period['fiscal_year'], compiled_spec=spec)
     observation = resolution['observation']
-    records = [*source['records'], *([observation] if observation is not None else []),
+    records = [*source['records'], *resolution.get('derived_assets',()),
+               *([observation] if observation is not None else []),
                resolution['trace'], resolution['result']]
     # ECD's absent/ambiguous/person/period outcomes remain the shared core's
     # exact outcomes. No arbitrary fallback to another proxy or annual year.
     assessment = {'selection':source['selection'], 'resolution':resolution['selection'],
-        'source_kind':'FIRST_REPORTED_PROXY_ECD', 'proxy_sct_consumer_complete':False}
+        'source_kind':source_kind,
+        'proxy_sct_consumer_complete':False,
+        'proxy_sct_route_used':source_kind=='FIRST_REPORTED_PROXY_SCT'}
     return {'kind':'STRUCTURED', 'primary_metric_id':'C03',
-        'compiled_specs':{'C03':spec}, 'spec_paths':{'C03':C03_SPEC_PATH},
+        'compiled_specs':{'C03':spec}, 'spec_paths':{'C03':spec_path},
         'target_period':period, 'prepared_annual_input':annual,
         'selected_proxy':source['selection']['selected_proxy'],
         'expected_records':records, 'results':{'C03':resolution['result']},

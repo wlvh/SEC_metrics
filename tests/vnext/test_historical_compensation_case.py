@@ -59,6 +59,25 @@ class HistoricalCompensationSelectionTest(TestCase):
 
 
 class HistoricalCompensationAdapterTest(TestCase):
+    def test_broken_inline_and_non_context_errors_do_not_enter_sct(self):
+        from vnext import historical_compensation_case as cases
+        from vnext.deterministic_router import DeterministicRouterError
+        from vnext.governance_signals import GovernanceSignalError
+        annual={'entity':'1048286','table_input':{'target_period':{'fiscal_year':2021,
+                'period_start':'2021-01-01','period_end':'2021-12-31'}}}
+        for raw,error in [(b'<ix:nonNumeric>broken',DeterministicRouterError('XBRL source contains no contexts')),
+                          (b'plain proxy',DeterministicRouterError('wrong entity')),
+                          (b'plain proxy',GovernanceSignalError('C03_USD_UNIT_REQUIRED'))]:
+            source={'prepared_annual_input':annual,'proxy_source':{'raw_bytes':raw,
+                'raw_blob':{},'source_reference':{}},'selection':{'selected_proxy':{}}}
+            with self.subTest(error=error), \
+                 patch.object(cases,'prepare_historical_compensation_sources',return_value=source), \
+                 patch.object(cases,'resolve_c03',side_effect=error):
+                with self.assertRaises(type(error)) as caught:
+                    cases.prepare_historical_compensation_year_case(repo_root=Path('/constructed'),
+                        company_id='marriott_international',metric_id='C03',fiscal_year=2021)
+                self.assertIs(error,caught.exception)
+
     def test_source_preparer_retains_annual_primary_for_reporter_and_distinct_proxy(self):
         from vnext import historical_compensation_case as cases
         from unittest.mock import Mock
