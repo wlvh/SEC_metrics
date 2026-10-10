@@ -1,0 +1,65 @@
+{
+  "started_utc": "2026-10-10T02:26:19.880832+00:00",
+  "ended_utc": "2026-10-10T02:26:22.764495+00:00",
+  "seconds": 2.8815893752034754,
+  "reviewed_head": "a915570a0961509d93c0759491cefebb444da988",
+  "saved_source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "network": "socket connect and DNS blocked",
+  "new_sec_provider_paid_calls": [
+    0,
+    0,
+    0
+  ],
+  "source_bytes_and_references_match_previous_record": true,
+  "processing_files_match_previous_record": true,
+  "scope_and_details_match_previous_record": true,
+  "scope_id": "sha256:011bfe85ff98017aa34ea4abd6c48ae2bb1512c9c5dd54606dd16c000a0116ef",
+  "source_scope_id": "sha256:7396d18f3219212746dff48873605ed95b7516ba48ed94d85482bd27c9bdf524",
+  "decision": "INPUT_PROPERTY_PROVEN",
+  "classification": "PART_III_ADDITION_WITH_NO_AMENDED_ITEM_1A",
+  "issues": [],
+  "source_admission": {
+    "record_type": "VERIFIED_SAVED_SOURCE_INPUTS",
+    "source_manifest_sha256": "78272fd3bb42f1c3fd28ce9bd934b8f469d42fc062c0425f06f480c750da7798",
+    "request_attempt_ids": [
+      "request:attempt:99822f51d1d96ec0fe592a78064a03098f2a1d3cb31d5f5be0d783abeb5f50bd",
+      "request:attempt:ca0adc7cd7b53d67089bb2d81793745e5f78f0f6c7100ac896f4600dd2d0ea71"
+    ],
+    "source_credit": "SAVED_SOURCE_BYTES_AND_REQUESTS_CHECKED",
+    "real_sec_credit": false,
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "full_document_block_counts": {
+    "original": 3592,
+    "amendment": 1596
+  },
+  "input_class": "SELECTED_ORIGINAL_ITEM_1A_HEADINGS",
+  "metric_ids": [
+    "D01"
+  ],
+  "risk_reference_summary": [
+    {
+      "blocks": [
+        79
+      ],
+      "window": {
+        "heading_block": 78,
+        "end_block_exclusive": 81
+      },
+      "status": "INITIAL_FILING_CROSS_REFERENCE"
+    }
+  ],
+  "boundaries": {
+    "whole_amendment_semantic_no_effect_asserted": false,
+    "financial_input_clearance": false,
+    "subject_continuity_proven": false,
+    "metric_result_created": false,
+    "source_acquisition_credit": false,
+    "production_authorized": false
+  }
+}

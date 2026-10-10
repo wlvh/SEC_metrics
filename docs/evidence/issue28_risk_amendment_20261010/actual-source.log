@@ -1,0 +1,10 @@
+decision WITHHELD classification UNRESOLVED seconds 3.037228166125715
+issues [{'reason': 'RISK_AMENDMENT_RISK_SECTION_REFERENCE_UNRESOLVED', 'error_type': 'AmendmentScopeError'}]
+note declared {'registrant': 'Paramount Skydance Corporation', 'number': '1', 'end': 'December 31, 2025', 'filed': 'February 25, 2026', 'aliases': '“Paramount,” the “Company,” “we,” “us” and “our”', 'scope_name': 'Paramount Skydance Corporation'}
+original section LOCATED
+risk refs [([79], 'UNRESOLVED_RISK_SECTION_REFERENCE')]
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-risk-amendment/SEC_metrics/docs/evidence/issue28_risk_amendment_20261010/verify_saved_amendment.py", line 51, in <module>
+    assert result['decision']=='INPUT_PROPERTY_PROVEN',result['issues']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [{'reason': 'RISK_AMENDMENT_RISK_SECTION_REFERENCE_UNRESOLVED', 'error_type': 'AmendmentScopeError'}]

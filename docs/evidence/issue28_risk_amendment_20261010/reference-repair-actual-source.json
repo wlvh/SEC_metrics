@@ -1,0 +1,248 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-risk-amendment/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "git_base": "a915570a0961509d93c0759491cefebb444da988",
+  "tested_tree": "UNCOMMITTED_NEW_SOURCE_API",
+  "seconds": 2.892776541877538,
+  "api_source_summaries": {
+    "original": {
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-02-25",
+        "accessionNumber": "0002041610-26-000011",
+        "primaryDocument": "psky-20251231.htm"
+      },
+      "period": {
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "raw_sha256": "4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:ca0329884451e51380468f4ffee24a484a67e6571f3a5691acb4794319770a99",
+        "raw_asset_id": "sha256:4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+        "company_id": "paramount_skydance_paramount_global",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm",
+        "accession": "0002041610-26-000011",
+        "document_name": "psky-20251231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:99822f51d1d96ec0fe592a78064a03098f2a1d3cb31d5f5be0d783abeb5f50bd"
+      }
+    },
+    "amendment": {
+      "filing": {
+        "form": "10-K/A",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-04-24",
+        "accessionNumber": "0001140361-26-016758",
+        "primaryDocument": "ef20071103_10ka.htm"
+      },
+      "period": {
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "raw_sha256": "10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:9bf93630dc255ffbd6dc9d2e8166df2601d7a44facf152648086c2115550bc3e",
+        "raw_asset_id": "sha256:10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0",
+        "company_id": "paramount_skydance_paramount_global",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+        "accession": "0001140361-26-016758",
+        "document_name": "ef20071103_10ka.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:ca0adc7cd7b53d67089bb2d81793745e5f78f0f6c7100ac896f4600dd2d0ea71"
+      }
+    }
+  },
+  "source_hashes": [
+    {
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-02-25",
+        "accessionNumber": "0002041610-26-000011",
+        "primaryDocument": "psky-20251231.htm"
+      },
+      "raw_sha256": "4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:ca0329884451e51380468f4ffee24a484a67e6571f3a5691acb4794319770a99",
+        "raw_asset_id": "sha256:4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+        "company_id": "paramount_skydance_paramount_global",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm",
+        "accession": "0002041610-26-000011",
+        "document_name": "psky-20251231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:99822f51d1d96ec0fe592a78064a03098f2a1d3cb31d5f5be0d783abeb5f50bd"
+      },
+      "source_path": "evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm"
+    },
+    {
+      "filing": {
+        "form": "10-K/A",
+        "reportDate": "2025-12-31",
+        "filingDate": "2026-04-24",
+        "accessionNumber": "0001140361-26-016758",
+        "primaryDocument": "ef20071103_10ka.htm"
+      },
+      "raw_sha256": "10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0",
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:9bf93630dc255ffbd6dc9d2e8166df2601d7a44facf152648086c2115550bc3e",
+        "raw_asset_id": "sha256:10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0",
+        "company_id": "paramount_skydance_paramount_global",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+        "accession": "0001140361-26-016758",
+        "document_name": "ef20071103_10ka.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:ca0adc7cd7b53d67089bb2d81793745e5f78f0f6c7100ac896f4600dd2d0ea71"
+      },
+      "source_path": "evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm"
+    }
+  ],
+  "source_admission": {
+    "record_type": "VERIFIED_SAVED_SOURCE_INPUTS",
+    "source_manifest_sha256": "78272fd3bb42f1c3fd28ce9bd934b8f469d42fc062c0425f06f480c750da7798",
+    "request_attempt_ids": [
+      "request:attempt:99822f51d1d96ec0fe592a78064a03098f2a1d3cb31d5f5be0d783abeb5f50bd",
+      "request:attempt:ca0adc7cd7b53d67089bb2d81793745e5f78f0f6c7100ac896f4600dd2d0ea71"
+    ],
+    "source_credit": "SAVED_SOURCE_BYTES_AND_REQUESTS_CHECKED",
+    "real_sec_credit": false,
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "scope_id": "sha256:011bfe85ff98017aa34ea4abd6c48ae2bb1512c9c5dd54606dd16c000a0116ef",
+  "classification": "PART_III_ADDITION_WITH_NO_AMENDED_ITEM_1A",
+  "decision": "INPUT_PROPERTY_PROVEN",
+  "input_class": "SELECTED_ORIGINAL_ITEM_1A_HEADINGS",
+  "issues": [],
+  "fiscal_window_unchanged": true,
+  "details": {
+    "note_identity": {
+      "declared_identity": {
+        "registrant": "Paramount Skydance Corporation",
+        "number": "1",
+        "end": "December 31, 2025",
+        "filed": "February 25, 2026",
+        "aliases": "“Paramount,” the “Company,” “we,” “us” and “our”",
+        "scope_name": "Paramount Skydance Corporation"
+      },
+      "banner": {
+        "text": "(Amendment No. 1)",
+        "linked": false,
+        "emphasized": true,
+        "leading_emphasis": {
+          "text": "(Amendment No. 1)",
+          "raw_start_byte": 5933,
+          "raw_end_byte": 5950,
+          "raw_span_sha256": "d8ba42c08467b381caa53adfe8b30719231789485f4e355a2a34e3c3097f5f10"
+        },
+        "block_index": 4,
+        "raw_start_byte": 5933,
+        "raw_end_byte": 5950,
+        "raw_span_sha256": "d8ba42c08467b381caa53adfe8b30719231789485f4e355a2a34e3c3097f5f10"
+      },
+      "note_grammar_hash": "sha256:33c4dd988d6c8980fb9c45680db5eee52a46f781c51c127016aaa9ac9722476a"
+    },
+    "original_item_1a_section": {
+      "status": "LOCATED",
+      "candidates": [
+        {
+          "section_id": "ITEM_1A",
+          "start_block": 232,
+          "end_block_exclusive": 357,
+          "heading": {
+            "item": "1A",
+            "block_index": 230,
+            "heading_end_index": 231
+          },
+          "closing_heading": {
+            "item": "1B",
+            "block_index": 357,
+            "heading_end_index": 358
+          }
+        }
+      ]
+    },
+    "risk_section_references": [
+      {
+        "source_blocks": [
+          {
+            "text": "This Amendment contains both historical and forward-looking statements, including statements related to our future financial results and performance, potential achievements and transactions (including in connection with the Company’s pending merger with Warner Bros. Discovery, Inc.) and their expected benefits, and industry trends and developments. All statements that are not statements of historical fact are, or may be deemed to be, forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. Similarly, statements that describe our objectives, plans or goals are or may be forward-looking statements. These forward-looking statements reflect our current expectations concerning future results and events; can generally be identified by the use of statements that include phrases such as “believe,” “expect,” “anticipate,” “intend,” “plan,” “foresee,” “likely,” “will,” “may,” “could,” “estimate” or other similar words or phrases; and involve known and unknown risks, uncertainties and other factors that are difficult to predict and which may cause our actual results, performance or achievements to be different from any future results, performance or achievements expressed or implied by these statements. These risks, uncertainties and other factors are discussed in “Item 1A. Risk Factors” in our Initial Form 10-K. Other risks, uncertainties or other factors, or updates to those discussed herein, may be described in our other filings with the SEC, including our reports on Form 10-Q and Form 8-K, press releases, public conference calls, webcasts, our social media and blog posts and on our website at paramount.com (under Investors). Information included on or accessible through our website is not intended to be incorporated into this Amendment. There may be additional risks, uncertainties and other factors that we do not currently view as material or that are not known. The forward-looking statements included in this Amendment are made only as of the date hereof, and we do not undertake any obligation to publicly update any forward-looking statements to reflect subsequent events or circumstances.",
+            "linked": false,
+            "emphasized": false,
+            "leading_emphasis": null,
+            "block_index": 79,
+            "raw_start_byte": 41951,
+            "raw_end_byte": 44389,
+            "raw_span_sha256": "39b61b54191852db795a2e938837334a12a7fd9fcfe4bec4cfaa0611296aaf76"
+          }
+        ],
+        "block_indices": [
+          79
+        ],
+        "text": "This Amendment contains both historical and forward-looking statements, including statements related to our future financial results and performance, potential achievements and transactions (including in connection with the Company’s pending merger with Warner Bros. Discovery, Inc.) and their expected benefits, and industry trends and developments. All statements that are not statements of historical fact are, or may be deemed to be, forward-looking statements within the meaning of the Private Securities Litigation Reform Act of 1995. Similarly, statements that describe our objectives, plans or goals are or may be forward-looking statements. These forward-looking statements reflect our current expectations concerning future results and events; can generally be identified by the use of statements that include phrases such as “believe,” “expect,” “anticipate,” “intend,” “plan,” “foresee,” “likely,” “will,” “may,” “could,” “estimate” or other similar words or phrases; and involve known and unknown risks, uncertainties and other factors that are difficult to predict and which may cause our actual results, performance or achievements to be different from any future results, performance or achievements expressed or implied by these statements. These risks, uncertainties and other factors are discussed in “Item 1A. Risk Factors” in our Initial Form 10-K. Other risks, uncertainties or other factors, or updates to those discussed herein, may be described in our other filings with the SEC, including our reports on Form 10-Q and Form 8-K, press releases, public conference calls, webcasts, our social media and blog posts and on our website at paramount.com (under Investors). Information included on or accessible through our website is not intended to be incorporated into this Amendment. There may be additional risks, uncertainties and other factors that we do not currently view as material or that are not known. The forward-looking statements included in this Amendment are made only as of the date hereof, and we do not undertake any obligation to publicly update any forward-looking statements to reflect subsequent events or circumstances.",
+        "initial_filing_citations": [
+          "These risks, uncertainties and other factors are discussed in “Item 1A. Risk Factors” in our Initial Form 10-K."
+        ],
+        "caution_window": {
+          "heading_block": 78,
+          "end_block_exclusive": 81
+        },
+        "status": "INITIAL_FILING_CROSS_REFERENCE"
+      }
+    ],
+    "unresolved_risk_section_references": []
+  },
+  "policy_hash": "sha256:0aff3223e553748783b58ecde0366f0f51cfb5b8e9d95a6a065aad6ade219d49",
+  "full_scope_contains_both_documents": true,
+  "source_scope_original_id": "sha256:7396d18f3219212746dff48873605ed95b7516ba48ed94d85482bd27c9bdf524",
+  "source_item_headers": [
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15"
+  ],
+  "not_covered_original_policy": [
+    "B06",
+    "B13",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D02",
+    "D03",
+    "D04"
+  ],
+  "tested_processing_files": {
+    "scripts/vnext/risk_heading_amendment_input_v1.py": "d04725c9c511e9ccd0cc42ccb2a3c24e93e5810c5f7f3e531539c188fec4e47c",
+    "scripts/vnext/annual_amendment_scope.py": "bd70d270d9747ac2d8ba72987b77c54c752c450847280174e8e56d2bd2560323",
+    "scripts/vnext/annual_amendment_scope_v2.py": "0ff94fa705572a832f7aadd979bcc3cda0cc1f2304a11b8bd896da804a1fc72f",
+    "scripts/vnext/amendment_note_layout.py": "cd5d92770dc865aa39b069be48fa8814fe362557eb0315025438d1f93a93d66f",
+    "scripts/vnext/text_coverage.py": "33fe616774a0ee6da02011dd00526f6cc086b191beab7af4d67ce79c4d84b5ce",
+    "scripts/vnext/text_results_v2.py": "26a0fe518cdbb76377d6afcfde82e0a886eb7e9fc730254abd875012ecf1cc93",
+    "scripts/vnext/normal_annual_input_v2.py": "8c54ef1eaf2a7774fdf4533e07fde6fa4a0391c3cec51bdaf76a317d9ebd5e19",
+    "scripts/vnext/canonical.py": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+    "scripts/vnext/deterministic_router.py": "1e5d71233fbfda516bdbefbc2c50ce36dd4f780ab515b26fbfbb69ece825f1c5",
+    "scripts/vnext/fiscal_year_labels.py": "b4c2c6d696604f6e313da83c7845bfa6dfe2ffae250de137dcaecf9633b93251",
+    "config/annual_amendment_scope_v1.json": "ed7c8d776c47b08a5238d41d250fa7d4712994f2df34148383040e2435a93202",
+    "config/instant_balance_amendment_v1.json": "50790b4f32651a2d93044d32b58aeace432d6dcde7fa9b42f599dbb05acb0892"
+  },
+  "reference_headings_used_as_input": false,
+  "metric_result_created": false,
+  "source_acquisition_credit": false,
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}

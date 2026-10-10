@@ -10,6 +10,7 @@ name: Company saved-source records
       - 'tests/vnext/test_precalculated_case.py'
       - 'tests/vnext/test_saved_source_checks.py'
       - 'tests/vnext/test_runtime_tools.py'
+      - 'tests/vnext/test_risk_heading_amendment_input.py'
       - 'tests/vnext/test_b03_current_input_scope.py'
       - 'tests/vnext/test_xbrl_namespace_policy.py'
       - 'tests/vnext/test_dei_release_selection.py'
@@ -56,6 +57,10 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail tests.vnext.test_runtime_tools tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy tests.vnext.test_dei_release_selection tests.vnext.test_successor_income_projection tests.vnext.test_event_rule_root tests.vnext.test_financial_dei_release tests.vnext.test_reported_average_period tests.vnext.test_bank_scope_dei_release -v
+      - name: Selected original risk-heading amendment input
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_risk_heading_amendment_input tests.vnext.test_amendment_note_layout tests.vnext.test_instant_amendment_paragraph_api
       - name: Historical dispatch and saved result states
         env:
           PYTHONDONTWRITEBYTECODE: '1'
