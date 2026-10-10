@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+    print("seconds",time.monotonic()-t);print("company",c["company_id"]);print("period",c["target_period"]);print("result",c["results"]["B01"]);print("selection",c["component"]["source_selection"].get("revenue_scope",{}).get("status"))
+                                                        ~^^^^^^^^^^^^^^
+KeyError: 'company_id'
+seconds 2.7926313751377165

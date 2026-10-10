@@ -87,3 +87,10 @@ failure or unknown source result. The same NIM module is now a separate
 five-minute job in the existing workflow; all original company modules remain
 in their original job. No timeout increase, skip, weakened assertion or rerun
 of passed company material locally. Remote new head terminal is separate.
+
+
+## Source-company P2 limited closure and main compatibility
+
+The original323NEEDS_FIX record remains. [Independent subject-only repair](independent-subject-repair/conclusion.md) PASS bindsa54114new source lines and two registration tests; four actual contract tests plus17independent smallCSV controls,10tools/one message/179.688s,05:57:29..06:00:29UTC. It closes the specific wrong-company/CIK/traits P2, not whole currentHEAD or fullNIM content. Earlier actualsource/company/default/failed-source evidence retains its original scope.
+
+Actualmainc99 has advanced. Existing117 now appends that main and keeps four conflict unions: its currentA04 dispatch plus mainD04, both specific dependency lists, mainfast functions/classes plus oneNIMcontract selector, and all mainworkflow steps plus original separateNIMjob. Actual financial resolver and NIMsource/contract test bytes remain exactrevieweda541. Publicreporter131/102/income/oldhistoricalroutes are retained, not overwritten by earlier fixed snapshots. No E01 or unmerged138dependency added. Required current/oldbank/default-source/subject/update/D04/company/reporting tests and representative formalCLI compatibility follow below; this is reception compatibility for an existing capability, not a newfamily scope.

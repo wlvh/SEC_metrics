@@ -72,6 +72,25 @@ class PrecalculatedCaseTest(unittest.TestCase):
             result=self.save(self.case)
         self.assertEqual(result['manifest']['target_period']['fiscal_year'],2025)
 
+    def test_current_metric_and_evidence_rows_keep_the_actual_reporter(self):
+        result=self.save(self.case)
+        for filename in ('metrics_matrix.csv', 'metric_evidence.csv'):
+            rows=list(csv.DictReader(io.StringIO(result['files'][filename].decode())))
+            self.assertTrue(rows)
+            self.assertTrue(all(r['cik']=='1048286' for r in rows))
+        self.assertEqual(result['result'],self.case['results']['B01'])
+
+    def test_modified_trace_is_rejected_before_completion(self):
+        case=copy.deepcopy(self.case)
+        trace=next(r for r in case['expected_records'] if r['record_type']=='EXECUTION_TRACE'
+                   and r['trace_id']==case['results']['B01']['trace_id'])
+        trace['calculation_target']['entity']='813828'
+        # The ordinary record consistency check rejects an in-place trace
+        # edit before rendering. Reporter mismatch for independently supplied
+        # targets is tested through the small reporting-view entry.
+        with self.assertRaisesRegex(ValueError,'EXECUTION_TRACE content identity differs'):self.save(case)
+        self.assertFalse((self.root/'result/manifest.json').exists())
+
     def test_wrong_target_period_has_no_completion_manifest(self):
         case=copy.deepcopy(self.case);case['target_period']={**case['target_period'],'period_end':'2024-12-31'}
         with self.assertRaisesRegex(ValueError,'PERIOD_CHANGED'):self.save(case)

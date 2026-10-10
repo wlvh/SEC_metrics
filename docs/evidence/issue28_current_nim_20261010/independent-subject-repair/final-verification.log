@@ -1,0 +1,34 @@
+{
+  "utc": "2026-10-10T06:00:29.416640+00:00",
+  "actual_head": "8f28e09e7bc09527420d0430fb420ade3bafab1b",
+  "target_files_equal_to_patch_sha": true,
+  "tracked_target_diff_empty": true,
+  "checks": [
+    {
+      "path": "scripts/vnext/financial_results.py",
+      "sha256": "79620a2f947a440afac2b507a926d7cb0cad9990d7bc987a35c004115ee627f9",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "tests/vnext/test_current_nim_company.py",
+      "sha256": "8121b40aa0b3902311d42fad76cdcfcdd18c6cd6804b5ee697b4b471a16eb015",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "docs/evidence/issue28_current_nim_20261010/independent-review/conclusion.md",
+      "sha256": "0293f4f64d16c97eee6097c585ec7853cafbbe304ad0890a88f889fbe3f78d35",
+      "unchanged_during_review": true
+    },
+    {
+      "path": "docs/evidence/issue28_current_nim_20261010/independent-review/subject-negative.log",
+      "sha256": "0b71a99031976690f9a77b4f6099781f71d25c065cb32a279a486f86eaaaf67c",
+      "unchanged_during_review": true
+    }
+  ],
+  "status": "?? docs/evidence/issue28_current_nim_20261010/independent-subject-repair/\n",
+  "tool_nodes_including_this_call": 10,
+  "elapsed_seconds": 179.688,
+  "required_tests": 4,
+  "isolated_controls": 17,
+  "all_isolated_controls_passed": true
+}
