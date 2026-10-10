@@ -17,7 +17,7 @@ EXTRA_REVENUE_CONCEPTS = (
     'us-gaap:RevenueFromCollaborativeArrangementExcludingRevenueFromContractWithCustomer',
     'us-gaap:RoyaltyRevenue', 'us-gaap:Revenues',
 )
-UNIT_HEADER = (r"\(?(?:dollars in |in )?(?:millions|thousands)(?:, except (?:per share|per-share) data)?\)?",)
+UNIT_HEADER = (r"\(?(?:dollars in |in )?(?:millions|thousands)(?:, except (?:per (?:common )?share|per-share) data)?\)?",)
 
 STATEMENT_CONCEPTS = ('us-gaap:NetIncomeLoss', 'us-gaap:ProfitLoss',
                       'us-gaap:CostOfRevenue', 'us-gaap:CostOfGoodsAndServicesSold')

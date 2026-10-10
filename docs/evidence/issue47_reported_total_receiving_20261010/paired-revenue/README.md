@@ -53,3 +53,13 @@ python3 tools/vnext_company.py results --company pfizer \
 已读接收者GitHub交接6094245836/6094248883；历史薄适配保留被拒收入scope到异常与inputassessment，日常选择只存scopeID/status/complete，不丢NO_DEMONSTRATED_SPLIT。拒绝/金额/原pairedguard不变。119相关控制0.759s零skip，构造current/prior角色控制核完整scope保存且摘要带准确限制。
 
 真实已保存MacyFY2023一个新隔离状态：当前原件总额范围成立，原FY2022无Total/完整范围未证，prior NO_DEMONSTRATED_SPLIT导致B02 null；首9.765s/exit2、禁止case/Calculator复1.237s/稳定扣留/0、独立读.555s/exit0，CSV原角色范围可读。原任务/旧db609错误Result不改、不以later25449m代前期。执行准确标为9dd+未提交scope显示修补树，不倒签后继commit。它是公司负例消费者验证，不授范围不一致合法增长或新method信用；SEC/model/paid0。
+
+## 接收回归：全新五年B02及普通单位说明修补
+
+已读Claude6094536012/6094654752并纠正旧证据边界：保存FY22正确值不证明fresh路径可产生它。main已84/136，本方正常接main；公共b860只UNIT_HEADER允许PER COMMON SHARE DATA，financial_duration/网格/列金额/年份不改。原span覆盖金额列，原失败为合法单位说明不匹配；原错误和790全绿保历史。公共源码及12小source反例逐字接，不写公司/year/table/金额/列常量，不移动列或借XML忽略可见冲突。107关联.635s/12source .326s零skip。
+
+全新不存在state一公司命令仅PF21–25 B02，从原件处理76.830s；三个正确年FY22 .2342535183544926680444838106、FY23 -.4169640187381640586065982259、FY25 -.01647099501783833906989171264，原47d/5aa/b1d ID保持。FY21/FY24两期完整scope均已成立，再由原pairedguard准确WITHHELD：原2020 41908m对本期比较41651m；原2023 58496m对本期比较59553m。real-comparison-conflicts.json保实际check字段，不改异常字符串伪装业务判断。五年十个scope均complete，scopeID/原claim/来源/年度证据在实际input-assessments/records，完整fresh状态路径在receipt。
+
+全范围禁止case/Calculator复4.261s：三NO_SOURCE_CONTENT_CHANGE、两PREVIOUS_INPUT_WITHHELD，零计算；另进程results .694s/5rows，44result/pointer文件保。旧任务另独立读.740s保25rows/424allstate、旧失败/开发/正确版本不改。新源码执行准确记13cb+未提交b860源码/test树，不倒签提交；原参考只用于抽取后比较，非输入。新SEC/model/paid/NativeRun/正式接受0。
+
+修复与重验按6094654752交回接收者；权限更正不授本方自行merge/Ready/采纳。公共限定差异审查与当前fresh消费分开，新headCI另核。MacyNO_DEMONSTRATED_SPLIT、旧db609/a6e缺陷与1950/在线来源未完责任不变。
