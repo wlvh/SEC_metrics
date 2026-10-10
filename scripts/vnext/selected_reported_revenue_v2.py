@@ -34,6 +34,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
     if fiscal_label_resolution is not None:
         from .canonical import sha256_bytes
         from .normal_annual_input_v2 import _choose_fiscal_year
+        from .historical_fiscal_labels import require_actual_definition_scope
         label=fiscal_label_resolution;inspected=label.get('source_inspection',{})
         _need(label.get('record_type') in {'SELECTED_HISTORICAL_FISCAL_LABEL','ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION'}
               and inspected.get('primary_sha256')==sha256_bytes(content=raw)
@@ -42,6 +43,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
               and inspected.get('actual_period')=={k:period[k] for k in ('period_start','period_end')}
               and label.get('original_dei_fiscal_year')==period['fiscal_year'],
               'FISCAL_LABEL_SOURCE_CHANGED')
+        inspected=require_actual_definition_scope(inspected)
         column_year,_=_choose_fiscal_year(inspected)
         _need(column_year==label.get('selected_fiscal_year'),'FISCAL_LABEL_SELECTION_CHANGED')
     xml_rows=native_income_reports(xml,annual,concepts,**options) if xml is not None else None

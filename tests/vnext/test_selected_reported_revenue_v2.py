@@ -98,6 +98,16 @@ class SelectedReportedRevenueTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'VISIBLE_DATE_CONFLICT'):
             reported_revenue_scope(primary=calendar,annual=annual,approved_concepts=APPROVED,
                 fiscal_label_resolution=calendar_label)
+        conditional_raw=raw.replace(b'References to fiscal 2026',
+            b'If the proposed naming convention is approved, References to fiscal 2026')
+        conditional=changed(source,conditional_raw)
+        conditional_inspected=inspect_fiscal_year_labels(primary_bytes=conditional_raw,companyfacts_bytes=cf,
+            expected_primary_sha256=sha256_bytes(content=conditional_raw),expected_companyfacts_sha256=sha256_bytes(content=cf),
+            expected_cik=annual['entity'],filing=annual['filing'])
+        self.assertEqual(conditional_inspected['source_defined_fiscal_year'],2026)
+        with self.assertRaisesRegex(ValueError,'FISCAL_LABEL_UNRESOLVED'):
+            reported_revenue_scope(primary=conditional,annual=annual,approved_concepts=APPROVED,
+                fiscal_label_resolution={**label,'source_inspection':conditional_inspected})
 
     def test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors(self):
         source,xml,annual=originals()
