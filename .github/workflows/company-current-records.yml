@@ -12,6 +12,7 @@ name: Company saved-source records
       - 'tests/vnext/test_saved_source_checks.py'
       - 'tests/vnext/test_runtime_tools.py'
       - 'tests/vnext/test_text_item_capacity.py'
+      - 'tests/vnext/test_current_risk_heading_case.py'
       - 'tests/vnext/test_b03_current_input_scope.py'
       - 'tests/vnext/test_xbrl_namespace_policy.py'
       - 'tests/vnext/test_dei_release_selection.py'
@@ -81,6 +82,10 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 tests/required_unittests.py tests.vnext.test_d01_explicit_running_headers
+      - name: Current D01 source selection and company consumer
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_current_risk_heading_case tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update
       - name: Existing historical SEC count and recorded capture compatibility
         env:
           PYTHONDONTWRITEBYTECODE: '1'
