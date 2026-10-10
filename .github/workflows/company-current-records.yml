@@ -10,6 +10,7 @@ name: Company saved-source records
       - 'tests/vnext/test_ordinary_current_update.py'
       - 'tests/vnext/test_selected_revenue_scope_v1.py'
       - 'tests/vnext/test_current_reported_revenue.py'
+      - 'tests/vnext/test_historical_statement_cases.py'
       - 'tests/vnext/test_selected_reported_revenue_v2.py'
       - 'tests/vnext/test_company_parse_reuse.py'
       - 'tests/vnext/test_precalculated_case.py'
@@ -65,7 +66,7 @@ jobs:
       - name: Historical dispatch and saved result states
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest -v
+        run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest tests.vnext.test_historical_statement_cases -v
       - name: Paired reported comparisons and exact revenue defect
         env:
           PYTHONDONTWRITEBYTECODE: '1'

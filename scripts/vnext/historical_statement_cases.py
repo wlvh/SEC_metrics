@@ -50,6 +50,7 @@ PROCESSING_FILES = (
 INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
     'scripts/vnext/selected_income_source_v1.py',
     'scripts/vnext/selected_revenue_scope_v1.py',
+    'scripts/vnext/selected_reported_revenue_v2.py',
     'scripts/vnext/composite_scope.py',
     'scripts/vnext/xbrl_namespace_policy.py',
     'scripts/vnext/ordinary_income_input.py',
@@ -94,11 +95,12 @@ def _registry_for_selected_period(*, registry, prepared, selection):
     return {**registry, 'primary_cik': reporting, 'entity_continuity_status': 'continuous'}, detail
 
 
-def prepare_historical_statement_year_case(*, repo_root, company_id, metric_id, fiscal_year):
+def prepare_historical_statement_year_case(*, repo_root, company_id, metric_id, fiscal_year,
+                                           period_selection=None):
     """Select one issuer year and supply the existing common computation."""
     _need(metric_id in METRICS, 'HISTORICAL_STATEMENT_FAMILY_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
     return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
-        metric_id=metric_id, fiscal_year=fiscal_year)
+        metric_id=metric_id, fiscal_year=fiscal_year, period_selection=period_selection)
 
 
 def prepare_historical_current_annual_year_case(*, repo_root, company_id, metric_id, fiscal_year):
@@ -178,13 +180,20 @@ def _metadata_outcome_case(*, source, company_id, metric_id, prepared, selection
 
 
 def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fiscal_year,
-                                       withhold_known_source_errors=False):
+                                       withhold_known_source_errors=False, period_selection=None):
     """Shared selected-filing case; catalog and Calculator retain computation."""
     source = Path(repo_root)
-    selection = resolve_period_selection(repo_root=source, company_id=company_id,
-                                         fiscal_year=fiscal_year, rules_root=ROOT)
+    selection = (resolve_period_selection(repo_root=source, company_id=company_id,
+                                          fiscal_year=fiscal_year, rules_root=ROOT)
+                 if period_selection is None else period_selection)
     prepared = prepare_historical_annual_input(repo_root=source, company_id=company_id,
                                                period_selection=selection, rules_root=ROOT)
+    # Explicit selection saves the preceding fiscal-year search only. Annual
+    # preparation re-derives its source selection, and the requested label is
+    # still checked even when the selection was originally made by report end.
+    if period_selection is not None:
+        _need(type(fiscal_year) is int and prepared['table_input']['target_period']['fiscal_year'] == fiscal_year,
+              'HISTORICAL_STATEMENT_REQUESTED_FISCAL_YEAR_CHANGED')
     if prepared['subject_policy']['mode'] == 'SUCCESSOR_REGISTRANT_ONLY' and metric_id != 'B01':
         return _successor_comparability_case(source=source, company_id=company_id,
             metric_id=metric_id, prepared=prepared, selection=selection)
@@ -260,8 +269,11 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
     assessment = prior_error
     if metric_id == 'B01':
         from .selected_revenue_scope_v1 import (
-            selected_revenue_scope, admit_revenue_facts, verify_revenue_observations)
+            selected_revenue_scope, admit_revenue_facts, verify_revenue_observations, STATEMENT_CONCEPTS)
+        from .selected_reported_revenue_v2 import (reported_revenue_scope,
+            admit_reported_revenue_facts, verify_reported_revenue_observations)
         from .selected_income_source_v1 import visible_income_periods
+        from .selected_income_source_v1 import native_income_reports
         from .deterministic_router import parse_accession_xbrl_source
         from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE
         from .ordinary_income_input import verify_income_observations
@@ -277,10 +289,25 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         _need(all(source_annual['table_input']['target_period'][key] == period[key]
                   for key in ('period_start', 'period_end')),
               'HISTORICAL_INCOME_ORIGINAL_PERIOD_CHANGED')
-        revenue_scope = selected_revenue_scope(primary=by_kind['primary'][0],
+        reported_scope = reported_revenue_scope(primary=by_kind['primary'][0],
             xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
-            namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period)
-        reports = revenue_scope['original_reports']
+            namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period,
+            fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'))
+        if reported_scope['complete_scope_proven']:
+            revenue_scope = reported_scope
+            admit_facts = admit_reported_revenue_facts
+            check_observations = verify_reported_revenue_observations
+            reports = {'primary':reported_scope['original_reports'],
+                       'xml':native_income_reports(by_kind['xml'][0],source_annual,
+                           sorted(set(concepts)|set(STATEMENT_CONCEPTS)),
+                           namespace_policy=YEAR_OR_DATE_RELEASE,annual_period_reader=annual_period)}
+        else:
+            revenue_scope = selected_revenue_scope(primary=by_kind['primary'][0],
+                xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
+                namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period)
+            admit_facts = admit_revenue_facts
+            check_observations = verify_revenue_observations
+            reports = revenue_scope['original_reports']
         # Preserve the existing visible check for a native short-period fact;
         # the scope helper does not grant that fact an annual interpretation.
         short = [row for row in reports['primary']
@@ -297,9 +324,9 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
             allowed_ciks=[prepared['entity']], include_instant=False)
         result, trace, observations = calculate_metric(compiled_spec=spec,
             target={**target, 'entity': prepared['entity'], 'accession': prepared['filing']['accessionNumber']},
-            company_traits=traits, structured_facts=admit_revenue_facts(facts=facts, scope=revenue_scope),
+            company_traits=traits, structured_facts=admit_facts(facts=facts, scope=revenue_scope),
             verified_observations=[])
-        verify_revenue_observations(observations=observations, scope=revenue_scope)
+        check_observations(observations=observations, scope=revenue_scope)
         assessment = {'selected_revenue_scope': revenue_scope}
         # Bind the CompanyFacts observation to this selected filing's originals.
         # The public reader does no current-year selection or amendment admission.
