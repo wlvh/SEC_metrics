@@ -1,0 +1,48 @@
+{
+  "debt_scope_definition": {
+    "included": [
+      "recognized_borrowings",
+      "notes_and_bonds",
+      "finance_lease_liabilities_including_combined_nonlease_components"
+    ],
+    "excluded": [
+      "operating_lease_liabilities",
+      "ordinary_trade_tax_provisions",
+      "customer_deposits",
+      "nonfinancing_trading_derivatives"
+    ],
+    "basis": "recognized_statement_carrying_amount_including_discount_premium_cost_hedge_and_fair_value_measurement",
+    "nonoverlap": "Each demonstrated liability set once; disjoint reported categories may be added",
+    "equity": "same_scope_StockholdersEquity_not_noncontrolling_inclusive",
+    "bank_scope": "Separate bank funding scope and comparability limitation; no netting assets"
+  },
+  "required_liability_classes": {
+    "consolidated_nonbank": [
+      "current_borrowings",
+      "noncurrent_borrowings",
+      "finance_leases"
+    ],
+    "bank_funding": [
+      "current_borrowings",
+      "noncurrent_borrowings",
+      "finance_leases",
+      "federal_funds_repurchase",
+      "consolidated_VIE_debt"
+    ],
+    "industrial": [
+      "current_borrowings",
+      "noncurrent_borrowings",
+      "finance_leases"
+    ]
+  },
+  "program_path": "scripts/vnext/b06_bond_leases.py",
+  "program_sha256": "d211352b8b8bf27a123236fdae8993f5996df03dfe5d7ceb447b6dc9feeca332",
+  "inventory_candidate_filter": "debt|borrow|loan|lease|credit|facility|financing|funding|obligation|promissory|seniornotes|subordinatednotes|debentures",
+  "InterestPayableCurrent_selected": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope_decision": "NOT_GRANTED_BY_THIS_CHECK"
+}

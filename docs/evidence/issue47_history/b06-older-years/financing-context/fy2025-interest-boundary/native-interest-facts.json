@@ -1,0 +1,136 @@
+[
+  {
+    "kind": "primary",
+    "path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/accession_materials/macy_s_794367_000162828026021721/m-20260131.htm",
+    "sha256": "47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+    "rows": [
+      {
+        "ordinal": 932,
+        "qualified_name": "us-gaap:InterestPayableCurrent",
+        "concept_qname": [
+          "http://fasb.org/us-gaap/2025",
+          "InterestPayableCurrent"
+        ],
+        "context_ref": "c-7",
+        "context": {
+          "context_ref": "c-7",
+          "dimensions": {},
+          "entity_identifier": "0000794367",
+          "period_end": "2026-01-31",
+          "period_start": "2026-01-31",
+          "typed_dimension_count": 0
+        },
+        "reported_text": "47",
+        "value": "47000000",
+        "format": null,
+        "unit": {
+          "measures": [
+            [
+              "http://www.xbrl.org/2003/iso4217",
+              "USD"
+            ]
+          ],
+          "divided": false
+        },
+        "selected_by_current_inventory_name_filter": false
+      },
+      {
+        "ordinal": 933,
+        "qualified_name": "us-gaap:InterestPayableCurrent",
+        "concept_qname": [
+          "http://fasb.org/us-gaap/2025",
+          "InterestPayableCurrent"
+        ],
+        "context_ref": "c-8",
+        "context": {
+          "context_ref": "c-8",
+          "dimensions": {},
+          "entity_identifier": "0000794367",
+          "period_end": "2025-02-01",
+          "period_start": "2025-02-01",
+          "typed_dimension_count": 0
+        },
+        "reported_text": "48",
+        "value": "48000000",
+        "format": null,
+        "unit": {
+          "measures": [
+            [
+              "http://www.xbrl.org/2003/iso4217",
+              "USD"
+            ]
+          ],
+          "divided": false
+        },
+        "selected_by_current_inventory_name_filter": false
+      }
+    ]
+  },
+  {
+    "kind": "xml",
+    "path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/accession_materials/macy_s_794367_000162828026021721/m-20260131_htm.xml",
+    "sha256": "86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+    "rows": [
+      {
+        "ordinal": 932,
+        "qualified_name": "us-gaap:interestpayablecurrent",
+        "concept_qname": [
+          "http://fasb.org/us-gaap/2025",
+          "interestpayablecurrent"
+        ],
+        "context_ref": "c-7",
+        "context": {
+          "context_ref": "c-7",
+          "dimensions": {},
+          "entity_identifier": "0000794367",
+          "period_end": "2026-01-31",
+          "period_start": "2026-01-31",
+          "typed_dimension_count": 0
+        },
+        "reported_text": "47000000",
+        "value": "47000000",
+        "format": null,
+        "unit": {
+          "measures": [
+            [
+              "http://www.xbrl.org/2003/iso4217",
+              "USD"
+            ]
+          ],
+          "divided": false
+        },
+        "selected_by_current_inventory_name_filter": false
+      },
+      {
+        "ordinal": 933,
+        "qualified_name": "us-gaap:interestpayablecurrent",
+        "concept_qname": [
+          "http://fasb.org/us-gaap/2025",
+          "interestpayablecurrent"
+        ],
+        "context_ref": "c-8",
+        "context": {
+          "context_ref": "c-8",
+          "dimensions": {},
+          "entity_identifier": "0000794367",
+          "period_end": "2025-02-01",
+          "period_start": "2025-02-01",
+          "typed_dimension_count": 0
+        },
+        "reported_text": "48000000",
+        "value": "48000000",
+        "format": null,
+        "unit": {
+          "measures": [
+            [
+              "http://www.xbrl.org/2003/iso4217",
+              "USD"
+            ]
+          ],
+          "divided": false
+        },
+        "selected_by_current_inventory_name_filter": false
+      }
+    ]
+  }
+]
