@@ -6082,6 +6082,39 @@
       "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-current-risk-headings/SEC_metrics/docs/evidence/issue28_current_risk_headings_20261010/independent-dependency-repair/结论.md",
       "verdict": "PASS_LIMITED_DEPENDENCY_REPAIR",
       "messages": 1
+    },
+    {
+      "task_name": "review_singleline_3ecf001",
+      "purpose": "review",
+      "scope_paths": [
+        "scripts/vnext/selected_reported_revenue_v2.py",
+        "scripts/vnext/selected_fiscal_definition_scope_v1.py",
+        "scripts/vnext/financial_duration.py",
+        "tests/vnext/test_single_revenue_line.py",
+        ".github/workflows/company-current-records.yml"
+      ],
+      "patch_sha": "3ecf0017e458e75f65f59c274398b70ef3dc46a9",
+      "spawned_at": "2026-10-10T04:47:02.931584+00:00",
+      "ended_at": "2026-10-10T04:53:53Z",
+      "tool_calls": 29,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/docs/evidence/issue28_single_revenue_line_20261010/independent-review/结论.md",
+      "verdict": "REQUEST_CHANGES_LIMITED_SINGLE_REVENUE",
+      "messages": 3
+    },
+    {
+      "task_name": "review_revenuebounds_e4868eb",
+      "purpose": "review",
+      "scope_paths": [
+        "scripts/vnext/selected_reported_revenue_v2.py:_single_revenue_line and own ordinal-scale",
+        "tests/vnext/test_single_revenue_line.py:new regression"
+      ],
+      "patch_sha": "e4868eb3206538c4d4b00f799dd3448348e23407",
+      "spawned_at": "2026-10-10T05:05:40.836602+00:00",
+      "ended_at": "2026-10-10T05:10:35Z",
+      "tool_calls": 20,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/docs/evidence/issue28_single_revenue_line_20261010/independent-bounds-repair/结论.md",
+      "verdict": "PASS_LIMITED_REVENUE_BOUNDS_REPAIR",
+      "messages": 1
     }
   ],
   "ci_capacity_20260922": {
@@ -18900,7 +18933,7 @@
       0,
       0
     ],
-    "next": "Claude limited receiving; Pfizer FY2022 direct Re venues complete source admission, oldpairednull stays",
+    "next": "Claude limited receiving, source136 and public identity repair continue",
     "pr": 135,
     "archive_head": "ae7d23b9130b866c12eee69d1a18476fd1dad4a3",
     "received_main": "145a464b3e92039d0bf1fe4a7e079e9c5e2a080f",
@@ -18916,7 +18949,66 @@
       0.07544179097749293
     ],
     "main_combination_result_files": 6,
-    "CI": "archive ae7 just pushed, inspect separately; code9c first5success/6inprogress",
+    "CI": "ae7d23b9 actual11terminalSUCCESS",
     "network": "LocalHTTPproxy500/SOCKSunreachable; directTLS GitHub200; per-commandGitHubonly proxy exclusion, no global or businessprovider change"
+  },
+  "single_revenue_line_20261010": {
+    "base": "bdb27684",
+    "product": "3ecf0017e458e75f65f59c274398b70ef3dc46a9",
+    "repair": "e4868eb3206538c4d4b00f799dd3448348e23407",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics",
+    "scope": "explicit Revenue/Revenues single full consolidated-income row, defaultFalse",
+    "old_review": "REQUEST_CHANGES29tools/3messages, cell+headerP2 preserved",
+    "repair_review": "PASS_LIMITED20tools/1message42tests/7.288+12controls",
+    "source_actual": {
+      "company": "pfizer",
+      "FY": 2022,
+      "accession": "0000078003-23-000024",
+      "cik": "78003",
+      "value": "100330000000",
+      "unit": "USD",
+      "xml": "MATCH",
+      "companyfacts_fact_id": "fact:sha256:d4ac13c65e02c46434776e4efa2e311fddf67ee8e906a205c3d192ca3bb96ce4",
+      "source_seconds": 16.907152749830857,
+      "company_result_created": false,
+      "uncommitted_actual_label_kept": true
+    },
+    "consumption": "peer fixed e486 may restore developer paired route; no adoption",
+    "next": "actualhead CI/limitedreceiving; root D04 unrelated processing-identity gap1037bbd5 next, not ignored",
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "pr": 136,
+    "head": "cbb5d919",
+    "base_received": "c99b5d3c3180b8e8dfbac7f9182a941af4ae7705",
+    "current_config_patch": "7b1e0015",
+    "combined_tests": {
+      "count": 149,
+      "seconds": 16.9,
+      "skip": 0
+    },
+    "peer_archive": "63464caf",
+    "peer_execution": "594eb7d97bf5d4e326dc7428dc7ec9d0aa31791e",
+    "peer_result": "sha256:5aa4a2b626f8fa6276d784642538943f9cf5222b4931ee24a7e56cb877f91780",
+    "peer_value": "-0.4169640187381640586065982259",
+    "peer_seconds": [
+      20.188210709020495,
+      1.4238680829294026,
+      0.7216945828404278
+    ],
+    "peer_old_protected": 241,
+    "peer_after_protected": 250,
+    "parent_peer_execution": false,
+    "parent_fixed_source_and_formula_checked": true,
+    "CI": "7b1first4success/7live; archivecbb notobservedyet"
+  },
+  "d04_unused_processing_identity_20261010": {
+    "peer_evidence_sha": "1037bbd5",
+    "scope": "D04-only twofile changes invalidate unrelated oldsuccess/withheld configuration",
+    "parent_static_diff_confirmed": true,
+    "fixed": false,
+    "disposition": "root shared controller/store responsibility, no oldconfig rewrite/no real30recompute; separate bounded repair after source receiving"
   }
 }
