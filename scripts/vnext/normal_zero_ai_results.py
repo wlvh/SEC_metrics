@@ -197,8 +197,28 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period,
     return all_claims,all_manifests,all_filings,evidence
 
 
+def _revenue_admission(*, primary, annual, approved_concepts, contract='components-v1',
+                       fiscal_label_resolution=None):
+    """Select source proof and its matching mechanical checks before calculation.
+
+    Only absence of a proven direct total permits the existing component
+    path. A source, scope or period error must remain an error, never a fallback.
+    """
+    from .selected_revenue_scope_v1 import selected_revenue_scope, admit_revenue_facts, verify_revenue_observations
+    _need(contract in {'components-v1','reported-total-v2'}, 'NORMAL_ZERO_AI_REVENUE_SCOPE_CONTRACT_INVALID')
+    if contract == 'reported-total-v2':
+        from .selected_reported_revenue_v2 import reported_revenue_scope, admit_reported_revenue_facts, verify_reported_revenue_observations
+        scope = reported_revenue_scope(primary=primary, annual=annual, approved_concepts=approved_concepts,
+                                       fiscal_label_resolution=fiscal_label_resolution)
+        if scope['reported_totals']:
+            return scope, admit_reported_revenue_facts, verify_reported_revenue_observations
+    scope = selected_revenue_scope(primary=primary, annual=annual, approved_concepts=approved_concepts)
+    return scope, admit_revenue_facts, verify_revenue_observations
+
+
 def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None,
-                                   validate_depreciation_scope=False):
+                                   validate_depreciation_scope=False, validate_revenue_scope=False,
+                                   revenue_scope_contract='components-v1'):
     """Derive native records from current saved annual input, without a Run.
 
     No caller fact, period, filing, answer, compiled Spec or source receipt is
@@ -206,7 +226,11 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     annual coordinate exists; source authenticity/authority errors propagate.
     """
     _need(metric_id in SUPPORTED_METRICS, "NORMAL_ZERO_AI_METRIC_NOT_IN_PROTOTYPE")
+    _need(revenue_scope_contract in {'components-v1','reported-total-v2'}
+          and (validate_revenue_scope or revenue_scope_contract=='components-v1'),
+          'NORMAL_ZERO_AI_REVENUE_SCOPE_CONTRACT_INVALID')
     from .ordinary_income_input import IncomeInputError, prepare_current_income_input, verify_income_observations
+    from .selected_income_source_v1 import IncomeSourceError
     rules = repo_root if rules_root is None else Path(rules_root)
     _need(rules_root is None or metric_id!='E01','NORMAL_ZERO_AI_E01_CONTENT_CONFIRMED_ROUTE_REQUIRED')
     authority = _authority(rules)
@@ -240,6 +264,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     income_input = None
     income_observation_checks = []
     depreciation_scope = None
+    revenue_scope = None
     if metric_id in {"B01", "B03"}:
         spec_path = B01_SPEC_PATH if metric_id == "B01" else B03_SPEC_PATH
         if metric_id == "B03":
@@ -283,11 +308,21 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
                 approved_concepts=approved, allowed_ciks=[prepared["entity"]], include_instant=False)
             claims = adapt_companyfacts(raw_bytes=facts_source["raw_bytes"], source_reference=facts_source["source_reference"],
                 source_set_manifest=manifest, approved_concepts=approved, allowed_ciks=[prepared["entity"]], include_instant=False)
+            if validate_revenue_scope:
+                revenue_spec = dependency_specs.get('B01', spec)
+                revenue_concepts = revenue_spec['compiled']['inputs']['revenue']['structured_role']['approved_concepts']
+                revenue_scope, admit_revenue_facts, verify_revenue_observations = _revenue_admission(
+                    primary=primary_source, annual=prepared.get('original_input',prepared),
+                    approved_concepts=revenue_concepts, contract=revenue_scope_contract,
+                    fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'))
+                facts = admit_revenue_facts(facts=facts, scope=revenue_scope)
             execution_target = {**target,"entity":prepared["entity"],"accession":prepared["filing"]["accessionNumber"]}
             reusable = []
             for dependency in dependency_specs.values():
                 dep_result, dep_trace, dep_observations = calculate_metric(compiled_spec=dependency,
                     target=execution_target, company_traits=traits, structured_facts=facts, verified_observations=[])
+                if revenue_scope is not None:
+                    verify_revenue_observations(observations=dep_observations, scope=revenue_scope)
                 dependency_records.extend([*dep_observations, dep_trace, dep_result])
                 reusable.extend(dep_observations)
             result, trace, observations = calculate_metric(compiled_spec=spec,
@@ -327,6 +362,8 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
                     depreciation_scope['rejected_observations'] = observations
                     result, trace = withheld_metric_result(compiled_spec=spec, target=target, reason_code=WITHHELD_REASON)
                     observations = []
+            if revenue_scope is not None:
+                verify_revenue_observations(observations=observations, scope=revenue_scope)
             if income_input is not None:
                 income_observation_checks = verify_income_observations(income_input,observations)
             selection = {"source_candidate_count":len(facts), "selected_fact_ids":[o["source_binding"]["fact_id"] for o in observations],
@@ -354,7 +391,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
             observations = [observation]
             selection = {"reason_code":result["reason_code"], "matched_verified_claim_ids":graph["matched_verified_claim_ids"],
                          "source_event_accessions":sorted({f["accessionNumber"] for f in events})}
-    except (NormalZeroAiError, NormalGovernanceInputError, AnnualUpdateError, BatchWorkflowError, SourceError, IncomeInputError) as error:
+    except (NormalZeroAiError, NormalGovernanceInputError, AnnualUpdateError, BatchWorkflowError, SourceError, IncomeInputError, IncomeSourceError) as error:
         reason = str(error)
         category = getattr(error, "category", "SOURCE_ACCESS_FAILED" if reason.startswith("LATEST_SOURCE_REQUEST_FAILED") else "SOURCE_INTEGRITY_ERROR")
         reason_code=('ORDINARY_INCOME_VISIBLE_PERIOD_CONFLICT'
@@ -365,6 +402,8 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
         selection = {**selection, "reason_code":result["reason_code"], "reason":reason, "category":category}
         if isinstance(error,IncomeInputError) and error.details is not None:
             selection['income_period']=error.details
+    if revenue_scope is not None:
+        selection['revenue_scope'] = revenue_scope
     if depreciation_scope is not None:
         selection['depreciation_scope'] = depreciation_scope
     proofs = prepared["source_proofs"] + [entry["proof"] for entry in reader.proofs.values()]

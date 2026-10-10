@@ -17,3 +17,9 @@ The public range entry will consume this exact interface; until its actual user-
 Actual explicit-selection case check uses existing MarriottFY2022 B02 source only, with preceding fiscal search forbidden. Valid selected report-end rebuilds source and returns original892903Result/.4990979288446272641985999856/annual dates in2.322s; forged accession rejects as ORDINARY_PERIOD_SELECTION_CHANGED in.095s; requestedFY2023 over resolved2022 rejects before amounts as HISTORICAL_STATEMENT_REQUESTED_FISCAL_YEAR_CHANGED in1.444s. No original state, Run, source or amount is edited; one affected case computation only, not the previous five-year batch.
 
 The public-supplied existing-workflow patch actually executes the new test module:producerf5c company job114069352853/run38004278199 is SUCCESS. Its historical step loads all five selected-byte label methods and both explicit-selection methods alongside the prior modules,66/.517s/zero skip (actual log records exact timing). Test-file path is included in pull_request filter. This actual execution is separate from earlier old-suite green; pure-log successors preserve source, final head CI still checked separately.
+
+## 已入main源码与剩余测试接收
+
+actualmain84已包含本纯标签接口/非实际定义scope修补，historical_fiscal_labels逐字同5f9；historical_statement_cases的可选selection/请求FY检查已由收入后继进入main。正常merge后两个产品文件严格同actualmain84，不能整拷旧case倒退Total收入修补。旧业务证据保原版本；本后继剩差异为原selectedlabel测试、已提交主要记录和一path/一现有history步骤模块并集，不是重新开发接口或新来源planner。
+
+92label/statement/dispatch/state/收入V1V2短例.512s零skip；conditional/hypothetical/无关句/错CIK/错acc/显式selection重新推导/请求FY不符全部原断言保。当前main workflow所有source/收入/paired/singleline/D04/event/SEC步骤保持，只加本标签模块，触发测试path保。源码与输入未变，不为组合重算Salesforce/Macy/Marriott，原.929/.787/2.322实际source/选期验证沿原记录复用。新headCI另核，不借5f9绿灯。仍不含公共128范围CLI或在线发现/缺件补齐；来源准入/预算/真实调用/Run/业务接受不由纯标签解析授予，0新增calls，不selfmerge/Ready/采纳。

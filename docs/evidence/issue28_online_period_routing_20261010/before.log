@@ -1,0 +1,59 @@
+test_latest_does_not_silently_ignore_supplied_years (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_latest_does_not_silently_ignore_supplied_years) ... 
+  test_latest_does_not_silently_ignore_supplied_years (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_latest_does_not_silently_ignore_supplied_years) (years=['--fiscal-year-start', '2021']) ... FAIL
+  test_latest_does_not_silently_ignore_supplied_years (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_latest_does_not_silently_ignore_supplied_years) (years=['--fiscal-year-end', '2025']) ... FAIL
+  test_latest_does_not_silently_ignore_supplied_years (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_latest_does_not_silently_ignore_supplied_years) (years=['--fiscal-year-start', '2021', '--fiscal-year-end', '2025']) ... FAIL
+test_latest_saved_source_also_rejects_ignored_year_arguments (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_latest_saved_source_also_rejects_ignored_year_arguments) ... FAIL
+test_online_historical_range_rejected_before_context_or_writer (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_online_historical_range_rejected_before_context_or_writer) ... FAIL
+test_saved_history_range_forwarded_to_existing_public_consumer (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_saved_history_range_forwarded_to_existing_public_consumer) ... ok
+test_supported_current_online_dispatch_unchanged (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_supported_current_online_dispatch_unchanged) ... ok
+
+======================================================================
+FAIL: test_latest_does_not_silently_ignore_supplied_years (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_latest_does_not_silently_ignore_supplied_years) (years=['--fiscal-year-start', '2021'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-online-period-routing/SEC_metrics/tests/vnext/test_company_online.py", line 165, in test_latest_does_not_silently_ignore_supplied_years
+    with self.assertRaises(SystemExit) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: SystemExit not raised
+
+======================================================================
+FAIL: test_latest_does_not_silently_ignore_supplied_years (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_latest_does_not_silently_ignore_supplied_years) (years=['--fiscal-year-end', '2025'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-online-period-routing/SEC_metrics/tests/vnext/test_company_online.py", line 165, in test_latest_does_not_silently_ignore_supplied_years
+    with self.assertRaises(SystemExit) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: SystemExit not raised
+
+======================================================================
+FAIL: test_latest_does_not_silently_ignore_supplied_years (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_latest_does_not_silently_ignore_supplied_years) (years=['--fiscal-year-start', '2021', '--fiscal-year-end', '2025'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-online-period-routing/SEC_metrics/tests/vnext/test_company_online.py", line 165, in test_latest_does_not_silently_ignore_supplied_years
+    with self.assertRaises(SystemExit) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: SystemExit not raised
+
+======================================================================
+FAIL: test_latest_saved_source_also_rejects_ignored_year_arguments (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_latest_saved_source_also_rejects_ignored_year_arguments)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-online-period-routing/SEC_metrics/tests/vnext/test_company_online.py", line 174, in test_latest_saved_source_also_rejects_ignored_year_arguments
+    with self.assertRaises(SystemExit):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: SystemExit not raised
+
+======================================================================
+FAIL: test_online_historical_range_rejected_before_context_or_writer (tests.vnext.test_company_online.CompanyCliPeriodRoutingTest.test_online_historical_range_rejected_before_context_or_writer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-online-period-routing/SEC_metrics/tests/vnext/test_company_online.py", line 152, in test_online_historical_range_rejected_before_context_or_writer
+    with self.assertRaises(SystemExit) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: SystemExit not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.010s
+
+FAILED (failures=5)
+{"allowed_skips": 0, "errors": 0, "failures": 5, "run": 5, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_company_online.CompanyCliPeriodRoutingTest"]}

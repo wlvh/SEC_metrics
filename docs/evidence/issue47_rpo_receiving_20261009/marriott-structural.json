@@ -1,0 +1,40 @@
+{
+  "root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-1791545149743426000",
+  "seconds": 3.530289542162791,
+  "rows": [
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B12",
+      "metric_name": "Remaining performance obligation (RPO substitute)",
+      "value": "",
+      "unit": "USD",
+      "status": "N_A_STRUCTURAL",
+      "source_class": "NOT_AVAILABLE",
+      "formula": "",
+      "period_start": "2025-12-31",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "fiscal_period": "STRUCTURAL",
+      "accession": "",
+      "form": "",
+      "filed_date": "",
+      "concept_or_section": "",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": null, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b\"]}",
+      "confidence": "",
+      "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+      "company_id": "marriott_international",
+      "result_id": "sha256:6536e516b277a5584748fcabbdc134f502b25a5dbcab54fce3bf6c71a187a871",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-1791545149743426000/state/updates/B12/periods/FY2025/results/9474aee1899b4c40b6331139514b4145",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "local_metric_status": "CANDIDATE_READY",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  ],
+  "source_inspector_called": false,
+  "structural_NA_not_disclosure_absence": true
+}

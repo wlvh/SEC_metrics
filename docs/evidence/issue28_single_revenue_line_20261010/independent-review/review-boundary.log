@@ -1,0 +1,27 @@
+{
+  "head": "3ecf0017e458e75f65f59c274398b70ef3dc46a9",
+  "base": "e89ee17b9753b2a1c0206c8272505ec3890b158c",
+  "first_recorded_utc": "2026-10-10 04:47:46 UTC",
+  "last_artifact_tool_utc": "2026-10-10 04:53:53 UTC",
+  "exec_wrappers": 13,
+  "nested_tools": 15,
+  "other_tools": 1,
+  "total_tools": 29,
+  "ordinary_messages": 3,
+  "tracked_diff_empty": true,
+  "staged_diff_empty": true,
+  "untracked_paths": [
+    "?? docs/evidence/issue28_single_revenue_line_20261010/independent-review/copied-v1-current-caller-tests.log",
+    "?? docs/evidence/issue28_single_revenue_line_20261010/independent-review/counterexamples.log",
+    "?? docs/evidence/issue28_single_revenue_line_20261010/independent-review/required-tests.log",
+    "?? docs/evidence/issue28_single_revenue_line_20261010/independent-review/source-and-dependencies.log",
+    "?? docs/evidence/issue28_single_revenue_line_20261010/independent-review/结论.md"
+  ],
+  "new_calls": {
+    "SEC": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "first_boundary_check_error": "Git default path quoting escaped Chinese filename; assertion exit 1, no source mutation",
+  "corrected_path_check": "git status --porcelain -z --untracked-files=all; PASS"
+}

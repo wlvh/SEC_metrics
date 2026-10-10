@@ -1,0 +1,75 @@
+{
+  "utc": "2026-10-09T14:15:51.735972+00:00",
+  "base": "79ff47b4aad95946f4bd403d5a06f5731656d369",
+  "patch": "abb7abdd78b0330b0c2464668e81cd4de7fdf375",
+  "original_function_asts_identical": true,
+  "function_names": [
+    "_run_source_case",
+    "_selected_tests",
+    "run_fast_tests",
+    "main"
+  ],
+  "source_tests_actual_variable": true,
+  "obsolete_source_material_tests_absent": true,
+  "fast_selector_count": 1,
+  "source_selector_count": 1,
+  "fast_selector_in_source_count": 0,
+  "source_selector_in_fast_count": 0,
+  "module_selector_count": 0,
+  "fast_total": 175,
+  "source_total": 99,
+  "patch_duplicates": {
+    "tests.vnext.test_selected_event_source_v1": 2,
+    "tests.vnext.test_registered_event_projection": 2
+  },
+  "base_duplicates": {
+    "tests.vnext.test_selected_event_source_v1": 2,
+    "tests.vnext.test_registered_event_projection": 2
+  },
+  "ordinary_runner_execution_precheck": "FAST_TEST_SUCCESSOR_SELECTOR_CONFLICT",
+  "cli": [
+    {
+      "command": [
+        "python3",
+        "tools/run_fast_tests_v2.py",
+        "--help"
+      ],
+      "return_code": 0,
+      "stderr": "",
+      "stdout": "usage: run_fast_tests_v2.py [-h] [--jobs JOBS] [--list]\n                            [--suite {fast,source-material}]\n                            [--shard-index SHARD_INDEX]\n                            [--shard-count SHARD_COUNT]\n\noptions:\n  -h, --help            show this help message and exit\n  --jobs JOBS\n  --list\n  --suite {fast,source-material}\n  --shard-index SHARD_INDEX\n  --shard-count SHARD_COUNT\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/run_fast_tests_v2.py",
+        "--list",
+        "--suite",
+        "fast"
+      ],
+      "return_code": 0,
+      "stderr": "",
+      "suite": "fast",
+      "listed_count": 175,
+      "reporting_selectors": [
+        "tests.vnext.test_reporting_company_projection.ReportingCompanyProjectionTest"
+      ]
+    },
+    {
+      "command": [
+        "python3",
+        "tools/run_fast_tests_v2.py",
+        "--list",
+        "--suite",
+        "source-material"
+      ],
+      "return_code": 0,
+      "stderr": "",
+      "suite": "source-material",
+      "listed_count": 99,
+      "reporting_selectors": [
+        "tests.vnext.test_reporting_company_projection.CurrentNullableTraceProjectionTest"
+      ]
+    }
+  ],
+  "initial_probe": "First runner probe asserted global selector uniqueness and failed before log creation; refined probe shows duplicate selectors are unchanged from base79ff47b."
+}
