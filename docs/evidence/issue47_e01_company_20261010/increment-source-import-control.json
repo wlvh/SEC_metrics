@@ -1,0 +1,44 @@
+{
+  "constructed_small_restore_control": true,
+  "source_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-source-import-control-r4dh361d",
+  "saved_body_bytes": 18964,
+  "proof": {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm",
+    "accession": "0000813828-24-000018",
+    "document_name": "ex-99.htm",
+    "content_sha256": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+    "request_body_sha256": "0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8",
+    "request_body_size": 18964,
+    "request_headers_repo_relative_path": "evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm.c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05.headers.json",
+    "request_headers_sha256": "c09852b6721e05c9c5591fcfb28cd9ff5fb16f4b724615b295758a6a01741e05",
+    "request_headers_size": 1658,
+    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+    "request_repo_relative_path": "evidence/request_attempts/0b/0baae3b371aa8cf9b7a5ce03e6edab2ce0484bfda693637112c401138348e7e8/ex-99.htm",
+    "request_attempt_id": "request:attempt:a2c364a3736a869f3da7ff03e59063e05a7fc69a388926c883952af60a3d2c04"
+  },
+  "ordinary_source_verifier": {
+    "record_type": "VERIFIED_SAVED_SOURCE_INPUTS",
+    "source_manifest_sha256": "2c48ad3e29b1a31a61f612407b45e08bdee47653d18a2bef1e0cb497c1087255",
+    "request_attempt_ids": [
+      "request:attempt:a2c364a3736a869f3da7ff03e59063e05a7fc69a388926c883952af60a3d2c04"
+    ],
+    "source_credit": "SAVED_SOURCE_BYTES_AND_REQUESTS_CHECKED",
+    "real_sec_credit": false,
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "seconds": 0.11322249984368682,
+  "repeat_import": "ALREADY_PRESENT",
+  "ledger_or_call_records_imported": false,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "wrong_baseline_rejected_before_write": true,
+  "wrong_baseline_control_files_unchanged": true
+}

@@ -1,0 +1,39 @@
+{
+  "seconds": 2.0133382088970393,
+  "code_uncommitted_at_execution": true,
+  "public_reporter_source": "c3ee8c84",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/e01-reporter-withheld-sly3djbz/result",
+  "row": {
+    "company": "Paramount Skydance / Paramount Global",
+    "cik": "813828",
+    "metric_id": "E01",
+    "metric_name": "M&A announcements (content-confirmed)",
+    "value": "",
+    "unit": "count",
+    "status": "WITHHELD",
+    "source_class": "8K_ITEM",
+    "formula": "",
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31",
+    "fiscal_year": "2024",
+    "fiscal_period": "TARGET_PERIOD",
+    "accession": "",
+    "form": "10-K",
+    "filed_date": "2025-02-26",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"coverage\": \"fiscal_year_source_set\", \"fiscal_year\": 2024, \"shared_claim_group_id\": \"merger_acquisition_items\"}, \"selection\": {\"e01_content\": {\"attachment_dependencies\": [{\"accession\": \"0000813828-24-000018\", \"acquisition_kind\": null, \"consumers\": [\"period:2024-12-31\", \"E01_SUCCESSOR_INCORPORATED_ATTACHMENT\"], \"declared_by\": \"docs/evidence/issue47_history/event-attachment-declarations-v1.json\", \"dependency_class\": \"FISCAL_EVENT_FILING\", \"document_name\": \"ex-99.htm\", \"maximum_sec_attempts\": 1, \"media_type\": \"text/html\", \"new_acquisition_required\": false, \"parent_item_id\": \"0000813828-24-000018#8.01@2224\", \"parent_sha256\": \"04c3af26f90298c45c7430014fe6b8b4e19e4e7690b3485e52d34f9e1889fbf0\", \"parent_source_url\": \"https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/para-20240429.htm\", \"primary_cik\": \"813828\", \"registrant_cik\": \"813828\", \"retry_count\": 0, \"saved_reason\": null, \"saved_status\": \"VERIFIED_SAVED_SOURCE\", \"source_acquisition_credit\": false, \"source_contract_scope\": \"SUCCESSOR_INPUT_ONLY_NO_OLD_REQUEST_OR_RUN_REBINDING\", \"source_roles\": [\"incorporated_EX99\"], \"source_url\": \"https://www.sec.gov/Archives/edgar/data/813828/000081382824000018/ex-99.htm\"}], \"candidate_item_ids\": [\"0000813828-24-000009#8.01@2402\", \"0000813828-24-000018#8.01@2224\", \"0000813828-24-000033#8.01@4324\", \"0000813828-24-000073#8.01@5204\", \"0000813828-24-000081#8.01@2227\", \"0000813828-24-000087#8.01@5109\", \"0001193125-24-177535#1.01@2210\", \"0001193125-24-196053#1.01@2212\"], \"complete_annual_count\": null, \"matching_response_available\": false, \"new_calls\": [0, 0, 0], \"old_answer_reused\": false, \"partial_count_exported\": false, \"reason_code\": \"E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST\", \"request_contract\": \"E01_SUPPLIED_ITEM_AND_INCORPORATED_TEXT_V2_DEVELOPMENT\", \"request_id\": \"sha256:2aa878ef4a047f929a40e4b808a5e7d01cc4211e254db42c9738692dbc866a41\", \"status\": \"WITHHELD\", \"target_model_execution_authorized\": false}}, \"source_reference_ids\": [\"sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5\", \"sha256:abfc5dda276a9f731c9c7551acd16e4a4bb40f846784178b8c06f999cf6c74e7\", \"sha256:61199b5b50703b802a686ef3abe519dc58675db5fc17338abd4b76b8ba5aaf6a\", \"sha256:50a73435b6af7951327bc709fe26701203be7bfa188f301b054fa5a1fd4c7172\", \"sha256:47bee06712d8a4b3c58a863591fd7a512da5865d5be8f9300135dc24082e1874\", \"sha256:7c60b144e746530cd9eea4c8454ec3fd746f7ae8d110d866807d8c1c45d0296f\", \"sha256:acd7de24c267ff053a382b6be77843612e72fff1f3c201e089c9dc01d2f7ee5b\", \"sha256:2907743a405076d34802da9378f8f6dad7f624a10909f90c7de858b8c21fc7e2\", \"sha256:7ca2f12ad25ad8c0ca6eaac086376342ccef0d891a07ae073692db6ca6adffd2\", \"sha256:84726a89731fb7258e401161da6035d98eccfebd47534a506bef19821bf99e82\", \"sha256:30bf4dafa9249114ed14b5d6a5725ac4c560da0e8938a56915a585284d4f8469\", \"sha256:04f7c26aac93a3486c134107989447b6f54c1b46bcb9163890d79e6fa098df5a\", \"sha256:a8a650bf1fa1706754ef576c88cea35241153e8644d36ea6275d9fb72a5507b0\", \"sha256:9c72986ca5cf0c5b1052350631994a048b471dd7332c1f9226bed839c2aed09e\", \"sha256:b11a670db32772bb1ae4baa67b21ad5904335a28f6d8b4bb8d5a46d0989e51e9\", \"sha256:baf51cf4965585cbc807e38aa18c4ee62456ac4ecb3fea54ec8c5fdc1f3d5fed\", \"sha256:d0eb2774b111e9b889981959463935793a5c69985a8d75c4dd72bb3549d62c77\", \"sha256:da00e470ca0e7d9a9c96734022ab099637e3ea082be8cc8275055af3341b3d1c\", \"sha256:e4aafaf7496af957b7d18e53de4f121279177ca21182027c97be579ef4502d4a\", \"sha256:13093750802fc9cfcc25923c5ed13d6b28b995bd505fe6a92e2c137e1746b472\", \"sha256:189936e563d0c17a5a107f68668982889e449253d212bb3a3ded0fc0032fde69\", \"sha256:459afde231b066b5bce4fcc9a28746895ab2bfbfacbf189ff5abc3bed5123575\", \"sha256:8187018be2c83e51fbad1297728207115dcebb157bea7bfa0d78daf4dacd827d\", \"sha256:1a6c22965ad19ccbf9c7b45087a01838c44dc67675469deedd1044dd1b5b0b70\", \"sha256:206be43bed1e23fc15c04a48861f7b0c5e20dabe07974975ae15e15d2c22a29f\", \"sha256:105cc75034abf0abde6b491ad9115a664872f3ac3509431b140cff0cccdd2ea1\", \"sha256:9f0062ce858bd3502f337db1b0bedda4ee639ee2244cd2a460d5342664836c32\", \"sha256:c90c466936ba3972f3b7e8f32c90803b84d79a3811f484c9fb6af6a3dd1359d0\", \"sha256:3d00399d7e9a4493fead3928a3fc2e527dab8375a75358b31bf5d14020244414\", \"sha256:9b0d87240be7eca3ad51dbd11f600ab6d5fca0425cc4d0ba6621d13c6e601da5\", \"sha256:c5cdaecf99be93cf4b3156085de2b68d84363447969bcdd7d969b5260bca1241\", \"sha256:25f65cacece1a9ced430202178f58573b96d5cdad7bfd8cab974131c2d0910bc\", \"sha256:5f2e4eb68dae172392e2078256b4c9d783189434bd582f311fadfb23f4df2a43\", \"sha256:eb089b5dfa0c8aa69c4f2543de59029abab5941d90b35b752532ff5374ef9e5c\", \"sha256:2838d00c004fc44f2c4ab79bc0d5179105a834fce2585d1ef0ba56f0f660a9eb\", \"sha256:ff54b48fc6becc96ca6fad6243966249eba519e30f6c42955a8ff65229f5f3e5\", \"sha256:3b819ff9122210d0aaad5e7de329d84f9476a57a121c805c70dffc885102caae\", \"sha256:9ea650b3fbf858b15897800ce7c7c7077aebcf43f94bffba16c84b392e74bc73\", \"sha256:e556a35d26beb390f74ccf70a4a9440ff85d5957873794068462e54de2c04f49\", \"sha256:2ea64671516cb84167d90eb0f5dd0941b285d9f267856ebff90e59da188677fe\", \"sha256:bbc860f0e29220717acc565b9f49532d193e96e1856c1d90cf93428697c4d49c\", \"sha256:64424ae53f8fddb99eb8cb26fbda62c2fd5b90f9fb602f8d60fb992efd032e24\", \"sha256:0e7abb23c8b2e67727f941c243e5d17c86bcfc9d9db77cf05f0fecc3b301a859\", \"sha256:f9bec7cd502e5e95ca8601024f6a87d50cf2008b0d847690a61e0827dcc44ebc\", \"sha256:9c8fde24a7d3ce4fd288f17ddcac9f5cc33e8e5cca0d16e68123ec8418359449\", \"sha256:176c4fc402c0559f253f36cc6bc960216b9fe8c6fa5e717e62077409afad1e97\", \"sha256:98bdadb31c5bdacbcba891e3af693f519867cfe9ff43bd46ede652a1317df75b\", \"sha256:47af4389d521182fc95caa4378d6cb1d79d3b7979ee8909a97292cd943eec759\"]}",
+    "confidence": "",
+    "notes": "Count of filing items matched by the approved route; it does not confirm a count of real-world business events. No accepted value is asserted for this target period. Native state: WITHHELD; reason: E01_CONTENT_RESPONSE_NOT_AVAILABLE_FOR_REQUEST."
+  },
+  "candidate_count": 8,
+  "request_id": "sha256:2aa878ef4a047f929a40e4b808a5e7d01cc4211e254db42c9738692dbc866a41",
+  "complete_request_saved": true,
+  "result_id": "sha256:3331877123ff9ef80e76165c7ab4b471840361617535342b21d6f953e3507f12",
+  "matching_answer_available": false,
+  "actual_company_cli_not_yet_received": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

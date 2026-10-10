@@ -274,3 +274,14 @@ class HistoryCompanyDispatchTest(TestCase):
             self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
         self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
         self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+
+    def test_e01_uses_explicit_content_consumer_and_keeps_old_event_factory(self):
+        from vnext.historical_e01_company_case import prepare_historical_e01_year_case,PROCESSING_FILES
+        from vnext.historical_event_cases import prepare_historical_event_year_case
+        with patch('vnext.company_current_records.run_saved_company',return_value={}) as shared:
+            self.run_history(company_id='paramount_skydance_paramount_global',metric_ids=['E01','C01','E03'])
+        args=shared.call_args.kwargs
+        self.assertIs(prepare_historical_e01_year_case,args['case_factories']['E01'])
+        self.assertEqual(PROCESSING_FILES,args['processing_files_by_metric']['E01'])
+        self.assertIs(prepare_historical_event_year_case,args['case_factories']['C01'])
+        self.assertIs(prepare_historical_event_year_case,args['case_factories']['E03'])

@@ -14,7 +14,8 @@ from urllib.parse import urlsplit
 from .annual_sources import _rows
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
-from .ordinary_saved_result import METRIC_IDS, SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS, create_saved_result, read_saved_result, save_calculated_case
+from .ordinary_saved_result import (METRIC_IDS, SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS,
+    CURRENT_E01_SPEC_PATH, current_e01_scope, create_saved_result, read_saved_result, save_calculated_case)
 from .traits import repository_company_ciks
 
 
@@ -243,6 +244,8 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
             source_errors = [r for r in census if r['status_code']!='200' or r['error']]
             if comparison:
                 saved = read_saved_result(output_root=root/'results'/comparison['version'])
+                if metric_id == 'E01' and fiscal_year is not None:
+                    _need(current_e01_scope(saved),'CURRENT_UPDATE_E01_SAVED_SCOPE_NOT_CONTENT_CONFIRMED')
                 _need(saved['manifest']['company_id']==company_id and saved['manifest']['metric_id']==metric_id,
                       'CURRENT_UPDATE_SAVED_COORDINATE_CHANGED')
                 _need(saved['result']['result_id']==comparison['result_id'],
@@ -272,6 +275,9 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
             else:
                 case = case_factory(repo_root=source, company_id=company_id, metric_id=metric_id,
                                     fiscal_year=fiscal_year)
+                if metric_id == 'E01':
+                    _need(case.get('spec_paths',{}).get('E01') == CURRENT_E01_SPEC_PATH,
+                          'CURRENT_UPDATE_E01_CONTENT_SPEC_REQUIRED')
                 _need(case['target_period']['fiscal_year']==fiscal_year,
                       'CURRENT_UPDATE_CASE_FISCAL_YEAR_CHANGED')
                 saved = save_calculated_case(source_root=source,output_root=root/'results'/version,
