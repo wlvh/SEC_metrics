@@ -6,6 +6,7 @@ name: Company saved-source records
       - 'tools/vnext_company.py'
       - 'tests/vnext/test_company_current_records.py'
       - 'tests/vnext/test_paired_measure_contradiction.py'
+      - 'tests/vnext/test_current_d04_company.py'
       - 'tests/vnext/test_ordinary_current_update.py'
       - 'tests/vnext/test_company_parse_reuse.py'
       - 'tests/vnext/test_precalculated_case.py'
@@ -65,6 +66,8 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 tests/required_unittests.py tests.vnext.test_paired_measure_contradiction
+      - name: Complete D04 company model input gates
+        run: python3 tests/required_unittests.py tests.vnext.test_current_d04_company
       - name: Selected event sources and explicit history validation
         env:
           PYTHONDONTWRITEBYTECODE: '1'
