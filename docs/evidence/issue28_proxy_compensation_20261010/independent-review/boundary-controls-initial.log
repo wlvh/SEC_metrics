@@ -1,0 +1,32 @@
+utc 2026-10-10T13:55:48.351794+00:00
+reviewed_head c1b141d4103c78f988e6fad38f0a0cb48642f2f8
+{"control": "raw_bytes_changed", "detail": {"error_type": "ProxySourceIdentityError", "reason": "PROXY_SOURCE_BYTES_CHANGED"}, "outcome": "PASS"}
+{"control": "wrong_raw_size", "detail": {"error_type": "ProxySourceIdentityError", "reason": "PROXY_SOURCE_BYTES_CHANGED"}, "outcome": "PASS"}
+{"control": "wrong_media", "detail": {"error_type": "ProxySourceIdentityError", "reason": "PROXY_SOURCE_BYTES_CHANGED"}, "outcome": "PASS"}
+{"control": "wrong_reference_company", "detail": {"error_type": "ProxySourceIdentityError", "reason": "PROXY_SELECTED_REFERENCE_CHANGED"}, "outcome": "PASS"}
+{"control": "wrong_reference_role", "detail": {"error_type": "ProxySourceIdentityError", "reason": "PROXY_SELECTED_REFERENCE_CHANGED"}, "outcome": "PASS"}
+{"control": "wrong_reference_accession", "detail": {"error_type": "ProxySourceIdentityError", "reason": "PROXY_SELECTED_REFERENCE_CHANGED"}, "outcome": "PASS"}
+{"control": "wrong_reference_document", "detail": {"error_type": "ProxySourceIdentityError", "reason": "PROXY_SELECTED_REFERENCE_CHANGED"}, "outcome": "PASS"}
+{"control": "wrong_issuer_url", "detail": {"error_type": "SourceError", "reason": "Live Reader filing identity differs from registry authority"}, "outcome": "PASS"}
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-proxy-compensation/SEC_metrics/scripts/vnext/sources.py", line 221, in source_reference_record
+    validate_official_sec_url(url=source_url)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-proxy-compensation/SEC_metrics/scripts/sec_http.py", line 279, in validate_official_sec_url
+    raise ValueError(f"Only official SEC HTTPS URLs are allowed: {url}")
+ValueError: Only official SEC HTTPS URLs are allowed: https://example.org/Archives/edgar/data/1234567/000123456722000001/proxy.htm
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<stdin>", line 48, in <module>
+  File "<stdin>", line 23, in check
+  File "<stdin>", line 48, in <lambda>
+  File "<stdin>", line 25, in expect_rejected
+  File "<stdin>", line 41, in <lambda>
+  File "<stdin>", line 31, in ref_change
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-proxy-compensation/SEC_metrics/scripts/vnext/sources.py", line 223, in source_reference_record
+    raise SourceError(
+        "SourceReference URL must use an official SEC origin"
+    ) from error
+vnext.sources.SourceError: SourceReference URL must use an official SEC origin
