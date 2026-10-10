@@ -56,7 +56,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         table,cell=bound[row['ordinal']]
         label=_label_key(_label(table,cell))
         single=allow_single_revenue_line and label in {'revenue','revenues'}
-        operating = label == 'total operating revenues'
+        operating = ' '.join(_label(table,cell).casefold().split()) == 'total operating revenues'
         if label not in {'total revenue','total revenues','total net revenues'} and not (single or operating):continue
         if (row['period_start'],row['period_end'])!=(period['period_start'],period['period_end']):continue
         same=[r for r in rows if r['context_ref']==row['context_ref'] and r['ordinal'] in bound
@@ -71,7 +71,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
             operating_costs=[r for r in cost_rows if r['context_ref']==row['context_ref']
                 and r['ordinal'] in cost_bound and cost_bound[r['ordinal']][0]['table_id']==table['table_id']
                 and cost_bound[r['ordinal']][1]['row_index']>cell['row_index']
-                and _label_key(_label(*cost_bound[r['ordinal']]))=='total operating expenses']
+                and ' '.join(_label(*cost_bound[r['ordinal']]).casefold().split())=='total operating expenses']
         names={r['concept'].casefold() for r in same}
         if not(names & {'us-gaap:netincomeloss','us-gaap:profitloss'}
                and (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'} or operating_costs)):continue

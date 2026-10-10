@@ -193,3 +193,15 @@ class ReportedOperatingRevenueTest(unittest.TestCase):
             try:scope=reported_revenue_scope(primary=altered,annual=annual,approved_concepts=APPROVED)
             except ValueError:continue
             self.assertFalse(scope['complete_scope_proven'])
+
+
+    def test_operating_label_parenthetical_scope_cannot_be_discarded(self):
+        source,annual=self.statement()
+        for before,after in ((b'Total operating revenues',b'Total operating revenues (domestic)'),
+                (b'Total operating revenues',b'Total operating revenues (subtotal)'),
+                (b'Total operating expenses',b'Total operating expenses (domestic)')):
+            altered=changed(source,source['raw_bytes'].replace(before,after))
+            with self.subTest(label=after):
+                result=reported_revenue_scope(primary=altered,annual=annual,
+                    approved_concepts=APPROVED,xml=altered)
+                self.assertFalse(result['complete_scope_proven'])

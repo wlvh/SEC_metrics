@@ -1,0 +1,37 @@
+test_operating_label_parenthetical_scope_cannot_be_discarded (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_label_parenthetical_scope_cannot_be_discarded) ... 
+  test_operating_label_parenthetical_scope_cannot_be_discarded (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_label_parenthetical_scope_cannot_be_discarded) (label=b'Total operating revenues (domestic)') ... FAIL
+  test_operating_label_parenthetical_scope_cannot_be_discarded (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_label_parenthetical_scope_cannot_be_discarded) (label=b'Total operating revenues (subtotal)') ... FAIL
+  test_operating_label_parenthetical_scope_cannot_be_discarded (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_label_parenthetical_scope_cannot_be_discarded) (label=b'Total operating expenses (domestic)') ... FAIL
+
+======================================================================
+FAIL: test_operating_label_parenthetical_scope_cannot_be_discarded (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_label_parenthetical_scope_cannot_be_discarded) (label=b'Total operating revenues (domestic)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 207, in test_operating_label_parenthetical_scope_cannot_be_discarded
+    self.assertFalse(result['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_operating_label_parenthetical_scope_cannot_be_discarded (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_label_parenthetical_scope_cannot_be_discarded) (label=b'Total operating revenues (subtotal)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 207, in test_operating_label_parenthetical_scope_cannot_be_discarded
+    self.assertFalse(result['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_operating_label_parenthetical_scope_cannot_be_discarded (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_label_parenthetical_scope_cannot_be_discarded) (label=b'Total operating expenses (domestic)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 207, in test_operating_label_parenthetical_scope_cannot_be_discarded
+    self.assertFalse(result['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.200s
+
+FAILED (failures=3)
+{"allowed_skips": 0, "errors": 0, "failures": 3, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_label_parenthetical_scope_cannot_be_discarded"]}
