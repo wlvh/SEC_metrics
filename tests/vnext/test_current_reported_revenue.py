@@ -1,6 +1,7 @@
 """Current opt-in and source-proof controls; constructed rows carry no business credit."""
 import inspect
 from pathlib import Path
+import json
 import unittest
 from unittest.mock import patch
 
@@ -154,3 +155,28 @@ class CurrentReportedRevenueTest(unittest.TestCase):
             with self.subTest(label=label),self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
                 _revenue_admission(primary=changed,annual=annual,approved_concepts=APPROVED,
                                    contract='reported-total-v2')
+
+
+class PublicRowRevenueScopeContextTest(unittest.TestCase):
+    def test_public_row_context_names_revenue_scope_by_identity_not_source_rows(self):
+        from vnext.ordinary_projection import _display_selection
+        scope = {'scope_id': 'sha256:abc', 'method': 'SELECTED_REPORTED_CONSOLIDATED_REVENUE_V2',
+                 'status': 'REPORTED_CONSOLIDATED_TOTAL', 'complete_scope_proven': True,
+                 'selected_fiscal_column_year': 2025,
+                 'annual_input': {'table_input': {'x' * 1000: 1}}, 'original_reports': [{'row': i} for i in range(500)],
+                 'reported_totals': [{'statement_scope': {'intervening_sources': ['y' * 5000]}}]}
+        selection = {'status': 'PASS', 'income_period': {'period_end': '2026-01-31'}, 'revenue_scope': scope}
+        shown = _display_selection(selection)
+        self.assertEqual(shown['revenue_scope'], {
+            'scope_id': 'sha256:abc', 'method': 'SELECTED_REPORTED_CONSOLIDATED_REVENUE_V2',
+            'status': 'REPORTED_CONSOLIDATED_TOTAL', 'complete_scope_proven': True,
+            'selected_fiscal_column_year': 2025})
+        self.assertEqual({k: v for k, v in shown.items() if k != 'revenue_scope'},
+                         {'status': 'PASS', 'income_period': {'period_end': '2026-01-31'}})
+        self.assertLess(len(json.dumps(shown)), 400)
+        # The case selection itself keeps the full scope for evidence rendering.
+        self.assertIn('original_reports', selection['revenue_scope'])
+        self.assertIsNone(_display_selection(None))
+        untouched = {'status': 'N_A_STRUCTURAL', 'depreciation_scope': {'complete_business_scope_proven': False}}
+        self.assertEqual(_display_selection(untouched), untouched)
+

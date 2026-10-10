@@ -25,6 +25,24 @@ def _need(condition, reason):
     if not condition:raise ValueError(reason)
 
 
+_SCOPE_DISPLAY_KEYS = ('scope_id', 'method', 'status', 'complete_scope_proven', 'selected_fiscal_column_year')
+
+
+def _display_selection(selection):
+    """Public-row context names a revenue scope by identity and outcome only.
+
+    The full scope (prepared annual input, native report rows, statement text,
+    cell proofs) stays in the saved input binding and records. The CSV context
+    keeps its scope_id, method and status, as the historical company entry
+    already does, so one row does not carry hundreds of kilobytes of copied
+    source material.
+    """
+    if not isinstance(selection, dict) or not isinstance(selection.get('revenue_scope'), dict):
+        return selection
+    scope = selection['revenue_scope']
+    return {**selection, 'revenue_scope': {key: scope[key] for key in _SCOPE_DISPLAY_KEYS if key in scope}}
+
+
 def _reporting_company_view(*, data_root, company, annual, calculation_target,
                             source_references=(), allow_metadata_only=False,
                             event_input_binding=None, event_metric_id=None,
@@ -446,7 +464,7 @@ def render_ordinary_records(*, data_root, manifest, records, case,
         label,note=_period_label(result,period);row["fiscal_period"]=label
         row["notes"]=" ".join([row.get("notes",""),note,"Native state: "+result["publication"]+"; reason: "+result["reason_code"]+"."])
         row["context_or_dimension"]=json.dumps({"scope":trace["calculation_target"]["scope"],"measurement_kind":label,
-            "annual_filing_period":period,"selection":case.get("selection"),
+            "annual_filing_period":period,"selection":_display_selection(case.get("selection")),
             "source_reference_ids":[r["source_reference_id"] for r in case["references"]]},ensure_ascii=False,sort_keys=True)
     elif result['text_payload'] is not None:
         _need(len(evidence)==len(result["text_payload"]["items"]),"ORDINARY_TEXT_EVIDENCE_SET_CHANGED")
