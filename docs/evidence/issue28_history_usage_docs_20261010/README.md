@@ -14,3 +14,6 @@ History consumer guide update after actualmain84 and review6094536012/6094654752
 
 
 2026-10-10接收增量：实际读取Claude PR137最终接收记录，mainf51已包含139/137。历史说明只更新取码版本、三正常增长/两实际不可比和Macy前期完整范围不足的具名状态；原失败、精确旧缺陷、保存source-root前提和在线接续缺口保持。新说明不重算财报，原候选执行记录按原代码身份保留。
+
+
+Historical C03 receiving guide5ad680db: content receives the already committed publicddc2169b guide without whole-branch ancestry. One guide file adds the explicit candidate checkout before ECD77b77724 and SCT813cf6a1 commands, states148 common base and151's149+150 dual dependency, links existing actual first/repeat/read evidence and returns to main afterwards. This prevents running candidate-only C03 on mainf51. First-reported, actual fiscal dates, people/currency/source and narrow no-inline fallback restrictions remain; online source discovery/supplementation remains unfinished. Sixteen shell blocks pass bash-n, fences are balanced, three commits are obtainable and actual run/results help flags match. No financial run/source retrieval/model call or product-code change; use the existing PR121 for document reception, not a new doc PR.
