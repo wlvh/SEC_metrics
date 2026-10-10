@@ -73,8 +73,10 @@ def render_text_payload(*, payload):
     """Render a strict ordered excerpt list without converting text to a count."""
     _need(type(payload) is dict and set(payload) == _PAYLOAD_FIELDS,
           "TEXT_PAYLOAD_FIELDS_INVALID")
+    from .text_rendering_limits import RENDERER_MAX_ITEMS
     _need(payload["version"] == VALUE_KIND and payload["content_kind"] == "SOURCE_EXCERPTS"
-          and payload["renderer"] == "ORDERED_NEWLINE_V1", "TEXT_PAYLOAD_PROTOCOL_UNSUPPORTED")
+          and type(payload["renderer"]) is str and payload["renderer"] in RENDERER_MAX_ITEMS,
+          "TEXT_PAYLOAD_PROTOCOL_UNSUPPORTED")
     for key in ("candidate_hash", "review_unit_hash", "approval_effect_hash"):
         _need(type(payload[key]) is str and _HASH.fullmatch(payload[key]), "TEXT_PAYLOAD_REVIEW_BINDING_INVALID")
     coverage = payload["coverage_hashes"]
@@ -83,7 +85,8 @@ def render_text_payload(*, payload):
           and coverage == sorted(set(coverage)),
           "TEXT_PAYLOAD_COVERAGE_INVALID")
     items = payload["items"]
-    _need(type(items) is list and 1 <= len(items) <= 64, "TEXT_PAYLOAD_ITEMS_INVALID")
+    _need(type(items) is list and 1 <= len(items) <= RENDERER_MAX_ITEMS[payload["renderer"]],
+          "TEXT_PAYLOAD_ITEMS_INVALID")
     roles, ids = [], []
     for ordinal, item in enumerate(items):
         _need(type(item) is dict and set(item) == {"order", "role", "text", "observation_id"}
@@ -388,8 +391,14 @@ def payload_from_observations(*, compiled_spec, target, observations):
 
 def build_text_result_and_trace(*, compiled_spec, target, payload=None, reason_code="PASS", structural=False):
     from .records import metric_result_contract_hash
-    text_policy(compiled_spec)
+    policy = text_policy(compiled_spec)
+    if payload is not None:
+        _need(type(payload) is dict and payload.get("renderer") == policy["renderer"],
+              "TEXT_PAYLOAD_SPEC_POLICY_CHANGED")
+        _need(type(payload.get("items")) is list and 1 <= len(payload["items"]) <= policy["max_items"],
+              "TEXT_PAYLOAD_SPEC_ITEM_LIMIT")
     value = render_text_payload(payload=payload) if payload is not None else None
+    _need(value is None or len(value) <= policy["max_text_chars"], "TEXT_RESULT_SIZE_LIMIT")
     _need((value is not None) == (reason_code == "PASS") and not (value is not None and structural), "TEXT_RESULT_STATE_INVALID")
     contract = {"company_id": target["company_id"], "metric_id": compiled_spec["compiled"]["metric_id"],
         "period_start": target["period_start"], "period_end": target["period_end"], "scope_key": target["scope_key"],
