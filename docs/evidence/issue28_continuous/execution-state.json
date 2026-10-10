@@ -5946,6 +5946,29 @@
         "wrapper_and_internal_conservative": 33
       },
       "end_boundary_note": "exact original turn boundaries UNKNOWN; tool work windows only, do not invent"
+    },
+    {
+      "task_name": "review_currentrevenue_7e6f6a2",
+      "purpose": "review",
+      "module": "current_reported_revenue",
+      "scope_paths": [
+        "scripts/vnext/normal_zero_ai_results.py",
+        "scripts/vnext/normal_run_inputs.py",
+        "scripts/vnext/ordinary_saved_result.py",
+        "scripts/vnext/ordinary_current_update.py",
+        "scripts/vnext/selected_revenue_scope_v1.py",
+        "tests/vnext/test_current_reported_revenue.py",
+        "tests/vnext/test_selected_revenue_scope_v1.py",
+        ".github/workflows/company-current-records.yml"
+      ],
+      "patch_sha": "7e6f6a240e63000ad69c1a9354f86980eced4228",
+      "base_sha": "aa29a0ab1b3eafc7ce384f98c1b889e2477012dc",
+      "spawned_at": "2026-10-10T01:39:46.211488+00:00",
+      "ended_at": null,
+      "tool_calls": 0,
+      "result_path": "/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics/docs/evidence/issue28_current_reported_revenue_20261010/independent-review/conclusion.md",
+      "verdict": "RUNNING",
+      "message_count": 0
     }
   ],
   "ci_capacity_20260922": {
@@ -18388,7 +18411,14 @@
     "pr": 121,
     "sha": "d0c085e66d837b204ed492ed2a92217a051406ff",
     "peer_source_sha": "5d904b6e27c79223eccbc77061ab2214da24106a",
-    "scope": "single historical guide clarified actual main versus candidate and exact revenue defects; no financial rerun"
+    "scope": "single historical guide clarified actual main versus candidate and exact revenue defects; no financial rerun",
+    "failure_read_limitation_correction": {
+      "peer_source_sha": "07b409b49fe9e5970194c7b7ed57ec42437af29b",
+      "own_commit": "072a973a",
+      "pr": 121,
+      "scope": "one existing historical paragraph, actual main reader limitation; candidate131 is not main yet",
+      "tests": "diff/link/version statement checked; no financial replay"
+    }
   },
   "reported_total_fiscal_source_v2_20261010": {
     "product_sha": "266c75efbbf1c9779b5ff0b7332de8a2be943035",
@@ -18404,7 +18434,7 @@
     "tests": 29,
     "seconds": 0.228,
     "review": "REQUEST_CHANGES preserved; final all-associated-date difference pending independent coverage, no trusted-credit release",
-    "next": "ordinary current producer explicit V2 integration; final date increment needs independent receiving; B02 original-prior completeness still unresolved",
+    "next": "Source130 final date increment still pending receiving; normal current caller now PR132; B02 original-prior completeness separate",
     "calls": [
       0,
       0,
@@ -18443,7 +18473,7 @@
   "daily_read_error_20261010": {
     "source_peer_sha": "3a3f98e8",
     "scope": "current read drops reason/error_type/error_category for failed/no-result; source exists but unreceived D01 amendment must remain implementation gap",
-    "next": "current head CI/reception and peer failed-state only-read verification; no finance recalculation",
+    "next": "receiving only; public failed-state/history reads verified; no finance recalculation",
     "calls": [
       0,
       0,
@@ -18468,9 +18498,81 @@
     "stage": "current/no-current failure details JSON/CSV and retained failure after subset; old value only explicit previous field, current failure null; unrequested CSV role repaired",
     "CI": {
       "head": "a0e2c809ea492b8641ba6d85a875943645f99ffb",
-      "success": 10,
-      "in_progress": 1,
-      "pending_name": "Main foundation audit and historical compatibility"
+      "success": 11,
+      "in_progress": 0,
+      "status": "SUCCESS",
+      "observation": "actual GitHub statusCheckRollup this turn; all11COMPLETED/SUCCESS"
     }
+  },
+  "current_reported_revenue_20261010": {
+    "pr": 132,
+    "product_sha": "7e6f6a240e63000ad69c1a9354f86980eced4228",
+    "base_sha": "aa29a0ab1b3eafc7ce384f98c1b889e2477012dc",
+    "upstream_prs": [
+      119,
+      130
+    ],
+    "independent_of_historical_consumer_pr": 129,
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics",
+    "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "stage": "actual current B01 CLI/save/forbidden factory repeat/independent CSV for three companies; explicit B01/B03 caller and dependency integration, limited review pending",
+    "actual_company_values": {
+      "macys": {
+        "fiscal_year": 2025,
+        "value": "22621000000",
+        "unit": "USD",
+        "period": [
+          "2025-02-02",
+          "2026-01-31"
+        ],
+        "result_id": "sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e"
+      },
+      "pfizer": {
+        "fiscal_year": 2025,
+        "value": "62579000000",
+        "original_result_preserved": true
+      },
+      "salesforce": {
+        "fiscal_year": 2026,
+        "value": "41525000000",
+        "original_result_preserved": true
+      }
+    },
+    "parent_tests": {
+      "run": 107,
+      "seconds": 9.044,
+      "skip": 0
+    },
+    "original_failures": [
+      "stale legacy source-credit20subtests+count kept, not green",
+      "realSalesforce V2 pretitle navigation/fiscal-costgroup format regression fixed, original105/106 and CLI logs kept"
+    ],
+    "shared_defaults": "new optional revenue_scope_contract defaults components-v1; optional adjacent_heading defaults False; default same returned Pfizer prototype with fixed base function/same current dependencies; not old installed replay",
+    "affected_functions": {
+      "scripts/vnext/normal_zero_ai_results.py": [
+        "resolve_ordinary_zero_ai_metric",
+        "_revenue_admission"
+      ],
+      "scripts/vnext/normal_run_inputs.py": [
+        "prepare_ordinary_zero_ai_run_input"
+      ],
+      "scripts/vnext/ordinary_saved_result.py": [
+        "_ordinary_case"
+      ],
+      "scripts/vnext/ordinary_current_update.py": [
+        "_configuration"
+      ],
+      "scripts/vnext/selected_revenue_scope_v1.py": [
+        "_statement_scope only optional adjacent_heading successor behavior"
+      ]
+    },
+    "evidence_path": "docs/evidence/issue28_current_reported_revenue_20261010/README.md",
+    "CI": "first query failed Internal Privoxy Error; no terminal claim",
+    "calls": [
+      0,
+      0,
+      0
+    ],
+    "business_credit": "development only, not formal acceptance or all39; Source130 date increment independent coverage pending"
   }
 }
