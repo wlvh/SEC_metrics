@@ -1,0 +1,52 @@
+test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match) ... 
+  test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match) (extra=b'100') ... FAIL
+  test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match) (extra=b'<span>100</span>') ... FAIL
+test_repeated_year_header_does_not_hide_an_earlier_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_repeated_year_header_does_not_hide_an_earlier_amount) ... 
+  test_repeated_year_header_does_not_hide_an_earlier_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_repeated_year_header_does_not_hide_an_earlier_amount) (amount=b'<ix:nonFraction name="issuer:OtherRevenue" contextRef="annual" unitRef="usd" scale="6" decimals="-6">100</ix:nonFraction>') ... FAIL
+  test_repeated_year_header_does_not_hide_an_earlier_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_repeated_year_header_does_not_hide_an_earlier_amount) (amount=b'100') ... FAIL
+
+======================================================================
+FAIL: test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match) (extra=b'100')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 89, in test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match
+    with self.subTest(extra=extra),self.assertRaisesRegex(ValueError,'SINGLE_REVENUE_'):
+                                   ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match) (extra=b'<span>100</span>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 89, in test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match
+    with self.subTest(extra=extra),self.assertRaisesRegex(ValueError,'SINGLE_REVENUE_'):
+                                   ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_repeated_year_header_does_not_hide_an_earlier_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_repeated_year_header_does_not_hide_an_earlier_amount) (amount=b'<ix:nonFraction name="issuer:OtherRevenue" contextRef="annual" unitRef="usd" scale="6" decimals="-6">100</ix:nonFraction>')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 100, in test_repeated_year_header_does_not_hide_an_earlier_amount
+    with self.subTest(amount=amount),self.assertRaisesRegex(ValueError,'SINGLE_REVENUE_'):
+                                     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_repeated_year_header_does_not_hide_an_earlier_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_repeated_year_header_does_not_hide_an_earlier_amount) (amount=b'100')
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 100, in test_repeated_year_header_does_not_hide_an_earlier_amount
+    with self.subTest(amount=amount),self.assertRaisesRegex(ValueError,'SINGLE_REVENUE_'):
+                                     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SINGLE_REVENUE_" does not match "SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED"
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.200s
+
+FAILED (failures=4)
+{"allowed_skips": 0, "errors": 0, "failures": 4, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match", "tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_repeated_year_header_does_not_hide_an_earlier_amount"]}

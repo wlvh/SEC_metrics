@@ -1,0 +1,1177 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics",
+  "base_commit": "aa29a0ab1b3eafc7ce384f98c1b889e2477012dc",
+  "tested_tree": "UNCOMMITTED_CURRENT_CHANGES",
+  "changed_files": [
+    ".github/workflows/company-current-records.yml",
+    "scripts/vnext/normal_run_inputs.py",
+    "scripts/vnext/normal_zero_ai_results.py",
+    "scripts/vnext/ordinary_current_update.py",
+    "scripts/vnext/ordinary_saved_result.py",
+    "scripts/vnext/selected_revenue_scope_v1.py",
+    "tests/vnext/test_selected_revenue_scope_v1.py"
+  ],
+  "tested_code_sha256": {
+    ".github/workflows/company-current-records.yml": "6a0969a7866e153af3b943ca2f71dac745b66cb55572160b68d6cdacb25bc1ac",
+    "scripts/vnext/normal_run_inputs.py": "9ccc66630d9171d9017fdb2eb077309cf96e41860e4b102fafdfcc215cf7838e",
+    "scripts/vnext/normal_zero_ai_results.py": "ced8bf50746b2db42f2dab796c6b5d10a9ee1fcae7346cf956ff9ceedba2d889",
+    "scripts/vnext/ordinary_current_update.py": "909be32f597dd273815b13d40e240b0dae9b8ac67adfe23787e5e51e3d576b66",
+    "scripts/vnext/ordinary_saved_result.py": "9020e937774732cafdc66af44c7c820b8c4907eb7aa23aced34e8ab062fd99a0",
+    "scripts/vnext/selected_revenue_scope_v1.py": "0237aa246ebdd8ec1883d4238e322d2f363dacf9725e3959c95856fc21dd3463",
+    "tests/vnext/test_selected_revenue_scope_v1.py": "657de15cc1f8eb7700249e8039a4e7f86e3797d24b59733021c3c28e856c835f"
+  },
+  "data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "outcomes": [
+    {
+      "company_id": "macys",
+      "source_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/source",
+      "state_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state",
+      "independent_reader_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/reader",
+      "cli_args": [
+        "run",
+        "--company",
+        "macys",
+        "--source-root",
+        "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/source",
+        "--work-dir",
+        "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state",
+        "--output-dir",
+        "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/output",
+        "--metric",
+        "B01"
+      ],
+      "first_seconds": 1.5682870000600815,
+      "repeat_seconds": 0.08558908384293318,
+      "reader_seconds": 0.13637866685166955,
+      "first_exit": 0,
+      "repeat_exit": 0,
+      "reader_exit": 0,
+      "rows": [
+        {
+          "company": "Macy's",
+          "cik": "794367",
+          "metric_id": "B01",
+          "metric_name": "Revenue",
+          "value": "22621000000",
+          "unit": "USD",
+          "status": "OK",
+          "source_class": "STD_XBRL",
+          "formula": "direct",
+          "period_start": "2025-02-02",
+          "period_end": "2026-01-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0001628280-26-021721",
+          "form": "10-K",
+          "filed_date": "2026-03-27",
+          "concept_or_section": "Revenues",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+          "company_id": "macys",
+          "result_id": "sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e",
+          "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state/updates/B01/results/5067270620c4462ea03155d59b128def",
+          "source_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/source",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True"
+        }
+      ],
+      "csv_sha256": "f8093ee89bba2f242173125546b4bf983c16718d4569e29830b79e6e83f71b9b",
+      "evidence_rows": [
+        {
+          "company": "Macy's",
+          "cik": "794367",
+          "metric_id": "B01",
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+          "repo_relative_path": "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+          "content_sha256": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+          "accession": "0001628280-26-021721",
+          "document_name": "CIK0000794367.json",
+          "concept_or_section": "Revenues",
+          "context_or_dimension": "{\"source_binding\": {\"accession\": \"0001628280-26-021721\", \"concept\": \"us-gaap:Revenues\", \"document_name\": \"CIK0000794367.json\", \"duration_days\": 364, \"entity\": \"794367\", \"fact_id\": \"fact:sha256:36fa0f4656cc783aab37805d762b2874ca784d5f1b259dd99db844942b2ba663\", \"filed\": \"2026-03-27\", \"fiscal_period\": \"FY\", \"form\": \"10-K\", \"frame\": \"CY2025\", \"raw_asset_id\": \"sha256:fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55\", \"source_reference_id\": \"sha256:333eadc460b0b7482c8deaa78eaae60779b8c8af193d0d9ebf3445c34b88b11c\", \"source_role\": \"companyfacts\"}, \"source_cells\": []}",
+          "unit": "USD",
+          "period_start": "2025-02-02",
+          "period_end": "2026-01-31",
+          "value_raw": "",
+          "value_normalized": "22621000000",
+          "evidence_quote": "Normalized source-derived observation: Revenues=22621000000 unit=USD accn=0001628280-26-021721 filed=2026-03-27",
+          "extraction_method": "ordinary_native_source_projection",
+          "parser_version": "ordinary_projection_v1"
+        }
+      ],
+      "revenue_assessment": {
+        "method": "SELECTED_REPORTED_CONSOLIDATED_REVENUE_V2",
+        "scope_id": "sha256:722953db7270a454d547a2f822a22dae5c2e9a2bf1b166a91bbcd0a9a9675856",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true,
+        "selected_fiscal_column_year": 2025,
+        "reported_totals": [
+          {
+            "total": {
+              "concept": "us-gaap:Revenues",
+              "value": "22621000000",
+              "unit": "USD",
+              "period_start": "2025-02-02",
+              "period_end": "2026-01-31",
+              "decimals": "-6",
+              "ordinal": 72,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000794367",
+                "period_end": "2026-01-31",
+                "period_start": "2025-02-02",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000794367",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2025-02-02"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2026-01-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:ca1e56ece9708a8e150c00ef57fc0b09f3b2d3da66c45ce29221919e6cab8250",
+                "raw_asset_id": "sha256:47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+                "company_id": "macys",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131.htm",
+                "accession": "0001628280-26-021721",
+                "document_name": "m-20260131.htm",
+                "source_role": "target_primary",
+                "request_attempt_id": "request:attempt:c3aabed7f8ec00b9058aa7f0c8d05d1e269490a28babe6d7a5c63f392fd47cdf"
+              }
+            },
+            "total_cell": {
+              "table_id": "table_000037",
+              "grid_sha256": "sha256:6ffc023e794289c64f05c68c371b00e7050ef2e4add8a4af9ddd02a1bdfefb3b",
+              "row_index": 4,
+              "column_index": 3,
+              "origin_row_index": 4,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "22,621&#160;",
+              "text": "22,621"
+            },
+            "statement_scope": {
+              "title_sources": [
+                {
+                  "start_byte": 740034,
+                  "end_byte": 740232,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-top:6pt;text-align:center"
+                    ]
+                  ],
+                  "inside_table": true,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:583",
+                    "table:1",
+                    "tr:2",
+                    "td:1",
+                    "div:2"
+                  ],
+                  "visible_text": "CONSOLIDATED STATEMENTS OF INCOME",
+                  "span_sha256": "5e784b40ce9446b9c88bee21b4349e114dc83292c26cc180abfd13115c7c1eae"
+                }
+              ],
+              "caption": "",
+              "table_span": {
+                "table_order": 36,
+                "start_byte": 740468,
+                "end_byte": 780023,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:584",
+                  "table:1"
+                ],
+                "span_sha256": "69dec0753f8af98745f4a133341b21ab790c23fd27e38c7aef5ea622d7d3ec48"
+              },
+              "intervening_sources": [
+                {
+                  "start_byte": 739872,
+                  "end_byte": 740034,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": true,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:583",
+                    "table:1",
+                    "tr:2",
+                    "td:1",
+                    "div:1"
+                  ],
+                  "visible_text": "MACY'S, INC.",
+                  "span_sha256": "0f2c289d6a9b4ca7783caba3d7ccb3937e5127a1f41f5a871c8c248de30f447b"
+                },
+                {
+                  "start_byte": 740034,
+                  "end_byte": 740232,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-top:6pt;text-align:center"
+                    ]
+                  ],
+                  "inside_table": true,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:583",
+                    "table:1",
+                    "tr:2",
+                    "td:1",
+                    "div:2"
+                  ],
+                  "visible_text": "CONSOLIDATED STATEMENTS OF INCOME",
+                  "span_sha256": "5e784b40ce9446b9c88bee21b4349e114dc83292c26cc180abfd13115c7c1eae"
+                },
+                {
+                  "start_byte": 740232,
+                  "end_byte": 740415,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": true,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:583",
+                    "table:1",
+                    "tr:2",
+                    "td:1",
+                    "div:3"
+                  ],
+                  "visible_text": "(millions, except per share data)",
+                  "span_sha256": "22c6b5d675eee92f057dfc8d6b8eb5cfa2c80af4c3943a102d823fb17478ba50"
+                }
+              ],
+              "unresolved_annotations": [],
+              "adjacent_heading_table": {
+                "table_order": 35,
+                "start_byte": 739552,
+                "end_byte": 740433,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:583",
+                  "table:1"
+                ],
+                "span_sha256": "f3307d99f47be6e3cc349db0c5edb26c380768a5928c7c37318dd57b987cd958"
+              }
+            },
+            "unit_sources": [
+              {
+                "kind": "heading_block",
+                "proof": {
+                  "start_byte": 740232,
+                  "end_byte": 740415,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": true,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:583",
+                    "table:1",
+                    "tr:2",
+                    "td:1",
+                    "div:3"
+                  ],
+                  "visible_text": "(millions, except per share data)",
+                  "span_sha256": "22c6b5d675eee92f057dfc8d6b8eb5cfa2c80af4c3943a102d823fb17478ba50"
+                },
+                "text": "(millions, except per share data)"
+              }
+            ],
+            "year_headers": [
+              {
+                "table_id": "table_000037",
+                "grid_sha256": "sha256:6ffc023e794289c64f05c68c371b00e7050ef2e4add8a4af9ddd02a1bdfefb3b",
+                "row_index": 1,
+                "column_index": 3,
+                "origin_row_index": 1,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ],
+            "end_headers": [],
+            "annual_period": {
+              "fiscal_year": 2025,
+              "period_start": "2025-02-02",
+              "period_end": "2026-01-31"
+            },
+            "xml_matches": [],
+            "xml_check": "NOT_SUPPLIED"
+          }
+        ]
+      },
+      "source_files": [
+        "config/company_registry.csv",
+        "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+        "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm.a47e15bb52bc24401f60545dae0ac437c7edd1a7811553f4b700db0a344b4131.headers.json",
+        "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json",
+        "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json.727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361.headers.json",
+        "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json",
+        "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json.e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af.headers.json",
+        "evidence/requests_log.csv",
+        "evidence/requests_log_manifest.json"
+      ],
+      "source_hashes": {
+        "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+        "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm": "47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+        "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm.a47e15bb52bc24401f60545dae0ac437c7edd1a7811553f4b700db0a344b4131.headers.json": "a47e15bb52bc24401f60545dae0ac437c7edd1a7811553f4b700db0a344b4131",
+        "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json": "75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+        "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json.727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361.headers.json": "727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361",
+        "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json": "fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+        "evidence/request_attempts/fc/fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55/CIK0000794367.json.e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af.headers.json": "e147665ba880b29bd7522f11b6fd12a1ad5322f8cc2c9304f8818ab2518554af",
+        "evidence/requests_log.csv": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+        "evidence/requests_log_manifest.json": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+      },
+      "protected_result_files": {
+        "updates/B01/results/5067270620c4462ea03155d59b128def/metrics_matrix.csv": "f2533454b84bc5bcce38fdeeb3a8a01c4cde59f41d16250c2f023b88bdd60f51",
+        "updates/B01/results/5067270620c4462ea03155d59b128def/metric_evidence.csv": "3d98c445d930986bb757060d8862b2ec836b3c979bbe096af1fb49f3e03b8c35",
+        "updates/B01/results/5067270620c4462ea03155d59b128def/records.jsonl": "a3adb07e07323dfc21a7c466a29a8709802d16912952c2b8a148114287901799",
+        "updates/B01/results/5067270620c4462ea03155d59b128def/input-assessments.json": "801a1fed022a1d311eb18fc64e94aae6af998e6e1f3cce6187d5a23b5a5898e6",
+        "updates/B01/results/5067270620c4462ea03155d59b128def/manifest.json": "63c2338300a6e3698c8f0bb9d1b65cf95afc4c9fbdcf029e11a2d2701fd7bf61",
+        "updates/B01/results/5067270620c4462ea03155d59b128def/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "updates/B01/results/5067270620c4462ea03155d59b128def/receipt.json": "4feb9bb680e24d6a15e168bd5b477f83df94d4d2959e206baa755fa869747dce"
+      },
+      "result_directories": [
+        "updates/B01/results/5067270620c4462ea03155d59b128def/manifest.json"
+      ],
+      "repeat_preserves_result_bytes_and_directories": true,
+      "cli_output": "{\n  \"elapsed_seconds\": 1.5672455420717597,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"macys\",\n  \"run_id\": \"20261010T013611Z-c382e158\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"01711906971149ecae82b3553b03d078\",\n      \"version\": \"5067270620c4462ea03155d59b128def\",\n      \"result_id\": \"sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e\",\n      \"result_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state/updates/B01/results/5067270620c4462ea03155d59b128def\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e\",\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state/updates/B01/results/5067270620c4462ea03155d59b128def\",\n      \"program_version\": {\n        \"commit\": \"aa29a0ab1b3eafc7ce384f98c1b889e2477012dc\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/source\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics\",\n  \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state\",\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/output/20261010T013611Z-c382e158\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false\n}\n{\n  \"elapsed_seconds\": 0.08470554207451642,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"macys\",\n  \"run_id\": \"20261010T013613Z-94c872fb\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"53756cbc3214420fbe4447f6cbcd613b\",\n      \"version\": \"5067270620c4462ea03155d59b128def\",\n      \"result_id\": \"sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e\",\n      \"result_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state/updates/B01/results/5067270620c4462ea03155d59b128def\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e\",\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state/updates/B01/results/5067270620c4462ea03155d59b128def\",\n      \"program_version\": {\n        \"commit\": \"aa29a0ab1b3eafc7ce384f98c1b889e2477012dc\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/source\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics\",\n  \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state\",\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/output/20261010T013613Z-94c872fb\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false\n}\n",
+      "reader_output": "{\n  \"elapsed_seconds\": 0.08630266692489386,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"macys\",\n  \"source_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/source\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"result_id\": \"sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e\",\n      \"period_start\": \"2025-02-02\",\n      \"period_end\": \"2026-01-31\",\n      \"fiscal_year\": 2025,\n      \"value\": \"22621000000\",\n      \"unit\": \"USD\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state/updates/B01/results/5067270620c4462ea03155d59b128def\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/reader\"\n}\n"
+    },
+    {
+      "company_id": "pfizer",
+      "source_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/source",
+      "state_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/state",
+      "independent_reader_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/reader",
+      "cli_args": [
+        "run",
+        "--company",
+        "pfizer",
+        "--source-root",
+        "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/source",
+        "--work-dir",
+        "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/state",
+        "--output-dir",
+        "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/output",
+        "--metric",
+        "B01"
+      ],
+      "first_seconds": 2.6959136249497533,
+      "repeat_seconds": 0.09083591611124575,
+      "reader_seconds": 0.13041579187847674,
+      "first_exit": 0,
+      "repeat_exit": 0,
+      "reader_exit": 0,
+      "rows": [
+        {
+          "company": "Pfizer",
+          "cik": "78003",
+          "metric_id": "B01",
+          "metric_name": "Revenue",
+          "value": "62579000000",
+          "unit": "USD",
+          "status": "OK",
+          "source_class": "STD_XBRL",
+          "formula": "direct",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0000078003-26-000026",
+          "form": "10-K",
+          "filed_date": "2026-02-26",
+          "concept_or_section": "Revenues",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+          "company_id": "pfizer",
+          "result_id": "sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf",
+          "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/state/updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b",
+          "source_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/source",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True"
+        }
+      ],
+      "csv_sha256": "30424f85a7cb9fde25e788d94e3db9c381571fe3b2e36019dce584ac5c8b7c0f",
+      "evidence_rows": [
+        {
+          "company": "Pfizer",
+          "cik": "78003",
+          "metric_id": "B01",
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+          "repo_relative_path": "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json",
+          "content_sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+          "accession": "0000078003-26-000026",
+          "document_name": "CIK0000078003.json",
+          "concept_or_section": "Revenues",
+          "context_or_dimension": "{\"source_binding\": {\"accession\": \"0000078003-26-000026\", \"concept\": \"us-gaap:Revenues\", \"document_name\": \"CIK0000078003.json\", \"duration_days\": 365, \"entity\": \"78003\", \"fact_id\": \"fact:sha256:700cecd87585e4bfd43d382aa5e833d4c25f92a0829e1e386fe26af85efc76dd\", \"filed\": \"2026-02-26\", \"fiscal_period\": \"FY\", \"form\": \"10-K\", \"frame\": \"CY2025\", \"raw_asset_id\": \"sha256:bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566\", \"source_reference_id\": \"sha256:cea56b517272ef02581aadd04078062479e66c7bb7c273578cd08d75b3b4dfea\", \"source_role\": \"companyfacts\"}, \"source_cells\": []}",
+          "unit": "USD",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "value_raw": "",
+          "value_normalized": "62579000000",
+          "evidence_quote": "Normalized source-derived observation: Revenues=62579000000 unit=USD accn=0000078003-26-000026 filed=2026-02-26",
+          "extraction_method": "ordinary_native_source_projection",
+          "parser_version": "ordinary_projection_v1"
+        }
+      ],
+      "revenue_assessment": {
+        "method": "SELECTED_REPORTED_CONSOLIDATED_REVENUE_V2",
+        "scope_id": "sha256:ef1d9cc45253b893ea9f9b70f2b8233b8ba0b8159550bdefc056088c5217bd5a",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true,
+        "selected_fiscal_column_year": 2025,
+        "reported_totals": [
+          {
+            "total": {
+              "concept": "us-gaap:Revenues",
+              "value": "62579000000",
+              "unit": "USD",
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31",
+              "decimals": "-6",
+              "ordinal": 142,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0000078003",
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0000078003",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2025-01-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2025-12-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+                "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+                "company_id": "pfizer",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+                "accession": "0000078003-26-000026",
+                "document_name": "pfe-20251231.htm",
+                "source_role": "target_primary",
+                "request_attempt_id": "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4"
+              }
+            },
+            "total_cell": {
+              "table_id": "table_000115",
+              "grid_sha256": "sha256:bd090c50d08aa709345b863b4ebd44f53d86023584fb3d52ca7e344fd43a43d0",
+              "row_index": 7,
+              "column_index": 15,
+              "origin_row_index": 7,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "62,579&#160;",
+              "text": "62,579"
+            },
+            "statement_scope": {
+              "title_sources": [
+                {
+                  "start_byte": 2036090,
+                  "end_byte": 2036252,
+                  "tag": "div",
+                  "attributes": [],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:850",
+                    "div:2"
+                  ],
+                  "visible_text": "Consolidated Statements of Operations",
+                  "span_sha256": "8a597a8dc99f8f45ff2dfaf986099579c79f092c092e0c7107d5f0ccce83ded7"
+                }
+              ],
+              "caption": "",
+              "table_span": {
+                "table_order": 114,
+                "start_byte": 2036475,
+                "end_byte": 2106687,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:851",
+                  "table:1"
+                ],
+                "span_sha256": "5e1236cf6b2b2f2081e3341e9edb9c6158573ddb4df055d025bcc1deaf9c1c2a"
+              },
+              "intervening_sources": [
+                {
+                  "start_byte": 2036090,
+                  "end_byte": 2036252,
+                  "tag": "div",
+                  "attributes": [],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:850",
+                    "div:2"
+                  ],
+                  "visible_text": "Consolidated Statements of Operations",
+                  "span_sha256": "8a597a8dc99f8f45ff2dfaf986099579c79f092c092e0c7107d5f0ccce83ded7"
+                },
+                {
+                  "start_byte": 2036252,
+                  "end_byte": 2036412,
+                  "tag": "div",
+                  "attributes": [],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:850",
+                    "div:3"
+                  ],
+                  "visible_text": "Pfizer Inc. and Subsidiary Companies",
+                  "span_sha256": "a415bcf75f9ad914c0b2c03592f63d68142d01d5446515dbe36a34859bb866e4"
+                }
+              ],
+              "unresolved_annotations": [],
+              "adjacent_heading_table": null
+            },
+            "unit_sources": [
+              {
+                "kind": "visible_cell",
+                "proof": {
+                  "table_id": "table_000115",
+                  "grid_sha256": "sha256:bd090c50d08aa709345b863b4ebd44f53d86023584fb3d52ca7e344fd43a43d0",
+                  "row_index": 2,
+                  "column_index": 0,
+                  "origin_row_index": 2,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 3,
+                  "raw_text": "(MILLIONS, EXCEPT PER SHARE DATA)",
+                  "text": "(MILLIONS, EXCEPT PER SHARE DATA)"
+                },
+                "text": "(MILLIONS, EXCEPT PER SHARE DATA)"
+              }
+            ],
+            "year_headers": [
+              {
+                "table_id": "table_000115",
+                "grid_sha256": "sha256:bd090c50d08aa709345b863b4ebd44f53d86023584fb3d52ca7e344fd43a43d0",
+                "row_index": 2,
+                "column_index": 15,
+                "origin_row_index": 2,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "2025",
+                "text": "2025"
+              }
+            ],
+            "end_headers": [
+              {
+                "table_id": "table_000115",
+                "grid_sha256": "sha256:bd090c50d08aa709345b863b4ebd44f53d86023584fb3d52ca7e344fd43a43d0",
+                "row_index": 1,
+                "column_index": 9,
+                "origin_row_index": 1,
+                "origin_column_index": 9,
+                "rowspan": 1,
+                "colspan": 15,
+                "raw_text": "Year Ended December 31, ",
+                "text": "Year Ended December 31,"
+              }
+            ],
+            "annual_period": {
+              "fiscal_year": 2025,
+              "period_start": "2025-01-01",
+              "period_end": "2025-12-31"
+            },
+            "xml_matches": [],
+            "xml_check": "NOT_SUPPLIED"
+          }
+        ]
+      },
+      "source_files": [
+        "config/company_registry.csv",
+        "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+        "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm.24cb16c7fe68f49102bd136a0e667604e5c5e8b9ed20da55e1eff99e67a2e701.headers.json",
+        "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json",
+        "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json.87d820246a7036bdfbbd48ef3aca556b5daa4647d06ea3c0cc8d4b35c2674168.headers.json",
+        "evidence/request_attempts/e0/e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331/CIK0000078003.json",
+        "evidence/request_attempts/e0/e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331/CIK0000078003.json.122e8fa00dfb0943c0d6c9a2a2c4285354867da08ea20b75f1b29af1ed74527f.headers.json",
+        "evidence/requests_log.csv",
+        "evidence/requests_log_manifest.json"
+      ],
+      "source_hashes": {
+        "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+        "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+        "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm.24cb16c7fe68f49102bd136a0e667604e5c5e8b9ed20da55e1eff99e67a2e701.headers.json": "24cb16c7fe68f49102bd136a0e667604e5c5e8b9ed20da55e1eff99e67a2e701",
+        "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+        "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json.87d820246a7036bdfbbd48ef3aca556b5daa4647d06ea3c0cc8d4b35c2674168.headers.json": "87d820246a7036bdfbbd48ef3aca556b5daa4647d06ea3c0cc8d4b35c2674168",
+        "evidence/request_attempts/e0/e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331/CIK0000078003.json": "e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331",
+        "evidence/request_attempts/e0/e01a2e8a12c57113ed779ee7ddc18f232f566c9cb467ea45b909ec9b103f4331/CIK0000078003.json.122e8fa00dfb0943c0d6c9a2a2c4285354867da08ea20b75f1b29af1ed74527f.headers.json": "122e8fa00dfb0943c0d6c9a2a2c4285354867da08ea20b75f1b29af1ed74527f",
+        "evidence/requests_log.csv": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+        "evidence/requests_log_manifest.json": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+      },
+      "protected_result_files": {
+        "updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b/metrics_matrix.csv": "e8cbb5a6325a0425ae4f84ce3e97885da64c4f1e73462e5ff4b6cb3030a91ced",
+        "updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b/metric_evidence.csv": "e15463a581aa2c8ed5d083e174e3e468f3fe7e1960a07fac35d72dca4fcb2d43",
+        "updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b/records.jsonl": "677ee654a418504cda1c0411d1f6741db361724bbfe83722f459907a84dea693",
+        "updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b/input-assessments.json": "5e48d66f8ea0db4c35700fe24f4fb22d3462b934a67fc7cd9a514e9e2443d8e2",
+        "updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b/manifest.json": "393bf44f4760d534cc5c86def029f4944bb3a5f7efef1af78d3a08af5de84e2c",
+        "updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b/receipt.json": "e844bde8b277bca9aa18a525de245cd6bb5abf3d0504df1b72cdcdaaa7a5d4ba"
+      },
+      "result_directories": [
+        "updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b/manifest.json"
+      ],
+      "repeat_preserves_result_bytes_and_directories": true,
+      "cli_output": "{\n  \"elapsed_seconds\": 2.6952570001594722,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"pfizer\",\n  \"run_id\": \"20261010T013618Z-036a99da\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"fb177ee026024ee283299549ebfa6a83\",\n      \"version\": \"a27e582e3f7743fc97abea3abbc9c62b\",\n      \"result_id\": \"sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf\",\n      \"result_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/state/updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf\",\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/state/updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b\",\n      \"program_version\": {\n        \"commit\": \"aa29a0ab1b3eafc7ce384f98c1b889e2477012dc\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/source\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics\",\n  \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/state\",\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/output/20261010T013618Z-036a99da\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false\n}\n{\n  \"elapsed_seconds\": 0.0899005001410842,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"pfizer\",\n  \"run_id\": \"20261010T013621Z-8e8a537d\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"c162a05b597041b2a0b1ad877253ab62\",\n      \"version\": \"a27e582e3f7743fc97abea3abbc9c62b\",\n      \"result_id\": \"sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf\",\n      \"result_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/state/updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf\",\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/state/updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b\",\n      \"program_version\": {\n        \"commit\": \"aa29a0ab1b3eafc7ce384f98c1b889e2477012dc\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/source\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics\",\n  \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/state\",\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/output/20261010T013621Z-8e8a537d\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false\n}\n",
+      "reader_output": "{\n  \"elapsed_seconds\": 0.0816539169754833,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"pfizer\",\n  \"source_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/source\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"result_id\": \"sha256:536f3b1286e2f586e083ebd1ae7361c965f287cb4ec7ea176c08005f0d1ee1bf\",\n      \"period_start\": \"2025-01-01\",\n      \"period_end\": \"2025-12-31\",\n      \"fiscal_year\": 2025,\n      \"value\": \"62579000000\",\n      \"unit\": \"USD\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/state/updates/B01/results/a27e582e3f7743fc97abea3abbc9c62b\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/pfizer/reader\"\n}\n"
+    },
+    {
+      "company_id": "salesforce",
+      "source_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/source",
+      "state_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/state",
+      "independent_reader_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/reader",
+      "cli_args": [
+        "run",
+        "--company",
+        "salesforce",
+        "--source-root",
+        "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/source",
+        "--work-dir",
+        "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/state",
+        "--output-dir",
+        "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/output",
+        "--metric",
+        "B01"
+      ],
+      "first_seconds": 1.7661121250130236,
+      "repeat_seconds": 0.0870828339830041,
+      "reader_seconds": 0.13779841596260667,
+      "first_exit": 2,
+      "repeat_exit": 2,
+      "reader_exit": 0,
+      "rows": [
+        {
+          "company": "Salesforce",
+          "cik": "1108524",
+          "metric_id": "B01",
+          "metric_name": "Revenue",
+          "value": "41525000000",
+          "unit": "USD",
+          "status": "OK",
+          "source_class": "STD_XBRL",
+          "formula": "direct",
+          "period_start": "2025-02-01",
+          "period_end": "2026-01-31",
+          "fiscal_year": "2026",
+          "fiscal_period": "ANNUAL",
+          "accession": "0001108524-26-000060",
+          "form": "10-K",
+          "filed_date": "2026-03-02",
+          "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS. Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding.",
+          "company_id": "salesforce",
+          "result_id": "sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d",
+          "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/state/updates/B01/results/b88711fc9b07415baa5e831193063795",
+          "source_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/source",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True"
+        }
+      ],
+      "csv_sha256": "ea438a1853a7c715bb786e5f360b37dd56cbcd4939898e8e715891356b199b4b",
+      "evidence_rows": [
+        {
+          "company": "Salesforce",
+          "cik": "1108524",
+          "metric_id": "B01",
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+          "repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+          "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+          "accession": "0001108524-26-000060",
+          "document_name": "CIK0001108524.json",
+          "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax",
+          "context_or_dimension": "{\"source_binding\": {\"accession\": \"0001108524-26-000060\", \"concept\": \"us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax\", \"document_name\": \"CIK0001108524.json\", \"duration_days\": 365, \"entity\": \"1108524\", \"fact_id\": \"fact:sha256:b2d081c30eaf3a3ae54645977e90b3b2319ea862047448c822660e532d4eb683\", \"filed\": \"2026-03-02\", \"fiscal_period\": \"FY\", \"form\": \"10-K\", \"frame\": \"CY2025\", \"raw_asset_id\": \"sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82\", \"source_reference_id\": \"sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f\", \"source_role\": \"companyfacts\"}, \"source_cells\": []}",
+          "unit": "USD",
+          "period_start": "2025-02-01",
+          "period_end": "2026-01-31",
+          "value_raw": "",
+          "value_normalized": "41525000000",
+          "evidence_quote": "Normalized source-derived observation: RevenueFromContractWithCustomerExcludingAssessedTax=41525000000 unit=USD accn=0001108524-26-000060 filed=2026-03-02",
+          "extraction_method": "ordinary_native_source_projection",
+          "parser_version": "ordinary_projection_v1"
+        }
+      ],
+      "revenue_assessment": {
+        "method": "SELECTED_REPORTED_CONSOLIDATED_REVENUE_V2",
+        "scope_id": "sha256:4ffc1344ab12403f008a617ab556df8f7f352eb333ba82c56588239e6322d6d7",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true,
+        "selected_fiscal_column_year": 2026,
+        "reported_totals": [
+          {
+            "total": {
+              "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+              "value": "41525000000",
+              "unit": "USD",
+              "period_start": "2025-02-01",
+              "period_end": "2026-01-31",
+              "decimals": "-6",
+              "ordinal": 158,
+              "context_ref": "c-1",
+              "context": {
+                "context_ref": "c-1",
+                "dimensions": {},
+                "entity_identifier": "0001108524",
+                "period_end": "2026-01-31",
+                "period_start": "2025-02-01",
+                "typed_dimension_count": 0
+              },
+              "context_proof": {
+                "context_ref": "c-1",
+                "identifiers": [
+                  {
+                    "value": "0001108524",
+                    "scheme": "http://www.sec.gov/CIK"
+                  }
+                ],
+                "period_fields": [
+                  {
+                    "kind": "startdate",
+                    "value": "2025-02-01"
+                  },
+                  {
+                    "kind": "enddate",
+                    "value": "2026-01-31"
+                  }
+                ],
+                "dimensions": [],
+                "typed_dimension_count": 0
+              },
+              "source_reference": {
+                "record_type": "SOURCE_REFERENCE",
+                "source_reference_id": "sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c",
+                "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+                "company_id": "salesforce",
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+                "accession": "0001108524-26-000060",
+                "document_name": "crm-20260131.htm",
+                "source_role": "target_primary",
+                "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
+              }
+            },
+            "total_cell": {
+              "table_id": "table_000034",
+              "grid_sha256": "sha256:3381ba8da554a3686f4099602a449cf7dc8ef7bcef8134c2dec9d44e7bf77f9e",
+              "row_index": 6,
+              "column_index": 15,
+              "origin_row_index": 6,
+              "origin_column_index": 15,
+              "rowspan": 1,
+              "colspan": 2,
+              "raw_text": "41,525&#160;",
+              "text": "41,525"
+            },
+            "statement_scope": {
+              "title_sources": [
+                {
+                  "start_byte": 1082545,
+                  "end_byte": 1082739,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:886"
+                  ],
+                  "visible_text": "Consolidated Statements of Operations ",
+                  "span_sha256": "d92422c78881105b3f84b2ea9044e0300fdce8eb38e15280ab8e5bc51e6e83e2"
+                }
+              ],
+              "caption": "",
+              "table_span": {
+                "table_order": 33,
+                "start_byte": 1082962,
+                "end_byte": 1139079,
+                "structure_path": [
+                  "html:1",
+                  "body:1",
+                  "div:888",
+                  "table:1"
+                ],
+                "span_sha256": "f1815351654762921ded55ff1c8b43bc705a18e3c2b05c394971dc97bdf7d6a2"
+              },
+              "intervening_sources": [
+                {
+                  "start_byte": 1081401,
+                  "end_byte": 1081580,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:881"
+                  ],
+                  "visible_text": "See accompanying Notes.",
+                  "span_sha256": "f4f0d47ff3bed415c200e8d981b12a4a57c566fbd6df5dbb169454872f27da30"
+                },
+                {
+                  "start_byte": 1081688,
+                  "end_byte": 1081846,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:882",
+                    "div:1",
+                    "div:1"
+                  ],
+                  "visible_text": "57",
+                  "span_sha256": "767f08fdb479765f0afe85fe3e0d9e0e48dbe41af717d66d41614961dd961fb6"
+                },
+                {
+                  "start_byte": 1081988,
+                  "end_byte": 1082367,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-top:12pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:884",
+                    "div:1"
+                  ],
+                  "visible_text": "Table of Contents",
+                  "span_sha256": "27a0dcd6e98ce4e46ef1512806e0ce80f49e8fdf87b25bd5db752a4f38a55e19"
+                },
+                {
+                  "start_byte": 1082373,
+                  "end_byte": 1082545,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:885"
+                  ],
+                  "visible_text": "Salesforce, Inc.",
+                  "span_sha256": "edd066db9e5bd76ec42168d9e0f7bec5cd08a08aafc5c095eba7c2b7fbd8eac3"
+                },
+                {
+                  "start_byte": 1082545,
+                  "end_byte": 1082739,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:886"
+                  ],
+                  "visible_text": "Consolidated Statements of Operations ",
+                  "span_sha256": "d92422c78881105b3f84b2ea9044e0300fdce8eb38e15280ab8e5bc51e6e83e2"
+                },
+                {
+                  "start_byte": 1082739,
+                  "end_byte": 1082931,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:887"
+                  ],
+                  "visible_text": "(in millions, except per share data)",
+                  "span_sha256": "f47f6cc2aae214c1f82f9f9ddb95e4db36670a563f36d2b009eefdf824b735a8"
+                }
+              ],
+              "unresolved_annotations": [],
+              "adjacent_heading_table": null,
+              "preceding_navigation_sources": [
+                {
+                  "start_byte": 1081401,
+                  "end_byte": 1081580,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:881"
+                  ],
+                  "visible_text": "See accompanying Notes.",
+                  "span_sha256": "f4f0d47ff3bed415c200e8d981b12a4a57c566fbd6df5dbb169454872f27da30"
+                },
+                {
+                  "start_byte": 1081688,
+                  "end_byte": 1081846,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:882",
+                    "div:1",
+                    "div:1"
+                  ],
+                  "visible_text": "57",
+                  "span_sha256": "767f08fdb479765f0afe85fe3e0d9e0e48dbe41af717d66d41614961dd961fb6"
+                },
+                {
+                  "start_byte": 1081988,
+                  "end_byte": 1082367,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "margin-top:12pt"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:884",
+                    "div:1"
+                  ],
+                  "visible_text": "Table of Contents",
+                  "span_sha256": "27a0dcd6e98ce4e46ef1512806e0ce80f49e8fdf87b25bd5db752a4f38a55e19"
+                }
+              ]
+            },
+            "unit_sources": [
+              {
+                "kind": "heading_block",
+                "proof": {
+                  "start_byte": 1082739,
+                  "end_byte": 1082931,
+                  "tag": "div",
+                  "attributes": [
+                    [
+                      "style",
+                      "text-align:center"
+                    ]
+                  ],
+                  "inside_table": false,
+                  "structure_path": [
+                    "html:1",
+                    "body:1",
+                    "div:887"
+                  ],
+                  "visible_text": "(in millions, except per share data)",
+                  "span_sha256": "f47f6cc2aae214c1f82f9f9ddb95e4db36670a563f36d2b009eefdf824b735a8"
+                },
+                "text": "(in millions, except per share data)"
+              }
+            ],
+            "year_headers": [
+              {
+                "table_id": "table_000034",
+                "grid_sha256": "sha256:3381ba8da554a3686f4099602a449cf7dc8ef7bcef8134c2dec9d44e7bf77f9e",
+                "row_index": 2,
+                "column_index": 15,
+                "origin_row_index": 2,
+                "origin_column_index": 15,
+                "rowspan": 1,
+                "colspan": 3,
+                "raw_text": "2026",
+                "text": "2026"
+              }
+            ],
+            "end_headers": [
+              {
+                "table_id": "table_000034",
+                "grid_sha256": "sha256:3381ba8da554a3686f4099602a449cf7dc8ef7bcef8134c2dec9d44e7bf77f9e",
+                "row_index": 1,
+                "column_index": 9,
+                "origin_row_index": 1,
+                "origin_column_index": 9,
+                "rowspan": 1,
+                "colspan": 15,
+                "raw_text": "Fiscal Year Ended January 31,",
+                "text": "Fiscal Year Ended January 31,"
+              }
+            ],
+            "annual_period": {
+              "fiscal_year": 2025,
+              "period_start": "2025-02-01",
+              "period_end": "2026-01-31"
+            },
+            "xml_matches": [],
+            "xml_check": "NOT_SUPPLIED"
+          }
+        ]
+      },
+      "source_files": [
+        "config/company_registry.csv",
+        "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+        "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+        "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+        "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm.b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb.headers.json",
+        "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json",
+        "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json.284a53ed4a1b9f7c0e8eac4efe1115117a8d818134de8fa11942412b52606dc6.headers.json",
+        "evidence/requests_log.csv",
+        "evidence/requests_log_manifest.json"
+      ],
+      "source_hashes": {
+        "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+        "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+        "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+        "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+        "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm.b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb.headers.json": "b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb",
+        "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json": "fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911",
+        "evidence/request_attempts/fe/fec572bf941ad9aa543f5aa82c563227a0409486a12f0e1fad9a6e7fde59a911/CIK0001108524.json.284a53ed4a1b9f7c0e8eac4efe1115117a8d818134de8fa11942412b52606dc6.headers.json": "284a53ed4a1b9f7c0e8eac4efe1115117a8d818134de8fa11942412b52606dc6",
+        "evidence/requests_log.csv": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+        "evidence/requests_log_manifest.json": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+      },
+      "protected_result_files": {
+        "updates/B01/results/b88711fc9b07415baa5e831193063795/metrics_matrix.csv": "bc54b561d53890fd6d4dd9663a4fa3e4d86976701b821f294e1ddc4c04b9617d",
+        "updates/B01/results/b88711fc9b07415baa5e831193063795/metric_evidence.csv": "7f4a4b93c150655d1fdced06125f8082d7e79a05564f153a05b1e1ebbb1f245a",
+        "updates/B01/results/b88711fc9b07415baa5e831193063795/records.jsonl": "36ce37b0b83dbd248e01716814ee0bcf033d9515512bf259c29be5ccbd6f80f9",
+        "updates/B01/results/b88711fc9b07415baa5e831193063795/input-assessments.json": "5202779accb62b48c37018085a9126581841050d5da75727fabd700761284773",
+        "updates/B01/results/b88711fc9b07415baa5e831193063795/manifest.json": "894b0a042c48c56c0b842a39035fe02d35e96e6c7bb5e3099840d4dec3d7ac72",
+        "updates/B01/results/b88711fc9b07415baa5e831193063795/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "updates/B01/results/b88711fc9b07415baa5e831193063795/receipt.json": "65dfd9132d3b5129430739cb3cac5c9d04dbb05257a8abfc22a7ec130a190cb7"
+      },
+      "result_directories": [
+        "updates/B01/results/b88711fc9b07415baa5e831193063795/manifest.json"
+      ],
+      "repeat_preserves_result_bytes_and_directories": true,
+      "cli_output": "{\n  \"elapsed_seconds\": 1.7653554589487612,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"salesforce\",\n  \"run_id\": \"20261010T013624Z-4e075d98\",\n  \"status\": \"FLOW_COMPLETED_WITH_LIMITATIONS\",\n  \"selected_metrics\": [\n    \"B01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"f666e42bfd6c40768e17365c9077730e\",\n      \"version\": \"b88711fc9b07415baa5e831193063795\",\n      \"result_id\": \"sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d\",\n      \"result_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/state/updates/B01/results/b88711fc9b07415baa5e831193063795\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [\n        {\n          \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml\",\n          \"status_code\": \"0\",\n          \"error\": \"<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>\",\n          \"content_sha256\": \"\",\n          \"document_name\": \"0001108524-25-000083.hdr.sgml\"\n        }\n      ],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d\",\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/state/updates/B01/results/b88711fc9b07415baa5e831193063795\",\n      \"program_version\": {\n        \"commit\": \"aa29a0ab1b3eafc7ce384f98c1b889e2477012dc\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/source\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics\",\n  \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/state\",\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/output/20261010T013624Z-4e075d98\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false\n}\n{\n  \"elapsed_seconds\": 0.08602112508378923,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"salesforce\",\n  \"run_id\": \"20261010T013626Z-59fcab2a\",\n  \"status\": \"FLOW_COMPLETED_WITH_LIMITATIONS\",\n  \"selected_metrics\": [\n    \"B01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"5b63062ded4a4127b9e8eb239e4d9ee7\",\n      \"version\": \"b88711fc9b07415baa5e831193063795\",\n      \"result_id\": \"sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d\",\n      \"result_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/state/updates/B01/results/b88711fc9b07415baa5e831193063795\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [\n        {\n          \"source_url\": \"https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml\",\n          \"status_code\": \"0\",\n          \"error\": \"<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>\",\n          \"content_sha256\": \"\",\n          \"document_name\": \"0001108524-25-000083.hdr.sgml\"\n        }\n      ],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d\",\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/state/updates/B01/results/b88711fc9b07415baa5e831193063795\",\n      \"program_version\": {\n        \"commit\": \"aa29a0ab1b3eafc7ce384f98c1b889e2477012dc\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/source\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics\",\n  \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/state\",\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/output/20261010T013626Z-59fcab2a\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false\n}\n",
+      "reader_output": "{\n  \"elapsed_seconds\": 0.08725183387286961,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"salesforce\",\n  \"source_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/source\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"result_id\": \"sha256:8cecba16403adcd8197747cecd1bbb27cb8cb851b4eb236eed2ad74f895ff60d\",\n      \"period_start\": \"2025-02-01\",\n      \"period_end\": \"2026-01-31\",\n      \"fiscal_year\": 2026,\n      \"value\": \"41525000000\",\n      \"unit\": \"USD\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/state/updates/B01/results/b88711fc9b07415baa5e831193063795\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/salesforce/reader\"\n}\n"
+    }
+  ],
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}

@@ -5,6 +5,7 @@ name: SecureGPT probe offline checks
       - 'scripts/securegpt_sdk.py'
       - 'tools/probe_securegpt.py'
       - 'tests/vnext/test_securegpt_probe.py'
+      - 'tests/vnext/test_securegpt_documented_response.py'
       - '.github/workflows/securegpt-probe.yml'
 permissions:
   contents: read
@@ -22,4 +23,4 @@ jobs:
       - name: Synthetic SDK only; no network or model call
         env:
           PYTHONDONTWRITEBYTECODE: '1'
-        run: python3 -m unittest -v tests.vnext.test_securegpt_probe
+        run: python3 tests/required_unittests.py tests.vnext.test_securegpt_probe tests.vnext.test_securegpt_documented_response

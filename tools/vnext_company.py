@@ -94,6 +94,11 @@ def main(argv=None):
     view.add_argument('--runtime-root', action='append', type=Path, default=[])
     view.add_argument('--output-root', type=Path, help='Write ordinary daily CSV/evidence without updating inputs')
     args = parser.parse_args(argv)
+    if args.command == 'run':
+        if args.period == 'latest-complete-fy' and (args.fiscal_year_start is not None or args.fiscal_year_end is not None):
+            parser.error('Fiscal-year arguments require --period fiscal-years')
+        if args.call_context is not None and args.period != 'latest-complete-fy':
+            parser.error('Historical online discovery is not connected; use --source-root with --period fiscal-years')
     start = time.monotonic()
     if args.command == 'run':
         if args.call_context is not None:

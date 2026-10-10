@@ -1,0 +1,8 @@
+mixed 0 10.054712875047699
+missing 2 0.5638396248687059
+read-after-missing 0 0.5088607920333743
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-events/SEC_metrics/work/rpo-receiving/mixed_and_missing.py", line 10, in <module>
+    read=invoke('read-after-missing',['results','--company','salesforce','--state-root',str(state),'--output-root',str(out/'read-after-missing')]);rows=list(csv.DictReader((out/'read-after-missing/metrics_matrix.csv').open()));assert len([r for r in rows if r['metric_id']=='B12'])==5
+                                                                                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
