@@ -105,6 +105,25 @@ class CurrentCompanyTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'RECORD_OUTSIDE_STATE'):
             current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
 
+    def test_restored_declared_history_year_must_match_saved_result(self):
+        restored,new=self.restored_task();p=restored/'latest-execution.json';d=json.loads(p.read_text())
+        d['metrics'][0]['requested_fiscal_year']=2025;p.write_text(json.dumps(d))
+        view=current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+        self.assertEqual(view['metrics'][0]['fiscal_year'],2025)
+        d['metrics'][0]['requested_fiscal_year']=2024;p.write_text(json.dumps(d))
+        with self.assertRaisesRegex(ValueError,'REQUESTED_PERIOD_CHANGED'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
+    def test_restored_fiscal_directory_must_match_saved_manifest_year(self):
+        restored,new=self.restored_task();target=restored/'updates/B01/periods/FY2024/results/first'
+        target.parent.mkdir(parents=True);shutil.move(str(new),target)
+        self.values[str(target)]=self.values[str(new)]
+        p=restored/'latest-execution.json';d=json.loads(p.read_text())
+        d['metrics'][0]['record_root']=str(self.work/'updates/B01/periods/FY2024/results/first')
+        p.write_text(json.dumps(d))
+        with self.assertRaisesRegex(ValueError,'RESULT_PERIOD_PATH_CHANGED'):
+            current.read_current_company(state_root=restored,company_id='marriott_international',defects_file=self.registry)
+
     def test_existing_local_entry_selects_saved_branch_without_configure_task(self):
         from vnext.company_local import run_local
         with patch('vnext.company_local.configure_task',side_effect=AssertionError('No legacy installation')), \
@@ -514,7 +533,12 @@ class PerMetricProducerTest(unittest.TestCase):
             period=kw['state_root']/'periods'/'FY2021'
             observation=original_update(**{**kw,'state_root':period})
             value=self.values[observation['result_root']]
-            value['result'].update(value='100',unit='USD',publication='PUBLISHED')
+            value['result'].update(value='100',unit='USD',publication='PUBLISHED',
+                                  period_start='2021-01-01',period_end='2021-12-31')
+            value['manifest']['target_period']['fiscal_year']=2021
+            row=next(csv.DictReader(value['files']['metrics_matrix.csv'].decode().splitlines()))
+            row.update(fiscal_year='2021',period_start='2021-01-01',period_end='2021-12-31')
+            value['files']['metrics_matrix.csv']=_csv_bytes(rows=[row],fieldnames=METRIC_FIELDS)
             pointer=period/'current-result.json'
             state=json.loads(pointer.read_text());state['requested_fiscal_year']=2021
             pointer.write_text(json.dumps(state))

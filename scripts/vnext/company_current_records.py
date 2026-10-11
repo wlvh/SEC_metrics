@@ -239,7 +239,9 @@ def _read_current_company(root, company_id, defects_file, output_root):
         year = observation.get('requested_fiscal_year')
         path = observation.get('record_root')
         if path and (Path(path)/'manifest.json').is_file():
-            year = strict_json_file(path=Path(path)/'manifest.json')['target_period']['fiscal_year']
+            saved_year = strict_json_file(path=Path(path)/'manifest.json')['target_period']['fiscal_year']
+            _need(year is None or year==saved_year, 'COMPANY_CURRENT_READ_REQUESTED_PERIOD_CHANGED')
+            year = saved_year
         return observation['metric_id'],year
 
     observations = {coordinate(normalize(m)): {**normalize(m), 'requested_in_latest_execution': True}
@@ -296,6 +298,12 @@ def _read_current_company(root, company_id, defects_file, output_root):
             result = saved['result']
             _need(result['company_id'] == company_id and result['metric_id'] == observation['metric_id']
                   and result['result_id'] == observation['read_result_id'], 'COMPANY_CURRENT_READ_COORDINATE_CHANGED')
+            saved_year=saved['manifest']['target_period']['fiscal_year']
+            requested=observation.get('requested_fiscal_year')
+            _need(requested is None or requested==saved_year, 'COMPANY_CURRENT_READ_REQUESTED_PERIOD_CHANGED')
+            hierarchy=record.relative_to(root).parts
+            if len(hierarchy)>=6 and hierarchy[2]=='periods':
+                _need(hierarchy[3]=='FY'+str(saved_year), 'COMPANY_CURRENT_READ_RESULT_PERIOD_PATH_CHANGED')
             conclusion=observation.get('completed_conclusion')
             if conclusion is not None:
                 _need(result.get('publication')==('PUBLISHED' if conclusion=='CANDIDATE_READY' else 'WITHHELD'),
