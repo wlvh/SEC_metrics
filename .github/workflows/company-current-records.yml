@@ -8,6 +8,8 @@ name: Company saved-source records
     - tests/vnext/test_company_current_records.py
     - tests/vnext/test_current_b06_case.py
     - tests/vnext/test_single_revenue_line.py
+    - tests/vnext/test_selected_income_calculation.py
+    - tests/vnext/test_historical_b03_case.py
     - tests/vnext/test_selected_reported_revenue_v2.py
     - tests/vnext/test_paired_measure_contradiction.py
     - tests/vnext/test_current_d04_company.py
@@ -184,6 +186,10 @@ jobs:
       run: python3 tests/required_unittests.py tests.vnext.test_single_revenue_line
         tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_financial_duration
         tests.vnext.test_selected_income_source_v1
+    - name: Selected shared income, coordinates and historical consumer
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_selected_income_calculation tests.vnext.test_historical_b03_case
   company-current:
     needs:
     - company-records

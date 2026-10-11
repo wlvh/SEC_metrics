@@ -1,0 +1,31 @@
+======================================================================
+FAIL: test_new_proof_dependencies_invalidate_only_consuming_metrics (tests.vnext.test_current_reported_revenue.CurrentReportedRevenueTest.test_new_proof_dependencies_invalidate_only_consuming_metrics) (path='scripts/vnext/selected_income_calculation.py', metric='B01')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-credit-controls/SEC_metrics/tests/vnext/test_current_reported_revenue.py", line 233, in test_new_proof_dependencies_invalidate_only_consuming_metrics
+    self.assertEqual(before!=after, metric in {'B01','B02','B03'})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False != True
+
+======================================================================
+FAIL: test_new_proof_dependencies_invalidate_only_consuming_metrics (tests.vnext.test_current_reported_revenue.CurrentReportedRevenueTest.test_new_proof_dependencies_invalidate_only_consuming_metrics) (path='scripts/vnext/selected_income_calculation.py', metric='B02')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-credit-controls/SEC_metrics/tests/vnext/test_current_reported_revenue.py", line 233, in test_new_proof_dependencies_invalidate_only_consuming_metrics
+    self.assertEqual(before!=after, metric in {'B01','B02','B03'})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False != True
+
+======================================================================
+FAIL: test_new_proof_dependencies_invalidate_only_consuming_metrics (tests.vnext.test_current_reported_revenue.CurrentReportedRevenueTest.test_new_proof_dependencies_invalidate_only_consuming_metrics) (path='scripts/vnext/selected_income_calculation.py', metric='B03')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-credit-controls/SEC_metrics/tests/vnext/test_current_reported_revenue.py", line 233, in test_new_proof_dependencies_invalidate_only_consuming_metrics
+    self.assertEqual(before!=after, metric in {'B01','B02','B03'})
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False != True
+
+----------------------------------------------------------------------
+Ran 1 test in 0.095s
+
+FAILED (failures=3)
