@@ -1,0 +1,29 @@
+{
+  "pre_test_commit": "63a340ca38db6054c44bef53e63bb5827b0f07ce",
+  "merge_parent": "c2f48e1ba18e2afab2bf19fa79598f99d3ec33ed",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-single-operating-revenue/SEC_metrics",
+  "tested_mode": "uncommitted mainc2f merge plus exact sharedsource change",
+  "code_sha256": {
+    "scripts/vnext/selected_reported_revenue_v2.py": "80f0d5ac68f75d9e7ec8f9639f41f6f18e9f24bd1988e5998cd27e0dfff13ced",
+    "scripts/vnext/selected_revenue_scope_v1.py": "c58f15f2d3972474f281c75e86691cc4df723fb79ab8df15f666c5e834499500",
+    "tests/vnext/test_single_revenue_line.py": "d3046ab398c52e0a114fc508873b31feaaf02de94d3443dd964c6c3b5bec4b4f"
+  },
+  "tests": "149/8.107s0skip",
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "previous_test_code_sha256": {
+    "scripts/vnext/selected_reported_revenue_v2.py": "80f0d5ac68f75d9e7ec8f9639f41f6f18e9f24bd1988e5998cd27e0dfff13ced",
+    "scripts/vnext/selected_revenue_scope_v1.py": "c58f15f2d3972474f281c75e86691cc4df723fb79ab8df15f666c5e834499500",
+    "tests/vnext/test_single_revenue_line.py": "d3046ab398c52e0a114fc508873b31feaaf02de94d3443dd964c6c3b5bec4b4f"
+  },
+  "new_merge_parent": "9088454db16dd7be809f300f89c1bcfbf388b323",
+  "new_code_sha256": {
+    "scripts/vnext/selected_reported_revenue_v2.py": "7bf3ee0f54525e52bc6b2db7466f2659bf66a0427b9af47d65b009ff6dc013c4",
+    "scripts/vnext/selected_revenue_scope_v1.py": "c58f15f2d3972474f281c75e86691cc4df723fb79ab8df15f666c5e834499500",
+    "tests/vnext/test_single_revenue_line.py": "d3046ab398c52e0a114fc508873b31feaaf02de94d3443dd964c6c3b5bec4b4f"
+  },
+  "merge_mode": "Normal908 merge, ownLumen+accepted162 sections union; newmain controls separately logged"
+}
