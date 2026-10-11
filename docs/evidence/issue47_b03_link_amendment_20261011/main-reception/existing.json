@@ -1,0 +1,215 @@
+{
+  "records": [
+    {
+      "metric": "B03",
+      "phases": {
+        "pre": {
+          "arguments": [
+            "results",
+            "--company",
+            "southwest_airlines",
+            "--state-root",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/state",
+            "--output-root",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-link-main-982-20261011-47/B03-before"
+          ],
+          "seconds": 0.3306548750042566,
+          "exit": 0
+        },
+        "upgrade": {
+          "arguments": [
+            "run",
+            "--company",
+            "southwest_airlines",
+            "--period",
+            "fiscal-years",
+            "--fiscal-year-start",
+            "2025",
+            "--fiscal-year-end",
+            "2025",
+            "--metric",
+            "B03",
+            "--source-root",
+            "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+            "--work-dir",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/state",
+            "--output-dir",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-link-main-982-20261011-47/B03-runs"
+          ],
+          "seconds": 7.330903165995551,
+          "exit": 0
+        },
+        "repeat": {
+          "arguments": [
+            "run",
+            "--company",
+            "southwest_airlines",
+            "--period",
+            "fiscal-years",
+            "--fiscal-year-start",
+            "2025",
+            "--fiscal-year-end",
+            "2025",
+            "--metric",
+            "B03",
+            "--source-root",
+            "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+            "--work-dir",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/state",
+            "--output-dir",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-link-main-982-20261011-47/B03-runs"
+          ],
+          "seconds": 0.9912074589956319,
+          "exit": 0
+        },
+        "read": {
+          "arguments": [
+            "results",
+            "--company",
+            "southwest_airlines",
+            "--state-root",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/state",
+            "--output-root",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-link-main-982-20261011-47/B03-read"
+          ],
+          "seconds": 0.3317509170010453,
+          "exit": 0
+        }
+      },
+      "rows": [
+        {
+          "company_id": "southwest_airlines",
+          "metric_id": "B03",
+          "fiscal_year": "2025",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "value": "0.07084060863058119231728610626",
+          "unit": "ratio",
+          "status": "OK",
+          "result_id": "sha256:ada9703572318e4e183b5db1e9cb4ac103fde3487151180512254f22149216d8",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/state/updates/B03/periods/FY2025/results/a7058f5c8fef4c7ab34985aba0f0508a"
+        }
+      ],
+      "original_result_files_checked_before_order_assertion": 7,
+      "result_files_checked_on_forbidden_repeat": 14,
+      "state_files_checked_on_independent_read": 26
+    },
+    {
+      "metric": "B07",
+      "phases": {
+        "pre": {
+          "arguments": [
+            "results",
+            "--company",
+            "southwest_airlines",
+            "--state-root",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b07-link-amendment-20261011-47/state",
+            "--output-root",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-link-main-982-20261011-47/B07-before"
+          ],
+          "seconds": 0.24328900000546128,
+          "exit": 0
+        },
+        "upgrade": {
+          "arguments": [
+            "run",
+            "--company",
+            "southwest_airlines",
+            "--period",
+            "fiscal-years",
+            "--fiscal-year-start",
+            "2025",
+            "--fiscal-year-end",
+            "2025",
+            "--metric",
+            "B07",
+            "--source-root",
+            "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+            "--work-dir",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b07-link-amendment-20261011-47/state",
+            "--output-dir",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-link-main-982-20261011-47/B07-runs"
+          ],
+          "seconds": 4.985482582997065,
+          "exit": 0
+        },
+        "repeat": {
+          "arguments": [
+            "run",
+            "--company",
+            "southwest_airlines",
+            "--period",
+            "fiscal-years",
+            "--fiscal-year-start",
+            "2025",
+            "--fiscal-year-end",
+            "2025",
+            "--metric",
+            "B07",
+            "--source-root",
+            "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+            "--work-dir",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b07-link-amendment-20261011-47/state",
+            "--output-dir",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-link-main-982-20261011-47/B07-runs"
+          ],
+          "seconds": 0.6957474169976194,
+          "exit": 0
+        },
+        "read": {
+          "arguments": [
+            "results",
+            "--company",
+            "southwest_airlines",
+            "--state-root",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b07-link-amendment-20261011-47/state",
+            "--output-root",
+            "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/statement-link-main-982-20261011-47/B07-read"
+          ],
+          "seconds": 0.2447881249972852,
+          "exit": 0
+        }
+      },
+      "rows": [
+        {
+          "company_id": "southwest_airlines",
+          "metric_id": "B07",
+          "fiscal_year": "2025",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "value": "2.562874251497005988023952096",
+          "unit": "ratio",
+          "status": "OK",
+          "result_id": "sha256:1dc8424e3bff62883070fb113de44842f208b0c17ee4e5d792f2656d9490260c",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b07-link-amendment-20261011-47/state/updates/B07/periods/FY2025/results/7dce1b3906d44576985a047b7e17f61e"
+        },
+        {
+          "company_id": "southwest_airlines",
+          "metric_id": "B07",
+          "fiscal_year": "2026",
+          "period_start": "",
+          "period_end": "",
+          "value": "",
+          "unit": "",
+          "status": "INPUT_OR_EXECUTION_FAILED",
+          "result_id": "",
+          "record_root": ""
+        }
+      ],
+      "original_result_files_checked_before_order_assertion": 7,
+      "result_files_checked_on_forbidden_repeat": 14,
+      "state_files_checked_on_independent_read": 30
+    }
+  ],
+  "source_hashes_unchanged": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "completed_phases_reused_after_order_harness_fix": true
+}
