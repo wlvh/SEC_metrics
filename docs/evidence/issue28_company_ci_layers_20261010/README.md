@@ -1,3 +1,11 @@
+## B06 candidate CI adaptation at fixed adf (2026-10-11)
+
+All five workflows for adf915bd are terminal SUCCESS (company38115299307, fast38115299268, parsed38115299229, request38115299224, reference38115299334), observed at a natural receiving checkpoint. Independent140 keeps that production workflow unchanged.
+
+Read fixed15908095691 ci-note-forms.patch and fixed161bafcd5b5 ci-history-b06.patch. The former does not apply directly because the source worker now retains main157's ordinary B06 step; incoming-patch-context-failure.log preserves this actual context failure. Adapted adf-159-mandatory-ci.patch and adf-159-161-mandatory-ci.patch are explicit candidate patches against adf, adding only two source module commands/paths and, for161, one history module command/path. These modules do not exist in standalone140, so enabling them here or importing historical implementations merely for CI would break scope. Candidate owner consumes the corresponding fixed patch; project receiver checks actual executed new modules before accepting that combination.
+
+Ruby/YAML semantic checks on isolated candidate workflow contents prove all original YAML remains identical after removing exactly these additions, all49 old selector executions and main157 B06 step remain, additions run exactly once without conditional skips, and required company-current gate/timeouts/setup remain unchanged (b06-candidate-ci-controls.json). The previously executed1024 gate combinations remain applicable because gate bytes are unchanged; they were not rerun. This is patch/structure verification, not new execution of the note or historical modules, financial rerun, or new model/SEC claim. PR140 remains independently receivable; downstream candidate CI remains separately pending. No new SEC/provider/paid calls.
+
 # Company CI layers: current672b receiver continuation
 
 Receiver153currentqueue and140feedback6103940364 read before this increment. The original two-layer candidate is retained below as historical84d evidence; its oldcbb D01 patch applies only to that fixed historical consumer, not the current five-layer workflow. No old cancellation is relabelled and no old timing is claimed as this candidate's execution.
