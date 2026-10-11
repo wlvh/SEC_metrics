@@ -1,0 +1,15 @@
+test_single_operating_revenue_retains_combined_currency_share_header (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_single_operating_revenue_retains_combined_currency_share_header) ... FAIL
+
+======================================================================
+FAIL: test_single_operating_revenue_retains_combined_currency_share_header (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_single_operating_revenue_retains_combined_currency_share_header)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-operating-revenue/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 46, in test_single_operating_revenue_retains_combined_currency_share_header
+    self.assertTrue(result['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.156s
+
+FAILED (failures=1)

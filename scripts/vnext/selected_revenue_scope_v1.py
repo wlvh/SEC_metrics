@@ -40,7 +40,7 @@ def _label_key(text):
 
 
 def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
-                     extra_unit_headers=(), extra_section_headers=()):
+                     extra_unit_headers=(), extra_section_headers=(), bind_statement_page=False):
     """Bind the actual consolidated statement title and unassigned prose.
 
     An unfamiliar local scope statement is unresolved, not silently ignored.
@@ -49,7 +49,22 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
     from .composite_scope import index_source_structure
     from .financial_duration import _cell_proof
     unit_headers = UNIT_HEADER + tuple(extra_unit_headers)
-    structure = index_source_structure(source_bytes=raw)
+    page_breaks = []
+    if bind_statement_page:
+        from .composite_scope import _SourceStructure
+        from .canonical import sha256_bytes
+        class StatementPages(_SourceStructure):
+            def handle_starttag(self, tag, attrs):
+                super().handle_starttag(tag, attrs)
+                if (tag == 'hr' and not any(f['tag']=='table' for f in self.stack)
+                        and re.fullmatch(r'\s*page-break-after\s*:\s*always\s*;?\s*',
+                            dict(attrs).get('style', ''), re.I)):
+                    start=self._position();end=start+len(self.get_starttag_text().encode('utf-8'))
+                    page_breaks.append({'start_byte':start,'end_byte':end,
+                        'span_sha256':sha256_bytes(content=raw[start:end])})
+        structure = StatementPages(raw).finish()
+    else:
+        structure = index_source_structure(source_bytes=raw)
     span = structure['tables'][table['order']]
     previous = max((t['end_byte'] for t in structure['tables']
                     if t['end_byte'] <= span['start_byte']), default=0)
@@ -77,6 +92,20 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
                 heading_span = heading
     title_pattern = r'consolidated statements? of (?:income|operations|earnings)'
     titles = [b for b in intro if re.fullmatch(title_pattern, _label_key(b['visible_text']))]
+    excluded_context, page_boundary = [], None
+    if bind_statement_page and titles:
+        boundaries=[p for p in page_breaks
+            if previous<=p['start_byte']<p['end_byte']<=titles[-1]['start_byte']]
+        if boundaries:
+            page_boundary=boundaries[-1]
+            excluded_context=[b for b in intro if b['end_byte']<=page_boundary['start_byte']]
+            _need(not any(re.search(r'\b(?:excludes?|excluded|excluding|only|limited to)\b',
+                        b['visible_text'],re.I)
+                    and re.search(r'\b(?:operations?|subsidiar(?:y|ies)|segments?|businesses)\b',
+                        b['visible_text'],re.I) for b in excluded_context),
+                  'STATEMENT_PRECEDING_PAGE_SCOPE_UNRESOLVED')
+            intro=[b for b in intro if b['start_byte']>=page_boundary['end_byte']]
+            titles=[b for b in intro if re.fullmatch(title_pattern,_label_key(b['visible_text']))]
     caption = table.get('caption', '').strip()
     _need(not caption or re.fullmatch(title_pattern, _label_key(caption)), 'STATEMENT_CAPTION_SCOPE_UNRESOLVED')
     _need(bool(titles) or bool(caption), 'CONSOLIDATED_STATEMENT_TITLE_UNPROVEN')
@@ -151,6 +180,9 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
         proof['adjacent_heading_table']=heading_span
         if navigation:
             proof['preceding_navigation_sources']=navigation
+    if page_boundary is not None:
+        proof['statement_page_boundary']=page_boundary
+        proof['preceding_page_context']=excluded_context
     return proof
 
 
