@@ -374,7 +374,8 @@ class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
 class HistoricalPairedRevenueCaseTest(unittest.TestCase):
     """Constructed full adapter control; graph stubs are not financial evidence."""
 
-    def case(self, *, unresolved_role=None, wrong_operand=False, amendment=None):
+    def case(self, *, unresolved_role=None, wrong_operand=False, amendment=None,
+             prior_amendment=None):
         from contextlib import ExitStack
         from types import SimpleNamespace
         from tests.vnext.test_selected_revenue_scope_v1 import originals
@@ -405,16 +406,31 @@ class HistoricalPairedRevenueCaseTest(unittest.TestCase):
                 'complete_scope_proven': True, 'full_evidence': {'original': 'kept only in assessments'}}
         with ExitStack() as stack:
             registry = {'company_id': annual['company_id'], 'entity_continuity_status': 'continuous'}
-            values = {'resolve_period_selection': {'prior_filing': prior},
+            selection = {'prior_filing': prior}
+            if prior_amendment is not None:
+                selection.update(prior_report_end=prior['reportDate'],
+                    prior_amendments=[{**prior, 'form':'10-K/A', 'accessionNumber':'constructed-amendment'}])
+            def amendments(reader, prepared, **kwargs):
+                if 'namespace_policy' not in kwargs:
+                    return [] if amendment is None else [amendment]
+                self.assertEqual('YEAR_QUARTER_OR_DATE',kwargs['namespace_policy'])
+                self.assertEqual(prior,prepared['filing'])
+                self.assertEqual(selection['prior_amendments'],prepared['amendments'])
+                kwargs['checks'].append(prior_amendment)
+                if prior_amendment['issues']:
+                    raise cases.StatementCaseError('HISTORICAL_STATEMENT_AMENDMENT_ORIGINAL_VALUES_NOT_PROVEN',
+                                                   'AMENDMENT_INPUT_NOT_CLEARED')
+                return kwargs['checks']
+            values = {'resolve_period_selection': selection,
                 'prepare_historical_annual_input': annual, '_Sources': reader,
                 '_registry_rows': [registry], 'repository_company_traits': [], 'metric_is_applicable': True,
                 'installed_ordinary_spec_documents': {'B02': {'compiled_spec': spec, 'path': 'catalog/ordinary_zero_ai/B02.md'}},
                 'filing_inventory': {}, 'prior_filing': (prior, primary),
                 '_load_deterministic_catalog': {'metrics': {'B02': {'branches': [{'components': [
                     {'accession_role': role, 'approved_concepts': ['Revenues']} for role in ('current','prior')]}]}}},
-                'verify_ordinary_source_proofs': {},
-                '_statement_amendment_checks': [] if amendment is None else [amendment]}
+                'verify_ordinary_source_proofs': {}}
             for name, value in values.items():stack.enter_context(patch.object(cases, name, return_value=value))
+            stack.enter_context(patch.object(cases,'_statement_amendment_checks',side_effect=amendments))
             stack.enter_context(patch.object(cases, '_filing_source', side_effect=[
                 ({'manifest': {}}, [current_claim]), ({'manifest': {}}, [prior_claim])]))
             stack.enter_context(patch.object(cases, '_revenue_claims_admitted_by_original', side_effect=scope))
@@ -435,6 +451,42 @@ class HistoricalPairedRevenueCaseTest(unittest.TestCase):
         self.assertEqual(set(full), {'current', 'prior'})
         self.assertTrue(all('full_evidence' in s for s in full.values()))
         self.assertTrue(all('full_evidence' not in s for s in case['selection']['paired_revenue_scopes'].values()))
+
+    def test_prior_amendment_must_clear_before_prior_claims_and_scope(self):
+        check={'scope_id':'constructed-prior-scope','classification':'UNRESOLVED',
+               'fiscal_window_unchanged':True,'unchanged_input_classes':['FISCAL_EVENT_WINDOW'],
+               'issues':['AMENDMENT_DECLARED_LIMITED_SCOPE_NOT_PROVEN'],'policy_hash':'constructed-policy',
+               'original_statement_admission_requires_further_review':True,
+               'full_source_evidence':{'not_a_real_financial_conclusion':True}}
+        case,calls=self.case(prior_amendment=check)
+        self.assertEqual(0,calls)
+        self.assertIsNone(case['results']['B02']['value'])
+        full=case['input_assessments']['historical_statement']
+        self.assertEqual('AMENDMENT_INPUT_NOT_CLEARED',full['category'])
+        self.assertEqual('prior',full['unresolved_amendment_role'])
+        self.assertEqual('10-K',full['prior_original_filing']['form'])
+        self.assertEqual(['10-K/A'],[f['form'] for f in full['prior_amendment_filings']])
+        self.assertEqual('2024-12-31',case['input_binding']['actual_periods']['prior']['period_end'])
+        self.assertEqual('10-K',case['input_binding']['filings']['prior']['form'])
+        self.assertNotIn('prior',case['input_binding']['claims_by_accession_role'])
+        self.assertEqual([check],full['prior_statement_amendment_checks'])
+        self.assertEqual({},case['input_binding']['paired_revenue_scopes']
+                         if 'paired_revenue_scopes' in case['input_binding'] else {})
+        self.assertNotIn('full_source_evidence',case['selection']['prior_statement_amendment_checks'][0])
+        self.assertEqual('YEAR_QUARTER_OR_DATE',case['input_binding']['prior_amendment_namespace_policy'])
+
+    def test_proven_prior_property_still_requires_both_original_revenue_scopes(self):
+        check={'scope_id':'constructed-prior-link','classification':'EXHIBIT_LINK_CORRECTION_WITH_IDENTICAL_ORIGINAL_ITEM15',
+               'fiscal_window_unchanged':True,'unchanged_input_classes':['ORIGINAL_STATEMENT_VALUES'],
+               'issues':[],'policy_hash':'constructed-policy',
+               'original_statement_admission_requires_further_review':False}
+        for role in (None,'prior'):
+            with self.subTest(role=role):
+                case,calls=self.case(prior_amendment=check,unresolved_role=role)
+                self.assertEqual(1 if role is None else 0,calls)
+                full=case['input_assessments']['historical_statement']
+                self.assertEqual([check],full['prior_statement_amendment_checks'])
+                self.assertEqual({'current','prior'},set(full['paired_revenue_scopes']))
 
     def test_link_only_amendment_proof_and_both_revenue_scopes_survive_together(self):
         # Constructed consumer control; shared amendment classification is
@@ -712,6 +764,31 @@ class HistoricalStatementAmendmentTest(unittest.TestCase):
         with patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',side_effect=[good,bad]):
             with self.assertRaisesRegex(cases.StatementCaseError,'ORIGINAL_VALUES_NOT_PROVEN'):
                 cases._statement_amendment_checks(reader,prepared)
+
+    def test_explicit_prior_policy_and_failed_scope_are_retained(self):
+        from unittest.mock import Mock
+        reader=Mock();reader.primary.return_value={'raw_bytes':b'constructed','raw_blob':{},'source_reference':{}}
+        checked={**self.checked(),'classification':'UNRESOLVED',
+                 'issues':['AMENDMENT_DECLARED_LIMITED_SCOPE_NOT_PROVEN']}
+        retained=[]
+        with patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=checked) as inspect:
+            with self.assertRaisesRegex(cases.StatementCaseError,'ORIGINAL_VALUES_NOT_PROVEN'):
+                cases._statement_amendment_checks(reader,self.prepared(),
+                    namespace_policy='YEAR_QUARTER_OR_DATE',checks=retained)
+        self.assertEqual([checked],retained)
+        self.assertEqual('YEAR_QUARTER_OR_DATE',inspect.call_args.kwargs['namespace_policy'])
+
+    def test_prior_reader_failure_is_not_missing_source_or_business_na(self):
+        from unittest.mock import Mock
+        from vnext.annual_amendment_scope import AmendmentScopeError
+        reader=Mock();reader.primary.return_value={'raw_bytes':b'constructed','raw_blob':{},'source_reference':{}}
+        with patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',
+                   side_effect=AmendmentScopeError('AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED')):
+            with self.assertRaisesRegex(cases.StatementCaseError,'AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED') as caught:
+                cases._statement_amendment_checks(reader,self.prepared(),namespace_policy='YEAR_QUARTER_OR_DATE')
+            self.assertEqual('AMENDMENT_INPUT_NOT_CLEARED',caught.exception.category)
+            with self.assertRaises(AmendmentScopeError):
+                cases._statement_amendment_checks(reader,self.prepared())
 
     def part_iii(self):
         return {**self.checked(),
