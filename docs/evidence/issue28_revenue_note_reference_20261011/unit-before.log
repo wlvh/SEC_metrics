@@ -1,0 +1,21 @@
+E
+======================================================================
+ERROR: test_unit_before_nested_table_retains_exact_source_and_rejects_conflicts (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_unit_before_nested_table_retains_exact_source_and_rejects_conflicts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 23, in test_unit_before_nested_table_retains_exact_source_and_rejects_conflicts
+    scope=reported_revenue_scope(primary=changed(primary,raw),xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 139, in reported_revenue_scope
+    _need(len(scales)==1 and int(native_by_ordinal[row['ordinal']]['scale'] or 0)==next(iter(scales)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'VISIBLE_NATIVE_UNIT_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 18, in _need
+    if not condition:raise IncomeSourceError('SELECTED_REPORTED_REVENUE_'+reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REPORTED_REVENUE_VISIBLE_NATIVE_UNIT_UNRESOLVED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.159s
+
+FAILED (errors=1)

@@ -1,0 +1,1105 @@
+test_net_expense_adjustments_and_scope_qualifiers_remain_unproven (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_net_expense_adjustments_and_scope_qualifiers_remain_unproven) ... ok
+test_operating_components_or_wrong_unit_or_segment_do_not_get_total_credit (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_components_or_wrong_unit_or_segment_do_not_get_total_credit) ... ok
+test_operating_label_parenthetical_scope_cannot_be_discarded (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_operating_label_parenthetical_scope_cannot_be_discarded) ... ok
+test_reported_net_expense_total_retains_whole_statement_scope (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_reported_net_expense_total_retains_whole_statement_scope) ... ERROR
+test_reported_operating_total_preserves_approved_native_amount_and_whole_statement (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_reported_operating_total_preserves_approved_native_amount_and_whole_statement) ... ERROR
+test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes) ... 
+  test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes) (name='Example Company and subsidiaries') ... ERROR
+  test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes) (name='Example Co.') ... ERROR
+  test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes) (name='Example LLC and subsidiaries') ... FAIL
+  test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes) (name='Other Company') ... FAIL
+test_consolidated_income_statement_title_order_keeps_original_scope (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_consolidated_income_statement_title_order_keeps_original_scope) ... ERROR
+test_explicit_total_admits_existing_fact_without_calculating_component_sum (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_explicit_total_admits_existing_fact_without_calculating_component_sum) ... ERROR
+test_fiscal_year_column_matches_full_selected_native_period_not_calendar_year (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_fiscal_year_column_matches_full_selected_native_period_not_calendar_year) ... ERROR
+test_geographic_or_subsidiary_parenthesis_is_not_a_footnote (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_geographic_or_subsidiary_parenthesis_is_not_a_footnote) ... ok
+test_later_year_header_cannot_hide_an_earlier_associated_full_date (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_later_year_header_cannot_hide_an_earlier_associated_full_date) ... ERROR
+test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors) ... 
+  test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors) (error='CAPTION_SCOPE') ... FAIL
+  test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors) (error='UNIT_UNRESOLVED') ... FAIL
+  test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors) (error='LOCAL_SCOPE') ... FAIL
+test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors) ... FAIL
+test_note_total_or_wrong_companyfacts_filing_does_not_supply_company_total (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_note_total_or_wrong_companyfacts_filing_does_not_supply_company_total) ... ERROR
+test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) ... 
+  test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(Note 4)') ... ERROR
+  test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(note 17)') ... ERROR
+  test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(4)') ... ERROR
+  test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(a)') ... ERROR
+test_plain_statement_sections_and_issuer_bound_eps_heading_are_not_scope_prose (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_plain_statement_sections_and_issuer_bound_eps_heading_are_not_scope_prose) ... ERROR
+test_previous_statement_note_reference_is_navigation_only_before_the_title (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_previous_statement_note_reference_is_navigation_only_before_the_title) ... ERROR
+test_resolved_label_keeps_raw_year_and_cannot_borrow_another_source (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_resolved_label_keeps_raw_year_and_cannot_borrow_another_source) ... ERROR
+test_separate_heading_table_is_bound_and_not_borrowed_from_other_statement (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_separate_heading_table_is_bound_and_not_borrowed_from_other_statement) ... ok
+test_unit_before_nested_table_retains_exact_source_and_rejects_conflicts (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_unit_before_nested_table_retains_exact_source_and_rejects_conflicts) ... ERROR
+test_visible_end_day_and_complete_date_agree_before_full_scope_credit (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_visible_end_day_and_complete_date_agree_before_full_scope_credit) ... ERROR
+test_accounting_cost_exclusion_does_not_change_revenue_entity_scope (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_accounting_cost_exclusion_does_not_change_revenue_entity_scope) ... ok
+test_approved_legacy_calculator_selects_total_after_component_admission (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_approved_legacy_calculator_selects_total_after_component_admission) ... ok
+test_conflicting_part_total_not_fixed_by_larger_value (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_conflicting_part_total_not_fixed_by_larger_value) ... ok
+test_explicit_local_exclusion_is_not_overruled_by_same_context (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_explicit_local_exclusion_is_not_overruled_by_same_context) ... ok
+test_explicit_scope_after_consolidated_title_is_not_ignored (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_explicit_scope_after_consolidated_title_is_not_ignored) ... ok
+test_income_items_alone_do_not_prove_consolidated_statement (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_income_items_alone_do_not_prove_consolidated_statement) ... ok
+test_missing_revenue_component_is_not_an_empty_success (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_missing_revenue_component_is_not_an_empty_success) ... ok
+test_native_fact_row_does_not_hide_unmarked_scope_clause (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_native_fact_row_does_not_hide_unmarked_scope_clause) ... ok
+test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear) ... ok
+test_old_visible_header_parser_default_is_retained (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_old_visible_header_parser_default_is_retained) ... ok
+test_other_filing_facts_and_prior_periods_not_rewritten_or_substituted (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_other_filing_facts_and_prior_periods_not_rewritten_or_substituted) ... ok
+test_primary_only_statement_check_is_explicit_not_faked_xml_check (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_primary_only_statement_check_is_explicit_not_faked_xml_check) ... ok
+test_primary_xml_conflict_rejected (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_primary_xml_conflict_rejected) ... ok
+test_quarter_caption_does_not_accept_annual_native_context (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_quarter_caption_does_not_accept_annual_native_context) ... ok
+test_restricted_caption_does_not_become_no_split_success (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_restricted_caption_does_not_become_no_split_success) ... ok
+test_revenue_note_total_without_full_statement_not_treated_as_company_total (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_revenue_note_total_without_full_statement_not_treated_as_company_total) ... ok
+test_same_total_value_must_exist_in_selected_companyfacts (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_same_total_value_must_exist_in_selected_companyfacts) ... ok
+test_saved_producer_opts_in_for_income_metrics_but_not_neighbours (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_saved_producer_opts_in_for_income_metrics_but_not_neighbours) ... ok
+test_scope_cannot_borrow_later_filing_total_when_original_is_missing (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_scope_cannot_borrow_later_filing_total_when_original_is_missing) ... ok
+test_single_full_revenue_keeps_contract_label_and_no_false_complete_credit (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_single_full_revenue_keeps_contract_label_and_no_false_complete_credit) ... ok
+test_source_bound_cells_year_and_primary_xml_retained (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_source_bound_cells_year_and_primary_xml_retained) ... ok
+test_update_configuration_names_actual_scope_and_header_dependencies (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_update_configuration_names_actual_scope_and_header_dependencies) ... ok
+test_visible_column_year_conflict_rejected (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_visible_column_year_conflict_rejected) ... ok
+test_visible_scale_cannot_be_overruled_by_native_amounts (tests.vnext.test_selected_revenue_scope_v1.SelectedRevenueScopeTest.test_visible_scale_cannot_be_overruled_by_native_amounts) ... ok
+test_actual_current_consumers_bind_fixed_fiscal_assertion_only_when_used (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_actual_current_consumers_bind_fixed_fiscal_assertion_only_when_used) ... ok
+test_common_share_unit_header_and_split_currency_use_spanned_year (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_common_share_unit_header_and_split_currency_use_spanned_year) ... ERROR
+test_component_rows_cannot_be_relabelled_as_single_revenue (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_component_rows_cannot_be_relabelled_as_single_revenue) ... ok
+test_existing_entity_period_unit_scope_and_xml_checks_still_apply (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_existing_entity_period_unit_scope_and_xml_checks_still_apply) ... 
+  test_existing_entity_period_unit_scope_and_xml_checks_still_apply (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_existing_entity_period_unit_scope_and_xml_checks_still_apply) (reason='UNIT_UNRESOLVED') ... FAIL
+  test_existing_entity_period_unit_scope_and_xml_checks_still_apply (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_existing_entity_period_unit_scope_and_xml_checks_still_apply) (reason='LOCAL_SCOPE') ... FAIL
+test_existing_entity_period_unit_scope_and_xml_checks_still_apply (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_existing_entity_period_unit_scope_and_xml_checks_still_apply) ... FAIL
+test_explicit_single_line_keeps_original_fact_and_default_contract (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_explicit_single_line_keeps_original_fact_and_default_contract) ... ERROR
+test_explicit_statement_page_keeps_scope_limitations_on_that_page (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_explicit_statement_page_keeps_scope_limitations_on_that_page) ... ERROR
+test_legitimate_repeated_header_and_currency_symbol_keep_the_single_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_legitimate_repeated_header_and_currency_symbol_keep_the_single_amount) ... ERROR
+test_no_statement_title_no_cost_or_no_income_does_not_prove_total (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_no_statement_title_no_cost_or_no_income_does_not_prove_total) ... FAIL
+test_only_explicit_boolean_option_and_exact_plain_label (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_only_explicit_boolean_option_and_exact_plain_label) ... ok
+test_remaining_tagged_and_untagged_revenue_parts_are_not_sole_line (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_remaining_tagged_and_untagged_revenue_parts_are_not_sole_line) ... ok
+test_repeated_year_header_does_not_hide_an_earlier_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_repeated_year_header_does_not_hide_an_earlier_amount) ... ok
+test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) ... 
+  test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='BASIC AND DILUTED EARNINGS (LOSS) PER COMMON SHARE') ... ERROR
+  test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='BASIC AND DILUTED (LOSS) EARNINGS PER COMMON SHARE') ... ERROR
+  test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='BASIC AND DILUTED LOSS PER COMMON SHARE') ... ERROR
+  test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='BASIC AND DILUTED LOSS PER SHARE OF COMMON STOCK') ... ERROR
+  test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='WEIGHTED AVERAGE COMMON SHARES OUTSTANDING') ... ERROR
+  test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='WEIGHTED AVERAGE COMMON STOCK OUTSTANDING') ... ERROR
+  test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='OTHER (EXPENSE) INCOME') ... ERROR
+test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_cell_extra_untagged_amount_cannot_hide_behind_xml_match) ... ok
+test_selected_fact_ordinal_is_not_a_python_list_offset (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_fact_ordinal_is_not_a_python_list_offset) ... ERROR
+test_single_operating_revenue_requires_exact_unqualified_label (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_single_operating_revenue_requires_exact_unqualified_label) ... ok
+test_single_operating_revenue_retains_combined_currency_share_header (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_single_operating_revenue_retains_combined_currency_share_header) ... ERROR
+test_invalid_policy_refuses_before_reading_any_amount (tests.vnext.test_selected_income_calculation.SelectedIncomeCalculationContractTest.test_invalid_policy_refuses_before_reading_any_amount) ... ok
+test_latest_filing_selection_is_not_owned_by_selected_calculation (tests.vnext.test_selected_income_calculation.SelectedIncomeCalculationContractTest.test_latest_filing_selection_is_not_owned_by_selected_calculation) ... ok
+test_actual_noncalendar_label_is_not_inferred_from_end_year (tests.vnext.test_selected_income_calculation.SelectedIncomeCoordinateTest.test_actual_noncalendar_label_is_not_inferred_from_end_year) ... ok
+test_exact_filing_manifest_uses_selected_history_block_or_original_default (tests.vnext.test_selected_income_calculation.SelectedIncomeCoordinateTest.test_exact_filing_manifest_uses_selected_history_block_or_original_default) ... ok
+test_existing_successor_input_can_supply_proved_short_statement_dates (tests.vnext.test_selected_income_calculation.SelectedIncomeCoordinateTest.test_existing_successor_input_can_supply_proved_short_statement_dates) ... ok
+test_other_selected_period_cannot_silently_override_the_annual (tests.vnext.test_selected_income_calculation.SelectedIncomeCoordinateTest.test_other_selected_period_cannot_silently_override_the_annual) ... ok
+test_primary_cf_inventory_and_xml_identity_changes_refuse (tests.vnext.test_selected_income_calculation.SelectedIncomeCoordinateTest.test_primary_cf_inventory_and_xml_identity_changes_refuse) ... ok
+test_selected_history_inventory_checks_identity_before_reading_amounts (tests.vnext.test_selected_income_calculation.SelectedIncomeCoordinateTest.test_selected_history_inventory_checks_identity_before_reading_amounts) ... ok
+test_wrong_target_company_dates_and_explicit_identity_refuse (tests.vnext.test_selected_income_calculation.SelectedIncomeCoordinateTest.test_wrong_target_company_dates_and_explicit_identity_refuse) ... ok
+test_display_is_bounded_while_complete_scope_evidence_is_retained (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_display_is_bounded_while_complete_scope_evidence_is_retained) ... ERROR
+test_literal_original_and_resolved_period_must_have_same_dates (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_literal_original_and_resolved_period_must_have_same_dates) ... ok
+test_no_reported_total_retains_the_existing_component_scope_path (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_no_reported_total_retains_the_existing_component_scope_path) ... ok
+test_processing_configuration_includes_shared_scope_dependency (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_processing_configuration_includes_shared_scope_dependency) ... ok
+test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) ... 
+  test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (day=31) ... ERROR
+  test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (text='Operating expenses (Europe):') ... FAIL
+  test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (text='Cost of revenues (Subsidiary):') ... FAIL
+test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions) ... ERROR
+test_reported_total_conflict_cannot_fall_back_to_the_old_component (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_total_conflict_cannot_fall_back_to_the_old_component) ... ok
+test_reported_total_is_admitted_before_actual_calculator (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_total_is_admitted_before_actual_calculator) ... ERROR
+test_sole_consolidated_revenue_path_is_explicitly_consumed_before_priority_selection (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_sole_consolidated_revenue_path_is_explicitly_consumed_before_priority_selection) ... ERROR
+test_source_bound_resolved_label_reaches_the_shared_reader_without_raw_year_rewrite (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_source_bound_resolved_label_reaches_the_shared_reader_without_raw_year_rewrite) ... ok
+test_total_cannot_be_borrowed_from_a_later_filing (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_total_cannot_be_borrowed_from_a_later_filing) ... FAIL
+
+======================================================================
+ERROR: test_reported_net_expense_total_retains_whole_statement_scope (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_reported_net_expense_total_retains_whole_statement_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 301, in test_reported_net_expense_total_retains_whole_statement_scope
+    result = reported_revenue_scope(primary=adjusted, annual=annual,
+        approved_concepts=APPROVED, xml=adjusted)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_reported_operating_total_preserves_approved_native_amount_and_whole_statement (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_reported_operating_total_preserves_approved_native_amount_and_whole_statement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 277, in test_reported_operating_total_preserves_approved_native_amount_and_whole_statement
+    result=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,xml=source)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes) (name='Example Company and subsidiaries')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 66, in test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes
+    scope=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes) (name='Example Co.')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 66, in test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes
+    scope=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_consolidated_income_statement_title_order_keeps_original_scope (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_consolidated_income_statement_title_order_keeps_original_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 88, in test_consolidated_income_statement_title_order_keeps_original_scope
+    scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_explicit_total_admits_existing_fact_without_calculating_component_sum (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_explicit_total_admits_existing_fact_without_calculating_component_sum)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 117, in test_explicit_total_admits_existing_fact_without_calculating_component_sum
+    scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_fiscal_year_column_matches_full_selected_native_period_not_calendar_year (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_fiscal_year_column_matches_full_selected_native_period_not_calendar_year)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 153, in test_fiscal_year_column_matches_full_selected_native_period_not_calendar_year
+    scope=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,annual_period_reader=annual_period)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_later_year_header_cannot_hide_an_earlier_associated_full_date (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_later_year_header_cannot_hide_an_earlier_associated_full_date)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 189, in test_later_year_header_cannot_hide_an_earlier_associated_full_date
+    scope=reported_revenue_scope(primary=changed(source,raw),annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_note_total_or_wrong_companyfacts_filing_does_not_supply_company_total (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_note_total_or_wrong_companyfacts_filing_does_not_supply_company_total)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 257, in test_note_total_or_wrong_companyfacts_filing_does_not_supply_company_total
+    source,_,annual=originals();scope=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED)
+                                      ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(Note 4)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 101, in test_numeric_note_reference_is_not_a_total_label_or_scope_change
+    scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(note 17)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 101, in test_numeric_note_reference_is_not_a_total_label_or_scope_change
+    scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(4)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 101, in test_numeric_note_reference_is_not_a_total_label_or_scope_change
+    scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) (marker='(a)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 101, in test_numeric_note_reference_is_not_a_total_label_or_scope_change
+    scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_plain_statement_sections_and_issuer_bound_eps_heading_are_not_scope_prose (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_plain_statement_sections_and_issuer_bound_eps_heading_are_not_scope_prose)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 48, in test_plain_statement_sections_and_issuer_bound_eps_heading_are_not_scope_prose
+    scope=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_previous_statement_note_reference_is_navigation_only_before_the_title (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_previous_statement_note_reference_is_navigation_only_before_the_title)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 77, in test_previous_statement_note_reference_is_navigation_only_before_the_title
+    scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_resolved_label_keeps_raw_year_and_cannot_borrow_another_source (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_resolved_label_keeps_raw_year_and_cannot_borrow_another_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 208, in test_resolved_label_keeps_raw_year_and_cannot_borrow_another_source
+    scope=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+        fiscal_label_resolution=label)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_unit_before_nested_table_retains_exact_source_and_rejects_conflicts (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_unit_before_nested_table_retains_exact_source_and_rejects_conflicts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 23, in test_unit_before_nested_table_retains_exact_source_and_rejects_conflicts
+    scope=reported_revenue_scope(primary=changed(primary,raw),xml=xml,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_visible_end_day_and_complete_date_agree_before_full_scope_credit (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_visible_end_day_and_complete_date_agree_before_full_scope_credit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 173, in test_visible_end_day_and_complete_date_agree_before_full_scope_credit
+    scope=reported_revenue_scope(primary=correct,annual=annual,approved_concepts=APPROVED)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_common_share_unit_header_and_split_currency_use_spanned_year (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_common_share_unit_header_and_split_currency_use_spanned_year)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 184, in test_common_share_unit_header_and_split_currency_use_spanned_year
+    scope=self.scope(source,annual,xml=source)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_explicit_single_line_keeps_original_fact_and_default_contract (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_explicit_single_line_keeps_original_fact_and_default_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 29, in test_explicit_single_line_keeps_original_fact_and_default_contract
+    result=self.scope(source,annual)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_explicit_statement_page_keeps_scope_limitations_on_that_page (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_explicit_statement_page_keeps_scope_limitations_on_that_page)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 90, in test_explicit_statement_page_keeps_scope_limitations_on_that_page
+    scope = self.scope(adjusted, annual)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_legitimate_repeated_header_and_currency_symbol_keep_the_single_amount (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_legitimate_repeated_header_and_currency_symbol_keep_the_single_amount)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 173, in test_legitimate_repeated_header_and_currency_symbol_keep_the_single_amount
+    self.assertTrue(self.scope(changed(source,raw),annual,xml=source)['complete_scope_proven'])
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='BASIC AND DILUTED EARNINGS (LOSS) PER COMMON SHARE')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 77, in test_same_eps_share_section_forms_remain_headers_not_scope_waivers
+    self.assertTrue(self.scope(changed(source,raw.replace(b'</table>',caption+b'</table>')),
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                               annual)['complete_scope_proven'])
+                               ^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='BASIC AND DILUTED (LOSS) EARNINGS PER COMMON SHARE')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 77, in test_same_eps_share_section_forms_remain_headers_not_scope_waivers
+    self.assertTrue(self.scope(changed(source,raw.replace(b'</table>',caption+b'</table>')),
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                               annual)['complete_scope_proven'])
+                               ^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='BASIC AND DILUTED LOSS PER COMMON SHARE')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 77, in test_same_eps_share_section_forms_remain_headers_not_scope_waivers
+    self.assertTrue(self.scope(changed(source,raw.replace(b'</table>',caption+b'</table>')),
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                               annual)['complete_scope_proven'])
+                               ^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='BASIC AND DILUTED LOSS PER SHARE OF COMMON STOCK')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 77, in test_same_eps_share_section_forms_remain_headers_not_scope_waivers
+    self.assertTrue(self.scope(changed(source,raw.replace(b'</table>',caption+b'</table>')),
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                               annual)['complete_scope_proven'])
+                               ^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='WEIGHTED AVERAGE COMMON SHARES OUTSTANDING')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 77, in test_same_eps_share_section_forms_remain_headers_not_scope_waivers
+    self.assertTrue(self.scope(changed(source,raw.replace(b'</table>',caption+b'</table>')),
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                               annual)['complete_scope_proven'])
+                               ^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='WEIGHTED AVERAGE COMMON STOCK OUTSTANDING')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 77, in test_same_eps_share_section_forms_remain_headers_not_scope_waivers
+    self.assertTrue(self.scope(changed(source,raw.replace(b'</table>',caption+b'</table>')),
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                               annual)['complete_scope_proven'])
+                               ^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_same_eps_share_section_forms_remain_headers_not_scope_waivers (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_same_eps_share_section_forms_remain_headers_not_scope_waivers) (text='OTHER (EXPENSE) INCOME')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 77, in test_same_eps_share_section_forms_remain_headers_not_scope_waivers
+    self.assertTrue(self.scope(changed(source,raw.replace(b'</table>',caption+b'</table>')),
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                               annual)['complete_scope_proven'])
+                               ^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_selected_fact_ordinal_is_not_a_python_list_offset (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_selected_fact_ordinal_is_not_a_python_list_offset)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 212, in test_selected_fact_ordinal_is_not_a_python_list_offset
+    self.assertTrue(self.scope(changed(source,raw),annual)['complete_scope_proven'])
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_single_operating_revenue_retains_combined_currency_share_header (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_single_operating_revenue_retains_combined_currency_share_header)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 49, in test_single_operating_revenue_retains_combined_currency_share_header
+    result = self.scope(adjusted, annual, xml=adjusted)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_display_is_bounded_while_complete_scope_evidence_is_retained (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_display_is_bounded_while_complete_scope_evidence_is_retained)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 133, in test_display_is_bounded_while_complete_scope_evidence_is_retained
+    value, _, _ = self.prepare()
+                  ~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 116, in prepare
+    value = cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
+        company_id=annual['company_id'], metric_id='B01', fiscal_year=2025)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 125, in prepare_historical_statement_year_case
+    return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
+        metric_id=metric_id, fiscal_year=fiscal_year, period_selection=period_selection)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 360, in _prepare_historical_statement_case
+    reported_scope = reported_revenue_scope(primary=by_kind['primary'][0],
+        xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
+        namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period,
+        fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'),
+        allow_single_revenue_line=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (day=31)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 236, in test_reported_late_date_and_cost_group_qualifiers_are_not_hidden
+    self.assertEqual(self.prepare(change=change)[0]['results']['B01']['value'],'58496000000')
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 116, in prepare
+    value = cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
+        company_id=annual['company_id'], metric_id='B01', fiscal_year=2025)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 125, in prepare_historical_statement_year_case
+    return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
+        metric_id=metric_id, fiscal_year=fiscal_year, period_selection=period_selection)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 360, in _prepare_historical_statement_case
+    reported_scope = reported_revenue_scope(primary=by_kind['primary'][0],
+        xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
+        namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period,
+        fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'),
+        allow_single_revenue_line=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 210, in test_reported_navigation_keeps_source_spans_without_accepting_subject_restrictions
+    value,_,_=self.prepare(change=change_intro(
+              ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+        '<div>See accompanying Notes.</div><div>57</div><div>Table of Contents</div>'))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 116, in prepare
+    value = cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
+        company_id=annual['company_id'], metric_id='B01', fiscal_year=2025)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 125, in prepare_historical_statement_year_case
+    return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
+        metric_id=metric_id, fiscal_year=fiscal_year, period_selection=period_selection)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 360, in _prepare_historical_statement_case
+    reported_scope = reported_revenue_scope(primary=by_kind['primary'][0],
+        xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
+        namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period,
+        fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'),
+        allow_single_revenue_line=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_reported_total_is_admitted_before_actual_calculator (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_total_is_admitted_before_actual_calculator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 121, in test_reported_total_is_admitted_before_actual_calculator
+    value, source_facts, calculator = self.prepare()
+                                      ~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 116, in prepare
+    value = cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
+        company_id=annual['company_id'], metric_id='B01', fiscal_year=2025)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 125, in prepare_historical_statement_year_case
+    return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
+        metric_id=metric_id, fiscal_year=fiscal_year, period_selection=period_selection)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 360, in _prepare_historical_statement_case
+    reported_scope = reported_revenue_scope(primary=by_kind['primary'][0],
+        xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
+        namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period,
+        fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'),
+        allow_single_revenue_line=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+ERROR: test_sole_consolidated_revenue_path_is_explicitly_consumed_before_priority_selection (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_sole_consolidated_revenue_path_is_explicitly_consumed_before_priority_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 168, in test_sole_consolidated_revenue_path_is_explicitly_consumed_before_priority_selection
+    value, source_facts, calculator = self.prepare()
+                                      ~~~~~~~~~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 116, in prepare
+    value = cases.prepare_historical_statement_year_case(repo_root=Path('/constructed'),
+        company_id=annual['company_id'], metric_id='B01', fiscal_year=2025)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 125, in prepare_historical_statement_year_case
+    return _prepare_historical_statement_case(repo_root=repo_root, company_id=company_id,
+        metric_id=metric_id, fiscal_year=fiscal_year, period_selection=period_selection)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/historical_statement_cases.py", line 360, in _prepare_historical_statement_case
+    reported_scope = reported_revenue_scope(primary=by_kind['primary'][0],
+        xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
+        namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period,
+        fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'),
+        allow_single_revenue_line=True)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1259, in _execute_mock_call
+    return self._mock_wraps(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 128, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 92, in _statement_scope
+    _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+======================================================================
+FAIL: test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes) (name='Example LLC and subsidiaries')
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 69, in test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes
+    with self.assertRaisesRegex(ValueError,'STATEMENT_.*SCOPE_UNRESOLVED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "STATEMENT_.*SCOPE_UNRESOLVED" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes) (name='Other Company')
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 69, in test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes
+    with self.assertRaisesRegex(ValueError,'STATEMENT_.*SCOPE_UNRESOLVED'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "STATEMENT_.*SCOPE_UNRESOLVED" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors) (error='CAPTION_SCOPE')
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 247, in test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors
+    with self.subTest(error=error),self.assertRaisesRegex(ValueError,error):
+                                   ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: "CAPTION_SCOPE" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors) (error='UNIT_UNRESOLVED')
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 247, in test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors
+    with self.subTest(error=error),self.assertRaisesRegex(ValueError,error):
+                                   ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: "UNIT_UNRESOLVED" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors) (error='LOCAL_SCOPE')
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 247, in test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors
+    with self.subTest(error=error),self.assertRaisesRegex(ValueError,error):
+                                   ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: "LOCAL_SCOPE" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors)
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 250, in test_limited_scope_wrong_scale_and_xml_disagreement_remain_errors
+    with self.assertRaisesRegex(ValueError,'XML_TOTAL_DIFFERS'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "XML_TOTAL_DIFFERS" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_existing_entity_period_unit_scope_and_xml_checks_still_apply (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_existing_entity_period_unit_scope_and_xml_checks_still_apply) (reason='UNIT_UNRESOLVED')
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 136, in test_existing_entity_period_unit_scope_and_xml_checks_still_apply
+    with self.subTest(reason=reason),self.assertRaisesRegex(ValueError,reason):
+                                     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: "UNIT_UNRESOLVED" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_existing_entity_period_unit_scope_and_xml_checks_still_apply (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_existing_entity_period_unit_scope_and_xml_checks_still_apply) (reason='LOCAL_SCOPE')
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 136, in test_existing_entity_period_unit_scope_and_xml_checks_still_apply
+    with self.subTest(reason=reason),self.assertRaisesRegex(ValueError,reason):
+                                     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: "LOCAL_SCOPE" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_existing_entity_period_unit_scope_and_xml_checks_still_apply (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_existing_entity_period_unit_scope_and_xml_checks_still_apply)
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 139, in test_existing_entity_period_unit_scope_and_xml_checks_still_apply
+    with self.assertRaisesRegex(ValueError,'XML_TOTAL_DIFFERS'):self.scope(source,annual,xml=xml)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "XML_TOTAL_DIFFERS" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_no_statement_title_no_cost_or_no_income_does_not_prove_total (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_no_statement_title_no_cost_or_no_income_does_not_prove_total)
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 127, in test_no_statement_title_no_cost_or_no_income_does_not_prove_total
+    with self.assertRaisesRegex(ValueError,'TITLE_UNPROVEN'):self.scope(altered,annual)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "TITLE_UNPROVEN" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (text='Operating expenses (Europe):')
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 238, in test_reported_late_date_and_cost_group_qualifiers_are_not_hidden
+    with self.subTest(text=text),self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+                                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "STATEMENT_LOCAL_SCOPE_UNRESOLVED" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_reported_late_date_and_cost_group_qualifiers_are_not_hidden (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_reported_late_date_and_cost_group_qualifiers_are_not_hidden) (text='Cost of revenues (Subsidiary):')
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 238, in test_reported_late_date_and_cost_group_qualifiers_are_not_hidden
+    with self.subTest(text=text),self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+                                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "STATEMENT_LOCAL_SCOPE_UNRESOLVED" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+======================================================================
+FAIL: test_total_cannot_be_borrowed_from_a_later_filing (tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest.test_total_cannot_be_borrowed_from_a_later_filing)
+----------------------------------------------------------------------
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/tests/vnext/test_historical_statement_cases.py", line 149, in test_total_cannot_be_borrowed_from_a_later_filing
+    with self.assertRaisesRegex(ValueError, 'TOTAL_NOT_IN_COMPANYFACTS'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "TOTAL_NOT_IN_COMPANYFACTS" does not match "SELECTED_REVENUE_STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED"
+
+----------------------------------------------------------------------
+Ran 80 tests in 0.554s
+
+FAILED (failures=13, errors=36)
+{"allowed_skips": 0, "errors": 36, "failures": 13, "run": 80, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_selected_reported_revenue_v2", "tests.vnext.test_selected_revenue_scope_v1", "tests.vnext.test_single_revenue_line", "tests.vnext.test_selected_income_calculation", "tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest"]}

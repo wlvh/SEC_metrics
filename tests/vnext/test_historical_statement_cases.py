@@ -277,6 +277,30 @@ class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
         self.assertEqual(admitted[0]['locator']['concept'], 'Revenues')
         self.assertEqual(claims, before)
 
+    def test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not(self):
+        from types import SimpleNamespace
+        from tests.vnext.test_selected_reported_revenue_v2 import changed
+        # Constructed format controls at the actual historical adapter.
+        # Real Ford originals are separately exercised through the company CLI.
+        for label, accepted in [('Total revenues (Note 4)', True),
+                                ('Total revenues (4)', True),
+                                ('Total revenues (Europe)', False),
+                                ('Total revenues (Subsidiary)', False),
+                                ('Total revenues (Note 4, Europe)', False)]:
+            reader, annual, claims, concepts = self.prepared_claims()
+            primary, xml = reader.auditor_filing(annual['filing'])
+            primary = changed(primary, primary['raw_bytes'].replace(b'Total revenues', label.encode()))
+            selected = SimpleNamespace(auditor_filing=lambda filing: [primary, xml], read=reader.read)
+            with self.subTest(label=label):
+                if accepted:
+                    admitted, scope = self.admit(selected, annual, claims, concepts)
+                    self.assertTrue(scope['complete_scope_proven'])
+                    self.assertEqual([claims[1]], admitted)
+                    self.assertIs(claims[1], admitted[0])
+                else:
+                    with self.assertRaisesRegex(ValueError, 'COMPLETE_SCOPE_UNPROVEN'):
+                        self.admit(selected, annual, claims, concepts)
+
     def test_wrong_unit_entity_accession_or_amount_cannot_supply_the_original_total(self):
         for key in ('unit', 'entity', 'accession', 'value', 'concept', 'period'):
             reader, annual, claims, concepts = self.prepared_claims()
