@@ -71,7 +71,8 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
             operating_costs=[r for r in cost_rows if r['context_ref']==row['context_ref']
                 and r['ordinal'] in cost_bound and cost_bound[r['ordinal']][0]['table_id']==table['table_id']
                 and cost_bound[r['ordinal']][1]['row_index']>cell['row_index']
-                and ' '.join(_label(*cost_bound[r['ordinal']]).casefold().split())=='total operating expenses']
+                and ' '.join(_label(*cost_bound[r['ordinal']]).casefold().split())
+                    in {'total operating expenses', 'total operating expenses, net'}]
         names={r['concept'].casefold() for r in same}
         if not(names & {'us-gaap:netincomeloss','us-gaap:profitloss'}
                and (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'} or operating_costs)):continue
@@ -110,8 +111,8 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                 end_headers.append(_cell_proof(table=table,cell=c))
         statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
             extra_unit_headers=extra_units,
-            extra_section_headers=(r'operating revenues:',r'operating expenses:',
-                r'non-operating expenses \(income\):') if operating else ())
+            extra_section_headers=(r'operating revenues:',r'operating expenses(?:, net)?:',
+                r'(?:non-operating|other) expenses \(income\):') if operating else ())
         units=[{'kind':'visible_cell','proof':_cell_proof(table=table,cell=c),'text':c['text']}
                for r in table['rows'][:column['row_index']+1] for c in r['cells']
                if c['is_origin'] and any(re.fullmatch(p,c['text'].strip(),re.I) for p in unit_headers)]

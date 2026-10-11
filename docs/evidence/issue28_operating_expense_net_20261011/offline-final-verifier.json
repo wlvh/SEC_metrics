@@ -1,0 +1,13 @@
+{
+  "method": "offline check existing actual CLI artifacts; no second first/repeat/read",
+  "first_seconds": 16.595390583999688,
+  "repeat_seconds": 0.6752827500004059,
+  "independent_read_seconds": 0.4188760409997485,
+  "protected_result_files": 14,
+  "values": {
+    "B01": "23814000000",
+    "B02": "0.5081697276757441418619379354"
+  },
+  "reference": "Original2022 revenue23814m, original2021 revenue15790m; approved (current-prior)/prior graph order",
+  "original_failure": "Verifier expected current/prior-1; mathematically equal but Decimal graph order lastdigit differs. Production succeeded; failed assertion retained."
+}
