@@ -1,0 +1,101 @@
+EEEE
+======================================================================
+ERROR: test_changed_companyfacts_and_filing_identity_are_changes (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_changed_companyfacts_and_filing_identity_are_changes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 152, in test_changed_companyfacts_and_filing_identity_are_changes
+    first=self.fingerprint()
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 127, in fingerprint
+    return fingerprint(source_root=self.fixture.root,company_id=COMPANY)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/ordinary_d04_task_input.py", line 20, in fingerprint
+    annual=prepared_annual_input or prepare_saved_annual_input(repo_root=root,company_id=company_id,ordinary_registered=True)
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input_v2.py", line 54, in prepare_saved_annual_input
+    original = prepare_original_input(repo_root=repo_root,company_id=company_id)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 225, in prepare_saved_annual_input
+    target = annual_period(raw=primary["raw"], cik=cik, filing=filing)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 168, in annual_period
+    form = dei("DocumentType")
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 159, in dei
+    _need(len(pairs) == 1, "DEI_MISSING_OR_AMBIGUOUS:" + name)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 30, in _need
+    raise NormalAnnualInputError(reason, category)
+vnext.normal_annual_input.NormalAnnualInputError: DEI_MISSING_OR_AMBIGUOUS:DocumentType
+
+======================================================================
+ERROR: test_external_script_only_is_equal_but_original_citations_remain (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_external_script_only_is_equal_but_original_citations_remain)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 130, in test_external_script_only_is_equal_but_original_citations_remain
+    first=self.fingerprint()
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 127, in fingerprint
+    return fingerprint(source_root=self.fixture.root,company_id=COMPANY)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/ordinary_d04_task_input.py", line 20, in fingerprint
+    annual=prepared_annual_input or prepare_saved_annual_input(repo_root=root,company_id=company_id,ordinary_registered=True)
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input_v2.py", line 54, in prepare_saved_annual_input
+    original = prepare_original_input(repo_root=repo_root,company_id=company_id)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 225, in prepare_saved_annual_input
+    target = annual_period(raw=primary["raw"], cik=cik, filing=filing)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 168, in annual_period
+    form = dei("DocumentType")
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 159, in dei
+    _need(len(pairs) == 1, "DEI_MISSING_OR_AMBIGUOUS:" + name)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 30, in _need
+    raise NormalAnnualInputError(reason, category)
+vnext.normal_annual_input.NormalAnnualInputError: DEI_MISSING_OR_AMBIGUOUS:DocumentType
+
+======================================================================
+ERROR: test_latest_failed_original_never_uses_equivalent_old_body (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_latest_failed_original_never_uses_equivalent_old_body)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 161, in test_latest_failed_original_never_uses_equivalent_old_body
+    first=self.fingerprint()
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 127, in fingerprint
+    return fingerprint(source_root=self.fixture.root,company_id=COMPANY)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/ordinary_d04_task_input.py", line 20, in fingerprint
+    annual=prepared_annual_input or prepare_saved_annual_input(repo_root=root,company_id=company_id,ordinary_registered=True)
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input_v2.py", line 54, in prepare_saved_annual_input
+    original = prepare_original_input(repo_root=repo_root,company_id=company_id)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 225, in prepare_saved_annual_input
+    target = annual_period(raw=primary["raw"], cik=cik, filing=filing)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 168, in annual_period
+    form = dei("DocumentType")
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 159, in dei
+    _need(len(pairs) == 1, "DEI_MISSING_OR_AMBIGUOUS:" + name)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 30, in _need
+    raise NormalAnnualInputError(reason, category)
+vnext.normal_annual_input.NormalAnnualInputError: DEI_MISSING_OR_AMBIGUOUS:DocumentType
+
+======================================================================
+ERROR: test_new_visible_content_table_unit_and_media_relationship_change_task (tests.vnext.test_ordinary_task_input.D04CompleteTaskFingerprintTest.test_new_visible_content_table_unit_and_media_relationship_change_task)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 139, in test_new_visible_content_table_unit_and_media_relationship_change_task
+    first=self.fingerprint()
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_ordinary_task_input.py", line 127, in fingerprint
+    return fingerprint(source_root=self.fixture.root,company_id=COMPANY)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/ordinary_d04_task_input.py", line 20, in fingerprint
+    annual=prepared_annual_input or prepare_saved_annual_input(repo_root=root,company_id=company_id,ordinary_registered=True)
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input_v2.py", line 54, in prepare_saved_annual_input
+    original = prepare_original_input(repo_root=repo_root,company_id=company_id)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 225, in prepare_saved_annual_input
+    target = annual_period(raw=primary["raw"], cik=cik, filing=filing)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 168, in annual_period
+    form = dei("DocumentType")
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 159, in dei
+    _need(len(pairs) == 1, "DEI_MISSING_OR_AMBIGUOUS:" + name)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/normal_annual_input.py", line 30, in _need
+    raise NormalAnnualInputError(reason, category)
+vnext.normal_annual_input.NormalAnnualInputError: DEI_MISSING_OR_AMBIGUOUS:DocumentType
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.402s
+
+FAILED (errors=4)

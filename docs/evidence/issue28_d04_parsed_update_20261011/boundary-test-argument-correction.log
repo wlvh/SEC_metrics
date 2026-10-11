@@ -1,0 +1,23 @@
+.EE
+======================================================================
+ERROR: test_saved_response_object_cannot_execute_even_if_replay_flag_is_cleared (tests.vnext.test_current_d04_company.D04SavedResponseOnlyBoundaryTest.test_saved_response_object_cannot_execute_even_if_replay_flag_is_cleared) (replay=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_current_d04_company.py", line 213, in test_saved_response_object_cannot_execute_even_if_replay_flag_is_cleared
+    calls._execute_semantic(prepared=value,ledger=None,recorded_wire=None)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _execute_semantic() missing 1 required keyword-only argument: 'native_assessment'
+
+======================================================================
+ERROR: test_saved_response_object_cannot_execute_even_if_replay_flag_is_cleared (tests.vnext.test_current_d04_company.D04SavedResponseOnlyBoundaryTest.test_saved_response_object_cannot_execute_even_if_replay_flag_is_cleared) (replay=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_current_d04_company.py", line 213, in test_saved_response_object_cannot_execute_even_if_replay_flag_is_cleared
+    calls._execute_semantic(prepared=value,ledger=None,recorded_wire=None)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: _execute_semantic() missing 1 required keyword-only argument: 'native_assessment'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.026s
+
+FAILED (errors=2)
