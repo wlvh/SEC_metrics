@@ -1,0 +1,24 @@
+--- a/.github/workflows/company-current-records.yml
++++ b/.github/workflows/company-current-records.yml
+@@ -10,6 +10,8 @@
+     - tests/vnext/test_selected_reported_revenue_v2.py
+     - tests/vnext/test_paired_measure_contradiction.py
+     - tests/vnext/test_current_d04_company.py
++    - tests/vnext/test_b06_note_source_forms.py
++    - tests/vnext/test_b06_note_source_material.py
+     - tests/vnext/test_ordinary_current_update.py
+     - tests/vnext/test_registry_processing_scope.py
+     - tests/vnext/test_d04_processing_scope.py
+@@ -91,6 +93,12 @@
+         tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy
+         tests.vnext.test_dei_release_selection tests.vnext.test_successor_income_projection
+         tests.vnext.test_event_rule_root -v
++    - name: Shared B06 complete note forms and source refusals
++      env:
++        PYTHONDONTWRITEBYTECODE: '1'
++        PYTHONPATH: scripts:.
++      run: python3 tests/required_unittests.py tests.vnext.test_b06_note_source_forms
++        tests.vnext.test_b06_note_source_material
+   company-financial:
+     runs-on: ubuntu-latest
+     timeout-minutes: 5
