@@ -19,7 +19,7 @@ from .records import validate_record
 METRIC_IDS = frozenset(installed_ordinary_spec_documents())
 LODGING_METRIC_IDS = frozenset({'B10','B11'})
 SAVED_MODEL_METRIC_IDS = frozenset({'D04'})
-SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | SAVED_MODEL_METRIC_IDS
+SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | SAVED_MODEL_METRIC_IDS | {'B06'}
 EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13','C03'})
 
 
@@ -91,6 +91,9 @@ def create_saved_result(*, source_root, output_root, company_id, metric_id, shar
     """Prepare through the existing Calculator and save its actual records."""
     _need(metric_id in SAVED_METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')
     def prepare(source):
+        if metric_id == 'B06':
+            from .current_b06_case import prepare_current_b06_case
+            return prepare_current_b06_case(source_root=source,company_id=company_id)
         if metric_id in SAVED_MODEL_METRIC_IDS:
             from .ordinary_d04_saved_route import prepare_case
             return prepare_case(source_root=source,company_id=company_id,metric_id=metric_id)

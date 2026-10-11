@@ -1,0 +1,29 @@
+{
+  "elapsed_seconds": 0.45072637498378754,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "macys",
+  "run_id": "20261010T150057Z-d585c315",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "B06"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B06",
+      "status": "PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED",
+      "reason": "This saved-source branch has no complete current processing interface for B06"
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/current-b06-20261010/baseline-state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/current-b06-20261010/baseline-out/20261010T150057Z-d585c315",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}
+ACTUAL_EXIT 2

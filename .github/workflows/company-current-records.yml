@@ -5,6 +5,7 @@ name: Company saved-source records
       - 'scripts/**'
       - 'tools/vnext_company.py'
       - 'tests/vnext/test_company_current_records.py'
+      - 'tests/vnext/test_current_b06_case.py'
       - 'tests/vnext/test_single_revenue_line.py'
       - 'tests/vnext/test_selected_reported_revenue_v2.py'
       - 'tests/vnext/test_paired_measure_contradiction.py'
@@ -84,6 +85,10 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: '1'
         run: python3 tests/required_unittests.py tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_financial_duration tests.vnext.test_selected_income_source_v1
+      - name: Ordinary B06 source composition and incomplete relation guards
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: python3 tests/required_unittests.py tests.vnext.test_current_b06_case tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest
       - name: Target registry scope, integrity and required input changes
         env:
           PYTHONDONTWRITEBYTECODE: '1'

@@ -1,0 +1,90 @@
+{
+  "phase": "repeat",
+  "seconds": 0.21376737486571074,
+  "exit": 2,
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "state_root": "/private/tmp/issue28-current-b06-macys-20261011",
+  "command": [
+    "tools/vnext_company.py",
+    "run",
+    "--company",
+    "macys",
+    "--metric",
+    "B06",
+    "--source-root",
+    "/Users/lyuhongwang/Developer/SEC_metrics",
+    "--work-dir",
+    "/private/tmp/issue28-current-b06-macys-20261011",
+    "--output-dir",
+    "/private/tmp/issue28-current-b06-macys-20261011-final/repeat"
+  ],
+  "old_files_preserved": 24,
+  "no_new_result_directory": true,
+  "row": {
+    "company": "Macy's",
+    "cik": "794367",
+    "metric_id": "B06",
+    "metric_name": "Debt-to-equity",
+    "value": "",
+    "unit": "ratio",
+    "status": "WITHHELD",
+    "source_class": "DERIVED",
+    "formula": "defined carrying debt / shareholders equity",
+    "period_start": "2026-01-31",
+    "period_end": "2026-01-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "TARGET_PERIOD",
+    "accession": "",
+    "form": "10-K",
+    "filed_date": "2026-03-27",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2026-01-31\", \"period_start\": \"2025-02-02\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"SOURCE_OR_RELATIONSHIP_UNRESOLVED\", \"reason\": \"B06_REPORTED_INTEREST_DEBT_SCOPE_UNRESOLVED\", \"selection_detail_id\": \"sha256:2820d07634bf7883d4d24aed3f4a20d68423b4c16055358ce95af7837c329199\"}, \"source_reference_ids\": [\"sha256:f93f1ab12a0532e4741456f163fcc24f5d7aa5ee32a59fbfa661844fba9b4704\", \"sha256:333eadc460b0b7482c8deaa78eaae60779b8c8af193d0d9ebf3445c34b88b11c\", \"sha256:88edde2a5dd3d0c83ecf208113e4fed28f43c3b249976e9805438c773daefb37\", \"sha256:ca1e56ece9708a8e150c00ef57fc0b09f3b2d3da66c45ce29221919e6cab8250\", \"sha256:06dc3b7326f26264191872ae86a9d30550c7253c11fd17e9a1683f1a24cf5a08\", \"sha256:19f7b7e16e9f7ffa9c0f23046512dc6dd1101076636b2f3ba99f0f60a037b3fa\"]}",
+    "confidence": "",
+    "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+    "company_id": "macys",
+    "result_id": "sha256:ea0fafbeb8f5c21d450402cdf87e2e7256c2fdcd604b7bef3cea8aab83ba6d36",
+    "record_root": "/private/tmp/issue28-current-b06-macys-20261011/updates/B06/results/3f8a3ca3a1174fe486d3a38a3e74f18c",
+    "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "metrics": [
+    {
+      "metric_id": "B06",
+      "status": "PREVIOUS_INPUT_WITHHELD",
+      "attempt_id": "33be620fc8374f3285959d59df4f88cc",
+      "version": "3f8a3ca3a1174fe486d3a38a3e74f18c",
+      "result_id": "sha256:ea0fafbeb8f5c21d450402cdf87e2e7256c2fdcd604b7bef3cea8aab83ba6d36",
+      "result_root": "/private/tmp/issue28-current-b06-macys-20261011/updates/B06/results/3f8a3ca3a1174fe486d3a38a3e74f18c",
+      "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:ea0fafbeb8f5c21d450402cdf87e2e7256c2fdcd604b7bef3cea8aab83ba6d36",
+      "record_root": "/private/tmp/issue28-current-b06-macys-20261011/updates/B06/results/3f8a3ca3a1174fe486d3a38a3e74f18c",
+      "program_version": {
+        "commit": "e84cdabffa5f20a976d9f072f381c05417d8b544",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "method": "Actual public CLI/source/case/writer/read; repeat only forbids factory, read only forbids update; socket denied"
+}
