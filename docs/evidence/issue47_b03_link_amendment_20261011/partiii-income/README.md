@@ -1,0 +1,21 @@
+# Part III income amendment: actual historical consumer gap
+
+This follows [receiver PR177 feedback6110764504](https://github.com/wlvh/SEC_metrics/pull/177#issuecomment-6110764504), independently of the bounded Ford PR179 candidate. Actual main255341ac still refuses Paramount FY2024 before B01 calculation. No new business definition or permission is needed to investigate this already required historical path.
+
+The selected original is CIK813828,10-K0000813828-25-000005, filed2025-02-26 for2024-12-31. Its 10-K/A0001193125-25-096776, filed2025-04-25, has raw SHAca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845. Both originals are already in the PR52 saved corpus. `existing-source-property.json` has source references, exact explanatory note and native false correction flag with its context.
+
+The existing shared annual scope correctly produces PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS, no issues and an unchanged fiscal window. It does not itself prove original income values: only FISCAL_EVENT_WINDOW is inherited and further income review is true. The existing ordinary income property does that further check, but currently fails INSTANT_AMENDMENT_COMPLETE_NOTE_UNSUPPORTED. Its fixed old note template misses this original's “solely”, proxy-incorporation clause and “References in this document” wording. The original cover's correction and recovery clauses also span inline blocks58–63; changing only the note regex would leave the next whole-block guard unsupported. The existing native correction-flag helper independently passes the explicit unmarked checkbox under the official DEI namespace, correct entity and full annual context. That fact alone is not income acceptance.
+
+The actual company entry from a completely new external task takes9.423s and exits2: B01 INPUT_OR_EXECUTION_FAILED, HISTORICAL_STATEMENT_AMENDMENT_ORIGINAL_VALUES_NOT_PROVEN, AMENDMENT_INPUT_NOT_CLEARED. Independent results0.495s, with case/Calculator/network forbidden, exports null and this precise reason/category while all7 state files remain unchanged (`failed-company.json`). This is an implementation/source-property failure, not structural non-applicability, zero revenue or a completed income result.
+
+Public original/paragraph/income property functions remain #28-owned. Historical caller, selected-period mapping, dependency declaration and affected same-company verification remain #47-owned. Use the existing paragraph/layout capability and a bounded shared property successor, retaining full note/cover identity, no-financial-statements declaration, native correction flag, quoted/conditional language and whole-document income conflicts. Do not replace original source strings to make the old template match, suppress unknown statements or duplicate an income selector in the historical caller. B02 still uses each year's selected original first report; B07 interest and B06 debt do not automatically inherit a B01/B03 income proof.
+
+Reproduce the actual property with the existing saved root, new diagnostic output and the project's Python dependencies:
+
+```sh
+PYTHONPATH=scripts:tools:. python3 docs/evidence/issue47_b03_link_amendment_20261011/partiii-income/reproduce.py --source-root SOURCE_INPUTS --company paramount_skydance_paramount_global --fiscal-year 2024 --output NEW_OUTPUT/property.json
+python3 tools/vnext_company.py run --company paramount_skydance_paramount_global --period fiscal-years --fiscal-year-start 2024 --fiscal-year-end 2024 --metric B01 --source-root SOURCE_INPUTS --work-dir NEW_STATE --output-dir NEW_RUNS
+python3 tools/vnext_company.py results --company paramount_skydance_paramount_global --state-root NEW_STATE --output-root NEW_READER
+```
+
+First source restoration uses the retained PR52 `tools/vnext_historical_sec.py restore` entry and its returned actual source-inputs root; an existing complete root is reused. The original reference is not supplied as a financial answer. A future fix must be consumed through the same task's processing, then tested for stable repeat, independent CSV/source reading and genuine correction/range counterexamples. Current evidence is a concrete failure/reproduction, not a delivered value or permission to relax scope. No SEC/provider/model call, old record/Run/ledger edit, Ready, author merge/adoption/deployment or active change.
