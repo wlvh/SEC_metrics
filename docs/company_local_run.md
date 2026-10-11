@@ -154,7 +154,7 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
 
 ### 候选：只检查指定报告期的来源
 
-`task/issue28-selected-source-preflight` 的 `sources` 是只读入口，尚未作为 main 能力交付：
+main 已接入 PR126/128 的 `sources` 只读入口，支持 B01/B02。下方 B03 是本候选新增的来源规划范围，尚未进入 main；不启用在线捕获或计算：
 
 ```sh
 python3 tools/vnext_company.py sources --company marriott_international \
@@ -164,11 +164,13 @@ python3 tools/vnext_company.py sources --company marriott_international \
 
 该入口按现有保存目录列出这一任务的目标、修订及必要前期年报、目录/XML、Company Facts和选源元数据。`--report-end`是SEC报告期结束日期；原件齐备时显示原件DEI的原始财年标签，不把日期年份当标签；与其他财年文字或机器标签的最终对照仍由既有计算侧选期实现处理，本预检不替代它。文件齐备返回`SAVED_SOURCE_BYTES_AVAILABLE`/exit0；缺件、末次失败或来源身份问题返回具体原因/exit2。只选择B01时不要求未被使用的前期原件；B02需要前期，只有既有完整、来源已核对且日期相邻的原生XML可以满足未保存的前期正文，失败GET不能被替代。
 
-这不是获取或计算，不能证明新鲜度、修订效果、收入范围或结果已被接受。索引未保存时仍有未知XML前沿，计数只是已知URL数，不是获取许可或最终调用预算。当前仅列B01/B02来源依赖，其他指标、历史在线捕获和模型请求仍走各自已交付/待接入路径；不使用一个“来源齐备”状态替代39项业务验收。
+这不是获取或计算，不能证明新鲜度、修订效果、收入范围或结果已被接受。索引未保存时仍有未知XML前沿，计数只是已知URL数，不是获取许可或最终调用预算。其他指标、历史在线捕获和模型请求仍走各自已交付/待接入路径；不使用一个“来源齐备”状态替代39项业务验收。
+
+在本候选 `task/issue28-b03-source-preflight` 中，可以把上面命令的指标改为 `--metric B03`。B03 单独规划目标年报 primary、目录与完整原生实例、Company Facts 和选源元数据；不增加 B02 专属的前期年报依赖。同年度修订列完整 primary，既有 B03 修订关系读者不消费的修订目录/XML 不被列为必需。混合 B01/B02 时仍保留原依赖并集。来源齐备不证明修订被准入或折旧摊销完整，缺件和最后一次获取失败继续显示。`acquire`、在线 `--call-context` 仍仅支持原 B01/B02，不因本只读入口扩大获取用途。
 
 ### 候选：直接给出发行人财年范围
 
-`task/issue28-fiscal-range-entry` 依赖来源预检PR126及纯标签接口PR127，尚未进入main。对保存来源的B01/B02，用户无需逐年提供report-end：
+main 已接入来源预检和发行人标签的财年范围入口。对保存来源的 B01/B02，用户无需逐年提供 report-end；本候选还允许只读 B03 来源范围，B03 计算消费者另见 PR167 的实际接收状态：
 
 ```sh
 python3 tools/vnext_company.py sources --company macys --source-root SOURCE \
