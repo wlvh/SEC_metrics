@@ -1,0 +1,26 @@
+{
+  "phase": "correctedfirst",
+  "company": "enphase_energy",
+  "command": [
+    "tools/vnext_company.py",
+    "run",
+    "--company",
+    "enphase_energy",
+    "--metric",
+    "B06",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/current-b06-20261010/enphase_energy/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/current-b06-20261010/enphase_energy/out"
+  ],
+  "exit": 0,
+  "seconds": 6.637346250005066,
+  "network_forbidden": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

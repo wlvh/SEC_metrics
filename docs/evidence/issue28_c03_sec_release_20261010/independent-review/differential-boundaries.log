@@ -1,0 +1,60 @@
+Synthetic, offline. Baseline source read from the exact declared commit, executed unchanged in memory; no source or test changes.
+EXIT: 0
+{"default_full_record_or_error_comparisons": 45, "same": true}
+{"case": "single", "reason_code": "PASS", "release": "2025", "replay_matches": true, "value": "100"}
+{"case": "repeated-generic", "reason_code": "PASS", "release": "2025", "replay_matches": true, "value": "100"}
+{"case": "equal-specific-people", "reason_code": "C03_MULTIPLE_REPORTED_PEOPLE", "release": "2025", "replay_matches": true, "value": null}
+{"case": "different-amounts", "reason_code": "C03_MULTIPLE_REPORTED_AMOUNTS", "release": "2025", "replay_matches": true, "value": null}
+{"case": "different-entity", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2025", "replay_matches": true, "value": null}
+{"case": "geography-axis", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2025", "replay_matches": true, "value": null}
+{"case": "other-period", "reason_code": "C03_TARGET_PERIOD_NOT_FOUND", "release": "2025", "replay_matches": true, "value": null}
+{"case": "eur", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2025", "replay_matches": true, "value": null}
+{"case": "bad-currency-namespace", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2025", "replay_matches": true, "value": null}
+{"case": "invalid-competitor", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2025", "replay_matches": true, "value": null}
+{"case": "nil", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2025", "replay_matches": true, "value": null}
+{"case": "wrong-transform", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2025", "replay_matches": true, "value": null}
+{"case": "paid-compensation", "reason_code": "C03_PEO_FACT_NOT_FOUND", "release": "2025", "replay_matches": true, "value": null}
+{"case": "current-name-conflict", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2025", "replay_matches": true, "value": null}
+{"case": "former-zero", "reason_code": "PASS", "release": "2025", "replay_matches": true, "value": "100"}
+{"counts": {"checked": 15, "held_or_error": 12, "pass": 3}, "release": "2025"}
+{"case": "single", "reason_code": "PASS", "release": "2022q4", "replay_matches": true, "value": "100"}
+{"case": "repeated-generic", "reason_code": "C03_MULTIPLE_REPORTED_PEOPLE", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "equal-specific-people", "reason_code": "C03_MULTIPLE_REPORTED_PEOPLE", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "different-amounts", "reason_code": "C03_MULTIPLE_REPORTED_AMOUNTS", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "different-entity", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "geography-axis", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "other-period", "reason_code": "C03_TARGET_PERIOD_NOT_FOUND", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "eur", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "bad-currency-namespace", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "invalid-competitor", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "nil", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "wrong-transform", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "paid-compensation", "reason_code": "C03_PEO_FACT_NOT_FOUND", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "current-name-conflict", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022q4", "replay_matches": true, "value": null}
+{"case": "former-zero", "reason_code": "PASS", "release": "2022q4", "replay_matches": true, "value": "100"}
+{"counts": {"checked": 15, "held_or_error": 13, "pass": 2}, "release": "2022q4"}
+{"case": "single", "reason_code": "PASS", "release": "2022-10-31", "replay_matches": true, "value": "100"}
+{"case": "repeated-generic", "reason_code": "C03_MULTIPLE_REPORTED_PEOPLE", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "equal-specific-people", "reason_code": "C03_MULTIPLE_REPORTED_PEOPLE", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "different-amounts", "reason_code": "C03_MULTIPLE_REPORTED_AMOUNTS", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "different-entity", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "geography-axis", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "other-period", "reason_code": "C03_TARGET_PERIOD_NOT_FOUND", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "eur", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "bad-currency-namespace", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "invalid-competitor", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "nil", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "wrong-transform", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "paid-compensation", "reason_code": "C03_PEO_FACT_NOT_FOUND", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "current-name-conflict", "reason_code": "C03_TARGET_FACT_INVALID", "release": "2022-10-31", "replay_matches": true, "value": null}
+{"case": "former-zero", "reason_code": "PASS", "release": "2022-10-31", "replay_matches": true, "value": "100"}
+{"counts": {"checked": 15, "held_or_error": 13, "pass": 2}, "release": "2022-10-31"}
+{"source_reference_scope_replay_mutations": [{"exception": "GovernanceSignalError", "mutation": "bytes", "reason": "GOVERNANCE_SOURCE_BYTES_CHANGED"}, {"exception": "GovernanceSignalError", "mutation": "company", "reason": "GOVERNANCE_COMPANY_MISMATCH"}, {"exception": "GovernanceSignalError", "mutation": "scope", "reason": "C03_TARGET_SCOPE_INVALID"}, {"exception": "SourceError", "mutation": "cik", "reason": "Live Reader filing identity differs from registry authority"}, {"exception": "RecordError", "mutation": "reference", "reason": "SOURCE_REFERENCE content identity differs"}, {"exception": "GovernanceSignalError", "mutation": "policy", "reason": "C03_SOURCE_REPLAY_MISMATCH"}, {"exception": "GovernanceSignalError", "mutation": "locator", "reason": "C03_SOURCE_REPLAY_MISMATCH"}, {"exception": "GovernanceSignalError", "mutation": "result", "reason": "C03_SOURCE_REPLAY_MISMATCH"}]}
+
+IDENTITY AND NAMESPACE REVIEW
+EXIT: 0
+{"head": "31b74980b936e89934023408e96573bdc392db5f", "python": "3.14.7", "reviewed_files": [{"matches_reviewed_commit": true, "path": "scripts/vnext/governance_signals.py", "sha256": "4722ab71d9646d8e377a890e7c11003777be8f1ee8387c830a428f1fe1edcbf6"}, {"matches_reviewed_commit": true, "path": "scripts/vnext/xbrl_namespace_policy.py", "sha256": "951b4d41a2541e96c22d4ad8eb230d03c7ccbdcf0a999131b9ad602e05383f98"}, {"matches_reviewed_commit": true, "path": "tests/vnext/test_c03_sec_release.py", "sha256": "7459f09a24905237f101fb835574ec723effa8adaee492ec43d591709ccb7425"}, {"matches_reviewed_commit": true, "path": ".github/workflows/vnext-fast.yml", "sha256": "e00bf277853cc803cf9a7e256ed45f2061606fde3f3e3c98292d9e59e65fc2ca"}], "saved_proxy_processing_hashes_match": true}
+{"namespace_positive_spellings": 24, "namespace_rejected_uri_spellings": 16, "unsupported_taxonomies": 4}
+ M docs/evidence/issue28_c03_sec_release_20261010/README.md
+ M docs/evidence/issue28_c03_sec_release_20261010/foundation-compatibility.log
+
