@@ -1,4 +1,5 @@
 """Latest saved C04 consumes the existing complete four-form source core."""
+import json
 from .c04_registration_successor import (prepare_c04_registration_case,EVENT_FORMS,
                                          SELECTED_PROCESSING_FILES)
 from .normal_annual_input_v2 import prepare_saved_annual_input
@@ -12,13 +13,32 @@ PROCESSING_FILES=tuple(dict.fromkeys((*SELECTED_PROCESSING_FILES,
 
 
 def prepare_current_auditor_case(*,source_root,company_id):
-    from .normal_governance_input import prepare_saved_governance_input
+    from .normal_governance_input import prepare_saved_governance_input,NormalGovernanceInputError
     from pathlib import Path
     source=Path(source_root)
     annual=prepare_saved_annual_input(repo_root=source,company_id=company_id,ordinary_registered=True)
     base=prepare_saved_governance_input(repo_root=source,company_id=company_id,rules_root=ROOT)
-    case=prepare_c04_registration_case(repo_root=source,company_id=company_id,event_forms=EVENT_FORMS,
-        selected_base=base,labelled_annual=annual)
+    try:
+        case=prepare_c04_registration_case(repo_root=source,company_id=company_id,event_forms=EVENT_FORMS,
+            selected_base=base,labelled_annual=annual)
+    except ValueError as error:
+        if str(error)!='C04_REGISTRATION_BASE_INPUT_UNRESOLVED':
+            raise
+        binding=base['input_binding']
+        limits=[{k:item[k] for k in ('category','reason') if k in item}
+                for item in binding.get('limitations',[]) if item.get('metric_id')=='C04']
+        fields=('history_name','reason','declared_filing_from','declared_filing_to',
+                'block_last_day','declared_filing_count','saved_filing_count',
+                'filings_outside_the_block','failed_checks')
+        conflicts=[{k:item[k] for k in fields if k in item}
+                   for item in binding.get('history_alignment_conflicts',[])]
+        if not limits and not conflicts:
+            raise
+        detail={'limitations':limits,'history_alignment_conflicts':conflicts}
+        category=next((item['category'] for item in limits if item.get('category')),
+                      'SOURCE_COVERAGE_CONFLICT')
+        raise NormalGovernanceInputError(str(error)+': '+json.dumps(detail,ensure_ascii=False,
+            separators=(',',':')),category) from error
     period=annual['table_input']['target_period'];result=case['results']['C04']
     if any(result[key]!=period[key] for key in ('period_start','period_end')) or case['target_period']['fiscal_year']!=period['fiscal_year']:
         raise ValueError('CURRENT_C04_SOURCE_PERIOD_CHANGED')
