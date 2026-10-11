@@ -15,6 +15,81 @@ def changed(source,raw):
 
 
 class SelectedReportedRevenueTest(unittest.TestCase):
+    def test_plain_statement_sections_and_issuer_bound_eps_heading_are_not_scope_prose(self):
+        primary,xml,annual=originals()
+        raw=primary['raw_bytes'].replace(b'<dei:DocumentType',
+            b'<dei:EntityRegistrantName contextRef="annual">Example Co</dei:EntityRegistrantName><dei:DocumentType',1)
+        sections=(b'<tr><td>Revenues</td><td></td></tr><tr><td>Costs and expenses</td><td></td></tr>'
+            b'<tr><td>EARNINGS/(LOSS) PER SHARE ATTRIBUTABLE TO EXAMPLE COMPANY COMMON AND CLASS B STOCK (Note 8)</td><td></td></tr>'
+            b'<tr><td>Weighted-average shares used in computation of earnings/(loss) per share</td><td></td></tr>')
+        source=changed(primary,raw.replace(b'</table>',sections+b'</table>'))
+        scope=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED)
+        self.assertTrue(scope['complete_scope_proven'])
+        for bad in (sections.replace(b'EXAMPLE COMPANY',b'OTHER COMPANY'),
+                    sections.replace(b'Revenues</td>',b'Revenues exclude subsidiaries</td>')):
+            with self.subTest(bad=bad),self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+                reported_revenue_scope(primary=changed(primary,raw.replace(b'</table>',bad+b'</table>')),
+                    annual=annual,approved_concepts=APPROVED)
+
+    def test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes(self):
+        primary,xml,annual=originals()
+        raw=primary['raw_bytes'].replace(b'<dei:DocumentType',
+            b'<dei:EntityRegistrantName contextRef="annual">Example Co</dei:EntityRegistrantName><dei:DocumentType',1)
+        title=b'<div>Consolidated Statements of Income</div>'
+        for name,allowed in (('Example Company and subsidiaries',True),('Example Co.',True),
+                             ('Example LLC and subsidiaries',False),('Other Company',False)):
+            source=changed(primary,raw.replace(title,('<div>'+name+'</div>').encode()+title))
+            with self.subTest(name=name):
+                if allowed:
+                    scope=reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED)
+                    self.assertTrue(scope['complete_scope_proven'])
+                else:
+                    with self.assertRaisesRegex(ValueError,'STATEMENT_.*SCOPE_UNRESOLVED'):
+                        reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED)
+
+    def test_previous_statement_note_reference_is_navigation_only_before_the_title(self):
+        primary,xml,annual=originals()
+        note=b'<div>The accompanying notes are part of the consolidated financial statements.</div><div>108</div>'
+        title=b'<div>Consolidated Statements of Income</div>'
+        source=changed(primary,primary['raw_bytes'].replace(title,note+title))
+        scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+        self.assertTrue(scope['complete_scope_proven'])
+        for raw in (primary['raw_bytes'].replace(title,title+note),
+                    primary['raw_bytes'].replace(title,note.replace(b'consolidated financial statements',b'Segment Alpha only')+title)):
+            with self.subTest(raw=raw),self.assertRaisesRegex(ValueError,'STATEMENT_.*SCOPE_UNRESOLVED'):
+                reported_revenue_scope(primary=changed(primary,raw),xml=xml,annual=annual,approved_concepts=APPROVED)
+
+    def test_consolidated_income_statement_title_order_keeps_original_scope(self):
+        primary,xml,annual=originals()
+        source=changed(primary,primary['raw_bytes'].replace(b'Consolidated Statements of Income',
+                                                           b'Consolidated Income Statements'))
+        scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+        self.assertTrue(scope['complete_scope_proven'])
+        self.assertEqual(scope['reported_totals'][0]['total']['value'],'58496000000')
+        for title in ('Subsidiary Income Statements','Consolidated Statements of Comprehensive Income'):
+            restricted=changed(primary,primary['raw_bytes'].replace(b'Consolidated Statements of Income',title.encode()))
+            with self.subTest(title=title),self.assertRaisesRegex(ValueError,'STATEMENT_TITLE_UNPROVEN'):
+                reported_revenue_scope(primary=restricted,xml=xml,annual=annual,approved_concepts=APPROVED)
+
+    def test_numeric_note_reference_is_not_a_total_label_or_scope_change(self):
+        primary,xml,annual=originals()
+        for marker in ('(Note 4)','(note 17)','(4)','(a)'):
+            with self.subTest(marker=marker):
+                source=changed(primary,primary['raw_bytes'].replace(b'Total revenues',('Total revenues '+marker).encode()))
+                scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+                self.assertTrue(scope['complete_scope_proven'])
+                self.assertEqual(scope['reported_totals'][0]['total']['value'],'58496000000')
+                self.assertEqual(scope['reported_totals'][0]['total_cell']['text'],'58496')
+
+    def test_geographic_or_subsidiary_parenthesis_is_not_a_footnote(self):
+        primary,xml,annual=originals()
+        for marker in ('(Europe)','(Subsidiary)','(Note 4, Europe)','(US)','(4 Europe)'):
+            with self.subTest(marker=marker):
+                source=changed(primary,primary['raw_bytes'].replace(b'Total revenues',('Total revenues '+marker).encode()))
+                scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+                self.assertFalse(scope['complete_scope_proven'])
+                self.assertEqual(scope['reported_totals'],[])
+
     def test_explicit_total_admits_existing_fact_without_calculating_component_sum(self):
         source,xml,annual=originals()
         scope=reported_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
