@@ -1,0 +1,39 @@
+UTC start: 2026-10-10T12:14:07.754084+00:00
+New committed regression, unchanged expectations, against original base resolver loaded from exact git bytes.
+test_generic_member_does_not_become_a_second_specific_person (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_generic_member_does_not_become_a_second_specific_person) ... 
+  test_generic_member_does_not_become_a_second_specific_person (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_generic_member_does_not_become_a_second_specific_person) (release='2022q4') ... FAIL
+  test_generic_member_does_not_become_a_second_specific_person (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_generic_member_does_not_become_a_second_specific_person) (release='2022-10-31') ... FAIL
+
+======================================================================
+FAIL: test_generic_member_does_not_become_a_second_specific_person (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_generic_member_does_not_become_a_second_specific_person) (release='2022q4')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 92, in test_generic_member_does_not_become_a_second_specific_person
+    self.assertEqual('100',resolved['result']['value'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '100' != None
+
+======================================================================
+FAIL: test_generic_member_does_not_become_a_second_specific_person (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_generic_member_does_not_become_a_second_specific_person) (release='2022-10-31')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-c03-release/SEC_metrics/tests/vnext/test_c03_sec_release.py", line 92, in test_generic_member_does_not_become_a_second_specific_person
+    self.assertEqual('100',resolved['result']['value'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '100' != None
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=2)
+
+Same regression against current head resolver.
+test_generic_member_does_not_become_a_second_specific_person (tests.vnext.test_c03_sec_release.C03SecReleaseTest.test_generic_member_does_not_become_a_second_specific_person) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.011s
+
+OK
+
+Regression validity: PASS; base quarterly/date subtests fail, head all three release subtests pass.
+UTC end: 2026-10-10T12:14:07.772743+00:00

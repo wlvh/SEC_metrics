@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics/tests/required_unittests.py", line 38, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics/tests/required_unittests.py", line 25, in main
+    suite = unittest.defaultTestLoader.loadTestsFromNames(args.names)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 214, in loadTestsFromNames
+    suites = [self.loadTestsFromName(name, module) for name in names]
+              ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 141, in loadTestsFromName
+    module = __import__(module_name)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics/tests/vnext/test_current_b06_case.py", line 47
+    with patch.object(self.current,'prepare_current_guarded_b06_result',side_effect=AssertionError('guard must wait')),
+                                                                                                                       ^
+SyntaxError: invalid syntax

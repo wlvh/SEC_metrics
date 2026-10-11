@@ -357,7 +357,8 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
         prepare_historical_lodging_year_case, HISTORICAL_LODGING_PROCESSING_FILES)
     from .historical_statement_cases import (METRICS as statement_metrics,
         prepare_historical_statement_year_case, PROCESSING_FILES as statement_files,
-        INCOME_PROCESSING_FILES as income_files)
+        INCOME_PROCESSING_FILES as income_files,
+        PAIRED_REVENUE_PROCESSING_FILES as paired_revenue_files)
     from .historical_statement_cases import prepare_historical_current_annual_year_case
     from .historical_liquidity_cases import (METRICS as liquidity_metrics,
         prepare_historical_liquidity_year_case, PROCESSING_FILES as liquidity_files)
@@ -375,11 +376,13 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
         prepare_historical_bank_scope_year_case, PROCESSING_FILES as bank_scope_files)
     from .historical_rpo_cases import (METRICS as rpo_metrics,
         prepare_historical_rpo_year_case, PROCESSING_FILES as rpo_files)
+    from .historical_compensation_case import (METRICS as compensation_metrics,
+        prepare_historical_compensation_year_case, PROCESSING_FILES as compensation_files)
     from .historical_auditor_case import (METRICS as auditor_metrics,
         prepare_historical_auditor_year_case, PROCESSING_FILES as auditor_files)
     selected = configured_scope(company_id) if metric_ids is None else list(metric_ids)
     need(selected and len(selected) == len(set(selected))
-         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | set(geography_metrics) | set(average_risk_metrics) | set(bank_scope_metrics) | set(rpo_metrics) | set(auditor_metrics) | {'B07'},
+         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | set(geography_metrics) | set(average_risk_metrics) | set(bank_scope_metrics) | set(rpo_metrics) | set(compensation_metrics) | set(auditor_metrics) | {'B07'},
          'LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry')
     from .company_current_records import run_saved_company
     if not set(selected) <= set(SUPPORTED_METRICS):
@@ -387,6 +390,7 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
             work_dir=work_dir, output_dir=output_dir, metric_ids=selected,
             fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
             case_factories={m: (prepare_historical_auditor_year_case if m in auditor_metrics else
+                               prepare_historical_compensation_year_case if m in compensation_metrics else
                                prepare_historical_rpo_year_case if m in rpo_metrics else
                                prepare_historical_event_year_case if m in event_metrics else
                                prepare_historical_geography_year_case if m in geography_metrics else
@@ -399,6 +403,7 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
                                prepare_historical_lodging_year_case if m in SUPPORTED_METRICS
                                else prepare_historical_statement_year_case) for m in selected},
             processing_files_by_metric={m: (auditor_files if m in auditor_metrics else
+                                            compensation_files if m in compensation_metrics else
                                             rpo_files if m in rpo_metrics else
                                             event_files if m in event_metrics else
                                             geography_files if m in geography_metrics else
@@ -409,7 +414,8 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
                                             capital_files if m in capital_metrics else
                                             liquidity_files if m in liquidity_metrics else
                                             HISTORICAL_LODGING_PROCESSING_FILES if m in SUPPORTED_METRICS
-                                            else income_files if m in {'B01','B02'}
+                                            else paired_revenue_files if m == 'B02'
+                                            else income_files if m == 'B01'
                                             else statement_files) for m in selected})
     return run_saved_company(company_id=company_id, source_root=source_root,
         work_dir=work_dir, output_dir=output_dir, metric_ids=selected,

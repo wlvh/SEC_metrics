@@ -1,0 +1,32 @@
+test_exact_fallback_callable_and_metric_specific_processing_dependencies (tests.vnext.test_current_b06_case.CurrentB06CompositionTest.test_exact_fallback_callable_and_metric_specific_processing_dependencies) ... ok
+test_existing_guard_terminal_does_not_parse_debt (tests.vnext.test_current_b06_case.CurrentB06CompositionTest.test_existing_guard_terminal_does_not_parse_debt) ... ok
+test_failed_matched_note_is_preserved_not_replaced_by_another_grammar (tests.vnext.test_current_b06_case.CurrentB06CompositionTest.test_failed_matched_note_is_preserved_not_replaced_by_another_grammar) ... ok
+test_full_audit_stays_out_of_daily_csv_selection (tests.vnext.test_current_b06_case.CurrentB06CompositionTest.test_full_audit_stays_out_of_daily_csv_selection) ... ok
+test_reported_interest_does_not_disappear_from_complete_component_claim (tests.vnext.test_current_b06_case.CurrentB06CompositionTest.test_reported_interest_does_not_disappear_from_complete_component_claim) ... FAIL
+test_selected_source_conflict_precedes_debt (tests.vnext.test_current_b06_case.CurrentB06CompositionTest.test_selected_source_conflict_precedes_debt) ... ok
+test_special_scope_cannot_fall_into_consolidated_grammars (tests.vnext.test_current_b06_case.CurrentB06CompositionTest.test_special_scope_cannot_fall_into_consolidated_grammars) ... ok
+test_unproven_amendment_never_enters_denominator_or_debt (tests.vnext.test_current_b06_case.CurrentB06CompositionTest.test_unproven_amendment_never_enters_denominator_or_debt) ... ok
+test_zero_or_tax_interest_is_not_a_positive_current_financing_relation (tests.vnext.test_current_b06_case.CurrentB06CompositionTest.test_zero_or_tax_interest_is_not_a_positive_current_financing_relation) ... ok
+test_current_writer_accepts_b06_before_source_calculation (tests.vnext.test_current_b06_case.CurrentB06EntryTest.test_current_writer_accepts_b06_before_source_calculation) ... ok
+
+======================================================================
+FAIL: test_reported_interest_does_not_disappear_from_complete_component_claim (tests.vnext.test_current_b06_case.CurrentB06CompositionTest.test_reported_interest_does_not_disappear_from_complete_component_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics/tests/vnext/test_current_b06_case.py", line 120, in test_reported_interest_does_not_disappear_from_complete_component_claim
+    self.assertEqual(['47000000','47000000'],[r['value'] for r in rows])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['47000000', '47000000'] != ['47000000']
+
+First list contains 1 additional elements.
+First extra element 1:
+'47000000'
+
+- ['47000000', '47000000']
++ ['47000000']
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.099s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 10, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_b06_case"]}

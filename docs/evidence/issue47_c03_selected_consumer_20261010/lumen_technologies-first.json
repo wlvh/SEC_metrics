@@ -1,0 +1,75 @@
+{
+  "seconds": 6.794236667221412,
+  "exit_code": 2,
+  "arguments": [
+    "run",
+    "--company",
+    "lumen_technologies",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2022",
+    "--fiscal-year-end",
+    "2022",
+    "--metric",
+    "C03",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/lumen_technologies/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/lumen_technologies/runs"
+  ],
+  "report": {
+    "elapsed_seconds": 6.740227749804035,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "lumen_technologies",
+    "run_id": "20261010T123248Z-9886ccc9",
+    "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+    "selected_metrics": [
+      "C03"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C03",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "027165928f6f40229f181504d57bff1d",
+        "version": "b8575dffe3504952a2930a7fc17edae7",
+        "result_id": "sha256:8d716ae5bcb3cfe47274a2502c6ca21300688212b4fcc492dfdd76c595fc9ef1",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/lumen_technologies/state/updates/C03/periods/FY2022/results/b8575dffe3504952a2930a7fc17edae7",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "C03_MULTIPLE_REPORTED_AMOUNTS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2022,
+        "defect_holds": [],
+        "read_result_id": "sha256:8d716ae5bcb3cfe47274a2502c6ca21300688212b4fcc492dfdd76c595fc9ef1",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/lumen_technologies/state/updates/C03/periods/FY2022/results/b8575dffe3504952a2930a7fc17edae7",
+        "program_version": {
+          "commit": "2384b62d6e8300ef39aa70155a1f3f07d581dc2c",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/lumen_technologies/state",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/lumen_technologies/runs/20261010T123248Z-9886ccc9",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "selected_fiscal_years": [
+      2022
+    ]
+  }
+}

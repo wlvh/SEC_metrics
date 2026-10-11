@@ -1,0 +1,48 @@
+{
+  "elapsed_seconds": 6.533529750071466,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "enphase_energy",
+  "run_id": "20261010T173111Z-c63aa5eb",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B06"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B06",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "61f5a19b6a36485bb6026164954c028e",
+      "version": "d37a65e7a25a48c2a48dcc24cb238ac9",
+      "result_id": "sha256:2983956c0931dd39384f3e2ebeb6fff4cef9f770a6d12b5d9acc0c0e4b85d26c",
+      "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/current-b06-20261010/enphase_energy/state/updates/B06/results/d37a65e7a25a48c2a48dcc24cb238ac9",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:2983956c0931dd39384f3e2ebeb6fff4cef9f770a6d12b5d9acc0c0e4b85d26c",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/current-b06-20261010/enphase_energy/state/updates/B06/results/d37a65e7a25a48c2a48dcc24cb238ac9",
+      "program_version": {
+        "commit": "e84cdabffa5f20a976d9f072f381c05417d8b544",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics",
+  "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-development-evidence/current-b06-20261010/enphase_energy/state",
+  "output_root": "/private/tmp/issue28-current-b06-enphase-final-20261011/20261010T173111Z-c63aa5eb",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}
