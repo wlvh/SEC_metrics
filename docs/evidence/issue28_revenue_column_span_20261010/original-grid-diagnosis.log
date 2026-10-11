@@ -1,0 +1,6 @@
+actualsource 7350907 a6dc538da8dd8c78563933a612ccb61bcc77ed9d067383ee6ed394612d5f0dd8
+index attrs ['convert_charrefs', 'scripting', 'rawdata', 'lasttag', 'interesting', 'cdata_elem', '_support_cdata', '_escapable', '_pending', '_pending_len', '_parse_threshold', 'lineno', 'offset', '_stack', '_total_raw_cell_count', '_total_text_char_count', 'tables', 'fact_ordinal', 'cell_ordinals', 'units', '_unit', '_in_measure', 'namespaces', 'source', 'lines', '_char_cursor', '_byte_cursor', 'fact_positions']
+actual parsed tables 319
+Traceback (most recent call last):
+  File "<stdin>", line 11, in <module>
+AttributeError: '_TableBuilder' object has no attribute 'table_id'

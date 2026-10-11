@@ -1,0 +1,15 @@
+{
+  "merged_main": "8592e4e21cb8beb7849c540f0210bbd0277b35b8",
+  "prior_source": "5b3aa10462c15b8fa6681a53c27e794f987b68a2",
+  "tested_uncommitted_merge": true,
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics",
+  "sha256": {
+    "scripts/vnext/ordinary_current_update.py": "6bfb6e3a4cfc9d6ef028ada68a50b29d36d854e635dc149c074f819b56c178c6",
+    "scripts/vnext/ordinary_registry_scope.py": "4657e2bcd3739a30516f9ae9e23831c7ee0217286e463c987c14c7713b8a7841",
+    "tests/vnext/test_registry_processing_scope.py": "b10fa3dd98d11fcb11d0b1611544eb2cec0e51bb31b9c29e684f5264ac07553f",
+    "tests/vnext/test_d04_processing_scope.py": "c244f0a08623aa74b574dd606941061e339185b8c35cf3fd49974bbab5f6162c",
+    ".github/workflows/company-current-records.yml": "e2b3333404f10bdb4b96ea0237d113752c86922ae0175825db89df904b490afb"
+  },
+  "tests": "86 in12.870s zero failure/error/skip",
+  "reused_company_evidence": "5b3 repaired tree, current merge only received D04 extraction + finite oldruntime tests; no new business source/contract difference"
+}

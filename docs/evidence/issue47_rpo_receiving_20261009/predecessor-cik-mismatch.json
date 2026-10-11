@@ -1,0 +1,72 @@
+{
+  "row": {
+    "company": "Paramount Skydance / Paramount Global",
+    "cik": "2041610",
+    "metric_id": "B12",
+    "metric_name": "Remaining performance obligation (RPO substitute)",
+    "value": "",
+    "unit": "USD",
+    "status": "N_A_STRUCTURAL",
+    "source_class": "NOT_AVAILABLE",
+    "formula": "",
+    "period_start": "2021-12-31",
+    "period_end": "2021-12-31",
+    "fiscal_year": "2021",
+    "fiscal_period": "STRUCTURAL",
+    "accession": "",
+    "form": "",
+    "filed_date": "",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2021, \"period_end\": \"2021-12-31\", \"period_start\": \"2021-01-01\"}, \"measurement_kind\": \"STRUCTURAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2021}, \"selection\": null, \"source_reference_ids\": [\"sha256:61199b5b50703b802a686ef3abe519dc58675db5fc17338abd4b76b8ba5aaf6a\", \"sha256:cc4b119849e582425aeeaf5b6d6be60f44cdc3fa998c1a97bdc2b8bfab4dd921\"]}",
+    "confidence": "",
+    "notes": "Trait applicability is structurally false. No financial measurement is asserted; dates retain the filing group. Native state: PUBLISHED; reason: TRAIT_NOT_APPLICABLE.",
+    "company_id": "paramount_skydance_paramount_global",
+    "result_id": "sha256:d6225bff1c520b4913952c747dbdf60963243f71f833eb75078f18f676134f22",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-structural-companies-1791548400539347000/paramount_skydance_paramount_global/state/updates/B12/periods/FY2021/results/209ff5ccbf5149d189458c12208d0c0f",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "trace_target": {
+    "accession": "0000813828-22-000005",
+    "company_id": "paramount_skydance_paramount_global",
+    "entity": "813828",
+    "period_end": "2021-12-31",
+    "period_start": "2021-12-31",
+    "scope": {
+      "coverage": "deterministic_source_set",
+      "fiscal_year": 2021
+    },
+    "scope_key": "sha256:0384f27d1ebcbba9d12396a47fb665f746bb66b569bb89588c42fee4cff6cc92"
+  },
+  "sources": [
+    {
+      "accession": "SUBMISSIONS-813828",
+      "company_id": "paramount_skydance_paramount_global",
+      "document_name": "CIK0000813828.json",
+      "raw_asset_id": "sha256:bdb17feef9c7303a0ad11d4ce6a74caf168b4ff7c65249202331ba06e7524130",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:8d0153590c00d0c131f673d04f1541b772a6c4e1b04ee7d93400f2bf59b5f477",
+      "source_reference_id": "sha256:61199b5b50703b802a686ef3abe519dc58675db5fc17338abd4b76b8ba5aaf6a",
+      "source_role": "sec_submissions_inventory",
+      "source_url": "https://data.sec.gov/submissions/CIK0000813828.json"
+    },
+    {
+      "accession": "0000813828-22-000005",
+      "company_id": "paramount_skydance_paramount_global",
+      "document_name": "viac-20211231.htm",
+      "raw_asset_id": "sha256:01df1ef3ea555d8d1bea3636f3afa0f9fb3087749644a5ba9400765a6f27b85e",
+      "record_type": "SOURCE_REFERENCE",
+      "request_attempt_id": "request:attempt:36077f9a5be04b04c9b908da34ec224586c7aefe61ebb5ae6f584d1b506205ed",
+      "source_reference_id": "sha256:cc4b119849e582425aeeaf5b6d6be60f44cdc3fa998c1a97bdc2b8bfab4dd921",
+      "source_role": "target_primary",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382822000005/viac-20211231.htm"
+    }
+  ],
+  "no_false_amount": true,
+  "consumer_not_fully_accepted": true
+}

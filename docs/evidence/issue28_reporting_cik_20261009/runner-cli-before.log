@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-reporting-cik/SEC_metrics/tools/run_fast_tests_v2.py", line 200, in <module>
+    SOURCE_MATERIAL_TESTS += ('tests.vnext.test_reporting_company_projection.CurrentNullableTraceProjectionTest',)
+    ^^^^^^^^^^^^^^^^^^^^^
+NameError: name 'SOURCE_MATERIAL_TESTS' is not defined

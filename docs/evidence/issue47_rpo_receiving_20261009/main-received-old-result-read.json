@@ -1,0 +1,35 @@
+{
+  "code_commit": "b00436870046b22f729f35a975a22582f5b83bff",
+  "actual_main_base": "f6ef7886",
+  "checks": [
+    {
+      "family": "rpo",
+      "seconds": null,
+      "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-salesforce-1791544616362255000/state",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-main-receiving-read-9cjt93qo/rpo",
+      "original_selected_rows_unchanged": 5,
+      "protected_files": 61,
+      "protected_unchanged": true,
+      "factory_calls": 0,
+      "first_cli_read_elapsed_not_recorded": true,
+      "existing_output_rechecked_seconds": 0.0012763331178575754
+    },
+    {
+      "family": "events",
+      "seconds": 0.8190881670452654,
+      "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paramount-event-cli-1791538080993122000/state",
+      "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/rpo-main-receiving-read-9cjt93qo/events",
+      "original_selected_rows_unchanged": 1,
+      "protected_files": 212,
+      "protected_unchanged": true,
+      "factory_calls": 0
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "original_business_processing_repeated": false,
+  "driver_initial_cik_expectation_error_retained": true
+}

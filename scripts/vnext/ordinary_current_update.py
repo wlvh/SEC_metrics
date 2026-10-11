@@ -43,7 +43,8 @@ def _configuration(source, company, metric):
             'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
             'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
     paths.update({'scripts/vnext/ordinary_current_update.py','scripts/vnext/ordinary_saved_result.py',
-                  'scripts/vnext/csv_output.py','config/issue28_normal_results_v2.json'})
+                  'scripts/vnext/csv_output.py','scripts/vnext/ordinary_update_compatibility.py',
+                  'config/issue28_normal_results_v2.json'})
     # The old Requirement inherited these dependencies implicitly. Ordinary
     # records must name their actual shared parser/calculator dependencies.
     paths.update('scripts/vnext/'+name+'.py' for name in (
@@ -59,14 +60,39 @@ def _configuration(source, company, metric):
                   'config/company_registry.csv'})
     if metric == 'B02':
         paths.add('scripts/vnext/paired_measure_v1.py')
+    if metric == 'B06':
+        from .current_b06_case import PROCESSING_FILES
+        paths.update(PROCESSING_FILES)
+    if metric == 'C02':
+        # Only C02's existing selector now imports this pure name helper.
+        # Explicit proxy C03 producers declare their own source dependencies.
+        paths.add('scripts/vnext/organization_name_core.py')
+    if metric in {'B01','B03'}:
+        paths.update('scripts/vnext/'+name+'.py' for name in (
+            'selected_revenue_scope_v1','selected_reported_revenue_v2','selected_fiscal_definition_scope_v1','selected_income_source_v1',
+            'historical_fiscal_labels','financial_structured',
+            'financial_duration','text_results_v2','xbrl_namespace_policy','composite_scope'))
     if metric == 'B03':
         paths.add('catalog/r6/text_results_v2_policy.json')
         paths.update('scripts/vnext/'+name+'.py' for name in (
             'ordinary_da_scope_v1','ordinary_b03_input_scope','xbrl_namespace_policy','b03_depreciation_scope',
             'b03_contract_amortization_scope','financial_structured','text_results_v2','reported_monetary_literal'))
+    if metric == 'D04':
+        from .ordinary_d04_saved_route import processing_paths
+        paths.update(processing_paths())
+    from .ordinary_registry_scope import registered_company_row
+    # The producer validates the entire program registry's profile mapping.
+    # Keep that admission check before reuse; valid unrelated rows still do
+    # not become comparison inputs. Source registries use program-side rules.
+    from .traits import repository_company_traits
+    repository_company_traits(repo_root=ROOT,company_id=company)
+    paths.discard('config/company_registry.csv')
+    paths.add('scripts/vnext/ordinary_registry_scope.py')
     return {'company_id':company,'metric_id':metric,'source_root':str(source),
         'processing_files':{p:sha256_file(path=ROOT/p) for p in sorted(paths)},
-        'source_registry_sha256':sha256_file(path=source/'config/company_registry.csv'),
+        'company_registry_rows':{
+            'program':registered_company_row(repo_root=ROOT,company_id=company),
+            'source':registered_company_row(repo_root=source,company_id=company)},
         'provider_enabled':False,'sec_fetch_enabled':False}
 
 
@@ -240,7 +266,11 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                 current = _current_sources(source,saved['manifest']['source_proofs'])
                 old = [{k:p[k] for k in ('source_url','accession','document_name','content_sha256')}
                        for p in saved['manifest']['source_proofs']]
-                if _same_processing_configuration(comparison['configuration'],configuration) and census==comparison.get('source_census') and current==old:
+                from .ordinary_update_compatibility import compatible_configuration
+                same_processing = _same_processing_configuration(comparison['configuration'], configuration)
+                compatible = not same_processing and compatible_configuration(
+                    comparison['configuration'], configuration)
+                if (same_processing or compatible) and census==comparison.get('source_census') and current==old:
                     status=('PREVIOUS_INPUT_WITHHELD' if saved['result']['publication']=='WITHHELD'
                             else 'NO_SOURCE_CONTENT_CHANGE')
                     report = {'status':status,'attempt_id':identity,
@@ -253,8 +283,17 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
                     if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
-                    _write(attempt/'terminal.json',report); _write(root/'latest-check.json',report)
-                    return report
+                    if compatible:
+                        # A new check can recognize the same inputs; the old
+                        # result, terminal and last success keep their identities.
+                        report['configuration_compatibility'] = 'FINITE_D04_DISPATCH_ONLY'
+                        report['completed_check'] = {**comparison, 'configuration':configuration,
+                            'status':('CANDIDATE_WITHHELD' if status=='PREVIOUS_INPUT_WITHHELD'
+                                      else 'CANDIDATE_READY')}
+                    _write(attempt/'terminal.json',report)
+                    if compatible:_write(root/'completed-check.json', report['completed_check'])
+                    _write(root/'latest-check.json',report)
+                    return {k:v for k,v in report.items() if k != 'completed_check'}
             # Full selection/period/subject checks only run for changed/new
             # input. A newly selected filing necessarily changes submissions.
             version = uuid4().hex

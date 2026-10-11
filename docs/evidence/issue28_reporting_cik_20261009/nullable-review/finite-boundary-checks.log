@@ -1,0 +1,122 @@
+{
+  "utc": "2026-10-09T14:17:34.721334+00:00",
+  "network": "socket denied",
+  "finite_checks": 27,
+  "input_mutation": false,
+  "checks": [
+    {
+      "case": "both_null_primary",
+      "reporter_cik": "813828"
+    },
+    {
+      "case": "null_entity_filled_matching_accession",
+      "reporter_cik": "813828"
+    },
+    {
+      "case": "null_accession_filled_matching_entity",
+      "reporter_cik": "813828"
+    },
+    {
+      "case": "metadata_only_same_inventory",
+      "reporter_cik": "813828"
+    },
+    {
+      "case": "numeric_or_text_cannot_use_inventory_only",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN"
+    },
+    {
+      "case": "metadata_unknown_inventory",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN"
+    },
+    {
+      "case": "metadata_foreign_registered_inventory",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN"
+    },
+    {
+      "case": "metadata_foreign_company_inventory",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN"
+    },
+    {
+      "case": "missing_all_references",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN"
+    },
+    {
+      "case": "primary_wrong_reference_accession",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN"
+    },
+    {
+      "case": "primary_wrong_document",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN"
+    },
+    {
+      "case": "primary_foreign_registered_cik",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN"
+    },
+    {
+      "case": "primary_foreign_company",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN"
+    },
+    {
+      "case": "filled_wrong_accession_not_hidden_by_inventory",
+      "rejected": "ORDINARY_PROJECTION_TRACE_FILING_CHANGED"
+    },
+    {
+      "case": "filled_foreign_registered_entity_not_hidden_by_primary",
+      "rejected": "ORDINARY_PROJECTION_TRACE_SUBJECT_CHANGED"
+    },
+    {
+      "case": "missing_entity_key",
+      "rejected": "ORDINARY_PROJECTION_TRACE_SUBJECT_CHANGED"
+    },
+    {
+      "case": "missing_accession_key",
+      "rejected": "ORDINARY_PROJECTION_TRACE_SUBJECT_CHANGED"
+    },
+    {
+      "case": "foreign_target_company",
+      "rejected": "ORDINARY_PROJECTION_TRACE_SUBJECT_CHANGED"
+    },
+    {
+      "case": "foreign_annual_company",
+      "rejected": "ORDINARY_PROJECTION_TRACE_SUBJECT_CHANGED"
+    },
+    {
+      "case": "unknown_reporter",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_NOT_REGISTERED"
+    },
+    {
+      "case": "foreign_reporter",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_NOT_REGISTERED"
+    },
+    {
+      "case": "combined_scope",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SCOPE_NOT_PROVEN"
+    },
+    {
+      "case": "unknown_scope",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SCOPE_NOT_PROVEN"
+    },
+    {
+      "case": "null_scope",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SCOPE_NOT_PROVEN"
+    },
+    {
+      "case": "renderer_metadata_only_native_null_trace_inventory_only",
+      "cik": "1048286",
+      "status": "N_A_STRUCTURAL",
+      "value": "",
+      "constructed_reference_subset": true
+    },
+    {
+      "case": "renderer_numeric_inventory_only",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN",
+      "constructed_invalid_payload_only_to_check_render_guard": true
+    },
+    {
+      "case": "renderer_text_inventory_only",
+      "rejected": "ORDINARY_PROJECTION_REPORTER_SOURCE_NOT_PROVEN",
+      "constructed_invalid_payload_only_to_check_render_guard": true
+    }
+  ],
+  "boundary": "Helper and renderer source/metadata guards only; constructed metadata reference subset and invalid numeric/text payload are not genuine business results."
+}

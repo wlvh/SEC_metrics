@@ -1,0 +1,541 @@
+{
+  "code_commit": "1d00cbd3f928d67845c6ffd900627964150bf489",
+  "seconds": 1.5367509580682963,
+  "raw_dei_fiscal_year": 2025,
+  "resolved_issuer_fiscal_year": 2026,
+  "old_saved_result_files_preserved": {
+    "metrics_matrix.csv": "992a359491dbccda8a8d2287b9583e21e835a3b2ddfb8315859eda44c30f29b4",
+    "metric_evidence.csv": "7f4a4b93c150655d1fdced06125f8082d7e79a05564f153a05b1e1ebbb1f245a",
+    "records.jsonl": "44199ee1dbf8434e1d5515aa0c1a1eeeded4a0bfe0fbbfc674bc2fa3de1eb02e",
+    "input-assessments.json": "bdd9e877d4f3ad1fd6aa3a2167678bd09ade3c7658c7fe12a9f6260133b52c11",
+    "manifest.json": "388b45a3106be2fafbf12f25662f20c4ae37c380cd649e2570d3040bbaaa4a8e",
+    "write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receipt.json": "fbf8e9a7ab34c9d00df4e88e7f2722b147a1ad0b2a5011a7f759f85bcd6289c4"
+  },
+  "original_result_not_recomputed": true,
+  "constructed_controls_not_financial_acceptance": [
+    {
+      "constructed_case": "unknown_subject",
+      "reason": "SELECTED_REVENUE_STATEMENT_HEADING_SCOPE_UNRESOLVED",
+      "refused": true
+    },
+    {
+      "constructed_case": "recognized_navigation",
+      "navigation_source_spans": [
+        {
+          "start_byte": 1605,
+          "end_byte": 1639,
+          "tag": "div",
+          "attributes": [],
+          "inside_table": false,
+          "structure_path": [
+            "xbrli:xbrl:1",
+            "div:1"
+          ],
+          "visible_text": "See accompanying Notes.",
+          "span_sha256": "4be9729e327257777d99b23099e7217a96a7a2612e006dddeb8d9464b12522ca"
+        },
+        {
+          "start_byte": 1639,
+          "end_byte": 1652,
+          "tag": "div",
+          "attributes": [],
+          "inside_table": false,
+          "structure_path": [
+            "xbrli:xbrl:1",
+            "div:2"
+          ],
+          "visible_text": "57",
+          "span_sha256": "29151546bbc164b7549a7f655e3095ff83785d52a36b149d69c90308965b594c"
+        },
+        {
+          "start_byte": 1652,
+          "end_byte": 1680,
+          "tag": "div",
+          "attributes": [],
+          "inside_table": false,
+          "structure_path": [
+            "xbrli:xbrl:1",
+            "div:3"
+          ],
+          "visible_text": "Table of Contents",
+          "span_sha256": "debefd3f7c1fb0c362cede890d2017d15e88bc2aa4dee67aa202bb3ddacf50f0"
+        }
+      ],
+      "refused": false
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "source_scope": {
+    "scope_id": "sha256:9d66f8c29c49e131fafc971b3eac27a479ea9a01e6c555f3900f44fa66a9da94",
+    "method": "SELECTED_REPORTED_CONSOLIDATED_REVENUE_V2",
+    "status": "REPORTED_CONSOLIDATED_TOTAL",
+    "complete_scope_proven": true,
+    "selected_fiscal_column_year": 2026,
+    "reported_totals": [
+      {
+        "total": {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "41525000000",
+          "unit": "USD",
+          "period_start": "2025-02-01",
+          "period_end": "2026-01-31",
+          "decimals": "-6",
+          "ordinal": 158,
+          "context_ref": "c-1",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0001108524",
+            "period_end": "2026-01-31",
+            "period_start": "2025-02-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "identifiers": [
+              {
+                "value": "0001108524",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2025-02-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2026-01-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c",
+            "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+            "company_id": "salesforce",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+            "accession": "0001108524-26-000060",
+            "document_name": "crm-20260131.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
+          }
+        },
+        "total_cell": {
+          "table_id": "table_000034",
+          "grid_sha256": "sha256:3381ba8da554a3686f4099602a449cf7dc8ef7bcef8134c2dec9d44e7bf77f9e",
+          "row_index": 6,
+          "column_index": 15,
+          "origin_row_index": 6,
+          "origin_column_index": 15,
+          "rowspan": 1,
+          "colspan": 2,
+          "raw_text": "41,525&#160;",
+          "text": "41,525"
+        },
+        "statement_scope": {
+          "title_sources": [
+            {
+              "start_byte": 1082545,
+              "end_byte": 1082739,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:886"
+              ],
+              "visible_text": "Consolidated Statements of Operations ",
+              "span_sha256": "d92422c78881105b3f84b2ea9044e0300fdce8eb38e15280ab8e5bc51e6e83e2"
+            }
+          ],
+          "caption": "",
+          "table_span": {
+            "table_order": 33,
+            "start_byte": 1082962,
+            "end_byte": 1139079,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:888",
+              "table:1"
+            ],
+            "span_sha256": "f1815351654762921ded55ff1c8b43bc705a18e3c2b05c394971dc97bdf7d6a2"
+          },
+          "intervening_sources": [
+            {
+              "start_byte": 1081401,
+              "end_byte": 1081580,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:881"
+              ],
+              "visible_text": "See accompanying Notes.",
+              "span_sha256": "f4f0d47ff3bed415c200e8d981b12a4a57c566fbd6df5dbb169454872f27da30"
+            },
+            {
+              "start_byte": 1081688,
+              "end_byte": 1081846,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:882",
+                "div:1",
+                "div:1"
+              ],
+              "visible_text": "57",
+              "span_sha256": "767f08fdb479765f0afe85fe3e0d9e0e48dbe41af717d66d41614961dd961fb6"
+            },
+            {
+              "start_byte": 1081988,
+              "end_byte": 1082367,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "margin-top:12pt"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:884",
+                "div:1"
+              ],
+              "visible_text": "Table of Contents",
+              "span_sha256": "27a0dcd6e98ce4e46ef1512806e0ce80f49e8fdf87b25bd5db752a4f38a55e19"
+            },
+            {
+              "start_byte": 1082373,
+              "end_byte": 1082545,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:885"
+              ],
+              "visible_text": "Salesforce, Inc.",
+              "span_sha256": "edd066db9e5bd76ec42168d9e0f7bec5cd08a08aafc5c095eba7c2b7fbd8eac3"
+            },
+            {
+              "start_byte": 1082545,
+              "end_byte": 1082739,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:886"
+              ],
+              "visible_text": "Consolidated Statements of Operations ",
+              "span_sha256": "d92422c78881105b3f84b2ea9044e0300fdce8eb38e15280ab8e5bc51e6e83e2"
+            },
+            {
+              "start_byte": 1082739,
+              "end_byte": 1082931,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:887"
+              ],
+              "visible_text": "(in millions, except per share data)",
+              "span_sha256": "f47f6cc2aae214c1f82f9f9ddb95e4db36670a563f36d2b009eefdf824b735a8"
+            }
+          ],
+          "unresolved_annotations": [],
+          "adjacent_heading_table": null,
+          "preceding_navigation_sources": [
+            {
+              "start_byte": 1081401,
+              "end_byte": 1081580,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:881"
+              ],
+              "visible_text": "See accompanying Notes.",
+              "span_sha256": "f4f0d47ff3bed415c200e8d981b12a4a57c566fbd6df5dbb169454872f27da30"
+            },
+            {
+              "start_byte": 1081688,
+              "end_byte": 1081846,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:882",
+                "div:1",
+                "div:1"
+              ],
+              "visible_text": "57",
+              "span_sha256": "767f08fdb479765f0afe85fe3e0d9e0e48dbe41af717d66d41614961dd961fb6"
+            },
+            {
+              "start_byte": 1081988,
+              "end_byte": 1082367,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "margin-top:12pt"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:884",
+                "div:1"
+              ],
+              "visible_text": "Table of Contents",
+              "span_sha256": "27a0dcd6e98ce4e46ef1512806e0ce80f49e8fdf87b25bd5db752a4f38a55e19"
+            }
+          ]
+        },
+        "unit_sources": [
+          {
+            "kind": "heading_block",
+            "proof": {
+              "start_byte": 1082739,
+              "end_byte": 1082931,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:887"
+              ],
+              "visible_text": "(in millions, except per share data)",
+              "span_sha256": "f47f6cc2aae214c1f82f9f9ddb95e4db36670a563f36d2b009eefdf824b735a8"
+            },
+            "text": "(in millions, except per share data)"
+          }
+        ],
+        "year_headers": [
+          {
+            "table_id": "table_000034",
+            "grid_sha256": "sha256:3381ba8da554a3686f4099602a449cf7dc8ef7bcef8134c2dec9d44e7bf77f9e",
+            "row_index": 2,
+            "column_index": 15,
+            "origin_row_index": 2,
+            "origin_column_index": 15,
+            "rowspan": 1,
+            "colspan": 3,
+            "raw_text": "2026",
+            "text": "2026"
+          }
+        ],
+        "end_headers": [
+          {
+            "table_id": "table_000034",
+            "grid_sha256": "sha256:3381ba8da554a3686f4099602a449cf7dc8ef7bcef8134c2dec9d44e7bf77f9e",
+            "row_index": 1,
+            "column_index": 9,
+            "origin_row_index": 1,
+            "origin_column_index": 9,
+            "rowspan": 1,
+            "colspan": 15,
+            "raw_text": "Fiscal Year Ended January 31,",
+            "text": "Fiscal Year Ended January 31,"
+          }
+        ],
+        "annual_period": {
+          "fiscal_year": 2025,
+          "period_end": "2026-01-31",
+          "period_start": "2025-02-01"
+        },
+        "xml_matches": [
+          {
+            "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+            "value": "41525000000",
+            "unit": "USD",
+            "period_start": "2025-02-01",
+            "period_end": "2026-01-31",
+            "decimals": "-6",
+            "ordinal": 158,
+            "context_ref": "c-1",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0001108524",
+              "period_end": "2026-01-31",
+              "period_start": "2025-02-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0001108524",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-02-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2026-01-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:49f22a0447f7bbc7e9d2fa79e64642550f424d82bd3442741fd292341a84e4d3",
+              "raw_asset_id": "sha256:ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+              "company_id": "salesforce",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+              "accession": "0001108524-26-000060",
+              "document_name": "crm-20260131_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3"
+            }
+          },
+          {
+            "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+            "value": "41525000000",
+            "unit": "USD",
+            "period_start": "2025-02-01",
+            "period_end": "2026-01-31",
+            "decimals": "-6",
+            "ordinal": 515,
+            "context_ref": "c-1",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0001108524",
+              "period_end": "2026-01-31",
+              "period_start": "2025-02-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "identifiers": [
+                {
+                  "value": "0001108524",
+                  "scheme": "http://www.sec.gov/CIK"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-02-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2026-01-31"
+                }
+              ],
+              "dimensions": [],
+              "typed_dimension_count": 0
+            },
+            "source_reference": {
+              "record_type": "SOURCE_REFERENCE",
+              "source_reference_id": "sha256:49f22a0447f7bbc7e9d2fa79e64642550f424d82bd3442741fd292341a84e4d3",
+              "raw_asset_id": "sha256:ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+              "company_id": "salesforce",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+              "accession": "0001108524-26-000060",
+              "document_name": "crm-20260131_htm.xml",
+              "source_role": "auditor_facts",
+              "request_attempt_id": "request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3"
+            }
+          }
+        ],
+        "xml_check": "MATCH"
+      }
+    ],
+    "raw_annual_period": {
+      "fiscal_year": 2025,
+      "period_end": "2026-01-31",
+      "period_start": "2025-02-01"
+    },
+    "fiscal_label_source": {
+      "selected_fiscal_year": 2026,
+      "original_dei_fiscal_year": 2025,
+      "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+      "source_inspection_id": "sha256:07b94467c10d4b198ab354c2b4f9a8db5fc7e54bb1b4f472705495f53b43c0cb",
+      "primary_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+      "entity": "1108524",
+      "accession": "0001108524-26-000060"
+    }
+  },
+  "full_label_reference": "5f9d6a76:docs/evidence/issue47_selected_label_20261010/actual-originals.json; unchanged source inspector/data"
+}

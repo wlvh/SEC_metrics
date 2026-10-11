@@ -134,3 +134,63 @@ class CompanyOnlineTest(unittest.TestCase):
                 online.Capture(self.root/'missing-replies',self.ledger,context,5)
         network.assert_not_called()
         with self.ledger.locked():self.assertEqual(self.ledger.snapshot()['counts'],[0,0,0])
+
+
+class CompanyCliPeriodRoutingTest(unittest.TestCase):
+    """Public argument routing controls; stubs are not computed results."""
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
+        self.root=Path(self.tmp.name)
+        self.base=['run','--company','ford_motor','--metric','B01',
+                   '--work-dir',str(self.root/'state'),'--output-dir',str(self.root/'output')]
+
+    def test_online_historical_range_rejected_before_context_or_writer(self):
+        from tools.vnext_company import main
+        with patch.object(online,'run_online_company',return_value={'status':'FLOW_COMPLETED'}) as run, \
+             patch.object(online,'_ledger',side_effect=AssertionError('No ledger')) as ledger, \
+             patch('sys.stderr',io.StringIO()),patch('sys.stdout',io.StringIO()):
+            with self.assertRaises(SystemExit) as caught:
+                main(self.base+['--period','fiscal-years','--fiscal-year-start','2021',
+                     '--fiscal-year-end','2025','--call-context',str(self.root/'not-readable.json')])
+        self.assertEqual(caught.exception.code,2);run.assert_not_called();ledger.assert_not_called()
+        self.assertEqual(list(self.root.iterdir()),[])
+
+    def test_latest_does_not_silently_ignore_supplied_years(self):
+        from tools.vnext_company import main
+        for years in (['--fiscal-year-start','2021'],['--fiscal-year-end','2025'],
+                      ['--fiscal-year-start','2021','--fiscal-year-end','2025']):
+            with self.subTest(years=years), \
+                 patch.object(online,'run_online_company',return_value={'status':'FLOW_COMPLETED'}) as run, \
+                 patch('sys.stderr',io.StringIO()),patch('sys.stdout',io.StringIO()):
+                with self.assertRaises(SystemExit) as caught:
+                    main(self.base+['--call-context',str(self.root/'missing-context')]+years)
+                self.assertEqual(caught.exception.code,2);run.assert_not_called()
+        self.assertEqual(list(self.root.iterdir()),[])
+
+    def test_latest_saved_source_also_rejects_ignored_year_arguments(self):
+        from tools.vnext_company import main
+        with patch('vnext.company_local.run_local',return_value={'status':'FLOW_COMPLETED'}) as run, \
+             patch('sys.stderr',io.StringIO()),patch('sys.stdout',io.StringIO()):
+            with self.assertRaises(SystemExit):
+                main(self.base+['--source-root',str(self.root/'source'),'--fiscal-year-start','2021'])
+        run.assert_not_called()
+
+    def test_supported_current_online_dispatch_unchanged(self):
+        from tools.vnext_company import main
+        with patch.object(online,'run_online_company',return_value={'status':'FLOW_COMPLETED'}) as run, \
+             patch('sys.stdout',io.StringIO()):
+            self.assertEqual(main(self.base+['--call-context',str(self.root/'context')]),0)
+        self.assertEqual(run.call_args.kwargs['company_id'],'ford_motor')
+        self.assertEqual(run.call_args.kwargs['metric_ids'],['B01'])
+        self.assertEqual(run.call_args.kwargs['call_context'],self.root/'context')
+        self.assertNotIn('fiscal_year_start',run.call_args.kwargs)
+
+    def test_saved_history_range_forwarded_to_existing_public_consumer(self):
+        from tools.vnext_company import main
+        with patch('vnext.company_local.run_local',return_value={'status':'FLOW_COMPLETED'}) as run, \
+             patch('sys.stdout',io.StringIO()):
+            self.assertEqual(main(self.base+['--period','fiscal-years','--fiscal-year-start','2021',
+                '--fiscal-year-end','2025','--source-root',str(self.root/'source')]),0)
+        self.assertEqual(run.call_args.kwargs['period'],'fiscal-years')
+        self.assertEqual(run.call_args.kwargs['fiscal_year_start'],2021)
+        self.assertEqual(run.call_args.kwargs['fiscal_year_end'],2025)

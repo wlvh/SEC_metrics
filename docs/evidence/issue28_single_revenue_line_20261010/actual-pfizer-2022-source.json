@@ -1,0 +1,286 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "fiscal_year": 2022,
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2022-12-31",
+    "filingDate": "2023-02-23",
+    "accessionNumber": "0000078003-23-000024",
+    "primaryDocument": "pfe-20221231.htm"
+  },
+  "entity": "78003",
+  "target_period": {
+    "fiscal_year": 2022,
+    "period_start": "2022-01-01",
+    "period_end": "2022-12-31"
+  },
+  "primary_sha256": "3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e",
+  "xml_sha256": "cf97c3a8e642864ba7c466f4e8f2a371aaf32c30f474b9734f223294bf2b6acb",
+  "old_scope_status": "NO_REPORTED_TOTAL_PROVEN",
+  "new_scope_status": "REPORTED_CONSOLIDATED_TOTAL",
+  "new_scope_id": "sha256:435dc83ab243023da974a8e35af0630ff15a7cd22c6c2f9bf019eca56403813a",
+  "total": {
+    "concept": "us-gaap:Revenues",
+    "value": "100330000000",
+    "unit": "USD",
+    "period_start": "2022-01-01",
+    "period_end": "2022-12-31",
+    "decimals": "-6",
+    "ordinal": 80,
+    "context_ref": "ifd32821b5aa74fbfbe10209f8777cec0_D20220101-20221231",
+    "context": {
+      "context_ref": "ifd32821b5aa74fbfbe10209f8777cec0_D20220101-20221231",
+      "dimensions": {},
+      "entity_identifier": "0000078003",
+      "period_end": "2022-12-31",
+      "period_start": "2022-01-01",
+      "typed_dimension_count": 0
+    },
+    "context_proof": {
+      "context_ref": "ifd32821b5aa74fbfbe10209f8777cec0_D20220101-20221231",
+      "identifiers": [
+        {
+          "value": "0000078003",
+          "scheme": "http://www.sec.gov/CIK"
+        }
+      ],
+      "period_fields": [
+        {
+          "kind": "startdate",
+          "value": "2022-01-01"
+        },
+        {
+          "kind": "enddate",
+          "value": "2022-12-31"
+        }
+      ],
+      "dimensions": [],
+      "typed_dimension_count": 0
+    },
+    "source_reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:1f773f13400a5196093fd497769df312f6176297915efe9b8a04e0467d1f1bd7",
+      "raw_asset_id": "sha256:3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e",
+      "company_id": "pfizer",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800323000024/pfe-20221231.htm",
+      "accession": "0000078003-23-000024",
+      "document_name": "pfe-20221231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:a5a91811752c8f15d04c11725e1885c5763a51be83de3e624c7b76c8282f1ba5"
+    }
+  },
+  "total_cell": {
+    "table_id": "table_000107",
+    "grid_sha256": "sha256:e73e1cf0f10f90485577e996c45dd0a18c0543bff602d42181d8f2d01de43f5e",
+    "row_index": 3,
+    "column_index": 16,
+    "origin_row_index": 3,
+    "origin_column_index": 16,
+    "rowspan": 1,
+    "colspan": 1,
+    "raw_text": "100,330&#160;",
+    "text": "100,330"
+  },
+  "statement_scope": {
+    "title_sources": [
+      {
+        "start_byte": 2476954,
+        "end_byte": 2477112,
+        "tag": "div",
+        "attributes": [],
+        "inside_table": false,
+        "structure_path": [
+          "html:1",
+          "body:1",
+          "div:831",
+          "div:2"
+        ],
+        "visible_text": "Consolidated Statements of Income",
+        "span_sha256": "1052e83a3a48bdb7c0b5dca42f30f0a4da5b81268966041392cec1ff9fc9c582"
+      }
+    ],
+    "caption": "",
+    "table_span": {
+      "table_order": 106,
+      "start_byte": 2477335,
+      "end_byte": 2567243,
+      "structure_path": [
+        "html:1",
+        "body:1",
+        "div:832",
+        "table:1"
+      ],
+      "span_sha256": "4621e030e97f3221e7419852130dac3d06627db51183e3822d0c593242201352"
+    },
+    "intervening_sources": [
+      {
+        "start_byte": 2476954,
+        "end_byte": 2477112,
+        "tag": "div",
+        "attributes": [],
+        "inside_table": false,
+        "structure_path": [
+          "html:1",
+          "body:1",
+          "div:831",
+          "div:2"
+        ],
+        "visible_text": "Consolidated Statements of Income",
+        "span_sha256": "1052e83a3a48bdb7c0b5dca42f30f0a4da5b81268966041392cec1ff9fc9c582"
+      },
+      {
+        "start_byte": 2477112,
+        "end_byte": 2477272,
+        "tag": "div",
+        "attributes": [],
+        "inside_table": false,
+        "structure_path": [
+          "html:1",
+          "body:1",
+          "div:831",
+          "div:3"
+        ],
+        "visible_text": "Pfizer Inc. and Subsidiary Companies",
+        "span_sha256": "a415bcf75f9ad914c0b2c03592f63d68142d01d5446515dbe36a34859bb866e4"
+      }
+    ],
+    "unresolved_annotations": [],
+    "adjacent_heading_table": null
+  },
+  "unit_sources": [
+    {
+      "kind": "visible_cell",
+      "proof": {
+        "table_id": "table_000107",
+        "grid_sha256": "sha256:e73e1cf0f10f90485577e996c45dd0a18c0543bff602d42181d8f2d01de43f5e",
+        "row_index": 2,
+        "column_index": 0,
+        "origin_row_index": 2,
+        "origin_column_index": 0,
+        "rowspan": 1,
+        "colspan": 3,
+        "raw_text": "(MILLIONS, EXCEPT PER SHARE DATA)",
+        "text": "(MILLIONS, EXCEPT PER SHARE DATA)"
+      },
+      "text": "(MILLIONS, EXCEPT PER SHARE DATA)"
+    }
+  ],
+  "year_headers": [
+    {
+      "table_id": "table_000107",
+      "grid_sha256": "sha256:e73e1cf0f10f90485577e996c45dd0a18c0543bff602d42181d8f2d01de43f5e",
+      "row_index": 2,
+      "column_index": 15,
+      "origin_row_index": 2,
+      "origin_column_index": 15,
+      "rowspan": 1,
+      "colspan": 3,
+      "raw_text": "2022",
+      "text": "2022"
+    }
+  ],
+  "xml_check": "MATCH",
+  "companyfacts_fact_ids": [
+    "fact:sha256:d4ac13c65e02c46434776e4efa2e311fddf67ee8e906a205c3d192ca3bb96ce4"
+  ],
+  "source_admission": {
+    "record_type": "VERIFIED_SAVED_SOURCE_INPUTS",
+    "source_manifest_sha256": "c3e698667941f5e0b1add27a0d33a47fff4ff2271f1422b47f840aa87f0f2447",
+    "request_attempt_ids": [
+      "request:attempt:da32347f7b7f3efe0b525c5095519d4177d7d788c9aa25beade0fcf580ec616a",
+      "request:attempt:a5a91811752c8f15d04c11725e1885c5763a51be83de3e624c7b76c8282f1ba5",
+      "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db",
+      "request:attempt:01cb4811068fe9fd1a66d13c3f24827a2ceb2b08ef19494a35adba2c7d369098",
+      "request:attempt:d76a162e9e87fe9efeba629b12ef7dbdcb8bbe2caca3a0378244c304b91921ca"
+    ],
+    "source_credit": "SAVED_SOURCE_BYTES_AND_REQUESTS_CHECKED",
+    "real_sec_credit": false,
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "source_proofs": [
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0000078003.json",
+      "accession": "",
+      "document_name": "CIK0000078003.json",
+      "content_sha256": "16e5e8fd177d0480a8cceef19709915acd7275fc874f9eb7962e1667b0e57c57",
+      "request_body_sha256": "16e5e8fd177d0480a8cceef19709915acd7275fc874f9eb7962e1667b0e57c57",
+      "request_body_size": 145587,
+      "request_headers_repo_relative_path": "evidence/request_attempts/16/16e5e8fd177d0480a8cceef19709915acd7275fc874f9eb7962e1667b0e57c57/CIK0000078003.json.9ef08fa860ff933ac75b17bf1c536139a84c05c9784df29321fd81e63e47ec20.headers.json",
+      "request_headers_sha256": "9ef08fa860ff933ac75b17bf1c536139a84c05c9784df29321fd81e63e47ec20",
+      "request_headers_size": 736,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/16/16e5e8fd177d0480a8cceef19709915acd7275fc874f9eb7962e1667b0e57c57/CIK0000078003.json",
+      "request_attempt_id": "request:attempt:da32347f7b7f3efe0b525c5095519d4177d7d788c9aa25beade0fcf580ec616a"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800323000024/pfe-20221231.htm",
+      "accession": "0000078003-23-000024",
+      "document_name": "pfe-20221231.htm",
+      "content_sha256": "3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e",
+      "request_body_sha256": "3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e",
+      "request_body_size": 6902609,
+      "request_headers_repo_relative_path": "evidence/request_attempts/3f/3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e/pfe-20221231.htm.e6828ac2fcf9d2604f103734cf3af358a5e55c304f188546d9540387410d3136.headers.json",
+      "request_headers_sha256": "e6828ac2fcf9d2604f103734cf3af358a5e55c304f188546d9540387410d3136",
+      "request_headers_size": 1683,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/3f/3f7fbed78fb0df432afcb1463bf372283a07eae770503e00cc9190d01e6d9f5e/pfe-20221231.htm",
+      "request_attempt_id": "request:attempt:a5a91811752c8f15d04c11725e1885c5763a51be83de3e624c7b76c8282f1ba5"
+    },
+    {
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+      "accession": "0000078003-23-000024",
+      "document_name": "CIK0000078003.json",
+      "content_sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+      "request_body_sha256": "bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+      "request_body_size": 5032767,
+      "request_headers_repo_relative_path": "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json.87d820246a7036bdfbbd48ef3aca556b5daa4647d06ea3c0cc8d4b35c2674168.headers.json",
+      "request_headers_sha256": "87d820246a7036bdfbbd48ef3aca556b5daa4647d06ea3c0cc8d4b35c2674168",
+      "request_headers_size": 707,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/bd/bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566/CIK0000078003.json",
+      "request_attempt_id": "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800323000024/index.json",
+      "accession": "0000078003-23-000024",
+      "document_name": "index.json",
+      "content_sha256": "6d7a4218503360263df8b7b1d4adb531b4fdc486452330882542803c74080a27",
+      "request_body_sha256": "6d7a4218503360263df8b7b1d4adb531b4fdc486452330882542803c74080a27",
+      "request_body_size": 15814,
+      "request_headers_repo_relative_path": "evidence/request_attempts/6d/6d7a4218503360263df8b7b1d4adb531b4fdc486452330882542803c74080a27/index.json.3f161ae9fa1ec96a5403b49df134fc2c1c457826ce2c71ca7d0b203276f2fa01.headers.json",
+      "request_headers_sha256": "3f161ae9fa1ec96a5403b49df134fc2c1c457826ce2c71ca7d0b203276f2fa01",
+      "request_headers_size": 1247,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/6d/6d7a4218503360263df8b7b1d4adb531b4fdc486452330882542803c74080a27/index.json",
+      "request_attempt_id": "request:attempt:01cb4811068fe9fd1a66d13c3f24827a2ceb2b08ef19494a35adba2c7d369098"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800323000024/pfe-20221231_htm.xml",
+      "accession": "0000078003-23-000024",
+      "document_name": "pfe-20221231_htm.xml",
+      "content_sha256": "cf97c3a8e642864ba7c466f4e8f2a371aaf32c30f474b9734f223294bf2b6acb",
+      "request_body_sha256": "cf97c3a8e642864ba7c466f4e8f2a371aaf32c30f474b9734f223294bf2b6acb",
+      "request_body_size": 8785580,
+      "request_headers_repo_relative_path": "evidence/request_attempts/cf/cf97c3a8e642864ba7c466f4e8f2a371aaf32c30f474b9734f223294bf2b6acb/pfe-20221231_htm.xml.92a62b5059630dbb173157ae562e351d326989dea83dac605b0748a768f2cfd6.headers.json",
+      "request_headers_sha256": "92a62b5059630dbb173157ae562e351d326989dea83dac605b0748a768f2cfd6",
+      "request_headers_size": 1990,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/cf/cf97c3a8e642864ba7c466f4e8f2a371aaf32c30f474b9734f223294bf2b6acb/pfe-20221231_htm.xml",
+      "request_attempt_id": "request:attempt:d76a162e9e87fe9efeba629b12ef7dbdcb8bbe2caca3a0378244c304b91921ca"
+    }
+  ],
+  "seconds": 17.36386458319612,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "company_result_created": false,
+  "reference_used_as_input": false
+}

@@ -1,0 +1,198 @@
+{
+  "utc": "2026-10-09T13:00:48.431061+00:00",
+  "action": "Read parent-created saved B01 result and original source; no CLI/calculation rerun",
+  "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/development/issue28-reporting-nq3m1m8x/state/updates/B01/periods/FY2021/results/5af6b3c385af4fb4b580fe0f52fe39ff",
+  "metric_ciks": [
+    "813828"
+  ],
+  "evidence_ciks": [
+    "813828"
+  ],
+  "trace_calculation_target": {
+    "accession": "0000813828-22-000005",
+    "company_id": "paramount_skydance_paramount_global",
+    "entity": "813828",
+    "period_end": "2021-12-31",
+    "period_start": "2021-01-01",
+    "scope": {
+      "entity_scope": "registrant",
+      "period_basis": "source_annual_duration"
+    },
+    "scope_key": "sha256:40c1b117aaff42f29f42a0f713715c68e0d00033448744ac18360a24199239c8"
+  },
+  "result_id": "sha256:ba43668519d6bf929a0a89d4c7e3afd8441bfae78161420c4106ddc73d9cf456",
+  "value": "28586000000",
+  "unit": "USD",
+  "period_start": "2021-01-01",
+  "period_end": "2021-12-31",
+  "primary_source_path": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/request_attempts/01/01df1ef3ea555d8d1bea3636f3afa0f9fb3087749644a5ba9400765a6f27b85e/viac-20211231.htm",
+  "primary_source_sha256": "01df1ef3ea555d8d1bea3636f3afa0f9fb3087749644a5ba9400765a6f27b85e",
+  "primary_source_matches_saved_target_primary_reference": true,
+  "evidence_source_kind": "companyfacts; independently rehashed actual evidence JSON",
+  "evidence_content_sha256": [
+    "c6173a017e1c2ed4efc0c746ca87c8d7e355c989c7b4b95a9a67165309cd490e"
+  ],
+  "original_issuer_cik": [
+    "0000813828"
+  ],
+  "original_2021_revenue_fact": [
+    {
+      "context_ref": "i37a58c68d81c49d99c24c73b1033ad9c_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "28,586"
+    },
+    {
+      "context_ref": "ia27a53f2d5cb49609679dd9005adc687_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "9,267"
+    },
+    {
+      "context_ref": "i0ae0072f62cf4a0586dd60e8c8d2c7fa_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "8,394"
+    },
+    {
+      "context_ref": "i04c14eb7349248e2971f8a8648e46b36_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "4,193"
+    },
+    {
+      "context_ref": "i110f10c2bb734aca8696e5797fbc1031_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "241"
+    },
+    {
+      "context_ref": "iebd4a92cd3d94747abd4611b52db89a7_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "6,491"
+    },
+    {
+      "context_ref": "i37a58c68d81c49d99c24c73b1033ad9c_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "28,586"
+    },
+    {
+      "context_ref": "idc2a94cd5a884ce6869bc255559ad833_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "5,377"
+    },
+    {
+      "context_ref": "i9d8227c41bd34f33baf1d78682ad1380_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "2,803"
+    },
+    {
+      "context_ref": "ie78ff532545c4f57b79a5692df553b8f_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "1,551"
+    },
+    {
+      "context_ref": "i18d692506d2846d1862b5c7dc8e87efb_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "3,200"
+    },
+    {
+      "context_ref": "ia4b135970e024659b46a4cb8c3723eed_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "12,931"
+    },
+    {
+      "context_ref": "i78c27098f4864c35a965d91ecd5232f4_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "3,907"
+    },
+    {
+      "context_ref": "i99e3a24c6e384d83951b0ba327e32425_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "5,591"
+    },
+    {
+      "context_ref": "i2a9b2305ac6042509425ba8a8a2204a8_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "2,642"
+    },
+    {
+      "context_ref": "ibd239d2e227f420c8e9d220b73a21441_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "2,060"
+    },
+    {
+      "context_ref": "i73ddfff682b9430faaa14df45798bf15_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "14,200"
+    },
+    {
+      "context_ref": "i5ca4124c460b4ef6a9f33462661c1143_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "241"
+    },
+    {
+      "context_ref": "ie5413c5e62474963bceeb85b17415d87_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "2,829"
+    },
+    {
+      "context_ref": "i5a4670826eba400ba943e0aa030bc0c3_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "3,070"
+    },
+    {
+      "context_ref": "i5cc186e3e69c4d31936450540fa7b10a_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "1,615"
+    },
+    {
+      "context_ref": "i37a58c68d81c49d99c24c73b1033ad9c_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "28,586"
+    },
+    {
+      "context_ref": "id76ddad2d98c4760bf2a51c37ecc136f_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "348"
+    },
+    {
+      "context_ref": "if0f76503799a463bb340f2d36d01d3de_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "625"
+    },
+    {
+      "context_ref": "i5a55ad568f6542b2b6e23a5eafeaf801_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "642"
+    },
+    {
+      "context_ref": "i6d9ec10db717496d9e35c2767e03dda6_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "1,615"
+    },
+    {
+      "context_ref": "i959e49ab1cd34668b23b8cf37e8b165b_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "23,320"
+    },
+    {
+      "context_ref": "i9396222d9d924ce1ae545cb4a4cdd771_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "5,266"
+    },
+    {
+      "context_ref": "i37a58c68d81c49d99c24c73b1033ad9c_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "28,586"
+    },
+    {
+      "context_ref": "i59fc4ef85fca46ee8f69b34507e04132_D20210101-20211231",
+      "scale": "6",
+      "visible_raw": "576"
+    }
+  ],
+  "result_files_unchanged_by_read": true,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "coverage_limit": "Parent-created B01 amount/source already processed; this independent action checks saved identity and one source fact, not full B01/annual correctness or repeat CLI execution",
+  "initial_probe_correction": "Initial assertion incorrectly equated primary HTML SHA with Company Facts evidence SHA; corrected to verify each against its actual saved reference, not a production defect"
+}

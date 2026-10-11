@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-events/SEC_metrics/work/reporting-cik/read_main_received.py", line 10, in <module>
+    row=next(r for r in rows if r['metric_id']==expected['metric_id'] and r['fiscal_year']==expected['fiscal_year']);assert all(row[k]==expected[k] for k in ['value','unit','period_start','period_end','result_id']);assert row['cik']==('794323' if label=='rpo' else '813828'),row['cik']
+                                                                                                                                                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1108524

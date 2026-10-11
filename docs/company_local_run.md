@@ -132,6 +132,8 @@ PR67修前29c9c9e在normal_source_authority旧绑定处、HTTP前失败；实际
 
 ## main 有限在线接续：B01/B02从空来源完成
 
+本候选的在线入口只接受 `--period latest-complete-fy`（默认值），不能用 `--call-context` 请求 `fiscal-years`。历史年度范围须使用已保存的 `--source-root`；历史在线发现/获取尚未接通，程序在账本和 HTTP 前明确拒绝。`--fiscal-year-start/end` 必须同时选择 `--period fiscal-years`，不能附在 latest 模式后被忽略。
+
 这段由 PR83 合入main；它与保留原生入口分开。`run --call-context` 将来源发现/获取与普通记录计算/CSV串接；首批只支持 B01/B02，不调用旧计算，不新建真实额度或恢复失败机会。当前验证替换外部 HTTP 返回，使用真实保存 SEC 原件，发现、落盘、解析、计算、保存和导出均走实际程序；不代表新的真实 SEC 验收或全部39指标完成。
 
 ```bash

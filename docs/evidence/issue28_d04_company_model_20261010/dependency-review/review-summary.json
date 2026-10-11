@@ -1,0 +1,27 @@
+{
+  "base": "d8c36ca4ab6b0b3d38151bb47f07660f32ceeab9",
+  "head": "666f245f67ccca4763da486b4c7d97cd2506cd86",
+  "started_utc": "2026-10-09T18:55:53+00:00",
+  "ended_utc": "2026-10-09T18:58:20.736755+00:00",
+  "elapsed_seconds": 147.736755,
+  "tool_calls_including_wrappers": 16,
+  "functions_exec_wrappers": 7,
+  "nested_tool_calls": 9,
+  "ordinary_messages_including_final": 2,
+  "source_test_bytes_equal_commit": true,
+  "source_test_sha256": {
+    "scripts/vnext/ordinary_current_update.py": "2e3379d25ad51e278fb2f2366bff98ec774615b97ab52f8c8b425d60423604eb",
+    "tests/vnext/test_current_d04_company.py": "303890729d69064710534b21a7d466823dd1c387a5051ef6f64127c1e5cbe3c1"
+  },
+  "quotation_helper_calls": [
+    {
+      "line": 193,
+      "code": "quotation_ranges=_quotation_ranges(raw)"
+    }
+  ],
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}

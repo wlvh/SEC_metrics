@@ -65,7 +65,8 @@ class HistoryCompanyDispatchTest(TestCase):
         shared.assert_not_called()
 
     def test_statement_pilot_uses_original_per_metric_factories_and_dependencies(self):
-        from vnext.historical_statement_cases import prepare_historical_statement_year_case, PROCESSING_FILES, INCOME_PROCESSING_FILES
+        from vnext.historical_statement_cases import (prepare_historical_statement_year_case,
+            PROCESSING_FILES, INCOME_PROCESSING_FILES, PAIRED_REVENUE_PROCESSING_FILES)
         with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
             self.run_history(company_id='macys', metric_ids=['B01', 'B02', 'B04', 'B05'],
                              fiscal_year_start=2021, fiscal_year_end=2025)
@@ -74,7 +75,12 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertNotIn('case_factory', args)
         self.assertTrue(all(f is prepare_historical_statement_year_case for f in args['case_factories'].values()))
         self.assertEqual(INCOME_PROCESSING_FILES, args['processing_files_by_metric']['B01'])
-        for metric in ['B02', 'B04', 'B05']:
+        self.assertEqual(PAIRED_REVENUE_PROCESSING_FILES, args['processing_files_by_metric']['B02'])
+        paired_source = 'scripts/vnext/historical_paired_revenue.py'
+        self.assertIn(paired_source, args['processing_files_by_metric']['B02'])
+        for metric in ['B01', 'B04', 'B05']:
+            self.assertNotIn(paired_source, args['processing_files_by_metric'][metric])
+        for metric in ['B04', 'B05']:
             self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
         self.assertIn('scripts/vnext/selected_income_source_v1.py', INCOME_PROCESSING_FILES)
         self.assertNotIn('scripts/vnext/selected_income_source_v1.py', PROCESSING_FILES)
@@ -125,6 +131,18 @@ class HistoryCompanyDispatchTest(TestCase):
         self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A02'])
         self.assertIs(prepare_historical_liquidity_year_case, args['case_factories']['B08'])
         self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['A01'])
+
+    def test_rpo_uses_native_case_without_changing_statement_or_capital_factories(self):
+        from vnext.historical_rpo_cases import prepare_historical_rpo_year_case, PROCESSING_FILES
+        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        from vnext.historical_capital_cases import prepare_historical_capital_year_case
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(company_id='salesforce', metric_ids=['B12', 'B01', 'A01'])
+        args = shared.call_args.kwargs
+        self.assertIs(prepare_historical_rpo_year_case, args['case_factories']['B12'])
+        self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B12'])
+        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+        self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
 
     def test_bank_performance_family_uses_original_factories_for_other_families(self):
         from vnext.historical_bank_performance_cases import prepare_historical_bank_year_case, PROCESSING_FILES

@@ -1,0 +1,6 @@
+Finite review probes; in-memory constructed fixtures only; no repository/test/source edits.
+baseline year plus December 31: ACCEPTED REPORTED_CONSOLIDATED_TOTAL; target={'fiscal_year': 2025, 'period_start': '2025-01-01', 'period_end': '2025-12-31'}
+explicit same end date: IncomeSourceError SELECTED_REPORTED_REVENUE_VISIBLE_DATE_CONFLICT
+explicit wrong full end date: IncomeSourceError SELECTED_REPORTED_REVENUE_VISIBLE_DATE_CONFLICT
+wrong visible month/day descriptor: ACCEPTED REPORTED_CONSOLIDATED_TOTAL; target={'fiscal_year': 2025, 'period_start': '2025-01-01', 'period_end': '2025-12-31'}
+fiscal case retained Year Ended December 31, / 2023: ACCEPTED REPORTED_CONSOLIDATED_TOTAL; target={'fiscal_year': 2023, 'period_start': '2023-01-29', 'period_end': '2024-02-03'}
