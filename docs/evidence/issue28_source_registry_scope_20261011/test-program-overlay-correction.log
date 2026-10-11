@@ -1,0 +1,25 @@
+..............F..................F..........
+======================================================================
+FAIL: test_unrelated_program_registry_change_preserves_selected_sources (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_unrelated_program_registry_change_preserves_selected_sources)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 96, in test_unrelated_program_registry_change_preserves_selected_sources
+    self.assertEqual(self.plan(),expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'rec[176 chars]on': None, 'original_annual_period': None, 'an[2943 chars]d57'} != {'rec[176 chars]on': {'record_type': 'ORDINARY_HISTORICAL_PERI[18295 chars]428'}
+Diff is 28020 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_unrelated_program_registry_change_preserves_range (tests.vnext.test_company_fiscal_range.CompanyFiscalRangeTest.test_unrelated_program_registry_change_preserves_range)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics/tests/vnext/test_company_fiscal_range.py", line 56, in test_unrelated_program_registry_change_preserves_range
+    self.assertEqual(self.discover(),expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'rec[5871 chars]YEAR_SOURCE_UNRESOLVED', 'limitations': [{'pha[1025 chars]d82'} != {'rec[5871 chars]YEAR_RESOLVED', 'limitations': [], 'report_end[40904 chars]0c4'}
+Diff is 87317 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 44 tests in 2.309s
+
+FAILED (failures=2)

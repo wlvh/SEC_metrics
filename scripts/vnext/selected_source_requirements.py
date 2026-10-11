@@ -10,7 +10,8 @@ from pathlib import Path
 from sec_urls import (accession_directory_url, accession_document_url,
                       companyfacts_url, submissions_file_url, submissions_url)
 from .canonical import content_hash, sha256_file, strict_json_loads
-from .normal_annual_input import _cik, _registry_rows, annual_period
+from .normal_annual_input import _cik, annual_period
+from .ordinary_registry_scope import registered_company_row
 from .normal_history_catalog import load_history_for_period
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
@@ -130,10 +131,11 @@ def discover_selected_annual_requirements(*, repo_root, company_id, report_end, 
     _need(type(metric_ids) in (list,tuple) and metric_ids and
           len(metric_ids) == len(set(metric_ids)) and set(metric_ids) <= METRIC_IDS,
           'METRIC_SCOPE_NOT_CONNECTED')
-    _need(sha256_file(path=source/'config/company_registry.csv')
-          == sha256_file(path=ROOT/'config/company_registry.csv'), 'COMPANY_REGISTRY_CHANGED')
-    company = next((r for r in _registry_rows(repo_root=source) if r['company_id']==company_id), None)
-    _need(company is not None, 'COMPANY_NOT_CONFIGURED')
+    company = registered_company_row(repo_root=source, company_id=company_id)
+    # Validate both complete registries, but only this task's company context
+    # must match. Other valid company rows cannot change its source plan.
+    _need(company == registered_company_row(repo_root=ROOT, company_id=company_id),
+          'COMPANY_REGISTRY_CHANGED')
     # Re-use the metadata selection by report end. In particular this does not
     # run the issuer-year resolver's full annual preparation just to name URLs.
     plan = _Requirements(source, company)
