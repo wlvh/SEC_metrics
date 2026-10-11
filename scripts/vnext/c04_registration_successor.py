@@ -34,6 +34,8 @@ SELECTED_PROCESSING_FILES = (
     'scripts/vnext/c04_verified_document_alias.py',
     'scripts/vnext/governance_signals.py',
     'scripts/vnext/normal_governance_input.py',
+    'scripts/vnext/normal_history_catalog.py',
+    'scripts/sec_urls.py',
     'scripts/vnext/normal_annual_input.py',
     'scripts/vnext/normal_annual_input_v2.py',
     'scripts/vnext/fiscal_year_labels.py',
@@ -74,10 +76,16 @@ def _registration_rows(payload, *, inventory_name):
              'metadata_origin': row['metadata_origin']} for row in checked]
 
 
-def _checked_inventory_rows(payload, *, inventory_name, shard=None):
+def _checked_inventory_rows(payload, *, inventory_name, shard=None, block_last_day=None):
     rows = _registration_rows(payload, inventory_name=inventory_name)
     if shard is not None:
-        _need(history_body_alignment(shard=shard, rows=rows) is None,
+        if block_last_day is None:
+            conflict = history_body_alignment(shard=shard, rows=rows)
+        else:
+            from .normal_history_catalog import history_block_coherence
+            conflict = history_block_coherence(shard=shard, body=payload,
+                rows=rows, last_day=block_last_day)
+        _need(conflict is None,
               'C04_REGISTRATION_HISTORY_BODY_ALIGNMENT_CONFLICT')
     return rows
 
@@ -156,6 +164,11 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
     current_payload = strict_json_loads(text=current['raw_bytes'].decode('utf-8'))
     history = _history_index(current_payload, cik)
     indexed = {item['name']: item for item in history}
+    if explicit:
+        from .normal_history_catalog import block_last_days
+        last_days = block_last_days(payload=current_payload, shards=history)
+    else:
+        last_days = {}
     _need(set(selected['history_loaded']) <= set(indexed),
           'C04_REGISTRATION_HISTORY_SELECTION_CHANGED')
     inventories = [(current, current_payload)]
@@ -171,7 +184,7 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
     for inventory, payload in inventories:
         name = inventory['source_reference']['document_name']
         rows.extend(_checked_inventory_rows(payload, inventory_name=name,
-            shard=indexed.get(name)))
+            shard=indexed.get(name), block_last_day=last_days.get(name)))
     accessions = [row['accessionNumber'] for row in rows]
     _need(len(accessions) == len(set(accessions)),
           'C04_REGISTRATION_METADATA_ACCESSIONS_OVERLAP')
@@ -185,7 +198,7 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
           'C04_REGISTRATION_OLD_EVENT_SELECTION_CHANGED')
     needed_history = {item['name'] for item in history
         if item['filingFrom'] <= window['period_end']
-        and item['filingTo'] >= window['period_start']}
+        and last_days.get(item['name'], item['filingTo']) >= window['period_start']}
     _need(needed_history <= set(selected['history_loaded']),
           'C04_REGISTRATION_RELEVANT_HISTORY_NOT_LOADED')
 
