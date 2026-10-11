@@ -118,8 +118,13 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                     r'(?:non-operating|other) expenses \(income\):') if operating else ()
         if single_operating:
             sections = (r'operating expenses:?', r'other expense:?',
+                        r'other \(expense\) income:?',
                         r'basic and diluted earnings \(loss\) per common share',
-                        r'weighted average common shares outstanding')
+                        r'basic and diluted \(loss\) earnings per common share',
+                        r'basic and diluted loss per common share',
+                        r'basic and diluted loss per share of common stock',
+                        r'weighted average common shares outstanding',
+                        r'weighted average common stock outstanding')
         statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
             extra_unit_headers=extra_units,
             extra_section_headers=sections, bind_statement_page=single_operating)
