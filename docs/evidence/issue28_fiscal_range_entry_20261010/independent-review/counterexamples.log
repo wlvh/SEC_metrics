@@ -1,0 +1,80 @@
+{
+  "probe_kind": "BOUNDED_CONSTRUCTED_BYTES_AND_API_CONTROLS_NO_REAL_ANNUAL_EXECUTION",
+  "results": [
+    {
+      "probe": "conditional_example",
+      "outcome": "ACCEPTED",
+      "selected_fiscal_year": 2022,
+      "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+      "inspection_status": "SOURCE_LABEL_CONFLICT",
+      "definition_text": [
+        "Our fiscal year ends on December 31. If the proposed naming convention is approved, References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021."
+      ]
+    },
+    {
+      "probe": "hypothetical_plain_quote",
+      "outcome": "ACCEPTED",
+      "selected_fiscal_year": 2022,
+      "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+      "inspection_status": "SOURCE_LABEL_CONFLICT",
+      "definition_text": [
+        "Our fiscal year ends on December 31. The following is a hypothetical example, not our actual naming convention: \"References to fiscal 2022, for example, refer to the fiscal year ending December 31, 2021.\""
+      ]
+    },
+    {
+      "probe": "quoted_html",
+      "outcome": "REJECTED",
+      "reason": "ORDINARY_FISCAL_LABEL_UNRESOLVED:EXPLICIT_DEFINITION_UNRESOLVED",
+      "type": "NormalAnnualInputError"
+    },
+    {
+      "probe": "conditional_ordered_widened",
+      "outcome": "ACCEPTED",
+      "selected_fiscal_year": 2022,
+      "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+      "inspection_status": "SOURCE_LABEL_CONFLICT",
+      "definition_text": [
+        "Our fiscal year ends on December 31. If the proposed naming convention is approved, Fiscal years 2022 and 2021 ended on December 31, 2021 and December 31, 2020, respectively, and included 52 weeks."
+      ]
+    },
+    {
+      "probe": "caller_mutates_fiscal_year_list_after_factory_creation",
+      "initial_years": [
+        2024,
+        2025
+      ],
+      "mutated_years": [
+        2024,
+        2025,
+        2026
+      ],
+      "outcome": "ACCEPTED",
+      "producer_years": [
+        2026
+      ],
+      "discovery_end": 2026
+    },
+    {
+      "probe": "exact_defect_filter",
+      "defect": "MACYS_FY2023_B01_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK",
+      "exact_current_hold": [
+        "MACYS_FY2023_B01_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK"
+      ],
+      "exact_results_hold": [
+        "MACYS_FY2023_B01_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK"
+      ],
+      "other_result_id_hold": []
+    },
+    {
+      "probe": "exact_defect_filter",
+      "defect": "MACYS_FY2023_B02_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK",
+      "exact_current_hold": [
+        "MACYS_FY2023_B02_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK"
+      ],
+      "exact_results_hold": [
+        "MACYS_FY2023_B02_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK"
+      ],
+      "other_result_id_hold": []
+    }
+  ]
+}
