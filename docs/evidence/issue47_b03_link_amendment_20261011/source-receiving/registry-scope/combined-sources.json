@@ -1,0 +1,200 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "constructed_rejection_controls": [
+    {
+      "constructed_program_registry": [
+        "southwest_airlines",
+        "primary_cik",
+        "1"
+      ],
+      "seconds": 0.0008910420001484454,
+      "exception_type": "ValueError",
+      "reason": "SELECTED_SOURCE_COMPANY_REGISTRY_CHANGED"
+    },
+    {
+      "constructed_program_registry": [
+        "pfizer",
+        "primary_cik",
+        "invalid"
+      ],
+      "seconds": 0.0007452079989889171,
+      "exception_type": "ValueError",
+      "reason": "CURRENT_UPDATE_COMPANY_REGISTRY_ROW_INVALID"
+    }
+  ],
+  "actual_b03_source_proofs": [
+    "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+    "https://data.sec.gov/submissions/CIK0000092380.json",
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/index.json",
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml",
+    "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm"
+  ],
+  "before": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "after": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "metric_executed": false,
+  "business_acceptance": false,
+  "runs": [
+    {
+      "baseline": {
+        "arguments": [
+          "sources",
+          "--company",
+          "southwest_airlines",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--metric",
+          "B03",
+          "--report-end",
+          "2025-12-31"
+        ],
+        "exit_code": 0,
+        "seconds": 1.0831310829998984,
+        "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+        "metric_executed": false,
+        "metric_acceptance_proven": false,
+        "plan_sha256_without_elapsed": "bbb5fae99993b8318897fb70e4bb8ab93db9e6ab9f07c7da1c7d39a3fca1c73f",
+        "source_urls": [
+          "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+          "https://data.sec.gov/submissions/CIK0000092380.json",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/index.json",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm"
+        ]
+      },
+      "unrelated_program_row": {
+        "arguments": [
+          "sources",
+          "--company",
+          "southwest_airlines",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--metric",
+          "B03",
+          "--report-end",
+          "2025-12-31"
+        ],
+        "exit_code": 0,
+        "seconds": 1.0824531670004944,
+        "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+        "metric_executed": false,
+        "metric_acceptance_proven": false,
+        "plan_sha256_without_elapsed": "bbb5fae99993b8318897fb70e4bb8ab93db9e6ab9f07c7da1c7d39a3fca1c73f",
+        "source_urls": [
+          "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+          "https://data.sec.gov/submissions/CIK0000092380.json",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/index.json",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm"
+        ]
+      }
+    },
+    {
+      "baseline": {
+        "arguments": [
+          "sources",
+          "--company",
+          "southwest_airlines",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--metric",
+          "B03",
+          "--fiscal-year-start",
+          "2025",
+          "--fiscal-year-end",
+          "2025"
+        ],
+        "exit_code": 0,
+        "seconds": 3.6073208330017223,
+        "status": "FISCAL_RANGE_RESOLVED",
+        "metric_executed": false,
+        "metric_acceptance_proven": false,
+        "plan_sha256_without_elapsed": "bb365cbb78c595578eb41a811ce812f09c333ad0e24c46273961d14510fabc21",
+        "source_urls": [
+          "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+          "https://data.sec.gov/submissions/CIK0000092380.json",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/index.json",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm"
+        ]
+      },
+      "unrelated_program_row": {
+        "arguments": [
+          "sources",
+          "--company",
+          "southwest_airlines",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--metric",
+          "B03",
+          "--fiscal-year-start",
+          "2025",
+          "--fiscal-year-end",
+          "2025"
+        ],
+        "exit_code": 0,
+        "seconds": 3.5675603749987204,
+        "status": "FISCAL_RANGE_RESOLVED",
+        "metric_executed": false,
+        "metric_acceptance_proven": false,
+        "plan_sha256_without_elapsed": "bb365cbb78c595578eb41a811ce812f09c333ad0e24c46273961d14510fabc21",
+        "source_urls": [
+          "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+          "https://data.sec.gov/submissions/CIK0000092380.json",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/index.json",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml",
+          "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm"
+        ]
+      }
+    }
+  ],
+  "mixed_selection": {
+    "arguments": [
+      "sources",
+      "--company",
+      "southwest_airlines",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--report-end",
+      "2025-12-31",
+      "--metric",
+      "B01",
+      "--metric",
+      "B03"
+    ],
+    "exit_code": 0,
+    "seconds": 1.298023874998762,
+    "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+    "metric_executed": false,
+    "metric_acceptance_proven": false,
+    "plan_sha256_without_elapsed": "1907fd9a02d91f3435581c21c3430a02315d2b72e07355770f5267c7edbb65a3",
+    "source_urls": [
+      "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+      "https://data.sec.gov/submissions/CIK0000092380.json",
+      "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/index.json",
+      "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+      "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml",
+      "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/index.json",
+      "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm",
+      "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231_htm.xml"
+    ]
+  }
+}

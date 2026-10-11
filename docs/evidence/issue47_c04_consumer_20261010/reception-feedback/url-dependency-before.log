@@ -1,0 +1,16 @@
+test_public_and_historical_read_dependencies_are_tracked_together (tests.vnext.test_historical_auditor_case.HistoricalAuditorCaseTest.test_public_and_historical_read_dependencies_are_tracked_together) ... FAIL
+
+======================================================================
+FAIL: test_public_and_historical_read_dependencies_are_tracked_together (tests.vnext.test_historical_auditor_case.HistoricalAuditorCaseTest.test_public_and_historical_read_dependencies_are_tracked_together)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_historical_auditor_case.py", line 59, in test_public_and_historical_read_dependencies_are_tracked_together
+    self.assertIn('scripts/sec_urls.py', cases.PROCESSING_FILES)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'scripts/sec_urls.py' not found in ('scripts/vnext/historical_auditor_case.py', 'scripts/vnext/historical_governance_input.py', 'scripts/vnext/historical_annual_input.py', 'scripts/vnext/historical_dei.py', 'scripts/vnext/historical_fiscal_labels.py', 'scripts/vnext/normal_period_selection.py', 'scripts/vnext/normal_history_catalog.py', 'scripts/vnext/normal_annual_input.py', 'scripts/vnext/normal_annual_input_v2.py', 'scripts/vnext/normal_governance_input.py', 'scripts/vnext/c04_registration_successor.py', 'scripts/vnext/c04_verified_document_alias.py', 'scripts/vnext/governance_signals.py', 'scripts/vnext/deterministic_router.py', 'scripts/vnext/calculator.py', 'scripts/vnext/specs.py', 'scripts/vnext/records.py', 'scripts/vnext/sources.py', 'scripts/vnext/canonical.py', 'scripts/vnext/ordinary_source_authority.py', 'catalog/r5/C04_auditor_changes_v3.md', 'catalog/r5/C04_auditor_changes_v2.md', 'config/normal_period_selection_v1.json', 'config/normal_fiscal_year_labels_v1.json', 'scripts/vnext/fiscal_year_labels.py')
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_auditor_case.HistoricalAuditorCaseTest.test_public_and_historical_read_dependencies_are_tracked_together"]}

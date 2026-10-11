@@ -1,0 +1,26 @@
+{
+  "runs": [
+    {
+      "baseline_seconds": 1.0831310829998984,
+      "unrelated_seconds": 1.0824531670004944,
+      "status": "SAVED_SOURCE_BYTES_AVAILABLE"
+    },
+    {
+      "baseline_seconds": 3.6073208330017223,
+      "unrelated_seconds": 3.5675603749987204,
+      "status": "FISCAL_RANGE_RESOLVED"
+    }
+  ],
+  "mixed_seconds": 1.298023874998762,
+  "rejection_reasons": [
+    "SELECTED_SOURCE_COMPANY_REGISTRY_CHANGED",
+    "CURRENT_UPDATE_COMPANY_REGISTRY_ROW_INVALID"
+  ],
+  "exact_b03_source_urls": 6,
+  "source_files_unchanged": true,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/docs/evidence/issue47_b03_link_amendment_20261011/source-receiving/registry-scope/verify_combined_sources.py", line 96, in <module>
+    rejection = execute(rows[0]['baseline']['arguments'])
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/docs/evidence/issue47_b03_link_amendment_20261011/source-receiving/registry-scope/verify_combined_sources.py", line 31, in execute
+    code = main(args)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tools/vnext_company.py", line 157, in main
+    result = discover_selected_annual_requirements(repo_root=args.source_root,
+        company_id=args.company, report_end=args.report_end, metric_ids=args.metric)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 137, in discover_selected_annual_requirements
+    _need(company == registered_company_row(repo_root=ROOT, company_id=company_id),
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'COMPANY_REGISTRY_CHANGED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 25, in _need
+    raise ValueError('SELECTED_SOURCE_' + reason)
+ValueError: SELECTED_SOURCE_COMPANY_REGISTRY_CHANGED
