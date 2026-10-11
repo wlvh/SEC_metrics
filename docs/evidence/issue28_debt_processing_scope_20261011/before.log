@@ -1,0 +1,35 @@
+FFF
+======================================================================
+FAIL: test_debt_note_only_change_does_not_invalidate_revenue_configuration (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_debt_note_only_change_does_not_invalidate_revenue_configuration) (metric='B01')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-debt-processing-scope/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 183, in test_debt_note_only_change_does_not_invalidate_revenue_configuration
+    with self.subTest(metric=metric):self.assertEqual(before[metric],after[metric])
+                                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'com[6502 chars]y': 'a3786d8838442e944a7a75c2e5e19cf7c8fc50ece[8480 chars]alse} != {'com[6502 chars]y': 'changed-debt-note-grammar', 'scripts/vnex[8441 chars]alse}
+Diff is 19166 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_debt_note_only_change_does_not_invalidate_revenue_configuration (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_debt_note_only_change_does_not_invalidate_revenue_configuration) (metric='B02')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-debt-processing-scope/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 183, in test_debt_note_only_change_does_not_invalidate_revenue_configuration
+    with self.subTest(metric=metric):self.assertEqual(before[metric],after[metric])
+                                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'com[6502 chars]y': 'a3786d8838442e944a7a75c2e5e19cf7c8fc50ece[8586 chars]alse} != {'com[6502 chars]y': 'changed-debt-note-grammar', 'scripts/vnex[8547 chars]alse}
+Diff is 19296 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_debt_note_only_change_does_not_invalidate_revenue_configuration (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_debt_note_only_change_does_not_invalidate_revenue_configuration) (metric='B03')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-debt-processing-scope/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 183, in test_debt_note_only_change_does_not_invalidate_revenue_configuration
+    with self.subTest(metric=metric):self.assertEqual(before[metric],after[metric])
+                                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'com[6732 chars]y': 'a3786d8838442e944a7a75c2e5e19cf7c8fc50ece[8816 chars]alse} != {'com[6732 chars]y': 'changed-debt-note-grammar', 'scripts/vnex[8777 chars]alse}
+Diff is 19852 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.079s
+
+FAILED (failures=3)

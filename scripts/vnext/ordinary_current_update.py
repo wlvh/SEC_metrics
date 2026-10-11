@@ -42,6 +42,20 @@ def _configuration(source, company, metric):
         paths.difference_update({'scripts/vnext/normal_lodging_results.py',
             'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
             'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
+        # This zero-AI producer does not call any current B06 debt grammar.
+        # Shared annual selection, source checks and financial calculation
+        # remain below; an explicit historical consumer may add its own paths.
+        paths.difference_update({
+            'scripts/vnext/b06_bond_leases.py','scripts/vnext/b06_current_input.py',
+            'scripts/vnext/b06_financing_inventory.py','scripts/vnext/b06_inclusive_table.py',
+            'scripts/vnext/b06_note_carrying.py','scripts/vnext/normal_bond_debt_results.py',
+            'scripts/vnext/normal_inclusive_debt_results.py','scripts/vnext/normal_note_debt_results.py',
+            'scripts/vnext/ordinary_debt_guard.py','scripts/vnext/ordinary_special_debt_scope.py',
+            'config/b06_bond_debt_set_v1.json','config/b06_bond_leases_v1.json',
+            'config/b06_current_input_v1.json','config/b06_financing_inventory_v1.json',
+            'config/b06_inclusive_table_v1.json','config/b06_note_carrying_v1.json',
+            'config/b06_special_scope_v1.json','catalog/r5/B06_bond_leases_v5.md',
+            'catalog/r5/B06_inclusive_table_v6.md','catalog/r5/B06_note_carrying_v4.md'})
     paths.update({'scripts/vnext/ordinary_current_update.py','scripts/vnext/ordinary_saved_result.py',
                   'scripts/vnext/csv_output.py','scripts/vnext/ordinary_update_compatibility.py',
                   'config/issue28_normal_results_v2.json'})
