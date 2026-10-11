@@ -194,6 +194,34 @@ class ReportedOperatingRevenueTest(unittest.TestCase):
             except ValueError:continue
             self.assertFalse(scope['complete_scope_proven'])
 
+    def test_reported_net_expense_total_retains_whole_statement_scope(self):
+        source, annual = self.statement()
+        raw = source['raw_bytes'].replace(b'Total operating expenses',
+            b'Total operating expenses, net').replace(b'OPERATING EXPENSES:',
+            b'OPERATING EXPENSES, NET:').replace(b'NON-OPERATING EXPENSES (INCOME):',
+            b'OTHER EXPENSES (INCOME):')
+        adjusted = changed(source, raw)
+        result = reported_revenue_scope(primary=adjusted, annual=annual,
+            approved_concepts=APPROVED, xml=adjusted)
+        self.assertTrue(result['complete_scope_proven'])
+        total = result['reported_totals'][0]
+        self.assertEqual('58496000000', total['total']['value'])
+        self.assertEqual('MATCH', total['xml_check'])
+        self.assertEqual(1, len(total['operating_expense_reports']))
+
+    def test_net_expense_adjustments_and_scope_qualifiers_remain_unproven(self):
+        source, annual = self.statement()
+        for label in (b'Total operating expenses, net, excluding special items',
+                      b'Total operating expenses, net (non-GAAP)',
+                      b'Total operating expenses, net (domestic)',
+                      b'Total operating expenses, net, as reported'):
+            with self.subTest(label=label):
+                altered = changed(source, source['raw_bytes'].replace(
+                    b'Total operating expenses', label))
+                result = reported_revenue_scope(primary=altered, annual=annual,
+                    approved_concepts=APPROVED, xml=altered)
+                self.assertFalse(result['complete_scope_proven'])
+
 
     def test_operating_label_parenthetical_scope_cannot_be_discarded(self):
         source,annual=self.statement()
