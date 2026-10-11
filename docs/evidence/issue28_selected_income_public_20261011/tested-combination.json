@@ -1,0 +1,22 @@
+{
+  "peer": "455f2e51af1d976e76e612a380ebf6dde1e9a42c",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-source-credit-controls/SEC_metrics",
+  "tested_mode": "actual dirty sharedcore/current/CI combination, before publishing",
+  "fixed_peer_core_bytes_unchanged": true,
+  "source_credit_patch_exact": "4ecc47b3",
+  "sha256": {
+    "scripts/vnext/normal_zero_ai_results.py": "2ee28eb517a5575fa4547ec519afe8490523ae937e03d4e48d7628c540460433",
+    "scripts/vnext/selected_income_calculation.py": "5406881ef6c4e2b3965947980a2952a956e590ba40c82fef64f3e8283950756f",
+    "scripts/vnext/historical_b03_case.py": "3b9a251942f4ca27f74885d82b7948f9216d2525545feb75fd307c17c4f2b9de",
+    "tests/vnext/test_selected_income_calculation.py": "08744c7c7563ce565018e9e18631c436a71c62e6f5c5e055f5f29848d7ba1ef8",
+    "tests/vnext/test_historical_b03_case.py": "13fb459ee49fb38b183d2ad046644a9c49080a72cbfa0fa42dc62d6b8e587828",
+    "scripts/vnext/ordinary_current_update.py": "76ba2557e494fb7e4b441845b36e5f767bf59842cea69c21ee3b63ee35e9b50b",
+    ".github/workflows/company-current-records.yml": "a0a35ce29e366bd0466e95586def3101067dd3799ac7d229037651c4cb61abbc",
+    "tests/vnext/test_current_reported_revenue.py": "81bd6530d8732f10168111108c364854e59516b3bd43999758a494d7e4a93fac"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
