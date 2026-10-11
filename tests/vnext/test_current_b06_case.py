@@ -135,4 +135,36 @@ class CurrentB06CompositionTest(unittest.TestCase):
                          for kind in ('primary','xml')}
             self.assertEqual([],self.current._unresolved_current_interest(preparation,annual))
 
+class B06FallbackDependencyTest(unittest.TestCase):
+    def test_both_public_fallback_exports_reach_financing_with_real_traits(self):
+        """TEST_ONLY proposal/facts isolate runtime dependencies, not business credit."""
+        from types import SimpleNamespace
+        from vnext import normal_candidates, ordinary_b06_resolution
+        from vnext import b06_disclosure_v2 as disclosure, r5_b06_scope, sources
+        from vnext.traits import repository_company_traits
+        root=Path(__file__).resolve().parents[2]
+        prepared={'company_id':'salesforce','entity':'1108524',
+            'filing':{'accessionNumber':'TEST_ONLY_FALLBACK','filingDate':'2026-03-01'},
+            'table_input':{'target_period':{'period_end':'2026-01-31'}}}
+        preparation={'input_binding':{'prepared_annual_input':prepared},
+            'xml':{'raw_bytes':b'TEST_ONLY_XML','source_reference':{}},
+            'primary':{'raw_bytes':b'TEST_ONLY_PRIMARY'},
+            'facts':{'raw_bytes':b'TEST_ONLY_FACTS','source_reference':{}}}
+        marker={'test_only':'runtime reached'}
+        for resolver in (ordinary_b06_resolution._b06_resolution,normal_candidates._b06_resolution):
+            with self.subTest(export=resolver.__module__), \
+                 patch.object(disclosure.prior,'parse_accession_xbrl_source',return_value=SimpleNamespace(contexts={})), \
+                 patch.object(disclosure,'propose',return_value={}), \
+                 patch.object(disclosure,'verify',return_value={}), \
+                 patch.object(sources,'companyfacts_structured_facts',return_value=[]), \
+                 patch.object(r5_b06_scope,'resolve_financing',return_value=(marker,{},[],{})) as calculation:
+                path,answer=resolver(data_root=root,preparation=preparation)
+                self.assertEqual(disclosure.SPEC_PATH,path)
+                self.assertIs(marker,answer['result'])
+                calculation.assert_called_once()
+                self.assertEqual(repository_company_traits(repo_root=root,company_id='salesforce'),
+                                 calculation.call_args.kwargs['traits'])
+                self.assertEqual('1108524',calculation.call_args.kwargs['target']['entity'])
+
+
 if __name__=='__main__':unittest.main()

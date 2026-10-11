@@ -1,6 +1,7 @@
 """Existing original-source borrowing resolver, without native Run management."""
 from .canonical import content_hash
 from .specs import compile_spec_file
+from .traits import repository_company_traits
 
 
 def _b06_resolution(*, data_root, preparation):
@@ -56,4 +57,3 @@ def _b06_resolution(*, data_root, preparation):
                                              reason_code="B06_SOURCE_RELATIONSHIP_UNRESOLVED")
         return path, {"result": result, "trace": trace, "observations": [],
                       "selection": {"reason": reason, "classification": category}}
-
