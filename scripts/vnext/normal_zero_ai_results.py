@@ -198,7 +198,7 @@ def _registered_event_sources(*, repo_root, reader, prepared, inventory, period,
 
 
 def _revenue_admission(*, primary, annual, approved_concepts, contract='components-v1',
-                       fiscal_label_resolution=None):
+                       fiscal_label_resolution=None, allow_single_revenue_line=False):
     """Select source proof and its matching mechanical checks before calculation.
 
     Only absence of a proven direct total permits the existing component
@@ -209,7 +209,8 @@ def _revenue_admission(*, primary, annual, approved_concepts, contract='componen
     if contract == 'reported-total-v2':
         from .selected_reported_revenue_v2 import reported_revenue_scope, admit_reported_revenue_facts, verify_reported_revenue_observations
         scope = reported_revenue_scope(primary=primary, annual=annual, approved_concepts=approved_concepts,
-                                       fiscal_label_resolution=fiscal_label_resolution)
+                                       fiscal_label_resolution=fiscal_label_resolution,
+                                       allow_single_revenue_line=allow_single_revenue_line)
         if scope['reported_totals']:
             return scope, admit_reported_revenue_facts, verify_reported_revenue_observations
     scope = selected_revenue_scope(primary=primary, annual=annual, approved_concepts=approved_concepts)
@@ -218,7 +219,7 @@ def _revenue_admission(*, primary, annual, approved_concepts, contract='componen
 
 def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None,
                                    validate_depreciation_scope=False, validate_revenue_scope=False,
-                                   revenue_scope_contract='components-v1'):
+                                   revenue_scope_contract='components-v1', allow_single_revenue_line=False):
     """Derive native records from current saved annual input, without a Run.
 
     No caller fact, period, filing, answer, compiled Spec or source receipt is
@@ -229,6 +230,9 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     _need(revenue_scope_contract in {'components-v1','reported-total-v2'}
           and (validate_revenue_scope or revenue_scope_contract=='components-v1'),
           'NORMAL_ZERO_AI_REVENUE_SCOPE_CONTRACT_INVALID')
+    _need(type(allow_single_revenue_line) is bool and (not allow_single_revenue_line
+          or validate_revenue_scope and revenue_scope_contract=='reported-total-v2'),
+          'NORMAL_ZERO_AI_SINGLE_REVENUE_OPTION_INVALID')
     from .ordinary_income_input import IncomeInputError, prepare_current_income_input, verify_income_observations
     from .selected_income_source_v1 import IncomeSourceError
     rules = repo_root if rules_root is None else Path(rules_root)
@@ -314,7 +318,8 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
                 revenue_scope, admit_revenue_facts, verify_revenue_observations = _revenue_admission(
                     primary=primary_source, annual=prepared.get('original_input',prepared),
                     approved_concepts=revenue_concepts, contract=revenue_scope_contract,
-                    fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'))
+                    fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'),
+                    allow_single_revenue_line=allow_single_revenue_line)
                 facts = admit_revenue_facts(facts=facts, scope=revenue_scope)
             execution_target = {**target,"entity":prepared["entity"],"accession":prepared["filing"]["accessionNumber"]}
             reusable = []

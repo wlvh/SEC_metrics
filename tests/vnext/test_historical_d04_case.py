@@ -13,6 +13,28 @@ from vnext import historical_d04_case as cases
 
 
 class HistoricalD04CaseTest(TestCase):
+    def test_used_historical_catalog_is_a_processing_dependency(self):
+        # Constructed control state, not a financial conclusion. A changed
+        # catalog must invalidate this producer's stable withholding once.
+        from tests.vnext.test_ordinary_current_update import SelectedPeriodUpdateTest
+        from scripts.vnext import ordinary_current_update as update
+        fixture = SelectedPeriodUpdateTest(methodName='runTest')
+        fixture.setUp()
+        self.addCleanup(fixture.doCleanups)
+        fixture.publication = 'WITHHELD'
+        first = fixture.selected(2024, processing_files=cases.PROCESSING_FILES)
+        original = update.sha256_file
+        with patch.object(update, 'sha256_file', side_effect=lambda *, path:
+                'b'*64 if path.name == 'normal_history_catalog.py' else original(path=path)):
+            changed = fixture.selected(2024, processing_files=cases.PROCESSING_FILES)
+            calls = fixture.factory_calls
+            repeated = fixture.selected(2024, processing_files=cases.PROCESSING_FILES)
+        self.assertNotEqual(first['version'], changed['version'])
+        self.assertEqual(2, calls)
+        self.assertEqual(calls, fixture.factory_calls)
+        self.assertEqual('PREVIOUS_INPUT_WITHHELD', repeated['status'])
+        self.assertFalse(repeated['calculation_performed'])
+
     def test_selected_annual_reaches_the_one_public_saved_replay(self):
         package = Path('/saved/original-model-ledger.tar.gz')
         selection = {'original_source_id':'constructed-original-source'}
@@ -40,6 +62,7 @@ class HistoricalD04CaseTest(TestCase):
         from vnext import historical_statement_cases as statements
         from vnext.company_fiscal_range import PROCESSING_FILES as range_files
         from vnext.historical_event_cases import prepare_historical_event_year_case
+        from vnext.historical_auditor_case import prepare_historical_auditor_year_case, PROCESSING_FILES as auditor_files
         selection = {'constructed_control': True, 'report_end': '2023-12-31'}
         plan = {'tasks': [{'fiscal_year': 2023, 'status': 'FISCAL_YEAR_RESOLVED',
                            'period_selection': selection}]}
@@ -48,7 +71,7 @@ class HistoricalD04CaseTest(TestCase):
              patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
             company_local.run_local(company_id='marriott_international', source_root=Path('/saved/source'),
                 work_dir=Path('/new/state'), output_dir=Path('/new/out'), period='fiscal-years',
-                fiscal_year_start=2023, fiscal_year_end=2024, metric_ids=['D04','B01','C01'],
+                fiscal_year_start=2023, fiscal_year_end=2024, metric_ids=['D04','C04','B01','C01'],
                 saved_call_package=Path('/saved/package'))
         args = shared.call_args.kwargs
         self.assertEqual([2023,2024], args['fiscal_years'])
@@ -66,6 +89,8 @@ class HistoricalD04CaseTest(TestCase):
             company_id='marriott_international', fiscal_year_start=2023,
             fiscal_year_end=2024, metric_ids=['B01'])
         self.assertIs(prepare_historical_event_year_case, args['case_factories']['C01'])
+        self.assertIs(prepare_historical_auditor_year_case, args['case_factories']['C04'])
+        self.assertEqual(auditor_files, args['processing_files_by_metric']['C04'])
         self.assertEqual(cases.PROCESSING_FILES, args['processing_files_by_metric']['D04'])
         self.assertEqual({'D04':(Path('/saved/package'),)}, args['processing_inputs_by_metric'])
         self.assertTrue(all((company_local.ROOT/p).is_file() for p in cases.PROCESSING_FILES))

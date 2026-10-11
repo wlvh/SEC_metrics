@@ -194,16 +194,16 @@ class SelectedRevenueScopeTest(unittest.TestCase):
         rows=self.scope()['splits'][0]['total'];table,cell=_fact_cells(index,parsed,{rows['ordinal']})[rows['ordinal']]
         self.assertEqual(_column_period(table=table,selected=cell)[2],'COLUMN_PERIOD_NOT_PROVEN')
 
-    def test_saved_producer_opts_in_for_b01_and_b03_but_not_neighbours(self):
+    def test_saved_producer_opts_in_for_income_metrics_but_not_neighbours(self):
         from vnext import ordinary_saved_result as saved
         # Test dispatch at the actual producer seam; no mocked business result
         # is registered or exported from this deliberately stopped preparation.
-        for metric in ('B01','B03','B02'):
+        for metric in ('B01','B02','B03','B04'):
             with self.subTest(metric=metric),patch.object(saved,'prepare_ordinary_zero_ai_run_input',side_effect=ValueError('stop')) as prepare:
                 with self.assertRaisesRegex(ValueError,'stop'):saved._ordinary_case(Path('/source'), 'test_company', metric)
-                self.assertEqual(prepare.call_args.kwargs.get('validate_revenue_scope',False),metric in {'B01','B03'})
+                self.assertEqual(prepare.call_args.kwargs.get('validate_revenue_scope',False),metric in {'B01','B02','B03'})
                 self.assertEqual(prepare.call_args.kwargs.get('revenue_scope_contract'),
-                                 'reported-total-v2' if metric in {'B01','B03'} else None)
+                                 'reported-total-v2' if metric in {'B01','B02','B03'} else None)
 
     def test_update_configuration_names_actual_scope_and_header_dependencies(self):
         from vnext.ordinary_current_update import _configuration

@@ -17,7 +17,6 @@ name: Company saved-source records
     - tests/vnext/test_selected_revenue_scope_v1.py
     - tests/vnext/test_current_reported_revenue.py
     - tests/vnext/test_historical_statement_cases.py
-    - tests/vnext/test_selected_reported_revenue_v2.py
     - tests/vnext/test_company_parse_reuse.py
     - tests/vnext/test_precalculated_case.py
     - tests/vnext/test_saved_source_checks.py
@@ -32,12 +31,10 @@ name: Company saved-source records
     - tests/vnext/test_event_rule_root.py
     - tests/vnext/test_selected_event_source_v1.py
     - tests/vnext/test_historical_event_cases.py
-    - tests/vnext/test_historical_statement_cases.py
     - tests/vnext/test_registered_event_projection.py
     - tests/vnext/test_reporting_company_projection.py
     - tests/vnext/test_existing_historical_sec_state.py
     - tests/vnext/test_historical_sec_capture_adapter.py
-    - tests/vnext/test_reporting_company_projection.py
     - tests/vnext/test_separate_rule_root.py
     - tests/vnext/test_selected_lodging_calculation.py
     - tests/vnext/test_selected_lodging_source.py
@@ -46,6 +43,9 @@ name: Company saved-source records
     - tests/vnext/test_history_company_dispatch.py
     - tests/vnext/test_historical_geography_cases.py
     - tests/vnext/test_selected_history_result_state.py
+    - tests/vnext/test_selected_source_requirements.py
+    - tests/vnext/test_company_fiscal_range.py
+    - tests/vnext/test_selected_historical_fiscal_label.py
     - tests/vnext/test_historical_compensation_case.py
     - tests/fixtures/lodging_selected_table.html
     - config/**
@@ -53,12 +53,11 @@ name: Company saved-source records
     - evidence/**
     - docs/evidence/issue28_continuous/known_result_defects.json
     - .github/workflows/company-current-records.yml
-    - tests/vnext/test_selected_source_requirements.py
-    - tests/vnext/test_company_fiscal_range.py
-    - tests/vnext/test_selected_historical_fiscal_label.py
     - tests/vnext/test_historical_d04_selection.py
     - tests/vnext/test_historical_d04_case.py
     - tests/vnext/test_saved_d04_replay.py
+    - tests/vnext/test_historical_auditor_selection.py
+    - tests/vnext/test_historical_auditor_case.py
 permissions:
   contents: read
 jobs:
@@ -133,8 +132,7 @@ jobs:
       run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state
         tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases
         tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest tests.vnext.test_historical_statement_cases
-        tests.vnext.test_historical_compensation_case tests.vnext.test_historical_d04_selection tests.vnext.test_historical_d04_case
-        -v
+        tests.vnext.test_historical_compensation_case -v
     - name: Paired reported comparisons and exact revenue defect
       env:
         PYTHONDONTWRITEBYTECODE: '1'
@@ -158,11 +156,6 @@ jobs:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 tests/required_unittests.py tests.vnext.test_historical_event_cases.HistoricalEventCaseTest
         tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest
-    - name: Existing historical SEC count and recorded capture compatibility
-      env:
-        PYTHONDONTWRITEBYTECODE: '1'
-      run: python3 tests/required_unittests.py tests.vnext.test_existing_historical_sec_state tests.vnext.test_historical_sec_capture_adapter
-        tests.vnext.test_company_online
     - name: Selected annual source preflight and missing dependencies
       env:
         PYTHONDONTWRITEBYTECODE: '1'
@@ -173,6 +166,19 @@ jobs:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 tests/required_unittests.py tests.vnext.test_saved_d04_replay tests.vnext.test_current_d04_company
         tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest tests.vnext.test_company_current_records
+    - name: Existing historical SEC count and recorded capture compatibility
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_existing_historical_sec_state tests.vnext.test_historical_sec_capture_adapter
+        tests.vnext.test_company_online
+    - name: Historical C04 source selection, gap boundaries and saved dependency scope
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_historical_auditor_selection tests.vnext.test_historical_auditor_case
+    - name: Historical D04 selected source and saved response consumer
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_historical_d04_selection tests.vnext.test_historical_d04_case
   source-contracts:
     runs-on: ubuntu-latest
     timeout-minutes: 5
