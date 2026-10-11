@@ -1,0 +1,56 @@
+{
+  "elapsed_seconds": 4.969273749999957,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "salesforce",
+  "run_id": "20261011T042623Z-2c547e47",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "B06"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B06",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "eebfcbda23124bc7973eaa881e9255c7",
+      "version": "e8690c87aa934673913cbc28df4d47d9",
+      "result_id": "sha256:c2e619af76783a5329cdfecd9245df3107f4482540857a88b9b2ec0e71d71696",
+      "result_root": "/private/tmp/issue28-b06-salesforce-receiver-repair-20261011/updates/B06/results/e8690c87aa934673913cbc28df4d47d9",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000083/0001108524-25-000083.hdr.sgml",
+          "status_code": "0",
+          "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>",
+          "content_sha256": "",
+          "document_name": "0001108524-25-000083.hdr.sgml"
+        }
+      ],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:c2e619af76783a5329cdfecd9245df3107f4482540857a88b9b2ec0e71d71696",
+      "record_root": "/private/tmp/issue28-b06-salesforce-receiver-repair-20261011/updates/B06/results/e8690c87aa934673913cbc28df4d47d9",
+      "program_version": {
+        "commit": "cf9106744b73a751076b8cc907ea2fbf3b346d06",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics",
+  "record_root": "/private/tmp/issue28-b06-salesforce-receiver-repair-20261011",
+  "output_root": "/private/tmp/issue28-b06-salesforce-receiver-repair-20261011-output/20261011T042623Z-2c547e47",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

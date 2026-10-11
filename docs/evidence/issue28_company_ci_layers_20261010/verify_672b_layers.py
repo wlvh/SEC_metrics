@@ -1,7 +1,7 @@
 """Current workflow selector/setup/gate controls; no financial or network execution."""
 import collections,copy,itertools,json,os,re,shlex,subprocess
 from pathlib import Path
-BASE='672b46b6d99d0f98bd0dd458d1b9767adc664636'
+BASE='63a340ca38db6054c44bef53e63bb5827b0f07ce'
 PATH='.github/workflows/company-current-records.yml'
 
 def parse(raw):

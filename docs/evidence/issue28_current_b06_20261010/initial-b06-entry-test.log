@@ -1,0 +1,21 @@
+test_current_writer_accepts_b06_before_source_calculation (tests.vnext.test_current_b06_case.CurrentB06EntryTest.test_current_writer_accepts_b06_before_source_calculation) ... ERROR
+
+======================================================================
+ERROR: test_current_writer_accepts_b06_before_source_calculation (tests.vnext.test_current_b06_case.CurrentB06EntryTest.test_current_writer_accepts_b06_before_source_calculation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics/tests/vnext/test_current_b06_case.py", line 11, in test_current_writer_accepts_b06_before_source_calculation
+    answer=saved.create_saved_result(source_root=Path('/source'),output_root=Path('/new'),
+        company_id='enphase_energy',metric_id='B06')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 92, in create_saved_result
+    _need(metric_id in SAVED_METRIC_IDS, 'SAVED_RESULT_ROUTE_NOT_IMPLEMENTED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics/scripts/vnext/ordinary_saved_result.py", line 37, in _need
+    raise ValueError(reason)
+ValueError: SAVED_RESULT_ROUTE_NOT_IMPLEMENTED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_b06_case"]}

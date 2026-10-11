@@ -149,20 +149,22 @@ def inspect_special_scope(*, primary, xml, annual, financial_institution, rules)
     return {**body, 'scope_source_id': content_hash(value=body)}
 
 
-def prepare_special_debt_case(*, repo_root: Path, company_id: str):
-    rules = strict_json_file(path=repo_root / POLICY_PATH)
+def prepare_special_debt_case(*, repo_root: Path, company_id: str, rules_root=None, preparation=None):
+    rule_root = repo_root if rules_root is None else Path(rules_root)
+    rules = strict_json_file(path=rule_root / POLICY_PATH)
     need(rules == strict_json_file(path=ROOT / POLICY_PATH) and rules['full_ratio_enabled'] is False,
          'INSTALLED_RULES_CHANGED')
-    preparation = _prepare_b06(repo_root=repo_root, company_id=company_id)
+    preparation = (_prepare_b06(repo_root=repo_root, company_id=company_id)
+                   if preparation is None else preparation)
     annual = preparation['input_binding']['prepared_annual_input']
-    company = next(c for c in _registry_rows(repo_root=repo_root) if c['company_id'] == company_id)
+    company = next(c for c in _registry_rows(repo_root=rule_root) if c['company_id'] == company_id)
     inspected = inspect_special_scope(primary=preparation['primary'], xml=preparation['xml'], annual=annual,
         financial_institution=company['industry_profile'] == 'financial_institution', rules=rules)
     if inspected is None:
         return None
     proofs = [*preparation['input_binding']['source_proofs'], *annual['source_proofs']]
     admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=proofs)
-    spec_path = rules['spec_path']; spec = compile_spec_file(path=repo_root / spec_path, dependency_specs={})
+    spec_path = rules['spec_path']; spec = compile_spec_file(path=rule_root / spec_path, dependency_specs={})
     need(spec == compile_spec_file(path=ROOT / spec_path, dependency_specs={}), 'SPEC_CHANGED')
     end = inspected['period_end']; scope = {'entity_scope': 'consolidated'}
     target = {'company_id': company_id, 'period_start': end, 'period_end': end,
@@ -175,9 +177,10 @@ def prepare_special_debt_case(*, repo_root: Path, company_id: str):
         'scope_source': inspected, 'reported_subtotal': inspected['reported_subtotal'], 'ratio': None}
     return {'kind': 'STRUCTURED', 'primary_metric_id': 'B06',
         'input_binding': {'original_source_input': preparation['input_binding'], 'scope_source': inspected,
-                          'source_proofs': proofs, 'policy_sha256': sha256_file(path=repo_root / POLICY_PATH)},
+                          'source_proofs': proofs, 'policy_sha256': sha256_file(path=rule_root / POLICY_PATH)},
         'source_records': records, 'references': [r for r in records if r['record_type'] == 'SOURCE_REFERENCE'],
         'source_proofs': proofs, 'admission': admission, 'spec_paths': {'B06': spec_path},
         'compiled_specs': {'B06': spec}, 'target_period': {'fiscal_year': annual['table_input']['target_period']['fiscal_year'],
             'period_start': end, 'period_end': end}, 'expected_records': [*records, trace, result],
-        'results': {'B06': result}, 'traces': {'B06': trace}, 'observations': [], 'selection': selection}
+        'results': {'B06': result}, 'traces': {'B06': trace}, 'observations': [], 'selection': selection,
+        **({} if rules_root is None else {'rules_root':str(rule_root)})}
