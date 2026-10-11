@@ -30,3 +30,5 @@ Copyable consumer checks (outputs must be new):
 PYTHONPATH=scripts:tools:. python3 docs/evidence/issue47_b06_note_forms_20261011/verify_current_company.py --output-root /new/b06/current-check
 PYTHONPATH=scripts:tools:. python3 docs/evidence/issue47_b06_note_forms_20261011/verify_selected_original.py --source-root /saved/sec/source-inputs --receipt /new/b06/selected-original.json
 ```
+
+CI followup consumes public fixedadf915bd five-worker layout and its159-only adapter53cb1593. YAML comparison proves exactadf preserved after removing only two test paths and one source-worker mandatory step;157B06/requiredgate/permissions/setup/timeouts remain. Exact required_unittests command locally runs18 new module tests21.466s, zero skips/failures/errors. This replaces the earlier patch-only pending integration statement; actual new-head remote execution still must be read. No financial run is repeated for CI placement.
