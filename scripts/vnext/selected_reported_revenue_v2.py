@@ -127,7 +127,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                         r'weighted average common stock outstanding')
         statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
             extra_unit_headers=extra_units,
-            extra_section_headers=sections, bind_statement_page=single_operating)
+            extra_section_headers=sections, bind_statement_page=True)
         unit_stop = cell['row_index'] if single_operating else column['row_index']+1
         units=[{'kind':'visible_cell','proof':_cell_proof(table=table,cell=c),'text':c['text']}
                for r in table['rows'][:unit_stop] for c in r['cells']

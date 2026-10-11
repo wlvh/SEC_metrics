@@ -17,7 +17,7 @@ EXTRA_REVENUE_CONCEPTS = (
     'us-gaap:RevenueFromCollaborativeArrangementExcludingRevenueFromContractWithCustomer',
     'us-gaap:RoyaltyRevenue', 'us-gaap:Revenues',
 )
-UNIT_HEADER = (r"\(?(?:dollars in |in )?(?:millions|thousands)(?:, except (?:per (?:common )?share|per-share) data)?\)?",)
+UNIT_HEADER = (r"\(?(?:dollars in |in )?(?:millions|thousands)(?:, except (?:per (?:common )?share|per-share) (?:data|amounts))?\)?",)
 
 STATEMENT_CONCEPTS = ('us-gaap:NetIncomeLoss', 'us-gaap:ProfitLoss',
                       'us-gaap:CostOfRevenue', 'us-gaap:CostOfGoodsAndServicesSold')
@@ -36,7 +36,9 @@ def _label(table, cell):
 
 
 def _label_key(text):
-    return re.sub(r'\s+', ' ', re.sub(r'\([a-z0-9]+\)', '', text.casefold())).strip()
+    # Strip explicit footnote references, not geographic/subject qualifiers.
+    return re.sub(r'\s+', ' ', re.sub(r'\((?:[a-z]|[0-9]+|note\s+[0-9]+)\)',
+                                    '', text.casefold())).strip()
 
 
 def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
@@ -70,6 +72,38 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
                     if t['end_byte'] <= span['start_byte']), default=0)
     intro = [b for b in structure['blocks'] if not b['inside_table']
              and previous <= b['start_byte'] < b['end_byte'] <= span['start_byte']]
+    title_pattern = r'consolidated (?:statements? of (?:income|operations|earnings)|income statements?)'
+    if adjacent_heading:
+        # A layout div may contain both a unit caption and the following table.
+        # Index only the original pre-table interval so its caption is not lost
+        # when the complete div is classified as containing a nested block.
+        from .composite_scope import _SourceStructure
+        from .canonical import sha256_bytes
+        class HeadingFragment(_SourceStructure):
+            def __init__(self, source_bytes):
+                super().__init__(source_bytes)
+                self.visible_parts = []
+            def handle_data(self, data):
+                self.visible_parts.append(data)
+                super().handle_data(data)
+        fragment_start = max((b['start_byte'] for b in intro
+            if re.fullmatch(title_pattern,_label_key(b['visible_text']))), default=previous)
+        fragment = HeadingFragment(raw[fragment_start:span['start_byte']])
+        clipped = fragment.finish()['blocks']
+        original = {(b['start_byte'], b['end_byte']): b for b in intro}
+        if any(b['end_byte'] == span['start_byte'] - fragment_start
+               and (fragment_start+b['start_byte'], fragment_start+b['end_byte']) not in original
+               for b in clipped):
+            covered = ''.join(b['visible_text'] for b in clipped)
+            _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+                  'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+            intro = [b for b in intro if b['end_byte'] <= fragment_start]
+            for block in clipped:
+                start, end = fragment_start+block['start_byte'], fragment_start+block['end_byte']
+                intro.append(original.get((start,end), {**block,
+                    'start_byte':start, 'end_byte':end,
+                    'span_sha256':sha256_bytes(content=raw[start:end]),
+                    'clipped_at_table_start':end==span['start_byte']}))
     heading_span = None
     if adjacent_heading and not intro:
         # Some filings put the statement title and units in a separate layout
@@ -90,7 +124,6 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
                 _need(re.sub(r'\s+','',all_text)==re.sub(r'\s+','',covered),
                       'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
                 heading_span = heading
-    title_pattern = r'consolidated statements? of (?:income|operations|earnings)'
     titles = [b for b in intro if re.fullmatch(title_pattern, _label_key(b['visible_text']))]
     excluded_context, page_boundary = [], None
     if bind_statement_page and titles:
@@ -110,7 +143,9 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
     _need(not caption or re.fullmatch(title_pattern, _label_key(caption)), 'STATEMENT_CAPTION_SCOPE_UNRESOLVED')
     _need(bool(titles) or bool(caption), 'CONSOLIDATED_STATEMENT_TITLE_UNPROVEN')
     def company_key(text):
-        return re.sub(r'[^a-z0-9]', '', text.casefold())
+        # Co/Company is the same spelling variant; LLC/Ltd etc remain distinct.
+        expanded=re.sub(r'\bco\.?(?=\s|$)','company',text.casefold())
+        return re.sub(r'[^a-z0-9]', '', expanded)
     registrants = {company_key(f['text']) for f in parsed.facts
                    if f['qualified_name'].split(':')[-1].casefold()=='entityregistrantname'}
     issuer_lines = {name+suffix for name in registrants
@@ -121,7 +156,8 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
         # precede this title. Preserve their spans, without allowing arbitrary
         # pre-title scope prose or a note after the title to disappear.
         navigation = [b for b in intro if titles and b['end_byte'] <= titles[-1]['start_byte']
-                      and re.fullmatch(r'(?:[0-9]+|table of contents|see accompanying notes\.)',
+                      and re.fullmatch(r'(?:[0-9]+|table of contents|see accompanying notes\.|'
+                                       r'the accompanying notes are part of the consolidated financial statements\.)',
                                        b['visible_text'].strip(), re.I)]
         _need(all(b in navigation or company_key(b['visible_text']) in issuer_lines
                   or re.fullmatch(title_pattern,_label_key(b['visible_text']))
@@ -165,11 +201,14 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
                                        _label_key(other['text'])) for other in cells)
                       or any(re.fullmatch(p, text) for p in unit_headers)
                       or re.fullmatch(title_pattern, text)
-                      or re.fullmatch(r'(?:revenues|costs and expenses|earnings per (?:common )?share[–— -]*(?:basic|diluted)):', text)
+                      or re.fullmatch(r'(?:revenues|costs and expenses|earnings per (?:common )?share[–— -]*(?:basic|diluted)):?', text)
                       or adjacent_heading and re.fullmatch(r'(?:cost of revenues|operating expenses)\s*:',
                           re.sub(r'\([0-9]+\)', '', c['text'].casefold().strip()).strip()))
             header = header or any(re.fullmatch(p, ' '.join(c['text'].casefold().split()))
                                    for p in extra_section_headers)
+            earnings = re.fullmatch(r'earnings/\(loss\) per share attributable to (.+) common and class [a-z] stock',text)
+            header = header or bool(earnings and company_key(earnings[1]) in issuer_lines)
+            header = header or bool(re.fullmatch(r'weighted-average shares used in computation of earnings/\(loss\) per share',text))
             if not header:
                 unknown.append(_cell_proof(table=table, cell=c))
     _need(not unknown, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')

@@ -42,6 +42,17 @@ def facts(annual):
 
 
 class SelectedRevenueScopeTest(unittest.TestCase):
+    def test_numeric_note_total_reference_keeps_component_scope_and_scope_words_do_not_disappear(self):
+        primary,xml,annual=originals()
+        for marker,allowed in (('(Note 4)',True),('(a)',True),('(4)',True),
+                               ('(Europe)',False),('(Subsidiary)',False),('(Note 4, Europe)',False)):
+            raw=primary['raw_bytes'].replace(b'Total revenues',('Total revenues '+marker).encode())
+            source={**primary,'raw_bytes':raw,'source_reference':{**primary['source_reference'],
+                    'raw_asset_id':'sha256:'+sha256_bytes(content=raw)}}
+            with self.subTest(marker=marker):
+                scope=selected_revenue_scope(primary=source,xml=xml,annual=annual,approved_concepts=APPROVED)
+                self.assertEqual(scope['complete_scope_proven'],allowed)
+
     def scope(self, **kwargs):
         primary,xml,annual=originals(**kwargs)
         return selected_revenue_scope(primary=primary,xml=xml,annual=annual,approved_concepts=APPROVED)
