@@ -4,6 +4,9 @@ name: Company saved-source records
   pull_request:
     paths:
     - scripts/**
+    - tests/vnext/test_selected_dei_text_scope.py
+    - tests/vnext/test_text_coverage.py
+    - docs/evidence/issue28_selected_dei_scope_20261012/**
     - tests/vnext/test_income_amendment_paragraph_dispatch.py
     - tests/vnext/test_instant_amendment_paragraph_api.py
     - tests/vnext/test_amendment_note_layout.py
@@ -202,6 +205,7 @@ jobs:
       env:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 tests/required_unittests.py tests.vnext.test_selected_income_calculation tests.vnext.test_historical_b03_case
+        tests.vnext.test_selected_dei_text_scope tests.vnext.test_text_coverage
         tests.vnext.test_income_amendment_paragraph_dispatch tests.vnext.test_instant_amendment_paragraph_api
         tests.vnext.test_amendment_note_layout
   company-current:
