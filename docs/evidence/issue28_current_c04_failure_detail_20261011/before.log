@@ -1,0 +1,31 @@
+test_changed_period_not_projected_as_current (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_changed_period_not_projected_as_current) ... ok
+test_current_case_selects_explicit_core_and_keeps_noncalendar_period (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_current_case_selects_explicit_core_and_keeps_noncalendar_period) ... ok
+test_failed_request_c04_limitation_is_visible_without_c03_misattribution (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_failed_request_c04_limitation_is_visible_without_c03_misattribution) ... FAIL
+test_no_c04_limitation_does_not_invent_another_metric_cause (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_no_c04_limitation_does_not_invent_another_metric_cause) ... ok
+test_only_c04_consumes_new_wrapper_dependency (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_only_c04_consumes_new_wrapper_dependency) ... ok
+test_snapshot_conflict_summary_keeps_file_and_ranges_without_entire_filing_inventory (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_snapshot_conflict_summary_keeps_file_and_ranges_without_entire_filing_inventory) ... FAIL
+test_writer_selects_current_c04_without_zero_ai_formula (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_writer_selects_current_c04_without_zero_ai_formula) ... ok
+
+======================================================================
+FAIL: test_failed_request_c04_limitation_is_visible_without_c03_misattribution (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_failed_request_c04_limitation_is_visible_without_c03_misattribution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_current_auditor_case.py", line 28, in test_failed_request_c04_limitation_is_visible_without_c03_misattribution
+    self.assertIn('LATEST_SOURCE_REQUEST_FAILED',str(error))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'LATEST_SOURCE_REQUEST_FAILED' not found in 'C04_REGISTRATION_BASE_INPUT_UNRESOLVED'
+
+======================================================================
+FAIL: test_snapshot_conflict_summary_keeps_file_and_ranges_without_entire_filing_inventory (tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest.test_snapshot_conflict_summary_keeps_file_and_ranges_without_entire_filing_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_current_auditor_case.py", line 44, in test_snapshot_conflict_summary_keeps_file_and_ranges_without_entire_filing_inventory
+    self.assertIn(value,str(error))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: 'SAVED_HISTORY_INDEX_AND_BODY_ARE_NOT_A_COHERENT_SNAPSHOT' not found in 'C04_REGISTRATION_BASE_INPUT_UNRESOLVED'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.015s
+
+FAILED (failures=2)
+{"allowed_skips": 0, "errors": 0, "failures": 2, "run": 7, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_auditor_case.CurrentAuditorCaseTest"]}

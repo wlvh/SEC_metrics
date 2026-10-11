@@ -502,19 +502,40 @@ class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
                     company_id='constructed', metric_id='B07', fiscal_year=2024)
             select.assert_not_called()
 
-    def test_amendment_and_successor_keep_the_existing_rejection(self):
+    def test_uncleared_amendment_and_successor_keep_the_existing_rejection(self):
         for amendments, mode in [([{'form':'10-K/A'}], 'CONTINUOUS_PRIMARY'),
                                  ([], 'SUCCESSOR_PREDECESSOR')]:
-            with self.subTest(mode=mode), \
-                    patch.object(cases, 'resolve_period_selection', return_value={}), \
-                    patch.object(cases, 'prepare_historical_annual_input', return_value={
-                        'amendments':amendments, 'subject_policy':{'mode':mode}}), \
-                    patch.object(cases, 'installed_ordinary_spec_documents') as specs, \
-                    patch.object(cases, '_deterministic_metric_graph') as graph:
-                with self.assertRaisesRegex(cases.StatementCaseError, 'AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED'):
+            with self.subTest(amendments=amendments,mode=mode), \
+                    patch.object(cases,'resolve_period_selection',return_value={}), \
+                    patch.object(cases,'prepare_historical_annual_input',return_value={
+                        'amendments':amendments,'entity':'1','subject_policy':{'mode':mode}}), \
+                    patch.object(cases,'_Sources'), \
+                    patch.object(cases,'_statement_amendment_checks',side_effect=cases.StatementCaseError(
+                        'HISTORICAL_STATEMENT_AMENDMENT_ORIGINAL_VALUES_NOT_PROVEN','AMENDMENT_INPUT_NOT_CLEARED')), \
+                    patch.object(cases,'installed_ordinary_spec_documents') as specs, \
+                    patch.object(cases,'_deterministic_metric_graph') as graph:
+                with self.assertRaises(cases.StatementCaseError) as caught:
                     cases.prepare_historical_current_annual_year_case(repo_root=Path('/constructed'),
-                        company_id='constructed', metric_id='B07', fiscal_year=2024)
+                        company_id='constructed',metric_id='B07',fiscal_year=2024)
+                self.assertEqual('AMENDMENT_INPUT_NOT_CLEARED' if amendments else 'IMPLEMENTATION_GAP',
+                                 caught.exception.category)
                 specs.assert_not_called();graph.assert_not_called()
+
+    def test_b07_consumes_the_same_proved_link_scope_before_specification(self):
+        period={'fiscal_year':2024,'period_start':'2024-01-01','period_end':'2024-12-31'}
+        annual={'amendments':[{'form':'10-K/A'}],'entity':'1',
+                'subject_policy':{'mode':'CONTINUOUS_PRIMARY'},'table_input':{'target_period':period}}
+        checked={'scope_id':'constructed-proved-link','classification':
+                 'EXHIBIT_LINK_CORRECTION_WITH_IDENTICAL_ORIGINAL_ITEM15'}
+        with patch.object(cases,'resolve_period_selection',return_value={}), \
+             patch.object(cases,'prepare_historical_annual_input',return_value=annual), \
+             patch.object(cases,'_Sources') as reader, \
+             patch.object(cases,'_statement_amendment_checks',return_value=[checked]) as scope, \
+             patch.object(cases,'installed_ordinary_spec_documents',side_effect=ValueError('stop at existing Spec')):
+            with self.assertRaisesRegex(ValueError,'stop at existing Spec'):
+                cases.prepare_historical_current_annual_year_case(repo_root=Path('/constructed'),
+                    company_id='constructed',metric_id='B07',fiscal_year=2024)
+        scope.assert_called_once_with(reader.return_value,annual)
 
 
 class HistoricalPeriodSubjectTest(unittest.TestCase):
