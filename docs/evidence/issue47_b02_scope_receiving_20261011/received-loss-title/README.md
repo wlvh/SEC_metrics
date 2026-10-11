@@ -1,0 +1,9 @@
+# PR179 receiver loss-title correction: historical consumer
+
+Receiver6111379095 rejected the prior candidate because SouthwestFY2021–FY2023 lost7 valid results. Public085c12a73472c450673c1f37f78b70bb01a4f416 changes only the exact consolidated-income title pattern to permit standardIncome(Loss), preserving allgeographic/subject qualifier words. The existing release-aware/current source and historical adapter controls remain; no general parenthesis removal was restored.
+
+29 selectedreported/historicaladmission controls pass in0.436s, zero skip. The historical side normally received the fixedcode and used its existing Southwestfinancialstate. OnlyFY2021/FY2022 B01/B02/B03 sixcoordinates were processed(44.582s), then onlyFY2023 B02(12.659s). The twoB03 rows were new in this particular existingstate, while previousB01/B02 identities were preserved. The exact7 values/units/ResultIDs match the receiver/public independently verified source reference. Oldresultdirectories and unrequestedyears/families remain unchanged; no Fordfive-year or 150point census was repeated.
+
+Factories/selected-income/Calculator/network-forbidden repeats take4.239s for21–22 and1.379s for23, zero calculations/newresults. Independentresults0.861s exports the whole existing task, including unrequestedcorrectresults; file-protection counts and exact7rows are inactual-company.json. This is authorconsumer verification, not the receiving reviewer’s own recheck or a merge decision. The rejected version and its old failures/CI evidence remain historical. The guide continues withholding rejected-version execution instructions until a repairedcandidate is independently received.
+
+No newSEC/provider/modelcalls, oldsource/response/Run/ledger edit, Ready, author merge/adoption/deployment oractive change. Scope-negative rules and the completeIssue47 responsibility remain; this finitecompatibility repair does not finish the outstanding revenue-scope cases.

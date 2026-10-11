@@ -1,0 +1,31 @@
+{
+  "head": "becf0a5d97bac8c6f887f3843e85e918d5534251",
+  "workflow_run": 38153772124,
+  "jobs": [
+    {
+      "id": 114512404143,
+      "name": "company-history",
+      "loaded_history_method": "2026-10-11T16:02:30.3270067Z test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not) ... ok",
+      "summaries": [
+        "2026-10-11T16:02:30.5676230Z Ran 132 tests in 0.817s",
+        "2026-10-11T16:02:41.4682838Z Ran 47 tests in 2.824s"
+      ],
+      "skipped_test_lines": []
+    },
+    {
+      "id": 114512404176,
+      "name": "source-contracts",
+      "loaded_source_methods": [
+        "2026-10-11T16:02:35.3876301Z test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_company_co_abbreviation_is_narrower_than_removing_all_legal_suffixes) ... ok",
+        "2026-10-11T16:02:35.5148528Z test_geographic_or_subsidiary_parenthesis_is_not_a_footnote (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_geographic_or_subsidiary_parenthesis_is_not_a_footnote) ... ok",
+        "2026-10-11T16:02:35.5470196Z test_income_statement_page_does_not_consume_the_prior_audit_report (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_income_statement_page_does_not_consume_the_prior_audit_report) ... ok",
+        "2026-10-11T16:02:35.6465680Z test_numeric_note_reference_is_not_a_total_label_or_scope_change (tests.vnext.test_selected_reported_revenue_v2.SelectedReportedRevenueTest.test_numeric_note_reference_is_not_a_total_label_or_scope_change) ... ok"
+      ],
+      "suite_receipts": [
+        "2026-10-11T16:02:52.0365099Z {\"allowed_skips\": 0, \"errors\": 0, \"failures\": 0, \"run\": 61, \"skip_reasons\": [], \"skipped\": 0, \"tests\": [\"tests.vnext.test_single_revenue_line\", \"tests.vnext.test_selected_reported_revenue_v2\", \"tests.vnext.test_financial_duration\", \"tests.vnext.test_selected_income_source_v1\"]}",
+        "2026-10-11T16:02:53.3352680Z {\"allowed_skips\": 0, \"errors\": 0, \"failures\": 0, \"run\": 19, \"skip_reasons\": [], \"skipped\": 0, \"tests\": [\"tests.vnext.test_selected_income_calculation\", \"tests.vnext.test_historical_b03_case\"]}"
+      ]
+    }
+  ],
+  "coverage": "Actual loaded methods and suite receipts, not broader business acceptance; fast workflow separately still in progress at last read"
+}

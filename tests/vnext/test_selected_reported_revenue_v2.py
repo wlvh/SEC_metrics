@@ -15,6 +15,19 @@ def changed(source,raw):
 
 
 class SelectedReportedRevenueTest(unittest.TestCase):
+    def test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers(self):
+        from vnext.selected_revenue_scope_v1 import selected_revenue_scope
+        primary,xml,annual=originals()
+        title=b'Consolidated Statement of Income (Loss)'
+        raw=primary['raw_bytes'].replace(b'Consolidated Statements of Income',title).replace(b'Net income',b'Net income (loss)')
+        for reader in (reported_revenue_scope,selected_revenue_scope):
+            with self.subTest(reader=reader.__name__):
+                scope=reader(primary=changed(primary,raw),xml=xml,annual=annual,approved_concepts=APPROVED)
+                self.assertTrue(scope['complete_scope_proven'])
+                for qualifier in (b' (US)',b' (Europe)',b' (Subsidiary)'):
+                    with self.subTest(qualifier=qualifier),self.assertRaisesRegex(ValueError,'STATEMENT_TITLE_UNPROVEN'):
+                        reader(primary=changed(primary,raw.replace(title,title+qualifier)),xml=xml,annual=annual,approved_concepts=APPROVED)
+
     def test_income_statement_page_does_not_consume_the_prior_audit_report(self):
         primary,xml,annual=originals()
         preceding=b'<div>Report of Independent Registered Public Accounting Firm</div><div>Our audit provides reasonable assurance.</div>'
