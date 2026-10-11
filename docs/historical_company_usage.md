@@ -335,3 +335,28 @@ python3 tools/vnext_company.py results --company lumen_technologies \
 已接收版本的五年 B01 为 19,687m / 17,478m / 14,557m / 13,108m / 12,402m USD；对应 B02 约为 −4.9488% / −11.2206% / −16.7124% / −9.9540% / −5.3860%。原 FY2022 小计误用结果按确切身份扣留且保留历史，新正确结果使用新身份。实际验证在现有任务仅处理受影响的 FY2021 和 FY2023–2025，FY2022 未重算；两个范围复跑零计算，子集运行后独立读口仍显示全部十个值和原失败记录。没有把该事实描述成新空状态五年首跑。
 
 [一份主要来源与公司验证记录](evidence/issue47_b01_scope_consumer_20261011/five-year-receiving/README.md)给完整数值、原申报／前期、原格／单位、实际命令、复跑与读取证据；main接收已完成；后续程序／来源变化仍按实际影响验证，不以原CI代替新变更核对。这只是 Lumen 的 B01/B02 五年能力，其他指标、公司、修订与主体边界、在线来源和整个 #47 完成标准继续保留。
+
+## B03 历史候选：同一公司入口的有限接收
+
+**PR167仍在开发／接收中，尚未入main。** 代码可从 `task/issue47-selected-income-consumer-20261011` 取得；它消费 PR166 的公共收入增量。PR166因仓库已有来源缺少前期HTML导致当期B02退化而被退回，公共负责人正在原PR修补；PR167仍须接收该固定版本、公共处理依赖与自动测试接线。不要把本节命令用于声称当期B02修补或完整五年B03已交付。
+
+在该候选代码目录，使用前述已恢复的保存来源根和全新的外部状态／输出目录：
+
+```bash
+python3 tools/vnext_company.py run \
+  --company marriott_international --period fiscal-years \
+  --fiscal-year-start 2024 --fiscal-year-end 2024 --metric B03 \
+  --source-root /your/restored/source-inputs \
+  --work-dir "$HOME/sec-metrics-marriott-b03/state" \
+  --output-dir "$HOME/sec-metrics-marriott-b03/runs"
+python3 tools/vnext_company.py results \
+  --company marriott_international \
+  --state-root "$HOME/sec-metrics-marriott-b03/state" \
+  --output-root "$HOME/sec-metrics-marriott-b03/read-01"
+```
+
+这个已核原件的位置为2024-01-01至2024-12-31，B03 = `(3767 + 128 + 255) / 25100` = `0.1653386454183266932270916335 ratio`，操作数的单位都是百万USD。输出保留原申报、CompanyFacts观察值及primary/XML相符的出处。复跑使用相同state；每次独立读取用新的output-root。实际同任务混合 `--metric B01 --metric B03` 新增B01=25,100,000,000USD时保住原B03，随后只执行B01仍能独立读到未请求的B03。
+
+Salesforce FY2026可用同一候选命令选择 `--company salesforce --fiscal-year-start 2026 --fiscal-year-end 2026 --metric B03`，实际期间为2025-02-01至2026-01-31。原件D&A的12亿与36.31亿美元候选冲突，当前结果扣留，原因 `B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN`，值为空；CLI退出码2表示这个明确限制。相同输入复跑应复用该扣留，不能挑较大金额或把扣留改成业务不适用。Marriott FY2021–FY2023完整D&A仍未解决；FY2025保留旧正确参考，本节未证明它已由新历史入口完成。历史B03修订与继任主体处理仍为实现缺口，线上来源发现／补齐仍未完成。
+
+本节的来源恢复、原件与调用边界沿本指南前述流程。主要实现、错公司输入拒绝、首次处理／零计算复跑／独立读取以及剩余公共依赖均在[PR167的单份主要记录](evidence/issue47_selected_income_consumer_20261011/README.md)及其[反馈修补](evidence/issue47_selected_income_consumer_20261011/coordinate-feedback/README.md)。技术接收不改变原Run、原失败或真实调用额度，也不授予正式采纳、部署或active切换。

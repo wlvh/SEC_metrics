@@ -71,7 +71,9 @@ class OrdinaryZeroAiPrototypeTest(unittest.TestCase):
                 self.assertEqual({'provider':0,'paid':0,'sec':0},case['calls'])
                 self.assertFalse(case['production_authorized'])
                 self.assertFalse(case['current_latest_verified'])
-                self.assertEqual('PREEXISTING_SAVED_ACQUISITIONS_ONLY',case['source_admission']['source_credit'])
+                self.assertEqual('SAVED_SOURCE_BYTES_AND_REQUESTS_CHECKED',case['source_admission']['source_credit'])
+                self.assertFalse(case['source_admission']['real_sec_credit'])
+                self.assertEqual({'provider':0,'paid':0,'sec':0},case['source_admission']['new_business_calls'])
                 for record in case['records']: validate_record(record=record)
                 for claim in case['claims']: validate_verified_claim(claim=claim)
                 result=case['result']
