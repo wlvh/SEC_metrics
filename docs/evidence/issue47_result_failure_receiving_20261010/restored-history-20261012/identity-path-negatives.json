@@ -1,0 +1,36 @@
+[
+  {
+    "constructed_negative": true,
+    "kind": "wrong_result",
+    "seconds": 0.42436279200046556,
+    "exit_code": 1,
+    "arguments": [
+      "results",
+      "--company",
+      "ford_motor_company",
+      "--state-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-relocated-state-20261012-47/constructed-wrong_result",
+      "--output-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-relocated-state-20261012-47/wrong_result-read"
+    ],
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    raise SystemExit(main(json.loads(sys.argv[1])))\n                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tools/vnext_company.py\", line 185, in main\n    result = read_company_results(state_root=args.state_root, company_id=args.company,\n                                 defects_file=args.defects_file, output_root=args.output_root)\n  File \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_result_view.py\", line 344, in read_company_results\n    return read_current_company(state_root=state_root, company_id=company_id,\n                                defects_file=defects_file, output_root=output_root)\n  File \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_current_records.py\", line 206, in read_current_company\n    return _read_current_company(root, company_id, defects_file, output_root)\n  File \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_current_records.py\", line 297, in _read_current_company\n    _need(result['company_id'] == company_id and result['metric_id'] == observation['metric_id']\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n          and result['result_id'] == observation['read_result_id'], 'COMPANY_CURRENT_READ_COORDINATE_CHANGED')\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_current_records.py\", line 34, in _need\n    raise ValueError(reason)\nValueError: COMPANY_CURRENT_READ_COORDINATE_CHANGED\n"
+  },
+  {
+    "constructed_negative": true,
+    "kind": "external_path",
+    "seconds": 0.4192592909967061,
+    "exit_code": 1,
+    "arguments": [
+      "results",
+      "--company",
+      "ford_motor_company",
+      "--state-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-relocated-state-20261012-47/constructed-external_path",
+      "--output-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-relocated-state-20261012-47/external_path-read"
+    ],
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 5, in <module>\n    raise SystemExit(main(json.loads(sys.argv[1])))\n                     ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tools/vnext_company.py\", line 185, in main\n    result = read_company_results(state_root=args.state_root, company_id=args.company,\n                                 defects_file=args.defects_file, output_root=args.output_root)\n  File \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_result_view.py\", line 344, in read_company_results\n    return read_current_company(state_root=state_root, company_id=company_id,\n                                defects_file=defects_file, output_root=output_root)\n  File \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_current_records.py\", line 206, in read_current_company\n    return _read_current_company(root, company_id, defects_file, output_root)\n  File \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_current_records.py\", line 294, in _read_current_company\n    _need(root in record.parents, 'COMPANY_CURRENT_RECORD_OUTSIDE_STATE')\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/scripts/vnext/company_current_records.py\", line 34, in _need\n    raise ValueError(reason)\nValueError: COMPANY_CURRENT_RECORD_OUTSIDE_STATE\n"
+  }
+]
