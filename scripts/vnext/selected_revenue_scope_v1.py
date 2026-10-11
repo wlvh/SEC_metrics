@@ -72,7 +72,7 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
                     if t['end_byte'] <= span['start_byte']), default=0)
     intro = [b for b in structure['blocks'] if not b['inside_table']
              and previous <= b['start_byte'] < b['end_byte'] <= span['start_byte']]
-    title_pattern = r'consolidated (?:statements? of (?:income|operations|earnings)|income statements?)'
+    title_pattern = r'consolidated (?:statements? of (?:income(?:\s*\(loss\))?|operations|earnings)|income statements?)'
     if adjacent_heading:
         # A layout div may contain both a unit caption and the following table.
         # Index only the original pre-table interval so its caption is not lost
