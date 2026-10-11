@@ -1,0 +1,108 @@
+test_explicit_release_still_rejects_wrong_entity_and_period (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_explicit_release_still_rejects_wrong_entity_and_period) ... ERROR
+test_fake_namespace_and_invalid_policy_are_not_releases (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_fake_namespace_and_invalid_policy_are_not_releases) ... 
+  test_fake_namespace_and_invalid_policy_are_not_releases (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_fake_namespace_and_invalid_policy_are_not_releases) (release='2021q5') ... ERROR
+  test_fake_namespace_and_invalid_policy_are_not_releases (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_fake_namespace_and_invalid_policy_are_not_releases) (release='2024-01-31/extra') ... ERROR
+test_fake_namespace_and_invalid_policy_are_not_releases (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_fake_namespace_and_invalid_policy_are_not_releases) ... ERROR
+test_quarter_and_date_release_require_explicit_existing_policy (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_quarter_and_date_release_require_explicit_existing_policy) ... 
+  test_quarter_and_date_release_require_explicit_existing_policy (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_quarter_and_date_release_require_explicit_existing_policy) (release='2021q4') ... ERROR
+  test_quarter_and_date_release_require_explicit_existing_policy (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_quarter_and_date_release_require_explicit_existing_policy) (release='2024-01-31') ... ERROR
+test_selected_base_and_labelled_annual_are_a_pair_before_latest_read (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_base_and_labelled_annual_are_a_pair_before_latest_read) ... 
+  test_selected_base_and_labelled_annual_are_a_pair_before_latest_read (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_base_and_labelled_annual_are_a_pair_before_latest_read) (kwargs={'selected_base': {}}) ... ERROR
+  test_selected_base_and_labelled_annual_are_a_pair_before_latest_read (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_base_and_labelled_annual_are_a_pair_before_latest_read) (kwargs={'labelled_annual': {}}) ... ERROR
+
+======================================================================
+ERROR: test_explicit_release_still_rejects_wrong_entity_and_period (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_explicit_release_still_rejects_wrong_entity_and_period)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 48, in test_explicit_release_still_rejects_wrong_entity_and_period
+    checked=self.check(filing_with_release('2021q4',entity='54321'),dei_release='YEAR_QUARTER_OR_DATE')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 26, in check
+    return _checked_filing(sources=[source],company_id='sample_entity',cik='12345',
+        period_end='2024-12-31',source_proofs=[],aliases=[],**kwargs)
+TypeError: _checked_filing() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_fake_namespace_and_invalid_policy_are_not_releases (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_fake_namespace_and_invalid_policy_are_not_releases) (release='2021q5')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 43, in test_fake_namespace_and_invalid_policy_are_not_releases
+    self.check(filing_with_release(release),dei_release='YEAR_QUARTER_OR_DATE')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 26, in check
+    return _checked_filing(sources=[source],company_id='sample_entity',cik='12345',
+        period_end='2024-12-31',source_proofs=[],aliases=[],**kwargs)
+TypeError: _checked_filing() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_fake_namespace_and_invalid_policy_are_not_releases (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_fake_namespace_and_invalid_policy_are_not_releases) (release='2024-01-31/extra')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 43, in test_fake_namespace_and_invalid_policy_are_not_releases
+    self.check(filing_with_release(release),dei_release='YEAR_QUARTER_OR_DATE')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 26, in check
+    return _checked_filing(sources=[source],company_id='sample_entity',cik='12345',
+        period_end='2024-12-31',source_proofs=[],aliases=[],**kwargs)
+TypeError: _checked_filing() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_fake_namespace_and_invalid_policy_are_not_releases (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_fake_namespace_and_invalid_policy_are_not_releases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 45, in test_fake_namespace_and_invalid_policy_are_not_releases
+    self.check(filing_with_release('2021q4'),dei_release='ANY_NAMESPACE')
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 26, in check
+    return _checked_filing(sources=[source],company_id='sample_entity',cik='12345',
+        period_end='2024-12-31',source_proofs=[],aliases=[],**kwargs)
+TypeError: _checked_filing() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_quarter_and_date_release_require_explicit_existing_policy (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_quarter_and_date_release_require_explicit_existing_policy) (release='2021q4')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 35, in test_quarter_and_date_release_require_explicit_existing_policy
+    checked=self.check(source,dei_release='YEAR_QUARTER_OR_DATE')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 26, in check
+    return _checked_filing(sources=[source],company_id='sample_entity',cik='12345',
+        period_end='2024-12-31',source_proofs=[],aliases=[],**kwargs)
+TypeError: _checked_filing() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_quarter_and_date_release_require_explicit_existing_policy (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_quarter_and_date_release_require_explicit_existing_policy) (release='2024-01-31')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 35, in test_quarter_and_date_release_require_explicit_existing_policy
+    checked=self.check(source,dei_release='YEAR_QUARTER_OR_DATE')
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 26, in check
+    return _checked_filing(sources=[source],company_id='sample_entity',cik='12345',
+        period_end='2024-12-31',source_proofs=[],aliases=[],**kwargs)
+TypeError: _checked_filing() got an unexpected keyword argument 'dei_release'
+
+======================================================================
+ERROR: test_selected_base_and_labelled_annual_are_a_pair_before_latest_read (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_base_and_labelled_annual_are_a_pair_before_latest_read) (kwargs={'selected_base': {}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 61, in test_selected_base_and_labelled_annual_are_a_pair_before_latest_read
+    prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        event_forms=EVENT_FORMS,**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: prepare_c04_registration_case() got an unexpected keyword argument 'selected_base'
+
+======================================================================
+ERROR: test_selected_base_and_labelled_annual_are_a_pair_before_latest_read (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_base_and_labelled_annual_are_a_pair_before_latest_read) (kwargs={'labelled_annual': {}})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/tests/vnext/test_c04_selected_input.py", line 61, in test_selected_base_and_labelled_annual_are_a_pair_before_latest_read
+    prepare_c04_registration_case(repo_root=ROOT,company_id='sample_entity',
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        event_forms=EVENT_FORMS,**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: prepare_c04_registration_case() got an unexpected keyword argument 'labelled_annual'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+FAILED (errors=8)
+{"allowed_skips": 0, "errors": 8, "failures": 0, "run": 4, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_c04_selected_input"]}

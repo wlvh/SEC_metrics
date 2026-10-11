@@ -13,15 +13,44 @@ class HistoryCompanyDispatchTest(TestCase):
         from vnext.historical_b06_case import prepare_historical_b06_year_case, PROCESSING_FILES
         from vnext.historical_statement_cases import prepare_historical_statement_year_case
         with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
-            self.run_history(company_id='enphase_energy', metric_ids=['B06', 'B01', 'B02', 'B04'],
+            self.run_history(company_id='enphase_energy', metric_ids=['B06', 'C04', 'B01', 'B02', 'B04'],
                              fiscal_year_start=2024, fiscal_year_end=2024)
         args = shared.call_args.kwargs
         self.assertIs(prepare_historical_b06_year_case, args['case_factories']['B06'])
         self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric']['B06'])
+        from vnext.historical_auditor_case import prepare_historical_auditor_year_case, PROCESSING_FILES as auditor_files
+        self.assertIs(prepare_historical_auditor_year_case, args['case_factories']['C04'])
+        self.assertEqual(auditor_files, args['processing_files_by_metric']['C04'])
         self.assert_range_income(args, 'B01')
         self.assert_range_income(args, 'B02')
         self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B04'])
 
+    def test_auditor_selected_case_keeps_received_event_and_statement_factories(self):
+        from vnext.historical_auditor_case import prepare_historical_auditor_year_case, PROCESSING_FILES
+        from vnext.historical_event_cases import prepare_historical_event_year_case
+        from vnext import historical_statement_cases as statements
+        from vnext.company_fiscal_range import PROCESSING_FILES as range_files
+        selection = {'constructed_control': True, 'report_end': '2024-12-31'}
+        plan = {'tasks': [{'fiscal_year': 2024, 'status': 'FISCAL_YEAR_RESOLVED',
+                           'period_selection': selection}]}
+        with patch.object(statements, 'prepare_historical_statement_year_case',
+                          return_value={'constructed_case': True}) as producer, \
+             patch('vnext.company_current_records.run_saved_company',return_value={}) as shared:
+            self.run_history(company_id='ford_motor_company',metric_ids=['C04','C01','B01'])
+        args=shared.call_args.kwargs
+        self.assertIs(prepare_historical_auditor_year_case,args['case_factories']['C04'])
+        self.assertEqual(PROCESSING_FILES,args['processing_files_by_metric']['C04'])
+        self.assertIs(prepare_historical_event_year_case,args['case_factories']['C01'])
+        self.assertEqual(tuple(dict.fromkeys((*statements.INCOME_PROCESSING_FILES, *range_files))),
+                         args['processing_files_by_metric']['B01'])
+        with patch('vnext.company_fiscal_range.discover_fiscal_range', return_value=plan), \
+             patch('vnext.company_fiscal_range.sha256_file', return_value='constructed-source-version'):
+            self.assertEqual({'constructed_case': True}, args['case_factories']['B01'](
+                repo_root=self.root, company_id='ford_motor_company', metric_id='B01',
+                fiscal_year=2024))
+        producer.assert_called_once_with(repo_root=self.root.resolve(),
+            company_id='ford_motor_company', metric_id='B01', fiscal_year=2024,
+            period_selection=selection)
     def test_range_b02_keeps_all_received_paired_income_dependencies(self):
         from vnext.historical_statement_cases import PAIRED_REVENUE_PROCESSING_FILES
         with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
