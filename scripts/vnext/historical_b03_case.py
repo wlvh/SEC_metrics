@@ -69,7 +69,9 @@ def prepare_selected_income_sources(*, repo_root, company_id, fiscal_year):
     facts = reader.read(companyfacts_url(cik=int(original['entity'])),
         accession=original['filing']['accessionNumber'], role='companyfacts',
         media_type='application/json')
-    amendment_checks = _statement_amendment_checks(reader, annual)
+    income_amendment_properties = []
+    amendment_checks = _statement_amendment_checks(reader, annual,
+        metric_id='B03', income_properties=income_amendment_properties)
     originals = reader.auditor_filing(original['filing'])
     primary = [s for s in originals if s['raw_blob']['media_type'] == 'text/html']
     xml = [s for s in originals if s['raw_blob']['media_type'] == 'application/xml']
@@ -82,6 +84,8 @@ def prepare_selected_income_sources(*, repo_root, company_id, fiscal_year):
         'source_sets': reader.file_sets, 'source_proofs': proofs}
     if amendment_checks:
         body['statement_amendment_checks'] = amendment_checks
+    if income_amendment_properties:
+        body['statement_income_amendment_properties'] = income_amendment_properties
     preparation = {'input_binding': {**body, 'input_binding_id': content_hash(value=body)},
             'records': list(reader.records.values()), 'inventory': inventory,
             'facts': facts, 'primary': primary[0], 'xml': xml[0]}
@@ -92,7 +96,8 @@ def prepare_selected_income_sources(*, repo_root, company_id, fiscal_year):
     return {'annual': annual, 'original_annual': original, 'selection': selection,
         'preparation': preparation,
         'source_proofs': proofs, 'admission': admission,
-        'statement_amendment_checks': amendment_checks}
+        'statement_amendment_checks': amendment_checks,
+        'statement_income_amendment_properties':income_amendment_properties}
 
 
 # The producer names actual shared business dependencies; it does not import
@@ -101,7 +106,7 @@ PROCESSING_FILES = tuple(dict.fromkeys((*SOURCE_PROCESSING_FILES, *(
     'scripts/vnext/'+name+'.py' for name in (
         'normal_annual_input', 'normal_annual_input_v2', 'selected_income_calculation', 'ordinary_income_input',
         'historical_statement_cases', 'annual_amendment_scope', 'annual_amendment_scope_v2',
-        'amendment_note_layout',
+        'amendment_note_layout', 'instant_balance_amendment', 'instant_balance_amendment_v2',
         'normal_zero_ai_results', 'selected_income_source_v1', 'selected_revenue_scope_v1',
         'selected_reported_revenue_v2', 'selected_fiscal_definition_scope_v1',
         'ordinary_b03_input_scope', 'ordinary_da_scope_v1', 'b03_depreciation_scope',
@@ -111,7 +116,8 @@ PROCESSING_FILES = tuple(dict.fromkeys((*SOURCE_PROCESSING_FILES, *(
         'zero_ai_r2', 'annual_sources', 'request_bindings', 'saved_source_checks',
         'fiscal_year_labels', 'traits')), 'catalog/metrics/B01_revenue.md',
     'catalog/metrics/B03_ebitda_margin.md', 'catalog/r6/text_results_v2_policy.json',
-    'config/annual_amendment_scope_v1.json')))
+    'config/annual_amendment_scope_v1.json', 'config/ordinary_income_input_v1.json',
+    'config/instant_balance_amendment_v1.json')))
 
 
 def prepare_historical_income_year_case(*, repo_root, company_id, metric_id, fiscal_year):
@@ -167,6 +173,13 @@ def prepare_historical_income_year_case(*, repo_root, company_id, metric_id, fis
     assessments['original_income_checks'] = computed['original_checks']
     if selected['statement_amendment_checks']:
         assessments['statement_amendment_checks'] = selected['statement_amendment_checks']
+    if selected.get('statement_income_amendment_properties'):
+        assessments['statement_income_amendment_properties'] = selected['statement_income_amendment_properties']
+        computed['selection'] = {**computed['selection'],
+            'statement_income_amendment_properties':[
+                {'source_scope_id':item['source_scope_id'], 'metric_id':item['metric_id'],
+                 'input_class':item['income_property']['input_class']}
+                for item in selected['statement_income_amendment_properties']]}
     body = {'record_type':'HISTORICAL_SELECTED_INCOME_CASE_INPUT',
         'selected_sources':preparation['input_binding'], 'target':target,
         'spec_closure_hashes':{m:docs[m]['compiled_spec']['spec_closure_hash'] for m in ('B01','B03')},

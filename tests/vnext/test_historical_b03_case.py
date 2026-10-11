@@ -111,9 +111,26 @@ class HistoricalB03SourcesTest(TestCase):
                  'scope_id':'constructed-proved-link-only'}
         with patch.object(cases,'_statement_amendment_checks',return_value=[checked]) as inspect:
             result,*_=self.prepare()
-        inspect.assert_called_once_with(self.reader,self.annual)
+        inspect.assert_called_once_with(self.reader,self.annual,
+            metric_id='B03',income_properties=[])
         self.assertEqual([checked],result['statement_amendment_checks'])
         self.assertEqual([checked],result['preparation']['input_binding']['statement_amendment_checks'])
+
+    def test_income_property_is_carried_separately_from_the_original_source_scope(self):
+        self.annual['amendments'] = [{'form':'10-K/A'}]
+        original={'classification':'PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS',
+                  'scope_id':'constructed-part3-source'}
+        property_check={'source_scope_id':original['scope_id'],'metric_id':'B03',
+            'income_property':{'input_class':'CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES'}}
+        def checked(reader,annual,*,metric_id,income_properties):
+            self.assertEqual('B03',metric_id)
+            income_properties.append(property_check)
+            return [original]
+        with patch.object(cases,'_statement_amendment_checks',side_effect=checked):
+            result,*_=self.prepare()
+        self.assertEqual([original],result['statement_amendment_checks'])
+        self.assertEqual([property_check],result['statement_income_amendment_properties'])
+        self.assertEqual([property_check],result['preparation']['input_binding']['statement_income_amendment_properties'])
 
     def test_uncleared_amendment_refuses_before_companyfacts_calculation(self):
         from vnext.historical_statement_cases import StatementCaseError
