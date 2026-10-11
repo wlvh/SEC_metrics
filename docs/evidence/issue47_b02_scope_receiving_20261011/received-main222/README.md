@@ -1,0 +1,9 @@
+# PR179 historical reception after main222
+
+Actual candidatebecf0a5d97bac8c6f887f3843e85e918d5534251 includes main222 (received177/178). The two shared production blobs are unchanged from the actual financial execution public72ac: selected_revenue_scope_v1=6feac673967150c1328f8bfebfe62a1925d67a07 and selected_reported_revenue_v2=5aba074b1e150062e25af8d241b36906ebab13c5. The received history adapter retains both Note/scope controls and original-value link amendment consumer checks.
+
+15 paired/link controls passed; the same command accidentally selected a nonexistent current-annual module, recorded as an import error. After checking the real class, only the remaining5 HistoricalCurrentAnnualScopeTest methods ran (.003s), allpass/no skip. The initial error remains; it is not a green first run and the already executed15 methods were not replayed to hide it. These small checks supplement the public author's123 source/income/history checks without another fullfinancial census.
+
+A new independent process from exactbecf reads the existing Ford company state in0.726s with case/Calculator/network forbidden. Allfive CSV rows' values, units, actual dates and fullResult IDs match the committed five-year followup7fd; all89 state files remain identical. Adjacent independent-read.json records the exact output and state scope. No financial task was rerun.
+
+This proves contract/read compatibility on the obtainable same-main combination. It does not transfer the predecessor's first/repeat financial execution to becf. Main177 changes the common historical producer file's processing hash, so a subsequent requested run may legitimately process once; no saved configuration was modified to avoid it. The original financial evidence is in the parent mainrecord, with its executed-version boundaries. The new CI/receiver review are separate; no newcalls, Ready/merge/adoption or broader business acceptance.
