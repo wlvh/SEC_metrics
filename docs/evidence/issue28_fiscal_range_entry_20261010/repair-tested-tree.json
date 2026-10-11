@@ -1,0 +1,20 @@
+{
+  "parent_sha": "2c4e3d56cb4939d9202f4d406aec48d471e86bdb",
+  "peer_source_sha": "012b3ca1e4a388825c22ed3820bfbd59b5084472",
+  "uncommitted_at_execution": true,
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-entry/SEC_metrics",
+  "source_kind": "small recorded originals via test fixtures; existing saved real-company receipts reused",
+  "files": {
+    "scripts/vnext/company_fiscal_range.py": "232064c422b37caaf249d1257a0d0376eb6e24909fc502e52c21abab510c3848",
+    "scripts/vnext/historical_fiscal_labels.py": "a6e5016486f63cfe4b8a4e010c2feef399a0e4ae6a05bd53eab9a59790344261",
+    "tests/vnext/test_company_fiscal_range.py": "67115fec76b34f365b0bce0ec39f0b6a991ed15670c8b652ed0d67cdc1a09822",
+    "tests/vnext/test_selected_historical_fiscal_label.py": "1ebbfcadfb8ce095a14d863df2feaa7dae5bafd80a8e7f3ca7253cc82ecd46cd"
+  },
+  "unique_tests": 53,
+  "seconds": 1.948,
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  }
+}
