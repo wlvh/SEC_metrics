@@ -1,0 +1,694 @@
+{
+  "seconds": 13.416990542000349,
+  "result": {
+    "company_id": "lumen_technologies",
+    "metric_id": "B02",
+    "period_start": "2022-01-01",
+    "period_end": "2022-12-31",
+    "scope_key": "sha256:97ca8af09fb9a5cb5e7db25dcd1522984c633a391ec34c16e426f5d6084d36fa",
+    "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+    "applicability": "APPLICABLE",
+    "quality": "NONE",
+    "publication": "WITHHELD",
+    "reason_code": "HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED",
+    "value": null,
+    "unit": null,
+    "trace_id": "sha256:6fe0d034cddef07547bd75c1b50d13eaf96c06690104fef96c4b3ed1d0c6f44f",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:84d0961a68f39fe55b140449c09d94440ff09844f95f934a04cbf99b40b824a1"
+  },
+  "calls": [
+    {
+      "allow_single_revenue_line": true,
+      "annual": {
+        "company_id": "lumen_technologies",
+        "entity": "18926",
+        "filing": {
+          "form": "10-K",
+          "reportDate": "2022-12-31",
+          "filingDate": "2023-02-23",
+          "accessionNumber": "0000018926-23-000013",
+          "primaryDocument": "lumn-20221231.htm"
+        },
+        "table_input": {
+          "target_period": {
+            "fiscal_year": 2022,
+            "period_start": "2022-01-01",
+            "period_end": "2022-12-31"
+          }
+        }
+      },
+      "approved_concepts": [
+        "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+        "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax",
+        "us-gaap:Revenues",
+        "us-gaap:SalesRevenueNet"
+      ],
+      "reported_status": "NO_REPORTED_TOTAL_PROVEN",
+      "complete_scope_proven": false,
+      "rows": [
+        {
+          "concept": "us-gaap:Revenues",
+          "value": "17478000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 61,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "OPERATING REVENUE",
+          "table_id": "table_000031",
+          "row_index": 4
+        },
+        {
+          "concept": "us-gaap:CostOfGoodsAndServicesSold",
+          "value": "7868000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 64,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "Cost of services and products (exclusive of depreciation and amortization)",
+          "table_id": "table_000031",
+          "row_index": 6
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-1548000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 103,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "NET (LOSS) INCOME",
+          "table_id": "table_000031",
+          "row_index": 20
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-1548000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 118,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "NET (LOSS) INCOME",
+          "table_id": "table_000032",
+          "row_index": 4
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-1548000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 275,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "Net (loss) income",
+          "table_id": "table_000034",
+          "row_index": 5
+        },
+        {
+          "concept": "us-gaap:Revenues",
+          "value": "17478000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 803,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "Total Revenue",
+          "table_id": "table_000044",
+          "row_index": 46
+        },
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "16108000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 805,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "Total Revenue",
+          "table_id": "table_000044",
+          "row_index": 46
+        },
+        {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "value": "16108000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 808,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "Total revenue from contracts with customers",
+          "table_id": "table_000044",
+          "row_index": 51
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-1548000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 2026,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "Net (loss) income",
+          "table_id": "table_000082",
+          "row_index": 5
+        },
+        {
+          "concept": "us-gaap:Revenues",
+          "value": "17478000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 2264,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "Revenue:",
+          "table_id": "table_000095",
+          "row_index": 4
+        },
+        {
+          "concept": "us-gaap:CostOfGoodsAndServicesSold",
+          "value": "7868000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 2269,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "Cost of services and products",
+          "table_id": "table_000095",
+          "row_index": 6
+        },
+        {
+          "concept": "us-gaap:NetIncomeLoss",
+          "value": "-1548000000",
+          "unit": "USD",
+          "period_start": "2022-01-01",
+          "period_end": "2022-12-31",
+          "decimals": "-6",
+          "ordinal": 2390,
+          "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+          "context": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0000018926",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231",
+            "identifiers": [
+              {
+                "value": "0000018926",
+                "scheme": "http://www.sec.gov/CIK"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "dimensions": [],
+            "typed_dimension_count": 0
+          },
+          "source_reference": {
+            "record_type": "SOURCE_REFERENCE",
+            "source_reference_id": "sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9",
+            "raw_asset_id": "sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7",
+            "company_id": "lumen_technologies",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm",
+            "accession": "0000018926-23-000013",
+            "document_name": "lumn-20221231.htm",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4"
+          },
+          "label": "Net (loss) income",
+          "table_id": "table_000098",
+          "row_index": 13
+        }
+      ]
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
