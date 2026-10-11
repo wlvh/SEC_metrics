@@ -1,0 +1,705 @@
+{
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47",
+  "before_source": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "after_source": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "records": [
+    {
+      "company": "marriott_international",
+      "fresh": {
+        "arguments": [
+          "run",
+          "--company",
+          "marriott_international",
+          "--period",
+          "fiscal-years",
+          "--metric",
+          "B03",
+          "--fiscal-year-start",
+          "2024",
+          "--fiscal-year-end",
+          "2024",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/marriott_international/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/marriott_international/runs"
+        ],
+        "seconds": 6.29447220899965,
+        "exit": 0
+      },
+      "repeat": {
+        "arguments": [
+          "run",
+          "--company",
+          "marriott_international",
+          "--period",
+          "fiscal-years",
+          "--metric",
+          "B03",
+          "--fiscal-year-start",
+          "2024",
+          "--fiscal-year-end",
+          "2024",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/marriott_international/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/marriott_international/runs"
+        ],
+        "seconds": 1.051730500003032,
+        "exit": 0
+      },
+      "read": {
+        "arguments": [
+          "results",
+          "--company",
+          "marriott_international",
+          "--state-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/marriott_international/state",
+          "--output-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/marriott_international/read"
+        ],
+        "seconds": 0.526547584002401,
+        "exit": 0
+      },
+      "repeat_metrics": [
+        {
+          "metric_id": "B03",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "5c5d2874a4fd4353bc8397f744779b8a",
+          "version": "499ad93fc5424d08a56fa85055be0b21",
+          "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/marriott_international/state/updates/B03/periods/FY2024/results/499ad93fc5424d08a56fa85055be0b21",
+          "result_reason_code": "PASS",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2024,
+          "defect_holds": [],
+          "read_result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/marriott_international/state/updates/B03/periods/FY2024/results/499ad93fc5424d08a56fa85055be0b21",
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "coordinates": [
+        {
+          "row": {
+            "company_id": "marriott_international",
+            "metric_id": "B03",
+            "fiscal_year": "2024",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31",
+            "value": "0.1653386454183266932270916335",
+            "unit": "ratio",
+            "status": "OK",
+            "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783"
+          },
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/marriott_international/state/updates/B03/periods/FY2024/results/499ad93fc5424d08a56fa85055be0b21",
+          "target_accession": "0001628280-25-004818",
+          "primary_source": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+            "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+            "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88"
+          },
+          "unique_saved_inventory_holding_target": {
+            "document_name": "CIK0001048286.json",
+            "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+            "raw_asset_id": "sha256:e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+            "source_reference_id": "sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe"
+          },
+          "depreciation_scope": {
+            "status": "KEEP",
+            "why": "THE_APPROVED_COMPOSITION_APPLIES"
+          },
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "protected_result_files": 7,
+      "independent_read_state_files_unchanged": 18
+    },
+    {
+      "company": "jpmorgan_chase",
+      "fresh": {
+        "arguments": [
+          "run",
+          "--company",
+          "jpmorgan_chase",
+          "--period",
+          "fiscal-years",
+          "--metric",
+          "B03",
+          "--fiscal-year-start",
+          "2021",
+          "--fiscal-year-end",
+          "2024",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/runs"
+        ],
+        "seconds": 180.14348787500057,
+        "exit": 0
+      },
+      "repeat": {
+        "arguments": [
+          "run",
+          "--company",
+          "jpmorgan_chase",
+          "--period",
+          "fiscal-years",
+          "--metric",
+          "B03",
+          "--fiscal-year-start",
+          "2021",
+          "--fiscal-year-end",
+          "2024",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/runs"
+        ],
+        "seconds": 11.129749125000671,
+        "exit": 0
+      },
+      "read": {
+        "arguments": [
+          "results",
+          "--company",
+          "jpmorgan_chase",
+          "--state-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state",
+          "--output-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/read"
+        ],
+        "seconds": 0.5802766249980778,
+        "exit": 0
+      },
+      "repeat_metrics": [
+        {
+          "metric_id": "B03",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "47daeb304dfe4eb598f2df870a40d134",
+          "version": "f464e070288e4a5997dfff32580232ed",
+          "result_id": "sha256:ac91dc9026adbca14455ef587406dd114d010b5a8f10b1afdcda985b4a2af796",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2021/results/f464e070288e4a5997dfff32580232ed",
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2021,
+          "defect_holds": [],
+          "read_result_id": "sha256:ac91dc9026adbca14455ef587406dd114d010b5a8f10b1afdcda985b4a2af796",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2021/results/f464e070288e4a5997dfff32580232ed",
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "metric_id": "B03",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "9e2ae45ee5984e5ebfd7ed258b48b311",
+          "version": "f28d191553e8442ab8b97b5aed26bfd7",
+          "result_id": "sha256:676fbc4a26e9ce99ed1cfd9e4340bae5659667a8266af56da37a9e98c3023da6",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2022/results/f28d191553e8442ab8b97b5aed26bfd7",
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2022,
+          "defect_holds": [],
+          "read_result_id": "sha256:676fbc4a26e9ce99ed1cfd9e4340bae5659667a8266af56da37a9e98c3023da6",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2022/results/f28d191553e8442ab8b97b5aed26bfd7",
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "metric_id": "B03",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "de08220d39084fe9a1d7fd660cff9e1b",
+          "version": "17ee02e885e74768bc94107ccf860b11",
+          "result_id": "sha256:ba7711ab9bf797e27ac7da1e5f3c52df7a2654ad848a57f590f6a37a63101b48",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2023/results/17ee02e885e74768bc94107ccf860b11",
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2023,
+          "defect_holds": [],
+          "read_result_id": "sha256:ba7711ab9bf797e27ac7da1e5f3c52df7a2654ad848a57f590f6a37a63101b48",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2023/results/17ee02e885e74768bc94107ccf860b11",
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "metric_id": "B03",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "attempt_id": "c1fbe09a2bb0404babc9d7532c32bc18",
+          "version": "247dcac7349d4bf6885f55701212c2a1",
+          "result_id": "sha256:812dc20134a7cda50e0992a1422231e36a390355ee2853bbe4b3c3acf91e9d85",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2024/results/247dcac7349d4bf6885f55701212c2a1",
+          "result_reason_code": "TRAIT_NOT_APPLICABLE",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2024,
+          "defect_holds": [],
+          "read_result_id": "sha256:812dc20134a7cda50e0992a1422231e36a390355ee2853bbe4b3c3acf91e9d85",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2024/results/247dcac7349d4bf6885f55701212c2a1",
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "coordinates": [
+        {
+          "row": {
+            "company_id": "jpmorgan_chase",
+            "metric_id": "B03",
+            "fiscal_year": "2021",
+            "period_start": "2021-01-01",
+            "period_end": "2021-12-31",
+            "value": "",
+            "unit": "ratio",
+            "status": "N_A_STRUCTURAL",
+            "result_id": "sha256:ac91dc9026adbca14455ef587406dd114d010b5a8f10b1afdcda985b4a2af796"
+          },
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2021/results/f464e070288e4a5997dfff32580232ed",
+          "target_accession": "0000019617-22-000272",
+          "primary_source": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961722000272/jpm-20211231.htm",
+            "raw_asset_id": "sha256:7c58f18f4348ede74dea11e95de81ff18634f45c50f22f6d1dccdd8abf36d478",
+            "source_reference_id": "sha256:7a658afc2bc677dad3fa43df9855352a93dd04afa38766574ae0c3d094105cf0"
+          },
+          "unique_saved_inventory_holding_target": {
+            "document_name": "CIK0000019617-submissions-034.json",
+            "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-034.json",
+            "raw_asset_id": "sha256:77f7ffeb5a9778a235b1b9b645d57e407eddeb683d3ab1eda2d3e5483b1de8e6",
+            "source_reference_id": "sha256:1063739d76a16fab9e1f321b3a268dec6c88f22d37fc823ca7e22b7beb1be24d"
+          },
+          "depreciation_scope": {},
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "row": {
+            "company_id": "jpmorgan_chase",
+            "metric_id": "B03",
+            "fiscal_year": "2022",
+            "period_start": "2022-01-01",
+            "period_end": "2022-12-31",
+            "value": "",
+            "unit": "ratio",
+            "status": "N_A_STRUCTURAL",
+            "result_id": "sha256:676fbc4a26e9ce99ed1cfd9e4340bae5659667a8266af56da37a9e98c3023da6"
+          },
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2022/results/f28d191553e8442ab8b97b5aed26bfd7",
+          "target_accession": "0000019617-23-000231",
+          "primary_source": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961723000231/jpm-20221231.htm",
+            "raw_asset_id": "sha256:ce5a7e360b2834d0e0eaa0b7872b64fee7f91f4b0696eb4a7fc2c4c83f42c7cb",
+            "source_reference_id": "sha256:dffc7df4ffb63200e87c2946fdb4a71e0d266cef0407f956c984b8c089a0ce87"
+          },
+          "unique_saved_inventory_holding_target": {
+            "document_name": "CIK0000019617-submissions-026.json",
+            "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-026.json",
+            "raw_asset_id": "sha256:bb524a1d9b01b288cf24093a4ce2ff33247e5e168c17d1a125946ced0d5927d2",
+            "source_reference_id": "sha256:6f6859878a6beb59262cb75d773f981582f93a990a5c2d7b4b322ae38e05b8e9"
+          },
+          "depreciation_scope": {},
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "row": {
+            "company_id": "jpmorgan_chase",
+            "metric_id": "B03",
+            "fiscal_year": "2023",
+            "period_start": "2023-01-01",
+            "period_end": "2023-12-31",
+            "value": "",
+            "unit": "ratio",
+            "status": "N_A_STRUCTURAL",
+            "result_id": "sha256:ba7711ab9bf797e27ac7da1e5f3c52df7a2654ad848a57f590f6a37a63101b48"
+          },
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2023/results/17ee02e885e74768bc94107ccf860b11",
+          "target_accession": "0000019617-24-000225",
+          "primary_source": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961724000225/jpm-20231231.htm",
+            "raw_asset_id": "sha256:8b49cc2426efed4b668d719014dd937ca10e5984120f18695c29dd37730ba301",
+            "source_reference_id": "sha256:d419b8a445a8c5e85aff96e215d9876350a5deea97a10417f808f19ec3e47ab4"
+          },
+          "unique_saved_inventory_holding_target": {
+            "document_name": "CIK0000019617-submissions-017.json",
+            "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-017.json",
+            "raw_asset_id": "sha256:7794b8d67435b338b1a595549b16221b681ed87a73185e3aa7115d38a82cceeb",
+            "source_reference_id": "sha256:9908217d755e262be2cf801a65ef4ec067787c80b9fe2c6a7d3115cfa1034891"
+          },
+          "depreciation_scope": {},
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "row": {
+            "company_id": "jpmorgan_chase",
+            "metric_id": "B03",
+            "fiscal_year": "2024",
+            "period_start": "2024-01-01",
+            "period_end": "2024-12-31",
+            "value": "",
+            "unit": "ratio",
+            "status": "N_A_STRUCTURAL",
+            "result_id": "sha256:812dc20134a7cda50e0992a1422231e36a390355ee2853bbe4b3c3acf91e9d85"
+          },
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/jpmorgan_chase/state/updates/B03/periods/FY2024/results/247dcac7349d4bf6885f55701212c2a1",
+          "target_accession": "0000019617-25-000270",
+          "primary_source": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000270/jpm-20241231.htm",
+            "raw_asset_id": "sha256:bddc8acf8dfcb88885679b801ccf51e1a5934cf683b2935b6362e10397ac3ad4",
+            "source_reference_id": "sha256:8112ff01800390a6c44060eed49e9ef394a177b2bc2c81bda977166511abe1f4"
+          },
+          "unique_saved_inventory_holding_target": {
+            "document_name": "CIK0000019617-submissions-007.json",
+            "source_url": "https://data.sec.gov/submissions/CIK0000019617-submissions-007.json",
+            "raw_asset_id": "sha256:f7a6be7988dd0000a83b6ec6db34251390392b591e404011625807f63eb9f926",
+            "source_reference_id": "sha256:aec6ea36a07a5d658380148151a0b3f6b0b14a99ae2a27c5cc39bd2172bf7a42"
+          },
+          "depreciation_scope": {},
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "protected_result_files": 28,
+      "independent_read_state_files_unchanged": 63
+    },
+    {
+      "company": "salesforce",
+      "fresh": {
+        "arguments": [
+          "run",
+          "--company",
+          "salesforce",
+          "--period",
+          "fiscal-years",
+          "--metric",
+          "B03",
+          "--fiscal-year-start",
+          "2021",
+          "--fiscal-year-end",
+          "2023",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/runs"
+        ],
+        "seconds": 21.18561808300001,
+        "exit": 2
+      },
+      "repeat": {
+        "arguments": [
+          "run",
+          "--company",
+          "salesforce",
+          "--period",
+          "fiscal-years",
+          "--metric",
+          "B03",
+          "--fiscal-year-start",
+          "2021",
+          "--fiscal-year-end",
+          "2023",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state",
+          "--output-dir",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/runs"
+        ],
+        "seconds": 2.278961916003027,
+        "exit": 2
+      },
+      "read": {
+        "arguments": [
+          "results",
+          "--company",
+          "salesforce",
+          "--state-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state",
+          "--output-root",
+          "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/read"
+        ],
+        "seconds": 0.5643931669983431,
+        "exit": 0
+      },
+      "repeat_metrics": [
+        {
+          "metric_id": "B03",
+          "status": "PREVIOUS_INPUT_WITHHELD",
+          "attempt_id": "a354595480f04111bb865e4ee3788697",
+          "version": "fdb5fd727580418aa867e616710e24f3",
+          "result_id": "sha256:cdea02f40a3209609b7d47d18f6a225630839c430139dd69e6462213ce6e2011",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state/updates/B03/periods/FY2021/results/fdb5fd727580418aa867e616710e24f3",
+          "result_reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2021,
+          "defect_holds": [],
+          "read_result_id": "sha256:cdea02f40a3209609b7d47d18f6a225630839c430139dd69e6462213ce6e2011",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state/updates/B03/periods/FY2021/results/fdb5fd727580418aa867e616710e24f3",
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "metric_id": "B03",
+          "status": "PREVIOUS_INPUT_WITHHELD",
+          "attempt_id": "6753bbd17c0d45c29bc583c75452e379",
+          "version": "e634fc0bd1c145bd9e8e5addefe88909",
+          "result_id": "sha256:857010c87b03c2835b0bb9f3adfc5cfa5efad4b777e4b9622ef0e5b96ed26c0f",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state/updates/B03/periods/FY2022/results/e634fc0bd1c145bd9e8e5addefe88909",
+          "result_reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2022,
+          "defect_holds": [],
+          "read_result_id": "sha256:857010c87b03c2835b0bb9f3adfc5cfa5efad4b777e4b9622ef0e5b96ed26c0f",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state/updates/B03/periods/FY2022/results/e634fc0bd1c145bd9e8e5addefe88909",
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "metric_id": "B03",
+          "status": "PREVIOUS_INPUT_WITHHELD",
+          "attempt_id": "6f40c70a921e4b76b7ea1bfa9ed68455",
+          "version": "14091f39726b43cabbc3608d5f32aca3",
+          "result_id": "sha256:2d788df1df32d4fc251bf45ebf89f9a94dace9c4cbebf0021bb34d138c99cdb7",
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state/updates/B03/periods/FY2023/results/14091f39726b43cabbc3608d5f32aca3",
+          "result_reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+          "raw_input_unchanged": true,
+          "calculation_performed": false,
+          "new_candidate_created": false,
+          "source_observation_errors": [],
+          "new_calls": {
+            "provider": 0,
+            "paid": 0,
+            "sec": 0
+          },
+          "production_authorized": false,
+          "requested_fiscal_year": 2023,
+          "defect_holds": [],
+          "read_result_id": "sha256:2d788df1df32d4fc251bf45ebf89f9a94dace9c4cbebf0021bb34d138c99cdb7",
+          "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state/updates/B03/periods/FY2023/results/14091f39726b43cabbc3608d5f32aca3",
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "coordinates": [
+        {
+          "row": {
+            "company_id": "salesforce",
+            "metric_id": "B03",
+            "fiscal_year": "2021",
+            "period_start": "2020-02-01",
+            "period_end": "2021-01-31",
+            "value": "",
+            "unit": "ratio",
+            "status": "WITHHELD",
+            "result_id": "sha256:cdea02f40a3209609b7d47d18f6a225630839c430139dd69e6462213ce6e2011"
+          },
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state/updates/B03/periods/FY2021/results/fdb5fd727580418aa867e616710e24f3",
+          "target_accession": "0001108524-22-000008",
+          "primary_source": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852422000008/crm-20210131.htm",
+            "raw_asset_id": "sha256:185c264293c944cb13e3968f5cb2798b2dd0d4900667c8a5f6e44564b324b350",
+            "source_reference_id": "sha256:0cd9cb2298a620eea46fe585be1ea8080617c5f5677efbc9206e5655f3d8f3ef"
+          },
+          "unique_saved_inventory_holding_target": {
+            "document_name": "CIK0001108524-submissions-001.json",
+            "source_url": "https://data.sec.gov/submissions/CIK0001108524-submissions-001.json",
+            "raw_asset_id": "sha256:f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd",
+            "source_reference_id": "sha256:1dfe57afa82a4c685c6ce1b91b7d454ff8d56b3923d4deb1ac4941b26f076de2"
+          },
+          "depreciation_scope": {
+            "status": "WITHHOLD",
+            "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+            "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT"
+          },
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "row": {
+            "company_id": "salesforce",
+            "metric_id": "B03",
+            "fiscal_year": "2022",
+            "period_start": "2021-02-01",
+            "period_end": "2022-01-31",
+            "value": "",
+            "unit": "ratio",
+            "status": "WITHHELD",
+            "result_id": "sha256:857010c87b03c2835b0bb9f3adfc5cfa5efad4b777e4b9622ef0e5b96ed26c0f"
+          },
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state/updates/B03/periods/FY2022/results/e634fc0bd1c145bd9e8e5addefe88909",
+          "target_accession": "0001108524-22-000013",
+          "primary_source": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852422000013/crm-20220131.htm",
+            "raw_asset_id": "sha256:ad88a84618e7d35b3aaf5990579dba2e42583ece4d3aaeaadc9383f9557c6b91",
+            "source_reference_id": "sha256:2cbe15185e572cb179d0d2bbbb9f0527bf71d5e854b1779d25768e814e7d06c0"
+          },
+          "unique_saved_inventory_holding_target": {
+            "document_name": "CIK0001108524-submissions-001.json",
+            "source_url": "https://data.sec.gov/submissions/CIK0001108524-submissions-001.json",
+            "raw_asset_id": "sha256:f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd",
+            "source_reference_id": "sha256:1dfe57afa82a4c685c6ce1b91b7d454ff8d56b3923d4deb1ac4941b26f076de2"
+          },
+          "depreciation_scope": {
+            "status": "WITHHOLD",
+            "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+            "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT"
+          },
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        },
+        {
+          "row": {
+            "company_id": "salesforce",
+            "metric_id": "B03",
+            "fiscal_year": "2023",
+            "period_start": "2022-02-01",
+            "period_end": "2023-01-31",
+            "value": "",
+            "unit": "ratio",
+            "status": "WITHHELD",
+            "result_id": "sha256:2d788df1df32d4fc251bf45ebf89f9a94dace9c4cbebf0021bb34d138c99cdb7"
+          },
+          "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/salesforce/state/updates/B03/periods/FY2023/results/14091f39726b43cabbc3608d5f32aca3",
+          "target_accession": "0001108524-23-000011",
+          "primary_source": {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852423000011/crm-20230131.htm",
+            "raw_asset_id": "sha256:577ba795230254fd897c3430920e4aa5a236ecaac6ef6fc99a691942e0966f15",
+            "source_reference_id": "sha256:1c010487297f9120bcf9820b9f2ffb0056df4d5c5af7dea6ac2d893ec33d9035"
+          },
+          "unique_saved_inventory_holding_target": {
+            "document_name": "CIK0001108524-submissions-001.json",
+            "source_url": "https://data.sec.gov/submissions/CIK0001108524-submissions-001.json",
+            "raw_asset_id": "sha256:f71caf4521bd2c2bc134b0aab2d1bbe9a6fb314a7ec14f74c038ae87227eebfd",
+            "source_reference_id": "sha256:1dfe57afa82a4c685c6ce1b91b7d454ff8d56b3923d4deb1ac4941b26f076de2"
+          },
+          "depreciation_scope": {
+            "status": "WITHHOLD",
+            "reason_code": "B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN",
+            "why": "DIRECT_CANDIDATES_CONFLICT_AND_NOTHING_IN_THE_FILING_RESOLVES_IT"
+          },
+          "program_version": {
+            "commit": "5b46a5a1cf995b0f3b7fed5e6ddce838046c3da1",
+            "has_uncommitted_changes": true
+          }
+        }
+      ],
+      "protected_result_files": 21,
+      "independent_read_state_files_unchanged": 45
+    }
+  ],
+  "recent_marriott_original_result_id_unchanged": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783"
+}

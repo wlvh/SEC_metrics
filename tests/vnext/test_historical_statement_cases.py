@@ -277,6 +277,30 @@ class HistoricalPairedRevenueAdmissionTest(unittest.TestCase):
         self.assertEqual(admitted[0]['locator']['concept'], 'Revenues')
         self.assertEqual(claims, before)
 
+    def test_numeric_note_reference_preserves_original_total_but_scope_parentheses_do_not(self):
+        from types import SimpleNamespace
+        from tests.vnext.test_selected_reported_revenue_v2 import changed
+        # Constructed format controls at the actual historical adapter.
+        # Real Ford originals are separately exercised through the company CLI.
+        for label, accepted in [('Total revenues (Note 4)', True),
+                                ('Total revenues (4)', True),
+                                ('Total revenues (Europe)', False),
+                                ('Total revenues (Subsidiary)', False),
+                                ('Total revenues (Note 4, Europe)', False)]:
+            reader, annual, claims, concepts = self.prepared_claims()
+            primary, xml = reader.auditor_filing(annual['filing'])
+            primary = changed(primary, primary['raw_bytes'].replace(b'Total revenues', label.encode()))
+            selected = SimpleNamespace(auditor_filing=lambda filing: [primary, xml], read=reader.read)
+            with self.subTest(label=label):
+                if accepted:
+                    admitted, scope = self.admit(selected, annual, claims, concepts)
+                    self.assertTrue(scope['complete_scope_proven'])
+                    self.assertEqual([claims[1]], admitted)
+                    self.assertIs(claims[1], admitted[0])
+                else:
+                    with self.assertRaisesRegex(ValueError, 'COMPLETE_SCOPE_UNPROVEN'):
+                        self.admit(selected, annual, claims, concepts)
+
     def test_wrong_unit_entity_accession_or_amount_cannot_supply_the_original_total(self):
         for key in ('unit', 'entity', 'accession', 'value', 'concept', 'period'):
             reader, annual, claims, concepts = self.prepared_claims()
@@ -478,19 +502,40 @@ class HistoricalCurrentAnnualScopeTest(unittest.TestCase):
                     company_id='constructed', metric_id='B07', fiscal_year=2024)
             select.assert_not_called()
 
-    def test_amendment_and_successor_keep_the_existing_rejection(self):
+    def test_uncleared_amendment_and_successor_keep_the_existing_rejection(self):
         for amendments, mode in [([{'form':'10-K/A'}], 'CONTINUOUS_PRIMARY'),
                                  ([], 'SUCCESSOR_PREDECESSOR')]:
-            with self.subTest(mode=mode), \
-                    patch.object(cases, 'resolve_period_selection', return_value={}), \
-                    patch.object(cases, 'prepare_historical_annual_input', return_value={
-                        'amendments':amendments, 'subject_policy':{'mode':mode}}), \
-                    patch.object(cases, 'installed_ordinary_spec_documents') as specs, \
-                    patch.object(cases, '_deterministic_metric_graph') as graph:
-                with self.assertRaisesRegex(cases.StatementCaseError, 'AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED'):
+            with self.subTest(amendments=amendments,mode=mode), \
+                    patch.object(cases,'resolve_period_selection',return_value={}), \
+                    patch.object(cases,'prepare_historical_annual_input',return_value={
+                        'amendments':amendments,'entity':'1','subject_policy':{'mode':mode}}), \
+                    patch.object(cases,'_Sources'), \
+                    patch.object(cases,'_statement_amendment_checks',side_effect=cases.StatementCaseError(
+                        'HISTORICAL_STATEMENT_AMENDMENT_ORIGINAL_VALUES_NOT_PROVEN','AMENDMENT_INPUT_NOT_CLEARED')), \
+                    patch.object(cases,'installed_ordinary_spec_documents') as specs, \
+                    patch.object(cases,'_deterministic_metric_graph') as graph:
+                with self.assertRaises(cases.StatementCaseError) as caught:
                     cases.prepare_historical_current_annual_year_case(repo_root=Path('/constructed'),
-                        company_id='constructed', metric_id='B07', fiscal_year=2024)
+                        company_id='constructed',metric_id='B07',fiscal_year=2024)
+                self.assertEqual('AMENDMENT_INPUT_NOT_CLEARED' if amendments else 'IMPLEMENTATION_GAP',
+                                 caught.exception.category)
                 specs.assert_not_called();graph.assert_not_called()
+
+    def test_b07_consumes_the_same_proved_link_scope_before_specification(self):
+        period={'fiscal_year':2024,'period_start':'2024-01-01','period_end':'2024-12-31'}
+        annual={'amendments':[{'form':'10-K/A'}],'entity':'1',
+                'subject_policy':{'mode':'CONTINUOUS_PRIMARY'},'table_input':{'target_period':period}}
+        checked={'scope_id':'constructed-proved-link','classification':
+                 'EXHIBIT_LINK_CORRECTION_WITH_IDENTICAL_ORIGINAL_ITEM15'}
+        with patch.object(cases,'resolve_period_selection',return_value={}), \
+             patch.object(cases,'prepare_historical_annual_input',return_value=annual), \
+             patch.object(cases,'_Sources') as reader, \
+             patch.object(cases,'_statement_amendment_checks',return_value=[checked]) as scope, \
+             patch.object(cases,'installed_ordinary_spec_documents',side_effect=ValueError('stop at existing Spec')):
+            with self.assertRaisesRegex(ValueError,'stop at existing Spec'):
+                cases.prepare_historical_current_annual_year_case(repo_root=Path('/constructed'),
+                    company_id='constructed',metric_id='B07',fiscal_year=2024)
+        scope.assert_called_once_with(reader.return_value,annual)
 
 
 class HistoricalPeriodSubjectTest(unittest.TestCase):
@@ -667,3 +712,74 @@ class HistoricalStatementAmendmentTest(unittest.TestCase):
         with patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',side_effect=[good,bad]):
             with self.assertRaisesRegex(cases.StatementCaseError,'ORIGINAL_VALUES_NOT_PROVEN'):
                 cases._statement_amendment_checks(reader,prepared)
+
+    def part_iii(self):
+        return {**self.checked(),
+            'classification':'PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS',
+            'unchanged_input_classes':['FISCAL_EVENT_WINDOW'],
+            'original_statement_admission_requires_further_review':True,
+            'note_layout':'inline-paragraphs-v2'}
+
+    def test_part_iii_income_consumption_keeps_source_scope_and_property_separate(self):
+        from unittest.mock import Mock
+        for metric in ('B01','B02','B03'):
+            checked=self.part_iii();before=copy.deepcopy(checked);properties=[]
+            reader=Mock();reader.primary.return_value={'raw_bytes':b'constructed','raw_blob':{},'source_reference':{}}
+            property_check={'original_scope_id':checked['scope_id'],
+                'input_class':'CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES',
+                'income_correction_blocks':[], 'part_iii_details':{'constructed':True}}
+            with self.subTest(metric=metric), \
+                 patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=checked), \
+                 patch('vnext.ordinary_income_input.inspect_income_amendment',return_value=property_check) as income:
+                result=cases._statement_amendment_checks(reader,self.prepared(),
+                    metric_id=metric,income_properties=properties)
+            self.assertEqual([checked],result)
+            self.assertEqual(before,checked)
+            self.assertEqual([{'source_scope_id':checked['scope_id'],'metric_id':metric,
+                              'income_property':property_check}],properties)
+            self.assertEqual('inline-paragraphs-v2',income.call_args.args[0]['note_layout'])
+
+    def test_part_iii_does_not_implicitly_cover_other_statement_metrics(self):
+        from unittest.mock import Mock
+        for metric in (None,'B04','B05','B07','B06'):
+            reader=Mock();reader.primary.return_value={'raw_bytes':b'constructed','raw_blob':{},'source_reference':{}}
+            with self.subTest(metric=metric), \
+                 patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=self.part_iii()), \
+                 patch('vnext.ordinary_income_input.inspect_income_amendment') as income:
+                with self.assertRaisesRegex(cases.StatementCaseError,'ORIGINAL_VALUES_NOT_PROVEN'):
+                    cases._statement_amendment_checks(reader,self.prepared(),metric_id=metric,income_properties=[])
+            income.assert_not_called()
+
+    def test_part_iii_income_rejection_and_wrong_property_binding_remain_failures(self):
+        from unittest.mock import Mock
+        from vnext.ordinary_income_input import IncomeInputError
+        reader=Mock();reader.primary.return_value={'raw_bytes':b'constructed','raw_blob':{},'source_reference':{}}
+        with patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=self.part_iii()), \
+             patch('vnext.ordinary_income_input.inspect_income_amendment',
+                   side_effect=IncomeInputError('AMENDMENT_INCOME_CORRECTION_UNRESOLVED')):
+            with self.assertRaisesRegex(cases.StatementCaseError,'INCOME_CORRECTION_UNRESOLVED') as error:
+                cases._statement_amendment_checks(reader,self.prepared(),metric_id='B02',income_properties=[])
+        self.assertEqual('AMENDMENT_INPUT_NOT_CLEARED',error.exception.category)
+        for change in ('scope','class'):
+            property_check={'original_scope_id':'constructed-scope',
+                'input_class':'CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES'}
+            property_check['original_scope_id' if change=='scope' else 'input_class']='wrong'
+            with self.subTest(change=change), \
+                 patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=self.part_iii()), \
+                 patch('vnext.ordinary_income_input.inspect_income_amendment',return_value=property_check):
+                with self.assertRaisesRegex(cases.StatementCaseError,'PROPERTY_BINDING_CHANGED'):
+                    cases._statement_amendment_checks(reader,self.prepared(),metric_id='B01',income_properties=[])
+
+    def test_part_iii_requires_identity_and_retained_income_evidence(self):
+        from unittest.mock import Mock
+        for changed in ({'fiscal_window_unchanged':False},{'issues':['CONSTRUCTED_FINANCIAL_CHANGE']}):
+            reader=Mock();reader.primary.return_value={'raw_bytes':b'constructed','raw_blob':{},'source_reference':{}}
+            with self.subTest(changed=changed), \
+                 patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value={**self.part_iii(),**changed}), \
+                 patch('vnext.ordinary_income_input.inspect_income_amendment') as income:
+                with self.assertRaisesRegex(cases.StatementCaseError,'ORIGINAL_VALUES_NOT_PROVEN'):
+                    cases._statement_amendment_checks(reader,self.prepared(),metric_id='B03',income_properties=[])
+            income.assert_not_called()
+        with patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=self.part_iii()):
+            with self.assertRaisesRegex(cases.StatementCaseError,'EVIDENCE_TARGET_REQUIRED'):
+                cases._statement_amendment_checks(reader,self.prepared(),metric_id='B01')

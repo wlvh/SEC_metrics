@@ -66,6 +66,10 @@ INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
     'scripts/vnext/composite_scope.py',
     'scripts/vnext/xbrl_namespace_policy.py',
     'scripts/vnext/ordinary_income_input.py',
+    'scripts/vnext/instant_balance_amendment.py',
+    'scripts/vnext/instant_balance_amendment_v2.py',
+    'config/ordinary_income_input_v1.json',
+    'config/instant_balance_amendment_v1.json',
     'scripts/vnext/financial_duration.py',
     'scripts/vnext/financial_structured.py',
     'scripts/vnext/text_results_v2.py',
@@ -202,7 +206,7 @@ def _metadata_outcome_case(*, source, company_id, metric_id, prepared, selection
         'rules_root': str(ROOT)}
 
 
-def _statement_amendment_checks(reader, prepared):
+def _statement_amendment_checks(reader, prepared, *, metric_id=None, income_properties=None):
     """Consume the shared original-statement proof for this selected filing."""
     if not prepared['amendments']:
         return []
@@ -218,9 +222,35 @@ def _statement_amendment_checks(reader, prepared):
                 'reference':amended['source_reference'], 'filing':filing},
             company_id=prepared['company_id'], cik=prepared['entity'],
             note_layout='inline-paragraphs-v2')
-        _need(checked['fiscal_window_unchanged'] and not checked['issues']
-              and 'ORIGINAL_STATEMENT_VALUES' in checked['unchanged_input_classes']
-              and checked['original_statement_admission_requires_further_review'] is False,
+        _need(checked['fiscal_window_unchanged'] and not checked['issues'],
+              'HISTORICAL_STATEMENT_AMENDMENT_ORIGINAL_VALUES_NOT_PROVEN',
+              'AMENDMENT_INPUT_NOT_CLEARED')
+        original_values = ('ORIGINAL_STATEMENT_VALUES' in checked['unchanged_input_classes']
+                          and checked['original_statement_admission_requires_further_review'] is False)
+        if (not original_values and metric_id in {'B01', 'B02', 'B03'}
+                and checked['classification'] == 'PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS'):
+            # The annual source proves only its stated limited scope. Reuse
+            # the public income property for the selected original values;
+            # do not mutate that source scope into a statement-value proof.
+            _need(type(income_properties) is list,
+                  'HISTORICAL_STATEMENT_INCOME_AMENDMENT_EVIDENCE_TARGET_REQUIRED',
+                  'IMPLEMENTATION_GAP')
+            from .canonical import strict_json_file
+            from .ordinary_income_input import inspect_income_amendment, IncomeInputError, POLICY_PATH
+            from .instant_balance_amendment import InstantAmendmentError
+            rules = strict_json_file(path=ROOT/POLICY_PATH)
+            try:
+                property_check = inspect_income_amendment(checked, amended['raw_bytes'], rules)
+            except (IncomeInputError, InstantAmendmentError) as error:
+                raise StatementCaseError('HISTORICAL_STATEMENT_INCOME_AMENDMENT_PROPERTY_NOT_PROVEN:'
+                    + str(error), 'AMENDMENT_INPUT_NOT_CLEARED') from error
+            _need(property_check.get('original_scope_id') == checked['scope_id']
+                  and property_check.get('input_class') == rules['input_class'],
+                  'HISTORICAL_STATEMENT_INCOME_AMENDMENT_PROPERTY_BINDING_CHANGED')
+            income_properties.append({'source_scope_id':checked['scope_id'],
+                'metric_id':metric_id, 'income_property':property_check})
+            original_values = True
+        _need(original_values,
               'HISTORICAL_STATEMENT_AMENDMENT_ORIGINAL_VALUES_NOT_PROVEN',
               'AMENDMENT_INPUT_NOT_CLEARED')
         checks.append(checked)
@@ -246,10 +276,13 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         return _successor_comparability_case(source=source, company_id=company_id,
             metric_id=metric_id, prepared=prepared, selection=selection)
     _need(prepared['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY'
-          and (not prepared['amendments'] or metric_id in METRICS),
+          and (not prepared['amendments'] or metric_id in METRICS | {'B07'}),
           'HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
     reader = _Sources(source, company_id, prepared['entity']) if prepared['amendments'] else None
-    amendment_checks = _statement_amendment_checks(reader, prepared)
+    income_amendment_properties = []
+    amendment_checks = _statement_amendment_checks(reader, prepared,
+        **({'metric_id':metric_id, 'income_properties':income_amendment_properties}
+           if metric_id in {'B01','B02'} else {}))
     period = prepared['table_input']['target_period']
     documents = installed_ordinary_spec_documents()
     spec = documents[metric_id]['compiled_spec']
@@ -457,6 +490,9 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
             {key:check[key] for key in ('scope_id','classification','fiscal_window_unchanged',
                 'unchanged_input_classes','issues','policy_hash')}
             for check in amendment_checks]}
+    if income_amendment_properties:
+        assessment = {**(assessment or {}),
+            'statement_income_amendment_properties':income_amendment_properties}
     if paired_revenue_scopes:
         assessment = {**(assessment or {}), 'paired_revenue_scopes': paired_revenue_scopes}
     if period_continuity is not None:
@@ -487,6 +523,12 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         display_assessment = {**(display_assessment or {}), 'paired_revenue_scopes': {
             role: {key: source_scope[key] for key in ('scope_id', 'status', 'complete_scope_proven')}
             for role, source_scope in assessment['paired_revenue_scopes'].items()}}
+    if income_amendment_properties:
+        display_assessment = {**(display_assessment or {}),
+            'statement_income_amendment_properties':[
+                {'source_scope_id':item['source_scope_id'], 'metric_id':item['metric_id'],
+                 'input_class':item['income_property']['input_class']}
+                for item in income_amendment_properties]}
     return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id, 'input_binding': binding,
         'compiled_specs': {metric_id: spec}, 'spec_paths': {metric_id: documents[metric_id]['path']},
         'target_period': period, 'prepared_annual_input': prepared, 'expected_records': records,

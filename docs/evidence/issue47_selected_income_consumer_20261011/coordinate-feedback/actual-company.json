@@ -1,0 +1,336 @@
+{
+  "single": {
+    "rows": [
+      {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "B03",
+        "metric_name": "EBITDA margin",
+        "value": "0.1653386454183266932270916335",
+        "unit": "ratio",
+        "status": "OK",
+        "source_class": "DERIVED",
+        "formula": "(Operating income + D&A) / revenue",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "fiscal_year": "2024",
+        "fiscal_period": "ANNUAL",
+        "accession": "0001628280-25-004818",
+        "form": "10-K",
+        "filed_date": "2025-02-11",
+        "concept_or_section": "Revenues+OperatingIncomeLoss+Depreciation+AmortizationOfIntangibleAssets",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"reason_code\": \"PASS\", \"selected_fact_ids\": [\"fact:sha256:bfaeba3174709c79421d56ed7d00e1b2064c30a0cbf613ea2ed06ea00acb1556\", \"fact:sha256:c8b67afc330386357c7dfba2c190bef98c89785a57d2d0dc8a557acb07ff2f55\", \"fact:sha256:1f516b55dbd323d92e9b4d92e3dae48bd9585daf92e11a78cb9f3f5cc9b08162\", \"fact:sha256:d1e2083e46a6144d2dc727f1955dfba925e0a9a8c0d70e7af4144314d3fe80ae\"], \"source_candidate_count\": 21, \"source_reported_periods\": [[\"2022-01-01\", \"2022-12-31\"], [\"2023-01-01\", \"2023-12-31\"], [\"2024-01-01\", \"2024-12-31\"]]}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:63687b69a68ec70135351fc580e0a0d4f4f9d369bfc8a4f087772217b312a630\", \"sha256:bf544d4ea45fb264453b4e0afbb986e366f93c73b43e55513e95741b1453b855\", \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\"]}",
+        "confidence": "",
+        "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+        "company_id": "marriott_international",
+        "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state/updates/B03/periods/FY2024/results/67ce1f2fd9f94b8195fbbccf9ebb16e1",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      }
+    ],
+    "preserved_state_files": 7,
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "mixed": {
+    "rows": [
+      {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "B01",
+        "metric_name": "Revenue",
+        "value": "25100000000",
+        "unit": "USD",
+        "status": "OK",
+        "source_class": "STD_XBRL",
+        "formula": "direct",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "fiscal_year": "2024",
+        "fiscal_period": "ANNUAL",
+        "accession": "0001628280-25-004818",
+        "form": "10-K",
+        "filed_date": "2025-02-11",
+        "concept_or_section": "Revenues",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:af01b12ad1237cc7ea83573b89cd8c48b772117ac9ca2bc9783969cf9c251ef4\", \"source_roles\": [\"primary\", \"xml\"]}], \"selected_revenue_scope\": {\"complete_scope_proven\": false, \"scope_id\": \"sha256:720c54fc3efef5f3bb298ad396157c9ad5ebbfc26c0430dbcfbe0ad63c47f85e\", \"status\": \"NO_DEMONSTRATED_SPLIT\"}}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"sha256:63687b69a68ec70135351fc580e0a0d4f4f9d369bfc8a4f087772217b312a630\", \"sha256:bf544d4ea45fb264453b4e0afbb986e366f93c73b43e55513e95741b1453b855\", \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\"]}",
+        "confidence": "",
+        "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+        "company_id": "marriott_international",
+        "result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state/updates/B01/periods/FY2024/results/a0b5dca3f20d446fbdc6dbccb0af3ad7",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+        "period_role": "REQUESTED_RESULT",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "True"
+      },
+      {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "B03",
+        "metric_name": "EBITDA margin",
+        "value": "0.1653386454183266932270916335",
+        "unit": "ratio",
+        "status": "OK",
+        "source_class": "DERIVED",
+        "formula": "(Operating income + D&A) / revenue",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "fiscal_year": "2024",
+        "fiscal_period": "ANNUAL",
+        "accession": "0001628280-25-004818",
+        "form": "10-K",
+        "filed_date": "2025-02-11",
+        "concept_or_section": "Revenues+OperatingIncomeLoss+Depreciation+AmortizationOfIntangibleAssets",
+        "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2024-12-31\", \"period_start\": \"2024-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"reason_code\": \"PASS\", \"selected_fact_ids\": [\"fact:sha256:bfaeba3174709c79421d56ed7d00e1b2064c30a0cbf613ea2ed06ea00acb1556\", \"fact:sha256:c8b67afc330386357c7dfba2c190bef98c89785a57d2d0dc8a557acb07ff2f55\", \"fact:sha256:1f516b55dbd323d92e9b4d92e3dae48bd9585daf92e11a78cb9f3f5cc9b08162\", \"fact:sha256:d1e2083e46a6144d2dc727f1955dfba925e0a9a8c0d70e7af4144314d3fe80ae\"], \"source_candidate_count\": 21, \"source_reported_periods\": [[\"2022-01-01\", \"2022-12-31\"], [\"2023-01-01\", \"2023-12-31\"], [\"2024-01-01\", \"2024-12-31\"]]}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:63687b69a68ec70135351fc580e0a0d4f4f9d369bfc8a4f087772217b312a630\", \"sha256:bf544d4ea45fb264453b4e0afbb986e366f93c73b43e55513e95741b1453b855\", \"sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88\", \"sha256:d7e4a9f6a5d5012058bd282dd004fb61de6f9a22c34c82eecc6644f85dc829a2\"]}",
+        "confidence": "",
+        "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+        "company_id": "marriott_international",
+        "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state/updates/B03/periods/FY2024/results/67ce1f2fd9f94b8195fbbccf9ebb16e1",
+        "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "local_metric_status": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+        "period_role": "SAVED_RESULT_NOT_REQUESTED",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+        "defect_holds": "[]",
+        "requested_in_latest_execution": "False"
+      }
+    ],
+    "protected_old_results": 7,
+    "independent_read_unchanged": 39
+  },
+  "executions": {
+    "fresh.json": {
+      "seconds": 6.360495250002714,
+      "exit": 0,
+      "args": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--metric",
+        "B03",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/runs"
+      ],
+      "metrics": [
+        {
+          "metric_id": "B03",
+          "status": "CANDIDATE_READY",
+          "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+          "calculation_performed": true,
+          "new_candidate_created": true
+        }
+      ]
+    },
+    "forbidden-repeat.json": {
+      "seconds": 1.0102712500010966,
+      "exit": 0,
+      "args": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--metric",
+        "B03",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/runs"
+      ],
+      "metrics": [
+        {
+          "metric_id": "B03",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+          "calculation_performed": false,
+          "new_candidate_created": false
+        }
+      ]
+    },
+    "independent-read.json": {
+      "seconds": 0.5014198339995346,
+      "exit": 0,
+      "args": [
+        "results",
+        "--company",
+        "marriott_international",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/read-1791709778523522000"
+      ],
+      "metrics": [
+        {
+          "metric_id": "B03",
+          "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783"
+        }
+      ]
+    },
+    "mixed-B01-B03.json": {
+      "seconds": 18.200191957999778,
+      "exit": 0,
+      "args": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/runs",
+        "--metric",
+        "B01",
+        "--metric",
+        "B03"
+      ],
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "status": "CANDIDATE_READY",
+          "result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+          "calculation_performed": true,
+          "new_candidate_created": true
+        },
+        {
+          "metric_id": "B03",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+          "calculation_performed": false,
+          "new_candidate_created": false
+        }
+      ]
+    },
+    "forbidden-mixed-repeat.json": {
+      "seconds": 1.4862153329995635,
+      "exit": 0,
+      "args": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/runs",
+        "--metric",
+        "B01",
+        "--metric",
+        "B03"
+      ],
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+          "calculation_performed": false,
+          "new_candidate_created": false
+        },
+        {
+          "metric_id": "B03",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783",
+          "calculation_performed": false,
+          "new_candidate_created": false
+        }
+      ]
+    },
+    "subset-B01.json": {
+      "seconds": 1.0130808329995489,
+      "exit": 0,
+      "args": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/runs",
+        "--metric",
+        "B01"
+      ],
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "status": "NO_SOURCE_CONTENT_CHANGE",
+          "result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0",
+          "calculation_performed": false,
+          "new_candidate_created": false
+        }
+      ]
+    },
+    "mixed-independent-read.json": {
+      "seconds": 0.512903874998301,
+      "exit": 0,
+      "args": [
+        "results",
+        "--company",
+        "marriott_international",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/shared-b03-coordinate-fixed-20261011-47/mixed-read-1791709849618069000"
+      ],
+      "metrics": [
+        {
+          "metric_id": "B01",
+          "result_id": "sha256:c51c10da7dc6e8962d7732020129702937e33e3df76c13a01f3a98e0f6615eb0"
+        },
+        {
+          "metric_id": "B03",
+          "result_id": "sha256:9cf2d114ca9c1f492321975b26d7c45a208cd80768364177c4588721b9e2c783"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics",
+  "base_local": "f75a95b6bc0061f4071e778af6c3c8252786fc44",
+  "actual_working_source_sha256": "8a92b6ca7b83f0f8064d66b65e6b0884529f49750ee0aacaba961ab177091b6c",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "state_root": "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state",
+  "cli": [
+    "run",
+    "--company",
+    "southwest_airlines",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2021",
+    "--fiscal-year-end",
+    "2023",
+    "--metric",
+    "B01",
+    "--metric",
+    "B02",
+    "--metric",
+    "B03",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/private/tmp/issue28-sw-loss-title-3rv4_5ds/state",
+    "--output-dir",
+    "/private/tmp/issue28-sw-loss-title-3rv4_5ds/output"
+  ],
+  "first_seconds": 61.51670858300349,
+  "forbidden_repeat_seconds": 3.1197630840033526,
+  "independent_reader_seconds": 0.45870383299916284,
+  "protected_state_files": 63,
+  "rows": [
+    {
+      "metric_id": "B01",
+      "fiscal_year": "2021",
+      "value": "15790000000",
+      "unit": "USD",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "result_id": "sha256:b4f733af9bc97d8ec52492130cd2697b5436deeb72ef6d4a5310a387d5438977",
+      "status": "OK"
+    },
+    {
+      "metric_id": "B02",
+      "fiscal_year": "2021",
+      "value": "0.7451370468611847922192749779",
+      "unit": "ratio",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "result_id": "sha256:87ab0affdc2695ea2e540ef516ee000eae5a5bd43bb080a0867d6506fa729698",
+      "status": "OK"
+    },
+    {
+      "metric_id": "B03",
+      "fiscal_year": "2021",
+      "value": "0.1895503483217226092463584547",
+      "unit": "ratio",
+      "period_start": "2021-01-01",
+      "period_end": "2021-12-31",
+      "result_id": "sha256:7b9b5a7ab1ba19e8bafb825b4b24bf66f7cc9ac81827763b77559cb0bb88b40f",
+      "status": "OK"
+    },
+    {
+      "metric_id": "B01",
+      "fiscal_year": "2022",
+      "value": "23814000000",
+      "unit": "USD",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:3848c4aea06a647daa20af5a2d10ac1ee26c974f2a86b943b768aa89faa00bd1",
+      "status": "OK"
+    },
+    {
+      "metric_id": "B02",
+      "fiscal_year": "2022",
+      "value": "0.5081697276757441418619379354",
+      "unit": "ratio",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:baf9e4dcbe0c80a388279077b7dcb98f1c9173c8a3ad144f4b9b09b194237662",
+      "status": "OK"
+    },
+    {
+      "metric_id": "B03",
+      "fiscal_year": "2022",
+      "value": "0.09943730578651213571848492483",
+      "unit": "ratio",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "result_id": "sha256:72a045b2af9608daff4ac93e31a4c8410de9d036d2ad3c1fe9169acdb9ebe2d1",
+      "status": "OK"
+    },
+    {
+      "metric_id": "B01",
+      "fiscal_year": "2023",
+      "value": "26091000000",
+      "unit": "USD",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:06b9aa145e1235055f682355a755a7539a82091173e57338d0aadb4ed7232f62",
+      "status": "OK"
+    },
+    {
+      "metric_id": "B02",
+      "fiscal_year": "2023",
+      "value": "0.0956160241874527588813303099",
+      "unit": "ratio",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:1496d825ac477bf00ad206a266f7dcf3cd7d8d716f488c6b081513ea67639213",
+      "status": "OK"
+    },
+    {
+      "metric_id": "B03",
+      "fiscal_year": "2023",
+      "value": "0.06691962745774404967230079338",
+      "unit": "ratio",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "result_id": "sha256:b29679e35528ecd810903704963d8b79d37d34ab9b818d058db4611e8a8fab07",
+      "status": "OK"
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

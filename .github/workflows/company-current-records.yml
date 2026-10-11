@@ -4,10 +4,19 @@ name: Company saved-source records
   pull_request:
     paths:
     - scripts/**
+    - tests/vnext/test_income_amendment_paragraph_dispatch.py
+    - tests/vnext/test_instant_amendment_paragraph_api.py
+    - tests/vnext/test_amendment_note_layout.py
+    - docs/evidence/issue28_income_paragraph_dispatch_20261012/**
+    - docs/evidence/issue28_current_c04_failure_detail_20261011/**
+    - docs/evidence/issue28_d04_debt_processing_scope_20261011/**
     - tools/vnext_company.py
     - tests/vnext/test_company_current_records.py
     - tests/vnext/test_current_b06_case.py
+    - tests/vnext/test_current_auditor_case.py
     - tests/vnext/test_single_revenue_line.py
+    - tests/vnext/test_selected_income_calculation.py
+    - tests/vnext/test_historical_b03_case.py
     - tests/vnext/test_selected_reported_revenue_v2.py
     - tests/vnext/test_paired_measure_contradiction.py
     - tests/vnext/test_current_d04_company.py
@@ -138,6 +147,10 @@ jobs:
         tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases
         tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest tests.vnext.test_historical_statement_cases
         tests.vnext.test_historical_compensation_case -v
+    - name: Current auditor changes use the shared four-form source core
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_current_auditor_case
     - name: Paired reported comparisons and exact revenue defect
       env:
         PYTHONDONTWRITEBYTECODE: '1'
@@ -195,6 +208,12 @@ jobs:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 tests/required_unittests.py tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2
         tests.vnext.test_financial_duration tests.vnext.test_selected_income_source_v1
+    - name: Selected shared income, coordinates and historical consumer
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_selected_income_calculation tests.vnext.test_historical_b03_case
+        tests.vnext.test_income_amendment_paragraph_dispatch tests.vnext.test_instant_amendment_paragraph_api
+        tests.vnext.test_amendment_note_layout
   company-current:
     needs:
     - company-records

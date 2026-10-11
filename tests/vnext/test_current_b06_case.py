@@ -58,11 +58,21 @@ class CurrentB06CompositionTest(unittest.TestCase):
         self.assertEqual(self.case['selection'],result['input_assessments']['B06']['selection'])
 
     def test_special_scope_cannot_fall_into_consolidated_grammars(self):
-        self.context(prepare_current_guarded_b06_result={'status':'CONTINUE_DEBT_PATH','reason_code':'EXISTING_SPECIAL_SCOPE_REQUIRED'},
-                     prepare_special_debt_case=None)
-        with patch.object(self.current,'prepare_note_debt_case',side_effect=AssertionError('wrong scope')):
+        self.context(prepare_current_guarded_b06_result={'status':'CONTINUE_DEBT_PATH','reason_code':'EXISTING_SPECIAL_SCOPE_REQUIRED'})
+        with patch('vnext.ordinary_reported_lease_scope.prepare_reported_lease_case',return_value=None), \
+             patch.object(self.current,'prepare_note_debt_case',side_effect=AssertionError('wrong scope')):
             with self.assertRaisesRegex(self.current.CurrentB06Error,'SEPARATE_BANK_OR_INDUSTRIAL'):
                 self.current.prepare_current_b06_case(source_root=Path('/sources'),company_id='enphase_energy')
+
+    def test_special_scope_consumes_existing_reported_lease_source_successor(self):
+        from vnext import ordinary_reported_lease_scope as lease
+        self.context(prepare_current_guarded_b06_result={'status':'CONTINUE_DEBT_PATH','reason_code':'EXISTING_SPECIAL_SCOPE_REQUIRED'})
+        with patch.object(lease,'prepare_reported_lease_case',return_value=self.case) as successor, \
+             patch.object(self.current,'prepare_special_debt_case',side_effect=AssertionError('Old source must not hide proved relation')):
+            result=self.current.prepare_current_b06_case(source_root=Path('/sources'),company_id='enphase_energy')
+        self.assertEqual(result['results']['B06']['publication'],'WITHHELD')
+        self.assertEqual(successor.call_count,1)
+        self.assertIs(successor.call_args.kwargs['preparation'],self.preparation)
 
     def test_existing_guard_terminal_does_not_parse_debt(self):
         guard={'status':'NOT_MEANINGFUL','reason_code':'DENOMINATOR_NONPOSITIVE','spec_path':'constructed',
