@@ -378,11 +378,13 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
         prepare_historical_rpo_year_case, PROCESSING_FILES as rpo_files)
     from .historical_compensation_case import (METRICS as compensation_metrics,
         prepare_historical_compensation_year_case, PROCESSING_FILES as compensation_files)
+    from .historical_b03_case import (METRICS as income_compute_metrics,
+        prepare_historical_income_year_case, PROCESSING_FILES as income_compute_files)
     from .historical_auditor_case import (METRICS as auditor_metrics,
         prepare_historical_auditor_year_case, PROCESSING_FILES as auditor_files)
     selected = configured_scope(company_id) if metric_ids is None else list(metric_ids)
     need(selected and len(selected) == len(set(selected))
-         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | set(geography_metrics) | set(average_risk_metrics) | set(bank_scope_metrics) | set(rpo_metrics) | set(compensation_metrics) | set(auditor_metrics) | {'B07'},
+         and set(selected) <= set(SUPPORTED_METRICS) | set(statement_metrics) | set(liquidity_metrics) | set(capital_metrics) | set(bank_metrics) | set(event_metrics) | set(geography_metrics) | set(average_risk_metrics) | set(bank_scope_metrics) | set(rpo_metrics) | set(compensation_metrics) | set(income_compute_metrics) | set(auditor_metrics) | {'B07'},
          'LOCAL_HISTORY_SAVED_FAMILY_NOT_IMPLEMENTED: select received saved families; other history uses its original entry')
     from .company_current_records import run_saved_company
     range_factories = {}
@@ -400,6 +402,7 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
             fiscal_years=list(range(fiscal_year_start, fiscal_year_end+1)),
             case_factories={m: (prepare_historical_auditor_year_case if m in auditor_metrics else
                                range_factories[m] if m in range_factories else
+                               prepare_historical_income_year_case if m in income_compute_metrics else
                                prepare_historical_compensation_year_case if m in compensation_metrics else
                                prepare_historical_rpo_year_case if m in rpo_metrics else
                                prepare_historical_event_year_case if m in event_metrics else
@@ -415,6 +418,7 @@ def _run_saved_history(*, company_id, source_root, work_dir, output_dir, metric_
             processing_files_by_metric={m: (auditor_files if m in auditor_metrics else
                                             tuple(dict.fromkeys((*paired_revenue_files,*range_files))) if m == 'B02' else
                                             tuple(dict.fromkeys((*income_files,*range_files))) if m == 'B01' else
+                                            income_compute_files if m in income_compute_metrics else
                                             compensation_files if m in compensation_metrics else
                                             rpo_files if m in rpo_metrics else
                                             event_files if m in event_metrics else

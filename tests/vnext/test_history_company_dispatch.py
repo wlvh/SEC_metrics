@@ -392,3 +392,19 @@ class HistoryCompanyDispatchTest(TestCase):
             self.assertEqual(PROCESSING_FILES, args['processing_files_by_metric'][metric])
         self.assertIs(prepare_historical_capital_year_case, args['case_factories']['A01'])
         self.assert_range_income(args, 'B01')
+
+class HistoricalIncomeSharedDispatchTest(TestCase):
+    setUp = HistoryCompanyDispatchTest.setUp
+    run_history = HistoryCompanyDispatchTest.run_history
+    assert_range_income = HistoryCompanyDispatchTest.assert_range_income
+    # Only the new mixed-family identity behavior; inherited financial tests
+    # are not installed again as a second suite.
+    def test_selected_b03_shares_company_controller_and_keeps_neighbours(self):
+        from vnext.historical_b03_case import prepare_historical_income_year_case, PROCESSING_FILES
+        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+            self.run_history(metric_ids=['B03','B01','B10'])
+        args=shared.call_args.kwargs
+        self.assertIs(prepare_historical_income_year_case,args['case_factories']['B03'])
+        self.assertEqual(PROCESSING_FILES,args['processing_files_by_metric']['B03'])
+        self.assert_range_income(args,'B01')
+        self.assertEqual('prepare_historical_lodging_year_case',args['case_factories']['B10'].__name__)
