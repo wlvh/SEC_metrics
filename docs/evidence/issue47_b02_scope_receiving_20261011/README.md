@@ -32,7 +32,11 @@ The driver calls the actual historical case, forbids sockets and writes a new di
 
 ## Next consumer delivery and limits
 
-#28 owns the shared scope/label implementation; #47 owns selected-period consumer reception. The next affected integration uses one fresh same-company B02 command for the representative and applicable second sample, then forbids the case factory/Calculator on identical input and independently reads `results`/CSV/provenance. The real Macy's unproved-scope path must remain withheld. Current/prior original filing selection, paired-measure comparability and saved old results remain unchanged.
+#28 owns the shared scope/label implementation; #47 owns selected-period consumer reception. The first shared implementation slice is Ford's explicit numeric note reference. Marriott's unlabelled total remains the next distinct class. Ford FY2023 and FY2024 original statement identities, complete rows and matching XML references are in `ford-two-originals.json`; the existing first-report operands are 176,191m / 158,057m and 184,992m / 176,191m, used only for post-computation comparison. `verify_company.py` is prepared for fresh/save/repeat/read reception, and has not yet been financially executed.
+
+An independent process on this baseline read the old Ford task in 0.763s with the case/Calculator/network forbidden; all 553 state files stayed unchanged (`old-ford-read.json`). This proves old-result readability, not a new positive calculation.
+
+The next affected integration uses one fresh same-company B02 command for the representative and applicable second sample, then forbids the case factory/Calculator on identical input and independently reads `results`/CSV/provenance. The real Macy's unproved-scope path must remain withheld. Current/prior original filing selection, paired-measure comparability and saved old results remain unchanged.
 
 Macy's FY2023 and Pfizer FY2021/FY2024 comparative changes retain existing values/limitations; choosing the current filing's revised comparative is not part of this work. JPM structural non-applicability and Paramount merger-year subject incomparability are separate reasons. Missing original filings, parsing defects and uncleared amendments remain distinct. Full five-year business acceptance, online discovery/completion, C04 source rules, D04 images and the other Issue47 gaps remain required.
 
