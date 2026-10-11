@@ -1,0 +1,19 @@
+E
+======================================================================
+ERROR: test_caller_json_cannot_supply_ledger_or_execute_replay_only (tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest.test_caller_json_cannot_supply_ledger_or_execute_replay_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/tests/vnext/test_registered_native_update.py", line 115, in test_caller_json_cannot_supply_ledger_or_execute_replay_only
+    _execute_semantic(prepared=SimpleNamespace(request_bytes=b'{}',replay_only=True),
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ledger=None,recorded_wire=None,native_assessment=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics/scripts/vnext/continuous_semantic_calls.py", line 924, in _execute_semantic
+    need(not prepared.d04_saved_response_only, 'D04_SAVED_RESPONSE_CANNOT_EXECUTE')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'd04_saved_response_only'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.019s
+
+FAILED (errors=1)
