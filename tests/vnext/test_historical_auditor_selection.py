@@ -83,3 +83,86 @@ class HistoricalAuditorSelectionTest(TestCase):
         chosen=self.check(event_forms=FORMS)
         self.assertEqual('2023-01-28',chosen['expected_prior_period_end'])
         self.assertEqual('prior',chosen['prior_ordinary']['accessionNumber'])
+
+
+class HistoricalAuditorShardBoundaryTest(TestCase):
+    """Constructed metadata, using the real loader and its coherence checks."""
+    def setUp(self):
+        self.name = 'CIK0000012345-submissions-001.json'
+        self.older = 'CIK0000012345-submissions-002.json'
+        self.shard = {'name': self.name, 'filingFrom': '2020-01-01',
+                      'filingTo': '2021-12-28', 'filingCount': 1}
+        self.older_shard = {'name': self.older, 'filingFrom': '2019-01-01',
+                           'filingTo': '2019-12-30', 'filingCount': 1}
+        self.target = ('0000012345-23-000001', '2023-02-01', '2022-12-31', '10-K', 'annual.htm')
+        self.prior = ('0000012345-22-000001', '2022-02-01', '2021-12-31', '10-K', 'prior.htm')
+        self.gap = ('0000012345-22-000003', '2022-01-02', '2022-01-02', '8-K', 'event.htm')
+
+    def columns(self, *rows):
+        keys = ('accessionNumber', 'filingDate', 'reportDate', 'form', 'primaryDocument')
+        return {key: [row[index] for row in rows] for index, key in enumerate(keys)}
+
+    def load(self, *, body=None, missing=False, target=None, prior=None, report_end='2022-12-31'):
+        import json
+        from pathlib import Path
+        from vnext import normal_history_catalog as catalog
+        main = 'CIK0000012345.json'
+        documents = {main: {'cik': '12345', 'filings': {
+            'recent': self.columns(target or self.target, prior or self.prior),
+            'files': [self.shard, self.older_shard]}}}
+        if not missing:
+            documents[self.name] = body if body is not None else self.columns(self.gap)
+        read_names = []
+
+        class SavedMetadata:
+            def read(self, url, *, required=True, **kwargs):
+                name = url.rsplit('/', 1)[-1]
+                read_names.append(name)
+                if name not in documents:
+                    if not required:
+                        return None
+                    raise AssertionError('Unrelated old metadata must not be loaded')
+                return {'raw_bytes': json.dumps(documents[name]).encode(),
+                        'source_reference': {'document_name': name}}
+
+        with patch.object(catalog, '_company', return_value={
+                'company_id': 'constructed', 'primary_cik': '12345'}), \
+             patch.object(catalog, '_subject_policy', return_value={}):
+            value = catalog.load_history_for_period(repo_root=Path('/constructed'),
+                company_id='constructed', report_end=report_end, reader=SavedMetadata())
+        return value, read_names
+
+    def test_gap_day_shard_is_loaded_before_an_older_irrelevant_block(self):
+        value, names = self.load()
+        self.assertEqual(['CIK0000012345.json', self.name], names)
+        self.assertIn(self.name, value['loaded_inventories'])
+        self.assertIn(self.gap[0], {row['accessionNumber'] for row in value['all_rows']})
+        self.assertTrue(value['window_proven'])
+        self.assertEqual([], value['limitations'])
+
+    def test_unread_derived_boundary_reaches_requested_end(self):
+        # Metadata only: these dates exercise the declared gap, not a
+        # claim about a real issuer's annual duration or fiscal-year label.
+        target = ('0000012345-22-000002', '2022-02-01', '2022-01-01', '10-K', 'annual.htm')
+        prior = ('0000012345-22-000001', '2022-01-15', '2020-12-31', '10-K', 'prior.htm')
+        value, _ = self.load(missing=True, target=target, prior=prior, report_end='2022-01-01')
+        self.assertEqual([self.name], value['unloaded_history_reaching_period'])
+        self.assertFalse(value['window_proven'])
+        self.assertEqual('HISTORY_SHARD_NOT_SAVED', value['limitations'][0]['kind'])
+
+    def test_derived_boundary_does_not_relax_all_row_count_or_outside_dates(self):
+        for change in ('count', 'outside'):
+            with self.subTest(change=change):
+                self.shard['filingCount'] = 2 if change == 'count' else 1
+                row = self.gap if change == 'count' else (
+                    self.gap[0], '2022-02-01', self.gap[2], self.gap[3], self.gap[4])
+                value, _ = self.load(body=self.columns(row))
+                self.assertFalse(value['window_proven'])
+                issue = value['limitations'][0]
+                self.assertEqual('HISTORY_SHARD_SNAPSHOT_CONFLICT', issue['kind'])
+                self.assertIn('FILING_COUNT_DIFFERS_FROM_DECLARED' if change == 'count'
+                              else 'FILINGS_OUTSIDE_THE_BLOCK', issue['failed_checks'])
+
+    def test_wrong_shard_entity_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'HISTORY_SHARD_ENTITY_CONFLICT'):
+            self.load(body={**self.columns(self.gap), 'cik': '54321'})

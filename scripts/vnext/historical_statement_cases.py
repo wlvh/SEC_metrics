@@ -360,7 +360,8 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         reported_scope = reported_revenue_scope(primary=by_kind['primary'][0],
             xml=by_kind['xml'][0], annual=source_annual, approved_concepts=concepts,
             namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period,
-            fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'))
+            fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'),
+            allow_single_revenue_line=True)
         if reported_scope['complete_scope_proven']:
             revenue_scope = reported_scope
             admit_facts = admit_reported_revenue_facts
