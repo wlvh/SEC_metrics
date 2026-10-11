@@ -15,11 +15,11 @@
         "--report-end",
         "2025-12-31"
       ],
-      "baseline_seconds": 1.2700590420026856,
-      "unrelated_program_row_seconds": 1.2790982090009493,
+      "baseline_seconds": 1.264353000002302,
+      "unrelated_program_row_seconds": 1.281838417002291,
       "exit_code": 0,
       "result": {
-        "elapsed_seconds": 1.2782167500008654,
+        "elapsed_seconds": 1.2810087090001616,
         "record_type": "SELECTED_ANNUAL_SOURCE_REQUIREMENTS_V1",
         "company_id": "southwest_airlines",
         "metric_ids": [
@@ -428,11 +428,11 @@
         "--fiscal-year-end",
         "2025"
       ],
-      "baseline_seconds": 3.7825987500000338,
-      "unrelated_program_row_seconds": 3.7480524580023484,
+      "baseline_seconds": 3.7804350840015104,
+      "unrelated_program_row_seconds": 3.7308132920006756,
       "exit_code": 0,
       "result": {
-        "elapsed_seconds": 3.7471429590004846,
+        "elapsed_seconds": 3.7299362080011633,
         "record_type": "COMPANY_FISCAL_RANGE_SOURCE_V1",
         "company_id": "southwest_airlines",
         "fiscal_years": [
@@ -1137,11 +1137,13 @@
   ],
   "before": {
     "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
-    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9"
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
   },
   "after": {
     "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
-    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9"
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
   },
   "sec": 0,
   "provider": 0,

@@ -7,9 +7,9 @@ from vnext import selected_source_requirements as selected,company_fiscal_range 
 ROOT=Path(__file__).resolve().parents[3]
 SOURCE=Path('/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs')
 OUT=Path(__file__).parent
-WATCH=['config/company_registry.csv','evidence/requests_log.csv','evidence/requests_log.manifest.json']
+WATCH=['config/company_registry.csv','evidence/requests_log.csv','evidence/requests_log_manifest.json']
 def hashes():
- return {p:hashlib.sha256((SOURCE/p).read_bytes()).hexdigest() for p in WATCH if (SOURCE/p).is_file()}
+ return {p:hashlib.sha256((SOURCE/p).read_bytes()).hexdigest() for p in WATCH}
 def execute(args):
  capture=io.StringIO();start=time.perf_counter()
  with patch('sys.stdout',capture):code=main(args)
