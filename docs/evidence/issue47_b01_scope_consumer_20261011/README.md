@@ -27,3 +27,7 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools:. python3 \
 ```
 
 This is one actual historical coordinate's B01/B02 delivery; it does not prove all Lumen years, Enphase's dimensional top line, Macy's multiple revenue categories, reclassification policy, missing prior/amendments, online historical discovery or1950positions. No model experiment, new source GET, paid/provider call, Run credit, Ready/merge/adoption/deployment/active action. The standalone helper option tests are not substituted for the actual company result. PR164 and this consumer remain candidates until reception; main alone still has the old Lumen gap.
+
+## Remaining affected years
+
+The same public proof's finite source-header correction87be53ce is now received. [The five-year consumer record](five-year-receiving/README.md) gives all10 actual Lumen B01/B02 values and complete original scope operands, necessary FY2021/FY2023–2025 processing, forbidden repeats and independent reading, with the completedFY2022 never requested/recomputed. The previous unresolved-cell/error observations remain separately on the same evidence branch. This slice is a candidate business milestone; the full Issue47 and online source responsibilities are unchanged.

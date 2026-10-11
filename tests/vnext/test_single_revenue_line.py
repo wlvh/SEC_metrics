@@ -62,6 +62,24 @@ class SingleRevenueLineTest(unittest.TestCase):
                 raw = source['raw_bytes'].replace(b'<td>Revenues</td>', b'<td>'+label+b'</td>')
                 self.assertFalse(self.scope(changed(source, raw), annual)['complete_scope_proven'])
 
+    def test_same_eps_share_section_forms_remain_headers_not_scope_waivers(self):
+        source, annual = single_statement()
+        raw=source['raw_bytes'].replace(b'<td>Revenues</td>',b'<td>OPERATING REVENUE</td>')
+        for text in ('BASIC AND DILUTED EARNINGS (LOSS) PER COMMON SHARE',
+                     'BASIC AND DILUTED (LOSS) EARNINGS PER COMMON SHARE',
+                     'BASIC AND DILUTED LOSS PER COMMON SHARE',
+                     'BASIC AND DILUTED LOSS PER SHARE OF COMMON STOCK',
+                     'WEIGHTED AVERAGE COMMON SHARES OUTSTANDING',
+                     'WEIGHTED AVERAGE COMMON STOCK OUTSTANDING',
+                     'OTHER (EXPENSE) INCOME'):
+            caption=b'<tr><td>'+text.encode()+b'</td><td></td></tr>'
+            with self.subTest(text=text):
+                self.assertTrue(self.scope(changed(source,raw.replace(b'</table>',caption+b'</table>')),
+                                           annual)['complete_scope_proven'])
+                restricted=caption.replace(text.encode(),(text+'; only Segment Alpha is included').encode())
+                with self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+                    self.scope(changed(source,raw.replace(b'</table>',restricted+b'</table>')),annual)
+
     def test_explicit_statement_page_keeps_scope_limitations_on_that_page(self):
         source, annual = single_statement()
         raw = source['raw_bytes'].replace(b'<td>Revenues</td>', b'<td>OPERATING REVENUE</td>')
