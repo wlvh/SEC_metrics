@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/docs/evidence/issue28_selected_c04_20261010/verify_saved_selected.py", line 74, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/docs/evidence/issue28_selected_c04_20261010/verify_saved_selected.py", line 46, in main
+    assert first['metrics'][0]['status'] in {'CANDIDATE_READY','CANDIDATE_WITHHELD'}, first['metrics']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [{'metric_id': 'C04', 'status': 'INPUT_OR_EXECUTION_FAILED', 'attempt_id': 'b58ac235f2ae491e8d80c51d9749a542', 'error_type': 'ValueError', 'reason': 'C04_SELECTED_ANNUAL_FILING_CENSUS_CHANGED', 'previous_result': None, 'new_calls': {'provider': 0, 'paid': 0, 'sec': 0}, 'production_authorized': False, 'requested_fiscal_year': 2022}]
