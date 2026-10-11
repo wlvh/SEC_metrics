@@ -1,0 +1,23 @@
+{
+  "tested_commit": "ade254a9",
+  "actual_main": "c6f5c90fe1fa49762608f5605bd54e0b9c7590d5",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-complete-revenue/SEC_metrics",
+  "data_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "mode": "actual merged production source; evidence/driver and extra small controls were uncommitted",
+  "production_sha256": {
+    "scripts/vnext/normal_companyfacts_results.py": "1147eb06040edfac2a8146e9d6020ac8141dbeeceefc2b67406e92dda1aed05b",
+    "scripts/vnext/normal_run_inputs.py": "8569faed05ccd1d9a1c94e3915f8bdc978afb5446be65e2b09193d7f24d7e1ce",
+    "scripts/vnext/normal_zero_ai_results.py": "ea0b719bd835a815d36a10dc3bdafea9921ef75de5695a79006ea853f5661b01",
+    "scripts/vnext/ordinary_current_update.py": "b11ed7cdf27bdcdcd08dedf1c533c92b3b59421d0357c0bc13d25fafa0d920da",
+    "scripts/vnext/ordinary_saved_result.py": "7a309f04cdb1a19ef55fa6dc3d0da7ed9d8e69b3c6ae8d60486866fbb1b0b001",
+    "scripts/vnext/selected_reported_revenue_v2.py": "4d7a5a5e544fe6df9e06886a3a55a37c43b35da326ff05cf7f34300184df4d0c",
+    "scripts/vnext/selected_revenue_scope_v1.py": "c58f15f2d3972474f281c75e86691cc4df723fb79ab8df15f666c5e834499500"
+  },
+  "unchanged_shared_defaults": true,
+  "historical_consumers_modified": false,
+  "new_calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  }
+}

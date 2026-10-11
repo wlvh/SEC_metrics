@@ -67,7 +67,7 @@ def _configuration(source, company, metric):
         # Only C02's existing selector now imports this pure name helper.
         # Explicit proxy C03 producers declare their own source dependencies.
         paths.add('scripts/vnext/organization_name_core.py')
-    if metric in {'B01','B03'}:
+    if metric in {'B01','B02','B03'}:
         paths.update('scripts/vnext/'+name+'.py' for name in (
             'selected_revenue_scope_v1','selected_reported_revenue_v2','selected_fiscal_definition_scope_v1','selected_income_source_v1',
             'historical_fiscal_labels','financial_structured',
