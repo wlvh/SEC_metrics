@@ -1,0 +1,79 @@
+{
+  "source_sha256": "5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+  "observed_rows": [
+    {
+      "concept": "DepreciationAndAmortization",
+      "ordinal": 98,
+      "value": "392000000",
+      "label": "Depreciation and amortization",
+      "table_id": "table_000053",
+      "row": 8,
+      "context_ref": "c-1",
+      "scale": "6"
+    },
+    {
+      "concept": "OperatingIncomeLoss",
+      "ordinal": 113,
+      "value": "-5269000000",
+      "label": "Operating income (loss)",
+      "table_id": "table_000053",
+      "row": 13,
+      "context_ref": "c-1",
+      "scale": "6"
+    },
+    {
+      "concept": "DepreciationAndAmortization",
+      "ordinal": 328,
+      "value": "392000000",
+      "label": "Depreciation and amortization",
+      "table_id": "table_000056",
+      "row": 9,
+      "context_ref": "c-1",
+      "scale": "6"
+    },
+    {
+      "concept": "Depreciation",
+      "ordinal": 670,
+      "value": "364000000",
+      "label": "Depreciation expense",
+      "table_id": "table_000062",
+      "row": 2,
+      "context_ref": "c-1",
+      "scale": "6"
+    },
+    {
+      "concept": "AmortizationOfIntangibleAssets",
+      "ordinal": 878,
+      "value": "28000000",
+      "label": "Amortization expense",
+      "table_id": "table_000070",
+      "row": 2,
+      "context_ref": "c-1",
+      "scale": "6"
+    },
+    {
+      "concept": "OperatingIncomeLoss",
+      "ordinal": 2118,
+      "value": "-5269000000",
+      "label": "Operating income (loss)",
+      "table_id": "table_000114",
+      "row": 36,
+      "context_ref": "c-1",
+      "scale": "6"
+    }
+  ],
+  "film_declaration": [
+    "http://fasb.org/us-gaap/2024#DirectOperatingCosts",
+    "http://fasb.org/us-gaap/2024#DirectOperatingCosts",
+    "http://fasb.org/us-gaap/2024#DirectOperatingCosts",
+    "http://fasb.org/us-gaap/2024#DirectOperatingCosts",
+    "http://fasb.org/us-gaap/2024#DirectOperatingCosts",
+    "http://fasb.org/us-gaap/2024#DirectOperatingCosts"
+  ],
+  "scope": "Selected source rows under approved GAAP proxy; not independent proof of all possible amortization categories",
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}

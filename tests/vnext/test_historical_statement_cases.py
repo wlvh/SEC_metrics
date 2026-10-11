@@ -712,3 +712,74 @@ class HistoricalStatementAmendmentTest(unittest.TestCase):
         with patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',side_effect=[good,bad]):
             with self.assertRaisesRegex(cases.StatementCaseError,'ORIGINAL_VALUES_NOT_PROVEN'):
                 cases._statement_amendment_checks(reader,prepared)
+
+    def part_iii(self):
+        return {**self.checked(),
+            'classification':'PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS',
+            'unchanged_input_classes':['FISCAL_EVENT_WINDOW'],
+            'original_statement_admission_requires_further_review':True,
+            'note_layout':'inline-paragraphs-v2'}
+
+    def test_part_iii_income_consumption_keeps_source_scope_and_property_separate(self):
+        from unittest.mock import Mock
+        for metric in ('B01','B02','B03'):
+            checked=self.part_iii();before=copy.deepcopy(checked);properties=[]
+            reader=Mock();reader.primary.return_value={'raw_bytes':b'constructed','raw_blob':{},'source_reference':{}}
+            property_check={'original_scope_id':checked['scope_id'],
+                'input_class':'CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES',
+                'income_correction_blocks':[], 'part_iii_details':{'constructed':True}}
+            with self.subTest(metric=metric), \
+                 patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=checked), \
+                 patch('vnext.ordinary_income_input.inspect_income_amendment',return_value=property_check) as income:
+                result=cases._statement_amendment_checks(reader,self.prepared(),
+                    metric_id=metric,income_properties=properties)
+            self.assertEqual([checked],result)
+            self.assertEqual(before,checked)
+            self.assertEqual([{'source_scope_id':checked['scope_id'],'metric_id':metric,
+                              'income_property':property_check}],properties)
+            self.assertEqual('inline-paragraphs-v2',income.call_args.args[0]['note_layout'])
+
+    def test_part_iii_does_not_implicitly_cover_other_statement_metrics(self):
+        from unittest.mock import Mock
+        for metric in (None,'B04','B05','B07','B06'):
+            reader=Mock();reader.primary.return_value={'raw_bytes':b'constructed','raw_blob':{},'source_reference':{}}
+            with self.subTest(metric=metric), \
+                 patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=self.part_iii()), \
+                 patch('vnext.ordinary_income_input.inspect_income_amendment') as income:
+                with self.assertRaisesRegex(cases.StatementCaseError,'ORIGINAL_VALUES_NOT_PROVEN'):
+                    cases._statement_amendment_checks(reader,self.prepared(),metric_id=metric,income_properties=[])
+            income.assert_not_called()
+
+    def test_part_iii_income_rejection_and_wrong_property_binding_remain_failures(self):
+        from unittest.mock import Mock
+        from vnext.ordinary_income_input import IncomeInputError
+        reader=Mock();reader.primary.return_value={'raw_bytes':b'constructed','raw_blob':{},'source_reference':{}}
+        with patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=self.part_iii()), \
+             patch('vnext.ordinary_income_input.inspect_income_amendment',
+                   side_effect=IncomeInputError('AMENDMENT_INCOME_CORRECTION_UNRESOLVED')):
+            with self.assertRaisesRegex(cases.StatementCaseError,'INCOME_CORRECTION_UNRESOLVED') as error:
+                cases._statement_amendment_checks(reader,self.prepared(),metric_id='B02',income_properties=[])
+        self.assertEqual('AMENDMENT_INPUT_NOT_CLEARED',error.exception.category)
+        for change in ('scope','class'):
+            property_check={'original_scope_id':'constructed-scope',
+                'input_class':'CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES'}
+            property_check['original_scope_id' if change=='scope' else 'input_class']='wrong'
+            with self.subTest(change=change), \
+                 patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=self.part_iii()), \
+                 patch('vnext.ordinary_income_input.inspect_income_amendment',return_value=property_check):
+                with self.assertRaisesRegex(cases.StatementCaseError,'PROPERTY_BINDING_CHANGED'):
+                    cases._statement_amendment_checks(reader,self.prepared(),metric_id='B01',income_properties=[])
+
+    def test_part_iii_requires_identity_and_retained_income_evidence(self):
+        from unittest.mock import Mock
+        for changed in ({'fiscal_window_unchanged':False},{'issues':['CONSTRUCTED_FINANCIAL_CHANGE']}):
+            reader=Mock();reader.primary.return_value={'raw_bytes':b'constructed','raw_blob':{},'source_reference':{}}
+            with self.subTest(changed=changed), \
+                 patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value={**self.part_iii(),**changed}), \
+                 patch('vnext.ordinary_income_input.inspect_income_amendment') as income:
+                with self.assertRaisesRegex(cases.StatementCaseError,'ORIGINAL_VALUES_NOT_PROVEN'):
+                    cases._statement_amendment_checks(reader,self.prepared(),metric_id='B03',income_properties=[])
+            income.assert_not_called()
+        with patch('vnext.annual_amendment_scope_v2.inspect_annual_amendment_scope',return_value=self.part_iii()):
+            with self.assertRaisesRegex(cases.StatementCaseError,'EVIDENCE_TARGET_REQUIRED'):
+                cases._statement_amendment_checks(reader,self.prepared(),metric_id='B01')
