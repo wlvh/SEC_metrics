@@ -154,6 +154,17 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
 
 录制上下文必须指定 `recorded_http_root`；该入口只从保存的HTTP原件读取回复，走原客户端的落盘/日志路径，不打开网络。LIVE上下文拒绝这个录制输入字段，使用正常HTTPS及原真实计数。录制模式不是一个可以免费访问SEC的通道；缺少回复不降级到真实网络。
 
+### 候选：当期审计师变更的保存来源路径
+
+`task/issue28-current-c04` 接main已有C04四形式来源核心到最新完整财年：
+
+```sh
+python3 tools/vnext_company.py run --company marriott_international --source-root SAVED_SOURCE --metric C04 --work-dir NEW_STATE --output-dir OUTPUT
+python3 tools/vnext_company.py results --company marriott_international --state-root NEW_STATE --output-root SEPARATE_READ
+```
+
+原件及完整事件清单充分时给0/1；缺同一注册人可比前期保留`WITHHELD/null`，缺必需文件报具体缺件，不借其他主体或旧结果。已验证MarriottFY2025和Salesforce发行人FY2026为0，Paramount保持不可比较。结果、完整输入证据、复跑和独立读取共用普通记录。此候选尚待main接收，在线捕获C04仍未接入；不因存在命令就声称新来源已在线获取或业务结果正式接受。
+
 ### 候选：只检查指定报告期的来源
 
 `task/issue28-selected-source-preflight` 的 `sources` 是只读入口，尚未作为 main 能力交付：
