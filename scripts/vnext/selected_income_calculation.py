@@ -11,6 +11,8 @@ from .sources import companyfacts_structured_facts
 from .deterministic_router import adapt_companyfacts
 from .zero_ai_r2 import _exact_filing_source_set
 from .xbrl_namespace_policy import YEAR_ONLY
+from .canonical import sha256_bytes
+from sec_urls import companyfacts_url, submissions_url, accession_document_url
 
 
 def revenue_admission(*, primary, annual, approved_concepts, contract='components-v1',
@@ -39,11 +41,56 @@ def revenue_admission(*, primary, annual, approved_concepts, contract='component
     return scope, admit_revenue_facts, verify_revenue_observations
 
 
+
+def selected_income_coordinate(*, prepared, target, period, primary_source,
+        facts_source, inventory, xml_source=None, selected_income_input=None):
+    """Reject accidental mixed issuer/filing/date inputs before reading amounts.
+
+    The annual label is a filing property, not the calendar year of its end.
+    A separately proved successor statement period may be shorter than that
+    container; only that existing current input supplies the alternate dates.
+    """
+    from .normal_zero_ai_results import _need
+    company, entity = prepared['company_id'], prepared['entity']
+    filing = prepared['filing']; accession = filing['accessionNumber']
+    annual_period = prepared['table_input']['target_period']
+    _need(target.get('company_id') == company,
+          'NORMAL_ZERO_AI_SELECTED_INCOME_COMPANY_CHANGED', 'SOURCE_INTEGRITY_ERROR')
+    _need(all(target.get(k) == period[k] for k in ('period_start','period_end')),
+          'NORMAL_ZERO_AI_SELECTED_INCOME_TARGET_PERIOD_CHANGED', 'SOURCE_INTEGRITY_ERROR')
+    _need(all(k not in target or target[k] == value
+              for k,value in (('entity',entity),('accession',accession))),
+          'NORMAL_ZERO_AI_SELECTED_INCOME_TARGET_IDENTITY_CHANGED', 'SOURCE_INTEGRITY_ERROR')
+    if period != annual_period:
+        packet = selected_income_input or {}; original = packet.get('annual_input',{})
+        _need(packet.get('company_id') == company and packet.get('statement_period') == period
+              and original.get('entity') == entity and original.get('company_id') == company
+              and original.get('filing',{}).get('accessionNumber') == accession
+              and original.get('table_input',{}).get('target_period') == annual_period,
+              'NORMAL_ZERO_AI_SELECTED_INCOME_PERIOD_NOT_PROVEN', 'SOURCE_INTEGRITY_ERROR')
+    for kind,source,url in (
+            ('primary',primary_source,accession_document_url(cik=int(entity),
+                accession=accession,document_name=filing['primaryDocument'])),
+            ('companyfacts',facts_source,companyfacts_url(cik=int(entity))),
+            ('inventory',inventory,submissions_url(cik=int(entity)))):
+        reference = source['source_reference']
+        _need(reference['company_id'] == company and reference['source_url'] == url
+              and reference['raw_asset_id'] == 'sha256:'+sha256_bytes(content=source['raw_bytes'])
+              and (kind == 'inventory' or reference['accession'] == accession),
+              'NORMAL_ZERO_AI_SELECTED_INCOME_SOURCE_IDENTITY_CHANGED:'+kind,
+              'SOURCE_INTEGRITY_ERROR')
+    if xml_source is not None:
+        reference = xml_source['source_reference']
+        _need(reference['company_id'] == company and reference['accession'] == accession
+              and reference['raw_asset_id'] == 'sha256:'+sha256_bytes(content=xml_source['raw_bytes']),
+              'NORMAL_ZERO_AI_SELECTED_INCOME_SOURCE_IDENTITY_CHANGED:xml', 'SOURCE_INTEGRITY_ERROR')
+
 def calculate_selected_income(*, repo_root, prepared, inventory, primary_source,
         facts_source, metric_id, spec, dependency_specs, target, period, traits,
         validate_depreciation_scope=False, validate_revenue_scope=False,
         revenue_scope_contract='components-v1', allow_single_revenue_line=False,
-        xml_source=None, namespace_policy=YEAR_ONLY, annual_period_reader=None):
+        xml_source=None, namespace_policy=YEAR_ONLY, annual_period_reader=None,
+        selected_income_input=None):
     """Internal computation seam; no caller-supplied monetary operands."""
     from .normal_zero_ai_results import _need
     _need(metric_id in {'B01','B03'}, 'NORMAL_ZERO_AI_SELECTED_INCOME_METRIC_INVALID')
@@ -54,6 +101,9 @@ def calculate_selected_income(*, repo_root, prepared, inventory, primary_source,
     _need(type(allow_single_revenue_line) is bool and (not allow_single_revenue_line
           or validate_revenue_scope and revenue_scope_contract=='reported-total-v2'),
           'NORMAL_ZERO_AI_SINGLE_REVENUE_OPTION_INVALID')
+    selected_income_coordinate(prepared=prepared, target=target, period=period,
+        primary_source=primary_source, facts_source=facts_source, inventory=inventory,
+        xml_source=xml_source, selected_income_input=selected_income_input)
     dependency_records = []
     revenue_scope = depreciation_scope = None
     manifest = _exact_filing_source_set(company_id=prepared['company_id'], source_role='companyfacts',

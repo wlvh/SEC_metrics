@@ -295,7 +295,8 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
                 validate_depreciation_scope=validate_depreciation_scope,
                 validate_revenue_scope=validate_revenue_scope,
                 revenue_scope_contract=revenue_scope_contract,
-                allow_single_revenue_line=allow_single_revenue_line)
+                allow_single_revenue_line=allow_single_revenue_line,
+                selected_income_input=income_input)
             claims, source_sets, observations = (computed[k] for k in ('claims','source_sets','observations'))
             dependency_records = computed['dependency_records']
             result, trace, selection = (computed[k] for k in ('result','trace','selection'))
