@@ -66,12 +66,20 @@ sys.setprofile(guard)
             '--output-dir',args.output_root/company/'runs']
         first, timing = invoke(company+'-first', command, exit_code=expected_exit)
         before = digests(state)
+        result_files = {name: sha for name,sha in before.items()
+            if '/results/' in name or name.endswith(('current-result.json','completed-check.json'))
+            or name == 'company-task.json'}
+        result_directories = {str(p.relative_to(state)) for p in state.glob('updates/B02/periods/*/results/*')}
         repeat, repeated = invoke(company+'-repeat', command, forbid=True, exit_code=expected_exit)
         assert all(not metric['calculation_performed'] for metric in repeat['metrics'])
-        assert digests(state) == before
+        assert all(digests(state).get(name) == sha for name,sha in result_files.items())
+        assert result_directories == {str(p.relative_to(state)) for p in state.glob('updates/B02/periods/*/results/*')}
+        # A normal repeat logs a new check and latest-execution. Immutable
+        # results/pointers remain protected; a read must change no state at all.
+        before_read = digests(state)
         read, read_timing = invoke(company+'-read', ['results','--company',company,
             '--state-root',state,'--output-root',args.output_root/company/'read'], forbid=True)
-        assert digests(state) == before
+        assert digests(state) == before_read
         rows = list(csv.DictReader((args.output_root/company/'read/metrics_matrix.csv').open(encoding='utf-8-sig')))
         assert len(rows) == end-start+1
         if company == 'ford_motor_company':
@@ -99,7 +107,8 @@ sys.setprofile(guard)
         assert evidence.exists() and evidence.stat().st_size > 0
         summary.append({'company':company,'first_seconds':timing['seconds'],
             'repeat_seconds':repeated['seconds'],'read_seconds':read_timing['seconds'],
-            'rows':rows,'unchanged_state_files':len(before)})
+            'rows':rows,'unchanged_result_files':len(result_files),
+            'unchanged_state_files_on_read':len(before_read)})
     assert all(hashlib.sha256(Path(p).read_bytes()).hexdigest() == sha for p,sha in source_before.items())
     (args.output_root/'summary.json').write_text(json.dumps({'code_commit':subprocess.check_output(
         ['git','rev-parse','HEAD'],text=True).strip(),'cases':summary,'new_calls':[0,0,0]},indent=2)+'\n')
