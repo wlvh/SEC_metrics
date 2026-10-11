@@ -158,6 +158,27 @@ class CompletedWithheldUpdateTest(unittest.TestCase):
 
 
 class CurrentProcessingConfigurationTest(unittest.TestCase):
+    def test_debt_note_change_does_not_invalidate_saved_d04_configuration(self):
+        original=update.sha256_file
+        before={metric:update._configuration(ROOT,'marriott_international',metric)
+                for metric in ('D04','B06')}
+        with patch.object(update,'sha256_file',side_effect=lambda *,path:
+                'changed-unconsumed-debt-note' if path==ROOT/'scripts/vnext/b06_note_carrying.py' else original(path=path)):
+            after={metric:update._configuration(ROOT,'marriott_international',metric) for metric in before}
+        self.assertEqual(before['D04'],after['D04'])
+        self.assertNotEqual(before['B06'],after['B06'])
+
+    def test_consumed_d04_review_and_source_changes_still_invalidate_configuration(self):
+        original=update.sha256_file
+        before=update._configuration(ROOT,'marriott_international','D04')
+        for relative in ('scripts/vnext/d04_native_assessment.py',
+                         'scripts/vnext/capacity_update_input.py','scripts/vnext/normal_annual_input.py'):
+            with self.subTest(used=relative):
+                with patch.object(update,'sha256_file',side_effect=lambda *,path,selected=ROOT/relative:
+                        'changed-used-d04-rule' if path==selected else original(path=path)):
+                    after=update._configuration(ROOT,'marriott_international','D04')
+                self.assertNotEqual(before,after)
+
     def test_unused_recorded_source_session_does_not_change_current_configuration(self):
         original = update.sha256_file
         for metric in ('B01', 'C01', 'B12', 'B10'):

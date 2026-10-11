@@ -1,0 +1,18 @@
+test_debt_note_change_does_not_invalidate_saved_d04_configuration (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_debt_note_change_does_not_invalidate_saved_d04_configuration) ... FAIL
+test_consumed_d04_review_and_source_changes_still_invalidate_configuration (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_consumed_d04_review_and_source_changes_still_invalidate_configuration) ... ok
+
+======================================================================
+FAIL: test_debt_note_change_does_not_invalidate_saved_d04_configuration (tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_debt_note_change_does_not_invalidate_saved_d04_configuration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-debt-processing-scope/SEC_metrics/tests/vnext/test_ordinary_current_update.py", line 168, in test_debt_note_change_does_not_invalidate_saved_d04_configuration
+    self.assertEqual(before['D04'],after['D04'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'com[8059 chars]y': 'a3786d8838442e944a7a75c2e5e19cf7c8fc50ece[10439 chars]alse} != {'com[8059 chars]y': 'changed-unconsumed-debt-note', 'scripts/v[10403 chars]alse}
+Diff is 23453 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.082s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_debt_note_change_does_not_invalidate_saved_d04_configuration", "tests.vnext.test_ordinary_current_update.CurrentProcessingConfigurationTest.test_consumed_d04_review_and_source_changes_still_invalidate_configuration"]}
