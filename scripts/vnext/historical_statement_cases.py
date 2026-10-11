@@ -246,7 +246,7 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         return _successor_comparability_case(source=source, company_id=company_id,
             metric_id=metric_id, prepared=prepared, selection=selection)
     _need(prepared['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY'
-          and (not prepared['amendments'] or metric_id in METRICS),
+          and (not prepared['amendments'] or metric_id in METRICS | {'B07'}),
           'HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
     reader = _Sources(source, company_id, prepared['entity']) if prepared['amendments'] else None
     amendment_checks = _statement_amendment_checks(reader, prepared)
