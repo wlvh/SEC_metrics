@@ -1,0 +1,8 @@
+ACTUAL_AFTER 2023 {}
+FORD 2023 0.1147307616872394136292603301 sha256:d21eeec77aa5dac0187905c55a494082b1c560732926e818af5cdbc98afa1972 23.490232000003743
+ACTUAL_AFTER 2024 {'reason': 'SELECTED_REVENUE_STATEMENT_HEADING_SCOPE_UNRESOLVED', 'unresolved_revenue_role': 'current'}
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-note-reference/SEC_metrics/docs/evidence/issue28_revenue_note_reference_20261011/verify_original_cases.py", line 32, in <module>
+    assert after['results']['B02']['value'] is not None,after['results']['B02']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'company_id': 'ford_motor_company', 'metric_id': 'B02', 'period_start': '2024-01-01', 'period_end': '2024-12-31', 'scope_key': 'sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e', 'spec_closure_hash': 'sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76', 'applicability': 'APPLICABLE', 'quality': 'NONE', 'publication': 'WITHHELD', 'reason_code': 'HISTORICAL_PAIRED_REVENUE_SCOPE_UNRESOLVED', 'value': None, 'unit': None, 'trace_id': 'sha256:290bc625767327ea4f79650bcfd7af380ed402c0bdcfa53f833442715912db34', 'record_type': 'METRIC_RESULT', 'result_id': 'sha256:66776afa3d50e318b26cd534ec30e0a071900d028ea86ddccf7cc0e2aefbf805'}

@@ -1,7 +1,25 @@
 {
-  "category": "SELECTED_SOURCE_SCOPE_UNRESOLVED",
-  "reason": "SELECTED_REPORTED_REVENUE_VISIBLE_NATIVE_UNIT_UNRESOLVED",
-  "error_type": "IncomeSourceError",
-  "unresolved_revenue_role": "current",
-  "paired_revenue_scopes": {}
+  "kind": "OBSERVED_SELECTED_SCOPE_SUMMARY_NOT_FULL_REPLAY_RECORD",
+  "scope_ids": {
+    "current": "sha256:d052335cac95f3fc0982e05b682af8dbdfac3a194b0aaae86f8fd9f6477daaaa",
+    "prior": "sha256:cf980af15f43179b6a8fb83a7824bcb8a2dcbedd44d4f78ad67679c56cb7cbe1"
+  },
+  "result": {
+    "company_id": "ford_motor_company",
+    "metric_id": "B02",
+    "period_start": "2023-01-01",
+    "period_end": "2023-12-31",
+    "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+    "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "0.1147307616872394136292603301",
+    "unit": "ratio",
+    "trace_id": "sha256:97aa744892b2bd217d72d4c39fb06b171c4f0c2e08c8b01a5c51a38849aedd15",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:d21eeec77aa5dac0187905c55a494082b1c560732926e818af5cdbc98afa1972"
+  },
+  "unresolved": {}
 }

@@ -1,0 +1,1475 @@
+{
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "scope": "Actual current consumer and original rows; old formatter checked on those row labels, not full old-checkout execution",
+  "cases": [
+    {
+      "year": 2023,
+      "after_seconds": 22.799647084000753,
+      "after_result": {
+        "company_id": "ford_motor_company",
+        "metric_id": "B02",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "scope_key": "sha256:2e83b74a2d9402db77faddac8ba68e9dccbd80004661ba2714b35f43ab8d85ef",
+        "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.1147307616872394136292603301",
+        "unit": "ratio",
+        "trace_id": "sha256:97aa744892b2bd217d72d4c39fb06b171c4f0c2e08c8b01a5c51a38849aedd15",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:d21eeec77aa5dac0187905c55a494082b1c560732926e818af5cdbc98afa1972"
+      },
+      "scope_ids": {
+        "current": "sha256:d052335cac95f3fc0982e05b682af8dbdfac3a194b0aaae86f8fd9f6477daaaa",
+        "prior": "sha256:cf980af15f43179b6a8fb83a7824bcb8a2dcbedd44d4f78ad67679c56cb7cbe1"
+      },
+      "source_proofs": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0000037996.json",
+          "accession": "",
+          "document_name": "CIK0000037996.json",
+          "content_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+          "request_body_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+          "request_body_size": 160015,
+          "request_headers_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json.8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530.headers.json",
+          "request_headers_sha256": "8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530",
+          "request_headers_size": 736,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json",
+          "request_attempt_id": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/f-20231231.htm",
+          "accession": "0000037996-24-000009",
+          "document_name": "f-20231231.htm",
+          "content_sha256": "9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f",
+          "request_body_sha256": "9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f",
+          "request_body_size": 5531292,
+          "request_headers_repo_relative_path": "evidence/request_attempts/9a/9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f/f-20231231.htm.81b0b2223458eb69f5c5150f7b9fe8a28a61a0104ef8406c2caac5d84568e9c9.headers.json",
+          "request_headers_sha256": "81b0b2223458eb69f5c5150f7b9fe8a28a61a0104ef8406c2caac5d84568e9c9",
+          "request_headers_size": 1681,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/9a/9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f/f-20231231.htm",
+          "request_attempt_id": "request:attempt:f7fe511d64e2275a340a24e319334dc7cb7fb80d13db1348cc998620a46c01df"
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json",
+          "accession": "0000037996-24-000009",
+          "document_name": "CIK0000037996.json",
+          "content_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+          "request_body_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+          "request_body_size": 3672318,
+          "request_headers_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json.47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960.headers.json",
+          "request_headers_sha256": "47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json",
+          "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/f-20221231.htm",
+          "accession": "0000037996-23-000012",
+          "document_name": "f-20221231.htm",
+          "content_sha256": "34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80",
+          "request_body_sha256": "34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80",
+          "request_body_size": 7086500,
+          "request_headers_repo_relative_path": "evidence/request_attempts/34/34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80/f-20221231.htm.8230f6c64d71161fd6282e2056823200b622fab72ca051f36d01ba77383291ee.headers.json",
+          "request_headers_sha256": "8230f6c64d71161fd6282e2056823200b622fab72ca051f36d01ba77383291ee",
+          "request_headers_size": 1681,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/34/34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80/f-20221231.htm",
+          "request_attempt_id": "request:attempt:1d0357b19f86c09fce4eb485bc6042ba106e8521b1679d5f0bf3c0e8ebfc3447"
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json",
+          "accession": "0000037996-23-000012",
+          "document_name": "CIK0000037996.json",
+          "content_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+          "request_body_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+          "request_body_size": 3672318,
+          "request_headers_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json.47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960.headers.json",
+          "request_headers_sha256": "47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json",
+          "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/index.json",
+          "accession": "0000037996-24-000009",
+          "document_name": "index.json",
+          "content_sha256": "e60b0c1fc3691fe782ead1185a7910d9c51b71c927835dbf380fc61b8659109a",
+          "request_body_sha256": "e60b0c1fc3691fe782ead1185a7910d9c51b71c927835dbf380fc61b8659109a",
+          "request_body_size": 14294,
+          "request_headers_repo_relative_path": "evidence/request_attempts/e6/e60b0c1fc3691fe782ead1185a7910d9c51b71c927835dbf380fc61b8659109a/index.json.b57c436f0b3e3cab18c4fc60d46dcf40032629a55ed9a3be4687d1086b23f16b.headers.json",
+          "request_headers_sha256": "b57c436f0b3e3cab18c4fc60d46dcf40032629a55ed9a3be4687d1086b23f16b",
+          "request_headers_size": 1247,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/e6/e60b0c1fc3691fe782ead1185a7910d9c51b71c927835dbf380fc61b8659109a/index.json",
+          "request_attempt_id": "request:attempt:7e72ec997a15540d28bcdab111b014a7de60bcd389f7f9e95cc669974c2ddcca"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/f-20231231_htm.xml",
+          "accession": "0000037996-24-000009",
+          "document_name": "f-20231231_htm.xml",
+          "content_sha256": "a2c6d69e31e61ba99679f22d332edffc4505e2140906613ba09f321f10f7dc63",
+          "request_body_sha256": "a2c6d69e31e61ba99679f22d332edffc4505e2140906613ba09f321f10f7dc63",
+          "request_body_size": 5798352,
+          "request_headers_repo_relative_path": "evidence/request_attempts/a2/a2c6d69e31e61ba99679f22d332edffc4505e2140906613ba09f321f10f7dc63/f-20231231_htm.xml.907249337a9173d8386d42a96e43421ababdd9843692a447d4556003a52fadb5.headers.json",
+          "request_headers_sha256": "907249337a9173d8386d42a96e43421ababdd9843692a447d4556003a52fadb5",
+          "request_headers_size": 1702,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/a2/a2c6d69e31e61ba99679f22d332edffc4505e2140906613ba09f321f10f7dc63/f-20231231_htm.xml",
+          "request_attempt_id": "request:attempt:f19fcd06a579851d99a8a69bfac89f579c1835e473f1fc6eb0f1d4a69804006d"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/index.json",
+          "accession": "0000037996-23-000012",
+          "document_name": "index.json",
+          "content_sha256": "d6c2fe430039b352dfd0134f62f933cb97b10e1b25730f9e01339c07eb988e48",
+          "request_body_sha256": "d6c2fe430039b352dfd0134f62f933cb97b10e1b25730f9e01339c07eb988e48",
+          "request_body_size": 13700,
+          "request_headers_repo_relative_path": "evidence/request_attempts/d6/d6c2fe430039b352dfd0134f62f933cb97b10e1b25730f9e01339c07eb988e48/index.json.6d4d8322c5e78057633144f3ba321c54d322ff8028b885ef603a844e593b650b.headers.json",
+          "request_headers_sha256": "6d4d8322c5e78057633144f3ba321c54d322ff8028b885ef603a844e593b650b",
+          "request_headers_size": 1247,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/d6/d6c2fe430039b352dfd0134f62f933cb97b10e1b25730f9e01339c07eb988e48/index.json",
+          "request_attempt_id": "request:attempt:024f8f0f797f29c42338bac2ff2d3e6b94de2784c383ec4d9e64b5cd155f4016"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/f-20221231_htm.xml",
+          "accession": "0000037996-23-000012",
+          "document_name": "f-20221231_htm.xml",
+          "content_sha256": "ac95d393e35ec57d2e7a2e4322efe674b2d7b1f6d436238e7cdf599fa887f72f",
+          "request_body_sha256": "ac95d393e35ec57d2e7a2e4322efe674b2d7b1f6d436238e7cdf599fa887f72f",
+          "request_body_size": 6937874,
+          "request_headers_repo_relative_path": "evidence/request_attempts/ac/ac95d393e35ec57d2e7a2e4322efe674b2d7b1f6d436238e7cdf599fa887f72f/f-20221231_htm.xml.590bc19173f8d7b40d8735ac0862be7bcac74b22cf3b238e1c57845417defe95.headers.json",
+          "request_headers_sha256": "590bc19173f8d7b40d8735ac0862be7bcac74b22cf3b238e1c57845417defe95",
+          "request_headers_size": 1702,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/ac/ac95d393e35ec57d2e7a2e4322efe674b2d7b1f6d436238e7cdf599fa887f72f/f-20221231_htm.xml",
+          "request_attempt_id": "request:attempt:b2015f3aa880fa7afebf856bcf5f4a087b53b86256831348f39d239451454d53"
+        }
+      ],
+      "current_original_total": {
+        "source_sha256": "9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/f-20231231.htm",
+        "native_ordinal": 243,
+        "native_fact": "<ix:nonFraction unitRef=\"usd\" contextRef=\"c-1\" decimals=\"-6\" name=\"us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax\" format=\"ixt:num-dot-decimal\" scale=\"6\" id=\"f-184\">176,191</ix:nonFraction>",
+        "native_fact_byte_start": 2617067,
+        "original_row": "Total revenues (Note 4) 136,341 158,057 176,191",
+        "value": "176191000000",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000037996",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "statement": {
+          "title_sources": [
+            {
+              "start_byte": 2607615,
+              "end_byte": 2607796,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1958"
+              ],
+              "visible_text": "CONSOLIDATED INCOME STATEMENTS",
+              "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738"
+            }
+          ],
+          "caption": "",
+          "table_span": {
+            "table_order": 77,
+            "start_byte": 2607980,
+            "end_byte": 2656097,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1959",
+              "table:1"
+            ],
+            "span_sha256": "78eb58641178882526909de6cf06cd725b1d61608edb653f8e2a343ab73465be"
+          },
+          "intervening_sources": [
+            {
+              "start_byte": 2607429,
+              "end_byte": 2607615,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1957"
+              ],
+              "visible_text": "FORD MOTOR COMPANY AND SUBSIDIARIES",
+              "span_sha256": "745f52da4b43f14ec36a9b0dc7af76443a9a78228fbdf3202e3b16ddaabde080"
+            },
+            {
+              "start_byte": 2607615,
+              "end_byte": 2607796,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1958"
+              ],
+              "visible_text": "CONSOLIDATED INCOME STATEMENTS",
+              "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738"
+            },
+            {
+              "start_byte": 2607796,
+              "end_byte": 2607980,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "div:2"
+              ],
+              "visible_text": "(in millions, except per share amounts)",
+              "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+              "clipped_at_table_start": true
+            }
+          ],
+          "unresolved_annotations": [],
+          "adjacent_heading_table": null,
+          "statement_page_boundary": {
+            "start_byte": 2607292,
+            "end_byte": 2607329,
+            "span_sha256": "dcab779a8f959ed9a60e2fd1e515a24af9a737c34ebf2a3a3ff2887763b7cb61"
+          },
+          "preceding_page_context": [
+            {
+              "start_byte": 2606744,
+              "end_byte": 2606967,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1953"
+              ],
+              "visible_text": "The accompanying notes are part of the consolidated financial statements.",
+              "span_sha256": "5eb61b6575472bb29bbf0c0210180831f12397698a61d0a0473dd257c5e2d9ad"
+            },
+            {
+              "start_byte": 2607072,
+              "end_byte": 2607226,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1954",
+                "div:1",
+                "div:1"
+              ],
+              "visible_text": "108",
+              "span_sha256": "eaed29e495bcea9fbf2fc5ab5807a5e722482c7fd87fd3d123dabf39772526c7"
+            }
+          ]
+        },
+        "unit_sources": [
+          {
+            "kind": "heading_block",
+            "proof": {
+              "start_byte": 2607796,
+              "end_byte": 2607980,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "div:2"
+              ],
+              "visible_text": "(in millions, except per share amounts)",
+              "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+              "clipped_at_table_start": true
+            },
+            "text": "(in millions, except per share amounts)"
+          }
+        ],
+        "xml_check": "MATCH"
+      },
+      "prior_original_total": {
+        "source_sha256": "34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/f-20221231.htm",
+        "native_ordinal": 245,
+        "native_fact": "<ix:nonFraction unitRef=\"usd\" contextRef=\"id5d9282c4298481b80715ab6fa2e69d3_D20220101-20221231\" decimals=\"-6\" name=\"us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax\" format=\"ixt:num-dot-decimal\" scale=\"6\" id=\"id3VybDovL2RvY3MudjEvZG9jOmU1MGFkYjZkODk5ZDRmNmViY2I1ZTczZjdiZDkxNWU3L3NlYzplNTBhZGI2ZDg5OWQ0ZjZlYmNiNWU3M2Y3YmQ5MTVlN18yNzcvZnJhZzpiYmI5NjQxZWE0Y2M0NzY4OWRjN2FjNzkxYTk1MDczNi90YWJsZTo1ZmFjN2VlYThhYjc0Yzg1YjJhYTc1MzdlMzgwMjFjYS90YWJsZXJhbmdlOjVmYWM3ZWVhOGFiNzRjODViMmFhNzUzN2UzODAyMWNhXzYtNS0xLTEtNzIxNDk_908ea710-4067-453f-8573-5f2c6e706709\">158,057</ix:nonFraction>",
+        "native_fact_byte_start": 2984874,
+        "original_row": "Total revenues (Note 4) 127,144 136,341 158,057",
+        "value": "158057000000",
+        "context": {
+          "context_ref": "id5d9282c4298481b80715ab6fa2e69d3_D20220101-20221231",
+          "dimensions": {},
+          "entity_identifier": "0000037996",
+          "period_end": "2022-12-31",
+          "period_start": "2022-01-01",
+          "typed_dimension_count": 0
+        },
+        "statement": {
+          "title_sources": [
+            {
+              "start_byte": 2969059,
+              "end_byte": 2969240,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1963"
+              ],
+              "visible_text": "CONSOLIDATED INCOME STATEMENTS",
+              "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738"
+            }
+          ],
+          "caption": "",
+          "table_span": {
+            "table_order": 91,
+            "start_byte": 2969424,
+            "end_byte": 3043751,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1964",
+              "table:1"
+            ],
+            "span_sha256": "e45735e1d493869df57a4a55e48904388b4a2a325d395b886ebbef49968fa4b5"
+          },
+          "intervening_sources": [
+            {
+              "start_byte": 2968873,
+              "end_byte": 2969059,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1962"
+              ],
+              "visible_text": "FORD MOTOR COMPANY AND SUBSIDIARIES",
+              "span_sha256": "745f52da4b43f14ec36a9b0dc7af76443a9a78228fbdf3202e3b16ddaabde080"
+            },
+            {
+              "start_byte": 2969059,
+              "end_byte": 2969240,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1963"
+              ],
+              "visible_text": "CONSOLIDATED INCOME STATEMENTS",
+              "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738"
+            },
+            {
+              "start_byte": 2969240,
+              "end_byte": 2969424,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "div:2"
+              ],
+              "visible_text": "(in millions, except per share amounts)",
+              "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+              "clipped_at_table_start": true
+            }
+          ],
+          "unresolved_annotations": [],
+          "adjacent_heading_table": null,
+          "statement_page_boundary": {
+            "start_byte": 2968736,
+            "end_byte": 2968773,
+            "span_sha256": "dcab779a8f959ed9a60e2fd1e515a24af9a737c34ebf2a3a3ff2887763b7cb61"
+          },
+          "preceding_page_context": [
+            {
+              "start_byte": 2968188,
+              "end_byte": 2968411,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1958"
+              ],
+              "visible_text": "The accompanying notes are part of the consolidated financial statements.",
+              "span_sha256": "5eb61b6575472bb29bbf0c0210180831f12397698a61d0a0473dd257c5e2d9ad"
+            },
+            {
+              "start_byte": 2968516,
+              "end_byte": 2968670,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1959",
+                "div:1",
+                "div:1"
+              ],
+              "visible_text": "109",
+              "span_sha256": "3e48b800b5528d1a59a66facf8a342ea91d0273863a2dab7d8589f695500c01f"
+            }
+          ]
+        },
+        "unit_sources": [
+          {
+            "kind": "heading_block",
+            "proof": {
+              "start_byte": 2969240,
+              "end_byte": 2969424,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "div:2"
+              ],
+              "visible_text": "(in millions, except per share amounts)",
+              "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+              "clipped_at_table_start": true
+            },
+            "text": "(in millions, except per share amounts)"
+          }
+        ],
+        "xml_check": "MATCH"
+      }
+    },
+    {
+      "year": 2024,
+      "after_seconds": 22.351720541002578,
+      "after_result": {
+        "company_id": "ford_motor_company",
+        "metric_id": "B02",
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31",
+        "scope_key": "sha256:f06038f2e9777c98996ef385a9dea78ca1e4f6d3c0dcb7aad3ceb958c192321e",
+        "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.04995147311724208387488577737",
+        "unit": "ratio",
+        "trace_id": "sha256:60eee077d8e45264cf4adba005e1a79294ab75179b4e8f84b62c0971e8d10907",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:d9fc95bb656d363872253b4d24d4af13d8111a28dc81a084f0c4e04031f30b1a"
+      },
+      "scope_ids": {
+        "current": "sha256:af9212b1892b82861dd78657cea14057300f7d4944d84c7446bb12748b5086aa",
+        "prior": "sha256:31089a04c0947e073f9e0fe7a116c1d235278b999be705ac5e408be91542ae77"
+      },
+      "source_proofs": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0000037996.json",
+          "accession": "",
+          "document_name": "CIK0000037996.json",
+          "content_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+          "request_body_sha256": "2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+          "request_body_size": 160015,
+          "request_headers_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json.8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530.headers.json",
+          "request_headers_sha256": "8ae085d80b07462565087561336d087caa41c1e35ac725ffbdb341bb931b2530",
+          "request_headers_size": 736,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/2e/2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53/CIK0000037996.json",
+          "request_attempt_id": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
+          "accession": "0000037996-25-000013",
+          "document_name": "f-20241231.htm",
+          "content_sha256": "9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da",
+          "request_body_sha256": "9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da",
+          "request_body_size": 5505900,
+          "request_headers_repo_relative_path": "evidence/request_attempts/9b/9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da/f-20241231.htm.3ea65b29d0a836ba7e08fae5015548ba9190b0210372e9faf5b6720fdf1cfce3.headers.json",
+          "request_headers_sha256": "3ea65b29d0a836ba7e08fae5015548ba9190b0210372e9faf5b6720fdf1cfce3",
+          "request_headers_size": 1681,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/9b/9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da/f-20241231.htm",
+          "request_attempt_id": "request:attempt:d3e116f6c707b86aef5d71cb4c1f7a08169eaca2a320c33f69490e1416aaa474"
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json",
+          "accession": "0000037996-25-000013",
+          "document_name": "CIK0000037996.json",
+          "content_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+          "request_body_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+          "request_body_size": 3672318,
+          "request_headers_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json.47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960.headers.json",
+          "request_headers_sha256": "47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json",
+          "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/f-20231231.htm",
+          "accession": "0000037996-24-000009",
+          "document_name": "f-20231231.htm",
+          "content_sha256": "9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f",
+          "request_body_sha256": "9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f",
+          "request_body_size": 5531292,
+          "request_headers_repo_relative_path": "evidence/request_attempts/9a/9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f/f-20231231.htm.81b0b2223458eb69f5c5150f7b9fe8a28a61a0104ef8406c2caac5d84568e9c9.headers.json",
+          "request_headers_sha256": "81b0b2223458eb69f5c5150f7b9fe8a28a61a0104ef8406c2caac5d84568e9c9",
+          "request_headers_size": 1681,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/9a/9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f/f-20231231.htm",
+          "request_attempt_id": "request:attempt:f7fe511d64e2275a340a24e319334dc7cb7fb80d13db1348cc998620a46c01df"
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json",
+          "accession": "0000037996-24-000009",
+          "document_name": "CIK0000037996.json",
+          "content_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+          "request_body_sha256": "db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+          "request_body_size": 3672318,
+          "request_headers_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json.47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960.headers.json",
+          "request_headers_sha256": "47538fb5f208ed1d28a2c6fc76e8621e7ebe347e6f97e1e8db2221c23ca62960",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/db/db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e/CIK0000037996.json",
+          "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/index.json",
+          "accession": "0000037996-25-000013",
+          "document_name": "index.json",
+          "content_sha256": "8ef6698613925a46bd4130a4771801adc3bda92073d3c8b1a45c80214876d2fd",
+          "request_body_sha256": "8ef6698613925a46bd4130a4771801adc3bda92073d3c8b1a45c80214876d2fd",
+          "request_body_size": 14093,
+          "request_headers_repo_relative_path": "evidence/accession_materials/ford_motor_company_37996_000003799625000013/index.json.headers.json",
+          "request_headers_sha256": "433c774dd11ec1cc9387344f639d45fb3b59ee87c11181a991870fca3b91ffb2",
+          "request_headers_size": 661,
+          "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+          "request_repo_relative_path": "evidence/accession_materials/ford_motor_company_37996_000003799625000013/index.json",
+          "request_attempt_id": "request:attempt:ad9e1e729643f464beeb6db765c2bf72ab2ca8eddedd883d18626e494e37927f"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231_htm.xml",
+          "accession": "0000037996-25-000013",
+          "document_name": "f-20241231_htm.xml",
+          "content_sha256": "cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6",
+          "request_body_sha256": "cadb83d6a44e3ad04dc3eb7b5f379957fb1ffefa54ea842a86500de7539c01a6",
+          "request_body_size": 5755643,
+          "request_headers_repo_relative_path": "evidence/accession_materials/ford_motor_company_37996_000003799625000013/f-20241231_htm.xml.headers.json",
+          "request_headers_sha256": "6ac1cf9730c9cf8a7773d957513f5ff04393240a3a3619093157a122928e6eee",
+          "request_headers_size": 1123,
+          "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+          "request_repo_relative_path": "evidence/accession_materials/ford_motor_company_37996_000003799625000013/f-20241231_htm.xml",
+          "request_attempt_id": "request:attempt:8adf179e4c333b747fbff9f6a0f3ac90d4e010c2cb9512f1345fc19e0e324000"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/index.json",
+          "accession": "0000037996-24-000009",
+          "document_name": "index.json",
+          "content_sha256": "e60b0c1fc3691fe782ead1185a7910d9c51b71c927835dbf380fc61b8659109a",
+          "request_body_sha256": "e60b0c1fc3691fe782ead1185a7910d9c51b71c927835dbf380fc61b8659109a",
+          "request_body_size": 14294,
+          "request_headers_repo_relative_path": "evidence/request_attempts/e6/e60b0c1fc3691fe782ead1185a7910d9c51b71c927835dbf380fc61b8659109a/index.json.b57c436f0b3e3cab18c4fc60d46dcf40032629a55ed9a3be4687d1086b23f16b.headers.json",
+          "request_headers_sha256": "b57c436f0b3e3cab18c4fc60d46dcf40032629a55ed9a3be4687d1086b23f16b",
+          "request_headers_size": 1247,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/e6/e60b0c1fc3691fe782ead1185a7910d9c51b71c927835dbf380fc61b8659109a/index.json",
+          "request_attempt_id": "request:attempt:7e72ec997a15540d28bcdab111b014a7de60bcd389f7f9e95cc669974c2ddcca"
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/f-20231231_htm.xml",
+          "accession": "0000037996-24-000009",
+          "document_name": "f-20231231_htm.xml",
+          "content_sha256": "a2c6d69e31e61ba99679f22d332edffc4505e2140906613ba09f321f10f7dc63",
+          "request_body_sha256": "a2c6d69e31e61ba99679f22d332edffc4505e2140906613ba09f321f10f7dc63",
+          "request_body_size": 5798352,
+          "request_headers_repo_relative_path": "evidence/request_attempts/a2/a2c6d69e31e61ba99679f22d332edffc4505e2140906613ba09f321f10f7dc63/f-20231231_htm.xml.907249337a9173d8386d42a96e43421ababdd9843692a447d4556003a52fadb5.headers.json",
+          "request_headers_sha256": "907249337a9173d8386d42a96e43421ababdd9843692a447d4556003a52fadb5",
+          "request_headers_size": 1702,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/a2/a2c6d69e31e61ba99679f22d332edffc4505e2140906613ba09f321f10f7dc63/f-20231231_htm.xml",
+          "request_attempt_id": "request:attempt:f19fcd06a579851d99a8a69bfac89f579c1835e473f1fc6eb0f1d4a69804006d"
+        }
+      ],
+      "current_original_total": {
+        "source_sha256": "9b0f2f56372c6889c2b4c7a669ed898ffedac97c9a43f28bd4bd5988e71d75da",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799625000013/f-20241231.htm",
+        "native_ordinal": 135,
+        "native_fact": "<ix:nonFraction unitRef=\"usd\" contextRef=\"c-1\" decimals=\"-6\" name=\"us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax\" format=\"ixt:num-dot-decimal\" scale=\"6\" id=\"f-80\">184,992</ix:nonFraction>",
+        "native_fact_byte_start": 2551143,
+        "original_row": "Total revenues (Note 4) 158,057 176,191 184,992",
+        "value": "184992000000",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000037996",
+          "period_end": "2024-12-31",
+          "period_start": "2024-01-01",
+          "typed_dimension_count": 0
+        },
+        "statement": {
+          "title_sources": [
+            {
+              "start_byte": 2541699,
+              "end_byte": 2541880,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1985"
+              ],
+              "visible_text": "CONSOLIDATED INCOME STATEMENTS",
+              "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738"
+            }
+          ],
+          "caption": "",
+          "table_span": {
+            "table_order": 76,
+            "start_byte": 2542064,
+            "end_byte": 2590510,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1986",
+              "table:1"
+            ],
+            "span_sha256": "fe94cdd279ffb404c32863dd1ca9be207c7a0f078f185efc8ef2c02027e874cc"
+          },
+          "intervening_sources": [
+            {
+              "start_byte": 2541513,
+              "end_byte": 2541699,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1984"
+              ],
+              "visible_text": "FORD MOTOR COMPANY AND SUBSIDIARIES",
+              "span_sha256": "745f52da4b43f14ec36a9b0dc7af76443a9a78228fbdf3202e3b16ddaabde080"
+            },
+            {
+              "start_byte": 2541699,
+              "end_byte": 2541880,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1985"
+              ],
+              "visible_text": "CONSOLIDATED INCOME STATEMENTS",
+              "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738"
+            },
+            {
+              "start_byte": 2541880,
+              "end_byte": 2542064,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "div:2"
+              ],
+              "visible_text": "(in millions, except per share amounts)",
+              "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+              "clipped_at_table_start": true
+            }
+          ],
+          "unresolved_annotations": [],
+          "adjacent_heading_table": null,
+          "statement_page_boundary": {
+            "start_byte": 2541376,
+            "end_byte": 2541413,
+            "span_sha256": "dcab779a8f959ed9a60e2fd1e515a24af9a737c34ebf2a3a3ff2887763b7cb61"
+          },
+          "preceding_page_context": [
+            {
+              "start_byte": 2522672,
+              "end_byte": 2522826,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1920",
+                "div:1",
+                "div:1"
+              ],
+              "visible_text": "104",
+              "span_sha256": "2f620f33f5ddd45aeb11d212353176f924253ce5fb6de7856812746d4d341c79"
+            },
+            {
+              "start_byte": 2523138,
+              "end_byte": 2523344,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1925"
+              ],
+              "visible_text": "Report of Independent Registered Public Accounting Firm",
+              "span_sha256": "345c00421bbfd595841752bcdc2b241fd324d6cb85f70ff9356f8dbeaa840b10"
+            },
+            {
+              "start_byte": 2523373,
+              "end_byte": 2523562,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1927"
+              ],
+              "visible_text": "To the Board of Directors and Stockholders of Ford Motor Company",
+              "span_sha256": "857bf15b30d975de1ad65eccc44c818bde2905ac989647efb85ff791ed39e63b"
+            },
+            {
+              "start_byte": 2523591,
+              "end_byte": 2523816,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1929"
+              ],
+              "visible_text": "Opinions on the Financial Statements and Internal Control over Financial Reporting",
+              "span_sha256": "a1b5938f048fd683ef4c3505e42a48c80e872ed8dd7ac9aa6ae5e1c9269ca089"
+            },
+            {
+              "start_byte": 2523845,
+              "end_byte": 2525384,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1931"
+              ],
+              "visible_text": "We have audited the accompanying consolidated balance sheets of Ford Motor Company and its subsidiaries (the\u00a0\u201cCompany\u201d) as of December\u00a031, 2024 and 2023, and the related consolidated statements of income, of comprehensive income, of equity and of cash flows for each of the three years in the period ended December\u00a031, 2024, including the related notes and financial statement schedule listed in the index appearing under Item 15(a)(2) (collectively referred to as the \u201cconsolidated financial statements\u201d).  We also have audited the Company\u2019s internal control over financial reporting as of December\u00a031, 2024, based on criteria established in Internal Control - Integrated Framework (2013) issued by the Committee of Sponsoring Organizations of the Treadway Commission (COSO).",
+              "span_sha256": "0028676b5382b81d27cfc6f4bf2ae286c90b397a108a0b974803385f83eec775"
+            },
+            {
+              "start_byte": 2525413,
+              "end_byte": 2526446,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1933"
+              ],
+              "visible_text": "In our opinion, the consolidated financial statements referred to above present fairly, in all material respects, the financial position of the Company as of December\u00a031, 2024 and 2023, and the results of its operations and its cash flows for each of the three years in the period ended December\u00a031, 2024 in conformity with accounting principles generally accepted in the United States of America.  Also in our opinion, the Company maintained, in all material respects, effective internal control over financial reporting as of December\u00a031, 2024, based on criteria established in Internal Control - Integrated Framework (2013) issued by the COSO. ",
+              "span_sha256": "6ca67390c2b3b0d34e0e71ba9a2687f9965968789ca87f60b9fe7475f7c872a6"
+            },
+            {
+              "start_byte": 2526475,
+              "end_byte": 2526636,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1935"
+              ],
+              "visible_text": "Basis for Opinions",
+              "span_sha256": "8f644a491db75c7cdd316f0b186abf286dc4061faaaf20a34da4b79f5412c171"
+            },
+            {
+              "start_byte": 2526665,
+              "end_byte": 2527663,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1937"
+              ],
+              "visible_text": "The Company\u2019s management is responsible for these consolidated financial statements, for maintaining effective internal control over financial reporting, and for its assessment of the effectiveness of internal control over financial reporting, included in Management\u2019s Report on Internal Control Over Financial Reporting appearing under Item 9A.  Our responsibility is to express opinions on the Company\u2019s consolidated financial statements and on the Company's internal control over financial reporting based on our audits.  We are a public accounting firm registered with the Public Company Accounting Oversight Board (United States) (PCAOB) and are required to be independent with respect to the Company in accordance with the U.S. federal securities laws and the applicable rules and regulations of the Securities and Exchange Commission and the PCAOB.",
+              "span_sha256": "a8f45762a416ae112abde4555910077618a7f416b2d91010d4717decf754eac5"
+            },
+            {
+              "start_byte": 2527692,
+              "end_byte": 2528205,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1939"
+              ],
+              "visible_text": "We conducted our audits in accordance with the standards of the PCAOB.  Those standards require that we plan and perform the audits to obtain reasonable assurance about whether the consolidated financial statements are free of material misstatement, whether due to error or fraud, and whether effective internal control over financial reporting was maintained in all material respects.   ",
+              "span_sha256": "697e765d7f26b249f7356a96df4b360d1666bb853660f5c761b3339dde87c82e"
+            },
+            {
+              "start_byte": 2528234,
+              "end_byte": 2529445,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1941"
+              ],
+              "visible_text": "Our audits of the consolidated financial statements included performing procedures to assess the risks of material misstatement of the consolidated financial statements, whether due to error or fraud, and performing procedures that respond to those risks.  Such procedures included examining, on a test basis, evidence regarding the amounts and disclosures in the consolidated financial statements.  Our audits also included evaluating the accounting principles used and significant estimates made by management, as well as evaluating the overall presentation of the consolidated financial statements.  Our audit of internal control over financial reporting included obtaining an understanding of internal control over financial reporting, assessing the risk that a material weakness exists, and testing and evaluating the design and operating effectiveness of internal control based on the assessed risk.  Our audits also included performing such other procedures as we considered necessary in the circumstances.  We believe that our audits provide a reasonable basis for our opinions.",
+              "span_sha256": "63e30769c8d381b954ff2bc0f3b27a627b2d7766975c63ec9c7e18f1b434239b"
+            },
+            {
+              "start_byte": 2529550,
+              "end_byte": 2529704,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1942",
+                "div:1",
+                "div:1"
+              ],
+              "visible_text": "105",
+              "span_sha256": "13b8b60364c03a8865a2f43cb9a278316e39696afbaab55a74fd82067ff1d380"
+            },
+            {
+              "start_byte": 2529853,
+              "end_byte": 2530067,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1944"
+              ],
+              "visible_text": "Definition and Limitations of Internal Control over Financial Reporting",
+              "span_sha256": "17de6da5b1dadd74af57ecd162ea2a261518f409005a8f7a2c2cf7e2b3cc2d90"
+            },
+            {
+              "start_byte": 2530096,
+              "end_byte": 2531334,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1946"
+              ],
+              "visible_text": "A company\u2019s internal control over financial reporting is a process designed to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with generally accepted accounting principles.  A company\u2019s internal control over financial reporting includes those policies and procedures that (i) pertain to the maintenance of records that, in reasonable detail, accurately and fairly reflect the transactions and dispositions of the assets of the company; (ii) provide reasonable assurance that transactions are recorded as necessary to permit preparation of financial statements in accordance with generally accepted accounting principles, and that receipts and expenditures of the company are being made only in accordance with authorizations of management and directors of the company; and (iii) provide reasonable assurance regarding prevention or timely detection of unauthorized acquisition, use, or disposition of the company\u2019s assets that could have a material effect on the financial statements.",
+              "span_sha256": "a7343705ae043690007677c974e2abe5866683439b3b535c040862f572c76f07"
+            },
+            {
+              "start_byte": 2531363,
+              "end_byte": 2531855,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1948"
+              ],
+              "visible_text": "Because of its inherent limitations, internal control over financial reporting may not prevent or detect misstatements.  Also, projections of any evaluation of effectiveness to future periods are subject to the risk that controls may become inadequate because of changes in conditions, or that the degree of compliance with the policies or procedures may deteriorate.",
+              "span_sha256": "c28d7f3f9ee6da62f203ca44f4ab6b0198c92b881e1df4aca63df802dcb14304"
+            },
+            {
+              "start_byte": 2531884,
+              "end_byte": 2532049,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1950"
+              ],
+              "visible_text": "Critical Audit Matters",
+              "span_sha256": "a70e4103bd85b08488588209880bd83a5bc96dfce192cebc19b1a9924906f76a"
+            },
+            {
+              "start_byte": 2532078,
+              "end_byte": 2532926,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1952"
+              ],
+              "visible_text": "The critical audit matters communicated below are matters arising from the current period audit of the consolidated financial statements that were communicated or required to be communicated to the audit committee and that (i) relate to accounts or disclosures that are material to the consolidated financial statements and (ii) involved our especially challenging, subjective, or complex judgments.  The communication of critical audit matters does not alter in any way our opinion on the consolidated financial statements, taken as a whole, and we are not, by communicating the critical audit matters below, providing separate opinions on the critical audit matters or on the accounts or disclosures to which they relate.",
+              "span_sha256": "dbcb2af2e88280562cc28e4ced94809f6f2901dd8f21b06e4c8374f6e21dc99f"
+            },
+            {
+              "start_byte": 2532955,
+              "end_byte": 2533166,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1954"
+              ],
+              "visible_text": "Ford Credit Consumer Finance Receivables Allowance for Credit Losses",
+              "span_sha256": "97e2631eb4c2ade653ed2440d68ac3abba7859d3011fcdadfd987bb51217e1cb"
+            },
+            {
+              "start_byte": 2533195,
+              "end_byte": 2534606,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1956"
+              ],
+              "visible_text": "As described in Note\u00a010 to the consolidated financial statements, the Company had consumer finance receivables of $83,218 million, for which a consumer allowance for credit losses of $860 million was recorded as of December 31, 2024.  The consumer allowance for credit losses represents management\u2019s estimate of the lifetime expected credit losses inherent in the consumer finance receivables as of the balance sheet date.  For consumer receivables that share similar risk characteristics, management estimates the lifetime expected credit losses based on a collective assessment using measurement models and management judgment.  The lifetime expected credit losses for the receivables is determined by applying probability of default and loss given default assumptions to monthly expected exposures, then discounting these cash flows to present value using the receivable\u2019s original effective interest rate or the current effective interest rate for a variable rate receivable.  If management does not believe the models reflect lifetime expected credit losses for the portfolio, an adjustment is made to reflect management judgment regarding qualitative factors including economic uncertainty, observable changes in portfolio performance, and other relevant factors.",
+              "span_sha256": "4664f9488cbb3c53273d76b650c671d9a305582c193775635d230507e2e19b69"
+            },
+            {
+              "start_byte": 2534635,
+              "end_byte": 2535428,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1958"
+              ],
+              "visible_text": "The principal considerations for our determination that performing procedures relating to the Ford Credit consumer finance receivables allowance for credit losses is a critical audit matter are (i) the significant judgment by management in determining the consumer finance receivables allowance for credit losses; (ii) a high degree of auditor judgment, subjectivity and effort in performing procedures and evaluating audit evidence relating to the probability of default and loss given default assumptions and management\u2019s judgment regarding qualitative factors; and (iii) the audit effort involved the use of professionals with specialized skill and knowledge.",
+              "span_sha256": "b83cf5f6a2f11b7bdac7f2eb4a0bfc97418916c42c19be5d10b3309840e8a7a5"
+            },
+            {
+              "start_byte": 2535457,
+              "end_byte": 2536654,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1960"
+              ],
+              "visible_text": "Addressing the matter involved performing procedures and evaluating audit evidence in connection with forming our overall opinion on the consolidated financial statements.  These procedures included testing the effectiveness of controls relating to the Company\u2019s determination of the consumer finance receivables allowance for credit losses.  These procedures also included, among others (i) testing management\u2019s process for determining the consumer finance receivables allowance for credit losses; (ii) evaluating the appropriateness of the models used to determine the allowance; (iii) evaluating the reasonableness of the probability of default and loss given default assumptions; (iv) testing the data used in the models; and (v) evaluating the reasonableness of management\u2019s judgment regarding qualitative factors related to economic uncertainty, observable changes in portfolio performance, and other relevant factors. Professionals with specialized skill and knowledge were used to assist in performing the procedures described in (i) through (v).",
+              "span_sha256": "c6f4039722b8c031ff5f698eb70270759191e0473e6b2d884535b42def1a6c3e"
+            },
+            {
+              "start_byte": 2536759,
+              "end_byte": 2536913,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1961",
+                "div:1",
+                "div:1"
+              ],
+              "visible_text": "106",
+              "span_sha256": "ea792ee6d7590647e9bc681ed5b1efbd1ac7a73d645e0a5417a0e09b3055d3df"
+            },
+            {
+              "start_byte": 2537062,
+              "end_byte": 2537263,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1963"
+              ],
+              "visible_text": "Warranty and Field Service Actions Accrual (United States)",
+              "span_sha256": "7befa5d8fed2554842dc765d06844d83fd24840c0bb35762f544aee886ea1c56"
+            },
+            {
+              "start_byte": 2537292,
+              "end_byte": 2538401,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1965"
+              ],
+              "visible_text": "As described in Note 24 to the consolidated financial statements, the Company had an accrual for estimated future warranty and field service action costs, net of estimated supplier recoveries (\u201cwarranty accrual\u201d), of $14,032 million as of December 31, 2024, of which the United States comprises a significant portion.  Management accrues the estimated cost of both base warranty coverages and field service actions at the time of sale.  Management establishes their estimate of base warranty obligations using a patterned estimation model, using historical information regarding the nature, frequency, and average cost of claims for each vehicle line by model year.  Management establishes their estimates of field service action obligations using a patterned estimation model, using historical information regarding the nature, frequency, severity, and average cost of claims for each model year.  Management reevaluates the adequacy of their accruals on a regular basis.",
+              "span_sha256": "ec1196b545c3a123a5d01c64895a083b72208a688c2607506e7827e55a29fe6f"
+            },
+            {
+              "start_byte": 2538430,
+              "end_byte": 2539151,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1967"
+              ],
+              "visible_text": "The principal considerations for our determination that performing procedures relating to the warranty accrual for the United States is a critical audit matter are (i) the significant judgment by management in the estimation of the accrual and development of the patterned estimation model; (ii) a high degree of auditor judgment, subjectivity, and effort in performing procedures and evaluating the estimation model and significant assumptions related to the frequency and average cost of claims; and (iii) the audit effort involved the use of professionals with specialized skill and knowledge.",
+              "span_sha256": "896c489a2bd55fbbc470939535baf979f0f8e35395c0bb869a3bdfd4249b2ace"
+            },
+            {
+              "start_byte": 2539180,
+              "end_byte": 2540137,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1969"
+              ],
+              "visible_text": "Addressing the matter involved performing procedures and evaluating audit evidence in connection with forming our overall opinion on the consolidated financial statements.  These procedures included testing the effectiveness of controls related to the estimate of the warranty accrual for the United States.  These procedures also included, among others, evaluating the reasonableness of significant assumptions used by management to develop the warranty accrual for the United States, related to the frequency and average cost of claims, in part by considering the historical experience of the Company.  Professionals with specialized skill and knowledge were used to assist in evaluating the appropriateness of the model as well as the reasonableness of significant assumptions related to the frequency and average cost of claims.",
+              "span_sha256": "66acefdde432871b15001330bf7509d34dcaa534261c3e200371af1069051339"
+            },
+            {
+              "start_byte": 2540224,
+              "end_byte": 2540379,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1973"
+              ],
+              "visible_text": "/s/ PricewaterhouseCoopers LLP",
+              "span_sha256": "cb0d398b9797c62c5572afd5ae1f9e428e4df902fb94d15d91d27225de5b727d"
+            },
+            {
+              "start_byte": 2540437,
+              "end_byte": 2540664,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1976"
+              ],
+              "visible_text": "Detroit, Michigan",
+              "span_sha256": "ef7fe0c110e2d126cf126c0be07327fe1c713bd2e6565f3079e8f20fc19f5338"
+            },
+            {
+              "start_byte": 2540664,
+              "end_byte": 2540811,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1977"
+              ],
+              "visible_text": "February\u00a05, 2025 ",
+              "span_sha256": "9522803a98b17bc6da32ad1cb436bd6402211c036f508281eb96461ef3fb929e"
+            },
+            {
+              "start_byte": 2540869,
+              "end_byte": 2541051,
+              "tag": "div",
+              "attributes": [],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1980"
+              ],
+              "visible_text": "We have served as the Company\u2019s auditor since 1946.",
+              "span_sha256": "dc6c1e40d27932de4de3d801a9e03fade5519bd052f919173ca463d79e526f9f"
+            },
+            {
+              "start_byte": 2541156,
+              "end_byte": 2541310,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1981",
+                "div:1",
+                "div:1"
+              ],
+              "visible_text": "107",
+              "span_sha256": "578bd4e926e4015da6298e18ec92a671387311f603455f4a2467aa34ae608ee3"
+            }
+          ]
+        },
+        "unit_sources": [
+          {
+            "kind": "heading_block",
+            "proof": {
+              "start_byte": 2541880,
+              "end_byte": 2542064,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "div:2"
+              ],
+              "visible_text": "(in millions, except per share amounts)",
+              "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+              "clipped_at_table_start": true
+            },
+            "text": "(in millions, except per share amounts)"
+          }
+        ],
+        "xml_check": "MATCH"
+      },
+      "prior_original_total": {
+        "source_sha256": "9a6f395ed1ed0084f1555151a3e4f72a69583aa86985527ae414a1259796132f",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799624000009/f-20231231.htm",
+        "native_ordinal": 243,
+        "native_fact": "<ix:nonFraction unitRef=\"usd\" contextRef=\"c-1\" decimals=\"-6\" name=\"us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax\" format=\"ixt:num-dot-decimal\" scale=\"6\" id=\"f-184\">176,191</ix:nonFraction>",
+        "native_fact_byte_start": 2617067,
+        "original_row": "Total revenues (Note 4) 136,341 158,057 176,191",
+        "value": "176191000000",
+        "context": {
+          "context_ref": "c-1",
+          "dimensions": {},
+          "entity_identifier": "0000037996",
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "typed_dimension_count": 0
+        },
+        "statement": {
+          "title_sources": [
+            {
+              "start_byte": 2607615,
+              "end_byte": 2607796,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1958"
+              ],
+              "visible_text": "CONSOLIDATED INCOME STATEMENTS",
+              "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738"
+            }
+          ],
+          "caption": "",
+          "table_span": {
+            "table_order": 77,
+            "start_byte": 2607980,
+            "end_byte": 2656097,
+            "structure_path": [
+              "html:1",
+              "body:1",
+              "div:1959",
+              "table:1"
+            ],
+            "span_sha256": "78eb58641178882526909de6cf06cd725b1d61608edb653f8e2a343ab73465be"
+          },
+          "intervening_sources": [
+            {
+              "start_byte": 2607429,
+              "end_byte": 2607615,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1957"
+              ],
+              "visible_text": "FORD MOTOR COMPANY AND SUBSIDIARIES",
+              "span_sha256": "745f52da4b43f14ec36a9b0dc7af76443a9a78228fbdf3202e3b16ddaabde080"
+            },
+            {
+              "start_byte": 2607615,
+              "end_byte": 2607796,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1958"
+              ],
+              "visible_text": "CONSOLIDATED INCOME STATEMENTS",
+              "span_sha256": "676ad9e621877d984831117f81274561e2e3a34abf05649e71da78bca6260738"
+            },
+            {
+              "start_byte": 2607796,
+              "end_byte": 2607980,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "div:2"
+              ],
+              "visible_text": "(in millions, except per share amounts)",
+              "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+              "clipped_at_table_start": true
+            }
+          ],
+          "unresolved_annotations": [],
+          "adjacent_heading_table": null,
+          "statement_page_boundary": {
+            "start_byte": 2607292,
+            "end_byte": 2607329,
+            "span_sha256": "dcab779a8f959ed9a60e2fd1e515a24af9a737c34ebf2a3a3ff2887763b7cb61"
+          },
+          "preceding_page_context": [
+            {
+              "start_byte": 2606744,
+              "end_byte": 2606967,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1953"
+              ],
+              "visible_text": "The accompanying notes are part of the consolidated financial statements.",
+              "span_sha256": "5eb61b6575472bb29bbf0c0210180831f12397698a61d0a0473dd257c5e2d9ad"
+            },
+            {
+              "start_byte": 2607072,
+              "end_byte": 2607226,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "html:1",
+                "body:1",
+                "div:1954",
+                "div:1",
+                "div:1"
+              ],
+              "visible_text": "108",
+              "span_sha256": "eaed29e495bcea9fbf2fc5ab5807a5e722482c7fd87fd3d123dabf39772526c7"
+            }
+          ]
+        },
+        "unit_sources": [
+          {
+            "kind": "heading_block",
+            "proof": {
+              "start_byte": 2607796,
+              "end_byte": 2607980,
+              "tag": "div",
+              "attributes": [
+                [
+                  "style",
+                  "text-align:center"
+                ]
+              ],
+              "inside_table": false,
+              "structure_path": [
+                "div:2"
+              ],
+              "visible_text": "(in millions, except per share amounts)",
+              "span_sha256": "2f9155692630cc0ee17cec8e5f881b4c660dc70f8667fc3f2eaebd39f64cedc3",
+              "clipped_at_table_start": true
+            },
+            "text": "(in millions, except per share amounts)"
+          }
+        ],
+        "xml_check": "MATCH"
+      }
+    }
+  ],
+  "protected_source_hashes": {
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs/evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
