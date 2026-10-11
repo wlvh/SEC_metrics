@@ -1,0 +1,825 @@
+{
+  "row": {
+    "company": "Southwest Airlines",
+    "cik": "92380",
+    "metric_id": "B03",
+    "metric_name": "EBITDA margin",
+    "value": "0.07084060863058119231728610626",
+    "unit": "ratio",
+    "status": "OK",
+    "source_class": "DERIVED",
+    "formula": "(Operating income + D&A) / revenue",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0000092380-26-000004",
+    "form": "10-K",
+    "filed_date": "2026-02-05",
+    "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax+OperatingIncomeLoss+DepreciationAndAmortization",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"reason_code\": \"PASS\", \"selected_fact_ids\": [\"fact:sha256:c896b24cf58b61cd3e3ca79d6eacfff117d788bf0408d4e085ebdd7be6ab5384\", \"fact:sha256:1b1064f17948f4b2fa64991804f05d91178ffe5e15a26963691b4debdcfa3a97\", \"fact:sha256:93d94c252ffd3c4961da6c7e1d6c1f7d09e1e7c947322e214b16a005d432d0c1\"], \"source_candidate_count\": 18, \"source_reported_periods\": [[\"2023-01-01\", \"2023-12-31\"], [\"2024-01-01\", \"2024-12-31\"], [\"2025-01-01\", \"2025-12-31\"]]}, \"source_reference_ids\": [\"sha256:32c3693c118e87d3f36ed71cfc70c721cfc45ea754171362c3aad48dcef46664\", \"sha256:b8c01734eb46fb27c559caa6de8c91a2eb3d1392d1d1be3e01fff8cafa837f45\", \"sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07\", \"sha256:f5a2ff5e9b0679bafb13b01c365d215fc6f7fcec35ea398c9e102617f66038ff\", \"sha256:c39162481f6f9f806a63e5441212055a1c20695872e2a2f99014369e82e3d133\", \"sha256:43e2f849c96bef14c8e64c4e4452795e4f2994fba34b2ab7a12b12bfba1107ea\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "southwest_airlines",
+    "result_id": "sha256:ada9703572318e4e183b5db1e9cb4ac103fde3487151180512254f22149216d8",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/state/updates/B03/periods/FY2025/results/f8ba75189ac743f9824c291ab912ac9f",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/state",
+  "protected_result_files": 7,
+  "read_state_files_unchanged": 18,
+  "source_reference_checks": [
+    {
+      "observation_id": "sha256:14bf22d91234c494e0d396e1417f48ac7c71ea259b4e5e9f43a32ec2b8898005",
+      "original_reports": {
+        "primary": [
+          {
+            "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000092380",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000092380"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "ordinal": 168,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "source_reference": {
+              "accession": "0000092380-26-000004",
+              "company_id": "southwest_airlines",
+              "document_name": "luv-20251231.htm",
+              "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+              "record_type": "SOURCE_REFERENCE",
+              "request_attempt_id": "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092",
+              "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+              "source_role": "target_primary",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm"
+            },
+            "unit": "USD",
+            "value": "28063000000"
+          }
+        ],
+        "xml": [
+          {
+            "concept": "us-gaap:revenuefromcontractwithcustomerexcludingassessedtax",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000092380",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000092380"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "ordinal": 168,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "source_reference": {
+              "accession": "0000092380-26-000004",
+              "company_id": "southwest_airlines",
+              "document_name": "luv-20251231_htm.xml",
+              "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+              "record_type": "SOURCE_REFERENCE",
+              "request_attempt_id": "request:attempt:42e771a8cc92220639314576bfc2751e9fb6057ecc332f8d0ae19594b7d17ffc",
+              "source_reference_id": "sha256:43e2f849c96bef14c8e64c4e4452795e4f2994fba34b2ab7a12b12bfba1107ea",
+              "source_role": "auditor_facts",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml"
+            },
+            "unit": "USD",
+            "value": "28063000000"
+          }
+        ]
+      }
+    },
+    {
+      "observation_id": "sha256:c7ef036e194b66f8344312039b1221632a85a0b3d85419d9bf121a72e1b01327",
+      "original_reports": {
+        "primary": [
+          {
+            "concept": "us-gaap:OperatingIncomeLoss",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000092380",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000092380"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "ordinal": 192,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "source_reference": {
+              "accession": "0000092380-26-000004",
+              "company_id": "southwest_airlines",
+              "document_name": "luv-20251231.htm",
+              "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+              "record_type": "SOURCE_REFERENCE",
+              "request_attempt_id": "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092",
+              "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+              "source_role": "target_primary",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm"
+            },
+            "unit": "USD",
+            "value": "428000000"
+          }
+        ],
+        "xml": [
+          {
+            "concept": "us-gaap:operatingincomeloss",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000092380",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000092380"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "ordinal": 192,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "source_reference": {
+              "accession": "0000092380-26-000004",
+              "company_id": "southwest_airlines",
+              "document_name": "luv-20251231_htm.xml",
+              "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+              "record_type": "SOURCE_REFERENCE",
+              "request_attempt_id": "request:attempt:42e771a8cc92220639314576bfc2751e9fb6057ecc332f8d0ae19594b7d17ffc",
+              "source_reference_id": "sha256:43e2f849c96bef14c8e64c4e4452795e4f2994fba34b2ab7a12b12bfba1107ea",
+              "source_role": "auditor_facts",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml"
+            },
+            "unit": "USD",
+            "value": "428000000"
+          }
+        ]
+      }
+    },
+    {
+      "observation_id": "sha256:3a7d3cdb9db0610d725f792b399be1878a3c204151eeaef1c8fe9ea9092edd0a",
+      "original_reports": {
+        "primary": [
+          {
+            "concept": "us-gaap:DepreciationAndAmortization",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000092380",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000092380"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "ordinal": 183,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "source_reference": {
+              "accession": "0000092380-26-000004",
+              "company_id": "southwest_airlines",
+              "document_name": "luv-20251231.htm",
+              "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+              "record_type": "SOURCE_REFERENCE",
+              "request_attempt_id": "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092",
+              "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+              "source_role": "target_primary",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm"
+            },
+            "unit": "USD",
+            "value": "1560000000"
+          },
+          {
+            "concept": "us-gaap:DepreciationAndAmortization",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000092380",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000092380"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "ordinal": 318,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "source_reference": {
+              "accession": "0000092380-26-000004",
+              "company_id": "southwest_airlines",
+              "document_name": "luv-20251231.htm",
+              "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+              "record_type": "SOURCE_REFERENCE",
+              "request_attempt_id": "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092",
+              "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+              "source_role": "target_primary",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm"
+            },
+            "unit": "USD",
+            "value": "1560000000"
+          }
+        ],
+        "xml": [
+          {
+            "concept": "us-gaap:depreciationandamortization",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000092380",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000092380"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "ordinal": 183,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "source_reference": {
+              "accession": "0000092380-26-000004",
+              "company_id": "southwest_airlines",
+              "document_name": "luv-20251231_htm.xml",
+              "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+              "record_type": "SOURCE_REFERENCE",
+              "request_attempt_id": "request:attempt:42e771a8cc92220639314576bfc2751e9fb6057ecc332f8d0ae19594b7d17ffc",
+              "source_reference_id": "sha256:43e2f849c96bef14c8e64c4e4452795e4f2994fba34b2ab7a12b12bfba1107ea",
+              "source_role": "auditor_facts",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml"
+            },
+            "unit": "USD",
+            "value": "1560000000"
+          },
+          {
+            "concept": "us-gaap:depreciationandamortization",
+            "context": {
+              "context_ref": "c-1",
+              "dimensions": {},
+              "entity_identifier": "0000092380",
+              "period_end": "2025-12-31",
+              "period_start": "2025-01-01",
+              "typed_dimension_count": 0
+            },
+            "context_proof": {
+              "context_ref": "c-1",
+              "dimensions": [],
+              "identifiers": [
+                {
+                  "scheme": "http://www.sec.gov/CIK",
+                  "value": "0000092380"
+                }
+              ],
+              "period_fields": [
+                {
+                  "kind": "startdate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "kind": "enddate",
+                  "value": "2025-12-31"
+                }
+              ],
+              "typed_dimension_count": 0
+            },
+            "context_ref": "c-1",
+            "decimals": "-6",
+            "ordinal": 318,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "source_reference": {
+              "accession": "0000092380-26-000004",
+              "company_id": "southwest_airlines",
+              "document_name": "luv-20251231_htm.xml",
+              "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+              "record_type": "SOURCE_REFERENCE",
+              "request_attempt_id": "request:attempt:42e771a8cc92220639314576bfc2751e9fb6057ecc332f8d0ae19594b7d17ffc",
+              "source_reference_id": "sha256:43e2f849c96bef14c8e64c4e4452795e4f2994fba34b2ab7a12b12bfba1107ea",
+              "source_role": "auditor_facts",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml"
+            },
+            "unit": "USD",
+            "value": "1560000000"
+          }
+        ]
+      }
+    }
+  ],
+  "amendment_checks": [
+    {
+      "scope_id": "sha256:17be3f58c3af58b4931770450db5f490bf78e17c6cfb252e29930c8728f5b0bf",
+      "classification": "EXHIBIT_LINK_CORRECTION_WITH_IDENTICAL_ORIGINAL_ITEM15",
+      "issues": [],
+      "fiscal_window_unchanged": true,
+      "unchanged_input_classes": [
+        "FISCAL_EVENT_WINDOW",
+        "ORIGINAL_STATEMENT_VALUES"
+      ],
+      "original_statement_admission_requires_further_review": false,
+      "policy_hash": "sha256:0aff3223e553748783b58ecde0366f0f51cfb5b8e9d95a6a065aad6ade219d49",
+      "note_layout": "inline-paragraphs-v2",
+      "original": {
+        "source_reference": {
+          "accession": "0000092380-26-000004",
+          "company_id": "southwest_airlines",
+          "document_name": "luv-20251231.htm",
+          "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092",
+          "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+          "source_role": "target_primary",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm"
+        },
+        "raw_sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+        "filing": {
+          "accessionNumber": "0000092380-26-000004",
+          "filingDate": "2026-02-05",
+          "form": "10-K",
+          "primaryDocument": "luv-20251231.htm",
+          "reportDate": "2025-12-31"
+        },
+        "period": {
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        }
+      },
+      "amendment": {
+        "source_reference": {
+          "accession": "0000092380-26-000006",
+          "company_id": "southwest_airlines",
+          "document_name": "luv-20251231.htm",
+          "raw_asset_id": "sha256:17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:834e3634154259e02a013dc1b813372f2a23bab0018dc04ec3aa59dba2d36aa1",
+          "source_reference_id": "sha256:f5a2ff5e9b0679bafb13b01c365d215fc6f7fcec35ea398c9e102617f66038ff",
+          "source_role": "target_primary",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm"
+        },
+        "raw_sha256": "17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279",
+        "filing": {
+          "accessionNumber": "0000092380-26-000006",
+          "filingDate": "2026-02-06",
+          "form": "10-K/A",
+          "primaryDocument": "luv-20251231.htm",
+          "reportDate": "2025-12-31"
+        },
+        "period": {
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        }
+      },
+      "explanatory_note": "Southwest Airlines Co. (the \u201cCompany\u201d) is filing this Amendment No. 1 on Form 10-K/A (this \u201cAmendment\u201d) to its Annual Report on Form 10-K for the fiscal year ended December 31, 2025 (the \u201cOriginal Form 10-K\u201d) to correct the hyperlink for Exhibit 3.2, the Fifth Amended and Restated Bylaws of the Company, effective May 16, 2025. Unless expressly stated, this Amendment does not reflect events occurring after the filing of the Original Form 10-K and does not modify or update in any way the disclosures contained in the Original Form 10-K, which speak as of the date of the Original Form 10-K. Accordingly, this Amendment should be read in conjunction with the Original Form 10-K and the Company\u2019s other filings with the Securities and Exchange Commission subsequent to the filing of the Original Form 10-K. Pursuant to Rule 12b-15 under the Securities Exchange Act of 1934, as amended, this Amendment contains new certifications pursuant to Section 302 of the Sarbanes-Oxley Act of 2002, which are attached hereto.",
+      "mechanical_relation": {
+        "added_links": [
+          [
+            "Fifth Amended and Restated Bylaws of the Company, effective May 16, 2025 (incorporated by reference to Exhibit 3.1 to the Company's Current Report on Form 8-K filed May 19, 2025 (File No. 1-7259)).",
+            "https://www.sec.gov/Archives/edgar/data/92380/000009238025000119/southwestairlines-fiftha.htm"
+          ],
+          [
+            "Rule 13a-14(a) Certification of Chief Executive Officer.",
+            "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-12312025xex311.htm"
+          ],
+          [
+            "Rule 13a-14(a) Certification of Chief Financial Officer.",
+            "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-12312025xex312.htm"
+          ]
+        ],
+        "changed_link_texts": [
+          "Fifth Amended and Restated Bylaws of the Company, effective May 16, 2025 (incorporated by reference to Exhibit 3.1 to the Company's Current Report on Form 8-K filed May 19, 2025 (File No. 1-7259)).",
+          "Rule 13a-14(a) Certification of Chief Executive Officer.",
+          "Rule 13a-14(a) Certification of Chief Financial Officer."
+        ],
+        "complete_note_has_only_link_correction_and_certifications": true,
+        "cover_equal_except_amendment_banner": true,
+        "declared_exhibit_matches_changed_link_row": true,
+        "exhibit": "3.2",
+        "item15_visible_text_equal": true,
+        "note_subject_period_and_amendment_number_match_source": true,
+        "only_declared_exhibit_and_certificate_links": true,
+        "remaining_body_is_part_iv_and_bound_signature": true,
+        "removed_links": [
+          [
+            "Fifth Amended and Restated Bylaws of the Company, effective May 16, 2025 (incorporated by reference to Exhibit 3.1 to the Company's Current Report on Form 8-K filed May 19, 2025 (File No. 1-7259)).",
+            "https://www.sec.gov/ix?doc=/Archives/edgar/data/0000092380/000009238025000117/luv-20250514.htm"
+          ],
+          [
+            "Rule 13a-14(a) Certification of Chief Executive Officer.",
+            "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-12312025xex311.htm"
+          ],
+          [
+            "Rule 13a-14(a) Certification of Chief Financial Officer.",
+            "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-12312025xex312.htm"
+          ]
+        ]
+      }
+    }
+  ],
+  "depreciation_scope": {
+    "chain_input": {
+      "concept": "DepreciationAndAmortization",
+      "value": "1560000000"
+    },
+    "complete_business_scope_proven": false,
+    "entity": "92380",
+    "existing_scope_check": {
+      "blocked": false,
+      "complete_depreciation_scope_proven": false,
+      "primary_source_sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+      "selected_fact_ordinals": [
+        183,
+        318
+      ],
+      "status": "NO_EXPLICIT_NARROW_SCOPE_FOUND"
+    },
+    "filing_answer": {
+      "candidates": [
+        {
+          "concept": "DepreciationAndAmortization",
+          "context_proof": {
+            "context_ref": "c-1",
+            "dimensions": [],
+            "identifiers": [
+              {
+                "scheme": "http://www.sec.gov/CIK",
+                "value": "0000092380"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2025-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2025-12-31"
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "context_ref": "c-1",
+          "decimals": "-6",
+          "fact_ordinal": 183,
+          "unit_ref": "usd",
+          "value": "1560000000"
+        }
+      ],
+      "selected": {
+        "concept": "DepreciationAndAmortization",
+        "context_proof": {
+          "context_ref": "c-1",
+          "dimensions": [],
+          "identifiers": [
+            {
+              "scheme": "http://www.sec.gov/CIK",
+              "value": "0000092380"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2025-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2025-12-31"
+            }
+          ],
+          "typed_dimension_count": 0
+        },
+        "context_ref": "c-1",
+        "decimals": "-6",
+        "fact_ordinal": 183,
+        "unit_ref": "usd",
+        "value": "1560000000"
+      },
+      "status": "TAKE",
+      "why": "EVERY_DIRECT_CANDIDATE_AGREES"
+    },
+    "period": {
+      "fiscal_year": 2025,
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01"
+    },
+    "primary_sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+    "source_facts": [
+      {
+        "concept": "DepreciationAndAmortization",
+        "context_proof": {
+          "context_ref": "c-1",
+          "dimensions": [],
+          "identifiers": [
+            {
+              "scheme": "http://www.sec.gov/CIK",
+              "value": "0000092380"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2025-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2025-12-31"
+            }
+          ],
+          "typed_dimension_count": 0
+        },
+        "context_ref": "c-1",
+        "decimals": "-6",
+        "fact_ordinal": 183,
+        "unit_ref": "usd",
+        "value": "1560000000"
+      },
+      {
+        "concept": "DepreciationAndAmortization",
+        "context_proof": {
+          "context_ref": "c-1",
+          "dimensions": [],
+          "identifiers": [
+            {
+              "scheme": "http://www.sec.gov/CIK",
+              "value": "0000092380"
+            }
+          ],
+          "period_fields": [
+            {
+              "kind": "startdate",
+              "value": "2025-01-01"
+            },
+            {
+              "kind": "enddate",
+              "value": "2025-12-31"
+            }
+          ],
+          "typed_dimension_count": 0
+        },
+        "context_ref": "c-1",
+        "decimals": "-6",
+        "fact_ordinal": 318,
+        "unit_ref": "usd",
+        "value": "1560000000"
+      }
+    ],
+    "status": "KEEP",
+    "why": "EVERY_DIRECT_CANDIDATE_AGREES"
+  },
+  "revenue_scope_summary": {
+    "status": "REPORTED_CONSOLIDATED_TOTAL",
+    "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+    "complete_scope_proven": true
+  },
+  "calls": [
+    0,
+    0,
+    0
+  ],
+  "production_sha256": {
+    "scripts/vnext/historical_b03_case.py": "4dfec61f546a2a2766c13ed97d83d1bfc9bf88539b4cb9e1719e62bbf93ac040",
+    "scripts/vnext/selected_income_calculation.py": "5406881ef6c4e2b3965947980a2952a956e590ba40c82fef64f3e8283950756f"
+  },
+  "fresh": {
+    "seconds": 7.5642772920000425,
+    "exit": 0,
+    "arguments": [
+      "run",
+      "--company",
+      "southwest_airlines",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2025",
+      "--fiscal-year-end",
+      "2025",
+      "--metric",
+      "B03",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/runs"
+    ],
+    "metrics": [
+      {
+        "metric_id": "B03",
+        "status": "CANDIDATE_READY",
+        "result_id": "sha256:ada9703572318e4e183b5db1e9cb4ac103fde3487151180512254f22149216d8",
+        "result_reason_code": "PASS",
+        "calculation_performed": true,
+        "new_candidate_created": true
+      }
+    ]
+  },
+  "forbidden-repeat": {
+    "seconds": 1.2524062499978754,
+    "exit": 0,
+    "arguments": [
+      "run",
+      "--company",
+      "southwest_airlines",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2025",
+      "--fiscal-year-end",
+      "2025",
+      "--metric",
+      "B03",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/runs"
+    ],
+    "metrics": [
+      {
+        "metric_id": "B03",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "result_id": "sha256:ada9703572318e4e183b5db1e9cb4ac103fde3487151180512254f22149216d8",
+        "result_reason_code": "PASS",
+        "calculation_performed": false,
+        "new_candidate_created": false
+      }
+    ]
+  },
+  "independent-read": {
+    "seconds": 0.5869947909995972,
+    "exit": 0,
+    "arguments": [
+      "results",
+      "--company",
+      "southwest_airlines",
+      "--state-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/state",
+      "--output-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-link-amendment-20261011-47/read"
+    ],
+    "metrics": [
+      {
+        "metric_id": "B03",
+        "result_id": "sha256:ada9703572318e4e183b5db1e9cb4ac103fde3487151180512254f22149216d8"
+      }
+    ]
+  },
+  "complete_assessment_location": "original ordinary task input-assessments.json; source originals remain under the restored source root"
+}

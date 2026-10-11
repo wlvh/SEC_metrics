@@ -71,16 +71,33 @@ class HistoricalB03SourcesTest(TestCase):
             self.prepare()
         self.assertEqual([], self.filings)
 
-    def test_unreceived_revision_or_subject_is_an_implementation_gap(self):
-        for change in ('amendment', 'subject'):
-            with self.subTest(change=change):
-                self.annual['amendments'] = [{'form': '10-K/A'}] if change == 'amendment' else []
-                self.annual['subject_policy']['mode'] = ('CONTINUOUS_PRIMARY' if change == 'amendment'
-                    else 'SUCCESSOR_REGISTRANT_ONLY')
-                with self.assertRaises(cases.HistoricalIncomeSourceError) as caught:
-                    self.prepare()
-                self.assertEqual('IMPLEMENTATION_GAP', caught.exception.category)
-                self.assertEqual([], self.filings)
+    def test_unreceived_successor_remains_an_implementation_gap(self):
+        self.annual['subject_policy']['mode'] = 'SUCCESSOR_REGISTRANT_ONLY'
+        with self.assertRaises(cases.HistoricalIncomeSourceError) as caught:
+            self.prepare()
+        self.assertEqual('IMPLEMENTATION_GAP',caught.exception.category)
+        self.assertEqual([],self.filings)
+
+    def test_link_amendment_uses_the_received_statement_check_and_carries_its_record(self):
+        self.annual['amendments'] = [{'form':'10-K/A'}]
+        checked={'classification':'EXHIBIT_LINK_CORRECTION_WITH_IDENTICAL_ORIGINAL_ITEM15',
+                 'scope_id':'constructed-proved-link-only'}
+        with patch.object(cases,'_statement_amendment_checks',return_value=[checked]) as inspect:
+            result,*_=self.prepare()
+        inspect.assert_called_once_with(self.reader,self.annual)
+        self.assertEqual([checked],result['statement_amendment_checks'])
+        self.assertEqual([checked],result['preparation']['input_binding']['statement_amendment_checks'])
+
+    def test_uncleared_amendment_refuses_before_companyfacts_calculation(self):
+        from vnext.historical_statement_cases import StatementCaseError
+        self.annual['amendments']=[{'form':'10-K/A'}]
+        with patch.object(cases,'_statement_amendment_checks',
+                side_effect=StatementCaseError('HISTORICAL_STATEMENT_AMENDMENT_ORIGINAL_VALUES_NOT_PROVEN',
+                    'AMENDMENT_INPUT_NOT_CLEARED')):
+            with self.assertRaises(StatementCaseError) as caught:
+                self.prepare()
+        self.assertEqual('AMENDMENT_INPUT_NOT_CLEARED',caught.exception.category)
+        self.assertEqual([],self.filings)
 
     def test_missing_or_duplicate_media_cannot_become_a_selected_original(self):
         for originals in ([self.primary], [self.primary, self.primary, self.xml]):

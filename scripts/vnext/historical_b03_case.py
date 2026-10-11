@@ -12,6 +12,7 @@ from .normal_governance_input import _Sources
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
 from .ordinary_source_authority import verify_ordinary_source_proofs
+from .historical_statement_cases import _statement_amendment_checks
 
 
 METRICS = frozenset({'B03'})
@@ -50,8 +51,8 @@ def prepare_selected_income_sources(*, repo_root, company_id, fiscal_year):
         period_selection=selection, rules_root=ROOT)
     _need(annual['table_input']['target_period']['fiscal_year'] == fiscal_year,
           'REQUESTED_YEAR_CHANGED')
-    _need(annual['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY'
-          and not annual['amendments'], 'AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED',
+    _need(annual['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY',
+          'SUCCESSOR_NOT_RECEIVED',
           'IMPLEMENTATION_GAP')
     original = annual.get('original_input', annual)
     _need(all(original['table_input']['target_period'][key] ==
@@ -63,6 +64,7 @@ def prepare_selected_income_sources(*, repo_root, company_id, fiscal_year):
     facts = reader.read(companyfacts_url(cik=int(original['entity'])),
         accession=original['filing']['accessionNumber'], role='companyfacts',
         media_type='application/json')
+    amendment_checks = _statement_amendment_checks(reader, annual)
     originals = reader.auditor_filing(original['filing'])
     primary = [s for s in originals if s['raw_blob']['media_type'] == 'text/html']
     xml = [s for s in originals if s['raw_blob']['media_type'] == 'application/xml']
@@ -73,11 +75,14 @@ def prepare_selected_income_sources(*, repo_root, company_id, fiscal_year):
     body = {'record_type': 'HISTORICAL_SELECTED_INCOME_SOURCE_INPUT',
         'prepared_annual_input': original, 'period_selection': selection,
         'source_sets': reader.file_sets, 'source_proofs': proofs}
+    if amendment_checks:
+        body['statement_amendment_checks'] = amendment_checks
     return {'annual': annual, 'original_annual': original, 'selection': selection,
         'preparation': {'input_binding': {**body, 'input_binding_id': content_hash(value=body)},
             'records': list(reader.records.values()), 'inventory': inventory,
             'facts': facts, 'primary': primary[0], 'xml': xml[0]},
-        'source_proofs': proofs, 'admission': admission}
+        'source_proofs': proofs, 'admission': admission,
+        'statement_amendment_checks': amendment_checks}
 
 
 # The producer names actual shared business dependencies; it does not import
@@ -85,6 +90,8 @@ def prepare_selected_income_sources(*, repo_root, company_id, fiscal_year):
 PROCESSING_FILES = tuple(dict.fromkeys((*SOURCE_PROCESSING_FILES, *(
     'scripts/vnext/'+name+'.py' for name in (
         'normal_annual_input', 'normal_annual_input_v2', 'selected_income_calculation', 'ordinary_income_input',
+        'historical_statement_cases', 'annual_amendment_scope', 'annual_amendment_scope_v2',
+        'amendment_note_layout',
         'normal_zero_ai_results', 'selected_income_source_v1', 'selected_revenue_scope_v1',
         'selected_reported_revenue_v2', 'selected_fiscal_definition_scope_v1',
         'ordinary_b03_input_scope', 'ordinary_da_scope_v1', 'b03_depreciation_scope',
@@ -93,7 +100,8 @@ PROCESSING_FILES = tuple(dict.fromkeys((*SOURCE_PROCESSING_FILES, *(
         'composite_scope', 'normal_run_specs', 'batch_workflow', 'deterministic_router',
         'zero_ai_r2', 'annual_sources', 'request_bindings', 'saved_source_checks',
         'fiscal_year_labels', 'traits')), 'catalog/metrics/B01_revenue.md',
-    'catalog/metrics/B03_ebitda_margin.md', 'catalog/r6/text_results_v2_policy.json')))
+    'catalog/metrics/B03_ebitda_margin.md', 'catalog/r6/text_results_v2_policy.json',
+    'config/annual_amendment_scope_v1.json')))
 
 
 def prepare_historical_income_year_case(*, repo_root, company_id, metric_id, fiscal_year):
@@ -146,6 +154,8 @@ def prepare_historical_income_year_case(*, repo_root, company_id, metric_id, fis
     assessments = {k:computed[k] for k in ('revenue_scope','depreciation_scope')
                    if computed[k] is not None}
     assessments['original_income_checks'] = computed['original_checks']
+    if selected['statement_amendment_checks']:
+        assessments['statement_amendment_checks'] = selected['statement_amendment_checks']
     body = {'record_type':'HISTORICAL_SELECTED_INCOME_CASE_INPUT',
         'selected_sources':preparation['input_binding'], 'target':target,
         'spec_closure_hashes':{m:docs[m]['compiled_spec']['spec_closure_hash'] for m in ('B01','B03')},
