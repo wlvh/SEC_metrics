@@ -15,6 +15,21 @@ def changed(source,raw):
 
 
 class SelectedReportedRevenueTest(unittest.TestCase):
+    def test_income_statement_page_does_not_consume_the_prior_audit_report(self):
+        primary,xml,annual=originals()
+        preceding=b'<div>Report of Independent Registered Public Accounting Firm</div><div>Our audit provides reasonable assurance.</div>'
+        boundary=b'<hr style="page-break-after:always"/>'
+        raw=primary['raw_bytes'].replace(b'<div>Consolidated',preceding+boundary+b'<div>Consolidated')
+        scope=reported_revenue_scope(primary=changed(primary,raw),xml=xml,annual=annual,approved_concepts=APPROVED)
+        self.assertTrue(scope['complete_scope_proven'])
+        statement=scope['reported_totals'][0]['statement_scope']
+        self.assertEqual(2,len(statement['preceding_page_context']))
+        proof=statement['statement_page_boundary']
+        self.assertEqual(proof['span_sha256'],sha256_bytes(content=raw[proof['start_byte']:proof['end_byte']]))
+        for bad in (raw.replace(boundary,b''),raw.replace(b'Our audit provides reasonable assurance.',b'Revenues exclude subsidiaries.')):
+            with self.subTest(bad=bad),self.assertRaisesRegex(ValueError,'STATEMENT_.*SCOPE_UNRESOLVED'):
+                reported_revenue_scope(primary=changed(primary,bad),xml=xml,annual=annual,approved_concepts=APPROVED)
+
     def test_unit_before_nested_table_retains_exact_source_and_rejects_conflicts(self):
         primary,xml,annual=originals()
         raw=primary['raw_bytes'].replace(b'(MILLIONS, EXCEPT PER SHARE DATA)',b'')
