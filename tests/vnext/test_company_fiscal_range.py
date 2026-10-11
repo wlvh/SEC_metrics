@@ -33,6 +33,39 @@ class CompanyFiscalRangeTest(TestCase):
             return ranges.discover_fiscal_range(repo_root=self.source,company_id=COMPANY,
                 fiscal_year_start=first,fiscal_year_end=last,metric_ids=['B01','B02'])
 
+    def test_unrelated_registry_change_preserves_resolved_range_and_formal_entry(self):
+        expected=self.discover()
+        self.fixture.rewrite_registry('pfizer',display_name='Pfizer source-package display')
+        before=self.fixture.digest_tree();actual=self.discover()
+        self.assertEqual(actual,expected)
+        args=['sources','--company',COMPANY,'--source-root',str(self.source),
+              '--fiscal-year-start','2024','--fiscal-year-end','2025','--metric','B01']
+        with patch('sys.stdout',new_callable=io.StringIO) as output:code=main(args)
+        self.assertEqual(code,0)
+        self.assertEqual(json.loads(output.getvalue())['status'],'FISCAL_RANGE_RESOLVED')
+        self.assertEqual(before,self.fixture.digest_tree())
+
+    def test_unrelated_program_registry_change_preserves_range(self):
+        expected=self.discover()
+        program=self.source.parent/'program';(program/'config').mkdir(parents=True)
+        (program/'config/company_registry.csv').write_bytes((source_fixtures.REPO_ROOT/'config/company_registry.csv').read_bytes()
+            .replace(b'pfizer,Pfizer,',b'pfizer,Pfizer unrelated program display,'))
+        policy='config/normal_period_selection_v1.json'
+        (program/policy).write_bytes((source_fixtures.REPO_ROOT/policy).read_bytes())
+        with patch.object(ranges,'ROOT',program),patch.object(source_fixtures.preflight,'ROOT',program):
+            self.assertEqual(self.discover(),expected)
+
+    def test_invalid_unrelated_registry_stops_range_before_source_resolution(self):
+        from vnext.request_bindings import BatchWorkflowError
+        self.fixture.rewrite_registry('pfizer',primary_cik='not-a-cik')
+        with patch.object(ranges,'_candidates',side_effect=AssertionError('No invalid-registry source selection')):
+            with self.assertRaises((ValueError,BatchWorkflowError)):self.discover()
+
+    def test_target_registry_change_stops_range_before_source_resolution(self):
+        self.fixture.rewrite_registry(COMPANY,fiscal_year_end='0131')
+        with patch.object(ranges,'_candidates',side_effect=AssertionError('No changed-subject source selection')):
+            with self.assertRaisesRegex(ValueError,'COMPANY_REGISTRY_CHANGED'):self.discover()
+
     def test_originals_resolve_requested_range_and_do_not_claim_metric_acceptance(self):
         before=self.fixture.digest_tree();r=self.discover()
         self.assertEqual(r['status'],'FISCAL_RANGE_RESOLVED')
@@ -133,6 +166,7 @@ class CompanyFiscalRangeTest(TestCase):
         self.assertEqual(set(args['case_factories']),{'B01','B02'})
         for metric in args['case_factories']:
             self.assertIn('scripts/vnext/company_fiscal_range.py',args['processing_files_by_metric'][metric])
+            self.assertIn('scripts/vnext/ordinary_registry_scope.py',args['processing_files_by_metric'][metric])
             self.assertIn('scripts/vnext/historical_statement_cases.py',args['processing_files_by_metric'][metric])
             self.assertIn('scripts/vnext/historical_fiscal_labels.py',args['processing_files_by_metric'][metric])
 
