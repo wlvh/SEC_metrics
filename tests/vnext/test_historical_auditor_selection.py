@@ -82,9 +82,11 @@ class HistoricalAuditorSelectionTest(TestCase):
             # Constructed index-bound HTML and XML sets; no auditor value is
             # invented. The real source reader owns construction/verification.
             accession = filing['accessionNumber']
-            refs = [{'source_reference_id': accession + ':html'},
-                    {'source_reference_id': accession + ':xml'}]
-            reader.file_sets.append({'filing': filing, 'source_references': refs,
+            refs = [{'source_reference_id': accession + ':html', 'accession': accession},
+                    {'source_reference_id': accession + ':xml', 'accession': accession}]
+            reader.file_sets.append({'filing': filing,
+                                     'index_source_reference_id': accession + ':index',
+                                     'source_reference_ids': [r['source_reference_id'] for r in refs],
                                      'expected_xml_documents': ['instance.xml'],
                                      'primary_saved': True})
             return [{'source_reference': ref} for ref in refs]
@@ -100,9 +102,16 @@ class HistoricalAuditorSelectionTest(TestCase):
         self.assertIs(reader.file_sets, binding['accession_source_sets'])
         self.assertEqual(['target-amendment', 'target', 'prior-amendment', 'prior'],
                          [s['filing']['accessionNumber'] for s in binding['accession_source_sets']])
-        self.assertTrue(all(len(s['source_references']) == 2 for s in binding['accession_source_sets']))
+        self.assertTrue(all(len(s['source_reference_ids']) == 2 for s in binding['accession_source_sets']))
         self.assertEqual(content_hash(value={k: v for k, v in binding.items()
                                             if k != 'input_binding_id'}), binding['input_binding_id'])
+        from vnext.c04_registration_successor import _check_selected_annual_census
+        arguments = selected['base']['resolver_inputs']['c04']['arguments']
+        _check_selected_annual_census(binding, arguments)
+        incomplete = deepcopy(arguments)
+        incomplete['current_filings'][0].pop()
+        with self.assertRaisesRegex(ValueError, 'C04_SELECTED_ANNUAL_SOURCE_CENSUS_CHANGED'):
+            _check_selected_annual_census(binding, incomplete)
     def test_older_annual_is_not_substituted_for_missing_actual_prior(self):
         self.rows[0]['reportDate']='2020-12-31'
         with self.assertRaisesRegex(ValueError,'PRIOR_ORIGINAL_MISSING'):

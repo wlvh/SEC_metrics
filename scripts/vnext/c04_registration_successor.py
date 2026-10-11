@@ -60,6 +60,38 @@ def _unique(items, key):
     return list(seen.values())
 
 
+def _check_selected_annual_census(binding, arguments):
+    """Every selected filing and admitted document must reach the resolver.
+
+    Proof of the supplied subset is not completeness of the selected annual
+    source set. The original binding records that set before interpretation.
+    """
+    _need(type(binding.get('accession_source_sets')) is list,
+          'C04_SELECTED_ANNUAL_SOURCE_CENSUS_REQUIRED')
+    census = _unique(binding['accession_source_sets'],
+        key=lambda item:item['filing']['accessionNumber'])
+    by_accession = {item['filing']['accessionNumber']:item for item in census}
+    prior = arguments.get('prior_filings')
+    prior_sources = arguments.get('prior_sources') or []
+    _need(prior is None or not prior_sources, 'C04_SELECTED_ANNUAL_FILING_CENSUS_CHANGED')
+    groups_by_role = {'current':arguments['current_filings'],
+        'prior':prior if prior is not None else ([prior_sources] if prior_sources else [])}
+    for role, groups in groups_by_role.items():
+        chain = binding['selection'].get(role+'_filing_chain', [])
+        _need(len(groups)==len(chain), 'C04_SELECTED_ANNUAL_FILING_CENSUS_CHANGED')
+        for filing, sources in zip(chain, groups):
+            accession = filing['accessionNumber']
+            declared = by_accession.get(accession)
+            _need(declared is not None and declared['filing']==filing,
+                  'C04_SELECTED_ANNUAL_FILING_CENSUS_CHANGED')
+            actual = [source['source_reference']['source_reference_id'] for source in sources]
+            expected = declared['source_reference_ids']
+            _need(bool(expected) and len(expected)==len(set(expected))
+                  and len(actual)==len(set(actual)) and set(actual)==set(expected)
+                  and all(source['source_reference']['accession']==accession for source in sources),
+                  'C04_SELECTED_ANNUAL_SOURCE_CENSUS_CHANGED')
+
+
 def _registration_rows(payload, *, inventory_name):
     """Use the frozen form validator, then restore exact saved form labels."""
     block = payload['filings']['recent'] if 'filings' in payload else payload
@@ -139,6 +171,7 @@ def prepare_c04_registration_case(*, repo_root: Path, company_id: str,
                     and 'sha256:' + proof['content_sha256'] == ref['raw_asset_id']
                     for proof in binding['source_proofs']),
                     'C04_SELECTED_ANNUAL_SOURCE_PROOF_MISSING')
+        _check_selected_annual_census(binding, arguments)
         verify_ordinary_source_proofs(data_root=repo_root, proofs=binding['source_proofs'])
     _need(labelled['original_input'] == binding['prepared_annual_input']
           and all(labelled['table_input']['target_period'][key] == annual[key]
