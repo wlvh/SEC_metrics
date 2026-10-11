@@ -42,7 +42,8 @@ def _configuration(source, company, metric):
         paths.difference_update({'scripts/vnext/normal_lodging_results.py',
             'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
             'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
-        # This zero-AI producer does not call any current B06 debt grammar.
+    if metric in METRIC_IDS or metric == 'D04':
+        # Neither zero-AI nor the saved D04 response producer calls B06 grammar.
         # Shared annual selection, source checks and financial calculation
         # remain below; an explicit historical consumer may add its own paths.
         paths.difference_update({
