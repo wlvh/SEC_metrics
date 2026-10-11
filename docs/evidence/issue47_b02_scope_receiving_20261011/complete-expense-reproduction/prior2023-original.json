@@ -1,0 +1,602 @@
+{
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2023-12-31",
+    "filingDate": "2024-02-28",
+    "accessionNumber": "0000813828-24-000007",
+    "primaryDocument": "para-20231231.htm"
+  },
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:874084195b28aaf8d1f6ea4ab4c4e5870a4a7e8849e8b3fb6693a793573282ed",
+    "raw_asset_id": "sha256:6b30f698a84b85b57f750cc46b28d21d39caa9a2560a33143cfad784ebe6ad7b",
+    "company_id": "paramount_skydance_paramount_global",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382824000007/para-20231231.htm",
+    "accession": "0000813828-24-000007",
+    "document_name": "para-20231231.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:8885450d69e1202b029d05d13a9cb2f5505e766c9ae6bbe14917fe5e80f5da58"
+  },
+  "period": {
+    "fiscal_year": 2023,
+    "period_start": "2023-01-01",
+    "period_end": "2023-12-31"
+  },
+  "facts": [
+    {
+      "ordinal": 74,
+      "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "value": "29652000000",
+      "text": "29,652",
+      "context_ref": "c-1",
+      "table_id": "table_000054",
+      "row": 3,
+      "label": "Revenues $"
+    },
+    {
+      "ordinal": 95,
+      "concept": "CostsAndExpenses",
+      "value": "30103000000",
+      "text": "30,103",
+      "context_ref": "c-1",
+      "table_id": "table_000054",
+      "row": 11,
+      "label": "Total costs and expenses"
+    },
+    {
+      "ordinal": 101,
+      "concept": "OperatingIncomeLoss",
+      "value": "-451000000",
+      "text": "451",
+      "context_ref": "c-1",
+      "table_id": "table_000054",
+      "row": 13,
+      "label": "Operating income (loss)"
+    },
+    {
+      "ordinal": 134,
+      "concept": "ProfitLoss",
+      "value": "-576000000",
+      "text": "576",
+      "context_ref": "c-1",
+      "table_id": "table_000054",
+      "row": 24,
+      "label": "Net earnings (loss) (Paramount and noncontrolling interests)"
+    },
+    {
+      "ordinal": 140,
+      "concept": "NetIncomeLoss",
+      "value": "-608000000",
+      "text": "608",
+      "context_ref": "c-1",
+      "table_id": "table_000054",
+      "row": 26,
+      "label": "Net earnings (loss) attributable to Paramount $"
+    },
+    {
+      "ordinal": 149,
+      "concept": "NetIncomeLoss",
+      "value": "-608000000",
+      "text": "608",
+      "context_ref": "c-1",
+      "table_id": "table_000054",
+      "row": 31,
+      "label": "Net earnings (loss) attributable to Paramount $"
+    }
+  ],
+  "original_tables": {
+    "table_000054": [
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "",
+        "Year Ended December 31,"
+      ],
+      [
+        "",
+        "2023",
+        "",
+        "2022",
+        "",
+        "2021"
+      ],
+      [
+        "Revenues",
+        "$",
+        "29,652",
+        "",
+        "",
+        "$",
+        "30,154",
+        "",
+        "",
+        "$",
+        "28,586",
+        ""
+      ],
+      [
+        "Costs and expenses:",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Operating",
+        "20,017",
+        "",
+        "",
+        "19,845",
+        "",
+        "",
+        "17,744",
+        ""
+      ],
+      [
+        "Programming charges",
+        "2,371",
+        "",
+        "",
+        "—",
+        "",
+        "",
+        "—",
+        ""
+      ],
+      [
+        "Selling, general and administrative",
+        "7,245",
+        "",
+        "",
+        "7,033",
+        "",
+        "",
+        "6,398",
+        ""
+      ],
+      [
+        "Depreciation and amortization",
+        "418",
+        "",
+        "",
+        "378",
+        "",
+        "",
+        "390",
+        ""
+      ],
+      [
+        "Impairment charges",
+        "83",
+        "",
+        "",
+        "27",
+        "",
+        "",
+        "—",
+        ""
+      ],
+      [
+        "Restructuring and other corporate matters",
+        "(31)",
+        "",
+        "",
+        "585",
+        "",
+        "",
+        "100",
+        ""
+      ],
+      [
+        "Total costs and expenses",
+        "30,103",
+        "",
+        "",
+        "27,868",
+        "",
+        "",
+        "24,632",
+        ""
+      ],
+      [
+        "Net gains on dispositions",
+        "—",
+        "",
+        "",
+        "56",
+        "",
+        "",
+        "2,343",
+        ""
+      ],
+      [
+        "Operating income (loss)",
+        "(451)",
+        "",
+        "",
+        "2,342",
+        "",
+        "",
+        "6,297",
+        ""
+      ],
+      [
+        "Interest expense",
+        "(920)",
+        "",
+        "",
+        "(931)",
+        "",
+        "",
+        "(986)",
+        ""
+      ],
+      [
+        "Interest income",
+        "137",
+        "",
+        "",
+        "108",
+        "",
+        "",
+        "53",
+        ""
+      ],
+      [
+        "Gain (loss) from investments",
+        "168",
+        "",
+        "",
+        "(9)",
+        "",
+        "",
+        "47",
+        ""
+      ],
+      [
+        "Gain (loss) on extinguishment of debt",
+        "29",
+        "",
+        "",
+        "(120)",
+        "",
+        "",
+        "(128)",
+        ""
+      ],
+      [
+        "Other items, net",
+        "(216)",
+        "",
+        "",
+        "(124)",
+        "",
+        "",
+        "(77)",
+        ""
+      ],
+      [
+        "Earnings (loss) from continuing operations before income taxes and equity in loss of investee companies",
+        "(1,253)",
+        "",
+        "",
+        "1,266",
+        "",
+        "",
+        "5,206",
+        ""
+      ],
+      [
+        "Benefit from (provision for) income taxes",
+        "361",
+        "",
+        "",
+        "(227)",
+        "",
+        "",
+        "(646)",
+        ""
+      ],
+      [
+        "Equity in loss of investee companies, net of tax",
+        "(360)",
+        "",
+        "",
+        "(204)",
+        "",
+        "",
+        "(91)",
+        ""
+      ],
+      [
+        "Net earnings (loss) from continuing operations",
+        "(1,252)",
+        "",
+        "",
+        "835",
+        "",
+        "",
+        "4,469",
+        ""
+      ],
+      [
+        "Net earnings from discontinued operations, net of tax",
+        "676",
+        "",
+        "",
+        "379",
+        "",
+        "",
+        "162",
+        ""
+      ],
+      [
+        "Net earnings (loss) (Paramount and noncontrolling interests)",
+        "(576)",
+        "",
+        "",
+        "1,214",
+        "",
+        "",
+        "4,631",
+        ""
+      ],
+      [
+        "Net earnings attributable to noncontrolling interests",
+        "(32)",
+        "",
+        "",
+        "(110)",
+        "",
+        "",
+        "(88)",
+        ""
+      ],
+      [
+        "Net earnings (loss) attributable to Paramount",
+        "$",
+        "(608)",
+        "",
+        "",
+        "$",
+        "1,104",
+        "",
+        "",
+        "$",
+        "4,543",
+        ""
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Amounts attributable to Paramount:",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Net earnings (loss) from continuing operations",
+        "$",
+        "(1,284)",
+        "",
+        "",
+        "$",
+        "725",
+        "",
+        "",
+        "$",
+        "4,381",
+        ""
+      ],
+      [
+        "Net earnings from discontinued operations, net of tax",
+        "676",
+        "",
+        "",
+        "379",
+        "",
+        "",
+        "162",
+        ""
+      ],
+      [
+        "Net earnings (loss) attributable to Paramount",
+        "$",
+        "(608)",
+        "",
+        "",
+        "$",
+        "1,104",
+        "",
+        "",
+        "$",
+        "4,543",
+        ""
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Basic net earnings (loss) per common share attributable to Paramount:",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Net earnings (loss) from continuing operations",
+        "$",
+        "(2.06)",
+        "",
+        "",
+        "$",
+        "1.03",
+        "",
+        "",
+        "$",
+        "6.77",
+        ""
+      ],
+      [
+        "Net earnings from discontinued operations",
+        "$",
+        "1.04",
+        "",
+        "",
+        "$",
+        ".58",
+        "",
+        "",
+        "$",
+        ".25",
+        ""
+      ],
+      [
+        "Net earnings (loss)",
+        "$",
+        "(1.02)",
+        "",
+        "",
+        "$",
+        "1.61",
+        "",
+        "",
+        "$",
+        "7.02",
+        ""
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Diluted net earnings (loss) per common share attributable to Paramount:",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Net earnings (loss) from continuing operations",
+        "$",
+        "(2.06)",
+        "",
+        "",
+        "$",
+        "1.03",
+        "",
+        "",
+        "$",
+        "6.69",
+        ""
+      ],
+      [
+        "Net earnings from discontinued operations",
+        "$",
+        "1.04",
+        "",
+        "",
+        "$",
+        ".58",
+        "",
+        "",
+        "$",
+        ".25",
+        ""
+      ],
+      [
+        "Net earnings (loss)",
+        "$",
+        "(1.02)",
+        "",
+        "",
+        "$",
+        "1.61",
+        "",
+        "",
+        "$",
+        "6.94",
+        ""
+      ],
+      [
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Weighted average number of common shares outstanding:",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      [
+        "Basic",
+        "652",
+        "",
+        "",
+        "649",
+        "",
+        "",
+        "641",
+        ""
+      ],
+      [
+        "Diluted",
+        "652",
+        "",
+        "",
+        "650",
+        "",
+        "",
+        "655",
+        ""
+      ]
+    ]
+  },
+  "no_new_calls": true,
+  "not_admission": true,
+  "record_scope": "Selected original consolidated income table only; full raw source remains in the existing restore"
+}
