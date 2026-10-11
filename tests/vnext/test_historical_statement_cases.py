@@ -133,7 +133,10 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
         value, _, _ = self.prepare()
         full = value['input_assessments']['historical_statement']['selected_revenue_scope']
         self.assertTrue(full['reported_totals'])
-        self.assertEqual(full['method'],'SELECTED_REPORTED_CONSOLIDATED_REVENUE_V2')
+        self.assertEqual(full['method'],'SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1')
+        self.assertTrue(full['single_revenue_line_allowed'])
+        self.assertEqual(full['status'], 'REPORTED_CONSOLIDATED_TOTAL')
+        self.assertTrue(full['complete_scope_proven'])
         self.assertNotIn('splits',full)
         self.assertEqual(value['input_binding']['assessment']['selected_revenue_scope'], full)
         self.assertEqual(set(value['selection']['selected_revenue_scope']),
@@ -158,6 +161,16 @@ class HistoricalRevenueScopeConsumerTest(unittest.TestCase):
         self.assertIn('scripts/vnext/selected_reported_revenue_v2.py', cases.INCOME_PROCESSING_FILES)
         self.assertNotIn('scripts/vnext/selected_revenue_scope_v1.py', cases.PROCESSING_FILES)
         self.assertNotIn('scripts/vnext/selected_reported_revenue_v2.py', cases.PROCESSING_FILES)
+
+    def test_sole_consolidated_revenue_path_is_explicitly_consumed_before_priority_selection(self):
+        from vnext import selected_reported_revenue_v2 as reported
+        with patch.object(reported, 'reported_revenue_scope', wraps=reported.reported_revenue_scope) as shared:
+            value, source_facts, calculator = self.prepare()
+        self.assertIs(True, shared.call_args.kwargs.get('allow_single_revenue_line'))
+        self.assertTrue(value['input_assessments']['historical_statement'][
+            'selected_revenue_scope']['complete_scope_proven'])
+        self.assertEqual([source_facts[1]], calculator.call_args.kwargs['structured_facts'])
+        self.assertEqual('58496000000', value['results']['B01']['value'])
 
     def test_no_reported_total_retains_the_existing_component_scope_path(self):
         from vnext import selected_reported_revenue_v2 as reported

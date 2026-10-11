@@ -1,3 +1,7 @@
+## Current receiving combination on main c6f (2026-10-11)
+
+Product/controller/test bytes remain originalee9, new normalmain combination resolves only CI conflict. Allmain steps/paths/five-layergate/timeouts preserved, one batchrequiredstep/path added. 109 controls10.174s/0skip; realmain emptyMarriottB01 first2.984879s, candidate forbiddencompute reuse.125439s, independentread.402881s/7Resultfiles/sourcehashes preserved. No reprofile/allfinancial rerun/credit transfer. [Precise incremental record](main-c6f-receiving/README.md) has code/data roots, commands and prior-evidence scope. Previousmain63 evidence below is historical, not thisheadCI or timing.
+
 ## Actual main63 receiving combination (2026-10-11)
 
 Read actualmain63a and project receiving Issue153 before this batch. Normal merge7f43+63a preserves main's accepted row-scoped registry, C03/B06/reporting/dependency changes. The controller conflict combines the already reviewed source-check-version comparison with main's finite D04 bridge: source latest/body/header/identity checks run first; same business configuration may reuse despite two check-module versions; otherwise only the existing bounded compatible_configuration path can apply. Unknown business/input changes still process. The main bridge and request_binding batch product remain their original bytes; only the necessary controller union is new receiving scope. No new hash-pair exemption is added.

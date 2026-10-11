@@ -1,0 +1,11 @@
+# Receiving on actual main c6f
+
+Read receiver6106920525/project153 before this batch. Merge currentmain c6f5c90f normally, retaining received B06, B02 scope, D04 provenance, reporting and CSV behavior. The only conflict is company-current-records.yml. Preserve all main jobs/commands/paths/gate/timeouts/pins, append one request_binding_batch required step in records and its exact test path. check_workflow.py verifies semantic equality, no dropped main step or selector and no new runner/platform.
+
+Both production files and their two existing tests remain byte-identical to old publicee9e4f3d. This is receiving/CI combination, not a new source-check method. 109 affected batch/controller/company/registry/D04/source controls pass10.174s, zero skips. Previously completed profiling/limited review remain their original scope and execution version; no reprofiling or full company material rerun.
+
+Actual mainc6f program in a separate own detached checkout prepares a new saved-source MarriottFY2025 B01 task with formal CLI, sockets forbidden. Candidate consumes that same unmodified task with result factory and both Calculators forbidden: NO_SOURCE_CONTENT_CHANGE/no new result. Independent results process preserves all state bytes, seven Result files, original26186000000USD/full2025/CIK1048286/e279 identity and source citations. Source log, manifest and registry hashes unchanged. Main first2.984879s includes process startup, candidate repeat.125439s in-process, read.402881s; scopes differ, no speed-ratio claim. main-c6f-actual-company.json records actual roots/args/results/constraints. No peer state or old Result supplied as an answer.
+
+Production tests were executed on the recorded uncommitted merge; source/test hashes are checked against ee9 in tested-tree.json. Public final tree relationship and new-head CI are recorded separately after publication. Base includes received140; no need to merge old standalone140 again. Receive this PR's unchanged batch capability plus the precise main/workflow union; do not sequentially replay all overlapping PRs.
+
+No SEC/provider/paid call, existing source/ledger/old Result rewrite, Ready/merge/business-adoption/deployment/active action. Current/historical/model business gaps and full390 remain, not certified by this integration.

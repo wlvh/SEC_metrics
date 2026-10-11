@@ -1,0 +1,3 @@
+Actual initial py_compile and sources --help both refused at tools/vnext_company.py:226:
+SyntaxError: expected 'else' after 'if' expression
+The ternary condition was wrapped across lines without parentheses. No source command or calculation executed. Fixed with an explicit parenthesized condition; no runtime behavior relaxed.
