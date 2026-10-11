@@ -41,6 +41,22 @@ class CompanyFiscalRangeTest(TestCase):
         self.assertFalse(r['metric_executed']);self.assertFalse(r['fetch_authorized'])
         self.assertEqual(before,self.fixture.digest_tree())
 
+    def test_b03_readonly_range_resolves_sources_without_wrapping_unsupported_business_signature(self):
+        before=self.fixture.digest_tree()
+        with patch('sys.stdout',new_callable=io.StringIO) as output:
+            code=main(['sources','--company',COMPANY,'--source-root',str(self.source),
+                '--fiscal-year-start','2025','--fiscal-year-end','2025','--metric','B03'])
+        self.assertEqual(code,0)
+        value=json.loads(output.getvalue());self.assertEqual(value['metric_ids'],['B03'])
+        self.assertEqual(value['status'],'FISCAL_RANGE_RESOLVED')
+        self.assertTrue(value['all_source_bytes_available'])
+        self.assertFalse(value['metric_executed']);self.assertFalse(value['fetch_authorized'])
+        self.assertEqual(before,self.fixture.digest_tree())
+        producer=lambda **kwargs:None
+        factories=ranges.range_case_factories(company_id=COMPANY,fiscal_years=[2025],
+            metric_ids=['B03'],case_factories={'B03':producer})
+        self.assertIs(factories['B03'],producer)
+
     def test_explicit_issuer_year_is_not_discarded_by_report_end_year(self):
         raw=annual().replace(b'19617',str(CIK).encode()).replace(b'2021',b'2025')
         raw=raw.replace(b'</body></html>',b'<p>Our fiscal year ends on December 31. References to fiscal 2026, for example, refer to the fiscal year ending December 31, 2025.</p></body></html>')

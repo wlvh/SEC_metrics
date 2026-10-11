@@ -1,4 +1,4 @@
-"""Read-only source preflight for one selected annual B01/B02 task.
+"""Read-only source preflight for one selected annual B01/B02/B03 task.
 
 This names source dependencies from existing saved metadata, not financial
 answers or a fetch allowance. Report end is an SEC metadata date; fiscal-year
@@ -16,7 +16,7 @@ from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
 from .normal_source_requirements import _Requirements, _instance_names
 
-METRIC_IDS = frozenset({'B01', 'B02'})
+METRIC_IDS = frozenset({'B01', 'B02', 'B03'})
 
 
 def _need(condition, reason):
@@ -162,7 +162,15 @@ def discover_selected_annual_requirements(*, repo_root, company_id, report_end, 
         current = _annual_requirements(plan, selection['current_filing'], 'target_annual', errors)
         current_period = current['period']
         for filing in selection['current_amendments']:
-            _annual_requirements(plan, filing, 'target_amendment', errors)
+            if set(metric_ids)=={'B03'}:
+                # B03's existing amendment relation reader consumes the whole
+                # inline primary. It does not consume an amendment instance
+                # or directory; do not invent unused required dependencies.
+                plan.require(accession_document_url(cik=int(selection['reporting_cik']),
+                    accession=filing['accessionNumber'],document_name=filing['primaryDocument']),
+                    'target_amendment_primary','text/html',filing['accessionNumber'])
+            else:
+                _annual_requirements(plan, filing, 'target_amendment', errors)
         facts = plan.require(companyfacts_url(cik=int(selection['reporting_cik'])),
                              'selected_companyfacts', 'application/json')
         if facts is not None:

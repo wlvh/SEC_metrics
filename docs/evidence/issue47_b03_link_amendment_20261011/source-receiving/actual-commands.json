@@ -1,0 +1,60 @@
+[
+  {
+    "name": "southwest-report-end",
+    "seconds": 1.4093997499985562,
+    "exit": 0,
+    "arguments": [
+      "sources",
+      "--company",
+      "southwest_airlines",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--report-end",
+      "2025-12-31",
+      "--metric",
+      "B03"
+    ],
+    "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "metric_acceptance_proven": false,
+    "metric_executed": false,
+    "task_summary": []
+  },
+  {
+    "name": "marriott-2021-source-ready",
+    "seconds": 6.561301874997298,
+    "exit": 0,
+    "arguments": [
+      "sources",
+      "--company",
+      "marriott_international",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--fiscal-year-start",
+      "2021",
+      "--fiscal-year-end",
+      "2021",
+      "--metric",
+      "B03"
+    ],
+    "status": "FISCAL_RANGE_RESOLVED",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "metric_acceptance_proven": false,
+    "metric_executed": false,
+    "task_summary": [
+      {
+        "fiscal_year": 2021,
+        "status": "FISCAL_YEAR_RESOLVED",
+        "source_bytes_available": true
+      }
+    ]
+  }
+]

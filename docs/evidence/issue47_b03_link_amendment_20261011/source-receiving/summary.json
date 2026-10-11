@@ -1,0 +1,31 @@
+{
+  "southwest": {
+    "source_urls": [
+      "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+      "https://data.sec.gov/submissions/CIK0000092380.json",
+      "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/index.json",
+      "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+      "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231_htm.xml",
+      "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm"
+    ],
+    "exactly_matches_actual_calculated_case_sources": true,
+    "source_ready": true,
+    "financial_execution_performed": false
+  },
+  "marriott2021": {
+    "source_ready": true,
+    "financial_execution_performed": false,
+    "metric_acceptance_proven": false,
+    "original_d_and_a_gap_not_released": true
+  },
+  "source_metadata_hashes_unchanged": {
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab",
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,9 @@
+# Consume returned public166 prior-XML correction
+
+Read actual receiver6107349782 and public response6107607114, then normally receive fixed166/6ceae751298ef169c95a53afc94dbefcb38ff0c1 on mainb529 combination. The public change is normal_companyfacts_results and its current source controls;167 selected income core and historicalB03 adapter remain byte-identical. No current proof is copied into a historical competitor.
+
+71 selected/current/source/paired/history dispatch/state controls pass0.363s,0skip. Existing real MarriottFY2024 B01/B03 independent CLI read with historical factory/shared computation/Calculator/network forbidden takes0.496s. Both values/IDs and39statefiles remain; no source/metric computation. This confirms ordinary reading in the code combination, not that all computation caches survive a relevant public code change.
+
+Public owner's actual ten-company repository-source fresh/repeat/read evidence and final two affected Lumen/Macy guards are reused from166 prior-xml-receiving. That change keeps original prior XML/CompanyFacts monetary operands; current comparative same-row total supplies scope only, unit/period/CF/XML/restatement conflicts still refuse. It records original_prior_statement_scope_proven=False, does not invent prior complete HTML. Historical B01/B02 scope implementation is unchanged; this reception does not relax its older scope limitations or rerun its ten-company/five-year collection.
+
+Still pending: public processing closure for the newly imported shared income function, actual mandatory CI execution for the two new167 test modules, independent current consumer of the extracted function and receiver recheck. Old166 green and new unchanged company steps do not prove this. The candidate remains developing,0newcalls, no Ready/merge/financial adoption/deploy/active. Existing Run and failed response identities remain.

@@ -27,3 +27,5 @@ python3 tools/vnext_company.py results --company southwest_airlines \
 ```
 
 Prerequisite: PR167 selected income core (currently developing on fixed166+mainb529); consume the public owner's repaired166/current configuration/CI before reception. This successor is kept on a separate short branch, not appended to the candidate under review and not yet proposed as another deeper PR. No claim of main delivery, five-year B03, original3Marriott D&A completion, successor/PartIII amendment support, online source discovery/completion or1950-target acceptance. Original failures/Run/results/source ledger remain.0 new SEC/provider/paid calls, no Ready/merge/adoption/deployment/active action.
+
+Final selected-year/statement-amendment/company dispatch/state combination43tests passes0.164s,0skip. No-amendment paths continue their existing producer contract; constructed missing year/local failure/old success-current withholding and stable withheld reuse remain. This test-only addition does not rerun the actual Southwest task or change production/source bytes.
