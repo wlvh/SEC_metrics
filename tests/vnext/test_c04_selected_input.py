@@ -22,6 +22,29 @@ def filing_with_release(release, *, entity='12345'):
 
 
 class SelectedC04InputTest(unittest.TestCase):
+    def test_selected_history_reuses_index_derived_gap_boundary_and_all_row_count(self):
+        from copy import deepcopy
+        from vnext.c04_registration_successor import _checked_inventory_rows
+        from vnext.normal_history_catalog import block_last_days
+        name = 'CIK0000012345-submissions-001.json'
+        shard = {'name':name, 'filingFrom':'2021-01-01',
+                 'filingTo':'2022-12-30', 'filingCount':1}
+        index = {'filings':{'recent':{'filingDate':['2023-01-02']}}}
+        body = {'form':['8-K12B'], 'reportDate':['2022-12-31'],
+                'filingDate':['2022-12-31'], 'accessionNumber':['0000012345-22-000007'],
+                'primaryDocument':['event.htm']}
+        last = block_last_days(payload=index, shards=[shard])[name]
+        self.assertEqual('2023-01-01', last)
+        with self.assertRaisesRegex(ValueError, 'HISTORY_BODY_ALIGNMENT_CONFLICT'):
+            _checked_inventory_rows(body, inventory_name=name, shard=shard)
+        rows = _checked_inventory_rows(body, inventory_name=name, shard=shard, block_last_day=last)
+        self.assertEqual(('8-K12B', '2022-12-31'), (rows[0]['form'], rows[0]['filingDate']))
+        for changed, meta in (({**body, 'filingDate':['2023-01-02']}, shard),
+                              (body, {**shard, 'filingCount':2})):
+            with self.subTest(changed=changed, meta=meta), \
+                 self.assertRaisesRegex(ValueError, 'HISTORY_BODY_ALIGNMENT_CONFLICT'):
+                _checked_inventory_rows(changed, inventory_name=name, shard=meta, block_last_day=last)
+
     def check(self, source, **kwargs):
         return _checked_filing(sources=[source],company_id='sample_entity',cik='12345',
             period_end='2024-12-31',source_proofs=[],aliases=[],**kwargs)

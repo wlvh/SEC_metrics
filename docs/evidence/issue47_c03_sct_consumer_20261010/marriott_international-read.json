@@ -1,0 +1,46 @@
+{
+  "seconds": 5.18155666696839,
+  "exit_code": 0,
+  "arguments": [
+    "results",
+    "--company",
+    "marriott_international",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/marriott_international/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/marriott_international/read"
+  ],
+  "report": {
+    "elapsed_seconds": 3.21281245816499,
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "marriott_international",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "metrics": [
+      {
+        "metric_id": "C03",
+        "result_id": "sha256:03d5e3384cc6f1c1e6e0ac3d3a1685327a89f4fe4fd5c42e653bef8b4a7c9774",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "fiscal_year": 2021,
+        "value": null,
+        "unit": null,
+        "publication": "WITHHELD",
+        "quality": "NONE",
+        "reason_code": "C03_PROXY_SCT_MORE_THAN_ONE_CHIEF_EXECUTIVE",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "PREVIOUS_INPUT_WITHHELD",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/marriott_international/state/updates/C03/periods/FY2021/results/a54c8659531b4aed85d60465de5850b8"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/marriott_international/read"
+  }
+}

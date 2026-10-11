@@ -1,0 +1,87 @@
+{
+  "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+  "company_id": "macys",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "result_id": "sha256:a4237cca3788296cffd90e794cbf00efd6398610b770176331570331957aafd7",
+      "period_start": "2022-01-30",
+      "period_end": "2023-01-28",
+      "fiscal_year": 2022,
+      "value": "24442000000",
+      "unit": "USD",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "CANDIDATE_READY",
+      "requested_in_latest_execution": true,
+      "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-fiscal-range-company-final-k5238gym/state/updates/B01/periods/FY2022/results/35cda32319ec4aa2a16e2a2bf7ba7390"
+    },
+    {
+      "metric_id": "B02",
+      "result_id": "sha256:bf5f4bdc3f6e80bafeb7cd6e5fbd5398e6e1866601d27007e584d128fe0c3123",
+      "period_start": "2022-01-30",
+      "period_end": "2023-01-28",
+      "fiscal_year": 2022,
+      "value": "-0.000735895339329517579721995094",
+      "unit": "ratio",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "defect_holds": [],
+      "latest_observation": "CANDIDATE_READY",
+      "requested_in_latest_execution": true,
+      "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-fiscal-range-company-final-k5238gym/state/updates/B02/periods/FY2022/results/dcec70dd1710426aba0aeed6192ba7c2"
+    },
+    {
+      "metric_id": "B01",
+      "result_id": "sha256:5f17ec97a234f3b8bae22bcaedd2bdb9ff2ace36056c7a52adfbc821ff088731",
+      "period_start": "2023-01-29",
+      "period_end": "2024-02-03",
+      "fiscal_year": 2023,
+      "value": null,
+      "unit": null,
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "CONFIRMED_INVALID",
+      "defect_holds": [
+        "MACYS_FY2023_B01_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK"
+      ],
+      "latest_observation": "CANDIDATE_READY",
+      "requested_in_latest_execution": true,
+      "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-fiscal-range-company-final-k5238gym/state/updates/B01/periods/FY2023/results/27eff59d82714d92acfec931c5ffe6ac"
+    },
+    {
+      "metric_id": "B02",
+      "result_id": "sha256:db609edd1f286ee1bf61e51126b8084fea1f0817b03847d8010e02cd1b1e81b7",
+      "period_start": "2023-01-29",
+      "period_end": "2024-02-03",
+      "fiscal_year": 2023,
+      "value": null,
+      "unit": null,
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "result_validity": "CONFIRMED_INVALID",
+      "defect_holds": [
+        "MACYS_FY2023_B02_NET_SALES_SUBTOTAL_IN_TOTAL_REVENUE_TASK"
+      ],
+      "latest_observation": "CANDIDATE_READY",
+      "requested_in_latest_execution": true,
+      "record_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-fiscal-range-company-final-k5238gym/state/updates/B02/periods/FY2023/results/1bc76579876542ff9714df94d9d700ac"
+    }
+  ],
+  "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "output_root": "/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-fiscal-range-company-final-k5238gym/read-with-known-defects"
+}

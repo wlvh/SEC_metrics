@@ -1,0 +1,76 @@
+{
+  "seconds": 1.491117874858901,
+  "exit_code": 0,
+  "arguments": [
+    "run",
+    "--company",
+    "pfizer",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2023",
+    "--fiscal-year-end",
+    "2023",
+    "--metric",
+    "B02",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paired-source-extraction-ko429ks1/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paired-source-extraction-ko429ks1/runs"
+  ],
+  "report": {
+    "elapsed_seconds": 0.9675991660915315,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "pfizer",
+    "run_id": "20261010T162526Z-b9431dea",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "B02"
+    ],
+    "metrics": [
+      {
+        "metric_id": "B02",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "39a514af853f4840b12feb9626c23fac",
+        "version": "e807560d359e412daef735fafe1afc0c",
+        "result_id": "sha256:5aa4a2b626f8fa6276d784642538943f9cf5222b4931ee24a7e56cb877f91780",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paired-source-extraction-ko429ks1/state/updates/B02/periods/FY2023/results/e807560d359e412daef735fafe1afc0c",
+        "result_reason_code": "PASS",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2023,
+        "defect_holds": [],
+        "read_result_id": "sha256:5aa4a2b626f8fa6276d784642538943f9cf5222b4931ee24a7e56cb877f91780",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paired-source-extraction-ko429ks1/state/updates/B02/periods/FY2023/results/e807560d359e412daef735fafe1afc0c",
+        "program_version": {
+          "commit": "9d1f20fc300e0ad96149686ea34f47bf26aaf8e0",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paired-source-extraction-ko429ks1/state",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paired-source-extraction-ko429ks1/runs/20261010T162526Z-b9431dea",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "selected_fiscal_years": [
+      2023
+    ]
+  }
+}

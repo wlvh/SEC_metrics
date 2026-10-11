@@ -1,0 +1,26 @@
+test_actual_annual_scope_does_not_change_to_calendar_year (tests.vnext.test_proxy_compensation_source.ProxyCompensationSourceTest.test_actual_annual_scope_does_not_change_to_calendar_year) ... ok
+test_cover_and_dated_names_remain_distinct_from_amount (tests.vnext.test_proxy_compensation_source.ProxyCompensationSourceTest.test_cover_and_dated_names_remain_distinct_from_amount) ... ok
+test_inline_document_does_not_fallback_to_the_table (tests.vnext.test_proxy_compensation_source.ProxyCompensationSourceTest.test_inline_document_does_not_fallback_to_the_table) ... ok
+test_multiple_people_and_subsidiary_ceo_do_not_first_win (tests.vnext.test_proxy_compensation_source.ProxyCompensationSourceTest.test_multiple_people_and_subsidiary_ceo_do_not_first_win) ... ok
+test_native_total_locator_still_matches_after_trailing_footnote_cell (tests.vnext.test_proxy_compensation_source.ProxyCompensationSourceTest.test_native_total_locator_still_matches_after_trailing_footnote_cell) ... FAIL
+test_nonempty_control_and_native_amount_locator (tests.vnext.test_proxy_compensation_source.ProxyCompensationSourceTest.test_nonempty_control_and_native_amount_locator) ... ok
+test_source_subject_target_inventory_and_complete_body_are_checked (tests.vnext.test_proxy_compensation_source.ProxyCompensationSourceTest.test_source_subject_target_inventory_and_complete_body_are_checked) ... ok
+test_wrong_sum_currency_title_and_scaling_remain_withheld (tests.vnext.test_proxy_compensation_source.ProxyCompensationSourceTest.test_wrong_sum_currency_title_and_scaling_remain_withheld) ... ok
+
+======================================================================
+FAIL: test_native_total_locator_still_matches_after_trailing_footnote_cell (tests.vnext.test_proxy_compensation_source.ProxyCompensationSourceTest.test_native_total_locator_still_matches_after_trailing_footnote_cell)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-proxy-compensation/SEC_metrics/tests/vnext/test_proxy_compensation_source.py", line 116, in test_native_total_locator_still_matches_after_trailing_footnote_cell
+    self.assertEqual('1,500,000',candidate['amount']['text'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '1,500,000' != '7'
+- 1,500,000
++ 7
+
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.025s
+
+FAILED (failures=1)
+INITIAL_TEST_ADAPTER=actual_main_C02_name_function; not_new_helper_delivery
