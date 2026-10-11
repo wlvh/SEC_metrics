@@ -1,0 +1,33 @@
+diff --git a/tests/vnext/test_history_company_dispatch.py b/tests/vnext/test_history_company_dispatch.py
+index 294e10e8..9b5c1fc7 100644
+--- a/tests/vnext/test_history_company_dispatch.py
++++ b/tests/vnext/test_history_company_dispatch.py
+@@ -9,6 +9,28 @@ from vnext import company_local as local
+ 
+ 
+ class HistoryCompanyDispatchTest(TestCase):
++    def test_range_b02_keeps_all_received_paired_income_dependencies(self):
++        from vnext.historical_statement_cases import PAIRED_REVENUE_PROCESSING_FILES
++        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
++            self.run_history(company_id='macys', metric_ids=['B02'],
++                             fiscal_year_start=2023, fiscal_year_end=2023)
++        declared = set(shared.call_args.kwargs['processing_files_by_metric']['B02'])
++        self.assertLessEqual(set(PAIRED_REVENUE_PROCESSING_FILES), declared)
++
++    def test_income_selection_combinations_keep_the_same_processing_identity(self):
++        import inspect
++        def identity(metrics, income):
++            with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
++                self.run_history(company_id='macys', metric_ids=metrics,
++                                 fiscal_year_start=2023, fiscal_year_end=2023)
++            args = shared.call_args.kwargs
++            factory = args['case_factories'][income]
++            return (factory.__module__, factory.__qualname__, inspect.getsourcefile(factory),
++                    frozenset(args['processing_files_by_metric'][income]))
++        for income in ('B01', 'B02'):
++            with self.subTest(metric=income):
++                self.assertEqual(identity([income], income), identity([income, 'B04'], income))
++
+     def test_absent_saved_range_year_retains_source_unavailable_category(self):
+         """Constructed missing-year control executes the public lazy factory."""
+         from vnext.company_fiscal_range import range_case_factories

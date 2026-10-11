@@ -1,0 +1,49 @@
+test_range_b02_keeps_all_received_paired_income_dependencies (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_range_b02_keeps_all_received_paired_income_dependencies) ... FAIL
+test_income_selection_combinations_keep_the_same_processing_identity (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_income_selection_combinations_keep_the_same_processing_identity) ... 
+  test_income_selection_combinations_keep_the_same_processing_identity (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_income_selection_combinations_keep_the_same_processing_identity) (metric='B01') ... FAIL
+  test_income_selection_combinations_keep_the_same_processing_identity (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_income_selection_combinations_keep_the_same_processing_identity) (metric='B02') ... FAIL
+
+======================================================================
+FAIL: test_range_b02_keeps_all_received_paired_income_dependencies (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_range_b02_keeps_all_received_paired_income_dependencies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_history_company_dispatch.py", line 18, in test_range_b02_keeps_all_received_paired_income_dependencies
+    self.assertLessEqual(set(PAIRED_REVENUE_PROCESSING_FILES), declared)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'scripts/vnext/historical_annual_input.py', 'scripts/vnext/selected_revenue_scope_v1.py', 'scripts/vnext/composite_scope.py', 'scripts/vnext/text_results_v2.py', 'scripts/vnext/selected_reported_revenue_v2.py', 'config/normal_fiscal_year_labels_v1.json', 'scripts/vnext/normal_annual_input.py', 'scripts/vnext/selected_income_source_v1.py', 'scripts/vnext/selected_fiscal_definition_scope_v1.py', 'catalog/r6/text_results_v2_policy.json', 'scripts/vnext/historical_paired_revenue.py', 'scripts/vnext/zero_ai_r2.py', 'scripts/vnext/fiscal_year_labels.py', 'scripts/vnext/r5_b06_scope.py', 'scripts/vnext/batch_workflow.py', 'scripts/vnext/normal_history_catalog.py', 'scripts/vnext/annual_amendment_scope_v2.py', 'config/normal_period_selection_v1.json', 'scripts/vnext/xbrl_namespace_policy.py', 'scripts/vnext/deterministic_router.py', 'scripts/vnext/normal_annual_input_v2.py', 'scripts/vnext/historical_filing_inventory.py', 'scripts/vnext/normal_period_selection.py', 'scripts/vnext/historical_statement_cases.py', 'scripts/vnext/governance_signals.py', 'scripts/vnext/historical_dei.py', 'scripts/vnext/ordinary_income_input.py', 'scripts/vnext/normal_companyfacts_results.py', 'scripts/vnext/financial_structured.py', 'scripts/vnext/amendment_note_layout.py', 'scripts/vnext/financial_duration.py', 'scripts/vnext/normal_governance_input.py', 'config/annual_amendment_scope_v1.json', 'catalog/deterministic_metrics.json', 'scripts/vnext/paired_measure_v1.py', 'scripts/vnext/annual_amendment_scope.py', 'scripts/vnext/historical_fiscal_labels.py'} not less than or equal to {'scripts/vnext/historical_annual_input.py', 'scripts/vnext/selected_revenue_scope_v1.py', 'scripts/vnext/composite_scope.py', 'scripts/vnext/text_results_v2.py', 'scripts/vnext/selected_reported_revenue_v2.py', 'config/normal_fiscal_year_labels_v1.json', 'scripts/vnext/normal_annual_input.py', 'scripts/vnext/selected_income_source_v1.py', 'scripts/vnext/selected_source_requirements.py', 'scripts/vnext/selected_fiscal_definition_scope_v1.py', 'catalog/r6/text_results_v2_policy.json', 'scripts/vnext/zero_ai_r2.py', 'scripts/vnext/fiscal_year_labels.py', 'scripts/vnext/r5_b06_scope.py', 'scripts/vnext/batch_workflow.py', 'scripts/vnext/normal_history_catalog.py', 'scripts/vnext/annual_amendment_scope_v2.py', 'config/normal_period_selection_v1.json', 'scripts/vnext/xbrl_namespace_policy.py', 'scripts/vnext/deterministic_router.py', 'scripts/vnext/company_fiscal_range.py', 'scripts/vnext/normal_annual_input_v2.py', 'scripts/vnext/historical_filing_inventory.py', 'scripts/vnext/normal_period_selection.py', 'scripts/vnext/historical_statement_cases.py', 'scripts/vnext/governance_signals.py', 'scripts/vnext/historical_dei.py', 'scripts/vnext/ordinary_income_input.py', 'scripts/vnext/normal_companyfacts_results.py', 'scripts/vnext/financial_structured.py', 'scripts/vnext/amendment_note_layout.py', 'scripts/vnext/financial_duration.py', 'scripts/vnext/normal_governance_input.py', 'config/annual_amendment_scope_v1.json', 'catalog/deterministic_metrics.json', 'scripts/vnext/paired_measure_v1.py', 'scripts/vnext/annual_amendment_scope.py', 'scripts/vnext/historical_fiscal_labels.py'}
+
+======================================================================
+FAIL: test_income_selection_combinations_keep_the_same_processing_identity (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_income_selection_combinations_keep_the_same_processing_identity) (metric='B01')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_history_company_dispatch.py", line 32, in test_income_selection_combinations_keep_the_same_processing_identity
+    self.assertEqual(identity([income], income), identity([income, 'B04'], income))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('vnext.company_fiscal_range', 'prepared_fiscal_r[1736 chars]y'})) != ('vnext.historical_statement_cases', 'prepare_his[1671 chars]y'}))
+
+First differing element 0:
+'vnext.company_fiscal_range'
+'vnext.historical_statement_cases'
+
+Diff is 2776 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_income_selection_combinations_keep_the_same_processing_identity (tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_income_selection_combinations_keep_the_same_processing_identity) (metric='B02')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_history_company_dispatch.py", line 32, in test_income_selection_combinations_keep_the_same_processing_identity
+    self.assertEqual(identity([income], income), identity([income, 'B04'], income))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: ('vnext.company_fiscal_range', 'prepared_fiscal_r[1736 chars]y'})) != ('vnext.historical_statement_cases', 'prepare_his[1717 chars]y'}))
+
+First differing element 0:
+'vnext.company_fiscal_range'
+'vnext.historical_statement_cases'
+
+Diff is 2836 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.401s
+
+FAILED (failures=3)
+{"allowed_skips": 0, "errors": 0, "failures": 3, "run": 2, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_range_b02_keeps_all_received_paired_income_dependencies", "tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest.test_income_selection_combinations_keep_the_same_processing_identity"]}
