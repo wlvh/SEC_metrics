@@ -1,0 +1,9 @@
+V1 default result unchanged from original base for {}: TRUE
+V1 default result unchanged from original base for {'full': False}: TRUE
+Same earlier-date conflict under original331: REJECTED SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED
+Same earlier-date conflict under repair1cbb: ACCEPTED complete_scope_proven=True
+Committed original331 actual scope critical fields equal current repair receipt: TRUE
+Repair HEAD blob equals worktree: scripts/vnext/selected_reported_revenue_v2.py SHA256=71bee64e6501b1b9c98424386d54e830ddfa878b479ddc74a4e4f7cde097f28d
+Repair HEAD blob equals worktree: scripts/vnext/selected_revenue_scope_v1.py SHA256=cc3c90d824b162fa249a171a55520ee5246c96e731df19761020d12895d0eb1c
+Repair HEAD blob equals worktree: tests/vnext/test_selected_reported_revenue_v2.py SHA256=f69fdd2658a4ff45fd8f12dfa4060a3fabd0e4a83e6dbb69014e9f9c1263fd9e
+Already-reviewed peer historical fiscal dependency still exact bytes: TRUE

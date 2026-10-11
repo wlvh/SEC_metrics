@@ -1,0 +1,75 @@
+{
+  "seconds": 78.36821833392605,
+  "exit_code": 2,
+  "arguments": [
+    "run",
+    "--company",
+    "marriott_international",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2021",
+    "--fiscal-year-end",
+    "2021",
+    "--metric",
+    "C03",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/marriott_international/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/marriott_international/runs"
+  ],
+  "report": {
+    "elapsed_seconds": 77.98279916704632,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "marriott_international",
+    "run_id": "20261010T135917Z-af0de95b",
+    "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+    "selected_metrics": [
+      "C03"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C03",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "cabac12e9f0a4e4e9cc46e6987d27a6c",
+        "version": "a54c8659531b4aed85d60465de5850b8",
+        "result_id": "sha256:03d5e3384cc6f1c1e6e0ac3d3a1685327a89f4fe4fd5c42e653bef8b4a7c9774",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/marriott_international/state/updates/C03/periods/FY2021/results/a54c8659531b4aed85d60465de5850b8",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "C03_PROXY_SCT_MORE_THAN_ONE_CHIEF_EXECUTIVE",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2021,
+        "defect_holds": [],
+        "read_result_id": "sha256:03d5e3384cc6f1c1e6e0ac3d3a1685327a89f4fe4fd5c42e653bef8b4a7c9774",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/marriott_international/state/updates/C03/periods/FY2021/results/a54c8659531b4aed85d60465de5850b8",
+        "program_version": {
+          "commit": "855601306671189f31b70a1ef9a5710114bf0c8b",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/marriott_international/state",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-proxy-sct-company-dqw4uv4l/marriott_international/runs/20261010T135917Z-af0de95b",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "selected_fiscal_years": [
+      2021
+    ]
+  }
+}

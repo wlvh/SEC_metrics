@@ -1,0 +1,18 @@
+test_compatible_completion_recovers_without_recalculating_or_rewriting_old_success (tests.vnext.test_d04_processing_scope.D04ProcessingScopeTest.test_compatible_completion_recovers_without_recalculating_or_rewriting_old_success) ... ok
+test_extracted_d04_rules_change_only_d04_configuration (tests.vnext.test_d04_processing_scope.D04ProcessingScopeTest.test_extracted_d04_rules_change_only_d04_configuration) ... ok
+test_main_before_extraction_reuses_and_consumed_period_changes_reprocess (tests.vnext.test_d04_processing_scope.D04ProcessingScopeTest.test_main_before_extraction_reuses_and_consumed_period_changes_reprocess) ... ok
+test_proven_d04_only_transition_keeps_success_and_withheld (tests.vnext.test_d04_processing_scope.D04ProcessingScopeTest.test_proven_d04_only_transition_keeps_success_and_withheld) ... ok
+test_unknown_business_scope_or_source_change_cannot_inherit_compatibility (tests.vnext.test_d04_processing_scope.D04ProcessingScopeTest.test_unknown_business_scope_or_source_change_cannot_inherit_compatibility) ... ok
+test_actual_selected_year_dependencies_ignore_unused_admission_code (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_actual_selected_year_dependencies_ignore_unused_admission_code)
+Constructed state control with the actual processing configuration. ... ok
+test_completed_withheld_recovers_pointer_without_recalculation (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_completed_withheld_recovers_pointer_without_recalculation) ... ok
+test_current_withheld_replaces_same_year_success_but_retains_old_version (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_current_withheld_replaces_same_year_success_but_retains_old_version) ... ok
+test_dependency_source_and_processing_changes_reprocess_withheld_once (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_dependency_source_and_processing_changes_reprocess_withheld_once) ... ok
+test_missing_year_and_one_metric_failure_preserve_other_periods (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_missing_year_and_one_metric_failure_preserve_other_periods) ... ok
+test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.241s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 11, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_d04_processing_scope", "tests.vnext.test_selected_history_result_state"]}

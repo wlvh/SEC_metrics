@@ -1,0 +1,27 @@
+{
+  "base_sha": "d8c36ca4ab6b0b3d38151bb47f07660f32ceeab9",
+  "uncommitted_source_diff": [
+    "scripts/vnext/ordinary_current_update.py",
+    "tests/vnext/test_current_d04_company.py"
+  ],
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d04-company-model/SEC_metrics",
+  "source_root": "synthetic temporary read-only input, no original ledger used",
+  "command": [
+    "/private/tmp/issue28-company-c02-venv-20261006/bin/python",
+    "tests/required_unittests.py",
+    "tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest"
+  ],
+  "returncode": 0,
+  "wall_seconds": 0.42997787497006357,
+  "file_sha256": {
+    "scripts/vnext/ordinary_current_update.py": "2e3379d25ad51e278fb2f2366bff98ec774615b97ab52f8c8b425d60423604eb",
+    "tests/vnext/test_current_d04_company.py": "303890729d69064710534b21a7d466823dd1c387a5051ef6f64127c1e5cbe3c1"
+  },
+  "actual_cases": 5,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "scope": "actual configuration/controller; substituted source census and stored records; no company content credit"
+}

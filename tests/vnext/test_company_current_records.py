@@ -100,7 +100,8 @@ class CurrentCompanyTest(unittest.TestCase):
         self.assertTrue(all(row['period_role']=='REQUESTED_WITHOUT_RESULT' for row in self.rows(r)))
 
     def test_missing_ai_and_deprecated_e01_do_not_manufacture_results(self):
-        r=self.run_company(['D04','E01'])
+        with patch.object(current,'run_once',side_effect=ValueError('D04_COMPLETE_SAVED_RESPONSE_SET_REQUIRED')):
+            r=self.run_company(['D04','E01'])
         self.assertEqual(self.updates,[]);self.assertEqual(r['status'],'FLOW_COMPLETED_WITH_LIMITATIONS')
         self.assertTrue(all(row['value']=='' for row in self.rows(r)))
 

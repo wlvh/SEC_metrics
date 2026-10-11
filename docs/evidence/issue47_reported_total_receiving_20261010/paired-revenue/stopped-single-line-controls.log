@@ -1,0 +1,14 @@
+test_missing_scope_and_conflicting_original_dates_are_not_complete_revenue (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_missing_scope_and_conflicting_original_dates_are_not_complete_revenue) ... ok
+test_prior_period_comparisons_stay_for_the_shared_comparability_guard (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_prior_period_comparisons_stay_for_the_shared_comparability_guard) ... ok
+test_stopped_single_line_does_not_gain_new_scope_while_explicit_total_keeps_working (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_stopped_single_line_does_not_gain_new_scope_while_explicit_total_keeps_working) ... ok
+test_total_admission_keeps_original_claim_id_and_never_retags_its_locator (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_total_admission_keeps_original_claim_id_and_never_retags_its_locator) ... ok
+test_wrong_unit_entity_accession_or_amount_cannot_supply_the_original_total (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest.test_wrong_unit_entity_accession_or_amount_cannot_supply_the_original_total) ... ok
+test_both_original_scopes_reach_the_one_graph_and_daily_summary_is_bounded (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_both_original_scopes_reach_the_one_graph_and_daily_summary_is_bounded) ... ok
+test_graph_cannot_select_an_operand_outside_the_admitted_original_claims (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_graph_cannot_select_an_operand_outside_the_admitted_original_claims) ... ok
+test_one_unproved_role_withholds_whole_growth_before_graph (tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest.test_one_unproved_role_withholds_whole_growth_before_graph) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.090s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 8, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueAdmissionTest", "tests.vnext.test_historical_statement_cases.HistoricalPairedRevenueCaseTest"]}

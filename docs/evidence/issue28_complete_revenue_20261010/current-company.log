@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/private/tmp/issue28-current-revenue-company.py", line 19, in <module>
+    with contextlib.redirect_stdout(stream):first_exit=main(args)
+                                                       ^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-revenue/SEC_metrics/tools/vnext_company.py", line 103, in main
+    result = run_local(company_id=args.company, work_dir=args.work_dir, output_dir=args.output_dir,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-revenue/SEC_metrics/scripts/vnext/company_local.py", line 180, in run_local
+    return run_saved_company(company_id=company_id, source_root=source_root,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-revenue/SEC_metrics/scripts/vnext/company_current_records.py", line 193, in run_saved_company
+    temporary.write_bytes(raw)
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py", line 1036, in write_bytes
+    with self.open(mode='wb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-complete-revenue/SEC_metrics/tests/vnext/test_normal_zero_ai_results.py", line 30, in call
+    raise AssertionError('Legacy answer or derived input read: ' + str(path))
+AssertionError: Legacy answer or derived input read: /private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-revenue-company-mf7feanj/output/20261009T205849Z-df64b1f9/.metrics_matrix.csv

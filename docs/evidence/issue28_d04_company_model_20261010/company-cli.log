@@ -1,0 +1,6 @@
+first 2 119.89453425002284
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-company-model/SEC_metrics/docs/evidence/issue28_d04_company_model_20261010/company-cli.py", line 32, in <module>
+    assert all(r['return_code']==0 for r in operations) and len(operations)==2
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

@@ -1,0 +1,6 @@
+Driver: PYTHONPATH=scripts:. python3 docs/evidence/issue28_reported_revenue_20261010/verify_actual_source.py
+Only in-memory sink replacement: parent actual-source-final.json -> /dev/null. No source/driver edit.
+REPORTED_CONSOLIDATED_TOTAL 23866000000 {'fiscal_year': 2023, 'period_start': '2023-01-29', 'period_end': '2024-02-03'} 1.1933736668433994
+Exact scope equals saved actual-source-final.json: TRUE
+Parent receipt SHA unchanged: 75967d328d96b25f711931e315789040fb6c745d171101487b058b49bf493a1d
+Original SHA verified by driver: 50ea8e3119bf4e07e0ee54e29e2f844289afc6197d584594e6f8ed4325282b29

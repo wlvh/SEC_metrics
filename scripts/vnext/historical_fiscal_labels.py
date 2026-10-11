@@ -55,6 +55,9 @@ _FROZEN_END = r"respectively\."
 _WEEKS_END = r"respectively(?:,\s+and\s+included\s+5[23]\s+weeks)?\."
 _LEGAL_FORMS = frozenset({"inc", "incorporated", "corp", "corporation", "co", "company",
                           "ltd", "limited", "llc", "plc", "lp"})
+ASSERTION_SCOPE_RULE = "HISTORICAL_FISCAL_DEFINITION_ASSERTION_SCOPE_V1"
+_CONDITIONAL_DEFINITION = re.compile(r"\bif\b[^.!?]{0,240}\b(?:proposed\s+)?naming convention\b", re.I)
+_HYPOTHETICAL_DEFINITION = re.compile(r"\b(?:hypothetical example|not our actual naming convention)\b", re.I)
 
 
 class HistoricalFiscalLabelError(ValueError):
@@ -172,13 +175,105 @@ def widen_inspection(*, inspected, primary_bytes):
     return {**body, "inspection_id": content_hash(value=body)}
 
 
+def require_actual_definition_scope(inspected):
+    """Keep identified conditional/hypothetical mappings unresolved.
+
+    The retained inspector recognizes sentence forms, including forms inside
+    ordinary quoted text. Recognizing a mapping does not establish that the
+    issuer has adopted it. This bounded historical check preserves the source
+    block and prevents the two reported non-actual contexts from overriding
+    metadata. Quotation marks around a label alone are not a rejection reason.
+    Unaffected inspections are returned unchanged, including their identity.
+    """
+    definitions, rejected = [], []
+    for item in inspected["source_definitions"]:
+        pattern = {"EXPLICIT_EXAMPLE":_frozen_labels._SINGLE,
+                   "EXPLICIT_ORDERED_YEARS":_ordered_pattern(),
+                   "EXPLICIT_REFERENCE_YEARS":_frozen_labels._REFERENCES}[item["kind"]]
+        contexts = []
+        for match in pattern.finditer(item["text"]):
+            if item["kind"] == "EXPLICIT_EXAMPLE":
+                mapping = [{"fiscal_year":int(match["label"]),"period_end":_frozen_labels._iso_end(match["end"])}]
+            else:
+                mapping = [{"fiscal_year":int(year),"period_end":_frozen_labels._iso_end(end)}
+                           for year,end in zip(re.findall(r"[0-9]{4}",match["labels"]),
+                                               re.findall(_frozen_labels._DATE,match["ends"],re.I))]
+            if mapping == item["mapping"]:
+                prefix = item["text"][:match.start()]
+                # The immediately governing sentence, not another sentence in
+                # the same HTML paragraph, supplies conditional/example scope.
+                contexts.append(re.split(r"[.!?]",prefix)[-1])
+        reason = ("DEFINITION_CONDITIONAL_NOT_ADOPTED" if any(_CONDITIONAL_DEFINITION.search(c) for c in contexts)
+                  else "DEFINITION_HYPOTHETICAL_NOT_ACTUAL" if any(_HYPOTHETICAL_DEFINITION.search(c) for c in contexts)
+                  else None)
+        if reason:
+            rejected.append({**item, "reason": reason})
+        else:
+            definitions.append(item)
+    if not rejected:
+        return inspected
+    unparsed = [*inspected["unsupported_definition_leads"],
+                *({"block_index":item["block_index"], "text":item["text"], "reason":item["reason"]}
+                  for item in rejected)]
+    labels, status, proposed = _status(inspected, definitions, unparsed)
+    body = {key:value for key,value in inspected.items() if key != "inspection_id"}
+    body.update(source_definitions=definitions, unsupported_definition_leads=unparsed,
+                current_definition_labels=labels, status=status,
+                source_defined_fiscal_year=proposed, new_rule_label_proposal=proposed,
+                definition_assertion_scope_rule=ASSERTION_SCOPE_RULE,
+                rejected_non_actual_definitions=rejected,
+                recognized_mapping_inspection_id=inspected["inspection_id"])
+    canonical_json_bytes(value=body)
+    return {**body, "inspection_id":content_hash(value=body)}
+
+
 def inspect_prepared_fiscal_year_labels(*, repo_root, prepared):
     """The DEI view's inspection of a pinned input, widened where the frozen scan stopped."""
     report = _frozen_inspection(repo_root=repo_root, prepared=prepared)
     inspected = report["inspection"]
-    if inspected["status"] != UNRESOLVED:
-        return report
-    primary = resolve_repository_file(
-        repo_root=repo_root,
-        repo_relative_path=prepared["table_input"]["source_repo_relative_path"]).read_bytes()
-    return {**report, "inspection": widen_inspection(inspected=inspected, primary_bytes=primary)}
+    if inspected["status"] == UNRESOLVED:
+        primary = resolve_repository_file(
+            repo_root=repo_root,
+            repo_relative_path=prepared["table_input"]["source_repo_relative_path"]).read_bytes()
+        inspected = widen_inspection(inspected=inspected, primary_bytes=primary)
+    checked = require_actual_definition_scope(inspected)
+    return report if checked is report["inspection"] else {**report, "inspection":checked}
+
+
+def resolve_selected_fiscal_year_label(*, primary_bytes, companyfacts_bytes,
+                                      expected_primary_sha256, expected_companyfacts_sha256,
+                                      expected_cik, filing):
+    """Resolve one selected original's label, without annual preparation.
+
+    The caller owns source admission and candidate uniqueness. This pure
+    consumer retains the original DEI year and actual dates, reads the same
+    issuer definitions and applies the existing normal-input label rule.
+    It does not discover/fetch sources or grant financial acceptance.
+    """
+    from .historical_dei import release_aware
+    from .normal_annual_input_v2 import _choose_fiscal_year, POLICY_PATH
+    from .normal_source_authority import ROOT
+    from .canonical import sha256_file, strict_json_file
+    inspected = release_aware(_frozen_labels.inspect_fiscal_year_labels)(
+        primary_bytes=primary_bytes, companyfacts_bytes=companyfacts_bytes,
+        expected_primary_sha256=expected_primary_sha256,
+        expected_companyfacts_sha256=expected_companyfacts_sha256,
+        expected_cik=expected_cik, filing=filing)
+    inspected = widen_inspection(inspected=inspected, primary_bytes=primary_bytes)
+    inspected = require_actual_definition_scope(inspected)
+    year, basis = _choose_fiscal_year(inspected)
+    body = {"record_type": "SELECTED_HISTORICAL_FISCAL_LABEL",
+            "policy_id": strict_json_file(path=ROOT/POLICY_PATH)["policy_id"],
+            "policy_sha256": sha256_file(path=ROOT/POLICY_PATH),
+            "historical_definition_forms_rule": FORMS_RULE,
+            "selected_fiscal_year": year, "basis": basis,
+            "original_dei_fiscal_year": inspected["dei_fiscal_year"],
+            "actual_period": inspected["actual_period"],
+            "source_inspection_status": inspected["status"],
+            "metadata_conflict_retained": inspected["status"] == "SOURCE_LABEL_CONFLICT",
+            "source_inspection": inspected,
+            "candidate_uniqueness_proven": False,
+            "source_admission_proven": False,
+            "metric_acceptance_proven": False,
+            "calls": {"provider": 0, "paid": 0, "sec": 0}}
+    return {**body, "label_resolution_id": content_hash(value=body)}

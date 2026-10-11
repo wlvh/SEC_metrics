@@ -1,0 +1,25 @@
+{"case": "clean", "variant": "prior", "accepted": true, "value": "58496000000", "xml_check": "MATCH"}
+{"case": "clean", "variant": "repair", "accepted": true, "value": "58496000000", "xml_check": "MATCH"}
+{"case": "selected text 100", "variant": "prior", "accepted": true, "value": "58496000000", "xml_check": "MATCH"}
+{"case": "selected text 100", "variant": "repair", "accepted": false, "error": "SELECTED_REPORTED_REVENUE_SINGLE_REVENUE_SELECTED_CELL_TEXT_CONFLICT"}
+{"case": "selected span 100", "variant": "prior", "accepted": true, "value": "58496000000", "xml_check": "MATCH"}
+{"case": "selected span 100", "variant": "repair", "accepted": false, "error": "SELECTED_REPORTED_REVENUE_SINGLE_REVENUE_SELECTED_CELL_TEXT_CONFLICT"}
+{"case": "earlier extension repeated header", "variant": "prior", "accepted": true, "value": "58496000000", "xml_check": "MATCH"}
+{"case": "earlier extension repeated header", "variant": "repair", "accepted": false, "error": "SELECTED_REPORTED_REVENUE_SINGLE_REVENUE_OTHER_AMOUNT"}
+{"case": "earlier plain amount repeated header", "variant": "prior", "accepted": false, "error": "SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED"}
+{"case": "earlier plain amount repeated header", "variant": "repair", "accepted": false, "error": "SELECTED_REPORTED_REVENUE_SINGLE_REVENUE_UNTAGGED_AMOUNT:row=2:100"}
+{"case": "clean repeated header", "variant": "prior", "accepted": true, "value": "58496000000", "xml_check": "MATCH"}
+{"case": "clean repeated header", "variant": "repair", "accepted": true, "value": "58496000000", "xml_check": "MATCH"}
+{"case": "clean USD symbol", "variant": "prior", "accepted": true, "value": "58496000000", "xml_check": "MATCH"}
+{"case": "clean USD symbol", "variant": "repair", "accepted": true, "value": "58496000000", "xml_check": "MATCH"}
+{"case": "two repeated headers with extension between", "variant": "prior", "accepted": true, "value": "58496000000", "xml_check": "MATCH"}
+{"case": "two repeated headers with extension between", "variant": "repair", "accepted": false, "error": "SELECTED_REPORTED_REVENUE_SINGLE_REVENUE_OTHER_AMOUNT"}
+{"case": "earlier extension preceding first header", "variant": "prior", "accepted": true, "value": "58496000000", "xml_check": "MATCH"}
+{"case": "earlier extension preceding first header", "variant": "repair", "accepted": false, "error": "SELECTED_REPORTED_REVENUE_SINGLE_REVENUE_OTHER_AMOUNT"}
+{"case": "selected native own scale mismatch", "variant": "prior", "accepted": true, "value": "58496000", "xml_check": "NOT_SUPPLIED"}
+{"case": "selected native own scale mismatch", "variant": "repair", "accepted": false, "error": "SELECTED_REPORTED_REVENUE_VISIBLE_NATIVE_UNIT_UNRESOLVED"}
+{"case": "following cost different scale", "variant": "prior", "accepted": false, "error": "SELECTED_REPORTED_REVENUE_VISIBLE_NATIVE_UNIT_UNRESOLVED"}
+{"case": "following cost different scale", "variant": "repair", "accepted": true, "value": "58496000000", "xml_check": "NOT_SUPPLIED"}
+{"default_v2_all_fields_equal": true, "scope_id": "sha256:585dcd3eff1ba560c015515a271a660df21abc3e7bc286bb9c3cb124e220de54", "single_option_field_present": false}
+{"selected_native_ordinal": 9, "actual_list_offset": 8, "misindexed_concept": "us-gaap:CostOfGoodsAndServicesSold", "misindexed_scale": "6"}
+independent_controls=12; expectations_met=true; network_calls=0; source_mutations=0

@@ -1,0 +1,25 @@
+test_documented_envelope_uses_existing_shared_answer_parser (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_documented_envelope_uses_existing_shared_answer_parser) ... ok
+test_injected_sdk_receives_one_text_request_without_private_imports (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_injected_sdk_receives_one_text_request_without_private_imports) ... ok
+test_known_counts_are_read_but_charge_is_not_invented (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_known_counts_are_read_but_charge_is_not_invented) ... ok
+test_missing_invalid_usage_remains_unknown (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_missing_invalid_usage_remains_unknown) ... ok
+test_truncated_filtered_and_error_returns_cannot_be_answers (tests.vnext.test_securegpt_documented_response.DocumentedSecureGPTResponseTest.test_truncated_filtered_and_error_returns_cannot_be_answers) ... ok
+test_non_text_or_malformed_messages_are_rejected_not_dropped (tests.vnext.test_securegpt_probe.MessageFormatTests.test_non_text_or_malformed_messages_are_rejected_not_dropped) ... ok
+test_string_content_becomes_text_parts (tests.vnext.test_securegpt_probe.MessageFormatTests.test_string_content_becomes_text_parts) ... ok
+test_text_parts_pass_through_unchanged (tests.vnext.test_securegpt_probe.MessageFormatTests.test_text_parts_pass_through_unchanged) ... ok
+test_arbitrary_text_is_not_pass (tests.vnext.test_securegpt_probe.ResponseTests.test_arbitrary_text_is_not_pass) ... ok
+test_choices_and_text_blocks (tests.vnext.test_securegpt_probe.ResponseTests.test_choices_and_text_blocks) ... ok
+test_dict (tests.vnext.test_securegpt_probe.ResponseTests.test_dict) ... ok
+test_error_message_not_success (tests.vnext.test_securegpt_probe.ResponseTests.test_error_message_not_success) ... ok
+test_explicit_path (tests.vnext.test_securegpt_probe.ResponseTests.test_explicit_path) ... ok
+test_no_markdown_repair (tests.vnext.test_securegpt_probe.ResponseTests.test_no_markdown_repair) ... ok
+test_old_response_wrong_nonce (tests.vnext.test_securegpt_probe.ResponseTests.test_old_response_wrong_nonce) ... ok
+test_response_object_with_text_body_is_kept_for_offline_reading (tests.vnext.test_securegpt_probe.ResponseTests.test_response_object_with_text_body_is_kept_for_offline_reading) ... ok
+test_string (tests.vnext.test_securegpt_probe.ResponseTests.test_string) ... ok
+test_truncation_is_not_pass (tests.vnext.test_securegpt_probe.ResponseTests.test_truncation_is_not_pass) ... ok
+test_wrong_sum_and_non_integer (tests.vnext.test_securegpt_probe.ResponseTests.test_wrong_sum_and_non_integer) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.001s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 19, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_securegpt_documented_response", "tests.vnext.test_securegpt_probe.MessageFormatTests", "tests.vnext.test_securegpt_probe.ResponseTests"]}

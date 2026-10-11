@@ -1,0 +1,55 @@
+test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) ... 
+  test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) (dependency='scripts/vnext/going_concern_source.py') ... FAIL
+  test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) (dependency='catalog/r6/going_concern_source_rules_v1.json') ... FAIL
+  test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) (dependency='catalog/r6/semantic_source_v1.json') ... FAIL
+  test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) (dependency='scripts/vnext/invocation_control.py') ... FAIL
+
+======================================================================
+FAIL: test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) (dependency='scripts/vnext/going_concern_source.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-company-model/SEC_metrics/tests/vnext/test_current_d04_company.py", line 84, in test_source_or_interpretation_change_rechecks_once_then_reuses
+    self.assertEqual(second['status'],'CANDIDATE_WITHHELD')
+AssertionError: 'PREVIOUS_INPUT_WITHHELD' != 'CANDIDATE_WITHHELD'
+- PREVIOUS_INPUT_WITHHELD
++ CANDIDATE_WITHHELD
+
+
+======================================================================
+FAIL: test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) (dependency='catalog/r6/going_concern_source_rules_v1.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-company-model/SEC_metrics/tests/vnext/test_current_d04_company.py", line 84, in test_source_or_interpretation_change_rechecks_once_then_reuses
+    self.assertEqual(second['status'],'CANDIDATE_WITHHELD')
+AssertionError: 'PREVIOUS_INPUT_WITHHELD' != 'CANDIDATE_WITHHELD'
+- PREVIOUS_INPUT_WITHHELD
++ CANDIDATE_WITHHELD
+
+
+======================================================================
+FAIL: test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) (dependency='catalog/r6/semantic_source_v1.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-company-model/SEC_metrics/tests/vnext/test_current_d04_company.py", line 84, in test_source_or_interpretation_change_rechecks_once_then_reuses
+    self.assertEqual(second['status'],'CANDIDATE_WITHHELD')
+AssertionError: 'PREVIOUS_INPUT_WITHHELD' != 'CANDIDATE_WITHHELD'
+- PREVIOUS_INPUT_WITHHELD
++ CANDIDATE_WITHHELD
+
+
+======================================================================
+FAIL: test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) (dependency='scripts/vnext/invocation_control.py')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-company-model/SEC_metrics/tests/vnext/test_current_d04_company.py", line 84, in test_source_or_interpretation_change_rechecks_once_then_reuses
+    self.assertEqual(second['status'],'CANDIDATE_WITHHELD')
+AssertionError: 'PREVIOUS_INPUT_WITHHELD' != 'CANDIDATE_WITHHELD'
+- PREVIOUS_INPUT_WITHHELD
++ CANDIDATE_WITHHELD
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.119s
+
+FAILED (failures=4)
+{"allowed_skips": 0, "errors": 0, "failures": 4, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest"]}

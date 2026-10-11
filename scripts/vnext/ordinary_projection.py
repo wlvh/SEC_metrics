@@ -21,8 +21,54 @@ A05_FORMULA_TEXT = ("Selected net income / ((current period-end total assets + "
                     "prior period-end total assets) / 2)")
 
 
+def _selected_proxy_display(*, case, annual, evidence):
+    """Display the explicit C03 source even when its amount is withheld.
+
+    The producer owns proxy selection and validates its metadata/source
+    proofs. This check connects that selected filing to the same input
+    binding, reporter and actual primary reference used by the saved case.
+    """
+    selected=case.get('selected_proxy')
+    if selected is None:
+        return None
+    from sec_urls import accession_document_url
+    _need(case['primary_metric_id']=='C03' and type(selected) is dict
+          and {'accessionNumber','primaryDocument','form','filingDate'}<=set(selected)
+          and selected['form']=='DEF 14A', 'ORDINARY_SELECTED_PROXY_DISPLAY_INVALID')
+    identity={k:selected[k] for k in ('accessionNumber','form','filingDate')}
+    _need(_filings(case['input_binding']).get(selected['accessionNumber'])==identity,
+          'ORDINARY_SELECTED_PROXY_METADATA_NOT_BOUND')
+    url=accession_document_url(cik=int(annual['entity']),accession=selected['accessionNumber'],
+                              document_name=selected['primaryDocument'])
+    matching=[r for r in case['references'] if r.get('company_id')==annual['company_id']
+              and r.get('accession')==selected['accessionNumber']
+              and r.get('document_name')==selected['primaryDocument']
+              and r.get('source_url')==url and r.get('source_role')=='governance_proxy']
+    _need(len(matching)==1 and all(e['accession']==selected['accessionNumber'] for e in evidence),
+          'ORDINARY_SELECTED_PROXY_SOURCE_NOT_BOUND')
+    return identity
+
+
 def _need(condition, reason):
     if not condition:raise ValueError(reason)
+
+
+_SCOPE_DISPLAY_KEYS = ('scope_id', 'method', 'status', 'complete_scope_proven', 'selected_fiscal_column_year')
+
+
+def _display_selection(selection):
+    """Public-row context names a revenue scope by identity and outcome only.
+
+    The full scope (prepared annual input, native report rows, statement text,
+    cell proofs) stays in the saved input binding and records. The CSV context
+    keeps its scope_id, method and status, as the historical company entry
+    already does, so one row does not carry hundreds of kilobytes of copied
+    source material.
+    """
+    if not isinstance(selection, dict) or not isinstance(selection.get('revenue_scope'), dict):
+        return selection
+    scope = selection['revenue_scope']
+    return {**selection, 'revenue_scope': {key: scope[key] for key in _SCOPE_DISPLAY_KEYS if key in scope}}
 
 
 def _reporting_company_view(*, data_root, company, annual, calculation_target,
@@ -446,7 +492,7 @@ def render_ordinary_records(*, data_root, manifest, records, case,
         label,note=_period_label(result,period);row["fiscal_period"]=label
         row["notes"]=" ".join([row.get("notes",""),note,"Native state: "+result["publication"]+"; reason: "+result["reason_code"]+"."])
         row["context_or_dimension"]=json.dumps({"scope":trace["calculation_target"]["scope"],"measurement_kind":label,
-            "annual_filing_period":period,"selection":case.get("selection"),
+            "annual_filing_period":period,"selection":_display_selection(case.get("selection")),
             "source_reference_ids":[r["source_reference_id"] for r in case["references"]]},ensure_ascii=False,sort_keys=True)
     elif result['text_payload'] is not None:
         _need(len(evidence)==len(result["text_payload"]["items"]),"ORDINARY_TEXT_EVIDENCE_SET_CHANGED")
@@ -468,6 +514,10 @@ def render_ordinary_records(*, data_root, manifest, records, case,
     row.update(accession=";".join(accessions),confidence="")
     if known:
         row.update(form=";".join(dict.fromkeys(f["form"] for f in known)),filed_date=";".join(dict.fromkeys(f["filingDate"] for f in known)))
+    selected_proxy=_selected_proxy_display(case=case,annual=annual,evidence=evidence)
+    if selected_proxy is not None:
+        row.update(form=selected_proxy['form'],filed_date=selected_proxy['filingDate'],
+                   accession=selected_proxy['accessionNumber'])
     if metric=="C02":row["source_class"]="PROXY" if known and all(f["form"]=="DEF 14A" for f in known) else "TEXT"
     if annual["fiscal_year_label_resolution"]["metadata_conflict_retained"]:
         row["notes"]+=" Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding."

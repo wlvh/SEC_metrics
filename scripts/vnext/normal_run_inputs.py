@@ -20,13 +20,19 @@ def _need(condition, reason):
 
 
 def prepare_ordinary_zero_ai_run_input(*, repo_root: Path, company_id: str, metric_id: str, rules_root=None,
-                                     validate_depreciation_scope=False):
+                                     validate_depreciation_scope=False, validate_revenue_scope=False,
+                                     revenue_scope_contract='components-v1'):
     specifications = validate_ordinary_spec_files(repo_root=repo_root if rules_root is None else Path(rules_root))
     _need(metric_id in specifications,"ORDINARY_RUN_METRIC_NOT_IN_ZERO_AI_SET")
+    _need(revenue_scope_contract in {'components-v1','reported-total-v2'}
+          and (validate_revenue_scope or revenue_scope_contract=='components-v1'),
+          'ORDINARY_RUN_REVENUE_SCOPE_CONTRACT_INVALID')
     expected_ids = {metric_id, *specifications[metric_id]["compiled_spec"]["compiled"]["dependencies"]}
     if metric_id in SUPPORTED_METRICS:
         component = resolve_ordinary_zero_ai_metric(repo_root=repo_root,company_id=company_id,metric_id=metric_id,
             **({'validate_depreciation_scope':True} if validate_depreciation_scope else {}),
+            **({'validate_revenue_scope':True} if validate_revenue_scope else {}),
+            **({'revenue_scope_contract':revenue_scope_contract} if revenue_scope_contract!='components-v1' else {}),
             **({} if rules_root is None else {'rules_root':rules_root}))
         specs = {metric_id:component["compiled_spec"],**component["dependency_specs"]}
         records = list(component["records"])
@@ -39,6 +45,8 @@ def prepare_ordinary_zero_ai_run_input(*, repo_root: Path, company_id: str, metr
         # entry as well, so a complete Run never invents or omits its result.
         for dependency in sorted(expected_ids-present_results):
             value = resolve_ordinary_zero_ai_metric(repo_root=repo_root,company_id=company_id,metric_id=dependency,
+                **({'validate_revenue_scope':True} if validate_revenue_scope else {}),
+                **({'revenue_scope_contract':revenue_scope_contract} if revenue_scope_contract!='components-v1' else {}),
                 **({} if rules_root is None else {'rules_root':rules_root}))
             _need(value["source_records"] == source_records and value["source_proofs"] == component["source_proofs"],
                   "ORDINARY_RUN_DEPENDENCY_SOURCE_SET_DIFFERS")

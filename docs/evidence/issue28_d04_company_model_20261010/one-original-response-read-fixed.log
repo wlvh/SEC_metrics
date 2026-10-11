@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<stdin>", line 16, in <module>
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-company-model/SEC_metrics/scripts/vnext/native_assessment_replay.py", line 193, in replay_original_d04_response
+    success = control.load_successful_response(workspace_dir=path,plan=plan,_historical_view=view)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-company-model/SEC_metrics/scripts/vnext/invocation_control.py", line 1967, in load_successful_response
+    validated_plan = validate_ai_invocation_plan(plan=plan, _historical_view=_historical_view)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-d04-company-model/SEC_metrics/scripts/vnext/invocation_control.py", line 990, in validate_ai_invocation_plan
+    raise InvocationControlError("Successor invocation policy binding differs")
+vnext.invocation_control.InvocationControlError: Successor invocation policy binding differs

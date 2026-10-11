@@ -1,0 +1,55 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics",
+  "base_before_repair": "7e6f6a240e63000ad69c1a9354f86980eced4228",
+  "tested_tree": "UNCOMMITTED_P2_REPAIR",
+  "actual_source_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/source",
+  "state_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state",
+  "reader_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/p2-reader",
+  "first_seconds": 2.332526500103995,
+  "repeat_seconds": 0.08717399998567998,
+  "reader_seconds": 0.12707462487742305,
+  "old_files_unchanged": {
+    "updates/B01/results/5067270620c4462ea03155d59b128def/metrics_matrix.csv": "f2533454b84bc5bcce38fdeeb3a8a01c4cde59f41d16250c2f023b88bdd60f51",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/metric_evidence.csv": "3d98c445d930986bb757060d8862b2ec836b3c979bbe096af1fb49f3e03b8c35",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/records.jsonl": "a3adb07e07323dfc21a7c466a29a8709802d16912952c2b8a148114287901799",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/input-assessments.json": "801a1fed022a1d311eb18fc64e94aae6af998e6e1f3cce6187d5a23b5a5898e6",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/manifest.json": "63c2338300a6e3698c8f0bb9d1b65cf95afc4c9fbdcf029e11a2d2701fd7bf61",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/receipt.json": "4feb9bb680e24d6a15e168bd5b477f83df94d4d2959e206baa755fa869747dce"
+  },
+  "after_repeat_protected_files": {
+    "updates/B01/results/5067270620c4462ea03155d59b128def/metrics_matrix.csv": "f2533454b84bc5bcce38fdeeb3a8a01c4cde59f41d16250c2f023b88bdd60f51",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/metric_evidence.csv": "3d98c445d930986bb757060d8862b2ec836b3c979bbe096af1fb49f3e03b8c35",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/records.jsonl": "a3adb07e07323dfc21a7c466a29a8709802d16912952c2b8a148114287901799",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/input-assessments.json": "801a1fed022a1d311eb18fc64e94aae6af998e6e1f3cce6187d5a23b5a5898e6",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/manifest.json": "63c2338300a6e3698c8f0bb9d1b65cf95afc4c9fbdcf029e11a2d2701fd7bf61",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "updates/B01/results/5067270620c4462ea03155d59b128def/receipt.json": "4feb9bb680e24d6a15e168bd5b477f83df94d4d2959e206baa755fa869747dce",
+    "updates/B01/results/7f37bcacdcdf4f3083918dc9a0c40932/metrics_matrix.csv": "f2533454b84bc5bcce38fdeeb3a8a01c4cde59f41d16250c2f023b88bdd60f51",
+    "updates/B01/results/7f37bcacdcdf4f3083918dc9a0c40932/metric_evidence.csv": "3d98c445d930986bb757060d8862b2ec836b3c979bbe096af1fb49f3e03b8c35",
+    "updates/B01/results/7f37bcacdcdf4f3083918dc9a0c40932/records.jsonl": "a3adb07e07323dfc21a7c466a29a8709802d16912952c2b8a148114287901799",
+    "updates/B01/results/7f37bcacdcdf4f3083918dc9a0c40932/input-assessments.json": "801a1fed022a1d311eb18fc64e94aae6af998e6e1f3cce6187d5a23b5a5898e6",
+    "updates/B01/results/7f37bcacdcdf4f3083918dc9a0c40932/manifest.json": "7a210432ac7c8026eb9b327bc66db58ee1f3d64b5f3e0216d63dd3073f110e27",
+    "updates/B01/results/7f37bcacdcdf4f3083918dc9a0c40932/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "updates/B01/results/7f37bcacdcdf4f3083918dc9a0c40932/receipt.json": "4feb9bb680e24d6a15e168bd5b477f83df94d4d2959e206baa755fa869747dce"
+  },
+  "one_changed_program_version": 1,
+  "value": "22621000000",
+  "unit": "USD",
+  "period": [
+    "2025-02-02",
+    "2026-01-31"
+  ],
+  "result_id": "sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e",
+  "csv_sha256": "90580545e3f014c8f88949ae0c88040726a906a90ddaaf7d36e135ac694dfe85",
+  "tested_code_sha256": {
+    "scripts/vnext/selected_revenue_scope_v1.py": "fec4ba263a08e45c0c8d62887a303eddce3641852dad4ad25cd74512d89fe07b",
+    "scripts/vnext/selected_reported_revenue_v2.py": "349de40756e01a0b1753f9365705d1b121da875f60a38918acf1cf6dcb514805"
+  },
+  "CLI_output": "{\n  \"elapsed_seconds\": 2.319249999942258,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"macys\",\n  \"run_id\": \"20261010T014854Z-718a92e4\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"bb613bde2dec4ec6b604dc522e8501bc\",\n      \"version\": \"7f37bcacdcdf4f3083918dc9a0c40932\",\n      \"result_id\": \"sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e\",\n      \"result_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state/updates/B01/results/7f37bcacdcdf4f3083918dc9a0c40932\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e\",\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state/updates/B01/results/7f37bcacdcdf4f3083918dc9a0c40932\",\n      \"program_version\": {\n        \"commit\": \"7e6f6a240e63000ad69c1a9354f86980eced4228\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/source\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics\",\n  \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state\",\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/p2-output/20261010T014854Z-718a92e4\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false\n}\n{\n  \"elapsed_seconds\": 0.08620479190722108,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"macys\",\n  \"run_id\": \"20261010T014857Z-8908a6ac\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"edde2c2ab65f41ef856272a0f7618dd1\",\n      \"version\": \"7f37bcacdcdf4f3083918dc9a0c40932\",\n      \"result_id\": \"sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e\",\n      \"result_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state/updates/B01/results/7f37bcacdcdf4f3083918dc9a0c40932\",\n      \"result_reason_code\": \"PASS\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e\",\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state/updates/B01/results/7f37bcacdcdf4f3083918dc9a0c40932\",\n      \"program_version\": {\n        \"commit\": \"7e6f6a240e63000ad69c1a9354f86980eced4228\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/source\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue28-current-reported-revenue/SEC_metrics\",\n  \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/state\",\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-current-reported-total-ek3cs4dk/macys/p2-output/20261010T014857Z-8908a6ac\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false\n}\n",
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}
