@@ -17,7 +17,7 @@ EXTRA_REVENUE_CONCEPTS = (
     'us-gaap:RevenueFromCollaborativeArrangementExcludingRevenueFromContractWithCustomer',
     'us-gaap:RoyaltyRevenue', 'us-gaap:Revenues',
 )
-UNIT_HEADER = (r"\(?(?:dollars in |in )?(?:millions|thousands)(?:, except (?:per (?:common )?share|per-share) data)?\)?",)
+UNIT_HEADER = (r"\(?(?:dollars in |in )?(?:millions|thousands)(?:, except (?:per (?:common )?share|per-share) (?:data|amounts))?\)?",)
 
 STATEMENT_CONCEPTS = ('us-gaap:NetIncomeLoss', 'us-gaap:ProfitLoss',
                       'us-gaap:CostOfRevenue', 'us-gaap:CostOfGoodsAndServicesSold')
@@ -72,6 +72,38 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
                     if t['end_byte'] <= span['start_byte']), default=0)
     intro = [b for b in structure['blocks'] if not b['inside_table']
              and previous <= b['start_byte'] < b['end_byte'] <= span['start_byte']]
+    title_pattern = r'consolidated (?:statements? of (?:income|operations|earnings)|income statements?)'
+    if adjacent_heading:
+        # A layout div may contain both a unit caption and the following table.
+        # Index only the original pre-table interval so its caption is not lost
+        # when the complete div is classified as containing a nested block.
+        from .composite_scope import _SourceStructure
+        from .canonical import sha256_bytes
+        class HeadingFragment(_SourceStructure):
+            def __init__(self, source_bytes):
+                super().__init__(source_bytes)
+                self.visible_parts = []
+            def handle_data(self, data):
+                self.visible_parts.append(data)
+                super().handle_data(data)
+        fragment_start = max((b['start_byte'] for b in intro
+            if re.fullmatch(title_pattern,_label_key(b['visible_text']))), default=previous)
+        fragment = HeadingFragment(raw[fragment_start:span['start_byte']])
+        clipped = fragment.finish()['blocks']
+        original = {(b['start_byte'], b['end_byte']): b for b in intro}
+        if any(b['end_byte'] == span['start_byte'] - fragment_start
+               and (fragment_start+b['start_byte'], fragment_start+b['end_byte']) not in original
+               for b in clipped):
+            covered = ''.join(b['visible_text'] for b in clipped)
+            _need(re.sub(r'\s+', '', covered) == re.sub(r'\s+', '', ''.join(fragment.visible_parts)),
+                  'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
+            intro = [b for b in intro if b['end_byte'] <= fragment_start]
+            for block in clipped:
+                start, end = fragment_start+block['start_byte'], fragment_start+block['end_byte']
+                intro.append(original.get((start,end), {**block,
+                    'start_byte':start, 'end_byte':end,
+                    'span_sha256':sha256_bytes(content=raw[start:end]),
+                    'clipped_at_table_start':end==span['start_byte']}))
     heading_span = None
     if adjacent_heading and not intro:
         # Some filings put the statement title and units in a separate layout
@@ -92,7 +124,6 @@ def _statement_scope(raw, index, parsed, table, *, adjacent_heading=False,
                 _need(re.sub(r'\s+','',all_text)==re.sub(r'\s+','',covered),
                       'STATEMENT_HEADING_TEXT_COVERAGE_UNRESOLVED')
                 heading_span = heading
-    title_pattern = r'consolidated (?:statements? of (?:income|operations|earnings)|income statements?)'
     titles = [b for b in intro if re.fullmatch(title_pattern, _label_key(b['visible_text']))]
     excluded_context, page_boundary = [], None
     if bind_statement_page and titles:

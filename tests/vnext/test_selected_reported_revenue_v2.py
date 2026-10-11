@@ -15,6 +15,28 @@ def changed(source,raw):
 
 
 class SelectedReportedRevenueTest(unittest.TestCase):
+    def test_unit_before_nested_table_retains_exact_source_and_rejects_conflicts(self):
+        primary,xml,annual=originals()
+        raw=primary['raw_bytes'].replace(b'(MILLIONS, EXCEPT PER SHARE DATA)',b'')
+        raw=raw.replace(b'<table>',b'<div><span>(in millions, except per share amounts)</span><table>',1)
+        raw=raw.replace(b'</table>',b'</table></div>',1)
+        scope=reported_revenue_scope(primary=changed(primary,raw),xml=xml,annual=annual,approved_concepts=APPROVED)
+        self.assertTrue(scope['complete_scope_proven'])
+        proof=scope['reported_totals'][0]['unit_sources'][0]['proof']
+        self.assertEqual(proof['span_sha256'],sha256_bytes(content=raw[proof['start_byte']:proof['end_byte']]))
+        self.assertLessEqual(proof['end_byte'],scope['reported_totals'][0]['statement_scope']['table_span']['start_byte'])
+        for bad in (raw.replace(b'in millions',b'in thousands'),
+                    raw.replace(b'</span><table>',b'</span>Revenue excludes subsidiaries<table>'),
+                    raw.replace(b'</span><table>',b'</span><p>Segment Alpha only</p><table>')):
+            with self.subTest(bad=bad),self.assertRaisesRegex(ValueError,'(?:UNIT_UNRESOLVED|STATEMENT_.*SCOPE_UNRESOLVED)'):
+                reported_revenue_scope(primary=changed(primary,bad),xml=xml,annual=annual,approved_concepts=APPROVED)
+        # A unit on a preceding monetary table is not this statement's unit.
+        no_unit=primary['raw_bytes'].replace(b'(MILLIONS, EXCEPT PER SHARE DATA)',b'')
+        earlier=b'<table><tr><td>(in millions, except per share amounts)</td><td>7</td></tr></table>'
+        with self.assertRaisesRegex(ValueError,'UNIT_UNRESOLVED'):
+            reported_revenue_scope(primary=changed(primary,no_unit.replace(b'<div>Consolidated',earlier+b'<div>Consolidated')),
+                                   xml=xml,annual=annual,approved_concepts=APPROVED)
+
     def test_plain_statement_sections_and_issuer_bound_eps_heading_are_not_scope_prose(self):
         primary,xml,annual=originals()
         raw=primary['raw_bytes'].replace(b'<dei:DocumentType',
