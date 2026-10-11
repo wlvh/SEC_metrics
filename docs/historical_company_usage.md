@@ -360,3 +360,25 @@ python3 tools/vnext_company.py results \
 Salesforce FY2026可用同一候选命令选择 `--company salesforce --fiscal-year-start 2026 --fiscal-year-end 2026 --metric B03`，实际期间为2025-02-01至2026-01-31。原件D&A的12亿与36.31亿美元候选冲突，当前结果扣留，原因 `B03_DEPRECIATION_AMORTIZATION_SCOPE_UNPROVEN`，值为空；CLI退出码2表示这个明确限制。相同输入复跑应复用该扣留，不能挑较大金额或把扣留改成业务不适用。Marriott FY2021–FY2023完整D&A仍未解决；FY2025保留旧正确参考，本节未证明它已由新历史入口完成。历史B03修订与继任主体处理仍为实现缺口，线上来源发现／补齐仍未完成。
 
 本节的来源恢复、原件与调用边界沿本指南前述流程。主要实现、错公司输入拒绝、首次处理／零计算复跑／独立读取以及剩余公共依赖均在[PR167的单份主要记录](evidence/issue47_selected_income_consumer_20261011/README.md)及其[反馈修补](evidence/issue47_selected_income_consumer_20261011/coordinate-feedback/README.md)。技术接收不改变原Run、原失败或真实调用额度，也不授予正式采纳、部署或active切换。
+
+## 独立后继：B03 保存来源预检与链接修订
+
+以下能力保存在独立开发分支 `task/issue47-b03-link-amendment-20261011`，消费 PR168 的只读来源接口、PR167 的共享计算及其公共依赖。它未追加到 PR167，尚未作为主干能力接收。取得材料仍沿本指南的保存来源恢复流程；当前命令不自动发现并获取缺件。
+
+```bash
+python3 tools/vnext_company.py sources --company southwest_airlines \
+  --source-root /your/restored/source-inputs --report-end 2025-12-31 --metric B03
+python3 tools/vnext_company.py run --company southwest_airlines --period fiscal-years \
+  --fiscal-year-start 2025 --fiscal-year-end 2025 --metric B03 \
+  --source-root /your/restored/source-inputs --work-dir "$HOME/sec-metrics-sw-b03/state" \
+  --output-dir "$HOME/sec-metrics-sw-b03/runs"
+python3 tools/vnext_company.py results --company southwest_airlines \
+  --state-root "$HOME/sec-metrics-sw-b03/state" \
+  --output-root "$HOME/sec-metrics-sw-b03/read-01"
+```
+
+`report-end` 是申报截止日期；也可在 `sources` 使用 `--fiscal-year-start 2025 --fiscal-year-end 2025`，由原件解释财年标签。此真实材料的六个来源 URL 与 B03 任务实际使用的源集合相同：submissions、CompanyFacts、原年报 primary／index／XML，以及修订主文档。B03 单项不需要 B02 的前期原件；链接修订的关系检查不额外读取修订 index／XML。混选 B01/B02 时仍保留它们自己的依赖要求。
+
+来源齐备只说明材料存在且可读取。Southwest 的这个修订另经既有完整检查确认只改 Exhibit 3.2 链接及认证、原财务数值保持，才允许后续处理。实际 FY2025 B03 为 `(428 + 1560) / 28063 = 0.07084060863058119231728610626 ratio`，2025-01-01至2025-12-31；重复和独立读取均保值与身份。Part III 仅事件许可、财务修正、期间变化、待审关系或继任主体不能沿该路径自动给值。
+
+反例是 Marriott FY2021：同一预检可报保存来源齐备，却没有完整 D&A 业务结论。它不执行 Calculator、不改旧空值、不授予模型或获取信用。后继运行与源码组合、原件关系、误字段诊断、实际命令和未完成范围见[唯一修订记录](evidence/issue47_b03_link_amendment_20261011/README.md)及[公共来源接收](evidence/issue47_b03_link_amendment_20261011/source-receiving/README.md)。这段保存来源流程仍不代表五年 B03、在线发现／补齐或1950位置验收完成。
