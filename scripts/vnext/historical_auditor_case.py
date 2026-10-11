@@ -14,7 +14,7 @@ PROCESSING_FILES = tuple('scripts/vnext/'+name+'.py' for name in (
     'governance_signals', 'deterministic_router', 'calculator', 'specs',
     'records', 'sources', 'canonical', 'ordinary_source_authority')) + (
     SPEC_PATH, 'catalog/r5/C04_auditor_changes_v2.md',
-    'scripts/sec_urls.py',
+    'scripts/sec_urls.py', 'scripts/sec_http.py',
     'config/normal_period_selection_v1.json', 'config/normal_fiscal_year_labels_v1.json')
 PROCESSING_FILES = tuple(dict.fromkeys((*PROCESSING_FILES, *SELECTED_PROCESSING_FILES)))
 

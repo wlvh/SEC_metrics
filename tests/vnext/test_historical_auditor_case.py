@@ -57,6 +57,7 @@ class HistoricalAuditorCaseTest(TestCase):
                          'normal_history_catalog'):
             self.assertIn('scripts/vnext/'+filename+'.py', cases.PROCESSING_FILES)
         self.assertIn('scripts/sec_urls.py', cases.PROCESSING_FILES)
+        self.assertIn('scripts/sec_http.py', cases.PROCESSING_FILES)
 
 
 class HistoricalAuditorProcessingIdentityTest(TestCase):
@@ -68,10 +69,16 @@ class HistoricalAuditorProcessingIdentityTest(TestCase):
     period_root = _controls.period_root
 
     def test_url_selection_change_reprocesses_once_and_keeps_old_withheld_result(self):
+        self.check_processing_change('scripts/sec_urls.py')
+
+    def test_request_identity_change_reprocesses_once_and_keeps_old_withheld_result(self):
+        self.check_processing_change('scripts/sec_http.py')
+
+    def check_processing_change(self, relative):
         from tests.vnext import test_selected_history_result_state as state
         update = state.update
         original_hash = update.sha256_file
-        url_path = state.ROOT / 'scripts/sec_urls.py'
+        url_path = state.ROOT / relative
         self.outcomes[2022, 'C04'] = 'WITHHELD'
 
         def invoke():
