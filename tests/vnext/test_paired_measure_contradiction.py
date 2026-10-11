@@ -49,6 +49,18 @@ class PairedReportedComparisonTest(unittest.TestCase):
 
 
 class DefaultRevenueScopeDefectTest(unittest.TestCase):
+    def test_new_current_and_historical_revenue_defects_match_full_id_only(self):
+        from vnext.company_current_records import _registry,_defects
+        registry=_registry()
+        rows=[d for d in registry['defects'] if d['defect_id'].startswith('CURRENT_OR_HISTORICAL_')]
+        self.assertEqual(len(rows),7)
+        for defect in rows:
+            bad={k:defect[k] for k in ('company_id','metric_id','period_end','result_id')}
+            with self.subTest(result=bad['result_id']):
+                self.assertIn(defect['defect_id'],_defects(bad,registry))
+                self.assertNotIn(defect['defect_id'],_defects({**bad,'result_id':bad['result_id'][:15]},registry))
+                self.assertNotIn(defect['defect_id'],_defects({**bad,'result_id':'new-correct-result'},registry))
+
     def test_default_register_holds_exact_subtotal_result_only(self):
         from vnext.company_current_records import _registry,_defects
         registry=_registry()

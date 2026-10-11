@@ -67,6 +67,79 @@ class CurrentReportedRevenueTest(unittest.TestCase):
                     self.assertEqual(resolver.call_args.kwargs.get('revenue_scope_contract'),
                                      options.get('revenue_scope_contract'))
 
+    def test_current_company_opts_in_b01_b02_b03_but_shared_defaults_do_not(self):
+        from vnext import ordinary_saved_result as saved
+        from vnext.normal_companyfacts_results import resolve_ordinary_companyfacts_metrics
+        for entry in (resolve_ordinary_zero_ai_metric, prepare_ordinary_zero_ai_run_input,
+                      resolve_ordinary_companyfacts_metrics):
+            self.assertFalse(inspect.signature(entry).parameters['allow_single_revenue_line'].default)
+        for metric in ('B01','B02','B03','B04'):
+            with self.subTest(metric=metric), patch.object(saved,'prepare_ordinary_zero_ai_run_input',
+                 side_effect=ValueError('stopped at actual preparation boundary')) as prepare:
+                with self.assertRaisesRegex(ValueError,'actual preparation boundary'):
+                    saved._ordinary_case(Path('/source'), 'lumen_technologies', metric)
+                self.assertEqual(prepare.call_args.kwargs.get('allow_single_revenue_line',False),
+                                 metric in {'B01','B02','B03'})
+
+    def test_b02_public_preparation_passes_scope_option_only_when_enabled(self):
+        from vnext import normal_run_inputs as inputs
+        root=Path(__file__).resolve().parents[2]
+        for options in ({}, {'validate_revenue_scope':True,'revenue_scope_contract':'reported-total-v2',
+                             'allow_single_revenue_line':True}):
+            with self.subTest(options=options), patch.object(inputs,'resolve_ordinary_companyfacts_metrics',
+                 side_effect=ValueError('stop at source resolver')) as resolver:
+                with self.assertRaisesRegex(ValueError,'stop at source resolver'):
+                    inputs.prepare_ordinary_zero_ai_run_input(repo_root=root,company_id='pfizer',metric_id='B02',**options)
+                self.assertEqual(resolver.call_args.kwargs.get('validate_revenue_scope'),options.get('validate_revenue_scope'))
+                self.assertEqual(resolver.call_args.kwargs.get('allow_single_revenue_line'),options.get('allow_single_revenue_line'))
+
+    def test_original_claim_admission_retains_ids_and_excludes_subtotal(self):
+        from vnext.normal_companyfacts_results import _original_revenue_claims
+        source,_,annual=originals()
+        class Reader:
+            def primary(self,filing):return source
+            def read(self,*args,**kwargs):return {'raw_bytes':b'{}'}
+        original=facts(annual)
+        claims=[{'claim_kind':'COMPANYFACTS_NUMERIC_FACT','locator':{'concept':f['concept'].split(':')[1]},
+                 'attributes':{k:f[k] for k in ('entity','accession','period_start','period_end')},
+                 'value':f['value'],'unit':f['unit'],'verified_claim_id':'claim-'+str(i)}
+                for i,f in enumerate(original)]
+        # Label inspection has its own real-source tests; this small control
+        # isolates claim filtering, not source authenticity or company credit.
+        inspected={'status':'METADATA_LABEL_ONLY','source_defined_fiscal_year':None,
+                   'invalid_companyfacts_fy_rows':[],'dei_fiscal_year':2023}
+        real_scope,admit,_=_revenue_admission(primary=source,annual=annual,
+            approved_concepts=APPROVED,contract='reported-total-v2')
+        with patch('vnext.fiscal_year_labels.inspect_fiscal_year_labels',return_value=inspected), \
+             patch('vnext.normal_zero_ai_results._revenue_admission',return_value=(real_scope,admit,None)):
+            kept,scope=_original_revenue_claims(reader=Reader(),prepared=annual,filing=annual['filing'],
+                period=annual['table_input']['target_period'],claims=claims,concepts=APPROVED,
+                allow_single_revenue_line=True)
+        self.assertEqual(kept,[claims[1]])
+        self.assertIs(kept[0],claims[1])
+        self.assertEqual(scope,real_scope)
+
+    def test_single_line_cannot_be_enabled_without_explicit_scope_contract(self):
+        from vnext.normal_companyfacts_results import resolve_ordinary_companyfacts_metrics
+        root=Path(__file__).resolve().parents[2]
+        for entry,kwargs in ((resolve_ordinary_zero_ai_metric,{'metric_id':'B01'}),
+                             (prepare_ordinary_zero_ai_run_input,{'metric_id':'B02'}),
+                             (resolve_ordinary_companyfacts_metrics,{})):
+            with self.subTest(entry=entry.__name__), self.assertRaisesRegex(ValueError,'REVENUE_OPTION_INVALID'):
+                entry(repo_root=root,company_id='pfizer',allow_single_revenue_line=True,**kwargs)
+
+    def test_paired_original_period_mismatch_cannot_reach_revenue_admission(self):
+        from vnext.normal_companyfacts_results import _original_revenue_claims
+        source,_,annual=originals()
+        class Reader:
+            def primary(self,filing):return source
+            def read(self,*args,**kwargs):return {'raw_bytes':b'{}'}
+        with patch('vnext.normal_zero_ai_results._revenue_admission',side_effect=AssertionError('No admission')):
+            with self.assertRaisesRegex(ValueError,'REVENUE_ORIGINAL_PERIOD_CHANGED'):
+                _original_revenue_claims(reader=Reader(),prepared=annual,filing=annual['filing'],
+                    period={**annual['table_input']['target_period'],'period_start':'2022-01-01'},
+                    claims=[],concepts=APPROVED,allow_single_revenue_line=True)
+
     def test_unknown_contract_or_disabled_validation_cannot_opt_in(self):
         for entry in (resolve_ordinary_zero_ai_metric, prepare_ordinary_zero_ai_run_input):
             for contract in ('unknown', 'reported-total-v2'):
@@ -80,13 +153,13 @@ class CurrentReportedRevenueTest(unittest.TestCase):
         root = Path(__file__).resolve().parents[2]
         original_hash = update.sha256_file
         for relative in ('scripts/vnext/selected_reported_revenue_v2.py', 'scripts/vnext/historical_fiscal_labels.py'):
-            for metric in ('B01', 'B03', 'C01'):
+            for metric in ('B01', 'B02', 'B03', 'C01'):
                 with self.subTest(path=relative, metric=metric):
                     before = update._configuration(root, 'pfizer', metric)
                     with patch.object(update, 'sha256_file', side_effect=lambda *, path:
                             'changed-selected-total-proof' if path==root/relative else original_hash(path=path)):
                         after = update._configuration(root, 'pfizer', metric)
-                    self.assertEqual(before!=after, metric in {'B01','B03'})
+                    self.assertEqual(before!=after, metric in {'B01','B02','B03'})
 
     def test_standard_preceding_navigation_is_preserved_without_admitting_scope_prose(self):
         source, _, annual = originals()
@@ -179,4 +252,3 @@ class PublicRowRevenueScopeContextTest(unittest.TestCase):
         self.assertIsNone(_display_selection(None))
         untouched = {'status': 'N_A_STRUCTURAL', 'depreciation_scope': {'complete_business_scope_proven': False}}
         self.assertEqual(_display_selection(untouched), untouched)
-

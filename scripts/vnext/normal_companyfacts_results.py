@@ -12,7 +12,7 @@ from sec_urls import companyfacts_url, submissions_url, submissions_file_url
 from .annual_sources import AnnualUpdateError
 from .batch_workflow import BatchWorkflowError
 from .calculator import metric_is_applicable, withheld_metric_result
-from .canonical import canonical_json_bytes, content_hash, sha256_file, strict_json_loads
+from .canonical import canonical_json_bytes, content_hash, sha256_bytes, sha256_file, strict_json_loads
 from .deterministic_router import adapt_companyfacts
 from .normal_annual_input import annual_period, _registry_rows, NormalAnnualInputError
 from .annual_amendment_scope import prepare_saved_amendment_input, POLICY_PATH as AMENDMENT_POLICY_PATH
@@ -28,13 +28,14 @@ from .traits import repository_company_traits
 from .zero_ai_r2 import (_load_deterministic_catalog, _compiled_deterministic_spec,
     _deterministic_metric_graph, _manual_result_trace, _exact_filing_source_set)
 from .deterministic_catalog import ZeroAiReleaseError
+from .selected_income_source_v1 import IncomeSourceError
 
 
 CATALOG_PATH = "catalog/deterministic_metrics.json"
 _AUTHORITY_PATHS = (CATALOG_PATH, FISCAL_LABEL_POLICY_PATH, AMENDMENT_POLICY_PATH, INSTANT_POLICY_PATH, "config/company_registry.csv", "catalog/company_traits.yaml",
                     "config/metric_applicability.yaml")
 _SOURCE_ERRORS = (AnnualUpdateError, BatchWorkflowError, NormalAnnualInputError,
-                  NormalGovernanceInputError, SourceError, ZeroAiReleaseError)
+                  NormalGovernanceInputError, SourceError, ZeroAiReleaseError, IncomeSourceError)
 
 
 class NormalCompanyfactsError(ValueError):
@@ -92,12 +93,56 @@ def _filing_source(reader, prepared, filing, inventory, concepts):
     return {"reference":source["source_reference"], "manifest":manifest}, claims
 
 
-def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str, rules_root=None):
+def _original_revenue_claims(*, reader, prepared, filing, period, claims, concepts,
+                             allow_single_revenue_line):
+    """Admit each year's original full total without changing claim identities.
+
+    This current consumer reuses the public statement proof. Later comparative
+    columns do not replace the immediately preceding filing's original value.
+    """
+    from .fiscal_year_labels import inspect_fiscal_year_labels
+    from .normal_annual_input_v2 import _choose_fiscal_year
+    from .normal_zero_ai_results import _revenue_admission
+    primary = reader.primary(filing)
+    facts = reader.read(companyfacts_url(cik=int(prepared['entity'])),
+        accession=filing['accessionNumber'], role='companyfacts', media_type='application/json')
+    original_period = annual_period(raw=primary['raw_bytes'], cik=prepared['entity'], filing=filing)
+    _need(all(original_period[k] == period[k] for k in ('period_start','period_end')),
+          'NORMAL_COMPANYFACTS_REVENUE_ORIGINAL_PERIOD_CHANGED')
+    inspected = inspect_fiscal_year_labels(primary_bytes=primary['raw_bytes'],
+        companyfacts_bytes=facts['raw_bytes'], expected_primary_sha256=sha256_bytes(content=primary['raw_bytes']),
+        expected_companyfacts_sha256=sha256_bytes(content=facts['raw_bytes']),
+        expected_cik=prepared['entity'], filing=filing)
+    year, _ = _choose_fiscal_year(inspected)
+    label = {'record_type':'ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION','source_inspection':inspected,
+        'original_dei_fiscal_year':original_period['fiscal_year'],'selected_fiscal_year':year}
+    annual = {'company_id':prepared['company_id'],'entity':prepared['entity'],'filing':filing,
+              'table_input':{'target_period':original_period}}
+    scope, admit, _ = _revenue_admission(primary=primary, annual=annual,
+        approved_concepts=['us-gaap:'+c.split(':')[-1] for c in concepts],
+        contract='reported-total-v2', fiscal_label_resolution=label,
+        allow_single_revenue_line=allow_single_revenue_line)
+    # Match B01's existing admission: a proven total filters competing facts;
+    # absence of a demonstrated split retains the catalog path and records
+    # complete_scope_proven=False. A source/period error never falls back.
+    _need(all(c['claim_kind']=='COMPANYFACTS_NUMERIC_FACT' and ':' not in c['locator']['concept']
+              for c in claims), 'NORMAL_COMPANYFACTS_REVENUE_CLAIM_KIND_CHANGED')
+    views = [{**c['locator'], **c['attributes'], 'concept':'us-gaap:'+c['locator']['concept'],
+        'value':c['value'],'unit':c['unit'],'verified_claim_id':c['verified_claim_id']} for c in claims]
+    allowed = {v['verified_claim_id'] for v in admit(facts=views, scope=scope)}
+    return [c for c in claims if c['verified_claim_id'] in allowed], scope
+
+
+def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str, rules_root=None,
+                                         validate_revenue_scope=False, allow_single_revenue_line=False):
     """Resolve all eleven catalog Company Facts metrics from saved originals.
 
     Current-only metrics can succeed when a required prior source for another
     metric is unavailable. No caller period, answer, filing or proof is accepted.
     """
+    _need(type(validate_revenue_scope) is bool and type(allow_single_revenue_line) is bool
+          and (not allow_single_revenue_line or validate_revenue_scope),
+          'NORMAL_COMPANYFACTS_REVENUE_OPTION_INVALID')
     rules = repo_root if rules_root is None else Path(rules_root)
     authority = _authority(rules)
     catalog = _load_deterministic_catalog(repo_root=rules)
@@ -213,7 +258,20 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str, r
                     _need(not common_error or limited_amendment, common_error)
                     requires_prior = any(c["accession_role"] == "prior" for b in route["branches"] for c in b["components"])
                     _need(not requires_prior or prior_error is None, (prior_error or {}).get("reason"))
-                    graph = _deterministic_metric_graph(context=context, company_id=company_id, metric_id=metric_id)
+                    graph_context = context
+                    revenue_scopes = None
+                    if metric_id == 'B02' and validate_revenue_scope:
+                        income_concepts = sorted({c for b in route['branches'] for component in b['components']
+                                                  for c in component['approved_concepts']})
+                        admitted, revenue_scopes = {}, {}
+                        for role in ('current','prior'):
+                            admitted[role], revenue_scopes[role] = _original_revenue_claims(
+                                reader=reader, prepared=prepared, filing=filings[role], period=periods[role],
+                                claims=claims_by_role[role], concepts=income_concepts,
+                                allow_single_revenue_line=allow_single_revenue_line)
+                        graph_context = {**context, 'role_context':{(company_id,'companyfacts'):
+                            {'sources':sources,'claims_by_accession_role':admitted}}}
+                    graph = _deterministic_metric_graph(context=graph_context, company_id=company_id, metric_id=metric_id)
                     if metric_id == "B02":
                         problem, bridged = paired_measure_problem(
                             route=route, claims=graph["claims"],
@@ -230,6 +288,8 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str, r
                             result, trace = graph["result"], graph["trace"]
                             if bridged:
                                 detail = {"paired_measure_bridge": bridged}
+                            if revenue_scopes is not None:
+                                detail = {**(detail or {}), 'paired_revenue_scopes':revenue_scopes}
                     else:
                         result, trace = graph["result"], graph["trace"]
                     if subject_error or limited_amendment:
