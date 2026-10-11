@@ -120,3 +120,47 @@ Receiver review, new-head remote CI, all-current-bank acceptance, all390,
 online A13, Ready, merge, formal adoption, deployment and active switching
 remain separate. Old tasks read their saved record/version; a normal code
 configuration change may cause one reprocessing check, not a result re-sign.
+
+## Isolated combination and a public-checkout entry
+
+PR175 and PR174 each work directly on main. Their combined tree has three
+shared-list textual conflicts. [union-resolved.patch](union-resolved.patch)
+shows the minimal explicit resolution: both metrics/dispatchers, both processing
+declarations and both test triggers are retained. The combined-index tree
+`8419fb5b8fcbcb2ad3cbb545589dacb57ae8418d` passed86 controls in8.396s,
+zero skips. [union-company.json](union-company.json) records real formal
+JPMorganA13 and MarriottC04 fresh tasks, forbidden-calculation repeats and
+independent subprocess reads: 6.895/.201/.403s and9.386/1.029/.418s, original
+values/units/full2025/IDs retained. This is an isolated combination, not an
+author merge or execution of either published head. The first attempt ran
+with unresolved markers and failed; that original log is preserved. Checking
+all staged archive files also reports a pre-existing blank line in the C04
+`before.log`; the three resolved code/workflow files themselves pass diffcheck.
+
+For a receiver without the private source root, run from this candidate's
+checkout with its already committed source bytes:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 TMPDIR=/private/tmp PYTHONPATH=scripts:tools:. \
+python3 docs/evidence/issue28_current_geography_20261011/verify_repository_source.py
+```
+
+[repository-source.json](repository-source.json) records actual repository
+JPMorgan source → formalCLI → save/repeat,6.265/.100s, same42,758m/full2025.
+Its metadata differs from the private-package example, so its newly created
+Result6207802f is not forcibly made equal to4661b0de. The already saved
+unrelated FY2024 header error remains visible; the overall command correctly
+returns2/`FLOW_COMPLETED_WITH_LIMITATIONS`, while the required three A13 sources
+and its metric have passed. This is not a claim that every repository source
+is ready. The first harness incorrectly expected globalexit0 and is retained;
+the corrected harness preserves and reports the exact source-observation error.
+
+The same script compares the base financial adapter's function bytes using
+unchanged installed helpers against the new default call. Their full returned
+objects are exactly equal, including originalResult76c0cbcc. This is a bounded
+default-interface compatibility check, not a full old-checkout execution.
+
+The evidence-only follow-up adds the executable evidence directory to the
+existing CI trigger; no test content, layer, timeout or required step changes.
+`workflow-trigger.log` verifies YAML and the single required A13 step. The
+100-test and actual company implementation bytes remain unchanged.

@@ -1,0 +1,141 @@
+{
+  "args": [
+    "run",
+    "--company",
+    "jpmorgan_chase",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+    "--metric",
+    "A13",
+    "--work-dir",
+    "/private/tmp/issue28-a13-repository-a75omtnm/state",
+    "--output-dir",
+    "/private/tmp/issue28-a13-repository-a75omtnm/out"
+  ],
+  "first": {
+    "elapsed_seconds": 6.263634916002047,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "jpmorgan_chase",
+    "run_id": "20261011T130954Z-b760e202",
+    "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+    "selected_metrics": [
+      "A13"
+    ],
+    "metrics": [
+      {
+        "metric_id": "A13",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "81ff0695fcad4e85940da3c5a9f29bef",
+        "version": "043cd965c6fa4ef2a271aedf7b911027",
+        "result_id": "sha256:6207802f2e2a030ca65b913ca9cc720c70e6ca5d1b144c7dd0573aff57cc9f22",
+        "result_root": "/private/tmp/issue28-a13-repository-a75omtnm/state/updates/A13/results/043cd965c6fa4ef2a271aedf7b911027",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+            "status_code": "0",
+            "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>",
+            "content_sha256": "",
+            "document_name": "0000019617-25-000332.hdr.sgml"
+          }
+        ],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:6207802f2e2a030ca65b913ca9cc720c70e6ca5d1b144c7dd0573aff57cc9f22",
+        "record_root": "/private/tmp/issue28-a13-repository-a75omtnm/state/updates/A13/results/043cd965c6fa4ef2a271aedf7b911027",
+        "program_version": {
+          "commit": "00bc5a070df85b42a5da95ab2e72dfd4bb02aa1a",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+    "record_root": "/private/tmp/issue28-a13-repository-a75omtnm/state",
+    "output_root": "/private/tmp/issue28-a13-repository-a75omtnm/out/20261011T130954Z-b760e202",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "first_seconds": 6.264675749996968,
+  "first_exit": 2,
+  "repeat": {
+    "elapsed_seconds": 0.09889916699466994,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "jpmorgan_chase",
+    "run_id": "20261011T131000Z-e006abf5",
+    "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+    "selected_metrics": [
+      "A13"
+    ],
+    "metrics": [
+      {
+        "metric_id": "A13",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "8bf6c8e330ec4ffa8e6d73f0979fd2ea",
+        "version": "043cd965c6fa4ef2a271aedf7b911027",
+        "result_id": "sha256:6207802f2e2a030ca65b913ca9cc720c70e6ca5d1b144c7dd0573aff57cc9f22",
+        "result_root": "/private/tmp/issue28-a13-repository-a75omtnm/state/updates/A13/results/043cd965c6fa4ef2a271aedf7b911027",
+        "result_reason_code": "PASS",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_observation_errors": [
+          {
+            "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000332/0000019617-25-000332.hdr.sgml",
+            "status_code": "0",
+            "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081)>",
+            "content_sha256": "",
+            "document_name": "0000019617-25-000332.hdr.sgml"
+          }
+        ],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:6207802f2e2a030ca65b913ca9cc720c70e6ca5d1b144c7dd0573aff57cc9f22",
+        "record_root": "/private/tmp/issue28-a13-repository-a75omtnm/state/updates/A13/results/043cd965c6fa4ef2a271aedf7b911027",
+        "program_version": {
+          "commit": "00bc5a070df85b42a5da95ab2e72dfd4bb02aa1a",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+    "record_root": "/private/tmp/issue28-a13-repository-a75omtnm/state",
+    "output_root": "/private/tmp/issue28-a13-repository-a75omtnm/out/20261011T131000Z-e006abf5",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "repeat_seconds": 0.09982562499499181,
+  "value": "42758000000",
+  "unit": "USD",
+  "default_adapter_exact_equal": true,
+  "default_result_id": "sha256:76c0cbcc23d8bc744187fdbd0bf9a60e5aa66ae445ac221b1c38c42413d725f2",
+  "compatibility_scope": "Base adapter function bytes with unchanged installed helpers versus new default; not full old checkout execution",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

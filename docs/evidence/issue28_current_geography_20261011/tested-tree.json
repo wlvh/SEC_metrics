@@ -18,5 +18,11 @@
     0,
     0,
     0
-  ]
+  ],
+  "posttest_trigger_only": {
+    "path": ".github/workflows/company-current-records.yml",
+    "sha256": "be27785091e5fea09629c43e8f342d1be1ce4cd0f7060e2c40fed3cbee215e32",
+    "change": "Add executable evidence trigger; no job or required-step change",
+    "verification": "Ruby YAML one required A13 step and script/test byte checks"
+  }
 }
