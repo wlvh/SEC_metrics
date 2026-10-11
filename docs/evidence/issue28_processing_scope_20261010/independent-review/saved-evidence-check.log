@@ -1,0 +1,47 @@
+
+SAVED EVIDENCE CHECK
+{
+  "json_row_differences": {
+    "local_metric_status": [
+      "CANDIDATE_READY",
+      "NO_SOURCE_CONTENT_CHANGE",
+      "NO_SOURCE_CONTENT_CHANGE"
+    ],
+    "source_observation_status": [
+      "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+      "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+      "NOT_CHECKED_BY_SAVED_READER"
+    ]
+  },
+  "real_saved_result_core_fields_match": true,
+  "original_success_and_new_comparison_share_result": true,
+  "compatibility_matches": true,
+  "saved_manifest_file_sizes": {
+    "metric_evidence.csv": 1478,
+    "metrics_matrix.csv": 1190,
+    "receipt.json": 895,
+    "records.jsonl": 7869
+  },
+  "exports": {
+    "first": {
+      "path": "/private/tmp/issue28-processing-company-first-20261010/20261010T053306Z-187471af/metrics_matrix.csv",
+      "rows": 1,
+      "bytes": 1715,
+      "sha256": "938ff61800ba91ff57e93aa1a39768a06555158c16c655b1904b16400855595c"
+    },
+    "repeat": {
+      "path": "/private/tmp/issue28-processing-company-repeat-20261010/20261010T053352Z-9fd5bc54/metrics_matrix.csv",
+      "rows": 1,
+      "bytes": 1724,
+      "sha256": "6e210c519cdeb8f5c711a081f4427147e23c7e048bc3e55a0810ed0c6f33eebf"
+    },
+    "read": {
+      "path": "/private/tmp/issue28-processing-company-read-20261010/metrics_matrix.csv",
+      "rows": 1,
+      "bytes": 1710,
+      "sha256": "a0e87db72aeb028dc51b30e39e21f33daa462e9dddb5947c1ab257dd193f68ac"
+    }
+  },
+  "source_body_not_reread": true,
+  "execution_not_repeated": true
+}

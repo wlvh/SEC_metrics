@@ -1,0 +1,75 @@
+{
+  "seconds": 7.55040054093115,
+  "exit_code": 2,
+  "arguments": [
+    "run",
+    "--company",
+    "macys",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2022",
+    "--fiscal-year-end",
+    "2022",
+    "--metric",
+    "C03",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/macys/state",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/macys/runs"
+  ],
+  "report": {
+    "elapsed_seconds": 7.4961919169873,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "macys",
+    "run_id": "20261010T123256Z-ec81268a",
+    "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+    "selected_metrics": [
+      "C03"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C03",
+        "status": "CANDIDATE_WITHHELD",
+        "attempt_id": "a09b8e2ba5ca4b409abe8859f358150a",
+        "version": "1605142df4434ba28dac4cca8b2e9b42",
+        "result_id": "sha256:2b1416ac94c74bba9b3fbde7fb36b2df355f5d99c51671e3b4edfc8f92b0af11",
+        "result_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/macys/state/updates/C03/periods/FY2022/results/1605142df4434ba28dac4cca8b2e9b42",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "C03_TARGET_PERIOD_NOT_FOUND",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2022,
+        "defect_holds": [],
+        "read_result_id": "sha256:2b1416ac94c74bba9b3fbde7fb36b2df355f5d99c51671e3b4edfc8f92b0af11",
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/macys/state/updates/C03/periods/FY2022/results/1605142df4434ba28dac4cca8b2e9b42",
+        "program_version": {
+          "commit": "2384b62d6e8300ef39aa70155a1f3f07d581dc2c",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/macys/state",
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/c03-selected-company-r8967o53/macys/runs/20261010T123256Z-ec81268a",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "selected_fiscal_years": [
+      2022
+    ]
+  }
+}

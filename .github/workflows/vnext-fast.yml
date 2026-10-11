@@ -31,7 +31,7 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts:tools
-        run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest
+        run: python3 -m unittest -v tests.vnext.test_historical_statement_cases.HistoricalStatementScopeTest tests.vnext.test_historical_filing_inventory_small.ABlockIsHeldToThePriorYearWalksChecks tests.vnext.test_history_company_dispatch.HistoryCompanyDispatchTest tests.vnext.test_historical_liquidity_cases.HistoricalLiquidityScopeTest tests.vnext.test_historical_capital_cases.HistoricalCapitalSourceTest tests.vnext.test_historical_bank_performance_cases.BankSourceRoleTest tests.vnext.test_historical_bank_performance_cases.BankPairedMeasureTest tests.vnext.test_historical_statement_cases.HistoricalCurrentAnnualScopeTest tests.vnext.test_historical_statement_cases.HistoricalPeriodSubjectTest tests.vnext.test_historical_statement_cases.HistoricalSuccessorComparabilityTest tests.vnext.test_historical_statement_cases.HistoricalStructuralApplicabilityTest tests.vnext.test_historical_compensation_case
 
       - name: Selected filing income source checks (small state)
         env:
@@ -77,6 +77,17 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
           PYTHONPATH: scripts:tools
         run: python3 tests/required_unittests.py tests.vnext.test_d04_provenance_reuse tests.vnext.test_current_d04_company tests.vnext.test_registered_native_update.RegisteredNativeUpdateTest
+      - name: Verify explicit SEC compensation release selection
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 tests/required_unittests.py tests.vnext.test_c03_sec_release tests.vnext.test_governance_signals tests.vnext.test_xbrl_namespace_policy tests.vnext.test_c03_company_seam
+
+      - name: Verify saved proxy compensation source and light identity
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts:tools
+        run: python3 tests/required_unittests.py tests.vnext.test_proxy_compensation_source tests.vnext.test_organization_name_core
 
 
   inherited-source-material:

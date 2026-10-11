@@ -1,3 +1,9 @@
+## Receiving combination with actual main63a (2026-10-11)
+
+Read receiving6102243740 and actual integration Issue153: original D04 reuse difference is accepted; updated receiving flow requires author to bring actual main into the candidate. Normal merge from f91 with63a resolves only vnext-fast.yml. Final YAML is exactly actual main plus the original D04 mandatory step; main C03/revenue/B06 controls remain. Earlier overbroad comparison to every old f91 fast step failed because main intentionally changed its own selectors, not because steps were dropped. No obsolete ancestor or governance assertion is restored.
+
+D04/C03/source/organization seam affected controls run70/0.386s with zero skips, errors or failures. The D04 production file is unchanged from the acceptedf91. Whole original Marriott company first/repeat/independent-read evidence and bounded reviews retain their actual original execution version and are reused, not relabelled as a new source acquisition or financial rerun. New head CI is tracked separately. main-63a-combination-tree.json records the uncommitted tested merge/code root. Source ledger/old results not modified; calls0/0/0; root does not merge main or markReady.
+
 # D04 same-body capture attempt compatibility
 
 Actual main base f51d8c3d. The formal MarriottFY2025 company CLI failed before creating a result: D04_SAVED_COMPANY_SOURCE_MISSING_OR_AMBIGUOUS. A bounded original-source diagnosis found no changed substantive source fields, one exact annual HTML hash c372495a... and four identical request groups. The only differences were `prepared_annual_input/companyfacts_input/request_attempt_id` and the repeated original_input copy. Original source/proofs and all 115–118 requests/responses remain unchanged.
