@@ -1,0 +1,42 @@
+{
+  "seconds": 8.736298792000525,
+  "original_filing": {
+    "form": "10-K",
+    "reportDate": "2023-12-31",
+    "filingDate": "2024-02-22",
+    "accessionNumber": "0000018926-24-000016",
+    "primaryDocument": "lumn-20231231.htm"
+  },
+  "period": {
+    "fiscal_year": 2023,
+    "period_start": "2023-01-01",
+    "period_end": "2023-12-31"
+  },
+  "error": "SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED",
+  "source_bound_unknown_cells": [
+    {
+      "reason": "STATEMENT_LOCAL_SCOPE_UNRESOLVED",
+      "unknown_cells": [
+        {
+          "table_id": "table_000030",
+          "grid_sha256": "sha256:26beaefb36dba1403918b0fd7f4093477651e3ace29c108db8ef14145517b4aa",
+          "row_index": 22,
+          "column_index": 0,
+          "origin_row_index": 22,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "BASIC AND DILUTED (LOSS) EARNINGS PER COMMON SHARE",
+          "text": "BASIC AND DILUTED (LOSS) EARNINGS PER COMMON SHARE"
+        }
+      ],
+      "table_id": "table_000030",
+      "source_sha256": "57782a31cafe37915ffb44e2204a3a0ffa6c11674dac7c0e16baf77bbf8af7ac"
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

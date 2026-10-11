@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/work/b01-scope-consumer/diagnose_scope2023.py", line 22, in <module>
+    try:reported_revenue_scope(primary=primary,xml=xml,annual=prepared.get('original_input',prepared),approved_concepts=['us-gaap:Revenues','us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax','us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax','us-gaap:SalesRevenueNet'],namespace_policy=YEAR_OR_DATE_RELEASE,annual_period_reader=annual_period,fiscal_label_resolution=prepared.get('fiscal_year_label_resolution'),allow_single_revenue_line=True)
+        ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 123, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+        extra_section_headers=sections, bind_statement_page=single_operating)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 175, in _statement_scope
+    _need(not unknown, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/mock.py", line 1247, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/work/b01-scope-consumer/diagnose_scope2023.py", line 16, in capture
+    local=inspect.currentframe().f_back.f_locals;observations.append({'reason':reason,'unknown_cells':local.get('unknown'),'table_id':local.get('table',{}).get('table_id'),'source_sha256':sha256_bytes(content=local['raw'])})
+                                                                                                                                                                                                                 ~~~~~^^^^^^^
+KeyError: "local variable ''raw'' is not defined"

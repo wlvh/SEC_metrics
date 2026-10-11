@@ -1,0 +1,54 @@
+{
+  "seconds": 9.30229374999908,
+  "original_filing": {
+    "form": "10-K",
+    "reportDate": "2020-12-31",
+    "filingDate": "2021-02-25",
+    "accessionNumber": "0000018926-21-000017",
+    "primaryDocument": "ctl-20201231.htm"
+  },
+  "period": {
+    "fiscal_year": 2020,
+    "period_start": "2020-01-01",
+    "period_end": "2020-12-31"
+  },
+  "error": "SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED",
+  "source_bound_unknown_cells": [
+    {
+      "reason": "STATEMENT_LOCAL_SCOPE_UNRESOLVED",
+      "unknown_cells": [
+        {
+          "table_id": "table_000035",
+          "grid_sha256": "sha256:7ff64bf9d1db361e7b1e74377dc9f88e4050888ecd6185a986a06161f819c035",
+          "row_index": 12,
+          "column_index": 0,
+          "origin_row_index": 12,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "OTHER (EXPENSE) INCOME",
+          "text": "OTHER (EXPENSE) INCOME"
+        },
+        {
+          "table_id": "table_000035",
+          "grid_sha256": "sha256:7ff64bf9d1db361e7b1e74377dc9f88e4050888ecd6185a986a06161f819c035",
+          "row_index": 19,
+          "column_index": 0,
+          "origin_row_index": 19,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "BASIC AND DILUTED LOSS PER COMMON SHARE",
+          "text": "BASIC AND DILUTED LOSS PER COMMON SHARE"
+        }
+      ],
+      "table_id": "table_000035",
+      "source_sha256": "6be5695ca6b9e5267bd04dc5565eb047f873fbeac4c24baa27a00e2c72d662f9"
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

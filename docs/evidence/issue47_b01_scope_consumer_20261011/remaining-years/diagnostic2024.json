@@ -1,0 +1,42 @@
+{
+  "seconds": 9.294240833000003,
+  "original_filing": {
+    "form": "10-K",
+    "reportDate": "2024-12-31",
+    "filingDate": "2025-02-20",
+    "accessionNumber": "0000018926-25-000010",
+    "primaryDocument": "lumn-20241231.htm"
+  },
+  "period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "error": "SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED",
+  "source_bound_unknown_cells": [
+    {
+      "reason": "STATEMENT_LOCAL_SCOPE_UNRESOLVED",
+      "unknown_cells": [
+        {
+          "table_id": "table_000030",
+          "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+          "row_index": 22,
+          "column_index": 0,
+          "origin_row_index": 22,
+          "origin_column_index": 0,
+          "rowspan": 1,
+          "colspan": 3,
+          "raw_text": "BASIC AND DILUTED LOSS PER COMMON SHARE",
+          "text": "BASIC AND DILUTED LOSS PER COMMON SHARE"
+        }
+      ],
+      "table_id": "table_000030",
+      "source_sha256": "f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297"
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
