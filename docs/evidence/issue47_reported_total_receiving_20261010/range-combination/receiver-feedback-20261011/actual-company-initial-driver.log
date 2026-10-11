@@ -1,0 +1,11 @@
+one-related-version-transition 2 20.499
+income-only 2 1.96
+mixed-again 2 2.343
+B01-only 0 1.157
+B02-only 2 1.387
+independent-read 0 0.662
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/range-selection-feedback/verify_actual_company.py", line 90, in <module>
+    assert not growth['value'] and growth['status'] == 'WITHHELD_KNOWN_DEFECT'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
