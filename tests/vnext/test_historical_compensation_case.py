@@ -130,17 +130,35 @@ class HistoricalCompensationAdapterTest(TestCase):
 
     def test_history_dispatch_preserves_existing_factories_and_dependencies(self):
         from vnext import company_local
+        from vnext import historical_statement_cases as statements
+        from vnext.company_fiscal_range import PROCESSING_FILES as range_files
         from vnext.historical_compensation_case import prepare_historical_compensation_year_case, PROCESSING_FILES
-        from vnext.historical_statement_cases import prepare_historical_statement_year_case
         from vnext.historical_event_cases import prepare_historical_event_year_case
-        with patch('vnext.company_current_records.run_saved_company',return_value={}) as shared:
+        selection = {'constructed_control': True, 'report_end': '2022-12-31'}
+        plan = {'tasks': [{'fiscal_year': 2022, 'status': 'FISCAL_YEAR_RESOLVED',
+                           'period_selection': selection}]}
+        with patch.object(statements, 'prepare_historical_statement_year_case',
+                          return_value={'constructed_case': True}) as producer, \
+             patch('vnext.company_current_records.run_saved_company',return_value={}) as shared:
             company_local.run_local(company_id='marriott_international',source_root=Path('/saved'),
                 work_dir=Path('/new/state'),output_dir=Path('/new/out'),period='fiscal-years',
                 fiscal_year_start=2022,fiscal_year_end=2022,metric_ids=['C03','B01','C01'])
         args=shared.call_args.kwargs
         self.assertIs(prepare_historical_compensation_year_case,args['case_factories']['C03'])
         self.assertEqual(PROCESSING_FILES,args['processing_files_by_metric']['C03'])
-        self.assertIs(prepare_historical_statement_year_case,args['case_factories']['B01'])
+        self.assertEqual(tuple(dict.fromkeys((*statements.INCOME_PROCESSING_FILES, *range_files))),
+                         args['processing_files_by_metric']['B01'])
+        with patch('vnext.company_fiscal_range.discover_fiscal_range', return_value=plan) as discover, \
+             patch('vnext.company_fiscal_range.sha256_file', return_value='constructed-source-version'):
+            result = args['case_factories']['B01'](repo_root=Path('/saved'),
+                company_id='marriott_international', metric_id='B01', fiscal_year=2022)
+        self.assertEqual({'constructed_case': True}, result)
+        producer.assert_called_once_with(repo_root=Path('/saved').resolve(),
+            company_id='marriott_international', metric_id='B01', fiscal_year=2022,
+            period_selection=selection)
+        discover.assert_called_once_with(repo_root=Path('/saved').resolve(),
+            company_id='marriott_international', fiscal_year_start=2022,
+            fiscal_year_end=2022, metric_ids=['B01'])
         self.assertIs(prepare_historical_event_year_case,args['case_factories']['C01'])
         self.assertEqual([2022],args['fiscal_years'])
 
