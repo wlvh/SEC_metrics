@@ -1,0 +1,46 @@
+{
+  "seconds": 0.5864700828678906,
+  "exit_code": 0,
+  "arguments": [
+    "results",
+    "--company",
+    "pfizer",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paired-source-extraction-ko429ks1/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paired-source-extraction-ko429ks1/read"
+  ],
+  "report": {
+    "elapsed_seconds": 0.08031895803287625,
+    "record_type": "ORDINARY_COMPANY_RESULT_VIEW_V1",
+    "company_id": "pfizer",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "metrics": [
+      {
+        "metric_id": "B02",
+        "result_id": "sha256:5aa4a2b626f8fa6276d784642538943f9cf5222b4931ee24a7e56cb877f91780",
+        "period_start": "2023-01-01",
+        "period_end": "2023-12-31",
+        "fiscal_year": 2023,
+        "value": "-0.4169640187381640586065982259",
+        "unit": "ratio",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+        "defect_holds": [],
+        "latest_observation": "NO_SOURCE_CONTENT_CHANGE",
+        "requested_in_latest_execution": true,
+        "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paired-source-extraction-ko429ks1/state/updates/B02/periods/FY2023/results/e807560d359e412daef735fafe1afc0c"
+      }
+    ],
+    "source_freshness": "NOT_CHECKED_BY_SAVED_READER",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/paired-source-extraction-ko429ks1/read"
+  }
+}

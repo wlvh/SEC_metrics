@@ -1,0 +1,48 @@
+{
+  "elapsed_seconds": 6.019505042117089,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "macys",
+  "run_id": "20261010T172407Z-2251d6ed",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "B06"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B06",
+      "status": "CANDIDATE_WITHHELD",
+      "attempt_id": "8c2e4bfb48d54245b63702d2da4a1c0b",
+      "version": "f6a1cfef22a847fc8f1052ad32a2a4fa",
+      "result_id": "sha256:ea0fafbeb8f5c21d450402cdf87e2e7256c2fdcd604b7bef3cea8aab83ba6d36",
+      "result_root": "/private/tmp/issue28-current-b06-macys-20261011/updates/B06/results/f6a1cfef22a847fc8f1052ad32a2a4fa",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:ea0fafbeb8f5c21d450402cdf87e2e7256c2fdcd604b7bef3cea8aab83ba6d36",
+      "record_root": "/private/tmp/issue28-current-b06-macys-20261011/updates/B06/results/f6a1cfef22a847fc8f1052ad32a2a4fa",
+      "program_version": {
+        "commit": "cee471a506d052f1b118919d896c3ac0ca92b9ef",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-b06/SEC_metrics",
+  "record_root": "/private/tmp/issue28-current-b06-macys-20261011",
+  "output_root": "/private/tmp/issue28-current-b06-macys-20261011-corrected-held-output/20261010T172407Z-2251d6ed",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

@@ -1,4 +1,15 @@
-# Issuer fiscal range through the same company entry
+# Issuer fiscal range — current receiver repair on main63a340ca
+
+Receiver feedback6103171116 contains two actual defects: the B02 rangepath omitted the accepted152 paired-revenue processing file, and pureincome versus mixedselection used different factories/dependency identities. #47 implemented only company_local._run_saved_history and existinghistorydispatch tests under explicit singlewriter agreement; #28 receives the same delta in originalPR128, not a new dispatcher/PR. Product5f2d8249/current#28source byte equality established. B01/B02 now always use the same lazyrange wrapper, including mixedselection; each retains its metric's original consumed inputs (B02 PAIRED_REVENUE_PROCESSING_FILES) plus range responsibility. Otherlodging/bank/event/C03/B04/B05/current dispatch and businessrules remain.
+
+Original1284dcc normally receives main672 then main63a (acceptedcurrentB06), preserving old/publishedhistory. Workflowonly conflict resolved by path/stepunion, no featurebranch import. The first roottest run87 passed but had omitted the two receivernegative methods from the peercommit's parent80; logs retained, not claimed complete. Full returnedtestfile comparison isolated just those22lines. Finalactualcombined89 tests1.113s withzero failure/error/skip, plusbyteexactcompany_local/test file equality to peer5f. Tests keep otherfamilies' originalfactory assertions and explicitactualrange wrapper delegation; no productionexpectednumbers are changed forgreen.
+
+[One peer actualsource repair record](https://github.com/wlvh/SEC_metrics/blob/12e7c9ae/docs/evidence/issue47_reported_total_receiving_20261010/range-combination/receiver-feedback-20261011/README.md) is read and reused, not relabelled as author rerun: existingMacyFY2023 one version transition20.499s; B01 23866m/53weeks/original778, B02 correctscope-unresolvednull/3e886, B04 originalc57. Four factory/discovery/Calculator-forbidden pure/mixed/single repeats1.960/2.343/1.157/1.387s,0calculate/0newresultdirs; independentread.662s preservesallstate andpreviousFY2027missingyear. Originaltestdriver wrongCSV/stale-rowcount assertions retained and correctedoffline withoutreplayingfirstcalculation. No laterrestated25449 borrowed, olddefectcreditnotrevived.
+
+Rootverifiedactualcurrentmain63a source/test/dependency combination; financialreplay evidence fromunchangedpeerproduct/672 noted separately. Receiverwillpersonally recheck the returnedsource-edit andselection-alternation failure; no extraformalagentreview. CurrentCIhead/technicalacceptance separate from controls/source/evidence/bodyidentity. Actualspec/context/period/source/company/units and latestfailure protections remain. Provider/paid/SECnew0/0/0; no main/Ready/formaladoption/deploy/active action. Full390/currentautomaticupdate responsibilities remain.
+
+## Prior versions and original scope evidence
+
 
 Actual base PR126/3de509ac on mainf6; peer pure label/optional selected-case source is d52b362076de9d4239cd8c69f9e81b0d81b6f6ee (later PR127 evidence/CI additions do not change it). Only two peer core files and its seven small tests received, not full17k-line inspection or historical branch. Public range/CLI owns discovery; #47 owns historical label/case logic. No second parser/Calculator/controller/client.
 

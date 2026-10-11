@@ -54,10 +54,11 @@ def inspect_current_debt_amendment(*, original, amendment, company_id, cik):
     return {**body,'effect_id':content_hash(value=body)}
 
 
-def prepare_current_debt_input(*, repo_root:Path, company_id:str):
-    path = resolve_repository_file(repo_root=repo_root,repo_relative_path=POLICY_PATH)
+def prepare_current_debt_input(*, repo_root:Path, company_id:str, rules_root=None):
+    path = resolve_repository_file(repo_root=repo_root if rules_root is None else Path(rules_root),repo_relative_path=POLICY_PATH)
     _need(path.read_bytes()==(ROOT/POLICY_PATH).read_bytes() and strict_json_file(path=path)==POLICY,'INSTALLED_POLICY_CHANGED')
-    packet = prepare_saved_amendment_scopes(repo_root=repo_root,company_id=company_id)
+    packet = prepare_saved_amendment_scopes(repo_root=repo_root,company_id=company_id,
+        **({} if rules_root is None else {"rules_root":rules_root}))
     blobs = {r['raw_asset_id']:r for r in packet['source_records'] if r['record_type']=='RAW_BLOB'}
     checks = []
     for scope in packet['scopes']:
@@ -93,17 +94,21 @@ def bind_current_debt_input(*, case, packet, repo_root):
         'input_binding':{**case['input_binding'],'current_debt_input':packet}}
 
 
-def withheld_current_debt_case(*, repo_root, company_id, packet):
+def withheld_current_debt_case(*, repo_root, company_id, packet, rules_root=None, preparation=None, annual_input=None):
     from .normal_candidates import _prepare_b06
     from .normal_annual_input_v2 import prepare_saved_annual_input
     from .specs import compile_spec_file
     from .calculator import withheld_metric_result
-    preparation = _prepare_b06(repo_root=repo_root,company_id=company_id)
-    annual = prepare_saved_annual_input(repo_root=repo_root,company_id=company_id)
+    rules = repo_root if rules_root is None else Path(rules_root)
+    preparation = (_prepare_b06(repo_root=repo_root,company_id=company_id)
+                   if preparation is None else preparation)
+    annual = (prepare_saved_annual_input(repo_root=repo_root,company_id=company_id,
+              **({} if rules_root is None else {"ordinary_registered":True}))
+              if annual_input is None else annual_input)
     end = annual['filing']['reportDate']; scope = {'entity_scope':'consolidated'}
     target = {'company_id':company_id,'entity':annual['entity'],'accession':annual['filing']['accessionNumber'],
               'period_start':end,'period_end':end,'scope':scope,'scope_key':content_hash(value=scope)}
-    path = 'catalog/r5/B06_new_source_v2.md'; spec = compile_spec_file(path=repo_root/path,dependency_specs={})
+    path = 'catalog/r5/B06_new_source_v2.md'; spec = compile_spec_file(path=rules/path,dependency_specs={})
     simple_target = {k:target[k] for k in ['company_id','period_start','period_end','scope','scope_key']}
     result,trace = withheld_metric_result(compiled_spec=spec,target=simple_target,reason_code='B06_CURRENT_INPUT_UNRESOLVED')
     records = list({content_hash(value=r):r for r in [*preparation['records'],*packet['source_records']]}.values())
@@ -115,4 +120,5 @@ def withheld_current_debt_case(*, repo_root, company_id, packet):
         'references':[r for r in records if r['record_type']=='SOURCE_REFERENCE'],'source_proofs':proofs,
         'admission':verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs),'spec_paths':{'B06':path},'compiled_specs':{'B06':spec},
         'target_period':{'fiscal_year':annual['table_input']['target_period']['fiscal_year'],'period_start':end,'period_end':end},
-        'expected_records':[*records,trace,result],'results':{'B06':result},'traces':{'B06':trace},'observations':[],'selection':selection}
+        'expected_records':[*records,trace,result],'results':{'B06':result},'traces':{'B06':trace},'observations':[],'selection':selection,
+        **({} if rules_root is None else {'rules_root':str(rules)})}
