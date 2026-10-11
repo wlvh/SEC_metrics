@@ -80,6 +80,36 @@ class CurrentB06CompositionTest(unittest.TestCase):
             with self.assertRaisesRegex(self.current.CurrentB06Error,'SELECTED_SOURCE_CHANGED'):
                 self.current.prepare_current_b06_case(source_root=Path('/sources'),company_id='enphase_energy')
 
+    def test_explicit_selected_case_never_rediscovers_latest(self):
+        self.context(prepare_current_guarded_b06_result={'status':'CONTINUE_DEBT_PATH','reason_code':'DENOMINATOR_POSITIVE'},
+                     prepare_note_debt_case=self.case)
+        with patch.object(self.current,'prepare_current_debt_input',side_effect=AssertionError('No latest amendment selection')), \
+             patch.object(self.current,'prepare_saved_original_financial_sources',side_effect=AssertionError('No latest financial selection')), \
+             patch.object(self.current,'prepare_saved_annual_input',side_effect=AssertionError('No latest fiscal year selection')):
+            result=self.current.prepare_selected_b06_case(source_root=Path('/selected-sources'),
+                company_id='enphase_energy',preparation=self.preparation,annual=self.annual,packet=self.packet)
+        self.assertEqual('INPUT_PROPERTY_PROVEN',result['input_assessments']['B06']['current_input_decision'])
+        self.assertEqual(self.case['selection'],result['input_assessments']['B06']['selection'])
+
+    def test_selected_packet_subject_must_match_before_guard_or_debt(self):
+        from copy import deepcopy
+        for field in ('company_id','entity','period_start'):
+            packet=deepcopy(self.packet);packet['prepared_input'][field]='different'
+            if field=='period_start':
+                packet['prepared_input'].pop(field)
+                packet['prepared_input']['table_input']['target_period'][field]='2024-01-01'
+            with patch.object(self.current,'prepare_current_guarded_b06_result',side_effect=AssertionError('Wrong packet must stop')):
+                with self.assertRaisesRegex(self.current.CurrentB06Error,'SELECTED_SOURCE_CHANGED'):
+                    self.current.prepare_selected_b06_case(source_root=Path('/selected-sources'),
+                        company_id='enphase_energy',preparation=self.preparation,annual=self.annual,packet=packet)
+
+    def test_inline_reader_dependencies_are_only_explicit_consumer_files(self):
+        needed={'scripts/vnext/annual_amendment_scope_v2.py',
+                'scripts/vnext/instant_balance_amendment_v2.py','scripts/vnext/amendment_note_layout.py'}
+        self.assertTrue(needed.isdisjoint(self.current.PROCESSING_FILES))
+        self.assertTrue(needed<=set(self.current.INLINE_NOTE_PROCESSING_FILES))
+        self.assertIn('config/instant_balance_amendment_v1.json',self.current.PROCESSING_FILES)
+
     def test_exact_fallback_callable_and_metric_specific_processing_dependencies(self):
         from vnext import normal_candidates,ordinary_b06_resolution,ordinary_current_update as update
         self.assertIs(normal_candidates._b06_resolution,ordinary_b06_resolution._b06_resolution)
@@ -165,6 +195,63 @@ class B06FallbackDependencyTest(unittest.TestCase):
                 self.assertEqual(repository_company_traits(repo_root=root,company_id='salesforce'),
                                  calculation.call_args.kwargs['traits'])
                 self.assertEqual('1108524',calculation.call_args.kwargs['target']['entity'])
+
+
+class SelectedDebtAmendmentReaderTest(unittest.TestCase):
+    def test_default_preserves_legacy_reader_and_effect_identity(self):
+        from vnext import b06_current_input as debt
+        scope={'fiscal_window_unchanged':True,'issues':[],'unchanged_input_classes':['ORIGINAL_STATEMENT_VALUES'],
+               'scope_id':'TEST_ONLY_scope'}
+        args={'original':{'filing':{'accessionNumber':'original'}},
+              'amendment':{'filing':{'accessionNumber':'amendment'}},'company_id':'TEST_ONLY_company','cik':'1'}
+        with patch.object(debt,'inspect_annual_amendment_scope',return_value=scope) as reader:
+            default=debt.inspect_current_debt_amendment(**args)
+            explicit=debt.inspect_current_debt_amendment(**args,note_layout='blocks-v1')
+        self.assertEqual(default,explicit);self.assertNotIn('note_layout',default)
+        self.assertEqual('INPUT_PROPERTY_PROVEN',default['decision'])
+        self.assertTrue(all('note_layout' not in call.kwargs for call in reader.call_args_list))
+
+    def test_inline_scope_and_balance_readers_are_selected_together(self):
+        from vnext import b06_current_input as debt,annual_amendment_scope_v2 as scope_v2,instant_balance_amendment_v2 as balance_v2
+        scope={'fiscal_window_unchanged':True,'issues':[],'unchanged_input_classes':[],
+               'scope_id':'TEST_ONLY_scope','classification':'PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS',
+               'note_layout':'inline-paragraphs-v2','amendment':{'document':{'blocks':[]}}}
+        args={'original':{'filing':{'accessionNumber':'original'}},
+              'amendment':{'raw':b'TEST_ONLY_note','filing':{'accessionNumber':'amendment'}},'company_id':'TEST_ONLY_company','cik':'1'}
+        with patch.object(debt,'inspect_annual_amendment_scope',side_effect=AssertionError('No legacy scope')), \
+             patch.object(debt,'_part_iii_details',side_effect=AssertionError('No legacy balance')), \
+             patch.object(scope_v2,'inspect_annual_amendment_scope',return_value=scope) as scope_reader, \
+             patch.object(balance_v2,'_part_iii_details',return_value={'TEST_ONLY':'checked'}) as balance_reader:
+            effect=debt.inspect_current_debt_amendment(**args,note_layout='inline-paragraphs-v2')
+        self.assertEqual('INPUT_PROPERTY_PROVEN',effect['decision'])
+        self.assertEqual('inline-paragraphs-v2',effect['note_layout'])
+        scope_reader.assert_called_once_with(**args,note_layout='inline-paragraphs-v2')
+        balance_reader.assert_called_once_with(scope,b'TEST_ONLY_note')
+        self.assertFalse(effect['debt_completeness_proven'])
+        self.assertFalse(effect['annual_continuity_proven'])
+        with self.assertRaisesRegex(ValueError,'NOTE_LAYOUT_UNSUPPORTED'):
+            debt.inspect_current_debt_amendment(**args,note_layout='not-a-layout')
+
+    def test_inline_note_cannot_hide_balance_failure_or_current_debt_change(self):
+        from vnext import b06_current_input as debt,annual_amendment_scope_v2 as scope_v2,instant_balance_amendment_v2 as balance_v2
+        from copy import deepcopy
+        scope={'fiscal_window_unchanged':True,'issues':[],'unchanged_input_classes':[],
+               'scope_id':'TEST_ONLY_scope','classification':'PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS',
+               'note_layout':'inline-paragraphs-v2','amendment':{'document':{'blocks':[]}}}
+        args={'original':{'filing':{'accessionNumber':'original'}},
+              'amendment':{'raw':b'TEST_ONLY_note','filing':{'accessionNumber':'amendment'}},'company_id':'TEST_ONLY_company','cik':'1'}
+        with patch.object(scope_v2,'inspect_annual_amendment_scope',return_value=scope), \
+             patch.object(balance_v2,'_part_iii_details',side_effect=ValueError('TEST_ONLY_balance_conflict')):
+            effect=debt.inspect_current_debt_amendment(**args,note_layout='inline-paragraphs-v2')
+        self.assertEqual('WITHHELD',effect['decision'])
+        self.assertIn('balance_conflict',effect['issues'][0]['reason'])
+        changed=deepcopy(scope)
+        changed['amendment']['document']['blocks']=[{'text':'Borrowings were restated to $10 million.','block_index':1}]
+        with patch.object(scope_v2,'inspect_annual_amendment_scope',return_value=changed), \
+             patch.object(balance_v2,'_part_iii_details',return_value={}):
+            effect=debt.inspect_current_debt_amendment(**args,note_layout='inline-paragraphs-v2')
+        self.assertEqual('WITHHELD',effect['decision'])
+        self.assertIn('DEBT_EQUITY_CHANGE_UNRESOLVED',effect['issues'][0]['reason'])
 
 
 if __name__=='__main__':unittest.main()

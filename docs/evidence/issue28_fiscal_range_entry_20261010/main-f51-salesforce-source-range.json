@@ -1,0 +1,1410 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-fiscal-range-entry/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "tested_commit": "4d58197892eea09ee0cc6fde10a860a29a5111fd",
+  "uncommitted_source_hashes": {
+    "scripts/vnext/company_local.py": "1187c5bbb55d63122ffe9b094e70768fa19932171249cf14558889e31bb349e6",
+    "scripts/vnext/company_fiscal_range.py": "232064c422b37caaf249d1257a0d0376eb6e24909fc502e52c21abab510c3848",
+    "scripts/vnext/selected_source_requirements.py": "ee7e05e20bbbcda7aea65107c4203558e1b5b2c092901989697d5fc5d2e75bd7",
+    "scripts/vnext/historical_fiscal_labels.py": "280c8dffebfdbd4a302e18270415fc2b6afb00d75a432dcce804b608dadedf4b",
+    "scripts/vnext/historical_statement_cases.py": "454131a7a443402eb7bef6e6af4ae9975e00edcc060861e3d97d648e74b22afc",
+    "tools/vnext_company.py": "442b06ec4fbecb6007d7f9bd3a7cb134ae9ffb66218ca8dcd5e3882fdd860e62"
+  },
+  "args": [
+    "sources",
+    "--company",
+    "salesforce",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--fiscal-year-start",
+    "2026",
+    "--fiscal-year-end",
+    "2026",
+    "--metric",
+    "B01",
+    "--metric",
+    "B02"
+  ],
+  "runs": [
+    {
+      "seconds": 4.242230375064537,
+      "exit": 0,
+      "report": {
+        "elapsed_seconds": 4.0861903328914195,
+        "record_type": "COMPANY_FISCAL_RANGE_SOURCE_V1",
+        "company_id": "salesforce",
+        "fiscal_years": [
+          2026
+        ],
+        "metric_ids": [
+          "B01",
+          "B02"
+        ],
+        "candidates": [
+          {
+            "report_end": "2026-01-31",
+            "reporting_cik": "1108524",
+            "source_fiscal_year_resolved": true,
+            "metadata_scope": {
+              "target_report_end": "2026-01-01",
+              "window_oldest_report_end": "2025-01-31",
+              "loaded_inventories": [
+                "CIK0001108524.json"
+              ],
+              "outside_window_report_ends": [
+                "2024-01-31"
+              ],
+              "unloaded_older_history_files": [
+                "CIK0001108524-submissions-001.json",
+                "CIK0001108524-submissions-002.json",
+                "CIK0001108524-submissions-003.json",
+                "CIK0001108524-submissions-004.json",
+                "CIK0001108524-submissions-005.json"
+              ]
+            },
+            "filing": {
+              "form": "10-K",
+              "reportDate": "2026-01-31",
+              "filingDate": "2026-03-02",
+              "accessionNumber": "0001108524-26-000060",
+              "primaryDocument": "crm-20260131.htm"
+            },
+            "fiscal_year": 2026,
+            "original_dei_fiscal_year": 2025,
+            "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+            "actual_period": {
+              "period_start": "2025-02-01",
+              "period_end": "2026-01-31"
+            },
+            "inspection_id": "sha256:07b94467c10d4b198ab354c2b4f9a8db5fc7e54bb1b4f472705495f53b43c0cb",
+            "label_status": "SOURCE_LABEL_CONFLICT",
+            "primary_proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+              "accession": "0001108524-26-000060",
+              "document_name": "crm-20260131.htm",
+              "content_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+              "request_body_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+              "request_body_size": 2570278,
+              "request_headers_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm.b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb.headers.json",
+              "request_headers_sha256": "b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb",
+              "request_headers_size": 1087,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+              "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
+            },
+            "companyfacts_proof": {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+              "accession": "",
+              "document_name": "CIK0001108524.json",
+              "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+              "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+              "request_body_size": 4664726,
+              "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+              "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+              "request_headers_size": 707,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+              "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+            }
+          },
+          {
+            "report_end": "2025-01-31",
+            "reporting_cik": "1108524",
+            "source_fiscal_year_resolved": true,
+            "metadata_scope": {
+              "target_report_end": "2026-01-01",
+              "window_oldest_report_end": "2025-01-31",
+              "loaded_inventories": [
+                "CIK0001108524.json"
+              ],
+              "outside_window_report_ends": [
+                "2024-01-31"
+              ],
+              "unloaded_older_history_files": [
+                "CIK0001108524-submissions-001.json",
+                "CIK0001108524-submissions-002.json",
+                "CIK0001108524-submissions-003.json",
+                "CIK0001108524-submissions-004.json",
+                "CIK0001108524-submissions-005.json"
+              ]
+            },
+            "filing": {
+              "form": "10-K",
+              "reportDate": "2025-01-31",
+              "filingDate": "2025-03-05",
+              "accessionNumber": "0001108524-25-000006",
+              "primaryDocument": "crm-20250131.htm"
+            },
+            "fiscal_year": 2025,
+            "original_dei_fiscal_year": 2025,
+            "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+            "actual_period": {
+              "period_start": "2024-02-01",
+              "period_end": "2025-01-31"
+            },
+            "inspection_id": "sha256:c9c846ebc78cacfcb8a70d387527af92874f3309464cf69b1b0a87208e9d907f",
+            "label_status": "SOURCE_LABELS_CONSISTENT",
+            "primary_proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+              "accession": "0001108524-25-000006",
+              "document_name": "crm-20250131.htm",
+              "content_sha256": "af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+              "request_body_sha256": "af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+              "request_body_size": 2454319,
+              "request_headers_repo_relative_path": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm.ac86b594603163b61f7d733fb23c5500a95b4146d7d54af7b52852f0025b58e7.headers.json",
+              "request_headers_sha256": "ac86b594603163b61f7d733fb23c5500a95b4146d7d54af7b52852f0025b58e7",
+              "request_headers_size": 1685,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm",
+              "request_attempt_id": "request:attempt:791af2d44a7f2b870517476791c7fe47af2a8786fd4690e42dbeefec5ad4bc6f"
+            },
+            "companyfacts_proof": {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+              "accession": "",
+              "document_name": "CIK0001108524.json",
+              "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+              "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+              "request_body_size": 4664726,
+              "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+              "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+              "request_headers_size": 707,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+              "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+            }
+          }
+        ],
+        "tasks": [
+          {
+            "fiscal_year": 2026,
+            "status": "FISCAL_YEAR_RESOLVED",
+            "limitations": [],
+            "report_end": "2026-01-31",
+            "reporting_cik": "1108524",
+            "label": {
+              "report_end": "2026-01-31",
+              "reporting_cik": "1108524",
+              "source_fiscal_year_resolved": true,
+              "metadata_scope": {
+                "target_report_end": "2026-01-01",
+                "window_oldest_report_end": "2025-01-31",
+                "loaded_inventories": [
+                  "CIK0001108524.json"
+                ],
+                "outside_window_report_ends": [
+                  "2024-01-31"
+                ],
+                "unloaded_older_history_files": [
+                  "CIK0001108524-submissions-001.json",
+                  "CIK0001108524-submissions-002.json",
+                  "CIK0001108524-submissions-003.json",
+                  "CIK0001108524-submissions-004.json",
+                  "CIK0001108524-submissions-005.json"
+                ]
+              },
+              "filing": {
+                "form": "10-K",
+                "reportDate": "2026-01-31",
+                "filingDate": "2026-03-02",
+                "accessionNumber": "0001108524-26-000060",
+                "primaryDocument": "crm-20260131.htm"
+              },
+              "fiscal_year": 2026,
+              "original_dei_fiscal_year": 2025,
+              "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+              "actual_period": {
+                "period_start": "2025-02-01",
+                "period_end": "2026-01-31"
+              },
+              "inspection_id": "sha256:07b94467c10d4b198ab354c2b4f9a8db5fc7e54bb1b4f472705495f53b43c0cb",
+              "label_status": "SOURCE_LABEL_CONFLICT",
+              "primary_proof": {
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+                "accession": "0001108524-26-000060",
+                "document_name": "crm-20260131.htm",
+                "content_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+                "request_body_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+                "request_body_size": 2570278,
+                "request_headers_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm.b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb.headers.json",
+                "request_headers_sha256": "b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb",
+                "request_headers_size": 1087,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+                "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
+              },
+              "companyfacts_proof": {
+                "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+                "accession": "",
+                "document_name": "CIK0001108524.json",
+                "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                "request_body_size": 4664726,
+                "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+                "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+                "request_headers_size": 707,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+                "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+              }
+            },
+            "period_selection": {
+              "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+              "schema_version": 1,
+              "policy_id": "ordinary_period_selection_v1",
+              "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+              "company_id": "salesforce",
+              "reporting_cik": "1108524",
+              "subject_policy": {
+                "mode": "CONTINUOUS_PRIMARY",
+                "selected_cik": "1108524",
+                "cross_entity_combination_authorized": false
+              },
+              "target_report_end": "2026-01-31",
+              "requested_fiscal_year": 2026,
+              "current_filing": {
+                "form": "10-K",
+                "reportDate": "2026-01-31",
+                "filingDate": "2026-03-02",
+                "accessionNumber": "0001108524-26-000060",
+                "primaryDocument": "crm-20260131.htm"
+              },
+              "current_amendments": [],
+              "prior_report_end": "2025-01-31",
+              "prior_filing": {
+                "form": "10-K",
+                "reportDate": "2025-01-31",
+                "filingDate": "2025-03-05",
+                "accessionNumber": "0001108524-25-000006",
+                "primaryDocument": "crm-20250131.htm"
+              },
+              "prior_amendments": [],
+              "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+              "dependency_filing_roles": {
+                "target_primary": "0001108524-26-000060",
+                "target_amendment_primary": [],
+                "prior_annual_primary": "0001108524-25-000006",
+                "prior_amendment_primary": []
+              },
+              "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+              "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+              "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+              "source_set_identity": "sha256:a6e1aa071d30e59ebfd6047f7c68c4ce1a55dc5446ba91f2af995dc92d97447b",
+              "loaded_inventories": [
+                "CIK0001108524.json"
+              ],
+              "latest_restated_values_used": false,
+              "caller_supplied_selection_trusted": false,
+              "production_authorized": false,
+              "selection_id": "sha256:ee0348b9cb0a83744647171764a51c9183a5fbd5a66aabc60fe8c30ddf79564a"
+            },
+            "source_preflight": {
+              "record_type": "SELECTED_ANNUAL_SOURCE_REQUIREMENTS_V1",
+              "company_id": "salesforce",
+              "metric_ids": [
+                "B01",
+                "B02"
+              ],
+              "requested_report_end": "2026-01-31",
+              "filing_selection": {
+                "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+                "schema_version": 1,
+                "policy_id": "ordinary_period_selection_v1",
+                "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+                "company_id": "salesforce",
+                "reporting_cik": "1108524",
+                "subject_policy": {
+                  "mode": "CONTINUOUS_PRIMARY",
+                  "selected_cik": "1108524",
+                  "cross_entity_combination_authorized": false
+                },
+                "target_report_end": "2026-01-31",
+                "requested_fiscal_year": null,
+                "current_filing": {
+                  "form": "10-K",
+                  "reportDate": "2026-01-31",
+                  "filingDate": "2026-03-02",
+                  "accessionNumber": "0001108524-26-000060",
+                  "primaryDocument": "crm-20260131.htm"
+                },
+                "current_amendments": [],
+                "prior_report_end": "2025-01-31",
+                "prior_filing": {
+                  "form": "10-K",
+                  "reportDate": "2025-01-31",
+                  "filingDate": "2025-03-05",
+                  "accessionNumber": "0001108524-25-000006",
+                  "primaryDocument": "crm-20250131.htm"
+                },
+                "prior_amendments": [],
+                "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+                "dependency_filing_roles": {
+                  "target_primary": "0001108524-26-000060",
+                  "target_amendment_primary": [],
+                  "prior_annual_primary": "0001108524-25-000006",
+                  "prior_amendment_primary": []
+                },
+                "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+                "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+                "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+                "source_set_identity": "sha256:a6e1aa071d30e59ebfd6047f7c68c4ce1a55dc5446ba91f2af995dc92d97447b",
+                "loaded_inventories": [
+                  "CIK0001108524.json"
+                ],
+                "latest_restated_values_used": false,
+                "caller_supplied_selection_trusted": false,
+                "production_authorized": false,
+                "selection_id": "sha256:a830a4291119c5a7d68749a6028664e80e051191489fd8ce344d2d3e12838380"
+              },
+              "original_annual_period": {
+                "fiscal_year": 2025,
+                "period_start": "2025-02-01",
+                "period_end": "2026-01-31"
+              },
+              "annual_period_label_source": "RAW_ORIGINAL_DEI_CONTEXT",
+              "consumer_fiscal_year_resolution_performed": false,
+              "requirements": [
+                {
+                  "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+                  "method": "GET",
+                  "roles": [
+                    "selected_submissions_inventory"
+                  ],
+                  "accession": "SUBMISSIONS-1108524",
+                  "media_type": "application/json",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:7ed762017e7566b455558619f6c93108bbeadcdd0345d7fe6a19e63eab9d2317",
+                    "raw_asset_id": "sha256:2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+                    "company_id": "salesforce",
+                    "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+                    "accession": "SUBMISSIONS-1108524",
+                    "document_name": "CIK0001108524.json",
+                    "source_role": "selected_submissions_inventory",
+                    "request_attempt_id": "request:attempt:a483ec50e009556e252d8f0966a11aceb66a0a80a6f38446a0df466b3c1020e3"
+                  },
+                  "proof": {
+                    "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+                    "accession": "SUBMISSIONS-1108524",
+                    "document_name": "CIK0001108524.json",
+                    "content_sha256": "2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+                    "request_body_sha256": "2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+                    "request_body_size": 156325,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json.4913d47e1c465a0db4185c5fa7f7b09979e7cf5da620545707afb185ae037fb4.headers.json",
+                    "request_headers_sha256": "4913d47e1c465a0db4185c5fa7f7b09979e7cf5da620545707afb185ae037fb4",
+                    "request_headers_size": 736,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json",
+                    "request_attempt_id": "request:attempt:a483ec50e009556e252d8f0966a11aceb66a0a80a6f38446a0df466b3c1020e3"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+                  "method": "GET",
+                  "roles": [
+                    "target_annual_primary"
+                  ],
+                  "accession": "0001108524-26-000060",
+                  "media_type": "text/html",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:761ecbd1f3099ecb9b116f6b22eff99504d8cfa92e429568aa1b0224e008e7ea",
+                    "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "crm-20260131.htm",
+                    "source_role": "target_annual_primary",
+                    "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "crm-20260131.htm",
+                    "content_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+                    "request_body_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+                    "request_body_size": 2570278,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm.b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb.headers.json",
+                    "request_headers_sha256": "b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb",
+                    "request_headers_size": 1087,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+                    "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/index.json",
+                  "method": "GET",
+                  "roles": [
+                    "target_annual_accession_index"
+                  ],
+                  "accession": "0001108524-26-000060",
+                  "media_type": "application/json",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:2bdb9af5131ada2aab4ad821fd6e1dd140d6e63c83d9afbad83303285892512f",
+                    "raw_asset_id": "sha256:3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/index.json",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "index.json",
+                    "source_role": "target_annual_accession_index",
+                    "request_attempt_id": "request:attempt:c1dc211efc94c196d97b75223845b8879755ad0634c7b2cdcd0ea83ec799f2da"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/index.json",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "index.json",
+                    "content_sha256": "3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78",
+                    "request_body_sha256": "3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78",
+                    "request_body_size": 10559,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/32/3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78/index.json.1b9ba8f2f5d4b7738ba2ae7fd20c2963d765f9b6d526397a377d46a037877172.headers.json",
+                    "request_headers_sha256": "1b9ba8f2f5d4b7738ba2ae7fd20c2963d765f9b6d526397a377d46a037877172",
+                    "request_headers_size": 678,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/32/3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78/index.json",
+                    "request_attempt_id": "request:attempt:c1dc211efc94c196d97b75223845b8879755ad0634c7b2cdcd0ea83ec799f2da"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+                  "method": "GET",
+                  "roles": [
+                    "target_annual_instance"
+                  ],
+                  "accession": "0001108524-26-000060",
+                  "media_type": "application/xml",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:e9c4d037e56f84125691cef05a2d3a412241b0ed7bf1054926f945b7b675a5c4",
+                    "raw_asset_id": "sha256:ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "crm-20260131_htm.xml",
+                    "source_role": "target_annual_instance",
+                    "request_attempt_id": "request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "crm-20260131_htm.xml",
+                    "content_sha256": "ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+                    "request_body_sha256": "ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+                    "request_body_size": 2292241,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/ad/ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24/crm-20260131_htm.xml.fad60e94e71495da99ff58df804eb592bf5f392690d7f4fa34adee730a710d46.headers.json",
+                    "request_headers_sha256": "fad60e94e71495da99ff58df804eb592bf5f392690d7f4fa34adee730a710d46",
+                    "request_headers_size": 1127,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/ad/ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24/crm-20260131_htm.xml",
+                    "request_attempt_id": "request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3"
+                  }
+                },
+                {
+                  "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+                  "method": "GET",
+                  "roles": [
+                    "selected_companyfacts"
+                  ],
+                  "accession": "",
+                  "media_type": "application/json",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:2000f8863d3fc4f68a8a2d19e3f969e61776b5b7e37af008c84ed2dd43368c1d",
+                    "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                    "company_id": "salesforce",
+                    "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+                    "accession": "SUBMISSIONS-1108524",
+                    "document_name": "CIK0001108524.json",
+                    "source_role": "selected_companyfacts",
+                    "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+                  },
+                  "proof": {
+                    "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+                    "accession": "",
+                    "document_name": "CIK0001108524.json",
+                    "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                    "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                    "request_body_size": 4664726,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+                    "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+                    "request_headers_size": 707,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+                    "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+                  "method": "GET",
+                  "roles": [
+                    "prior_annual_primary"
+                  ],
+                  "accession": "0001108524-25-000006",
+                  "media_type": "text/html",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:656e37e04e65686e56753ef58d6c38de769b54747bad722ba4181842f47339b8",
+                    "raw_asset_id": "sha256:af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "crm-20250131.htm",
+                    "source_role": "prior_annual_primary",
+                    "request_attempt_id": "request:attempt:791af2d44a7f2b870517476791c7fe47af2a8786fd4690e42dbeefec5ad4bc6f"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "crm-20250131.htm",
+                    "content_sha256": "af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+                    "request_body_sha256": "af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+                    "request_body_size": 2454319,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm.ac86b594603163b61f7d733fb23c5500a95b4146d7d54af7b52852f0025b58e7.headers.json",
+                    "request_headers_sha256": "ac86b594603163b61f7d733fb23c5500a95b4146d7d54af7b52852f0025b58e7",
+                    "request_headers_size": 1685,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm",
+                    "request_attempt_id": "request:attempt:791af2d44a7f2b870517476791c7fe47af2a8786fd4690e42dbeefec5ad4bc6f"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/index.json",
+                  "method": "GET",
+                  "roles": [
+                    "prior_annual_accession_index"
+                  ],
+                  "accession": "0001108524-25-000006",
+                  "media_type": "application/json",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:7ffc15969739c93c8a76dcc89541d28523949ab08757e8f543eabf6354c5754b",
+                    "raw_asset_id": "sha256:7c02f89809f56be6189bc0c09f989d3c4e8b717ed0a24706a161b12c1997d0cf",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/index.json",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "index.json",
+                    "source_role": "prior_annual_accession_index",
+                    "request_attempt_id": "request:attempt:79e59a596bdab953f7febde3a80f55e52f4d6d9a06e6f6ede05fc4d3448d2d8e"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/index.json",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "index.json",
+                    "content_sha256": "7c02f89809f56be6189bc0c09f989d3c4e8b717ed0a24706a161b12c1997d0cf",
+                    "request_body_sha256": "7c02f89809f56be6189bc0c09f989d3c4e8b717ed0a24706a161b12c1997d0cf",
+                    "request_body_size": 11336,
+                    "request_headers_repo_relative_path": "evidence/accession_materials/salesforce_1108524_000110852425000006/index.json.headers.json",
+                    "request_headers_sha256": "48e325ad1c44f3314a8049dfbed0f644e0b8b640be2876c046e646f6f7293bd2",
+                    "request_headers_size": 663,
+                    "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+                    "request_repo_relative_path": "evidence/accession_materials/salesforce_1108524_000110852425000006/index.json",
+                    "request_attempt_id": "request:attempt:79e59a596bdab953f7febde3a80f55e52f4d6d9a06e6f6ede05fc4d3448d2d8e"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+                  "method": "GET",
+                  "roles": [
+                    "prior_annual_instance"
+                  ],
+                  "accession": "0001108524-25-000006",
+                  "media_type": "application/xml",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:148dfbe1516df617a01e0804ea8f509393598334b5fe29cd06decae6b9990c95",
+                    "raw_asset_id": "sha256:519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "crm-20250131_htm.xml",
+                    "source_role": "prior_annual_instance",
+                    "request_attempt_id": "request:attempt:15b61e4f79a4684e2230b203e86c7acc16218be5688e4585e35e6aa1d7171a61"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "crm-20250131_htm.xml",
+                    "content_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+                    "request_body_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+                    "request_body_size": 2095588,
+                    "request_headers_repo_relative_path": "evidence/accession_materials/salesforce_1108524_000110852425000006/crm-20250131_htm.xml.headers.json",
+                    "request_headers_sha256": "8ed7375cd5794c2b85600e29cfed5cc8efb79ad5664557c5db27f0d182486779",
+                    "request_headers_size": 1127,
+                    "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+                    "request_repo_relative_path": "evidence/accession_materials/salesforce_1108524_000110852425000006/crm-20250131_htm.xml",
+                    "request_attempt_id": "request:attempt:15b61e4f79a4684e2230b203e86c7acc16218be5688e4585e35e6aa1d7171a61"
+                  }
+                }
+              ],
+              "unresolved_dependency_urls": [],
+              "limitations": [],
+              "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+              "complete_known_source_graph": true,
+              "unique_known_get_count": 8,
+              "unknown_instance_frontier": [],
+              "fiscal_year_claimed_from_report_date": false,
+              "current_sec_freshness_proven": false,
+              "amendment_effect_on_metric_verified": false,
+              "metric_acceptance_proven": false,
+              "all_39_source_acceptance_proven": false,
+              "fetch_authorized": false,
+              "metric_executed": false,
+              "production_authorized": false,
+              "calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "program_sha256": "ee7e05e20bbbcda7aea65107c4203558e1b5b2c092901989697d5fc5d2e75bd7",
+              "requirements_id": "sha256:6f837cda508b6ea6d9f64a7c68f47059c2865e7f5f0f0a8158567af227917c0b"
+            },
+            "source_bytes_available": true
+          }
+        ],
+        "status": "FISCAL_RANGE_RESOLVED",
+        "all_source_bytes_available": true,
+        "discovery_scope": "EXISTING_TARGET_AND_NEAREST_PRIOR_METADATA_WINDOW",
+        "all_older_history_excluded_by_fiscal_label": false,
+        "current_sec_freshness_proven": false,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "fetch_authorized": false,
+        "metric_executed": false,
+        "metric_acceptance_proven": false,
+        "production_authorized": false,
+        "range_id": "sha256:71e956e1c949a655933597f394c41dbdeb726b25f6f4b25ef5befd5fcae0d893"
+      }
+    },
+    {
+      "seconds": 4.15123433386907,
+      "exit": 0,
+      "report": {
+        "elapsed_seconds": 3.9991770000196993,
+        "record_type": "COMPANY_FISCAL_RANGE_SOURCE_V1",
+        "company_id": "salesforce",
+        "fiscal_years": [
+          2026
+        ],
+        "metric_ids": [
+          "B01",
+          "B02"
+        ],
+        "candidates": [
+          {
+            "report_end": "2026-01-31",
+            "reporting_cik": "1108524",
+            "source_fiscal_year_resolved": true,
+            "metadata_scope": {
+              "target_report_end": "2026-01-01",
+              "window_oldest_report_end": "2025-01-31",
+              "loaded_inventories": [
+                "CIK0001108524.json"
+              ],
+              "outside_window_report_ends": [
+                "2024-01-31"
+              ],
+              "unloaded_older_history_files": [
+                "CIK0001108524-submissions-001.json",
+                "CIK0001108524-submissions-002.json",
+                "CIK0001108524-submissions-003.json",
+                "CIK0001108524-submissions-004.json",
+                "CIK0001108524-submissions-005.json"
+              ]
+            },
+            "filing": {
+              "form": "10-K",
+              "reportDate": "2026-01-31",
+              "filingDate": "2026-03-02",
+              "accessionNumber": "0001108524-26-000060",
+              "primaryDocument": "crm-20260131.htm"
+            },
+            "fiscal_year": 2026,
+            "original_dei_fiscal_year": 2025,
+            "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+            "actual_period": {
+              "period_start": "2025-02-01",
+              "period_end": "2026-01-31"
+            },
+            "inspection_id": "sha256:07b94467c10d4b198ab354c2b4f9a8db5fc7e54bb1b4f472705495f53b43c0cb",
+            "label_status": "SOURCE_LABEL_CONFLICT",
+            "primary_proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+              "accession": "0001108524-26-000060",
+              "document_name": "crm-20260131.htm",
+              "content_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+              "request_body_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+              "request_body_size": 2570278,
+              "request_headers_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm.b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb.headers.json",
+              "request_headers_sha256": "b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb",
+              "request_headers_size": 1087,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+              "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
+            },
+            "companyfacts_proof": {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+              "accession": "",
+              "document_name": "CIK0001108524.json",
+              "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+              "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+              "request_body_size": 4664726,
+              "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+              "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+              "request_headers_size": 707,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+              "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+            }
+          },
+          {
+            "report_end": "2025-01-31",
+            "reporting_cik": "1108524",
+            "source_fiscal_year_resolved": true,
+            "metadata_scope": {
+              "target_report_end": "2026-01-01",
+              "window_oldest_report_end": "2025-01-31",
+              "loaded_inventories": [
+                "CIK0001108524.json"
+              ],
+              "outside_window_report_ends": [
+                "2024-01-31"
+              ],
+              "unloaded_older_history_files": [
+                "CIK0001108524-submissions-001.json",
+                "CIK0001108524-submissions-002.json",
+                "CIK0001108524-submissions-003.json",
+                "CIK0001108524-submissions-004.json",
+                "CIK0001108524-submissions-005.json"
+              ]
+            },
+            "filing": {
+              "form": "10-K",
+              "reportDate": "2025-01-31",
+              "filingDate": "2025-03-05",
+              "accessionNumber": "0001108524-25-000006",
+              "primaryDocument": "crm-20250131.htm"
+            },
+            "fiscal_year": 2025,
+            "original_dei_fiscal_year": 2025,
+            "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+            "actual_period": {
+              "period_start": "2024-02-01",
+              "period_end": "2025-01-31"
+            },
+            "inspection_id": "sha256:c9c846ebc78cacfcb8a70d387527af92874f3309464cf69b1b0a87208e9d907f",
+            "label_status": "SOURCE_LABELS_CONSISTENT",
+            "primary_proof": {
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+              "accession": "0001108524-25-000006",
+              "document_name": "crm-20250131.htm",
+              "content_sha256": "af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+              "request_body_sha256": "af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+              "request_body_size": 2454319,
+              "request_headers_repo_relative_path": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm.ac86b594603163b61f7d733fb23c5500a95b4146d7d54af7b52852f0025b58e7.headers.json",
+              "request_headers_sha256": "ac86b594603163b61f7d733fb23c5500a95b4146d7d54af7b52852f0025b58e7",
+              "request_headers_size": 1685,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm",
+              "request_attempt_id": "request:attempt:791af2d44a7f2b870517476791c7fe47af2a8786fd4690e42dbeefec5ad4bc6f"
+            },
+            "companyfacts_proof": {
+              "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+              "accession": "",
+              "document_name": "CIK0001108524.json",
+              "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+              "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+              "request_body_size": 4664726,
+              "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+              "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+              "request_headers_size": 707,
+              "request_locator_kind": "IMMUTABLE_ATTEMPT",
+              "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+              "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+            }
+          }
+        ],
+        "tasks": [
+          {
+            "fiscal_year": 2026,
+            "status": "FISCAL_YEAR_RESOLVED",
+            "limitations": [],
+            "report_end": "2026-01-31",
+            "reporting_cik": "1108524",
+            "label": {
+              "report_end": "2026-01-31",
+              "reporting_cik": "1108524",
+              "source_fiscal_year_resolved": true,
+              "metadata_scope": {
+                "target_report_end": "2026-01-01",
+                "window_oldest_report_end": "2025-01-31",
+                "loaded_inventories": [
+                  "CIK0001108524.json"
+                ],
+                "outside_window_report_ends": [
+                  "2024-01-31"
+                ],
+                "unloaded_older_history_files": [
+                  "CIK0001108524-submissions-001.json",
+                  "CIK0001108524-submissions-002.json",
+                  "CIK0001108524-submissions-003.json",
+                  "CIK0001108524-submissions-004.json",
+                  "CIK0001108524-submissions-005.json"
+                ]
+              },
+              "filing": {
+                "form": "10-K",
+                "reportDate": "2026-01-31",
+                "filingDate": "2026-03-02",
+                "accessionNumber": "0001108524-26-000060",
+                "primaryDocument": "crm-20260131.htm"
+              },
+              "fiscal_year": 2026,
+              "original_dei_fiscal_year": 2025,
+              "basis": "EXPLICIT_SOURCE_ISSUER_DEFINITION",
+              "actual_period": {
+                "period_start": "2025-02-01",
+                "period_end": "2026-01-31"
+              },
+              "inspection_id": "sha256:07b94467c10d4b198ab354c2b4f9a8db5fc7e54bb1b4f472705495f53b43c0cb",
+              "label_status": "SOURCE_LABEL_CONFLICT",
+              "primary_proof": {
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+                "accession": "0001108524-26-000060",
+                "document_name": "crm-20260131.htm",
+                "content_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+                "request_body_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+                "request_body_size": 2570278,
+                "request_headers_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm.b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb.headers.json",
+                "request_headers_sha256": "b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb",
+                "request_headers_size": 1087,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+                "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
+              },
+              "companyfacts_proof": {
+                "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+                "accession": "",
+                "document_name": "CIK0001108524.json",
+                "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                "request_body_size": 4664726,
+                "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+                "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+                "request_headers_size": 707,
+                "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+                "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+              }
+            },
+            "period_selection": {
+              "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+              "schema_version": 1,
+              "policy_id": "ordinary_period_selection_v1",
+              "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+              "company_id": "salesforce",
+              "reporting_cik": "1108524",
+              "subject_policy": {
+                "mode": "CONTINUOUS_PRIMARY",
+                "selected_cik": "1108524",
+                "cross_entity_combination_authorized": false
+              },
+              "target_report_end": "2026-01-31",
+              "requested_fiscal_year": 2026,
+              "current_filing": {
+                "form": "10-K",
+                "reportDate": "2026-01-31",
+                "filingDate": "2026-03-02",
+                "accessionNumber": "0001108524-26-000060",
+                "primaryDocument": "crm-20260131.htm"
+              },
+              "current_amendments": [],
+              "prior_report_end": "2025-01-31",
+              "prior_filing": {
+                "form": "10-K",
+                "reportDate": "2025-01-31",
+                "filingDate": "2025-03-05",
+                "accessionNumber": "0001108524-25-000006",
+                "primaryDocument": "crm-20250131.htm"
+              },
+              "prior_amendments": [],
+              "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+              "dependency_filing_roles": {
+                "target_primary": "0001108524-26-000060",
+                "target_amendment_primary": [],
+                "prior_annual_primary": "0001108524-25-000006",
+                "prior_amendment_primary": []
+              },
+              "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+              "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+              "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+              "source_set_identity": "sha256:a6e1aa071d30e59ebfd6047f7c68c4ce1a55dc5446ba91f2af995dc92d97447b",
+              "loaded_inventories": [
+                "CIK0001108524.json"
+              ],
+              "latest_restated_values_used": false,
+              "caller_supplied_selection_trusted": false,
+              "production_authorized": false,
+              "selection_id": "sha256:ee0348b9cb0a83744647171764a51c9183a5fbd5a66aabc60fe8c30ddf79564a"
+            },
+            "source_preflight": {
+              "record_type": "SELECTED_ANNUAL_SOURCE_REQUIREMENTS_V1",
+              "company_id": "salesforce",
+              "metric_ids": [
+                "B01",
+                "B02"
+              ],
+              "requested_report_end": "2026-01-31",
+              "filing_selection": {
+                "record_type": "ORDINARY_HISTORICAL_PERIOD_SELECTION",
+                "schema_version": 1,
+                "policy_id": "ordinary_period_selection_v1",
+                "policy_sha256": "6fd86440f7b62680e7ce2fa66de9f79b900f6a2b53fc8300aee590834967ab72",
+                "company_id": "salesforce",
+                "reporting_cik": "1108524",
+                "subject_policy": {
+                  "mode": "CONTINUOUS_PRIMARY",
+                  "selected_cik": "1108524",
+                  "cross_entity_combination_authorized": false
+                },
+                "target_report_end": "2026-01-31",
+                "requested_fiscal_year": null,
+                "current_filing": {
+                  "form": "10-K",
+                  "reportDate": "2026-01-31",
+                  "filingDate": "2026-03-02",
+                  "accessionNumber": "0001108524-26-000060",
+                  "primaryDocument": "crm-20260131.htm"
+                },
+                "current_amendments": [],
+                "prior_report_end": "2025-01-31",
+                "prior_filing": {
+                  "form": "10-K",
+                  "reportDate": "2025-01-31",
+                  "filingDate": "2025-03-05",
+                  "accessionNumber": "0001108524-25-000006",
+                  "primaryDocument": "crm-20250131.htm"
+                },
+                "prior_amendments": [],
+                "prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+                "dependency_filing_roles": {
+                  "target_primary": "0001108524-26-000060",
+                  "target_amendment_primary": [],
+                  "prior_annual_primary": "0001108524-25-000006",
+                  "prior_amendment_primary": []
+                },
+                "filing_selection_policy_id": "PINNED_ANNUAL_REPORT_END_IN_COMPLETE_SAVED_SUBMISSIONS",
+                "value_selection_policy_id": "CURRENT_AND_PRIOR_EACH_FROM_ITS_OWN_SELECTED_FILING_FIRST_REPORT",
+                "amendment_policy_id": "AMENDMENTS_RETAINED_AS_SEPARATE_INPUTS_NOT_SUBSTITUTED",
+                "source_set_identity": "sha256:a6e1aa071d30e59ebfd6047f7c68c4ce1a55dc5446ba91f2af995dc92d97447b",
+                "loaded_inventories": [
+                  "CIK0001108524.json"
+                ],
+                "latest_restated_values_used": false,
+                "caller_supplied_selection_trusted": false,
+                "production_authorized": false,
+                "selection_id": "sha256:a830a4291119c5a7d68749a6028664e80e051191489fd8ce344d2d3e12838380"
+              },
+              "original_annual_period": {
+                "fiscal_year": 2025,
+                "period_start": "2025-02-01",
+                "period_end": "2026-01-31"
+              },
+              "annual_period_label_source": "RAW_ORIGINAL_DEI_CONTEXT",
+              "consumer_fiscal_year_resolution_performed": false,
+              "requirements": [
+                {
+                  "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+                  "method": "GET",
+                  "roles": [
+                    "selected_submissions_inventory"
+                  ],
+                  "accession": "SUBMISSIONS-1108524",
+                  "media_type": "application/json",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:7ed762017e7566b455558619f6c93108bbeadcdd0345d7fe6a19e63eab9d2317",
+                    "raw_asset_id": "sha256:2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+                    "company_id": "salesforce",
+                    "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+                    "accession": "SUBMISSIONS-1108524",
+                    "document_name": "CIK0001108524.json",
+                    "source_role": "selected_submissions_inventory",
+                    "request_attempt_id": "request:attempt:a483ec50e009556e252d8f0966a11aceb66a0a80a6f38446a0df466b3c1020e3"
+                  },
+                  "proof": {
+                    "source_url": "https://data.sec.gov/submissions/CIK0001108524.json",
+                    "accession": "SUBMISSIONS-1108524",
+                    "document_name": "CIK0001108524.json",
+                    "content_sha256": "2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+                    "request_body_sha256": "2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+                    "request_body_size": 156325,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json.4913d47e1c465a0db4185c5fa7f7b09979e7cf5da620545707afb185ae037fb4.headers.json",
+                    "request_headers_sha256": "4913d47e1c465a0db4185c5fa7f7b09979e7cf5da620545707afb185ae037fb4",
+                    "request_headers_size": 736,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json",
+                    "request_attempt_id": "request:attempt:a483ec50e009556e252d8f0966a11aceb66a0a80a6f38446a0df466b3c1020e3"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+                  "method": "GET",
+                  "roles": [
+                    "target_annual_primary"
+                  ],
+                  "accession": "0001108524-26-000060",
+                  "media_type": "text/html",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:761ecbd1f3099ecb9b116f6b22eff99504d8cfa92e429568aa1b0224e008e7ea",
+                    "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "crm-20260131.htm",
+                    "source_role": "target_annual_primary",
+                    "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131.htm",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "crm-20260131.htm",
+                    "content_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+                    "request_body_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+                    "request_body_size": 2570278,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm.b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb.headers.json",
+                    "request_headers_sha256": "b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb",
+                    "request_headers_size": 1087,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+                    "request_attempt_id": "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/index.json",
+                  "method": "GET",
+                  "roles": [
+                    "target_annual_accession_index"
+                  ],
+                  "accession": "0001108524-26-000060",
+                  "media_type": "application/json",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:2bdb9af5131ada2aab4ad821fd6e1dd140d6e63c83d9afbad83303285892512f",
+                    "raw_asset_id": "sha256:3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/index.json",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "index.json",
+                    "source_role": "target_annual_accession_index",
+                    "request_attempt_id": "request:attempt:c1dc211efc94c196d97b75223845b8879755ad0634c7b2cdcd0ea83ec799f2da"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/index.json",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "index.json",
+                    "content_sha256": "3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78",
+                    "request_body_sha256": "3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78",
+                    "request_body_size": 10559,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/32/3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78/index.json.1b9ba8f2f5d4b7738ba2ae7fd20c2963d765f9b6d526397a377d46a037877172.headers.json",
+                    "request_headers_sha256": "1b9ba8f2f5d4b7738ba2ae7fd20c2963d765f9b6d526397a377d46a037877172",
+                    "request_headers_size": 678,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/32/3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78/index.json",
+                    "request_attempt_id": "request:attempt:c1dc211efc94c196d97b75223845b8879755ad0634c7b2cdcd0ea83ec799f2da"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+                  "method": "GET",
+                  "roles": [
+                    "target_annual_instance"
+                  ],
+                  "accession": "0001108524-26-000060",
+                  "media_type": "application/xml",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:e9c4d037e56f84125691cef05a2d3a412241b0ed7bf1054926f945b7b675a5c4",
+                    "raw_asset_id": "sha256:ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "crm-20260131_htm.xml",
+                    "source_role": "target_annual_instance",
+                    "request_attempt_id": "request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000060/crm-20260131_htm.xml",
+                    "accession": "0001108524-26-000060",
+                    "document_name": "crm-20260131_htm.xml",
+                    "content_sha256": "ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+                    "request_body_sha256": "ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+                    "request_body_size": 2292241,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/ad/ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24/crm-20260131_htm.xml.fad60e94e71495da99ff58df804eb592bf5f392690d7f4fa34adee730a710d46.headers.json",
+                    "request_headers_sha256": "fad60e94e71495da99ff58df804eb592bf5f392690d7f4fa34adee730a710d46",
+                    "request_headers_size": 1127,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/ad/ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24/crm-20260131_htm.xml",
+                    "request_attempt_id": "request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3"
+                  }
+                },
+                {
+                  "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+                  "method": "GET",
+                  "roles": [
+                    "selected_companyfacts"
+                  ],
+                  "accession": "",
+                  "media_type": "application/json",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:2000f8863d3fc4f68a8a2d19e3f969e61776b5b7e37af008c84ed2dd43368c1d",
+                    "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                    "company_id": "salesforce",
+                    "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+                    "accession": "SUBMISSIONS-1108524",
+                    "document_name": "CIK0001108524.json",
+                    "source_role": "selected_companyfacts",
+                    "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+                  },
+                  "proof": {
+                    "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+                    "accession": "",
+                    "document_name": "CIK0001108524.json",
+                    "content_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                    "request_body_sha256": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+                    "request_body_size": 4664726,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json",
+                    "request_headers_sha256": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+                    "request_headers_size": 707,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json",
+                    "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+                  "method": "GET",
+                  "roles": [
+                    "prior_annual_primary"
+                  ],
+                  "accession": "0001108524-25-000006",
+                  "media_type": "text/html",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:656e37e04e65686e56753ef58d6c38de769b54747bad722ba4181842f47339b8",
+                    "raw_asset_id": "sha256:af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "crm-20250131.htm",
+                    "source_role": "prior_annual_primary",
+                    "request_attempt_id": "request:attempt:791af2d44a7f2b870517476791c7fe47af2a8786fd4690e42dbeefec5ad4bc6f"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131.htm",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "crm-20250131.htm",
+                    "content_sha256": "af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+                    "request_body_sha256": "af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+                    "request_body_size": 2454319,
+                    "request_headers_repo_relative_path": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm.ac86b594603163b61f7d733fb23c5500a95b4146d7d54af7b52852f0025b58e7.headers.json",
+                    "request_headers_sha256": "ac86b594603163b61f7d733fb23c5500a95b4146d7d54af7b52852f0025b58e7",
+                    "request_headers_size": 1685,
+                    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+                    "request_repo_relative_path": "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm",
+                    "request_attempt_id": "request:attempt:791af2d44a7f2b870517476791c7fe47af2a8786fd4690e42dbeefec5ad4bc6f"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/index.json",
+                  "method": "GET",
+                  "roles": [
+                    "prior_annual_accession_index"
+                  ],
+                  "accession": "0001108524-25-000006",
+                  "media_type": "application/json",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:7ffc15969739c93c8a76dcc89541d28523949ab08757e8f543eabf6354c5754b",
+                    "raw_asset_id": "sha256:7c02f89809f56be6189bc0c09f989d3c4e8b717ed0a24706a161b12c1997d0cf",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/index.json",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "index.json",
+                    "source_role": "prior_annual_accession_index",
+                    "request_attempt_id": "request:attempt:79e59a596bdab953f7febde3a80f55e52f4d6d9a06e6f6ede05fc4d3448d2d8e"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/index.json",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "index.json",
+                    "content_sha256": "7c02f89809f56be6189bc0c09f989d3c4e8b717ed0a24706a161b12c1997d0cf",
+                    "request_body_sha256": "7c02f89809f56be6189bc0c09f989d3c4e8b717ed0a24706a161b12c1997d0cf",
+                    "request_body_size": 11336,
+                    "request_headers_repo_relative_path": "evidence/accession_materials/salesforce_1108524_000110852425000006/index.json.headers.json",
+                    "request_headers_sha256": "48e325ad1c44f3314a8049dfbed0f644e0b8b640be2876c046e646f6f7293bd2",
+                    "request_headers_size": 663,
+                    "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+                    "request_repo_relative_path": "evidence/accession_materials/salesforce_1108524_000110852425000006/index.json",
+                    "request_attempt_id": "request:attempt:79e59a596bdab953f7febde3a80f55e52f4d6d9a06e6f6ede05fc4d3448d2d8e"
+                  }
+                },
+                {
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+                  "method": "GET",
+                  "roles": [
+                    "prior_annual_instance"
+                  ],
+                  "accession": "0001108524-25-000006",
+                  "media_type": "application/xml",
+                  "refresh_for_new_discovery": false,
+                  "saved_status": "VERIFIED_SAVED_SOURCE",
+                  "source_acquisition_credit": false,
+                  "source_reference": {
+                    "record_type": "SOURCE_REFERENCE",
+                    "source_reference_id": "sha256:148dfbe1516df617a01e0804ea8f509393598334b5fe29cd06decae6b9990c95",
+                    "raw_asset_id": "sha256:519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+                    "company_id": "salesforce",
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "crm-20250131_htm.xml",
+                    "source_role": "prior_annual_instance",
+                    "request_attempt_id": "request:attempt:15b61e4f79a4684e2230b203e86c7acc16218be5688e4585e35e6aa1d7171a61"
+                  },
+                  "proof": {
+                    "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852425000006/crm-20250131_htm.xml",
+                    "accession": "0001108524-25-000006",
+                    "document_name": "crm-20250131_htm.xml",
+                    "content_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+                    "request_body_sha256": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+                    "request_body_size": 2095588,
+                    "request_headers_repo_relative_path": "evidence/accession_materials/salesforce_1108524_000110852425000006/crm-20250131_htm.xml.headers.json",
+                    "request_headers_sha256": "8ed7375cd5794c2b85600e29cfed5cc8efb79ad5664557c5db27f0d182486779",
+                    "request_headers_size": 1127,
+                    "request_locator_kind": "LEGACY_WORKING_LOCATOR",
+                    "request_repo_relative_path": "evidence/accession_materials/salesforce_1108524_000110852425000006/crm-20250131_htm.xml",
+                    "request_attempt_id": "request:attempt:15b61e4f79a4684e2230b203e86c7acc16218be5688e4585e35e6aa1d7171a61"
+                  }
+                }
+              ],
+              "unresolved_dependency_urls": [],
+              "limitations": [],
+              "status": "SAVED_SOURCE_BYTES_AVAILABLE",
+              "complete_known_source_graph": true,
+              "unique_known_get_count": 8,
+              "unknown_instance_frontier": [],
+              "fiscal_year_claimed_from_report_date": false,
+              "current_sec_freshness_proven": false,
+              "amendment_effect_on_metric_verified": false,
+              "metric_acceptance_proven": false,
+              "all_39_source_acceptance_proven": false,
+              "fetch_authorized": false,
+              "metric_executed": false,
+              "production_authorized": false,
+              "calls": {
+                "provider": 0,
+                "paid": 0,
+                "sec": 0
+              },
+              "program_sha256": "ee7e05e20bbbcda7aea65107c4203558e1b5b2c092901989697d5fc5d2e75bd7",
+              "requirements_id": "sha256:6f837cda508b6ea6d9f64a7c68f47059c2865e7f5f0f0a8158567af227917c0b"
+            },
+            "source_bytes_available": true
+          }
+        ],
+        "status": "FISCAL_RANGE_RESOLVED",
+        "all_source_bytes_available": true,
+        "discovery_scope": "EXISTING_TARGET_AND_NEAREST_PRIOR_METADATA_WINDOW",
+        "all_older_history_excluded_by_fiscal_label": false,
+        "current_sec_freshness_proven": false,
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "fetch_authorized": false,
+        "metric_executed": false,
+        "metric_acceptance_proven": false,
+        "production_authorized": false,
+        "range_id": "sha256:71e956e1c949a655933597f394c41dbdeb726b25f6f4b25ef5befd5fcae0d893"
+      }
+    }
+  ],
+  "protected_source_files": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/accession_materials/salesforce_1108524_000110852425000006/crm-20250131_htm.xml": "519c39be1557314dd84c63d8d51b11e72e710ec96aabee2082aa79e2ae81e8c8",
+    "evidence/accession_materials/salesforce_1108524_000110852425000006/crm-20250131_htm.xml.headers.json": "8ed7375cd5794c2b85600e29cfed5cc8efb79ad5664557c5db27f0d182486779",
+    "evidence/accession_materials/salesforce_1108524_000110852425000006/index.json": "7c02f89809f56be6189bc0c09f989d3c4e8b717ed0a24706a161b12c1997d0cf",
+    "evidence/accession_materials/salesforce_1108524_000110852425000006/index.json.headers.json": "48e325ad1c44f3314a8049dfbed0f644e0b8b640be2876c046e646f6f7293bd2",
+    "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json": "07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+    "evidence/request_attempts/07/07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82/CIK0001108524.json.368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a.headers.json": "368b5645ffcd4d353f16e10b9015fc52e68830ccbb650db5dda90abb6d858e6a",
+    "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json": "2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d",
+    "evidence/request_attempts/20/2031f3f3b73a0ecacda271618ba72a3ece3b94e02be615a20f1589331e62c51d/CIK0001108524.json.4913d47e1c465a0db4185c5fa7f7b09979e7cf5da620545707afb185ae037fb4.headers.json": "4913d47e1c465a0db4185c5fa7f7b09979e7cf5da620545707afb185ae037fb4",
+    "evidence/request_attempts/32/3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78/index.json": "3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78",
+    "evidence/request_attempts/32/3247fcbfa4c72cd5ee810c5375242ad5acdfbfeb57fed9ce9d9fa4456f468a78/index.json.1b9ba8f2f5d4b7738ba2ae7fd20c2963d765f9b6d526397a377d46a037877172.headers.json": "1b9ba8f2f5d4b7738ba2ae7fd20c2963d765f9b6d526397a377d46a037877172",
+    "evidence/request_attempts/ad/ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24/crm-20260131_htm.xml": "ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+    "evidence/request_attempts/ad/ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24/crm-20260131_htm.xml.fad60e94e71495da99ff58df804eb592bf5f392690d7f4fa34adee730a710d46.headers.json": "fad60e94e71495da99ff58df804eb592bf5f392690d7f4fa34adee730a710d46",
+    "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm": "af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632",
+    "evidence/request_attempts/af/af658caacde29e048595e71d42eeca0dce211ea3cf187b7077b95bf0c8caa632/crm-20250131.htm.ac86b594603163b61f7d733fb23c5500a95b4146d7d54af7b52852f0025b58e7.headers.json": "ac86b594603163b61f7d733fb23c5500a95b4146d7d54af7b52852f0025b58e7",
+    "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+    "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm.b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb.headers.json": "b8445b9495aee9850d7850604790c1f3ab4c52d88523306ae49a0769635a33eb",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "source_ledger_unchanged": true,
+  "requests_and_calculator_forbidden": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

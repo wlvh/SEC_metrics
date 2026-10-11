@@ -1,3 +1,7 @@
+## Current receiving combination on main c6f (2026-10-11)
+
+Normalmain merge keeps latest income range/D04/B06/CSV paths; conflict onlyCI. OriginalD01/current/controller/product/test bytes match18be. Main allsteps/paths/five-layergate/timeouts retained plus three existing D01 steps/paths.132controls9.663s/0skip; actual formal EnphaseFY25 newtask60headings/3b7a/full2025 first3.5702s, annualprep/writer-forbidden repeat.2562s, independentread.0825s/six resultfiles retained. [Current precise record](main-c6f-receiving/README.md) contains roots/versions/commands/limits. Prior timing/main63 sections below retain historical scope, not current CI.
+
 ## Current main receiving combination (2026-10-11)
 
 Normal merge ae7d23b9+actualmain63a; preserve accepted B06 and saved D04 membership plus C03 and D01 explicit cases, not either-side wholesale replacement. Current optional factory/selected history signatures keep old defaults; main finite D04 bridge stays. Thin current adapter remains byte-identical to its bounded reviewed product. No new source method/heading rule/model/metric family. Source/renderer dependencies from124/134 remain their existing bounded scope.

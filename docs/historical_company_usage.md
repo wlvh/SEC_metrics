@@ -288,3 +288,35 @@ python3 tools/vnext_company.py results --company macys \
 完整历史来源准备仍须把公司、期间、指标贯穿现有来源发现/缺件清单、按具体用途许可获取、同一公司计算和结果出口。年度基础材料已保存不等于附件、图片、前期和所有指标依赖齐备。本项是仍有效的H4/历史交付责任，不因首批范围有限而取消；原十公司×39指标×五年业务目标继续。
 
 公共 PR126/127/128 正在接收保存来源的 B01/B02 财年范围准备：同一公司 `sources` 可解析窗口内的发行人财年并列精确依赖，`run` 只在确需处理时消费该选择。固定组合已验证 Salesforce FY2026 单位置、未变复用、独立读取和缺FY2027保旧结果；这仍是候选能力，不是main已能自动获取历史来源。范围解析中条件/假设定义误判已有有限修复回到 PR127，须随公共修补组合接收；不能使用待批准的命名示例确认实际财年。代码组合、命令、取得输入和真实输出见[同一消费者记录](https://github.com/wlvh/SEC_metrics/blob/d05b8e46/docs/evidence/issue47_selected_label_20261010/range-consumer/README.md)与[有限作用域修复](https://github.com/wlvh/SEC_metrics/blob/ee3491fd/docs/evidence/issue47_selected_label_20261010/assertion-scope/README.md)。缺件自动补齐、真实调用实现及其具体用途权限仍是后续交付，不能把来源预检完成写成完整五年自动取源到CSV。
+
+## Lumen 五年 B01/B02：PR164 → PR165 候选
+
+截至本节核查的 main `96968acf`，本节的完整收入修补尚未合入。需要公共 [PR164](https://github.com/wlvh/SEC_metrics/pull/164) 的固定来源证明 `87be53ce`，以及历史 [PR165](https://github.com/wlvh/SEC_metrics/pull/165) 的同公司消费者；使用分支 `task/issue47-b01-complete-scope-consumer-20261011`，不能在早期 main 上借用这些结果宣称程序已修复。
+
+候选保留实际 FY2021–2025 的全年日期和 CIK18926。B01 使用原损益表的完整收入，包含原件中的租赁部分；合同客户收入小计不能替代总收入。B02 的前期取前期原申报首次报告值，保留实际来源与可比性检查，不自动改用本年重列比较数。以下只需目标公司的已保存来源和自己的状态，不要求先跑其他公司或逐年拼接内部输出。
+
+```bash
+# 先取得该候选代码；已有工作目录有修改时保留它，使用未占用的新目录。
+git fetch origin task/issue47-b01-complete-scope-consumer-20261011
+git worktree add -b review/issue47-lumen-revenue ../SEC_metrics-lumen-revenue \
+  origin/task/issue47-b01-complete-scope-consumer-20261011
+cd ../SEC_metrics-lumen-revenue
+export PYTHONPATH=scripts:tools:.
+export PYTHONDONTWRITEBYTECODE=1
+ISSUE47_SAVED_SOURCE_ROOT=/your/saved/source-inputs
+ISSUE47_LUMEN_STATE="$HOME/sec-metrics-lumen-revenue/state"
+ISSUE47_LUMEN_RUNS="$HOME/sec-metrics-lumen-revenue/runs"
+ISSUE47_LUMEN_READ="$HOME/sec-metrics-lumen-revenue/read-01"
+python3 tools/vnext_company.py run --company lumen_technologies --period fiscal-years \
+  --fiscal-year-start 2021 --fiscal-year-end 2025 --metric B01 --metric B02 \
+  --source-root "$ISSUE47_SAVED_SOURCE_ROOT" --work-dir "$ISSUE47_LUMEN_STATE" \
+  --output-dir "$ISSUE47_LUMEN_RUNS"
+python3 tools/vnext_company.py results --company lumen_technologies \
+  --state-root "$ISSUE47_LUMEN_STATE" --output-root "$ISSUE47_LUMEN_READ"
+```
+
+目录和分支名被占用时另选，不能覆盖现有任务。来源按本指南既有 PR52 恢复步骤取得实际 `source-inputs`；已有完整根只读复用，不重新获取 SEC。`fiscal-years` 尚未接在线发现／补齐。`run` 的具名输入失败、完整检查后扣留和成功分别解释；完成检查但有明确业务原因扣留可复用，输入／执行失败仍可在修补后重新处理，不能把失败强行缓存成业务结论。
+
+该候选的五年 B01 为 19,687m / 17,478m / 14,557m / 13,108m / 12,402m USD；对应 B02 约为 −4.9488% / −11.2206% / −16.7124% / −9.9540% / −5.3860%。原 FY2022 小计误用结果按确切身份扣留且保留历史，新正确结果使用新身份。实际验证在现有任务仅处理受影响的 FY2021 和 FY2023–2025，FY2022 未重算；两个范围复跑零计算，子集运行后独立读口仍显示全部十个值和原失败记录。没有把该事实描述成新空状态五年首跑。
+
+[一份主要来源与公司验证记录](evidence/issue47_b01_scope_consumer_20261011/five-year-receiving/README.md)给完整数值、原申报／前期、原格／单位、实际命令、复跑与读取证据；远端 CI 和技术接收按对应 PR 当前 head 核对。这只是 Lumen 的 B01/B02 五年能力，其他指标、公司、修订与主体边界、在线来源和整个 #47 完成标准继续保留。

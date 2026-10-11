@@ -1,0 +1,45 @@
+[
+  {
+    "candidate": "159",
+    "fixed_workflow": "adf915bd7074f63c08a68170def1ca02a7e2cb3e",
+    "selectors_original": 49,
+    "selectors_with_additions": 51,
+    "added_selectors": [
+      "tests.vnext.test_b06_note_source_forms",
+      "tests.vnext.test_b06_note_source_material"
+    ],
+    "trigger_paths_exact": true,
+    "all_other_yaml_semantics_equal": true,
+    "main_b06_steps_and_all_old_commands_preserved": true,
+    "required_gate_byte_equivalent": true,
+    "commands_unconditional": true,
+    "module_execution": "candidate owner must run and inspect actual CI; not present in independent PR140",
+    "business_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "candidate": "159-161",
+    "fixed_workflow": "adf915bd7074f63c08a68170def1ca02a7e2cb3e",
+    "selectors_original": 49,
+    "selectors_with_additions": 52,
+    "added_selectors": [
+      "tests.vnext.test_b06_note_source_forms",
+      "tests.vnext.test_b06_note_source_material",
+      "tests.vnext.test_historical_b06_case"
+    ],
+    "trigger_paths_exact": true,
+    "all_other_yaml_semantics_equal": true,
+    "main_b06_steps_and_all_old_commands_preserved": true,
+    "required_gate_byte_equivalent": true,
+    "commands_unconditional": true,
+    "module_execution": "candidate owner must run and inspect actual CI; not present in independent PR140",
+    "business_calls": [
+      0,
+      0,
+      0
+    ]
+  }
+]
