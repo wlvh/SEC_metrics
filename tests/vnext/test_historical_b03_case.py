@@ -115,6 +115,8 @@ class HistoricalB03SourcesTest(TestCase):
             metric_id='B03',income_properties=[])
         self.assertEqual([checked],result['statement_amendment_checks'])
         self.assertEqual([checked],result['preparation']['input_binding']['statement_amendment_checks'])
+        self.assertNotIn('statement_income_amendment_properties',result)
+        self.assertNotIn('statement_income_amendment_properties',result['preparation']['input_binding'])
 
     def test_income_property_is_carried_separately_from_the_original_source_scope(self):
         self.annual['amendments'] = [{'form':'10-K/A'}]

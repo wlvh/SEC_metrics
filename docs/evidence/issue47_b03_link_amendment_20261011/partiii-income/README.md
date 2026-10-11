@@ -44,3 +44,6 @@ This candidate is now an actual PartIII historical income-property/entry increme
 
 
 A separate entirely new B01-only task validates fresh processing without existing result/cache: first12.006s yields the same29,213m/2b50; forbidden-factory repeat1.157s and independentread0.503s reuse and preserve the new record. `fresh-b01.json` distinguishes this from recovery of the earlierfailedtask. No other company/year/metric was recomputed for this fresh check.
+
+
+Public-owner receiving feedback found a default shape change: B03 selection returned an empty income-property list even when no PartIII property was used. The field is now omitted unless nonempty, preserving old no-amendment/link-only objects; the caller already usesget. ElevenB03 source/guard controls0.007s pass, including explicit absence on old link-only return and presence/binding on the new property. No production amount or source changed and no financial computation was repeated for this return-only fix; earlier numeric execution remains attributed to its prior code version.

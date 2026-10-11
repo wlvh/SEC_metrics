@@ -97,7 +97,8 @@ def prepare_selected_income_sources(*, repo_root, company_id, fiscal_year):
         'preparation': preparation,
         'source_proofs': proofs, 'admission': admission,
         'statement_amendment_checks': amendment_checks,
-        'statement_income_amendment_properties':income_amendment_properties}
+        **({'statement_income_amendment_properties':income_amendment_properties}
+           if income_amendment_properties else {})}
 
 
 # The producer names actual shared business dependencies; it does not import
