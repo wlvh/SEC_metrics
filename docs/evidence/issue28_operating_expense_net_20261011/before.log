@@ -1,0 +1,15 @@
+test_reported_net_expense_total_retains_whole_statement_scope (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_reported_net_expense_total_retains_whole_statement_scope) ... FAIL
+
+======================================================================
+FAIL: test_reported_net_expense_total_retains_whole_statement_scope (tests.vnext.test_selected_reported_revenue_v2.ReportedOperatingRevenueTest.test_reported_net_expense_total_retains_whole_statement_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-operating-expense-net/SEC_metrics/tests/vnext/test_selected_reported_revenue_v2.py", line 205, in test_reported_net_expense_total_retains_whole_statement_scope
+    self.assertTrue(result['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.165s
+
+FAILED (failures=1)

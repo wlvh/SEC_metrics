@@ -1,3 +1,7 @@
+## Actualmain969 receiving update (2026-10-11)
+
+Read project receiving Issue153 and actualmain96968acf (includes128/126,145,162,160). Only necessarycompany workflow union: keep priorfiveworker layout and add main128 source-preflight three testpaths and originalmandatory step tohistoryworker. No newbusiness, testframework, module or timeout/protection change. Against actualmain969, all52selector executions/51unique and11otherwholecommands pluspins/env/permissions/triggers are preserved. Actual1024 gate combinations+threeunknown controls pass(main-969-workflow-controls.log). No financial/material rerun. The previous53/adf workflowresults are their exactprior heads; newheadCI separatelytracked. Source-only nextcandidate patches against oldadf remain markedfixedbase, not mechanicallyapplied tofuturemain.
+
 ## B06 candidate CI adaptation at fixed adf (2026-10-11)
 
 All five workflows for adf915bd are terminal SUCCESS (company38115299307, fast38115299268, parsed38115299229, request38115299224, reference38115299334), observed at a natural receiving checkpoint. Independent140 keeps that production workflow unchanged.
