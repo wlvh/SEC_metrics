@@ -25,6 +25,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--source-root', type=Path, required=True)
     parser.add_argument('--output-root', type=Path, required=True)
+    parser.add_argument('--ford-only', action='store_true',
+        help='The existing Macy negative task can be migrated separately without a duplicate fresh run')
     args = parser.parse_args()
     args.output_root.mkdir(parents=True, exist_ok=False)
     env = {**os.environ, 'PYTHONPATH': 'scripts:tools:.', 'PYTHONDONTWRITEBYTECODE': '1'}
@@ -58,7 +60,10 @@ sys.setprofile(guard)
         return json.loads(process.stdout), report
 
     summary = []
-    for company, start, end, expected_exit in [('ford_motor_company',2023,2024,0),('macys',2022,2022,2)]:
+    cases = [('ford_motor_company',2023,2024,0)]
+    if not args.ford_only:
+        cases.append(('macys',2022,2022,2))
+    for company, start, end, expected_exit in cases:
         state = args.output_root/company/'state'
         command = ['run','--company',company,'--period','fiscal-years',
             '--fiscal-year-start',start,'--fiscal-year-end',end,'--metric','B02',
