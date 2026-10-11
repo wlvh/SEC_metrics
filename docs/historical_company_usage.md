@@ -382,3 +382,16 @@ python3 tools/vnext_company.py results --company southwest_airlines \
 来源齐备只说明材料存在且可读取。Southwest 的这个修订另经既有完整检查确认只改 Exhibit 3.2 链接及认证、原财务数值保持，才允许后续处理。实际 FY2025 B03 为 `(428 + 1560) / 28063 = 0.07084060863058119231728610626 ratio`，2025-01-01至2025-12-31；重复和独立读取均保值与身份。Part III 仅事件许可、财务修正、期间变化、待审关系或继任主体不能沿该路径自动给值。
 
 反例是 Marriott FY2021：同一预检可报保存来源齐备，却没有完整 D&A 业务结论。它不执行 Calculator、不改旧空值、不授予模型或获取信用。后继运行与源码组合、原件关系、误字段诊断、实际命令和未完成范围见[唯一修订记录](evidence/issue47_b03_link_amendment_20261011/README.md)及[公共来源接收](evidence/issue47_b03_link_amendment_20261011/source-receiving/README.md)。这段保存来源流程仍不代表五年 B03、在线发现／补齐或1950位置验收完成。
+
+同一独立链接修订后继也已消费 B07 的既有年度计算：Southwest FY2025 按同一原数值修订检查进入原公共公式，营业利润428百万USD／利息费用167百万USD＝`2.562874251497005988023952096 ratio`，实际2025全年。没有改B07的公式、利息概念或公共计算器；167／168审查范围不包含这段后继。可在已保存来源根运行：
+
+```bash
+python3 tools/vnext_company.py run --company southwest_airlines --period fiscal-years \
+  --fiscal-year-start 2025 --fiscal-year-end 2025 --metric B07 \
+  --source-root /your/restored/source-inputs --work-dir "$HOME/sec-metrics-sw-b07/state" \
+  --output-dir "$HOME/sec-metrics-sw-b07/runs"
+python3 tools/vnext_company.py results --company southwest_airlines \
+  --state-root "$HOME/sec-metrics-sw-b07/state" --output-root "$HOME/sec-metrics-sw-b07/read-01"
+```
+
+`B07`仍不在当前只读` sources`／在线`acquire`的指标选项内，不把B03的预检冒充B07来源接线。选择真缺FY2026时，保存`SOURCE_UNAVAILABLE`的输入失败；FY2025原正确值留在原期间，不能代填FY2026。首次、禁计算复跑、独立读取及缺年保旧结果的实际命令和源操作数只在[同一后继的利息保障记录](evidence/issue47_b03_link_amendment_20261011/interest-coverage/README.md)。该有限接线不证明其他修订、其他B07财年或全五年业务完成。
