@@ -65,6 +65,44 @@ class HistoricalAuditorSelectionTest(TestCase):
                 prepare_selected_auditor_base(repo_root='/constructed',company_id='sample',fiscal_year=2025)
         self.assertEqual(rebuild.call_args.kwargs['period_selection'],select.return_value)
         read.assert_not_called()
+
+    def test_selected_base_carries_the_readers_complete_filing_sets(self):
+        from pathlib import Path
+        from types import SimpleNamespace
+        from vnext.historical_governance_input import prepare_selected_auditor_base
+        from vnext.canonical import content_hash
+        annual = {**self.prepared, 'company_id': 'constructed', 'entity': '12345',
+                  'subject_policy': {'mode': 'CONTINUOUS_PRIMARY'}, 'source_proofs': []}
+        history = {'all_rows': self.rows, 'loaded_inventories': ['main.json', 'saved-shard'],
+                   'inventory': {'source_reference': {'document_name': 'main.json'}},
+                   'limitations': [], 'reporting_cik': '12345'}
+        reader = SimpleNamespace(file_sets=[], records={}, proofs={}, read=lambda *a, **k: None)
+
+        def read_complete_filing(filing):
+            # Constructed index-bound HTML and XML sets; no auditor value is
+            # invented. The real source reader owns construction/verification.
+            accession = filing['accessionNumber']
+            refs = [{'source_reference_id': accession + ':html'},
+                    {'source_reference_id': accession + ':xml'}]
+            reader.file_sets.append({'filing': filing, 'source_references': refs,
+                                     'expected_xml_documents': ['instance.xml'],
+                                     'primary_saved': True})
+            return [{'source_reference': ref} for ref in refs]
+
+        reader.auditor_filing = read_complete_filing
+        with patch('vnext.normal_period_selection.resolve_period_selection', return_value={}), \
+             patch('vnext.historical_annual_input.prepare_historical_annual_input', return_value=annual), \
+             patch('vnext.normal_history_catalog.load_history_for_period', return_value=history), \
+             patch('vnext.normal_governance_input._Sources', return_value=reader):
+            selected = prepare_selected_auditor_base(repo_root=Path('/constructed'),
+                company_id='constructed', fiscal_year=2022)
+        binding = selected['base']['input_binding']
+        self.assertIs(reader.file_sets, binding['accession_source_sets'])
+        self.assertEqual(['target-amendment', 'target', 'prior-amendment', 'prior'],
+                         [s['filing']['accessionNumber'] for s in binding['accession_source_sets']])
+        self.assertTrue(all(len(s['source_references']) == 2 for s in binding['accession_source_sets']))
+        self.assertEqual(content_hash(value={k: v for k, v in binding.items()
+                                            if k != 'input_binding_id'}), binding['input_binding_id'])
     def test_older_annual_is_not_substituted_for_missing_actual_prior(self):
         self.rows[0]['reportDate']='2020-12-31'
         with self.assertRaisesRegex(ValueError,'PRIOR_ORIGINAL_MISSING'):

@@ -167,6 +167,7 @@ def prepare_selected_auditor_base(*, repo_root, company_id, fiscal_year):
     body = {'record_type': 'HISTORICAL_SELECTED_GOVERNANCE_INPUT',
         'company_id': company_id, 'prepared_annual_input': annual,
         'selection': choice, 'period_selection': selected, 'source_proofs': proofs,
+        'accession_source_sets': reader.file_sets,
         'history_alignment_conflicts': history['limitations'],
         'metric_input_status': {'C04': 'PREPARED'}, 'new_calls': [0, 0, 0]}
     binding = {**body, 'input_binding_id': content_hash(value=body)}
