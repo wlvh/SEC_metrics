@@ -57,7 +57,9 @@ name: Company saved-source records
     - catalog/**
     - evidence/**
     - docs/evidence/issue28_continuous/known_result_defects.json
-    - ".github/workflows/company-current-records.yml"
+    - .github/workflows/company-current-records.yml
+    - tests/vnext/test_historical_auditor_selection.py
+    - tests/vnext/test_historical_auditor_case.py
 permissions:
   contents: read
 jobs:
@@ -75,9 +77,9 @@ jobs:
       env:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 -m unittest tests.vnext.test_saved_source_checks tests.vnext.test_separate_rule_root
-        tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update
-        tests.vnext.test_company_parse_reuse tests.vnext.test_precalculated_case tests.vnext.test_runtime_tools
-        tests.vnext.test_reporting_company_projection -v
+        tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse
+        tests.vnext.test_precalculated_case tests.vnext.test_runtime_tools tests.vnext.test_reporting_company_projection
+        -v
   company-source:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -94,9 +96,8 @@ jobs:
       run: python3 -m unittest tests.vnext.test_selected_lodging_calculation tests.vnext.test_selected_lodging_source
         tests.vnext.test_deterministic_router.DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims
         tests.vnext.test_deterministic_router.DeterministicRouterTest.test_source_set_tamper_and_metric_specific_branch_fail
-        tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy
-        tests.vnext.test_dei_release_selection tests.vnext.test_successor_income_projection
-        tests.vnext.test_event_rule_root -v
+        tests.vnext.test_b03_current_input_scope tests.vnext.test_xbrl_namespace_policy tests.vnext.test_dei_release_selection
+        tests.vnext.test_successor_income_projection tests.vnext.test_event_rule_root -v
     - name: Ordinary B06 source composition and incomplete relation guards
       env:
         PYTHONDONTWRITEBYTECODE: '1'
@@ -115,9 +116,8 @@ jobs:
       env:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 -m unittest tests.vnext.test_financial_dei_release tests.vnext.test_reported_average_period
-        tests.vnext.test_bank_scope_dei_release tests.vnext.test_selected_revenue_scope_v1
-        tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_current_reported_revenue
-        -v
+        tests.vnext.test_bank_scope_dei_release tests.vnext.test_selected_revenue_scope_v1 tests.vnext.test_selected_reported_revenue_v2
+        tests.vnext.test_current_reported_revenue -v
   company-history:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -132,10 +132,9 @@ jobs:
       env:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 -m unittest tests.vnext.test_history_company_dispatch tests.vnext.test_selected_history_result_state
-        tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases
-        tests.vnext.test_historical_bank_scope_cases tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest
-        tests.vnext.test_historical_statement_cases tests.vnext.test_historical_compensation_case
-        -v
+        tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases
+        tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest tests.vnext.test_historical_statement_cases
+        tests.vnext.test_historical_compensation_case -v
     - name: Paired reported comparisons and exact revenue defect
       env:
         PYTHONDONTWRITEBYTECODE: '1'
@@ -153,23 +152,26 @@ jobs:
     - name: Selected event sources and explicit history validation
       env:
         PYTHONDONTWRITEBYTECODE: '1'
-      run: python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1
-        tests.vnext.test_registered_event_projection
+      run: python3 tests/required_unittests.py tests.vnext.test_selected_event_source_v1 tests.vnext.test_registered_event_projection
     - name: Historical selected event scope and record retention
       env:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 tests/required_unittests.py tests.vnext.test_historical_event_cases.HistoricalEventCaseTest
-        tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest
-        tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest
+        tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest
     - name: Selected annual source preflight and missing dependencies
       env:
         PYTHONDONTWRITEBYTECODE: '1'
-      run: python3 tests/required_unittests.py tests.vnext.test_selected_source_requirements tests.vnext.test_company_fiscal_range tests.vnext.test_selected_historical_fiscal_label
+      run: python3 tests/required_unittests.py tests.vnext.test_selected_source_requirements tests.vnext.test_company_fiscal_range
+        tests.vnext.test_selected_historical_fiscal_label
     - name: Existing historical SEC count and recorded capture compatibility
       env:
         PYTHONDONTWRITEBYTECODE: '1'
-      run: python3 tests/required_unittests.py tests.vnext.test_existing_historical_sec_state
-        tests.vnext.test_historical_sec_capture_adapter tests.vnext.test_company_online
+      run: python3 tests/required_unittests.py tests.vnext.test_existing_historical_sec_state tests.vnext.test_historical_sec_capture_adapter
+        tests.vnext.test_company_online
+    - name: Historical C04 source selection, gap boundaries and saved dependency scope
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_historical_auditor_selection tests.vnext.test_historical_auditor_case
   source-contracts:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -183,9 +185,8 @@ jobs:
     - name: Explicit single revenue source and unchanged period defaults
       env:
         PYTHONDONTWRITEBYTECODE: '1'
-      run: python3 tests/required_unittests.py tests.vnext.test_single_revenue_line
-        tests.vnext.test_selected_reported_revenue_v2 tests.vnext.test_financial_duration
-        tests.vnext.test_selected_income_source_v1
+      run: python3 tests/required_unittests.py tests.vnext.test_single_revenue_line tests.vnext.test_selected_reported_revenue_v2
+        tests.vnext.test_financial_duration tests.vnext.test_selected_income_source_v1
     - name: Selected shared income, coordinates and historical consumer
       env:
         PYTHONDONTWRITEBYTECODE: '1'
@@ -197,21 +198,27 @@ jobs:
     - company-financial
     - company-history
     - source-contracts
-    if: "${{ always() }}"
+    if: ${{ always() }}
     runs-on: ubuntu-latest
     timeout-minutes: 1
     steps:
     - name: Require every company test layer
       env:
-        COMPANY_RECORDS_RESULT: "${{ needs.company-records.result }}"
-        COMPANY_SOURCE_RESULT: "${{ needs.company-source.result }}"
-        COMPANY_FINANCIAL_RESULT: "${{ needs.company-financial.result }}"
-        COMPANY_HISTORY_RESULT: "${{ needs.company-history.result }}"
-        SOURCE_CONTRACTS_RESULT: "${{ needs.source-contracts.result }}"
-      run: |
-        set -e
+        COMPANY_RECORDS_RESULT: ${{ needs.company-records.result }}
+        COMPANY_SOURCE_RESULT: ${{ needs.company-source.result }}
+        COMPANY_FINANCIAL_RESULT: ${{ needs.company-financial.result }}
+        COMPANY_HISTORY_RESULT: ${{ needs.company-history.result }}
+        SOURCE_CONTRACTS_RESULT: ${{ needs.source-contracts.result }}
+      run: 'set -e
+
         test "$COMPANY_RECORDS_RESULT" = success
+
         test "$COMPANY_SOURCE_RESULT" = success
+
         test "$COMPANY_FINANCIAL_RESULT" = success
+
         test "$COMPANY_HISTORY_RESULT" = success
+
         test "$SOURCE_CONTRACTS_RESULT" = success
+
+        '

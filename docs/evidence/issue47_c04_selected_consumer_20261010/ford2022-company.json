@@ -1,0 +1,2297 @@
+{
+  "code_commit": "241622760c1fe409298da5a5cff0b6fc904fcfcb",
+  "uncommitted_shared_receiving_tree": true,
+  "first": {
+    "seconds": 19.733245541108772,
+    "exit_code": 0,
+    "arguments": [
+      "run",
+      "--company",
+      "ford_motor_company",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2022",
+      "--fiscal-year-end",
+      "2022",
+      "--metric",
+      "C04",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/runs"
+    ]
+  },
+  "repeat": {
+    "seconds": 4.865321582881734,
+    "exit_code": 0,
+    "arguments": [
+      "run",
+      "--company",
+      "ford_motor_company",
+      "--period",
+      "fiscal-years",
+      "--fiscal-year-start",
+      "2022",
+      "--fiscal-year-end",
+      "2022",
+      "--metric",
+      "C04",
+      "--source-root",
+      "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+      "--work-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state",
+      "--output-dir",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/runs"
+    ]
+  },
+  "read": {
+    "seconds": 0.5793767080176622,
+    "exit_code": 0,
+    "arguments": [
+      "results",
+      "--company",
+      "ford_motor_company",
+      "--state-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state",
+      "--output-root",
+      "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/read"
+    ]
+  },
+  "row": {
+    "company": "Ford Motor Company",
+    "cik": "37996",
+    "metric_id": "C04",
+    "metric_name": "Auditor changes",
+    "value": "0",
+    "unit": "flag",
+    "status": "OK",
+    "source_class": "DERIVED",
+    "formula": "source-verified auditor change signal",
+    "period_start": "2022-01-01",
+    "period_end": "2022-12-31",
+    "fiscal_year": "2022",
+    "fiscal_period": "ANNUAL",
+    "accession": "0000037996-23-000012",
+    "form": "10-K",
+    "filed_date": "2023-02-03",
+    "concept_or_section": "Auditor changes",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2022, \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\"}, \"selection\": {\"event_forms\": [\"8-K\", \"8-K/A\", \"8-K12B\", \"8-K12B/A\"], \"event_source_set_ids\": [\"sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3\"], \"matched_item_4_01_claim_ids\": [], \"names_differ\": false, \"reason_code\": \"PASS\", \"resolver\": \"auditor_change_registration_filings_v3\", \"same_cik_prior_status\": \"SAME_CIK_PRIOR_DISCOVERED\", \"selected_current_accession\": \"0000037996-23-000012\", \"selection_id\": \"sha256:b95182770feb09b59a4c0194553818715275a13a8b243b499e233f4e2507795c\"}, \"source_reference_ids\": [\"sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6\", \"sha256:cd95ad087a70a883f0b507cd20f371602020594dfd58b682124550bb6ff701c1\", \"sha256:5e21bf412fc93956a4de40b7aac95b653707ccf77c6e3ec172759db94a9c5a1b\", \"sha256:85c8a9e6cfeaf791526a2f0c11649a6f7fb1429d4328c5742125b554d0a59d47\", \"sha256:75c14364edc20126d456bd0ad9f41f87684c0aa5d45ff85891f2f380e43904a6\", \"sha256:5adb3b7bd4e8c2bc705fe41d321dda4f02dbfdd91842b92bdb4c393098c3e60b\", \"sha256:c8c87b309c47a1eacbb481254dc031ccad771785063dab9ad376cc7fc286e3d6\", \"sha256:01811aae099199dc1b4fe8aeee5704caeb499f178482bc233c8b803f1e6a1e70\", \"sha256:931674ae43df9534ddd3e18cacc4b0b4b3ac94136aee7c15a8a3439d354da1e1\", \"sha256:43715b1686a64ed0aa9f2460c2f4589dfa5220bea8801f294e3c877517509864\", \"sha256:817283cf6aa854cbe6330a4ac6d76d74f1aaaf31631f87187fcd55370376d527\", \"sha256:3231486ee217ac50c7d74ce5e9a914d77fcd89037272035cddea0dcbe871577c\", \"sha256:13607c6e771526cc1ae0d9b45422f4174289a5df7c98be7e5b855e3dce5c0966\", \"sha256:3b8a6759f7005333985c975a64ae67976aaf101b66f8ebb192eb265f2b0fb2cd\", \"sha256:f4eca4a2fc391b0e7ce96e1344ad1252a03f77832c6e16389c7618701aeb028f\", \"sha256:9986aa82428572acf8a010d0149c2434c5aed2c440d3b0e620478a0c06f93b53\", \"sha256:9f196516f1f84a668123dd0181f997f506536c092c51c806d65604acf08718c3\", \"sha256:2dd0d50ae83cc765e443a69e56079920ba0ac3c2fb1039f1ce43f01125dd39ac\", \"sha256:f5ef0fbe2e8f07acb5c4aeda16725602773c9b2ed16337a4aa2ebb261a339304\", \"sha256:9b8d60f74c816f1183c6836f548a2cf2714285eb291f828c1eed950f000762e3\", \"sha256:48c26c5c7666c54b1e42ed407efc00ddf05267087c7ba382a42d3591f81ca7fa\", \"sha256:65f8d3e27f28a6a1d713f468c752db929625135759b368b1d225abef4fc138b2\", \"sha256:ed4b3c2bc6a62f06dfed9b43a9b22d2bea5a9718874791e15202281238d1a886\", \"sha256:46a56c9a0b0ecca97c7bb4de649609aae72bb183214e424c4ae3c1049db006de\", \"sha256:ace3763405270b2522863b6d98f87e43b452c2959e8fb741421fd5abf421a386\", \"sha256:fd7ce47a2d484d0eb37d0007b85856795c066fb7e180b4fd65fac4baf3d9bb0e\", \"sha256:9f64a74d50094675ec976c3d6b210abbeb69ea1035cfd5a284550c7d6280252b\", \"sha256:da42332e3f9966483da827233ecdb1e75921cb295db753bc512c2ed030dc1ad0\", \"sha256:b4e2f8bc0bf4a81ee1f775ee03b5db4f5dc31847b0db8103d0941636de3b13e1\", \"sha256:d013d47536a063c9fb63bee3f94332e67bc21fc7b99e9e45395591f7cad97bbe\", \"sha256:cfe1fc7cd2860566c314e44b4f690bb9af6faf30db99999bc3e9c2956056809c\", \"sha256:f376856247cf287a61306275a7bc6c3a3c848547428eb107787f4dfc9f5d152e\", \"sha256:ebd617b680ace3bde451c9e961555355543606b0f60c51e1a842fa7675987f49\", \"sha256:cbbc99828795ac7999fe7585508f5b0d654dabd58b4d5c724f2ef70bc1327b63\", \"sha256:353f74f45d2f6424839d813d1b7d57dc2c509b0d3aa436a03fe6e0a4cc2897c9\", \"sha256:118613c19a1673c17d4097b85e9002b8fcdb1fa9bae0ec4e3a83b9b0dcefb58a\", \"sha256:c6a4d1f8a791e523c5feb06689b96eb62fda49e6741c44ffbf34e7b68055e43b\", \"sha256:78cabea98c8920cbe63b1a6ff5a36d618ed0147dcd8e8cb8a32928fdf54625ff\", \"sha256:d6704920058850d0fa49a857837444a18fbe59943c152b5ab4388604f0e1fcb8\", \"sha256:d0a400d50f845c5d4570aa0a725d2ae263733a5113d7a68b2d301984cc92aaff\", \"sha256:a83cd018f473976c5277cc91aa3ba002b742fa4c74101601a082aece1339c835\", \"sha256:7143889a0751bb3d2a4122612016121d86e30eee3f96c51e68fe9f2ce684a8b8\", \"sha256:42809afae4ebb9aac6f5174e917ac80312c920fea50dc09f89ecd41f28f7a016\", \"sha256:00f04d652ed9623d00e7669b80c2c11339e1048357d4fa3459f7b31bc80ef249\", \"sha256:a535cfcfb5c842a3eb4432bf3d85569fe9963f4e1afac76d92b7d6208ce42c92\", \"sha256:474440048319343e21a338ad8d739356c742c3b06b8ca29d79e2b170fce1b958\", \"sha256:be4a62d2681d20eb6e6d9db2c9092c7ab647856c9cbad0100c19802beee9f62b\", \"sha256:72338b06828eed6ad11ee076ace9335d6ef1c63a1f783868f382d05b5cbdc2ad\", \"sha256:e229eacc93198daaf8ad03692dfe1550c548b202445aa7fe3e94317d1f62426e\", \"sha256:d6425cb94819dcfd874a638fc695067a5aebc79e482286b0760b0fc3e9f09601\", \"sha256:fcb812bf18bc04b910c999bf2ee5f6d272207d764c7f00e19e76729caf28c923\", \"sha256:10b719858994d7f65aecccaf68c6145a9c6113efe2feaf3f26bdbe6c447bf21b\", \"sha256:806120d1927e9afe01a7f4588ee4f3cc4f7f983ce5cc47f34a4fb63d64ba4584\", \"sha256:3d8fca212b7585e4c064b61e2bcacd3ead1df2d56c3cc599381c8cba0024f76b\", \"sha256:8db367bac01245146bc053d2be63907b67c6e8b84a9d238ec7ecd0f7d25a298e\", \"sha256:4a357beea38a69cd3cc2078c3ea2108363c47d4f80a090fd6c1959cdcf4d9809\", \"sha256:a3910cf019c92f7502f5cb08d28d637eade2536a70356344d24fa432a5bfbd55\", \"sha256:cd87192e2ad36b7544393636cb8df3fd7a3bae1fab0b37ffed46c62159faabf1\", \"sha256:0eb19cbc2c926b636f65e95aa2d5298f171b7b8b28bd6bc9a1b241384b13b640\", \"sha256:3b58a02d4f23e1c37b847ffe00ac95fe549ce7ad1ce0d908c658be269a0d59e4\", \"sha256:714fb0b077cfd2f2eed786c5d1f4ab2cee0a7c7fc5f5a16e2642a6aff8304898\", \"sha256:622d523abd5658588adeb802d205d272419ea81b4bba4493872c2035968aaac8\", \"sha256:882669643ba8e1a31f8fa7be40f036cf06a259d67af5ff761b9fffb982683ce6\", \"sha256:6935663cfa76c954da73976f63b0082d73a3c46f86c0171c6fa0c9d299424fa0\"]}",
+    "confidence": "",
+    "notes": "1 means an auditor-change signal was verified; 0 requires completed auditor-name and event-coverage checks. Neither is a probability. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "ford_motor_company",
+    "result_id": "sha256:0ec6c7d627150e95e00673fe8009110585104fa91fc269bf9d553671909760da",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state/updates/C04/periods/FY2022/results/b7366f229c8448e39055a360417de6e0",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "state_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz/state",
+  "output_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/ford-auditor-company-vgu2kjwz",
+  "protected_files": 10,
+  "complete_selection": {
+    "current_filing_checks": [
+      {
+        "accession": "0000037996-23-000012",
+        "canonical_names": [
+          "pricewaterhousecoopersllp"
+        ],
+        "facts": [
+          {
+            "accession": "0000037996-23-000012",
+            "canonical_name": "pricewaterhousecoopersllp",
+            "entity_identifier": "0000037996",
+            "locator": {
+              "context_ref": "id5d9282c4298481b80715ab6fa2e69d3_D20220101-20221231",
+              "ordinal": 102,
+              "qualified_name": "dei:AuditorName"
+            },
+            "name": "PricewaterhouseCoopers LLP",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "raw_asset_id": "sha256:34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80",
+            "source_reference_id": "sha256:85c8a9e6cfeaf791526a2f0c11649a6f7fb1429d4328c5742125b554d0a59d47"
+          },
+          {
+            "accession": "0000037996-23-000012",
+            "canonical_name": "pricewaterhousecoopersllp",
+            "entity_identifier": "0000037996",
+            "locator": {
+              "context_ref": "id5d9282c4298481b80715ab6fa2e69d3_D20220101-20221231",
+              "ordinal": 102,
+              "qualified_name": "dei:auditorname"
+            },
+            "name": "PricewaterhouseCoopers LLP",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "raw_asset_id": "sha256:ac95d393e35ec57d2e7a2e4322efe674b2d7b1f6d436238e7cdf599fa887f72f",
+            "source_reference_id": "sha256:75c14364edc20126d456bd0ad9f41f87684c0aa5d45ff85891f2f380e43904a6"
+          }
+        ],
+        "form": "10-K",
+        "problems": [],
+        "source_references": [
+          {
+            "accession": "0000037996-23-000012",
+            "company_id": "ford_motor_company",
+            "document_name": "f-20221231.htm",
+            "raw_asset_id": "sha256:34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80",
+            "record_type": "SOURCE_REFERENCE",
+            "request_attempt_id": "request:attempt:1d0357b19f86c09fce4eb485bc6042ba106e8521b1679d5f0bf3c0e8ebfc3447",
+            "source_reference_id": "sha256:85c8a9e6cfeaf791526a2f0c11649a6f7fb1429d4328c5742125b554d0a59d47",
+            "source_role": "target_primary",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/f-20221231.htm"
+          },
+          {
+            "accession": "0000037996-23-000012",
+            "company_id": "ford_motor_company",
+            "document_name": "f-20221231_htm.xml",
+            "raw_asset_id": "sha256:ac95d393e35ec57d2e7a2e4322efe674b2d7b1f6d436238e7cdf599fa887f72f",
+            "record_type": "SOURCE_REFERENCE",
+            "request_attempt_id": "request:attempt:b2015f3aa880fa7afebf856bcf5f4a087b53b86256831348f39d239451454d53",
+            "source_reference_id": "sha256:75c14364edc20126d456bd0ad9f41f87684c0aa5d45ff85891f2f380e43904a6",
+            "source_role": "auditor_facts",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/f-20221231_htm.xml"
+          }
+        ],
+        "status": "FOUND"
+      }
+    ],
+    "event_forms": [
+      "8-K",
+      "8-K/A",
+      "8-K12B",
+      "8-K12B/A"
+    ],
+    "event_item_claims": [
+      {
+        "attributes": {
+          "accession": "0000037996-22-000002",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000002",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000002/0000037996-22-000002.hdr.sgml"
+          },
+          "event_key_hash": "sha256:0204c8e3b20a80bf2e8ab1629610fa61716e78f19d82b02b71dec0fd6fe0249b",
+          "hdr_source_reference_id": "sha256:43715b1686a64ed0aa9f2460c2f4589dfa5220bea8801f294e3c877517509864",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated January 5, 2022 concerning U.S. sales in December 2021 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EX",
+          "primary_source_reference_id": "sha256:931674ae43df9534ddd3e18cacc4b0b4b3ac94136aee7c15a8a3439d354da1e1",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000002/0000037996-22-000002.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:43715b1686a64ed0aa9f2460c2f4589dfa5220bea8801f294e3c877517509864",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:2c243682ea9a266b7fc6f496f6233ab7b1c959d4a0c1af120cd1da056b110e82"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000002",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000002",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000002/0000037996-22-000002.hdr.sgml"
+          },
+          "event_key_hash": "sha256:408f2005d6ca90d41a92ae2b41c93826ee1e5d9728aa8b5839bf64634b349308",
+          "hdr_source_reference_id": "sha256:43715b1686a64ed0aa9f2460c2f4589dfa5220bea8801f294e3c877517509864",
+          "item_code": "9.01",
+          "primary_heading_brief": "021 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated January 5, 2022 Filed with this Report concerning December 2021 U.S. sales Exhibit 104 Cover Page In",
+          "primary_source_reference_id": "sha256:931674ae43df9534ddd3e18cacc4b0b4b3ac94136aee7c15a8a3439d354da1e1",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000002/0000037996-22-000002.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:43715b1686a64ed0aa9f2460c2f4589dfa5220bea8801f294e3c877517509864",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:914b779da8da3ae149b4cea71119be7656d0a5a3238811f6227b6c81c89ce055"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000005",
+          "brief": "8-K item 7.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000005",
+            "item_code": "7.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000005/0000037996-22-000005.hdr.sgml"
+          },
+          "event_key_hash": "sha256:0f7db6c8251304ffb9b91de284e7c1318bb3046a260df77137dca97377b56988",
+          "hdr_source_reference_id": "sha256:3231486ee217ac50c7d74ce5e9a914d77fcd89037272035cddea0dcbe871577c",
+          "item_code": "7.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 7.01. Regulation FD Disclosure . Accounting for Pension and OPEB Plans Ford Motor Company uses the mark-to-market method of accounting for pension and other postretirement employee benefits (OPEB). Under this method, we reco",
+          "primary_source_reference_id": "sha256:817283cf6aa854cbe6330a4ac6d76d74f1aaaf31631f87187fcd55370376d527",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000005/0000037996-22-000005.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "7.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:3231486ee217ac50c7d74ce5e9a914d77fcd89037272035cddea0dcbe871577c",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 7.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:85930de378b3b9bab3430622e1ec7a07187f844dee4c4d40133b6bb5b9117541"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000005",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000005",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000005/0000037996-22-000005.hdr.sgml"
+          },
+          "event_key_hash": "sha256:f2bed9b00d5669d9863adafdb1d9fbb8673731b87b6515ba2aa53c5ed7760fd8",
+          "hdr_source_reference_id": "sha256:3231486ee217ac50c7d74ce5e9a914d77fcd89037272035cddea0dcbe871577c",
+          "item_code": "9.01",
+          "primary_heading_brief": "1 (0.1) 0.5 (0.3) 0.2 Total Tax Special Items $ (0.1) $ (0.1) $ 0.5 $ 1.6 $ 1.9 Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated January 18, 2022 Furnished with this Report Exhibit 104 Cover Page Interactive Data File ** (formatt",
+          "primary_source_reference_id": "sha256:817283cf6aa854cbe6330a4ac6d76d74f1aaaf31631f87187fcd55370376d527",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000005/0000037996-22-000005.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:3231486ee217ac50c7d74ce5e9a914d77fcd89037272035cddea0dcbe871577c",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:dc7c8d09071b088089ba48fb98f97fa6952b7789cb3ba2350e7b4a4830d33e6e"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000008",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000008",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000008/0000037996-22-000008.hdr.sgml"
+          },
+          "event_key_hash": "sha256:13f7ebec94236e440cbd4020eb61d2a6c7ab28880eeb69b65b0875a4282a4ec7",
+          "hdr_source_reference_id": "sha256:3b8a6759f7005333985c975a64ae67976aaf101b66f8ebb192eb265f2b0fb2cd",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated February 2, 2022 concerning U.S. sales in January 2022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EX",
+          "primary_source_reference_id": "sha256:13607c6e771526cc1ae0d9b45422f4174289a5df7c98be7e5b855e3dce5c0966",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000008/0000037996-22-000008.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:3b8a6759f7005333985c975a64ae67976aaf101b66f8ebb192eb265f2b0fb2cd",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:7f7aefb0c4feac29edfc5f842c43e2cea983a931edb94dd3b9fe210e91f1cc5f"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000008",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000008",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000008/0000037996-22-000008.hdr.sgml"
+          },
+          "event_key_hash": "sha256:b717eb1517afcdd80bf5d7fad3fb6cc3eb724cb4a27ce76c7649465fc332c306",
+          "hdr_source_reference_id": "sha256:3b8a6759f7005333985c975a64ae67976aaf101b66f8ebb192eb265f2b0fb2cd",
+          "item_code": "9.01",
+          "primary_heading_brief": "022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated February 2, 2022 Filed with this Report concerning January 2022 U.S. sales Exhibit 104 Cover Page In",
+          "primary_source_reference_id": "sha256:13607c6e771526cc1ae0d9b45422f4174289a5df7c98be7e5b855e3dce5c0966",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000008/0000037996-22-000008.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:3b8a6759f7005333985c975a64ae67976aaf101b66f8ebb192eb265f2b0fb2cd",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:9470f4cfc6c25faf0cdd8829abf2877de8d34d8eb8f66bd5f37d7b78dc258c9c"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000012",
+          "brief": "8-K item 2.02 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000012",
+            "item_code": "2.02",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000012/0000037996-22-000012.hdr.sgml"
+          },
+          "event_key_hash": "sha256:77f298ae0b92b0b30ccafe336f164bb800d93474f696e3d64f4a2b522f2a43a4",
+          "hdr_source_reference_id": "sha256:9986aa82428572acf8a010d0149c2434c5aed2c440d3b0e620478a0c06f93b53",
+          "item_code": "2.02",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 2.02. Results of Operations and Financial Condition . Ford Motor Company (\u201cFord\u201d or \u201cCompany\u201d) hereby incorporates by reference its news release dated February 3, 2022, which is furnished as Exhibit 99 hereto. Beginning at 5",
+          "primary_source_reference_id": "sha256:f4eca4a2fc391b0e7ce96e1344ad1252a03f77832c6e16389c7618701aeb028f",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000012/0000037996-22-000012.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "2.02"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:9986aa82428572acf8a010d0149c2434c5aed2c440d3b0e620478a0c06f93b53",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 2.02 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:2ba8519d71a8328c029dea8d9e4080c794b8e1d2b2067389b0ef864653eaa03a"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000012",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000012",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000012/0000037996-22-000012.hdr.sgml"
+          },
+          "event_key_hash": "sha256:102005e817ea153964e5b630c04e36e7f629d5729edaaf54a7098984c8ad9773",
+          "hdr_source_reference_id": "sha256:9986aa82428572acf8a010d0149c2434c5aed2c440d3b0e620478a0c06f93b53",
+          "item_code": "9.01",
+          "primary_heading_brief": "ence ID for replays is 9318248. All times referenced above are in Eastern Time. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated February 3, 2022 Furnished with this Report Exhibit 104 Cover Page Interactive Data File ** (formatt",
+          "primary_source_reference_id": "sha256:f4eca4a2fc391b0e7ce96e1344ad1252a03f77832c6e16389c7618701aeb028f",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000012/0000037996-22-000012.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:9986aa82428572acf8a010d0149c2434c5aed2c440d3b0e620478a0c06f93b53",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:86e50c37ab3e4dd6e43c93d28e340ab3d81d67b4b8ad5863242243b2a6b12bcd"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000015",
+          "brief": "8-K item 7.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000015",
+            "item_code": "7.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000015/0000037996-22-000015.hdr.sgml"
+          },
+          "event_key_hash": "sha256:8586aff1fa006fb8349564b3d8d8fe4c3840bbade50550f4d9463d611cfb0820",
+          "hdr_source_reference_id": "sha256:2dd0d50ae83cc765e443a69e56079920ba0ac3c2fb1039f1ce43f01125dd39ac",
+          "item_code": "7.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 7.01. Regulation FD Disclosure . Ford Motor Company\u2019s news release dated March 2, 2022 is furnished as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS *",
+          "primary_source_reference_id": "sha256:9f196516f1f84a668123dd0181f997f506536c092c51c806d65604acf08718c3",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000015/0000037996-22-000015.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "7.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:2dd0d50ae83cc765e443a69e56079920ba0ac3c2fb1039f1ce43f01125dd39ac",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 7.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:ff8dbb755b65790c0450f8544bcee52dde72d6b71ec9aed5c55510d5b65e6145"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000015",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000015",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000015/0000037996-22-000015.hdr.sgml"
+          },
+          "event_key_hash": "sha256:88e0f0996c09e4f6428b85c5f42cb2e3bfc6903749f674e6d49a122942136a83",
+          "hdr_source_reference_id": "sha256:2dd0d50ae83cc765e443a69e56079920ba0ac3c2fb1039f1ce43f01125dd39ac",
+          "item_code": "9.01",
+          "primary_heading_brief": "is furnished as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated March 2, 2022 Furnished with this Report Exhibit 104 Cover Page Interactive Data File ** (formatted",
+          "primary_source_reference_id": "sha256:9f196516f1f84a668123dd0181f997f506536c092c51c806d65604acf08718c3",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000015/0000037996-22-000015.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:2dd0d50ae83cc765e443a69e56079920ba0ac3c2fb1039f1ce43f01125dd39ac",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:227c587f79b6433d06d26146e722a0d78ab277d771578fd02945eaa6b6b4e448"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000017",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000017",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000017/0000037996-22-000017.hdr.sgml"
+          },
+          "event_key_hash": "sha256:f4d3b513afa9b50038f341fb4729e08dd6a770677f6ec8945534e4ef76aec7b5",
+          "hdr_source_reference_id": "sha256:9b8d60f74c816f1183c6836f548a2cf2714285eb291f828c1eed950f000762e3",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated March 2, 2022 concerning U.S. sales in February 2022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHI",
+          "primary_source_reference_id": "sha256:f5ef0fbe2e8f07acb5c4aeda16725602773c9b2ed16337a4aa2ebb261a339304",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000017/0000037996-22-000017.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:9b8d60f74c816f1183c6836f548a2cf2714285eb291f828c1eed950f000762e3",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:120f9f989ca84f3ded87d1c165f8fb3d53e04f7a4c0e6cb4a57106f93312803e"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000017",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000017",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000017/0000037996-22-000017.hdr.sgml"
+          },
+          "event_key_hash": "sha256:829b33bb1b021d87206cca6795048e4d58520f21a630fc9a532adf0919e6c9fa",
+          "hdr_source_reference_id": "sha256:9b8d60f74c816f1183c6836f548a2cf2714285eb291f828c1eed950f000762e3",
+          "item_code": "9.01",
+          "primary_heading_brief": "022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated March 2, 2022 Filed with this Report concerning February 2022 U.S. sales Exhibit 104 Cover Page Inte",
+          "primary_source_reference_id": "sha256:f5ef0fbe2e8f07acb5c4aeda16725602773c9b2ed16337a4aa2ebb261a339304",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000017/0000037996-22-000017.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:9b8d60f74c816f1183c6836f548a2cf2714285eb291f828c1eed950f000762e3",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:4f85e3fa8372e94e8a6fa494f3ce78878b51a3eda375ab765c0d2bb7eab544b2"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000019",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000019",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000019/0000037996-22-000019.hdr.sgml"
+          },
+          "event_key_hash": "sha256:8d15d1cf60e6bfa6b676f963ae350a775a4ab7f6cc16ca7ad2d1140769d0a669",
+          "hdr_source_reference_id": "sha256:65f8d3e27f28a6a1d713f468c752db929625135759b368b1d225abef4fc138b2",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated April 4, 2022 concerning U.S. sales in March 2022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBIT",
+          "primary_source_reference_id": "sha256:48c26c5c7666c54b1e42ed407efc00ddf05267087c7ba382a42d3591f81ca7fa",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000019/0000037996-22-000019.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:65f8d3e27f28a6a1d713f468c752db929625135759b368b1d225abef4fc138b2",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:5c0016d7ba0a4533edaba87cea84913f51d598d6d80e94b9d7945a4bcd82698a"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000019",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000019",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000019/0000037996-22-000019.hdr.sgml"
+          },
+          "event_key_hash": "sha256:065a9f8cda36e9b78f625963454196aa3b127e499714da64bc65419ac713bca2",
+          "hdr_source_reference_id": "sha256:65f8d3e27f28a6a1d713f468c752db929625135759b368b1d225abef4fc138b2",
+          "item_code": "9.01",
+          "primary_heading_brief": "022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated April 4, 2022 Filed with this Report concerning March 2022 U.S. sales Exhibit 104 Cover Page Interac",
+          "primary_source_reference_id": "sha256:48c26c5c7666c54b1e42ed407efc00ddf05267087c7ba382a42d3591f81ca7fa",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000019/0000037996-22-000019.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:65f8d3e27f28a6a1d713f468c752db929625135759b368b1d225abef4fc138b2",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:4ece6e79066b05c05067fc146961248626e518d0cd57523ade0e5f8dd9bb9c63"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000023",
+          "brief": "8-K item 2.02 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000023",
+            "item_code": "2.02",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000023/0000037996-22-000023.hdr.sgml"
+          },
+          "event_key_hash": "sha256:a2322406cf1fd569bbbd4c643a48ca42467a469218270ea5b86762d5cce24b14",
+          "hdr_source_reference_id": "sha256:46a56c9a0b0ecca97c7bb4de649609aae72bb183214e424c4ae3c1049db006de",
+          "item_code": "2.02",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 2.02. Results of Operations and Financial Condition . Ford Motor Company (\u201cFord\u201d or \u201cCompany\u201d) hereby incorporates by reference its news release dated April 27, 2022, which is furnished as Exhibit 99 hereto. Beginning at 5:0",
+          "primary_source_reference_id": "sha256:ed4b3c2bc6a62f06dfed9b43a9b22d2bea5a9718874791e15202281238d1a886",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000023/0000037996-22-000023.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "2.02"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:46a56c9a0b0ecca97c7bb4de649609aae72bb183214e424c4ae3c1049db006de",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 2.02 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:aa6f78c6dd756b47f10d761909332054182404666b025366acb16715c6463f13"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000023",
+          "brief": "8-K item 7.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000023",
+            "item_code": "7.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000023/0000037996-22-000023.hdr.sgml"
+          },
+          "event_key_hash": "sha256:4d81708cb5893ee678f848547bf941162aa4572cf343769a4a57fb0cb8fc8aeb",
+          "hdr_source_reference_id": "sha256:46a56c9a0b0ecca97c7bb4de649609aae72bb183214e424c4ae3c1049db006de",
+          "item_code": "7.01",
+          "primary_heading_brief": "ence ID for replays is 2364458. All times referenced above are in Eastern Time. Item 7.01. Regulation FD Disclosure . Additional Explanation of Previously Disclosed Executive Compensation The Company\u2019s Annual Report on Form 10-K for the year ended December 31, 2021 included, as Exhibits 10-M and 10-N, respec",
+          "primary_source_reference_id": "sha256:ed4b3c2bc6a62f06dfed9b43a9b22d2bea5a9718874791e15202281238d1a886",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000023/0000037996-22-000023.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "7.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:46a56c9a0b0ecca97c7bb4de649609aae72bb183214e424c4ae3c1049db006de",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 7.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:40da96f69186668c5ac1ef58deaac57ea22cb88500853876afb5b653669100ab"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000023",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000023",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000023/0000037996-22-000023.hdr.sgml"
+          },
+          "event_key_hash": "sha256:51f3952f63d98f3569c50049e437561e02e04b571215553f4e0c1e1d8c85340e",
+          "hdr_source_reference_id": "sha256:46a56c9a0b0ecca97c7bb4de649609aae72bb183214e424c4ae3c1049db006de",
+          "item_code": "9.01",
+          "primary_heading_brief": "forfeited from their respective former employers when they joined the Company. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated April 27, 2022 Furnished with this Report Exhibit 104 Cover Page Interactive Data File ** (formatted",
+          "primary_source_reference_id": "sha256:ed4b3c2bc6a62f06dfed9b43a9b22d2bea5a9718874791e15202281238d1a886",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000023/0000037996-22-000023.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:46a56c9a0b0ecca97c7bb4de649609aae72bb183214e424c4ae3c1049db006de",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:a9ff46abbdf5e25c8b15f1f19c89feb8a6bb271ab42da130023ebd7ae11c026e"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000026",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000026",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000026/0000037996-22-000026.hdr.sgml"
+          },
+          "event_key_hash": "sha256:11ed37995d1975c53ef77e625e03e2e4f813301feac4f0a2241193a9b240ea1b",
+          "hdr_source_reference_id": "sha256:fd7ce47a2d484d0eb37d0007b85856795c066fb7e180b4fd65fac4baf3d9bb0e",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated May 4, 2022 concerning U.S. sales in April 2022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS",
+          "primary_source_reference_id": "sha256:ace3763405270b2522863b6d98f87e43b452c2959e8fb741421fd5abf421a386",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000026/0000037996-22-000026.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:fd7ce47a2d484d0eb37d0007b85856795c066fb7e180b4fd65fac4baf3d9bb0e",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:f13e6f105aad57f189f996e93f773b4fc40f0616dfe5db8c52dc6482dbedf83c"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000026",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000026",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000026/0000037996-22-000026.hdr.sgml"
+          },
+          "event_key_hash": "sha256:5d00f056d3e788ef149169447f884ee65f2e4237e315086907ae878d2d3f2d57",
+          "hdr_source_reference_id": "sha256:fd7ce47a2d484d0eb37d0007b85856795c066fb7e180b4fd65fac4baf3d9bb0e",
+          "item_code": "9.01",
+          "primary_heading_brief": "022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated May 4, 2022 Filed with this Report concerning April 2022 U.S. sales Exhibit 104 Cover Page Interacti",
+          "primary_source_reference_id": "sha256:ace3763405270b2522863b6d98f87e43b452c2959e8fb741421fd5abf421a386",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000026/0000037996-22-000026.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:fd7ce47a2d484d0eb37d0007b85856795c066fb7e180b4fd65fac4baf3d9bb0e",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:1117948c151e0e1c2774c0cd7a57df8ea02af41f83cf85a378fffca7cf255370"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000028",
+          "brief": "8-K item 5.07 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000028",
+            "item_code": "5.07",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000028/0000037996-22-000028.hdr.sgml"
+          },
+          "event_key_hash": "sha256:2d4f791d0cbe26b2510a0bbf62c1e7c85b2cbe421f71cd0ee59d0a3b2b4022fd",
+          "hdr_source_reference_id": "sha256:da42332e3f9966483da827233ecdb1e75921cb295db753bc512c2ed030dc1ad0",
+          "item_code": "5.07",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 5.07. Submission of Matters to a Vote of Security Holders . On May 12, 2022, our Annual Meeting of Shareholders was held. The matters voted upon and the results of the vote were as follows: Proposal One: Election of Director",
+          "primary_source_reference_id": "sha256:9f64a74d50094675ec976c3d6b210abbeb69ea1035cfd5a284550c7d6280252b",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000028/0000037996-22-000028.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "5.07"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:da42332e3f9966483da827233ecdb1e75921cb295db753bc512c2ed030dc1ad0",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 5.07 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:5384beb01c5c77d12e85eca9cac31209c64334d0d05b17cb04c0f5d328d1fbaa"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000034",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000034",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000034/0000037996-22-000034.hdr.sgml"
+          },
+          "event_key_hash": "sha256:e57b6b304ecc560ef9e19a9064712ec9148af8243bc7b62ed1c43eef905e3433",
+          "hdr_source_reference_id": "sha256:d013d47536a063c9fb63bee3f94332e67bc21fc7b99e9e45395591f7cad97bbe",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated June 2, 2022 concerning U.S. sales in May 2022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS *",
+          "primary_source_reference_id": "sha256:b4e2f8bc0bf4a81ee1f775ee03b5db4f5dc31847b0db8103d0941636de3b13e1",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000034/0000037996-22-000034.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:d013d47536a063c9fb63bee3f94332e67bc21fc7b99e9e45395591f7cad97bbe",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:810a6d4e2f95e3b10c7385592104a09966d549ac575d0ac5ee03efa3300ea69f"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000034",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000034",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000034/0000037996-22-000034.hdr.sgml"
+          },
+          "event_key_hash": "sha256:4062b16975d65b7d48ad0c5c3487886183b925233b051a35318c42caaef60305",
+          "hdr_source_reference_id": "sha256:d013d47536a063c9fb63bee3f94332e67bc21fc7b99e9e45395591f7cad97bbe",
+          "item_code": "9.01",
+          "primary_heading_brief": "022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated June 2, 2022 Filed with this Report concerning May 2022 U.S. sales Exhibit 104 Cover Page Interactiv",
+          "primary_source_reference_id": "sha256:b4e2f8bc0bf4a81ee1f775ee03b5db4f5dc31847b0db8103d0941636de3b13e1",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000034/0000037996-22-000034.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:d013d47536a063c9fb63bee3f94332e67bc21fc7b99e9e45395591f7cad97bbe",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:1ecaaf02558dda11cf132d2ba6afa2b4301fed0c7749492449b056ecd5bf3c15"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000038",
+          "brief": "8-K item 1.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000038",
+            "item_code": "1.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000038/0000037996-22-000038.hdr.sgml"
+          },
+          "event_key_hash": "sha256:4fbdc43c177313605e3ee7786859005ad995519452f58e5f529d2ce86493e937",
+          "hdr_source_reference_id": "sha256:f376856247cf287a61306275a7bc6c3a3c848547428eb107787f4dfc9f5d152e",
+          "item_code": "1.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 1.01. Entry into a Material Definitive Agreement . Item 2.03. Creation of a Direct Financial Obligation or an Obligation under an Off-Balance Sheet Arrangement of a Registrant . On June 23, 2022, Ford Motor Company (\u201cFord\u201d o",
+          "primary_source_reference_id": "sha256:cfe1fc7cd2860566c314e44b4f690bb9af6faf30db99999bc3e9c2956056809c",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000038/0000037996-22-000038.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "1.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:f376856247cf287a61306275a7bc6c3a3c848547428eb107787f4dfc9f5d152e",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 1.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:51bc06a25e90ba66d0857db4a5128f89d9df3778f5f7a5175921684c955403b9"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000038",
+          "brief": "8-K item 2.03 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000038",
+            "item_code": "2.03",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000038/0000037996-22-000038.hdr.sgml"
+          },
+          "event_key_hash": "sha256:8c2bf4ff962e333587a47e3e7637615153ee489f34fa13ce7ee554f0cfae180d",
+          "hdr_source_reference_id": "sha256:f376856247cf287a61306275a7bc6c3a3c848547428eb107787f4dfc9f5d152e",
+          "item_code": "2.03",
+          "primary_heading_brief": "of the Exchange Act. \u2610 Item 1.01. Entry into a Material Definitive Agreement . Item 2.03. Creation of a Direct Financial Obligation or an Obligation under an Off-Balance Sheet Arrangement of a Registrant . On June 23, 2022, Ford Motor Company (\u201cFord\u201d or \u201cCompany\u201d) entered into the Nineteenth Amendment (the",
+          "primary_source_reference_id": "sha256:cfe1fc7cd2860566c314e44b4f690bb9af6faf30db99999bc3e9c2956056809c",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000038/0000037996-22-000038.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "2.03"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:f376856247cf287a61306275a7bc6c3a3c848547428eb107787f4dfc9f5d152e",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 2.03 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:e73fda2812ca39bc9c27e3ddb87e3e86de855693ed65e8115ab4e5cad4e69bac"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000038",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000038",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000038/0000037996-22-000038.hdr.sgml"
+          },
+          "event_key_hash": "sha256:1e39e0a1affe4616a715f9c4826e0fa9663136a6c389963f2138d595de67e352",
+          "hdr_source_reference_id": "sha256:f376856247cf287a61306275a7bc6c3a3c848547428eb107787f4dfc9f5d152e",
+          "item_code": "9.01",
+          "primary_heading_brief": "ent. The maturity date of the Term Loan Credit Agreement was December 31, 2022. Item 9.01. Financial Statements and Exhibits . EXHIBITS Designation Description Method of Filing Exhibit 10.1 Nineteenth Amendment dated June 23, 2022 to Filed with this Report the Credit Agreement dated as of December 15, 2006,",
+          "primary_source_reference_id": "sha256:cfe1fc7cd2860566c314e44b4f690bb9af6faf30db99999bc3e9c2956056809c",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000038/0000037996-22-000038.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:f376856247cf287a61306275a7bc6c3a3c848547428eb107787f4dfc9f5d152e",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:b90082884fb9ad2e78ef913a2e57c044310905feb70b13d301861ec01c19c6e5"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000040",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000040",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000040/0000037996-22-000040.hdr.sgml"
+          },
+          "event_key_hash": "sha256:e1c9001e2506dc1eb310a4f0882807fc51ce166c6b4e15849e8643dc6f1eee9a",
+          "hdr_source_reference_id": "sha256:cbbc99828795ac7999fe7585508f5b0d654dabd58b4d5c724f2ef70bc1327b63",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated July 5, 2022 concerning U.S. sales in June 2022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS",
+          "primary_source_reference_id": "sha256:ebd617b680ace3bde451c9e961555355543606b0f60c51e1a842fa7675987f49",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000040/0000037996-22-000040.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:cbbc99828795ac7999fe7585508f5b0d654dabd58b4d5c724f2ef70bc1327b63",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:8012cf7bfd6c863b3ada2d1d74841d631a8ebb7000d7ec1683d4be901336ff7c"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000040",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000040",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000040/0000037996-22-000040.hdr.sgml"
+          },
+          "event_key_hash": "sha256:8b4fb1c3dbae6a1443ba9424fc1d68e4628eb750748131f7b31a9d60a78f15fa",
+          "hdr_source_reference_id": "sha256:cbbc99828795ac7999fe7585508f5b0d654dabd58b4d5c724f2ef70bc1327b63",
+          "item_code": "9.01",
+          "primary_heading_brief": "022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated July 5, 2022 Filed with this Report concerning June 2022 U.S. sales Exhibit 104 Cover Page Interacti",
+          "primary_source_reference_id": "sha256:ebd617b680ace3bde451c9e961555355543606b0f60c51e1a842fa7675987f49",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000040/0000037996-22-000040.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:cbbc99828795ac7999fe7585508f5b0d654dabd58b4d5c724f2ef70bc1327b63",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:1481aaa14826a79d7bb9758cec46d55a7065c8e9279955780f9b7fd51b58b254"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000042",
+          "brief": "8-K item 2.03 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000042",
+            "item_code": "2.03",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000042/0000037996-22-000042.hdr.sgml"
+          },
+          "event_key_hash": "sha256:4f850e4261c816a601220f746d86268c89ef89275ba59fcd186295b2b10f8dff",
+          "hdr_source_reference_id": "sha256:118613c19a1673c17d4097b85e9002b8fcdb1fa9bae0ec4e3a83b9b0dcefb58a",
+          "item_code": "2.03",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 2.03. Creation of a Direct Financial Obligation or an Obligation under an Off-Balance Sheet Arrangement of a Registrant. On July 13, 2022, Ford Motor Company (\u201cFord\u201d), SK On Co., Ltd. (\u201cSK On\u201d), and SK Battery America, Inc.",
+          "primary_source_reference_id": "sha256:353f74f45d2f6424839d813d1b7d57dc2c509b0d3aa436a03fe6e0a4cc2897c9",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000042/0000037996-22-000042.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "2.03"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:118613c19a1673c17d4097b85e9002b8fcdb1fa9bae0ec4e3a83b9b0dcefb58a",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 2.03 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:08c91b574b8fdcb90b70e93e84f8571f237da5579f4594082aeb02ad01f4c6dd"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000044",
+          "brief": "8-K item 7.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000044",
+            "item_code": "7.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000044/0000037996-22-000044.hdr.sgml"
+          },
+          "event_key_hash": "sha256:ae98123055422c42b5146e9eecc1fdc224e3aa90de47b5911eb5f10c8aab5396",
+          "hdr_source_reference_id": "sha256:78cabea98c8920cbe63b1a6ff5a36d618ed0147dcd8e8cb8a32928fdf54625ff",
+          "item_code": "7.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 7.01. Regulation FD Disclosure . Ford Motor Company\u2019s news release dated July 21, 2022 is furnished as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS *",
+          "primary_source_reference_id": "sha256:c6a4d1f8a791e523c5feb06689b96eb62fda49e6741c44ffbf34e7b68055e43b",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000044/0000037996-22-000044.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "7.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:78cabea98c8920cbe63b1a6ff5a36d618ed0147dcd8e8cb8a32928fdf54625ff",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 7.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:84331c9fd38951cc53885a6e7bcfdf4d1521d7e0b7924210bf4755d8e10ec20e"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000044",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000044",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000044/0000037996-22-000044.hdr.sgml"
+          },
+          "event_key_hash": "sha256:c9c4f3d16bb19a4a68ace4cbe67439a429e2f2bc80a95db452520cbc95de6717",
+          "hdr_source_reference_id": "sha256:78cabea98c8920cbe63b1a6ff5a36d618ed0147dcd8e8cb8a32928fdf54625ff",
+          "item_code": "9.01",
+          "primary_heading_brief": "is furnished as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated July 21, 2022 Furnished with this Report Exhibit 104 Cover Page Interactive Data File ** (formatted",
+          "primary_source_reference_id": "sha256:c6a4d1f8a791e523c5feb06689b96eb62fda49e6741c44ffbf34e7b68055e43b",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000044/0000037996-22-000044.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:78cabea98c8920cbe63b1a6ff5a36d618ed0147dcd8e8cb8a32928fdf54625ff",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:193e2cd0400b088654c4b2cbb694b9511167f7536404663ea3c7975d27d9979d"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000047",
+          "brief": "8-K item 2.02 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000047",
+            "item_code": "2.02",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000047/0000037996-22-000047.hdr.sgml"
+          },
+          "event_key_hash": "sha256:5b9c7f7a27be7f148dc2a435eefa16b5eacb561b4a6a50098d6fdc5aeb254b0f",
+          "hdr_source_reference_id": "sha256:d0a400d50f845c5d4570aa0a725d2ae263733a5113d7a68b2d301984cc92aaff",
+          "item_code": "2.02",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 2.02. Results of Operations and Financial Condition . Ford Motor Company (\u201cFord\u201d or \u201cCompany\u201d) hereby incorporates by reference its news release dated July 27, 2022, which is furnished as Exhibit 99 hereto. Beginning at 5:00",
+          "primary_source_reference_id": "sha256:d6704920058850d0fa49a857837444a18fbe59943c152b5ab4388604f0e1fcb8",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000047/0000037996-22-000047.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "2.02"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:d0a400d50f845c5d4570aa0a725d2ae263733a5113d7a68b2d301984cc92aaff",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 2.02 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:8d15c3487927b7aa42c83c54099e17c3da351f4599d9f5a26a95e7b20238e33a"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000047",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000047",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000047/0000037996-22-000047.hdr.sgml"
+          },
+          "event_key_hash": "sha256:208f5ecb64fa853ec597199c045fcf0c088c58ce7f7355905baa067ecd5a8e28",
+          "hdr_source_reference_id": "sha256:d0a400d50f845c5d4570aa0a725d2ae263733a5113d7a68b2d301984cc92aaff",
+          "item_code": "9.01",
+          "primary_heading_brief": "ence ID for replays is 3199256. All times referenced above are in Eastern Time. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated July 27, 2022 Furnished with this Report Exhibit 104 Cover Page Interactive Data File ** (formatted",
+          "primary_source_reference_id": "sha256:d6704920058850d0fa49a857837444a18fbe59943c152b5ab4388604f0e1fcb8",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000047/0000037996-22-000047.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:d0a400d50f845c5d4570aa0a725d2ae263733a5113d7a68b2d301984cc92aaff",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:394269c2b4f0e66e1fdcfbbdc33cbdab440aa4f0a51f3af647f60d740e9e6e83"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000050",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000050",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000050/0000037996-22-000050.hdr.sgml"
+          },
+          "event_key_hash": "sha256:7e285746484c60595172e3bcc83d8594cce808211452de856f07d96b38f3d7ad",
+          "hdr_source_reference_id": "sha256:7143889a0751bb3d2a4122612016121d86e30eee3f96c51e68fe9f2ce684a8b8",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated August 3, 2022 concerning U.S. sales in July 2022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBIT",
+          "primary_source_reference_id": "sha256:a83cd018f473976c5277cc91aa3ba002b742fa4c74101601a082aece1339c835",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000050/0000037996-22-000050.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:7143889a0751bb3d2a4122612016121d86e30eee3f96c51e68fe9f2ce684a8b8",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:95afe7f2cd5860081bf0fa20ad694cc2fbe14c395e34f4038f68048b9ea2181e"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000050",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000050",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000050/0000037996-22-000050.hdr.sgml"
+          },
+          "event_key_hash": "sha256:5e7a09514c8ac546ac075535d008ef3209c4910080001e26b35660bef014e97d",
+          "hdr_source_reference_id": "sha256:7143889a0751bb3d2a4122612016121d86e30eee3f96c51e68fe9f2ce684a8b8",
+          "item_code": "9.01",
+          "primary_heading_brief": "022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated August 3, 2022 Filed with this Report concerning July 2022 U.S. sales Exhibit 104 Cover Page Interac",
+          "primary_source_reference_id": "sha256:a83cd018f473976c5277cc91aa3ba002b742fa4c74101601a082aece1339c835",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000050/0000037996-22-000050.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:7143889a0751bb3d2a4122612016121d86e30eee3f96c51e68fe9f2ce684a8b8",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:61a101155545a36a62d6b5ccb1fee56cfafa787dfae5bc9289df62840528dc6f"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000052",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000052",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000052/0000037996-22-000052.hdr.sgml"
+          },
+          "event_key_hash": "sha256:f0e7fcd6b8f3a1c926167763f2a168c626290191765ed59e314505876bb395da",
+          "hdr_source_reference_id": "sha256:00f04d652ed9623d00e7669b80c2c11339e1048357d4fa3459f7b31bc80ef249",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . On August 15, 2022, Ford Motor Company (the \u201cCompany\u201d) issued and sold $600,000,000 aggregate principal amount of 6.500% Notes due August 15, 2062 (the \u201cNotes\u201d), pursuant to the Company\u2019s effective regis",
+          "primary_source_reference_id": "sha256:42809afae4ebb9aac6f5174e917ac80312c920fea50dc09f89ecd41f28f7a016",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000052/0000037996-22-000052.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:00f04d652ed9623d00e7669b80c2c11339e1048357d4fa3459f7b31bc80ef249",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:e1d1424846f4b1dbbe0a7587b69040d68b8d4c616b4b940db64190edf1b76212"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000052",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000052",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000052/0000037996-22-000052.hdr.sgml"
+          },
+          "event_key_hash": "sha256:0a5b3d736ad6b220362672abb8114dfeef7e3e04b5b9b5ca045c3239fb717274",
+          "hdr_source_reference_id": "sha256:00f04d652ed9623d00e7669b80c2c11339e1048357d4fa3459f7b31bc80ef249",
+          "item_code": "9.01",
+          "primary_heading_brief": "th into the Registration Statement pursuant to which the Notes were registered. Item 9.01. Financial Statements and Exhibits . The following exhibits are filed as part of this Report on Form 8-K. EXHIBITS Designation Description Method of Filing Exhibit 5 Opinion of Corey M. MacGillivray, Counsel to the Comp",
+          "primary_source_reference_id": "sha256:42809afae4ebb9aac6f5174e917ac80312c920fea50dc09f89ecd41f28f7a016",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000052/0000037996-22-000052.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:00f04d652ed9623d00e7669b80c2c11339e1048357d4fa3459f7b31bc80ef249",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:4606c5a07d3cafdecd5758eaa33caef6d68dcc926d5f10b79a4b48b3dec7d83e"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000056",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000056",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000056/0000037996-22-000056.hdr.sgml"
+          },
+          "event_key_hash": "sha256:05e4a5ad13ce1c558c8f7b049a8cecd372e33d3430ffccdea5dfa44d0ce3cfcf",
+          "hdr_source_reference_id": "sha256:72338b06828eed6ad11ee076ace9335d6ef1c63a1f783868f382d05b5cbdc2ad",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . On August 19, 2022, Ford Motor Company (the \u201cCompany\u201d) issued and sold $1,750,000,000 aggregate principal amount of 6.100% Notes due August 19, 2032 (the \u201cNotes\u201d), pursuant to the Company\u2019s effective reg",
+          "primary_source_reference_id": "sha256:be4a62d2681d20eb6e6d9db2c9092c7ab647856c9cbad0100c19802beee9f62b",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000056/0000037996-22-000056.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:72338b06828eed6ad11ee076ace9335d6ef1c63a1f783868f382d05b5cbdc2ad",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:ae08ae42329b75a87c7a0488d520b5df7449a2b4f4e01e6b2ac577ed56b6d17a"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000056",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000056",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000056/0000037996-22-000056.hdr.sgml"
+          },
+          "event_key_hash": "sha256:64beeb1418723c3b1ef4b6cfb03f13a33b5e0c74518624289e5e16de3eb74948",
+          "hdr_source_reference_id": "sha256:72338b06828eed6ad11ee076ace9335d6ef1c63a1f783868f382d05b5cbdc2ad",
+          "item_code": "9.01",
+          "primary_heading_brief": "th into the Registration Statement pursuant to which the Notes were registered. Item 9.01. Financial Statements and Exhibits . The following exhibits are filed as part of this Report on Form 8-K. EXHIBITS Designation Description Method of Filing Exhibit 5 Opinion of David J. Witten, Counsel to the Company Fi",
+          "primary_source_reference_id": "sha256:be4a62d2681d20eb6e6d9db2c9092c7ab647856c9cbad0100c19802beee9f62b",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000056/0000037996-22-000056.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:72338b06828eed6ad11ee076ace9335d6ef1c63a1f783868f382d05b5cbdc2ad",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:da9e4b783402c6602b936192ec9160eb04f40be636e296cba33bf4b647a69857"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000060",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000060",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000060/0000037996-22-000060.hdr.sgml"
+          },
+          "event_key_hash": "sha256:82f1f201e6459fb8919a29c4904cd2e3ee938bdc9e6e79be64a9ef37ae28e448",
+          "hdr_source_reference_id": "sha256:d6425cb94819dcfd874a638fc695067a5aebc79e482286b0760b0fc3e9f09601",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated September 2, 2022 concerning U.S. sales in August 2022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EX",
+          "primary_source_reference_id": "sha256:e229eacc93198daaf8ad03692dfe1550c548b202445aa7fe3e94317d1f62426e",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000060/0000037996-22-000060.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:d6425cb94819dcfd874a638fc695067a5aebc79e482286b0760b0fc3e9f09601",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:4a86b1bf42a2329ab1071d31653ec745b6fae076a8fa46ed8669634303f8c148"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000060",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000060",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000060/0000037996-22-000060.hdr.sgml"
+          },
+          "event_key_hash": "sha256:4db73c13afad4b041a235ad66d6f4ad809b323181ca4f81cb4fb3efa226d65cc",
+          "hdr_source_reference_id": "sha256:d6425cb94819dcfd874a638fc695067a5aebc79e482286b0760b0fc3e9f09601",
+          "item_code": "9.01",
+          "primary_heading_brief": "022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated September 2, 2022 Filed with this Report concerning August 2022 U.S. sales Exhibit 104 Cover Page In",
+          "primary_source_reference_id": "sha256:e229eacc93198daaf8ad03692dfe1550c548b202445aa7fe3e94317d1f62426e",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000060/0000037996-22-000060.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:d6425cb94819dcfd874a638fc695067a5aebc79e482286b0760b0fc3e9f09601",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:872fcb94756bda2a5be3634e69120e9ba6408a4e4e7b769ba2bd899412153ad5"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000064",
+          "brief": "8-K item 7.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000064",
+            "item_code": "7.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000064/0000037996-22-000064.hdr.sgml"
+          },
+          "event_key_hash": "sha256:e455edb3ce74af0389d392aa11d0150eed5c1981bc76041a9768a1d42978a47e",
+          "hdr_source_reference_id": "sha256:10b719858994d7f65aecccaf68c6145a9c6113efe2feaf3f26bdbe6c447bf21b",
+          "item_code": "7.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 7.01. Regulation FD Disclosure . Ford Motor Company\u2019s news release dated September 19, 2022 is furnished as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIB",
+          "primary_source_reference_id": "sha256:fcb812bf18bc04b910c999bf2ee5f6d272207d764c7f00e19e76729caf28c923",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000064/0000037996-22-000064.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "7.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:10b719858994d7f65aecccaf68c6145a9c6113efe2feaf3f26bdbe6c447bf21b",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 7.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:d93b221d66f53251381a7b3ec21badbb5eb1eee55c49f0d85fb502c120fe1de0"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000064",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000064",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000064/0000037996-22-000064.hdr.sgml"
+          },
+          "event_key_hash": "sha256:752897a8807ede81ed3b1ea997571c0e79a28394130eb2c614ddda5b4c9a0411",
+          "hdr_source_reference_id": "sha256:10b719858994d7f65aecccaf68c6145a9c6113efe2feaf3f26bdbe6c447bf21b",
+          "item_code": "9.01",
+          "primary_heading_brief": "is furnished as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated September 19, 2022 Furnished with this Report Exhibit 104 Cover Page Interactive Data File ** (forma",
+          "primary_source_reference_id": "sha256:fcb812bf18bc04b910c999bf2ee5f6d272207d764c7f00e19e76729caf28c923",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000064/0000037996-22-000064.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:10b719858994d7f65aecccaf68c6145a9c6113efe2feaf3f26bdbe6c447bf21b",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:f69698c84342a2cb2eec92efb1c463ddf35ee1b83ba802d1473b0d58d4083825"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000066",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000066",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000066/0000037996-22-000066.hdr.sgml"
+          },
+          "event_key_hash": "sha256:252c59d09a9b2f956d4d7cf5eda7cd6f1dce94763f13ab70cb2d915b5dd88fd7",
+          "hdr_source_reference_id": "sha256:3d8fca212b7585e4c064b61e2bcacd3ead1df2d56c3cc599381c8cba0024f76b",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated October 4, 2022 concerning U.S. sales in September 2022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . E",
+          "primary_source_reference_id": "sha256:806120d1927e9afe01a7f4588ee4f3cc4f7f983ce5cc47f34a4fb63d64ba4584",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000066/0000037996-22-000066.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:3d8fca212b7585e4c064b61e2bcacd3ead1df2d56c3cc599381c8cba0024f76b",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:24937f563bdf3cb026e1b32cb37e9f8af65104d8f9af0b76954b00d50e4f37ca"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000066",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000066",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000066/0000037996-22-000066.hdr.sgml"
+          },
+          "event_key_hash": "sha256:7143fb7e91f8fe5e6a15b196192a7191c0402162b8f2dfb86f6f3188e2c40ca0",
+          "hdr_source_reference_id": "sha256:3d8fca212b7585e4c064b61e2bcacd3ead1df2d56c3cc599381c8cba0024f76b",
+          "item_code": "9.01",
+          "primary_heading_brief": "022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated October 4, 2022 Filed with this Report concerning September 2022 U.S. sales Exhibit 104 Cover Page I",
+          "primary_source_reference_id": "sha256:806120d1927e9afe01a7f4588ee4f3cc4f7f983ce5cc47f34a4fb63d64ba4584",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000066/0000037996-22-000066.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:3d8fca212b7585e4c064b61e2bcacd3ead1df2d56c3cc599381c8cba0024f76b",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:b8201859c0d5ecf3d4674a86af4204c74fd5f736fc6a114a7eecd377caf92be8"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000072",
+          "brief": "8-K item 2.02 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000072",
+            "item_code": "2.02",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000072/0000037996-22-000072.hdr.sgml"
+          },
+          "event_key_hash": "sha256:60911a1d3948d32bb76a41b807e99bc287af44ee51994e8f40869a7dc95fc063",
+          "hdr_source_reference_id": "sha256:4a357beea38a69cd3cc2078c3ea2108363c47d4f80a090fd6c1959cdcf4d9809",
+          "item_code": "2.02",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 2.02. Results of Operations and Financial Condition . Ford Motor Company (\u201cFord\u201d or \u201cCompany\u201d) hereby incorporates by reference its news release dated October 26, 2022, which is furnished as Exhibit 99 hereto. Beginning at 5",
+          "primary_source_reference_id": "sha256:8db367bac01245146bc053d2be63907b67c6e8b84a9d238ec7ecd0f7d25a298e",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000072/0000037996-22-000072.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "2.02"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:4a357beea38a69cd3cc2078c3ea2108363c47d4f80a090fd6c1959cdcf4d9809",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 2.02 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:251c7407bb4cbb60938c3d75d628f2ab113dc233a58a6a7b6e7a8152dac0e43a"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000072",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000072",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000072/0000037996-22-000072.hdr.sgml"
+          },
+          "event_key_hash": "sha256:1750ad35d81b0cde7e02346534cb60417a3cd20bf5accb20bd49c7585560235b",
+          "hdr_source_reference_id": "sha256:4a357beea38a69cd3cc2078c3ea2108363c47d4f80a090fd6c1959cdcf4d9809",
+          "item_code": "9.01",
+          "primary_heading_brief": "ence ID for replays is 8005789. All times referenced above are in Eastern Time. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated October 26, 2022 Furnished with this Report Exhibit 104 Cover Page Interactive Data File ** (formatt",
+          "primary_source_reference_id": "sha256:8db367bac01245146bc053d2be63907b67c6e8b84a9d238ec7ecd0f7d25a298e",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000072/0000037996-22-000072.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:4a357beea38a69cd3cc2078c3ea2108363c47d4f80a090fd6c1959cdcf4d9809",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:fe8db2bf9154a3ff6d493185ed8793c12a28480107448cb138702879a33637b3"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000076",
+          "brief": "8-K item 1.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000076",
+            "item_code": "1.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000076/0000037996-22-000076.hdr.sgml"
+          },
+          "event_key_hash": "sha256:2bcb66aa5e7ec624482098b9769a7404d9a389fcf083ec2984516643cb2c5a53",
+          "hdr_source_reference_id": "sha256:cd87192e2ad36b7544393636cb8df3fd7a3bae1fab0b37ffed46c62159faabf1",
+          "item_code": "1.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 1.01. Entry into a Material Definitive Agreement . Item 2.03. Creation of a Direct Financial Obligation or an Obligation under an Off-Balance Sheet Arrangement of a Registrant . As previously reported in our Quarterly Report",
+          "primary_source_reference_id": "sha256:a3910cf019c92f7502f5cb08d28d637eade2536a70356344d24fa432a5bfbd55",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000076/0000037996-22-000076.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "1.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:cd87192e2ad36b7544393636cb8df3fd7a3bae1fab0b37ffed46c62159faabf1",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 1.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:29ae17aa91f48237ed031ccac78d190ef456d934ec1cffebaa6136f36a3167a7"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000076",
+          "brief": "8-K item 2.03 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000076",
+            "item_code": "2.03",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000076/0000037996-22-000076.hdr.sgml"
+          },
+          "event_key_hash": "sha256:b9b0f97820659908033b17aa7eefadbe55933566f62f6af3897c97b134364347",
+          "hdr_source_reference_id": "sha256:cd87192e2ad36b7544393636cb8df3fd7a3bae1fab0b37ffed46c62159faabf1",
+          "item_code": "2.03",
+          "primary_heading_brief": "of the Exchange Act. \u2610 Item 1.01. Entry into a Material Definitive Agreement . Item 2.03. Creation of a Direct Financial Obligation or an Obligation under an Off-Balance Sheet Arrangement of a Registrant . As previously reported in our Quarterly Report on Form 10-Q for the quarter ended September 30, 2022,",
+          "primary_source_reference_id": "sha256:a3910cf019c92f7502f5cb08d28d637eade2536a70356344d24fa432a5bfbd55",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000076/0000037996-22-000076.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "2.03"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:cd87192e2ad36b7544393636cb8df3fd7a3bae1fab0b37ffed46c62159faabf1",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 2.03 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:79e4c8535fa1192055d7bfbad70441411b6f89c1e2d48d93881733dbad3c91d0"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000076",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000076",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000076/0000037996-22-000076.hdr.sgml"
+          },
+          "event_key_hash": "sha256:6bc2a425dd4ea5dac5e64360015f3f36efb567e7b79ca760c144f301617210e7",
+          "hdr_source_reference_id": "sha256:cd87192e2ad36b7544393636cb8df3fd7a3bae1fab0b37ffed46c62159faabf1",
+          "item_code": "9.01",
+          "primary_heading_brief": ", 2022, Ford designated Ford Motor Credit Company LLC as a subsidiary borrower. Item 9.01. Financial Statements and Exhibits . EXHIBITS Designation Description Method of Filing Exhibit 10 First Amendment dated October 26, 2022 to the Filed with this Report 364-Day Revolving Credit Agreement dated June 23, 20",
+          "primary_source_reference_id": "sha256:a3910cf019c92f7502f5cb08d28d637eade2536a70356344d24fa432a5bfbd55",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000076/0000037996-22-000076.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:cd87192e2ad36b7544393636cb8df3fd7a3bae1fab0b37ffed46c62159faabf1",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:3d5fbf133275795dff637b10d024ae1a9dfbc414548cd98586226b1c7ea22ce2"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000079",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000079",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000079/0000037996-22-000079.hdr.sgml"
+          },
+          "event_key_hash": "sha256:757b24ccb04259b319a8abb52facb547a6968afd93a7e4f2385d747fec528270",
+          "hdr_source_reference_id": "sha256:3b58a02d4f23e1c37b847ffe00ac95fe549ce7ad1ce0d908c658be269a0d59e4",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated November 2, 2022 concerning U.S. sales in October 2022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EX",
+          "primary_source_reference_id": "sha256:0eb19cbc2c926b636f65e95aa2d5298f171b7b8b28bd6bc9a1b241384b13b640",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000079/0000037996-22-000079.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:3b58a02d4f23e1c37b847ffe00ac95fe549ce7ad1ce0d908c658be269a0d59e4",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:df2f7d9063259f6f74be10168d28ff546213f8c384b7f765b937daf7e16278b5"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000079",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000079",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000079/0000037996-22-000079.hdr.sgml"
+          },
+          "event_key_hash": "sha256:74da8cf5a69b10a29e2cb97f6746d2ce2d1d200ffc4a4da0bd9bc4863987a613",
+          "hdr_source_reference_id": "sha256:3b58a02d4f23e1c37b847ffe00ac95fe549ce7ad1ce0d908c658be269a0d59e4",
+          "item_code": "9.01",
+          "primary_heading_brief": "022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated November 2, 2022 Filed with this Report concerning October 2022 U.S. sales Exhibit 104 Cover Page In",
+          "primary_source_reference_id": "sha256:0eb19cbc2c926b636f65e95aa2d5298f171b7b8b28bd6bc9a1b241384b13b640",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000079/0000037996-22-000079.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:3b58a02d4f23e1c37b847ffe00ac95fe549ce7ad1ce0d908c658be269a0d59e4",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:753de65c745a5ffcfef750ccb0ba8cd137b51821ecba861447e7193ce2394eef"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000081",
+          "brief": "8-K item 8.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000081",
+            "item_code": "8.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000081/0000037996-22-000081.hdr.sgml"
+          },
+          "event_key_hash": "sha256:45027b114f19b74885ab65dc20fe549883738c76b84cdb9842a57a7e0445f353",
+          "hdr_source_reference_id": "sha256:622d523abd5658588adeb802d205d272419ea81b4bba4493872c2035968aaac8",
+          "item_code": "8.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 8.01. Other Events . Our news release dated December 2, 2022 concerning U.S. sales in November 2022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . E",
+          "primary_source_reference_id": "sha256:714fb0b077cfd2f2eed786c5d1f4ab2cee0a7c7fc5f5a16e2642a6aff8304898",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000081/0000037996-22-000081.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "8.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:622d523abd5658588adeb802d205d272419ea81b4bba4493872c2035968aaac8",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 8.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:55db3a043d41bda8ba6e69b22a0f5c167b505a01eaa3c68b1ad85d58b8951075"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000081",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000081",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000081/0000037996-22-000081.hdr.sgml"
+          },
+          "event_key_hash": "sha256:cc5d82af8bef64433cc99a61171c74c1160d067bc34500fd8c72de8625d45f24",
+          "hdr_source_reference_id": "sha256:622d523abd5658588adeb802d205d272419ea81b4bba4493872c2035968aaac8",
+          "item_code": "9.01",
+          "primary_heading_brief": "022 is filed as Exhibit 99 to this Report and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS * Designation Description Method of Filing Exhibit 99 News release dated December 2, 2022 Filed with this Report concerning November 2022 U.S. sales Exhibit 104 Cover Page I",
+          "primary_source_reference_id": "sha256:714fb0b077cfd2f2eed786c5d1f4ab2cee0a7c7fc5f5a16e2642a6aff8304898",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000081/0000037996-22-000081.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:622d523abd5658588adeb802d205d272419ea81b4bba4493872c2035968aaac8",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:c774c1e6e2abdbb904d234560d81ac3a53005789a1b121898f5aaf596d47f38d"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000085",
+          "brief": "8-K item 5.03 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000085",
+            "item_code": "5.03",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000085/0000037996-22-000085.hdr.sgml"
+          },
+          "event_key_hash": "sha256:17e01e337e80f4a210e629a8abeded84c30dc752e072836bf0f913b10f5a2656",
+          "hdr_source_reference_id": "sha256:6935663cfa76c954da73976f63b0082d73a3c46f86c0171c6fa0c9d299424fa0",
+          "item_code": "5.03",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u2610 Item 5.03. Amendments to Articles of Incorporation or Bylaws; Change in Fiscal Year . On December 8, 2022, the Board of Directors of Ford Motor Company (the \u201cCompany\u201d) adopted amendments to the Company\u2019s By-Laws (the \u201cBy-Laws\u201d),",
+          "primary_source_reference_id": "sha256:882669643ba8e1a31f8fa7be40f036cf06a259d67af5ff761b9fffb982683ce6",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000085/0000037996-22-000085.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "5.03"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:6935663cfa76c954da73976f63b0082d73a3c46f86c0171c6fa0c9d299424fa0",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 5.03 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:7546a163cf97d01e9f6f220cb153ffa68699c3fac016d82b8efd7a8f803303f9"
+      },
+      {
+        "attributes": {
+          "accession": "0000037996-22-000085",
+          "brief": "8-K item 9.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0000037996-22-000085",
+            "item_code": "9.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000085/0000037996-22-000085.hdr.sgml"
+          },
+          "event_key_hash": "sha256:d0952cd3ac3889c47130f0ffae34ef821a893d7cd3bc2df07ed3d38cdcb646cd",
+          "hdr_source_reference_id": "sha256:6935663cfa76c954da73976f63b0082d73a3c46f86c0171c6fa0c9d299424fa0",
+          "item_code": "9.01",
+          "primary_heading_brief": "ed as Exhibits 3.1 and 3.2, respectively, and incorporated by reference herein. Item 9.01. Financial Statements and Exhibits . EXHIBITS Designation Description Method of Filing Exhibit 3.1 By-Laws, as amended December 8, 2022 Filed with this Report Exhibit 3. 2 By-Laws, marked to show amendments effective as",
+          "primary_source_reference_id": "sha256:882669643ba8e1a31f8fa7be40f036cf06a259d67af5ff761b9fffb982683ce6",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000085/0000037996-22-000085.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "9.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:6935663cfa76c954da73976f63b0082d73a3c46f86c0171c6fa0c9d299424fa0",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 9.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:b278d873cb90aca4c421f550ce794fde671dc8b4e32c3145b24b99aa6d5ee209"
+      },
+      {
+        "attributes": {
+          "accession": "0001104659-22-091583",
+          "brief": "8-K item 7.01 parsed from hdr.sgml",
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "deterministic_router_semantic_version": "2",
+          "event_key": {
+            "accession": "0001104659-22-091583",
+            "item_code": "7.01",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000110465922091583/0001104659-22-091583.hdr.sgml"
+          },
+          "event_key_hash": "sha256:5716b4465b5ba9e506ddb669530c7a1fc9836c00fea69c480051fd84cffae3b7",
+          "hdr_source_reference_id": "sha256:474440048319343e21a338ad8d739356c742c3b06b8ca29d79e2b170fce1b958",
+          "item_code": "7.01",
+          "primary_heading_brief": "accounting standards provided pursuant to Section 13(a) of the Exchange Act. \u00a8 Item 7.01. Regulation FD Disclosure . On August 16, 2022, Ford Motor Company delivered to the trustee for delivery to the holders of the 9.000% Notes due April 2025 a notice of redemption to redeem (the \u201cRedemption\u201d) on September",
+          "primary_source_reference_id": "sha256:a535cfcfb5c842a3eb4432bf3d85569fe9963f4e1afac76d92b7d6208ce42c92",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000110465922091583/0001104659-22-091583.hdr.sgml"
+        },
+        "claim_kind": "DETERMINISTIC_8K_ITEM_BRIEF",
+        "company_id": "ford_motor_company",
+        "locator": {
+          "brief_source": "HDR_SGML_ITEM_CODE",
+          "item_code": "7.01"
+        },
+        "record_type": "DETERMINISTIC_VERIFIED_CLAIM",
+        "source_reference_id": "sha256:474440048319343e21a338ad8d739356c742c3b06b8ca29d79e2b170fce1b958",
+        "source_role": "fy_8k_item_inventory",
+        "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3",
+        "unit": "text",
+        "value": "8-K item 7.01 parsed from hdr.sgml",
+        "verified_claim_id": "sha256:e0056532d20946104400204a9c767ef791f7758477ee1dc541919a22ec9703e1"
+      }
+    ],
+    "event_source_set_manifest": {
+      "company_id": "ford_motor_company",
+      "cutoff_timestamp_or_pinned_submissions_attempt": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+      "discovered_accession_set_hash": "sha256:dbc7db20c734e9b20f05c217ec87e5cf463ceeaa6060fb0004480ce6110f2fe8",
+      "discovery_policy": "PINNED_SUBMISSIONS",
+      "fiscal_or_date_window": {
+        "period_end": "2022-12-31",
+        "period_start": "2022-01-01"
+      },
+      "form_types": [
+        "8-K",
+        "8-K/A",
+        "8-K12B",
+        "8-K12B/A"
+      ],
+      "inventory_source_reference_id": "sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6",
+      "ordered_source_reference_ids": [
+        "sha256:43715b1686a64ed0aa9f2460c2f4589dfa5220bea8801f294e3c877517509864",
+        "sha256:931674ae43df9534ddd3e18cacc4b0b4b3ac94136aee7c15a8a3439d354da1e1",
+        "sha256:3231486ee217ac50c7d74ce5e9a914d77fcd89037272035cddea0dcbe871577c",
+        "sha256:817283cf6aa854cbe6330a4ac6d76d74f1aaaf31631f87187fcd55370376d527",
+        "sha256:3b8a6759f7005333985c975a64ae67976aaf101b66f8ebb192eb265f2b0fb2cd",
+        "sha256:13607c6e771526cc1ae0d9b45422f4174289a5df7c98be7e5b855e3dce5c0966",
+        "sha256:9986aa82428572acf8a010d0149c2434c5aed2c440d3b0e620478a0c06f93b53",
+        "sha256:f4eca4a2fc391b0e7ce96e1344ad1252a03f77832c6e16389c7618701aeb028f",
+        "sha256:2dd0d50ae83cc765e443a69e56079920ba0ac3c2fb1039f1ce43f01125dd39ac",
+        "sha256:9f196516f1f84a668123dd0181f997f506536c092c51c806d65604acf08718c3",
+        "sha256:9b8d60f74c816f1183c6836f548a2cf2714285eb291f828c1eed950f000762e3",
+        "sha256:f5ef0fbe2e8f07acb5c4aeda16725602773c9b2ed16337a4aa2ebb261a339304",
+        "sha256:65f8d3e27f28a6a1d713f468c752db929625135759b368b1d225abef4fc138b2",
+        "sha256:48c26c5c7666c54b1e42ed407efc00ddf05267087c7ba382a42d3591f81ca7fa",
+        "sha256:46a56c9a0b0ecca97c7bb4de649609aae72bb183214e424c4ae3c1049db006de",
+        "sha256:ed4b3c2bc6a62f06dfed9b43a9b22d2bea5a9718874791e15202281238d1a886",
+        "sha256:fd7ce47a2d484d0eb37d0007b85856795c066fb7e180b4fd65fac4baf3d9bb0e",
+        "sha256:ace3763405270b2522863b6d98f87e43b452c2959e8fb741421fd5abf421a386",
+        "sha256:da42332e3f9966483da827233ecdb1e75921cb295db753bc512c2ed030dc1ad0",
+        "sha256:9f64a74d50094675ec976c3d6b210abbeb69ea1035cfd5a284550c7d6280252b",
+        "sha256:d013d47536a063c9fb63bee3f94332e67bc21fc7b99e9e45395591f7cad97bbe",
+        "sha256:b4e2f8bc0bf4a81ee1f775ee03b5db4f5dc31847b0db8103d0941636de3b13e1",
+        "sha256:f376856247cf287a61306275a7bc6c3a3c848547428eb107787f4dfc9f5d152e",
+        "sha256:cfe1fc7cd2860566c314e44b4f690bb9af6faf30db99999bc3e9c2956056809c",
+        "sha256:cbbc99828795ac7999fe7585508f5b0d654dabd58b4d5c724f2ef70bc1327b63",
+        "sha256:ebd617b680ace3bde451c9e961555355543606b0f60c51e1a842fa7675987f49",
+        "sha256:118613c19a1673c17d4097b85e9002b8fcdb1fa9bae0ec4e3a83b9b0dcefb58a",
+        "sha256:353f74f45d2f6424839d813d1b7d57dc2c509b0d3aa436a03fe6e0a4cc2897c9",
+        "sha256:78cabea98c8920cbe63b1a6ff5a36d618ed0147dcd8e8cb8a32928fdf54625ff",
+        "sha256:c6a4d1f8a791e523c5feb06689b96eb62fda49e6741c44ffbf34e7b68055e43b",
+        "sha256:d0a400d50f845c5d4570aa0a725d2ae263733a5113d7a68b2d301984cc92aaff",
+        "sha256:d6704920058850d0fa49a857837444a18fbe59943c152b5ab4388604f0e1fcb8",
+        "sha256:7143889a0751bb3d2a4122612016121d86e30eee3f96c51e68fe9f2ce684a8b8",
+        "sha256:a83cd018f473976c5277cc91aa3ba002b742fa4c74101601a082aece1339c835",
+        "sha256:00f04d652ed9623d00e7669b80c2c11339e1048357d4fa3459f7b31bc80ef249",
+        "sha256:42809afae4ebb9aac6f5174e917ac80312c920fea50dc09f89ecd41f28f7a016",
+        "sha256:474440048319343e21a338ad8d739356c742c3b06b8ca29d79e2b170fce1b958",
+        "sha256:a535cfcfb5c842a3eb4432bf3d85569fe9963f4e1afac76d92b7d6208ce42c92",
+        "sha256:72338b06828eed6ad11ee076ace9335d6ef1c63a1f783868f382d05b5cbdc2ad",
+        "sha256:be4a62d2681d20eb6e6d9db2c9092c7ab647856c9cbad0100c19802beee9f62b",
+        "sha256:d6425cb94819dcfd874a638fc695067a5aebc79e482286b0760b0fc3e9f09601",
+        "sha256:e229eacc93198daaf8ad03692dfe1550c548b202445aa7fe3e94317d1f62426e",
+        "sha256:10b719858994d7f65aecccaf68c6145a9c6113efe2feaf3f26bdbe6c447bf21b",
+        "sha256:fcb812bf18bc04b910c999bf2ee5f6d272207d764c7f00e19e76729caf28c923",
+        "sha256:3d8fca212b7585e4c064b61e2bcacd3ead1df2d56c3cc599381c8cba0024f76b",
+        "sha256:806120d1927e9afe01a7f4588ee4f3cc4f7f983ce5cc47f34a4fb63d64ba4584",
+        "sha256:4a357beea38a69cd3cc2078c3ea2108363c47d4f80a090fd6c1959cdcf4d9809",
+        "sha256:8db367bac01245146bc053d2be63907b67c6e8b84a9d238ec7ecd0f7d25a298e",
+        "sha256:cd87192e2ad36b7544393636cb8df3fd7a3bae1fab0b37ffed46c62159faabf1",
+        "sha256:a3910cf019c92f7502f5cb08d28d637eade2536a70356344d24fa432a5bfbd55",
+        "sha256:3b58a02d4f23e1c37b847ffe00ac95fe549ce7ad1ce0d908c658be269a0d59e4",
+        "sha256:0eb19cbc2c926b636f65e95aa2d5298f171b7b8b28bd6bc9a1b241384b13b640",
+        "sha256:622d523abd5658588adeb802d205d272419ea81b4bba4493872c2035968aaac8",
+        "sha256:714fb0b077cfd2f2eed786c5d1f4ab2cee0a7c7fc5f5a16e2642a6aff8304898",
+        "sha256:6935663cfa76c954da73976f63b0082d73a3c46f86c0171c6fa0c9d299424fa0",
+        "sha256:882669643ba8e1a31f8fa7be40f036cf06a259d67af5ff761b9fffb982683ce6"
+      ],
+      "record_type": "SOURCE_SET_MANIFEST",
+      "schema_version": 1,
+      "sec_submissions_inventory_hash": "sha256:2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+      "source_role": "fy_8k_item_inventory",
+      "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3"
+    },
+    "event_source_sets": [
+      {
+        "inventory_source_reference": {
+          "accession": "SUBMISSIONS-37996",
+          "company_id": "ford_motor_company",
+          "document_name": "CIK0000037996.json",
+          "raw_asset_id": "sha256:2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+          "source_reference_id": "sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6",
+          "source_role": "sec_submissions_inventory",
+          "source_url": "https://data.sec.gov/submissions/CIK0000037996.json"
+        },
+        "manifest": {
+          "company_id": "ford_motor_company",
+          "cutoff_timestamp_or_pinned_submissions_attempt": "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+          "discovered_accession_set_hash": "sha256:dbc7db20c734e9b20f05c217ec87e5cf463ceeaa6060fb0004480ce6110f2fe8",
+          "discovery_policy": "PINNED_SUBMISSIONS",
+          "fiscal_or_date_window": {
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01"
+          },
+          "form_types": [
+            "8-K",
+            "8-K/A",
+            "8-K12B",
+            "8-K12B/A"
+          ],
+          "inventory_source_reference_id": "sha256:9fc7f567ee31f33b929df0694303cc3e5522c88e7afb25640fe347d2250c80d6",
+          "ordered_source_reference_ids": [
+            "sha256:43715b1686a64ed0aa9f2460c2f4589dfa5220bea8801f294e3c877517509864",
+            "sha256:931674ae43df9534ddd3e18cacc4b0b4b3ac94136aee7c15a8a3439d354da1e1",
+            "sha256:3231486ee217ac50c7d74ce5e9a914d77fcd89037272035cddea0dcbe871577c",
+            "sha256:817283cf6aa854cbe6330a4ac6d76d74f1aaaf31631f87187fcd55370376d527",
+            "sha256:3b8a6759f7005333985c975a64ae67976aaf101b66f8ebb192eb265f2b0fb2cd",
+            "sha256:13607c6e771526cc1ae0d9b45422f4174289a5df7c98be7e5b855e3dce5c0966",
+            "sha256:9986aa82428572acf8a010d0149c2434c5aed2c440d3b0e620478a0c06f93b53",
+            "sha256:f4eca4a2fc391b0e7ce96e1344ad1252a03f77832c6e16389c7618701aeb028f",
+            "sha256:2dd0d50ae83cc765e443a69e56079920ba0ac3c2fb1039f1ce43f01125dd39ac",
+            "sha256:9f196516f1f84a668123dd0181f997f506536c092c51c806d65604acf08718c3",
+            "sha256:9b8d60f74c816f1183c6836f548a2cf2714285eb291f828c1eed950f000762e3",
+            "sha256:f5ef0fbe2e8f07acb5c4aeda16725602773c9b2ed16337a4aa2ebb261a339304",
+            "sha256:65f8d3e27f28a6a1d713f468c752db929625135759b368b1d225abef4fc138b2",
+            "sha256:48c26c5c7666c54b1e42ed407efc00ddf05267087c7ba382a42d3591f81ca7fa",
+            "sha256:46a56c9a0b0ecca97c7bb4de649609aae72bb183214e424c4ae3c1049db006de",
+            "sha256:ed4b3c2bc6a62f06dfed9b43a9b22d2bea5a9718874791e15202281238d1a886",
+            "sha256:fd7ce47a2d484d0eb37d0007b85856795c066fb7e180b4fd65fac4baf3d9bb0e",
+            "sha256:ace3763405270b2522863b6d98f87e43b452c2959e8fb741421fd5abf421a386",
+            "sha256:da42332e3f9966483da827233ecdb1e75921cb295db753bc512c2ed030dc1ad0",
+            "sha256:9f64a74d50094675ec976c3d6b210abbeb69ea1035cfd5a284550c7d6280252b",
+            "sha256:d013d47536a063c9fb63bee3f94332e67bc21fc7b99e9e45395591f7cad97bbe",
+            "sha256:b4e2f8bc0bf4a81ee1f775ee03b5db4f5dc31847b0db8103d0941636de3b13e1",
+            "sha256:f376856247cf287a61306275a7bc6c3a3c848547428eb107787f4dfc9f5d152e",
+            "sha256:cfe1fc7cd2860566c314e44b4f690bb9af6faf30db99999bc3e9c2956056809c",
+            "sha256:cbbc99828795ac7999fe7585508f5b0d654dabd58b4d5c724f2ef70bc1327b63",
+            "sha256:ebd617b680ace3bde451c9e961555355543606b0f60c51e1a842fa7675987f49",
+            "sha256:118613c19a1673c17d4097b85e9002b8fcdb1fa9bae0ec4e3a83b9b0dcefb58a",
+            "sha256:353f74f45d2f6424839d813d1b7d57dc2c509b0d3aa436a03fe6e0a4cc2897c9",
+            "sha256:78cabea98c8920cbe63b1a6ff5a36d618ed0147dcd8e8cb8a32928fdf54625ff",
+            "sha256:c6a4d1f8a791e523c5feb06689b96eb62fda49e6741c44ffbf34e7b68055e43b",
+            "sha256:d0a400d50f845c5d4570aa0a725d2ae263733a5113d7a68b2d301984cc92aaff",
+            "sha256:d6704920058850d0fa49a857837444a18fbe59943c152b5ab4388604f0e1fcb8",
+            "sha256:7143889a0751bb3d2a4122612016121d86e30eee3f96c51e68fe9f2ce684a8b8",
+            "sha256:a83cd018f473976c5277cc91aa3ba002b742fa4c74101601a082aece1339c835",
+            "sha256:00f04d652ed9623d00e7669b80c2c11339e1048357d4fa3459f7b31bc80ef249",
+            "sha256:42809afae4ebb9aac6f5174e917ac80312c920fea50dc09f89ecd41f28f7a016",
+            "sha256:474440048319343e21a338ad8d739356c742c3b06b8ca29d79e2b170fce1b958",
+            "sha256:a535cfcfb5c842a3eb4432bf3d85569fe9963f4e1afac76d92b7d6208ce42c92",
+            "sha256:72338b06828eed6ad11ee076ace9335d6ef1c63a1f783868f382d05b5cbdc2ad",
+            "sha256:be4a62d2681d20eb6e6d9db2c9092c7ab647856c9cbad0100c19802beee9f62b",
+            "sha256:d6425cb94819dcfd874a638fc695067a5aebc79e482286b0760b0fc3e9f09601",
+            "sha256:e229eacc93198daaf8ad03692dfe1550c548b202445aa7fe3e94317d1f62426e",
+            "sha256:10b719858994d7f65aecccaf68c6145a9c6113efe2feaf3f26bdbe6c447bf21b",
+            "sha256:fcb812bf18bc04b910c999bf2ee5f6d272207d764c7f00e19e76729caf28c923",
+            "sha256:3d8fca212b7585e4c064b61e2bcacd3ead1df2d56c3cc599381c8cba0024f76b",
+            "sha256:806120d1927e9afe01a7f4588ee4f3cc4f7f983ce5cc47f34a4fb63d64ba4584",
+            "sha256:4a357beea38a69cd3cc2078c3ea2108363c47d4f80a090fd6c1959cdcf4d9809",
+            "sha256:8db367bac01245146bc053d2be63907b67c6e8b84a9d238ec7ecd0f7d25a298e",
+            "sha256:cd87192e2ad36b7544393636cb8df3fd7a3bae1fab0b37ffed46c62159faabf1",
+            "sha256:a3910cf019c92f7502f5cb08d28d637eade2536a70356344d24fa432a5bfbd55",
+            "sha256:3b58a02d4f23e1c37b847ffe00ac95fe549ce7ad1ce0d908c658be269a0d59e4",
+            "sha256:0eb19cbc2c926b636f65e95aa2d5298f171b7b8b28bd6bc9a1b241384b13b640",
+            "sha256:622d523abd5658588adeb802d205d272419ea81b4bba4493872c2035968aaac8",
+            "sha256:714fb0b077cfd2f2eed786c5d1f4ab2cee0a7c7fc5f5a16e2642a6aff8304898",
+            "sha256:6935663cfa76c954da73976f63b0082d73a3c46f86c0171c6fa0c9d299424fa0",
+            "sha256:882669643ba8e1a31f8fa7be40f036cf06a259d67af5ff761b9fffb982683ce6"
+          ],
+          "record_type": "SOURCE_SET_MANIFEST",
+          "schema_version": 1,
+          "sec_submissions_inventory_hash": "sha256:2e312b9a7c22fc6b22a4c68dc2b2924274426be1e672178d40428ff655fcae53",
+          "source_role": "fy_8k_item_inventory",
+          "source_set_manifest_id": "sha256:41e3e60afa3e30ea91604f680fb790cc38aa5e793626fd1f3c64e5525a08b6f3"
+        }
+      }
+    ],
+    "matched_item_4_01_claim_ids": [],
+    "names_differ": false,
+    "prior_filing_check": {
+      "accession": "0000037996-22-000013",
+      "canonical_names": [
+        "pricewaterhousecoopersllp"
+      ],
+      "facts": [
+        {
+          "accession": "0000037996-22-000013",
+          "canonical_name": "pricewaterhousecoopersllp",
+          "entity_identifier": "0000037996",
+          "locator": {
+            "context_ref": "i7e5fe2e4007e4b6ea4035f6fbf03dbe9_D20210101-20211231",
+            "ordinal": 57,
+            "qualified_name": "dei:AuditorName"
+          },
+          "name": "PricewaterhouseCoopers LLP",
+          "period_end": "2021-12-31",
+          "period_start": "2021-01-01",
+          "raw_asset_id": "sha256:7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+          "source_reference_id": "sha256:c8c87b309c47a1eacbb481254dc031ccad771785063dab9ad376cc7fc286e3d6"
+        },
+        {
+          "accession": "0000037996-22-000013",
+          "canonical_name": "pricewaterhousecoopersllp",
+          "entity_identifier": "0000037996",
+          "locator": {
+            "context_ref": "i7e5fe2e4007e4b6ea4035f6fbf03dbe9_D20210101-20211231",
+            "ordinal": 57,
+            "qualified_name": "dei:auditorname"
+          },
+          "name": "PricewaterhouseCoopers LLP",
+          "period_end": "2021-12-31",
+          "period_start": "2021-01-01",
+          "raw_asset_id": "sha256:c1435115f59c269162a8adcbb87c43c6bb3151add5cf3cea6f5638cad8b4321e",
+          "source_reference_id": "sha256:01811aae099199dc1b4fe8aeee5704caeb499f178482bc233c8b803f1e6a1e70"
+        }
+      ],
+      "form": "10-K",
+      "problems": [],
+      "source_references": [
+        {
+          "accession": "0000037996-22-000013",
+          "company_id": "ford_motor_company",
+          "document_name": "f-20211231.htm",
+          "raw_asset_id": "sha256:7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c",
+          "source_reference_id": "sha256:c8c87b309c47a1eacbb481254dc031ccad771785063dab9ad376cc7fc286e3d6",
+          "source_role": "target_primary",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231.htm"
+        },
+        {
+          "accession": "0000037996-22-000013",
+          "company_id": "ford_motor_company",
+          "document_name": "f-20211231_htm.xml",
+          "raw_asset_id": "sha256:c1435115f59c269162a8adcbb87c43c6bb3151add5cf3cea6f5638cad8b4321e",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:1cd8e2b04ea325f6232b78f0ccc9a983d7c47f70cb01cab53b50233e896dd402",
+          "source_reference_id": "sha256:01811aae099199dc1b4fe8aeee5704caeb499f178482bc233c8b803f1e6a1e70",
+          "source_role": "auditor_facts",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231_htm.xml"
+        }
+      ],
+      "status": "FOUND"
+    },
+    "prior_filing_checks": [
+      {
+        "accession": "0000037996-22-000013",
+        "canonical_names": [
+          "pricewaterhousecoopersllp"
+        ],
+        "facts": [
+          {
+            "accession": "0000037996-22-000013",
+            "canonical_name": "pricewaterhousecoopersllp",
+            "entity_identifier": "0000037996",
+            "locator": {
+              "context_ref": "i7e5fe2e4007e4b6ea4035f6fbf03dbe9_D20210101-20211231",
+              "ordinal": 57,
+              "qualified_name": "dei:AuditorName"
+            },
+            "name": "PricewaterhouseCoopers LLP",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "raw_asset_id": "sha256:7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+            "source_reference_id": "sha256:c8c87b309c47a1eacbb481254dc031ccad771785063dab9ad376cc7fc286e3d6"
+          },
+          {
+            "accession": "0000037996-22-000013",
+            "canonical_name": "pricewaterhousecoopersllp",
+            "entity_identifier": "0000037996",
+            "locator": {
+              "context_ref": "i7e5fe2e4007e4b6ea4035f6fbf03dbe9_D20210101-20211231",
+              "ordinal": 57,
+              "qualified_name": "dei:auditorname"
+            },
+            "name": "PricewaterhouseCoopers LLP",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "raw_asset_id": "sha256:c1435115f59c269162a8adcbb87c43c6bb3151add5cf3cea6f5638cad8b4321e",
+            "source_reference_id": "sha256:01811aae099199dc1b4fe8aeee5704caeb499f178482bc233c8b803f1e6a1e70"
+          }
+        ],
+        "form": "10-K",
+        "problems": [],
+        "source_references": [
+          {
+            "accession": "0000037996-22-000013",
+            "company_id": "ford_motor_company",
+            "document_name": "f-20211231.htm",
+            "raw_asset_id": "sha256:7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+            "record_type": "SOURCE_REFERENCE",
+            "request_attempt_id": "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c",
+            "source_reference_id": "sha256:c8c87b309c47a1eacbb481254dc031ccad771785063dab9ad376cc7fc286e3d6",
+            "source_role": "target_primary",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231.htm"
+          },
+          {
+            "accession": "0000037996-22-000013",
+            "company_id": "ford_motor_company",
+            "document_name": "f-20211231_htm.xml",
+            "raw_asset_id": "sha256:c1435115f59c269162a8adcbb87c43c6bb3151add5cf3cea6f5638cad8b4321e",
+            "record_type": "SOURCE_REFERENCE",
+            "request_attempt_id": "request:attempt:1cd8e2b04ea325f6232b78f0ccc9a983d7c47f70cb01cab53b50233e896dd402",
+            "source_reference_id": "sha256:01811aae099199dc1b4fe8aeee5704caeb499f178482bc233c8b803f1e6a1e70",
+            "source_role": "auditor_facts",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231_htm.xml"
+          }
+        ],
+        "status": "FOUND"
+      }
+    ],
+    "reason_code": "PASS",
+    "resolver": "auditor_change_registration_filings_v3",
+    "same_cik_prior_status": "SAME_CIK_PRIOR_DISCOVERED",
+    "selected_current_accession": "0000037996-23-000012",
+    "selection_id": "sha256:b95182770feb09b59a4c0194553818715275a13a8b243b499e233f4e2507795c",
+    "target": {
+      "company_id": "ford_motor_company",
+      "period_end": "2022-12-31",
+      "period_start": "2022-01-01",
+      "scope": {
+        "entity_scope": "registrant"
+      },
+      "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6"
+    }
+  },
+  "record_count": 187,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "reference_not_input": true
+}

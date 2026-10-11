@@ -8,6 +8,7 @@ from pathlib import Path
 from sec_urls import companyfacts_url, submissions_url
 from .canonical import content_hash
 from .historical_annual_input import prepare_historical_annual_input
+from .historical_filing_inventory import filing_inventory
 from .normal_governance_input import _Sources
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
@@ -20,6 +21,7 @@ SOURCE_PROCESSING_FILES = (
     'scripts/vnext/historical_annual_input.py',
     'scripts/vnext/historical_dei.py',
     'scripts/vnext/historical_fiscal_labels.py',
+    'scripts/vnext/historical_filing_inventory.py',
     'scripts/vnext/normal_period_selection.py',
     'scripts/vnext/normal_history_catalog.py',
     'scripts/vnext/normal_governance_input.py',
@@ -60,6 +62,9 @@ def prepare_selected_income_sources(*, repo_root, company_id, fiscal_year):
     reader = _Sources(source, company_id, original['entity'])
     inventory = reader.read(submissions_url(cik=int(original['entity'])),
         role='sec_submissions_inventory', media_type='application/json')
+    target_inventory = filing_inventory(reader=reader, inventory=inventory,
+        period_selection=selection, cik=original['entity'],
+        accession=original['filing']['accessionNumber'])
     facts = reader.read(companyfacts_url(cik=int(original['entity'])),
         accession=original['filing']['accessionNumber'], role='companyfacts',
         media_type='application/json')
@@ -73,10 +78,15 @@ def prepare_selected_income_sources(*, repo_root, company_id, fiscal_year):
     body = {'record_type': 'HISTORICAL_SELECTED_INCOME_SOURCE_INPUT',
         'prepared_annual_input': original, 'period_selection': selection,
         'source_sets': reader.file_sets, 'source_proofs': proofs}
-    return {'annual': annual, 'original_annual': original, 'selection': selection,
-        'preparation': {'input_binding': {**body, 'input_binding_id': content_hash(value=body)},
+    preparation = {'input_binding': {**body, 'input_binding_id': content_hash(value=body)},
             'records': list(reader.records.values()), 'inventory': inventory,
-            'facts': facts, 'primary': primary[0], 'xml': xml[0]},
+            'facts': facts, 'primary': primary[0], 'xml': xml[0]}
+    # Recent filings keep the original object and unchanged calculation input.
+    # Older filings use the verified loaded block that actually lists the row.
+    if target_inventory is not inventory:
+        preparation['filing_inventory_source'] = target_inventory
+    return {'annual': annual, 'original_annual': original, 'selection': selection,
+        'preparation': preparation,
         'source_proofs': proofs, 'admission': admission}
 
 
@@ -127,7 +137,8 @@ def prepare_historical_income_year_case(*, repo_root, company_id, metric_id, fis
             period=period, traits=repository_company_traits(repo_root=ROOT, company_id=company_id),
             validate_revenue_scope=True, revenue_scope_contract='reported-total-v2',
             allow_single_revenue_line=True, validate_depreciation_scope=True,
-            namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period)
+            namespace_policy=YEAR_OR_DATE_RELEASE, annual_period_reader=annual_period,
+            filing_inventory_source=preparation.get('filing_inventory_source'))
     except (IncomeSourceError, NormalZeroAiError) as error:
         result, trace = withheld_metric_result(compiled_spec=spec, target=target,
             reason_code='NORMAL_ZERO_AI_SOURCE_ROUTE_UNRESOLVED')

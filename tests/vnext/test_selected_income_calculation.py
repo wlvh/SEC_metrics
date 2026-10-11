@@ -99,3 +99,46 @@ class SelectedIncomeCoordinateTest(TestCase):
             altered=deepcopy(original);altered['source_reference']['accession']='wrong'
             with self.subTest(source=key),self.assertRaisesRegex(ValueError,'SOURCE_IDENTITY_CHANGED'):
                 self.invoke(**{key:altered})
+
+    def history_inventory(self):
+        from copy import deepcopy
+        from sec_urls import submissions_file_url
+        name = 'CIK0000012345-submissions-001.json'
+        self.annual['period_selection'] = {'reporting_cik': '12345',
+            'loaded_inventories': ['CIK0000012345.json', name]}
+        source = deepcopy(self.inventory)
+        source['source_reference']['source_url'] = submissions_file_url(file_name=name)
+        return source
+
+    def test_selected_history_inventory_checks_identity_before_reading_amounts(self):
+        from copy import deepcopy
+        source = self.history_inventory()
+        self.invoke(filing_inventory_source=source)
+        for field, value in (('company_id', 'other'), ('raw_asset_id', 'sha256:wrong'),
+                             ('source_url', 'https://data.sec.gov/submissions/unselected.json')):
+            altered = deepcopy(source)
+            altered['source_reference'][field] = value
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, 'SOURCE_IDENTITY_CHANGED:filing_inventory'):
+                self.invoke(filing_inventory_source=altered)
+        self.annual['period_selection']['reporting_cik'] = '54321'
+        with self.assertRaisesRegex(ValueError, 'FILING_INVENTORY_NOT_SELECTED'):
+            self.invoke(filing_inventory_source=source)
+
+    def test_exact_filing_manifest_uses_selected_history_block_or_original_default(self):
+        from vnext import selected_income_calculation as common
+        source = self.history_inventory()
+        spec = installed_ordinary_spec_documents()['B03']['compiled_spec']
+        for selected in (None, source):
+            with self.subTest(history=selected is not None), \
+                 patch.object(common, '_exact_filing_source_set', return_value={'constructed_manifest': True}) as manifest, \
+                 patch.object(common, 'companyfacts_structured_facts', return_value=[]), \
+                 patch.object(common, 'adapt_companyfacts', return_value=[]), \
+                 patch.object(common, 'calculate_metric', return_value=({'publication': 'WITHHELD',
+                     'value': None, 'reason_code': 'CONSTRUCTED_CONTROL'}, {}, [])):
+                common.calculate_selected_income(repo_root=Path('/constructed'), prepared=self.annual,
+                    inventory=self.inventory, primary_source=self.primary, facts_source=self.cf,
+                    metric_id='B03', spec=spec, dependency_specs={}, target=self.target,
+                    period=self.period, traits={}, filing_inventory_source=selected)
+            expected = self.inventory if selected is None else source
+            self.assertIs(expected['source_reference'], manifest.call_args.kwargs['inventory_reference'])
+            self.assertEqual(expected['raw_bytes'], manifest.call_args.kwargs['inventory_bytes'])

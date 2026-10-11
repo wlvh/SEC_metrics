@@ -12,7 +12,7 @@ from .deterministic_router import adapt_companyfacts
 from .zero_ai_r2 import _exact_filing_source_set
 from .xbrl_namespace_policy import YEAR_ONLY
 from .canonical import sha256_bytes
-from sec_urls import companyfacts_url, submissions_url, accession_document_url
+from sec_urls import companyfacts_url, submissions_url, submissions_file_url, accession_document_url
 
 
 def revenue_admission(*, primary, annual, approved_concepts, contract='components-v1',
@@ -43,7 +43,8 @@ def revenue_admission(*, primary, annual, approved_concepts, contract='component
 
 
 def selected_income_coordinate(*, prepared, target, period, primary_source,
-        facts_source, inventory, xml_source=None, selected_income_input=None):
+        facts_source, inventory, xml_source=None, selected_income_input=None,
+        filing_inventory_source=None):
     """Reject accidental mixed issuer/filing/date inputs before reading amounts.
 
     The annual label is a filing property, not the calendar year of its end.
@@ -84,13 +85,29 @@ def selected_income_coordinate(*, prepared, target, period, primary_source,
         _need(reference['company_id'] == company and reference['accession'] == accession
               and reference['raw_asset_id'] == 'sha256:'+sha256_bytes(content=xml_source['raw_bytes']),
               'NORMAL_ZERO_AI_SELECTED_INCOME_SOURCE_IDENTITY_CHANGED:xml', 'SOURCE_INTEGRITY_ERROR')
+    if filing_inventory_source is not None:
+        selection = prepared.get('period_selection', {})
+        loaded = selection.get('loaded_inventories', [])
+        _need(type(loaded) is list and loaded
+              and str(selection.get('reporting_cik', '')).isdigit()
+              and int(selection['reporting_cik']) == int(entity),
+              'NORMAL_ZERO_AI_SELECTED_INCOME_FILING_INVENTORY_NOT_SELECTED',
+              'SOURCE_INTEGRITY_ERROR')
+        reference = filing_inventory_source['source_reference']
+        allowed = {submissions_url(cik=int(entity)),
+                   *(submissions_file_url(file_name=name) for name in loaded[1:])}
+        _need(reference['company_id'] == company and reference['source_url'] in allowed
+              and reference['raw_asset_id'] == 'sha256:'+sha256_bytes(
+                  content=filing_inventory_source['raw_bytes']),
+              'NORMAL_ZERO_AI_SELECTED_INCOME_SOURCE_IDENTITY_CHANGED:filing_inventory',
+              'SOURCE_INTEGRITY_ERROR')
 
 def calculate_selected_income(*, repo_root, prepared, inventory, primary_source,
         facts_source, metric_id, spec, dependency_specs, target, period, traits,
         validate_depreciation_scope=False, validate_revenue_scope=False,
         revenue_scope_contract='components-v1', allow_single_revenue_line=False,
         xml_source=None, namespace_policy=YEAR_ONLY, annual_period_reader=None,
-        selected_income_input=None):
+        selected_income_input=None, filing_inventory_source=None):
     """Internal computation seam; no caller-supplied monetary operands."""
     from .normal_zero_ai_results import _need
     _need(metric_id in {'B01','B03'}, 'NORMAL_ZERO_AI_SELECTED_INCOME_METRIC_INVALID')
@@ -103,12 +120,14 @@ def calculate_selected_income(*, repo_root, prepared, inventory, primary_source,
           'NORMAL_ZERO_AI_SINGLE_REVENUE_OPTION_INVALID')
     selected_income_coordinate(prepared=prepared, target=target, period=period,
         primary_source=primary_source, facts_source=facts_source, inventory=inventory,
-        xml_source=xml_source, selected_income_input=selected_income_input)
+        xml_source=xml_source, selected_income_input=selected_income_input,
+        filing_inventory_source=filing_inventory_source)
     dependency_records = []
     revenue_scope = depreciation_scope = None
+    exact_inventory = inventory if filing_inventory_source is None else filing_inventory_source
     manifest = _exact_filing_source_set(company_id=prepared['company_id'], source_role='companyfacts',
-        reference=facts_source['source_reference'], inventory_reference=inventory['source_reference'],
-        inventory_bytes=inventory['raw_bytes'])
+        reference=facts_source['source_reference'], inventory_reference=exact_inventory['source_reference'],
+        inventory_bytes=exact_inventory['raw_bytes'])
     source_sets = [manifest]
     approved = sorted(set(_structured_concepts(compiled_spec=spec)) | {
         concept for dependency in dependency_specs.values()

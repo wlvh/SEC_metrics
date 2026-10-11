@@ -21,6 +21,8 @@ class HistoricalB03SourcesTest(TestCase):
         self.originals = [self.primary, self.xml]
         self.filings = []
         self.reads = []
+        self.target_inventory = None
+        self.inventory_lookups = []
 
         def read(url, **kwargs):
             self.reads.append((url, kwargs))
@@ -34,10 +36,19 @@ class HistoricalB03SourcesTest(TestCase):
             proofs={'source': {'proof': {'constructed_original_proof': True}}},
             records={}, file_sets=[{'constructed_complete_original_set': True}])
 
+    def lookup_inventory(self, **kwargs):
+        self.inventory_lookups.append(kwargs)
+        if self.target_inventory is not None:
+            self.reader.proofs['history'] = {'proof': {'constructed_history_proof': True}}
+            self.reader.records['history'] = {'record_type': 'SOURCE_REFERENCE', 'constructed_history': True}
+            return self.target_inventory
+        return kwargs['inventory']
+
     def prepare(self):
         with patch.object(cases, 'resolve_period_selection', return_value={'selected': 'constructed'}) as select, \
              patch.object(cases, 'prepare_historical_annual_input', return_value=self.annual) as annual, \
              patch.object(cases, '_Sources', return_value=self.reader), \
+             patch.object(cases, 'filing_inventory', side_effect=self.lookup_inventory), \
              patch.object(cases, 'verify_ordinary_source_proofs', return_value={'checked': True}) as admit:
             value = cases.prepare_selected_income_sources(repo_root=Path('/saved'),
                 company_id='constructed', fiscal_year=2024)
@@ -54,6 +65,22 @@ class HistoricalB03SourcesTest(TestCase):
         self.assertEqual(2, len(result['source_proofs']))
         admit.assert_called_once_with(data_root=Path('/saved').resolve(), proofs=result['source_proofs'])
         self.assertNotIn('results', result)
+        self.assertNotIn('filing_inventory_source', result['preparation'])
+
+    def test_older_filing_uses_loaded_history_inventory_and_keeps_main_identity(self):
+        self.target_inventory = {'source': 'constructed-history-block'}
+        result, *_ = self.prepare()
+        self.assertIs(self.target_inventory, result['preparation']['filing_inventory_source'])
+        self.assertEqual('https://data.sec.gov/submissions/CIK0000012345.json',
+                         result['preparation']['inventory']['constructed_url'])
+        lookup = self.inventory_lookups[0]
+        self.assertEqual('old-selected', lookup['accession'])
+        self.assertEqual('12345', lookup['cik'])
+        self.assertEqual({'selected': 'constructed'}, lookup['period_selection'])
+        self.assertIs(self.reader, lookup['reader'])
+        self.assertIn({'constructed_history_proof': True}, result['source_proofs'])
+        self.assertIn({'record_type': 'SOURCE_REFERENCE', 'constructed_history': True},
+                      result['preparation']['records'])
 
     def test_literal_and_resolved_labels_are_distinct_but_dates_must_match(self):
         self.annual['original_input'] = deepcopy(self.annual)
@@ -103,5 +130,6 @@ class HistoricalB03ConsumerGuardTest(TestCase):
                      'scripts/vnext/ordinary_b03_input_scope.py',
                      'scripts/vnext/b03_contract_amortization_scope.py',
                      'scripts/vnext/ordinary_income_input.py',
+                     'scripts/vnext/historical_filing_inventory.py',
                      'scripts/sec_http.py'):
             self.assertIn(path,cases.PROCESSING_FILES)
