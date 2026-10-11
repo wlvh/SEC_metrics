@@ -1,0 +1,134 @@
+[
+  {
+    "year": 2021,
+    "result_id": "sha256:38bffb79be809cfe450e5c8945a7ab80b75534f3d653a4e601dbb997b5224702",
+    "reason": "HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-fresh-review-qn8zcrbk/state/updates/B02/periods/FY2021/results/8134e66cc88e47298fb1703383109018",
+    "scope_summaries": {
+      "current": {
+        "scope_id": "sha256:9e131b855038dd9d93b7ff00c33779008bd143c4efae66dcfb8cc9342a72f96e",
+        "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      },
+      "prior": {
+        "scope_id": "sha256:164e59d0ba8e2cbd51b2e2e60bc007d1e6dd788827093ce1e51ad1e461ac5d1a",
+        "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      }
+    },
+    "assessment": null,
+    "input_binding_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-fresh-review-qn8zcrbk/state/updates/B02/periods/FY2021/results/8134e66cc88e47298fb1703383109018/input-binding.json"
+  },
+  {
+    "year": 2022,
+    "result_id": "sha256:47d20f7c579bd54ab83344ccf0aaf163ea501d93e9cb5ecd9293dfa2d9fd4712",
+    "reason": "PASS",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-fresh-review-qn8zcrbk/state/updates/B02/periods/FY2022/results/c84127d34e904c008b3d6ee6682b2476",
+    "scope_summaries": {
+      "current": {
+        "scope_id": "sha256:52497fffd01be0b75c17b29e0aefdd300676c140595d2f39a0502b4902b207ce",
+        "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      },
+      "prior": {
+        "scope_id": "sha256:1a45b7a4dd7e8843ee6d00d32a1ac37caf41e293c3facc972ea08ca8e95b8046",
+        "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      }
+    },
+    "assessment": [
+      {
+        "current": {
+          "accession": "0000078003-23-000024",
+          "concept": "Revenues",
+          "period_end": "2022-12-31",
+          "period_start": "2022-01-01",
+          "unit": "USD",
+          "value": "100330000000"
+        },
+        "prior": {
+          "accession": "0000078003-22-000027",
+          "concept": "RevenueFromContractWithCustomerExcludingAssessedTax",
+          "period_end": "2021-12-31",
+          "period_start": "2021-01-01",
+          "unit": "USD",
+          "value": "81288000000"
+        },
+        "target_filing_reports_the_prior_year_under_the_current_concept": [
+          "81288000000"
+        ]
+      }
+    ],
+    "input_binding_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-fresh-review-qn8zcrbk/state/updates/B02/periods/FY2022/results/c84127d34e904c008b3d6ee6682b2476/input-binding.json"
+  },
+  {
+    "year": 2023,
+    "result_id": "sha256:5aa4a2b626f8fa6276d784642538943f9cf5222b4931ee24a7e56cb877f91780",
+    "reason": "PASS",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-fresh-review-qn8zcrbk/state/updates/B02/periods/FY2023/results/14b896a085df4ecaacad03c303a85039",
+    "scope_summaries": {
+      "current": {
+        "scope_id": "sha256:848ddb7f7b51cfc91ee6b7fe5cc6ef211697776d40998014259e34ccf41194ee",
+        "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      },
+      "prior": {
+        "scope_id": "sha256:8fadc7f5f9386d69970fd6993ff8036731d37840883afb3dac1e7549ed5b4754",
+        "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      }
+    },
+    "assessment": null,
+    "input_binding_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-fresh-review-qn8zcrbk/state/updates/B02/periods/FY2023/results/14b896a085df4ecaacad03c303a85039/input-binding.json"
+  },
+  {
+    "year": 2024,
+    "result_id": "sha256:26673f1f3b18cde9d6b8fe3897fc645e732e2499ffb821ac06aeb47253742fad",
+    "reason": "HISTORICAL_PAIRED_MEASURE_NOT_COMPARABLE",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-fresh-review-qn8zcrbk/state/updates/B02/periods/FY2024/results/37d3b3d5bd79403fb78faeccdf8439c7",
+    "scope_summaries": {
+      "current": {
+        "scope_id": "sha256:5c4c506696412e1e9d9f9d1a63d7aad6cc6fc23ccc13cb8a72275cfdf70d7c5e",
+        "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      },
+      "prior": {
+        "scope_id": "sha256:c0bf7f60eb801c50d1a49a707f1f77ba8035ec549fcb55a56904cea7e46c2055",
+        "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      }
+    },
+    "assessment": null,
+    "input_binding_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-fresh-review-qn8zcrbk/state/updates/B02/periods/FY2024/results/37d3b3d5bd79403fb78faeccdf8439c7/input-binding.json"
+  },
+  {
+    "year": 2025,
+    "result_id": "sha256:b1d89f891ff2675af4f478a103e46abdb2d09052f7111ab93751e33e93b59ac9",
+    "reason": "PASS",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-fresh-review-qn8zcrbk/state/updates/B02/periods/FY2025/results/89a6f446974840bfb47d9965cbda0a2a",
+    "scope_summaries": {
+      "current": {
+        "scope_id": "sha256:6a8ebd823b0b448f911d4086693a2302ec930e261f0dcfb768ff2352efbd2a62",
+        "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      },
+      "prior": {
+        "scope_id": "sha256:9a486308047b7b8478c8a10409b70e5f7a978ae4c8297189cff14fe8af7c2011",
+        "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+        "status": "REPORTED_CONSOLIDATED_TOTAL",
+        "complete_scope_proven": true
+      }
+    },
+    "assessment": null,
+    "input_binding_file": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/pfizer-paired-fresh-review-qn8zcrbk/state/updates/B02/periods/FY2025/results/89a6f446974840bfb47d9965cbda0a2a/input-binding.json"
+  }
+]

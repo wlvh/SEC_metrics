@@ -1,0 +1,43 @@
+{
+  "base": "f51d8c3d27f3169b9cdb3a246295830882240c1f",
+  "patch": "6731aff359746c76cedbe01cf4b7466d7b5a6204",
+  "actual_utc_start": "2026-10-10 16:26:24 UTC",
+  "actual_utc_end": "2026-10-10 16:48:44 UTC",
+  "tool_nodes_total": 35,
+  "tool_count_definition": "functions.exec outer and every nested tool each count as one; no collaboration tool calls",
+  "ordinary_messages_total_including_final": 3,
+  "questions": 0,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "status": "?? docs/evidence/issue28_registry_row_scope_20261010/independent-review/",
+  "review_file_checks": {
+    "scripts/vnext/ordinary_registry_scope.py": {
+      "sha256": "4657e2bcd3739a30516f9ae9e23831c7ee0217286e463c987c14c7713b8a7841",
+      "matches_tested_tree_and_patch": true
+    },
+    "scripts/vnext/ordinary_current_update.py": {
+      "sha256": "49d500b206d83c4c93cd5764eaa1d67796912bcf3a5d2f6306cd290961a71be6",
+      "matches_tested_tree_and_patch": true
+    },
+    "tests/vnext/test_registry_processing_scope.py": {
+      "sha256": "89099b5f4be62b73c2c0e0cee10484a71bd012de7532f908cbf5e8de1d9b9022",
+      "matches_tested_tree_and_patch": true
+    },
+    ".github/workflows/company-current-records.yml": {
+      "sha256": "e3e121fe631d78d04c69e226689c3e5cb8cc0ecae87e9a49a47c8d3d0794fd2f",
+      "matches_tested_tree_and_patch": true
+    }
+  },
+  "conclusion": "CHANGES_REQUIRED: one P2",
+  "independent_required_tests": {
+    "run": 42,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "supplemental_controls_passed": 12,
+  "confirmed_regression_controls": 1
+}

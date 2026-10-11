@@ -1,0 +1,24 @@
+test_common_share_unit_header_and_split_currency_use_spanned_year (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_common_share_unit_header_and_split_currency_use_spanned_year) ... ERROR
+
+======================================================================
+ERROR: test_common_share_unit_header_and_split_currency_use_spanned_year (tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_common_share_unit_header_and_split_currency_use_spanned_year)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 118, in test_common_share_unit_header_and_split_currency_use_spanned_year
+    scope=self.scope(source,annual,xml=source)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/tests/vnext/test_single_revenue_line.py", line 22, in scope
+    return reported_revenue_scope(primary=source,annual=annual,approved_concepts=APPROVED,
+                                  allow_single_revenue_line=True,**kwargs)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 68, in reported_revenue_scope
+    _need(not reason and column['year']==column_year,'FISCAL_COLUMN_UNRESOLVED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-single-revenue-line/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 18, in _need
+    if not condition:raise IncomeSourceError('SELECTED_REPORTED_REVENUE_'+reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REPORTED_REVENUE_FISCAL_COLUMN_UNRESOLVED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.182s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_single_revenue_line.SingleRevenueLineTest.test_common_share_unit_header_and_split_currency_use_spanned_year"]}

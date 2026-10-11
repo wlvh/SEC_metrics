@@ -7,6 +7,7 @@ semantic normalization API and cannot purchase a replacement execution.
 from copy import deepcopy
 from dataclasses import replace
 from pathlib import Path
+from sec_urls import submissions_url
 
 from .canonical import content_hash, sha256_file, strict_json_file, strict_json_loads
 from .capacity_utilization_source import need
@@ -17,13 +18,32 @@ _META = {'semantic_source_id','original_source_packet_id','inherited_complete_so
          'module_sha256','capacity_module_sha256'}
 
 
-def _annual_content(value):
+def _annual_content(value, *, ignore_companyfacts_attempt=False):
     value=deepcopy(value)
     value.pop('input_id',None);value.pop('source_proofs',None)
     if isinstance(value.get('original_input'),dict):
         value['original_input'].pop('input_id',None)
         value['original_input'].pop('source_proofs',None)
+    if ignore_companyfacts_attempt:
+        for annual in (value, value.get('original_input', {})):
+            if isinstance(annual,dict) and isinstance(annual.get('companyfacts_input'),dict):
+                annual['companyfacts_input'].pop('request_attempt_id',None)
     return value
+
+
+def _companyfacts_attempt_is_bound(source):
+    annual=source['prepared_annual_input']
+    for item in (annual,annual.get('original_input',{})):
+        if not isinstance(item,dict) or 'companyfacts_input' not in item:continue
+        facts=item['companyfacts_input']
+        if not isinstance(facts,dict):return False
+        matching=[p for p in source['source_proofs']
+            if all(p.get(pk)==facts.get(fk) and facts.get(fk) is not None
+                for pk,fk in (('source_url','source_url'),('accession','accession'),
+                    ('document_name','document_name'),('request_attempt_id','request_attempt_id'),
+                    ('request_repo_relative_path','source_repo_relative_path')))]
+        if len(matching)!=1:return False
+    return True
 
 
 def source_equivalence(*,current,original):
@@ -37,10 +57,23 @@ def source_equivalence(*,current,original):
          and 'HISTORICAL' not in current['record_type'], 'UPDATE_NATIVE_SOURCE_TYPE_CHANGED')
     need(all(current[k]==original[k] for k in current if k not in _META),
          'UPDATE_NATIVE_SUBSTANTIVE_SOURCE_CHANGED')
-    need(_annual_content(current['prepared_annual_input'])==_annual_content(original['prepared_annual_input']),
-         'UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED')
     def bodies(source):
-        return sorted((p['source_url'],p['accession'],p['document_name'],p['content_sha256']) for p in source['source_proofs'])
+        entity=source['prepared_annual_input'].get('entity')
+        discovery_url=(submissions_url(cik=int(entity))
+            if source['metric_id']=='D04' and str(entity).isdigit() else None)
+        return sorted((p['source_url'],p['accession'],p['document_name'],
+            None if p['source_url']==discovery_url and p['accession']==''
+                and p['document_name']==discovery_url.rsplit('/',1)[-1]
+            else p['content_sha256']) for p in source['source_proofs'])
+    # A same-body D04 capture already permits a fresh proof attempt. Its
+    # companyfacts descriptor repeats that provenance, not a selection rule.
+    # Keep the full descriptor and B13 default comparison otherwise unchanged.
+    ignore_attempt=(current['metric_id']=='D04' and bodies(current)==bodies(original)
+                    and _companyfacts_attempt_is_bound(current)
+                    and _companyfacts_attempt_is_bound(original))
+    need(_annual_content(current['prepared_annual_input'],ignore_companyfacts_attempt=ignore_attempt)
+         ==_annual_content(original['prepared_annual_input'],ignore_companyfacts_attempt=ignore_attempt),
+         'UPDATE_NATIVE_ANNUAL_SELECTION_CHANGED')
     need(bodies(current)==bodies(original),'UPDATE_NATIVE_SOURCE_BODY_SET_CHANGED')
     def requests(source):
         return [{k:v for k,v in r.items() if k not in {'source_id','request_id'}} for r in source_requests(source)]
@@ -50,6 +83,14 @@ def source_equivalence(*,current,original):
         'original_source_id':original['semantic_source_id'],'source_body_set_hash':content_hash(value=bodies(current)),
         'substantive_request_set_hash':content_hash(value=current_requests),
         'original_provider_bytes_rewritten':False,'new_provider_execution':False,'new_acquisition_credit':False}
+    if current['metric_id']=='D04':
+        previous={(p['source_url'],p['accession'],p['document_name']):p['content_sha256']
+                  for p in original['source_proofs']}
+        refreshed=[{'source_url':p['source_url'],'original_sha256':previous[
+            (p['source_url'],p['accession'],p['document_name'])],
+            'current_sha256':p['content_sha256']} for p in current['source_proofs']
+            if p['content_sha256']!=previous[(p['source_url'],p['accession'],p['document_name'])]]
+        if refreshed:body['discovery_only_body_changes']=refreshed
     return {**body,'equivalence_id':content_hash(value=body)}
 
 

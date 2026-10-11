@@ -1,0 +1,23 @@
+test_proven_d04_only_transition_keeps_success_and_withheld (tests.vnext.test_d04_processing_scope.D04ProcessingScopeTest.test_proven_d04_only_transition_keeps_success_and_withheld) ... FAIL
+
+======================================================================
+FAIL: test_proven_d04_only_transition_keeps_success_and_withheld (tests.vnext.test_d04_processing_scope.D04ProcessingScopeTest.test_proven_d04_only_transition_keeps_success_and_withheld)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-processing-scope/SEC_metrics/tests/vnext/test_d04_processing_scope.py", line 46, in test_proven_d04_only_transition_keeps_success_and_withheld
+    self.assertEqual(['NO_SOURCE_CONTENT_CHANGE', 'PREVIOUS_INPUT_WITHHELD'], [r['status'] for r in again])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['NO_SOURCE_CONTENT_CHANGE', 'PREVIOUS_INPUT_WITHHELD'] != ['INPUT_OR_EXECUTION_FAILED', 'INPUT_OR_EXECUTION_FAILED']
+
+First differing element 0:
+'NO_SOURCE_CONTENT_CHANGE'
+'INPUT_OR_EXECUTION_FAILED'
+
+- ['NO_SOURCE_CONTENT_CHANGE', 'PREVIOUS_INPUT_WITHHELD']
++ ['INPUT_OR_EXECUTION_FAILED', 'INPUT_OR_EXECUTION_FAILED']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.044s
+
+FAILED (failures=1)
+{"allowed_skips": 0, "errors": 0, "failures": 1, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_d04_processing_scope.D04ProcessingScopeTest.test_proven_d04_only_transition_keeps_success_and_withheld"]}
