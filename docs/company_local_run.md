@@ -148,6 +148,8 @@ python /path/to/SEC_metrics/tools/vnext_company.py run \
 
 来源保存在任务 `sources`，普通计算状态在 `company-state`，输出在指定输出目录；用户不手工准备 FULL_SOURCE 或选择内部程序树。独立采集用同版 `acquire --company ... --work-dir ... --call-context ... --metric B01 --metric B02 --max-sec-requests 20`；单独计算可用同版保存来源 `run --source-root <任务/sources>` 指向另一个普通状态目录。日常读取用 `results --state-root <任务/company-state> --company ...`，不重放计算。已有原生任务继续原固定入口，不覆盖旧原生状态。
 
+在线注册表兼容后继 `task/issue28-online-registry-scope` 允许来源根保留其他公司的合法旧注册行，只要求本次公司的完整注册行与程序一致；目标主体/期间规则变化及无效CSV仍在客户端和申领前拒绝。该候选不改元数据刷新计数、不重取不可变年报，不增加在线指标或调用许可，尚待接收。
+
 同一原账本已保存的不可变原件，不能因为换任务目录就再取一次。调用上下文可固定既有完整 SEC `source_root`，直接复用其原请求行/原件/身份，不能裁账本或拼不同历史；未给原来源位置但账本已有同URL成功记录时，新入口在申领前返回 `ALREADY_CAPTURED_SOURCE_REUSE_REQUIRED`。元数据刷新单独明确计数。该配置是持久运行配置，不是每年手填来源答案；既有来源根必须在代码和状态/输出根之外。
 
 录制上下文必须指定 `recorded_http_root`；该入口只从保存的HTTP原件读取回复，走原客户端的落盘/日志路径，不打开网络。LIVE上下文拒绝这个录制输入字段，使用正常HTTPS及原真实计数。录制模式不是一个可以免费访问SEC的通道；缺少回复不降级到真实网络。

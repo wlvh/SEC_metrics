@@ -56,10 +56,15 @@ class Capture:
                   'EXISTING_LEDGER_SOURCE_REQUIRED')
         self.source.mkdir(parents=True, exist_ok=True)
         registry = self.source/'config/company_registry.csv'
-        if registry.exists():
-            _need(registry.read_bytes() == (ROOT/'config/company_registry.csv').read_bytes(), 'REGISTRY_CHANGED')
-        else:
+        if not registry.exists():
             write_immutable_bytes(path=registry, content=(ROOT/'config/company_registry.csv').read_bytes())
+        from .ordinary_registry_scope import registered_company_row
+        # Existing source packages may contain other valid company rows from
+        # their capture version. This invocation's full company context must
+        # still match before any client construction or ledger claim.
+        _need(registered_company_row(repo_root=self.source,company_id=context['company_id'])
+              == registered_company_row(repo_root=ROOT,company_id=context['company_id']),
+              'REGISTRY_CHANGED')
         if ledger.live:
             _need('recorded_http_root' not in context,'RECORDED_INPUT_CANNOT_ENTER_LIVE')
             client_type,options=SecHttpClient,{}
