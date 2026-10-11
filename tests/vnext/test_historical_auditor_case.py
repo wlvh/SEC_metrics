@@ -56,3 +56,45 @@ class HistoricalAuditorCaseTest(TestCase):
                          'historical_fiscal_labels', 'normal_period_selection',
                          'normal_history_catalog'):
             self.assertIn('scripts/vnext/'+filename+'.py', cases.PROCESSING_FILES)
+        self.assertIn('scripts/sec_urls.py', cases.PROCESSING_FILES)
+
+
+class HistoricalAuditorProcessingIdentityTest(TestCase):
+    """Constructed withholding; it exercises the real updater configuration."""
+    from tests.vnext.test_selected_history_result_state import SelectedHistoryResultStateTest as _controls
+    setUp = _controls.setUp
+    factory = _controls.factory
+    save_control = _controls.save_control
+    period_root = _controls.period_root
+
+    def test_url_selection_change_reprocesses_once_and_keeps_old_withheld_result(self):
+        from tests.vnext import test_selected_history_result_state as state
+        update = state.update
+        original_hash = update.sha256_file
+        url_path = state.ROOT / 'scripts/sec_urls.py'
+        self.outcomes[2022, 'C04'] = 'WITHHELD'
+
+        def invoke():
+            with patch.object(update, 'save_calculated_case', side_effect=self.save_control):
+                return update.run_once(state_root=self.root / 'C04', source_root=state.ROOT,
+                    company_id='marriott_international', metric_id='C04', fiscal_year=2022,
+                    case_factory=self.factory, processing_files=cases.PROCESSING_FILES)
+
+        with patch.object(update, '_configuration', side_effect=self.actual_configuration):
+            first = invoke()
+            old_result = self.period_root(2022, 'C04') / 'results' / first['version']
+            old_files = {p: p.read_bytes() for p in old_result.rglob('*') if p.is_file()}
+            self.forbid_factory = True
+            self.assertEqual('PREVIOUS_INPUT_WITHHELD', invoke()['status'])
+            self.forbid_factory = False
+            with patch.object(update, 'sha256_file', side_effect=lambda *, path:
+                    'constructed-url-selection-change' if path == url_path else original_hash(path=path)):
+                changed = invoke()
+                self.assertNotEqual(first['version'], changed['version'])
+                self.assertEqual('CANDIDATE_WITHHELD', changed['status'])
+                self.forbid_factory = True
+                repeated = invoke()
+                self.assertEqual('PREVIOUS_INPUT_WITHHELD', repeated['status'])
+                self.assertEqual(changed['version'], repeated['version'])
+            self.assertTrue(all(p.read_bytes() == raw for p, raw in old_files.items()))
+            self.assertEqual([(2022, 'C04'), (2022, 'C04')], self.factory_calls)
