@@ -7,3 +7,13 @@ The existing shared `annual_amendment_scope_v2` with `note_layout=inline-paragra
 Public #28 owns the shared classifier/policy and will assess the necessary source-bound further proof for this same original financial input. Historical code does not add permission classes, suppress review, drop an amendment or copy a second classifier. Any eventual admission must retain financial corrections/unknown extra scope, wrong subject/period and non-governance fact refusal; it cannot by itself resolve revenue scope, prior comparability or the separate successor August7/August8 conflict. The original classifier result and source bytes remain.
 
 `inspect_saved.py` reuses the saved source selection and public checker, and prints a bounded diagnosis. Existing source root is reused; no GET/provider/paid calls, no Calculator/Run/acceptance/adoption/active. This diagnostic is separate from PR165's completed Lumen scope, and does not expand that reviewed candidate.
+
+Portable reproduction with caller-selected saved sources and a new output directory:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools:. python3 \
+ docs/evidence/issue47_paramount_amendment_dependency_20261011/inspect_saved.py \
+ --source-root /your/saved/source-inputs --output-dir /your/new/amendment-diagnostic
+```
+
+The recorded10.130s is the original same-source inspection above. The subsequent driver parameterization changes only caller paths, not its selection/checker calls, and is syntax-checked; it does not cause a duplicate original inspection.
