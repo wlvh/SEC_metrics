@@ -48,6 +48,10 @@ PROCESSING_FILES = (
     'scripts/vnext/batch_workflow.py',
     'scripts/vnext/zero_ai_r2.py',
     'scripts/vnext/paired_measure_v1.py',
+    'scripts/vnext/annual_amendment_scope.py',
+    'scripts/vnext/annual_amendment_scope_v2.py',
+    'scripts/vnext/amendment_note_layout.py',
+    'config/annual_amendment_scope_v1.json',
     'config/normal_period_selection_v1.json',
     'config/normal_fiscal_year_labels_v1.json',
     'catalog/deterministic_metrics.json',
@@ -72,6 +76,9 @@ INCOME_PROCESSING_FILES = (*PROCESSING_FILES,
 )
 
 
+PAIRED_REVENUE_PROCESSING_FILES = (*INCOME_PROCESSING_FILES,
+    'scripts/vnext/historical_paired_revenue.py')
+
 
 class StatementCaseError(ValueError):
     def __init__(self, reason, category='SOURCE_INTEGRITY_ERROR', *, revenue_scope=None):
@@ -86,54 +93,11 @@ def _need(condition, reason, category='SOURCE_INTEGRITY_ERROR'):
 
 
 def _revenue_claims_admitted_by_original(*, reader, prepared, filing, period, claims, concepts):
-    """Use the shared source-total filter, retaining original claim identities."""
-    from .selected_revenue_scope_v1 import selected_revenue_scope, admit_revenue_facts
-    from .selected_reported_revenue_v2 import reported_revenue_scope, admit_reported_revenue_facts
-    from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE
-    from .historical_fiscal_labels import resolve_selected_fiscal_year_label
-    from .canonical import sha256_bytes
-    originals = reader.auditor_filing(filing)
-    primary = next((s for s in originals if s['raw_blob']['media_type'] == 'text/html'), None)
-    xml = next((s for s in originals if s['raw_blob']['media_type'] == 'application/xml'), None)
-    _need(primary is not None, 'HISTORICAL_PAIRED_REVENUE_PRIMARY_REQUIRED', 'SOURCE_UNAVAILABLE')
-    facts = reader.read(companyfacts_url(cik=int(prepared['entity'])),
-        accession=filing['accessionNumber'], role='companyfacts', media_type='application/json')
-    label = resolve_selected_fiscal_year_label(primary_bytes=primary['raw_bytes'],
-        companyfacts_bytes=facts['raw_bytes'],
-        expected_primary_sha256=sha256_bytes(content=primary['raw_bytes']),
-        expected_companyfacts_sha256=sha256_bytes(content=facts['raw_bytes']),
-        expected_cik=prepared['entity'], filing=filing)
-    source_period = annual_period(raw=primary['raw_bytes'], cik=prepared['entity'], filing=filing)
-    _need(all(source_period[key] == period[key] for key in ('period_start', 'period_end')),
-          'HISTORICAL_PAIRED_REVENUE_ORIGINAL_PERIOD_CHANGED')
-    annual = {'company_id': prepared['company_id'], 'entity': prepared['entity'],
-        'filing': filing, 'table_input': {'target_period': source_period}}
-    qualified = ['us-gaap:' + c.split(':')[-1] for c in concepts]
-    scope = reported_revenue_scope(primary=primary, xml=xml, annual=annual,
-        approved_concepts=qualified, namespace_policy=YEAR_OR_DATE_RELEASE,
-        annual_period_reader=annual_period, fiscal_label_resolution=label,
+    """Retained adapter seam; B02's own scope implementation is independent."""
+    from .historical_paired_revenue import revenue_claims_admitted_by_original
+    return revenue_claims_admitted_by_original(reader=reader, prepared=prepared,
+        filing=filing, period=period, claims=claims, concepts=concepts,
         allow_single_revenue_line=PAIRED_SINGLE_REVENUE_LINE_ENABLED)
-    admit = admit_reported_revenue_facts
-    if not scope['complete_scope_proven']:
-        scope = selected_revenue_scope(primary=primary, xml=xml, annual=annual,
-            approved_concepts=qualified, namespace_policy=YEAR_OR_DATE_RELEASE,
-            annual_period_reader=annual_period)
-        admit = admit_revenue_facts
-    if not scope['complete_scope_proven']:
-        raise StatementCaseError('HISTORICAL_PAIRED_REVENUE_COMPLETE_SCOPE_UNPROVEN',
-            'IMPLEMENTATION_GAP', revenue_scope=scope)
-    views = []
-    for claim in claims:
-        _need(claim['claim_kind'] == 'COMPANYFACTS_NUMERIC_FACT'
-              and ':' not in claim['locator']['concept'],
-              'HISTORICAL_PAIRED_REVENUE_CLAIM_KIND_CHANGED')
-        views.append({**claim['locator'], **claim['attributes'],
-            'concept': 'us-gaap:' + claim['locator']['concept'],
-            'value': claim['value'], 'unit': claim['unit'],
-            'verified_claim_id': claim['verified_claim_id']})
-    allowed = {v['verified_claim_id'] for v in admit(facts=views, scope=scope)}
-    return [claim for claim in claims if claim['verified_claim_id'] in allowed], scope
-
 
 def _registry_for_selected_period(*, registry, prepared, selection):
     """Reuse the retained history rule for a predecessor's own annual period."""
@@ -238,6 +202,31 @@ def _metadata_outcome_case(*, source, company_id, metric_id, prepared, selection
         'rules_root': str(ROOT)}
 
 
+def _statement_amendment_checks(reader, prepared):
+    """Consume the shared original-statement proof for this selected filing."""
+    if not prepared['amendments']:
+        return []
+    from .annual_amendment_scope_v2 import inspect_annual_amendment_scope
+    original_source = reader.primary(prepared['filing'])
+    original = {'raw':original_source['raw_bytes'], 'blob':original_source['raw_blob'],
+        'reference':original_source['source_reference'], 'filing':prepared['filing']}
+    checks = []
+    for filing in prepared['amendments']:
+        amended = reader.primary(filing)
+        checked = inspect_annual_amendment_scope(original=original,
+            amendment={'raw':amended['raw_bytes'], 'blob':amended['raw_blob'],
+                'reference':amended['source_reference'], 'filing':filing},
+            company_id=prepared['company_id'], cik=prepared['entity'],
+            note_layout='inline-paragraphs-v2')
+        _need(checked['fiscal_window_unchanged'] and not checked['issues']
+              and 'ORIGINAL_STATEMENT_VALUES' in checked['unchanged_input_classes']
+              and checked['original_statement_admission_requires_further_review'] is False,
+              'HISTORICAL_STATEMENT_AMENDMENT_ORIGINAL_VALUES_NOT_PROVEN',
+              'AMENDMENT_INPUT_NOT_CLEARED')
+        checks.append(checked)
+    return checks
+
+
 def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fiscal_year,
                                        withhold_known_source_errors=False, period_selection=None):
     """Shared selected-filing case; catalog and Calculator retain computation."""
@@ -256,8 +245,11 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
     if prepared['subject_policy']['mode'] == 'SUCCESSOR_REGISTRANT_ONLY' and metric_id != 'B01':
         return _successor_comparability_case(source=source, company_id=company_id,
             metric_id=metric_id, prepared=prepared, selection=selection)
-    _need(not prepared['amendments'] and prepared['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY',
+    _need(prepared['subject_policy']['mode'] == 'CONTINUOUS_PRIMARY'
+          and (not prepared['amendments'] or metric_id in METRICS),
           'HISTORICAL_STATEMENT_AMENDMENT_OR_SUCCESSOR_NOT_RECEIVED', 'IMPLEMENTATION_GAP')
+    reader = _Sources(source, company_id, prepared['entity']) if prepared['amendments'] else None
+    amendment_checks = _statement_amendment_checks(reader, prepared)
     period = prepared['table_input']['target_period']
     documents = installed_ordinary_spec_documents()
     spec = documents[metric_id]['compiled_spec']
@@ -282,7 +274,8 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
                 'applicability_rule':spec['compiled']['applicability'], 'traits':traits,
                 'statement_values_used':False, 'source_extraction_failure':False},
             record_type='HISTORICAL_STRUCTURAL_APPLICABILITY_INPUT', assessment_name='structural_applicability')
-    reader = _Sources(source, company_id, prepared['entity'])
+    if reader is None:
+        reader = _Sources(source, company_id, prepared['entity'])
     main = reader.read(submissions_url(cik=int(prepared['entity'])),
                        role='sec_submissions_inventory', media_type='application/json')
     reader.primary(prepared['filing'])
@@ -458,6 +451,11 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
                 observations = [graph['observation']] if graph['observation'] else []
                 selected_claims = graph['claims']
                 assessment = {'paired_measure_bridge': bridged} if bridged else None
+    if amendment_checks:
+        assessment = {**(assessment or {}), 'statement_amendment_checks': [
+            {key:check[key] for key in ('scope_id','classification','fiscal_window_unchanged',
+                'unchanged_input_classes','issues','policy_hash')}
+            for check in amendment_checks]}
     if paired_revenue_scopes:
         assessment = {**(assessment or {}), 'paired_revenue_scopes': paired_revenue_scopes}
     if period_continuity is not None:
@@ -472,7 +470,8 @@ def _prepare_historical_statement_case(*, repo_root, company_id, metric_id, fisc
         'actual_periods': periods, 'source_sets': [s['manifest'] for s in sources],
         'claims_by_accession_role': by_role,
         'spec_closure_hash': spec['spec_closure_hash'], 'source_proofs': proofs,
-        'assessment': assessment}
+        'assessment': assessment,
+        **({'statement_amendment_checks':amendment_checks} if amendment_checks else {})}
     display_assessment = assessment
     if assessment and 'selected_revenue_scope' in assessment:
         revenue_scope = assessment['selected_revenue_scope']

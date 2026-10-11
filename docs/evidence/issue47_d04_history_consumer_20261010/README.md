@@ -104,3 +104,7 @@ The first verification harness mistakenly included mutable latest-check.json in 
 This is a branch-only company delivery of explicit saved-response/media limitations, not completed full D04 semantics or five-year acceptance. Four original filings still have14 unacquired/uninterpreted image pixels; the earlier8800 supplied-block/original16-answer reading is reused, not restarted. Other historical metric/model gaps and online discovery/supplement remain. New real provider/paid/SEC0/0/0; no NativeRun, acceptance, Ready/merge/adoption/deploy/active switch.
 
 Final independent read after the corrective forbidden-repeat check takes.504s, returns both saved year-specific holds plus the FY2026 missing-source failure as SAVED_CHECK_NOT_REQUESTED_WITHOUT_RESULT, and leaves all41 state files unchanged. The failure remains visible after a later subset execution, rather than disappearing with the latest request list. Actual stored document source-unit counts16/18 are confirmed. Capability-contract structure check passes; it is structural evidence only.
+
+## Current main reception
+
+The original PR147 candidate now normally receives main `c2f48e1b` including PR128. [The incremental record](main-c2f-receiving/README.md) preserves C03, B01/B02 range dependencies and D04 package dependencies; it contains the stale bare-factory test failure, repaired 120-test result and unchanged original-task independent reading. Original filing processing and original response records above remain attached to their execution versions, with full-media limitations unchanged.

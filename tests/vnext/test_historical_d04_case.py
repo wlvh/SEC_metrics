@@ -37,16 +37,34 @@ class HistoricalD04CaseTest(TestCase):
         select.assert_not_called()
 
     def test_same_company_dispatch_keeps_other_families_and_exposes_package_dependency(self):
-        from vnext.historical_statement_cases import prepare_historical_statement_year_case
+        from vnext import historical_statement_cases as statements
+        from vnext.company_fiscal_range import PROCESSING_FILES as range_files
         from vnext.historical_event_cases import prepare_historical_event_year_case
-        with patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
+        selection = {'constructed_control': True, 'report_end': '2023-12-31'}
+        plan = {'tasks': [{'fiscal_year': 2023, 'status': 'FISCAL_YEAR_RESOLVED',
+                           'period_selection': selection}]}
+        with patch.object(statements, 'prepare_historical_statement_year_case',
+                          return_value={'constructed_case': True}) as producer, \
+             patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
             company_local.run_local(company_id='marriott_international', source_root=Path('/saved/source'),
                 work_dir=Path('/new/state'), output_dir=Path('/new/out'), period='fiscal-years',
                 fiscal_year_start=2023, fiscal_year_end=2024, metric_ids=['D04','B01','C01'],
                 saved_call_package=Path('/saved/package'))
         args = shared.call_args.kwargs
         self.assertEqual([2023,2024], args['fiscal_years'])
-        self.assertIs(prepare_historical_statement_year_case, args['case_factories']['B01'])
+        self.assertEqual(tuple(dict.fromkeys((*statements.INCOME_PROCESSING_FILES, *range_files))),
+                         args['processing_files_by_metric']['B01'])
+        with patch('vnext.company_fiscal_range.discover_fiscal_range', return_value=plan) as discover, \
+             patch('vnext.company_fiscal_range.sha256_file', return_value='constructed-source-version'):
+            self.assertEqual({'constructed_case': True}, args['case_factories']['B01'](
+                repo_root=Path('/saved/source'), company_id='marriott_international',
+                metric_id='B01', fiscal_year=2023))
+        producer.assert_called_once_with(repo_root=Path('/saved/source').resolve(),
+            company_id='marriott_international', metric_id='B01', fiscal_year=2023,
+            period_selection=selection)
+        discover.assert_called_once_with(repo_root=Path('/saved/source').resolve(),
+            company_id='marriott_international', fiscal_year_start=2023,
+            fiscal_year_end=2024, metric_ids=['B01'])
         self.assertIs(prepare_historical_event_year_case, args['case_factories']['C01'])
         self.assertEqual(cases.PROCESSING_FILES, args['processing_files_by_metric']['D04'])
         self.assertEqual({'D04':(Path('/saved/package'),)}, args['processing_inputs_by_metric'])
