@@ -63,6 +63,9 @@ def _configuration(source, company, metric):
     if metric == 'B06':
         from .current_b06_case import PROCESSING_FILES
         paths.update(PROCESSING_FILES)
+    if metric == 'C04':
+        from .current_auditor_case import PROCESSING_FILES
+        paths.update(PROCESSING_FILES)
     if metric == 'C02':
         # Only C02's existing selector now imports this pure name helper.
         # Explicit proxy C03 producers declare their own source dependencies.
