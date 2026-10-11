@@ -1,0 +1,11 @@
+# Historical result-reader consumption of PR166's exact defect entries
+
+Public owner #28 maintains the defect registry and current income repair in PR166 fixed011e8266. Historical side reads its four exact old Lumen B01 identities (FY2021/2023/2024/2025) through the existing `results --defects-file` append interface on received mainc6f. The already main FY2022/dac005 hold remains in the default registry. This is an isolated additional register file for reader verification, not a ledger reset, second viewer or modification of the shared registry.
+
+Actual old task read.802s: all five incorrect historical B01 results are empty-valued `WITHHELD_KNOWN_DEFECT`/`CONFIRMED_INVALID`; all358 original statefiles remain unchanged. All25 original rows remain readable (20financial plus5D01). The first observation incorrectly asserted20 total rows; the original assertion log is preserved, and inspecting the actual CSV showed the extra5D01 results. The corrected check does not drop those rows or weaken the five exact holds.
+
+Actual corrected five-year task read.810s: all10 B01/B02 rows remain correct/readable, all250statefiles unchanged. The five new correct B01 result IDs do not match the old exact defects, so no coordinate-wide hold or old credit release is applied. Selection/statement preparation/both Calculator functions/network are forbidden for both read processes. No financial/source processing or old data edit occurs.
+
+`historical-extra-defects.json` contains exactly the four entries selected unchanged from011e8266. The code was mainc6 plus the existing doc-only guide candidate; PR166's new current calculation modules were not copied or evaluated here. The public current owner provides that independent actual business verification. `read-results.json` records arguments/current IDs/views/file protection; `initial-row-count-assumption.log` retains the erroneous observation. Original record hashes and source mappings are separately in `old-historical-lumen-defect-ids.json` on this same evidence branch.
+
+No new SEC/provider/paid calls, old Run/source/result rewriting, Ready/merge/adoption/active action. The additional register is only for receiving verification until PR166 enters main; main default availability and candidate append behavior are different claims.

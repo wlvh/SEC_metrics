@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-guide-received-main-20261011/SEC_metrics/work/income-defect-consumer/verify_old_and_new.py", line 21, in <module>
+    if name=='old':assert len(rows)==20 and len(rev)==5 and all(r['value']=='' and r['status']=='WITHHELD_KNOWN_DEFECT' and r['result_validity']=='CONFIRMED_INVALID' for r in rev)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
