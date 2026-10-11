@@ -7,6 +7,12 @@ from vnext import historical_b06_case as history
 
 
 class HistoricalB06CaseTest(TestCase):
+    def test_consumer_tracks_shared_calculation_and_both_explicit_amendment_readers(self):
+        from vnext.current_b06_case import INLINE_NOTE_PROCESSING_FILES
+        self.assertLessEqual(set(INLINE_NOTE_PROCESSING_FILES), set(history.PROCESSING_FILES))
+        self.assertEqual(len(history.PROCESSING_FILES), len(set(history.PROCESSING_FILES)))
+        self.assertTrue(all((history.ROOT/path).is_file() for path in history.PROCESSING_FILES))
+
     def setUp(self):
         self.source = Path('/constructed/saved-source')
         self.filing = {'accessionNumber': 'constructed-annual', 'reportDate': '2024-12-31'}
