@@ -1,0 +1,34 @@
+test_consumed_rule_change_still_requires_processing (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_consumed_rule_change_still_requires_processing) ... ok
+test_target_cik_role_industry_and_period_fields_require_processing (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_target_cik_role_industry_and_period_fields_require_processing) ... ok
+test_unrelated_program_row_add_or_change_keeps_existing_result (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_program_row_add_or_change_keeps_existing_result) ... FAIL
+test_unrelated_source_row_add_or_change_keeps_existing_result (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_source_row_add_or_change_keeps_existing_result) ... FAIL
+
+======================================================================
+FAIL: test_unrelated_program_row_add_or_change_keeps_existing_result (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_program_row_add_or_change_keeps_existing_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics/tests/vnext/test_registry_processing_scope.py", line 48, in test_unrelated_program_row_add_or_change_keeps_existing_result
+    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',again['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'INPUT_OR_EXECUTION_FAILED'
+- NO_SOURCE_CONTENT_CHANGE
++ INPUT_OR_EXECUTION_FAILED
+
+
+======================================================================
+FAIL: test_unrelated_source_row_add_or_change_keeps_existing_result (tests.vnext.test_registry_processing_scope.RegistryProcessingScopeTest.test_unrelated_source_row_add_or_change_keeps_existing_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-registry-row-scope/SEC_metrics/tests/vnext/test_registry_processing_scope.py", line 59, in test_unrelated_source_row_add_or_change_keeps_existing_result
+    self.assertEqual('NO_SOURCE_CONTENT_CHANGE',again['status'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'NO_SOURCE_CONTENT_CHANGE' != 'INPUT_OR_EXECUTION_FAILED'
+- NO_SOURCE_CONTENT_CHANGE
++ INPUT_OR_EXECUTION_FAILED
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.183s
+
+FAILED (failures=2)
+{"allowed_skips": 0, "errors": 0, "failures": 2, "run": 4, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_registry_processing_scope"]}

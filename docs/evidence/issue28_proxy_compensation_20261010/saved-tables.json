@@ -1,0 +1,618 @@
+{
+  "base": "98e5312e2b1e5170724055a171942f9c10f337a6",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-proxy-compensation/SEC_metrics",
+  "original_reader_sha": "bcc0c0bc0293ba6b6ffc58b1f4e9034dbb52a786",
+  "name_helper_sha": "4bcf6fbf9b92337940c6321eb84e1f1d10b9330c",
+  "working_tree_tests": true,
+  "code_sha256": {
+    "scripts/vnext/proxy_source_identity.py": "8f2c4f6d9c5766f28135e2a84fc10f35489aba82fe0440737a318cb6b10cac7d",
+    "scripts/vnext/proxy_compensation_source.py": "35729ac42c66d6500e6e8217535aa37f6f291adeeceaf8327aadc18b49f70ed1",
+    "scripts/vnext/organization_name_core.py": "b8314a2cd125b3b0a06f86dd4e1bfcde9d5b6151200f833ca2fd87d48663f749"
+  },
+  "protected_original_files": 6,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "cases": [
+    {
+      "company_id": "macys",
+      "cik": "794367",
+      "filing": {
+        "form": "DEF 14A",
+        "accessionNumber": "0001558370-22-005031",
+        "primaryDocument": "tmb-20220520xdef14a.htm",
+        "filingDate": "2022-04-01",
+        "reportDate": ""
+      },
+      "target": {
+        "company_id": "macys",
+        "period_start": "2021-01-31",
+        "period_end": "2022-01-29",
+        "scope": {
+          "entity_scope": "registrant"
+        },
+        "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:7fb9b55616133ee50a5a41fd5b40fd88dfda762556a2735ecb607c3a729f3101",
+        "raw_asset_id": "sha256:d46ebb89b7331be082a1cd8fbf725fc4be1ff1e274edfb3f344be11c13feb007",
+        "company_id": "macys",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000155837022005031/tmb-20220520xdef14a.htm",
+        "accession": "0001558370-22-005031",
+        "document_name": "tmb-20220520xdef14a.htm",
+        "source_role": "governance_proxy",
+        "request_attempt_id": "request:attempt:1b7259c9ca9b0c64040371d480adf2b5cb47647ba0d257182a7f532b00764af4"
+      },
+      "source_proofs": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000155837022005031/tmb-20220520xdef14a.htm",
+          "accession": "0001558370-22-005031",
+          "document_name": "tmb-20220520xdef14a.htm",
+          "content_sha256": "d46ebb89b7331be082a1cd8fbf725fc4be1ff1e274edfb3f344be11c13feb007",
+          "request_body_sha256": "d46ebb89b7331be082a1cd8fbf725fc4be1ff1e274edfb3f344be11c13feb007",
+          "request_body_size": 4508313,
+          "request_headers_repo_relative_path": "evidence/request_attempts/d4/d46ebb89b7331be082a1cd8fbf725fc4be1ff1e274edfb3f344be11c13feb007/tmb-20220520xdef14a.htm.f9069f76ab6c15a5a66647b17c544b822b93d328e709971d1dfed2fccd73a371.headers.json",
+          "request_headers_sha256": "f9069f76ab6c15a5a66647b17c544b822b93d328e709971d1dfed2fccd73a371",
+          "request_headers_size": 1665,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/d4/d46ebb89b7331be082a1cd8fbf725fc4be1ff1e274edfb3f344be11c13feb007/tmb-20220520xdef14a.htm",
+          "request_attempt_id": "request:attempt:1b7259c9ca9b0c64040371d480adf2b5cb47647ba0d257182a7f532b00764af4"
+        },
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0000794367.json",
+          "accession": "",
+          "document_name": "CIK0000794367.json",
+          "content_sha256": "75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+          "request_body_sha256": "75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6",
+          "request_body_size": 164040,
+          "request_headers_repo_relative_path": "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json.727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361.headers.json",
+          "request_headers_sha256": "727b86a2ea4a2e981b53f6a4ff0410afc5280a5aceb2a94b150f5c21b4492361",
+          "request_headers_size": 736,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/75/75bae90dce2dc83aaa5db7077e48302d46af05db7244bc4d4036a295cb60fdf6/CIK0000794367.json",
+          "request_attempt_id": "request:attempt:d3b5914e9e0a6f3568a2da42a67774d198faa3a0a04e220054489d3c045c9529"
+        }
+      ],
+      "seconds": 7.685333625180647,
+      "result": {
+        "company_id": "macys",
+        "metric_id": "C03",
+        "period_start": "2021-01-31",
+        "period_end": "2022-01-29",
+        "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+        "spec_closure_hash": "sha256:4ce3bb2bcfa59b177148720e07d5088a044086bddeeab3bcd95ad7b715da5e42",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "12290931",
+        "unit": "USD",
+        "trace_id": "sha256:3408fb30ffdcb404607f3db659e032a9649974ea97c2ea79b67ec323255f6b6f",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:d9c102a11ce18a6e06724eb148e5c304472e568236b90ff2b8a36afd3c6c2124"
+      },
+      "selection": {
+        "resolver": "proxy_compensation_table_v1",
+        "source_reference_id": "sha256:7fb9b55616133ee50a5a41fd5b40fd88dfda762556a2735ecb607c3a729f3101",
+        "raw_asset_id": "sha256:d46ebb89b7331be082a1cd8fbf725fc4be1ff1e274edfb3f344be11c13feb007",
+        "derived_asset_id": "sha256:96295daafd5fefaa862d739b479affae1e3fb5a9f18488a8754457bedf40dec3",
+        "text_document_id": "sha256:f3d182fc42cc53e621fe93176d7af1a0a1538d1e1263726e0d66ba9a46fb3e19",
+        "proxy_cover_identity": {
+          "basis": "PROXY_SCHEDULE_14A_COVER",
+          "cover_registrant_name": "Macy’s, Inc.",
+          "sec_names_on_filing_date": [
+            "Macy's, Inc."
+          ],
+          "filing_date": "2022-04-01"
+        },
+        "report_period_start": "2021-01-31",
+        "report_period_end": "2022-01-29",
+        "fiscal_year": 2021,
+        "period_basis": "TABLE_YEAR_EQUALS_PINNED_FISCAL_YEAR",
+        "candidates": [
+          {
+            "table_id": "table_000199",
+            "table_grid_sha256": "sha256:4d8406b9e4abd6b271025462c08e2618ef989fd24cd1c919010c2326710f407a",
+            "person_and_position": "Jeff Gennette Chief Executive Officer",
+            "fiscal_year": 2021,
+            "person": [
+              {
+                "locator": {
+                  "derived_asset_id": "sha256:96295daafd5fefaa862d739b479affae1e3fb5a9f18488a8754457bedf40dec3",
+                  "table_id": "table_000199",
+                  "row_index": 9,
+                  "column_index": 0,
+                  "origin_row_index": 9,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 1
+                },
+                "raw_text": "\nJeff Gennette",
+                "text": "Jeff Gennette"
+              },
+              {
+                "locator": {
+                  "derived_asset_id": "sha256:96295daafd5fefaa862d739b479affae1e3fb5a9f18488a8754457bedf40dec3",
+                  "table_id": "table_000199",
+                  "row_index": 10,
+                  "column_index": 0,
+                  "origin_row_index": 10,
+                  "origin_column_index": 0,
+                  "rowspan": 1,
+                  "colspan": 1
+                },
+                "raw_text": "\nChief Executive Officer",
+                "text": "Chief Executive Officer"
+              }
+            ],
+            "year": {
+              "locator": {
+                "derived_asset_id": "sha256:96295daafd5fefaa862d739b479affae1e3fb5a9f18488a8754457bedf40dec3",
+                "table_id": "table_000199",
+                "row_index": 9,
+                "column_index": 2,
+                "origin_row_index": 9,
+                "origin_column_index": 2,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "\n2021",
+              "text": "2021"
+            },
+            "reason": "PASS",
+            "unit": "USD",
+            "value": "12290931",
+            "components": [
+              1300000,
+              0,
+              7096408,
+              0,
+              3315000,
+              477829,
+              101694
+            ],
+            "amount": {
+              "locator": {
+                "derived_asset_id": "sha256:96295daafd5fefaa862d739b479affae1e3fb5a9f18488a8754457bedf40dec3",
+                "table_id": "table_000199",
+                "row_index": 9,
+                "column_index": 26,
+                "origin_row_index": 9,
+                "origin_column_index": 26,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "\n 12,290,931",
+              "text": "12,290,931"
+            }
+          }
+        ],
+        "diagnostics": [],
+        "reason_code": "PASS",
+        "selection_id": "sha256:c2a1224739ce90956fd9a2278a3e88cd196dd72008827864498aa33638b1b3f0"
+      },
+      "derived_table_count": 311,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "filing": {
+        "form": "DEF 14A",
+        "accessionNumber": "0001193125-22-081138",
+        "primaryDocument": "d235712ddef14a.htm",
+        "filingDate": "2022-03-22",
+        "reportDate": ""
+      },
+      "target": {
+        "company_id": "marriott_international",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "scope": {
+          "entity_scope": "registrant"
+        },
+        "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:2d1bff13e42c2bac47269564873678da5bad6b10c4fa35e55dc1d218e798a1a3",
+        "raw_asset_id": "sha256:69270175d55cecc73b52c6837941c1a2cebafba0b2ba7924a8b413c3d5eda6b0",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312522081138/d235712ddef14a.htm",
+        "accession": "0001193125-22-081138",
+        "document_name": "d235712ddef14a.htm",
+        "source_role": "governance_proxy",
+        "request_attempt_id": "request:attempt:5a9b2d65e83903a4e07590dc35a3cf9f4683e4283c781d15818b4e56e7e27ba2"
+      },
+      "source_proofs": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000119312522081138/d235712ddef14a.htm",
+          "accession": "0001193125-22-081138",
+          "document_name": "d235712ddef14a.htm",
+          "content_sha256": "69270175d55cecc73b52c6837941c1a2cebafba0b2ba7924a8b413c3d5eda6b0",
+          "request_body_sha256": "69270175d55cecc73b52c6837941c1a2cebafba0b2ba7924a8b413c3d5eda6b0",
+          "request_body_size": 1756093,
+          "request_headers_repo_relative_path": "evidence/request_attempts/69/69270175d55cecc73b52c6837941c1a2cebafba0b2ba7924a8b413c3d5eda6b0/d235712ddef14a.htm.0c617442ff1e15d4f8c5f15f04a68e4486b92e43ff664d6bdaf13d5bcc09efa3.headers.json",
+          "request_headers_sha256": "0c617442ff1e15d4f8c5f15f04a68e4486b92e43ff664d6bdaf13d5bcc09efa3",
+          "request_headers_size": 1661,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/69/69270175d55cecc73b52c6837941c1a2cebafba0b2ba7924a8b413c3d5eda6b0/d235712ddef14a.htm",
+          "request_attempt_id": "request:attempt:5a9b2d65e83903a4e07590dc35a3cf9f4683e4283c781d15818b4e56e7e27ba2"
+        },
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+          "accession": "",
+          "document_name": "CIK0001048286.json",
+          "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+          "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+          "request_body_size": 147714,
+          "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+          "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
+          "request_headers_size": 736,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+          "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+        }
+      ],
+      "seconds": 4.797157250111923,
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "C03",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+        "spec_closure_hash": "sha256:4ce3bb2bcfa59b177148720e07d5088a044086bddeeab3bcd95ad7b715da5e42",
+        "applicability": "APPLICABLE",
+        "quality": "NONE",
+        "publication": "WITHHELD",
+        "reason_code": "C03_PROXY_SCT_MORE_THAN_ONE_CHIEF_EXECUTIVE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:d6584e151cca565c2e814c867c3806efd750a72faeb2d90031af557e457d2ad7",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:03d5e3384cc6f1c1e6e0ac3d3a1685327a89f4fe4fd5c42e653bef8b4a7c9774"
+      },
+      "selection": {
+        "resolver": "proxy_compensation_table_v1",
+        "source_reference_id": "sha256:2d1bff13e42c2bac47269564873678da5bad6b10c4fa35e55dc1d218e798a1a3",
+        "raw_asset_id": "sha256:69270175d55cecc73b52c6837941c1a2cebafba0b2ba7924a8b413c3d5eda6b0",
+        "derived_asset_id": "sha256:c73483a872c7a956a10b674055de5aa8bd7262959d3dc5eaa6b98480a495597b",
+        "text_document_id": "sha256:8a38295db078a6c80b58e139b089e8c10b62bf156b456fbedf8584f215a26182",
+        "proxy_cover_identity": {
+          "basis": "PROXY_SCHEDULE_14A_COVER",
+          "cover_registrant_name": "Marriott International, Inc.",
+          "sec_names_on_filing_date": [
+            "MARRIOTT INTERNATIONAL INC /MD/"
+          ],
+          "filing_date": "2022-03-22"
+        },
+        "report_period_start": "2021-01-01",
+        "report_period_end": "2021-12-31",
+        "fiscal_year": 2021,
+        "period_basis": "TABLE_YEAR_EQUALS_PINNED_FISCAL_YEAR",
+        "candidates": [
+          {
+            "table_id": "table_000244",
+            "table_grid_sha256": "sha256:b1fab8266dd5d1ce04146778ceb773ff8e72938806982ed1b2ea18cf6cef1aba",
+            "person_and_position": "Anthony G. Capuano Chief Executive Officer",
+            "fiscal_year": 2021,
+            "person": [
+              {
+                "locator": {
+                  "derived_asset_id": "sha256:c73483a872c7a956a10b674055de5aa8bd7262959d3dc5eaa6b98480a495597b",
+                  "table_id": "table_000244",
+                  "row_index": 2,
+                  "column_index": 0,
+                  "origin_row_index": 2,
+                  "origin_column_index": 0,
+                  "rowspan": 3,
+                  "colspan": 1
+                },
+                "raw_text": " \n&nbsp; \nAnthony&nbsp;G.&nbsp;Capuano \nChief Executive Officer",
+                "text": "Anthony G. Capuano Chief Executive Officer"
+              }
+            ],
+            "year": {
+              "locator": {
+                "derived_asset_id": "sha256:c73483a872c7a956a10b674055de5aa8bd7262959d3dc5eaa6b98480a495597b",
+                "table_id": "table_000244",
+                "row_index": 2,
+                "column_index": 3,
+                "origin_row_index": 2,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": " \n2021",
+              "text": "2021"
+            },
+            "reason": "PASS",
+            "unit": "USD",
+            "value": "18391882",
+            "components": [
+              1234615,
+              0,
+              10171778,
+              2250072,
+              4691538,
+              13556,
+              30323
+            ],
+            "amount": {
+              "locator": {
+                "derived_asset_id": "sha256:c73483a872c7a956a10b674055de5aa8bd7262959d3dc5eaa6b98480a495597b",
+                "table_id": "table_000244",
+                "row_index": 2,
+                "column_index": 35,
+                "origin_row_index": 2,
+                "origin_column_index": 35,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": " \n18,391,882",
+              "text": "18,391,882"
+            }
+          },
+          {
+            "table_id": "table_000244",
+            "table_grid_sha256": "sha256:b1fab8266dd5d1ce04146778ceb773ff8e72938806982ed1b2ea18cf6cef1aba",
+            "person_and_position": "Arne M. Sorenson Former President and Chief Executive Officer",
+            "fiscal_year": 2021,
+            "person": [
+              {
+                "locator": {
+                  "derived_asset_id": "sha256:c73483a872c7a956a10b674055de5aa8bd7262959d3dc5eaa6b98480a495597b",
+                  "table_id": "table_000244",
+                  "row_index": 13,
+                  "column_index": 0,
+                  "origin_row_index": 13,
+                  "origin_column_index": 0,
+                  "rowspan": 3,
+                  "colspan": 1
+                },
+                "raw_text": " \n&nbsp;\n\nArne&nbsp;M.&nbsp;Sorenson\n\nFormer President and Chief Executive Officer",
+                "text": "Arne M. Sorenson Former President and Chief Executive Officer"
+              }
+            ],
+            "year": {
+              "locator": {
+                "derived_asset_id": "sha256:c73483a872c7a956a10b674055de5aa8bd7262959d3dc5eaa6b98480a495597b",
+                "table_id": "table_000244",
+                "row_index": 13,
+                "column_index": 3,
+                "origin_row_index": 13,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "2021",
+              "text": "2021"
+            },
+            "reason": "PASS",
+            "unit": "USD",
+            "value": "12278151",
+            "components": [
+              321058,
+              0,
+              0,
+              0,
+              387693,
+              59975,
+              11509425
+            ],
+            "amount": {
+              "locator": {
+                "derived_asset_id": "sha256:c73483a872c7a956a10b674055de5aa8bd7262959d3dc5eaa6b98480a495597b",
+                "table_id": "table_000244",
+                "row_index": 13,
+                "column_index": 35,
+                "origin_row_index": 13,
+                "origin_column_index": 35,
+                "rowspan": 1,
+                "colspan": 1
+              },
+              "raw_text": "12,278,151",
+              "text": "12,278,151"
+            }
+          }
+        ],
+        "diagnostics": [],
+        "reason_code": "C03_PROXY_SCT_MORE_THAN_ONE_CHIEF_EXECUTIVE",
+        "selection_id": "sha256:ff3644c0be3407a36f224450eeec5fba60bab496700bb5a2ac3e3d1c6a586cd4"
+      },
+      "derived_table_count": 409,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "cik": "19617",
+      "filing": {
+        "form": "DEF 14A",
+        "accessionNumber": "0000019617-22-000303",
+        "primaryDocument": "a2022proxystatement.htm",
+        "filingDate": "2022-04-04",
+        "reportDate": ""
+      },
+      "target": {
+        "company_id": "jpmorgan_chase",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "scope": {
+          "entity_scope": "registrant"
+        },
+        "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:e86b41e02e4c45c89efde486c6326c0c5f8a2028782c91e35d5524836a719b7d",
+        "raw_asset_id": "sha256:5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc",
+        "company_id": "jpmorgan_chase",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961722000303/a2022proxystatement.htm",
+        "accession": "0000019617-22-000303",
+        "document_name": "a2022proxystatement.htm",
+        "source_role": "governance_proxy",
+        "request_attempt_id": "request:attempt:fe4ccbb61dc6e6e84bd2b12c7ecfacba70ee7c7646b0790d1f80049d4f288546"
+      },
+      "source_proofs": [
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961722000303/a2022proxystatement.htm",
+          "accession": "0000019617-22-000303",
+          "document_name": "a2022proxystatement.htm",
+          "content_sha256": "5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc",
+          "request_body_sha256": "5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc",
+          "request_body_size": 2767528,
+          "request_headers_repo_relative_path": "evidence/request_attempts/5a/5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc/a2022proxystatement.htm.64c9db1ea3079c467fbc11aae051f0aea16d35478ab3594acbb55e7d99114033.headers.json",
+          "request_headers_sha256": "64c9db1ea3079c467fbc11aae051f0aea16d35478ab3594acbb55e7d99114033",
+          "request_headers_size": 1644,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/5a/5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc/a2022proxystatement.htm",
+          "request_attempt_id": "request:attempt:fe4ccbb61dc6e6e84bd2b12c7ecfacba70ee7c7646b0790d1f80049d4f288546"
+        },
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0000019617.json",
+          "accession": "",
+          "document_name": "CIK0000019617.json",
+          "content_sha256": "f345311e3931358fa8f5a51713dbb51927e323f094d793cc5b5bcfd0d1158e03",
+          "request_body_sha256": "f345311e3931358fa8f5a51713dbb51927e323f094d793cc5b5bcfd0d1158e03",
+          "request_body_size": 4654275,
+          "request_headers_repo_relative_path": "evidence/request_attempts/f3/f345311e3931358fa8f5a51713dbb51927e323f094d793cc5b5bcfd0d1158e03/CIK0000019617.json.c1d9b94dc2bafe4ecf6327fdf0d736d53ad0b6f6e07ed9a9bb66268479500c8d.headers.json",
+          "request_headers_sha256": "c1d9b94dc2bafe4ecf6327fdf0d736d53ad0b6f6e07ed9a9bb66268479500c8d",
+          "request_headers_size": 737,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/f3/f345311e3931358fa8f5a51713dbb51927e323f094d793cc5b5bcfd0d1158e03/CIK0000019617.json",
+          "request_attempt_id": "request:attempt:820e366379fd257e18a8abb89138f7d8a2af2edbc84a85c443a21a0dd76829d6"
+        }
+      ],
+      "seconds": 19.96139608300291,
+      "result": {
+        "company_id": "jpmorgan_chase",
+        "metric_id": "C03",
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31",
+        "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+        "spec_closure_hash": "sha256:4ce3bb2bcfa59b177148720e07d5088a044086bddeeab3bcd95ad7b715da5e42",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "84428145",
+        "unit": "USD",
+        "trace_id": "sha256:2a981ae306794e6c60ded66adfda6febb50a0fd5dc6719cbb061b87b59b6e294",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:b0e913d616d6a2ff1b6a94cdf6c4dd2f15074c41fdaa0361b454895662215e15"
+      },
+      "selection": {
+        "resolver": "proxy_compensation_table_v1",
+        "source_reference_id": "sha256:e86b41e02e4c45c89efde486c6326c0c5f8a2028782c91e35d5524836a719b7d",
+        "raw_asset_id": "sha256:5ac340fba4dc659432c6d3e01446914c7e18fd6b456a68660f644f071a6744fc",
+        "derived_asset_id": "sha256:62e18bad38a43434f85dfc27cc007fdefe5f0ef68abd752f727bc68c29384b8b",
+        "text_document_id": "sha256:4efdc609337586d2f22c21c3419e99c9e9cd9cea734aac5845478074747739c9",
+        "proxy_cover_identity": {
+          "basis": "PROXY_SCHEDULE_14A_COVER",
+          "cover_registrant_name": "JPMorgan Chase & Co.",
+          "sec_names_on_filing_date": [
+            "JPMORGAN CHASE & CO"
+          ],
+          "filing_date": "2022-04-04",
+          "cover_name_basis": "NAME_PRINTED_AS_AN_IMAGE_FIRST_BLOCK_AFTER_THE_COVER"
+        },
+        "report_period_start": "2021-01-01",
+        "report_period_end": "2021-12-31",
+        "fiscal_year": 2021,
+        "period_basis": "TABLE_YEAR_EQUALS_PINNED_FISCAL_YEAR",
+        "candidates": [
+          {
+            "table_id": "table_000319",
+            "table_grid_sha256": "sha256:a24855802628366344e5b5a13e287a64207f39364eeb724a9b9eae4429ef32eb",
+            "person_and_position": "James Dimon Chairman and CEO",
+            "fiscal_year": 2021,
+            "person": [
+              {
+                "locator": {
+                  "derived_asset_id": "sha256:62e18bad38a43434f85dfc27cc007fdefe5f0ef68abd752f727bc68c29384b8b",
+                  "table_id": "table_000319",
+                  "row_index": 2,
+                  "column_index": 0,
+                  "origin_row_index": 2,
+                  "origin_column_index": 0,
+                  "rowspan": 3,
+                  "colspan": 3
+                },
+                "raw_text": "\nJames Dimon\nChairman and CEO",
+                "text": "James Dimon Chairman and CEO"
+              }
+            ],
+            "year": {
+              "locator": {
+                "derived_asset_id": "sha256:62e18bad38a43434f85dfc27cc007fdefe5f0ef68abd752f727bc68c29384b8b",
+                "table_id": "table_000319",
+                "row_index": 2,
+                "column_index": 3,
+                "origin_row_index": 2,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 3
+              },
+              "raw_text": "2021",
+              "text": "2021"
+            },
+            "cells_read_as_footnote_marks": [
+              "7"
+            ],
+            "reason": "PASS",
+            "unit": "USD",
+            "value": "84428145",
+            "components": [
+              1500000,
+              5000000,
+              25000000,
+              52620000,
+              25486,
+              282659
+            ],
+            "amount": {
+              "locator": {
+                "derived_asset_id": "sha256:62e18bad38a43434f85dfc27cc007fdefe5f0ef68abd752f727bc68c29384b8b",
+                "table_id": "table_000319",
+                "row_index": 2,
+                "column_index": 72,
+                "origin_row_index": 2,
+                "origin_column_index": 72,
+                "rowspan": 1,
+                "colspan": 2
+              },
+              "raw_text": "84,428,145&#160;",
+              "text": "84,428,145"
+            }
+          }
+        ],
+        "diagnostics": [
+          {
+            "table_id": "table_000279",
+            "reason": "C03_PROXY_SCT_TITLE_NOT_ESTABLISHED"
+          }
+        ],
+        "reason_code": "PASS",
+        "selection_id": "sha256:f69a8e97eb7c06ba71ec8c269e72c4de1908681205435e81ff2a70a41771ea02"
+      },
+      "derived_table_count": 428,
+      "new_calls": [
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}

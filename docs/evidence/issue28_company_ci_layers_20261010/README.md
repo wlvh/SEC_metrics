@@ -1,4 +1,15 @@
-# Keep company CI complete under the existing five-minute test budgets
+# Company CI layers: current672b receiver continuation
+
+Receiver153currentqueue and140feedback6103940364 read before this increment. The original two-layer candidate is retained below as historical84d evidence; its oldcbb D01 patch applies only to that fixed historical consumer, not the current five-layer workflow. No old cancellation is relabelled and no old timing is claimed as this candidate's execution.
+
+Actual672b company-current's large23-selector step is partitioned by wholemodules into8records/controller/reader selectors,9source/subject/unit/lodging selectors and6financial/fiscal/revenue selectors. All other originalcomplete steps remain unchanged, split into history/control and source-contract layers. Allfiveworkers retain5minute budgets, originalpinnedcheckout/setup/Python3.14/environment and trigger/permission semantics. Requiredcompany-current stays an always aggregate and requires allfiveworkers' success. No mainprotection change, skip, retiredbusinessassertion, sourcemock, timeoutincrease, newfixture/cache/platform/manifest system or businessroute change.
+
+verify_672b_layers.py performs Ruby standardYAML decode, exact47selector-execution multiset/46unique equality, unchanged9complete steps and setup/triggers/permissions,1024 actualshellgate outcome controls plus3unknown/empty outcomes. Original repeatedselector stays repeated; no oldgreen cache used. It does not execute financialmaterial or claim thosebusinessresults. Splitjobs were chosen by coherent modules, not estimatedaccuracy or a measuredspeedup. Receiver's own original4m43job/3m46large step is read evidence, not author rerun; actual newhead timing must be measured in CI. Finite original main11/nowjob count remains not390acceptance.
+
+One workflow conflict was resolved as a semantic union: reapply this existingCIcandidate on actualmain672b while preserving receivedD04/registry/C03/income steps/selectors and paths. New code affects workflowonly. ExistingD01/NIM consumers should extend the appropriateworker and include it in alwaysgate, not overwrite otherlayers or blindly apply the oldcbbpatch. Owner28implements publiclayout, history47applies consumerdelta. No RootReady/merge/production or newSEC/provider/paid0/0/0.
+
+## Historical two-layer candidate and its evidence
+
 
 Actualmain84d15f35. Parent actually read serverjob114153412817/run38031567093 and fixed9244c306 rawlog. Joboverall CANCELLED after5min; source257tests221.083s, textcapacity30tests26.005s, single-revenue43tests22.612s, remaininghistory/source/event/SEC commandsallprintOK. Final27tests6.053s/OK appear beforeaction cancellation. This is not a business assertion failure, not a passedjob and not an unexecutedtail. original-job.json retains serverstep conclusions separately from teststdout.
 
