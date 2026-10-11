@@ -32,6 +32,54 @@ class SingleRevenueLineTest(unittest.TestCase):
         self.assertEqual(result['method'],'SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1')
         self.assertNotIn('single_revenue_line_allowed',old)
 
+    def test_single_operating_revenue_retains_combined_currency_share_header(self):
+        source, annual = single_statement()
+        raw = source['raw_bytes'].replace(b'<td>Revenues</td>', b'<td>OPERATING REVENUE</td>')
+        raw = raw.replace(b'MILLIONS, EXCEPT PER SHARE DATA',
+            b'Dollars in millions, except per share amounts, and shares in thousands')
+        header = b'<tr><td>(Dollars in millions, except per share amounts, and shares in thousands)</td><td>2025</td></tr>'
+        self.assertIn(header, raw)
+        raw = raw.replace(header,
+            b'<tr><td></td><td>2025</td></tr><tr><td>(Dollars in millions, except per share amounts, and shares in thousands)</td><td></td></tr>')
+        raw = raw.replace(b'<tr><td>Cost of sales',
+            b'<tr><td>OPERATING EXPENSES</td><td></td></tr><tr><td>Cost of sales')
+        raw = raw.replace(b'<tr><td>Net income',
+            b'<tr><td>OTHER EXPENSE</td><td></td></tr><tr><td>Net income')
+        adjusted = changed(source, raw)
+        result = self.scope(adjusted, annual, xml=adjusted)
+        self.assertTrue(result['complete_scope_proven'])
+        self.assertEqual('58496000000', result['reported_totals'][0]['total']['value'])
+        self.assertEqual('MATCH', result['reported_totals'][0]['xml_check'])
+        self.assertEqual('USD', result['reported_totals'][0]['total']['unit'])
+        self.assertFalse(reported_revenue_scope(primary=adjusted, annual=annual,
+            approved_concepts=APPROVED)['complete_scope_proven'])
+
+    def test_single_operating_revenue_requires_exact_unqualified_label(self):
+        source, annual = single_statement()
+        for label in (b'OPERATING REVENUE (domestic)', b'OPERATING REVENUE (subtotal)',
+                      b'OPERATING REVENUE excluding special items', b'NET SALES'):
+            with self.subTest(label=label):
+                raw = source['raw_bytes'].replace(b'<td>Revenues</td>', b'<td>'+label+b'</td>')
+                self.assertFalse(self.scope(changed(source, raw), annual)['complete_scope_proven'])
+
+    def test_explicit_statement_page_keeps_scope_limitations_on_that_page(self):
+        source, annual = single_statement()
+        raw = source['raw_bytes'].replace(b'<td>Revenues</td>', b'<td>OPERATING REVENUE</td>')
+        title = b'<div>Consolidated Statements of Income</div>'
+        before = b'<p>Prior discussion of cash flows and an auditor report.</p>'
+        boundary = b'<hr style="page-break-after:always"/>'
+        adjusted = changed(source, raw.replace(title, before+boundary+title))
+        scope = self.scope(adjusted, annual)
+        self.assertTrue(scope['complete_scope_proven'])
+        proof = scope['reported_totals'][0]['statement_scope']
+        self.assertEqual(1, len(proof['preceding_page_context']))
+        span=proof['statement_page_boundary']
+        self.assertEqual(boundary, adjusted['raw_bytes'][span['start_byte']:span['end_byte']])
+        for prefix in (before+title, before+boundary+b'<p>Only Segment Alpha is included.</p>'+title,
+                       b'<p>The following statements include only Segment Alpha.</p>'+boundary+title):
+            with self.subTest(prefix=prefix), self.assertRaisesRegex(ValueError, 'SCOPE_UNRESOLVED'):
+                self.scope(changed(source, raw.replace(title,prefix)), annual)
+
     def test_remaining_tagged_and_untagged_revenue_parts_are_not_sole_line(self):
         source,annual=single_statement()
         additions=[

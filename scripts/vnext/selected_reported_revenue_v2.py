@@ -55,7 +55,9 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         if row['concept'].casefold() not in approved or row['ordinal'] not in bound:continue
         table,cell=bound[row['ordinal']]
         label=_label_key(_label(table,cell))
-        single=allow_single_revenue_line and label in {'revenue','revenues'}
+        single_operating = allow_single_revenue_line and ' '.join(
+            _label(table,cell).casefold().split()) == 'operating revenue'
+        single=allow_single_revenue_line and (label in {'revenue','revenues'} or single_operating)
         operating = ' '.join(_label(table,cell).casefold().split()) == 'total operating revenues'
         if label not in {'total revenue','total revenues','total net revenues'} and not (single or operating):continue
         if (row['period_start'],row['period_end'])!=(period['period_start'],period['period_end']):continue
@@ -77,11 +79,14 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         if not(names & {'us-gaap:netincomeloss','us-gaap:profitloss'}
                and (names & {'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'} or operating_costs)):continue
         extra_units=(r'\(?(?:in |dollars in )?(?:millions|thousands), except per share amounts\)?',) if operating else ()
+        if single_operating:
+            extra_units = (r'\(?dollars in (?:millions|thousands), except per share amounts, and shares in thousands\)?',)
         unit_headers=UNIT_HEADER+extra_units
         column,headers,reason=_column_period(table=table,selected=cell,extra_header_descriptors=unit_headers)
         _need(not reason and column['year']==column_year,'FISCAL_COLUMN_UNRESOLVED')
         if single:
-            _single_revenue_line(index,parsed,table,cell,row,column,same)
+            _single_revenue_line(index,parsed,table,cell,row,column,same,
+                                 extra_unit_headers=extra_units)
         column_end=column.get('date')
         _need(column_end is None or column_end.isoformat()==period['period_end'],'VISIBLE_DATE_CONFLICT')
         actual_end=date.fromisoformat(period['period_end']);end_headers=[]
@@ -109,12 +114,18 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                     except ValueError:raise IncomeSourceError('SELECTED_REPORTED_REVENUE_VISIBLE_END_DAY_INVALID')
                     _need(described_end==actual_end,'VISIBLE_END_DAY_CONFLICT')
                 end_headers.append(_cell_proof(table=table,cell=c))
+        sections = (r'operating revenues:',r'operating expenses(?:, net)?:',
+                    r'(?:non-operating|other) expenses \(income\):') if operating else ()
+        if single_operating:
+            sections = (r'operating expenses:?', r'other expense:?',
+                        r'basic and diluted earnings \(loss\) per common share',
+                        r'weighted average common shares outstanding')
         statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
             extra_unit_headers=extra_units,
-            extra_section_headers=(r'operating revenues:',r'operating expenses(?:, net)?:',
-                r'(?:non-operating|other) expenses \(income\):') if operating else ())
+            extra_section_headers=sections, bind_statement_page=single_operating)
+        unit_stop = cell['row_index'] if single_operating else column['row_index']+1
         units=[{'kind':'visible_cell','proof':_cell_proof(table=table,cell=c),'text':c['text']}
-               for r in table['rows'][:column['row_index']+1] for c in r['cells']
+               for r in table['rows'][:unit_stop] for c in r['cells']
                if c['is_origin'] and any(re.fullmatch(p,c['text'].strip(),re.I) for p in unit_headers)]
         units.extend({'kind':'heading_block','proof':b,'text':b['visible_text']}
                      for b in statement['intervening_sources']
@@ -142,7 +153,7 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
     return {**body,'scope_id':content_hash(value=body)}
 
 
-def _single_revenue_line(index,parsed,table,cell,row,column,following):
+def _single_revenue_line(index,parsed,table,cell,row,column,following,*,extra_unit_headers=()):
     """A sole top-line amount in this column, not a component or note subtotal.
 
     The caller still proves the complete consolidated income statement,
@@ -170,7 +181,8 @@ def _single_revenue_line(index,parsed,table,cell,row,column,following):
     header_rows=set()
     for before in table['rows'][:first_cost]:
         probe={**cell,'row_index':before['row_index']+1}
-        period,_,reason=_column_period(table=table,selected=probe,extra_header_descriptors=UNIT_HEADER)
+        period,_,reason=_column_period(table=table,selected=probe,
+            extra_header_descriptors=UNIT_HEADER+extra_unit_headers)
         if not reason and period['row_index']==before['row_index']:
             _need(period['year']==column['year'],'SINGLE_REVENUE_HEADER_CONFLICT')
             header_rows.add(before['row_index'])
