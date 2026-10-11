@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-online-registry-scope/SEC_metrics/docs/evidence/issue28_online_registry_scope_20261011/verify_recorded_cli.py", line 35, in <module>
+    assert immutable_before=={p:h for p,h in snap(source).items() if p.startswith('evidence/raw/')}
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
