@@ -7,6 +7,7 @@ name: Company saved-source records
     - tools/vnext_company.py
     - tests/vnext/test_company_current_records.py
     - tests/vnext/test_current_b06_case.py
+    - tests/vnext/test_current_geography_case.py
     - tests/vnext/test_single_revenue_line.py
     - tests/vnext/test_selected_reported_revenue_v2.py
     - tests/vnext/test_paired_measure_contradiction.py
@@ -88,6 +89,10 @@ jobs:
     - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
       with:
         python-version: '3.14'
+    - name: Current international net revenue uses the existing source inspector
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_current_geography_case
     - name: Source subjects, units, periods and lodging
       env:
         PYTHONDONTWRITEBYTECODE: '1'

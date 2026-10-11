@@ -1,0 +1,51 @@
+{
+  "state": "/private/tmp/issue28-a13-first-ymj5gbn1",
+  "report": {
+    "elapsed_seconds": 8.157813125002576,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "jpmorgan_chase",
+    "run_id": "20261011T120225Z-37976c30",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "A13"
+    ],
+    "metrics": [
+      {
+        "metric_id": "A13",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "4a44482b526e4a568ce4bc2b8c4d14f2",
+        "version": "9efc2dddeeab4076b352170a26e9723c",
+        "result_id": "sha256:4661b0dec833b8d082b4031e3e45583cc7c4af9098a08c4c0c7e468f3f37b6ba",
+        "result_root": "/private/tmp/issue28-a13-first-ymj5gbn1/state/updates/A13/results/9efc2dddeeab4076b352170a26e9723c",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:4661b0dec833b8d082b4031e3e45583cc7c4af9098a08c4c0c7e468f3f37b6ba",
+        "record_root": "/private/tmp/issue28-a13-first-ymj5gbn1/state/updates/A13/results/9efc2dddeeab4076b352170a26e9723c",
+        "program_version": {
+          "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-geography/SEC_metrics",
+    "record_root": "/private/tmp/issue28-a13-first-ymj5gbn1/state",
+    "output_root": "/private/tmp/issue28-a13-first-ymj5gbn1/out/20261011T120225Z-37976c30",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  }
+}

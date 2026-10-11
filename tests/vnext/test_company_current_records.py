@@ -448,11 +448,14 @@ class PerMetricProducerTest(unittest.TestCase):
         self.assertEqual(seen[0]['processing_files'],('explicit-a13.py',))
         self.assertEqual(report['metrics'][0]['status'],'INPUT_OR_EXECUTION_FAILED')
 
-    def test_default_a13_stays_unimplemented_and_unknown_explicit_core_rejects(self):
-        with patch.object(current,'run_once',side_effect=AssertionError('No default A13 calculator')):
+    def test_current_a13_enters_update_and_unknown_explicit_core_rejects(self):
+        with patch.object(current,'run_once',return_value={
+                'status':'INPUT_OR_EXECUTION_FAILED','reason':'CONTROL_NEW_CURRENT_A13_DISPATCH'}) as boundary:
             report=current.run_saved_company(company_id='marriott_international',source_root=self.source,
                 work_dir=self.work,output_dir=self.outputs,metric_ids=['A13'])
-        self.assertEqual(report['metrics'][0]['status'],'PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED')
+        boundary.assert_called_once()
+        self.assertEqual(boundary.call_args.kwargs['metric_id'],'A13')
+        self.assertEqual(report['metrics'][0]['reason'],'CONTROL_NEW_CURRENT_A13_DISPATCH')
         with self.assertRaisesRegex(ValueError,'METRIC_FACTORIES_INVALID'):
             current.run_saved_company(company_id='marriott_international',source_root=self.source,
                 work_dir=self.work,output_dir=self.outputs,metric_ids=['D03'],fiscal_years=[2021],
