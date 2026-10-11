@@ -1,0 +1,163 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics",
+  "tested_commit": "84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf",
+  "uncommitted_diff": " scripts/vnext/c04_registration_successor.py  | 62 +++++++++++++++++++++++++---\n scripts/vnext/c04_verified_document_alias.py | 17 +++++---\n scripts/vnext/ordinary_saved_result.py       |  2 +-\n 3 files changed, 69 insertions(+), 12 deletions(-)\n",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "peer_sha": "a6ea48f113988ae20c7eb91ca525ca3b0632d29c",
+  "peer_preparer_sha256": "0c488e847938f1dcca433fe19ce86699a3c09e863bbcf5151daba60f9c559508",
+  "seconds": {
+    "first": 18.391887209145352,
+    "repeat": 2.4961044169031084,
+    "independent_results": 0.4856996249873191
+  },
+  "factory_calls": [
+    [
+      "ford_motor_company",
+      "C04",
+      2022
+    ]
+  ],
+  "first": {
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "ford_motor_company",
+    "run_id": "20261010T075410Z-d6e20db8",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "C04"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C04",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "e10eb288fec94336bb0cd3769831164b",
+        "version": "877e3bcb31564642a26b5dd395e6dfe6",
+        "result_id": "sha256:0ec6c7d627150e95e00673fe8009110585104fa91fc269bf9d553671909760da",
+        "result_root": "/private/tmp/issue28-c04-selected-ford22-complete/state/updates/C04/periods/FY2022/results/877e3bcb31564642a26b5dd395e6dfe6",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2022,
+        "defect_holds": [],
+        "read_result_id": "sha256:0ec6c7d627150e95e00673fe8009110585104fa91fc269bf9d553671909760da",
+        "record_root": "/private/tmp/issue28-c04-selected-ford22-complete/state/updates/C04/periods/FY2022/results/877e3bcb31564642a26b5dd395e6dfe6",
+        "program_version": {
+          "commit": "84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics",
+    "record_root": "/private/tmp/issue28-c04-selected-ford22-complete/state",
+    "output_root": "/private/tmp/issue28-c04-selected-ford22-complete/first/20261010T075410Z-d6e20db8",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "selected_fiscal_years": [
+      2022
+    ]
+  },
+  "repeat": {
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "ford_motor_company",
+    "run_id": "20261010T075428Z-f474a6bd",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "C04"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C04",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "8f9968bd6b14407eb1932fb2581e6cf7",
+        "version": "877e3bcb31564642a26b5dd395e6dfe6",
+        "result_id": "sha256:0ec6c7d627150e95e00673fe8009110585104fa91fc269bf9d553671909760da",
+        "result_root": "/private/tmp/issue28-c04-selected-ford22-complete/state/updates/C04/periods/FY2022/results/877e3bcb31564642a26b5dd395e6dfe6",
+        "result_reason_code": "PASS",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "requested_fiscal_year": 2022,
+        "defect_holds": [],
+        "read_result_id": "sha256:0ec6c7d627150e95e00673fe8009110585104fa91fc269bf9d553671909760da",
+        "record_root": "/private/tmp/issue28-c04-selected-ford22-complete/state/updates/C04/periods/FY2022/results/877e3bcb31564642a26b5dd395e6dfe6",
+        "program_version": {
+          "commit": "84d15f35eb3f0a7b6dc9e0b06100ceba738c7adf",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics",
+    "record_root": "/private/tmp/issue28-c04-selected-ford22-complete/state",
+    "output_root": "/private/tmp/issue28-c04-selected-ford22-complete/repeat/20261010T075428Z-f474a6bd",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false,
+    "selected_fiscal_years": [
+      2022
+    ]
+  },
+  "rows": [
+    {
+      "company": "Ford Motor Company",
+      "cik": "37996",
+      "metric_id": "C04",
+      "value": "0",
+      "unit": "flag",
+      "status": "OK",
+      "period_start": "2022-01-01",
+      "period_end": "2022-12-31",
+      "fiscal_year": "2022",
+      "accession": "0000037996-23-000012",
+      "result_id": "sha256:0ec6c7d627150e95e00673fe8009110585104fa91fc269bf9d553671909760da",
+      "record_root": "/private/tmp/issue28-c04-selected-ford22-complete/state/updates/C04/periods/FY2022/results/877e3bcb31564642a26b5dd395e6dfe6",
+      "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs"
+    }
+  ],
+  "protected_files": 10,
+  "post_files": 12,
+  "source_ledger_unchanged_during_this_resume_or_run": true,
+  "resume_only": false,
+  "first_wall_time_missing_reason": null,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "public_code_sha256": {
+    "scripts/vnext/c04_registration_successor.py": "59fdac6790b27c09e1d660d4b1104ba2b496e43662b48851f546df8897028384",
+    "scripts/vnext/c04_verified_document_alias.py": "a7cb38796887d808ddb689e512fc58ffbb6b07c8ebf43d88c917c66833544ea6",
+    "scripts/vnext/governance_signals.py": "b5a81465be57ac332c595c61bd107d0e8da8e90bac5dd47a071c3576dcbce820",
+    "scripts/vnext/normal_governance_input.py": "e6b4e3f2b5e80ac4fa63346e56faab4ab249443de3eb3f37fccf8ee30af3e8d4",
+    "scripts/vnext/normal_annual_input.py": "8f7bf4f93c6fc73665304970ee3aaa2536240ce17aacd89879153d5dc7a335cf",
+    "scripts/vnext/normal_annual_input_v2.py": "8c54ef1eaf2a7774fdf4533e07fde6fa4a0391c3cec51bdaf76a317d9ebd5e19",
+    "scripts/vnext/fiscal_year_labels.py": "b4c2c6d696604f6e313da83c7845bfa6dfe2ffae250de137dcaecf9633b93251",
+    "scripts/vnext/deterministic_router.py": "1e5d71233fbfda516bdbefbc2c50ce36dd4f780ab515b26fbfbb69ece825f1c5",
+    "catalog/r5/C04_auditor_changes_v2.md": "596a442394f159c61a00aaab5d6e2b8b4cd32a897e1e98a01f80144b12f2f2fc",
+    "catalog/r5/C04_auditor_changes_v3.md": "54612951aa27b88c8cf1dbe046e2506a8384ce8f7fb018629aaaa3ef019a98d8",
+    "config/normal_fiscal_year_labels_v1.json": "fde417632520d90046818fd31046615b6ea3b3df9cfdf5a1a527e38deea7bd87"
+  }
+}

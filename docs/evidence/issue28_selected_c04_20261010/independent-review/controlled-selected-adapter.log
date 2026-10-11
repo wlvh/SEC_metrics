@@ -1,0 +1,15 @@
+UTC start: 2026-10-10T08:07:44.135213+00:00
+UTC end: 2026-10-10T08:07:44.151630+00:00
+Command: TMPDIR=/private/tmp PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 [inline controlled fixtures]
+Controlled synthetic business adapter checks. Physical saved-proof verification and _Sources are replaced; annual parser, four-form census, manifest validation, Calculator, Spec checks and correspondence checks are real.
+Traceback (most recent call last):
+  File "<stdin>", line 56, in <module>
+  File "<stdin>", line 52, in case
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-selected-c04/SEC_metrics/scripts/vnext/c04_registration_successor.py", line 212, in prepare_c04_registration_case
+    header = reader.read(hdr_sgml_url(cik=int(cik), accession=accession),
+        accession=accession,
+        role='registration_event_header' if registration else 'fy_8k_header',
+        media_type='text/plain')
+  File "<stdin>", line 42, in read
+KeyError: 'https://www.sec.gov/Archives/edgar/data/12345/000001234525000005/0000012345-25-000005.hdr.sgml'
+Exit code: 1
