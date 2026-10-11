@@ -213,10 +213,26 @@ def _read_current_company(root, company_id, defects_file, output_root):
     registry = _registry(defects_file)
     report = strict_json_file(path=root/'latest-execution.json')
     _need(report['company_id'] == company_id, 'COMPANY_CURRENT_WRONG_EXECUTION')
+    recorded_root=Path(report.get('record_root',root)).resolve()
     def normalize(observation):
         value = dict(observation)
         value.setdefault('record_root',value.get('result_root'))
         value.setdefault('read_result_id',value.get('result_id'))
+        path=value.get('record_root')
+        if path and recorded_root!=root:
+            old=Path(path).resolve()
+            if recorded_root in old.parents:
+                relative=old.relative_to(recorded_root)
+                parts=relative.parts
+                _need(len(parts)>=4 and parts[0]=='updates'
+                      and parts[1]==value['metric_id'] and parts[-2]=='results',
+                      'COMPANY_CURRENT_RESTORED_RECORD_LAYOUT_CHANGED')
+                _need(value.get('version',parts[-1])==parts[-1],
+                      'COMPANY_CURRENT_RESTORED_RECORD_VERSION_CHANGED')
+                # Resolve only the saved task's own result hierarchy. The
+                # ordinary reader still checks containment, manifest and
+                # company/metric/result identity below, without rewriting it.
+                value['record_root']=str(root/relative)
         return value
 
     def coordinate(observation):
