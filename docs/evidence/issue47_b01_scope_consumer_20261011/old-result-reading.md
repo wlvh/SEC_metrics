@@ -1,0 +1,7 @@
+# Exact old-result reading after the income repair
+
+At published PR165 `fc876d29` (identical local9ee tree), the original Lumen task still contains B01 FY2022 resultdac005 with16108000000USD. Default company `results` automatically consumes the unchanged public defect-register interface; it shows that exact old result as `WITHHELD_KNOWN_DEFECT`, empty value, `CONFIRMED_INVALID`. It does not promote the old subtotal after the program gains a correct consumer. The new complete-revenue result8d8e is a different identity and is not held by this exact-result defect.
+
+Separate CLI reading with statement factory, both calculators and network forbidden takes0.797s, preserves all358 original statefiles and keeps all20 old metric/year rows readable. No old source/record/pointer is edited and no old financial value is recomputed. `old-defect-read.json` records the arguments, exact old row and state protection; it uses the default register, no user-provided defects flag needed. An earlier read explicitly added the same register again and also passed, but it duplicated hold labels; the final check uses the ordinary default command rather than asking the user to duplicate the register.
+
+This is compatibility and accurate defect display, not migration of all old Lumen business results. Main has not yet received164/165. No new real SEC/provider/paid calls or acceptance/Ready/merge/adoption/active action.

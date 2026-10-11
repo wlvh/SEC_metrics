@@ -1,0 +1,52 @@
+{
+  "code_commit": "9ee4be0b83bb0baa0fd9ee0d81f4b2cc6643656b",
+  "seconds": 0.7968509580005048,
+  "arguments": [
+    "results",
+    "--company",
+    "lumen_technologies",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-statements-company-9efl_3jh/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-old-defect-read-lih7r3sm/read"
+  ],
+  "state_files_unchanged": 358,
+  "rows": 25,
+  "exact_old_row": {
+    "company": "Lumen Technologies",
+    "cik": "18926",
+    "metric_id": "B01",
+    "metric_name": "Revenue",
+    "value": "",
+    "unit": "",
+    "status": "WITHHELD_KNOWN_DEFECT",
+    "source_class": "STD_XBRL",
+    "formula": "direct",
+    "period_start": "2022-01-01",
+    "period_end": "2022-12-31",
+    "fiscal_year": "2022",
+    "fiscal_period": "ANNUAL",
+    "accession": "0000018926-23-000013",
+    "form": "10-K",
+    "filed_date": "2023-02-23",
+    "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2022, \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"income_observation_checks\": [{\"observation_id\": \"sha256:db7645e2194a66f9f42df252a2e3df20f35579a889e02fd39a4e18e6b7afc3cb\", \"original_reports\": {\"primary\": [{\"concept\": \"us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax\", \"context\": {\"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"dimensions\": {}, \"entity_identifier\": \"0000018926\", \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000018926\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2022-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2022-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"decimals\": \"-6\", \"ordinal\": 805, \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\", \"source_reference\": {\"accession\": \"0000018926-23-000013\", \"company_id\": \"lumen_technologies\", \"document_name\": \"lumn-20221231.htm\", \"raw_asset_id\": \"sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4\", \"source_reference_id\": \"sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm\"}, \"unit\": \"USD\", \"value\": \"16108000000\"}, {\"concept\": \"us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax\", \"context\": {\"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"dimensions\": {}, \"entity_identifier\": \"0000018926\", \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000018926\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2022-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2022-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"decimals\": \"-6\", \"ordinal\": 808, \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\", \"source_reference\": {\"accession\": \"0000018926-23-000013\", \"company_id\": \"lumen_technologies\", \"document_name\": \"lumn-20221231.htm\", \"raw_asset_id\": \"sha256:d7361b93bb6e1e2af07df2313f5b71f5b71b8a7074854c961772345ffb1f0dd7\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:4f96adcc75725e203c4b12c221099db22ce722dbcb4e34a059e60c16acd2bba4\", \"source_reference_id\": \"sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9\", \"source_role\": \"target_primary\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231.htm\"}, \"unit\": \"USD\", \"value\": \"16108000000\"}], \"xml\": [{\"concept\": \"us-gaap:revenuefromcontractwithcustomerexcludingassessedtax\", \"context\": {\"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"dimensions\": {}, \"entity_identifier\": \"0000018926\", \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000018926\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2022-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2022-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"decimals\": \"-6\", \"ordinal\": 805, \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\", \"source_reference\": {\"accession\": \"0000018926-23-000013\", \"company_id\": \"lumen_technologies\", \"document_name\": \"lumn-20221231_htm.xml\", \"raw_asset_id\": \"sha256:bf32ed5e394b6b168b9642225d338f3e46eca99f8362d80b77302ebf4f6d64d9\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:bc7f1dd12d89daf1bb2283328c3641d718ad3632636bb57135c7b6d21bdadd0b\", \"source_reference_id\": \"sha256:85c0287f448f142e933393895181edc38209169c37e871485d0eac808f29a7bd\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"16108000000\"}, {\"concept\": \"us-gaap:revenuefromcontractwithcustomerexcludingassessedtax\", \"context\": {\"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"dimensions\": {}, \"entity_identifier\": \"0000018926\", \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\", \"typed_dimension_count\": 0}, \"context_proof\": {\"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"dimensions\": [], \"identifiers\": [{\"scheme\": \"http://www.sec.gov/CIK\", \"value\": \"0000018926\"}], \"period_fields\": [{\"kind\": \"startdate\", \"value\": \"2022-01-01\"}, {\"kind\": \"enddate\", \"value\": \"2022-12-31\"}], \"typed_dimension_count\": 0}, \"context_ref\": \"i52a02064393c455e89fb6e46a9b726dc_D20220101-20221231\", \"decimals\": \"-6\", \"ordinal\": 808, \"period_end\": \"2022-12-31\", \"period_start\": \"2022-01-01\", \"source_reference\": {\"accession\": \"0000018926-23-000013\", \"company_id\": \"lumen_technologies\", \"document_name\": \"lumn-20221231_htm.xml\", \"raw_asset_id\": \"sha256:bf32ed5e394b6b168b9642225d338f3e46eca99f8362d80b77302ebf4f6d64d9\", \"record_type\": \"SOURCE_REFERENCE\", \"request_attempt_id\": \"request:attempt:bc7f1dd12d89daf1bb2283328c3641d718ad3632636bb57135c7b6d21bdadd0b\", \"source_reference_id\": \"sha256:85c0287f448f142e933393895181edc38209169c37e871485d0eac808f29a7bd\", \"source_role\": \"auditor_facts\", \"source_url\": \"https://www.sec.gov/Archives/edgar/data/18926/000001892623000013/lumn-20221231_htm.xml\"}, \"unit\": \"USD\", \"value\": \"16108000000\"}]}}]}, \"source_reference_ids\": [\"sha256:8daae18007567b32df57dfbf2f36af2471a927c13846b99a4869f84b9921dd58\", \"sha256:7c6e04141f4a3f66882e891cfae9ac06214ca9e2fdceac4a8e29cfee8ae0e2f9\", \"sha256:6adf06f3f314dc364b40a4ba4c435c35bce235165b0a1292d7fc2cf3d0012401\", \"sha256:039568eb75f503436e2b8630b715109d10e750b6feae1628c3777c372e9d3254\", \"sha256:85c0287f448f142e933393895181edc38209169c37e871485d0eac808f29a7bd\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.; B01_LUMEN_FY2022_CONTRACT_REVENUE_COMPONENT_AS_TOTAL",
+    "company_id": "lumen_technologies",
+    "result_id": "sha256:dac0051db5ac4ee69f6d8e0398ce5f89472e4f4e181b7d08a3fe3909e037be9d",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/lumen-statements-company-9efl_3jh/state/updates/B01/periods/FY2022/results/f501ee9fa2ce434fb7a744a5dace28ff",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NOT_REQUESTED_IN_LATEST_EXECUTION",
+    "period_role": "SAVED_RESULT_NOT_REQUESTED",
+    "result_validity": "CONFIRMED_INVALID",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[\"B01_LUMEN_FY2022_CONTRACT_REVENUE_COMPONENT_AS_TOTAL\"]",
+    "requested_in_latest_execution": "False"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
