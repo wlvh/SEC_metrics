@@ -5,6 +5,103 @@ from unittest import TestCase
 from unittest.mock import Mock,patch
 from vnext import historical_e01_company_case as cases
 from tests.vnext.test_historical_ma_confirmation import candidate,POINTER
+from vnext import historical_event_items as items
+
+
+class EventItemEndSubsectionTest(TestCase):
+    """Constructed layout controls, with no model or financial conclusion."""
+
+    @staticmethod
+    def source(*blocks):
+        return ('<html><body>' + ''.join('<p>'+block+'</p>' for block in blocks)
+                + '</body></html>').encode()
+
+    def test_caption_and_distinct_lettered_parts_end_at_the_base_heading(self):
+        for code in ('5.02', '9.01'):
+            with self.subTest(code=code):
+                raw = self.source('Item 1.01 Entry into a Material Definitive Agreement. Body A.',
+                    'Item '+code+' '+items._END_CAPTIONS[code]+'.',
+                    'Item '+code+'(b) Body B.', 'Item '+code+'(d) Body D.', 'SIGNATURES')
+                result = items.item_text(raw_bytes=raw, item_code='1.01')
+                view = items._visible_text(raw_bytes=raw)
+                self.assertEqual(view.index('Item '+code), result['end'])
+                self.assertEqual(view[result['start']:result['end']], result['text'])
+                self.assertEqual('NEXT_ITEM_HEADING', result['end_marker'])
+                self.assertNotIn('Body B', result['text'])
+
+    def test_unqualified_repeat_cannot_cut_off_the_acquisition_paragraph(self):
+        raw = self.source('Item 8.01 Other Events. See the exhibit discussion below:',
+            'Item 9.01 Exhibits are listed below.',
+            'We signed an acquisition agreement with Acme.',
+            'Item 9.01 Financial Statements and Exhibits.', 'SIGNATURES')
+        with self.assertRaisesRegex(items.EventItemTextError, 'END_HEADING_NOT_UNIQUE:8.01:9.01'):
+            items.item_text(raw_bytes=raw, item_code='8.01')
+
+    def test_repeated_base_or_letter_stays_ambiguous(self):
+        for repeated in ('Item 5.02 Another body.', 'Item 5.02(b) Another body.'):
+            with self.subTest(repeated=repeated):
+                raw = self.source('Item 1.01 Entry into a Material Definitive Agreement. Body.',
+                    'Item 5.02 '+items._END_CAPTIONS['5.02']+'.',
+                    'Item 5.02(b) First body.', repeated, 'SIGNATURES')
+                with self.assertRaisesRegex(items.EventItemTextError, 'END_HEADING_NOT_UNIQUE'):
+                    items.item_text(raw_bytes=raw, item_code='1.01')
+
+    def test_another_item_between_parts_stays_ambiguous(self):
+        raw = self.source('Item 1.01 Entry into a Material Definitive Agreement. Body.',
+            'Item 5.02 '+items._END_CAPTIONS['5.02']+'.', 'Item 5.02(b) First body.',
+            'Item 7.01 Regulation FD Disclosure. Another item.', 'Item 5.02(d) Second body.')
+        with self.assertRaisesRegex(items.EventItemTextError, 'END_HEADING_NOT_UNIQUE'):
+            items.item_text(raw_bytes=raw, item_code='1.01')
+
+    def test_text_before_a_part_is_not_just_the_known_caption(self):
+        raw = self.source('Item 1.01 Entry into a Material Definitive Agreement. Body.',
+            'Item 5.02 '+items._END_CAPTIONS['5.02']+'. The acquisition paragraph continues.',
+            'Item 5.02(b) Other body.')
+        with self.assertRaisesRegex(items.EventItemTextError, 'END_HEADING_NOT_UNIQUE'):
+            items.item_text(raw_bytes=raw, item_code='1.01')
+
+    def test_linked_or_hidden_subsections_do_not_clear_the_end(self):
+        for part in ('<a href="#part">Item 5.02(b) Body.</a>',
+                     '<span hidden>Item 5.02(b) Body.</span>'):
+            with self.subTest(part=part):
+                raw = self.source('Item 1.01 Entry into a Material Definitive Agreement. Body.',
+                    'Item 5.02 '+items._END_CAPTIONS['5.02']+'.', part)
+                with self.assertRaisesRegex(items.EventItemTextError, 'END_HEADING_NOT_UNIQUE'):
+                    items.item_text(raw_bytes=raw, item_code='1.01')
+
+    def test_shared_body_caption_rules_are_unchanged(self):
+        self.assertNotIn('5.02', items._CAPTIONS)
+        self.assertIn('5.02', items._END_CAPTIONS)
+
+    def test_an_invisible_caption_cannot_qualify_a_repeated_end(self):
+        raw = self.source('Item 1.01 Entry into a Material Definitive Agreement. Body.',
+            'Item 5.02 <span hidden>'+items._END_CAPTIONS['5.02']+'</span>.',
+            'Item 5.02(b) Other body.')
+        with self.assertRaisesRegex(items.EventItemTextError, 'END_HEADING_NOT_UNIQUE'):
+            items.item_text(raw_bytes=raw, item_code='1.01')
+
+    def test_parts_on_opposite_sides_of_signatures_are_not_one_end(self):
+        raw = self.source('Item 1.01 Entry into a Material Definitive Agreement. Body.',
+            'Item 5.02 '+items._END_CAPTIONS['5.02']+'.', 'Item 5.02(b) First body.',
+            'SIGNATURES', 'Item 5.02(d) An attached document.')
+        with self.assertRaisesRegex(items.EventItemTextError, 'END_HEADING_NOT_UNIQUE'):
+            items.item_text(raw_bytes=raw, item_code='1.01')
+
+    def test_a_second_own_section_is_still_refused(self):
+        raw = self.source('Item 8.01 Other Events. First body.',
+            'Item 7.01 Regulation FD Disclosure. Other body.', 'Item 8.01 Other Events. Second body.')
+        with self.assertRaisesRegex(items.EventItemTextError, 'HEADED_MORE_THAN_ONCE:8.01'):
+            items.item_text(raw_bytes=raw, item_code='8.01')
+
+    def test_hidden_selected_text_and_ambiguous_signatures_stay_refused(self):
+        samples = [
+            (self.source('Item 8.01 Other Events.', '<span hidden>Acquired Acme.</span>',
+                         'SIGNATURES'), 'TEXT_A_READER_CANNOT_SEE'),
+            (self.source('Item 8.01 Other Events. The SIGNATURE page follows.',
+                         'We agreed to acquire Acme.', 'SIGNATURES'), 'END_SIGNATURES_NOT_UNIQUE')]
+        for raw,reason in samples:
+            with self.subTest(reason=reason), self.assertRaisesRegex(items.EventItemTextError, reason):
+                items.item_text(raw_bytes=raw, item_code='8.01')
 
 class HistoricalE01CompanyCaseTest(TestCase):
     def prepare(self, *, dependency=None, successor=False, packet_error=None, amendment_checks=None):
