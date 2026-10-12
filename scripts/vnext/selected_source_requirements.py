@@ -1,4 +1,4 @@
-"""Read-only source preflight for one selected annual B01/B02 task.
+"""Read-only source preflight for one selected annual B01/B02/B03 task.
 
 This names source dependencies from existing saved metadata, not financial
 answers or a fetch allowance. Report end is an SEC metadata date; fiscal-year
@@ -10,13 +10,14 @@ from pathlib import Path
 from sec_urls import (accession_directory_url, accession_document_url,
                       companyfacts_url, submissions_file_url, submissions_url)
 from .canonical import content_hash, sha256_file, strict_json_loads
-from .normal_annual_input import _cik, _registry_rows, annual_period
+from .normal_annual_input import _cik, annual_period
+from .ordinary_registry_scope import registered_company_row
 from .normal_history_catalog import load_history_for_period
 from .normal_period_selection import resolve_period_selection
 from .normal_source_authority import ROOT
 from .normal_source_requirements import _Requirements, _instance_names
 
-METRIC_IDS = frozenset({'B01', 'B02'})
+METRIC_IDS = frozenset({'B01', 'B02', 'B03'})
 
 
 def _need(condition, reason):
@@ -130,10 +131,11 @@ def discover_selected_annual_requirements(*, repo_root, company_id, report_end, 
     _need(type(metric_ids) in (list,tuple) and metric_ids and
           len(metric_ids) == len(set(metric_ids)) and set(metric_ids) <= METRIC_IDS,
           'METRIC_SCOPE_NOT_CONNECTED')
-    _need(sha256_file(path=source/'config/company_registry.csv')
-          == sha256_file(path=ROOT/'config/company_registry.csv'), 'COMPANY_REGISTRY_CHANGED')
-    company = next((r for r in _registry_rows(repo_root=source) if r['company_id']==company_id), None)
-    _need(company is not None, 'COMPANY_NOT_CONFIGURED')
+    company = registered_company_row(repo_root=source, company_id=company_id)
+    # Validate both complete registries, but only this task's company context
+    # must match. Other valid company rows cannot change its source plan.
+    _need(company == registered_company_row(repo_root=ROOT, company_id=company_id),
+          'COMPANY_REGISTRY_CHANGED')
     # Re-use the metadata selection by report end. In particular this does not
     # run the issuer-year resolver's full annual preparation just to name URLs.
     plan = _Requirements(source, company)
@@ -162,7 +164,15 @@ def discover_selected_annual_requirements(*, repo_root, company_id, report_end, 
         current = _annual_requirements(plan, selection['current_filing'], 'target_annual', errors)
         current_period = current['period']
         for filing in selection['current_amendments']:
-            _annual_requirements(plan, filing, 'target_amendment', errors)
+            if set(metric_ids)=={'B03'}:
+                # B03's existing amendment relation reader consumes the whole
+                # inline primary. It does not consume an amendment instance
+                # or directory; do not invent unused required dependencies.
+                plan.require(accession_document_url(cik=int(selection['reporting_cik']),
+                    accession=filing['accessionNumber'],document_name=filing['primaryDocument']),
+                    'target_amendment_primary','text/html',filing['accessionNumber'])
+            else:
+                _annual_requirements(plan, filing, 'target_amendment', errors)
         facts = plan.require(companyfacts_url(cik=int(selection['reporting_cik'])),
                              'selected_companyfacts', 'application/json')
         if facts is not None:

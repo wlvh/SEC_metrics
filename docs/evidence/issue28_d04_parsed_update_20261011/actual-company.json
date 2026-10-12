@@ -1,0 +1,224 @@
+{
+  "code_hashes": {
+    "current_d04_result.py": "91ff5ea4158d23d16b791fbaba391b46cd82e67182aed1509a57ed520f6e9a4e",
+    "ordinary_d04_task_input.py": "2f09453f210fe73bc375d576d8ed2390e56feab16f8e97918ea4e182c0f895b0",
+    "ordinary_task_input.py": "1048582127182d712f418ae4754bc05350ab845cdf48077817e015bccd8be16e",
+    "ordinary_current_update.py": "52d60874406adb1d9a6a1fc30e0948a3bedb1ba29ee1a217bebcfc9658516f97",
+    "ordinary_d04_saved_route.py": "4c736e23da7796995f34d7212408b13ded955626a7d41696b6be2a7ddf77d65d",
+    "continuous_semantic_calls.py": "ecfed86f48c4c12cf7c095a6e88d7812d8cca23b88c0ee0f90dbcd7bfd919bc8"
+  },
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics",
+  "code_identity": "working-tree hashes recorded separately",
+  "source_root": "/private/tmp/issue28-d04-r2-2lscwmmh/d04-original-source",
+  "archive_sha256": "10d5e21437f3ceea4d3fd5b20b41076bca35ec0bcdd31173ba0dcd538833db34",
+  "state": "/private/tmp/issue28-d04-r2-2lscwmmh/state",
+  "operations": [
+    {
+      "label": "first-current-complete-D04",
+      "code": 2,
+      "seconds": 61.59523445800005,
+      "report": {
+        "elapsed_seconds": 61.59380500000043,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "marriott_international",
+        "run_id": "20261011T111653Z-39a3113e",
+        "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+        "selected_metrics": [
+          "D04"
+        ],
+        "metrics": [
+          {
+            "metric_id": "D04",
+            "status": "CANDIDATE_WITHHELD",
+            "attempt_id": "b72d8d256c1c4be39b30f699cd7af6b7",
+            "version": "304bf82b3fc145c596d419f76d36b570",
+            "result_id": "sha256:e523b7a9b36b787596d7de5100746a3c23b44ca336b4791d64c7df9ef7555371",
+            "result_root": "/private/tmp/issue28-d04-r2-2lscwmmh/state/updates/D04/results/304bf82b3fc145c596d419f76d36b570",
+            "calculation_performed": true,
+            "new_candidate_created": true,
+            "result_reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "defect_holds": [],
+            "read_result_id": "sha256:e523b7a9b36b787596d7de5100746a3c23b44ca336b4791d64c7df9ef7555371",
+            "record_root": "/private/tmp/issue28-d04-r2-2lscwmmh/state/updates/D04/results/304bf82b3fc145c596d419f76d36b570",
+            "program_version": {
+              "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/private/tmp/issue28-d04-r2-2lscwmmh/d04-original-source",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics",
+        "record_root": "/private/tmp/issue28-d04-r2-2lscwmmh/state",
+        "output_root": "/private/tmp/issue28-d04-r2-2lscwmmh/out/20261011T111653Z-39a3113e",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    },
+    {
+      "label": "same-task-new-original-bytes",
+      "code": 2,
+      "seconds": 2.02558074999979,
+      "report": {
+        "elapsed_seconds": 2.024486333997629,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "marriott_international",
+        "run_id": "20261011T111755Z-66e22d54",
+        "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+        "selected_metrics": [
+          "D04"
+        ],
+        "metrics": [
+          {
+            "metric_id": "D04",
+            "status": "PREVIOUS_INPUT_WITHHELD",
+            "attempt_id": "2e8ab81d79f34c7f8fba6aea36dcb048",
+            "version": "304bf82b3fc145c596d419f76d36b570",
+            "result_id": "sha256:e523b7a9b36b787596d7de5100746a3c23b44ca336b4791d64c7df9ef7555371",
+            "result_root": "/private/tmp/issue28-d04-r2-2lscwmmh/state/updates/D04/results/304bf82b3fc145c596d419f76d36b570",
+            "result_reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+            "raw_input_unchanged": false,
+            "calculation_performed": false,
+            "new_candidate_created": false,
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "task_input_unchanged": true,
+            "source_comparison": "PARSED_D04_TASK_INPUT_UNCHANGED",
+            "defect_holds": [],
+            "read_result_id": "sha256:e523b7a9b36b787596d7de5100746a3c23b44ca336b4791d64c7df9ef7555371",
+            "record_root": "/private/tmp/issue28-d04-r2-2lscwmmh/state/updates/D04/results/304bf82b3fc145c596d419f76d36b570",
+            "program_version": {
+              "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/private/tmp/issue28-d04-r2-2lscwmmh/d04-original-source",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics",
+        "record_root": "/private/tmp/issue28-d04-r2-2lscwmmh/state",
+        "output_root": "/private/tmp/issue28-d04-r2-2lscwmmh/out/20261011T111755Z-66e22d54",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    },
+    {
+      "label": "same-checked-raw-no-task-parse",
+      "code": 2,
+      "seconds": 0.0798407500005851,
+      "report": {
+        "elapsed_seconds": 0.07881095799893956,
+        "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+        "company_id": "marriott_international",
+        "run_id": "20261011T111757Z-f1e6d352",
+        "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+        "selected_metrics": [
+          "D04"
+        ],
+        "metrics": [
+          {
+            "metric_id": "D04",
+            "status": "PREVIOUS_INPUT_WITHHELD",
+            "attempt_id": "dd21131538b14a4b820761d896ed608c",
+            "version": "304bf82b3fc145c596d419f76d36b570",
+            "result_id": "sha256:e523b7a9b36b787596d7de5100746a3c23b44ca336b4791d64c7df9ef7555371",
+            "result_root": "/private/tmp/issue28-d04-r2-2lscwmmh/state/updates/D04/results/304bf82b3fc145c596d419f76d36b570",
+            "result_reason_code": "D04_DEFINED_SCOPE_NO_DOUBT_DISCLOSURE",
+            "raw_input_unchanged": true,
+            "calculation_performed": false,
+            "new_candidate_created": false,
+            "source_observation_errors": [],
+            "new_calls": {
+              "provider": 0,
+              "paid": 0,
+              "sec": 0
+            },
+            "production_authorized": false,
+            "defect_holds": [],
+            "read_result_id": "sha256:e523b7a9b36b787596d7de5100746a3c23b44ca336b4791d64c7df9ef7555371",
+            "record_root": "/private/tmp/issue28-d04-r2-2lscwmmh/state/updates/D04/results/304bf82b3fc145c596d419f76d36b570",
+            "program_version": {
+              "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+              "has_uncommitted_changes": true
+            }
+          }
+        ],
+        "source_root": "/private/tmp/issue28-d04-r2-2lscwmmh/d04-original-source",
+        "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-d04-parsed-update/SEC_metrics",
+        "record_root": "/private/tmp/issue28-d04-r2-2lscwmmh/state",
+        "output_root": "/private/tmp/issue28-d04-r2-2lscwmmh/out/20261011T111757Z-f1e6d352",
+        "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+        "calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false
+      }
+    }
+  ],
+  "read_seconds": 0.4603129999995872,
+  "rows": [
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "D04",
+      "metric_name": "Going concern source statements and defined-scope assessment",
+      "value": "",
+      "unit": "text",
+      "status": "TEXT_QUAL",
+      "source_class": "10-K",
+      "formula": "source-reported going concern statements",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "fiscal_period": "",
+      "accession": "0001048286-26-000007",
+      "form": "10-K",
+      "filed_date": "2026-02-10",
+      "concept_or_section": "",
+      "context_or_dimension": "",
+      "confidence": "",
+      "notes": "\u672a\u62ab\u9732\u6301\u7eed\u7ecf\u8425\u7591\u8651\uff1a\u5df2\u68c0\u67e5\u4fdd\u5b58\u7684\u5b8c\u6574\u5e74\u62a5\u53ca\u672c\u671f\u4fee\u8ba2\u3001\u539f\u751f\u4e8b\u5b9e\u548c\u7eed\u63a5\u5bf9\u8c61\uff1b\u8fd9\u4e0d\u8868\u793a\u5bf9\u672a\u6765\u8d22\u52a1\u72b6\u51b5\u4f5c\u4fdd\u8bc1\u3002",
+      "company_id": "marriott_international",
+      "result_id": "sha256:e523b7a9b36b787596d7de5100746a3c23b44ca336b4791d64c7df9ef7555371",
+      "record_root": "/private/tmp/issue28-d04-r2-2lscwmmh/state/updates/D04/results/304bf82b3fc145c596d419f76d36b570",
+      "source_root": "/private/tmp/issue28-d04-r2-2lscwmmh/d04-original-source",
+      "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  ],
+  "old_result_files_unchanged": true,
+  "ledger_and_real115_118_files_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "source_comparison_test_adaptation": "None: all phases use the same formal company task and fixed isolated source root; saved-response-only request factory blocks actual execution",
+  "source_append": "Isolated recorded persistence of already saved real live2 body; not new SEC acquisition"
+}

@@ -1,0 +1,556 @@
+{
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2023-12-31",
+    "filingDate": "2024-02-13",
+    "accessionNumber": "0001628280-24-004372",
+    "primaryDocument": "mar-20231231.htm"
+  },
+  "target_period": {
+    "fiscal_year": 2023,
+    "period_start": "2023-01-01",
+    "period_end": "2023-12-31"
+  },
+  "native_revenue_rows": [
+    {
+      "ordinal": 50,
+      "name": "mar:RevenuesGrossofCapitalizedContractCostAmortization",
+      "text": "1,238",
+      "scale": "6",
+      "context": {
+        "context_ref": "c-4",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "us-gaap:ManagementServiceBaseMember"
+        },
+        "entity_identifier": "0001048286",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "typed_dimension_count": 0
+      },
+      "label": "Base management fees",
+      "table": "table_000026",
+      "row": 3
+    },
+    {
+      "ordinal": 53,
+      "name": "mar:RevenuesGrossofCapitalizedContractCostAmortization",
+      "text": "2,831",
+      "scale": "6",
+      "context": {
+        "context_ref": "c-7",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "us-gaap:FranchiseMember"
+        },
+        "entity_identifier": "0001048286",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "typed_dimension_count": 0
+      },
+      "label": "Franchise fees",
+      "table": "table_000026",
+      "row": 4
+    },
+    {
+      "ordinal": 56,
+      "name": "mar:RevenuesGrossofCapitalizedContractCostAmortization",
+      "text": "755",
+      "scale": "6",
+      "context": {
+        "context_ref": "c-10",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "us-gaap:ManagementServiceIncentiveMember"
+        },
+        "entity_identifier": "0001048286",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "typed_dimension_count": 0
+      },
+      "label": "Incentive management fees",
+      "table": "table_000026",
+      "row": 5
+    },
+    {
+      "ordinal": 59,
+      "name": "mar:RevenuesGrossofCapitalizedContractCostAmortization",
+      "text": "4,824",
+      "scale": "6",
+      "context": {
+        "context_ref": "c-13",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+        },
+        "entity_identifier": "0001048286",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "typed_dimension_count": 0
+      },
+      "label": "Gross fee revenues",
+      "table": "table_000026",
+      "row": 6
+    },
+    {
+      "ordinal": 65,
+      "name": "us-gaap:Revenues",
+      "text": "4,736",
+      "scale": "6",
+      "context": {
+        "context_ref": "c-13",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "mar:FeeServiceMember"
+        },
+        "entity_identifier": "0001048286",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "typed_dimension_count": 0
+      },
+      "label": "Net fee revenues",
+      "table": "table_000026",
+      "row": 8
+    },
+    {
+      "ordinal": 68,
+      "name": "us-gaap:Revenues",
+      "text": "1,564",
+      "scale": "6",
+      "context": {
+        "context_ref": "c-16",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "mar:OwnedLeasedandOtherMember"
+        },
+        "entity_identifier": "0001048286",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "typed_dimension_count": 0
+      },
+      "label": "Owned, leased, and other revenue",
+      "table": "table_000026",
+      "row": 9
+    },
+    {
+      "ordinal": 71,
+      "name": "us-gaap:Revenues",
+      "text": "17,413",
+      "scale": "6",
+      "context": {
+        "context_ref": "c-19",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "mar:ReimbursementsMember"
+        },
+        "entity_identifier": "0001048286",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "typed_dimension_count": 0
+      },
+      "label": "Cost reimbursement revenue (1)",
+      "table": "table_000026",
+      "row": 10
+    },
+    {
+      "ordinal": 74,
+      "name": "us-gaap:Revenues",
+      "text": "23,713",
+      "scale": "6",
+      "context": {
+        "context_ref": "c-1",
+        "dimensions": {},
+        "entity_identifier": "0001048286",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "typed_dimension_count": 0
+      },
+      "label": "",
+      "table": "table_000026",
+      "row": 11
+    },
+    {
+      "ordinal": 77,
+      "name": "us-gaap:CostOfRevenue",
+      "text": "1,165",
+      "scale": "6",
+      "context": {
+        "context_ref": "c-16",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "mar:OwnedLeasedandOtherMember"
+        },
+        "entity_identifier": "0001048286",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "typed_dimension_count": 0
+      },
+      "label": "Owned, leased, and other - direct",
+      "table": "table_000026",
+      "row": 13
+    },
+    {
+      "ordinal": 89,
+      "name": "us-gaap:CostOfRevenue",
+      "text": "17,424",
+      "scale": "6",
+      "context": {
+        "context_ref": "c-19",
+        "dimensions": {
+          "srt:ProductOrServiceAxis": "mar:ReimbursementsMember"
+        },
+        "entity_identifier": "0001048286",
+        "period_end": "2023-12-31",
+        "period_start": "2023-01-01",
+        "typed_dimension_count": 0
+      },
+      "label": "Reimbursed expenses (1)",
+      "table": "table_000026",
+      "row": 17
+    }
+  ],
+  "table_rows": [
+    [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "",
+      "2023",
+      "",
+      "2022",
+      "",
+      "2021"
+    ],
+    [
+      "REVENUES",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Base management fees",
+      "$",
+      "1,238",
+      "",
+      "",
+      "$",
+      "1,044",
+      "",
+      "",
+      "$",
+      "669",
+      ""
+    ],
+    [
+      "Franchise fees",
+      "2,831",
+      "",
+      "",
+      "2,505",
+      "",
+      "",
+      "1,790",
+      ""
+    ],
+    [
+      "Incentive management fees",
+      "755",
+      "",
+      "",
+      "529",
+      "",
+      "",
+      "235",
+      ""
+    ],
+    [
+      "Gross fee revenues",
+      "4,824",
+      "",
+      "",
+      "4,078",
+      "",
+      "",
+      "2,694",
+      ""
+    ],
+    [
+      "Contract investment amortization",
+      "(88)",
+      "",
+      "",
+      "(89)",
+      "",
+      "",
+      "(75)",
+      ""
+    ],
+    [
+      "Net fee revenues",
+      "4,736",
+      "",
+      "",
+      "3,989",
+      "",
+      "",
+      "2,619",
+      ""
+    ],
+    [
+      "Owned, leased, and other revenue",
+      "1,564",
+      "",
+      "",
+      "1,367",
+      "",
+      "",
+      "796",
+      ""
+    ],
+    [
+      "Cost reimbursement revenue (1)",
+      "17,413",
+      "",
+      "",
+      "15,417",
+      "",
+      "",
+      "10,442",
+      ""
+    ],
+    [
+      "",
+      "23,713",
+      "",
+      "",
+      "20,773",
+      "",
+      "",
+      "13,857",
+      ""
+    ],
+    [
+      "OPERATING COSTS AND EXPENSES",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Owned, leased, and other - direct",
+      "1,165",
+      "",
+      "",
+      "1,074",
+      "",
+      "",
+      "734",
+      ""
+    ],
+    [
+      "Depreciation, amortization, and other",
+      "189",
+      "",
+      "",
+      "193",
+      "",
+      "",
+      "220",
+      ""
+    ],
+    [
+      "General, administrative, and other",
+      "1,011",
+      "",
+      "",
+      "891",
+      "",
+      "",
+      "823",
+      ""
+    ],
+    [
+      "Merger-related charges and other",
+      "60",
+      "",
+      "",
+      "12",
+      "",
+      "",
+      "8",
+      ""
+    ],
+    [
+      "Reimbursed expenses (1)",
+      "17,424",
+      "",
+      "",
+      "15,141",
+      "",
+      "",
+      "10,322",
+      ""
+    ],
+    [
+      "",
+      "19,849",
+      "",
+      "",
+      "17,311",
+      "",
+      "",
+      "12,107",
+      ""
+    ],
+    [
+      "OPERATING INCOME",
+      "3,864",
+      "",
+      "",
+      "3,462",
+      "",
+      "",
+      "1,750",
+      ""
+    ],
+    [
+      "Gains and other income, net",
+      "40",
+      "",
+      "",
+      "11",
+      "",
+      "",
+      "10",
+      ""
+    ],
+    [
+      "Loss on extinguishment of debt",
+      "\u2014",
+      "",
+      "",
+      "\u2014",
+      "",
+      "",
+      "(164)",
+      ""
+    ],
+    [
+      "Interest expense",
+      "(565)",
+      "",
+      "",
+      "(403)",
+      "",
+      "",
+      "(420)",
+      ""
+    ],
+    [
+      "Interest income",
+      "30",
+      "",
+      "",
+      "26",
+      "",
+      "",
+      "28",
+      ""
+    ],
+    [
+      "Equity in earnings (losses) (1)",
+      "9",
+      "",
+      "",
+      "18",
+      "",
+      "",
+      "(24)",
+      ""
+    ],
+    [
+      "INCOME BEFORE INCOME TAXES",
+      "3,378",
+      "",
+      "",
+      "3,114",
+      "",
+      "",
+      "1,180",
+      ""
+    ],
+    [
+      "Provision for income taxes",
+      "(295)",
+      "",
+      "",
+      "(756)",
+      "",
+      "",
+      "(81)",
+      ""
+    ],
+    [
+      "NET INCOME",
+      "$",
+      "3,083",
+      "",
+      "",
+      "$",
+      "2,358",
+      "",
+      "",
+      "$",
+      "1,099",
+      ""
+    ],
+    [
+      "EARNINGS PER SHARE",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Earnings per share \u2013 basic",
+      "$",
+      "10.23",
+      "",
+      "",
+      "$",
+      "7.27",
+      "",
+      "",
+      "$",
+      "3.36",
+      ""
+    ],
+    [
+      "Earnings per share \u2013 diluted",
+      "$",
+      "10.18",
+      "",
+      "",
+      "$",
+      "7.24",
+      "",
+      "",
+      "$",
+      "3.34",
+      ""
+    ]
+  ]
+}

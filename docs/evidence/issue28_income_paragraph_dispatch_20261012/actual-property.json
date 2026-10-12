@@ -1,0 +1,67 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics",
+  "base_main": "222ab29b7ab767943d3faff66f2b6175390c8927",
+  "tested_working_difference": [
+    "scripts/vnext/ordinary_income_input.py"
+  ],
+  "actual_function_sha256": "bf5cdb95c617a4cd92834fa922304cf2a3ff59b1fab2f4c7509e48c163bc683d",
+  "checks": [
+    {
+      "scope_id": "sha256:2aad479ae1eeaf9b0802a8b41a7fd508ead73758cacecd87be604a2dededb8fb",
+      "classification": "PART_III_ADDITION_WITH_EXPLICIT_NO_NEW_FINANCIAL_STATEMENTS",
+      "original_further_review_retained": true,
+      "original_unchanged_input_classes": [
+        "FISCAL_EVENT_WINDOW"
+      ],
+      "source_references": [
+        {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:0f1a9b2a108d1f35340ea3a4a473d82a3a3b8710de577bd4402e408dbe712af5",
+          "raw_asset_id": "sha256:5e1a509968b99ce829546d0eabeb6e663e711788577901f83d0cbaa53cf6a44a",
+          "company_id": "paramount_skydance_paramount_global",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000081382825000005/para-20241231.htm",
+          "accession": "0000813828-25-000005",
+          "document_name": "para-20241231.htm",
+          "source_role": "target_primary",
+          "request_attempt_id": "request:attempt:255bb923386890b3db4f807546f3fac75d33f941ccdc035730d90d98d37c4b6e"
+        },
+        {
+          "record_type": "SOURCE_REFERENCE",
+          "source_reference_id": "sha256:abfc5dda276a9f731c9c7551acd16e4a4bb40f846784178b8c06f999cf6c74e7",
+          "raw_asset_id": "sha256:ca8bf425a320024aa65885a23bad51b5e97b74f8aadf62bba9968ea13181f845",
+          "company_id": "paramount_skydance_paramount_global",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/813828/000119312525096776/d886907d10ka.htm",
+          "accession": "0001193125-25-096776",
+          "document_name": "d886907d10ka.htm",
+          "source_role": "target_primary",
+          "request_attempt_id": "request:attempt:6b270f8c914232d0bfc5fd978e7f19dc4e249956218b93c68bb067e43735a206"
+        }
+      ],
+      "original_note_text": "Paramount Global (the \u201cCompany\u201d), a Delaware corporation, is filing this Amendment No. 1 on Form 10-K/A (this \u201cAmendment\u201d) to its Annual Report on Form 10-K for the year ended December 31, 2024, originally filed with the Securities and Exchange Commission (the \u201cSEC\u201d) on February 26, 2025 (the \u201cInitial Form 10-K\u201d), solely to amend Part III, Items 10, 11, 12, 13 and 14 of the Initial Form 10-K to include the information required by such Items, rather than incorporate such information into Part III by reference to a proxy statement. Except as explicitly set forth herein, this Amendment does not otherwise change, modify or update the disclosures in, or exhibits to, the Initial Form 10-K. References in this document to \u201cParamount,\u201d the \u201cCompany,\u201d \u201cwe,\u201d \u201cus\u201d and \u201cour\u201d refer to Paramount Global and its consolidated subsidiaries, unless the context otherwise requires.",
+      "before_error": {
+        "reason": "INSTANT_AMENDMENT_COMPLETE_NOTE_UNSUPPORTED",
+        "error_type": "InstantAmendmentError"
+      },
+      "after_input_class": "CURRENT_ORIGINAL_INCOME_STATEMENT_VALUES",
+      "income_conflicts": [],
+      "correction_cover_blocks": [
+        58,
+        59,
+        60
+      ],
+      "restatement_cover_blocks": [
+        61,
+        62,
+        63
+      ],
+      "native_flag_value": "\u2610"
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "metric_result_created": false,
+  "company_result_not_yet_proven": true
+}

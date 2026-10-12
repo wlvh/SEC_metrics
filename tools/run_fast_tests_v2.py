@@ -206,6 +206,11 @@ FAST_TESTS += ('tests.vnext.test_reporting_company_projection.ReportingCompanyPr
 SOURCE_TESTS += ('tests.vnext.test_reporting_company_projection.CurrentNullableTraceProjectionTest',)
 FAST_TESTS += ('tests.vnext.test_current_d04_company',)
 FAST_TESTS += ('tests.vnext.test_securegpt_documented_response',)
+FAST_TESTS += ('tests.vnext.test_explicit_e01_company',)
+FAST_TESTS += ('tests.vnext.test_c04_selected_input',)
+FAST_TESTS += ('tests.vnext.test_historical_auditor_selection',)
+FAST_TESTS += ('tests.vnext.test_historical_auditor_case',)
+FAST_TESTS += ("tests.vnext.test_statement_group_totals",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

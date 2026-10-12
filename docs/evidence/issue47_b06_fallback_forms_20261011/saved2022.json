@@ -1,0 +1,4121 @@
+{
+  "seconds": 8.739696458000253,
+  "result": {
+    "company_id": "southwest_airlines",
+    "metric_id": "B06",
+    "period_start": "2022-12-31",
+    "period_end": "2022-12-31",
+    "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+    "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "0.7568073360157200336857864695",
+    "unit": "ratio",
+    "trace_id": "sha256:28c95bfacec698c16ab7423e08ff554229399a5c4519388d7551ec4fa8da7746",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:9d93b570c392267a675f01fc5d60cee2e3e9296cfbab986c07d36a30d9f7157f"
+  },
+  "selection": {
+    "measurement": {
+      "model_id": "INCLUSIVE_RECONCILED_COSTS",
+      "model": {
+        "inputs": {
+          "gross": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "cost": "us-gaap:DeferredFinanceCostsGross"
+        },
+        "groups": [
+          {
+            "roles": [
+              "gross",
+              "cost"
+            ],
+            "coverage": [
+              "current_borrowings",
+              "noncurrent_borrowings",
+              "finance_leases"
+            ],
+            "expression": {
+              "op": "subtract",
+              "args": [
+                "gross",
+                "cost"
+              ]
+            }
+          }
+        ],
+        "expression": {
+          "op": "subtract",
+          "args": [
+            "gross",
+            "cost"
+          ]
+        },
+        "checks": [
+          {
+            "inputs": {
+              "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+              "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations"
+            },
+            "left": {
+              "op": "subtract",
+              "args": [
+                "gross",
+                "cost"
+              ]
+            },
+            "right": {
+              "op": "add",
+              "args": [
+                "current",
+                "noncurrent"
+              ]
+            }
+          }
+        ]
+      },
+      "scope_class": "consolidated_nonbank",
+      "complete": true,
+      "unresolved": [],
+      "source_credit": "NOT_EVALUATED_AT_SEMANTIC_LAYER",
+      "coverage": [
+        "current_borrowings",
+        "noncurrent_borrowings",
+        "finance_leases"
+      ],
+      "scope_id": "sha256:accec8070a2dfbf5a114262093e52606e81e97222f4bdc881997101e9c0a45d9",
+      "relations": [
+        {
+          "premise": "lease_balance_sheet_classification",
+          "status": "VERIFIED",
+          "evidence": "Finance leases are included in Property and equipment, Current maturities of long-term debt, and Long-term debt less current maturities in the Consolidated Balance Sheet."
+        },
+        {
+          "premise": "debt_composition_membership",
+          "status": "VERIFIED",
+          "members": [
+            [
+              "Pass Through Certificates due 2022 - 6.24%",
+              "0"
+            ],
+            [
+              "2.75% Notes due 2022",
+              "0"
+            ],
+            [
+              "4.75% Notes due 2023",
+              "0"
+            ],
+            [
+              "1.25% Convertible Notes due 2025",
+              "1611000000"
+            ],
+            [
+              "5.25% Notes due 2025",
+              "1302000000"
+            ],
+            [
+              "3.00% Notes due 2026",
+              "300000000"
+            ],
+            [
+              "3.45% Notes due 2027",
+              "300000000"
+            ],
+            [
+              "5.125% Notes due 2027",
+              "1727000000"
+            ],
+            [
+              "7.375% Debentures due 2027",
+              "114000000"
+            ],
+            [
+              "2.625% Notes due 2030",
+              "500000000"
+            ],
+            [
+              "1.000% Payroll Support Program Loan due April 2030 (See Note 2)",
+              "976000000"
+            ],
+            [
+              "1.000% Payroll Support Program Loan due January 2031 (See Note 2)",
+              "566000000"
+            ],
+            [
+              "1.000% Payroll Support Program Loan due April 2031 (See Note 2)",
+              "526000000"
+            ],
+            [
+              "Finance leases",
+              "189000000"
+            ]
+          ]
+        },
+        {
+          "premise": "current_and_adjustments_target",
+          "status": "VERIFIED",
+          "deductions": [
+            [
+              "less current maturities",
+              "42000000"
+            ],
+            [
+              "less debt discount and issuance costs",
+              "23000000"
+            ]
+          ]
+        },
+        {
+          "premise": "finance_lease_current_noncurrent",
+          "status": "VERIFIED",
+          "current": "42000000",
+          "noncurrent": "147000000",
+          "total": "189000000"
+        }
+      ],
+      "disclosure_inventory": [
+        {
+          "origin": "debt_composition",
+          "row": 3,
+          "label": "Pass Through Certificates due 2022 - 6.24%",
+          "value": "0",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 5,
+          "label": "2.75% Notes due 2022",
+          "value": "0",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 6,
+          "label": "4.75% Notes due 2023",
+          "value": "0",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 7,
+          "label": "1.25% Convertible Notes due 2025",
+          "value": "1611000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 8,
+          "label": "5.25% Notes due 2025",
+          "value": "1302000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 10,
+          "label": "3.00% Notes due 2026",
+          "value": "300000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 12,
+          "label": "3.45% Notes due 2027",
+          "value": "300000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 13,
+          "label": "5.125% Notes due 2027",
+          "value": "1727000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 14,
+          "label": "7.375% Debentures due 2027",
+          "value": "114000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 16,
+          "label": "2.625% Notes due 2030",
+          "value": "500000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 17,
+          "label": "1.000% Payroll Support Program Loan due April 2030 (See Note 2)",
+          "value": "976000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 18,
+          "label": "1.000% Payroll Support Program Loan due January 2031 (See Note 2)",
+          "value": "566000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 19,
+          "label": "1.000% Payroll Support Program Loan due April 2031 (See Note 2)",
+          "value": "526000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 20,
+          "label": "Finance leases",
+          "value": "189000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 21,
+          "label": "",
+          "value": "8111000000",
+          "disposition": "RECONCILED_TOTAL"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 22,
+          "label": "Less current maturities",
+          "value": "42000000",
+          "disposition": "RECONCILED_ADJUSTMENT"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 23,
+          "label": "Less debt discount and issuance costs",
+          "value": "23000000",
+          "disposition": "RECONCILED_ADJUSTMENT"
+        },
+        {
+          "origin": "debt_composition",
+          "row": 24,
+          "label": "",
+          "value": "8046000000",
+          "disposition": "RECONCILED_TOTAL"
+        },
+        {
+          "origin": "balance_sheet",
+          "row": 26,
+          "label": "Accounts payable",
+          "value": "2004000000",
+          "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+        },
+        {
+          "origin": "balance_sheet",
+          "row": 27,
+          "label": "Accrued liabilities",
+          "value": "2043000000",
+          "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+        },
+        {
+          "origin": "balance_sheet",
+          "row": 28,
+          "label": "Current operating lease liabilities",
+          "value": "225000000",
+          "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+        },
+        {
+          "origin": "balance_sheet",
+          "row": 29,
+          "label": "Air traffic liability",
+          "value": "6064000000",
+          "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+        },
+        {
+          "origin": "balance_sheet",
+          "row": 30,
+          "label": "Current maturities of long-term debt",
+          "value": "42000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "balance_sheet",
+          "row": 31,
+          "label": "Total current liabilities",
+          "value": "10378000000",
+          "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+        },
+        {
+          "origin": "balance_sheet",
+          "row": 33,
+          "label": "Long-term debt less current maturities",
+          "value": "8046000000",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "balance_sheet",
+          "row": 34,
+          "label": "Air traffic liability - noncurrent",
+          "value": "2186000000",
+          "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+        },
+        {
+          "origin": "balance_sheet",
+          "row": 35,
+          "label": "Deferred income taxes",
+          "value": "1985000000",
+          "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+        },
+        {
+          "origin": "balance_sheet",
+          "row": 37,
+          "label": "Noncurrent operating lease liabilities",
+          "value": "1118000000",
+          "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+        },
+        {
+          "origin": "balance_sheet",
+          "row": 38,
+          "label": "Other noncurrent liabilities",
+          "value": "969000000",
+          "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetbeforeaccumulateddepreciationandamortization",
+          "ordinal": 94,
+          "value": "30984000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetaccumulateddepreciationandamortization",
+          "ordinal": 96,
+          "value": "13642000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+          "ordinal": 98,
+          "value": "17342000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:operatingleaserightofuseasset",
+          "ordinal": 102,
+          "value": "1394000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:operatingleaseliabilitycurrent",
+          "ordinal": 112,
+          "value": "225000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+          "ordinal": 116,
+          "value": "42000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+          "ordinal": 120,
+          "value": "8046000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+          "ordinal": 126,
+          "value": "1118000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliability",
+          "ordinal": 730,
+          "value": "189000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebtandcapitalleaseobligationsincludingcurrentmaturities",
+          "ordinal": 732,
+          "value": "8111000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+          "ordinal": 734,
+          "value": "42000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+          "ordinal": 738,
+          "value": "8046000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:lettersofcreditoutstandingamount",
+          "ordinal": 872,
+          "value": "162000000",
+          "disposition": "EXCLUDED_DOCUMENTED_OFF_BALANCE_SHEET_STANDBY"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:debtinstrumentcollateralamount",
+          "ordinal": 873,
+          "value": "2000000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+          "ordinal": 876,
+          "value": "42000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+          "ordinal": 877,
+          "value": "41000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+          "ordinal": 878,
+          "value": "2943000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+          "ordinal": 879,
+          "value": "322000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+          "ordinal": 880,
+          "value": "2147000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalafteryearfive",
+          "ordinal": 881,
+          "value": "2602000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:longtermdebt",
+          "ordinal": 882,
+          "value": "8097000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:operatingleaserightofuseasset",
+          "ordinal": 914,
+          "value": "1394000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaserightofuseassetaccumulatedamortization",
+          "ordinal": 916,
+          "value": "634000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaserightofuseasset",
+          "ordinal": 918,
+          "value": "297000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "luv:leaserightofuseasset",
+          "ordinal": 920,
+          "value": "1691000000",
+          "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:operatingleaseliabilitycurrent",
+          "ordinal": 922,
+          "value": "225000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilitycurrent",
+          "ordinal": 924,
+          "value": "42000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+          "ordinal": 926,
+          "value": "1118000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilitynoncurrent",
+          "ordinal": 928,
+          "value": "147000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "luv:leaseliability",
+          "ordinal": 930,
+          "value": "1532000000",
+          "disposition": "RECONCILED_FINANCE_AND_OPERATING_TOTAL"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsduenexttwelvemonths",
+          "ordinal": 971,
+          "value": "266000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilitypaymentsduenexttwelvemonths",
+          "ordinal": 972,
+          "value": "49000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyeartwo",
+          "ordinal": 973,
+          "value": "228000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilitypaymentsdueyeartwo",
+          "ordinal": 974,
+          "value": "46000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearthree",
+          "ordinal": 975,
+          "value": "187000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilitypaymentsdueyearthree",
+          "ordinal": 976,
+          "value": "33000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfour",
+          "ordinal": 977,
+          "value": "178000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfour",
+          "ordinal": 978,
+          "value": "24000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfive",
+          "ordinal": 979,
+          "value": "174000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfive",
+          "ordinal": 980,
+          "value": "22000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueafteryearfive",
+          "ordinal": 981,
+          "value": "522000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilitypaymentsdueafteryearfive",
+          "ordinal": 982,
+          "value": "36000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdue",
+          "ordinal": 983,
+          "value": "1555000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilitypaymentsdue",
+          "ordinal": 984,
+          "value": "210000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:lesseeoperatingleaseliabilityundiscountedexcessamount",
+          "ordinal": 985,
+          "value": "212000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilityundiscountedexcessamount",
+          "ordinal": 986,
+          "value": "21000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:operatingleaseliability",
+          "ordinal": 987,
+          "value": "1343000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliability",
+          "ordinal": 988,
+          "value": "189000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:operatingleaseliabilitycurrent",
+          "ordinal": 989,
+          "value": "225000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilitycurrent",
+          "ordinal": 990,
+          "value": "42000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+          "ordinal": 991,
+          "value": "1118000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseliabilitynoncurrent",
+          "ordinal": 992,
+          "value": "147000000",
+          "disposition": "INCLUDED_OR_RECONCILED"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:operatingleaseweightedaveragediscountratepercent",
+          "ordinal": 997,
+          "value": "0.036",
+          "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:financeleaseweightedaveragediscountratepercent",
+          "ordinal": 999,
+          "value": "0.039",
+          "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "luv:letterofcreditpercentofcollateral",
+          "ordinal": 1227,
+          "value": "1",
+          "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:definedbenefitplanbenefitobligation",
+          "ordinal": 1435,
+          "value": "241000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:definedbenefitplanaccumulatedothercomprehensiveincomenetpriorservicecostcreditbeforetax",
+          "ordinal": 1443,
+          "value": "3000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:definedbenefitplanassumptionsusedcalculatingbenefitobligationdiscountrate",
+          "ordinal": 1473,
+          "value": "0.0560",
+          "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "luv:deferredtaxassetsoperatingleaseliability",
+          "ordinal": 1497,
+          "value": "313000000",
+          "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+        },
+        {
+          "origin": "all_instant_xbrl",
+          "concept": "us-gaap:creditcardreceivables",
+          "ordinal": 1564,
+          "value": "85000000",
+          "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+        },
+        {
+          "origin": "related_disclosure",
+          "concept": "us-gaap:debtdisclosuretextblock",
+          "row": 17,
+          "label": "1.000% Payroll Support Program Loan due April 2030 (See Note 2)",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "related_disclosure",
+          "concept": "us-gaap:debtdisclosuretextblock",
+          "row": 18,
+          "label": "1.000% Payroll Support Program Loan due January 2031 (See Note 2)",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "related_disclosure",
+          "concept": "us-gaap:debtdisclosuretextblock",
+          "row": 19,
+          "label": "1.000% Payroll Support Program Loan due April 2031 (See Note 2)",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "related_disclosure",
+          "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+          "row": 17,
+          "label": "1.000% Payroll Support Program Loan due April 2030 (See Note 2)",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "related_disclosure",
+          "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+          "row": 18,
+          "label": "1.000% Payroll Support Program Loan due January 2031 (See Note 2)",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "related_disclosure",
+          "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+          "row": 19,
+          "label": "1.000% Payroll Support Program Loan due April 2031 (See Note 2)",
+          "disposition": "INCLUDED_IN_SELECTED_SET"
+        },
+        {
+          "origin": "related_disclosure",
+          "concept": "us-gaap:lesseeoperatingleasestextblock",
+          "row": 5,
+          "label": "Financing cash flows for finance leases",
+          "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+        },
+        {
+          "origin": "related_disclosure",
+          "concept": "us-gaap:lesseefinanceleasestextblock",
+          "row": 5,
+          "label": "Financing cash flows for finance leases",
+          "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+        },
+        {
+          "origin": "related_disclosure",
+          "concept": "us-gaap:operatingleasesoflessordisclosuretextblock",
+          "row": 5,
+          "label": "Financing cash flows for finance leases",
+          "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+        },
+        {
+          "origin": "related_disclosure",
+          "concept": "us-gaap:leasecosttabletextblock",
+          "row": 5,
+          "label": "Financing cash flows for finance leases",
+          "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+        }
+      ],
+      "proposal": {
+        "method": "DETERMINISTIC_DISCLOSURE_V1",
+        "model_id": "INCLUSIVE_RECONCILED_COSTS",
+        "source_sha256": "729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+        "primary_sha256": "a6e2bc5f40c8f2bc933cf35538b9b371c1f7e96f6a305bbda1ca9d09a5b926c2",
+        "scope_id": "sha256:accec8070a2dfbf5a114262093e52606e81e97222f4bdc881997101e9c0a45d9"
+      },
+      "calculation_facts": [
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:ea4df9200dceff8ecf1a51309ad01e33d7a75871a3cb4ffc974d89da108065a0",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+            "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+            "source_role": "auditor_facts",
+            "document_name": "luv-20221231_htm.xml",
+            "accession": "0000092380-23-000010",
+            "entity": "92380",
+            "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+            "xbrl_fact_ordinal": 732,
+            "reported_decimals": "-6"
+          },
+          "unit": "USD",
+          "value": "8111000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:DeferredFinanceCostsGross",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:15482b2eca961a05d14a08110e1e8ad349ca2db08512d536d74cfe2de49127ce",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+            "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+            "source_role": "auditor_facts",
+            "document_name": "luv-20221231_htm.xml",
+            "accession": "0000092380-23-000010",
+            "entity": "92380",
+            "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+            "xbrl_fact_ordinal": 736,
+            "reported_decimals": "-6"
+          },
+          "unit": "USD",
+          "value": "23000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:StockholdersEquity",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:7dd9346ac196913bd47bb89aa9a79832bc02a337293af6dffe250b33b3ae3225",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+            "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+            "source_role": "auditor_facts",
+            "document_name": "luv-20221231_htm.xml",
+            "accession": "0000092380-23-000010",
+            "entity": "92380",
+            "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+            "xbrl_fact_ordinal": 148,
+            "reported_decimals": "-6"
+          },
+          "unit": "USD",
+          "value": "10687000000"
+        }
+      ],
+      "equity_fact": {
+        "accession": "0000092380-23-000010",
+        "concept": "us-gaap:StockholdersEquity",
+        "duration_days": 0,
+        "entity": "92380",
+        "fact_id": "fact:sha256:7dd9346ac196913bd47bb89aa9a79832bc02a337293af6dffe250b33b3ae3225",
+        "filed": "2023-02-07",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2022-12-31",
+        "period_end": "2022-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+          "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+          "source_role": "auditor_facts",
+          "document_name": "luv-20221231_htm.xml",
+          "accession": "0000092380-23-000010",
+          "entity": "92380",
+          "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+          "xbrl_fact_ordinal": 148,
+          "reported_decimals": "-6"
+        },
+        "unit": "USD",
+        "value": "10687000000"
+      },
+      "components": {
+        "gross": {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:ea4df9200dceff8ecf1a51309ad01e33d7a75871a3cb4ffc974d89da108065a0",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+            "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+            "source_role": "auditor_facts",
+            "document_name": "luv-20221231_htm.xml",
+            "accession": "0000092380-23-000010",
+            "entity": "92380",
+            "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+            "xbrl_fact_ordinal": 732,
+            "reported_decimals": "-6"
+          },
+          "unit": "USD",
+          "value": "8111000000"
+        },
+        "cost": {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:DeferredFinanceCostsGross",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:15482b2eca961a05d14a08110e1e8ad349ca2db08512d536d74cfe2de49127ce",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+            "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+            "source_role": "auditor_facts",
+            "document_name": "luv-20221231_htm.xml",
+            "accession": "0000092380-23-000010",
+            "entity": "92380",
+            "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+            "xbrl_fact_ordinal": 736,
+            "reported_decimals": "-6"
+          },
+          "unit": "USD",
+          "value": "23000000"
+        }
+      },
+      "carrying_amount": "8088000000",
+      "precision": [
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "chosen_ordinal": 732,
+          "all_reports": [
+            {
+              "value": "8111000000",
+              "decimals": "-6",
+              "ordinal": 732,
+              "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:DeferredFinanceCostsGross",
+          "chosen_ordinal": 736,
+          "all_reports": [
+            {
+              "value": "23000000",
+              "decimals": "-6",
+              "ordinal": 736,
+              "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "chosen_ordinal": 116,
+          "all_reports": [
+            {
+              "value": "42000000",
+              "decimals": "-6",
+              "ordinal": 116,
+              "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+            },
+            {
+              "value": "42000000",
+              "decimals": "-6",
+              "ordinal": 734,
+              "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "chosen_ordinal": 120,
+          "all_reports": [
+            {
+              "value": "8046000000",
+              "decimals": "-6",
+              "ordinal": 120,
+              "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+            },
+            {
+              "value": "8046000000",
+              "decimals": "-6",
+              "ordinal": 738,
+              "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:StockholdersEquity",
+          "chosen_ordinal": 148,
+          "all_reports": [
+            {
+              "value": "10687000000",
+              "decimals": "-6",
+              "ordinal": 148,
+              "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+            },
+            {
+              "value": "10687000000",
+              "decimals": "-6",
+              "ordinal": 329,
+              "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:FinanceLeaseLiability",
+          "chosen_ordinal": 730,
+          "all_reports": [
+            {
+              "value": "189000000",
+              "decimals": "-6",
+              "ordinal": 730,
+              "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+            },
+            {
+              "value": "189000000",
+              "decimals": "-6",
+              "ordinal": 988,
+              "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+            }
+          ]
+        }
+      ],
+      "reconciliations": [
+        {
+          "rule": {
+            "inputs": {
+              "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+              "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations"
+            },
+            "left": {
+              "op": "subtract",
+              "args": [
+                "gross",
+                "cost"
+              ]
+            },
+            "right": {
+              "op": "add",
+              "args": [
+                "current",
+                "noncurrent"
+              ]
+            }
+          },
+          "source_facts": [
+            {
+              "accession": "0000092380-23-000010",
+              "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+              "duration_days": 0,
+              "entity": "92380",
+              "fact_id": "fact:sha256:af6ddd7cc42d4d92b240fb35ab052d2ff6a7f7b848fbd28abaa3c01065d16404",
+              "filed": "2023-02-07",
+              "fiscal_period": "FY",
+              "form": "10-K",
+              "period_start": "2022-12-31",
+              "period_end": "2022-12-31",
+              "source_binding": {
+                "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+                "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+                "source_role": "auditor_facts",
+                "document_name": "luv-20221231_htm.xml",
+                "accession": "0000092380-23-000010",
+                "entity": "92380",
+                "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+                "xbrl_fact_ordinal": 116,
+                "reported_decimals": "-6"
+              },
+              "unit": "USD",
+              "value": "42000000"
+            },
+            {
+              "accession": "0000092380-23-000010",
+              "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+              "duration_days": 0,
+              "entity": "92380",
+              "fact_id": "fact:sha256:c9a4f5520feaf5d286784537cd62890c7f41e7270e0aa34b671416d9b072b5eb",
+              "filed": "2023-02-07",
+              "fiscal_period": "FY",
+              "form": "10-K",
+              "period_start": "2022-12-31",
+              "period_end": "2022-12-31",
+              "source_binding": {
+                "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+                "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+                "source_role": "auditor_facts",
+                "document_name": "luv-20221231_htm.xml",
+                "accession": "0000092380-23-000010",
+                "entity": "92380",
+                "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+                "xbrl_fact_ordinal": 120,
+                "reported_decimals": "-6"
+              },
+              "unit": "USD",
+              "value": "8046000000"
+            }
+          ],
+          "left_value": "8088000000",
+          "right_value": "8088000000"
+        }
+      ],
+      "debt_scope_definition": {
+        "included": [
+          "recognized_borrowings",
+          "notes_and_bonds",
+          "finance_lease_liabilities_including_combined_nonlease_components"
+        ],
+        "excluded": [
+          "operating_lease_liabilities",
+          "ordinary_trade_tax_provisions",
+          "customer_deposits",
+          "nonfinancing_trading_derivatives"
+        ],
+        "basis": "recognized_statement_carrying_amount_including_discount_premium_cost_hedge_and_fair_value_measurement",
+        "nonoverlap": "Each demonstrated liability set once; disjoint reported categories may be added",
+        "equity": "same_scope_StockholdersEquity_not_noncontrolling_inclusive",
+        "bank_scope": "Separate bank funding scope and comparability limitation; no netting assets"
+      },
+      "successor_content_checks": {
+        "version": "debt_equity_new_source_v2",
+        "primary_xml_numeric_agreement": [
+          {
+            "concept": "us-gaap:DeferredFinanceCostsGross",
+            "value": "23000000",
+            "xml_reports": [
+              {
+                "value": "23000000",
+                "decimals": "-6",
+                "ordinal": 736,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ],
+            "primary_reports": [
+              {
+                "value": "23000000",
+                "decimals": "-6",
+                "ordinal": 736,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:FinanceLeaseLiability",
+            "value": "189000000",
+            "xml_reports": [
+              {
+                "value": "189000000",
+                "decimals": "-6",
+                "ordinal": 730,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "189000000",
+                "decimals": "-6",
+                "ordinal": 988,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ],
+            "primary_reports": [
+              {
+                "value": "189000000",
+                "decimals": "-6",
+                "ordinal": 730,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "189000000",
+                "decimals": "-6",
+                "ordinal": 988,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:FinanceLeaseLiabilityCurrent",
+            "value": "42000000",
+            "xml_reports": [
+              {
+                "value": "42000000",
+                "decimals": "-6",
+                "ordinal": 924,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "42000000",
+                "decimals": "-6",
+                "ordinal": 990,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ],
+            "primary_reports": [
+              {
+                "value": "42000000",
+                "decimals": "-6",
+                "ordinal": 924,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "42000000",
+                "decimals": "-6",
+                "ordinal": 990,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:FinanceLeaseLiabilityNoncurrent",
+            "value": "147000000",
+            "xml_reports": [
+              {
+                "value": "147000000",
+                "decimals": "-6",
+                "ordinal": 928,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "147000000",
+                "decimals": "-6",
+                "ordinal": 992,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ],
+            "primary_reports": [
+              {
+                "value": "147000000",
+                "decimals": "-6",
+                "ordinal": 928,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "147000000",
+                "decimals": "-6",
+                "ordinal": 992,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:FinanceLeaseLiabilityPaymentsDue",
+            "value": "210000000",
+            "xml_reports": [
+              {
+                "value": "210000000",
+                "decimals": "-6",
+                "ordinal": 984,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ],
+            "primary_reports": [
+              {
+                "value": "210000000",
+                "decimals": "-6",
+                "ordinal": 984,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:FinanceLeaseLiabilityUndiscountedExcessAmount",
+            "value": "21000000",
+            "xml_reports": [
+              {
+                "value": "21000000",
+                "decimals": "-6",
+                "ordinal": 986,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ],
+            "primary_reports": [
+              {
+                "value": "21000000",
+                "decimals": "-6",
+                "ordinal": 986,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:LongTermDebt",
+            "value": "8097000000",
+            "xml_reports": [
+              {
+                "value": "8097000000",
+                "decimals": "-6",
+                "ordinal": 882,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ],
+            "primary_reports": [
+              {
+                "value": "8097000000",
+                "decimals": "-6",
+                "ordinal": 882,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+            "value": "8046000000",
+            "xml_reports": [
+              {
+                "value": "8046000000",
+                "decimals": "-6",
+                "ordinal": 120,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "8046000000",
+                "decimals": "-6",
+                "ordinal": 738,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ],
+            "primary_reports": [
+              {
+                "value": "8046000000",
+                "decimals": "-6",
+                "ordinal": 120,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "8046000000",
+                "decimals": "-6",
+                "ordinal": 738,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+            "value": "42000000",
+            "xml_reports": [
+              {
+                "value": "42000000",
+                "decimals": "-6",
+                "ordinal": 116,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "42000000",
+                "decimals": "-6",
+                "ordinal": 734,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ],
+            "primary_reports": [
+              {
+                "value": "42000000",
+                "decimals": "-6",
+                "ordinal": 116,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "42000000",
+                "decimals": "-6",
+                "ordinal": 734,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+            "value": "8111000000",
+            "xml_reports": [
+              {
+                "value": "8111000000",
+                "decimals": "-6",
+                "ordinal": 732,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ],
+            "primary_reports": [
+              {
+                "value": "8111000000",
+                "decimals": "-6",
+                "ordinal": 732,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:StockholdersEquity",
+            "value": "10687000000",
+            "xml_reports": [
+              {
+                "value": "10687000000",
+                "decimals": "-6",
+                "ordinal": 148,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "10687000000",
+                "decimals": "-6",
+                "ordinal": 329,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ],
+            "primary_reports": [
+              {
+                "value": "10687000000",
+                "decimals": "-6",
+                "ordinal": 148,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "10687000000",
+                "decimals": "-6",
+                "ordinal": 329,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          }
+        ],
+        "alternate_measurements": [
+          {
+            "concept": "us-gaap:scheduleofmaturitiesoflongtermdebttabletextblock",
+            "value": "8097000000",
+            "disposition": "EXPLAINED_DIFFERENT_REPORTED_MEASUREMENT",
+            "basis": "FUTURE_PRINCIPAL_MATURITIES",
+            "members": [
+              {
+                "row": 2,
+                "label": "2023",
+                "value": "42000000"
+              },
+              {
+                "row": 3,
+                "label": "2024",
+                "value": "41000000"
+              },
+              {
+                "row": 4,
+                "label": "2025",
+                "value": "2943000000"
+              },
+              {
+                "row": 5,
+                "label": "2026",
+                "value": "322000000"
+              },
+              {
+                "row": 6,
+                "label": "2027",
+                "value": "2147000000"
+              },
+              {
+                "row": 7,
+                "label": "Thereafter",
+                "value": "2602000000"
+              }
+            ],
+            "total": "8097000000"
+          }
+        ],
+        "narrative_inventory": [
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "FINANCING ACTIVITIES During 2020, the Company issued $2.0 billion of unsecured notes due 2027, of which $1.3 billion was issued June 8, 2020 (the \u201c$1.3 billion 2027 Notes\u201d) and $700 million was issued July 31, 2020 (the \u201c$700 million 2027 Notes\u201d).",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The notes bear interest at 5.125%.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The $700 million 2027 Notes were offered as an additional issuance of the Company\u2019s $1.3 billion 2027 Notes issued on June 8, 2020.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The $700 million 2027 Notes were issued at a premium and this premium has been included within Capitalized financing items in the Consolidated Statement of Cash Flows.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "A portion of the proceeds from the $1.3 billion 2027 Notes was used to repay a portion of the then outstanding Amended and Restated 364-Day Credit Agreement balance.",
+            "disposition": "EXPLICIT_OTHER_PERIOD"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The Company made early prepayments on the notes of $272 million throughout 2022, utilizing available cash on hand.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "During 2020, the Company issued $1.55 billion of unsecured notes due 2025, of which $1.25 billion was issued May 4, 2020 (the \u201c$1.25 billion 2025 Notes\u201d) and $300 million was issued July 31, 2020 (the \u201c$300 million 2025 Notes\u201d).",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The notes bear interest at 5.250%.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The $300 million 2025 Notes were offered as an additional issuance of the Company\u2019s $1.25 billion 2025 Notes issued on May 4, 2020.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The $300 million 2025 Notes were issued at a premium and this premium has been included within Capitalized financing items in the Consolidated Statement of Cash Flows.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The proceeds from the $1.25 billion 2025 Notes were used to repay a portion of the then outstanding Amended and Restated 364-Day Credit Agreement balance.",
+            "disposition": "EXPLICIT_OTHER_PERIOD"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The Company made early prepayments on the notes of $248 million throughout 2022, utilizing available cash on hand.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "During 2020, the Company issued $1.25 billion of unsecured notes due 2023, of which $750 million was issued May 4, 2020 (the \u201c$750 million 2023 Notes\u201d) and $500 million was issued June 8, 2020 (the \u201c$500 million 2023 Notes\u201d).",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The notes bore interest at 4.750%.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The $500 million 2023 Notes were offered as an additional issuance of the Company's $750 million 2023 Notes issued on May 4, 2020.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The $500 million 2023 Notes were issued at a premium and this premium has been included within Capitalized financing items in the Consolidated Statement of Cash Flows.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The proceeds from the $750 million 2023 Notes and a portion of the proceeds of the $500 million 2023 Notes were used to repay a portion of the then outstanding Amended and Restated 364-Day Credit Agreement balance.",
+            "disposition": "EXPLICIT_OTHER_PERIOD"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The Company prepaid the notes in full on August 31, 2022, utilizing available cash on hand.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "On May 1, 2020, the Company completed the public offering of $2.3 billion aggregate principal amount of Convertible Senior Notes (the \u201cConvertible Notes\u201d).",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The Convertible Notes bear interest at a rate of 1.25% and will mature on May 1, 2025.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "Interest on the notes is payable semi-annually in arrears.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "Holders may convert their Convertible Notes at their option at any time prior to the close of business on the business day immediately preceding February 1, 2025, in the event certain conditions are met, as stated in the offering documents.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The Convertible Notes did not meet the criteria to be converted as of the date of the financial statements, and thus are classified as Long-term debt in the accompanying Consolidated Balance Sheet as of December 31, 2022.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The Company intends to settle conversions by paying cash up to the principal amount of the Convertible Notes, with any excess conversion value settled in cash or shares of common stock.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The initial conversion rate is 25.9909 shares of common stock per $1,000 principal amount of Convertible Notes (equivalent to an initial conversion price of approximately $38.48 per share of common stock).",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "As of December 31, 2022, the if-converted value of the Convertible Notes was less than the principal amount by $201 million, using the Company's closing stock price.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "Upon issuance, the Company bifurcated the Convertible Notes for accounting purposes between a liability component and an equity component utilizing applicable guidance.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The liability component was determined by estimating the fair value of a hypothetical issuance of an identical offering excluding the conversion feature of the Convertible Notes.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The initial carrying amount of the equity component was calculated as the difference between the liability component and the face amount of the Convertible Notes.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "Upon adoption, the Company reclassified the remaining equity component, of $300 million, from Additional paid-in capital to Long-term debt associated with its Convertible Notes, and no longer records amortization of the debt discount to Interest expense.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The following table details the equity and liability component recognized related to the Convertible Notes, prior to and following the adoption of ASU 2020-06: The Company recognized interest expense associated with the Convertible Notes as follows: The unamortized debt issuance costs are being recognized as non-cash interest expense based on the 5-year term of the notes, through May 1, 2025, less amounts that were or will be required to be accelerated immediately upon conversion or repurchases.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The effective interest rate associated with the Convertible Notes was approximately 1.9 percent for the year ended December 31, 2022.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "During the years ended December 31, 2022 and 2021, the Company paid $3.1 billion and $905 million, respectively, in debt and finance lease obligations, which included scheduled debt and lease payments, partial extinguishment of Convertible Notes, and the early prepayment of debt.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The following tables present the details of the partial extinguishment of the Company's Convertible Notes and early prepayment of debt (excluding payments on finance leases) for the years ended December 31, 2022 and 2021.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The Company has access to $1.0 billion under its amended and restated revolving credit facility (the \"Amended A&R Credit Agreement\").",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "In July 2022, this facility was amended to extend the expiration date to August 2025, and to change the benchmark rate from London Interbank Offered Rate (\"LIBOR\") to the Secured Overnight Financing Rate (\"SOFR\").",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "For the twelve months ended December 31, 2022 and 2021 there were no amounts outstanding under the Amended A&R Credit Agreement.",
+            "disposition": "EXPLICIT_NO_BORROWING_BALANCE"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "Generally, amounts outstanding under the Amended A&R Credit Agreement bear interest at interest rates based on either the SOFR rate (selected by the Company for designated interest periods) or the \u201calternate base rate\u201d (being the highest of (1) the Wall Street Journal prime rate, (2) one-month adjusted SOFR (one-month SOFR plus 0.1 percent) plus 1 percent, and (3) the Federal Reserve Bank of New York Rate, plus 0.5 percent).",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The Amended A&R Credit Agreement contains customary representations and warranties, covenants, and events of default.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The Amended A&R Credit Agreement is secured by a pool of 83 aircraft and related assets, each with a minimum appraised value ratio requirement.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "Under the Amended A&R Credit Agreement, the Company is required to maintain a minimum level of liquidity of $1.5 billion (defined as the sum of (i) the aggregate amount available to be borrowed under the Amended A&R Credit Agreement plus (ii) the aggregate amount of unrestricted cash and cash equivalents of the Company plus (iii) the aggregate amount of short-term investments of the Company).",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "For the twelve months ended December 31, 2022 and 2021, the Company was in compliance with this covenant and all other covenants in the Amended A&R Credit Agreement.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The Amended A&R Credit Agreement has an accordion feature that would allow the Company, subject to, among other things, the procurement of incremental commitments, to increase the size of the facility to $1.5 billion.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "During February 2020, the Company issued $500 million senior unsecured notes due 2030.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The notes bear interest at 2.625 percent.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "During November 2017, the Company issued $300 million senior unsecured notes due 2022.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The notes bore interest at 2.75 percent.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The Company paid the loans in full on November 14, 2022, utilizing available cash on hand.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "Also during November 2017, the Company issued $300 million senior unsecured notes due 2027.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The notes bear interest at 3.45 percent.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "During November 2016, the Company issued $300 million senior unsecured notes due 2026.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The notes bear interest at 3.00 percent.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The trusts used the proceeds from the sale of certificates to acquire equipment notes in the same amounts, which were issued by the Company on a full recourse basis.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "Payments on the equipment notes held in each trust were passed through to the holders of certificates of such trust.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The equipment notes were issued for each of 16 Boeing 737-700 (\"-700\") aircraft owned by the Company and were secured by a mortgage on each aircraft.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The equipment notes matured and were paid in full on August 1, 2022, utilizing available cash on hand.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "On February 28, 1997, the Company issued $100 million of senior unsecured 7.375 percent debentures due March 1, 2027.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The debentures may be redeemed, at the option of the Company, in whole at any time or in part from time to time, at a redemption price equal to the greater of the principal amount of the debentures plus accrued interest at the date of redemption or the sum of the present values of the remaining scheduled payments of principal and interest thereon, discounted to the date of redemption at the comparable treasury rate plus 20 basis points, plus accrued interest at the date of redemption.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "The net book value of the assets pledged as collateral for the Company\u2019s secured borrowings, primarily aircraft, was $2.0 billion at December 31, 2022.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "This included aircraft with net book values of approximately $296 million, in which the associated debt had been repaid as of December 31, 2022, but for which the liens have been or will be formally removed in 2023.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "sentence": "As of December 31, 2022, aggregate annual principal maturities of debt and finance leases (not including amounts associated with interest on finance leases) are as follows:",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:lesseeleasespolicytextblock",
+            "sentence": "Finance leases are included in Property and equipment, Current maturities of long-term debt, and Long-term debt less current maturities in the Consolidated Balance Sheet.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:lesseeleasespolicytextblock",
+            "sentence": "Lease payments do not include (i) variable lease payments other than those that depend on an index or rate, (ii) any guarantee by the lessee of the lessor\u2019s debt, or (iii) any amount allocated to non-lease components, if such election was made upon adoption, per the provisions of the Accounting Standards Codification (\"ASC\") 842.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:lesseeleasespolicytextblock",
+            "sentence": "The Company uses its estimated incremental borrowing rate, which is derived from information available at the lease commencement date, in determining the present value of lease payments, since the Company does not know the actual implicit rates in its leases.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          },
+          {
+            "concept": "us-gaap:lesseeleasespolicytextblock",
+            "sentence": "The Company gives consideration to its recent debt issuances as well as publicly available data for instruments with similar characteristics when calculating its incremental borrowing rate.",
+            "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+          }
+        ],
+        "narrative_scope": "CURRENT_MONETARY_BALANCE_ASSERTIONS_IN_REQUIRED_DEBT_AND_LEASE_NOTES",
+        "checks_id": "sha256:ca64ab3e7f7ae1775628942baf93ba6870b049c2e45b93c9bf945f6a885fb829"
+      }
+    },
+    "audit": {
+      "record_type": "STRUCTURED_PRIMARY_SELECTION",
+      "resolver": "debt_equity_financing_set_v3",
+      "target": {
+        "company_id": "southwest_airlines",
+        "entity": "92380",
+        "accession": "0000092380-23-000010",
+        "period_start": "2022-12-31",
+        "period_end": "2022-12-31",
+        "scope": {
+          "entity_scope": "consolidated"
+        },
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b"
+      },
+      "branch": "INCLUSIVE_RECONCILED_COSTS",
+      "debt_candidates": [
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:DeferredFinanceCostsGross",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:f812f976ec9d15afab73ccf8eb3b4480e961b42212118a033718dd1ac862ff80",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e",
+            "accession": "0000092380-23-000010",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "23000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:FinanceLeaseLiability",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:1be526fe496c33a6b8d4a0943fb51dab7c41d3e952b6d6c66e0317e453b9c9b4",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e",
+            "accession": "0000092380-23-000010",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "189000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:FinanceLeaseLiabilityCurrent",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:9d53e67cbdc9e5e4262f131982ac714e60bd03c363b96e7d7ce4a8f004dcaea5",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e",
+            "accession": "0000092380-23-000010",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "42000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:FinanceLeaseLiabilityNoncurrent",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:390bda8ffb26e57feb13a0e762b8080d04a72df1d481f27ae846817fa3a48ad9",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e",
+            "accession": "0000092380-23-000010",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "147000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:LongTermDebt",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:97c0e81ed4aed62a17d75653d6886598f201b1080b33562d77283e247babdb00",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e",
+            "accession": "0000092380-23-000010",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": "CY2022Q4I"
+          },
+          "unit": "USD",
+          "value": "8097000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:9d26bef571498fb7cb748faf1ca13e26ce2060578eebcd0c075b8b1201889dcf",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e",
+            "accession": "0000092380-23-000010",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "8046000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:d8a7cf2adbb96c3cdb577a1946d982facb0ceaa220b9c9d5a64776e911e1d9b9",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e",
+            "accession": "0000092380-23-000010",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "42000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:3a1925618d4f09aee169725f43c4612645ea1f198332f9fa81287dc622231519",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e",
+            "accession": "0000092380-23-000010",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "8111000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:StockholdersEquity",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:d44cd23a6d54ed2f5d6fc23ca69f424707227a6152b258dd8744fc55e879ef2a",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:11d8e0e98fb7291b823486e7b38d22dfb5f82f4c4d1017fd4480cd71e61d0b1e",
+            "accession": "0000092380-23-000010",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "10687000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:ea4df9200dceff8ecf1a51309ad01e33d7a75871a3cb4ffc974d89da108065a0",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+            "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+            "source_role": "auditor_facts",
+            "document_name": "luv-20221231_htm.xml",
+            "accession": "0000092380-23-000010",
+            "entity": "92380",
+            "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+            "xbrl_fact_ordinal": 732,
+            "reported_decimals": "-6"
+          },
+          "unit": "USD",
+          "value": "8111000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:DeferredFinanceCostsGross",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:15482b2eca961a05d14a08110e1e8ad349ca2db08512d536d74cfe2de49127ce",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+            "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+            "source_role": "auditor_facts",
+            "document_name": "luv-20221231_htm.xml",
+            "accession": "0000092380-23-000010",
+            "entity": "92380",
+            "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+            "xbrl_fact_ordinal": 736,
+            "reported_decimals": "-6"
+          },
+          "unit": "USD",
+          "value": "23000000"
+        },
+        {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:StockholdersEquity",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:7dd9346ac196913bd47bb89aa9a79832bc02a337293af6dffe250b33b3ae3225",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+            "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+            "source_role": "auditor_facts",
+            "document_name": "luv-20221231_htm.xml",
+            "accession": "0000092380-23-000010",
+            "entity": "92380",
+            "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+            "xbrl_fact_ordinal": 148,
+            "reported_decimals": "-6"
+          },
+          "unit": "USD",
+          "value": "10687000000"
+        }
+      ],
+      "chosen_debt_fact_ids": [
+        "fact:sha256:ea4df9200dceff8ecf1a51309ad01e33d7a75871a3cb4ffc974d89da108065a0",
+        "fact:sha256:15482b2eca961a05d14a08110e1e8ad349ca2db08512d536d74cfe2de49127ce"
+      ],
+      "equity_fact_id": "fact:sha256:7dd9346ac196913bd47bb89aa9a79832bc02a337293af6dffe250b33b3ae3225",
+      "debt": "8088000000",
+      "proven_debt_subtotal": "8088000000",
+      "equity": "10687000000",
+      "reasons": [],
+      "nonpositive_equity": false,
+      "fallback_executed": false,
+      "provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "measurement_basis": "PERIOD_END_CARRYING_AMOUNT_OF_DEFINED_DEBT_SET",
+      "measurement_reconciliation": {
+        "model_id": "INCLUSIVE_RECONCILED_COSTS",
+        "model": {
+          "inputs": {
+            "gross": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+            "cost": "us-gaap:DeferredFinanceCostsGross"
+          },
+          "groups": [
+            {
+              "roles": [
+                "gross",
+                "cost"
+              ],
+              "coverage": [
+                "current_borrowings",
+                "noncurrent_borrowings",
+                "finance_leases"
+              ],
+              "expression": {
+                "op": "subtract",
+                "args": [
+                  "gross",
+                  "cost"
+                ]
+              }
+            }
+          ],
+          "expression": {
+            "op": "subtract",
+            "args": [
+              "gross",
+              "cost"
+            ]
+          },
+          "checks": [
+            {
+              "inputs": {
+                "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+                "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations"
+              },
+              "left": {
+                "op": "subtract",
+                "args": [
+                  "gross",
+                  "cost"
+                ]
+              },
+              "right": {
+                "op": "add",
+                "args": [
+                  "current",
+                  "noncurrent"
+                ]
+              }
+            }
+          ]
+        },
+        "scope_class": "consolidated_nonbank",
+        "complete": true,
+        "unresolved": [],
+        "source_credit": "NOT_EVALUATED_AT_SEMANTIC_LAYER",
+        "coverage": [
+          "current_borrowings",
+          "noncurrent_borrowings",
+          "finance_leases"
+        ],
+        "scope_id": "sha256:accec8070a2dfbf5a114262093e52606e81e97222f4bdc881997101e9c0a45d9",
+        "relations": [
+          {
+            "premise": "lease_balance_sheet_classification",
+            "status": "VERIFIED",
+            "evidence": "Finance leases are included in Property and equipment, Current maturities of long-term debt, and Long-term debt less current maturities in the Consolidated Balance Sheet."
+          },
+          {
+            "premise": "debt_composition_membership",
+            "status": "VERIFIED",
+            "members": [
+              [
+                "Pass Through Certificates due 2022 - 6.24%",
+                "0"
+              ],
+              [
+                "2.75% Notes due 2022",
+                "0"
+              ],
+              [
+                "4.75% Notes due 2023",
+                "0"
+              ],
+              [
+                "1.25% Convertible Notes due 2025",
+                "1611000000"
+              ],
+              [
+                "5.25% Notes due 2025",
+                "1302000000"
+              ],
+              [
+                "3.00% Notes due 2026",
+                "300000000"
+              ],
+              [
+                "3.45% Notes due 2027",
+                "300000000"
+              ],
+              [
+                "5.125% Notes due 2027",
+                "1727000000"
+              ],
+              [
+                "7.375% Debentures due 2027",
+                "114000000"
+              ],
+              [
+                "2.625% Notes due 2030",
+                "500000000"
+              ],
+              [
+                "1.000% Payroll Support Program Loan due April 2030 (See Note 2)",
+                "976000000"
+              ],
+              [
+                "1.000% Payroll Support Program Loan due January 2031 (See Note 2)",
+                "566000000"
+              ],
+              [
+                "1.000% Payroll Support Program Loan due April 2031 (See Note 2)",
+                "526000000"
+              ],
+              [
+                "Finance leases",
+                "189000000"
+              ]
+            ]
+          },
+          {
+            "premise": "current_and_adjustments_target",
+            "status": "VERIFIED",
+            "deductions": [
+              [
+                "less current maturities",
+                "42000000"
+              ],
+              [
+                "less debt discount and issuance costs",
+                "23000000"
+              ]
+            ]
+          },
+          {
+            "premise": "finance_lease_current_noncurrent",
+            "status": "VERIFIED",
+            "current": "42000000",
+            "noncurrent": "147000000",
+            "total": "189000000"
+          }
+        ],
+        "disclosure_inventory": [
+          {
+            "origin": "debt_composition",
+            "row": 3,
+            "label": "Pass Through Certificates due 2022 - 6.24%",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 5,
+            "label": "2.75% Notes due 2022",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 6,
+            "label": "4.75% Notes due 2023",
+            "value": "0",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 7,
+            "label": "1.25% Convertible Notes due 2025",
+            "value": "1611000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 8,
+            "label": "5.25% Notes due 2025",
+            "value": "1302000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 10,
+            "label": "3.00% Notes due 2026",
+            "value": "300000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 12,
+            "label": "3.45% Notes due 2027",
+            "value": "300000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 13,
+            "label": "5.125% Notes due 2027",
+            "value": "1727000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 14,
+            "label": "7.375% Debentures due 2027",
+            "value": "114000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 16,
+            "label": "2.625% Notes due 2030",
+            "value": "500000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan due April 2030 (See Note 2)",
+            "value": "976000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan due January 2031 (See Note 2)",
+            "value": "566000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 19,
+            "label": "1.000% Payroll Support Program Loan due April 2031 (See Note 2)",
+            "value": "526000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 20,
+            "label": "Finance leases",
+            "value": "189000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 21,
+            "label": "",
+            "value": "8111000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 22,
+            "label": "Less current maturities",
+            "value": "42000000",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 23,
+            "label": "Less debt discount and issuance costs",
+            "value": "23000000",
+            "disposition": "RECONCILED_ADJUSTMENT"
+          },
+          {
+            "origin": "debt_composition",
+            "row": 24,
+            "label": "",
+            "value": "8046000000",
+            "disposition": "RECONCILED_TOTAL"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 26,
+            "label": "Accounts payable",
+            "value": "2004000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 27,
+            "label": "Accrued liabilities",
+            "value": "2043000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 28,
+            "label": "Current operating lease liabilities",
+            "value": "225000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 29,
+            "label": "Air traffic liability",
+            "value": "6064000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 30,
+            "label": "Current maturities of long-term debt",
+            "value": "42000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 31,
+            "label": "Total current liabilities",
+            "value": "10378000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 33,
+            "label": "Long-term debt less current maturities",
+            "value": "8046000000",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 34,
+            "label": "Air traffic liability - noncurrent",
+            "value": "2186000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 35,
+            "label": "Deferred income taxes",
+            "value": "1985000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 37,
+            "label": "Noncurrent operating lease liabilities",
+            "value": "1118000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "balance_sheet",
+            "row": 38,
+            "label": "Other noncurrent liabilities",
+            "value": "969000000",
+            "disposition": "EXCLUDED_ORDINARY_OR_OPERATING_OR_AGGREGATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetbeforeaccumulateddepreciationandamortization",
+            "ordinal": 94,
+            "value": "30984000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetaccumulateddepreciationandamortization",
+            "ordinal": 96,
+            "value": "13642000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:propertyplantandequipmentandfinanceleaserightofuseassetafteraccumulateddepreciationandamortization",
+            "ordinal": 98,
+            "value": "17342000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 102,
+            "value": "1394000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 112,
+            "value": "225000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+            "ordinal": 116,
+            "value": "42000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+            "ordinal": 120,
+            "value": "8046000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 126,
+            "value": "1118000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 730,
+            "value": "189000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationsincludingcurrentmaturities",
+            "ordinal": 732,
+            "value": "8111000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligationscurrent",
+            "ordinal": 734,
+            "value": "42000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtandcapitalleaseobligations",
+            "ordinal": 738,
+            "value": "8046000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lettersofcreditoutstandingamount",
+            "ordinal": 872,
+            "value": "162000000",
+            "disposition": "EXCLUDED_DOCUMENTED_OFF_BALANCE_SHEET_STANDBY"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:debtinstrumentcollateralamount",
+            "ordinal": 873,
+            "value": "2000000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinnexttwelvemonths",
+            "ordinal": 876,
+            "value": "42000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyeartwo",
+            "ordinal": 877,
+            "value": "41000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearthree",
+            "ordinal": 878,
+            "value": "2943000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfour",
+            "ordinal": 879,
+            "value": "322000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalinyearfive",
+            "ordinal": 880,
+            "value": "2147000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebtmaturitiesrepaymentsofprincipalafteryearfive",
+            "ordinal": 881,
+            "value": "2602000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:longtermdebt",
+            "ordinal": 882,
+            "value": "8097000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaserightofuseasset",
+            "ordinal": 914,
+            "value": "1394000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseassetaccumulatedamortization",
+            "ordinal": 916,
+            "value": "634000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaserightofuseasset",
+            "ordinal": 918,
+            "value": "297000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:leaserightofuseasset",
+            "ordinal": 920,
+            "value": "1691000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 922,
+            "value": "225000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 924,
+            "value": "42000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 926,
+            "value": "1118000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 928,
+            "value": "147000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:leaseliability",
+            "ordinal": 930,
+            "value": "1532000000",
+            "disposition": "RECONCILED_FINANCE_AND_OPERATING_TOTAL"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 971,
+            "value": "266000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsduenexttwelvemonths",
+            "ordinal": 972,
+            "value": "49000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 973,
+            "value": "228000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyeartwo",
+            "ordinal": 974,
+            "value": "46000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearthree",
+            "ordinal": 975,
+            "value": "187000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearthree",
+            "ordinal": 976,
+            "value": "33000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfour",
+            "ordinal": 977,
+            "value": "178000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfour",
+            "ordinal": 978,
+            "value": "24000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueyearfive",
+            "ordinal": 979,
+            "value": "174000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueyearfive",
+            "ordinal": 980,
+            "value": "22000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 981,
+            "value": "522000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdueafteryearfive",
+            "ordinal": 982,
+            "value": "36000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilitypaymentsdue",
+            "ordinal": 983,
+            "value": "1555000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitypaymentsdue",
+            "ordinal": 984,
+            "value": "210000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:lesseeoperatingleaseliabilityundiscountedexcessamount",
+            "ordinal": 985,
+            "value": "212000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilityundiscountedexcessamount",
+            "ordinal": 986,
+            "value": "21000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliability",
+            "ordinal": 987,
+            "value": "1343000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliability",
+            "ordinal": 988,
+            "value": "189000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitycurrent",
+            "ordinal": 989,
+            "value": "225000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitycurrent",
+            "ordinal": 990,
+            "value": "42000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseliabilitynoncurrent",
+            "ordinal": 991,
+            "value": "1118000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseliabilitynoncurrent",
+            "ordinal": 992,
+            "value": "147000000",
+            "disposition": "INCLUDED_OR_RECONCILED"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:operatingleaseweightedaveragediscountratepercent",
+            "ordinal": 997,
+            "value": "0.036",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:financeleaseweightedaveragediscountratepercent",
+            "ordinal": 999,
+            "value": "0.039",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:letterofcreditpercentofcollateral",
+            "ordinal": 1227,
+            "value": "1",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:definedbenefitplanbenefitobligation",
+            "ordinal": 1435,
+            "value": "241000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:definedbenefitplanaccumulatedothercomprehensiveincomenetpriorservicecostcreditbeforetax",
+            "ordinal": 1443,
+            "value": "3000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:definedbenefitplanassumptionsusedcalculatingbenefitobligationdiscountrate",
+            "ordinal": 1473,
+            "value": "0.0560",
+            "disposition": "EXCLUDED_NONMONETARY_COUNT_OR_RATE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "luv:deferredtaxassetsoperatingleaseliability",
+            "ordinal": 1497,
+            "value": "313000000",
+            "disposition": "EXCLUDED_EXPLICIT_CUSTOM_TAX_ASSET_OR_OPERATING_NATURE"
+          },
+          {
+            "origin": "all_instant_xbrl",
+            "concept": "us-gaap:creditcardreceivables",
+            "ordinal": 1564,
+            "value": "85000000",
+            "disposition": "EXCLUDED_STANDARD_DIFFERENT_MEASUREMENT_OR_NATURE"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan due April 2030 (See Note 2)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan due January 2031 (See Note 2)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:debtdisclosuretextblock",
+            "row": 19,
+            "label": "1.000% Payroll Support Program Loan due April 2031 (See Note 2)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 17,
+            "label": "1.000% Payroll Support Program Loan due April 2030 (See Note 2)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 18,
+            "label": "1.000% Payroll Support Program Loan due January 2031 (See Note 2)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+            "row": 19,
+            "label": "1.000% Payroll Support Program Loan due April 2031 (See Note 2)",
+            "disposition": "INCLUDED_IN_SELECTED_SET"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:lesseeoperatingleasestextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:lesseefinanceleasestextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:operatingleasesoflessordisclosuretextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          },
+          {
+            "origin": "related_disclosure",
+            "concept": "us-gaap:leasecosttabletextblock",
+            "row": 5,
+            "label": "Financing cash flows for finance leases",
+            "disposition": "EXCLUDED_LEASE_CASH_FLOW"
+          }
+        ],
+        "proposal": {
+          "method": "DETERMINISTIC_DISCLOSURE_V1",
+          "model_id": "INCLUSIVE_RECONCILED_COSTS",
+          "source_sha256": "729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+          "primary_sha256": "a6e2bc5f40c8f2bc933cf35538b9b371c1f7e96f6a305bbda1ca9d09a5b926c2",
+          "scope_id": "sha256:accec8070a2dfbf5a114262093e52606e81e97222f4bdc881997101e9c0a45d9"
+        },
+        "calculation_facts": [
+          {
+            "accession": "0000092380-23-000010",
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+            "duration_days": 0,
+            "entity": "92380",
+            "fact_id": "fact:sha256:ea4df9200dceff8ecf1a51309ad01e33d7a75871a3cb4ffc974d89da108065a0",
+            "filed": "2023-02-07",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2022-12-31",
+            "period_end": "2022-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+              "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+              "source_role": "auditor_facts",
+              "document_name": "luv-20221231_htm.xml",
+              "accession": "0000092380-23-000010",
+              "entity": "92380",
+              "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+              "xbrl_fact_ordinal": 732,
+              "reported_decimals": "-6"
+            },
+            "unit": "USD",
+            "value": "8111000000"
+          },
+          {
+            "accession": "0000092380-23-000010",
+            "concept": "us-gaap:DeferredFinanceCostsGross",
+            "duration_days": 0,
+            "entity": "92380",
+            "fact_id": "fact:sha256:15482b2eca961a05d14a08110e1e8ad349ca2db08512d536d74cfe2de49127ce",
+            "filed": "2023-02-07",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2022-12-31",
+            "period_end": "2022-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+              "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+              "source_role": "auditor_facts",
+              "document_name": "luv-20221231_htm.xml",
+              "accession": "0000092380-23-000010",
+              "entity": "92380",
+              "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+              "xbrl_fact_ordinal": 736,
+              "reported_decimals": "-6"
+            },
+            "unit": "USD",
+            "value": "23000000"
+          },
+          {
+            "accession": "0000092380-23-000010",
+            "concept": "us-gaap:StockholdersEquity",
+            "duration_days": 0,
+            "entity": "92380",
+            "fact_id": "fact:sha256:7dd9346ac196913bd47bb89aa9a79832bc02a337293af6dffe250b33b3ae3225",
+            "filed": "2023-02-07",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2022-12-31",
+            "period_end": "2022-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+              "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+              "source_role": "auditor_facts",
+              "document_name": "luv-20221231_htm.xml",
+              "accession": "0000092380-23-000010",
+              "entity": "92380",
+              "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+              "xbrl_fact_ordinal": 148,
+              "reported_decimals": "-6"
+            },
+            "unit": "USD",
+            "value": "10687000000"
+          }
+        ],
+        "equity_fact": {
+          "accession": "0000092380-23-000010",
+          "concept": "us-gaap:StockholdersEquity",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:7dd9346ac196913bd47bb89aa9a79832bc02a337293af6dffe250b33b3ae3225",
+          "filed": "2023-02-07",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2022-12-31",
+          "period_end": "2022-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+            "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+            "source_role": "auditor_facts",
+            "document_name": "luv-20221231_htm.xml",
+            "accession": "0000092380-23-000010",
+            "entity": "92380",
+            "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+            "xbrl_fact_ordinal": 148,
+            "reported_decimals": "-6"
+          },
+          "unit": "USD",
+          "value": "10687000000"
+        },
+        "components": {
+          "gross": {
+            "accession": "0000092380-23-000010",
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+            "duration_days": 0,
+            "entity": "92380",
+            "fact_id": "fact:sha256:ea4df9200dceff8ecf1a51309ad01e33d7a75871a3cb4ffc974d89da108065a0",
+            "filed": "2023-02-07",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2022-12-31",
+            "period_end": "2022-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+              "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+              "source_role": "auditor_facts",
+              "document_name": "luv-20221231_htm.xml",
+              "accession": "0000092380-23-000010",
+              "entity": "92380",
+              "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+              "xbrl_fact_ordinal": 732,
+              "reported_decimals": "-6"
+            },
+            "unit": "USD",
+            "value": "8111000000"
+          },
+          "cost": {
+            "accession": "0000092380-23-000010",
+            "concept": "us-gaap:DeferredFinanceCostsGross",
+            "duration_days": 0,
+            "entity": "92380",
+            "fact_id": "fact:sha256:15482b2eca961a05d14a08110e1e8ad349ca2db08512d536d74cfe2de49127ce",
+            "filed": "2023-02-07",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2022-12-31",
+            "period_end": "2022-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+              "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+              "source_role": "auditor_facts",
+              "document_name": "luv-20221231_htm.xml",
+              "accession": "0000092380-23-000010",
+              "entity": "92380",
+              "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+              "xbrl_fact_ordinal": 736,
+              "reported_decimals": "-6"
+            },
+            "unit": "USD",
+            "value": "23000000"
+          }
+        },
+        "carrying_amount": "8088000000",
+        "precision": [
+          {
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+            "chosen_ordinal": 732,
+            "all_reports": [
+              {
+                "value": "8111000000",
+                "decimals": "-6",
+                "ordinal": 732,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:DeferredFinanceCostsGross",
+            "chosen_ordinal": 736,
+            "all_reports": [
+              {
+                "value": "23000000",
+                "decimals": "-6",
+                "ordinal": 736,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+            "chosen_ordinal": 116,
+            "all_reports": [
+              {
+                "value": "42000000",
+                "decimals": "-6",
+                "ordinal": 116,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "42000000",
+                "decimals": "-6",
+                "ordinal": 734,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+            "chosen_ordinal": 120,
+            "all_reports": [
+              {
+                "value": "8046000000",
+                "decimals": "-6",
+                "ordinal": 120,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "8046000000",
+                "decimals": "-6",
+                "ordinal": 738,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:StockholdersEquity",
+            "chosen_ordinal": 148,
+            "all_reports": [
+              {
+                "value": "10687000000",
+                "decimals": "-6",
+                "ordinal": 148,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "10687000000",
+                "decimals": "-6",
+                "ordinal": 329,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          },
+          {
+            "concept": "us-gaap:FinanceLeaseLiability",
+            "chosen_ordinal": 730,
+            "all_reports": [
+              {
+                "value": "189000000",
+                "decimals": "-6",
+                "ordinal": 730,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              },
+              {
+                "value": "189000000",
+                "decimals": "-6",
+                "ordinal": 988,
+                "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+              }
+            ]
+          }
+        ],
+        "reconciliations": [
+          {
+            "rule": {
+              "inputs": {
+                "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+                "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations"
+              },
+              "left": {
+                "op": "subtract",
+                "args": [
+                  "gross",
+                  "cost"
+                ]
+              },
+              "right": {
+                "op": "add",
+                "args": [
+                  "current",
+                  "noncurrent"
+                ]
+              }
+            },
+            "source_facts": [
+              {
+                "accession": "0000092380-23-000010",
+                "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+                "duration_days": 0,
+                "entity": "92380",
+                "fact_id": "fact:sha256:af6ddd7cc42d4d92b240fb35ab052d2ff6a7f7b848fbd28abaa3c01065d16404",
+                "filed": "2023-02-07",
+                "fiscal_period": "FY",
+                "form": "10-K",
+                "period_start": "2022-12-31",
+                "period_end": "2022-12-31",
+                "source_binding": {
+                  "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+                  "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+                  "source_role": "auditor_facts",
+                  "document_name": "luv-20221231_htm.xml",
+                  "accession": "0000092380-23-000010",
+                  "entity": "92380",
+                  "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+                  "xbrl_fact_ordinal": 116,
+                  "reported_decimals": "-6"
+                },
+                "unit": "USD",
+                "value": "42000000"
+              },
+              {
+                "accession": "0000092380-23-000010",
+                "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+                "duration_days": 0,
+                "entity": "92380",
+                "fact_id": "fact:sha256:c9a4f5520feaf5d286784537cd62890c7f41e7270e0aa34b671416d9b072b5eb",
+                "filed": "2023-02-07",
+                "fiscal_period": "FY",
+                "form": "10-K",
+                "period_start": "2022-12-31",
+                "period_end": "2022-12-31",
+                "source_binding": {
+                  "raw_asset_id": "sha256:729e907ac0560ceef06f4b0e9361791e7eaeb22bf8cc84a8aa30628799053929",
+                  "source_reference_id": "sha256:14f3fd5cc6200d46487f18c2524772cb781ee886da3791e53d286fd09cd27647",
+                  "source_role": "auditor_facts",
+                  "document_name": "luv-20221231_htm.xml",
+                  "accession": "0000092380-23-000010",
+                  "entity": "92380",
+                  "xbrl_context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231",
+                  "xbrl_fact_ordinal": 120,
+                  "reported_decimals": "-6"
+                },
+                "unit": "USD",
+                "value": "8046000000"
+              }
+            ],
+            "left_value": "8088000000",
+            "right_value": "8088000000"
+          }
+        ],
+        "debt_scope_definition": {
+          "included": [
+            "recognized_borrowings",
+            "notes_and_bonds",
+            "finance_lease_liabilities_including_combined_nonlease_components"
+          ],
+          "excluded": [
+            "operating_lease_liabilities",
+            "ordinary_trade_tax_provisions",
+            "customer_deposits",
+            "nonfinancing_trading_derivatives"
+          ],
+          "basis": "recognized_statement_carrying_amount_including_discount_premium_cost_hedge_and_fair_value_measurement",
+          "nonoverlap": "Each demonstrated liability set once; disjoint reported categories may be added",
+          "equity": "same_scope_StockholdersEquity_not_noncontrolling_inclusive",
+          "bank_scope": "Separate bank funding scope and comparability limitation; no netting assets"
+        },
+        "successor_content_checks": {
+          "version": "debt_equity_new_source_v2",
+          "primary_xml_numeric_agreement": [
+            {
+              "concept": "us-gaap:DeferredFinanceCostsGross",
+              "value": "23000000",
+              "xml_reports": [
+                {
+                  "value": "23000000",
+                  "decimals": "-6",
+                  "ordinal": 736,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ],
+              "primary_reports": [
+                {
+                  "value": "23000000",
+                  "decimals": "-6",
+                  "ordinal": 736,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ]
+            },
+            {
+              "concept": "us-gaap:FinanceLeaseLiability",
+              "value": "189000000",
+              "xml_reports": [
+                {
+                  "value": "189000000",
+                  "decimals": "-6",
+                  "ordinal": 730,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "189000000",
+                  "decimals": "-6",
+                  "ordinal": 988,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ],
+              "primary_reports": [
+                {
+                  "value": "189000000",
+                  "decimals": "-6",
+                  "ordinal": 730,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "189000000",
+                  "decimals": "-6",
+                  "ordinal": 988,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ]
+            },
+            {
+              "concept": "us-gaap:FinanceLeaseLiabilityCurrent",
+              "value": "42000000",
+              "xml_reports": [
+                {
+                  "value": "42000000",
+                  "decimals": "-6",
+                  "ordinal": 924,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "42000000",
+                  "decimals": "-6",
+                  "ordinal": 990,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ],
+              "primary_reports": [
+                {
+                  "value": "42000000",
+                  "decimals": "-6",
+                  "ordinal": 924,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "42000000",
+                  "decimals": "-6",
+                  "ordinal": 990,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ]
+            },
+            {
+              "concept": "us-gaap:FinanceLeaseLiabilityNoncurrent",
+              "value": "147000000",
+              "xml_reports": [
+                {
+                  "value": "147000000",
+                  "decimals": "-6",
+                  "ordinal": 928,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "147000000",
+                  "decimals": "-6",
+                  "ordinal": 992,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ],
+              "primary_reports": [
+                {
+                  "value": "147000000",
+                  "decimals": "-6",
+                  "ordinal": 928,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "147000000",
+                  "decimals": "-6",
+                  "ordinal": 992,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ]
+            },
+            {
+              "concept": "us-gaap:FinanceLeaseLiabilityPaymentsDue",
+              "value": "210000000",
+              "xml_reports": [
+                {
+                  "value": "210000000",
+                  "decimals": "-6",
+                  "ordinal": 984,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ],
+              "primary_reports": [
+                {
+                  "value": "210000000",
+                  "decimals": "-6",
+                  "ordinal": 984,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ]
+            },
+            {
+              "concept": "us-gaap:FinanceLeaseLiabilityUndiscountedExcessAmount",
+              "value": "21000000",
+              "xml_reports": [
+                {
+                  "value": "21000000",
+                  "decimals": "-6",
+                  "ordinal": 986,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ],
+              "primary_reports": [
+                {
+                  "value": "21000000",
+                  "decimals": "-6",
+                  "ordinal": 986,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ]
+            },
+            {
+              "concept": "us-gaap:LongTermDebt",
+              "value": "8097000000",
+              "xml_reports": [
+                {
+                  "value": "8097000000",
+                  "decimals": "-6",
+                  "ordinal": 882,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ],
+              "primary_reports": [
+                {
+                  "value": "8097000000",
+                  "decimals": "-6",
+                  "ordinal": 882,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ]
+            },
+            {
+              "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+              "value": "8046000000",
+              "xml_reports": [
+                {
+                  "value": "8046000000",
+                  "decimals": "-6",
+                  "ordinal": 120,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "8046000000",
+                  "decimals": "-6",
+                  "ordinal": 738,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ],
+              "primary_reports": [
+                {
+                  "value": "8046000000",
+                  "decimals": "-6",
+                  "ordinal": 120,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "8046000000",
+                  "decimals": "-6",
+                  "ordinal": 738,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ]
+            },
+            {
+              "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+              "value": "42000000",
+              "xml_reports": [
+                {
+                  "value": "42000000",
+                  "decimals": "-6",
+                  "ordinal": 116,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "42000000",
+                  "decimals": "-6",
+                  "ordinal": 734,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ],
+              "primary_reports": [
+                {
+                  "value": "42000000",
+                  "decimals": "-6",
+                  "ordinal": 116,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "42000000",
+                  "decimals": "-6",
+                  "ordinal": 734,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ]
+            },
+            {
+              "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+              "value": "8111000000",
+              "xml_reports": [
+                {
+                  "value": "8111000000",
+                  "decimals": "-6",
+                  "ordinal": 732,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ],
+              "primary_reports": [
+                {
+                  "value": "8111000000",
+                  "decimals": "-6",
+                  "ordinal": 732,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ]
+            },
+            {
+              "concept": "us-gaap:StockholdersEquity",
+              "value": "10687000000",
+              "xml_reports": [
+                {
+                  "value": "10687000000",
+                  "decimals": "-6",
+                  "ordinal": 148,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "10687000000",
+                  "decimals": "-6",
+                  "ordinal": 329,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ],
+              "primary_reports": [
+                {
+                  "value": "10687000000",
+                  "decimals": "-6",
+                  "ordinal": 148,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                },
+                {
+                  "value": "10687000000",
+                  "decimals": "-6",
+                  "ordinal": 329,
+                  "context_ref": "i61b31d5fef204b07996bb6b83e4b2009_I20221231"
+                }
+              ]
+            }
+          ],
+          "alternate_measurements": [
+            {
+              "concept": "us-gaap:scheduleofmaturitiesoflongtermdebttabletextblock",
+              "value": "8097000000",
+              "disposition": "EXPLAINED_DIFFERENT_REPORTED_MEASUREMENT",
+              "basis": "FUTURE_PRINCIPAL_MATURITIES",
+              "members": [
+                {
+                  "row": 2,
+                  "label": "2023",
+                  "value": "42000000"
+                },
+                {
+                  "row": 3,
+                  "label": "2024",
+                  "value": "41000000"
+                },
+                {
+                  "row": 4,
+                  "label": "2025",
+                  "value": "2943000000"
+                },
+                {
+                  "row": 5,
+                  "label": "2026",
+                  "value": "322000000"
+                },
+                {
+                  "row": 6,
+                  "label": "2027",
+                  "value": "2147000000"
+                },
+                {
+                  "row": 7,
+                  "label": "Thereafter",
+                  "value": "2602000000"
+                }
+              ],
+              "total": "8097000000"
+            }
+          ],
+          "narrative_inventory": [
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "FINANCING ACTIVITIES During 2020, the Company issued $2.0 billion of unsecured notes due 2027, of which $1.3 billion was issued June 8, 2020 (the \u201c$1.3 billion 2027 Notes\u201d) and $700 million was issued July 31, 2020 (the \u201c$700 million 2027 Notes\u201d).",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The notes bear interest at 5.125%.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The $700 million 2027 Notes were offered as an additional issuance of the Company\u2019s $1.3 billion 2027 Notes issued on June 8, 2020.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The $700 million 2027 Notes were issued at a premium and this premium has been included within Capitalized financing items in the Consolidated Statement of Cash Flows.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "A portion of the proceeds from the $1.3 billion 2027 Notes was used to repay a portion of the then outstanding Amended and Restated 364-Day Credit Agreement balance.",
+              "disposition": "EXPLICIT_OTHER_PERIOD"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The Company made early prepayments on the notes of $272 million throughout 2022, utilizing available cash on hand.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "During 2020, the Company issued $1.55 billion of unsecured notes due 2025, of which $1.25 billion was issued May 4, 2020 (the \u201c$1.25 billion 2025 Notes\u201d) and $300 million was issued July 31, 2020 (the \u201c$300 million 2025 Notes\u201d).",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The notes bear interest at 5.250%.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The $300 million 2025 Notes were offered as an additional issuance of the Company\u2019s $1.25 billion 2025 Notes issued on May 4, 2020.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The $300 million 2025 Notes were issued at a premium and this premium has been included within Capitalized financing items in the Consolidated Statement of Cash Flows.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The proceeds from the $1.25 billion 2025 Notes were used to repay a portion of the then outstanding Amended and Restated 364-Day Credit Agreement balance.",
+              "disposition": "EXPLICIT_OTHER_PERIOD"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The Company made early prepayments on the notes of $248 million throughout 2022, utilizing available cash on hand.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "During 2020, the Company issued $1.25 billion of unsecured notes due 2023, of which $750 million was issued May 4, 2020 (the \u201c$750 million 2023 Notes\u201d) and $500 million was issued June 8, 2020 (the \u201c$500 million 2023 Notes\u201d).",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The notes bore interest at 4.750%.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The $500 million 2023 Notes were offered as an additional issuance of the Company's $750 million 2023 Notes issued on May 4, 2020.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The $500 million 2023 Notes were issued at a premium and this premium has been included within Capitalized financing items in the Consolidated Statement of Cash Flows.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The proceeds from the $750 million 2023 Notes and a portion of the proceeds of the $500 million 2023 Notes were used to repay a portion of the then outstanding Amended and Restated 364-Day Credit Agreement balance.",
+              "disposition": "EXPLICIT_OTHER_PERIOD"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The Company prepaid the notes in full on August 31, 2022, utilizing available cash on hand.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "On May 1, 2020, the Company completed the public offering of $2.3 billion aggregate principal amount of Convertible Senior Notes (the \u201cConvertible Notes\u201d).",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The Convertible Notes bear interest at a rate of 1.25% and will mature on May 1, 2025.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "Interest on the notes is payable semi-annually in arrears.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "Holders may convert their Convertible Notes at their option at any time prior to the close of business on the business day immediately preceding February 1, 2025, in the event certain conditions are met, as stated in the offering documents.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The Convertible Notes did not meet the criteria to be converted as of the date of the financial statements, and thus are classified as Long-term debt in the accompanying Consolidated Balance Sheet as of December 31, 2022.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The Company intends to settle conversions by paying cash up to the principal amount of the Convertible Notes, with any excess conversion value settled in cash or shares of common stock.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The initial conversion rate is 25.9909 shares of common stock per $1,000 principal amount of Convertible Notes (equivalent to an initial conversion price of approximately $38.48 per share of common stock).",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "As of December 31, 2022, the if-converted value of the Convertible Notes was less than the principal amount by $201 million, using the Company's closing stock price.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "Upon issuance, the Company bifurcated the Convertible Notes for accounting purposes between a liability component and an equity component utilizing applicable guidance.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The liability component was determined by estimating the fair value of a hypothetical issuance of an identical offering excluding the conversion feature of the Convertible Notes.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The initial carrying amount of the equity component was calculated as the difference between the liability component and the face amount of the Convertible Notes.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "Upon adoption, the Company reclassified the remaining equity component, of $300 million, from Additional paid-in capital to Long-term debt associated with its Convertible Notes, and no longer records amortization of the debt discount to Interest expense.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The following table details the equity and liability component recognized related to the Convertible Notes, prior to and following the adoption of ASU 2020-06: The Company recognized interest expense associated with the Convertible Notes as follows: The unamortized debt issuance costs are being recognized as non-cash interest expense based on the 5-year term of the notes, through May 1, 2025, less amounts that were or will be required to be accelerated immediately upon conversion or repurchases.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The effective interest rate associated with the Convertible Notes was approximately 1.9 percent for the year ended December 31, 2022.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "During the years ended December 31, 2022 and 2021, the Company paid $3.1 billion and $905 million, respectively, in debt and finance lease obligations, which included scheduled debt and lease payments, partial extinguishment of Convertible Notes, and the early prepayment of debt.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The following tables present the details of the partial extinguishment of the Company's Convertible Notes and early prepayment of debt (excluding payments on finance leases) for the years ended December 31, 2022 and 2021.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The Company has access to $1.0 billion under its amended and restated revolving credit facility (the \"Amended A&R Credit Agreement\").",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "In July 2022, this facility was amended to extend the expiration date to August 2025, and to change the benchmark rate from London Interbank Offered Rate (\"LIBOR\") to the Secured Overnight Financing Rate (\"SOFR\").",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "For the twelve months ended December 31, 2022 and 2021 there were no amounts outstanding under the Amended A&R Credit Agreement.",
+              "disposition": "EXPLICIT_NO_BORROWING_BALANCE"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "Generally, amounts outstanding under the Amended A&R Credit Agreement bear interest at interest rates based on either the SOFR rate (selected by the Company for designated interest periods) or the \u201calternate base rate\u201d (being the highest of (1) the Wall Street Journal prime rate, (2) one-month adjusted SOFR (one-month SOFR plus 0.1 percent) plus 1 percent, and (3) the Federal Reserve Bank of New York Rate, plus 0.5 percent).",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The Amended A&R Credit Agreement contains customary representations and warranties, covenants, and events of default.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The Amended A&R Credit Agreement is secured by a pool of 83 aircraft and related assets, each with a minimum appraised value ratio requirement.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "Under the Amended A&R Credit Agreement, the Company is required to maintain a minimum level of liquidity of $1.5 billion (defined as the sum of (i) the aggregate amount available to be borrowed under the Amended A&R Credit Agreement plus (ii) the aggregate amount of unrestricted cash and cash equivalents of the Company plus (iii) the aggregate amount of short-term investments of the Company).",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "For the twelve months ended December 31, 2022 and 2021, the Company was in compliance with this covenant and all other covenants in the Amended A&R Credit Agreement.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The Amended A&R Credit Agreement has an accordion feature that would allow the Company, subject to, among other things, the procurement of incremental commitments, to increase the size of the facility to $1.5 billion.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "During February 2020, the Company issued $500 million senior unsecured notes due 2030.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The notes bear interest at 2.625 percent.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "During November 2017, the Company issued $300 million senior unsecured notes due 2022.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The notes bore interest at 2.75 percent.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The Company paid the loans in full on November 14, 2022, utilizing available cash on hand.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "Also during November 2017, the Company issued $300 million senior unsecured notes due 2027.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The notes bear interest at 3.45 percent.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "During November 2016, the Company issued $300 million senior unsecured notes due 2026.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The notes bear interest at 3.00 percent.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The trusts used the proceeds from the sale of certificates to acquire equipment notes in the same amounts, which were issued by the Company on a full recourse basis.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "Payments on the equipment notes held in each trust were passed through to the holders of certificates of such trust.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The equipment notes were issued for each of 16 Boeing 737-700 (\"-700\") aircraft owned by the Company and were secured by a mortgage on each aircraft.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The equipment notes matured and were paid in full on August 1, 2022, utilizing available cash on hand.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "On February 28, 1997, the Company issued $100 million of senior unsecured 7.375 percent debentures due March 1, 2027.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The debentures may be redeemed, at the option of the Company, in whole at any time or in part from time to time, at a redemption price equal to the greater of the principal amount of the debentures plus accrued interest at the date of redemption or the sum of the present values of the remaining scheduled payments of principal and interest thereon, discounted to the date of redemption at the comparable treasury rate plus 20 basis points, plus accrued interest at the date of redemption.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "The net book value of the assets pledged as collateral for the Company\u2019s secured borrowings, primarily aircraft, was $2.0 billion at December 31, 2022.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "This included aircraft with net book values of approximately $296 million, in which the associated debt had been repaid as of December 31, 2022, but for which the liens have been or will be formally removed in 2023.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:debtdisclosuretextblock",
+              "sentence": "As of December 31, 2022, aggregate annual principal maturities of debt and finance leases (not including amounts associated with interest on finance leases) are as follows:",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:lesseeleasespolicytextblock",
+              "sentence": "Finance leases are included in Property and equipment, Current maturities of long-term debt, and Long-term debt less current maturities in the Consolidated Balance Sheet.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:lesseeleasespolicytextblock",
+              "sentence": "Lease payments do not include (i) variable lease payments other than those that depend on an index or rate, (ii) any guarantee by the lessee of the lessor\u2019s debt, or (iii) any amount allocated to non-lease components, if such election was made upon adoption, per the provisions of the Accounting Standards Codification (\"ASC\") 842.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:lesseeleasespolicytextblock",
+              "sentence": "The Company uses its estimated incremental borrowing rate, which is derived from information available at the lease commencement date, in determining the present value of lease payments, since the Company does not know the actual implicit rates in its leases.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            },
+            {
+              "concept": "us-gaap:lesseeleasespolicytextblock",
+              "sentence": "The Company gives consideration to its recent debt issuances as well as publicly available data for instruments with similar characteristics when calculating its incremental borrowing rate.",
+              "disposition": "NO_MONETARY_BALANCE_ASSERTION"
+            }
+          ],
+          "narrative_scope": "CURRENT_MONETARY_BALANCE_ASSERTIONS_IN_REQUIRED_DEBT_AND_LEASE_NOTES",
+          "checks_id": "sha256:ca64ab3e7f7ae1775628942baf93ba6870b049c2e45b93c9bf945f6a885fb829"
+        }
+      },
+      "debt_scope_definition": {
+        "included": [
+          "recognized_borrowings",
+          "notes_and_bonds",
+          "finance_lease_liabilities_including_combined_nonlease_components"
+        ],
+        "excluded": [
+          "operating_lease_liabilities",
+          "ordinary_trade_tax_provisions",
+          "customer_deposits",
+          "nonfinancing_trading_derivatives"
+        ],
+        "basis": "recognized_statement_carrying_amount_including_discount_premium_cost_hedge_and_fair_value_measurement",
+        "nonoverlap": "Each demonstrated liability set once; disjoint reported categories may be added",
+        "equity": "same_scope_StockholdersEquity_not_noncontrolling_inclusive",
+        "bank_scope": "Separate bank funding scope and comparability limitation; no netting assets"
+      },
+      "result_id": "sha256:9d93b570c392267a675f01fc5d60cee2e3e9296cfbab986c07d36a30d9f7157f",
+      "selection_id": "sha256:a7219210f50f6bb06f44456cc8530731dcfe83d5ddd84b874b2d57add76edafb"
+    }
+  },
+  "spec_path": "catalog/r5/B06_new_source_v2.md",
+  "filing": {
+    "form": "10-K",
+    "reportDate": "2022-12-31",
+    "filingDate": "2023-02-07",
+    "accessionNumber": "0000092380-23-000010",
+    "primaryDocument": "luv-20221231.htm"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

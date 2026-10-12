@@ -9,6 +9,7 @@ from decimal import Decimal
 from datetime import date
 import re
 
+from .xbrl_namespace_policy import is_fasb_namespace, source_reader_options
 from . import b06_disclosure as disclosure
 from .b06_financing_inventory import inspect_financing_inventory
 from .canonical import content_hash, decimal_text, strict_json_file
@@ -151,9 +152,10 @@ def _lease_maturity(note, reports, prepared):
             'members':members,'totals':values,'columns':columns}
 
 
-def inspect_separate_finance_leases(*, primary, xml, prepared):
+def inspect_separate_finance_leases(*, primary, xml, prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """A source component only, pending complete debt-set composition."""
-    inventory = inspect_financing_inventory(primary=primary,xml=xml,prepared=prepared)
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    inventory = inspect_financing_inventory(primary=primary,xml=xml,prepared=prepared, **reader_options)
     notes = _notes(primary,xml,prepared); end = prepared['filing']['reportDate']
     reports = _finance_reports(inventory,end)
     classification = _lease_classification(notes['lease_classification'],end,reports)
@@ -165,11 +167,12 @@ def inspect_separate_finance_leases(*, primary, xml, prepared):
         'source_acquisition_credit':False,'production_authorized':False}
 
 
-def inspect_supplier_payment_terms(*, primary, xml, prepared):
+def inspect_supplier_payment_terms(*, primary, xml, prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Recognize the reported unchanged trade-payable arrangement, not its name."""
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     from .b06_disclosure_v2 import _Narrative
     from .fiscal_year_labels import _DefinitionBlocks
-    inventory = inspect_financing_inventory(primary=primary,xml=xml,prepared=prepared)
+    inventory = inspect_financing_inventory(primary=primary,xml=xml,prepared=prepared, **reader_options)
     notes = _notes(primary,xml,prepared,concepts=POLICY['supplier_note_concepts'])
     names = []
     for source in [primary,xml]:
@@ -236,7 +239,8 @@ def inspect_supplier_payment_terms(*, primary, xml, prepared):
         'whole_b06_proven':False,'source_acquisition_credit':False,'production_authorized':False}
 
 
-def _balance_reports(primary, xml, prepared):
+def _balance_reports(primary, xml, prepared, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     from .text_results_v2 import _ReportedFactMetadata, _verified_context
     from .governance_signals import _source_value
     from .financial_structured import _InlineTableIndex, _fact_cells
@@ -258,7 +262,7 @@ def _balance_reports(primary, xml, prepared):
             context = {**c,'dimensions':dict(c['dimensions'])}; context_proof = _verified_context(native=context,metadata=meta)
             _need(meta.units.get(f['unit_ref']) == {'measures':[('http://www.xbrl.org/2003/iso4217','USD')],'divided':False},
                   'BALANCE_UNIT_CONFLICT')
-            standard = re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) is not None
+            standard = is_fasb_namespace(uri, namespace_policy=namespace_policy)
             value = _source_value(f,m)
             for role in roles:
                 _need(standard == POLICY['balance_concepts'][role].startswith('us-gaap:') and uri.startswith(('http://','https://')),
@@ -400,14 +404,15 @@ def _balance_separation(primary, end, reports, lease, supplier):
             'reported_combined_lease_liabilities':reports['combined_lease']['chosen']['value']}
 
 
-def inspect_bond_lease_composition(*, primary, xml, prepared):
+def inspect_bond_lease_composition(*, primary, xml, prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Reconcile composition; independent financing completeness is still pending."""
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     notes = _notes(primary,xml,prepared); end = prepared['filing']['reportDate']
-    reports = _balance_reports(primary,xml,prepared)
+    reports = _balance_reports(primary,xml,prepared, **reader_options)
     bonds = _bond_schedule(notes['schedule'],end,reports)
     fair_value = _fair_value_scope(notes,end,reports)
-    lease = inspect_separate_finance_leases(primary=primary,xml=xml,prepared=prepared)
-    supplier = inspect_supplier_payment_terms(primary=primary,xml=xml,prepared=prepared)
+    lease = inspect_separate_finance_leases(primary=primary,xml=xml,prepared=prepared, **reader_options)
+    supplier = inspect_supplier_payment_terms(primary=primary,xml=xml,prepared=prepared, **reader_options)
     separation = _balance_separation(primary,end,reports,lease,supplier)
     total = Decimal(bonds['reported_borrowing'])+Decimal(lease['recognized_finance_lease'])
     return {'record_type':'BOND_AND_LEASE_COMPOSITION_COMPONENT','policy_hash':content_hash(value=POLICY),
@@ -418,8 +423,9 @@ def inspect_bond_lease_composition(*, primary, xml, prepared):
         'source_acquisition_credit':False,'production_authorized':False}
 
 
-def _native_bond_members(primary, xml, prepared, bonds):
+def _native_bond_members(primary, xml, prepared, bonds, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Bind each current note dimension to an actual current-column table row."""
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     from .text_results_v2 import _ReportedFactMetadata, _verified_context
     from .governance_signals import _source_value
     from .financial_structured import _InlineTableIndex, _fact_cells
@@ -436,7 +442,7 @@ def _native_bond_members(primary, xml, prepared, bonds):
                 local.casefold() == 'debtcurrent' and bool(c['dimensions']))
             if not bond_amount or c['period_start'] != c['period_end'] or c['period_end'] != prepared['filing']['reportDate']:
                 continue
-            _need(re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) and not c['typed_dimension_count']
+            _need(is_fasb_namespace(uri, namespace_policy=namespace_policy) and not c['typed_dimension_count']
                   and str(int(c['entity_identifier'])) == prepared['entity'],'BOND_MEMBER_SCOPE_OR_NAMESPACE_CONFLICT')
             _need(c['dimensions'] and any(k.split(':')[-1] == 'DebtInstrumentAxis' for k in c['dimensions']),
                   'BOND_MEMBER_DIMENSION_MISSING')
@@ -549,8 +555,9 @@ def _current_borrowing_assertions(notes, prepared, other):
     return result
 
 
-def _financing_inventory(primary, xml, prepared, composition, members, other):
+def _financing_inventory(primary, xml, prepared, composition, members, other, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
     """Every current potential financing fact is retained, including dimensions."""
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     from .text_results_v2 import _ReportedFactMetadata, _verified_context
     from .governance_signals import _source_value, _qname
     result = {}
@@ -573,7 +580,7 @@ def _financing_inventory(primary, xml, prepared, composition, members, other):
             context = {**c,'dimensions':dict(c['dimensions'])}; _verified_context(native=context,metadata=meta)
             unit = meta.units.get(f['unit_ref']); usd = unit == {'measures':[('http://www.xbrl.org/2003/iso4217','USD')],'divided':False}
             pure = unit == {'measures':[('http://www.xbrl.org/2003/instance','pure')],'divided':False}
-            standard = re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) is not None
+            standard = is_fasb_namespace(uri, namespace_policy=namespace_policy)
             if name == 'lineofcreditfacilityfairvalueofamountoutstanding' and f['text'].strip().casefold() == 'no':
                 transform_uri,transform = _qname(m['attrs'].get('format',''),m['namespaces'])
                 nil = [v for k,v in m['attrs'].items() if _qname(k,m['namespaces']) == ('http://www.w3.org/2001/XMLSchema-instance','nil')]
@@ -651,13 +658,14 @@ def _financing_inventory(primary, xml, prepared, composition, members, other):
     return result
 
 
-def inspect_bond_debt_scope(*, primary, xml, prepared):
-    composition = inspect_bond_lease_composition(primary=primary,xml=xml,prepared=prepared)
+def inspect_bond_debt_scope(*, primary, xml, prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    composition = inspect_bond_lease_composition(primary=primary,xml=xml,prepared=prepared, **reader_options)
     notes = _notes(primary,xml,prepared)
-    members = _native_bond_members(primary,xml,prepared,composition['bonds'])
+    members = _native_bond_members(primary,xml,prepared,composition['bonds'], **reader_options)
     other = _reported_other_natures(notes,prepared)
     assertions = _current_borrowing_assertions(notes,prepared,other)
-    inventory = _financing_inventory(primary,xml,prepared,composition,members,other)
+    inventory = _financing_inventory(primary,xml,prepared,composition,members,other, **reader_options)
     return {**composition,'record_type':'BOND_AND_SEPARATE_LEASE_DEBT_SCOPE_PROOF',
         'native_bond_members':members,'other_reported_natures':other,'borrowing_assertions':assertions,
         'independent_financing_inventory':inventory,'complete_b06_proven':True,'remaining_check':None}

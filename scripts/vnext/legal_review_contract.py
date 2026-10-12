@@ -166,6 +166,7 @@ def validate_answer(*, request, raw_output):
         _need(type(entry) is dict and set(entry) == {"block_id", "decision", "quote"},
               "D02_REVIEW_DECISION_SHAPE")
         identity = entry["block_id"]
+        _need(type(identity) is str, "D02_REVIEW_DECISION_BLOCK_ID_WRONG_TYPE")
         _need(identity in must, "D02_REVIEW_DECIDES_A_BLOCK_NOT_ASKED:" + str(identity)[:40])
         _need(identity not in decisions, "D02_REVIEW_BLOCK_DECIDED_TWICE:" + identity)
         _need(entry["decision"] in DECISIONS, "D02_REVIEW_DECISION_UNKNOWN:" + identity)
@@ -181,6 +182,7 @@ def validate_answer(*, request, raw_output):
         _need(type(entry) is dict and set(entry) == {"block_id", "quote"},
               "D02_REVIEW_ADDITION_SHAPE")
         identity = entry["block_id"]
+        _need(type(identity) is str, "D02_REVIEW_ADDITION_BLOCK_ID_WRONG_TYPE")
         _need(identity in texts, "D02_REVIEW_ADDS_A_BLOCK_NOT_IN_THE_REQUEST:" + str(identity)[:40])
         _need(identity not in must, "D02_REVIEW_ADDS_A_MUST_DECIDE_BLOCK:" + identity)
         _need(identity not in added, "D02_REVIEW_BLOCK_ADDED_TWICE:" + identity)

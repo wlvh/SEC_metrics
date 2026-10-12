@@ -1,0 +1,13 @@
+EXPLICIT_SOURCE_FAILURE AmendmentScopeError AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-text-scope/SEC_metrics/docs/evidence/issue28_selected_dei_scope_20261012/verify_saved_mar2020.py", line 23, in <module>
+    scope=inspect_annual_amendment_scope(**args,namespace_policy=YEAR_QUARTER_OR_DATE)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-text-scope/SEC_metrics/scripts/vnext/annual_amendment_scope_v2.py", line 43, in inspect_annual_amendment_scope
+    note=_note(new['document'], **({'raw':amendment['raw']} if note_layout!='blocks-v1' else {}));text=note['text']
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-text-scope/SEC_metrics/scripts/vnext/annual_amendment_scope_v2.py", line 21, in _note
+    _need(start+1<end and count<=8,"AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-dei-text-scope/SEC_metrics/scripts/vnext/annual_amendment_scope.py", line 38, in _need
+    if not condition:raise AmendmentScopeError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.annual_amendment_scope.AmendmentScopeError: AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED

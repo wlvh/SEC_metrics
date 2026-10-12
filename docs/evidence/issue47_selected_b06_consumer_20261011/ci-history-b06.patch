@@ -1,0 +1,22 @@
+--- a/.github/workflows/company-current-records.yml
++++ b/.github/workflows/company-current-records.yml
+@@ -47,6 +47,7 @@
+     - tests/vnext/test_historical_geography_cases.py
+     - tests/vnext/test_selected_history_result_state.py
+     - tests/vnext/test_historical_compensation_case.py
++    - tests/vnext/test_historical_b06_case.py
+     - tests/fixtures/lodging_selected_table.html
+     - config/**
+     - catalog/**
+@@ -161,6 +162,11 @@
+         PYTHONDONTWRITEBYTECODE: '1'
+       run: python3 tests/required_unittests.py tests.vnext.test_existing_historical_sec_state
+         tests.vnext.test_historical_sec_capture_adapter tests.vnext.test_company_online
++    - name: Selected historical B06 source and amendment boundaries
++      env:
++        PYTHONDONTWRITEBYTECODE: '1'
++        PYTHONPATH: scripts:.
++      run: python3 tests/required_unittests.py tests.vnext.test_historical_b06_case
+   source-contracts:
+     runs-on: ubuntu-latest
+     timeout-minutes: 5

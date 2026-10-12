@@ -1,0 +1,60 @@
+diff --git a/.github/workflows/company-current-records.yml b/.github/workflows/company-current-records.yml
+index 12614a52..918b1c64 100644
+--- a/.github/workflows/company-current-records.yml
++++ b/.github/workflows/company-current-records.yml
+@@ -8,6 +8,7 @@ name: Company saved-source records
+     - tests/vnext/test_company_current_records.py
+     - tests/vnext/test_current_b06_case.py
+     - tests/vnext/test_current_geography_case.py
++    - tests/vnext/test_current_auditor_case.py
+     - tests/vnext/test_single_revenue_line.py
+     - tests/vnext/test_selected_reported_revenue_v2.py
+     - tests/vnext/test_paired_measure_contradiction.py
+@@ -138,6 +139,10 @@ jobs:
+         tests.vnext.test_historical_geography_cases tests.vnext.test_historical_average_risk_cases tests.vnext.test_historical_bank_scope_cases
+         tests.vnext.test_historical_statement_cases.HistoricalRevenueScopeConsumerTest tests.vnext.test_historical_statement_cases
+         tests.vnext.test_historical_compensation_case -v
++    - name: Current auditor changes use the shared four-form source core
++      env:
++        PYTHONDONTWRITEBYTECODE: '1'
++      run: python3 tests/required_unittests.py tests.vnext.test_current_auditor_case
+     - name: Paired reported comparisons and exact revenue defect
+       env:
+         PYTHONDONTWRITEBYTECODE: '1'
+diff --git a/scripts/vnext/ordinary_current_update.py b/scripts/vnext/ordinary_current_update.py
+index c7acd815..33d8f54d 100644
+--- a/scripts/vnext/ordinary_current_update.py
++++ b/scripts/vnext/ordinary_current_update.py
+@@ -66,6 +66,9 @@ def _configuration(source, company, metric):
+     if metric == 'A13':
+         from .current_geography_case import PROCESSING_FILES
+         paths.update(PROCESSING_FILES)
++    if metric == 'C04':
++        from .current_auditor_case import PROCESSING_FILES
++        paths.update(PROCESSING_FILES)
+     if metric == 'C02':
+         # Only C02's existing selector now imports this pure name helper.
+         # Explicit proxy C03 producers declare their own source dependencies.
+diff --git a/scripts/vnext/ordinary_saved_result.py b/scripts/vnext/ordinary_saved_result.py
+index d9e0889e..d752216d 100644
+--- a/scripts/vnext/ordinary_saved_result.py
++++ b/scripts/vnext/ordinary_saved_result.py
+@@ -19,7 +19,7 @@ from .records import validate_record
+ METRIC_IDS = frozenset(installed_ordinary_spec_documents())
+ LODGING_METRIC_IDS = frozenset({'B10','B11'})
+ SAVED_MODEL_METRIC_IDS = frozenset({'D04'})
+-SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | SAVED_MODEL_METRIC_IDS | {'B06','A13'}
++SAVED_METRIC_IDS = METRIC_IDS | LODGING_METRIC_IDS | SAVED_MODEL_METRIC_IDS | {'B06','A13','C04'}
+ EXPLICIT_CASE_METRICS = frozenset({'A03','A04','A09','A11','A12','A13','C03','C04'})
+ 
+ 
+@@ -97,6 +97,9 @@ def create_saved_result(*, source_root, output_root, company_id, metric_id, shar
+         if metric_id == 'A13':
+             from .current_geography_case import prepare_current_geography_case
+             return prepare_current_geography_case(source_root=source,company_id=company_id)
++        if metric_id == 'C04':
++            from .current_auditor_case import prepare_current_auditor_case
++            return prepare_current_auditor_case(source_root=source,company_id=company_id)
+         if metric_id == 'B06':
+             from .current_b06_case import prepare_current_b06_case
+             return prepare_current_b06_case(source_root=source,company_id=company_id)

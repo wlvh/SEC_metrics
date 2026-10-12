@@ -1,0 +1,2911 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-complete-revenue/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "tested_commit": "ade254a93722b48fa4829051bb041299cdd08591",
+  "has_uncommitted_changes": true,
+  "records": [
+    {
+      "company": "lumen_technologies",
+      "first": {
+        "args": [
+          "run",
+          "--company",
+          "lumen_technologies",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies",
+          "--output-dir",
+          "/private/tmp/issue28-current-revenue-final-oiiopx5f/outputs-lumen_technologies",
+          "--metric",
+          "B01",
+          "--metric",
+          "B02",
+          "--metric",
+          "B03"
+        ],
+        "code": 0,
+        "seconds": 12.621837499998946,
+        "rows": [
+          {
+            "company": "Lumen Technologies",
+            "cik": "18926",
+            "metric_id": "B01",
+            "metric_name": "Revenue",
+            "value": "12402000000",
+            "unit": "USD",
+            "status": "OK",
+            "source_class": "STD_XBRL",
+            "formula": "direct",
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31",
+            "fiscal_year": "2025",
+            "fiscal_period": "ANNUAL",
+            "accession": "0000018926-26-000014",
+            "form": "10-K",
+            "filed_date": "2026-02-20",
+            "concept_or_section": "Revenues",
+            "confidence": "",
+            "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+            "company_id": "lumen_technologies",
+            "result_id": "sha256:f2d5abfbdfa8c9a0642c240d2fb5688f15ce7f49f632b96a182f04710199da6c",
+            "record_root": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e",
+            "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+            "local_metric_status": "CANDIDATE_READY",
+            "period_role": "REQUESTED_RESULT",
+            "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+            "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+            "defect_holds": "[]",
+            "requested_in_latest_execution": "True",
+            "context_or_dimension_sha256": "77e3d275bd06d89e98d426a5ac0733ae3f07c54ca1f690cc24273e63fc484df8"
+          },
+          {
+            "company": "Lumen Technologies",
+            "cik": "18926",
+            "metric_id": "B02",
+            "metric_name": "Revenue YoY growth",
+            "value": "-0.05386023802258162953921269454",
+            "unit": "ratio",
+            "status": "OK",
+            "source_class": "DERIVED",
+            "formula": "",
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31",
+            "fiscal_year": "2025",
+            "fiscal_period": "ANNUAL",
+            "accession": "0000018926-26-000014;0000018926-25-000010",
+            "form": "10-K",
+            "filed_date": "2026-02-20;2025-02-20",
+            "concept_or_section": "Revenue YoY growth",
+            "confidence": "",
+            "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+            "company_id": "lumen_technologies",
+            "result_id": "sha256:c8e5ebc71c56c0c510385ca4a6c7414bf0e44c833dd421c039025d91c94dd48c",
+            "record_root": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B02/results/b89cd4a313604df4832dbb85ed0c67db",
+            "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+            "local_metric_status": "CANDIDATE_READY",
+            "period_role": "REQUESTED_RESULT",
+            "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+            "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+            "defect_holds": "[]",
+            "requested_in_latest_execution": "True",
+            "context_or_dimension_sha256": "56316e7e65ad8bb779f63ac75b5117b8b79387803afdb76f79b947e5350678df"
+          },
+          {
+            "company": "Lumen Technologies",
+            "cik": "18926",
+            "metric_id": "B03",
+            "metric_name": "EBITDA margin",
+            "value": "0.1561844863731656184486373166",
+            "unit": "ratio",
+            "status": "OK",
+            "source_class": "DERIVED",
+            "formula": "(Operating income + D&A) / revenue",
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31",
+            "fiscal_year": "2025",
+            "fiscal_period": "ANNUAL",
+            "accession": "0000018926-26-000014",
+            "form": "10-K",
+            "filed_date": "2026-02-20",
+            "concept_or_section": "Revenues+OperatingIncomeLoss+DepreciationDepletionAndAmortization",
+            "confidence": "",
+            "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+            "company_id": "lumen_technologies",
+            "result_id": "sha256:a29eea94d88f200aebfd5420ca8b73a67cc4d5a7477698d4fa484d5d64eb3b50",
+            "record_root": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B03/results/21a61fcca5894f858a960852a2a4e962",
+            "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+            "local_metric_status": "CANDIDATE_READY",
+            "period_role": "REQUESTED_RESULT",
+            "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+            "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+            "defect_holds": "[]",
+            "requested_in_latest_execution": "True",
+            "context_or_dimension_sha256": "ad98005415719edaaa3297279d26758534670619148ae52a4ae354ed112f42e1"
+          }
+        ],
+        "stdout": "{\n  \"elapsed_seconds\": 12.618306791002396,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"lumen_technologies\",\n  \"run_id\": \"20261011T080619Z-7e1ac91d\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\",\n    \"B02\",\n    \"B03\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"98ac31a560bd4f1a886bbeeba2887f9e\",\n      \"version\": \"4938ebe5dd1d46c9826cf402f2f55b1e\",\n      \"result_id\": \"sha256:f2d5abfbdfa8c9a0642c240d2fb5688f15ce7f49f632b96a182f04710199da6c\",\n      \"result_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:f2d5abfbdfa8c9a0642c240d2fb5688f15ce7f49f632b96a182f04710199da6c\",\n      \"record_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e\",\n      \"program_version\": {\n        \"commit\": \"ade254a93722b48fa4829051bb041299cdd08591\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"bbfb0b60000c4f3a86731db903aab832\",\n      \"version\": \"b89cd4a313604df4832dbb85ed0c67db\",\n      \"result_id\": \"sha256:c8e5ebc71c56c0c510385ca4a6c7414bf0e44c833dd421c039025d91c94dd48c\",\n      \"result_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B02/results/b89cd4a313604df4832dbb85ed0c67db\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:c8e5ebc71c56c0c510385ca4a6c7414bf0e44c833dd421c039025d91c94dd48c\",\n      \"record_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B02/results/b89cd4a313604df4832dbb85ed0c67db\",\n      \"program_version\": {\n        \"commit\": \"ade254a93722b48fa4829051bb041299cdd08591\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B03\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"2e472e2145974af2a8bc14db7a7844a2\",\n      \"version\": \"21a61fcca5894f858a960852a2a4e962\",\n      \"result_id\": \"sha256:a29eea94d88f200aebfd5420ca8b73a67cc4d5a7477698d4fa484d5d64eb3b50\",\n      \"result_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B03/results/21a61fcca5894f858a960852a2a4e962\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:a29eea94d88f200aebfd5420ca8b73a67cc4d5a7477698d4fa484d5d64eb3b50\",\n      \"record_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B03/results/21a61fcca5894f858a960852a2a4e962\",\n      \"program_version\": {\n        \"commit\": \"ade254a93722b48fa4829051bb041299cdd08591\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue28-current-complete-revenue/SEC_metrics\",\n  \"record_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies\",\n  \"output_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/outputs-lumen_technologies/20261011T080619Z-7e1ac91d\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false\n}\n"
+      },
+      "repeat_exit": 0,
+      "repeat_seconds": 0.6321266250015469,
+      "independent_read_seconds": 0.43925470800240873,
+      "rows": [
+        {
+          "company": "Lumen Technologies",
+          "cik": "18926",
+          "metric_id": "B01",
+          "metric_name": "Revenue",
+          "value": "12402000000",
+          "unit": "USD",
+          "status": "OK",
+          "source_class": "STD_XBRL",
+          "formula": "direct",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0000018926-26-000014",
+          "form": "10-K",
+          "filed_date": "2026-02-20",
+          "concept_or_section": "Revenues",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+          "company_id": "lumen_technologies",
+          "result_id": "sha256:f2d5abfbdfa8c9a0642c240d2fb5688f15ce7f49f632b96a182f04710199da6c",
+          "record_root": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True",
+          "context_or_dimension_sha256": "77e3d275bd06d89e98d426a5ac0733ae3f07c54ca1f690cc24273e63fc484df8"
+        },
+        {
+          "company": "Lumen Technologies",
+          "cik": "18926",
+          "metric_id": "B02",
+          "metric_name": "Revenue YoY growth",
+          "value": "-0.05386023802258162953921269454",
+          "unit": "ratio",
+          "status": "OK",
+          "source_class": "DERIVED",
+          "formula": "",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0000018926-26-000014;0000018926-25-000010",
+          "form": "10-K",
+          "filed_date": "2026-02-20;2025-02-20",
+          "concept_or_section": "Revenue YoY growth",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+          "company_id": "lumen_technologies",
+          "result_id": "sha256:c8e5ebc71c56c0c510385ca4a6c7414bf0e44c833dd421c039025d91c94dd48c",
+          "record_root": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B02/results/b89cd4a313604df4832dbb85ed0c67db",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True",
+          "context_or_dimension_sha256": "56316e7e65ad8bb779f63ac75b5117b8b79387803afdb76f79b947e5350678df"
+        },
+        {
+          "company": "Lumen Technologies",
+          "cik": "18926",
+          "metric_id": "B03",
+          "metric_name": "EBITDA margin",
+          "value": "0.1561844863731656184486373166",
+          "unit": "ratio",
+          "status": "OK",
+          "source_class": "DERIVED",
+          "formula": "(Operating income + D&A) / revenue",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0000018926-26-000014",
+          "form": "10-K",
+          "filed_date": "2026-02-20",
+          "concept_or_section": "Revenues+OperatingIncomeLoss+DepreciationDepletionAndAmortization",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+          "company_id": "lumen_technologies",
+          "result_id": "sha256:a29eea94d88f200aebfd5420ca8b73a67cc4d5a7477698d4fa484d5d64eb3b50",
+          "record_root": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B03/results/21a61fcca5894f858a960852a2a4e962",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True",
+          "context_or_dimension_sha256": "ad98005415719edaaa3297279d26758534670619148ae52a4ae354ed112f42e1"
+        }
+      ],
+      "old_wrong_read": [
+        {
+          "company": "Lumen Technologies",
+          "cik": "18926",
+          "metric_id": "B01",
+          "metric_name": "Revenue",
+          "value": "",
+          "unit": "",
+          "status": "WITHHELD_KNOWN_DEFECT",
+          "source_class": "STD_XBRL",
+          "formula": "direct",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0000018926-26-000014",
+          "form": "10-K",
+          "filed_date": "2026-02-20",
+          "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.; CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B01_FY2025_REVENUE_SUBTOTAL",
+          "company_id": "lumen_technologies",
+          "result_id": "sha256:7fcf383616ec80d771c6918957b3bf1abda4722691abe0fd2cd0b57484069d9b",
+          "record_root": "/private/tmp/issue28-current-revenue-20261011/baseline-lumen_technologies/updates/B01/results/a5f22cb88b764969aee2bec7ddb92025",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "CANDIDATE_READY",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "CONFIRMED_INVALID",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[\"CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B01_FY2025_REVENUE_SUBTOTAL\"]",
+          "requested_in_latest_execution": "True",
+          "context_or_dimension_sha256": "437e96b1d9787c44ae64ac86a4e8086e96ff946ce20ef439f98a9afa2d49aa9e"
+        },
+        {
+          "company": "Lumen Technologies",
+          "cik": "18926",
+          "metric_id": "B02",
+          "metric_name": "Revenue YoY growth",
+          "value": "",
+          "unit": "",
+          "status": "WITHHELD_KNOWN_DEFECT",
+          "source_class": "DERIVED",
+          "formula": "",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0000018926-26-000014;0000018926-25-000010",
+          "form": "10-K",
+          "filed_date": "2026-02-20;2025-02-20",
+          "concept_or_section": "Revenue YoY growth",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.; CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B02_FY2025_REVENUE_SUBTOTAL",
+          "company_id": "lumen_technologies",
+          "result_id": "sha256:f0c9bed5e63186bdbda1d035d5125dfd514a43c3adbb56e58fb95050c43aac3a",
+          "record_root": "/private/tmp/issue28-current-revenue-20261011/baseline-lumen_technologies/updates/B02/results/cab11b1c44b146a7b99ccc8557499238",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "CANDIDATE_READY",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "CONFIRMED_INVALID",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[\"CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B02_FY2025_REVENUE_SUBTOTAL\"]",
+          "requested_in_latest_execution": "True",
+          "context_or_dimension_sha256": "7be2864ac0b49b396cd1d2f500cd35de3c4487ce7548394cb8b7366cf58910b7"
+        },
+        {
+          "company": "Lumen Technologies",
+          "cik": "18926",
+          "metric_id": "B03",
+          "metric_name": "EBITDA margin",
+          "value": "",
+          "unit": "",
+          "status": "WITHHELD_KNOWN_DEFECT",
+          "source_class": "DERIVED",
+          "formula": "(Operating income + D&A) / revenue",
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0000018926-26-000014",
+          "form": "10-K",
+          "filed_date": "2026-02-20",
+          "concept_or_section": "RevenueFromContractWithCustomerExcludingAssessedTax+OperatingIncomeLoss+DepreciationDepletionAndAmortization",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.; CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B03_FY2025_REVENUE_SUBTOTAL",
+          "company_id": "lumen_technologies",
+          "result_id": "sha256:1afee89f9ee092a0d0f273792907462b349a4f793aa82bd1a5119e775aae167e",
+          "record_root": "/private/tmp/issue28-current-revenue-20261011/baseline-lumen_technologies/updates/B03/results/c17c3508f91d470e832c3e1ec5b6baec",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "CANDIDATE_READY",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "CONFIRMED_INVALID",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[\"CURRENT_OR_HISTORICAL_LUMEN_TECHNOLOGIES_B03_FY2025_REVENUE_SUBTOTAL\"]",
+          "requested_in_latest_execution": "True",
+          "context_or_dimension_sha256": "a7e6f69de53317f13a9055bf1444f8075d0a18837e026634a6501804f2971245"
+        }
+      ],
+      "old_read_seconds": 0.42185395900014555,
+      "result_files_before": {
+        "updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e/metrics_matrix.csv": "5a60e3c2855e2bf369a42d313c8872ff7672a80fc9de53619ebfa398075888ee",
+        "updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e/metric_evidence.csv": "4b72edb60a8eb651f99e6b33f16165d6607df6413fa27ac6e2b29e51589c7257",
+        "updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e/records.jsonl": "fc2feee8a25f5f7e71546beca1ba550657af0859ac36578aa7d5b4d65020af19",
+        "updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e/input-assessments.json": "f3c091219aa0f4a4b10dcac059290bbb2dec8c7880ed6a45fb009e3d609cbcd1",
+        "updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e/manifest.json": "32e26b7caefe564d8070f39d04ec07ca4ddf0ab560bedc4cd01f13447c1c6b45",
+        "updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e/receipt.json": "886b21c65e6914bbbe60c5ddde262a917faa99e5b6dd23b286152647bf54245e",
+        "updates/B03/results/21a61fcca5894f858a960852a2a4e962/metrics_matrix.csv": "0e5039e45a730862894b701f83aee22926392beb2c02ff1a15b4cd1e71046928",
+        "updates/B03/results/21a61fcca5894f858a960852a2a4e962/metric_evidence.csv": "73458b39601be26763015911108a0ebaaed46191959aaa11245da27ccc065f29",
+        "updates/B03/results/21a61fcca5894f858a960852a2a4e962/records.jsonl": "c69e1666c778994ba9b5839308ba75377d51f7f6d8da40f39791f1ff89135a9c",
+        "updates/B03/results/21a61fcca5894f858a960852a2a4e962/input-assessments.json": "199733e59f75066f48acf83ac00a59fc63bdcb4676100513e83fa65afeb67894",
+        "updates/B03/results/21a61fcca5894f858a960852a2a4e962/manifest.json": "ab5389330082efffbbd295383a27ccebd5b220685ef7350d52ccb0575be2ac2b",
+        "updates/B03/results/21a61fcca5894f858a960852a2a4e962/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "updates/B03/results/21a61fcca5894f858a960852a2a4e962/receipt.json": "9ca022fe876931ad1bb910247d544c147c243512f6e36bd95b9f37227c6486bf",
+        "updates/B02/results/b89cd4a313604df4832dbb85ed0c67db/metrics_matrix.csv": "07ec4182bc12d94427dc3a4e82890a9346632e40ff07c3976666647ecd9fd1c6",
+        "updates/B02/results/b89cd4a313604df4832dbb85ed0c67db/metric_evidence.csv": "1edfd8cca97bfbcf8e2d590da03dcebc839f332faa83bcdd9b5b166abc8a1507",
+        "updates/B02/results/b89cd4a313604df4832dbb85ed0c67db/records.jsonl": "53c7b2cb868b03e9f29489f2536cb727e18a53e50f78c6805ff2878ba51a4fad",
+        "updates/B02/results/b89cd4a313604df4832dbb85ed0c67db/input-assessments.json": "10d817e0b2d6fcb37037541869bdc38eab5ece347262b00aa20ba647c1d7399f",
+        "updates/B02/results/b89cd4a313604df4832dbb85ed0c67db/manifest.json": "1d9492b139fb7ecc6c67d4d3372943316351f9a6943bd92062f0ba04973aa96c",
+        "updates/B02/results/b89cd4a313604df4832dbb85ed0c67db/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "updates/B02/results/b89cd4a313604df4832dbb85ed0c67db/receipt.json": "bcd6bbd6e7929b5c0b06aca8f32c9371ab615f5a3269a5bcbdf384ef8f029989"
+      },
+      "repeat_result_files_unchanged": true,
+      "independent_read_all_state_unchanged": true,
+      "source_metadata_unchanged": true,
+      "scopes": [
+        {
+          "path": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B01/results/4938ebe5dd1d46c9826cf402f2f55b1e/input-assessments.json",
+          "assessments": {
+            "revenue_scope": {
+              "annual_input": {
+                "company_id": "lumen_technologies",
+                "entity": "18926",
+                "filing": {
+                  "acceptanceDateTime": "2026-02-20T21:18:31.000Z",
+                  "accessionNumber": "0000018926-26-000014",
+                  "act": "34",
+                  "core_type": "XBRL",
+                  "fileNumber": "001-07784",
+                  "filingDate": "2026-02-20",
+                  "filmNumber": "26660190",
+                  "form": "10-K",
+                  "isInlineXBRL": 1,
+                  "isXBRL": 1,
+                  "isXBRLNumeric": null,
+                  "items": "",
+                  "primaryDocDescription": "10-K",
+                  "primaryDocument": "lumn-20251231.htm",
+                  "reportDate": "2025-12-31",
+                  "size": 21998152
+                },
+                "table_input": {
+                  "accession": "0000018926-26-000014",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20251231.htm",
+                  "request_attempt_id": "request:attempt:f0226bcec5dfff818b5a2b35e88fb0c84529e04c6b3b42b220e7ff712bcabe9b",
+                  "source_media_type": "text/html",
+                  "source_repo_relative_path": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm",
+                  "target_period": {
+                    "fiscal_year": 2025,
+                    "period_end": "2025-12-31",
+                    "period_start": "2025-01-01"
+                  }
+                }
+              },
+              "approved_concepts": [
+                "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "us-gaap:Revenues",
+                "us-gaap:SalesRevenueNet",
+                "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax"
+              ],
+              "complete_scope_proven": true,
+              "fiscal_label_resolution": {
+                "record_type": "ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION",
+                "original_dei_fiscal_year": 2025,
+                "selected_fiscal_year": 2025
+              },
+              "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+              "reported_totals": [
+                {
+                  "annual_period": {
+                    "fiscal_year": 2025,
+                    "period_end": "2025-12-31",
+                    "period_start": "2025-01-01"
+                  },
+                  "end_headers": [
+                    {
+                      "colspan": 15,
+                      "column_index": 3,
+                      "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                      "origin_column_index": 3,
+                      "origin_row_index": 1,
+                      "raw_text": "Years Ended December&#160;31,",
+                      "row_index": 1,
+                      "rowspan": 1,
+                      "table_id": "table_000028",
+                      "text": "Years Ended December 31,"
+                    }
+                  ],
+                  "statement_scope": {
+                    "adjacent_heading_table": null,
+                    "caption": "",
+                    "intervening_sources": [
+                      {
+                        "attributes": [],
+                        "end_byte": 1212615,
+                        "inside_table": false,
+                        "span_sha256": "2e9f8520b127b28c1c7ce93fc1560d21d448e0dea40612eb4fe62cd0628052ab",
+                        "start_byte": 1212091,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:2039",
+                          "div:1"
+                        ],
+                        "tag": "div",
+                        "visible_text": "Table of Contents"
+                      },
+                      {
+                        "attributes": [
+                          [
+                            "style",
+                            "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                          ]
+                        ],
+                        "end_byte": 1212829,
+                        "inside_table": false,
+                        "span_sha256": "2653bb61e8c3c3465489e41a714cd2bb3f038ba19eed653b976b6f1e11c10cc8",
+                        "start_byte": 1212621,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:2040"
+                        ],
+                        "tag": "div",
+                        "visible_text": "LUMEN TECHNOLOGIES, INC."
+                      },
+                      {
+                        "attributes": [
+                          [
+                            "style",
+                            "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                          ]
+                        ],
+                        "end_byte": 1213050,
+                        "inside_table": false,
+                        "span_sha256": "7d47e81cc0b6dec99af910f7885bcf7e8c8a6ed28898a98fd4b38331fd1ea4b2",
+                        "start_byte": 1212829,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:2041"
+                        ],
+                        "tag": "div",
+                        "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS"
+                      }
+                    ],
+                    "preceding_navigation_sources": [
+                      {
+                        "attributes": [],
+                        "end_byte": 1212615,
+                        "inside_table": false,
+                        "span_sha256": "2e9f8520b127b28c1c7ce93fc1560d21d448e0dea40612eb4fe62cd0628052ab",
+                        "start_byte": 1212091,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:2039",
+                          "div:1"
+                        ],
+                        "tag": "div",
+                        "visible_text": "Table of Contents"
+                      }
+                    ],
+                    "statement_page_boundary": {
+                      "end_byte": 1212048,
+                      "span_sha256": "dcab779a8f959ed9a60e2fd1e515a24af9a737c34ebf2a3a3ff2887763b7cb61",
+                      "start_byte": 1212011
+                    },
+                    "table_span": {
+                      "end_byte": 1257707,
+                      "span_sha256": "a55eb19bd171f120bfa96453641f3e0795cd22f1eb0123c421322438c0129bf0",
+                      "start_byte": 1213078,
+                      "structure_path": [
+                        "html:1",
+                        "body:1",
+                        "div:2042",
+                        "table:1"
+                      ],
+                      "table_order": 27
+                    },
+                    "title_sources": [
+                      {
+                        "attributes": [
+                          [
+                            "style",
+                            "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                          ]
+                        ],
+                        "end_byte": 1213050,
+                        "inside_table": false,
+                        "span_sha256": "7d47e81cc0b6dec99af910f7885bcf7e8c8a6ed28898a98fd4b38331fd1ea4b2",
+                        "start_byte": 1212829,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:2041"
+                        ],
+                        "tag": "div",
+                        "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS"
+                      }
+                    ],
+                    "unresolved_annotations": [],
+                    "preceding_page_context_count": 79
+                  },
+                  "total": {
+                    "concept": "us-gaap:Revenues",
+                    "context": {
+                      "context_ref": "c-1",
+                      "dimensions": {},
+                      "entity_identifier": "0000018926",
+                      "period_end": "2025-12-31",
+                      "period_start": "2025-01-01",
+                      "typed_dimension_count": 0
+                    },
+                    "context_proof": {
+                      "context_ref": "c-1",
+                      "dimensions": [],
+                      "identifiers": [
+                        {
+                          "scheme": "http://www.sec.gov/CIK",
+                          "value": "0000018926"
+                        }
+                      ],
+                      "period_fields": [
+                        {
+                          "kind": "startdate",
+                          "value": "2025-01-01"
+                        },
+                        {
+                          "kind": "enddate",
+                          "value": "2025-12-31"
+                        }
+                      ],
+                      "typed_dimension_count": 0
+                    },
+                    "context_ref": "c-1",
+                    "decimals": "-6",
+                    "ordinal": 81,
+                    "period_end": "2025-12-31",
+                    "period_start": "2025-01-01",
+                    "source_reference": {
+                      "accession": "0000018926-26-000014",
+                      "company_id": "lumen_technologies",
+                      "document_name": "lumn-20251231.htm",
+                      "raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+                      "record_type": "SOURCE_REFERENCE",
+                      "request_attempt_id": "request:attempt:f0226bcec5dfff818b5a2b35e88fb0c84529e04c6b3b42b220e7ff712bcabe9b",
+                      "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+                      "source_role": "target_primary",
+                      "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm"
+                    },
+                    "unit": "USD",
+                    "value": "12402000000"
+                  },
+                  "total_cell": {
+                    "colspan": 1,
+                    "column_index": 4,
+                    "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                    "origin_column_index": 4,
+                    "origin_row_index": 4,
+                    "raw_text": "12,402&#160;",
+                    "row_index": 4,
+                    "rowspan": 1,
+                    "table_id": "table_000028",
+                    "text": "12,402"
+                  },
+                  "unit_sources": [
+                    {
+                      "kind": "visible_cell",
+                      "proof": {
+                        "colspan": 15,
+                        "column_index": 3,
+                        "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                        "origin_column_index": 3,
+                        "origin_row_index": 3,
+                        "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                        "row_index": 3,
+                        "rowspan": 1,
+                        "table_id": "table_000028",
+                        "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                      },
+                      "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                    }
+                  ],
+                  "xml_check": "NOT_SUPPLIED",
+                  "xml_matches": [],
+                  "year_headers": [
+                    {
+                      "colspan": 3,
+                      "column_index": 3,
+                      "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                      "origin_column_index": 3,
+                      "origin_row_index": 2,
+                      "raw_text": "2025",
+                      "row_index": 2,
+                      "rowspan": 1,
+                      "table_id": "table_000028",
+                      "text": "2025"
+                    }
+                  ]
+                }
+              ],
+              "scope_id": "sha256:5d7e0ed6c8f591dca19351e1b072a9c0eabb0a3e655db4253f84d2d88bec94f5",
+              "selected_fiscal_column_year": 2025,
+              "single_revenue_line_allowed": true,
+              "status": "REPORTED_CONSOLIDATED_TOTAL"
+            }
+          }
+        },
+        {
+          "path": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B03/results/21a61fcca5894f858a960852a2a4e962/input-assessments.json",
+          "assessments": {
+            "depreciation_scope": {
+              "chain_input": {
+                "concept": "DepreciationDepletionAndAmortization",
+                "value": "2749000000"
+              },
+              "complete_business_scope_proven": false,
+              "entity": "18926",
+              "existing_scope_check": {
+                "blocked": false,
+                "complete_depreciation_scope_proven": false,
+                "primary_source_sha256": "87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+                "selected_fact_ordinals": [
+                  268
+                ],
+                "status": "NO_EXPLICIT_NARROW_SCOPE_FOUND"
+              },
+              "filing_answer": {
+                "candidates": [
+                  {
+                    "concept": "DepreciationDepletionAndAmortization",
+                    "context_proof": {
+                      "context_ref": "c-1",
+                      "dimensions": [],
+                      "identifiers": [
+                        {
+                          "scheme": "http://www.sec.gov/CIK",
+                          "value": "0000018926"
+                        }
+                      ],
+                      "period_fields": [
+                        {
+                          "kind": "startdate",
+                          "value": "2025-01-01"
+                        },
+                        {
+                          "kind": "enddate",
+                          "value": "2025-12-31"
+                        }
+                      ],
+                      "typed_dimension_count": 0
+                    },
+                    "context_ref": "c-1",
+                    "decimals": "-6",
+                    "fact_ordinal": 268,
+                    "unit_ref": "usd",
+                    "value": "2749000000"
+                  },
+                  {
+                    "concept": "DepreciationAndAmortization",
+                    "context_proof": {
+                      "context_ref": "c-1",
+                      "dimensions": [],
+                      "identifiers": [
+                        {
+                          "scheme": "http://www.sec.gov/CIK",
+                          "value": "0000018926"
+                        }
+                      ],
+                      "period_fields": [
+                        {
+                          "kind": "startdate",
+                          "value": "2025-01-01"
+                        },
+                        {
+                          "kind": "enddate",
+                          "value": "2025-12-31"
+                        }
+                      ],
+                      "typed_dimension_count": 0
+                    },
+                    "context_ref": "c-1",
+                    "decimals": "-6",
+                    "fact_ordinal": 93,
+                    "unit_ref": "usd",
+                    "value": "2749000000"
+                  }
+                ],
+                "selected": {
+                  "concept": "DepreciationDepletionAndAmortization",
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "dimensions": [],
+                    "identifiers": [
+                      {
+                        "scheme": "http://www.sec.gov/CIK",
+                        "value": "0000018926"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2025-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2025-12-31"
+                      }
+                    ],
+                    "typed_dimension_count": 0
+                  },
+                  "context_ref": "c-1",
+                  "decimals": "-6",
+                  "fact_ordinal": 268,
+                  "unit_ref": "usd",
+                  "value": "2749000000"
+                },
+                "status": "TAKE",
+                "why": "EVERY_DIRECT_CANDIDATE_AGREES"
+              },
+              "period": {
+                "fiscal_year": 2025,
+                "period_end": "2025-12-31",
+                "period_start": "2025-01-01"
+              },
+              "primary_sha256": "87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+              "source_facts": [
+                {
+                  "concept": "DepreciationAndAmortization",
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "dimensions": [],
+                    "identifiers": [
+                      {
+                        "scheme": "http://www.sec.gov/CIK",
+                        "value": "0000018926"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2025-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2025-12-31"
+                      }
+                    ],
+                    "typed_dimension_count": 0
+                  },
+                  "context_ref": "c-1",
+                  "decimals": "-6",
+                  "fact_ordinal": 93,
+                  "unit_ref": "usd",
+                  "value": "2749000000"
+                },
+                {
+                  "concept": "DepreciationDepletionAndAmortization",
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "dimensions": [],
+                    "identifiers": [
+                      {
+                        "scheme": "http://www.sec.gov/CIK",
+                        "value": "0000018926"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2025-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2025-12-31"
+                      }
+                    ],
+                    "typed_dimension_count": 0
+                  },
+                  "context_ref": "c-1",
+                  "decimals": "-6",
+                  "fact_ordinal": 268,
+                  "unit_ref": "usd",
+                  "value": "2749000000"
+                },
+                {
+                  "concept": "AmortizationOfIntangibleAssets",
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "dimensions": [],
+                    "identifiers": [
+                      {
+                        "scheme": "http://www.sec.gov/CIK",
+                        "value": "0000018926"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2025-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2025-12-31"
+                      }
+                    ],
+                    "typed_dimension_count": 0
+                  },
+                  "context_ref": "c-1",
+                  "decimals": "-8",
+                  "fact_ordinal": 602,
+                  "unit_ref": "usd",
+                  "value": "1000000000"
+                },
+                {
+                  "concept": "Depreciation",
+                  "context_proof": {
+                    "context_ref": "c-1",
+                    "dimensions": [],
+                    "identifiers": [
+                      {
+                        "scheme": "http://www.sec.gov/CIK",
+                        "value": "0000018926"
+                      }
+                    ],
+                    "period_fields": [
+                      {
+                        "kind": "startdate",
+                        "value": "2025-01-01"
+                      },
+                      {
+                        "kind": "enddate",
+                        "value": "2025-12-31"
+                      }
+                    ],
+                    "typed_dimension_count": 0
+                  },
+                  "context_ref": "c-1",
+                  "decimals": "-8",
+                  "fact_ordinal": 1540,
+                  "unit_ref": "usd",
+                  "value": "1700000000"
+                }
+              ],
+              "status": "KEEP",
+              "why": "EVERY_DIRECT_CANDIDATE_AGREES"
+            },
+            "revenue_scope": {
+              "annual_input": {
+                "company_id": "lumen_technologies",
+                "entity": "18926",
+                "filing": {
+                  "acceptanceDateTime": "2026-02-20T21:18:31.000Z",
+                  "accessionNumber": "0000018926-26-000014",
+                  "act": "34",
+                  "core_type": "XBRL",
+                  "fileNumber": "001-07784",
+                  "filingDate": "2026-02-20",
+                  "filmNumber": "26660190",
+                  "form": "10-K",
+                  "isInlineXBRL": 1,
+                  "isXBRL": 1,
+                  "isXBRLNumeric": null,
+                  "items": "",
+                  "primaryDocDescription": "10-K",
+                  "primaryDocument": "lumn-20251231.htm",
+                  "reportDate": "2025-12-31",
+                  "size": 21998152
+                },
+                "table_input": {
+                  "accession": "0000018926-26-000014",
+                  "company_id": "lumen_technologies",
+                  "document_name": "lumn-20251231.htm",
+                  "request_attempt_id": "request:attempt:f0226bcec5dfff818b5a2b35e88fb0c84529e04c6b3b42b220e7ff712bcabe9b",
+                  "source_media_type": "text/html",
+                  "source_repo_relative_path": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm",
+                  "target_period": {
+                    "fiscal_year": 2025,
+                    "period_end": "2025-12-31",
+                    "period_start": "2025-01-01"
+                  }
+                }
+              },
+              "approved_concepts": [
+                "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "us-gaap:Revenues",
+                "us-gaap:SalesRevenueNet",
+                "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax"
+              ],
+              "complete_scope_proven": true,
+              "fiscal_label_resolution": {
+                "record_type": "ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION",
+                "original_dei_fiscal_year": 2025,
+                "selected_fiscal_year": 2025
+              },
+              "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+              "reported_totals": [
+                {
+                  "annual_period": {
+                    "fiscal_year": 2025,
+                    "period_end": "2025-12-31",
+                    "period_start": "2025-01-01"
+                  },
+                  "end_headers": [
+                    {
+                      "colspan": 15,
+                      "column_index": 3,
+                      "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                      "origin_column_index": 3,
+                      "origin_row_index": 1,
+                      "raw_text": "Years Ended December&#160;31,",
+                      "row_index": 1,
+                      "rowspan": 1,
+                      "table_id": "table_000028",
+                      "text": "Years Ended December 31,"
+                    }
+                  ],
+                  "statement_scope": {
+                    "adjacent_heading_table": null,
+                    "caption": "",
+                    "intervening_sources": [
+                      {
+                        "attributes": [],
+                        "end_byte": 1212615,
+                        "inside_table": false,
+                        "span_sha256": "2e9f8520b127b28c1c7ce93fc1560d21d448e0dea40612eb4fe62cd0628052ab",
+                        "start_byte": 1212091,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:2039",
+                          "div:1"
+                        ],
+                        "tag": "div",
+                        "visible_text": "Table of Contents"
+                      },
+                      {
+                        "attributes": [
+                          [
+                            "style",
+                            "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                          ]
+                        ],
+                        "end_byte": 1212829,
+                        "inside_table": false,
+                        "span_sha256": "2653bb61e8c3c3465489e41a714cd2bb3f038ba19eed653b976b6f1e11c10cc8",
+                        "start_byte": 1212621,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:2040"
+                        ],
+                        "tag": "div",
+                        "visible_text": "LUMEN TECHNOLOGIES, INC."
+                      },
+                      {
+                        "attributes": [
+                          [
+                            "style",
+                            "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                          ]
+                        ],
+                        "end_byte": 1213050,
+                        "inside_table": false,
+                        "span_sha256": "7d47e81cc0b6dec99af910f7885bcf7e8c8a6ed28898a98fd4b38331fd1ea4b2",
+                        "start_byte": 1212829,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:2041"
+                        ],
+                        "tag": "div",
+                        "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS"
+                      }
+                    ],
+                    "preceding_navigation_sources": [
+                      {
+                        "attributes": [],
+                        "end_byte": 1212615,
+                        "inside_table": false,
+                        "span_sha256": "2e9f8520b127b28c1c7ce93fc1560d21d448e0dea40612eb4fe62cd0628052ab",
+                        "start_byte": 1212091,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:2039",
+                          "div:1"
+                        ],
+                        "tag": "div",
+                        "visible_text": "Table of Contents"
+                      }
+                    ],
+                    "statement_page_boundary": {
+                      "end_byte": 1212048,
+                      "span_sha256": "dcab779a8f959ed9a60e2fd1e515a24af9a737c34ebf2a3a3ff2887763b7cb61",
+                      "start_byte": 1212011
+                    },
+                    "table_span": {
+                      "end_byte": 1257707,
+                      "span_sha256": "a55eb19bd171f120bfa96453641f3e0795cd22f1eb0123c421322438c0129bf0",
+                      "start_byte": 1213078,
+                      "structure_path": [
+                        "html:1",
+                        "body:1",
+                        "div:2042",
+                        "table:1"
+                      ],
+                      "table_order": 27
+                    },
+                    "title_sources": [
+                      {
+                        "attributes": [
+                          [
+                            "style",
+                            "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                          ]
+                        ],
+                        "end_byte": 1213050,
+                        "inside_table": false,
+                        "span_sha256": "7d47e81cc0b6dec99af910f7885bcf7e8c8a6ed28898a98fd4b38331fd1ea4b2",
+                        "start_byte": 1212829,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:2041"
+                        ],
+                        "tag": "div",
+                        "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS"
+                      }
+                    ],
+                    "unresolved_annotations": [],
+                    "preceding_page_context_count": 79
+                  },
+                  "total": {
+                    "concept": "us-gaap:Revenues",
+                    "context": {
+                      "context_ref": "c-1",
+                      "dimensions": {},
+                      "entity_identifier": "0000018926",
+                      "period_end": "2025-12-31",
+                      "period_start": "2025-01-01",
+                      "typed_dimension_count": 0
+                    },
+                    "context_proof": {
+                      "context_ref": "c-1",
+                      "dimensions": [],
+                      "identifiers": [
+                        {
+                          "scheme": "http://www.sec.gov/CIK",
+                          "value": "0000018926"
+                        }
+                      ],
+                      "period_fields": [
+                        {
+                          "kind": "startdate",
+                          "value": "2025-01-01"
+                        },
+                        {
+                          "kind": "enddate",
+                          "value": "2025-12-31"
+                        }
+                      ],
+                      "typed_dimension_count": 0
+                    },
+                    "context_ref": "c-1",
+                    "decimals": "-6",
+                    "ordinal": 81,
+                    "period_end": "2025-12-31",
+                    "period_start": "2025-01-01",
+                    "source_reference": {
+                      "accession": "0000018926-26-000014",
+                      "company_id": "lumen_technologies",
+                      "document_name": "lumn-20251231.htm",
+                      "raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+                      "record_type": "SOURCE_REFERENCE",
+                      "request_attempt_id": "request:attempt:f0226bcec5dfff818b5a2b35e88fb0c84529e04c6b3b42b220e7ff712bcabe9b",
+                      "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+                      "source_role": "target_primary",
+                      "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm"
+                    },
+                    "unit": "USD",
+                    "value": "12402000000"
+                  },
+                  "total_cell": {
+                    "colspan": 1,
+                    "column_index": 4,
+                    "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                    "origin_column_index": 4,
+                    "origin_row_index": 4,
+                    "raw_text": "12,402&#160;",
+                    "row_index": 4,
+                    "rowspan": 1,
+                    "table_id": "table_000028",
+                    "text": "12,402"
+                  },
+                  "unit_sources": [
+                    {
+                      "kind": "visible_cell",
+                      "proof": {
+                        "colspan": 15,
+                        "column_index": 3,
+                        "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                        "origin_column_index": 3,
+                        "origin_row_index": 3,
+                        "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                        "row_index": 3,
+                        "rowspan": 1,
+                        "table_id": "table_000028",
+                        "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                      },
+                      "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                    }
+                  ],
+                  "xml_check": "NOT_SUPPLIED",
+                  "xml_matches": [],
+                  "year_headers": [
+                    {
+                      "colspan": 3,
+                      "column_index": 3,
+                      "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                      "origin_column_index": 3,
+                      "origin_row_index": 2,
+                      "raw_text": "2025",
+                      "row_index": 2,
+                      "rowspan": 1,
+                      "table_id": "table_000028",
+                      "text": "2025"
+                    }
+                  ]
+                }
+              ],
+              "scope_id": "sha256:5d7e0ed6c8f591dca19351e1b072a9c0eabb0a3e655db4253f84d2d88bec94f5",
+              "selected_fiscal_column_year": 2025,
+              "single_revenue_line_allowed": true,
+              "status": "REPORTED_CONSOLIDATED_TOTAL"
+            }
+          }
+        },
+        {
+          "path": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-lumen_technologies/updates/B02/results/b89cd4a313604df4832dbb85ed0c67db/input-assessments.json",
+          "assessments": {
+            "paired_revenue_scopes": {
+              "current": {
+                "annual_input": {
+                  "company_id": "lumen_technologies",
+                  "entity": "18926",
+                  "filing": {
+                    "acceptanceDateTime": "2026-02-20T21:18:31.000Z",
+                    "accessionNumber": "0000018926-26-000014",
+                    "act": "34",
+                    "core_type": "XBRL",
+                    "fileNumber": "001-07784",
+                    "filingDate": "2026-02-20",
+                    "filmNumber": "26660190",
+                    "form": "10-K",
+                    "isInlineXBRL": 1,
+                    "isXBRL": 1,
+                    "isXBRLNumeric": null,
+                    "items": "",
+                    "primaryDocDescription": "10-K",
+                    "primaryDocument": "lumn-20251231.htm",
+                    "reportDate": "2025-12-31",
+                    "size": 21998152
+                  },
+                  "table_input": {
+                    "target_period": {
+                      "fiscal_year": 2025,
+                      "period_end": "2025-12-31",
+                      "period_start": "2025-01-01"
+                    }
+                  }
+                },
+                "approved_concepts": [
+                  "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax",
+                  "us-gaap:Revenues",
+                  "us-gaap:SalesRevenueNet"
+                ],
+                "complete_scope_proven": true,
+                "fiscal_label_resolution": {
+                  "record_type": "ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION",
+                  "original_dei_fiscal_year": 2025,
+                  "selected_fiscal_year": 2025
+                },
+                "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+                "reported_totals": [
+                  {
+                    "annual_period": {
+                      "fiscal_year": 2025,
+                      "period_end": "2025-12-31",
+                      "period_start": "2025-01-01"
+                    },
+                    "end_headers": [
+                      {
+                        "colspan": 15,
+                        "column_index": 3,
+                        "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                        "origin_column_index": 3,
+                        "origin_row_index": 1,
+                        "raw_text": "Years Ended December&#160;31,",
+                        "row_index": 1,
+                        "rowspan": 1,
+                        "table_id": "table_000028",
+                        "text": "Years Ended December 31,"
+                      }
+                    ],
+                    "statement_scope": {
+                      "adjacent_heading_table": null,
+                      "caption": "",
+                      "intervening_sources": [
+                        {
+                          "attributes": [],
+                          "end_byte": 1212615,
+                          "inside_table": false,
+                          "span_sha256": "2e9f8520b127b28c1c7ce93fc1560d21d448e0dea40612eb4fe62cd0628052ab",
+                          "start_byte": 1212091,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:2039",
+                            "div:1"
+                          ],
+                          "tag": "div",
+                          "visible_text": "Table of Contents"
+                        },
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                            ]
+                          ],
+                          "end_byte": 1212829,
+                          "inside_table": false,
+                          "span_sha256": "2653bb61e8c3c3465489e41a714cd2bb3f038ba19eed653b976b6f1e11c10cc8",
+                          "start_byte": 1212621,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:2040"
+                          ],
+                          "tag": "div",
+                          "visible_text": "LUMEN TECHNOLOGIES, INC."
+                        },
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                            ]
+                          ],
+                          "end_byte": 1213050,
+                          "inside_table": false,
+                          "span_sha256": "7d47e81cc0b6dec99af910f7885bcf7e8c8a6ed28898a98fd4b38331fd1ea4b2",
+                          "start_byte": 1212829,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:2041"
+                          ],
+                          "tag": "div",
+                          "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS"
+                        }
+                      ],
+                      "preceding_navigation_sources": [
+                        {
+                          "attributes": [],
+                          "end_byte": 1212615,
+                          "inside_table": false,
+                          "span_sha256": "2e9f8520b127b28c1c7ce93fc1560d21d448e0dea40612eb4fe62cd0628052ab",
+                          "start_byte": 1212091,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:2039",
+                            "div:1"
+                          ],
+                          "tag": "div",
+                          "visible_text": "Table of Contents"
+                        }
+                      ],
+                      "statement_page_boundary": {
+                        "end_byte": 1212048,
+                        "span_sha256": "dcab779a8f959ed9a60e2fd1e515a24af9a737c34ebf2a3a3ff2887763b7cb61",
+                        "start_byte": 1212011
+                      },
+                      "table_span": {
+                        "end_byte": 1257707,
+                        "span_sha256": "a55eb19bd171f120bfa96453641f3e0795cd22f1eb0123c421322438c0129bf0",
+                        "start_byte": 1213078,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:2042",
+                          "table:1"
+                        ],
+                        "table_order": 27
+                      },
+                      "title_sources": [
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                            ]
+                          ],
+                          "end_byte": 1213050,
+                          "inside_table": false,
+                          "span_sha256": "7d47e81cc0b6dec99af910f7885bcf7e8c8a6ed28898a98fd4b38331fd1ea4b2",
+                          "start_byte": 1212829,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:2041"
+                          ],
+                          "tag": "div",
+                          "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS"
+                        }
+                      ],
+                      "unresolved_annotations": [],
+                      "preceding_page_context_count": 79
+                    },
+                    "total": {
+                      "concept": "us-gaap:Revenues",
+                      "context": {
+                        "context_ref": "c-1",
+                        "dimensions": {},
+                        "entity_identifier": "0000018926",
+                        "period_end": "2025-12-31",
+                        "period_start": "2025-01-01",
+                        "typed_dimension_count": 0
+                      },
+                      "context_proof": {
+                        "context_ref": "c-1",
+                        "dimensions": [],
+                        "identifiers": [
+                          {
+                            "scheme": "http://www.sec.gov/CIK",
+                            "value": "0000018926"
+                          }
+                        ],
+                        "period_fields": [
+                          {
+                            "kind": "startdate",
+                            "value": "2025-01-01"
+                          },
+                          {
+                            "kind": "enddate",
+                            "value": "2025-12-31"
+                          }
+                        ],
+                        "typed_dimension_count": 0
+                      },
+                      "context_ref": "c-1",
+                      "decimals": "-6",
+                      "ordinal": 81,
+                      "period_end": "2025-12-31",
+                      "period_start": "2025-01-01",
+                      "source_reference": {
+                        "accession": "0000018926-26-000014",
+                        "company_id": "lumen_technologies",
+                        "document_name": "lumn-20251231.htm",
+                        "raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+                        "record_type": "SOURCE_REFERENCE",
+                        "request_attempt_id": "request:attempt:f0226bcec5dfff818b5a2b35e88fb0c84529e04c6b3b42b220e7ff712bcabe9b",
+                        "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+                        "source_role": "target_primary",
+                        "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm"
+                      },
+                      "unit": "USD",
+                      "value": "12402000000"
+                    },
+                    "total_cell": {
+                      "colspan": 1,
+                      "column_index": 4,
+                      "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                      "origin_column_index": 4,
+                      "origin_row_index": 4,
+                      "raw_text": "12,402&#160;",
+                      "row_index": 4,
+                      "rowspan": 1,
+                      "table_id": "table_000028",
+                      "text": "12,402"
+                    },
+                    "unit_sources": [
+                      {
+                        "kind": "visible_cell",
+                        "proof": {
+                          "colspan": 15,
+                          "column_index": 3,
+                          "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                          "origin_column_index": 3,
+                          "origin_row_index": 3,
+                          "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                          "row_index": 3,
+                          "rowspan": 1,
+                          "table_id": "table_000028",
+                          "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                        },
+                        "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                      }
+                    ],
+                    "xml_check": "NOT_SUPPLIED",
+                    "xml_matches": [],
+                    "year_headers": [
+                      {
+                        "colspan": 3,
+                        "column_index": 3,
+                        "grid_sha256": "sha256:2c0dd463480858407a394018c3c0ce25e8e0b60954f14a7889e028a9f09afff4",
+                        "origin_column_index": 3,
+                        "origin_row_index": 2,
+                        "raw_text": "2025",
+                        "row_index": 2,
+                        "rowspan": 1,
+                        "table_id": "table_000028",
+                        "text": "2025"
+                      }
+                    ]
+                  }
+                ],
+                "scope_id": "sha256:b70923a776b3ff5e89a2804c02faffb330ea7c67eaabe006f3df885fd5ad6b4c",
+                "selected_fiscal_column_year": 2025,
+                "single_revenue_line_allowed": true,
+                "status": "REPORTED_CONSOLIDATED_TOTAL"
+              },
+              "prior": {
+                "annual_input": {
+                  "company_id": "lumen_technologies",
+                  "entity": "18926",
+                  "filing": {
+                    "acceptanceDateTime": "2025-02-20T21:17:27.000Z",
+                    "accessionNumber": "0000018926-25-000010",
+                    "act": "34",
+                    "core_type": "XBRL",
+                    "fileNumber": "001-07784",
+                    "filingDate": "2025-02-20",
+                    "filmNumber": "25645638",
+                    "form": "10-K",
+                    "isInlineXBRL": 1,
+                    "isXBRL": 1,
+                    "isXBRLNumeric": null,
+                    "items": "",
+                    "metadata_origin": {
+                      "inventory_name": "CIK0000018926.json",
+                      "row_index": 132
+                    },
+                    "primaryDocDescription": "10-K",
+                    "primaryDocument": "lumn-20241231.htm",
+                    "reportDate": "2024-12-31",
+                    "size": 22348984
+                  },
+                  "table_input": {
+                    "target_period": {
+                      "fiscal_year": 2024,
+                      "period_end": "2024-12-31",
+                      "period_start": "2024-01-01"
+                    }
+                  }
+                },
+                "approved_concepts": [
+                  "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax",
+                  "us-gaap:Revenues",
+                  "us-gaap:SalesRevenueNet"
+                ],
+                "complete_scope_proven": true,
+                "fiscal_label_resolution": {
+                  "record_type": "ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION",
+                  "original_dei_fiscal_year": 2024,
+                  "selected_fiscal_year": 2024
+                },
+                "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+                "reported_totals": [
+                  {
+                    "annual_period": {
+                      "fiscal_year": 2024,
+                      "period_end": "2024-12-31",
+                      "period_start": "2024-01-01"
+                    },
+                    "end_headers": [
+                      {
+                        "colspan": 15,
+                        "column_index": 3,
+                        "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                        "origin_column_index": 3,
+                        "origin_row_index": 1,
+                        "raw_text": "Years Ended December&#160;31,",
+                        "row_index": 1,
+                        "rowspan": 1,
+                        "table_id": "table_000030",
+                        "text": "Years Ended December 31,"
+                      }
+                    ],
+                    "statement_scope": {
+                      "adjacent_heading_table": null,
+                      "caption": "",
+                      "intervening_sources": [
+                        {
+                          "attributes": [],
+                          "end_byte": 1167049,
+                          "inside_table": false,
+                          "span_sha256": "073ec4478ebfd5d79c1c6e19f4d9978a264855ab598e5d427cd67a5c19448da0",
+                          "start_byte": 1166703,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:1496",
+                            "div:1"
+                          ],
+                          "tag": "div",
+                          "visible_text": "Table of Contents"
+                        },
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                            ]
+                          ],
+                          "end_byte": 1167263,
+                          "inside_table": false,
+                          "span_sha256": "2653bb61e8c3c3465489e41a714cd2bb3f038ba19eed653b976b6f1e11c10cc8",
+                          "start_byte": 1167055,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:1497"
+                          ],
+                          "tag": "div",
+                          "visible_text": "LUMEN TECHNOLOGIES, INC."
+                        },
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                            ]
+                          ],
+                          "end_byte": 1167484,
+                          "inside_table": false,
+                          "span_sha256": "f32c9480e11ad9d985288c08bddf35b23c367bb65d7ac8f8d6431266451774b7",
+                          "start_byte": 1167263,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:1498"
+                          ],
+                          "tag": "div",
+                          "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS"
+                        }
+                      ],
+                      "preceding_navigation_sources": [
+                        {
+                          "attributes": [],
+                          "end_byte": 1167049,
+                          "inside_table": false,
+                          "span_sha256": "073ec4478ebfd5d79c1c6e19f4d9978a264855ab598e5d427cd67a5c19448da0",
+                          "start_byte": 1166703,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:1496",
+                            "div:1"
+                          ],
+                          "tag": "div",
+                          "visible_text": "Table of Contents"
+                        }
+                      ],
+                      "statement_page_boundary": {
+                        "end_byte": 1166660,
+                        "span_sha256": "dcab779a8f959ed9a60e2fd1e515a24af9a737c34ebf2a3a3ff2887763b7cb61",
+                        "start_byte": 1166623
+                      },
+                      "table_span": {
+                        "end_byte": 1213840,
+                        "span_sha256": "82f965121a6eb06413673b55c60b942516192781e97b600ec1842795ef928393",
+                        "start_byte": 1167512,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:1499",
+                          "table:1"
+                        ],
+                        "table_order": 29
+                      },
+                      "title_sources": [
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "margin-bottom:2pt;margin-top:2pt;text-align:center"
+                            ]
+                          ],
+                          "end_byte": 1167484,
+                          "inside_table": false,
+                          "span_sha256": "f32c9480e11ad9d985288c08bddf35b23c367bb65d7ac8f8d6431266451774b7",
+                          "start_byte": 1167263,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:1498"
+                          ],
+                          "tag": "div",
+                          "visible_text": "CONSOLIDATED STATEMENTS OF OPERATIONS"
+                        }
+                      ],
+                      "unresolved_annotations": [],
+                      "preceding_page_context_count": 63
+                    },
+                    "total": {
+                      "concept": "us-gaap:Revenues",
+                      "context": {
+                        "context_ref": "c-1",
+                        "dimensions": {},
+                        "entity_identifier": "0000018926",
+                        "period_end": "2024-12-31",
+                        "period_start": "2024-01-01",
+                        "typed_dimension_count": 0
+                      },
+                      "context_proof": {
+                        "context_ref": "c-1",
+                        "dimensions": [],
+                        "identifiers": [
+                          {
+                            "scheme": "http://www.sec.gov/CIK",
+                            "value": "0000018926"
+                          }
+                        ],
+                        "period_fields": [
+                          {
+                            "kind": "startdate",
+                            "value": "2024-01-01"
+                          },
+                          {
+                            "kind": "enddate",
+                            "value": "2024-12-31"
+                          }
+                        ],
+                        "typed_dimension_count": 0
+                      },
+                      "context_ref": "c-1",
+                      "decimals": "-6",
+                      "ordinal": 83,
+                      "period_end": "2024-12-31",
+                      "period_start": "2024-01-01",
+                      "source_reference": {
+                        "accession": "0000018926-25-000010",
+                        "company_id": "lumen_technologies",
+                        "document_name": "lumn-20241231.htm",
+                        "raw_asset_id": "sha256:f49ba30f8fa1f0502dcbd84793679e66b0ca29dd4e7dc7378e236f54a1ea5297",
+                        "record_type": "SOURCE_REFERENCE",
+                        "request_attempt_id": "request:attempt:b8ea38e1a1a43e9a5e1f4ab37e2c05dd934a9c1ffb6db84abcbc290a69cd33fd",
+                        "source_reference_id": "sha256:328dafc031a5f3ecddcb9e58064634d9139c1b463c2d61c2a427e65514641077",
+                        "source_role": "target_primary",
+                        "source_url": "https://www.sec.gov/Archives/edgar/data/18926/000001892625000010/lumn-20241231.htm"
+                      },
+                      "unit": "USD",
+                      "value": "13108000000"
+                    },
+                    "total_cell": {
+                      "colspan": 1,
+                      "column_index": 4,
+                      "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                      "origin_column_index": 4,
+                      "origin_row_index": 4,
+                      "raw_text": "13,108&#160;",
+                      "row_index": 4,
+                      "rowspan": 1,
+                      "table_id": "table_000030",
+                      "text": "13,108"
+                    },
+                    "unit_sources": [
+                      {
+                        "kind": "visible_cell",
+                        "proof": {
+                          "colspan": 15,
+                          "column_index": 3,
+                          "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                          "origin_column_index": 3,
+                          "origin_row_index": 3,
+                          "raw_text": "(Dollars in millions, except per share\namounts, and shares in thousands)",
+                          "row_index": 3,
+                          "rowspan": 1,
+                          "table_id": "table_000030",
+                          "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                        },
+                        "text": "(Dollars in millions, except per share amounts, and shares in thousands)"
+                      }
+                    ],
+                    "xml_check": "NOT_SUPPLIED",
+                    "xml_matches": [],
+                    "year_headers": [
+                      {
+                        "colspan": 3,
+                        "column_index": 3,
+                        "grid_sha256": "sha256:12c2d9bb70a888dec0fcf82fc06f46cd348e43ba2a3cf14613d7e9fb8f3ce4d2",
+                        "origin_column_index": 3,
+                        "origin_row_index": 2,
+                        "raw_text": "2024",
+                        "row_index": 2,
+                        "rowspan": 1,
+                        "table_id": "table_000030",
+                        "text": "2024"
+                      }
+                    ]
+                  }
+                ],
+                "scope_id": "sha256:7fd9b6d2fdcac8e5d035aecfec95b6eacefd34a299715c49fab22152b9de10c1",
+                "selected_fiscal_column_year": 2024,
+                "single_revenue_line_allowed": true,
+                "status": "REPORTED_CONSOLIDATED_TOTAL"
+              }
+            }
+          }
+        }
+      ],
+      "calls": {
+        "sec": 0,
+        "provider": 0,
+        "paid": 0
+      }
+    },
+    {
+      "company": "macys",
+      "first": {
+        "args": [
+          "run",
+          "--company",
+          "macys",
+          "--source-root",
+          "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "--work-dir",
+          "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys",
+          "--output-dir",
+          "/private/tmp/issue28-current-revenue-final-oiiopx5f/outputs-macys",
+          "--metric",
+          "B01",
+          "--metric",
+          "B02"
+        ],
+        "code": 0,
+        "seconds": 6.468738042000041,
+        "rows": [
+          {
+            "company": "Macy's",
+            "cik": "794367",
+            "metric_id": "B01",
+            "metric_name": "Revenue",
+            "value": "22621000000",
+            "unit": "USD",
+            "status": "OK",
+            "source_class": "STD_XBRL",
+            "formula": "direct",
+            "period_start": "2025-02-02",
+            "period_end": "2026-01-31",
+            "fiscal_year": "2025",
+            "fiscal_period": "ANNUAL",
+            "accession": "0001628280-26-021721",
+            "form": "10-K",
+            "filed_date": "2026-03-27",
+            "concept_or_section": "Revenues",
+            "confidence": "",
+            "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+            "company_id": "macys",
+            "result_id": "sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e",
+            "record_root": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys/updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8",
+            "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+            "local_metric_status": "CANDIDATE_READY",
+            "period_role": "REQUESTED_RESULT",
+            "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+            "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+            "defect_holds": "[]",
+            "requested_in_latest_execution": "True",
+            "context_or_dimension_sha256": "df2d5061309a4edab9ca66084e653ada998ab1e3c1563bf9106b1d7b2e016185"
+          },
+          {
+            "company": "Macy's",
+            "cik": "794367",
+            "metric_id": "B02",
+            "metric_name": "Revenue YoY growth",
+            "value": "-0.016734764843953751195340346",
+            "unit": "ratio",
+            "status": "OK",
+            "source_class": "DERIVED",
+            "formula": "",
+            "period_start": "2025-02-02",
+            "period_end": "2026-01-31",
+            "fiscal_year": "2025",
+            "fiscal_period": "ANNUAL",
+            "accession": "0001628280-26-021721;0001628280-25-014315",
+            "form": "10-K",
+            "filed_date": "2026-03-27;2025-03-21",
+            "concept_or_section": "Revenue YoY growth",
+            "confidence": "",
+            "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+            "company_id": "macys",
+            "result_id": "sha256:49192f1ecfdb6035e2820071001df6c2a82ceed43defeb42bc240ead254f2659",
+            "record_root": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys/updates/B02/results/9ad145dbf1f44d509dacb869b980fb09",
+            "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+            "local_metric_status": "CANDIDATE_READY",
+            "period_role": "REQUESTED_RESULT",
+            "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+            "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+            "defect_holds": "[]",
+            "requested_in_latest_execution": "True",
+            "context_or_dimension_sha256": "1da6b3869e2ff505fdfbb04736489574bad3fc2576a513fae2827827a80a8af6"
+          }
+        ],
+        "stdout": "{\n  \"elapsed_seconds\": 6.465926417000446,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"macys\",\n  \"run_id\": \"20261011T080633Z-34f61219\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\",\n    \"B02\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"5ff99a148f584983b3392336a94b7658\",\n      \"version\": \"769ec95fd3bd4577983f077d3bbdc8a8\",\n      \"result_id\": \"sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e\",\n      \"result_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys/updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e\",\n      \"record_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys/updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8\",\n      \"program_version\": {\n        \"commit\": \"ade254a93722b48fa4829051bb041299cdd08591\",\n        \"has_uncommitted_changes\": true\n      }\n    },\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"15cdac1367404e6697c9ffd148b52fdd\",\n      \"version\": \"9ad145dbf1f44d509dacb869b980fb09\",\n      \"result_id\": \"sha256:49192f1ecfdb6035e2820071001df6c2a82ceed43defeb42bc240ead254f2659\",\n      \"result_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys/updates/B02/results/9ad145dbf1f44d509dacb869b980fb09\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:49192f1ecfdb6035e2820071001df6c2a82ceed43defeb42bc240ead254f2659\",\n      \"record_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys/updates/B02/results/9ad145dbf1f44d509dacb869b980fb09\",\n      \"program_version\": {\n        \"commit\": \"ade254a93722b48fa4829051bb041299cdd08591\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue28-current-complete-revenue/SEC_metrics\",\n  \"record_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys\",\n  \"output_root\": \"/private/tmp/issue28-current-revenue-final-oiiopx5f/outputs-macys/20261011T080633Z-34f61219\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false\n}\n"
+      },
+      "repeat_exit": 0,
+      "repeat_seconds": 0.44464187499761465,
+      "independent_read_seconds": 0.4322555829967314,
+      "rows": [
+        {
+          "company": "Macy's",
+          "cik": "794367",
+          "metric_id": "B01",
+          "metric_name": "Revenue",
+          "value": "22621000000",
+          "unit": "USD",
+          "status": "OK",
+          "source_class": "STD_XBRL",
+          "formula": "direct",
+          "period_start": "2025-02-02",
+          "period_end": "2026-01-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0001628280-26-021721",
+          "form": "10-K",
+          "filed_date": "2026-03-27",
+          "concept_or_section": "Revenues",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+          "company_id": "macys",
+          "result_id": "sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e",
+          "record_root": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys/updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True",
+          "context_or_dimension_sha256": "df2d5061309a4edab9ca66084e653ada998ab1e3c1563bf9106b1d7b2e016185"
+        },
+        {
+          "company": "Macy's",
+          "cik": "794367",
+          "metric_id": "B02",
+          "metric_name": "Revenue YoY growth",
+          "value": "-0.016734764843953751195340346",
+          "unit": "ratio",
+          "status": "OK",
+          "source_class": "DERIVED",
+          "formula": "",
+          "period_start": "2025-02-02",
+          "period_end": "2026-01-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0001628280-26-021721;0001628280-25-014315",
+          "form": "10-K",
+          "filed_date": "2026-03-27;2025-03-21",
+          "concept_or_section": "Revenue YoY growth",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+          "company_id": "macys",
+          "result_id": "sha256:49192f1ecfdb6035e2820071001df6c2a82ceed43defeb42bc240ead254f2659",
+          "record_root": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys/updates/B02/results/9ad145dbf1f44d509dacb869b980fb09",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True",
+          "context_or_dimension_sha256": "1da6b3869e2ff505fdfbb04736489574bad3fc2576a513fae2827827a80a8af6"
+        }
+      ],
+      "old_wrong_read": [
+        {
+          "company": "Macy's",
+          "cik": "794367",
+          "metric_id": "B01",
+          "metric_name": "Revenue",
+          "value": "22621000000",
+          "unit": "USD",
+          "status": "OK",
+          "source_class": "STD_XBRL",
+          "formula": "direct",
+          "period_start": "2025-02-02",
+          "period_end": "2026-01-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0001628280-26-021721",
+          "form": "10-K",
+          "filed_date": "2026-03-27",
+          "concept_or_section": "Revenues",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+          "company_id": "macys",
+          "result_id": "sha256:923318dfcf74a09a6f198d2cb13475ff5396793d4f79b7b119d562fd3fc9ee6e",
+          "record_root": "/private/tmp/issue28-current-revenue-20261011/baseline-macys/updates/B01/results/19019abb1b97494ca116ac5f0349804c",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "CANDIDATE_READY",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[]",
+          "requested_in_latest_execution": "True",
+          "context_or_dimension_sha256": "5ba1d8c383e5a5d1cec3c337f6a76d941b833bc951d63180fa5b812d26a341b3"
+        },
+        {
+          "company": "Macy's",
+          "cik": "794367",
+          "metric_id": "B02",
+          "metric_name": "Revenue YoY growth",
+          "value": "",
+          "unit": "",
+          "status": "WITHHELD_KNOWN_DEFECT",
+          "source_class": "DERIVED",
+          "formula": "",
+          "period_start": "2025-02-02",
+          "period_end": "2026-01-31",
+          "fiscal_year": "2025",
+          "fiscal_period": "ANNUAL",
+          "accession": "0001628280-26-021721;0001628280-25-014315",
+          "form": "10-K",
+          "filed_date": "2026-03-27;2025-03-21",
+          "concept_or_section": "Revenue YoY growth",
+          "confidence": "",
+          "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.; CURRENT_OR_HISTORICAL_MACYS_B02_FY2025_REVENUE_SUBTOTAL",
+          "company_id": "macys",
+          "result_id": "sha256:66d0234b888976f0da475d1fbabe7e90408ca3c0ad74fd47340f9646e81765e3",
+          "record_root": "/private/tmp/issue28-current-revenue-20261011/baseline-macys/updates/B02/results/3d386d4b237b4436919108683acdc547",
+          "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+          "local_metric_status": "CANDIDATE_READY",
+          "period_role": "REQUESTED_RESULT",
+          "result_validity": "CONFIRMED_INVALID",
+          "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+          "defect_holds": "[\"CURRENT_OR_HISTORICAL_MACYS_B02_FY2025_REVENUE_SUBTOTAL\"]",
+          "requested_in_latest_execution": "True",
+          "context_or_dimension_sha256": "e15bce972ed3207066ebc7655ae1827b8ef7e4b7573b02255cabf8d293d5e012"
+        }
+      ],
+      "old_read_seconds": 0.42334529199797544,
+      "result_files_before": {
+        "updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8/metrics_matrix.csv": "7d4f1f18c8322d21e4b565186dbea75f3b82cdba48fc5ef06af0f0bcf2edf884",
+        "updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8/metric_evidence.csv": "3d98c445d930986bb757060d8862b2ec836b3c979bbe096af1fb49f3e03b8c35",
+        "updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8/records.jsonl": "a3adb07e07323dfc21a7c466a29a8709802d16912952c2b8a148114287901799",
+        "updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8/input-assessments.json": "2e6fc79fb94beda28ef3ad4f922455f744e3fdc819e4fac65b73e4fe1b04f52c",
+        "updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8/manifest.json": "bff6016606340cffec4fca55d8670c885bcb490a683ea31c3cffad667fc9ad23",
+        "updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8/receipt.json": "b35f83348af309e154929dd0f9207ded1eddfb2b57c432c671d1ff1dd2291598",
+        "updates/B02/results/9ad145dbf1f44d509dacb869b980fb09/metrics_matrix.csv": "8a482baa9d3984d0743f19868fd398d8c30e29f9c24d9d08bacc7c7d2cba58cc",
+        "updates/B02/results/9ad145dbf1f44d509dacb869b980fb09/metric_evidence.csv": "5e39eda9fb854bd1b79c954280edd42cae5d2cb84f0bea1e5e2602c16bdc410c",
+        "updates/B02/results/9ad145dbf1f44d509dacb869b980fb09/records.jsonl": "9a3673b9661735e2426aba7fed915a2b2386801b56489197b67ec47d05218635",
+        "updates/B02/results/9ad145dbf1f44d509dacb869b980fb09/input-assessments.json": "7b6796adfaec46b45031ef9b74f24c1602faa134222f9b378ac2b6fdee15241d",
+        "updates/B02/results/9ad145dbf1f44d509dacb869b980fb09/manifest.json": "9354391eed0eab104947d24959d18ff27c0eb3b43615cb21febb9f61d6688b0d",
+        "updates/B02/results/9ad145dbf1f44d509dacb869b980fb09/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "updates/B02/results/9ad145dbf1f44d509dacb869b980fb09/receipt.json": "f81a5e242bd59d7f6091e693acf0210dffa1581b6355d68604f602a8347acc45"
+      },
+      "repeat_result_files_unchanged": true,
+      "independent_read_all_state_unchanged": true,
+      "source_metadata_unchanged": true,
+      "scopes": [
+        {
+          "path": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys/updates/B01/results/769ec95fd3bd4577983f077d3bbdc8a8/input-assessments.json",
+          "assessments": {
+            "revenue_scope": {
+              "annual_input": {
+                "company_id": "macys",
+                "entity": "794367",
+                "filing": {
+                  "acceptanceDateTime": "2026-03-27T20:06:03.000Z",
+                  "accessionNumber": "0001628280-26-021721",
+                  "act": "34",
+                  "core_type": "XBRL",
+                  "fileNumber": "001-13536",
+                  "filingDate": "2026-03-27",
+                  "filmNumber": "26807292",
+                  "form": "10-K",
+                  "isInlineXBRL": 1,
+                  "isXBRL": 1,
+                  "isXBRLNumeric": null,
+                  "items": "",
+                  "primaryDocDescription": "10-K",
+                  "primaryDocument": "m-20260131.htm",
+                  "reportDate": "2026-01-31",
+                  "size": 12958386
+                },
+                "table_input": {
+                  "accession": "0001628280-26-021721",
+                  "company_id": "macys",
+                  "document_name": "m-20260131.htm",
+                  "request_attempt_id": "request:attempt:c3aabed7f8ec00b9058aa7f0c8d05d1e269490a28babe6d7a5c63f392fd47cdf",
+                  "source_media_type": "text/html",
+                  "source_repo_relative_path": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+                  "source_role": "target_primary",
+                  "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131.htm",
+                  "target_period": {
+                    "fiscal_year": 2025,
+                    "period_end": "2026-01-31",
+                    "period_start": "2025-02-02"
+                  }
+                }
+              },
+              "approved_concepts": [
+                "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                "us-gaap:Revenues",
+                "us-gaap:SalesRevenueNet",
+                "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax"
+              ],
+              "complete_scope_proven": true,
+              "fiscal_label_resolution": {
+                "record_type": "ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION",
+                "original_dei_fiscal_year": 2025,
+                "selected_fiscal_year": 2025
+              },
+              "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+              "reported_totals": [
+                {
+                  "annual_period": {
+                    "fiscal_year": 2025,
+                    "period_end": "2026-01-31",
+                    "period_start": "2025-02-02"
+                  },
+                  "end_headers": [],
+                  "statement_scope": {
+                    "adjacent_heading_table": {
+                      "end_byte": 740433,
+                      "span_sha256": "f3307d99f47be6e3cc349db0c5edb26c380768a5928c7c37318dd57b987cd958",
+                      "start_byte": 739552,
+                      "structure_path": [
+                        "html:1",
+                        "body:1",
+                        "div:583",
+                        "table:1"
+                      ],
+                      "table_order": 35
+                    },
+                    "caption": "",
+                    "intervening_sources": [
+                      {
+                        "attributes": [
+                          [
+                            "style",
+                            "text-align:center"
+                          ]
+                        ],
+                        "end_byte": 740034,
+                        "inside_table": true,
+                        "span_sha256": "0f2c289d6a9b4ca7783caba3d7ccb3937e5127a1f41f5a871c8c248de30f447b",
+                        "start_byte": 739872,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:583",
+                          "table:1",
+                          "tr:2",
+                          "td:1",
+                          "div:1"
+                        ],
+                        "tag": "div",
+                        "visible_text": "MACY'S, INC."
+                      },
+                      {
+                        "attributes": [
+                          [
+                            "style",
+                            "margin-top:6pt;text-align:center"
+                          ]
+                        ],
+                        "end_byte": 740232,
+                        "inside_table": true,
+                        "span_sha256": "5e784b40ce9446b9c88bee21b4349e114dc83292c26cc180abfd13115c7c1eae",
+                        "start_byte": 740034,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:583",
+                          "table:1",
+                          "tr:2",
+                          "td:1",
+                          "div:2"
+                        ],
+                        "tag": "div",
+                        "visible_text": "CONSOLIDATED STATEMENTS OF INCOME"
+                      },
+                      {
+                        "attributes": [
+                          [
+                            "style",
+                            "text-align:center"
+                          ]
+                        ],
+                        "end_byte": 740415,
+                        "inside_table": true,
+                        "span_sha256": "22c6b5d675eee92f057dfc8d6b8eb5cfa2c80af4c3943a102d823fb17478ba50",
+                        "start_byte": 740232,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:583",
+                          "table:1",
+                          "tr:2",
+                          "td:1",
+                          "div:3"
+                        ],
+                        "tag": "div",
+                        "visible_text": "(millions, except per share data)"
+                      }
+                    ],
+                    "table_span": {
+                      "end_byte": 780023,
+                      "span_sha256": "69dec0753f8af98745f4a133341b21ab790c23fd27e38c7aef5ea622d7d3ec48",
+                      "start_byte": 740468,
+                      "structure_path": [
+                        "html:1",
+                        "body:1",
+                        "div:584",
+                        "table:1"
+                      ],
+                      "table_order": 36
+                    },
+                    "title_sources": [
+                      {
+                        "attributes": [
+                          [
+                            "style",
+                            "margin-top:6pt;text-align:center"
+                          ]
+                        ],
+                        "end_byte": 740232,
+                        "inside_table": true,
+                        "span_sha256": "5e784b40ce9446b9c88bee21b4349e114dc83292c26cc180abfd13115c7c1eae",
+                        "start_byte": 740034,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:583",
+                          "table:1",
+                          "tr:2",
+                          "td:1",
+                          "div:2"
+                        ],
+                        "tag": "div",
+                        "visible_text": "CONSOLIDATED STATEMENTS OF INCOME"
+                      }
+                    ],
+                    "unresolved_annotations": []
+                  },
+                  "total": {
+                    "concept": "us-gaap:Revenues",
+                    "context": {
+                      "context_ref": "c-1",
+                      "dimensions": {},
+                      "entity_identifier": "0000794367",
+                      "period_end": "2026-01-31",
+                      "period_start": "2025-02-02",
+                      "typed_dimension_count": 0
+                    },
+                    "context_proof": {
+                      "context_ref": "c-1",
+                      "dimensions": [],
+                      "identifiers": [
+                        {
+                          "scheme": "http://www.sec.gov/CIK",
+                          "value": "0000794367"
+                        }
+                      ],
+                      "period_fields": [
+                        {
+                          "kind": "startdate",
+                          "value": "2025-02-02"
+                        },
+                        {
+                          "kind": "enddate",
+                          "value": "2026-01-31"
+                        }
+                      ],
+                      "typed_dimension_count": 0
+                    },
+                    "context_ref": "c-1",
+                    "decimals": "-6",
+                    "ordinal": 72,
+                    "period_end": "2026-01-31",
+                    "period_start": "2025-02-02",
+                    "source_reference": {
+                      "accession": "0001628280-26-021721",
+                      "company_id": "macys",
+                      "document_name": "m-20260131.htm",
+                      "raw_asset_id": "sha256:47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+                      "record_type": "SOURCE_REFERENCE",
+                      "request_attempt_id": "request:attempt:c3aabed7f8ec00b9058aa7f0c8d05d1e269490a28babe6d7a5c63f392fd47cdf",
+                      "source_reference_id": "sha256:ca1e56ece9708a8e150c00ef57fc0b09f3b2d3da66c45ce29221919e6cab8250",
+                      "source_role": "target_primary",
+                      "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131.htm"
+                    },
+                    "unit": "USD",
+                    "value": "22621000000"
+                  },
+                  "total_cell": {
+                    "colspan": 2,
+                    "column_index": 3,
+                    "grid_sha256": "sha256:6ffc023e794289c64f05c68c371b00e7050ef2e4add8a4af9ddd02a1bdfefb3b",
+                    "origin_column_index": 3,
+                    "origin_row_index": 4,
+                    "raw_text": "22,621&#160;",
+                    "row_index": 4,
+                    "rowspan": 1,
+                    "table_id": "table_000037",
+                    "text": "22,621"
+                  },
+                  "unit_sources": [
+                    {
+                      "kind": "heading_block",
+                      "proof": {
+                        "attributes": [
+                          [
+                            "style",
+                            "text-align:center"
+                          ]
+                        ],
+                        "end_byte": 740415,
+                        "inside_table": true,
+                        "span_sha256": "22c6b5d675eee92f057dfc8d6b8eb5cfa2c80af4c3943a102d823fb17478ba50",
+                        "start_byte": 740232,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:583",
+                          "table:1",
+                          "tr:2",
+                          "td:1",
+                          "div:3"
+                        ],
+                        "tag": "div",
+                        "visible_text": "(millions, except per share data)"
+                      },
+                      "text": "(millions, except per share data)"
+                    }
+                  ],
+                  "xml_check": "NOT_SUPPLIED",
+                  "xml_matches": [],
+                  "year_headers": [
+                    {
+                      "colspan": 3,
+                      "column_index": 3,
+                      "grid_sha256": "sha256:6ffc023e794289c64f05c68c371b00e7050ef2e4add8a4af9ddd02a1bdfefb3b",
+                      "origin_column_index": 3,
+                      "origin_row_index": 1,
+                      "raw_text": "2025",
+                      "row_index": 1,
+                      "rowspan": 1,
+                      "table_id": "table_000037",
+                      "text": "2025"
+                    }
+                  ]
+                }
+              ],
+              "scope_id": "sha256:fb819681e64e00a08be95ee3cd13a0594ddc43106ffb163ef0a3f9591c665204",
+              "selected_fiscal_column_year": 2025,
+              "single_revenue_line_allowed": true,
+              "status": "REPORTED_CONSOLIDATED_TOTAL"
+            }
+          }
+        },
+        {
+          "path": "/private/tmp/issue28-current-revenue-final-oiiopx5f/fixed-macys/updates/B02/results/9ad145dbf1f44d509dacb869b980fb09/input-assessments.json",
+          "assessments": {
+            "paired_revenue_scopes": {
+              "current": {
+                "annual_input": {
+                  "company_id": "macys",
+                  "entity": "794367",
+                  "filing": {
+                    "acceptanceDateTime": "2026-03-27T20:06:03.000Z",
+                    "accessionNumber": "0001628280-26-021721",
+                    "act": "34",
+                    "core_type": "XBRL",
+                    "fileNumber": "001-13536",
+                    "filingDate": "2026-03-27",
+                    "filmNumber": "26807292",
+                    "form": "10-K",
+                    "isInlineXBRL": 1,
+                    "isXBRL": 1,
+                    "isXBRLNumeric": null,
+                    "items": "",
+                    "primaryDocDescription": "10-K",
+                    "primaryDocument": "m-20260131.htm",
+                    "reportDate": "2026-01-31",
+                    "size": 12958386
+                  },
+                  "table_input": {
+                    "target_period": {
+                      "fiscal_year": 2025,
+                      "period_end": "2026-01-31",
+                      "period_start": "2025-02-02"
+                    }
+                  }
+                },
+                "approved_concepts": [
+                  "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax",
+                  "us-gaap:Revenues",
+                  "us-gaap:SalesRevenueNet"
+                ],
+                "complete_scope_proven": true,
+                "fiscal_label_resolution": {
+                  "record_type": "ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION",
+                  "original_dei_fiscal_year": 2025,
+                  "selected_fiscal_year": 2025
+                },
+                "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+                "reported_totals": [
+                  {
+                    "annual_period": {
+                      "fiscal_year": 2025,
+                      "period_end": "2026-01-31",
+                      "period_start": "2025-02-02"
+                    },
+                    "end_headers": [],
+                    "statement_scope": {
+                      "adjacent_heading_table": {
+                        "end_byte": 740433,
+                        "span_sha256": "f3307d99f47be6e3cc349db0c5edb26c380768a5928c7c37318dd57b987cd958",
+                        "start_byte": 739552,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:583",
+                          "table:1"
+                        ],
+                        "table_order": 35
+                      },
+                      "caption": "",
+                      "intervening_sources": [
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "text-align:center"
+                            ]
+                          ],
+                          "end_byte": 740034,
+                          "inside_table": true,
+                          "span_sha256": "0f2c289d6a9b4ca7783caba3d7ccb3937e5127a1f41f5a871c8c248de30f447b",
+                          "start_byte": 739872,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:583",
+                            "table:1",
+                            "tr:2",
+                            "td:1",
+                            "div:1"
+                          ],
+                          "tag": "div",
+                          "visible_text": "MACY'S, INC."
+                        },
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "margin-top:6pt;text-align:center"
+                            ]
+                          ],
+                          "end_byte": 740232,
+                          "inside_table": true,
+                          "span_sha256": "5e784b40ce9446b9c88bee21b4349e114dc83292c26cc180abfd13115c7c1eae",
+                          "start_byte": 740034,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:583",
+                            "table:1",
+                            "tr:2",
+                            "td:1",
+                            "div:2"
+                          ],
+                          "tag": "div",
+                          "visible_text": "CONSOLIDATED STATEMENTS OF INCOME"
+                        },
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "text-align:center"
+                            ]
+                          ],
+                          "end_byte": 740415,
+                          "inside_table": true,
+                          "span_sha256": "22c6b5d675eee92f057dfc8d6b8eb5cfa2c80af4c3943a102d823fb17478ba50",
+                          "start_byte": 740232,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:583",
+                            "table:1",
+                            "tr:2",
+                            "td:1",
+                            "div:3"
+                          ],
+                          "tag": "div",
+                          "visible_text": "(millions, except per share data)"
+                        }
+                      ],
+                      "table_span": {
+                        "end_byte": 780023,
+                        "span_sha256": "69dec0753f8af98745f4a133341b21ab790c23fd27e38c7aef5ea622d7d3ec48",
+                        "start_byte": 740468,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:584",
+                          "table:1"
+                        ],
+                        "table_order": 36
+                      },
+                      "title_sources": [
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "margin-top:6pt;text-align:center"
+                            ]
+                          ],
+                          "end_byte": 740232,
+                          "inside_table": true,
+                          "span_sha256": "5e784b40ce9446b9c88bee21b4349e114dc83292c26cc180abfd13115c7c1eae",
+                          "start_byte": 740034,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:583",
+                            "table:1",
+                            "tr:2",
+                            "td:1",
+                            "div:2"
+                          ],
+                          "tag": "div",
+                          "visible_text": "CONSOLIDATED STATEMENTS OF INCOME"
+                        }
+                      ],
+                      "unresolved_annotations": []
+                    },
+                    "total": {
+                      "concept": "us-gaap:Revenues",
+                      "context": {
+                        "context_ref": "c-1",
+                        "dimensions": {},
+                        "entity_identifier": "0000794367",
+                        "period_end": "2026-01-31",
+                        "period_start": "2025-02-02",
+                        "typed_dimension_count": 0
+                      },
+                      "context_proof": {
+                        "context_ref": "c-1",
+                        "dimensions": [],
+                        "identifiers": [
+                          {
+                            "scheme": "http://www.sec.gov/CIK",
+                            "value": "0000794367"
+                          }
+                        ],
+                        "period_fields": [
+                          {
+                            "kind": "startdate",
+                            "value": "2025-02-02"
+                          },
+                          {
+                            "kind": "enddate",
+                            "value": "2026-01-31"
+                          }
+                        ],
+                        "typed_dimension_count": 0
+                      },
+                      "context_ref": "c-1",
+                      "decimals": "-6",
+                      "ordinal": 72,
+                      "period_end": "2026-01-31",
+                      "period_start": "2025-02-02",
+                      "source_reference": {
+                        "accession": "0001628280-26-021721",
+                        "company_id": "macys",
+                        "document_name": "m-20260131.htm",
+                        "raw_asset_id": "sha256:47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+                        "record_type": "SOURCE_REFERENCE",
+                        "request_attempt_id": "request:attempt:c3aabed7f8ec00b9058aa7f0c8d05d1e269490a28babe6d7a5c63f392fd47cdf",
+                        "source_reference_id": "sha256:ca1e56ece9708a8e150c00ef57fc0b09f3b2d3da66c45ce29221919e6cab8250",
+                        "source_role": "target_primary",
+                        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131.htm"
+                      },
+                      "unit": "USD",
+                      "value": "22621000000"
+                    },
+                    "total_cell": {
+                      "colspan": 2,
+                      "column_index": 3,
+                      "grid_sha256": "sha256:6ffc023e794289c64f05c68c371b00e7050ef2e4add8a4af9ddd02a1bdfefb3b",
+                      "origin_column_index": 3,
+                      "origin_row_index": 4,
+                      "raw_text": "22,621&#160;",
+                      "row_index": 4,
+                      "rowspan": 1,
+                      "table_id": "table_000037",
+                      "text": "22,621"
+                    },
+                    "unit_sources": [
+                      {
+                        "kind": "heading_block",
+                        "proof": {
+                          "attributes": [
+                            [
+                              "style",
+                              "text-align:center"
+                            ]
+                          ],
+                          "end_byte": 740415,
+                          "inside_table": true,
+                          "span_sha256": "22c6b5d675eee92f057dfc8d6b8eb5cfa2c80af4c3943a102d823fb17478ba50",
+                          "start_byte": 740232,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:583",
+                            "table:1",
+                            "tr:2",
+                            "td:1",
+                            "div:3"
+                          ],
+                          "tag": "div",
+                          "visible_text": "(millions, except per share data)"
+                        },
+                        "text": "(millions, except per share data)"
+                      }
+                    ],
+                    "xml_check": "NOT_SUPPLIED",
+                    "xml_matches": [],
+                    "year_headers": [
+                      {
+                        "colspan": 3,
+                        "column_index": 3,
+                        "grid_sha256": "sha256:6ffc023e794289c64f05c68c371b00e7050ef2e4add8a4af9ddd02a1bdfefb3b",
+                        "origin_column_index": 3,
+                        "origin_row_index": 1,
+                        "raw_text": "2025",
+                        "row_index": 1,
+                        "rowspan": 1,
+                        "table_id": "table_000037",
+                        "text": "2025"
+                      }
+                    ]
+                  }
+                ],
+                "scope_id": "sha256:f0b6f2540e36f8469f7d431274480752d2ac737baa32c9b0b23a85ae7957543b",
+                "selected_fiscal_column_year": 2025,
+                "single_revenue_line_allowed": true,
+                "status": "REPORTED_CONSOLIDATED_TOTAL"
+              },
+              "prior": {
+                "annual_input": {
+                  "company_id": "macys",
+                  "entity": "794367",
+                  "filing": {
+                    "acceptanceDateTime": "2025-03-21T20:05:35.000Z",
+                    "accessionNumber": "0001628280-25-014315",
+                    "act": "34",
+                    "core_type": "XBRL",
+                    "fileNumber": "001-13536",
+                    "filingDate": "2025-03-21",
+                    "filmNumber": "25760473",
+                    "form": "10-K",
+                    "isInlineXBRL": 1,
+                    "isXBRL": 1,
+                    "isXBRLNumeric": null,
+                    "items": "",
+                    "metadata_origin": {
+                      "inventory_name": "CIK0000794367.json",
+                      "row_index": 185
+                    },
+                    "primaryDocDescription": "10-K",
+                    "primaryDocument": "m-20250201.htm",
+                    "reportDate": "2025-02-01",
+                    "size": 12598551
+                  },
+                  "table_input": {
+                    "target_period": {
+                      "fiscal_year": 2024,
+                      "period_end": "2025-02-01",
+                      "period_start": "2024-02-04"
+                    }
+                  }
+                },
+                "approved_concepts": [
+                  "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+                  "us-gaap:RevenueFromContractWithCustomerIncludingAssessedTax",
+                  "us-gaap:Revenues",
+                  "us-gaap:SalesRevenueNet"
+                ],
+                "complete_scope_proven": true,
+                "fiscal_label_resolution": {
+                  "record_type": "ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION",
+                  "original_dei_fiscal_year": 2024,
+                  "selected_fiscal_year": 2024
+                },
+                "method": "SELECTED_REPORTED_SINGLE_REVENUE_LINE_V1",
+                "reported_totals": [
+                  {
+                    "annual_period": {
+                      "fiscal_year": 2024,
+                      "period_end": "2025-02-01",
+                      "period_start": "2024-02-04"
+                    },
+                    "end_headers": [],
+                    "statement_scope": {
+                      "adjacent_heading_table": {
+                        "end_byte": 756163,
+                        "span_sha256": "f3307d99f47be6e3cc349db0c5edb26c380768a5928c7c37318dd57b987cd958",
+                        "start_byte": 755282,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:579",
+                          "table:1"
+                        ],
+                        "table_order": 37
+                      },
+                      "caption": "",
+                      "intervening_sources": [
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "text-align:center"
+                            ]
+                          ],
+                          "end_byte": 755764,
+                          "inside_table": true,
+                          "span_sha256": "0f2c289d6a9b4ca7783caba3d7ccb3937e5127a1f41f5a871c8c248de30f447b",
+                          "start_byte": 755602,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:579",
+                            "table:1",
+                            "tr:2",
+                            "td:1",
+                            "div:1"
+                          ],
+                          "tag": "div",
+                          "visible_text": "MACY'S, INC."
+                        },
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "margin-top:6pt;text-align:center"
+                            ]
+                          ],
+                          "end_byte": 755962,
+                          "inside_table": true,
+                          "span_sha256": "5e784b40ce9446b9c88bee21b4349e114dc83292c26cc180abfd13115c7c1eae",
+                          "start_byte": 755764,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:579",
+                            "table:1",
+                            "tr:2",
+                            "td:1",
+                            "div:2"
+                          ],
+                          "tag": "div",
+                          "visible_text": "CONSOLIDATED STATEMENTS OF INCOME"
+                        },
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "text-align:center"
+                            ]
+                          ],
+                          "end_byte": 756145,
+                          "inside_table": true,
+                          "span_sha256": "22c6b5d675eee92f057dfc8d6b8eb5cfa2c80af4c3943a102d823fb17478ba50",
+                          "start_byte": 755962,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:579",
+                            "table:1",
+                            "tr:2",
+                            "td:1",
+                            "div:3"
+                          ],
+                          "tag": "div",
+                          "visible_text": "(millions, except per share data)"
+                        }
+                      ],
+                      "table_span": {
+                        "end_byte": 793935,
+                        "span_sha256": "99a86093347ba4781843be23f53124b3be3971ceed919c0a976efc7a330218ba",
+                        "start_byte": 756198,
+                        "structure_path": [
+                          "html:1",
+                          "body:1",
+                          "div:580",
+                          "table:1"
+                        ],
+                        "table_order": 38
+                      },
+                      "title_sources": [
+                        {
+                          "attributes": [
+                            [
+                              "style",
+                              "margin-top:6pt;text-align:center"
+                            ]
+                          ],
+                          "end_byte": 755962,
+                          "inside_table": true,
+                          "span_sha256": "5e784b40ce9446b9c88bee21b4349e114dc83292c26cc180abfd13115c7c1eae",
+                          "start_byte": 755764,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:579",
+                            "table:1",
+                            "tr:2",
+                            "td:1",
+                            "div:2"
+                          ],
+                          "tag": "div",
+                          "visible_text": "CONSOLIDATED STATEMENTS OF INCOME"
+                        }
+                      ],
+                      "unresolved_annotations": []
+                    },
+                    "total": {
+                      "concept": "us-gaap:Revenues",
+                      "context": {
+                        "context_ref": "c-1",
+                        "dimensions": {},
+                        "entity_identifier": "0000794367",
+                        "period_end": "2025-02-01",
+                        "period_start": "2024-02-04",
+                        "typed_dimension_count": 0
+                      },
+                      "context_proof": {
+                        "context_ref": "c-1",
+                        "dimensions": [],
+                        "identifiers": [
+                          {
+                            "scheme": "http://www.sec.gov/CIK",
+                            "value": "0000794367"
+                          }
+                        ],
+                        "period_fields": [
+                          {
+                            "kind": "startdate",
+                            "value": "2024-02-04"
+                          },
+                          {
+                            "kind": "enddate",
+                            "value": "2025-02-01"
+                          }
+                        ],
+                        "typed_dimension_count": 0
+                      },
+                      "context_ref": "c-1",
+                      "decimals": "-6",
+                      "ordinal": 72,
+                      "period_end": "2025-02-01",
+                      "period_start": "2024-02-04",
+                      "source_reference": {
+                        "accession": "0001628280-25-014315",
+                        "company_id": "macys",
+                        "document_name": "m-20250201.htm",
+                        "raw_asset_id": "sha256:29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+                        "record_type": "SOURCE_REFERENCE",
+                        "request_attempt_id": "request:attempt:bf643f1928306b75aa3feb59d16108ca1e06f2428d4f7bf337e3b9da60ec08e4",
+                        "source_reference_id": "sha256:f4ab1a06f4defda3612d67c8ce20995cd849527646f612d53144363543ae4daf",
+                        "source_role": "target_primary",
+                        "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm"
+                      },
+                      "unit": "USD",
+                      "value": "23006000000"
+                    },
+                    "total_cell": {
+                      "colspan": 2,
+                      "column_index": 3,
+                      "grid_sha256": "sha256:f1973d98a9faaabedd0b9aafb79e5a644bb9090d0540fab284f494c5d0c0b5f4",
+                      "origin_column_index": 3,
+                      "origin_row_index": 4,
+                      "raw_text": "23,006&#160;",
+                      "row_index": 4,
+                      "rowspan": 1,
+                      "table_id": "table_000039",
+                      "text": "23,006"
+                    },
+                    "unit_sources": [
+                      {
+                        "kind": "heading_block",
+                        "proof": {
+                          "attributes": [
+                            [
+                              "style",
+                              "text-align:center"
+                            ]
+                          ],
+                          "end_byte": 756145,
+                          "inside_table": true,
+                          "span_sha256": "22c6b5d675eee92f057dfc8d6b8eb5cfa2c80af4c3943a102d823fb17478ba50",
+                          "start_byte": 755962,
+                          "structure_path": [
+                            "html:1",
+                            "body:1",
+                            "div:579",
+                            "table:1",
+                            "tr:2",
+                            "td:1",
+                            "div:3"
+                          ],
+                          "tag": "div",
+                          "visible_text": "(millions, except per share data)"
+                        },
+                        "text": "(millions, except per share data)"
+                      }
+                    ],
+                    "xml_check": "NOT_SUPPLIED",
+                    "xml_matches": [],
+                    "year_headers": [
+                      {
+                        "colspan": 3,
+                        "column_index": 3,
+                        "grid_sha256": "sha256:f1973d98a9faaabedd0b9aafb79e5a644bb9090d0540fab284f494c5d0c0b5f4",
+                        "origin_column_index": 3,
+                        "origin_row_index": 1,
+                        "raw_text": "2024",
+                        "row_index": 1,
+                        "rowspan": 1,
+                        "table_id": "table_000039",
+                        "text": "2024"
+                      }
+                    ]
+                  }
+                ],
+                "scope_id": "sha256:9b4e7c79498d86f8f52fff1109e0058c7fc5e97b6eb139f00f0da7871b4fea48",
+                "selected_fiscal_column_year": 2024,
+                "single_revenue_line_allowed": true,
+                "status": "REPORTED_CONSOLIDATED_TOTAL"
+              }
+            }
+          }
+        }
+      ],
+      "calls": {
+        "sec": 0,
+        "provider": 0,
+        "paid": 0
+      }
+    }
+  ]
+}

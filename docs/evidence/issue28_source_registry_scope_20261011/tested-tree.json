@@ -1,0 +1,25 @@
+{
+  "base_commit": "b529ab91ccd194179623bc49f7e46b7b07d4f31e",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-source-registry-scope/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "tested_state": "uncommitted working tree; these hashes must match committed production/test files",
+  "files": {
+    "scripts/vnext/company_fiscal_range.py": "e979be94df7468df307e227f1d96d10040155a975bdf1635c22a3e05bfe87e7a",
+    "scripts/vnext/selected_source_requirements.py": "965e1f8ae5b347ee4477f6c64867ee502efc719de17b2c5a4b63e33f8b544471",
+    "tests/vnext/test_company_fiscal_range.py": "49f10f5821d2048b22044eaaac19c85d3f3347dd6c30c505443057e24b5df5a1",
+    "tests/vnext/test_selected_source_requirements.py": "98fd209a3a13286d269df77a810a7c8a8c391792c6a64e0c5039198bb637d87c"
+  },
+  "tests": {
+    "run": 91,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 10.627
+  },
+  "calls": {
+    "sec": 0,
+    "provider": 0,
+    "paid": 0
+  },
+  "scope": "read-only source planning plus existing unaffected ordinary company entry regression; no new financial value or source acquisition credit"
+}

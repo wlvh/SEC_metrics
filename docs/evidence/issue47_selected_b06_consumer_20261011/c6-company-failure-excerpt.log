@@ -1,0 +1,18 @@
+2026-10-11T05:43:45.9981353Z FAIL: test_history_dispatch_preserves_existing_factories_and_dependencies (tests.vnext.test_historical_compensation_case.HistoricalCompensationAdapterTest.test_history_dispatch_preserves_existing_factories_and_dependencies)
+2026-10-11T05:43:45.9982690Z ----------------------------------------------------------------------
+2026-10-11T05:43:45.9983277Z Traceback (most recent call last):
+2026-10-11T05:43:45.9990875Z   File "/home/runner/work/SEC_metrics/SEC_metrics/tests/vnext/test_historical_compensation_case.py", line 143, in test_history_dispatch_preserves_existing_factories_and_dependencies
+2026-10-11T05:43:45.9991815Z     self.assertIs(prepare_historical_statement_year_case,args['case_factories']['B01'])
+2026-10-11T05:43:45.9992550Z     ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-11T05:43:45.9993295Z AssertionError: <function prepare_historical_statement_year_case at 0x7f633a8026c0> is not <function prepared_fiscal_range_B01 at 0x7f633a25f690>
+2026-10-11T05:43:45.9993843Z 
+2026-10-11T05:43:45.9994049Z ----------------------------------------------------------------------
+2026-10-11T05:43:45.9994495Z Ran 127 tests in 1.072s
+2026-10-11T05:43:45.9994658Z 
+2026-10-11T05:43:45.9994809Z FAILED (failures=1)
+2026-10-11T05:43:46.0539152Z ##[error]Process completed with exit code 1.
+2026-10-11T05:43:46.0726607Z Post job cleanup.
+2026-10-11T05:43:46.1572902Z [command]/usr/bin/git version
+2026-10-11T05:43:46.1610693Z git version 2.55.0
+2026-10-11T05:43:46.1651512Z Temporarily overriding HOME='/home/runner/work/_temp/0af46e2c-8b6f-416a-af5c-c0338d433b95' before making global git config changes
+2026-10-11T05:43:46.1658047Z Adding repository directory to the temporary git global config as a safe directory

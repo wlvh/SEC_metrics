@@ -1,0 +1,223 @@
+test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) ... 
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=None, section='decisions') ... FAIL
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=None, section='also_in_scope') ... FAIL
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=True, section='decisions') ... FAIL
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=True, section='also_in_scope') ... FAIL
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=12, section='decisions') ... FAIL
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=12, section='also_in_scope') ... FAIL
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=[], section='decisions') ... ERROR
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=[], section='also_in_scope') ... ERROR
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity={}, section='decisions') ... ERROR
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity={}, section='also_in_scope') ... ERROR
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=['b000000'], section='decisions') ... ERROR
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=['b000000'], section='also_in_scope') ... ERROR
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity={'block_id': 'b000000'}, section='decisions') ... ERROR
+  test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity={'block_id': 'b000000'}, section='also_in_scope') ... ERROR
+
+======================================================================
+ERROR: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=[], section='decisions')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 95, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    review.validate_answer(request=req, raw_output=answer(
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        [(identity, 'IN_SCOPE', LITIGATION)]))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/legal_review_contract.py", line 169, in validate_answer
+    _need(identity in must, "D02_REVIEW_DECIDES_A_BLOCK_NOT_ASKED:" + str(identity)[:40])
+          ^^^^^^^^^^^^^^^^
+TypeError: cannot use 'list' as a set element (unhashable type: 'list')
+
+======================================================================
+ERROR: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=[], section='also_in_scope')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 100, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    review.validate_answer(request=req, raw_output=answer(
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        [(req['must_decide'][0], 'IN_SCOPE', LITIGATION)], [(identity, LEASES)]))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/legal_review_contract.py", line 184, in validate_answer
+    _need(identity in texts, "D02_REVIEW_ADDS_A_BLOCK_NOT_IN_THE_REQUEST:" + str(identity)[:40])
+          ^^^^^^^^^^^^^^^^^
+TypeError: cannot use 'list' as a dict key (unhashable type: 'list')
+
+======================================================================
+ERROR: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity={}, section='decisions')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 95, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    review.validate_answer(request=req, raw_output=answer(
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        [(identity, 'IN_SCOPE', LITIGATION)]))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/legal_review_contract.py", line 169, in validate_answer
+    _need(identity in must, "D02_REVIEW_DECIDES_A_BLOCK_NOT_ASKED:" + str(identity)[:40])
+          ^^^^^^^^^^^^^^^^
+TypeError: cannot use 'dict' as a set element (unhashable type: 'dict')
+
+======================================================================
+ERROR: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity={}, section='also_in_scope')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 100, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    review.validate_answer(request=req, raw_output=answer(
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        [(req['must_decide'][0], 'IN_SCOPE', LITIGATION)], [(identity, LEASES)]))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/legal_review_contract.py", line 184, in validate_answer
+    _need(identity in texts, "D02_REVIEW_ADDS_A_BLOCK_NOT_IN_THE_REQUEST:" + str(identity)[:40])
+          ^^^^^^^^^^^^^^^^^
+TypeError: cannot use 'dict' as a dict key (unhashable type: 'dict')
+
+======================================================================
+ERROR: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=['b000000'], section='decisions')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 95, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    review.validate_answer(request=req, raw_output=answer(
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        [(identity, 'IN_SCOPE', LITIGATION)]))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/legal_review_contract.py", line 169, in validate_answer
+    _need(identity in must, "D02_REVIEW_DECIDES_A_BLOCK_NOT_ASKED:" + str(identity)[:40])
+          ^^^^^^^^^^^^^^^^
+TypeError: cannot use 'list' as a set element (unhashable type: 'list')
+
+======================================================================
+ERROR: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=['b000000'], section='also_in_scope')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 100, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    review.validate_answer(request=req, raw_output=answer(
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        [(req['must_decide'][0], 'IN_SCOPE', LITIGATION)], [(identity, LEASES)]))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/legal_review_contract.py", line 184, in validate_answer
+    _need(identity in texts, "D02_REVIEW_ADDS_A_BLOCK_NOT_IN_THE_REQUEST:" + str(identity)[:40])
+          ^^^^^^^^^^^^^^^^^
+TypeError: cannot use 'list' as a dict key (unhashable type: 'list')
+
+======================================================================
+ERROR: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity={'block_id': 'b000000'}, section='decisions')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 95, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    review.validate_answer(request=req, raw_output=answer(
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        [(identity, 'IN_SCOPE', LITIGATION)]))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/legal_review_contract.py", line 169, in validate_answer
+    _need(identity in must, "D02_REVIEW_DECIDES_A_BLOCK_NOT_ASKED:" + str(identity)[:40])
+          ^^^^^^^^^^^^^^^^
+TypeError: cannot use 'dict' as a set element (unhashable type: 'dict')
+
+======================================================================
+ERROR: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity={'block_id': 'b000000'}, section='also_in_scope')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 100, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    review.validate_answer(request=req, raw_output=answer(
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        [(req['must_decide'][0], 'IN_SCOPE', LITIGATION)], [(identity, LEASES)]))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/scripts/vnext/legal_review_contract.py", line 184, in validate_answer
+    _need(identity in texts, "D02_REVIEW_ADDS_A_BLOCK_NOT_IN_THE_REQUEST:" + str(identity)[:40])
+          ^^^^^^^^^^^^^^^^^
+TypeError: cannot use 'dict' as a dict key (unhashable type: 'dict')
+
+======================================================================
+FAIL: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=None, section='decisions')
+----------------------------------------------------------------------
+vnext.legal_review_contract.LegalReviewContractError: D02_REVIEW_DECIDES_A_BLOCK_NOT_ASKED:None
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 93, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    with self.assertRaisesRegex(review.LegalReviewContractError,
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                '^D02_REVIEW_DECISION_BLOCK_ID_WRONG_TYPE$'):
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "^D02_REVIEW_DECISION_BLOCK_ID_WRONG_TYPE$" does not match "D02_REVIEW_DECIDES_A_BLOCK_NOT_ASKED:None"
+
+======================================================================
+FAIL: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=None, section='also_in_scope')
+----------------------------------------------------------------------
+vnext.legal_review_contract.LegalReviewContractError: D02_REVIEW_ADDS_A_BLOCK_NOT_IN_THE_REQUEST:None
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 98, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    with self.assertRaisesRegex(review.LegalReviewContractError,
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                '^D02_REVIEW_ADDITION_BLOCK_ID_WRONG_TYPE$'):
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "^D02_REVIEW_ADDITION_BLOCK_ID_WRONG_TYPE$" does not match "D02_REVIEW_ADDS_A_BLOCK_NOT_IN_THE_REQUEST:None"
+
+======================================================================
+FAIL: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=True, section='decisions')
+----------------------------------------------------------------------
+vnext.legal_review_contract.LegalReviewContractError: D02_REVIEW_DECIDES_A_BLOCK_NOT_ASKED:True
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 93, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    with self.assertRaisesRegex(review.LegalReviewContractError,
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                '^D02_REVIEW_DECISION_BLOCK_ID_WRONG_TYPE$'):
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "^D02_REVIEW_DECISION_BLOCK_ID_WRONG_TYPE$" does not match "D02_REVIEW_DECIDES_A_BLOCK_NOT_ASKED:True"
+
+======================================================================
+FAIL: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=True, section='also_in_scope')
+----------------------------------------------------------------------
+vnext.legal_review_contract.LegalReviewContractError: D02_REVIEW_ADDS_A_BLOCK_NOT_IN_THE_REQUEST:True
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 98, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    with self.assertRaisesRegex(review.LegalReviewContractError,
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                '^D02_REVIEW_ADDITION_BLOCK_ID_WRONG_TYPE$'):
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "^D02_REVIEW_ADDITION_BLOCK_ID_WRONG_TYPE$" does not match "D02_REVIEW_ADDS_A_BLOCK_NOT_IN_THE_REQUEST:True"
+
+======================================================================
+FAIL: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=12, section='decisions')
+----------------------------------------------------------------------
+vnext.legal_review_contract.LegalReviewContractError: D02_REVIEW_DECIDES_A_BLOCK_NOT_ASKED:12
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 93, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    with self.assertRaisesRegex(review.LegalReviewContractError,
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                '^D02_REVIEW_DECISION_BLOCK_ID_WRONG_TYPE$'):
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "^D02_REVIEW_DECISION_BLOCK_ID_WRONG_TYPE$" does not match "D02_REVIEW_DECIDES_A_BLOCK_NOT_ASKED:12"
+
+======================================================================
+FAIL: test_block_identity_type_is_a_contract_failure_in_each_answer_list (tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list) (identity=12, section='also_in_scope')
+----------------------------------------------------------------------
+vnext.legal_review_contract.LegalReviewContractError: D02_REVIEW_ADDS_A_BLOCK_NOT_IN_THE_REQUEST:12
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics/tests/vnext/test_legal_review_contract.py", line 98, in test_block_identity_type_is_a_contract_failure_in_each_answer_list
+    with self.assertRaisesRegex(review.LegalReviewContractError,
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                '^D02_REVIEW_ADDITION_BLOCK_ID_WRONG_TYPE$'):
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "^D02_REVIEW_ADDITION_BLOCK_ID_WRONG_TYPE$" does not match "D02_REVIEW_ADDS_A_BLOCK_NOT_IN_THE_REQUEST:12"
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (failures=6, errors=8)
+{"allowed_skips": 0, "errors": 8, "failures": 6, "run": 1, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_legal_review_contract.AnswerContractTest.test_block_identity_type_is_a_contract_failure_in_each_answer_list"]}

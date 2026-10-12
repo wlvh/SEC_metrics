@@ -9,17 +9,20 @@ from pathlib import Path
 
 from sec_urls import accession_document_url, companyfacts_url
 from .canonical import content_hash, sha256_file
-from .normal_annual_input import _registry_rows, _subject_policy
+from .normal_annual_input import _subject_policy
+from .ordinary_registry_scope import registered_company_row
 from .normal_history_catalog import load_history_for_period, annual_periods
 from .normal_period_selection import PeriodSelectionError, restore_period_selection
 from .normal_source_authority import ROOT
 from .normal_source_requirements import _Requirements
 from .selected_source_requirements import discover_selected_annual_requirements
 
-METRIC_IDS = frozenset({'B01', 'B02'})
+METRIC_IDS = frozenset({'B01', 'B02', 'B03'})
+RANGE_CASE_METRIC_IDS = frozenset({'B01', 'B02'})
 PROCESSING_FILES = (
     'scripts/vnext/company_fiscal_range.py',
     'scripts/vnext/selected_source_requirements.py',
+    'scripts/vnext/ordinary_registry_scope.py',
     'scripts/vnext/fiscal_year_labels.py',
     'scripts/vnext/historical_fiscal_labels.py',
     'scripts/vnext/historical_dei.py',
@@ -79,11 +82,10 @@ def discover_fiscal_range(*,repo_root,company_id,fiscal_year_start,fiscal_year_e
     _need(type(metric_ids) in (tuple,list) and metric_ids and
           len(metric_ids)==len(set(metric_ids)) and set(metric_ids)<=METRIC_IDS, 'METRIC_NOT_CONNECTED')
     source=Path(repo_root).resolve()
-    _need(sha256_file(path=source/'config/company_registry.csv')==
-          sha256_file(path=ROOT/'config/company_registry.csv'),'SOURCE_COMPANY_REGISTRY_CHANGED')
-    companies=[r for r in _registry_rows(repo_root=source) if r['company_id']==company_id]
-    _need(len(companies)==1,'COMPANY_NOT_CONFIGURED')
-    company=companies[0]; failures=[]; entries=[]
+    company=registered_company_row(repo_root=source,company_id=company_id)
+    _need(company==registered_company_row(repo_root=ROOT,company_id=company_id),
+          'SOURCE_COMPANY_REGISTRY_CHANGED')
+    failures=[]; entries=[]
     try:candidates=_candidates(source,company,years[0],years[-1])
     except (ValueError,KeyError,TypeError) as error:
         candidates=[];failures.append(_issue('ANNUAL_METADATA',error))
@@ -159,7 +161,9 @@ def range_case_factories(*,company_id,fiscal_years,metric_ids,case_factories):
     """Operation-local lazy source discovery, only after the updater needs work."""
     years=tuple(fiscal_years)
     _need(bool(years) and years==tuple(_years(min(years),max(years))), 'YEARS_NOT_CONTIGUOUS')
-    selected=set(metric_ids)&METRIC_IDS
+    # Read-only B03 discovery is available; its business producer still owns
+    # selection and does not accept this wrapper's period_selection parameter.
+    selected=set(metric_ids)&RANGE_CASE_METRIC_IDS
     _need(selected<=set(case_factories),'BUSINESS_CASE_MISSING')
     cache={}; result=dict(case_factories); expected_company=company_id
     def make(producer,metric):

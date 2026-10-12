@@ -1,0 +1,24 @@
+test_consumed_shared_functions_are_actual_declared_processing_dependencies (tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest.test_consumed_shared_functions_are_actual_declared_processing_dependencies) ... ok
+test_explicit_historical_namespace_view_cannot_admit_fake_dei_uri (tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest.test_explicit_historical_namespace_view_cannot_admit_fake_dei_uri) ... ok
+test_original_and_resolved_annual_dates_cannot_diverge (tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest.test_original_and_resolved_annual_dates_cannot_diverge) ... ok
+test_shared_d01_keeps_all_emphasized_excerpts_and_source_locators (tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest.test_shared_d01_keeps_all_emphasized_excerpts_and_source_locators) ... FAIL
+test_unreceived_amendment_and_successor_refuse_before_source_extraction (tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest.test_unreceived_amendment_and_successor_refuse_before_source_extraction) ... ok
+test_unsupported_metric_does_not_prepare_an_annual_source (tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest.test_unsupported_metric_does_not_prepare_an_annual_source) ... ok
+test_wrong_original_entity_and_missing_item1a_do_not_create_text (tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest.test_wrong_original_entity_and_missing_item1a_do_not_create_text) ... ok
+
+======================================================================
+FAIL: test_shared_d01_keeps_all_emphasized_excerpts_and_source_locators (tests.vnext.test_historical_risk_heading_case.HistoricalRiskHeadingCaseTest.test_shared_d01_keeps_all_emphasized_excerpts_and_source_locators)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/tests/vnext/test_historical_risk_heading_case.py", line 41, in test_shared_d01_keeps_all_emphasized_excerpts_and_source_locators
+    self.assertEqual(result['quality'],'TEXT_QUAL')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'EXACT' != 'TEXT_QUAL'
+- EXACT
++ TEXT_QUAL
+
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.111s
+
+FAILED (failures=1)

@@ -3,6 +3,7 @@ import hashlib
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 from vnext.ordinary_reported_lease_scope import _case_sources, _reported
 
@@ -65,3 +66,20 @@ class ReportedLeaseSuccessorTest(unittest.TestCase):
         self.assertIsNone(result['ratio']); self.assertFalse(result['definition_complete'])
         self.assertNotIn('lease_inclusion', scope)
 
+
+
+class ReportedLeasePreparedInputCompatibilityTest(unittest.TestCase):
+    def test_default_preserves_old_inherited_call(self):
+        from vnext import ordinary_reported_lease_scope as successor
+        with patch.object(successor.inherited,'prepare_special_debt_case',return_value=None) as original:
+            self.assertIsNone(successor.prepare_reported_lease_case(repo_root=Path('/source'),company_id='selected'))
+        original.assert_called_once_with(repo_root=Path('/source'),company_id='selected')
+
+    def test_explicit_rule_root_and_preparation_are_forwarded_without_reselection(self):
+        from vnext import ordinary_reported_lease_scope as successor
+        prepared=object()
+        with patch.object(successor.inherited,'prepare_special_debt_case',return_value=None) as original:
+            self.assertIsNone(successor.prepare_reported_lease_case(repo_root=Path('/source'),company_id='selected',
+                rules_root=Path('/program'),preparation=prepared))
+        self.assertIs(original.call_args.kwargs['preparation'],prepared)
+        self.assertEqual(original.call_args.kwargs['rules_root'],Path('/program'))

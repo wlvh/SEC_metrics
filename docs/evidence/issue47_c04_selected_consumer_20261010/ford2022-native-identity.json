@@ -1,0 +1,114 @@
+[
+  {
+    "role": "current_filings",
+    "reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:85c8a9e6cfeaf791526a2f0c11649a6f7fb1429d4328c5742125b554d0a59d47",
+      "raw_asset_id": "sha256:34ba99b0c91bdd15e6c80bc08e0287f7a7e6c1f388c1f49cb15784bbd3a4db80",
+      "company_id": "ford_motor_company",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/f-20221231.htm",
+      "accession": "0000037996-23-000012",
+      "document_name": "f-20221231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:1d0357b19f86c09fce4eb485bc6042ba106e8521b1679d5f0bf3c0e8ebfc3447"
+    },
+    "facts": [
+      {
+        "namespace": "http://xbrl.sec.gov/dei/2022",
+        "name": "DocumentType",
+        "text": "10-K",
+        "ordinal": 59
+      },
+      {
+        "namespace": "http://xbrl.sec.gov/dei/2022",
+        "name": "AuditorName",
+        "text": "PricewaterhouseCoopers LLP",
+        "ordinal": 102
+      }
+    ]
+  },
+  {
+    "role": "current_filings",
+    "reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:75c14364edc20126d456bd0ad9f41f87684c0aa5d45ff85891f2f380e43904a6",
+      "raw_asset_id": "sha256:ac95d393e35ec57d2e7a2e4322efe674b2d7b1f6d436238e7cdf599fa887f72f",
+      "company_id": "ford_motor_company",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/f-20221231_htm.xml",
+      "accession": "0000037996-23-000012",
+      "document_name": "f-20221231_htm.xml",
+      "source_role": "auditor_facts",
+      "request_attempt_id": "request:attempt:b2015f3aa880fa7afebf856bcf5f4a087b53b86256831348f39d239451454d53"
+    },
+    "facts": [
+      {
+        "namespace": "http://xbrl.sec.gov/dei/2022",
+        "name": "documenttype",
+        "text": "10-K",
+        "ordinal": 59
+      },
+      {
+        "namespace": "http://xbrl.sec.gov/dei/2022",
+        "name": "auditorname",
+        "text": "PricewaterhouseCoopers LLP",
+        "ordinal": 102
+      }
+    ]
+  },
+  {
+    "role": "prior_filings",
+    "reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:c8c87b309c47a1eacbb481254dc031ccad771785063dab9ad376cc7fc286e3d6",
+      "raw_asset_id": "sha256:7b3b9bc7e43800ad49e55ba0c164ca2e005fde16ed5c7545ff88f6921d64ae3d",
+      "company_id": "ford_motor_company",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231.htm",
+      "accession": "0000037996-22-000013",
+      "document_name": "f-20211231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:105e8be6b7a7bff1992e4fd978f53b795410443a3be9df279d5efcaab758c35c"
+    },
+    "facts": [
+      {
+        "namespace": "http://xbrl.sec.gov/dei/2021q4",
+        "name": "DocumentType",
+        "text": "10-K",
+        "ordinal": 20
+      },
+      {
+        "namespace": "http://xbrl.sec.gov/dei/2021q4",
+        "name": "AuditorName",
+        "text": "PricewaterhouseCoopers LLP",
+        "ordinal": 57
+      }
+    ]
+  },
+  {
+    "role": "prior_filings",
+    "reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:01811aae099199dc1b4fe8aeee5704caeb499f178482bc233c8b803f1e6a1e70",
+      "raw_asset_id": "sha256:c1435115f59c269162a8adcbb87c43c6bb3151add5cf3cea6f5638cad8b4321e",
+      "company_id": "ford_motor_company",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799622000013/f-20211231_htm.xml",
+      "accession": "0000037996-22-000013",
+      "document_name": "f-20211231_htm.xml",
+      "source_role": "auditor_facts",
+      "request_attempt_id": "request:attempt:1cd8e2b04ea325f6232b78f0ccc9a983d7c47f70cb01cab53b50233e896dd402"
+    },
+    "facts": [
+      {
+        "namespace": "http://xbrl.sec.gov/dei/2021q4",
+        "name": "documenttype",
+        "text": "10-K",
+        "ordinal": 20
+      },
+      {
+        "namespace": "http://xbrl.sec.gov/dei/2021q4",
+        "name": "auditorname",
+        "text": "PricewaterhouseCoopers LLP",
+        "ordinal": 57
+      }
+    ]
+  }
+]

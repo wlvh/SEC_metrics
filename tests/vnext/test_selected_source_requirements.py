@@ -1,5 +1,6 @@
 """Small source originals/logs through the actual read-only public preflight."""
 import hashlib
+import csv
 import io
 import json
 from pathlib import Path
@@ -15,6 +16,7 @@ from tests.vnext.test_dei_release_selection import annual
 from sec_urls import accession_directory_url, accession_document_url, companyfacts_url, submissions_url
 from sec_http import parse_request_log_rows, request_log_csv_bytes, refresh_request_log_manifest
 from vnext.recorded_sec_http import RecordedSecHttpClient
+from vnext.request_bindings import BatchWorkflowError
 from vnext import selected_source_requirements as preflight
 from tools.vnext_company import main
 
@@ -68,6 +70,52 @@ class SelectedSourceRequirementsTest(unittest.TestCase):
         return {str(p.relative_to(self.root)):hashlib.sha256(p.read_bytes()).hexdigest()
                 for p in self.root.rglob('*') if p.is_file()}
 
+    def rewrite_registry(self, company_id, **changes):
+        path=self.root/'config/company_registry.csv'
+        with path.open(newline='') as stream:
+            reader=csv.DictReader(stream);fields=reader.fieldnames;rows=list(reader)
+        for row in rows:
+            if row['company_id']==company_id:row.update(changes)
+        with path.open('w',newline='') as stream:
+            writer=csv.DictWriter(stream,fieldnames=fields);writer.writeheader();writer.writerows(rows)
+
+    def test_unrelated_registered_company_change_does_not_block_selected_sources(self):
+        expected=self.plan()
+        self.rewrite_registry('pfizer',display_name='Pfizer source-package display')
+        before=self.digest_tree();actual=self.plan()
+        self.assertEqual(actual,expected)
+        self.assertEqual(before,self.digest_tree())
+
+    def test_unrelated_program_registry_change_preserves_selected_sources(self):
+        expected=self.plan()
+        program=self.root.parent/'program';(program/'config').mkdir(parents=True)
+        (program/'config/company_registry.csv').write_bytes((REPO_ROOT/'config/company_registry.csv').read_bytes()
+            .replace(b'pfizer,Pfizer,',b'pfizer,Pfizer unrelated program display,'))
+        policy='config/normal_period_selection_v1.json'
+        (program/policy).write_bytes((REPO_ROOT/policy).read_bytes())
+        with patch.object(preflight,'ROOT',program):
+            self.assertEqual(self.plan(),expected)
+
+    def test_target_registry_context_changes_are_not_accepted(self):
+        path=self.root/'config/company_registry.csv';original=path.read_bytes()
+        changes={'primary_cik':'19617','roles':'primary:19617','industry_profile':'pharma',
+                 'fiscal_year_end':'0131','target_period_policy':'changed',
+                 'entity_continuity_status':'changed','related_ciks':'19617'}
+        for field,value in changes.items():
+            with self.subTest(field=field):
+                path.write_bytes(original);self.rewrite_registry(COMPANY,**{field:value})
+                with self.assertRaisesRegex(ValueError,'COMPANY_REGISTRY_CHANGED'):self.plan()
+
+    def test_invalid_unrelated_registry_rows_still_block_source_planning(self):
+        path=self.root/'config/company_registry.csv';original=path.read_bytes()
+        for raw in (original+original.splitlines(keepends=True)[2],
+                    original.replace(b'pfizer,Pfizer,78003,',b'pfizer,Pfizer,not-a-cik,'),
+                    original.replace(b'company_id,display_name,',b'company_id,company_id,'),
+                    original.replace(b'pfizer,Pfizer,78003,PFE,',b'pfizer,Pfizer,78003,')):
+            with self.subTest(raw=raw[-70:]):
+                path.write_bytes(raw)
+                with self.assertRaises((ValueError,BatchWorkflowError)):self.plan()
+
     def test_selected_task_preserves_complete_groups_and_is_read_only_not_acceptance(self):
         before=self.digest_tree();value=self.plan()
         self.assertEqual(value['status'],'SAVED_SOURCE_BYTES_AVAILABLE')
@@ -85,6 +133,47 @@ class SelectedSourceRequirementsTest(unittest.TestCase):
         value=self.plan(('B01',));self.assertEqual(value['status'],'SAVED_SOURCE_BYTES_AVAILABLE')
         self.assertNotIn(self.urls[2024],[r['source_url'] for r in value['requirements']])
         self.assertEqual(value['unique_known_get_count'],5)
+
+    def test_b03_names_target_originals_without_requiring_b02_prior(self):
+        self.record(self.urls[2024],b'failed',503,'unused prior unavailable')
+        before=self.digest_tree();value=self.plan(('B03',))
+        self.assertEqual(value['status'],'SAVED_SOURCE_BYTES_AVAILABLE')
+        self.assertEqual(value['unique_known_get_count'],5)
+        self.assertNotIn(self.urls[2024],[r['source_url'] for r in value['requirements']])
+        self.assertFalse(value['metric_executed']);self.assertFalse(value['metric_acceptance_proven'])
+        self.assertFalse(value['fetch_authorized']);self.assertEqual(before,self.digest_tree())
+
+    def test_b03_missing_target_instance_and_target_amendment_remain_dependencies(self):
+        instance=accession_document_url(cik=CIK,accession=self.filings[0]['accessionNumber'],document_name='annual-2025_htm.xml')
+        self.remove_get(instance);value=self.plan(('B03',))
+        self.assertIn(instance,value['unresolved_dependency_urls'])
+        amendment={**self.filings[0],'form':'10-K/A','accessionNumber':'0001048286-26-000008',
+            'primaryDocument':'amendment.htm','filingDate':'2026-03-01'}
+        self.metadata['filings']['recent']={k:[amendment[k],*[f[k] for f in self.filings]] for k in self.filings[0]}
+        self.record(submissions_url(cik=CIK),json.dumps(self.metadata).encode())
+        value=self.plan(('B03',));url=accession_document_url(cik=CIK,accession=amendment['accessionNumber'],document_name='amendment.htm')
+        self.assertIn(url,value['unresolved_dependency_urls'])
+        self.assertFalse(value['amendment_effect_on_metric_verified'])
+        raw=annual('http://xbrl.sec.gov/dei/2021q4').replace(b'19617',str(CIK).encode()).replace(b'2021',b'2025')
+        self.record(instance,raw)
+        self.record(url,raw.replace(b'>10-K<',b'>10-K/A<').replace(b'>false<',b'>true<'))
+        ready=self.plan(('B03',))
+        self.assertEqual(ready['status'],'SAVED_SOURCE_BYTES_AVAILABLE')
+        amendment_requests=[r for r in ready['requirements'] if r['accession']==amendment['accessionNumber']]
+        self.assertEqual([r['source_url'] for r in amendment_requests],[url])
+        self.assertFalse(ready['amendment_effect_on_metric_verified'])
+
+    def test_formal_sources_entry_accepts_b03_and_keeps_acquire_scope_closed(self):
+        from tools.vnext_company import main
+        args=['sources','--company',COMPANY,'--source-root',str(self.root),
+              '--report-end','2025-12-31','--metric','B03']
+        with patch('sys.stdout',new_callable=io.StringIO) as output:
+            code=main(args)
+        self.assertEqual(code,0)
+        value=json.loads(output.getvalue());self.assertEqual(value['metric_ids'],['B03'])
+        self.assertFalse(value['metric_executed']);self.assertFalse(value['fetch_authorized'])
+        from vnext.company_online import ONLINE_METRICS
+        self.assertEqual(ONLINE_METRICS,frozenset({'B01','B02'}))
 
     def test_missing_target_is_named_without_running_full_preparation(self):
         self.remove_get(self.urls[2025]);value=self.plan()

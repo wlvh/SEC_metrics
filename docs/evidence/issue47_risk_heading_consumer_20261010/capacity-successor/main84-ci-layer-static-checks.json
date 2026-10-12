@@ -1,0 +1,94 @@
+{
+  "public_patch": "47d9435b",
+  "source_code_changed": false,
+  "exact_test_command_multiset": 10,
+  "trigger_paths_equal": true,
+  "original_time_limit_per_test_job": 5,
+  "aggregate_outcomes": [
+    {
+      "company": "success",
+      "source": "success",
+      "passes": true
+    },
+    {
+      "company": "success",
+      "source": "failure",
+      "passes": false
+    },
+    {
+      "company": "success",
+      "source": "cancelled",
+      "passes": false
+    },
+    {
+      "company": "success",
+      "source": "skipped",
+      "passes": false
+    },
+    {
+      "company": "failure",
+      "source": "success",
+      "passes": false
+    },
+    {
+      "company": "failure",
+      "source": "failure",
+      "passes": false
+    },
+    {
+      "company": "failure",
+      "source": "cancelled",
+      "passes": false
+    },
+    {
+      "company": "failure",
+      "source": "skipped",
+      "passes": false
+    },
+    {
+      "company": "cancelled",
+      "source": "success",
+      "passes": false
+    },
+    {
+      "company": "cancelled",
+      "source": "failure",
+      "passes": false
+    },
+    {
+      "company": "cancelled",
+      "source": "cancelled",
+      "passes": false
+    },
+    {
+      "company": "cancelled",
+      "source": "skipped",
+      "passes": false
+    },
+    {
+      "company": "skipped",
+      "source": "success",
+      "passes": false
+    },
+    {
+      "company": "skipped",
+      "source": "failure",
+      "passes": false
+    },
+    {
+      "company": "skipped",
+      "source": "cancelled",
+      "passes": false
+    },
+    {
+      "company": "skipped",
+      "source": "skipped",
+      "passes": false
+    }
+  ],
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -130,4 +130,95 @@ class CurrentRiskHeadingCaseTest(unittest.TestCase):
                     self.assertTrue((Path(folder)/'state/results'/first['version']).is_dir())
 
 
+class CurrentD01ProcessingInputUnionTest(unittest.TestCase):
+    def test_current_factory_and_saved_input_reach_the_same_update(self):
+        from tests.vnext.test_company_current_records import CurrentCompanyTest
+        control=CurrentCompanyTest(methodName='runTest');control.setUp()
+        try:
+            package=control.source/'TEST_ONLY_saved_processing_input.json'
+            package.write_text('{}')
+            def factory(**kwargs):return {'TEST_ONLY':True}
+            with patch.object(company,'run_once',return_value={
+                    'status':'INPUT_OR_EXECUTION_FAILED','reason':'TEST_ONLY_UNION_BOUNDARY'}) as boundary:
+                report=company.run_saved_company(company_id='marriott_international',
+                    source_root=control.source,work_dir=control.work,output_dir=control.outputs,
+                    metric_ids=['D01'],current_case_factories={'D01':factory},
+                    processing_files_by_metric={'D01':current.PROCESSING_FILES},
+                    processing_inputs_by_metric={'D01':(package,)})
+            boundary.assert_called_once()
+            self.assertIs(boundary.call_args.kwargs['current_case_factory'],factory)
+            self.assertEqual(boundary.call_args.kwargs['processing_inputs'],(package,))
+            self.assertEqual(report['metrics'][0]['reason'],'TEST_ONLY_UNION_BOUNDARY')
+        finally:control.doCleanups()
+
+    def test_current_factory_retains_and_reacts_to_its_saved_processing_input(self):
+        # Small controller records isolate the merge seam, not content credit.
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp);package=root/'TEST_ONLY_input.json';package.write_text('first')
+            calls=[];records={}
+            def factory(**kwargs):calls.append(kwargs);return {'TEST_ONLY':True}
+            def save(**kwargs):
+                path=kwargs['output_root'];path.mkdir(parents=True)
+                record={'manifest':{'company_id':'enphase_energy','metric_id':'D01','source_proofs':[]},
+                    'result':{'company_id':'enphase_energy','metric_id':'D01','publication':'PUBLISHED',
+                              'period_end':'2025-12-31','result_id':'TEST_ONLY_'+str(len(calls))}}
+                records[str(path)]=record;return record
+            args=dict(state_root=root/'state',source_root=REPO_ROOT,company_id='enphase_energy',
+                metric_id='D01',current_case_factory=factory,processing_files=current.PROCESSING_FILES,
+                processing_inputs=(package,))
+            with (patch.object(update,'_source_census',return_value=[]),
+                  patch.object(update,'_current_sources',return_value=[]),
+                  patch.object(update,'save_calculated_case',side_effect=save),
+                  patch.object(update,'read_saved_result',side_effect=lambda **kwargs:records[str(kwargs['output_root'])])):
+                first=update.run_once(**args);package.write_text('changed input')
+                second=update.run_once(**args)
+                with patch.object(update,'save_calculated_case',side_effect=AssertionError('No repeated save')):
+                    third=update.run_once(**args)
+            self.assertEqual(first['status'],'CANDIDATE_READY')
+            self.assertEqual(second['status'],'CANDIDATE_READY')
+            self.assertNotEqual(first['version'],second['version'])
+            self.assertEqual(third['status'],'NO_SOURCE_CONTENT_CHANGE')
+            self.assertEqual(len(calls),2)
+
+
+class DefaultCurrentConfigurationPreservationTest(unittest.TestCase):
+    def test_default_configuration_matches_main_with_identical_program_inputs(self):
+        # Same actual program inputs: file version hashes remain real. This
+        # does not assert unchanged hashes across two different code trees.
+        import subprocess
+        baseline=subprocess.check_output(['git','show',
+            '2f24282ca9cdefbae07f788b91d88b204c01ed2e:scripts/vnext/ordinary_current_update.py'],text=True)
+        namespace={'__name__':'vnext.reference_main_update','__package__':'vnext',
+                   '__file__':str(REPO_ROOT/'scripts/vnext/ordinary_current_update.py')}
+        exec(compile(baseline,'reference-main-update','exec'),namespace)
+        for metric in ('B01','B02','D04','C04','A13'):
+            with self.subTest(metric=metric):
+                expected=namespace['_configuration'](REPO_ROOT,'marriott_international',metric)
+                actual=update._configuration(REPO_ROOT,'marriott_international',metric)
+                self.assertEqual(expected,actual)
+                self.assertNotIn('current_case_producer',actual)
+                self.assertNotIn('saved_processing_inputs',actual)
+
+    def test_omitted_and_explicit_empty_options_keep_completed_configuration(self):
+        import json
+        from tests.vnext.test_ordinary_current_update import CurrentUpdateTest
+        control=CurrentUpdateTest(methodName='runTest');control.setUp()
+        try:
+            first=control.run_update()
+            saved=(control.root/'completed-check.json').read_bytes()
+            again=control.run_update()
+            from scripts.vnext import ordinary_current_update as test_update
+            third=test_update.run_once(state_root=control.root,source_root=REPO_ROOT,
+                company_id='marriott_international',metric_id='B01',
+                current_case_factory=None,processing_inputs=())
+            self.assertEqual(again['status'],'NO_SOURCE_CONTENT_CHANGE')
+            self.assertEqual(third['status'],'NO_SOURCE_CONTENT_CHANGE')
+            self.assertEqual((control.root/'completed-check.json').read_bytes(),saved)
+            config=json.loads(saved)['configuration']
+            self.assertNotIn('current_case_producer',config)
+            self.assertNotIn('saved_processing_inputs',config)
+            self.assertEqual(control.calculations,1)
+        finally:control.doCleanups()
+
+
 if __name__=='__main__':unittest.main()

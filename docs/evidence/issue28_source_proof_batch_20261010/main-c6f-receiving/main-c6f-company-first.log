@@ -1,0 +1,49 @@
+{
+  "elapsed_seconds": 2.9234035420013242,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261011T084133Z-bc838f16",
+  "status": "FLOW_COMPLETED",
+  "selected_metrics": [
+    "B01"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B01",
+      "status": "CANDIDATE_READY",
+      "attempt_id": "bfe9760bb49a49e5a6122d05a18240f4",
+      "version": "aa739cbf830c44c2a97e5da96949f41f",
+      "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "result_root": "/private/tmp/issue28-proof-main63-company-f4d3vwxc/state/updates/B01/results/aa739cbf830c44c2a97e5da96949f41f",
+      "calculation_performed": true,
+      "new_candidate_created": true,
+      "result_reason_code": "PASS",
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "defect_holds": [],
+      "read_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+      "record_root": "/private/tmp/issue28-proof-main63-company-f4d3vwxc/state/updates/B01/results/aa739cbf830c44c2a97e5da96949f41f",
+      "program_version": {
+        "commit": "c6f5c90fe1fa49762608f5605bd54e0b9c7590d5",
+        "has_uncommitted_changes": false
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-source-proof-main-c6f/SEC_metrics",
+  "record_root": "/private/tmp/issue28-proof-main63-company-f4d3vwxc/state",
+  "output_root": "/private/tmp/issue28-proof-main63-company-f4d3vwxc/output/20261011T084133Z-bc838f16",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}
+{"driver_exit": 0, "driver_seconds": 2.9274469170013617}

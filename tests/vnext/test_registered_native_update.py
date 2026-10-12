@@ -112,7 +112,7 @@ class RegisteredNativeUpdateTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'RECORDED_NATIVE_LEDGER_REQUIRED'):
             _ledger(requirement,'RECORDED_TEST_ONLY',None)
         with self.assertRaisesRegex(ValueError,'REPLAY_OBJECT_CANNOT_EXECUTE'):
-            _execute_semantic(prepared=SimpleNamespace(request_bytes=b'{}',replay_only=True),
+            _execute_semantic(prepared=SimpleNamespace(request_bytes=b'{}',replay_only=True,d04_saved_response_only=False),
                 ledger=None,recorded_wire=None,native_assessment=True)
 
     @staticmethod

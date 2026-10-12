@@ -6,6 +6,7 @@ are reconstructed together. A reported total never grants completeness alone.
 from decimal import Decimal
 import re
 
+from .xbrl_namespace_policy import is_fasb_namespace, source_reader_options
 from . import b06_disclosure as disclosure
 from .canonical import content_hash,decimal_text,sha256_bytes,strict_json_file
 from .constraints import parse_numeric_claim
@@ -73,7 +74,8 @@ class _InventoryMetadata(_ReportedFactMetadata):
         super().handle_endtag(tag)
 
 
-def _inventory_context(c,meta,name,standard):
+def _inventory_context(c,meta,name,standard, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     if not c['typed_dimension_count']:
         return _verified_context(native=c,metadata=meta),[]
     from datetime import date
@@ -84,18 +86,19 @@ def _inventory_context(c,meta,name,standard):
           and proof['period_fields']==[{'kind':'instant','value':c['period_end']}]
           and not proof['dimensions'] and len(typed)==proof['typed_dimension_count']==1,'TYPED_RPO_CONTEXT_CHANGED')
     t=typed[0];axis='RevenueRemainingPerformanceObligationExpectedTimingOfSatisfactionStartDateAxis'
-    _need(re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',t['axis'][0])
+    _need(is_fasb_namespace(t['axis'][0], namespace_policy=namespace_policy)
           and t['axis'][1].casefold()==axis.casefold() and len(t['domains'])==1
           and t['domains'][0][0]==t['axis'][0] and t['domains'][0][1].casefold()==(axis+'.domain').casefold()
           and date.fromisoformat(t['value'])>date.fromisoformat(c['period_end']),'TYPED_RPO_FUTURE_DATE_UNPROVEN')
     return proof,typed
 
 
-def _native(source,prepared,kind):
+def _native(source,prepared,kind, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     raw=source['raw_bytes'];ref=source['source_reference'];period=prepared['table_input']['target_period']
     _need(ref['raw_asset_id']=='sha256:'+sha256_bytes(content=raw) and ref['accession']==prepared['filing']['accessionNumber']
           and ref['company_id']==prepared['company_id'],'SOURCE_BINDING_CHANGED')
-    _need(annual_period(raw=raw,cik=prepared['entity'],filing=prepared['filing'])==period,'SOURCE_IDENTITY_CHANGED')
+    _need(annual_period(raw=raw,cik=prepared['entity'],filing=prepared['filing'], **({'dei_release': dei_release} if dei_release != 'YEAR_ONLY' else {}))==period,'SOURCE_IDENTITY_CHANGED')
     parsed=parse_accession_xbrl_source(raw_bytes=raw);meta=_ReportedFactMetadata();meta.feed(raw.decode('utf-8-sig'));meta.close()
     _need(meta.ordinal==len(parsed.facts),'NATIVE_STREAM_CHANGED')
     notes={};reports={role:[] for role in POLICY['monetary_concepts']};members=[]
@@ -106,7 +109,7 @@ def _native(source,prepared,kind):
         roles=[r for r,n in POLICY['monetary_concepts'].items() if n.casefold()==local.casefold()]
         member=local.casefold() in {n.casefold() for n in POLICY['member_concepts']}
         if not note and not roles and not member:continue
-        _need(re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri)
+        _need(is_fasb_namespace(uri, namespace_policy=namespace_policy)
               or note and note[0] in POLICY['extension_note_concepts'] and uri and not f['qualified_name'].casefold().startswith('us-gaap:'),
               'CONCEPT_NAMESPACE_CONFLICT')
         _need(str(int(c['entity_identifier']))==prepared['entity'],'CURRENT_ENTITY_CONFLICT')
@@ -161,9 +164,10 @@ def _current_column(table,end,prepared):
     return col,width,row
 
 
-def inspect_inclusive_composition(*,primary,xml,prepared):
-    xp,xnotes,xreports,xmembers=_native(xml,prepared,'xml')
-    ip,inotes,ireports,imembers=_native(primary,prepared,'primary')
+def inspect_inclusive_composition(*,primary,xml,prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    xp,xnotes,xreports,xmembers=_native(xml,prepared,'xml', **reader_options)
+    ip,inotes,ireports,imembers=_native(primary,prepared,'primary', **reader_options)
     inline=_InclusiveInlineNotes();inline.feed(primary['raw_bytes'].decode('utf-8-sig'));inline.close()
     _need(not inline.active and not inline.excluded,'INLINE_NOTE_TRUNCATED')
     compact=lambda s:re.sub(r'\s','',s)
@@ -284,8 +288,9 @@ def _other_disclosures(primary,prepared,composition):
         'letters_off_balance_statement':letters[0],'purchase_statement':purchase,'programming_statement':programming}
 
 
-def inspect_inclusive_balance_scope(*,primary,xml,prepared):
-    component=inspect_inclusive_composition(primary=primary,xml=xml,prepared=prepared)
+def inspect_inclusive_balance_scope(*,primary,xml,prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    component=inspect_inclusive_composition(primary=primary,xml=xml,prepared=prepared, **reader_options)
     return {**component,'balance_scope':_balance_scope(primary,prepared,component),
             'other_financing_disclosures':_other_disclosures(primary,prepared,component)}
 
@@ -395,7 +400,8 @@ def _narrative(component,prepared):
     return result
 
 
-def _independent_inventory(primary,xml,prepared,component):
+def _independent_inventory(primary,xml,prepared,component, *, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     from .governance_signals import _qname
     inventory={}
     for kind,source in [('xml',xml),('primary',primary)]:
@@ -408,8 +414,8 @@ def _independent_inventory(primary,xml,prepared,component):
             if c['period_start']!=c['period_end'] or c['period_end']!=prepared['filing']['reportDate'] or not f['unit_ref']:continue
             if not re.search(r'debt|borrow|loan|lease|credit|facility|financing|funding|obligation|promissory|seniornotes|subordinatednotes|debentures',name):continue
             _need(str(int(c['entity_identifier']))==prepared['entity'],'INVENTORY_SUBJECT_CONFLICT')
-            standard=re.fullmatch(r'https?://fasb\.org/us-gaap/[0-9]{4}',uri) is not None
-            context={**c,'dimensions':dict(c['dimensions'])};context_proof,typed=_inventory_context(context,meta,name,standard)
+            standard=is_fasb_namespace(uri, namespace_policy=namespace_policy)
+            context={**c,'dimensions':dict(c['dimensions'])};context_proof,typed=_inventory_context(context,meta,name,standard, **reader_options)
             unit=meta.units.get(f['unit_ref']);usd=unit=={'measures':[('http://www.xbrl.org/2003/iso4217','USD')],'divided':False}
             pure=unit=={'measures':[('http://www.xbrl.org/2003/instance','pure')],'divided':False}
             if f['text'].strip().casefold() in {'no','zero'} and name in {'lineofcredit','lettersofcreditoutstandingamount'}:
@@ -474,10 +480,11 @@ def _independent_inventory(primary,xml,prepared,component):
     return inventory
 
 
-def inspect_inclusive_debt_scope(*,primary,xml,prepared):
-    component=inspect_inclusive_balance_scope(primary=primary,xml=xml,prepared=prepared)
+def inspect_inclusive_debt_scope(*,primary,xml,prepared, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
+    component=inspect_inclusive_balance_scope(primary=primary,xml=xml,prepared=prepared, **reader_options)
     component['measurements']=_measurements(primary,prepared,component)
     component['narrative_inventory']=_narrative(component,prepared)
-    inventory=_independent_inventory(primary,xml,prepared,component)
+    inventory=_independent_inventory(primary,xml,prepared,component, **reader_options)
     return {**component,'record_type':'INCLUSIVE_DEBT_SCOPE_COMPONENT','independent_financing_inventory':inventory,
             'complete_b06_proven':True,'proven_composition_amount':component['carrying_amount'],'remaining_checks':[]}

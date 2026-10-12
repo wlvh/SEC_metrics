@@ -15,6 +15,7 @@ from .canonical import content_hash, sha256_bytes
 from .deterministic_router import parse_accession_xbrl_source
 from .governance_signals import (_FactAttributes, C04_RESOLVER,
                                  C04_V2_RESOLVER)
+from .normal_annual_input import dei_namespace_pattern
 from .observations import scope_key
 from .ordinary_source_authority import verify_ordinary_source_proofs
 from .records import validate_record
@@ -27,8 +28,9 @@ def _need(condition, reason):
 
 
 def _checked_filing(*, sources, company_id, cik, period_end,
-                    source_proofs, aliases):
+                    source_proofs, aliases, dei_release="YEAR_ONLY"):
     """Keep frozen annual fact semantics; change only proven URL-name equality."""
+    namespace_pattern = dei_namespace_pattern(dei_release)
     _need(bool(sources), 'C04_FILING_SOURCE_REQUIRED')
     accessions, forms, references, facts, problems = set(), set(), [], [], []
     for source in sources:
@@ -78,7 +80,7 @@ def _checked_filing(*, sources, company_id, cik, period_end,
               'C04_ATTRIBUTE_STREAM_INCOMPLETE')
         for fact in parsed.facts:
             uri, local = metadata.facts[fact['ordinal']]['concept']
-            if re.fullmatch(r'https?://xbrl\.sec\.gov/dei/\d{4}', uri) is None:
+            if re.fullmatch(namespace_pattern, uri) is None:
                 continue
             if local.casefold() == 'documenttype':
                 forms.add(fact['text'].upper())
@@ -119,8 +121,12 @@ def _checked_filing(*, sources, company_id, cik, period_end,
 
 
 def annual_selection_with_verified_aliases(*, arguments, source_proofs,
-                                           data_root):
+                                           data_root, dei_release="YEAR_ONLY",
+                                           allow_exact_document_names=False):
     """Compare current/prior auditor facts after rechecking original GETs."""
+    dei_namespace_pattern(dei_release)
+    _need(type(allow_exact_document_names) is bool,
+          "C04_EXACT_DOCUMENT_SELECTION_INVALID")
     verify_ordinary_source_proofs(data_root=data_root, proofs=source_proofs)
     _need(type(arguments) is dict and arguments.get('event_input') is None,
           'C04_ALIAS_ANNUAL_ONLY_REQUIRED')
@@ -143,7 +149,7 @@ def annual_selection_with_verified_aliases(*, arguments, source_proofs,
         return _checked_filing(sources=sources,
             company_id=target['company_id'], cik=cik,
             period_end=period_end, source_proofs=source_proofs,
-            aliases=aliases)
+            aliases=aliases, dei_release=dei_release)
     current = [check(sources, target['period_end'])
                for sources in arguments['current_filings']]
     _need(1 <= len(current) <= 64
@@ -184,7 +190,8 @@ def annual_selection_with_verified_aliases(*, arguments, source_proofs,
         'PASS' if names_differ is True else
         'C04_EVENT_COVERAGE_REQUIRED' if names_differ is False else
         'C04_COMPARABLE_AUDITOR_FACTS_MISSING')
-    _need(bool(aliases), 'C04_ALIAS_FALLBACK_WITHOUT_REAL_ALIAS')
+    _need(bool(aliases) or allow_exact_document_names,
+          'C04_ALIAS_FALLBACK_WITHOUT_REAL_ALIAS')
     selection = {'target': dict(target), 'current_filing_checks': current,
         'selected_current_accession': selected['accession'],
         'prior_filing_check': prior, 'prior_filing_checks': prior_checks,

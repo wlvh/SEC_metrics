@@ -1,0 +1,29 @@
+test_changed_original_answer_or_wire_rejected (tests.vnext.test_saved_d04_replay.SavedD04ReplayTest.test_changed_original_answer_or_wire_rejected) ... ok
+test_failed_terminal_cannot_become_empty_findings (tests.vnext.test_saved_d04_replay.SavedD04ReplayTest.test_failed_terminal_cannot_become_empty_findings) ... ok
+test_missing_or_duplicate_call_or_member_rejected (tests.vnext.test_saved_d04_replay.SavedD04ReplayTest.test_missing_or_duplicate_call_or_member_rejected) ... ok
+test_original_group_rechecks_without_media_or_call_credit (tests.vnext.test_saved_d04_replay.SavedD04ReplayTest.test_original_group_rechecks_without_media_or_call_credit) ... ok
+test_wrong_year_is_not_selected_success (tests.vnext.test_saved_d04_replay.SavedD04ReplayTest.test_wrong_year_is_not_selected_success) ... ok
+test_complete_nonempty_findings_are_allowed_without_inventing_doubt (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_complete_nonempty_findings_are_allowed_without_inventing_doubt) ... ok
+test_missing_failed_and_conflicting_groups_are_rejected (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_missing_failed_and_conflicting_groups_are_rejected) ... ok
+test_missing_group_cannot_be_complete_even_with_a_stale_true_flag (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_missing_group_cannot_be_complete_even_with_a_stale_true_flag) ... ok
+test_unresolved_or_failed_evidence_is_never_company_credit (tests.vnext.test_current_d04_company.CurrentD04CompanyGateTest.test_unresolved_or_failed_evidence_is_never_company_credit) ... ok
+test_source_or_interpretation_change_rechecks_once_then_reuses (tests.vnext.test_current_d04_company.CurrentD04DependencyUpdateTest.test_source_or_interpretation_change_rechecks_once_then_reuses) ... ok
+test_a13_without_explicit_year_and_other_unsupported_family_stay_closed (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_a13_without_explicit_year_and_other_unsupported_family_stay_closed) ... ok
+test_completed_withheld_periods_do_not_override_current_or_each_other (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_completed_withheld_periods_do_not_override_current_or_each_other) ... ok
+test_declared_dependency_change_recalculates_but_unrelated_change_does_not (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_declared_dependency_change_recalculates_but_unrelated_change_does_not) ... ok
+test_explicit_a13_selected_case_reaches_factory_without_default_expansion (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_explicit_a13_selected_case_reaches_factory_without_default_expansion) ... ok
+test_explicit_recorded_session_dependency_still_reprocesses (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_explicit_recorded_session_dependency_still_reprocesses) ... ok
+test_missing_saved_answer_input_does_not_reuse_old_success (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_missing_saved_answer_input_does_not_reuse_old_success) ... ok
+test_period_selection_failure_retains_year_and_category (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_period_selection_failure_retains_year_and_category) ... ok
+test_processing_dependency_path_error_preserves_previous_result (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_processing_dependency_path_error_preserves_previous_result) ... ok
+test_saved_answer_input_change_rechecks_once_then_reuses_withheld (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_saved_answer_input_change_rechecks_once_then_reuses_withheld) ... ok
+test_selected_period_without_factory_never_selects_latest (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_selected_period_without_factory_never_selects_latest) ... ok
+test_two_selected_periods_have_separate_pointers_and_current_layout_stays (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_two_selected_periods_have_separate_pointers_and_current_layout_stays) ... ok
+test_unchanged_selected_period_does_not_invoke_case_factory (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_unchanged_selected_period_does_not_invoke_case_factory) ... ok
+test_wrong_selected_year_preserves_previous_pointer (tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest.test_wrong_selected_year_preserves_previous_pointer) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.238s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 23, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_saved_d04_replay", "tests.vnext.test_current_d04_company", "tests.vnext.test_ordinary_current_update.SelectedPeriodUpdateTest"]}

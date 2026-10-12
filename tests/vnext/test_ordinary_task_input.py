@@ -61,6 +61,12 @@ class ParsedTaskInputTest(unittest.TestCase):
             args=binding(changed)
             with self.assertRaises(ValueError):parsed_d04_document(**args)
 
+    def test_same_words_in_quotation_container_change_model_input(self):
+        first=self.parse(annual(BODY+'<p>We may have substantial doubt.</p>'))
+        quoted=self.parse(annual(BODY+'<blockquote><p>We may have substantial doubt.</p></blockquote>'))
+        self.assertNotEqual(first['parsed_input_sha256'],quoted['parsed_input_sha256'])
+        self.assertTrue(any(b['html_quotation_context'] for b in quoted['parsed_input']['quotation_context']))
+
     def test_verbatim_unicode_is_not_nfc_collapsed(self):
         a=self.parse(annual(BODY+'<p>Text\u037e</p>'))
         b=self.parse(annual(BODY+'<p>Text;</p>'))
@@ -107,3 +113,64 @@ class ParsedTaskInputTest(unittest.TestCase):
 
 
 if __name__=='__main__':unittest.main()
+
+
+class D04CompleteTaskFingerprintTest(unittest.TestCase):
+    """Actual source/log checking with a small recorded SEC package."""
+    def setUp(self):
+        from tests.vnext.test_selected_source_requirements import SelectedSourceRequirementsTest
+        self.fixture=SelectedSourceRequirementsTest();self.fixture.setUp();self.addCleanup(self.fixture.doCleanups)
+        from tests.vnext.test_text_coverage import BODY
+        from tests.vnext.test_selected_historical_fiscal_label import annual
+        from tests.vnext.test_selected_source_requirements import CIK
+        self.raw=annual().replace(b'19617',str(CIK).encode()).replace(b'2021',b'2025').replace(b'/2025q4',b'/2025')
+        self.raw=self.raw.replace(b'</body></html>',BODY.encode()+b'</body></html>')
+        self.fixture.record(self.fixture.urls[2025],self.raw)
+        from sec_urls import companyfacts_url
+        import json
+        f=self.fixture.filings[0]
+        self.cf={'cik':CIK,'facts':{'us-gaap':{'Revenues':{'units':{'USD':[
+            {'accn':f['accessionNumber'],'fy':2025,'start':'2025-01-01','end':'2025-12-31',
+             'form':'10-K','fp':'FY','filed':f['filingDate'],'val':100}]}}}}}
+        self.fixture.record(companyfacts_url(cik=CIK),json.dumps(self.cf).encode())
+
+    def fingerprint(self):
+        from vnext.ordinary_d04_task_input import fingerprint
+        from tests.vnext.test_selected_source_requirements import COMPANY
+        return fingerprint(source_root=self.fixture.root,company_id=COMPANY)
+
+    def test_external_script_only_is_equal_but_original_citations_remain(self):
+        first=self.fingerprint()
+        changed=self.raw.replace(b'</body>',b'<script src="/additional.js"></script></body>')
+        self.fixture.record(self.fixture.urls[2025],changed)
+        second=self.fingerprint()
+        self.assertEqual(first['task_input_id'],second['task_input_id'])
+        self.assertNotEqual(first['source_proofs'],second['source_proofs'])
+        self.assertFalse(second['source_admission_or_result_credit'])
+
+    def test_new_visible_content_table_unit_and_media_relationship_change_task(self):
+        first=self.fingerprint()
+        for fragment in ('<p>Substantial doubt exists.</p>',
+            '<table><tr><th>USD million</th></tr><tr><td>100</td></tr></table>',
+            '<img id="new-diagram" src="new.png" alt="Financial statement">',
+            '<script type="application/json">{"debt":100}</script>'):
+            with self.subTest(fragment=fragment):
+                self.fixture.record(self.fixture.urls[2025],self.raw.replace(b'</body>',fragment.encode()+b'</body>'))
+                self.assertNotEqual(first['task_input_id'],self.fingerprint()['task_input_id'])
+
+    def test_changed_companyfacts_and_filing_identity_are_changes(self):
+        from sec_urls import companyfacts_url,submissions_url
+        from tests.vnext.test_selected_source_requirements import CIK
+        import json
+        first=self.fingerprint()
+        self.fixture.record(companyfacts_url(cik=CIK),json.dumps({**self.cf,'changed':True}).encode())
+        self.assertNotEqual(first['task_input_id'],self.fingerprint()['task_input_id'])
+        self.fixture.record(companyfacts_url(cik=CIK),json.dumps(self.cf).encode())
+        self.fixture.metadata['filings']['recent']['filingDate'][0]='2026-02-11'
+        self.fixture.record(submissions_url(cik=CIK),json.dumps(self.fixture.metadata).encode())
+        self.assertNotEqual(first['task_input_id'],self.fingerprint()['task_input_id'])
+
+    def test_latest_failed_original_never_uses_equivalent_old_body(self):
+        first=self.fingerprint()
+        self.fixture.record(self.fixture.urls[2025],b'failed',503,'recorded failure')
+        with self.assertRaises(ValueError):self.fingerprint()
