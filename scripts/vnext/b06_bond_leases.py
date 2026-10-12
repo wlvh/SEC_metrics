@@ -332,7 +332,7 @@ def _bond_schedule(note, end, reports):
             raise BondLeaseError('BOND_LEASE_UNKNOWN_BOND_ROW:'+label)
     _need(set(totals) == {'current','noncurrent'} and all(parts.values()) and set(adjustments) == {'cost','premium'},
           'BOND_COMPONENTS_INCOMPLETE')
-    _need(len({p['label'] for group in parts.values() for p in group}) == sum(len(v) for v in parts.values()),
+    _need(all(len({p['label'] for p in group}) == len(group) for group in parts.values()),
           'BOND_MEMBER_DUPLICATED')
     current = sum(Decimal(p['value']) for p in parts['current'])
     gross_long = sum(Decimal(p['value']) for p in parts['noncurrent'])
@@ -342,8 +342,21 @@ def _bond_schedule(note, end, reports):
           and Decimal(adjustments['premium']['value']) == v['premium'],'BOND_GROSS_ADJUSTMENT_CONFLICT')
     _need(gross_long-v['cost']+v['premium'] == Decimal(totals['noncurrent']['value']) == v['carrying']
           and v['carrying']+v['current'] == v['total_borrowing'],'BOND_CARRYING_RECONCILIATION_CONFLICT')
-    return {'table_id':table['table_id'],'grid_sha256':table['grid_sha256'],'members':parts,
+    result = {'table_id':table['table_id'],'grid_sha256':table['grid_sha256'],'members':parts,
             'adjustments':adjustments,'totals':totals,'reported_borrowing':decimal_text(value=v['total_borrowing'])}
+    labels = [row['label'] for group in parts.values() for row in group]
+    if len(set(labels)) != len(labels):
+        result['section_grid_shape_hash'] = _bond_grid_shape_hash(table)
+    return result
+
+
+def _bond_grid_shape_hash(table):
+    """Match decoded note cells and geometry, independent of document order."""
+    shape = {k:v for k,v in table.items() if k not in {
+        'table_id','order','grid_sha256','caption_raw_text','rows'}}
+    shape['rows'] = [dict(row,cells=[{k:v for k,v in cell.items() if k != 'raw_text'}
+        for cell in row['cells']]) for row in table['rows']]
+    return content_hash(value=shape)
 
 
 def _fair_value_scope(notes, end, reports):
@@ -429,7 +442,13 @@ def _native_bond_members(primary, xml, prepared, bonds, *, dei_release='YEAR_ONL
     from .text_results_v2 import _ReportedFactMetadata, _verified_context
     from .governance_signals import _source_value
     from .financial_structured import _InlineTableIndex, _fact_cells
-    expected = {row['label']:row['value'] for group in bonds['members'].values() for row in group}
+    section_aware = 'section_grid_shape_hash' in bonds
+    expected = {(section,row['label']) if section_aware else row['label']:row['value']
+                for section,group in bonds['members'].items() for row in group}
+    positions = {row['row']['row_index']:(section,row['label'])
+                 for section,group in bonds['members'].items() for row in group}
+    _need(len(expected) == len(positions) == sum(len(group) for group in bonds['members'].values()),
+          'BOND_SECTION_MEMBER_DUPLICATED')
     sources = {}
     for kind,source in [('xml',xml),('primary',primary)]:
         raw = source['raw_bytes']; parsed = parse_accession_xbrl_source(raw_bytes=raw)
@@ -452,6 +471,8 @@ def _native_bond_members(primary, xml, prepared, bonds, *, dei_release='YEAR_ONL
             proof = _verified_context(native=context,metadata=meta)
             found.append({'ordinal':f['ordinal'],'context_ref':f['context_ref'],'dimensions':dict(c['dimensions']),
                 'context_proof':proof,'value':_source_value(f,m),'decimals':m['attrs'].get('decimals')})
+            if section_aware:
+                found[-1]['classification'] = 'current' if local.casefold() == 'debtcurrent' else 'noncurrent'
         _need(found,'BOND_NATIVE_MEMBERS_MISSING')
         if kind == 'primary':
             index = _InlineTableIndex(raw); index.feed(raw.decode('utf-8-sig')); index.close()
@@ -460,15 +481,23 @@ def _native_bond_members(primary, xml, prepared, bonds, *, dei_release='YEAR_ONL
                 _need(r['ordinal'] in cells,'BOND_MEMBER_VISIBLE_CELL_MISSING')
                 table,cell = cells[r['ordinal']]; row = table['rows'][cell['origin_row_index']]
                 label = disclosure.label(row); col,width,_ = disclosure._period_column(table,prepared['filing']['reportDate'],False)
-                _need(label in expected and expected[label] == r['value'] and col <= cell['column_index'] < col+width,
+                member = (r['classification'],label) if section_aware else label
+                _need(member in expected and expected[member] == r['value']
+                      and col <= cell['column_index'] < col+width
+                      and (not section_aware or (positions.get(row['row_index']) == member
+                           and _bond_grid_shape_hash(table) == bonds['section_grid_shape_hash'])),
                       'BOND_MEMBER_NOT_IN_CURRENT_COMPOSITION')
                 _need(any(disclosure.label(row) == POLICY['bond_cost_label'] for row in table['rows']),
                       'BOND_MEMBER_IN_UNRELATED_TABLE')
                 r['source_row'] = {'table_id':table['table_id'],'grid_sha256':table['grid_sha256'],
                     'row_index':row['row_index'],'label':label,'cell':cell}
-            _need({r['source_row']['label'] for r in found} == set(expected),'BOND_NATIVE_MEMBER_ROW_SET_DIFFERS')
+            observed = {(r['classification'],r['source_row']['label']) if section_aware
+                        else r['source_row']['label'] for r in found}
+            _need(observed == set(expected),'BOND_NATIVE_MEMBER_ROW_SET_DIFFERS')
         groups = {}
-        for r in found: groups.setdefault(content_hash(value=r['dimensions']),[]).append(r)
+        for r in found:
+            key = {'classification':r['classification'],'dimensions':r['dimensions']} if section_aware else r['dimensions']
+            groups.setdefault(content_hash(value=key),[]).append(r)
         sources[kind] = groups
     _need(set(sources['xml']) == set(sources['primary']),'BOND_NATIVE_DIMENSION_SETS_DIFFER')
     result = []
@@ -478,6 +507,8 @@ def _native_bond_members(primary, xml, prepared, bonds, *, dei_release='YEAR_ONL
         _need(len({r['source_row']['label'] for r in right}) == 1,'BOND_DIMENSION_REUSED_FOR_DIFFERENT_ROWS')
         result.append({'dimensions':left[0]['dimensions'],'value':chosen['value'],
                        'xml_reports':left,'primary_reports':right})
+        if section_aware:
+            result[-1]['classification'] = left[0]['classification']
     _need(len(result) == len(expected),'BOND_MEMBER_DIMENSION_CARDINALITY_CONFLICT')
     return result
 
