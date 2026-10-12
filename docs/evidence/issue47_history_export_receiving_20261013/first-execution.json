@@ -1,0 +1,24 @@
+{
+  "seconds": 10.812841541002854,
+  "exit_code": 0,
+  "arguments": [
+    "run",
+    "--company",
+    "marriott_international",
+    "--metric",
+    "B02",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2023",
+    "--fiscal-year-end",
+    "2023",
+    "--source-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-export-b02-receiving-20261013/package",
+    "--work-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-export-b02-receiving-20261013/task",
+    "--output-dir",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-export-b02-receiving-20261013/first"
+  ],
+  "stdout": "{\n  \"elapsed_seconds\": 10.812015208997764,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"marriott_international\",\n  \"run_id\": \"20261012T185914Z-0c4c7bfa\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B02\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B02\",\n      \"status\": \"CANDIDATE_READY\",\n      \"attempt_id\": \"c69b71868530471785904a1daa9206b2\",\n      \"version\": \"44c8dc7f89b7471d98f6c3086e33b57f\",\n      \"result_id\": \"sha256:aae9df4d466327b9d8af21caafb38a5af5afe2aed10f891ae10994cd88e0c166\",\n      \"result_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-export-b02-receiving-20261013/task/updates/B02/periods/FY2023/results/44c8dc7f89b7471d98f6c3086e33b57f\",\n      \"calculation_performed\": true,\n      \"new_candidate_created\": true,\n      \"result_reason_code\": \"PASS\",\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2023,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:aae9df4d466327b9d8af21caafb38a5af5afe2aed10f891ae10994cd88e0c166\",\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-export-b02-receiving-20261013/task/updates/B02/periods/FY2023/results/44c8dc7f89b7471d98f6c3086e33b57f\",\n      \"program_version\": {\n        \"commit\": \"73bce1ff2dce73e52a580391272fb5f533a6615a\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-export-b02-receiving-20261013/package\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue47-auditor-main-receiving-20261011/SEC_metrics\",\n  \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-export-b02-receiving-20261013/task\",\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-export-b02-receiving-20261013/first/20261012T185914Z-0c4c7bfa\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2023\n  ]\n}\n"
+}

@@ -1,0 +1,83 @@
+export 29.252 0
+first-execution 10.813 0
+repeat-forbidden 0.293 0
+{
+  "code_head": "73bce1ff2dce73e52a580391272fb5f533a6615a",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "work_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-export-b02-receiving-20261013",
+  "export": {
+    "seconds": 29.25225595899974,
+    "package_id": "sha256:a705e2526519dde7fc0935358b56a422a48043eb30eed0d745c1fc24acc61a08",
+    "files": 61,
+    "fiscal_years": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "copied_originals_equal": true
+  },
+  "first": {
+    "seconds": 10.812841541002854,
+    "calculation_performed": true,
+    "result_id": "sha256:aae9df4d466327b9d8af21caafb38a5af5afe2aed10f891ae10994cd88e0c166"
+  },
+  "repeat": {
+    "seconds": 0.2932632919983007,
+    "calculation_forbidden": true,
+    "unchanged_result_files": 7,
+    "no_new_result_directory": true
+  },
+  "independent_read": {
+    "seconds": 0.1847074589895783,
+    "state_files_unchanged": 18,
+    "row": {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B02",
+      "metric_name": "Revenue YoY growth",
+      "value": "0.1415298705049824291147162182",
+      "unit": "ratio",
+      "status": "OK",
+      "source_class": "DERIVED",
+      "formula": "",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "fiscal_year": "2023",
+      "fiscal_period": "ANNUAL",
+      "accession": "0001628280-24-004372;0001628280-23-003485",
+      "form": "10-K",
+      "filed_date": "2024-02-13;2023-02-14",
+      "concept_or_section": "Revenue YoY growth",
+      "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2023, \"period_end\": \"2023-12-31\", \"period_start\": \"2023-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2023}, \"selection\": {\"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:83943af6cff3ace54db38b0e80086b8f83b009da3a9041c74936a5edb40209af\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:e973a723793458838a04794fabedf2e4506cd7fb822ddb10721efbe028d3a476\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:7cf0e5ed84b13e459c4d010ac18c1bae2229587a8ce78a4fff367018cf7743d4\", \"sha256:c78685fbc9c806be8fef591c442fc95ce02a6082ade54d8923a9aeae10e1b582\", \"sha256:5c52fe5d4bfa948787dcbb4dc0c94753b4386277e72cb5de0faa16d51132e16c\", \"sha256:8dbd703eeca276eaff649a13634f5b044dcd539a4aa60d8c63fbe67012536d08\", \"sha256:71afedc392ecfe24fec6cd6bc9fc83d50d50f196d263bf0edb06ddc15e24a229\", \"sha256:79e06655e482136c976afbb4f64af60399ff8720811ceada0ed6911970bb168e\", \"sha256:2cfa8e22f878904ba4e76fda770806aef5850aef5575c84202f7840c149ce1fe\", \"sha256:c959a45a340da9916489efeb6c8cc78a2c89a08ad53b469b40a25e9c95a1a00f\"]}",
+      "confidence": "",
+      "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+      "company_id": "marriott_international",
+      "result_id": "sha256:aae9df4d466327b9d8af21caafb38a5af5afe2aed10f891ae10994cd88e0c166",
+      "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-export-b02-receiving-20261013/task/updates/B02/periods/FY2023/results/44c8dc7f89b7471d98f6c3086e33b57f",
+      "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/history-export-b02-receiving-20261013/package",
+      "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+      "period_role": "REQUESTED_RESULT",
+      "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+      "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+      "defect_holds": "[]",
+      "requested_in_latest_execution": "True"
+    }
+  },
+  "source_hashes": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "limits": [
+    "One FY2023 B02 result computed; five-year package readiness is not full business acceptance.",
+    "No online discovery or missing-source acquisition performed.",
+    "Existing tasks/results and original source ledger are untouched."
+  ]
+}

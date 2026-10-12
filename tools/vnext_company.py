@@ -48,10 +48,12 @@ def main(argv=None):
     export = sub.add_parser('export', help='Controlled preparation: source-only company export')
     export.add_argument('--source-root', required=True, type=Path)
     export.add_argument('--output-root', required=True, type=Path)
-    export.add_argument('--trust-root', required=True, type=Path)
+    export.add_argument('--trust-root', type=Path,
+                        help='Required by retained native export; unused for ordinary --history-years export')
     export.add_argument('--company', required=True)
     export.add_argument('--metric', action='append')
-    export.add_argument('--history-years', type=int, choices=[5])
+    export.add_argument('--history-years', type=int, choices=[5],
+                        help='Saved-source export for five issuer years; explicit B01/B02/B03 only')
     processing = sub.add_parser('export-processing', help='Authenticate complete saved D04 separately from SEC sources')
     processing.add_argument('--installed-root', required=True, type=Path)
     processing.add_argument('--output-root', required=True, type=Path)
@@ -174,13 +176,19 @@ def main(argv=None):
     elif args.command == 'export':
         from vnext.company_handoff import export_company
         declaration = None
+        export_options = {}
+        if not args.history_years and args.trust_root is None:
+            parser.error('Retained native export requires --trust-root')
         if args.history_years:
-            from vnext.historical_source_acquisition import declared_frame
-            declaration = lambda source, company: declared_frame(
-                repo_root=source, company_id=company, years=args.history_years)
+            from vnext.company_history_export import latest_history_source_frame, METRIC_IDS
+            if not args.metric or not set(args.metric) <= METRIC_IDS:
+                parser.error('--history-years requires explicit received B01/B02/B03 metrics')
+            declaration = lambda source, company: latest_history_source_frame(
+                repo_root=source, company_id=company, years=args.history_years, metric_ids=args.metric)
+            export_options['saved_source_only'] = True
         result = export_company(source_root=args.source_root, output_root=args.output_root,
                                 trust_root=args.trust_root, company_id=args.company,
-                                metric_ids=args.metric, declared_frame=declaration)
+                                metric_ids=args.metric, declared_frame=declaration, **export_options)
     elif args.command == 'export-processing':
         from vnext.company_processing import export_processing
         result = export_processing(installed_root=args.installed_root, output_root=args.output_root,
@@ -239,7 +247,7 @@ def main(argv=None):
     if args.command == 'sources':
         return 0 if (result['status']=='SAVED_SOURCE_BYTES_AVAILABLE' or
             result['status']=='FISCAL_RANGE_RESOLVED' and result['all_source_bytes_available']) else 2
-    return 2 if result.get('status') == 'EXPORTED_PARTIAL' else 0
+    return 2 if result.get('status') in {'EXPORTED_PARTIAL', 'SOURCE_EXPORT_INCOMPLETE'} else 0
 
 
 if __name__ == '__main__':
