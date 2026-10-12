@@ -1,0 +1,85 @@
+{
+  "records": [
+    {
+      "company": "enphase_energy",
+      "year": 2021,
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2021-12-31",
+        "filingDate": "2022-02-11",
+        "accessionNumber": "0001463101-22-000016",
+        "primaryDocument": "enph-20211231.htm"
+      },
+      "period": {
+        "fiscal_year": 2021,
+        "period_start": "2021-01-01",
+        "period_end": "2021-12-31"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:39808ae04e68862f11cf338bcf02a07e44498b167574f3360a8c11594c97297f",
+        "raw_asset_id": "sha256:d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a",
+        "company_id": "enphase_energy",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310122000016/enph-20211231.htm",
+        "accession": "0001463101-22-000016",
+        "document_name": "enph-20211231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:2f78da70da49e97934551e0e0112d2add95c200735e43570fefb97b8671030e0"
+      },
+      "observed_namespaces": [
+        "http://fasb.org/us-gaap/2021-01-31",
+        "http://xbrl.sec.gov/dei/2021q4"
+      ],
+      "historical_preparation_passed": true,
+      "shared_guard_failure": {
+        "reason": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+        "error_type": "NormalAnnualInputError",
+        "category": "SOURCE_INTEGRITY_ERROR"
+      },
+      "explicit_annual_reader_passed": true,
+      "seconds": 7.9246038340061205,
+      "financial_calculation": false
+    },
+    {
+      "company": "salesforce",
+      "year": 2022,
+      "filing": {
+        "form": "10-K",
+        "reportDate": "2022-01-31",
+        "filingDate": "2022-03-11",
+        "accessionNumber": "0001108524-22-000013",
+        "primaryDocument": "crm-20220131.htm"
+      },
+      "period": {
+        "fiscal_year": 2022,
+        "period_start": "2021-02-01",
+        "period_end": "2022-01-31"
+      },
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:2cbe15185e572cb179d0d2bbbb9f0527bf71d5e854b1779d25768e814e7d06c0",
+        "raw_asset_id": "sha256:ad88a84618e7d35b3aaf5990579dba2e42583ece4d3aaeaadc9383f9557c6b91",
+        "company_id": "salesforce",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852422000013/crm-20220131.htm",
+        "accession": "0001108524-22-000013",
+        "document_name": "crm-20220131.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:701b596f9974587b5796c3d821a58be453b068db9fc4425370b3020a27a8615a"
+      },
+      "observed_namespaces": [
+        "http://fasb.org/us-gaap/2021-01-31",
+        "http://xbrl.sec.gov/dei/2021q4"
+      ],
+      "historical_preparation_passed": true,
+      "shared_guard_failure": {
+        "reason": "DEI_MISSING_OR_AMBIGUOUS:DocumentType",
+        "error_type": "NormalAnnualInputError",
+        "category": "SOURCE_INTEGRITY_ERROR"
+      },
+      "explicit_annual_reader_passed": true,
+      "seconds": 7.632302958001674,
+      "financial_calculation": false
+    }
+  ],
+  "new_calls": 0
+}
