@@ -5,6 +5,7 @@ debt source case. It never turns that case into a complete B06 ratio.
 """
 from pathlib import Path
 
+from .xbrl_namespace_policy import is_fasb_namespace, source_reader_options
 from . import ordinary_special_debt_scope as inherited
 from .canonical import content_hash, sha256_file
 from .financial_structured import _InlineTableIndex
@@ -14,13 +15,14 @@ from .normal_source_authority import ROOT
 from .sources import resolve_repository_file
 
 
-def _reported(scope, *, sources, annual):
+def _reported(scope, *, sources, annual, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     if scope is None:
         return None
     body = {k: v for k, v in scope.items() if k != 'scope_source_id'}
     body['record_type'] = 'ORDINARY_B06_SPECIAL_SCOPE_SOURCE_V2'
     if body['scope_class'] == 'industrial':
-        native = {kind: inherited.native(source, annual) for kind, source in sources.items()}
+        native = {kind: inherited.native(source, annual, **reader_options) for kind, source in sources.items()}
         index = _InlineTableIndex(sources['primary']['raw_bytes'])
         index.feed(sources['primary']['raw_bytes'].decode('utf-8-sig')); index.close()
         body['lease_inclusion'] = inspect_inclusion(primary=sources['primary'],
@@ -36,10 +38,11 @@ def _reported(scope, *, sources, annual):
     return {**body, 'scope_source_id': content_hash(value=body)}
 
 
-def inspect_reported_lease_scope(*, primary, xml, annual, financial_institution, rules):
+def inspect_reported_lease_scope(*, primary, xml, annual, financial_institution, rules, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     scope = inherited.inspect_special_scope(primary=primary, xml=xml, annual=annual,
-        financial_institution=financial_institution, rules=rules)
-    return _reported(scope, sources={'primary': primary, 'xml': xml}, annual=annual)
+        financial_institution=financial_institution, rules=rules, **reader_options)
+    return _reported(scope, sources={'primary': primary, 'xml': xml}, annual=annual, **reader_options)
 
 
 def _case_sources(case, source_root):
@@ -61,22 +64,27 @@ def _case_sources(case, source_root):
     return sources
 
 
-def prepare_reported_lease_case(*, repo_root: Path, company_id: str, rules_root=None, preparation=None):
+def prepare_reported_lease_case(*, repo_root: Path, company_id: str, rules_root=None, preparation=None, dei_release='YEAR_ONLY', namespace_policy='YEAR_ONLY'):
+    reader_options = source_reader_options(dei_release=dei_release, namespace_policy=namespace_policy)
     options={}
     if rules_root is not None:options['rules_root']=rules_root
     if preparation is not None:options['preparation']=preparation
-    case = inherited.prepare_special_debt_case(repo_root=repo_root, company_id=company_id,**options)
+    case = inherited.prepare_special_debt_case(repo_root=repo_root, company_id=company_id,**options, **reader_options)
     if case is None:
         return None
     original = case['input_binding']['original_source_input']
     annual = original['prepared_annual_input']
     scope = _reported(case['selection']['scope_source'],
-        sources=_case_sources(case, repo_root), annual=annual)
-    processing = {p: sha256_file(path=ROOT / p) for p in (
+        sources=_case_sources(case, repo_root), annual=annual, **reader_options)
+    processing_paths = (
         'scripts/vnext/ordinary_special_debt_scope.py',
         'scripts/vnext/ordinary_reported_lease_scope.py',
         'scripts/vnext/industrial_lease_relation.py',
-        'scripts/vnext/b06_inclusive_table.py')}
+        'scripts/vnext/b06_inclusive_table.py')
+    if reader_options:
+        processing_paths += ('scripts/vnext/normal_annual_input.py',
+            'scripts/vnext/xbrl_namespace_policy.py')
+    processing = {p: sha256_file(path=ROOT / p) for p in processing_paths}
     return {**case,
         'input_binding': {**case['input_binding'], 'scope_source': scope,
             'original_source_input': {**original, 'reported_relations': True,

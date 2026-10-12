@@ -3,6 +3,8 @@ name: Company saved-source records
 'on':
   pull_request:
     paths:
+    - tests/vnext/test_b06_guarded_result_v3.py
+    - docs/evidence/issue28_selected_b06_release_20261012/**
     - scripts/**
     - tests/vnext/test_historical_e01_incorporated_input.py
     - tests/vnext/test_historical_e01_company_case.py

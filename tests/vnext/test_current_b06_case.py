@@ -57,6 +57,46 @@ class CurrentB06CompositionTest(unittest.TestCase):
             result=self.current.prepare_current_b06_case(source_root=Path('/sources'),company_id='enphase_energy')
         self.assertEqual(self.case['selection'],result['input_assessments']['B06']['selection'])
 
+    def test_selected_release_reaches_each_existing_grammar_without_reselecting(self):
+        self.context(prepare_current_guarded_b06_result={
+            'status':'CONTINUE_DEBT_PATH','reason_code':'DENOMINATOR_POSITIVE'})
+        options={'dei_release':'YEAR_QUARTER_OR_DATE','namespace_policy':'YEAR_OR_DATE_RELEASE'}
+        for matched in range(3):
+            with self.subTest(grammar=matched):
+                from contextlib import ExitStack
+                with ExitStack() as stack:
+                    producers=[]
+                    for index,name in enumerate(('prepare_note_debt_case','prepare_bond_debt_case',
+                                                  'prepare_inclusive_debt_case')):
+                        producers.append(stack.enter_context(patch.object(self.current,name,
+                            return_value=self.case if index==matched else None)))
+                    self.current.prepare_selected_b06_case(source_root=Path('/sources'),
+                        company_id='enphase_energy',preparation=self.preparation,
+                        annual=self.annual,packet=self.packet,**options)
+                for index,producer in enumerate(producers):
+                    self.assertEqual(producer.call_count,1 if index<=matched else 0)
+                    if index<=matched:
+                        self.assertIs(producer.call_args.kwargs['preparation'],self.preparation)
+                        self.assertIs(producer.call_args.kwargs['annual_input'],self.annual)
+                        for key,value in options.items():self.assertEqual(value,producer.call_args.kwargs[key])
+
+    def test_default_selected_release_preserves_old_producer_call(self):
+        self.context(prepare_current_guarded_b06_result={
+            'status':'CONTINUE_DEBT_PATH','reason_code':'DENOMINATOR_POSITIVE'})
+        with patch.object(self.current,'prepare_note_debt_case',return_value=self.case) as producer:
+            self.current.prepare_selected_b06_case(source_root=Path('/sources'),
+                company_id='enphase_energy',preparation=self.preparation,annual=self.annual,packet=self.packet)
+        self.assertNotIn('dei_release',producer.call_args.kwargs)
+        self.assertNotIn('namespace_policy',producer.call_args.kwargs)
+
+    def test_unknown_release_policy_is_rejected_before_source_or_debt_processing(self):
+        with patch.object(self.current,'prepare_current_guarded_b06_result',side_effect=AssertionError('guard')):
+            for options in ({'dei_release':'ANY_URI'},{'namespace_policy':'ANY_URI'}):
+                with self.subTest(options=options),self.assertRaisesRegex(ValueError,'POLICY_UNSUPPORTED'):
+                    self.current.prepare_selected_b06_case(source_root=Path('/sources'),
+                        company_id='enphase_energy',preparation=self.preparation,
+                        annual=self.annual,packet=self.packet,**options)
+
     def test_special_scope_cannot_fall_into_consolidated_grammars(self):
         self.context(prepare_current_guarded_b06_result={'status':'CONTINUE_DEBT_PATH','reason_code':'EXISTING_SPECIAL_SCOPE_REQUIRED'})
         with patch('vnext.ordinary_reported_lease_scope.prepare_reported_lease_case',return_value=None), \
