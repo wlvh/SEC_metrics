@@ -1,0 +1,113 @@
+{
+  "code_head": "1b161e4cb51c9058fd5cf4ad949bc00a1885a1ea",
+  "phases": {
+    "migration": {
+      "seconds": 7.972059000006993,
+      "exit_code": 2,
+      "arguments": [
+        "run",
+        "--company",
+        "macys",
+        "--metric",
+        "B06",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-sections-migration-20261013-47/first"
+      ]
+    },
+    "repeat": {
+      "seconds": 0.6003855000017211,
+      "exit_code": 2,
+      "arguments": [
+        "run",
+        "--company",
+        "macys",
+        "--metric",
+        "B06",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2024",
+        "--fiscal-year-end",
+        "2024",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-sections-migration-20261013-47/repeat"
+      ]
+    },
+    "read": {
+      "seconds": 0.3016617910034256,
+      "exit_code": 0,
+      "arguments": [
+        "results",
+        "--company",
+        "macys",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-sections-migration-20261013-47/read"
+      ]
+    }
+  },
+  "actual_selection": {
+    "classification": "SOURCE_OR_RELATIONSHIP_UNRESOLVED",
+    "reason": "BOND_LEASE_STANDBY_CAPACITY_NATURE_UNPROVEN"
+  },
+  "row": {
+    "company": "Macy's",
+    "cik": "794367",
+    "metric_id": "B06",
+    "metric_name": "Debt-to-equity",
+    "value": "",
+    "unit": "ratio",
+    "status": "WITHHELD",
+    "source_class": "DERIVED",
+    "formula": "defined carrying debt / shareholders equity",
+    "period_start": "2025-02-01",
+    "period_end": "2025-02-01",
+    "fiscal_year": "2024",
+    "fiscal_period": "TARGET_PERIOD",
+    "accession": "",
+    "form": "10-K",
+    "filed_date": "2025-03-21",
+    "concept_or_section": "",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2024, \"period_end\": \"2025-02-01\", \"period_start\": \"2024-02-04\"}, \"measurement_kind\": \"TARGET_PERIOD\", \"scope\": {\"entity_scope\": \"consolidated\"}, \"selection\": {\"calculation\": {}, \"classification\": \"SOURCE_OR_RELATIONSHIP_UNRESOLVED\", \"reason\": \"BOND_LEASE_STANDBY_CAPACITY_NATURE_UNPROVEN\", \"selection_detail_id\": \"sha256:76973757a55b0b86d7dbda03f4222ad4854bad217ea42afb91d39090f148aad4\"}, \"source_reference_ids\": [\"sha256:f93f1ab12a0532e4741456f163fcc24f5d7aa5ee32a59fbfa661844fba9b4704\", \"sha256:ac6c418f3c4e691eab08058ef17c544704dc1788feef6d97d2d055455703a92e\", \"sha256:6393bfb0a284316edbd33165f544ad3d29be52575fb826801733bc442dbd8b9e\", \"sha256:f4ab1a06f4defda3612d67c8ce20995cd849527646f612d53144363543ae4daf\", \"sha256:427bae5775128eb31e6beeb04c894439f76248d9d11596faf0da96d25b2b2c00\"]}",
+    "confidence": "",
+    "notes": "Recognized borrowing, bond and finance lease carrying amounts divided by source-verified shareholders equity. No accepted value is asserted for this target period. Native state: WITHHELD; reason: B06_SOURCE_RELATIONSHIP_UNRESOLVED.",
+    "company_id": "macys",
+    "result_id": "sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/macys-b06-selected-current-gap-20261013-47/state/updates/B06/periods/FY2024/results/f5a57559ad6d409394598a87049d886b",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "PREVIOUS_INPUT_WITHHELD",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "old_result_and_check_files_preserved": 11,
+  "read_state_files_preserved": 28,
+  "new_result_files_preserved": 14,
+  "source_hashes": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

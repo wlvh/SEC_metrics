@@ -1,0 +1,23 @@
+test_amendment_uses_the_same_explicit_layout_and_preserves_withheld_effect (tests.vnext.test_historical_b06_case.HistoricalB06CaseTest.test_amendment_uses_the_same_explicit_layout_and_preserves_withheld_effect) ... ok
+test_consumer_tracks_shared_calculation_and_both_explicit_amendment_readers (tests.vnext.test_historical_b06_case.HistoricalB06CaseTest.test_consumer_tracks_shared_calculation_and_both_explicit_amendment_readers) ... ok
+test_layout_gap_is_separate_from_wrong_identity (tests.vnext.test_historical_b06_case.HistoricalB06CaseTest.test_layout_gap_is_separate_from_wrong_identity) ... ok
+test_missing_or_multiple_original_media_is_rejected (tests.vnext.test_historical_b06_case.HistoricalB06CaseTest.test_missing_or_multiple_original_media_is_rejected) ... ok
+test_packet_keeps_annual_and_amendment_proofs_before_shared_calculation (tests.vnext.test_historical_b06_case.HistoricalB06CaseTest.test_packet_keeps_annual_and_amendment_proofs_before_shared_calculation) ... ok
+test_same_public_computation_receives_selected_sources_annual_and_packet (tests.vnext.test_historical_b06_case.HistoricalB06CaseTest.test_same_public_computation_receives_selected_sources_annual_and_packet) ... ok
+test_selected_year_is_revalidated_and_original_filing_reads_both_media (tests.vnext.test_historical_b06_case.HistoricalB06CaseTest.test_selected_year_is_revalidated_and_original_filing_reads_both_media) ... ok
+test_unreceived_subject_change_is_an_implementation_gap_before_debt_reads (tests.vnext.test_historical_b06_case.HistoricalB06CaseTest.test_unreceived_subject_change_is_an_implementation_gap_before_debt_reads) ... ok
+test_wrong_metric_does_not_prepare_sources (tests.vnext.test_historical_b06_case.HistoricalB06CaseTest.test_wrong_metric_does_not_prepare_sources) ... ok
+test_actual_selected_year_dependencies_ignore_unused_admission_code (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_actual_selected_year_dependencies_ignore_unused_admission_code)
+Constructed state control with the actual processing configuration. ... ok
+test_completed_withheld_recovers_pointer_without_recalculation (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_completed_withheld_recovers_pointer_without_recalculation) ... ok
+test_current_withheld_replaces_same_year_success_but_retains_old_version (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_current_withheld_replaces_same_year_success_but_retains_old_version) ... ok
+test_dependency_source_and_processing_changes_reprocess_withheld_once (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_dependency_source_and_processing_changes_reprocess_withheld_once) ... ok
+test_historical_d01_shared_dependency_changes_reprocess_then_reuse (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_historical_d01_shared_dependency_changes_reprocess_then_reuse) ... ok
+test_missing_year_and_one_metric_failure_preserve_other_periods (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_missing_year_and_one_metric_failure_preserve_other_periods) ... ok
+test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates (tests.vnext.test_selected_history_result_state.SelectedHistoryResultStateTest.test_success_and_stable_withheld_reuse_in_distinct_historical_coordinates) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.126s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 16, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_b06_case", "tests.vnext.test_selected_history_result_state"]}
