@@ -1,0 +1,2837 @@
+{
+  "scope": "Original D04 artifacts, source-proof file hashes and current response checker only; no current request construction, complete-company acceptance, media completion, backup restore, or new business credit",
+  "ledger_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13",
+  "source_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/source-inputs",
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-selected-b06-release/SEC_metrics",
+  "claims_sha256": "6023bf1790b31d5895dad3ef824b3d102d56b0381140f6b79463d8e97964f6eb",
+  "claims_count": 195,
+  "counts": {
+    "HISTORICAL_FAILURE_ONLY": 5,
+    "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH": 93
+  },
+  "by_company": {
+    "enphase_energy": {
+      "HISTORICAL_FAILURE_ONLY": 2,
+      "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH": 6
+    },
+    "ford_motor_company": {
+      "HISTORICAL_FAILURE_ONLY": 2,
+      "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH": 11
+    },
+    "jpmorgan_chase": {
+      "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH": 27
+    },
+    "lumen_technologies": {
+      "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH": 8
+    },
+    "macys": {
+      "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH": 5
+    },
+    "marriott_international": {
+      "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH": 4
+    },
+    "paramount_skydance_paramount_global": {
+      "HISTORICAL_FAILURE_ONLY": 1,
+      "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH": 10
+    },
+    "pfizer": {
+      "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH": 11
+    },
+    "salesforce": {
+      "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH": 5
+    },
+    "southwest_airlines": {
+      "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH": 6
+    }
+  },
+  "rows": [
+    {
+      "ordinal": 69,
+      "company": "ford_motor_company",
+      "original_status": "FAILED_TERMINAL",
+      "request_id": "sha256:69a94f721a559a0294e64e8cf46398c73ce90eb179181d4ee3aee17aa7e55e7e",
+      "response_contract": null,
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0069",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "HISTORICAL_FAILURE_ONLY"
+    },
+    {
+      "ordinal": 70,
+      "company": "ford_motor_company",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:77a7d67057a27769f42a148ffb103fc4eff5abe423cf4edc3e571e686ce98775",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0070",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 71,
+      "company": "ford_motor_company",
+      "original_status": "FAILED_TERMINAL",
+      "request_id": "sha256:cd327064f63d440e30c9c8dbbf7e3e77b07320f710ad7b78f81819b26325a05a",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0071",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "HISTORICAL_FAILURE_ONLY"
+    },
+    {
+      "ordinal": 72,
+      "company": "ford_motor_company",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:aec87ddfcac5d8916b9fab1740495da3bdfc6ab0429803e4814d833a3a8eb485",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0072",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 73,
+      "company": "ford_motor_company",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:d01ad534f7dd987cf40f7fe6586ebed1a75a7afc70c9a591520e972fa08fc869",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0073",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 74,
+      "company": "ford_motor_company",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:5f521f2615ea1d423ffba4117b2efa054b9e286f3c00e3e1f4fef6cee709bde0",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0074",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 75,
+      "company": "ford_motor_company",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:97468c38751b28d34f5910ae05b0b4e89938294c1a682b1831898ec34c5740e8",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0075",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 76,
+      "company": "ford_motor_company",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:eb4c615e2e5396bc4b03cc950e2d6e69b0926136ceebb64adbf08daf1e79d60f",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0076",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 77,
+      "company": "ford_motor_company",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:0f0d430e03d49f5b88291beee3ebbbf5eab0632e2f4a2a609f444783e8147879",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0077",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 78,
+      "company": "ford_motor_company",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:1c4d2efbd24e967f412bbf1a875f13906ad8ab03307356b8cc13f86b116a691b",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0078",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 79,
+      "company": "ford_motor_company",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:8837d0ec051244fdd1f4b9a5869b25a6b55efa2e5609e60f6c35b8b576dcde07",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0079",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 80,
+      "company": "ford_motor_company",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:81d9683b43d1e8ce5862cf1d9ea40384a1948fc9d26d26b5d083a86560dee67b",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0080",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 81,
+      "company": "ford_motor_company",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:55e8b91f6d21d3a107ac5fd9c27f8e3f023005919c0c0ed68b802cdcb8203028",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0081",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 83,
+      "company": "pfizer",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:e633b123ca169f07d546ae88c0611769f1c027365efa9ba69f29db6960a72162",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0083",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 84,
+      "company": "pfizer",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:3c0cbf34d4892aa2a3941ac6c90f22b460c77db040affe7250c15daa665f68b0",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0084",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 85,
+      "company": "pfizer",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:3e2f5571f8f38f0b78776bb947c7618259b2bda1ef332a120b685918af1a96e3",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0085",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 86,
+      "company": "pfizer",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:4c122461a04b604eaf178f3546b807d5703684edb211569656ac4f80aa3ef4c4",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0086",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 87,
+      "company": "pfizer",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:3bd2dd9eeaa83ff4f5624201c6d515a04f73608bf693bcfcf82887597cd11e93",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0087",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 88,
+      "company": "pfizer",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:50c04a2dfea1b9ce59aa629c63d1cbcca71d780dba6fc3437be249cc7cec9932",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0088",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 89,
+      "company": "pfizer",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:cf33df2223388577910fab56f6591b851f3fb389b4dd282f29b84e529fd9109b",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0089",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 90,
+      "company": "pfizer",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:408e1054529ec4efd784fa8193a30a4ed27efa9730718812c53f581ddbc7d255",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0090",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 91,
+      "company": "pfizer",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:a3496795955641c3a86e8592211d94464b7b580a256cc378b33fa7edd65a7222",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0091",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 92,
+      "company": "pfizer",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:9d63a8200e4bcbee4cce4f23c345d93663d5fe2721f4301cf1323a7e168d6cc9",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0092",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 93,
+      "company": "pfizer",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:4742315264c8dcccd1f6fc09fbd8fc5834d484f85175674a22fa72c1841adfe1",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0093",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 113,
+      "company": "paramount_skydance_paramount_global",
+      "original_status": "FAILED_TERMINAL",
+      "request_id": "sha256:df5c856849f041fc6a2b0b3e31ad03d51fe168308b240cfad2176d6bf4d0e4a2",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0113",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "HISTORICAL_FAILURE_ONLY"
+    },
+    {
+      "ordinal": 114,
+      "company": "enphase_energy",
+      "original_status": "FAILED_TERMINAL",
+      "request_id": "sha256:277ee01c8c84b2aa54ca0695a08ac1e3e8cc5885e93a278ed42b52ef6b15295a",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0114",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "HISTORICAL_FAILURE_ONLY"
+    },
+    {
+      "ordinal": 115,
+      "company": "marriott_international",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:d0e948679235f5da705a026bee1f5706712a010cd464d16b4e9cf057277ee3b5",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0115",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 116,
+      "company": "marriott_international",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:f73acd3ccc0022df6acfc83436df2cbb8ea4fdaf09f49626af7b9ac8deff3577",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0116",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 117,
+      "company": "marriott_international",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:8270d9755900b43ce3472c558e2187f1974e278530f36eb98f771aee905eac94",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0117",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 118,
+      "company": "marriott_international",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:c6c358f833877ebc41c0c561bdeb11180f106d04e1e63bfe7936dfc77552c9fa",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0118",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 119,
+      "company": "southwest_airlines",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:04379322520fe736bf4a3158a701b3455411b6876647821da75d2e5a2b1ba0b5",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0119",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 120,
+      "company": "southwest_airlines",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:38fe7b8387b518752b97b46f3a1d8557118abf363f2525d77410d0c43026c600",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0120",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 121,
+      "company": "southwest_airlines",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:e756027baae1b0195e41e87a22f2f9fa2a2318d0a78c95e6c56ec7cf3f53ed87",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0121",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 122,
+      "company": "southwest_airlines",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:6e82ff34c034e6a8df66fce4874e19974992d85b9d61251afa121217211eb05d",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0122",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 123,
+      "company": "southwest_airlines",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:28492dc7b0332e8bcec415d2eef18a4394f7ba794bdbf016c08982e67dde40af",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0123",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 124,
+      "company": "southwest_airlines",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:421acfe56da6beec956b0f9ce2c58f3e2c53d0401df65e832c7f9cec7f7a0749",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0124",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 125,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:4cb73cc0dac80b8f6a390364344117985efcd73444ac2516ce79bbed5b235b95",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0125",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 126,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:05b668dd6ee1baeb05e2da8a1939a64f6fefb8847e15abce6996b62d653bc7e1",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0126",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 127,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:2669304d770dcdc365f804dc098df201596650fcc3e52dc2be26e74b01dcd709",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0127",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 128,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:067a5a9bcd1e6cbc0fcf16f5e18ded764ac07d7d8f86e2405d57410551677005",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0128",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 129,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:f6f69fe36a96b267d5ff45bd6ad487e7878e1efc325cb6d777058354b7f6dfec",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0129",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 130,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:f1ea5241f44966b17d12b9a438768fe59b526afbd2d7ccd63f79a40db3ede055",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0130",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 131,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:2167c81337ed8298e62c48059e588c042bb08490a10955d111f62aeb3b7d176e",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0131",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 132,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:775a92ba445051e04ae0fd3dfd29207a78d482cd746c87cb1fcaad91f7a51efe",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0132",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 133,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:75c8a5e6b981feef4f439d15514c79a503433c4fa4a23fea4827b2f92ed2db53",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0133",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 134,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:9e862526db5948b99424d17bd7d48a2e049ec696e4219cff79d46f8c6c28812a",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0134",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 135,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:e69f6f4dcf13ea01f0af7411f4a0800a80cea533cd87025950980138f49feaae",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0135",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 136,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:434c17e9ef6a58358d726fac32c452444db9117863ffb5499d82bbbe7ae9daef",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0136",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 137,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:6c1034dfc2f88c0b155318226ab7131a30fe99e110c329e4e29ede057ba0b32c",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0137",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 138,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:ccdf093f1cd7e4be7c93b5cb6d802675838ca7d09c27a254e1370be506fec8cc",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0138",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 139,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:d79153f3d3e6cd65022763a367fa5b1cae26946c9bbc6b07366de0b4804c10f8",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0139",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 140,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:e64a6add9f3943a5334d7eb8b8705657d85f20fb90cc157615f8049140928d48",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0140",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 141,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:15d940fe59552fc8157d48e99574fdded8c965dd9a9f641f8f4cf9d62412c643",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0141",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 142,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:4a4025c9906d132ad3aa6e0138084cecde4e8665b0e4da169fa7075b12b2be93",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0142",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 143,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:dc61c3f83aba20e127c01929032e383cba7dc0b50377377194a4e9b1e58bd500",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0143",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 144,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:73bb3620faeedcbed3f3caa8515d1fc505900956f5911829ecbff39f6a0c4fe7",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0144",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 145,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:03fb573ccc02da078f38b2d25e1a423a7ecf1a00d69b0bb5cd32a662f23ac84a",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0145",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 146,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:87151d2b146e5de4fd09c53756b4a7bed8e35be55b5df652ec342cd54a5925c6",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0146",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 147,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:077ebb37c55d9e914abdd94c4f7e4f494da8cdd2d9da7bd35d88e0008c0cd819",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0147",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 148,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:283633caeddabafe6c5cfabc56a4ce4949f4a920bfc06fa2e3fe0c73235975bf",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0148",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 149,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:0ec9546bf3a7b731a132d263b3f9f5d3aa3eef8b22d442b7dd04d843ce12d39b",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0149",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 150,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:ba5c69650b56041a281cdab8e196b3b624cf682847d8b036bbc8082dce076d76",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0150",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 151,
+      "company": "jpmorgan_chase",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:7d362988f1d9c7a493cfa0415911a5a91b5e93e4739999bd68751e6630390779",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0151",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 152,
+      "company": "salesforce",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:d3c4cc81162ab7d938abf3220aed2ab839b6c2977d4287d22d1f5061caa01651",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0152",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2026,
+        "period_end": "2026-01-31",
+        "period_start": "2025-02-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 153,
+      "company": "salesforce",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:39e4d8c8dcefd84f28b58edec20a33b00167e1e0cd7b0499dd6a8b14c59c16a6",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0153",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2026,
+        "period_end": "2026-01-31",
+        "period_start": "2025-02-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 154,
+      "company": "salesforce",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:2f2259bbd70e1f7cc9f967f62eb0fdb121274a1ae89334fd0d295ecdb589072e",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0154",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2026,
+        "period_end": "2026-01-31",
+        "period_start": "2025-02-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 155,
+      "company": "salesforce",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:8d56bf0b6ff5b9e9c318acbb1000e44f8a4f3bac9d53a07c4daffa51c92c6fae",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0155",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2026,
+        "period_end": "2026-01-31",
+        "period_start": "2025-02-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 156,
+      "company": "salesforce",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:8ea674eda2649f10eea3c555180d50e0435e5ee17974d26084d55a3c012f3d4c",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0156",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2026,
+        "period_end": "2026-01-31",
+        "period_start": "2025-02-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 157,
+      "company": "lumen_technologies",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:fad918cf447b4785b7f945765dd919b278aa382a73065e8643ddd58f5c25bcc2",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0157",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 158,
+      "company": "lumen_technologies",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:96cf209e8ea9992d3446bb176ed306009ba595cf2aa5600614a767811bc8114c",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0158",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 159,
+      "company": "lumen_technologies",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:673378626868162a6f30671b644843d75194d6ecd0ba61a8125e20c5bb27837e",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0159",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 160,
+      "company": "lumen_technologies",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:610436edffde236f9977b74067e68f081908b5426c2a94b6505dd9e84c538bc5",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0160",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 161,
+      "company": "lumen_technologies",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:e389bd10ceb54f998fe4d99487e1ce2bafb0ef837241967941569a1b7a9d74fa",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0161",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 162,
+      "company": "lumen_technologies",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:c22b8eadf26ccc17ca9850b1cc7528f00472a04d2c774288ccd2324c47940fca",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0162",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 163,
+      "company": "lumen_technologies",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:65f230c439bcd25081015c1d930b1ce645962aa543f66d9006d75593e8c9eb61",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0163",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 164,
+      "company": "lumen_technologies",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:ae2e2bd20640d643827ea45be6cf84cfcf6316ef22ba3e734ad7b1ddcd45643a",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0164",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 165,
+      "company": "macys",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:8958d81c795cde2ae6afd19c870e680f319a6ab9fc2b8e0f96b36e47d1e143ba",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0165",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2026-01-31",
+        "period_start": "2025-02-02"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 166,
+      "company": "macys",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:10a22d01d91cb42297a6ca619dc06330c9c2ebc87e401cffec460240a36f06b3",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0166",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2026-01-31",
+        "period_start": "2025-02-02"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 167,
+      "company": "macys",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:7febf94662fd9c3d7b2db08f50e84d950c173a7adeb99f0ebbe4554d64219120",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0167",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2026-01-31",
+        "period_start": "2025-02-02"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 168,
+      "company": "macys",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:0787aec2a613bcaa0bb6566c8d55c48fc5871ff30fba3b2f3c659f47d5a96eed",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0168",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2026-01-31",
+        "period_start": "2025-02-02"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 169,
+      "company": "macys",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:53dff4eeda033c296b2fc27c718ee32cb4f98b3953d5757fc1a3ebe862086a2b",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0169",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2026-01-31",
+        "period_start": "2025-02-02"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 172,
+      "company": "enphase_energy",
+      "original_status": "FAILED_TERMINAL",
+      "request_id": "sha256:277ee01c8c84b2aa54ca0695a08ac1e3e8cc5885e93a278ed42b52ef6b15295a",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0172",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "HISTORICAL_FAILURE_ONLY"
+    },
+    {
+      "ordinal": 173,
+      "company": "enphase_energy",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:277ee01c8c84b2aa54ca0695a08ac1e3e8cc5885e93a278ed42b52ef6b15295a",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0173",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 174,
+      "company": "enphase_energy",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:595df0c4a1654528117d4353e493e2ff60ad13d5904a75c77be29f61d3dd9634",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0174",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 175,
+      "company": "enphase_energy",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:a03dbaa6924c124cef74b3d2375a17889a18842b3f460bb555ae27e8b069d14a",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0175",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 176,
+      "company": "enphase_energy",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:e55a2a78f4a74c040e76aa293aec45572042cb9c7f1e34cc0f266fe188c86055",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0176",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 177,
+      "company": "enphase_energy",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:0afd398952aeae6bddca335fd2779863797078570826ceb148d2049c410dfe7e",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0177",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 178,
+      "company": "enphase_energy",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:ba47c1117d18877e690e6148239e779733589151c1286a2c30b0f23daa967eec",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0178",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 179,
+      "company": "paramount_skydance_paramount_global",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:df5c856849f041fc6a2b0b3e31ad03d51fe168308b240cfad2176d6bf4d0e4a2",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0179",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 180,
+      "company": "paramount_skydance_paramount_global",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:de87382fd236fafc70df2e8d5c46d35ab46d38b60d6e575a4e4f12f38a1ab429",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0180",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 181,
+      "company": "paramount_skydance_paramount_global",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:90c46d5ffb11c9317b638981c04a951a035e3051838ca0cf68a0688195d4879c",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0181",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 182,
+      "company": "paramount_skydance_paramount_global",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:93d642eb193c46b080721ce87e0c3380188f4252d121942f53ab9d474695fc40",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0182",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 183,
+      "company": "paramount_skydance_paramount_global",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:35fd42cfa036b6c421d131c10f6ee00205fb1315804fb3f68a57f143d536c91b",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0183",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 184,
+      "company": "paramount_skydance_paramount_global",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:5818655a143bf084a68c6c9f3698cbdc9bf4bd53025a268558c53602eb47f148",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0184",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 185,
+      "company": "paramount_skydance_paramount_global",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:665c97e5b9828fe2c44b6bf73a1127da6b61ece3661a61252c0665fe5416e0a2",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0185",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 186,
+      "company": "paramount_skydance_paramount_global",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:54a564856ea2a54ffa68f42303f2cc2cd2c22d327fe6d5f8157a1c931e71cd83",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0186",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 187,
+      "company": "paramount_skydance_paramount_global",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:05bb398efcbb39ed4274a79fdc368a04727906f515f2153c1e622f166223fd0c",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0187",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    },
+    {
+      "ordinal": 188,
+      "company": "paramount_skydance_paramount_global",
+      "original_status": "SUCCEEDED",
+      "request_id": "sha256:aa190ea63d1461d142de7b98e698301bba89a338474022a518175eed075e5312",
+      "response_contract": "D04_COMPLETE_UNITS_V1",
+      "request_context_format": "deepseek-v41-two-message-json-chat-1",
+      "call_directory": "/Users/lyuhongwang/.local/state/sec_metrics/issue28-2026-09-13/calls/0188",
+      "material_problems": [],
+      "fiscal_year": null,
+      "original_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "classification": "CURRENT_RESPONSE_CHECK_PASSED_REQUIRES_SELECTED_INPUT_MATCH",
+      "response_check_keys": [
+        "request_id",
+        "response",
+        "findings",
+        "unresolved",
+        "status",
+        "semantic_correctness_verified",
+        "native_result_created",
+        "production_authorized",
+        "current_target_findings"
+      ],
+      "unresolved_count": 0
+    }
+  ],
+  "seconds": "11.922701792005682",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
