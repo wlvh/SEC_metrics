@@ -1,0 +1,34 @@
+2021-12-31 COVER_AND_DEI_BOUND 1.5234307919890853
+2022-12-31 DEFAULT_YEAR_PROOF_IDENTICAL 1.6529694170021685
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/docs/evidence/issue28_cover_dei_release_20261012/verify_original.py", line 71, in <module>
+    main()
+    ~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/docs/evidence/issue28_cover_dei_release_20261012/verify_original.py", line 67, in main
+    args.output.write_text(json.dumps(exact_json_value(result),ensure_ascii=False,indent=2)+'\n')
+                                      ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/scripts/vnext/normal_annual_input_v2.py", line 23, in exact_json_value
+    canonical_json_bytes(value=value)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/scripts/vnext/canonical.py", line 415, in canonical_json_bytes
+    normalized = _canonicalize(value=value, path=(), set_paths=set_paths)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/scripts/vnext/canonical.py", line 371, in _canonicalize
+    _canonicalize(value=item, path=path + ("*",), set_paths=set_paths,)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-cover-dei-release/SEC_metrics/scripts/vnext/canonical.py", line 350, in _canonicalize
+    raise CanonicalError("Binary float is forbidden; use Decimal")
+vnext.canonical.CanonicalError: Binary float is forbidden; use Decimal
