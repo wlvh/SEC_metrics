@@ -40,6 +40,32 @@ class CurrentUpdateTest(unittest.TestCase):
         return update.run_once(state_root=self.root,source_root=ROOT,
                                company_id='marriott_international',metric_id='B01')
 
+    def test_source_check_only_version_change_revalidates_but_does_not_recalculate(self):
+        self.config['processing_files']={'scripts/vnext/ordinary_current_update.py':'old',
+            'scripts/vnext/request_bindings.py':'old-check','scripts/vnext/calculator.py':'same'}
+        first=self.run_update();old_configuration=(self.root/'completed-check.json').read_bytes()
+        self.config['processing_files']['scripts/vnext/request_bindings.py']='new-check'
+        self.config['processing_files']['scripts/vnext/ordinary_current_update.py']='new-controller'
+        with patch.object(update,'create_saved_result',side_effect=AssertionError('No calculation')), \
+             patch.object(update,'_current_sources',return_value=[dict(self.proof)]) as source_check:
+            again=self.run_update()
+        self.assertEqual(again['status'],'NO_SOURCE_CONTENT_CHANGE')
+        self.assertEqual(again['result_id'],first['result_id']);source_check.assert_called_once()
+        self.assertEqual(again['source_check_versions']['scripts/vnext/request_bindings.py'],'new-check')
+        self.assertEqual((self.root/'completed-check.json').read_bytes(),old_configuration)
+        self.config['processing_files']['scripts/vnext/calculator.py']='changed-formula'
+        self.assertTrue(self.run_update()['calculation_performed'])
+
+    def test_new_source_checker_failure_still_blocks_old_success_reuse(self):
+        self.config['processing_files']={'scripts/vnext/request_bindings.py':'old'}
+        self.run_update();old=(self.root/'current-result.json').read_bytes()
+        self.config['processing_files']['scripts/vnext/request_bindings.py']='new'
+        with patch.object(update,'_current_sources',side_effect=ValueError('CURRENT_BODY_CORRUPT')), \
+             patch.object(update,'create_saved_result',side_effect=AssertionError('No calculation')):
+            failed=self.run_update()
+        self.assertEqual(failed['status'],'INPUT_OR_EXECUTION_FAILED')
+        self.assertEqual((self.root/'current-result.json').read_bytes(),old)
+
     def test_identical_raw_and_config_never_enters_calculation(self):
         first=self.run_update()
         with patch.object(update,'create_saved_result',side_effect=AssertionError('No calculation')):

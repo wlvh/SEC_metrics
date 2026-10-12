@@ -14,7 +14,8 @@ from urllib.parse import urlsplit
 from .annual_sources import _rows
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_source_authority import ROOT
-from .ordinary_saved_result import METRIC_IDS, SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS, create_saved_result, read_saved_result, save_calculated_case
+from .ordinary_saved_result import (METRIC_IDS, SAVED_METRIC_IDS, EXPLICIT_CASE_METRICS,
+    CURRENT_E01_SPEC_PATH, current_e01_scope, create_saved_result, read_saved_result, save_calculated_case)
 from .traits import repository_company_ciks
 
 
@@ -118,11 +119,27 @@ def _configuration(source, company, metric):
         'provider_enabled':False,'sec_fetch_enabled':False}
 
 
+def _same_processing_configuration(previous, current):
+    """Source checking/control versions are recorded, not extraction inputs.
+
+    These two modules do not select, interpret or calculate a metric. Their
+    source checks run again before every reuse. Producer/parser/Spec/prompt,
+    registry and actual source differences remain part of the comparison.
+    """
+    checking = {'scripts/vnext/ordinary_current_update.py',
+                'scripts/vnext/request_bindings.py'}
+    def business(config):
+        return {**config,'processing_files':{path:digest for path,digest in config.get('processing_files',{}).items()
+                                            if path not in checking}}
+    return business(previous)==business(current)
+
+
 def _current_sources(source, proofs):
     from sec_http import request_log_attempt_id
-    from .request_bindings import validate_request_attempt_binding
+    from .request_bindings import validate_request_attempt_bindings
+    log_digest = sha256_file(path=source/'evidence/requests_log.csv')
     latest = {row['source_url']:(i,row) for i,row in enumerate(_rows(source)) if row['method']=='GET'}
-    rows = []
+    rows, requests = [], []
     for old in proofs:
         current=latest.get(old['source_url'])
         _need(current is not None,'CURRENT_UPDATE_SOURCE_MISSING:'+old['source_url'])
@@ -131,11 +148,12 @@ def _current_sources(source, proofs):
         # Pin the actual latest row. Repeated identical legacy GETs are valid,
         # but the convenience selector deliberately cannot disambiguate them.
         # This verifier still checks that row's exact body and header bytes.
-        validate_request_attempt_binding(repo_root=source,source_url=old['source_url'],
-            accession=old['accession'],document_name=row['document_name'],content_sha256=row['content_sha256'],
-            request_attempt_id=request_log_attempt_id(row_index=index,row=row),require_immutable=False)
+        requests.append(dict(source_url=old['source_url'],accession=old['accession'],
+            document_name=row['document_name'],content_sha256=row['content_sha256'],
+            request_attempt_id=request_log_attempt_id(row_index=index,row=row),require_immutable=False))
         rows.append({'source_url':old['source_url'],'accession':old['accession'],
                      'document_name':row['document_name'],'content_sha256':row['content_sha256']})
+    validate_request_attempt_bindings(repo_root=source,requests=requests,expected_log_sha256=log_digest)
     return rows
 
 
@@ -275,6 +293,8 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
             source_errors = [r for r in census if r['status_code']!='200' or r['error']]
             if comparison:
                 saved = read_saved_result(output_root=root/'results'/comparison['version'])
+                if metric_id == 'E01' and fiscal_year is not None:
+                    _need(current_e01_scope(saved),'CURRENT_UPDATE_E01_SAVED_SCOPE_NOT_CONTENT_CONFIRMED')
                 _need(saved['manifest']['company_id']==company_id and saved['manifest']['metric_id']==metric_id,
                       'CURRENT_UPDATE_SAVED_COORDINATE_CHANGED')
                 _need(saved['result']['result_id']==comparison['result_id'],
@@ -283,7 +303,8 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                 old = comparison.get('compared_source_proofs') or [{k:p[k] for k in ('source_url','accession','document_name','content_sha256')}
                        for p in saved['manifest']['source_proofs']]
                 from .ordinary_update_compatibility import compatible_configuration
-                compatible = configuration != comparison['configuration'] and compatible_configuration(
+                same_processing = _same_processing_configuration(comparison['configuration'], configuration)
+                compatible = not same_processing and compatible_configuration(
                     comparison['configuration'], configuration)
                 parsed_equivalent=False
                 if (metric_id=='D04' and fiscal_year is None
@@ -300,7 +321,7 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                             # the original complete processor handles/records it.
                             new_task=None
                         parsed_equivalent=new_task is not None and same_task(old_task,new_task)
-                if ((configuration==comparison['configuration'] or compatible)
+                if ((same_processing or compatible)
                         and ((census==comparison.get('source_census') and current==old) or parsed_equivalent)):
                     status=('PREVIOUS_INPUT_WITHHELD' if saved['result']['publication']=='WITHHELD'
                             else 'NO_SOURCE_CONTENT_CHANGE')
@@ -309,6 +330,8 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         'result_root':str(root/'results'/comparison['version']),
                         'result_reason_code':saved['result'].get('reason_code'),
                         'raw_input_unchanged':True,'calculation_performed':False,'new_candidate_created':False,
+                        'source_check_versions':{path:configuration.get('processing_files',{}).get(path)
+                            for path in ('scripts/vnext/ordinary_current_update.py','scripts/vnext/request_bindings.py')},
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
                     if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
@@ -340,6 +363,9 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
             else:
                 case = case_factory(repo_root=source, company_id=company_id, metric_id=metric_id,
                                     fiscal_year=fiscal_year)
+                if metric_id == 'E01':
+                    _need(case.get('spec_paths',{}).get('E01') == CURRENT_E01_SPEC_PATH,
+                          'CURRENT_UPDATE_E01_CONTENT_SPEC_REQUIRED')
                 _need(case['target_period']['fiscal_year']==fiscal_year,
                       'CURRENT_UPDATE_CASE_FISCAL_YEAR_CHANGED')
                 saved = save_calculated_case(source_root=source,output_root=root/'results'/version,

@@ -63,6 +63,7 @@ class HistoricalD04CaseTest(TestCase):
         from vnext.company_fiscal_range import PROCESSING_FILES as range_files
         from vnext.historical_event_cases import prepare_historical_event_year_case
         from vnext.historical_auditor_case import prepare_historical_auditor_year_case, PROCESSING_FILES as auditor_files
+        from vnext.historical_e01_company_case import prepare_historical_e01_year_case, PROCESSING_FILES as e01_files
         selection = {'constructed_control': True, 'report_end': '2023-12-31'}
         plan = {'tasks': [{'fiscal_year': 2023, 'status': 'FISCAL_YEAR_RESOLVED',
                            'period_selection': selection}]}
@@ -71,7 +72,7 @@ class HistoricalD04CaseTest(TestCase):
              patch('vnext.company_current_records.run_saved_company', return_value={}) as shared:
             company_local.run_local(company_id='marriott_international', source_root=Path('/saved/source'),
                 work_dir=Path('/new/state'), output_dir=Path('/new/out'), period='fiscal-years',
-                fiscal_year_start=2023, fiscal_year_end=2024, metric_ids=['D04','C04','B01','C01'],
+                fiscal_year_start=2023, fiscal_year_end=2024, metric_ids=['D04','E01','C04','B01','C01'],
                 saved_call_package=Path('/saved/package'))
         args = shared.call_args.kwargs
         self.assertEqual([2023,2024], args['fiscal_years'])
@@ -88,6 +89,8 @@ class HistoricalD04CaseTest(TestCase):
         discover.assert_called_once_with(repo_root=Path('/saved/source').resolve(),
             company_id='marriott_international', fiscal_year_start=2023,
             fiscal_year_end=2024, metric_ids=['B01'])
+        self.assertIs(prepare_historical_e01_year_case, args['case_factories']['E01'])
+        self.assertEqual(e01_files, args['processing_files_by_metric']['E01'])
         self.assertIs(prepare_historical_event_year_case, args['case_factories']['C01'])
         self.assertIs(prepare_historical_auditor_year_case, args['case_factories']['C04'])
         self.assertEqual(auditor_files, args['processing_files_by_metric']['C04'])

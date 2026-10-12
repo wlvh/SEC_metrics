@@ -1,0 +1,46 @@
+{
+  "base_main": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-source-proof-batch/SEC_metrics",
+  "product_changes_uncommitted": true,
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "state_root": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-proof-batch-company-d9rsi6o1/state",
+  "argv": [
+    "run",
+    "--company",
+    "jpmorgan_chase",
+    "--period",
+    "fiscal-years",
+    "--fiscal-year-start",
+    "2021",
+    "--fiscal-year-end",
+    "2021",
+    "--metric",
+    "B01",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--work-dir",
+    "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-proof-batch-company-d9rsi6o1/state",
+    "--output-dir",
+    "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-proof-batch-company-d9rsi6o1/output"
+  ],
+  "cli_seconds": 0.2792707921471447,
+  "cli_exit": 0,
+  "independent_read_seconds": 0.11842370801605284,
+  "reader_exit": 0,
+  "result_files_unchanged": {
+    "updates/B01/periods/FY2021/results/107159fe899c45ab8f8d120fdf5bfe59/metrics_matrix.csv": "eb90d404d5291ac769526a6b64ddcc5ceee287b234d45caee6c97ae8f40132a5",
+    "updates/B01/periods/FY2021/results/107159fe899c45ab8f8d120fdf5bfe59/metric_evidence.csv": "d5890c5affa63b84603efcee20665991218b44b094e60f3abba99eb96e0341c8",
+    "updates/B01/periods/FY2021/results/107159fe899c45ab8f8d120fdf5bfe59/records.jsonl": "64500e3a6ab5677dbe1e4364cf744d056c50de03f9a1139bb8ea2dff2dd10f13",
+    "updates/B01/periods/FY2021/results/107159fe899c45ab8f8d120fdf5bfe59/input-assessments.json": "64ae135b9d4f2bff11f45e546995b35761340ce54203951cfd05f4194b848091",
+    "updates/B01/periods/FY2021/results/107159fe899c45ab8f8d120fdf5bfe59/manifest.json": "1b66ac2cf6a29e7bc1f60e61d9d3633e846caddf5ccec5e062c6aaf06618c5af",
+    "updates/B01/periods/FY2021/results/107159fe899c45ab8f8d120fdf5bfe59/write.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "updates/B01/periods/FY2021/results/107159fe899c45ab8f8d120fdf5bfe59/receipt.json": "fe9a6e8ce89b381c30e63f7ecf4b26f019fbc7a793fbc6fae0f82c9d8ca62339"
+  },
+  "cli_output": "{\n  \"elapsed_seconds\": 0.27836324996314943,\n  \"record_type\": \"ORDINARY_COMPANY_EXECUTION_V1\",\n  \"company_id\": \"jpmorgan_chase\",\n  \"run_id\": \"20261009T221209Z-fee426c3\",\n  \"status\": \"FLOW_COMPLETED\",\n  \"selected_metrics\": [\n    \"B01\"\n  ],\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"status\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"attempt_id\": \"28f8c94ea49e41e48ef994ce0a9e993b\",\n      \"version\": \"107159fe899c45ab8f8d120fdf5bfe59\",\n      \"result_id\": \"sha256:2b5095227baf78becce06a05d2c696c2125b86f70b6eb41d6fbb9f5e139b3a9c\",\n      \"result_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-proof-batch-company-d9rsi6o1/state/updates/B01/periods/FY2021/results/107159fe899c45ab8f8d120fdf5bfe59\",\n      \"result_reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"raw_input_unchanged\": true,\n      \"calculation_performed\": false,\n      \"new_candidate_created\": false,\n      \"source_check_versions\": {\n        \"scripts/vnext/ordinary_current_update.py\": \"0133d5a0ea524ec0e50300721d7f407c31ce1001e16c3f08b2dc5f90a8af7ffd\",\n        \"scripts/vnext/request_bindings.py\": \"d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee\"\n      },\n      \"source_observation_errors\": [],\n      \"new_calls\": {\n        \"provider\": 0,\n        \"paid\": 0,\n        \"sec\": 0\n      },\n      \"production_authorized\": false,\n      \"requested_fiscal_year\": 2021,\n      \"defect_holds\": [],\n      \"read_result_id\": \"sha256:2b5095227baf78becce06a05d2c696c2125b86f70b6eb41d6fbb9f5e139b3a9c\",\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-proof-batch-company-d9rsi6o1/state/updates/B01/periods/FY2021/results/107159fe899c45ab8f8d120fdf5bfe59\",\n      \"program_version\": {\n        \"commit\": \"f6ef7886d6630f7675c25cd42e306c373ab05769\",\n        \"has_uncommitted_changes\": true\n      }\n    }\n  ],\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"program_root\": \"/Users/lyuhongwang/.codex/worktrees/issue28-source-proof-batch/SEC_metrics\",\n  \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-proof-batch-company-d9rsi6o1/state\",\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-proof-batch-company-d9rsi6o1/output/20261009T221209Z-fee426c3\",\n  \"source_mode\": \"SAVED_ONLY_NO_ONLINE_DISCOVERY\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"selected_fiscal_years\": [\n    2021\n  ]\n}\n",
+  "reader_output": "{\n  \"elapsed_seconds\": 0.07507870788685977,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"jpmorgan_chase\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B01\",\n      \"result_id\": \"sha256:2b5095227baf78becce06a05d2c696c2125b86f70b6eb41d6fbb9f5e139b3a9c\",\n      \"period_start\": \"2021-01-01\",\n      \"period_end\": \"2021-12-31\",\n      \"fiscal_year\": 2021,\n      \"value\": null,\n      \"unit\": null,\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"NONE\",\n      \"reason_code\": \"TRAIT_NOT_APPLICABLE\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-proof-batch-company-d9rsi6o1/state/updates/B01/periods/FY2021/results/107159fe899c45ab8f8d120fdf5bfe59\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-proof-batch-company-d9rsi6o1/reader\"\n}\n",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

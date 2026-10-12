@@ -1,0 +1,119 @@
+usage: python3.14 -m unittest sources [-h] --company COMPANY
+                                      --source-root SOURCE_ROOT
+                                      (--report-end REPORT_END |
+                                      --fiscal-year-start FISCAL_YEAR_START)
+                                      [--fiscal-year-end FISCAL_YEAR_END]
+                                      --metric {B01,B02}
+python3.14 -m unittest sources: error: argument --metric: invalid choice: 'B03' (choose from 'B01', 'B02')
+======================================================================
+ERROR: test_b03_names_target_originals_without_requiring_b02_prior (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_b03_names_target_originals_without_requiring_b02_prior)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source-preflight/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 91, in test_b03_names_target_originals_without_requiring_b02_prior
+    before=self.digest_tree();value=self.plan(('B03',))
+                                    ~~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source-preflight/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 59, in plan
+    return preflight.discover_selected_annual_requirements(repo_root=self.root,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+        company_id=COMPANY,report_end='2025-12-31',metric_ids=list(metrics),**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source-preflight/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 130, in discover_selected_annual_requirements
+    _need(type(metric_ids) in (list,tuple) and metric_ids and
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          len(metric_ids) == len(set(metric_ids)) and set(metric_ids) <= METRIC_IDS,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'METRIC_SCOPE_NOT_CONNECTED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source-preflight/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 24, in _need
+    raise ValueError('SELECTED_SOURCE_' + reason)
+ValueError: SELECTED_SOURCE_METRIC_SCOPE_NOT_CONNECTED
+
+======================================================================
+ERROR: test_b03_missing_target_instance_and_target_amendment_remain_dependencies (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_b03_missing_target_instance_and_target_amendment_remain_dependencies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source-preflight/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 100, in test_b03_missing_target_instance_and_target_amendment_remain_dependencies
+    self.remove_get(instance);value=self.plan(('B03',))
+                                    ~~~~~~~~~^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source-preflight/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 59, in plan
+    return preflight.discover_selected_annual_requirements(repo_root=self.root,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+        company_id=COMPANY,report_end='2025-12-31',metric_ids=list(metrics),**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source-preflight/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 130, in discover_selected_annual_requirements
+    _need(type(metric_ids) in (list,tuple) and metric_ids and
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          len(metric_ids) == len(set(metric_ids)) and set(metric_ids) <= METRIC_IDS,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          'METRIC_SCOPE_NOT_CONNECTED')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source-preflight/SEC_metrics/scripts/vnext/selected_source_requirements.py", line 24, in _need
+    raise ValueError('SELECTED_SOURCE_' + reason)
+ValueError: SELECTED_SOURCE_METRIC_SCOPE_NOT_CONNECTED
+
+======================================================================
+ERROR: test_formal_sources_entry_accepts_b03_and_keeps_acquire_scope_closed (tests.vnext.test_selected_source_requirements.SelectedSourceRequirementsTest.test_formal_sources_entry_accepts_b03_and_keeps_acquire_scope_closed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2047, in _parse_known_args2
+    namespace, args = self._parse_known_args(args, namespace, intermixed)
+                      ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2298, in _parse_known_args
+    start_index = consume_optional(start_index)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2222, in consume_optional
+    take_action(action, args, option_string)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2108, in take_action
+    argument_values = self._get_values(action, argument_strings)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2625, in _get_values
+    self._check_value(action, value)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2696, in _check_value
+    raise ArgumentError(action, msg % args)
+argparse.ArgumentError: argument --metric: invalid choice: 'B03' (choose from 'B01', 'B02')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source-preflight/SEC_metrics/tests/vnext/test_selected_source_requirements.py", line 115, in test_formal_sources_entry_accepts_b03_and_keeps_acquire_scope_closed
+    code=main(args)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-b03-source-preflight/SEC_metrics/tools/vnext_company.py", line 99, in main
+    args = parser.parse_args(argv)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2008, in parse_args
+    args, argv = self.parse_known_args(args, namespace)
+                 ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2018, in parse_known_args
+    return self._parse_known_args2(args, namespace, intermixed=False)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2047, in _parse_known_args2
+    namespace, args = self._parse_known_args(args, namespace, intermixed)
+                      ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2279, in _parse_known_args
+    positionals_end_index = consume_positionals(start_index)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2254, in consume_positionals
+    take_action(action, args)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2123, in take_action
+    action(self, namespace, argument_values, option_string)
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 1318, in __call__
+    subnamespace, arg_strings = subparser.parse_known_args(arg_strings, None)
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2018, in parse_known_args
+    return self._parse_known_args2(args, namespace, intermixed=False)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2049, in _parse_known_args2
+    self.error(str(err))
+    ~~~~~~~~~~^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2785, in error
+    self.exit(2, _('%(prog)s: error: %(message)s\n') % args)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/argparse.py", line 2772, in exit
+    _sys.exit(status)
+    ~~~~~~~~~^^^^^^^^
+SystemExit: 2
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.160s
+
+FAILED (errors=3)

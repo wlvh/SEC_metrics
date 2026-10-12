@@ -1,0 +1,69 @@
+test_historical_event_items (unittest.loader._FailedTest.test_historical_event_items) ... ERROR
+test_catalog_change_to_content_method_is_an_explicit_gap (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_catalog_change_to_content_method_is_an_explicit_gap) ... ok
+test_content_confirmation_route_is_not_silently_counted (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_content_confirmation_route_is_not_silently_counted) ... ok
+test_incoherent_history_block_is_not_read_around (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_incoherent_history_block_is_not_read_around) ... ok
+test_missing_event_header_is_withheld_not_a_correct_zero (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_missing_event_header_is_withheld_not_a_correct_zero) ... ok
+test_part_iii_window_clearance_does_not_admit_financial_inputs (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_part_iii_window_clearance_does_not_admit_financial_inputs) ... ok
+test_predecessor_period_reads_only_its_selected_registrant (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_predecessor_period_reads_only_its_selected_registrant) ... ok
+test_successor_keeps_wide_measurement_and_pinned_container (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_successor_keeps_wide_measurement_and_pinned_container) ... ok
+test_unknown_program_error_is_not_mislabeled_as_disclosure_absence (tests.vnext.test_historical_event_cases.HistoricalEventCaseTest.test_unknown_program_error_is_not_mislabeled_as_disclosure_absence) ... ok
+test_complete_body_and_gap_day_use_the_existing_coherence_rule (tests.vnext.test_historical_event_cases.HistoricalEventHistoryStrategyTest.test_complete_body_and_gap_day_use_the_existing_coherence_rule) ... ok
+test_source_reference_does_not_overwrite_its_raw_blob (tests.vnext.test_historical_event_cases.HistoricalEventRecordRetentionTest.test_source_reference_does_not_overwrite_its_raw_blob) ... ok
+test_historical_event_attachments (unittest.loader._FailedTest.test_historical_event_attachments) ... ERROR
+test_historical_ma_confirmation_case (unittest.loader._FailedTest.test_historical_ma_confirmation_case) ... ERROR
+test_declared_dependencies_include_the_used_event_and_amendment_rules (tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_declared_dependencies_include_the_used_event_and_amendment_rules) ... ok
+test_display_summary_keeps_amendment_conclusion_and_full_evidence_separate (tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_display_summary_keeps_amendment_conclusion_and_full_evidence_separate) ... ok
+test_missing_declared_attachment_has_exact_dependency_and_no_answer_reuse (tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_missing_declared_attachment_has_exact_dependency_and_no_answer_reuse) ... ok
+test_no_matching_response_is_whole_window_withheld_not_old_item_count (tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_no_matching_response_is_whole_window_withheld_not_old_item_count) ... ok
+test_saved_attachment_changes_request_contract_but_not_into_model_success (tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_saved_attachment_changes_request_contract_but_not_into_model_success) ... ok
+test_source_error_is_not_no_candidate_or_zero (tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_source_error_is_not_no_candidate_or_zero) ... ok
+test_successor_cannot_borrow_the_other_event_familys_wide_window (tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_successor_cannot_borrow_the_other_event_familys_wide_window) ... ok
+test_wrong_family_refuses_before_source_selection (tests.vnext.test_historical_e01_company_case.HistoricalE01CompanyCaseTest.test_wrong_family_refuses_before_source_selection) ... ok
+test_zero_requires_the_successful_complete_candidate_walk (tests.vnext.test_historical_e01_company_case.HistoricalE01ZeroCandidateTest.test_zero_requires_the_successful_complete_candidate_walk) ... ok
+test_e01_composed_candidate (unittest.loader._FailedTest.test_e01_composed_candidate) ... ERROR
+
+======================================================================
+ERROR: test_historical_event_items (unittest.loader._FailedTest.test_historical_event_items)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_historical_event_items
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 141, in loadTestsFromName
+    module = __import__(module_name)
+ModuleNotFoundError: No module named 'tests.vnext.test_historical_event_items'
+
+
+======================================================================
+ERROR: test_historical_event_attachments (unittest.loader._FailedTest.test_historical_event_attachments)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_historical_event_attachments
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 141, in loadTestsFromName
+    module = __import__(module_name)
+ModuleNotFoundError: No module named 'tests.vnext.test_historical_event_attachments'
+
+
+======================================================================
+ERROR: test_historical_ma_confirmation_case (unittest.loader._FailedTest.test_historical_ma_confirmation_case)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_historical_ma_confirmation_case
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 141, in loadTestsFromName
+    module = __import__(module_name)
+ModuleNotFoundError: No module named 'tests.vnext.test_historical_ma_confirmation_case'
+
+
+======================================================================
+ERROR: test_e01_composed_candidate (unittest.loader._FailedTest.test_e01_composed_candidate)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_e01_composed_candidate
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/loader.py", line 141, in loadTestsFromName
+    module = __import__(module_name)
+ModuleNotFoundError: No module named 'tests.vnext.test_e01_composed_candidate'
+
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.044s
+
+FAILED (errors=4)
+{"allowed_skips": 0, "errors": 4, "failures": 0, "run": 23, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_historical_event_items", "tests.vnext.test_historical_event_cases", "tests.vnext.test_historical_event_attachments", "tests.vnext.test_historical_ma_confirmation_case", "tests.vnext.test_historical_e01_company_case", "tests.vnext.test_e01_composed_candidate"]}
