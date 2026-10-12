@@ -214,6 +214,7 @@ FAST_TESTS += ("tests.vnext.test_statement_group_totals",)
 FAST_TESTS += ("tests.vnext.test_cover_dei_release",)
 FAST_TESTS += ("tests.vnext.test_single_segment_revenue",)
 FAST_TESTS += ("tests.vnext.test_bond_maturity_sections",)
+FAST_TESTS += ("tests.vnext.test_standby_note_relation",)
 SOURCE_TIMEOUT_SECONDS = 240
 SOURCE_TIMEOUT_OVERRIDES = {
     # The unchanged full original-source module passed on head 698b9a45 in

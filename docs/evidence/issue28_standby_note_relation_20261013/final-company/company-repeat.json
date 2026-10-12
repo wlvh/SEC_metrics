@@ -1,0 +1,57 @@
+{
+  "elapsed_seconds": 0.1311903329915367,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "macys",
+  "run_id": "20261012T210123Z-659a5cf5",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "B06"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B06",
+      "status": "PREVIOUS_INPUT_WITHHELD",
+      "attempt_id": "d9084a83bab844e09c4b94a9870111e5",
+      "version": "12da532686a34f08b3883f27873d5b2e",
+      "result_id": "sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb",
+      "result_root": "/private/tmp/issue28-financing-notes-company-20261013/state/updates/B06/periods/FY2024/results/12da532686a34f08b3883f27873d5b2e",
+      "result_reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED",
+      "raw_input_unchanged": true,
+      "calculation_performed": false,
+      "new_candidate_created": false,
+      "source_check_versions": {
+        "scripts/vnext/ordinary_current_update.py": "f247a5a8f2353612b1388bae9a3d7e39dc2b6c338045ad92d326162c5a39fb5f",
+        "scripts/vnext/request_bindings.py": "d0148da00951a5ef5b7f84dc73172e6d3a543c3fa16b4db511ddc715d6763fee"
+      },
+      "source_observation_errors": [],
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024,
+      "defect_holds": [],
+      "read_result_id": "sha256:4bdb9b24989e48efd58b5a51da4359c6ed7a3e4334c712d7f6646641755ae9cb",
+      "record_root": "/private/tmp/issue28-financing-notes-company-20261013/state/updates/B06/periods/FY2024/results/12da532686a34f08b3883f27873d5b2e",
+      "program_version": {
+        "commit": "38d149abbff2032df37cac73176f7c7d1a605ed3",
+        "has_uncommitted_changes": true
+      }
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-standby-note-relation/SEC_metrics",
+  "record_root": "/private/tmp/issue28-financing-notes-company-20261013/state",
+  "output_root": "/private/tmp/issue28-financing-notes-company-20261013/repeat/20261012T210123Z-659a5cf5",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2024
+  ]
+}

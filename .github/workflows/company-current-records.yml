@@ -148,7 +148,7 @@ jobs:
     - name: Ordinary B06 source composition and incomplete relation guards
       env:
         PYTHONDONTWRITEBYTECODE: '1'
-      run: python3 tests/required_unittests.py tests.vnext.test_current_b06_case tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest tests.vnext.test_bond_maturity_sections
+      run: python3 tests/required_unittests.py tests.vnext.test_current_b06_case tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest tests.vnext.test_bond_maturity_sections tests.vnext.test_standby_note_relation
     - name: Shared B06 complete note forms and source refusals
       env:
         PYTHONDONTWRITEBYTECODE: '1'
