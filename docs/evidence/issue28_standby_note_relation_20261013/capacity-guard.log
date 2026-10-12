@@ -1,0 +1,26 @@
+test_a_native_capacity_cannot_be_cleared_without_a_reported_relation (tests.vnext.test_standby_note_relation.StandbyNoteRelationTest.test_a_native_capacity_cannot_be_cleared_without_a_reported_relation) ... ERROR
+test_a_reported_capacity_cannot_lose_its_limit_or_reconciliation (tests.vnext.test_standby_note_relation.StandbyNoteRelationTest.test_a_reported_capacity_cannot_lose_its_limit_or_reconciliation) ... ok
+test_existing_reported_capacity_still_reconciles (tests.vnext.test_standby_note_relation.StandbyNoteRelationTest.test_existing_reported_capacity_still_reconciles) ... ok
+test_reported_amount_does_not_require_a_disclosed_capacity (tests.vnext.test_standby_note_relation.StandbyNoteRelationTest.test_reported_amount_does_not_require_a_disclosed_capacity) ... ok
+test_stale_period_wrong_nature_or_missing_zero_remains_unproved (tests.vnext.test_standby_note_relation.StandbyNoteRelationTest.test_stale_period_wrong_nature_or_missing_zero_remains_unproved) ... ok
+test_unknown_capacity_description_cannot_match_a_shortened_sentence (tests.vnext.test_standby_note_relation.StandbyNoteRelationTest.test_unknown_capacity_description_cannot_match_a_shortened_sentence) ... ok
+
+======================================================================
+ERROR: test_a_native_capacity_cannot_be_cleared_without_a_reported_relation (tests.vnext.test_standby_note_relation.StandbyNoteRelationTest.test_a_native_capacity_cannot_be_cleared_without_a_reported_relation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-standby-note-relation/SEC_metrics/tests/vnext/test_standby_note_relation.py", line 63, in test_a_native_capacity_cannot_be_cleared_without_a_reported_relation
+    _financing_inventory(**args,composition=composition,members=[],
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        other={'unused_capacity':None})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-standby-note-relation/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 605, in _financing_inventory
+    represented.update(r['ordinal'] for group in composition['lease']['finance_reports'].values() for r in group[kind])
+                                                 ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'finance_reports'
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (errors=1)
+{"allowed_skips": 0, "errors": 1, "failures": 0, "run": 6, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_standby_note_relation"]}

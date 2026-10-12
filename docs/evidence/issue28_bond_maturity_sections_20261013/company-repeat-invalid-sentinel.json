@@ -1,0 +1,41 @@
+{
+  "elapsed_seconds": 0.011288916008197702,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "macys",
+  "run_id": "20261012T203100Z-e3cc7b6c",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "B06"
+  ],
+  "metrics": [
+    {
+      "metric_id": "B06",
+      "status": "INPUT_OR_EXECUTION_FAILED",
+      "attempt_id": "dcb18cd65632414bac9431e7a2d8c0c7",
+      "error_type": "TypeError",
+      "reason": "module, class, method, function, traceback, frame, or code object was expected, got MagicMock",
+      "previous_result": null,
+      "new_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      },
+      "production_authorized": false,
+      "requested_fiscal_year": 2024
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-bond-maturity-sections/SEC_metrics",
+  "record_root": "/private/tmp/issue28-bond-sections-company-20261013/state",
+  "output_root": "/private/tmp/issue28-bond-sections-company-20261013/repeat/20261012T203100Z-e3cc7b6c",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false,
+  "selected_fiscal_years": [
+    2024
+  ]
+}
