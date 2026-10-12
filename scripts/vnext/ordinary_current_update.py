@@ -42,6 +42,21 @@ def _configuration(source, company, metric):
         paths.difference_update({'scripts/vnext/normal_lodging_results.py',
             'scripts/vnext/lodging_table_source.py', 'config/ordinary_lodging_table_v1.json',
             'catalog/ordinary_lodging/B10.md', 'catalog/ordinary_lodging/B11.md'})
+    if metric in METRIC_IDS or metric == 'D04':
+        # Neither zero-AI nor the saved D04 response producer calls B06 grammar.
+        # Shared annual selection, source checks and financial calculation
+        # remain below; an explicit historical consumer may add its own paths.
+        paths.difference_update({
+            'scripts/vnext/b06_bond_leases.py','scripts/vnext/b06_current_input.py',
+            'scripts/vnext/b06_financing_inventory.py','scripts/vnext/b06_inclusive_table.py',
+            'scripts/vnext/b06_note_carrying.py','scripts/vnext/normal_bond_debt_results.py',
+            'scripts/vnext/normal_inclusive_debt_results.py','scripts/vnext/normal_note_debt_results.py',
+            'scripts/vnext/ordinary_debt_guard.py','scripts/vnext/ordinary_special_debt_scope.py',
+            'config/b06_bond_debt_set_v1.json','config/b06_bond_leases_v1.json',
+            'config/b06_current_input_v1.json','config/b06_financing_inventory_v1.json',
+            'config/b06_inclusive_table_v1.json','config/b06_note_carrying_v1.json',
+            'config/b06_special_scope_v1.json','catalog/r5/B06_bond_leases_v5.md',
+            'catalog/r5/B06_inclusive_table_v6.md','catalog/r5/B06_note_carrying_v4.md'})
     paths.update({'scripts/vnext/ordinary_current_update.py','scripts/vnext/ordinary_saved_result.py',
                   'scripts/vnext/csv_output.py','scripts/vnext/ordinary_update_compatibility.py',
                   'config/issue28_normal_results_v2.json'})
@@ -63,12 +78,16 @@ def _configuration(source, company, metric):
     if metric == 'B06':
         from .current_b06_case import PROCESSING_FILES
         paths.update(PROCESSING_FILES)
+    if metric == 'C04':
+        from .current_auditor_case import PROCESSING_FILES
+        paths.update(PROCESSING_FILES)
     if metric == 'C02':
         # Only C02's existing selector now imports this pure name helper.
         # Explicit proxy C03 producers declare their own source dependencies.
         paths.add('scripts/vnext/organization_name_core.py')
-    if metric in {'B01','B03'}:
+    if metric in {'B01','B02','B03'}:
         paths.update('scripts/vnext/'+name+'.py' for name in (
+            'selected_income_calculation',
             'selected_revenue_scope_v1','selected_reported_revenue_v2','selected_fiscal_definition_scope_v1','selected_income_source_v1',
             'historical_fiscal_labels','financial_structured',
             'financial_duration','text_results_v2','xbrl_namespace_policy','composite_scope'))
@@ -247,12 +266,28 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                 _need(saved['result']['result_id']==comparison['result_id'],
                       'CURRENT_UPDATE_COMPLETED_RESULT_ID_CHANGED')
                 current = _current_sources(source,saved['manifest']['source_proofs'])
-                old = [{k:p[k] for k in ('source_url','accession','document_name','content_sha256')}
+                old = comparison.get('compared_source_proofs') or [{k:p[k] for k in ('source_url','accession','document_name','content_sha256')}
                        for p in saved['manifest']['source_proofs']]
                 from .ordinary_update_compatibility import compatible_configuration
                 compatible = configuration != comparison['configuration'] and compatible_configuration(
                     comparison['configuration'], configuration)
-                if (configuration==comparison['configuration'] or compatible) and census==comparison.get('source_census') and current==old:
+                parsed_equivalent=False
+                if (metric_id=='D04' and fiscal_year is None
+                        and configuration==comparison['configuration'] and not source_errors
+                        and (current!=old or census!=comparison.get('source_census'))
+                        and {r['source_url'] for r in census}=={r['source_url'] for r in comparison.get('source_census',[])}):
+                    old_task=saved.get('input_assessments',{}).get('d04_task_input')
+                    if old_task is not None:
+                        from .ordinary_d04_task_input import fingerprint,same_task
+                        try:
+                            new_task=fingerprint(source_root=source,company_id=company_id)
+                        except ValueError:
+                            # Comparison failure is not a successful conclusion;
+                            # the original complete processor handles/records it.
+                            new_task=None
+                        parsed_equivalent=new_task is not None and same_task(old_task,new_task)
+                if ((configuration==comparison['configuration'] or compatible)
+                        and ((census==comparison.get('source_census') and current==old) or parsed_equivalent)):
                     status=('PREVIOUS_INPUT_WITHHELD' if saved['result']['publication']=='WITHHELD'
                             else 'NO_SOURCE_CONTENT_CHANGE')
                     report = {'status':status,'attempt_id':identity,
@@ -263,6 +298,14 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                         'source_observation_errors':source_errors,
                         'new_calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False}
                     if fiscal_year is not None:report['requested_fiscal_year']=fiscal_year
+                    if parsed_equivalent:
+                        report['raw_input_unchanged']=False
+                        report['task_input_unchanged']=True
+                        report['source_comparison']='PARSED_D04_TASK_INPUT_UNCHANGED'
+                        # Keep the original Result and citations; only this
+                        # completed comparison advances to current raw inputs.
+                        report['completed_check']={**comparison,'source_census':census,
+                            'compared_source_proofs':current}
                     if compatible:
                         # A new check can recognize the same inputs; the old
                         # result, terminal and last success keep their identities.
@@ -271,7 +314,7 @@ def run_once(*, state_root, source_root, company_id, metric_id, shared_input_roo
                             'status':('CANDIDATE_WITHHELD' if status=='PREVIOUS_INPUT_WITHHELD'
                                       else 'CANDIDATE_READY')}
                     _write(attempt/'terminal.json',report)
-                    if compatible:_write(root/'completed-check.json', report['completed_check'])
+                    if compatible or parsed_equivalent:_write(root/'completed-check.json', report['completed_check'])
                     _write(root/'latest-check.json',report)
                     return {k:v for k,v in report.items() if k != 'completed_check'}
             # Full selection/period/subject checks only run for changed/new

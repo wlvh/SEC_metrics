@@ -1,0 +1,33 @@
+# Historical B01 consumes the shared complete single-line proof
+
+The actual mixed Lumen FY2022 public-core validation found that B02 uses complete reported revenue17478m/current and19687m/original prior, while historical B01 still selects the contract-customer subtotal16108m. The original result `dac0051db5ac4ee69f6d8e0398ce5f89472e4f4e181b7d08a3fe3909e037be9d` remains an incorrect saved result; a mechanical PASS does not give it business credit. Source and original observations remain unchanged. Root cause in this consumer is that its `reported_revenue_scope` call does not enable the same explicit `allow_single_revenue_line` path that historical B02 already consumes.
+
+This main-based consumer change passes `allow_single_revenue_line=True` to the existing shared reader before the existing fact-admission/calculation step. No new reader, priority change, company/year exception or source-rule relaxation is added. Complete-scope original filtering, native/XML match, entity/dates/units, reported-conflict refusal, old component path and source-bound observation checks remain. The shared new exact OPERATING REVENUE proof and source-page/unit fixes are owned by #28 and are not copied from its private work in progress; actual Lumen acceptance waits for its fixed committed core.
+
+The new adapter control originally fails for the omitted option (`before.log`). Enabling the existing path changes the shared reader's method marker even for an explicit total; the old marker-only display assertion fails in `affected-tests.log`. It is corrected to assert the public single-line method option, `REPORTED_CONSOLIDATED_TOTAL`, complete scope and the same total value/evidence. 87 affected historical/default/single-line/reported-scope checks pass.478s, zero skips (`affected-tests-repaired.log`). These constructed/fixture controls do not prove the actual Lumen fix.
+
+Next affected validation is one new empty company task selecting B01+B02 for FY2022, using the existing saved sources, then forbidden-factory/Calculator repeat and independent CSV reading. Exact expected17478m and first-reported prior19687m come from the already inspected original reports, not the old answer. New core/consumer scopes must admit total revenue and exclude16108m/17795m contract subtotals. No whole five-year/company collection is rerun; no new real SEC/provider/paid call is authorized or made. Default model limits and old Runs/results/answers remain.
+
+Normal reception of actual main `9088454d` includes PR162's already accepted net-operating-expense scope. The same affected controls remain89/.483s, zero skips (`main-908-tests.log`); the shared label/cost behavior is consumed, not copied into a historical reader. The receiver's actual Southwest FY2021–2024 results and stable repeat are reused from PR162/6106506355, not recomputed here. Actual Lumen still awaits the new committed public proof and consumer combination.
+
+## Actual same-company mixed delivery over public PR164
+
+The shared fixed source is PR164 `2b14f95a4bd62ea1835a70cecac55a05cfd75258`, based on accepted main908. Its two production core files and one source-test file are consumed byte-identically; the original incorrect B01 result's exact known-defect entry is also retained. This consumer adds only the historical B01 explicit single-line option and its adapter assertions. No global controller, writer or renderer implementation is added.
+
+On actual code `642d4f2c`, a new empty external task runs the same company CLI with B01+B02 for Lumen FY2022. First18.213s: B01=17,478,000,000USD, new result8d8e3e6a; B02=-0.1122060242799817138213033982ratio, a526ff23, using current17478m and original prior19687m. All three scope assessments are `REPORTED_CONSOLIDATED_TOTAL`/complete, with exact table cells, native annual entity/period, XML matches, visible units and page boundary proof. Contract subtotals16108m/current and17795m/prior are excluded before calculation; the old wrongdac005 result is retained under its known defect, not overwritten or recredited.
+
+Forbidden fiscal discovery/statement producer/both Calculator functions repeat1.906s returns no calculation and no new candidate for both metrics, preserving all14 result files. Independent CLI `results`0.561s exports both correct scoped rows/CSV/evidence, preserves all33 state files. Both report2022-01-01..2022-12-31, CIK18926 and FY2022; B02's prior source is accession0000018926-22-000007 with actual2021 full-year dates. The amount agrees with the already read original reference, not a previously saved result. `actual-company.json` records actual arguments/timing/row IDs, total cells/unit/page proof and assessment hashes; complete assessments remain in the ordinary task output. `verify_company.py` is portable with explicit saved source/output paths.
+
+The combined shared source and historical controls152/8.594s pass with zero skips (`fixed-combination-tests.log`). Earlier failures and prior execution versions remain. Reproduce on this consumer candidate with the original saved sources read-only:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:tools:. python3 \
+ docs/evidence/issue47_b01_scope_consumer_20261011/verify_company.py \
+ --source-root /your/saved/source-inputs --output-root /your/new/lumen-check
+```
+
+This is one actual historical coordinate's B01/B02 delivery; it does not prove all Lumen years, Enphase's dimensional top line, Macy's multiple revenue categories, reclassification policy, missing prior/amendments, online historical discovery or1950positions. No model experiment, new source GET, paid/provider call, Run credit, Ready/merge/adoption/deployment/active action. The standalone helper option tests are not substituted for the actual company result. PR164 and this consumer remain candidates until reception; main alone still has the old Lumen gap.
+
+## Remaining affected years
+
+The same public proof's finite source-header correction87be53ce is now received. [The five-year consumer record](five-year-receiving/README.md) gives all10 actual Lumen B01/B02 values and complete original scope operands, necessary FY2021/FY2023–2025 processing, forbidden repeats and independent reading, with the completedFY2022 never requested/recomputed. The previous unresolved-cell/error observations remain separately on the same evidence branch. This slice is a candidate business milestone; the full Issue47 and online source responsibilities are unchanged.

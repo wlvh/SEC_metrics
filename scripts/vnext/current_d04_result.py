@@ -45,7 +45,7 @@ def prepare_current_d04_case(*, source_root, company_id, ledger=None):
             binding=strict_json_file(path=root/'binding.json'),live=True)
     current=calls.prepare_requests(company_id=company_id,metric_id='D04',native=True,
         reference_context=True,complete_response_contract=True,
-        source_root=source_root,source_ledger=ledger)
+        source_root=source_root,source_ledger=ledger,d04_saved_response_only=True)
     template=current[0];current_source=strict_json_loads(text=template.source_bytes.decode())
     with ledger.locked():
         rows=ledger.snapshot()['rows']
@@ -121,6 +121,7 @@ def prepare_current_d04_case(*, source_root, company_id, ledger=None):
         'new_provider_execution':False,'production_authorized':False}
     return {'kind':'STRUCTURED','primary_metric_id':'D04','input_binding':binding,
         'compiled_specs':{'D04':spec},'spec_paths':{'D04':SPEC_PATH},'target_period':period,
+        'input_assessments':_task_input(source_root,company_id,current_source['prepared_annual_input']),
         'prepared_annual_input':current_source['prepared_annual_input'],
         'references':references,'source_proofs':current_source['source_proofs'],
         'admission':verify_ordinary_source_proofs(data_root=source_root,proofs=current_source['source_proofs']),
@@ -130,3 +131,13 @@ def prepare_current_d04_case(*, source_root, company_id, ledger=None):
         'selection':{'status':'TEXT_QUAL','assessment_mode':assessment['mode'],
                      'numeric_utilization_inferred':False},
         'source_assessment':assessment,'rules_root':str(ROOT)}
+
+
+def _task_input(source_root,company_id,annual):
+    from .ordinary_d04_task_input import fingerprint
+    try:
+        return {'d04_task_input':fingerprint(source_root=source_root,company_id=company_id,prepared_annual_input=annual)}
+    except ValueError as error:
+        # Unsupported parsed comparison must not revoke an otherwise fully
+        # checked saved response. Its next changed input uses original replay.
+        return {'d04_task_input_comparison_unavailable':str(error)}

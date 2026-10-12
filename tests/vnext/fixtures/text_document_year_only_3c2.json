@@ -1,0 +1,272 @@
+{
+  "source_commit": "3c2d8f88acf31c87d770ce033dd0c8aedc790b9b",
+  "source_path": "scripts/vnext/text_coverage.py",
+  "fixture_input": "tests.vnext.test_text_coverage.annual(BODY)",
+  "expected": {
+    "record_type": "LOCAL_TEXT_DOCUMENT",
+    "transform_version": "1",
+    "source_reference_id": "sha256:35247a84a8a0be21f2520fdaeda819879c79a8055d2be6b5fa303a482a2ee938",
+    "source_reference": {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:35247a84a8a0be21f2520fdaeda819879c79a8055d2be6b5fa303a482a2ee938",
+      "raw_asset_id": "sha256:ecbfc5397077e976e041fcf9d9c38d83e20df04bcda508a177957903bd94aa71",
+      "company_id": "sample_entity",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/12345/000001234526000001/source.htm",
+      "accession": "0000012345-26-000001",
+      "document_name": "source.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "test-only-source-attempt"
+    },
+    "raw_asset_id": "sha256:ecbfc5397077e976e041fcf9d9c38d83e20df04bcda508a177957903bd94aa71",
+    "byte_length": 1389,
+    "company_id": "sample_entity",
+    "cik": "12345",
+    "registrant_names": [],
+    "period_end": "2025-12-31",
+    "form": "10-K",
+    "source_state": "COMPLETE_LOCAL_DOCUMENT",
+    "source_reasons": [],
+    "blocks": [
+      {
+        "text": "Item 1. Business",
+        "linked": false,
+        "emphasized": true,
+        "leading_emphasis": {
+          "text": "Item 1. Business",
+          "raw_start_byte": 810,
+          "raw_end_byte": 826,
+          "raw_span_sha256": "a25af894bdd8896ffa5cec95dee2346261cdd14ad3effabc1302f1d1a1a59636"
+        },
+        "block_index": 0,
+        "raw_start_byte": 810,
+        "raw_end_byte": 826,
+        "raw_span_sha256": "a25af894bdd8896ffa5cec95dee2346261cdd14ad3effabc1302f1d1a1a59636"
+      },
+      {
+        "text": "Our activities are described here.",
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "block_index": 1,
+        "raw_start_byte": 834,
+        "raw_end_byte": 868,
+        "raw_span_sha256": "9544972392ee2cebe4468057b11143d7cc4fe14c2bf3671fced58adb66d8ee3c"
+      },
+      {
+        "text": "Item 1A. Risk Factors",
+        "linked": false,
+        "emphasized": true,
+        "leading_emphasis": {
+          "text": "Item 1A. Risk Factors",
+          "raw_start_byte": 877,
+          "raw_end_byte": 898,
+          "raw_span_sha256": "073ff5c623abbc00e44641e8d46d538d63096ef4cfccff86ec80bd980a98d24a"
+        },
+        "block_index": 2,
+        "raw_start_byte": 877,
+        "raw_end_byte": 898,
+        "raw_span_sha256": "073ff5c623abbc00e44641e8d46d538d63096ef4cfccff86ec80bd980a98d24a"
+      },
+      {
+        "text": "A supply constraint could affect production.",
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "block_index": 3,
+        "raw_start_byte": 906,
+        "raw_end_byte": 950,
+        "raw_span_sha256": "e19c5790128a92700aab78f7c544fd66e1d9c668f29b4fb09271d6a89ed30ce4"
+      },
+      {
+        "text": "Item 1B. Unresolved Staff Comments",
+        "linked": false,
+        "emphasized": true,
+        "leading_emphasis": {
+          "text": "Item 1B. Unresolved Staff Comments",
+          "raw_start_byte": 959,
+          "raw_end_byte": 993,
+          "raw_span_sha256": "84fda9f6666cdc8b53454c456caa930ec13c02f935782f2dc4792e6ebe0c2d61"
+        },
+        "block_index": 4,
+        "raw_start_byte": 959,
+        "raw_end_byte": 993,
+        "raw_span_sha256": "84fda9f6666cdc8b53454c456caa930ec13c02f935782f2dc4792e6ebe0c2d61"
+      },
+      {
+        "text": "None.",
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "block_index": 5,
+        "raw_start_byte": 1001,
+        "raw_end_byte": 1006,
+        "raw_span_sha256": "903ea500e7ccf842c1312b6c2f964e3e98ff146456cecec717e9a0e122bf735f"
+      },
+      {
+        "text": "Item 3. Legal Proceedings",
+        "linked": false,
+        "emphasized": true,
+        "leading_emphasis": {
+          "text": "Item 3. Legal Proceedings",
+          "raw_start_byte": 1015,
+          "raw_end_byte": 1040,
+          "raw_span_sha256": "36bdb2ee8904eadab1a76f83ac84b8d6a06a0cff66ea55e67548e1ef97bfde22"
+        },
+        "block_index": 6,
+        "raw_start_byte": 1015,
+        "raw_end_byte": 1040,
+        "raw_span_sha256": "36bdb2ee8904eadab1a76f83ac84b8d6a06a0cff66ea55e67548e1ef97bfde22"
+      },
+      {
+        "text": "We received a subpoena from an authority.",
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "block_index": 7,
+        "raw_start_byte": 1048,
+        "raw_end_byte": 1089,
+        "raw_span_sha256": "f19e925bad7bbbb8d2bc446d5f1a825d197b7fbde2eb4ec6e83bdcd6f5ee2209"
+      },
+      {
+        "text": "Item 4. Mine Safety Disclosures",
+        "linked": false,
+        "emphasized": true,
+        "leading_emphasis": {
+          "text": "Item 4. Mine Safety Disclosures",
+          "raw_start_byte": 1098,
+          "raw_end_byte": 1129,
+          "raw_span_sha256": "668f3205ad675c25e68b2f76257d3c7d5ea360d6ce5164853f237a0513503a44"
+        },
+        "block_index": 8,
+        "raw_start_byte": 1098,
+        "raw_end_byte": 1129,
+        "raw_span_sha256": "668f3205ad675c25e68b2f76257d3c7d5ea360d6ce5164853f237a0513503a44"
+      },
+      {
+        "text": "Not applicable.",
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "block_index": 9,
+        "raw_start_byte": 1137,
+        "raw_end_byte": 1152,
+        "raw_span_sha256": "a3014a36534d5612e7e04f74fc455b30bd0101d370991d349923efd6cc69ebc0"
+      },
+      {
+        "text": "Item 8. Financial Statements and Supplementary Data",
+        "linked": false,
+        "emphasized": true,
+        "leading_emphasis": {
+          "text": "Item 8. Financial Statements and Supplementary Data",
+          "raw_start_byte": 1161,
+          "raw_end_byte": 1212,
+          "raw_span_sha256": "813221d7916a9d382a64b544d6585a2222d7b36169f5d0536688abca41d21f76"
+        },
+        "block_index": 10,
+        "raw_start_byte": 1161,
+        "raw_end_byte": 1212,
+        "raw_span_sha256": "813221d7916a9d382a64b544d6585a2222d7b36169f5d0536688abca41d21f76"
+      },
+      {
+        "text": "The claim and related loss contingency are described in the following note.",
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "block_index": 11,
+        "raw_start_byte": 1221,
+        "raw_end_byte": 1296,
+        "raw_span_sha256": "9f2780bdfba81a4dcdddacf5ee6c9b9a9a57b452f3a6c63dd255c7857c688bf9"
+      },
+      {
+        "text": "Item 9. Changes in and Disagreements with Accountants",
+        "linked": false,
+        "emphasized": true,
+        "leading_emphasis": {
+          "text": "Item 9. Changes in and Disagreements with Accountants",
+          "raw_start_byte": 1305,
+          "raw_end_byte": 1358,
+          "raw_span_sha256": "4857a474c1010f811ddfd0d0e7d5d73b6d7c4f07d8c899c94265ed84fb751ac1"
+        },
+        "block_index": 12,
+        "raw_start_byte": 1305,
+        "raw_end_byte": 1358,
+        "raw_span_sha256": "4857a474c1010f811ddfd0d0e7d5d73b6d7c4f07d8c899c94265ed84fb751ac1"
+      },
+      {
+        "text": "None.",
+        "linked": false,
+        "emphasized": false,
+        "leading_emphasis": null,
+        "block_index": 13,
+        "raw_start_byte": 1366,
+        "raw_end_byte": 1371,
+        "raw_span_sha256": "903ea500e7ccf842c1312b6c2f964e3e98ff146456cecec717e9a0e122bf735f"
+      }
+    ],
+    "sections": {
+      "ITEM_1A": {
+        "status": "LOCATED",
+        "candidates": [
+          {
+            "section_id": "ITEM_1A",
+            "start_block": 3,
+            "end_block_exclusive": 4,
+            "heading": {
+              "item": "1A",
+              "block_index": 2,
+              "heading_end_index": 2
+            },
+            "closing_heading": {
+              "item": "1B",
+              "block_index": 4,
+              "heading_end_index": 4
+            }
+          }
+        ]
+      },
+      "ITEM_3": {
+        "status": "LOCATED",
+        "candidates": [
+          {
+            "section_id": "ITEM_3",
+            "start_block": 7,
+            "end_block_exclusive": 8,
+            "heading": {
+              "item": "3",
+              "block_index": 6,
+              "heading_end_index": 6
+            },
+            "closing_heading": {
+              "item": "4",
+              "block_index": 8,
+              "heading_end_index": 8
+            }
+          }
+        ]
+      },
+      "ITEM_8": {
+        "status": "LOCATED",
+        "candidates": [
+          {
+            "section_id": "ITEM_8",
+            "start_block": 11,
+            "end_block_exclusive": 12,
+            "heading": {
+              "item": "8",
+              "block_index": 10,
+              "heading_end_index": 10
+            },
+            "closing_heading": {
+              "item": "9",
+              "block_index": 12,
+              "heading_end_index": 12
+            }
+          }
+        ]
+      }
+    },
+    "semantic_disclosure_verified": false,
+    "publication_credit": false,
+    "text_document_id": "sha256:e90916b4574c5aaa4113e8f359350b8941eeaf672ecb77adb05d427ed7e75cc5"
+  }
+}

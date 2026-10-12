@@ -1,0 +1,24 @@
+test_explicit_release_still_rejects_wrong_entity_and_period (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_explicit_release_still_rejects_wrong_entity_and_period) ... ok
+test_fake_namespace_and_invalid_policy_are_not_releases (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_fake_namespace_and_invalid_policy_are_not_releases) ... ok
+test_quarter_and_date_release_require_explicit_existing_policy (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_quarter_and_date_release_require_explicit_existing_policy) ... ok
+test_selected_base_and_labelled_annual_are_a_pair_before_latest_read (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_base_and_labelled_annual_are_a_pair_before_latest_read) ... ok
+test_selected_coordinate_prior_and_label_changes_refuse_before_sources (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_coordinate_prior_and_label_changes_refuse_before_sources) ... ok
+test_selected_gate_does_not_open_default_current_producer (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_selected_gate_does_not_open_default_current_producer) ... ok
+test_year_only_checked_filing_default_dictionary_matches_main (tests.vnext.test_c04_selected_input.SelectedC04InputTest.test_year_only_checked_filing_default_dictionary_matches_main) ... ok
+test_amendment_precedes_same_year_original_and_conflict_never_falls_back (tests.vnext.test_governance_signals.AuditorSignalsTest.test_amendment_precedes_same_year_original_and_conflict_never_falls_back) ... ok
+test_deleted_event_and_required_history_shard_cannot_make_zero (tests.vnext.test_governance_signals.AuditorSignalsTest.test_deleted_event_and_required_history_shard_cannot_make_zero) ... ok
+test_different_bound_names_are_positive_without_absence_claim (tests.vnext.test_governance_signals.AuditorSignalsTest.test_different_bound_names_are_positive_without_absence_claim) ... ok
+test_equal_year_end_names_do_not_hide_intervening_item_4_01 (tests.vnext.test_governance_signals.AuditorSignalsTest.test_equal_year_end_names_do_not_hide_intervening_item_4_01) ... ok
+test_missing_prior_never_becomes_no_change (tests.vnext.test_governance_signals.AuditorSignalsTest.test_missing_prior_never_becomes_no_change) ... ok
+test_rebound_inventory_identity_and_history_dates_cannot_grant_zero (tests.vnext.test_governance_signals.AuditorSignalsTest.test_rebound_inventory_identity_and_history_dates_cannot_grant_zero) ... ok
+test_same_cik_prior_period_target_order_and_raw_byte_tamper (tests.vnext.test_governance_signals.AuditorSignalsTest.test_same_cik_prior_period_target_order_and_raw_byte_tamper) ... ok
+test_unchanged_requires_both_names_and_complete_event_source_set (tests.vnext.test_governance_signals.AuditorSignalsTest.test_unchanged_requires_both_names_and_complete_event_source_set) ... ok
+test_original_annual_alias_needs_matching_proof_and_same_cik_url (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_original_annual_alias_needs_matching_proof_and_same_cik_url) ... ok
+test_rejects_unapproved_form_subset_and_wrong_metric (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_rejects_unapproved_form_subset_and_wrong_metric) ... ok
+test_registration_event_outside_history_index_cannot_be_omitted_before_zero (tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_registration_event_outside_history_index_cannot_be_omitted_before_zero) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.091s
+
+OK
+{"allowed_skips": 0, "errors": 0, "failures": 0, "run": 18, "skip_reasons": [], "skipped": 0, "tests": ["tests.vnext.test_c04_selected_input", "tests.vnext.test_governance_signals.AuditorSignalsTest", "tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_original_annual_alias_needs_matching_proof_and_same_cik_url", "tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_rejects_unapproved_form_subset_and_wrong_metric", "tests.vnext.test_c04_registration_successor.C04RegistrationSuccessorTest.test_registration_event_outside_history_index_cannot_be_omitted_before_zero"]}

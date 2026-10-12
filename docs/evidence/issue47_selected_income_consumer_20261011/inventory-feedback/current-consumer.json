@@ -1,0 +1,68 @@
+{
+  "protected_results": 7,
+  "read_state_files_unchanged": 18,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "metric": {
+    "company_id": null,
+    "metric_id": "B01",
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "value": "26186000000",
+    "unit": "USD",
+    "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc"
+  },
+  "phases": {
+    "fresh": {
+      "arguments": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--metric",
+        "B01",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/current-marriott-corrected/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/current-marriott-corrected/runs"
+      ],
+      "seconds": 2.9431904590019258,
+      "exit": 0
+    },
+    "repeat": {
+      "arguments": [
+        "run",
+        "--company",
+        "marriott_international",
+        "--metric",
+        "B01",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/current-marriott-corrected/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/current-marriott-corrected/runs"
+      ],
+      "seconds": 0.7374693329984439,
+      "exit": 0
+    },
+    "read": {
+      "arguments": [
+        "results",
+        "--company",
+        "marriott_international",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/current-marriott-corrected/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/b03-inventory-repair-20261011-47/current-marriott-corrected/read"
+      ],
+      "seconds": 0.4222877079992031,
+      "exit": 0
+    }
+  }
+}

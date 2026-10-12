@@ -1,0 +1,51 @@
+{
+  "test_state": "/private/tmp/issue28-current-c04-first-og_1qte1",
+  "report": {
+    "elapsed_seconds": 8.249321540999517,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "marriott_international",
+    "run_id": "20261011T114616Z-32f406fa",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "C04"
+    ],
+    "metrics": [
+      {
+        "metric_id": "C04",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "6f155d0dfdcd42ffad0f6a6e60c81937",
+        "version": "8525f9d81a6e4e4e858966cf4c458d6e",
+        "result_id": "sha256:a5517d36ec92517b057a4e8e5f1277cc8f2850d9108d563a1adb2ad71cb7c3f9",
+        "result_root": "/private/tmp/issue28-current-c04-first-og_1qte1/state/updates/C04/results/8525f9d81a6e4e4e858966cf4c458d6e",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:a5517d36ec92517b057a4e8e5f1277cc8f2850d9108d563a1adb2ad71cb7c3f9",
+        "record_root": "/private/tmp/issue28-current-c04-first-og_1qte1/state/updates/C04/results/8525f9d81a6e4e4e858966cf4c458d6e",
+        "program_version": {
+          "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04/SEC_metrics",
+    "record_root": "/private/tmp/issue28-current-c04-first-og_1qte1/state",
+    "output_root": "/private/tmp/issue28-current-c04-first-og_1qte1/out/20261011T114616Z-32f406fa",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  }
+}

@@ -20,7 +20,7 @@ def processing_paths():
     # responses. Name the consumed rules, not a recursive authority tree:
     # unchanged SEC bytes cannot preserve credit after these rules change.
     paths.update('scripts/vnext/'+name+'.py' for name in (
-        'current_d04_result','current_request_configuration','continuous_semantic_calls',
+        'current_d04_result','ordinary_d04_task_input','ordinary_task_input','current_request_configuration','continuous_semantic_calls',
         'continuous_request_context','request_limits','continuous_call_ledger',
         'native_assessment_replay','capacity_native_assessment','capacity_update_input',
         'd04_native_assessment','r6_semantic_source','r6_semantic_review',

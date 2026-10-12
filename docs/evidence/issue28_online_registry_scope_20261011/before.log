@@ -1,0 +1,18 @@
+E
+======================================================================
+ERROR: test_resume_unrelated_registry_change_reuses_saved_response_without_claim (tests.vnext.test_company_online.CompanyOnlineTest.test_resume_unrelated_registry_change_reuses_saved_response_without_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-online-registry-scope/SEC_metrics/tests/vnext/test_company_online.py", line 45, in test_resume_unrelated_registry_change_reuses_saved_response_without_claim
+    resumed=online.Capture(self.capture.source,self.ledger,self.context,5)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-online-registry-scope/SEC_metrics/scripts/vnext/company_online.py", line 60, in __init__
+    _need(registry.read_bytes() == (ROOT/'config/company_registry.csv').read_bytes(), 'REGISTRY_CHANGED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-online-registry-scope/SEC_metrics/scripts/vnext/company_online.py", line 29, in _need
+    raise ValueError('COMPANY_ONLINE_' + reason)
+ValueError: COMPANY_ONLINE_REGISTRY_CHANGED
+
+----------------------------------------------------------------------
+Ran 1 test in 0.011s
+
+FAILED (errors=1)

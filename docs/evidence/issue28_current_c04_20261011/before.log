@@ -1,0 +1,30 @@
+code 2 seconds 0.354709917002765
+{
+  "elapsed_seconds": 0.35357787500106497,
+  "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+  "company_id": "marriott_international",
+  "run_id": "20261011T114551Z-faee0a4d",
+  "status": "FLOW_COMPLETED_WITH_LIMITATIONS",
+  "selected_metrics": [
+    "C04"
+  ],
+  "metrics": [
+    {
+      "metric_id": "C04",
+      "status": "PROCESSING_INPUT_OR_IMPLEMENTATION_REQUIRED",
+      "reason": "This saved-source branch has no complete current processing interface for C04"
+    }
+  ],
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04/SEC_metrics",
+  "record_root": "/private/tmp/issue28-current-c04-before-nex3xh9b/state",
+  "output_root": "/private/tmp/issue28-current-c04-before-nex3xh9b/out/20261011T114551Z-faee0a4d",
+  "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+  "calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}
+

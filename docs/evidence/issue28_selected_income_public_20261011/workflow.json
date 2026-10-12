@@ -1,0 +1,12 @@
+{
+  "main": "b529ab91",
+  "all_main_commands_paths_jobs_retained": true,
+  "new_step": {
+    "name": "Selected shared income, coordinates and historical consumer",
+    "env": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "run": "python3 tests/required_unittests.py tests.vnext.test_selected_income_calculation tests.vnext.test_historical_b03_case"
+  },
+  "no_gate_or_limit_changed": true
+}

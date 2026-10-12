@@ -30,10 +30,11 @@ PROCESSING_FILES=tuple('scripts/vnext/'+name+'.py' for name in (
     'b06_guarded_result_v3','ordinary_special_debt_scope','normal_note_debt_results',
     'normal_bond_debt_results','normal_inclusive_debt_results','b06_note_carrying',
     'b06_bond_leases','b06_inclusive_table','b06_financing_inventory',
-    'b06_combined_borrowings','b06_disclosure_v2','b06_disclosure','r5_b06_scope',
+    'b06_combined_borrowings','ordinary_reported_lease_scope','industrial_lease_relation','b06_disclosure_v2','b06_disclosure','r5_b06_scope',
     'r5_b06_measurement','ordinary_source_authority','text_results_v2',
 )) + (
     'config/b06_current_input_v1.json','config/annual_amendment_scope_v1.json',
+    'config/instant_balance_amendment_v1.json',
     'config/normal_fiscal_year_labels_v1.json','config/b06_special_scope_v1.json',
     'config/b06_note_carrying_v1.json','config/b06_bond_leases_v1.json',
     'config/b06_inclusive_table_v1.json','config/r5_b06_debt_sets_v3.json',
@@ -41,6 +42,11 @@ PROCESSING_FILES=tuple('scripts/vnext/'+name+'.py' for name in (
     'catalog/r5/B06_guarded_v3.md','catalog/r5/B06_note_carrying_v4.md',
     'catalog/r5/B06_bond_leases_v5.md','catalog/r5/B06_inclusive_table_v6.md',
 )
+
+# Explicit consumers using the existing inline paragraph readers must name
+# their dependencies. Current default consumers do not load those readers.
+INLINE_NOTE_PROCESSING_FILES=PROCESSING_FILES+tuple('scripts/vnext/'+name+'.py' for name in (
+    'annual_amendment_scope_v2','instant_balance_amendment_v2','amendment_note_layout'))
 
 
 class CurrentB06Error(ValueError):
@@ -77,6 +83,12 @@ def _display_selection(selection):
     audit=selection.get('audit') or selection.get('measurement') or {}
     displayed={key:selection[key] for key in ('classification','reason','reason_code','debt_completeness')
                if key in selection}
+    if selection.get('scope_class') is not None:
+        displayed.update({k:selection[k] for k in ('scope_class','reasons','reported_subtotal') if k in selection})
+        relationship=selection.get('scope_source',{}).get('lease_inclusion',{})
+        if relationship:
+            displayed['lease_inclusion']={k:relationship[k] for k in
+                ('status','additional_debt_amount','component_total') if k in relationship}
     displayed['selection_detail_id']=content_hash(value=selection)
     if isinstance(audit,dict):
         displayed['calculation']={key:audit[key] for key in
@@ -125,11 +137,28 @@ def prepare_current_b06_case(*, source_root, company_id):
     packet=prepare_current_debt_input(repo_root=source,company_id=company_id,rules_root=ROOT)
     preparation=prepare_saved_original_financial_sources(repo_root=source,company_id=company_id)
     annual=prepare_saved_annual_input(repo_root=source,company_id=company_id,ordinary_registered=True)
+    return prepare_selected_b06_case(source_root=source,company_id=company_id,
+        preparation=preparation,annual=annual,packet=packet)
+
+
+def prepare_selected_b06_case(*, source_root, company_id, preparation, annual, packet):
+    """Compose the existing B06 route for an already source-selected period.
+
+    The consumer prepares original sources, issuer year and amendment effects;
+    this shared route keeps source identity checks and the current cascade.
+    It does not discover another year or accept a supplied numerical answer.
+    """
+    source=Path(source_root)
     original=preparation['input_binding']['prepared_annual_input']
     _need(original['company_id']==annual['company_id']==company_id
+          and packet['prepared_input']['company_id']==company_id
           and original['entity']==annual['entity']
+          and packet['prepared_input']['entity']==original['entity']
           and all(original['filing'][k]==annual['filing'][k] for k in
                   ('accessionNumber','reportDate','primaryDocument'))
+          and all(original['table_input']['target_period'][k]==annual['table_input']['target_period'][k]
+                  ==packet['prepared_input']['table_input']['target_period'][k]
+                  for k in ('period_start','period_end'))
           and packet['prepared_input']['filing']==original['filing'],
           'B06_CURRENT_SELECTED_SOURCE_CHANGED')
     if packet['decision']!='INPUT_PROPERTY_PROVEN':
@@ -145,7 +174,8 @@ def prepare_current_b06_case(*, source_root, company_id):
                     'selection':{'reason_code':guard['reason_code'],
                                  'debt_completeness':'NOT_EVALUATED','equity_proof':guard['equity_proof']}})
         elif guard['reason_code']=='EXISTING_SPECIAL_SCOPE_REQUIRED':
-            case=prepare_special_debt_case(repo_root=source,company_id=company_id,
+            from .ordinary_reported_lease_scope import prepare_reported_lease_case
+            case=prepare_reported_lease_case(repo_root=source,company_id=company_id,
                 rules_root=ROOT,preparation=preparation)
             _need(case is not None,'B06_SEPARATE_BANK_OR_INDUSTRIAL_SCOPE_NOT_IMPLEMENTED')
         else:

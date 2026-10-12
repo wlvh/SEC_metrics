@@ -1,0 +1,159 @@
+{
+  "code_root": "/Users/lyuhongwang/.codex/worktrees/issue28-debt-processing-scope/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "test_state": "/private/tmp/issue28-debt-scope-9oagawmy",
+  "args": [
+    "run",
+    "--company",
+    "marriott_international",
+    "--source-root",
+    "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "--metric",
+    "B01",
+    "--work-dir",
+    "/private/tmp/issue28-debt-scope-9oagawmy/state",
+    "--output-dir",
+    "/private/tmp/issue28-debt-scope-9oagawmy/output"
+  ],
+  "first": {
+    "elapsed_seconds": 2.700248000001011,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "marriott_international",
+    "run_id": "20261011T112856Z-a1f096a2",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "B01"
+    ],
+    "metrics": [
+      {
+        "metric_id": "B01",
+        "status": "CANDIDATE_READY",
+        "attempt_id": "ec018a24f5354a46a99e2fac7ac9da57",
+        "version": "4a4f94a3aab440e4876557e4b2064286",
+        "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "result_root": "/private/tmp/issue28-debt-scope-9oagawmy/state/updates/B01/results/4a4f94a3aab440e4876557e4b2064286",
+        "calculation_performed": true,
+        "new_candidate_created": true,
+        "result_reason_code": "PASS",
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "record_root": "/private/tmp/issue28-debt-scope-9oagawmy/state/updates/B01/results/4a4f94a3aab440e4876557e4b2064286",
+        "program_version": {
+          "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-debt-processing-scope/SEC_metrics",
+    "record_root": "/private/tmp/issue28-debt-scope-9oagawmy/state",
+    "output_root": "/private/tmp/issue28-debt-scope-9oagawmy/output/20261011T112856Z-a1f096a2",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "repeat": {
+    "elapsed_seconds": 0.1785264170030132,
+    "record_type": "ORDINARY_COMPANY_EXECUTION_V1",
+    "company_id": "marriott_international",
+    "run_id": "20261011T112859Z-6f9c71f1",
+    "status": "FLOW_COMPLETED",
+    "selected_metrics": [
+      "B01"
+    ],
+    "metrics": [
+      {
+        "metric_id": "B01",
+        "status": "NO_SOURCE_CONTENT_CHANGE",
+        "attempt_id": "e065c2be102548b8ae394f52e5a31a92",
+        "version": "4a4f94a3aab440e4876557e4b2064286",
+        "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "result_root": "/private/tmp/issue28-debt-scope-9oagawmy/state/updates/B01/results/4a4f94a3aab440e4876557e4b2064286",
+        "result_reason_code": "PASS",
+        "raw_input_unchanged": true,
+        "calculation_performed": false,
+        "new_candidate_created": false,
+        "source_observation_errors": [],
+        "new_calls": {
+          "provider": 0,
+          "paid": 0,
+          "sec": 0
+        },
+        "production_authorized": false,
+        "defect_holds": [],
+        "read_result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+        "record_root": "/private/tmp/issue28-debt-scope-9oagawmy/state/updates/B01/results/4a4f94a3aab440e4876557e4b2064286",
+        "program_version": {
+          "commit": "e24a5271325a2a39e8329df45f526f2629b543b0",
+          "has_uncommitted_changes": true
+        }
+      }
+    ],
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-debt-processing-scope/SEC_metrics",
+    "record_root": "/private/tmp/issue28-debt-scope-9oagawmy/state",
+    "output_root": "/private/tmp/issue28-debt-scope-9oagawmy/output/20261011T112859Z-6f9c71f1",
+    "source_mode": "SAVED_ONLY_NO_ONLINE_DISCOVERY",
+    "calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "first_seconds": 2.701372250001441,
+  "repeat_seconds": 0.17960887499793898,
+  "read_seconds": 0.43697120800061384,
+  "csv": {
+    "company": "Marriott International",
+    "cik": "1048286",
+    "metric_id": "B01",
+    "metric_name": "Revenue",
+    "value": "26186000000",
+    "unit": "USD",
+    "status": "OK",
+    "source_class": "STD_XBRL",
+    "formula": "direct",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0001048286-26-000007",
+    "form": "10-K",
+    "filed_date": "2026-02-10",
+    "concept_or_section": "Revenues",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"entity_scope\": \"registrant\", \"period_basis\": \"source_annual_duration\"}, \"selection\": {\"reason_code\": \"PASS\", \"revenue_scope\": {\"complete_scope_proven\": false, \"method\": \"SELECTED_REVENUE_COMPONENT_ADMISSION_V1\", \"scope_id\": \"sha256:7d1f200983504f44b83a096cac38445026eab828d50ba9a67afd52a34a2eaac5\", \"status\": \"NO_DEMONSTRATED_SPLIT\"}, \"selected_fact_ids\": [\"fact:sha256:640d9a21651aece0a442d56ed33584b1de816baa0a4cbeb0b717c112ca0c878a\"], \"source_candidate_count\": 3, \"source_reported_periods\": [[\"2023-01-01\", \"2023-12-31\"], [\"2024-01-01\", \"2024-12-31\"], [\"2025-01-01\", \"2025-12-31\"]]}, \"source_reference_ids\": [\"sha256:c37238976da80a6d94cfdac4177c453af617a627c1651f9bb071a20ad8ab2dfe\", \"sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b\", \"sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "marriott_international",
+    "result_id": "sha256:e279b28db1cecf3434d84fb7455717e5f7340a7e64310d84af935c92e55288bc",
+    "record_root": "/private/tmp/issue28-debt-scope-9oagawmy/state/updates/B01/results/4a4f94a3aab440e4876557e4b2064286",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "CANDIDATE_READY",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "SAVED_SOURCE_CHECKED_NOT_ONLINE_REFRESHED",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "source_registry_log_manifest_unchanged": true,
+  "result_unchanged_under_debt_note_edit": true,
+  "independent_read_state_unchanged": true,
+  "new_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope": "Synthetic hash change at only the unrelated b06_note_carrying file; actual revenue factory/Calculator/save/CLI/read untouched; no financial answer supplied"
+}

@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-b06-main-ac365-receiving-20261011/SEC_metrics/docs/evidence/issue47_selected_b06_consumer_20261011/main-e24-receiving/verify_existing_consumers.py", line 62, in <module>
+    if hashlib.sha256((ROOT / p).read_bytes()).hexdigest() != sha}
+                      ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/lyuhongwang/.codex/worktrees/issue47-b06-main-ac365-receiving-20261011/SEC_metrics/docs/catalog/r5/B06_bond_leases_v5.md'
