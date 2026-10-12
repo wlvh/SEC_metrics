@@ -1,0 +1,32 @@
+EE
+======================================================================
+ERROR: test_history_option_enters_received_exporter_instead_of_missing_module (tests.vnext.test_history_source_export.HistorySourceExportEntryTest.test_history_option_enters_received_exporter_instead_of_missing_module)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_history_source_export.py", line 21, in test_history_option_enters_received_exporter_instead_of_missing_module
+    code = main(['export', '--company', 'marriott_international',
+        '--source-root', '/unused/source', '--output-root', '/unused/output',
+        '--trust-root', '/unused/trust', '--metric', 'B01', '--history-years', '5'])
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tools/vnext_company.py", line 178, in main
+    from vnext.historical_source_acquisition import declared_frame
+ModuleNotFoundError: No module named 'vnext.historical_source_acquisition'
+
+======================================================================
+ERROR: test_unconnected_history_metric_is_rejected_before_exporter (tests.vnext.test_history_source_export.HistorySourceExportEntryTest.test_unconnected_history_metric_is_rejected_before_exporter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tests/vnext/test_history_source_export.py", line 30, in test_unconnected_history_metric_is_rejected_before_exporter
+    main(['export', '--company', 'marriott_international',
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '--source-root', '/unused/source', '--output-root', '/unused/output',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '--trust-root', '/unused/trust', '--metric', 'D04', '--history-years', '5'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-current-c04-failure-detail/SEC_metrics/tools/vnext_company.py", line 178, in main
+    from vnext.historical_source_acquisition import declared_frame
+ModuleNotFoundError: No module named 'vnext.historical_source_acquisition'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.003s
+
+FAILED (errors=2)
