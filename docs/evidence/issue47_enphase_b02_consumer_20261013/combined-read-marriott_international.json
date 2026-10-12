@@ -1,0 +1,16 @@
+{
+  "head": "d3d157f50426dc8c87efd756409c58099c01c999",
+  "seconds": 0.2883885829942301,
+  "exit": 0,
+  "arguments": [
+    "results",
+    "--company",
+    "marriott_international",
+    "--state-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-followup-years-20261012-47/FY2022/state",
+    "--output-root",
+    "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-selected-recovery-20261013-47/combined-read-marriott_international"
+  ],
+  "stdout": "{\n  \"elapsed_seconds\": 0.06268912499945145,\n  \"record_type\": \"ORDINARY_COMPANY_RESULT_VIEW_V1\",\n  \"company_id\": \"marriott_international\",\n  \"source_root\": \"/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs\",\n  \"metrics\": [\n    {\n      \"metric_id\": \"B02\",\n      \"result_id\": \"sha256:8929038392f9d4b4016de922ef06cc76c017681219668af81f35e08b7e3a11de\",\n      \"period_start\": \"2022-01-01\",\n      \"period_end\": \"2022-12-31\",\n      \"fiscal_year\": 2022,\n      \"value\": \"0.4990979288446272641985999856\",\n      \"unit\": \"ratio\",\n      \"publication\": \"PUBLISHED\",\n      \"quality\": \"EXACT\",\n      \"reason_code\": \"PASS\",\n      \"result_validity\": \"SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED\",\n      \"defect_holds\": [],\n      \"latest_observation\": \"NO_SOURCE_CONTENT_CHANGE\",\n      \"requested_in_latest_execution\": true,\n      \"record_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/marriott-b02-followup-years-20261012-47/FY2022/state/updates/B02/periods/FY2022/results/a5060b4279ff416089a2b069e4c88d47\"\n    }\n  ],\n  \"source_freshness\": \"NOT_CHECKED_BY_SAVED_READER\",\n  \"calls\": {\n    \"provider\": 0,\n    \"paid\": 0,\n    \"sec\": 0\n  },\n  \"production_authorized\": false,\n  \"output_root\": \"/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-selected-recovery-20261013-47/combined-read-marriott_international\"\n}\n",
+  "stderr": ""
+}

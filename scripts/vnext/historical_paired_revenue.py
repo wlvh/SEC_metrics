@@ -13,7 +13,7 @@ def revenue_claims_admitted_by_original(*, reader, prepared, filing, period, cla
     from .historical_statement_cases import StatementCaseError, _need
     from .selected_revenue_scope_v1 import selected_revenue_scope, admit_revenue_facts
     from .selected_reported_revenue_v2 import reported_revenue_scope, admit_reported_revenue_facts
-    from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE
+    from .xbrl_namespace_policy import YEAR_OR_DATE_RELEASE, YEAR_QUARTER_OR_DATE
     from .historical_fiscal_labels import resolve_selected_fiscal_year_label
     from .canonical import sha256_bytes
     originals = reader.auditor_filing(filing)
@@ -35,9 +35,11 @@ def revenue_claims_admitted_by_original(*, reader, prepared, filing, period, cla
     qualified = ['us-gaap:' + c.split(':')[-1] for c in concepts]
     scope = reported_revenue_scope(primary=primary, xml=xml, annual=annual,
         approved_concepts=qualified, namespace_policy=YEAR_OR_DATE_RELEASE,
+        dei_release=YEAR_QUARTER_OR_DATE,
         annual_period_reader=annual_period, fiscal_label_resolution=label,
         allow_single_revenue_line=allow_single_revenue_line,
-        allow_statement_group_totals=True)
+        allow_statement_group_totals=True,
+        allow_single_segment_revenue=True)
     admit = admit_reported_revenue_facts
     if not scope['complete_scope_proven']:
         scope = selected_revenue_scope(primary=primary, xml=xml, annual=annual,

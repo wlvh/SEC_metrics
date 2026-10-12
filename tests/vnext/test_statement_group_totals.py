@@ -120,3 +120,50 @@ class StatementGroupTotalsTest(unittest.TestCase):
                 scope=reported_revenue_scope(primary=changed(source,raw),xml=changed(source,raw),annual=annual,
                     approved_concepts=APPROVED,allow_statement_group_totals=True)
                 self.assertFalse(scope['complete_scope_proven'])
+
+    def test_dollar_unit_caption_before_table_is_not_a_scope_limitation(self):
+        source,annual=closed_statement()
+        raw=source['raw_bytes'].replace(b'<table>',
+            b'<div>($ in millions, except per share amounts)</div><table>',1)
+        revised=changed(source,raw)
+        scope=reported_revenue_scope(primary=revised,xml=revised,annual=annual,
+            approved_concepts=APPROVED,allow_statement_group_totals=True)
+        self.assertTrue(scope['complete_scope_proven'])
+        self.assertEqual('58496000000',scope['reported_totals'][0]['total']['value'])
+
+    def test_foreign_currency_or_extra_scope_text_is_not_the_dollar_caption(self):
+        source,annual=closed_statement()
+        for caption in ('(EUR in millions, except per share amounts)',
+                        '($ in millions, only subsidiary operations)'):
+            raw=source['raw_bytes'].replace(b'<table>',('<div>'+caption+'</div><table>').encode(),1)
+            revised=changed(source,raw)
+            with self.subTest(caption=caption),self.assertRaises(ValueError):
+                reported_revenue_scope(primary=revised,xml=revised,annual=annual,
+                    approved_concepts=APPROVED,allow_statement_group_totals=True)
+
+    def test_dollar_caption_cannot_override_the_native_scale(self):
+        source,annual=closed_statement()
+        raw=source['raw_bytes'].replace(b'<table>',
+            b'<div>($ in thousands, except per share amounts)</div><table>',1)
+        revised=changed(source,raw)
+        with self.assertRaisesRegex(ValueError,'VISIBLE_NATIVE_UNIT_UNRESOLVED'):
+            reported_revenue_scope(primary=revised,xml=revised,annual=annual,
+                approved_concepts=APPROVED,allow_statement_group_totals=True)
+
+    def test_loss_qualified_earnings_per_share_heading_keeps_scope_proof(self):
+        source,annual=closed_statement()
+        raw=source['raw_bytes'].replace(b'</table>',
+            b'<tr><td>EARNINGS (LOSS) PER SHARE</td></tr></table>',1)
+        revised=changed(source,raw)
+        scope=reported_revenue_scope(primary=revised,xml=revised,annual=annual,
+            approved_concepts=APPROVED,allow_statement_group_totals=True)
+        self.assertTrue(scope['complete_scope_proven'])
+
+    def test_eps_heading_does_not_hide_subsidiary_scope_annotation(self):
+        source,annual=closed_statement()
+        raw=source['raw_bytes'].replace(b'</table>',
+            b'<tr><td>EARNINGS (LOSS) PER SHARE; only subsidiary operations</td></tr></table>',1)
+        revised=changed(source,raw)
+        with self.assertRaises(ValueError):
+            reported_revenue_scope(primary=revised,xml=revised,annual=annual,
+                approved_concepts=APPROVED,allow_statement_group_totals=True)
