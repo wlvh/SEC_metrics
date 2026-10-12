@@ -26,7 +26,7 @@ from .calculator import withheld_metric_result
 
 PROCESSING_FILES=tuple('scripts/vnext/'+name+'.py' for name in (
     'current_b06_case','ordinary_b06_resolution','normal_governance_input',
-    'b06_current_input','annual_amendment_scope','instant_balance_amendment',
+    'b06_current_input','annual_amendment_scope','text_coverage','instant_balance_amendment',
     'normal_annual_input_v2','fiscal_year_labels','ordinary_debt_guard',
     'b06_guarded_result_v3','ordinary_special_debt_scope','normal_note_debt_results',
     'normal_bond_debt_results','normal_inclusive_debt_results','b06_note_carrying',
