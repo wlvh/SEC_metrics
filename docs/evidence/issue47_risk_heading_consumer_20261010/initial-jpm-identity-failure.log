@@ -1,0 +1,8 @@
+{'name': 'first-jpm-2021-d01', 'seconds': 55.514302499825135, 'exit_code': 0, 'status': 'FLOW_COMPLETED'}
+{'name': 'repeat-forbid-d01-factory', 'seconds': 3.267502750037238, 'exit_code': 0, 'status': 'FLOW_COMPLETED'}
+{'name': 'independent-results', 'seconds': 0.8644809168763459, 'exit_code': 0, 'status': None}
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue47-revenue-scope-consumer/SEC_metrics/work/d01-consumer/verify_jpm.py", line 24, in <module>
+    assert r['result_id']==expected['previous_result_id']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

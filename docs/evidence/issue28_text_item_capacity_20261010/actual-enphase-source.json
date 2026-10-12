@@ -1,0 +1,90 @@
+{
+  "program_root": "/Users/lyuhongwang/.codex/worktrees/issue28-text-item-capacity/SEC_metrics",
+  "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+  "base_commit": "f6ef7886d6630f7675c25cd42e306c373ab05769",
+  "tested_tree": "UNCOMMITTED_CAPACITY_CHANGE",
+  "source_sha256": "d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a",
+  "source_proof": {
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310122000016/enph-20211231.htm",
+    "accession": "0001463101-22-000016",
+    "document_name": "enph-20211231.htm",
+    "content_sha256": "d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a",
+    "request_body_sha256": "d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a",
+    "request_body_size": 3805278,
+    "request_headers_repo_relative_path": "evidence/request_attempts/d2/d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a/enph-20211231.htm.c5abf8be6a696839c6a508507ec6128535eb9b7a523ed57fc6f9aa0f7b30c442.headers.json",
+    "request_headers_sha256": "c5abf8be6a696839c6a508507ec6128535eb9b7a523ed57fc6f9aa0f7b30c442",
+    "request_headers_size": 1640,
+    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+    "request_repo_relative_path": "evidence/request_attempts/d2/d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a/enph-20211231.htm",
+    "request_attempt_id": "request:attempt:2f78da70da49e97934551e0e0112d2add95c200735e43570fefb97b8671030e0"
+  },
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:39808ae04e68862f11cf338bcf02a07e44498b167574f3360a8c11594c97297f",
+    "raw_asset_id": "sha256:d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a",
+    "company_id": "enphase_energy",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310122000016/enph-20211231.htm",
+    "accession": "0001463101-22-000016",
+    "document_name": "enph-20211231.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:2f78da70da49e97934551e0e0112d2add95c200735e43570fefb97b8671030e0"
+  },
+  "source_admission": {
+    "record_type": "VERIFIED_SAVED_SOURCE_INPUTS",
+    "source_manifest_sha256": "cf3e8a71c65a2539f18e14f808ccf018ff3b36c664c347b3446283fc59c9cabd",
+    "request_attempt_ids": [
+      "request:attempt:2f78da70da49e97934551e0e0112d2add95c200735e43570fefb97b8671030e0"
+    ],
+    "source_credit": "SAVED_SOURCE_BYTES_AND_REQUESTS_CHECKED",
+    "real_sec_credit": false,
+    "new_business_calls": {
+      "provider": 0,
+      "paid": 0,
+      "sec": 0
+    },
+    "production_authorized": false
+  },
+  "spec_path": "catalog/ordinary_risk_headings/D01_128.md",
+  "spec_sha256": "49f80d3f6ba7421b6eeccaae5261af8e0c5cee7e51b9706596224f75ed2961d2",
+  "old_spec_unchanged": {
+    "spec_path": "catalog/r6/D01_risk_factor_headings.md",
+    "failure": {
+      "error_type": "TextResultError",
+      "reason": "DETERMINISTIC_TEXT_HEADINGS_EXCEED_BOUND"
+    }
+  },
+  "target": {
+    "company_id": "enphase_energy",
+    "entity": "1463101",
+    "accession": "0001463101-22-000016",
+    "period_start": "2021-01-01",
+    "period_end": "2021-12-31",
+    "scope": {
+      "entity_scope": "registrant"
+    },
+    "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6"
+  },
+  "new_spec_closure_hash": "sha256:510d869a8bdfcb368d2f6cda55916719b4be31a4e90c9793732232700b1e0553",
+  "result_id": "sha256:f154e5af84b9e151e56337b59247c1bc444d5dd41ca4c2fb8e2326a3035fc4d1",
+  "renderer": "ORDERED_NEWLINE_128_V2",
+  "observations": 68,
+  "heading_count": 68,
+  "text_chars": 12530,
+  "text_utf8_bytes": 12538,
+  "value_sha256": "sha256:8b66471154344b88f8a7e94a0184d90f284e65850c089f0abcbfe8f49909a483",
+  "matches_existing_reference_after_extraction": true,
+  "existing_reference_sha256": "191ff8e1f5875261a2c70f1d431dc8714fa346c56120e6d8892045111800481b",
+  "calculation_seconds": 3.8476740829646587,
+  "saved_replay_seconds": 0.8361324169673026,
+  "saved_records_path": "/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/issue28-text68-replay-wiq9c2zu/records.json",
+  "saved_record_sha256_unchanged": "29bbdbe3df9d9099668c4908e4d8042ccc11b5232982feeaded8b3e07b0573fa",
+  "evidence_status": "PASS",
+  "review_type": "SYSTEM_MECHANICAL_NOT_OWNER_ADOPTION",
+  "native_run_created": false,
+  "company_cli_completed": false,
+  "calls": [
+    0,
+    0,
+    0
+  ]
+}

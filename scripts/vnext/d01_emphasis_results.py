@@ -19,10 +19,11 @@ from .text_results import (DETERMINISTIC_CANDIDATE_TYPE, DETERMINISTIC_METHOD,
                            _text, text_policy)
 
 POLICY = "D01_EMPHASIS_SOURCE_V2"
+RUNNING_HEADER_POLICY = "D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER"
 
 
 def _successor(*, compiled_spec, d01_emphasis_policy):
-    _need(d01_emphasis_policy in {None, POLICY}, "D01_EMPHASIS_POLICY_INVALID")
+    _need(d01_emphasis_policy in {None, POLICY, RUNNING_HEADER_POLICY}, "D01_EMPHASIS_POLICY_INVALID")
     if d01_emphasis_policy is None:
         return False
     _need(compiled_spec["compiled"]["metric_id"] == "D01"
@@ -94,7 +95,8 @@ def create_deterministic_text_candidate(*, compiled_spec, target, source_referen
         d01_emphasis_policy=d01_emphasis_policy)
     return frozen._derive_deterministic_candidate(
         compiled_spec=compiled_spec, target=target, source_references=source_references,
-        documents=documents, coverages=coverages)
+        documents=documents, coverages=coverages,
+        exclude_combined_part_headers=d01_emphasis_policy == RUNNING_HEADER_POLICY)
 
 
 def verify_deterministic_text_candidate(*, candidate, **source_arguments):
@@ -130,7 +132,8 @@ def build_text_evidence(*, compiled_spec, target, candidate, source_references,
     if candidate["record_type"] == DETERMINISTIC_CANDIDATE_TYPE:
         expected = frozen._derive_deterministic_candidate(
             compiled_spec=compiled_spec, target=target, source_references=source_references,
-            documents=documents, coverages=coverages)
+            documents=documents, coverages=coverages,
+            exclude_combined_part_headers=d01_emphasis_policy == RUNNING_HEADER_POLICY)
         _need(candidate == expected, "DETERMINISTIC_TEXT_CANDIDATE_REPLAY_CHANGED")
     selected = candidate["selected"]
     _need(1 <= len(selected) <= policy["max_items"], "TEXT_CANDIDATE_ITEM_COUNT_INVALID")
