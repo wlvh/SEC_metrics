@@ -54,6 +54,17 @@ class ExplicitD01HeaderTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'CANDIDATE_REPLAY_CHANGED'):
             d01.build_text_evidence(candidate=old,**args)
 
+    def test_namespace_policy_cannot_silently_modify_the_frozen_default(self):
+        from vnext.xbrl_namespace_policy import YEAR_QUARTER_OR_DATE
+        args=self.args()
+        with self.assertRaisesRegex(ValueError,'REQUIRES_EXPLICIT_SOURCE_POLICY'):
+            d01.create_deterministic_text_candidate(
+                **args, namespace_policy=YEAR_QUARTER_OR_DATE)
+        with self.assertRaisesRegex(ValueError,'SEC_NAMESPACE_POLICY_UNSUPPORTED'):
+            d01.create_deterministic_text_candidate(
+                **args,d01_emphasis_policy=d01.RUNNING_HEADER_POLICY,
+                namespace_policy='arbitrary-release-pattern')
+
     def test_risk_sentence_with_the_same_prefix_is_kept_and_exact_span_preserved(self):
         title='Parts I and II of the supply chain may be disrupted'
         args,new=self.candidate(d01.RUNNING_HEADER_POLICY,additions='<p><b>'+title+'</b>. Later explanation.</p>')

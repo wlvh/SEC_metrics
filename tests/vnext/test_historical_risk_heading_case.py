@@ -78,6 +78,22 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
         raw=annual(BODY).replace(b'http://xbrl.sec.gov/dei/2025',b'https://example.org/dei/2025')
         with self.assertRaises(ValueError):self.case(source=binding(raw))
 
+    def test_official_quarter_dei_namespace_reaches_shared_source_and_replay(self):
+        raw=annual(BODY.replace('<p>A supply constraint could affect production.</p>',
+            '<p><b>A supplied risk heading</b>. Explanation.</p>')).replace(
+                b'http://xbrl.sec.gov/dei/2025', b'http://xbrl.sec.gov/dei/2021q4')
+        case=self.case(source=binding(raw))
+        self.assertEqual(case['results']['D01']['value'],'A supplied risk heading')
+        self.assertEqual(case['selection']['heading_count'],1)
+        self.assertEqual(case['input_binding']['namespace_policy'],
+                         'YEAR_QUARTER_OR_DATE')
+        from vnext.d01_emphasis_source import build_text_document_admitting_underline
+        with self.assertRaisesRegex(ValueError,'ENTITY_MISMATCH_OR_MISSING'):
+            build_text_document_admitting_underline(**binding(raw))
+        for uri in (b'https://example.org/dei/2021q4',b'http://xbrl.sec.gov/dei/2021q5'):
+            with self.subTest(uri=uri),self.assertRaises(ValueError):
+                self.case(source=binding(raw.replace(b'http://xbrl.sec.gov/dei/2021q4',uri)))
+
     def test_capacity_successor_keeps_the_complete_source_set_only_above_old_count(self):
         for count in (64,65,68,128,129):
             text=''.join('<p><b>Source risk heading '+str(i)+'</b>. Explanation.</p>' for i in range(count))
@@ -107,7 +123,7 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
                 self.case()
 
     def test_consumed_shared_functions_are_actual_declared_processing_dependencies(self):
-        for name in ['d01_emphasis_results','d01_emphasis_source','text_coverage','text_results','risk_signals','text_review','review','historical_dei']:
+        for name in ['d01_emphasis_results','d01_emphasis_source','text_coverage','text_results','risk_signals','text_review','review','historical_dei','xbrl_namespace_policy']:
             self.assertIn('scripts/vnext/'+name+'.py',cases.PROCESSING_FILES)
         self.assertIn(cases.CAPACITY_SPEC_PATH,cases.PROCESSING_FILES)
         self.assertIn('scripts/vnext/text_rendering_limits.py',cases.PROCESSING_FILES)

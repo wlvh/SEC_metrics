@@ -9,7 +9,7 @@ from pathlib import Path
 
 from .canonical import content_hash
 from .historical_annual_input import prepare_historical_annual_input
-from .historical_dei import release_aware
+from .xbrl_namespace_policy import YEAR_QUARTER_OR_DATE
 from .normal_period_selection import resolve_period_selection
 from .normal_governance_input import _Sources
 from .normal_source_authority import ROOT
@@ -27,6 +27,7 @@ PROCESSING_FILES = (
     'scripts/vnext/historical_risk_heading_case.py',
     'scripts/vnext/historical_annual_input.py',
     'scripts/vnext/historical_dei.py',
+    'scripts/vnext/xbrl_namespace_policy.py',
     'scripts/vnext/historical_fiscal_labels.py',
     'scripts/vnext/historical_filing_inventory.py',
     'scripts/vnext/normal_period_selection.py',
@@ -89,10 +90,10 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
         'source_references': [primary['source_reference']],
         'raw_blobs': {primary['raw_blob']['raw_asset_id']: primary['raw_blob']},
         'raw_bytes_by_id': {primary['raw_blob']['raw_asset_id']: primary['raw_bytes']},
-        'd01_emphasis_policy': d01_emphasis_results.RUNNING_HEADER_POLICY}
-    # The retained namespace view keeps shared D01 algorithms while admitting
-    # actual historical SEC/FASB release names. It is not a second selector.
-    api = release_aware(d01_emphasis_results)
+        'd01_emphasis_policy': d01_emphasis_results.RUNNING_HEADER_POLICY,
+        'namespace_policy': YEAR_QUARTER_OR_DATE}
+    # The same source and every replay receive an explicit finite SEC policy.
+    api = d01_emphasis_results
     selected_spec_path = SPEC_PATH
     try:
         candidate = api.create_deterministic_text_candidate(**args)
@@ -133,6 +134,7 @@ def prepare_historical_risk_heading_year_case(*, repo_root, company_id, metric_i
     binding = {'record_type': 'HISTORICAL_RISK_HEADING_INPUT', 'metric_id': metric_id,
         'prepared_input': annual, 'period_selection': selection,
         'source_proofs': proofs, 'd01_emphasis_policy': d01_emphasis_results.RUNNING_HEADER_POLICY,
+        'namespace_policy': YEAR_QUARTER_OR_DATE,
         'new_provider_execution': False}
     return {'kind': 'STRUCTURED', 'primary_metric_id': metric_id,
         'input_binding': binding, 'compiled_specs': {metric_id: spec},

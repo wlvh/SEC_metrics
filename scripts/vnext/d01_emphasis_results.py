@@ -12,6 +12,7 @@ from __future__ import annotations
 import unicodedata
 
 from .canonical import content_hash, sha256_bytes
+from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 from .d01_emphasis_source import build_text_document_admitting_underline
 from . import text_results as frozen
 from .text_results import (DETERMINISTIC_CANDIDATE_TYPE, DETERMINISTIC_METHOD,
@@ -22,7 +23,10 @@ POLICY = "D01_EMPHASIS_SOURCE_V2"
 RUNNING_HEADER_POLICY = "D01_EMPHASIS_SOURCE_V3_RUNNING_HEADER"
 
 
-def _successor(*, compiled_spec, d01_emphasis_policy):
+def _successor(*, compiled_spec, d01_emphasis_policy, namespace_policy):
+    is_sec_namespace('', taxonomy='dei', namespace_policy=namespace_policy)
+    _need(d01_emphasis_policy is not None or namespace_policy == YEAR_ONLY,
+          "D01_NAMESPACE_POLICY_REQUIRES_EXPLICIT_SOURCE_POLICY")
     _need(d01_emphasis_policy in {None, POLICY, RUNNING_HEADER_POLICY}, "D01_EMPHASIS_POLICY_INVALID")
     if d01_emphasis_policy is None:
         return False
@@ -33,9 +37,10 @@ def _successor(*, compiled_spec, d01_emphasis_policy):
 
 
 def prepare_text_sources(*, compiled_spec, target, source_references, raw_blobs,
-                         raw_bytes_by_id, d01_emphasis_policy=None):
+                         raw_bytes_by_id, d01_emphasis_policy=None, namespace_policy=YEAR_ONLY):
     """The frozen preparation, on documents that admit underline as emphasis."""
-    if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy):
+    if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy,
+                      namespace_policy=namespace_policy):
         return frozen.prepare_text_sources(
             compiled_spec=compiled_spec, target=target, source_references=source_references,
             raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id)
@@ -55,7 +60,7 @@ def prepare_text_sources(*, compiled_spec, target, source_references, raw_blobs,
         document = build_text_document_admitting_underline(
             raw_bytes=raw_bytes_by_id[raw_id], raw_blob=raw_blobs[raw_id],
             source_reference=source, expected_company_id=target["company_id"],
-            expected_cik=target["entity"], expected_period_end=target["period_end"])
+            expected_cik=target["entity"], expected_period_end=target["period_end"], namespace_policy=namespace_policy)
         parsed = parse_accession_xbrl_source(raw_bytes=raw_bytes_by_id[raw_id])
         periods = {(parsed.contexts[fact["context_ref"]]["period_start"],
                     parsed.contexts[fact["context_ref"]]["period_end"])
@@ -83,16 +88,17 @@ def prepare_text_sources(*, compiled_spec, target, source_references, raw_blobs,
 
 def create_deterministic_text_candidate(*, compiled_spec, target, source_references,
                                         raw_blobs, raw_bytes_by_id,
-                                        d01_emphasis_policy=None):
+                                        d01_emphasis_policy=None, namespace_policy=YEAR_ONLY):
     """Derive all source headings from the trusted input set; no AI fields exist."""
-    if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy):
+    if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy,
+                      namespace_policy=namespace_policy):
         return frozen.create_deterministic_text_candidate(
             compiled_spec=compiled_spec, target=target, source_references=source_references,
             raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id)
     documents, coverages = prepare_text_sources(
         compiled_spec=compiled_spec, target=target, source_references=source_references,
         raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id,
-        d01_emphasis_policy=d01_emphasis_policy)
+        d01_emphasis_policy=d01_emphasis_policy, namespace_policy=namespace_policy)
     return frozen._derive_deterministic_candidate(
         compiled_spec=compiled_spec, target=target, source_references=source_references,
         documents=documents, coverages=coverages,
@@ -106,9 +112,10 @@ def verify_deterministic_text_candidate(*, candidate, **source_arguments):
 
 
 def build_text_evidence(*, compiled_spec, target, candidate, source_references,
-                        raw_blobs, raw_bytes_by_id, d01_emphasis_policy=None):
+                        raw_blobs, raw_bytes_by_id, d01_emphasis_policy=None, namespace_policy=YEAR_ONLY):
     """Check every selected exact excerpt and required section using raw bytes."""
-    if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy):
+    if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy,
+                      namespace_policy=namespace_policy):
         return frozen.build_text_evidence(
             compiled_spec=compiled_spec, target=target, candidate=candidate,
             source_references=source_references, raw_blobs=raw_blobs,
@@ -128,7 +135,7 @@ def build_text_evidence(*, compiled_spec, target, candidate, source_references,
     documents, coverages = prepare_text_sources(
         compiled_spec=compiled_spec, target=target, source_references=source_references,
         raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id,
-        d01_emphasis_policy=d01_emphasis_policy)
+        d01_emphasis_policy=d01_emphasis_policy, namespace_policy=namespace_policy)
     if candidate["record_type"] == DETERMINISTIC_CANDIDATE_TYPE:
         expected = frozen._derive_deterministic_candidate(
             compiled_spec=compiled_spec, target=target, source_references=source_references,
@@ -198,9 +205,10 @@ def build_text_evidence(*, compiled_spec, target, candidate, source_references,
 
 def reviewed_text_observations(*, compiled_spec, target, candidate, evidence_check, review_unit,
                                review_decisions, source_references, raw_blobs, raw_bytes_by_id,
-                               d01_emphasis_policy=None):
+                               d01_emphasis_policy=None, namespace_policy=YEAR_ONLY):
     """Create same-type observations only after raw replay and effective approval."""
-    if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy):
+    if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy,
+                      namespace_policy=namespace_policy):
         return frozen.reviewed_text_observations(
             compiled_spec=compiled_spec, target=target, candidate=candidate,
             evidence_check=evidence_check, review_unit=review_unit,
@@ -211,7 +219,7 @@ def reviewed_text_observations(*, compiled_spec, target, candidate, evidence_che
     expected = build_text_evidence(compiled_spec=compiled_spec, target=target, candidate=candidate,
                                    source_references=source_references, raw_blobs=raw_blobs,
                                    raw_bytes_by_id=raw_bytes_by_id,
-                                   d01_emphasis_policy=d01_emphasis_policy)
+                                   d01_emphasis_policy=d01_emphasis_policy, namespace_policy=namespace_policy)
     _need(_record(evidence_check) == expected, "TEXT_EVIDENCE_REPLAY_CHANGED")
     unit = _record(review_unit)
     _need(unit["evidence_check_id"] == expected["evidence_check_id"]
@@ -250,9 +258,10 @@ def reviewed_text_observations(*, compiled_spec, target, candidate, evidence_che
 
 def replay_text_result(*, compiled_spec, target, company_traits, candidate, evidence_check,
                        review_unit, review_decisions, source_references, raw_blobs,
-                       raw_bytes_by_id, d01_emphasis_policy=None):
+                       raw_bytes_by_id, d01_emphasis_policy=None, namespace_policy=YEAR_ONLY):
     """Single raw-source-to-result replay hook for OPEN and FROZEN Run graphs."""
-    if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy):
+    if not _successor(compiled_spec=compiled_spec, d01_emphasis_policy=d01_emphasis_policy,
+                      namespace_policy=namespace_policy):
         return frozen.replay_text_result(
             compiled_spec=compiled_spec, target=target, company_traits=company_traits,
             candidate=candidate, evidence_check=evidence_check, review_unit=review_unit,
@@ -264,7 +273,7 @@ def replay_text_result(*, compiled_spec, target, company_traits, candidate, evid
         evidence_check=evidence_check, review_unit=review_unit,
         review_decisions=review_decisions, source_references=source_references,
         raw_blobs=raw_blobs, raw_bytes_by_id=raw_bytes_by_id,
-        d01_emphasis_policy=d01_emphasis_policy)
+        d01_emphasis_policy=d01_emphasis_policy, namespace_policy=namespace_policy)
     result, trace = calculate_text_metric(compiled_spec=compiled_spec, target=target,
                                           company_traits=company_traits,
                                           observations=observations)
