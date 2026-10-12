@@ -82,6 +82,7 @@ name: Company saved-source records
     - tests/vnext/test_historical_compensation_case.py
     - tests/vnext/test_historical_b06_case.py
     - tests/vnext/test_selected_source_requirements.py
+    - tests/vnext/test_company_event_source_preflight.py
     - tests/vnext/test_company_fiscal_range.py
     - tests/vnext/test_history_source_export.py
     - docs/evidence/issue28_history_export_entry_20261013/**
@@ -245,6 +246,7 @@ jobs:
       env:
         PYTHONDONTWRITEBYTECODE: '1'
       run: python3 tests/required_unittests.py tests.vnext.test_selected_source_requirements tests.vnext.test_company_fiscal_range
+        tests.vnext.test_company_event_source_preflight
         tests.vnext.test_selected_historical_fiscal_label tests.vnext.test_history_source_export
     - name: Historical C04 source selection, gap boundaries and saved dependency scope
       env:

@@ -15,9 +15,10 @@ from .normal_history_catalog import load_history_for_period, annual_periods
 from .normal_period_selection import PeriodSelectionError, restore_period_selection
 from .normal_source_authority import ROOT
 from .normal_source_requirements import _Requirements
-from .selected_source_requirements import discover_selected_annual_requirements
+from .selected_source_requirements import discover_selected_annual_requirements, discover_selected_source_requirements
 
 METRIC_IDS = frozenset({'B01', 'B02', 'B03'})
+SOURCE_METRIC_IDS = METRIC_IDS | frozenset({'E01'})
 RANGE_CASE_METRIC_IDS = frozenset({'B01', 'B02'})
 PROCESSING_FILES = (
     'scripts/vnext/company_fiscal_range.py',
@@ -80,7 +81,7 @@ def _candidates(source,company,first,last):
 def discover_fiscal_range(*,repo_root,company_id,fiscal_year_start,fiscal_year_end,metric_ids):
     years=_years(fiscal_year_start,fiscal_year_end)
     _need(type(metric_ids) in (tuple,list) and metric_ids and
-          len(metric_ids)==len(set(metric_ids)) and set(metric_ids)<=METRIC_IDS, 'METRIC_NOT_CONNECTED')
+          len(metric_ids)==len(set(metric_ids)) and set(metric_ids)<=SOURCE_METRIC_IDS, 'METRIC_NOT_CONNECTED')
     source=Path(repo_root).resolve()
     company=registered_company_row(repo_root=source,company_id=company_id)
     _need(company==registered_company_row(repo_root=ROOT,company_id=company_id),
@@ -130,7 +131,8 @@ def discover_fiscal_range(*,repo_root,company_id,fiscal_year_start,fiscal_year_e
         if not task['limitations'] and len(matches)==1:
             match=matches[0]
             try:
-                prepared=discover_selected_annual_requirements(repo_root=source,company_id=company_id,
+                prepare=(discover_selected_source_requirements if 'E01' in metric_ids else discover_selected_annual_requirements)
+                prepared=prepare(repo_root=source,company_id=company_id,
                     report_end=match['report_end'],metric_ids=metric_ids)
                 selection=restore_period_selection(repo_root=source,company_id=company_id,
                     target_report_end=match['report_end'],requested_fiscal_year=year,rules_root=ROOT)

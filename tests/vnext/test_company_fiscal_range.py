@@ -90,6 +90,22 @@ class CompanyFiscalRangeTest(TestCase):
             metric_ids=['B03'],case_factories={'B03':producer})
         self.assertIs(factories['B03'],producer)
 
+    def test_e01_range_uses_the_selected_event_source_contract_only(self):
+        # The fixture proves fiscal-label routing; event source reading is
+        # separately exercised on full saved originals by the formal CLI.
+        event={'status':'SELECTED_SOURCE_DEPENDENCIES_UNRESOLVED',
+               'complete_known_source_graph':False,'metric_executed':False}
+        with patch.object(ranges,'discover_selected_source_requirements',return_value=event) as selected, \
+             patch.object(ranges,'discover_selected_annual_requirements',
+                          side_effect=AssertionError('Wrong event-only preparation')):
+            result=ranges.discover_fiscal_range(repo_root=self.source,company_id=COMPANY,
+                fiscal_year_start=2025,fiscal_year_end=2025,metric_ids=['E01'])
+        selected.assert_called_once_with(repo_root=self.source.resolve(),company_id=COMPANY,
+            report_end='2025-12-31',metric_ids=['E01'])
+        self.assertFalse(result['all_source_bytes_available'])
+        self.assertIs(result['tasks'][0]['source_preflight'],event)
+        self.assertFalse(result['metric_executed'])
+
     def test_explicit_issuer_year_is_not_discarded_by_report_end_year(self):
         raw=annual().replace(b'19617',str(CIK).encode()).replace(b'2021',b'2025')
         raw=raw.replace(b'</body></html>',b'<p>Our fiscal year ends on December 31. References to fiscal 2026, for example, refer to the fiscal year ending December 31, 2025.</p></body></html>')
