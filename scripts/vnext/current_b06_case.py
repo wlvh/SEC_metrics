@@ -33,6 +33,7 @@ PROCESSING_FILES=tuple('scripts/vnext/'+name+'.py' for name in (
     'b06_bond_leases','b06_inclusive_table','b06_financing_inventory',
     'b06_combined_borrowings','ordinary_reported_lease_scope','industrial_lease_relation','b06_disclosure_v2','b06_disclosure','r5_b06_scope',
     'r5_b06_measurement','ordinary_source_authority','text_results_v2',
+    'constraints','financial_structured','r5_b06_structured','xbrl_namespace_policy',
 )) + (
     'config/b06_current_input_v1.json','config/annual_amendment_scope_v1.json',
     'config/instant_balance_amendment_v1.json',

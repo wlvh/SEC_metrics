@@ -127,3 +127,30 @@ class HistoricalRiskHeadingCaseTest(unittest.TestCase):
             self.assertIn('scripts/vnext/'+name+'.py',cases.PROCESSING_FILES)
         self.assertIn(cases.CAPACITY_SPEC_PATH,cases.PROCESSING_FILES)
         self.assertIn('scripts/vnext/text_rendering_limits.py',cases.PROCESSING_FILES)
+
+    def test_shared_dependency_check_covers_both_historical_text_renderers(self):
+        from tests.vnext.processing_dependency_checks import (
+            processing_calls, assert_processing_calls)
+        from vnext.ordinary_current_update import _configuration
+        root=Path(__file__).resolve().parents[2]
+        configuration=_configuration(root,'enphase_energy','D01')
+        for count in (2,65):
+            headings=''.join('<p><b>Selected-year risk '+str(i)+'</b>.</p>'
+                             for i in range(count))
+            source=binding(annual(BODY.replace(
+                '<p>A supply constraint could affect production.</p>',headings)))
+            with self.subTest(count=count), processing_calls(root) as observed:
+                case=self.case(source=source)
+            self.assertEqual(case['results']['D01']['value'].splitlines(),
+                             ['Selected-year risk '+str(i) for i in range(count)])
+            self.assertEqual(case['results']['D01']['text_payload']['renderer'],
+                'ORDERED_NEWLINE_V1' if count==2 else 'ORDERED_NEWLINE_128_V2')
+            assert_processing_calls(observed,configuration,cases.PROCESSING_FILES)
+            required=['scope_contract.py','states.py']
+            for filename in required:
+                path='scripts/vnext/'+filename
+                self.assertIn(path,observed)
+                reduced=tuple(p for p in cases.PROCESSING_FILES if p!=path)
+                with self.subTest(missing=filename), self.assertRaisesRegex(
+                        AssertionError,filename):
+                    assert_processing_calls(observed,configuration,reduced)

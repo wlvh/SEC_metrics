@@ -9,7 +9,7 @@ import re
 from datetime import date
 
 from .canonical import content_hash
-from .selected_income_source_v1 import native_income_reports, IncomeSourceError
+from .selected_income_source_v1 import native_income_reports, single_segment_revenue_reports, IncomeSourceError
 from .selected_revenue_scope_v1 import UNIT_HEADER, STATEMENT_CONCEPTS, _label, _label_key, _statement_scope, _key
 from .xbrl_namespace_policy import YEAR_ONLY, is_sec_namespace
 
@@ -35,16 +35,20 @@ def _need(condition,reason):
 def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                            namespace_policy=YEAR_ONLY,annual_period_reader=None,
                            fiscal_label_resolution=None,allow_single_revenue_line=False,
-                           allow_statement_group_totals=False,dei_release=YEAR_ONLY):
+                           allow_statement_group_totals=False,dei_release=YEAR_ONLY,
+                           allow_single_segment_revenue=False):
     from .financial_structured import _InlineTableIndex,_fact_cells
     from .financial_duration import _column_period,_cell_proof,_MONTH,_DATE,_date
     from .deterministic_router import parse_accession_xbrl_source
     _need(type(allow_single_revenue_line) is bool,'SINGLE_REVENUE_OPTION_INVALID')
     _need(type(allow_statement_group_totals) is bool,'STATEMENT_GROUP_OPTION_INVALID')
+    _need(type(allow_single_segment_revenue) is bool,'SINGLE_SEGMENT_OPTION_INVALID')
     is_sec_namespace('',taxonomy='dei',namespace_policy=dei_release)
     concepts=sorted(set(approved_concepts)|set(STATEMENT_CONCEPTS))
     options={'namespace_policy':namespace_policy,'annual_period_reader':annual_period_reader}
     rows=native_income_reports(primary,annual,concepts,**options)
+    if allow_single_segment_revenue:
+        rows+=single_segment_revenue_reports(primary,annual,approved_concepts,**options)
     raw=primary['raw_bytes'];parsed=parse_accession_xbrl_source(raw_bytes=raw)
     native_by_ordinal={f['ordinal']:f for f in parsed.facts}
     index=_InlineTableIndex(raw);index.feed(raw.decode('utf-8-sig'));index.close()
@@ -67,6 +71,8 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         column_year,_=_choose_fiscal_year(inspected)
         _need(column_year==label.get('selected_fiscal_year'),'FISCAL_LABEL_SELECTION_CHANGED')
     xml_rows=native_income_reports(xml,annual,concepts,**options) if xml is not None else None
+    if allow_single_segment_revenue and xml is not None:
+        xml_rows+=single_segment_revenue_reports(xml,annual,approved_concepts,**options)
     selected=[]
     complete_expense_rejections=[]
     for row in rows:
@@ -75,13 +81,22 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         label=_label_key(_label(table,cell))
         single_operating = allow_single_revenue_line and ' '.join(
             _label(table,cell).casefold().split()) == 'operating revenue'
-        single=allow_single_revenue_line and (label in {'revenue','revenues'} or single_operating)
+        single_net=allow_single_revenue_line and label in {'net revenue','net revenues'}
+        single=allow_single_revenue_line and (label in {'revenue','revenues'} or single_operating or single_net)
+        segment=allow_single_segment_revenue and 'single_segment_scope' in row
+        if segment and (xml is None or label not in {'revenue','revenues','net revenues',
+                'total revenue','total revenues','total net revenues'}):continue
+        single=single or segment
         operating = ' '.join(_label(table,cell).casefold().split()) == 'total operating revenues'
         group_total=allow_statement_group_totals and label==''
         if group_total and xml is None:continue
         if label not in {'total revenue','total revenues','total net revenues'} and not (single or operating or group_total):continue
         if (row['period_start'],row['period_end'])!=(period['period_start'],period['period_end']):continue
-        same=[r for r in rows if r['context_ref']==row['context_ref'] and r['ordinal'] in bound
+        same=[r for r in rows if (r['context_ref']==row['context_ref'] or segment
+                and not r['context']['dimensions']
+                and not r['context']['typed_dimension_count']
+                and str(int(r['context']['entity_identifier']))==annual['entity']
+                and (r['period_start'],r['period_end'])==(row['period_start'],row['period_end'])) and r['ordinal'] in bound
               and bound[r['ordinal']][0]['table_id']==table['table_id']
               and bound[r['ordinal']][1]['row_index']>cell['row_index']]
         operating_costs=[]
@@ -123,6 +138,24 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         unit_headers=UNIT_HEADER+extra_units
         column,headers,reason=_column_period(table=table,selected=cell,extra_header_descriptors=unit_headers)
         _need(not reason and column['year']==column_year,'FISCAL_COLUMN_UNRESOLVED')
+        segment_statement_rows=[]
+        if segment:
+            year_group={(h['origin_row_index'],h['origin_column_index']) for h,_,_ in headers}
+            for following in same:
+                if following['concept'].casefold() not in {'us-gaap:netincomeloss','us-gaap:profitloss',
+                        'us-gaap:costofrevenue','us-gaap:costofgoodsandservicessold'}:continue
+                following_cell=bound[following['ordinal']][1]
+                following_column,following_headers,reason=_column_period(table=table,selected=following_cell,
+                    extra_header_descriptors=unit_headers)
+                _need(not reason and following_column['year']==column_year
+                    and {(h['origin_row_index'],h['origin_column_index']) for h,_,_ in following_headers}==year_group,
+                    'SINGLE_SEGMENT_STATEMENT_COLUMN_CONFLICT')
+                _need(int(native_by_ordinal[following['ordinal']]['scale'] or 0)
+                      ==int(native_by_ordinal[row['ordinal']]['scale'] or 0),
+                      'SINGLE_SEGMENT_STATEMENT_SCALE_CONFLICT')
+                segment_statement_rows.append({'report':following,
+                    'cell':_cell_proof(table=table,cell=following_cell),
+                    'year_headers':[_cell_proof(table=table,cell=h) for h,_,_ in following_headers]})
         if single:
             _single_revenue_line(index,parsed,table,cell,row,column,same,
                                  extra_unit_headers=extra_units,
@@ -157,6 +190,9 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
                 end_headers.append(_cell_proof(table=table,cell=c))
         sections = (r'operating revenues:',r'operating expenses(?:, net)?:',
                     r'(?:non-operating|other) expenses \(income\):') if operating else ()
+        if segment or single_net:
+            sections=(*sections,r'other income(?: \(expense\))?, net:?',r'net income per share:?',
+                      r'shares used in per share calculation:?')
         if single_operating:
             sections = (r'operating expenses:?', r'other expense:?',
                         r'other \(expense\) income:?',
@@ -191,8 +227,12 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         _need(len(scales)==1 and int(native_by_ordinal[row['ordinal']]['scale'] or 0)==next(iter(scales)),
               'VISIBLE_NATIVE_UNIT_UNRESOLVED')
         matches=[r for r in xml_rows if _key(r)==_key(row)] if xml_rows is not None else []
+        if segment:
+            matches=[r for r in matches if 'single_segment_scope' in r
+                and r['single_segment_scope']['segment_member_qname']==row['single_segment_scope']['segment_member_qname']]
         _need(xml_rows is None or matches,'PRIMARY_XML_TOTAL_DIFFERS')
         selected.append({**({'operating_expense_reports':operating_costs} if operating else {}),'total':row,'total_cell':_cell_proof(table=table,cell=cell),
+                         **({'consolidated_statement_rows':segment_statement_rows} if segment else {}),
                          **({'complete_expense_statement':complete_expenses} if complete_expenses else {}),
                          **({'statement_group_total':True} if group_total else {}),
                          **({'issuer_header_definition':issuer_headers['definitions']} if issuer_headers else {}),
@@ -211,6 +251,8 @@ def reported_revenue_scope(*,primary,annual,approved_concepts,xml=None,
         body['complete_expense_rejections']=complete_expense_rejections
     if allow_statement_group_totals:
         body['statement_group_totals_allowed']=True
+    if allow_single_segment_revenue:
+        body['single_segment_revenue_allowed']=True
     if dei_release!=YEAR_ONLY:
         body['dei_release']=dei_release
     if allow_single_revenue_line:
