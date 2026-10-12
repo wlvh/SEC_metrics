@@ -1,0 +1,304 @@
+[
+  {
+    "fy": "2021",
+    "value": null,
+    "assessment": {
+      "category": "SELECTED_SOURCE_SCOPE_UNRESOLVED",
+      "error_type": "IncomeSourceError",
+      "reason": "SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED",
+      "unresolved_revenue_role": "prior"
+    }
+  },
+  {
+    "fy": "2022",
+    "value": "0.6865197977785158123916011661",
+    "originals": {
+      "current": {
+        "total": {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "context": {
+            "context_ref": "i789bb736637b43daaa33382a149a2a2c_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0001463101",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i789bb736637b43daaa33382a149a2a2c_D20220101-20221231",
+            "dimensions": [],
+            "identifiers": [
+              {
+                "scheme": "http://www.sec.gov/CIK",
+                "value": "0001463101"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "context_ref": "i789bb736637b43daaa33382a149a2a2c_D20220101-20221231",
+          "decimals": "-3",
+          "ordinal": 136,
+          "period_end": "2022-12-31",
+          "period_start": "2022-01-01",
+          "source_reference": {
+            "accession": "0001463101-23-000025",
+            "company_id": "enphase_energy",
+            "document_name": "enph-20221231.htm",
+            "raw_asset_id": "sha256:55eb2f2cb82a3468b4a8df2703042d1c47edffc4b77dad01734761ff8250f76b",
+            "record_type": "SOURCE_REFERENCE",
+            "request_attempt_id": "request:attempt:f52c37613678131eb2985f72e2f65f072fa8b032f6fa4726545f216658071594",
+            "source_reference_id": "sha256:81ea25fb8599adf040261b134f5320ab5f77a9ba8e281f1780da50dc4056a780",
+            "source_role": "target_primary",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310123000025/enph-20221231.htm"
+          },
+          "unit": "USD",
+          "value": "2330853000"
+        },
+        "cell": {
+          "colspan": 1,
+          "column_index": 16,
+          "grid_sha256": "sha256:a3d8c07dee4bd436ee804c2121ab16cff99cd79d1d1285ad1471d3c9fc52af8b",
+          "origin_column_index": 16,
+          "origin_row_index": 3,
+          "raw_text": "2,330,853&#160;",
+          "row_index": 3,
+          "rowspan": 1,
+          "table_id": "table_000097",
+          "text": "2,330,853"
+        },
+        "period": {
+          "fiscal_year": 2022,
+          "period_end": "2022-12-31",
+          "period_start": "2022-01-01"
+        },
+        "xml_check": "MATCH"
+      },
+      "prior": {
+        "total": {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "context": {
+            "context_ref": "ia787b512c08e4d518dea8df04bd00f85_D20210101-20211231",
+            "dimensions": {},
+            "entity_identifier": "0001463101",
+            "period_end": "2021-12-31",
+            "period_start": "2021-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "ia787b512c08e4d518dea8df04bd00f85_D20210101-20211231",
+            "dimensions": [],
+            "identifiers": [
+              {
+                "scheme": "http://www.sec.gov/CIK",
+                "value": "0001463101"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2021-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2021-12-31"
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "context_ref": "ia787b512c08e4d518dea8df04bd00f85_D20210101-20211231",
+          "decimals": "-3",
+          "ordinal": 141,
+          "period_end": "2021-12-31",
+          "period_start": "2021-01-01",
+          "source_reference": {
+            "accession": "0001463101-22-000016",
+            "company_id": "enphase_energy",
+            "document_name": "enph-20211231.htm",
+            "raw_asset_id": "sha256:d27dbecccbedb373035c6458278895442f91d04bd38274e2ae9abd6b88ec9e7a",
+            "record_type": "SOURCE_REFERENCE",
+            "request_attempt_id": "request:attempt:2f78da70da49e97934551e0e0112d2add95c200735e43570fefb97b8671030e0",
+            "source_reference_id": "sha256:39808ae04e68862f11cf338bcf02a07e44498b167574f3360a8c11594c97297f",
+            "source_role": "target_primary",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310122000016/enph-20211231.htm"
+          },
+          "unit": "USD",
+          "value": "1382049000"
+        },
+        "cell": {
+          "colspan": 1,
+          "column_index": 16,
+          "grid_sha256": "sha256:9d99f5578c99fa7431ac025aee6c35b2c7d4d15587c8a96d3035981e668dd0fb",
+          "origin_column_index": 16,
+          "origin_row_index": 3,
+          "raw_text": "1,382,049&#160;",
+          "row_index": 3,
+          "rowspan": 1,
+          "table_id": "table_000102",
+          "text": "1,382,049"
+        },
+        "period": {
+          "fiscal_year": 2021,
+          "period_end": "2021-12-31",
+          "period_start": "2021-01-01"
+        },
+        "xml_check": "MATCH"
+      }
+    }
+  },
+  {
+    "fy": "2023",
+    "value": "-0.01718984423299109810871813881",
+    "originals": {
+      "current": {
+        "total": {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "context": {
+            "context_ref": "c-1",
+            "dimensions": {},
+            "entity_identifier": "0001463101",
+            "period_end": "2023-12-31",
+            "period_start": "2023-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "c-1",
+            "dimensions": [],
+            "identifiers": [
+              {
+                "scheme": "http://www.sec.gov/CIK",
+                "value": "0001463101"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2023-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2023-12-31"
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "context_ref": "c-1",
+          "decimals": "-3",
+          "ordinal": 138,
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01",
+          "source_reference": {
+            "accession": "0001463101-24-000024",
+            "company_id": "enphase_energy",
+            "document_name": "enph-20231231.htm",
+            "raw_asset_id": "sha256:e20f1ff0b674b7c7a82f9654b03956dd4402bb375ebf2e90878f08772f3631c8",
+            "record_type": "SOURCE_REFERENCE",
+            "request_attempt_id": "request:attempt:36fc2b6ea321336d5808856186dfaa69d9053d6b50974afadf0c27537a019a47",
+            "source_reference_id": "sha256:2ae76095a2bcdbbf3e47552e7de438e13ecdeb0e779f5363db5f3a3b0e790e06",
+            "source_role": "target_primary",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310124000024/enph-20231231.htm"
+          },
+          "unit": "USD",
+          "value": "2290786000"
+        },
+        "cell": {
+          "colspan": 1,
+          "column_index": 16,
+          "grid_sha256": "sha256:1065e584eb0470dac8a0dba6bbed1062e681040eb2ff83c1d19636af195ce522",
+          "origin_column_index": 16,
+          "origin_row_index": 3,
+          "raw_text": "2,290,786&#160;",
+          "row_index": 3,
+          "rowspan": 1,
+          "table_id": "table_000095",
+          "text": "2,290,786"
+        },
+        "period": {
+          "fiscal_year": 2023,
+          "period_end": "2023-12-31",
+          "period_start": "2023-01-01"
+        },
+        "xml_check": "MATCH"
+      },
+      "prior": {
+        "total": {
+          "concept": "us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax",
+          "context": {
+            "context_ref": "i789bb736637b43daaa33382a149a2a2c_D20220101-20221231",
+            "dimensions": {},
+            "entity_identifier": "0001463101",
+            "period_end": "2022-12-31",
+            "period_start": "2022-01-01",
+            "typed_dimension_count": 0
+          },
+          "context_proof": {
+            "context_ref": "i789bb736637b43daaa33382a149a2a2c_D20220101-20221231",
+            "dimensions": [],
+            "identifiers": [
+              {
+                "scheme": "http://www.sec.gov/CIK",
+                "value": "0001463101"
+              }
+            ],
+            "period_fields": [
+              {
+                "kind": "startdate",
+                "value": "2022-01-01"
+              },
+              {
+                "kind": "enddate",
+                "value": "2022-12-31"
+              }
+            ],
+            "typed_dimension_count": 0
+          },
+          "context_ref": "i789bb736637b43daaa33382a149a2a2c_D20220101-20221231",
+          "decimals": "-3",
+          "ordinal": 136,
+          "period_end": "2022-12-31",
+          "period_start": "2022-01-01",
+          "source_reference": {
+            "accession": "0001463101-23-000025",
+            "company_id": "enphase_energy",
+            "document_name": "enph-20221231.htm",
+            "raw_asset_id": "sha256:55eb2f2cb82a3468b4a8df2703042d1c47edffc4b77dad01734761ff8250f76b",
+            "record_type": "SOURCE_REFERENCE",
+            "request_attempt_id": "request:attempt:f52c37613678131eb2985f72e2f65f072fa8b032f6fa4726545f216658071594",
+            "source_reference_id": "sha256:81ea25fb8599adf040261b134f5320ab5f77a9ba8e281f1780da50dc4056a780",
+            "source_role": "target_primary",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310123000025/enph-20221231.htm"
+          },
+          "unit": "USD",
+          "value": "2330853000"
+        },
+        "cell": {
+          "colspan": 1,
+          "column_index": 16,
+          "grid_sha256": "sha256:a3d8c07dee4bd436ee804c2121ab16cff99cd79d1d1285ad1471d3c9fc52af8b",
+          "origin_column_index": 16,
+          "origin_row_index": 3,
+          "raw_text": "2,330,853&#160;",
+          "row_index": 3,
+          "rowspan": 1,
+          "table_id": "table_000097",
+          "text": "2,330,853"
+        },
+        "period": {
+          "fiscal_year": 2022,
+          "period_end": "2022-12-31",
+          "period_start": "2022-01-01"
+        },
+        "xml_check": "MATCH"
+      }
+    }
+  }
+]

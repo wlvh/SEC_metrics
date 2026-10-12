@@ -1,0 +1,109 @@
+{
+  "code_head": "ac076626c0ba0b7321a87afa89d83cbfc94cf226",
+  "phases": {
+    "recovery": {
+      "seconds": 10.604221292000148,
+      "exit_code": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "enphase_energy",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2025",
+        "--fiscal-year-end",
+        "2025",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-statements-company-jvkm2nml/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-next-year-receiving-20261013-47/runs"
+      ]
+    },
+    "repeat": {
+      "seconds": 0.678395916998852,
+      "exit_code": 0,
+      "arguments": [
+        "run",
+        "--company",
+        "enphase_energy",
+        "--period",
+        "fiscal-years",
+        "--fiscal-year-start",
+        "2025",
+        "--fiscal-year-end",
+        "2025",
+        "--metric",
+        "B02",
+        "--source-root",
+        "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+        "--work-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-statements-company-jvkm2nml/state",
+        "--output-dir",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-next-year-receiving-20261013-47/runs"
+      ]
+    },
+    "read": {
+      "seconds": 0.6436374159966363,
+      "exit_code": 0,
+      "arguments": [
+        "results",
+        "--company",
+        "enphase_energy",
+        "--state-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-statements-company-jvkm2nml/state",
+        "--output-root",
+        "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-b02-next-year-receiving-20261013-47/read"
+      ]
+    }
+  },
+  "row": {
+    "company": "Enphase Energy",
+    "cik": "1463101",
+    "metric_id": "B02",
+    "metric_name": "Revenue YoY growth",
+    "value": "0.1071886817555546034487812908",
+    "unit": "ratio",
+    "status": "OK",
+    "source_class": "DERIVED",
+    "formula": "",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "fiscal_year": "2025",
+    "fiscal_period": "ANNUAL",
+    "accession": "0001463101-26-000013;0001463101-25-000024",
+    "form": "10-K",
+    "filed_date": "2026-02-17;2025-02-10",
+    "concept_or_section": "Revenue YoY growth",
+    "context_or_dimension": "{\"annual_filing_period\": {\"fiscal_year\": 2025, \"period_end\": \"2025-12-31\", \"period_start\": \"2025-01-01\"}, \"measurement_kind\": \"ANNUAL\", \"scope\": {\"coverage\": \"deterministic_source_set\", \"fiscal_year\": 2025}, \"selection\": {\"paired_revenue_scopes\": {\"current\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:1a78c56a384f109eb518ad0b546530a8e9151e0e10fba85e5a4efb903927e50a\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}, \"prior\": {\"complete_scope_proven\": true, \"scope_id\": \"sha256:c3a237e0eecc9ae6b5b701761e0c66f2be4f41679206930bfca6a7f3c849a364\", \"status\": \"REPORTED_CONSOLIDATED_TOTAL\"}}}, \"source_reference_ids\": [\"sha256:1113478f788bf7d2483f879c0da31c0b2eead47941e47df5937a62c29c7ab14b\", \"sha256:efef485617df1e76e6ecb9990b0013d18210962a70f3a5761036eb46aa3c7016\", \"sha256:374643665da7bbb31076ae94fc32cff5c09973f8bbdfb25db751c646e997808f\", \"sha256:a1606a8a8171ba34d8979b41e1f129d0684cd87f2d9eacb9c1e0c0b379c83b7a\", \"sha256:970bf7b3a93a1b983fc96a706fcdc6c3b62389f0715b7dc297d3e165b9f50ca5\", \"sha256:175eefb5031ea68b222a12b4d329056134dc4938f834a282d0690e5264018338\", \"sha256:32e86a9490f7db39f134e51e9054163c6de81146cc0eb6650bb361c866fbb083\", \"sha256:6acc94ab8ef9ac2500724c34232c37a1b412b0e3490a91709c49ebface27f86b\", \"sha256:e0a5f2f5392d027cc7a82e8dfc7075cf4f09f3efe94b8f8ed432694bba59d82e\"]}",
+    "confidence": "",
+    "notes": "Source-rebuilt native result; exact measurement dates are retained. Measurement covers the source fiscal-year interval. Native state: PUBLISHED; reason: PASS.",
+    "company_id": "enphase_energy",
+    "result_id": "sha256:5bbc45e0480d7830120003e32b33fbe337edb1df1c282000debee72ca2b1c9e0",
+    "record_root": "/Users/lyuhongwang/.local/state/sec_metrics/issue47-development-evidence/enphase-statements-company-jvkm2nml/state/updates/B02/periods/FY2025/results/124ae9fa18374193a122fe7fe120ed3f",
+    "source_root": "/Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs",
+    "local_metric_status": "NO_SOURCE_CONTENT_CHANGE",
+    "period_role": "REQUESTED_RESULT",
+    "result_validity": "SAVED_RECORD_CHECKED_CONTENT_NOT_ACCEPTED",
+    "source_observation_status": "NOT_CHECKED_BY_SAVED_READER",
+    "defect_holds": "[]",
+    "requested_in_latest_execution": "True"
+  },
+  "source_hashes": {
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "evidence/requests_log.csv": "61252ac5844ad1c5917040f753c04a7ed4f6e1d75e2fb0803804773fd6c0eef9",
+    "evidence/requests_log_manifest.json": "e91193401733b86ddc28c69cbae0debd74eeb899a328e60fcfb32532ed6a85ab"
+  },
+  "old_files_unchanged": 275,
+  "unselected_metric_files_unchanged": 305,
+  "read_state_files_unchanged": 389,
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
