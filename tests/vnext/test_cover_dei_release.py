@@ -42,8 +42,12 @@ class CoverDeiReleaseTest(unittest.TestCase):
 
     def test_quarter_is_still_refused_without_explicit_release(self):
         primary,parsed,metadata,selected,bound=source('http://xbrl.sec.gov/dei/2025q4')
-        with self.assertRaises(ValueError):
-            _defined_income_headers(primary,parsed,selected,include_cover=True)
+        headers=_defined_income_headers(primary,parsed,selected,include_cover=True)
+        # Unsupported name facts cannot authorize a cover alias. The helper
+        # has no cover work to execute when the correct namespace filter
+        # removed them; whole-statement refusal is tested separately.
+        self.assertEqual(headers['definitions'],[])
+        self.assertEqual(headers['heading_patterns'],())
 
     def test_fasb_policy_or_unknown_value_is_not_a_sec_release(self):
         primary,parsed,metadata,selected,bound=source()

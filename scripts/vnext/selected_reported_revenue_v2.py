@@ -267,7 +267,7 @@ def _defined_income_headers(primary,parsed,annual,*,include_cover=False,dei_rele
     """Exact issuer headings from its explicit consolidated alias definition."""
     from .fiscal_year_labels import _DefinitionBlocks
     from .text_results_v2 import _ReportedFactMetadata
-    from .xbrl_namespace_policy import is_sec_namespace,YEAR_QUARTER_OR_DATE
+    from .xbrl_namespace_policy import is_sec_namespace
     from .canonical import sha256_bytes
     is_sec_namespace('',taxonomy='dei',namespace_policy=dei_release)
     raw=primary['raw_bytes'];text=raw.decode('utf-8-sig');meta=_ReportedFactMetadata()
@@ -275,7 +275,7 @@ def _defined_income_headers(primary,parsed,annual,*,include_cover=False,dei_rele
     names={f['text'].strip() for f in parsed.facts
         if meta.facts[f['ordinal']]['concept'][1].casefold()=='entityregistrantname'
         and is_sec_namespace(meta.facts[f['ordinal']]['concept'][0],taxonomy='dei',
-                             namespace_policy=YEAR_QUARTER_OR_DATE)
+                             namespace_policy=dei_release)
         and str(int(parsed.contexts[f['context_ref']]['entity_identifier']))==annual['entity']
         and not parsed.contexts[f['context_ref']]['dimensions']
         and not parsed.contexts[f['context_ref']]['typed_dimension_count']
