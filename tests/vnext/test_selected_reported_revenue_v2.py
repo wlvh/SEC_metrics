@@ -15,6 +15,147 @@ def changed(source,raw):
 
 
 class SelectedReportedRevenueTest(unittest.TestCase):
+    def complete_expense_statement(self):
+        from tests.vnext.test_single_revenue_line import single_statement
+        source,annual=single_statement()
+        raw=source['raw_bytes'].replace(b'Cost of sales',b'Total costs and expenses').replace(
+            b'CostOfGoodsAndServicesSold',b'CostsAndExpenses')
+        cost=b'<tr><td>Total costs and expenses'
+        raw=raw.replace(cost,b'<tr><td>Costs and expenses:</td><td></td></tr>'+cost)
+        operating=(b'<tr><td>Operating income (loss)</td><td><ix:nonFraction name="us-gaap:OperatingIncomeLoss" '
+                   b'contextRef="annual" unitRef="usd" scale="6" decimals="-6">48496</ix:nonFraction></td></tr>')
+        raw=raw.replace(b'<tr><td>Net income',operating+b'<tr><td>Net income')
+        return changed(source,raw),annual
+
+    def test_complete_cost_statement_is_explicit_and_preserves_source_relations(self):
+        source,annual=self.complete_expense_statement()
+        self.assertFalse(reported_revenue_scope(primary=source,xml=source,annual=annual,
+            approved_concepts=APPROVED)['complete_scope_proven'])
+        result=reported_revenue_scope(primary=source,xml=source,annual=annual,
+            approved_concepts=APPROVED,allow_single_revenue_line=True)
+        self.assertTrue(result['complete_scope_proven'])
+        proof=result['reported_totals'][0]['complete_expense_statement']
+        self.assertEqual('us-gaap:CostsAndExpenses',proof['expense']['concept'])
+        self.assertEqual('10000000000',proof['expense']['value'])
+        self.assertEqual('48496000000',proof['operating_income']['value'])
+        self.assertEqual('MATCH',proof['xml_check'])
+        self.assertEqual(annual['table_input']['target_period'],proof['annual_period'])
+
+    def test_complete_expense_statement_uses_the_resolved_issuer_column_year(self):
+        from vnext.fiscal_year_labels import inspect_fiscal_year_labels
+        source,annual=self.complete_expense_statement()
+        raw=source['raw_bytes'].replace(b'<td>2025</td>',b'<td>2026</td>')
+        raw=raw.replace(b'Year Ended December 31,',b'')
+        definition=b'<p>Our fiscal year ends on December 31. References to fiscal 2026, for example, refer to the fiscal year ending December 31, 2025.</p>'
+        raw=b'<html><body>'+raw.replace(b'</xbrli:xbrl>',definition+b'</xbrli:xbrl>')+b'</body></html>'
+        source=changed(source,raw)
+        cf=json.dumps({'cik':int(annual['entity']),'facts':{'us-gaap':{'Revenues':{'units':{'USD':[
+            {'accn':annual['filing']['accessionNumber'],'fy':2025,'fp':'FY','form':'10-K','val':58496000000,
+             'start':'2025-01-01','end':'2025-12-31','filed':'2026-02-01'}]}}}}}).encode()
+        inspected=inspect_fiscal_year_labels(primary_bytes=raw,companyfacts_bytes=cf,
+            expected_primary_sha256=sha256_bytes(content=raw),expected_companyfacts_sha256=sha256_bytes(content=cf),
+            expected_cik=annual['entity'],filing=annual['filing'])
+        label={'record_type':'ORDINARY_FISCAL_YEAR_LABEL_RESOLUTION','source_inspection':inspected,
+            'selected_fiscal_year':2026,'original_dei_fiscal_year':2025}
+        scope=reported_revenue_scope(primary=source,xml=source,annual=annual,
+            approved_concepts=APPROVED,fiscal_label_resolution=label,allow_single_revenue_line=True)
+        self.assertTrue(scope['complete_scope_proven'])
+        self.assertEqual(2026,scope['selected_fiscal_column_year'])
+        self.assertEqual(2025,scope['annual_input']['table_input']['target_period']['fiscal_year'])
+        self.assertEqual('2025-12-31',scope['reported_totals'][0]['complete_expense_statement']['annual_period']['period_end'])
+        wrong=changed(source,raw.replace(b'<td>2026</td>',b'<td>2027</td>'))
+        with self.assertRaisesRegex(ValueError,'(?:FISCAL_LABEL_SOURCE_CHANGED|COLUMN_PERIOD_UNPROVEN)'):
+            reported_revenue_scope(primary=wrong,xml=wrong,annual=annual,
+                approved_concepts=APPROVED,fiscal_label_resolution=label,allow_single_revenue_line=True)
+
+    def test_complete_cost_statement_does_not_hide_other_income_or_false_total(self):
+        source,annual=self.complete_expense_statement()
+        changes=[(b'Total costs and expenses',b'Costs and expenses excluding subsidiaries'),
+                 (b'>48496</ix:nonFraction>',b'>48495</ix:nonFraction>'),
+                 (b'Costs and expenses:</td>',b'Costs and expenses; only Segment Alpha:</td>')]
+        for before,after in changes:
+            with self.subTest(after=after),self.assertRaises(ValueError):
+                reported_revenue_scope(primary=changed(source,source['raw_bytes'].replace(before,after)),
+                    xml=source,annual=annual,approved_concepts=APPROVED,allow_single_revenue_line=True)
+        extra=b'<tr><td>Other revenues</td><td>100</td></tr>'
+        with self.assertRaisesRegex(ValueError,'SINGLE_REVENUE_'):
+            reported_revenue_scope(primary=changed(source,source['raw_bytes'].replace(
+                b'<tr><td>Costs and expenses:',extra+b'<tr><td>Costs and expenses:')),
+                xml=source,annual=annual,approved_concepts=APPROVED,allow_single_revenue_line=True)
+
+    def test_complete_expense_amount_scope_unit_column_and_xml_are_required(self):
+        source,annual=self.complete_expense_statement()
+        cost=(b'name="us-gaap:CostsAndExpenses" contextRef="annual" unitRef="usd" scale="6"')
+        changes=[(cost,cost.replace(b'contextRef="annual"',b'contextRef="short"')),
+                 (cost,cost.replace(b'scale="6"',b'scale="3"')),
+                 (b'>10000</ix:nonFraction>',b'>10000</ix:nonFraction><span>7</span>'),
+                 (b'<td>Total costs and expenses</td><td>',b'<td>Total costs and expenses</td><td></td><td>')]
+        for before,after in changes:
+            raw=source['raw_bytes'].replace(before,after)
+            with self.subTest(after=after):
+                try:result=reported_revenue_scope(primary=changed(source,raw),xml=source,annual=annual,
+                    approved_concepts=APPROVED,allow_single_revenue_line=True)
+                except ValueError:continue
+                self.assertFalse(result['complete_scope_proven'])
+        xml=changed(source,source['raw_bytes'].replace(b'>10000</ix:nonFraction>',b'>9999</ix:nonFraction>'))
+        with self.assertRaisesRegex(ValueError,'COMPLETE_EXPENSE_PRIMARY_XML_DIFFERS'):
+            reported_revenue_scope(primary=source,xml=xml,annual=annual,
+                approved_concepts=APPROVED,allow_single_revenue_line=True)
+
+    def test_nonzero_or_untagged_intervening_gain_cannot_be_ignored(self):
+        source,annual=self.complete_expense_statement()
+        insertions=[b'<tr><td>Gains on dispositions</td><td>7</td></tr>',
+            b'<tr><td>Gains on dispositions</td><td><ix:nonFraction name="issuer:Gain" '
+            b'contextRef="annual" unitRef="usd" scale="6" decimals="-6">7</ix:nonFraction></td></tr>']
+        for inserted in insertions:
+            with self.subTest(inserted=inserted),self.assertRaisesRegex(ValueError,'COMPLETE_EXPENSE_.*AMOUNT'):
+                reported_revenue_scope(primary=changed(source,source['raw_bytes'].replace(
+                    b'<tr><td>Operating income',inserted+b'<tr><td>Operating income')),
+                    xml=source,annual=annual,approved_concepts=APPROVED,allow_single_revenue_line=True)
+
+    def test_exact_zero_intermediate_retains_its_own_native_context(self):
+        source,annual=self.complete_expense_statement()
+        zero=(b'<tr><td>Gains on dispositions</td><td><ix:nonFraction name="issuer:Gain" '
+              b'contextRef="annual" unitRef="usd" scale="6" decimals="-6">0</ix:nonFraction></td></tr>')
+        raw=source['raw_bytes'].replace(b'<tr><td>Operating income',zero+b'<tr><td>Operating income')
+        result=reported_revenue_scope(primary=changed(source,raw),xml=source,annual=annual,
+            approved_concepts=APPROVED,allow_single_revenue_line=True)
+        self.assertTrue(result['complete_scope_proven'])
+        neutral=result['reported_totals'][0]['complete_expense_statement']['neutral_intermediate_reports']
+        self.assertEqual(1,len(neutral));self.assertEqual('0',neutral[0]['value'])
+        for changed_zero in (zero.replace(b'contextRef="annual"',b'contextRef="short"'),
+                             zero.replace(b'>0</ix:',b'>0</ix:').replace(b'</td></tr>',b'<span>9</span></td></tr>')):
+            with self.subTest(changed_zero=changed_zero),self.assertRaisesRegex(ValueError,'COMPLETE_EXPENSE_.*AMOUNT'):
+                reported_revenue_scope(primary=changed(source,source['raw_bytes'].replace(
+                    b'<tr><td>Operating income',changed_zero+b'<tr><td>Operating income')),
+                    xml=source,annual=annual,approved_concepts=APPROVED,allow_single_revenue_line=True)
+
+    def test_complete_expense_headers_require_an_unquoted_same_issuer_definition(self):
+        source,annual=self.complete_expense_statement()
+        raw=source['raw_bytes'].replace(b'<dei:DocumentType',
+            b'<dei:EntityRegistrantName contextRef="annual">Example Global</dei:EntityRegistrantName><dei:DocumentType',1)
+        raw=raw.replace(b'<xbrli:xbrl ',b'<html ').replace(b'</xbrli:xbrl>',b'</html>')
+        raw=raw.replace(b'<div>Consolidated',b'<body><div>Consolidated').replace(b'</html>',b'</body></html>')
+        definition=('Unless the context requires otherwise, references in this document to “Example,” '
+            '“the Company,” “we,” “us” and “our” mean Example Global and its consolidated subsidiaries.').encode()
+        headers=b'<tr><td>Amounts attributable to Example:</td><td></td></tr>'
+        headers+=b'<tr><td>Basic net earnings (loss) per common share attributable to Example:</td><td></td></tr>'
+        raw=raw.replace(b'<div>Consolidated',b'<p>'+definition+b'</p><hr style="page-break-after:always"/><div>Consolidated')
+        raw=raw.replace(b'</table>',headers+b'</table>')
+        result=reported_revenue_scope(primary=changed(source,raw),xml=source,annual=annual,
+            approved_concepts=APPROVED,allow_single_revenue_line=True)
+        self.assertTrue(result['complete_scope_proven'])
+        proof=result['reported_totals'][0]['issuer_header_definition'][0]
+        self.assertEqual(['Example'],proof['aliases'])
+        self.assertEqual(proof['raw_span_sha256'],sha256_bytes(content=raw[proof['raw_start_byte']:proof['raw_end_byte']]))
+        for bad in (raw.replace(b'<p>'+definition+b'</p>',b'<blockquote>'+definition+b'</blockquote>'),
+                    raw.replace(definition,definition.replace(b'Example Global and',b'Other Global and')),
+                    raw.replace(headers,headers.replace(b'Example:',b'Other:')),
+                    raw.replace(definition,b'We use the name Example.')):
+            with self.subTest(bad=bad),self.assertRaisesRegex(ValueError,'STATEMENT_LOCAL_SCOPE_UNRESOLVED'):
+                reported_revenue_scope(primary=changed(source,bad),xml=source,annual=annual,
+                    approved_concepts=APPROVED,allow_single_revenue_line=True)
+
     def test_standard_income_loss_title_keeps_native_loss_labels_and_scope_qualifiers(self):
         from vnext.selected_revenue_scope_v1 import selected_revenue_scope
         primary,xml,annual=originals()

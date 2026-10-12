@@ -1,0 +1,34 @@
+{
+  "actual_result": {
+    "company_id": "pfizer",
+    "metric_id": "B02",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "scope_key": "sha256:e370aa51d98685a695710e5e6293ca52e313e188bfd92b64e0f4ccf4cbe7537c",
+    "spec_closure_hash": "sha256:7f569259f31e7d0bd237ca8ba6bc368cbf55d47453f86915c4cf8e0638868a76",
+    "applicability": "APPLICABLE",
+    "quality": "EXACT",
+    "publication": "PUBLISHED",
+    "reason_code": "PASS",
+    "value": "-0.01647099501783833906989171264",
+    "unit": "ratio",
+    "trace_id": "sha256:bb67c39de20d8794badaa3d6c18550f6d14b4360f9d19708dace0632c5746b4a",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:b1d89f891ff2675af4f478a103e46abdb2d09052f7111ab93751e33e93b59ac9"
+  },
+  "baseline_record": "docs/evidence/issue28_revenue_note_reference_20261011/current-pfizer.json",
+  "matched_fields": [
+    "value",
+    "unit",
+    "period_start",
+    "period_end",
+    "result_id"
+  ],
+  "recovery": "Read complete producer result from the failed outer assertion; no computation rerun",
+  "initial_error": "driver guessed an incorrect decimal expectation; production result matches the original accepted current result",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
