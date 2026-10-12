@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/docs/evidence/issue28_audit_note_source_scope_20261013/verify_note_boundary.py", line 18, in <module>
+    result=inspect_annual_amendment_scope(original=source(selection['prior_filing']),amendment=source(selection['prior_amendments'][0]),
+      company_id='marriott_international',cik='1048286',note_layout='inline-paragraphs-v2',namespace_policy=YEAR_QUARTER_OR_DATE)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/scripts/vnext/annual_amendment_scope_v2.py", line 54, in inspect_annual_amendment_scope
+    note=_note(new['document'], **({'raw':amendment['raw']} if note_layout!='blocks-v1' else {}));text=note['text']
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/scripts/vnext/annual_amendment_scope_v2.py", line 32, in _note
+    _need(start+1<end and count<=8,"AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-income-paragraph-dispatch/SEC_metrics/scripts/vnext/annual_amendment_scope.py", line 38, in _need
+    if not condition:raise AmendmentScopeError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.annual_amendment_scope.AmendmentScopeError: AMENDMENT_EXPLANATORY_SCOPE_UNSUPPORTED
