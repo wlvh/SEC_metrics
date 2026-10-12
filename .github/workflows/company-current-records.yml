@@ -31,6 +31,7 @@ name: Company saved-source records
     - tests/vnext/test_selected_income_calculation.py
     - tests/vnext/test_historical_b03_case.py
     - tests/vnext/test_selected_reported_revenue_v2.py
+    - docs/evidence/issue28_complete_expense_scope_20261012/**
     - tests/vnext/test_paired_measure_contradiction.py
     - tests/vnext/test_current_d04_company.py
     - tests/vnext/test_b06_note_source_forms.py
@@ -84,6 +85,7 @@ name: Company saved-source records
     - tests/vnext/test_historical_d04_selection.py
     - tests/vnext/test_historical_d04_case.py
     - tests/vnext/test_saved_d04_replay.py
+    - tests/vnext/test_b06_fallback_source_forms.py
 permissions:
   contents: read
 jobs:
@@ -139,6 +141,11 @@ jobs:
         PYTHONDONTWRITEBYTECODE: '1'
         PYTHONPATH: scripts:.
       run: python3 tests/required_unittests.py tests.vnext.test_b06_note_source_forms tests.vnext.test_b06_note_source_material
+    - name: Debt certificates and standard pension source boundaries
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+        PYTHONPATH: scripts:.
+      run: python3 tests/required_unittests.py tests.vnext.test_b06_fallback_source_forms
   company-financial:
     runs-on: ubuntu-latest
     timeout-minutes: 5
