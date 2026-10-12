@@ -1,0 +1,73 @@
+{
+  "source_reference": {
+    "record_type": "SOURCE_REFERENCE",
+    "source_reference_id": "sha256:f4ab1a06f4defda3612d67c8ce20995cd849527646f612d53144363543ae4daf",
+    "raw_asset_id": "sha256:29bc388bcff3c0bac7894743ffe22fc1fe486b05ceb83f6bfe172b5f46e19549",
+    "company_id": "macys",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828025014315/m-20250201.htm",
+    "accession": "0001628280-25-014315",
+    "document_name": "m-20250201.htm",
+    "source_role": "target_primary",
+    "request_attempt_id": "request:attempt:bf643f1928306b75aa3feb59d16108ca1e06f2428d4f7bf337e3b9da60ec08e4"
+  },
+  "period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-02-04",
+    "period_end": "2025-02-01"
+  },
+  "blocks": {
+    "568": {
+      "text": "The Company ended the year with a cash and cash equivalents balance of $1,306 million, an increase from $1,034 million in 2023. Also, the Company is party to the ABL Credit Facility with certain financial institutions providing for a $3,000 million Revolving ABL Facility. As of February 1, 2025, borrowing capacity of the ABL Credit Facility was $2,856 million, which reflects a $144 million reduction due to standby letters of credit outstanding and borrowing availability was $2,459 million, which considers a further $397 million reduction due to inventory levels and its impact on the ABL borrowing base.",
+      "start": 595035,
+      "end": 595650,
+      "linked": false,
+      "emphasized": false,
+      "leading_emphasis": null,
+      "quoted_context": false
+    },
+    "592": {
+      "text": "The Company's future contractual obligations and commitments as it relates to financing activities as of February 1, 2025 are $2.8 billion of long-term debt obligations, including the current portion of long-term debt of $6 million, and $1.4 billion of related interest, $144 million of standby letters of credit and $23 million of finance lease obligations. Note 6 and Note 4 to the Financial Statements provide additional information on debt and finance leases, respectively.",
+      "start": 611174,
+      "end": 611656,
+      "linked": false,
+      "emphasized": false,
+      "leading_emphasis": null,
+      "quoted_context": false
+    },
+    "1344": {
+      "text": "There were $144 million and $148 million of other standby letters of credit outstanding as of February 1, 2025 and February 3, 2024, respectively.",
+      "start": 1364617,
+      "end": 1365068,
+      "linked": false,
+      "emphasized": false,
+      "leading_emphasis": null,
+      "quoted_context": false
+    }
+  },
+  "relations": {
+    "md_and_a": {
+      "facility_limit": 3000000000,
+      "standby_reduction": 144000000,
+      "borrowing_capacity": 2856000000,
+      "inventory_reduction": 397000000,
+      "borrowing_availability": 2459000000,
+      "not_period_end_borrowing_balance": true
+    },
+    "note": {
+      "standby_current": 144000000,
+      "standby_prior": 148000000,
+      "unused_capacity_in_this_note_statement": null
+    },
+    "future_contractual_obligations": {
+      "debt_obligations_approximate": 2800000000,
+      "related_future_interest": 1400000000,
+      "finance_lease_future_payments": 23000000,
+      "not_current_carrying_amount_or_accrued_interest": true
+    }
+  },
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}
