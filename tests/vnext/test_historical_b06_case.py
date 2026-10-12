@@ -8,8 +8,10 @@ from vnext import historical_b06_case as history
 
 class HistoricalB06CaseTest(TestCase):
     def test_consumer_tracks_shared_calculation_and_both_explicit_amendment_readers(self):
-        from vnext.current_b06_case import INLINE_NOTE_PROCESSING_FILES
-        self.assertLessEqual(set(INLINE_NOTE_PROCESSING_FILES), set(history.PROCESSING_FILES))
+        from vnext.current_b06_case import SELECTED_RELEASE_PROCESSING_FILES
+        self.assertLessEqual(set(SELECTED_RELEASE_PROCESSING_FILES), set(history.PROCESSING_FILES))
+        self.assertIn('scripts/vnext/normal_annual_input.py', history.PROCESSING_FILES)
+        self.assertIn('scripts/vnext/xbrl_namespace_policy.py', history.PROCESSING_FILES)
         self.assertEqual(len(history.PROCESSING_FILES), len(set(history.PROCESSING_FILES)))
         self.assertTrue(all((history.ROOT/path).is_file() for path in history.PROCESSING_FILES))
 
@@ -79,7 +81,8 @@ class HistoricalB06CaseTest(TestCase):
             case = history.prepare_historical_b06_year_case(repo_root=self.source,
                 company_id='constructed', metric_id='B06', fiscal_year=2024)
         compute.assert_called_once_with(source_root=self.source, company_id='constructed',
-            preparation=selected['preparation'], annual=self.annual, packet=packet)
+            preparation=selected['preparation'], annual=self.annual, packet=packet,
+            dei_release='YEAR_QUARTER_OR_DATE', namespace_policy='YEAR_OR_DATE_RELEASE')
         self.assertEqual(selected['selection'], case['historical_period_selection'])
 
     def test_wrong_metric_does_not_prepare_sources(self):
