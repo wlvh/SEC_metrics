@@ -1,0 +1,20 @@
+test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_equal_amount_in_a_note_or_limited_statement_does_not_prove_scope) ... ok
+test_explicit_single_segment_revenue_keeps_original_dimension_and_default (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_explicit_single_segment_revenue_keeps_original_dimension_and_default) ... FAIL
+test_geography_product_and_arbitrary_members_are_not_company_totals (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_geography_product_and_arbitrary_members_are_not_company_totals) ... ok
+test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_missing_ambiguous_or_multiple_segment_counts_do_not_prove_scope) ... ok
+test_option_is_not_a_general_dimension_or_xml_bypass (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_option_is_not_a_general_dimension_or_xml_bypass) ... ok
+test_xml_count_or_amount_conflict_remains_rejected (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_xml_count_or_amount_conflict_remains_rejected) ... ok
+
+======================================================================
+FAIL: test_explicit_single_segment_revenue_keeps_original_dimension_and_default (tests.vnext.test_single_segment_revenue.SingleSegmentRevenueTest.test_explicit_single_segment_revenue_keeps_original_dimension_and_default)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/tests/vnext/test_single_segment_revenue.py", line 39, in test_explicit_single_segment_revenue_keeps_original_dimension_and_default
+    self.assertTrue(result['complete_scope_proven'])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.124s
+
+FAILED (failures=1)

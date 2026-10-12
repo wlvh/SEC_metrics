@@ -1,0 +1,20 @@
+REPORTED_CONSOLIDATED_TOTAL 1330383000 c-6 6.595211
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/docs/evidence/issue28_single_segment_revenue_20261012/verify_original.py", line 88, in <module>
+    main()
+    ~~~~^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/docs/evidence/issue28_single_segment_revenue_20261012/verify_original.py", line 72, in main
+    current=revenue.reported_revenue_scope(**kwargs,allow_single_revenue_line=True,
+        allow_single_segment_revenue=True)
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_reported_revenue_v2.py", line 207, in reported_revenue_scope
+    statement=_statement_scope(raw,index,parsed,table,adjacent_heading=True,
+        extra_unit_headers=extra_units,
+    ...<2 lines>...
+            r'fiscal years '+str(column_year)+r', '+str(column_year-1)+
+            r', and '+str(column_year-2))} if group_total else {}))
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 217, in _statement_scope
+    _need(not unknown, 'STATEMENT_LOCAL_SCOPE_UNRESOLVED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/.codex/worktrees/issue28-revenue-group-total/SEC_metrics/scripts/vnext/selected_revenue_scope_v1.py", line 28, in _need
+    raise IncomeSourceError('SELECTED_REVENUE_' + reason)
+vnext.selected_income_source_v1.IncomeSourceError: SELECTED_REVENUE_STATEMENT_LOCAL_SCOPE_UNRESOLVED
