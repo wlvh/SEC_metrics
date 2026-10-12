@@ -1,0 +1,31 @@
+source /Users/lyuhongwang/.codex/worktrees/7e99/SEC_metrics-issue47-company-verified-source-20261006/source-inputs proof_count 44
+configuration 0.012387 7
+census 0.02848 381
+saved-read 0.00096 5
+current-source-proofs 1.612502 44
+profiled_proofs_wall 2.290579790947959
+         7851624 function calls (7847488 primitive calls) in 2.290 seconds
+
+   Ordered by: cumulative time
+   List reduced from 165 to 16 due to restriction <16>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.011    0.011    2.290    2.290 ordinary_current_update.py:73(_current_sources)
+       44    0.016    0.000    2.249    0.051 request_bindings.py:234(validate_request_attempt_binding)
+       90    0.255    0.003    1.308    0.015 sec_http.py:928(parse_request_log_rows)
+   227880    0.179    0.000    0.890    0.000 csv.py:173(__next__)
+   111452    0.228    0.000    0.812    0.000 sec_http.py:1001(request_log_attempt_id)
+       45    0.009    0.000    0.695    0.015 sec_http.py:1065(validate_request_log_manifest)
+       45    0.000    0.000    0.683    0.015 sec_http.py:1037(request_log_manifest_payload)
+   227970    0.672    0.000    0.672    0.000 {built-in method builtins.next}
+   111452    0.055    0.000    0.391    0.000 __init__.py:185(dumps)
+   111452    0.044    0.000    0.325    0.000 encoder.py:185(encode)
+   111452    0.261    0.000    0.261    0.000 encoder.py:207(iterencode)
+  3416850    0.162    0.000    0.162    0.000 sec_http.py:948(<genexpr>)
+  1671780    0.121    0.000    0.121    0.000 sec_http.py:1018(<genexpr>)
+   111717    0.096    0.000    0.096    0.000 {built-in method _hashlib.openssl_sha256}
+       44    0.000    0.000    0.095    0.002 request_bindings.py:25(_verified_request_locator)
+       44    0.001    0.000    0.046    0.001 sec_http.py:760(legacy_response_snapshot_paths)
+
+
+

@@ -41,6 +41,7 @@ name: Company saved-source records
     - tests/vnext/test_company_parse_reuse.py
     - tests/vnext/test_precalculated_case.py
     - tests/vnext/test_saved_source_checks.py
+    - tests/vnext/test_request_binding_batch.py
     - tests/vnext/test_runtime_tools.py
     - tests/vnext/test_b03_current_input_scope.py
     - tests/vnext/test_xbrl_namespace_policy.py
@@ -97,6 +98,10 @@ jobs:
         tests.vnext.test_company_current_records tests.vnext.test_ordinary_current_update tests.vnext.test_company_parse_reuse
         tests.vnext.test_precalculated_case tests.vnext.test_runtime_tools tests.vnext.test_reporting_company_projection
         -v
+    - name: Current source batch proofs and source-check-only reuse
+      env:
+        PYTHONDONTWRITEBYTECODE: '1'
+      run: python3 tests/required_unittests.py tests.vnext.test_request_binding_batch
   company-source:
     runs-on: ubuntu-latest
     timeout-minutes: 5

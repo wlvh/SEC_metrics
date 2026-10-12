@@ -140,6 +140,31 @@ class CurrentD04ParsedReuseTest(unittest.TestCase):
         self.assertEqual(third['status'],'PREVIOUS_INPUT_WITHHELD')
         self.assertEqual(len(self.created),1)
 
+    def test_check_only_change_with_same_raw_reuses_without_parsing(self):
+        self.config['processing_files']={'scripts/vnext/request_bindings.py':'check-one'}
+        first=self.run_d04()
+        self.config['processing_files']={'scripts/vnext/request_bindings.py':'check-two'}
+        with patch.object(update,'create_saved_result',side_effect=AssertionError('No unchanged-raw calculation')), \
+             patch('scripts.vnext.ordinary_d04_task_input.fingerprint',side_effect=AssertionError('No unchanged-raw parse')):
+            repeated=self.run_d04()
+        self.assertEqual('PREVIOUS_INPUT_WITHHELD',repeated['status'])
+        self.assertEqual(first['result_id'],repeated['result_id'])
+        self.assertEqual('check-two',repeated['source_check_versions']['scripts/vnext/request_bindings.py'])
+        self.assertEqual(1,len(self.created))
+
+    def test_changed_raw_and_check_version_does_not_relax_parsed_equivalence(self):
+        self.config['processing_files']={'scripts/vnext/request_bindings.py':'check-one'}
+        first=self.run_d04();self.changed_raw()
+        self.config['processing_files']={'scripts/vnext/request_bindings.py':'check-two'}
+        # Exact configuration is still required for interpreting new bytes.
+        # This fallback uses an explicit constructed saved-response processor;
+        # it gives no new provider execution permission.
+        with patch('scripts.vnext.ordinary_d04_task_input.fingerprint',side_effect=AssertionError('Changed config must not use parsed equivalence')):
+            changed=self.run_d04()
+        self.assertEqual('CANDIDATE_WITHHELD',changed['status'])
+        self.assertNotEqual(first['result_id'],changed['result_id'])
+        self.assertEqual(2,len(self.created))
+
     def test_changed_business_input_or_configuration_does_not_reuse(self):
         first=self.run_d04();self.changed_raw();self.new_task={'method':'ORDINARY_D04_COMPLETE_TASK_INPUT_V1','body':'new-business-task'}
         from vnext.canonical import content_hash
